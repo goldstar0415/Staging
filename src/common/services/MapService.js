@@ -4,6 +4,7 @@
         .factory('MapService', function ($rootScope) {
             var map = null;
             var radiusSelectionLimit = 1500;
+            var controlGroup = L.layerGroup();
             var eventsLayer = new L.MarkerClusterGroup();
             var pitstopsLayer = new L.MarkerClusterGroup();;
             var recreationsLayer = new L.MarkerClusterGroup();
@@ -73,10 +74,33 @@
                 L.control.fullscreen({
                     position: 'bottomright'
                 }).addTo(map);
+                ChangeState("big");
                 return map;
             }
             function GetMap() {
                 return map;
+            }
+            function GetCurrentLayer() {
+                var layer = null;
+                switch (currentLayer) {
+                    case "events":
+                        layer = eventsLayer;
+                        break;
+                    case "recreations":
+                        layer = recreationsLayer;
+                        break;
+                    case "pitstops":
+                        layer = pitstopsLayer;
+                        break;
+                    case "other":
+                        layer = otherLayer;
+                        break;
+                    default:
+                        layer = null;
+                        break;
+                }
+
+                return layer;
             }
 
             //Layers
@@ -84,14 +108,18 @@
                 switch (state) {
                     case "big":
                         showEventsLayer(true);
+                        $rootScope.mapState = "big";
                         break;
                     case "small":
                         showOtherLayers();
+                        $rootScope.mapState = "small";
                         break;
                     case "hidden":
+                        $rootScope.mapState = "hidden";
                         removeAllLayers();
                         break;
                 }
+                $rootScope.$apply();
             }
             function showEventsLayer (clearLayers) {
                 if(clearLayers) eventsLayer.clearLayers();
@@ -134,7 +162,7 @@
                 currentLayer = "other";
             }
             function removeAllLayers () {
-                currentLayer = "empty";
+                currentLayer = "none";
                 map.removeLayer(otherLayer);
                 map.removeLayer(recreationsLayer);
                 map.removeLayer(pitstopsLayer);
@@ -156,20 +184,20 @@
             }
 
             //Controls
-            function RemoveControls(controls) {
-                for(var k in controls) {
-                    map.removeLayer(controls[k]);
-                }
+            function RemoveControls() {
+                map.removeLayer(controlGroup);
             }
-            function AddControls(controls) {
-                for(var k in controls) {
-                    map.addLayer(controls[k]);
-                }
+            function AddControls() {
+                map.addLayer(controlGroup);
             }
 
             //Makers
             function CreateMaker(latlng, options) {
-                return L.marker(latlng, options).addTo(map);
+                if(currentLayer == "none") return false;
+                var marker = L.marker(latlng, options);
+                GetCurrentLayer().addLayer(marker);
+
+                return marker;
             }
 
             //Processing functions
@@ -218,6 +246,7 @@
             return {
                 Init: InitMap,
                 GetMap: GetMap,
+                GetCurrentLayer: GetCurrentLayer,
                 //Layers
                 ChangeState: ChangeState,
                 showEvents: showEventsLayer,
