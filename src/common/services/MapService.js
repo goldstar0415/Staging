@@ -270,12 +270,16 @@
             }
 
             //Makers
-            function CreateMaker(latlng, options) {
+            function CreateMarker(latlng, options) {
                 if(currentLayer == "none") return false;
                 var marker = L.marker(latlng, options);
                 GetCurrentLayer().addLayer(marker);
 
                 return marker;
+            }
+            function RemoveMarker(Marker) {
+                if(currentLayer == "none") return;
+                GetCurrentLayer().removeLayer(marker);
             }
 
             //Processing functions
@@ -340,7 +344,8 @@
                 AddControls: AddControls,
                 RemoveControls: RemoveControls,
                 //Makers
-                CreateMarker: CreateMaker,
+                CreateMarker: CreateMarker,
+                RemoveMarker: RemoveMarker,
                 //Math
                 pointInPolygon: pointInPolygon
             }
