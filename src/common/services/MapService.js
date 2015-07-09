@@ -171,16 +171,94 @@
 
             //Selections
             function LassoSelection(callback) {
+                map.clearAllEventListeners();
+                var started = false;
+                var points = [];
+                var polyline = null;
 
-            }
-            function PathSelection(callback) {
+                if(L.Browser.touch) {
+                    map.on('touchstart', start);
+                    map.on('touchmove', move);
+                    map.on('touchend', end);
+                } else {
+                    map.on('mousedown', start);
+                    map.on('mousemove', move);
+                    map.on('mouseup', end);
+                }
 
-            }
-            function PolygonSelection(callback) {
+                function start(e) {
+                    points = [];
+                    started = true;
+                    polyline = L.polyline([], {color: 'red'}).addTo(map);
+                    points.push(e.latlng);
+                    polyline.setLatLngs(points);
+                }
 
+                function move(e) {
+                    if(started){
+                        points.push(e.latlng);
+                        polyline.setLatLngs(points);
+                    }
+                }
+
+                function end(e){
+                    if(started){
+                        started = false;
+                        points.push(e.latlng);
+                        points.push(points[0]);
+                        map.removeLayer(polyline);
+                        callback(getConcaveHull(points));
+                    }
+                }
             }
             function RadiusSelection(callback) {
+                map.clearAllEventListeners();
+                var started = false,
+                    startPoint = null,
+                    radius = 0,
+                    circle = null;
 
+                if(L.Browser.touch) {
+                    map.on('touchstart', start);
+                    map.on('touchmove', move);
+                    map.on('touchend', end);
+                } else {
+                    map.on('mousedown', start);
+                    map.on('mousemove', move);
+                    map.on('mouseup', end);
+                }
+
+                function start(e) {
+                    started = true;
+                    startPoint = L.latLng(e.latlng.lat, e.latlng.lng);
+                    circle = L.polyline(startPoint, radius, {color: 'red', weight: 3}).addTo(map);
+                }
+
+                function move(e) {
+                    if(started){
+                        var entPoint = L.latLng(e.latlng.lat, e.latlng.lng);
+                        var distance = startPoint.distanceTo(entPoint);
+
+                        if(distance <= radiusSelectionLimit) {
+                            circle.setRadius(distance);
+                        }
+                    }
+                }
+
+                function end(e){
+                    if(started){
+                        started = false;
+                        points.push(e.latlng);
+                        map.removeLayer(polyline);
+                        callback(getConcaveHull(points));
+                    }
+                }
+            }
+            function PathSelection(callback) {
+                map.clearAllEventListeners();
+            }
+            function PolygonSelection(callback) {
+                map.clearAllEventListeners();
             }
 
             //Controls
