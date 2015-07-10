@@ -10,12 +10,12 @@ angular.module('zoomtivity',
     'ui.bootstrap'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('home', {
-        url: '/',
-        templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl'
+      .state('index', {
+        url: '/'
       });
 
     $urlRouterProvider.otherwise('/');
   })
-;
+  .run(function(MapService){
+    var map = MapService.Init('map', {}, '');
+  });
