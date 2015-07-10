@@ -15,6 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['namespace' => 'DownloadModule'], function () {
-    Route::get('file', 'DownloadController@index');
-});
+Route::get('file', 'DownloadController@index');
+
+Route::get('test/{id}/{name}', 'DownloadController@test');

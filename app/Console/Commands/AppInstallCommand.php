@@ -73,6 +73,8 @@ redirect_stderr=true
 stdout_logfile=$logs_path/$this->socket_conf.log
 FILE;
         file_put_contents('/etc/supervisor/conf.d/' . $this->socket_conf . '.conf', $laravel_socket);
+        //Task Scheduling
+        system('* * * * * php ' . $app_path . '/artisan schedule:run 1>> /dev/null 2>&1');
         $this->info('Application initialized successfuly!');
     }
 

@@ -12,6 +12,9 @@ use SplFileInfo;
 class Download
 {
 
+    const USER_AVATAR = 1;
+    const USER_ALBUM = 2;
+
     /**
      * @var \SplFileObject|string
      */
@@ -19,30 +22,18 @@ class Download
 
     private $title;
 
-    private $userfiles;
-
-    private $attributes;
 
     /**
      * @param string $file
-     * @param string $tile
-     * @param array $attributes
+     * @param string $title
      * @param bool $userfiles
      */
-    function __construct($file, $tile = '', $attributes = [], $userfiles = true)
+    function __construct($file, $title = '', $mode = self::USER_AVATAR)
     {
         $this->file = $file;
-        $this->title = $tile;
-        $this->userfiles = $userfiles;
-        $this->attributes = $attributes;
+        $this->title = $title;
     }
 
-
-    public function htmLink()
-    {
-        $file = $this->prepareSession();
-        return '<a href="' . url('file?id=' . $file) . '"' . $this->attributes($this->attributes) . '>' . $this->title . '</a>';
-    }
 
     private function prepareSession()
     {
@@ -74,49 +65,13 @@ class Download
         if (empty($file)) {
             abort(404);
         }
+
         return response()->download($file);
     }
 
     public function link()
     {
         return url('file?id=' . $this->prepareSession());
-    }
-
-    public function attributes($attributes)
-    {
-        $html = array();
-
-        // For numeric keys we will assume that the key and the value are the same
-        // as this will convert HTML attributes such as "required" to a correct
-        // form like required="required" instead of using incorrect numerics.
-        foreach ((array)$attributes as $key => $value) {
-            $element = $this->attributeElement($key, $value);
-
-            if (!is_null($element)) {
-                $html[] = $element;
-            }
-        }
-
-        return count($html) > 0 ? ' ' . implode(' ', $html) : '';
-    }
-
-    /**
-     * Build a single attribute element.
-     *
-     * @param  string $key
-     * @param  string $value
-     * @return string
-     */
-    protected function attributeElement($key, $value)
-    {
-        if (is_numeric($key)) {
-            $key = $value;
-        }
-
-        if (!is_null($value)) {
-            return $key . '="' . e($value) . '"';
-        }
-        return '';
     }
 
 }
