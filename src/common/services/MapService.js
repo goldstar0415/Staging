@@ -3,7 +3,7 @@ angular
     .factory('MapService', function ($rootScope, $timeout, $http) {
         var map = null;
         var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
-        var radiusSelectionLimit = 1500;
+        var radiusSelectionLimit = 500000; //in meters
         var controlGroup = L.layerGroup();
         var drawLayer = L.featureGroup();
         var eventsLayer = new L.MarkerClusterGroup();
@@ -138,7 +138,6 @@ angular
                 map.invalidateSize();
             });
         }
-
         function showEventsLayer(clearLayers) {
             if (clearLayers) eventsLayer.clearLayers();
             if (currentLayer != "events") {
@@ -149,7 +148,6 @@ angular
             map.removeLayer(otherLayer);
             currentLayer = "events";
         }
-
         function showPitstopsLayer(clearLayers) {
             if (clearLayers) pitstopsLayer.clearLayers();
             if (currentLayer != "pitstops") {
@@ -160,7 +158,6 @@ angular
             map.removeLayer(otherLayer);
             currentLayer = "pitstops";
         }
-
         function showRecreationsLayer(clearLayers) {
             if (clearLayers) recreationsLayer.clearLayers();
             if (currentLayer != "recreations") {
@@ -171,7 +168,6 @@ angular
             map.removeLayer(otherLayer);
             currentLayer = "recreations";
         }
-
         function showOtherLayers() {
             otherLayer.clearLayers();
             if (currentLayer != "other") {
@@ -182,7 +178,6 @@ angular
             map.removeLayer(eventsLayer);
             currentLayer = "other";
         }
-
         function removeAllLayers() {
             currentLayer = "none";
             map.removeLayer(otherLayer);
@@ -195,7 +190,7 @@ angular
 
         //Note: Selections tools are private and can be used only inside MapService
         function LassoSelection(callback) {
-            map.clearAllEventListeners();
+            ClearSelectionListeners();
             var started = false;
             var points = [];
             var polyline = null;
@@ -226,10 +221,9 @@ angular
             }
 
             function end(e) {
-                map.clearAllEventListeners();
                 if (started) {
+                    ClearSelectionListeners();
                     started = false;
-                    points.push(e.latlng);
                     points.push(points[0]);
                     drawLayer.removeLayer(polyline);
                     callback(getConcaveHull(points));
@@ -237,11 +231,12 @@ angular
             }
         }
         function RadiusSelection(callback) {
-            map.clearAllEventListeners();
-            var started = false,
-                startPoint = null,
-                radius = 0,
-                circle = null;
+            ClearSelectionListeners();
+            map.dragging.disable();
+            var started = false;
+            var startPoint = null;
+            var radius = 1000;
+            var circle = null;
 
             if (L.Browser.touch) {
                 map.on('touchstart', start);
@@ -253,17 +248,17 @@ angular
                 map.on('mouseup', end);
             }
 
+
             function start(e) {
                 started = true;
                 startPoint = L.latLng(e.latlng.lat, e.latlng.lng);
-                circle = L.polyline(startPoint, radius, {color: 'red', weight: 3}).addTo(drawLayer);
+                circle = L.circle(e.latlng, radius, {color: 'red', weight: 3}).addTo(drawLayer);
             }
 
             function move(e) {
                 if (started) {
                     var endPoint = L.latLng(e.latlng.lat, e.latlng.lng);
                     var distance = startPoint.distanceTo(endPoint);
-
                     if (distance <= radiusSelectionLimit) {
                         radius = distance;
                         circle.setRadius(distance);
@@ -272,19 +267,27 @@ angular
             }
 
             function end(e) {
-                map.clearAllEventListeners();
                 if (started) {
+                    ClearSelectionListeners();
                     started = false;
-                    var circleGeoJson = circle.toGeoJSON();
                     drawLayer.removeLayer(circle);
-                    callback(startPoint, radius, circleGeoJson);
+                    map.dragging.enable();
+                    callback(startPoint, radius);
                 }
             }
         }
         function PathSelection(callback) {
-            map.clearAllEventListeners();
+            ClearSelectionListeners();
         }
 
+        function ClearSelectionListeners(){
+            map.off('mousedown');
+            map.off('mousemove');
+            map.off('mouseup');
+            map.off('touchstart');
+            map.off('touchmove');
+            map.off('touchend');
+        }
         function ClearSelections(){
             drawLayer.clearLayers();
             eventsLayer.clearLayers();
@@ -311,16 +314,15 @@ angular
         }
         function RemoveMarker(Marker) {
             if (currentLayer == "none") return;
-            GetCurrentLayer().removeLayer(marker);
+            GetCurrentLayer().removeLayer(Marker);
         }
+
 
         //Processing functions
         //Return concave hull from points array
         function getConcaveHull(latLngs) {
-            latLngs.push(latLngs[0]);
             return new ConcaveHull(latLngs).getLatLngs();
         }
-
         //Determine if point inside polygon or not
         function pointInPolygon(point, polyPoints) {
             if (point.lat && point.lng) {

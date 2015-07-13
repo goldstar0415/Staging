@@ -17,5 +17,6 @@ angular.module('zoomtivity',
     $urlRouterProvider.otherwise('/');
   })
   .run(function(MapService){
-    var map = MapService.Init('map', {}, '');
+    MapService.Init('map');
   });
+
