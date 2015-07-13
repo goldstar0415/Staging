@@ -21,13 +21,24 @@
     <!-- endbuild -->
     <link rel="stylesheet" href="libs/Leaflet/leaflet.css"/>
     <script src="libs/Leaflet/leaflet.js"></script>
+    <style>
+      .fullsize {
+        height: 900px;
+      }
+      .smallsize {
+        height: 550px;
+      }
+      .hidden {
+        height: 0px;
+      }
+    </style>
   </head>
   <body>
     <!--[if lt IE 10]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div id="map"></div>
+    <div id="map" ng-class="{'fullsize': mapState == 'big', 'smallsize': mapState == 'small', 'hidden': mapState == 'hidden'}"></div>
     <div ui-view>
 
     </div>

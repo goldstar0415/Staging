@@ -1,9 +1,11 @@
 angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope) {
+    .factory('MapService', function ($rootScope, $timeout, $http) {
         var map = null;
+        var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
         var radiusSelectionLimit = 1500;
         var controlGroup = L.layerGroup();
+        var drawLayer = L.featureGroup();
         var eventsLayer = new L.MarkerClusterGroup();
         var pitstopsLayer = new L.MarkerClusterGroup();
         var recreationsLayer = new L.MarkerClusterGroup();
@@ -11,7 +13,7 @@ angular
         var currentLayer = "";
 
         //initialization
-        function InitMap(mapDOMElement, mapOptions, mapTilesUrl) {
+        function InitMap(mapDOMElement) {
             //Leaflet touch hook
             L.Map.mergeOptions({
                 touchExtend: true
@@ -68,15 +70,18 @@ angular
             });
             L.Map.addInitHook('addHandler', 'touchExtend', L.Map.TouchExtend);
 
+            //map init
             map = L.map(mapDOMElement, {
-                fullscreenControl: true,
                 attributionControl: false,
                 zoomControl: true
             }).setView({lat:49.9, lng:36.25}, 8);
-            L.tileLayer('http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
+            L.tileLayer(tilesUrl, {
                 maxZoom: 15,
                 minZoom: 3
             }).addTo(map);
+            map.addLayer(controlGroup);
+            map.addLayer(drawLayer);
+
             ChangeState("big");
             return map;
         }
@@ -84,7 +89,9 @@ angular
         function GetMap() {
             return map;
         }
-
+        function GetControlGroup() {
+            return controlGroup;
+        }
         function GetCurrentLayer() {
             var layer = null;
             switch (currentLayer) {
@@ -110,7 +117,7 @@ angular
 
         //Layers
         function ChangeState(state) {
-            switch (state) {
+            switch (state.toLowerCase()) {
                 case "big":
                     showEventsLayer(true);
                     $rootScope.mapState = "big";
@@ -125,6 +132,11 @@ angular
                     break;
             }
             $rootScope.$apply();
+
+            //Wait until digest cycle ends and then invalidateSize of the map.
+            $timeout(function(){
+                map.invalidateSize();
+            });
         }
 
         function showEventsLayer(clearLayers) {
@@ -180,6 +192,8 @@ angular
         }
 
         //Selections
+
+        //Note: Selections tools are private and can be used only inside MapService
         function LassoSelection(callback) {
             map.clearAllEventListeners();
             var started = false;
@@ -199,7 +213,7 @@ angular
             function start(e) {
                 points = [];
                 started = true;
-                polyline = L.polyline([], {color: 'red'}).addTo(map);
+                polyline = L.polyline([], {color: 'red'}).addTo(drawLayer);
                 points.push(e.latlng);
                 polyline.setLatLngs(points);
             }
@@ -212,16 +226,16 @@ angular
             }
 
             function end(e) {
+                map.clearAllEventListeners();
                 if (started) {
                     started = false;
                     points.push(e.latlng);
                     points.push(points[0]);
-                    map.removeLayer(polyline);
+                    drawLayer.removeLayer(polyline);
                     callback(getConcaveHull(points));
                 }
             }
         }
-
         function RadiusSelection(callback) {
             map.clearAllEventListeners();
             var started = false,
@@ -242,43 +256,47 @@ angular
             function start(e) {
                 started = true;
                 startPoint = L.latLng(e.latlng.lat, e.latlng.lng);
-                circle = L.polyline(startPoint, radius, {color: 'red', weight: 3}).addTo(map);
+                circle = L.polyline(startPoint, radius, {color: 'red', weight: 3}).addTo(drawLayer);
             }
 
             function move(e) {
                 if (started) {
-                    var entPoint = L.latLng(e.latlng.lat, e.latlng.lng);
-                    var distance = startPoint.distanceTo(entPoint);
+                    var endPoint = L.latLng(e.latlng.lat, e.latlng.lng);
+                    var distance = startPoint.distanceTo(endPoint);
 
                     if (distance <= radiusSelectionLimit) {
+                        radius = distance;
                         circle.setRadius(distance);
                     }
                 }
             }
 
             function end(e) {
+                map.clearAllEventListeners();
                 if (started) {
                     started = false;
-                    points.push(e.latlng);
-                    map.removeLayer(polyline);
-                    callback(getConcaveHull(points));
+                    var circleGeoJson = circle.toGeoJSON();
+                    drawLayer.removeLayer(circle);
+                    callback(startPoint, radius, circleGeoJson);
                 }
             }
         }
-
         function PathSelection(callback) {
             map.clearAllEventListeners();
         }
 
-        function PolygonSelection(callback) {
-            map.clearAllEventListeners();
+        function ClearSelections(){
+            drawLayer.clearLayers();
+            eventsLayer.clearLayers();
+            pitstopsLayer.clearLayers();
+            recreationsLayer.clearLayers();
+            otherLayer.clearLayers();
         }
 
         //Controls
         function RemoveControls() {
             map.removeLayer(controlGroup);
         }
-
         function AddControls() {
             map.addLayer(controlGroup);
         }
@@ -291,7 +309,6 @@ angular
 
             return marker;
         }
-
         function RemoveMarker(Marker) {
             if (currentLayer == "none") return;
             GetCurrentLayer().removeLayer(marker);
@@ -302,11 +319,6 @@ angular
         function getConcaveHull(latLngs) {
             latLngs.push(latLngs[0]);
             return new ConcaveHull(latLngs).getLatLngs();
-        }
-
-        //Simplify polygon
-        function simplifyPolygon(points) {
-            return simplify(points, 0.01, true);
         }
 
         //Determine if point inside polygon or not
@@ -345,6 +357,7 @@ angular
         return {
             Init: InitMap,
             GetMap: GetMap,
+            GetControlGroup: GetControlGroup,
             GetCurrentLayer: GetCurrentLayer,
             //Layers
             ChangeState: ChangeState,
@@ -353,10 +366,7 @@ angular
             showRecreations: showRecreationsLayer,
             showOtherLayers: showEventsLayer,
             //Selections
-            Lasso: LassoSelection,
-            Path: PathSelection,
-            Polygon: PolygonSelection,
-            Radius: RadiusSelection,
+            clearSelections: ClearSelections,
             //Controls
             AddControls: AddControls,
             RemoveControls: RemoveControls,
