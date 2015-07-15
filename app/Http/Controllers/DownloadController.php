@@ -21,9 +21,4 @@ class DownloadController extends Controller {
 		return Download::getFile($request->input('id'));
 	}
 
-	public function test(Request $request, $id, $name)
-	{
-		return $request->get('test') . ' ' . $id . ' ' . $name;
-	}
-
 }

@@ -13,10 +13,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        if (App::environment('local')) {
 
+        $this->call(RolesSeeder::class);
+        $this->call(SpotTypesTableSeeder::class);
+        if (App::environment('local')) {
+            $this->call(UserTableSeeder::class);
+            $this->call(SpotTypeCategoriesTableSeeder::class);
+            $this->call(SpotTableSeeder::class);
         }
-        // $this->call('UserTableSeeder');
 
         Model::reguard();
     }

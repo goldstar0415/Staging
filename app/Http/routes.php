@@ -12,9 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return '';
 });
 
 Route::get('file', 'DownloadController@index');
-
-Route::get('test/{id}/{name}', 'DownloadController@test');
