@@ -16,5 +16,10 @@ Route::get('/', function () {
     return 'Hello';
 });
 
-
+/**
+ * User resource
+ */
+Route::post('users/login', 'UserController@login');
+Route::resource('users', 'UserController');
+//-----------------------------------------------
 Route::get('file', 'DownloadController@index');
