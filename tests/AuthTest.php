@@ -4,16 +4,24 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ExampleTest extends TestCase
+class AuthTest extends TestCase
 {
     /**
      * A basic functional test example.
      *
      * @return void
      */
-    public function testBasicExample()
+    public function testSignUp()
     {
-        $this->visit('/')
-             ->see('Laravel 5');
+        $this->put('/',
+            [
+                '_token' => csrf_token()
+            ]
+        )->seeJson(
+            [
+                'field' => 'value'
+            ]
+        );
     }
+
 }

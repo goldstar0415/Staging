@@ -50,6 +50,7 @@ return [
             'driver'   => 'sqlite',
             'database' => storage_path('database.sqlite'),
             'prefix'   => '',
+            'rand_func' => 'RANDOM()'
         ],
 
         'mysql' => [
@@ -62,6 +63,7 @@ return [
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
             'strict'    => false,
+            'rand_func' => 'RAND()'
         ],
 
         'pgsql' => [
@@ -73,6 +75,7 @@ return [
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => 'public',
+            'rand_func' => 'RANDOM()'
         ],
 
         'sqlsrv' => [
@@ -82,6 +85,7 @@ return [
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'prefix'   => '',
+            'rand_func' => 'NEWID()'
         ],
 
     ],

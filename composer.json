@@ -44,7 +44,6 @@
             "php artisan key:generate",
             "php artisan app:init",
             "php artisan ide-helper:generate",
-            "php artisan vendor:publish",
             "php artisan migrate --seed",
             "npm install",
             "supervisorctl reread",
