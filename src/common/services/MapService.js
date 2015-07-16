@@ -4,13 +4,176 @@ angular
         var map = null;
         var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
         var radiusSelectionLimit = 500000; //in meters
-        var controlGroup = L.layerGroup();
         var drawLayer = L.featureGroup();
         var eventsLayer = new L.MarkerClusterGroup();
         var pitstopsLayer = new L.MarkerClusterGroup();
         var recreationsLayer = new L.MarkerClusterGroup();
         var otherLayer = new L.MarkerClusterGroup();
         var currentLayer = "";
+
+        // Path variables
+        var pathRouter = L.Routing.osrm();
+        var pathSelectionStarted = false;
+
+        //MAP CONTROLS
+        // Lasso controls
+        L.Control.lasso = L.Control.extend({
+            options: {
+                position: 'bottomleft',
+                title: {
+                    'false': 'Lasso selection',
+                    'true': 'Lasso selection'
+                }
+            },
+            onAdd: function (map) {
+                var container = L.DomUtil.create('div', 'map-tools');
+
+                this.link = L.DomUtil.create('div', 'lasso-selection', container);
+                this.link.href = '#';
+                this._map = map;
+
+                L.DomEvent.on(this.link, 'click', this._click, this);
+                return container;
+            },
+            _click: function (e) {
+                L.DomEvent.stopPropagation(e);
+                L.DomEvent.preventDefault(e);
+                LassoSelection(function LassoCallback(points, b_box) {
+
+                });
+            }
+
+        });
+        L.Control.Lasso = function (options) {
+            return new L.Control.lasso(options);
+        };
+        // Radius controls
+        L.Control.radius = L.Control.extend({
+            options: {
+                position: 'bottomleft',
+                title: {
+                    'false': 'Radius selection',
+                    'true': 'Radius selection'
+                }
+            },
+            onAdd: function (map) {
+                var container = L.DomUtil.create('div', 'map-tools');
+
+                this.link = L.DomUtil.create('div', 'radius-selection', container);
+                this.link.href = '#';
+                this._map = map;
+
+                L.DomEvent.on(this.link, 'click', this._click, this);
+                return container;
+            },
+            _click: function (e) {
+                L.DomEvent.stopPropagation(e);
+                L.DomEvent.preventDefault(e);
+                RadiusSelection(function(startPoing, radius, b_box) {
+
+                });
+            }
+
+        });
+        L.Control.Radius = function (options) {
+            return new L.Control.radius(options);
+        };
+        // Path controls
+        L.Control.path = L.Control.extend({
+            options: {
+                position: 'bottomleft',
+                title: {
+                    'false': 'Path selection',
+                    'true': 'Path selection'
+                }
+            },
+            onAdd: function (map) {
+                var container = L.DomUtil.create('div', 'map-tools');
+
+                this.link = L.DomUtil.create('div', 'path-selection', container);
+                this.link.href = '#';
+                this._map = map;
+
+                L.DomEvent.on(this.link, 'click', this._click, this);
+                return container;
+            },
+            _click: function (e) {
+                L.DomEvent.stopPropagation(e);
+                L.DomEvent.preventDefault(e);
+                PathSelection(function() {
+
+                })
+            }
+
+        });
+        L.Control.Path = function (options) {
+            return new L.Control.path(options);
+        };
+        // Save selection
+        L.Control.saveSelection = L.Control.extend({
+            options: {
+                position: 'bottomleft',
+                title: {
+                    'false': 'Save selection',
+                    'true': 'Save selection'
+                }
+            },
+            onAdd: function (map) {
+                var container = L.DomUtil.create('div', 'map-tools');
+
+                this.link = L.DomUtil.create('div', 'save-selection', container);
+                this.link.href = '#';
+                this._map = map;
+
+                L.DomEvent.on(this.link, 'click', this._click, this);
+                return container;
+            },
+            _click: function (e) {
+                L.DomEvent.stopPropagation(e);
+                L.DomEvent.preventDefault(e);
+                SaveSelections();
+            }
+
+        });
+        L.Control.SaveSelection = function (options) {
+            return new L.Control.saveSelection(options);
+        };
+        // Clean selection
+        L.Control.clearSelection = L.Control.extend({
+            options: {
+                position: 'bottomleft',
+                title: {
+                    'false': 'Clear selection',
+                    'true': 'Clear selection'
+                }
+            },
+            onAdd: function (map) {
+                var container = L.DomUtil.create('div', 'map-tools');
+
+                this.link = L.DomUtil.create('div', 'clear-selection', container);
+                this.link.href = '#';
+                this._map = map;
+
+                L.DomEvent.on(this.link, 'click', this._click, this);
+                return container;
+            },
+            _click: function (e) {
+                L.DomEvent.stopPropagation(e);
+                L.DomEvent.preventDefault(e);
+                ClearSelections();
+            }
+
+        });
+        L.Control.ClearSelection = function (options) {
+            return new L.Control.clearSelection(options);
+        };
+
+        //controls
+        var lassoControl = L.Control.Lasso();
+        var radiusControl = L.Control.Radius();
+        var pathControl = L.Control.Path();
+        var clearSelectionControl = L.Control.ClearSelection();
+        var saveSelectionControl = L.Control.SaveSelection();
 
         //initialization
         function InitMap(mapDOMElement) {
@@ -79,10 +242,12 @@ angular
                 maxZoom: 15,
                 minZoom: 3
             }).addTo(map);
-            map.addLayer(controlGroup);
+            ChangeState("big");
+
+            //add controls
+            AddControls();
             map.addLayer(drawLayer);
 
-            ChangeState("big");
             return map;
         }
 
@@ -188,9 +353,13 @@ angular
 
         //Selections
 
-        //Note: Selections tools are private and can be used only inside MapService
+        /* Callback output:
+         * points - array of latlng points
+         * b_box - bounding box of the shape
+         */
         function LassoSelection(callback) {
             ClearSelectionListeners();
+            map.dragging.disable();
             var started = false;
             var points = [];
             var polyline = null;
@@ -223,13 +392,21 @@ angular
             function end(e) {
                 if (started) {
                     ClearSelectionListeners();
+                    map.dragging.enable();
                     started = false;
                     points.push(points[0]);
+                    var b_box = polyline.getBounds();
                     drawLayer.removeLayer(polyline);
-                    callback(getConcaveHull(points));
+                    callback(getConcaveHull(points), b_box);
                 }
             }
         }
+
+        /* Callback output:
+         * startPoint - latlng of the circles center
+         * radius - radius of the circle in meters
+         * b_box - bounding box of the circle
+         */
         function RadiusSelection(callback) {
             ClearSelectionListeners();
             map.dragging.disable();
@@ -269,15 +446,61 @@ angular
             function end(e) {
                 if (started) {
                     ClearSelectionListeners();
-                    started = false;
-                    drawLayer.removeLayer(circle);
                     map.dragging.enable();
-                    callback(startPoint, radius);
+                    started = false;
+                    var b_box = circle.getBounds();
+                    drawLayer.removeLayer(circle);
+                    callback(startPoint, radius, b_box);
                 }
             }
         }
+
         function PathSelection(callback) {
-            ClearSelectionListeners();
+            var markers = [],
+                line,
+                rect;
+            var lineOptions = {};
+            lineOptions.styles = [{color: 'blue', opacity: 0.2, weight: 50, clickable: true},{color: 'red', opacity: 1, weight: 2, clickable: true}];
+
+            pathSelectionStarted = true;
+            map.on ('click', onMapClick);
+
+            function onMapClick(e) {
+                var marker = L.marker(e.latlng, {draggable: true}).addTo(drawLayer);
+                markers.push(marker);
+
+                marker.on('drag', _.throttle(RecalculateRoute, 300));
+                RecalculateRoute();
+            }
+
+            function RecalculateRoute() {
+                if (markers.length >= 2) {
+                    var waypoints = _.map(markers, function(m) {
+                        return {latLng: m.getLatLng()};
+                    });
+                    pathRouter.route (waypoints, function (err, routes) {
+                        if (line) {
+                            drawLayer.removeLayer (rect);
+                            drawLayer.removeLayer (line);
+                            line.off('linetouched');
+                        }
+
+                        if (err) {
+                            console.log(err);
+                        } else {
+
+                            line = L.Routing.line(routes [0], lineOptions).addTo(drawLayer);
+                            var bounds = line.getBounds();
+                            bounds = scaleBoundingBox(bounds, 2000);
+                            rect = L.rectangle(bounds, {color: "red", weight: 1}).addTo(drawLayer);
+
+                        }
+                    });
+                }
+            }
+        }
+        function CancelPathSelection() {
+            pathSelectionStarted = false;
         }
 
         function ClearSelectionListeners(){
@@ -287,6 +510,14 @@ angular
             map.off('touchstart');
             map.off('touchmove');
             map.off('touchend');
+            map.off('click');
+            CancelPathSelection();
+        }
+        function SaveSelections() {
+            ClearSelectionListeners();
+            if(pathSelectionStarted){
+                CancelPathSelection();
+            }
         }
         function ClearSelections(){
             drawLayer.clearLayers();
@@ -294,14 +525,26 @@ angular
             pitstopsLayer.clearLayers();
             recreationsLayer.clearLayers();
             otherLayer.clearLayers();
+            ClearSelectionListeners();
+            if(pathSelectionStarted){
+                CancelPathSelection();
+            }
         }
 
         //Controls
         function RemoveControls() {
-            map.removeLayer(controlGroup);
+            map.removeLayer(radiusControl);
+            map.removeLayer(lassoControl);
+            map.removeLayer(pathControl);
+            map.removeLayer(saveSelectionControl);
+            map.removeLayer(clearSelectionControl);
         }
         function AddControls() {
-            map.addLayer(controlGroup);
+            clearSelectionControl.addTo(map);
+            saveSelectionControl.addTo(map);
+            pathControl.addTo(map);
+            lassoControl.addTo(map);
+            radiusControl.addTo(map);
         }
 
         //Makers
@@ -315,6 +558,11 @@ angular
         function RemoveMarker(Marker) {
             if (currentLayer == "none") return;
             GetCurrentLayer().removeLayer(Marker);
+        }
+        function DragMarker(Marker, Callback) {
+            Marker.on('dragend', function(e) {
+               callback(e);
+            });
         }
 
 
@@ -354,6 +602,23 @@ angular
             }
 
             return inside;
+        }
+        //Scale bounding box
+        function scaleBoundingBox(b_box, offset) {
+            var _southWest = b_box.getSouthWest();
+            var _northEast = b_box.getNorthEast();
+            var zoomLevel = map.getZoom();
+            console.log(offset / 1000 * zoomLevel / 100);
+
+            _southWest.lat = _southWest.lat - offset / 1000 * zoomLevel / 100;
+            _southWest.lng = _southWest.lng - offset / 1000 * zoomLevel / 100;
+
+            _northEast.lat = _northEast.lat + offset / 1000 * zoomLevel / 100;
+            _northEast.lng = _northEast.lng + offset / 1000 * zoomLevel / 100;
+
+            var newBoundingBox = L.latLngBounds(_southWest, _northEast);
+
+            return newBoundingBox;
         }
 
         return {

@@ -7,7 +7,9 @@ angular.module('zoomtivity',
     'ngSanitize',
     'ngResource',
     'ui.router',
-    'ui.bootstrap'])
+    'ui.bootstrap',
+    'snap',
+    'ui-notification'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('index', {
