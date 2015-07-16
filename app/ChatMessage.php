@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class ChatMessage
  * @package App
@@ -11,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $id
  * @property string $body
  */
-class ChatMessage extends Model
+class ChatMessage extends BaseModel
 {
     protected $fillable = ['body'];
 

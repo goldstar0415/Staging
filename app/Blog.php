@@ -3,7 +3,6 @@
 namespace App;
 
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
-use Illuminate\Database\Eloquent\Model;
 use Phaza\LaravelPostgis\Geometries\MultiPoint;
 use Phaza\LaravelPostgis\Geometries\Point;
 
@@ -21,7 +20,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property string $url
  * @property integer $count_views
  */
-class Blog extends Model
+class Blog extends BaseModel
 {
     use PostgisTrait;
 

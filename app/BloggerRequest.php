@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class BloggerRequest
  * @package App
@@ -13,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $status
  * @property string $text
  */
-class BloggerRequest extends Model
+class BloggerRequest extends BaseModel
 {
     protected $fillable = ['status', 'text'];
 

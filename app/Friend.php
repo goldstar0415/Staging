@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
@@ -21,7 +20,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property Point $location
  * @property string $note
  */
-class Friend extends Model
+class Friend extends BaseModel
 {
     protected $guarded = ['id', 'user_id'];
 

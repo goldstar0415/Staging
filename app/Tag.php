@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class Tag
  * @package App
@@ -11,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $name
  */
-class Tag extends Model
+class Tag extends BaseModel
 {
     protected $fillable = ['name'];
 

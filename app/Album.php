@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class Album
  * @package App
@@ -13,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property boolean $is_private
  */
-class Album extends Model
+class Album extends BaseModel
 {
     protected $fillable = ['name', 'is_private'];
 

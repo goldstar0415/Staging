@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class SpotVote
  * @package App
@@ -13,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $spot_id
  * @property integer $vote
  */
-class SpotVote extends Model
+class SpotVote extends BaseModel
 {
     protected $fillable = ['vote'];
 

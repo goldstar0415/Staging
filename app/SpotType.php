@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class SpotType
  * @package App
@@ -12,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $display_name
  */
-class SpotType extends Model
+class SpotType extends BaseModel
 {
     protected $fillable = ['name', 'display_name'];
 

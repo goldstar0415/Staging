@@ -3,20 +3,18 @@
 namespace App;
 
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
-use Illuminate\Database\Eloquent\Model;
 use Phaza\LaravelPostgis\Geometries\MultiPoint;
-
 
 /**
  * Class Area
  * @package App
- * 
+ *
  * @property integer $id
  * @property integer $user_id
  * @property string $data
  * @property MultiPoint $b_box
  */
-class Area extends Model
+class Area extends BaseModel
 {
     use PostgisTrait;
 

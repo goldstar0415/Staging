@@ -12,6 +12,8 @@
 */
 
 Route::get('/', function () {
+    $user = App\SpotType::random()->first();
+    dd($user->categories());
     return '';
 });
 

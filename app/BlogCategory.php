@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class BlogCategory
  * @package App
@@ -11,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $id
  * @property string $name
  */
-class BlogCategory extends Model
+class BlogCategory extends BaseModel
 {
     protected $fillable = ['name'];
 

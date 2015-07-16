@@ -12,7 +12,7 @@ class CreateSpotTagPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('tag_spot', function(Blueprint $table) {
+        Schema::create('spot_tag', function(Blueprint $table) {
             $table->integer('spot_id')->unsigned();
             $table->integer('tag_id')->unsigned();
 
@@ -32,6 +32,6 @@ class CreateSpotTagPivotTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tag_spot');
+        Schema::drop('spot_tag');
     }
 }

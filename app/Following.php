@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class Following
  * @package App
@@ -11,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $follower_id
  * @property integer $following_id
  */
-class Following extends Model
+class Following extends BaseModel
 {
     public $timestamps = false;
 

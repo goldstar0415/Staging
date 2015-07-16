@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class Spot
  * @package App
@@ -17,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $end_date
  */
-class Spot extends Model
+class Spot extends BaseModel
 {
     protected $guarder = ['id', 'user_id', 'spot_type_category_id'];
 
@@ -55,8 +53,7 @@ class Spot extends Model
 
     public function category()
     {
-        //TODO: изменить с учётом переопределённого метода
-        return $this->belongsTo(SpotTypeCategory::class, snake_case(class_basename(SpotTypeCategory::class)) . '_id');
+        return $this->belongsTo(SpotTypeCategory::class);
     }
 
     public function points()

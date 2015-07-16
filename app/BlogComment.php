@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class BlogComment
  * @package App
@@ -13,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $blog_id
  * @property string $body
  */
-class BlogComment extends Model
+class BlogComment extends BaseModel
 {
     protected $fillable = ['body'];
 }

@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 
 /**
  * Class Wall
@@ -15,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $receiver_id
  * @property string $body
  */
-class Wall extends Model
+class Wall extends BaseModel
 {
     use SoftDeletes;
 

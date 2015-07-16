@@ -18,7 +18,7 @@ class CreateSpotsTable extends Migration
             $table->integer('spot_type_category_id')->unsigned();
             $table->string('title', 255);
             $table->string('description', 5000);
-            $table->string('web_site', 64);
+            $table->string('web_site');
             $table->timestamp('start_date');
             $table->timestamp('end_date');
             $table->timestamps();

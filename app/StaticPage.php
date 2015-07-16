@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class StaticPage
  * @package App
@@ -12,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property string $body
  */
-class StaticPage extends Model
+class StaticPage extends BaseModel
 {
    protected $guarded = ['id'];
 }

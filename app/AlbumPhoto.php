@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 /**
@@ -14,7 +13,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property string $address
  * @property Point $location
  */
-class AlbumPhoto extends Model
+class AlbumPhoto extends BaseModel
 {
     protected $fillable = ['location', 'address'];
 

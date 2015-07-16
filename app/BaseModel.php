@@ -3,12 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 abstract class BaseModel extends Model
 {
     private $db_rand_func;
 
-    public function random()
+    public function scopeRandom($query, $count = 1)
     {
         if (!isset($this->db_rand_func)) {
             switch (config('database.default')) {
@@ -29,9 +30,20 @@ abstract class BaseModel extends Model
                     break;
             }
         }
-        return self::orderBy(DB::raw($this->db_rand_func))->take(1)->first();
+        return $query->orderBy(DB::raw($this->db_rand_func))->take($count);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function belongsTo($related, $foreignKey = null, $otherKey = null, $relation = null)
+    {
+        if ($foreignKey === null) {
+            $foreignKey = snake_case(class_basename(SpotTypeCategory::class)) . '_id';
+        }
+        return parent::belongsTo($related, $foreignKey, $otherKey, $relation);
+    }
+
+
     //TODO: переопределить связи с учётом внешних ключей
-    //TODO: унаследовать модели от данной
 }

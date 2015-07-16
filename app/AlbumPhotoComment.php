@@ -2,9 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-
 /**
  * Class AlbumPhotoComment
  * @package App
@@ -14,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $album_photo_id
  * @property string $body
  */
-class AlbumPhotoComment extends Model
+class AlbumPhotoComment extends BaseModel
 {
     protected $fillable = ['body'];
 

@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             $this->call(UserTableSeeder::class);
             $this->call(SpotTypeCategoriesTableSeeder::class);
             $this->call(SpotTableSeeder::class);
+            $this->call(SpotPointsTableSeeder::class);
+            $this->call(TagsTableSeeder::class);
         }
 
         Model::reguard();

@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
@@ -19,7 +18,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $end_date
  */
-class Plan extends Model
+class Plan extends BaseModel
 {
     use PostgisTrait;
 

@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class Favorite
  * @package App
@@ -12,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $user_id
  * @property integer $spot_id
  */
-class Favorite extends Model
+class Favorite extends BaseModel
 {
     public function user()
     {

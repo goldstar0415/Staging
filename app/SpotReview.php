@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class SpotReview
  * @package App
@@ -13,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $user_id
  * @property string $body
  */
-class SpotReview extends Model
+class SpotReview extends BaseModel
 {
     protected $fillable = ['body'];
 
