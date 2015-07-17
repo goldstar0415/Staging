@@ -248,7 +248,7 @@
           maxZoom: 15,
           minZoom: 3
         }).addTo(map);
-        ChangeState("small");
+        ChangeState("hidden");
 
         //add controls
         AddControls();

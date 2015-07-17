@@ -1,21 +1,19 @@
-<nav class="navbar navbar-static-top navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="https://github.com/Swiip/generator-gulp-angular">
-        <span class="glyphicon glyphicon-home"></span> Gulp Angular
-      </a>
+<a ng-click="signIn.openSignInModal()">Sign in</a>
+
+<script type="text/ng-template" id="SignInModal.html">
+  <div>
+    <div class="modal-header">
+      <h3 class="modal-title">Sign in</h3>
     </div>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
-      <ul class="nav navbar-nav">
-        <li class="active"><a ng-href="#">Home</a></li>
-        <li><a ng-href="#">About</a></li>
-        <li><a ng-href="#">Contact</a></li>
-      </ul>
+    <div class="modal-body">
+      <form ng-submit="signIn($form)" novalidate>
+        <input type="email" name="email" ng-model="vm.email" required/>
+        <input type="password" name="password" ng-model="vm.password" required/>
 
-      <ul class="nav navbar-nav navbar-right acme-navbar-text">
-        <li>Application was created {{ vm.relativeDate }}.</li>
-      </ul>
+        <input type="submit" value="Zoom"/>
+      </form>
     </div>
   </div>
-</nav>
+
+</script>

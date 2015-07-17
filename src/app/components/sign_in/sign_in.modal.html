@@ -1,0 +1,14 @@
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title">Sign in</h3>
+  </div>
+
+  <div class="modal-body">
+    <form ng-submit="signIn($form)" novalidate>
+      <input type="email" name="email" ng-model="vm.email" required/>
+      <input type="password" name="password" ng-model="vm.password" required/>
+
+      <input type="submit" value="Zoom"/>
+    </form>
+  </div>
+</div>

@@ -1,31 +1,28 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('zoomtivity')
-    .directive('sign_in', acmeNavbar);
+    .directive('signIn', signIn);
 
   /** @ngInject */
-  function acmeNavbar() {
-    var directive = {
+  function signIn() {
+    return {
       restrict: 'E',
-      templateUrl: 'app/components/navbar/navbar.html',
-      scope: {
-          creationDate: '='
-      },
-      controller: NavbarController,
-      controllerAs: 'vm',
+      templateUrl: 'app/components/sign_in/sign_in.html',
+      controller: SignInController,
+      controllerAs: 'signIn',
       bindToController: true
     };
 
-    return directive;
-
     /** @ngInject */
-    function NavbarController(moment) {
+    function SignInController(SignInService) {
       var vm = this;
 
-      // "vm.creation" is avaible by directive option "bindToController: true"
-      vm.relativeDate = moment(vm.creationDate).fromNow();
+      vm.openSignInModal = SignInService.openModal(SignInController);
+      vm.userLogin = SignInService.userLogin;
+
+
     }
   }
 

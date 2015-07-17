@@ -8,6 +8,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
     <!-- bower:css -->
     <!-- run `gulp inject` to automatically populate bower styles dependencies -->
     <!-- endbower -->
@@ -24,7 +25,7 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div snap-drawers>
+    <div snap-drawers ng-cloak>
       <div snap-drawer>
         I'm a left drawer!
       </div>
@@ -33,8 +34,9 @@
       </div>
     </div>
 
-    <div snap-content snap-options="options.snap">
+    <div snap-content snap-options="options.snap" class="content" ng-cloak>
       <!-- include header-->
+      <sign-in></sign-in>
 
       <!-- map container-->
       <div id="map" ng-class="mapState"></div>
@@ -42,6 +44,7 @@
       <!-- content container-->
       <div ng-show="mapState != 'big'" ui-view></div>
     </div>
+
 
     <!-- build:js(src) scripts/vendor.js -->
     <!--<script src="assets/libs/Leaflet/leaflet.js"></script>-->

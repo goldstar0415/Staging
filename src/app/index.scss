@@ -15,6 +15,9 @@ html, body {
   width: 45px;
   background-color: white;
 }
+.content {
+  background: #fff;
+}
 .lasso-selection {
   height: 100%;
   width: 100%;
@@ -39,4 +42,8 @@ html, body {
   height: 100%;
   width: 100%;
   background-color: purple;
+}
+
+[ng-click], [ui-sref] {
+  cursor: pointer;
 }
