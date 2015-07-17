@@ -8,6 +8,10 @@
   /** @ngInject */
   function routeConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
+      .state('index', {
+        url: '/',
+        mapState: 'big'
+      })
       .state('settings', {
         url: '/settings',
         templateUrl: 'app/settings/settings.html',

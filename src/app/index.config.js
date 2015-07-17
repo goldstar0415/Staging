@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -6,21 +6,34 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, toastr, cfpLoadingBarProvider, $locationProvider, DEBUG) {
+  function config($logProvider, toastr, cfpLoadingBarProvider, snapRemoteProvider, $locationProvider, DEBUG) {
     // Enable log
     $logProvider.debugEnabled(DEBUG);
     if (!DEBUG) {
       $locationProvider.html5Mode({enabled: true, requireBase: false});
     }
 
-
-    // Set options third-party lib
+    // toastr
     toastr.options.timeOut = 3000;
     toastr.options.positionClass = 'toast-top-right';
     toastr.options.preventDuplicates = true;
     toastr.options.progressBar = true;
 
-    // config loading bar
+
+    // snap
+    var disable = "";
+    if($(window).width() < 768) {
+      disable = "right";
+    } else {
+      disable = "left";
+    }
+
+    snapRemoteProvider.globalOptions = {
+      disable: disable,
+      hyperextensible: false
+    };
+
+    // loading bar
     cfpLoadingBarProvider.includeBar = true;
     cfpLoadingBarProvider.includeSpinner = true;
     cfpLoadingBarProvider.latencyThreshold = 100;

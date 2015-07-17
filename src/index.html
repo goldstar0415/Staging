@@ -24,10 +24,24 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div id="map" ng-class="{'fullsize': mapState == 'big', 'smallsize': mapState == 'small', 'hidden': mapState == 'hidden'}"></div>
+    <div snap-drawers>
+      <div snap-drawer>
+        I'm a left drawer!
+      </div>
+      <div snap-drawer="right">
+        I'm a right drawer!
+      </div>
+    </div>
 
+    <div snap-content snap-options="options.snap">
+      <!-- include header-->
 
-    <div ui-view></div>
+      <!-- map container-->
+      <div id="map" ng-class="mapState"></div>
+
+      <!-- content container-->
+      <div ng-show="mapState != 'big'" ui-view></div>
+    </div>
 
     <!-- build:js(src) scripts/vendor.js -->
     <!--<script src="assets/libs/Leaflet/leaflet.js"></script>-->
