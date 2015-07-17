@@ -23,14 +23,4 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         return $app;
     }
 
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        Session::start();
-    }
 }

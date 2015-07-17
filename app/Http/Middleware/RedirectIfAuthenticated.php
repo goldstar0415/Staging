@@ -35,7 +35,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         if ($this->auth->check()) {
-            return redirect('/home');
+            return response()->json(['message' => 'user already authenticated'], 400);
         }
 
         return $next($request);

@@ -11,10 +11,11 @@
 |
 */
 
-
-Route::get('/', function () {
-    return 'Hello';
-});
-
-
+/**
+ * User resource
+ */
+Route::post('users/login', 'Auth\AuthController@login');
+Route::resource('users', 'Auth\AuthController', ['except' => 'create']);
+Route::controller('users', 'Auth\PasswordController');
+//-----------------------------------------------
 Route::get('file', 'DownloadController@index');
