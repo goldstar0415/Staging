@@ -6,7 +6,7 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, toastr) {
+  function config($logProvider, toastr, snapRemoteProvider) {
     // Enable log
     $logProvider.debugEnabled(true);
 
@@ -15,6 +15,11 @@
     toastr.options.positionClass = 'toast-top-right';
     toastr.options.preventDuplicates = true;
     toastr.options.progressBar = true;
+
+    snapRemoteProvider.globalOptions = {
+      disable: 'right',
+      hyperextensible: false
+    }
   }
 
 })();
