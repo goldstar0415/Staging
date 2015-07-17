@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout) {
+    .factory('MapService', function ($rootScope, $timeout, snapRemote) {
       var map = null;
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
       var radiusSelectionLimit = 500000; //in meters
@@ -39,9 +39,11 @@
           return container;
         },
         _click: function (e) {
+          snapRemote.disable();
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
           LassoSelection(function LassoCallback(points, b_box) {
+            snapRemote.enable();
 
           });
         }
@@ -70,10 +72,11 @@
           return container;
         },
         _click: function (e) {
+          snapRemote.disable();
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
           RadiusSelection(function (startPoing, radius, b_box) {
-
+            snapRemote.enable();
           });
         }
 
@@ -105,7 +108,7 @@
           L.DomEvent.preventDefault(e);
           PathSelection(function () {
 
-          })
+          });
         }
 
       });
@@ -206,7 +209,7 @@
               return;
             }
 
-            touch = e.touches[0]
+            touch = e.touches[0];
             containerPoint = L.point(touch.clientX, touch.clientY);
             layerPoint = this._map.containerPointToLayerPoint(containerPoint);
             latlng = this._map.layerPointToLatLng(layerPoint);
@@ -310,8 +313,8 @@
       }
 
       function showEventsLayer(clearLayers) {
-        if (clearLayers) eventsLayer.clearLayers();
-        if (currentLayer != "events") {
+        if (clearLayers) { eventsLayer.clearLayers(); }
+        if (currentLayer !== "events") {
           map.addLayer(eventsLayer);
         }
         map.removeLayer(recreationsLayer);
@@ -321,8 +324,8 @@
       }
 
       function showPitstopsLayer(clearLayers) {
-        if (clearLayers) pitstopsLayer.clearLayers();
-        if (currentLayer != "pitstops") {
+        if (clearLayers) { pitstopsLayer.clearLayers(); }
+        if (currentLayer !== "pitstops") {
           map.addLayer(pitstopsLayer);
         }
         map.removeLayer(recreationsLayer);
@@ -332,8 +335,8 @@
       }
 
       function showRecreationsLayer(clearLayers) {
-        if (clearLayers) recreationsLayer.clearLayers();
-        if (currentLayer != "recreations") {
+        if (clearLayers) { recreationsLayer.clearLayers(); }
+        if (currentLayer !== "recreations") {
           map.addLayer(recreationsLayer);
         }
         map.removeLayer(eventsLayer);
@@ -344,7 +347,7 @@
 
       function showOtherLayers() {
         otherLayer.clearLayers();
-        if (currentLayer != "other") {
+        if (currentLayer !== "other") {
           map.addLayer(otherLayer);
         }
         map.removeLayer(recreationsLayer);
@@ -513,7 +516,7 @@
 
       function onLineTouched(e) {
         console.log(e);
-      };
+      }
 
       function CancelPathSelection() {
         pathSelectionStarted = false;
@@ -568,7 +571,7 @@
 
       //Makers
       function CreateMarker(latlng, options) {
-        if (currentLayer == "none") return false;
+        if (currentLayer === "none") { return false; }
         var marker = L.marker(latlng, options);
         GetCurrentLayer().addLayer(marker);
 
@@ -576,7 +579,7 @@
       }
 
       function RemoveMarker(Marker) {
-        if (currentLayer == "none") return;
+        if (currentLayer === "none") { return; }
         GetCurrentLayer().removeLayer(Marker);
       }
 
@@ -604,19 +607,18 @@
         var inside = false;
         for (var i = 0, j = polyPoints.length - 1; i < polyPoints.length; j = i++) {
           if (polyPoints[i].lat && polyPoints[i].lng) {
-            var p = map.latLngToLayerPoint(polyPoints[i]);
-            polyPoints[i] = [p.x, p.y];
+            var polyPoint = map.latLngToLayerPoint(polyPoints[i]);
+            polyPoints[i] = [polyPoint.x, polyPoint.y];
           }
           if (polyPoints[j].lat && polyPoints[j].lng) {
-            var p = map.latLngToLayerPoint(polyPoints[j]);
-            polyPoints[j] = [p.x, p.y];
+            var polyPointSecond = map.latLngToLayerPoint(polyPoints[j]);
+            polyPoints[j] = [polyPointSecond.x, polyPointSecond.y];
           }
 
           var xi = polyPoints[i][0], yi = polyPoints[i][1];
           var xj = polyPoints[j][0], yj = polyPoints[j][1];
 
-          var intersect = ((yi > y) != (yj > y))
-            && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+          var intersect = ((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
           if (intersect) {
             inside = !inside;
             break;
@@ -665,7 +667,7 @@
         RemoveMarker: RemoveMarker,
         //Math
         pointInPolygon: pointInPolygon
-      }
+      };
     });
 
 })();

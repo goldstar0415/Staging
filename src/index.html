@@ -33,9 +33,14 @@
       </div>
     </div>
 
-    <div snap-content>
+    <div snap-content snap-options="options">
+      <!-- include header-->
+
+      <!-- map container-->
       <div id="map" ng-class="{'fullsize': mapState == 'big', 'smallsize': mapState == 'small', 'hidden': mapState == 'hidden'}"></div>
-      <div ui-view></div>
+
+      <!-- content container-->
+      <div ng-show="mapState != 'big'" ui-view></div>
     </div>
 
     <!-- build:js(src) scripts/vendor.js -->

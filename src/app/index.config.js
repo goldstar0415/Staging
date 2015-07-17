@@ -16,8 +16,15 @@
     toastr.options.preventDuplicates = true;
     toastr.options.progressBar = true;
 
+    var disable = "";
+    if($(window).width() < 768) {
+      disable = "right";
+    } else {
+      disable = "left";
+    }
+
     snapRemoteProvider.globalOptions = {
-      disable: 'right',
+      disable: disable,
       hyperextensible: false
     }
   }
