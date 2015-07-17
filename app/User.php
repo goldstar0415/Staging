@@ -39,6 +39,8 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property boolean $notification_coming_spot
  * @property \Carbon\Carbon $banned_at
  * @property string $ban_reason
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  */
 class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract
 {

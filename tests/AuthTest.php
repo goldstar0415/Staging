@@ -11,7 +11,6 @@ class AuthTest extends TestCase
     /**
      * @var App\User
      */
-    private $user;
 
     private $date_format;
 
@@ -23,8 +22,8 @@ class AuthTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        Session::start();
         $this->date_format = DB::getQueryGrammar()->getDateFormat();
-        $this->user = factory(App\User::class)->make();
     }
 
     /**
@@ -32,46 +31,80 @@ class AuthTest extends TestCase
      */
     public function testSignUp()
     {
+        $user = factory(App\User::class)->make();
         $this->post('/users',
             [
-                'first_name' => $this->user->getAttributeValue('first_name'),
-                'last_name' => $this->user->getAttributeValue('last_name'),
-                'email' => $this->user->getAttributeValue('email'),
+                'first_name' => $user->getAttributeValue('first_name'),
+                'last_name' => $user->getAttributeValue('last_name'),
+                'email' => $user->getAttributeValue('email'),
                 'password' => 'qwerty',
                 'password_confirmation' => 'qwerty',
                 '_token' => csrf_token()
-            ]
-        )->seeJson(
+            ],
+            ['Accept' => 'application/json']
+        )->seeJsonEquals(
             [
                 'id' => Auth::id(),
-                'first_name' => $this->user->getAttributeValue('first_name'),
-                'last_name' => $this->user->getAttributeValue('last_name'),
-                'email' => $this->user->getAttributeValue('email'),
+                'first_name' => $user->getAttributeValue('first_name'),
+                'last_name' => $user->getAttributeValue('last_name'),
+                'email' => $user->getAttributeValue('email'),
                 'created_at' => Auth::user()->created_at->format($this->date_format),
                 'updated_at' => Auth::user()->updated_at->format($this->date_format)
             ]
         );
-        $this->assertTrue(Auth::user()->hasRole(config('entrust.default')));
+        $user = Auth::user();
+        $this->assertTrue($user->hasRole(config('entrust.default')));
+        $this->assertResponseStatus(200);
     }
 
     public function testLogin()
     {
-        $date_format = DB::getQueryGrammar()->getDateFormat();
+        $user = factory(App\User::class)->create();
         $this->post('/users/login',
             [
-                'email' => $this->user->email,
-                'password' => 'qwerty'
-            ]
-        )->seeJson(
+                'email' => $user->email,
+                'password' => 'password'
+            ],
+            ['Accept' => 'application/json']
+        )->withSession([])->seeJson(
             [
-                'id' => Auth::id(),
-                'first_name' => $this->user->getAttributeValue('first_name'),
-                'last_name' => $this->user->getAttributeValue('last_name'),
-                'email' => $this->user->getAttributeValue('email'),
-                'created_at' => Auth::user()->created_at->format($this->date_format),
-                'updated_at' => Auth::user()->updated_at->format($this->date_format)
+                'id' => $user->id,
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'email' => $user->email,
+                'created_at' => $user->created_at->format($this->date_format),
+                'updated_at' => $user->updated_at->format($this->date_format)
             ]
         );
+        $this->assertResponseStatus(200);
     }
 
+    public function testLoginError()
+    {
+        $response = $this->post('/users/login',
+            [
+                'email' => 'random@mail.com',
+                'password' => 'randompassword'
+            ],
+            ['Accept' => 'application/json']
+        )->seeJson([
+            'email' => 'These credentials do not match our records.'
+        ]);
+        $this->assertResponseStatus(422);
+    }
+
+    public function testIsGuest()
+    {
+        $user = App\User::random()->first();
+        Auth::login($user);
+        $response = $this->post('/users/login',
+            [
+                'email' => $user->email,
+                'password' => 'randompassword'
+            ],
+            ['Accept' => 'application/json']
+
+        )->seeJson(['message' => 'user already authenticated']);
+        $this->assertResponseStatus(400);
+    }
 }
