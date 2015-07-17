@@ -24,5 +24,4 @@ abstract class BaseModel extends Model
         }
         return parent::belongsTo($related, $foreignKey, $otherKey, $relation);
     }
-
 }

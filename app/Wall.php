@@ -12,6 +12,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $sender_id
  * @property integer $receiver_id
  * @property string $body
+ *
+ * Relation properties
+ * @property SpotType $type
+ * @property \Illuminate\Database\Eloquent\Collection $spots
+ * @property \Illuminate\Database\Eloquent\Collection $albumPhotos
+ * @property \Illuminate\Database\Eloquent\Collection $areas
  */
 class Wall extends BaseModel
 {
@@ -31,7 +37,7 @@ class Wall extends BaseModel
         return $this->belongsToMany(Spot::class);
     }
 
-    public function album_photos()
+    public function albumPhotos()
     {
         return $this->belongsToMany(AlbumPhoto::class);
     }

@@ -10,6 +10,10 @@ namespace App;
  * @property integer $user_id
  * @property integer $album_photo_id
  * @property string $body
+ *
+ * Relation properties
+ * @property AlbumPhoto $photo
+ * @property User $user
  */
 class AlbumPhotoComment extends BaseModel
 {

@@ -13,6 +13,10 @@ use Phaza\LaravelPostgis\Geometries\MultiPoint;
  * @property integer $user_id
  * @property string $data
  * @property MultiPoint $b_box
+ *
+ * Relation properties
+ * @property User $user
+ * @property \Illuminate\Database\Eloquent\Collection $walls
  */
 class Area extends BaseModel
 {

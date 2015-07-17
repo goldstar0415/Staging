@@ -8,6 +8,9 @@ namespace App;
  * 
  * @property integer $id
  * @property string $name
+ *
+ * Relation properties
+ * @property \Illuminate\Database\Eloquent\Collection $blogs
  */
 class BlogCategory extends BaseModel
 {

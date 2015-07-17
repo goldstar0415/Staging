@@ -19,6 +19,11 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property Point $location
  * @property string $url
  * @property integer $count_views
+ *
+ * Relation properties
+ * @property User $user
+ * @property \Illuminate\Database\Eloquent\Collection $comments
+ * @property \Illuminate\Database\Eloquent\Collection $category
  */
 class Blog extends BaseModel
 {
@@ -44,6 +49,4 @@ class Blog extends BaseModel
     {
         return $this->belongsTo(BlogCategory::class);
     }
-
-
 }

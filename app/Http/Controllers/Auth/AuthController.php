@@ -18,6 +18,7 @@ class AuthController extends Controller
     use Registrar, ThrottlesLogins;
 
     private $auth;
+
     private $loginPath = '/users/login';
 
     /**
@@ -34,7 +35,6 @@ class AuthController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
      */
     public function index()
     {
@@ -50,7 +50,8 @@ class AuthController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @param Request $request
+     * @return \Illuminate\Http\Response
      */
     public function login(Request $request)
     {
@@ -80,7 +81,10 @@ class AuthController extends Controller
             $this->incrementLoginAttempts($request);
         }
 
-        return $this->buildFailedValidationResponse($request, [$this->loginUsername() => $this->getFailedLoginMessage()]);
+        return $this->buildFailedValidationResponse(
+            $request,
+            [$this->loginUsername() => $this->getFailedLoginMessage()]
+        );
     }
 
     /**
@@ -94,9 +98,7 @@ class AuthController extends Controller
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
+            $this->throwValidationException($request, $validator);
         }
 
         $this->auth->login($this->create($request->all()));
@@ -105,5 +107,4 @@ class AuthController extends Controller
         $user->roles()->attach(Role::take(config('entrust.default')));
         return $user;
     }
-
 }

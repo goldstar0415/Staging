@@ -13,6 +13,9 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property integer $spot_id
  * @property string $address
  * @property Point $location
+ *
+ * Relation properties
+ * @property Spot $spot
  */
 class SpotPoint extends BaseModel
 {

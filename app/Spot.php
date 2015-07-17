@@ -14,6 +14,17 @@ namespace App;
  * @property string $web_site
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $end_date
+ *
+ * Relation properties
+ * @property User $user
+ * @property SpotTypeCategory $category
+ * @property \Illuminate\Database\Eloquent\Collection $walls
+ * @property \Illuminate\Database\Eloquent\Collection $votes
+ * @property \Illuminate\Database\Eloquent\Collection $reviews
+ * @property \Illuminate\Database\Eloquent\Collection $favorites
+ * @property \Illuminate\Database\Eloquent\Collection $tags
+ * @property \Illuminate\Database\Eloquent\Collection $plans
+ * @property \Illuminate\Database\Eloquent\Collection $points
  */
 class Spot extends BaseModel
 {

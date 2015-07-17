@@ -8,6 +8,11 @@ namespace App;
  *
  * @property integer $id
  * @property string $body
+ *
+ * Relation properties
+ * @property User $sender
+ * @property User $receiver
+ * @property \Illuminate\Database\Eloquent\Collection $albumPhotos
  */
 class ChatMessage extends BaseModel
 {
@@ -23,9 +28,8 @@ class ChatMessage extends BaseModel
         return $this->belongsToMany(User::class, null, 'receiver_id');
     }
 
-    public function album_photos()
+    public function albumPhotos()
     {
         return $this->belongsToMany(AlbumPhoto::class);
     }
-
 }

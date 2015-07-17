@@ -19,6 +19,9 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property string $address
  * @property Point $location
  * @property string $note
+ *
+ * Relation properties
+ * @property User $user
  */
 class Friend extends BaseModel
 {

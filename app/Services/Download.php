@@ -26,9 +26,9 @@ class Download
     /**
      * @param string $file
      * @param string $title
-     * @param bool $userfiles
+     * @param int $mode
      */
-    function __construct($file, $title = '', $mode = self::USER_AVATAR)
+    public function __construct($file, $title = '', $mode = self::USER_AVATAR)
     {
         $this->file = $file;
         $this->title = $title;
@@ -73,5 +73,4 @@ class Download
     {
         return url('file?id=' . $this->prepareSession());
     }
-
 }

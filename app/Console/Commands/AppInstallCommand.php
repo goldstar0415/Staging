@@ -77,5 +77,4 @@ FILE;
         system('* * * * * php ' . $app_path . '/artisan schedule:run 1>> /dev/null 2>&1');
         $this->info('Application initialized successfuly!');
     }
-
 }

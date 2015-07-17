@@ -8,6 +8,9 @@ namespace App;
  *
  * @property int $id
  * @property string $name
+ *
+ * Relation properties
+ * @property \Illuminate\Database\Eloquent\Collection $spots
  */
 class Tag extends BaseModel
 {

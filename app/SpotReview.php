@@ -10,6 +10,10 @@ namespace App;
  * @property integer $spot_id
  * @property integer $user_id
  * @property string $body
+ *
+ * Relation properties
+ * @property User $user
+ * @property Spot $spot
  */
 class SpotReview extends BaseModel
 {

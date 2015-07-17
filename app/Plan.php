@@ -17,6 +17,11 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property Point $location
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $end_date
+ *
+ * Relation properties
+ * @property User $user
+ * @property \Illuminate\Database\Eloquent\Collection $activities
+ * @property \Illuminate\Database\Eloquent\Collection $spots
  */
 class Plan extends BaseModel
 {

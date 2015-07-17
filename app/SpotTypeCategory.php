@@ -9,6 +9,10 @@ namespace App;
  * @property integer $spot_type_id
  * @property string $name
  * @property string $display_name
+ *
+ * Relation properties
+ * @property SpotType $type
+ * @property \Illuminate\Database\Eloquent\Collection $spots
  */
 class SpotTypeCategory extends BaseModel
 {
@@ -16,7 +20,7 @@ class SpotTypeCategory extends BaseModel
 
     public $timestamps = false;
 
-    public function spot_type()
+    public function type()
     {
         return $this->belongsTo(SpotType::class);
     }

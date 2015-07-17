@@ -35,7 +35,7 @@ class PasswordController extends Controller
     /**
      * Send a reset link to the given user.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function postRecovery(Request $request)
@@ -68,7 +68,7 @@ class PasswordController extends Controller
     /**
      * Reset the given user's password.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function postReset(Request $request)
@@ -80,7 +80,10 @@ class PasswordController extends Controller
         ]);
 
         $credentials = $request->only(
-            'email', 'password', 'password_confirmation', 'token'
+            'email',
+            'password',
+            'password_confirmation',
+            'token'
         );
 
         $response = Password::reset($credentials, function ($user, $password) {
@@ -101,8 +104,8 @@ class PasswordController extends Controller
     /**
      * Reset the given user's password.
      *
-     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
-     * @param  string  $password
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword $user
+     * @param  string $password
      * @return void
      */
     protected function resetPassword($user, $password)

@@ -10,6 +10,9 @@ namespace App;
  * @property integer $user_id
  * @property string $status
  * @property string $text
+ *
+ * Relation properties
+ * @property User $user
  */
 class BloggerRequest extends BaseModel
 {

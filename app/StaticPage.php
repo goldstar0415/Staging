@@ -12,5 +12,5 @@ namespace App;
  */
 class StaticPage extends BaseModel
 {
-   protected $guarded = ['id'];
+    protected $guarded = ['id'];
 }

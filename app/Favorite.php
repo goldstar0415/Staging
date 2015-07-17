@@ -9,6 +9,10 @@ namespace App;
  * @property integer $id
  * @property integer $user_id
  * @property integer $spot_id
+ *
+ * Relation properties
+ * @property User $user
+ * @property Spot $spot
  */
 class Favorite extends BaseModel
 {

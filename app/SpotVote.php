@@ -10,6 +10,10 @@ namespace App;
  * @property integer $user_id
  * @property integer $spot_id
  * @property integer $vote
+ *
+ * Relation properties
+ * @property Spot $spot
+ * @property User $user
  */
 class SpotVote extends BaseModel
 {

@@ -21,5 +21,4 @@ class DownloadController extends Controller
     {
         return Download::getFile($request->input('id'));
     }
-
 }

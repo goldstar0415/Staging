@@ -12,6 +12,12 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property integer $album_id
  * @property string $address
  * @property Point $location
+ *
+ * Relation properties
+ * @property Album $album
+ * @property \Illuminate\Database\Eloquent\Collection $comments
+ * @property \Illuminate\Database\Eloquent\Collection $walls
+ * @property \Illuminate\Database\Eloquent\Collection $chatMessages
  */
 class AlbumPhoto extends BaseModel
 {
@@ -32,7 +38,7 @@ class AlbumPhoto extends BaseModel
         return $this->belongsToMany(Wall::class);
     }
 
-    public function chat_messages()
+    public function chatMessages()
     {
         return $this->belongsToMany(ChatMessage::class);
     }

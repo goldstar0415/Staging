@@ -41,6 +41,23 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property string $ban_reason
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ *
+ * Relation properties
+ * @property \Illuminate\Database\Eloquent\Collection $followings
+ * @property \Illuminate\Database\Eloquent\Collection $albums
+ * @property \Illuminate\Database\Eloquent\Collection $chatMessages
+ * @property \Illuminate\Database\Eloquent\Collection $albumPhotoComments
+ * @property \Illuminate\Database\Eloquent\Collection $walls
+ * @property \Illuminate\Database\Eloquent\Collection $friends
+ * @property \Illuminate\Database\Eloquent\Collection $areas
+ * @property \Illuminate\Database\Eloquent\Collection $blogComments
+ * @property \Illuminate\Database\Eloquent\Collection $blogs
+ * @property \Illuminate\Database\Eloquent\Collection $spotVotes
+ * @property \Illuminate\Database\Eloquent\Collection $plans
+ * @property \Illuminate\Database\Eloquent\Collection $favorites
+ * @property \Illuminate\Database\Eloquent\Collection $spotReviews
+ * @property \Illuminate\Database\Eloquent\Collection $spots
+ * @property BloggerRequest $bloggerRequest
  */
 class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -83,12 +100,12 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         return $this->hasMany(Album::class);
     }
 
-    public function chat_messages()
+    public function chatMessages()
     {
         return $this->belongsToMany(ChatMessage::class, null, 'sender_id');
     }
 
-    public function album_photo_comments()
+    public function albumPhotoComments()
     {
         return $this->hasMany(AlbumPhotoComment::class);
     }
@@ -108,12 +125,12 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         return $this->hasMany(Area::class);
     }
 
-    public function blog_comments()
+    public function blogComments()
     {
         return $this->hasMany(BlogComment::class);
     }
 
-    public function blogger_request()
+    public function bloggerRequest()
     {
         return $this->hasOne(BloggerRequest::class);
     }
@@ -123,7 +140,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         return $this->hasMany(Blog::class);
     }
 
-    public function spot_votes()
+    public function spotVotes()
     {
         return $this->hasMany(SpotVote::class);
     }
@@ -138,7 +155,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         return $this->hasMany(Favorite::class);
     }
 
-    public function spot_reviews()
+    public function spotReviews()
     {
         return $this->hasMany(SpotReview::class);
     }

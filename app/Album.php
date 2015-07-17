@@ -2,6 +2,7 @@
 
 namespace App;
 
+
 /**
  * Class Album
  * @package App
@@ -10,6 +11,10 @@ namespace App;
  * @property integer $user_id
  * @property string $name
  * @property boolean $is_private
+ *
+ * Relation properties
+ * @property User $user
+ * @property \Illuminate\Database\Eloquent\Collection $photos
  */
 class Album extends BaseModel
 {

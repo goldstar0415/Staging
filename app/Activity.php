@@ -18,6 +18,9 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property Point $location
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $end_date
+ *
+ * Relation properties
+ * @property Plan $plan
  */
 class Activity extends BaseModel
 {
