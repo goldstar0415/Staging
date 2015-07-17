@@ -6,14 +6,12 @@ namespace App\Services;
 
 
 use Auth;
+use File;
 use Session;
 use SplFileInfo;
 
 class Download
 {
-
-    const USER_AVATAR = 1;
-    const USER_ALBUM = 2;
 
     /**
      * @var \SplFileObject|string
@@ -28,7 +26,7 @@ class Download
      * @param string $title
      * @param int $mode
      */
-    public function __construct($file, $title = '', $mode = self::USER_AVATAR)
+    public function __construct($file, $title = '', $mode = Uploader::USER_AVATAR)
     {
         $this->file = $file;
         $this->title = $title;
@@ -53,7 +51,7 @@ class Download
             }
         }
         if (empty($file_id)) {
-            $file_id = bcrypt(uniqid(str_random(), true));
+            $file_id = str_random();
             Session::set('files.' . $file_id, $file_path);
         }
         return $file_id;

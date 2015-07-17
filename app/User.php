@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 /**
@@ -89,6 +90,10 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     protected $postgisFields = [
         'location' => Point::class,
     ];
+
+    public function setAvatar(UploadedFile $file)
+    {
+    }
 
     public function followings()
     {
