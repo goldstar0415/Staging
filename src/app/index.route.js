@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -7,13 +7,15 @@
 
   /** @ngInject */
   function routeConfig($stateProvider, $urlRouterProvider) {
-    //$stateProvider
-    //  .state('home', {
-    //    url: '/',
-    //    templateUrl: 'app/main/main.html',
-    //    controller: 'MainController',
-    //    controllerAs: 'main'
-    //  });
+    $stateProvider
+      .state('settings', {
+        url: '/settings',
+        templateUrl: 'app/settings/settings.html',
+        controller: 'SettingsController',
+        controllerAs: 'Settings',
+        mapState: 'hidden'
+      })
+    ;
 
     $urlRouterProvider.otherwise('/');
   }
