@@ -12,7 +12,7 @@ angular
         var currentLayer = "";
 
         // Path variables
-        var pathRouter = L.Routing.osrm();
+        var pathRouter = L.Routing.osrm({geometryOnly: true});
         var pathSelectionStarted = false;
 
         //MAP CONTROLS
@@ -460,7 +460,8 @@ angular
                 line,
                 rect;
             var lineOptions = {};
-            lineOptions.styles = [{color: 'blue', opacity: 0.2, weight: 50, clickable: true},{color: 'red', opacity: 1, weight: 2, clickable: true}];
+            lineOptions.styles = [{type: 'polygon', color: 'blue', opacity: 0.2, weight: 1},{color: 'red', opacity: 1, weight: 3}];
+            ClearSelectionListeners();
 
             pathSelectionStarted = true;
             map.on ('click', onMapClick);
@@ -469,7 +470,7 @@ angular
                 var marker = L.marker(e.latlng, {draggable: true}).addTo(drawLayer);
                 markers.push(marker);
 
-                marker.on('drag', _.throttle(RecalculateRoute, 300));
+                marker.on('dragend', RecalculateRoute);
                 RecalculateRoute();
             }
 
@@ -488,17 +489,18 @@ angular
                         if (err) {
                             console.log(err);
                         } else {
-
-                            line = L.Routing.line(routes [0], lineOptions).addTo(drawLayer);
-                            var bounds = line.getBounds();
-                            bounds = scaleBoundingBox(bounds, 2000);
-                            rect = L.rectangle(bounds, {color: "red", weight: 1}).addTo(drawLayer);
-
+                            line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
+                            line.on('linetouched', onLineTouched);
                         }
-                    });
+                    }, {geometryOnly: true});
                 }
             }
         }
+
+        function onLineTouched(e) {
+            console.log(e);
+        };
+
         function CancelPathSelection() {
             pathSelectionStarted = false;
         }

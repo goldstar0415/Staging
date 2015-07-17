@@ -1185,12 +1185,26 @@ if (typeof module !== undefined) module.exports = polyline;
 				pl;
 
 			for (i = 0; i < styles.length; i++) {
-				pl = L.polyline(coords, styles[i]);
+				if(styles[i].type == "polygon") {
+					//create line and simplify it with turf :)
+					var line = L.polyline(coords, styles[i]).toGeoJSON();
+					line = turf.simplify(line, 0.02, false);
+
+					//Buffer it with turf library :)
+					var geoJSONPoly = turf.buffer(line, 10, 'miles');
+
+					//return geoJson layer
+					pl = L.geoJson(geoJSONPoly);
+				} else {
+					pl = L.polyline(coords, styles[i]);
+				}
 				this.addLayer(pl);
-				if (mouselistener) {
+				if (mouselistener && styles[i].type == "polygon") {
 					pl.on('mousedown', this._onLineTouched, this);
 				}
 			}
+
+
 		},
 
 		_findNearestWpBefore: function(i) {
