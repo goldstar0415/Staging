@@ -1,4 +1,6 @@
-.idea
-.tmp
-bower_components
-node_modules
+node_modules/
+bower_components/
+.sass-cache/
+.idea/
+.tmp/
+dist/

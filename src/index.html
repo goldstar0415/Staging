@@ -1,70 +1,23 @@
 <!doctype html>
-<html class="no-js" ng-app="zoomtivity">
+<html ng-app="zoomtivity">
   <head>
     <meta charset="utf-8">
-    <title>Zoomtivity</title>
+    <title>zoomtivity</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
-    <link rel="stylesheet" href="app/vendor.css">
     <!-- bower:css -->
-    <!-- run `gulp wiredep` to automaticaly populate bower styles dependencies -->
+    <!-- run `gulp inject` to automatically populate bower styles dependencies -->
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:css({.tmp/serve,src}) styles/app.css -->
     <!-- inject:css -->
-    <!-- css files will be automaticaly insert here -->
+    <!-- css files will be automatically insert here -->
     <!-- endinject -->
     <!-- endbuild -->
-    <link rel="stylesheet" href="libs/Leaflet/leaflet.css"/>
-    <script src="libs/Leaflet/leaflet.js"></script>
-    <style>
-      html, body {
-        height: 100%;
-      }
-      .fullsize {
-        height: 100%;
-      }
-      .smallsize {
-        height: 30%;
-      }
-      .hidden {
-        height: 0px;
-      }
-      .map-tools{
-        height: 45px;
-        width: 45px;
-        background-color: white;
-      }
-      .lasso-selection {
-        height: 100%;
-        width: 100%;
-        background-color: cyan;
-      }
-      .radius-selection {
-        height: 100%;
-        width: 100%;
-        background-color: orange;
-      }
-      .path-selection {
-        height: 100%;
-        width: 100%;
-        background-color: red;
-      }
-      .save-selection {
-        height: 100%;
-        width: 100%;
-        background-color: black;
-      }
-      .clear-selection {
-        height: 100%;
-        width: 100%;
-        background-color: purple;
-      }
-    </style>
   </head>
   <body>
     <!--[if lt IE 10]>
@@ -72,19 +25,20 @@
     <![endif]-->
 
     <div id="map" ng-class="{'fullsize': mapState == 'big', 'smallsize': mapState == 'small', 'hidden': mapState == 'hidden'}"></div>
-    <div ui-view>
 
-    </div>
+
+    <div ui-view></div>
 
     <!-- build:js(src) scripts/vendor.js -->
+    <!--<script src="assets/libs/Leaflet/leaflet.js"></script>-->
     <!-- bower:js -->
-    <!-- run `gulp wiredep` to automaticaly populate bower script dependencies -->
+    <!-- run `gulp inject` to automatically populate bower script dependencies -->
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
     <!-- inject:js -->
-    <!-- js files will be automaticaly insert here -->
+    <!-- js files will be automatically insert here -->
     <!-- endinject -->
 
     <!-- inject:partials -->
