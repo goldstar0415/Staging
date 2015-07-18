@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Uploader\Download;
+use App\Services\Uploader\Upload;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

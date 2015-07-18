@@ -20,6 +20,8 @@ class Album extends BaseModel
 {
     protected $fillable = ['name', 'is_private'];
 
+    protected $files_dir = 'user_rel/id';
+
     public function user()
     {
         return $this->belongsTo(User::class);

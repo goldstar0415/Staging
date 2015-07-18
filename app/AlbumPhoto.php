@@ -2,7 +2,10 @@
 
 namespace App;
 
+use App\Services\Uploader\Download;
+use App\Services\Uploader\Upload;
 use Phaza\LaravelPostgis\Geometries\Point;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class AlbumPhoto
@@ -23,6 +26,28 @@ class AlbumPhoto extends BaseModel
 {
     protected $fillable = ['location', 'address'];
 
+    protected $appends = ['photo_url'];
+
+    protected $files_dir = 'album_rel';
+
+    public function setPhotoAttribute(UploadedFile $file)
+    {
+        /**
+         * @var Upload $upload
+         */
+        $upload = app(Upload::class);
+        $upload->make($file, $this)->save();
+    }
+
+    public function getPhotoUrlAttribute()
+    {
+        /**
+         * @var Download $upload
+         */
+        $download = app(Download::class);
+        return $download->link($this);
+    }
+    
     public function album()
     {
         return $this->belongsTo(Album::class);
