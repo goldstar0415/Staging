@@ -2,6 +2,10 @@
 
 namespace App;
 
+use App\Services\Uploader\Download;
+use App\Services\Uploader\Upload;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * Class Spot
  * @package App
@@ -30,13 +34,52 @@ class Spot extends BaseModel
 {
     protected $guarder = ['id', 'user_id', 'spot_type_category_id'];
 
-    protected $appends = ['rating'];
+    protected $appends = ['rating', 'cover_url'];
 
     protected $dates = ['start_date', 'end_date'];
 
     public function getRatingAttribute()
     {
         return (float)$this->votes()->avg('vote');
+    }
+
+    public $files_dir = 'user_rel/name/id';
+
+
+    public function setCoverAttribute(UploadedFile $file)
+    {
+        /**
+         * @var Upload $upload
+         */
+        $upload = app(Upload::class);
+        $upload->make($file, $this, 'cover')->save();
+    }
+
+    public function getCoverUrlAttribute()
+    {
+        /**
+         * @var Download $upload
+         */
+        $download = app(Download::class);
+        return $download->link($this, 'cover');
+    }
+
+    public function setPhotoAttribute(UploadedFile $file)
+    {
+        /**
+         * @var Upload $upload
+         */
+        $upload = app(Upload::class);
+        $upload->make($file, $this)->randomName()->save();
+    }
+
+    public function getPhotoUrlAttribute()
+    {
+        /**
+         * @var Download $download
+         */
+        $download = app(Download::class);
+        return $download->randomName()->link($this);
     }
 
     public function user()

@@ -24,8 +24,13 @@ class UserTableSeeder extends Seeder
         $admin->roles()->attach(Role::take('admin'));
 
         $zoomer = Role::take('zoomer');
-        factory(User::class, 100)->create()->each(function (User $user) use ($zoomer, $this) {
-            $user->roles()->attach($zoomer);
-        });
+        factory(User::class, 100)->create()->each(
+            Closure::bind(
+                function (User $user) use ($zoomer) {
+                    $user->roles()->attach($zoomer);
+                },
+                $this
+            )
+        );
     }
 }

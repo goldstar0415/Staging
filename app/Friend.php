@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\Services\Uploader\Upload;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class Friend
@@ -25,6 +27,8 @@ use Phaza\LaravelPostgis\Geometries\Point;
  */
 class Friend extends BaseModel
 {
+    use PostgisTrait;
+
     protected $guarded = ['id', 'user_id'];
 
     protected $dates = ['birth_date'];
@@ -32,6 +36,15 @@ class Friend extends BaseModel
     protected $postgisFields = [
         'location' => Point::class,
     ];
+
+    public function setAvatarAttribute(UploadedFile $file)
+    {
+        /**
+         * @var Upload $upload
+         */
+        $upload = app(Upload::class);
+        $upload->make($file, $this, 'avatar')->save();
+    }
 
     public function user()
     {

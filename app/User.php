@@ -2,12 +2,15 @@
 
 namespace App;
 
+use App\Services\Uploader\Download;
+use App\Services\Uploader\Upload;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 
 /**
@@ -78,6 +81,8 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      */
     protected $fillable = ['last_name', 'first_name', 'email', 'password'];
 
+    protected $appends = ['avatar_url'];
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -87,9 +92,26 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     protected $dates = ['banned_at'];
 
+    public $files_dir = 'name/id';
+
     protected $postgisFields = [
         'location' => Point::class,
     ];
+
+    public function setAvatarAttribute(UploadedFile $file)
+    {
+        $upload = app(Upload::class);
+        $upload->save($file, $this, 'avatar');
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        /**
+         * @var Download $upload
+         */
+        $download = app(Download::class);
+        return $download->link($this, 'avatar');
+    }
 
     public function followings()
     {
