@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 /**
@@ -21,6 +22,12 @@ use Phaza\LaravelPostgis\Geometries\Point;
  */
 class AlbumPhoto extends BaseModel
 {
+    use PostgisTrait;
+
+    protected $postgisFields = [
+        'location' => Point::class,
+    ];
+
     protected $fillable = ['location', 'address'];
 
     public function album()

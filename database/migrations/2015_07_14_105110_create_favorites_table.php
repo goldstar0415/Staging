@@ -22,6 +22,8 @@ class CreateFavoritesTable extends Migration
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('spot_id')->references('id')->on('spots')
                 ->onUpdate('cascade')->onDelete('cascade');
+
+            $table->unique(['user_id', 'spot_id']);
         });
     }
 

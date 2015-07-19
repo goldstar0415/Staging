@@ -1,5 +1,7 @@
 <?php
 
+use App\SpotType;
+use App\SpotTypeCategory;
 use Illuminate\Database\Seeder;
 
 class SpotTypeCategoriesTableSeeder extends Seeder
@@ -11,8 +13,8 @@ class SpotTypeCategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        App\SpotType::all()->each(function (App\SpotType $spot_type) {
-            $spot_type->categories()->saveMany(factory(App\SpotTypeCategory::class, 20)->make());
+        SpotType::all()->each(function (SpotType $spot_type) {
+            $spot_type->categories()->saveMany(factory(SpotTypeCategory::class, 20)->make());
         });
     }
 }

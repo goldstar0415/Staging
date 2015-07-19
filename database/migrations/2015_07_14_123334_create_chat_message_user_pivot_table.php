@@ -19,10 +19,12 @@ class CreateChatMessageUserPivotTable extends Migration
 
             $table->foreign('chat_message_id')->references('id')->on('chat_messages')
                 ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('sender_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('receiver_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->primary(['sender_id', 'receiver_id']);
+            $table->index(['sender_id', 'receiver_id']);
         });
     }
 

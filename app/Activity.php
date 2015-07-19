@@ -38,4 +38,9 @@ class Activity extends BaseModel
     {
         return $this->belongsTo(Plan::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(ActivityCategory::class);
+    }
 }

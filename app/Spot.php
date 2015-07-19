@@ -30,7 +30,14 @@ class Spot extends BaseModel
 {
     protected $guarder = ['id', 'user_id', 'spot_type_category_id'];
 
+    protected $appends = ['rating'];
+
     protected $dates = ['start_date', 'end_date'];
+
+    public function getRatingAttribute()
+    {
+        return (float)$this->votes()->avg('vote');
+    }
 
     public function user()
     {

@@ -5,6 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
+/**
+ * Class BaseModel
+ * @package App
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder random(int $count = 1)
+ */
 abstract class BaseModel extends Model
 {
 
@@ -20,7 +26,7 @@ abstract class BaseModel extends Model
     public function belongsTo($related, $foreignKey = null, $otherKey = null, $relation = null)
     {
         if ($foreignKey === null) {
-            $foreignKey = snake_case(class_basename(SpotTypeCategory::class)) . '_id';
+            $foreignKey = snake_case(class_basename($related)) . '_id';
         }
         return parent::belongsTo($related, $foreignKey, $otherKey, $relation);
     }

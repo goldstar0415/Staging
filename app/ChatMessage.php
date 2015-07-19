@@ -20,12 +20,12 @@ class ChatMessage extends BaseModel
 
     public function sender()
     {
-        return $this->belongsToMany(User::class, null, 'sender_id');
+        return $this->belongsToMany(User::class, null, null, 'sender_id');
     }
 
     public function receiver()
     {
-        return $this->belongsToMany(User::class, null, 'receiver_id');
+        return $this->belongsToMany(User::class, null, null, 'receiver_id');
     }
 
     public function albumPhotos()

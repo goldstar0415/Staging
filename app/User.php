@@ -46,6 +46,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property \Illuminate\Database\Eloquent\Collection $followings
  * @property \Illuminate\Database\Eloquent\Collection $albums
  * @property \Illuminate\Database\Eloquent\Collection $chatMessages
+ * @property \Illuminate\Database\Eloquent\Collection $chatMessagesReceived
  * @property \Illuminate\Database\Eloquent\Collection $albumPhotoComments
  * @property \Illuminate\Database\Eloquent\Collection $walls
  * @property \Illuminate\Database\Eloquent\Collection $friends
@@ -105,6 +106,11 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         return $this->belongsToMany(ChatMessage::class, null, 'sender_id');
     }
 
+    public function chatMessagesReceived()
+    {
+        return $this->belongsToMany(ChatMessage::class, null, 'receiver_id');
+    }
+
     public function albumPhotoComments()
     {
         return $this->hasMany(AlbumPhotoComment::class);
@@ -112,7 +118,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function walls()
     {
-        return $this->hasMany(Wall::class, 'sender_id');
+        return $this->hasMany(Wall::class, 'receiver_id');
     }
 
     public function friends()

@@ -15,8 +15,6 @@ namespace App;
  */
 class Following extends BaseModel
 {
-    public $timestamps = false;
-
     public function follower()
     {
         return $this->belongsTo(User::class, 'follower_id');

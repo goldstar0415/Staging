@@ -90,7 +90,6 @@ $factory->defineAs(App\Role::class, 'blogger', function (Generator $faker) {
     ];
 });
 
-
 $factory->define(App\Spot::class, function (Generator $faker) use ($timestamps, $dates) {
     $start_date = $faker->dateTimeBetween('-50 days','+50 days');
     $end_date = clone $start_date->modify('+' . mt_rand(1, 5) . ' day');
@@ -113,28 +112,27 @@ $factory->define(App\SpotReview::class, function (Generator $faker) use ($timest
         'body' => $faker->text
     ], $timestamps());
 });
-{
-    $factory->defineAs(App\SpotType::class, 'event', function (Generator $faker) {
-        return [
-            'name' => 'event',
-            'display_name' => 'Event'
-        ];
-    });
 
-    $factory->defineAs(App\SpotType::class, 'recreation', function (Generator $faker) {
-        return [
-            'name' => 'recreation',
-            'display_name' => 'Recreation'
-        ];
-    });
+$factory->defineAs(App\SpotType::class, 'event', function (Generator $faker) {
+    return [
+        'name' => 'event',
+        'display_name' => 'Event'
+    ];
+});
 
-    $factory->defineAs(App\SpotType::class, 'pitstop', function (Generator $faker) {
-        return [
-            'name' => 'pitstop',
-            'display_name' => 'Pit Stop'
-        ];
-    });
-}
+$factory->defineAs(App\SpotType::class, 'recreation', function (Generator $faker) {
+    return [
+        'name' => 'recreation',
+        'display_name' => 'Recreation'
+    ];
+});
+
+$factory->defineAs(App\SpotType::class, 'pitstop', function (Generator $faker) {
+    return [
+        'name' => 'pitstop',
+        'display_name' => 'Pit Stop'
+    ];
+});
 
 $factory->define(App\SpotTypeCategory::class, function (Generator $faker) {
     $name = $faker->unique()->word;
@@ -231,7 +229,7 @@ $factory->define(App\BloggerRequest::class, function (Generator $faker) use ($ti
     $status = ['requested',  'rejected',  'accepted'];
     return array_merge([
         'text' => $faker->text,
-        'status' => $status[mt_rand(0, 3)]
+        'status' => $status[mt_rand(0, 2)]
     ], $timestamps());
 });
 
@@ -273,4 +271,12 @@ $factory->define(App\Wall::class, function (Generator $faker) use ($timestamps) 
     return array_merge([
         'body' => $faker->sentence(24),
     ], $timestamps());
+});
+
+$factory->define(App\Favorite::class, function (Generator $faker) use ($timestamps) {
+    return $timestamps();
+});
+
+$factory->define(App\Following::class, function (Generator $faker) use ($timestamps) {
+    return $timestamps();
 });

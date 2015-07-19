@@ -1,9 +1,13 @@
 <?php
 
+use App\Role;
+use App\User;
 use Illuminate\Database\Seeder;
+use Seeds\FileSeeder;
 
 class UserTableSeeder extends Seeder
 {
+    use FileSeeder;
     /**
      * Run the database seeds.
      *
@@ -11,16 +15,16 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $admin = factory(App\User::class)->create([
+        $admin = factory(User::class)->create([
                 'first_name' => 'Admin',
                 'last_name' => 'Administrator',
                 'email' => 'admin@admin.com',
                 'password' => bcrypt('admin')
             ]);
-        $admin->roles()->attach(App\Role::take('admin'));
+        $admin->roles()->attach(Role::take('admin'));
 
-        $zoomer = App\Role::take('zoomer');
-        factory(App\User::class, 100)->create()->each(function ($user) use ($zoomer) {
+        $zoomer = Role::take('zoomer');
+        factory(User::class, 100)->create()->each(function (User $user) use ($zoomer, $this) {
             $user->roles()->attach($zoomer);
         });
     }

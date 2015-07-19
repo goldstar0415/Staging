@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Role;
 
 class RolesSeeder extends Seeder
 {
@@ -11,8 +12,8 @@ class RolesSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Role::class)->create();
-        factory(App\Role::class, 'admin')->create();
-        factory(App\Role::class, 'blogger')->create();
+        factory(Role::class)->create();
+        factory(Role::class, 'admin')->create();
+        factory(Role::class, 'blogger')->create();
     }
 }

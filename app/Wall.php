@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * Relation properties
  * @property SpotType $type
+ * @property User $sender
+ * @property User $receiver
  * @property \Illuminate\Database\Eloquent\Collection $spots
  * @property \Illuminate\Database\Eloquent\Collection $albumPhotos
  * @property \Illuminate\Database\Eloquent\Collection $areas
@@ -27,9 +29,14 @@ class Wall extends BaseModel
 
     protected $dates = ['deleted_at'];
 
-    public function user()
+    public function receiver()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'receiver_id');
+    }
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'sender_id');
     }
 
     public function spots()

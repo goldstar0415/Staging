@@ -14,4 +14,14 @@ namespace App;
 class BlogComment extends BaseModel
 {
     protected $fillable = ['body'];
+
+    public function blog()
+    {
+        return $this->belongsTo(Blog::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Spot;
+use App\Tag;
 use Illuminate\Database\Seeder;
 
 class TagsTableSeeder extends Seeder
@@ -11,8 +13,8 @@ class TagsTableSeeder extends Seeder
      */
     public function run()
     {
-        $tags = factory(App\Tag::class, 50)->create();
-        App\Spot::all()->each(function (App\Spot $spot) use ($tags) {
+        $tags = factory(Tag::class, 50)->create();
+        Spot::all()->each(function (Spot $spot) use ($tags) {
             $rand = mt_rand(1, 5);
             if ($rand > 1) {
                 $tags = $tags->random($rand)->map(function ($tag) {

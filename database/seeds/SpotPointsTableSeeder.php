@@ -1,6 +1,8 @@
 <?php
 
+use App\SpotPoint;
 use Illuminate\Database\Seeder;
+use App\Spot;
 
 class SpotPointsTableSeeder extends Seeder
 {
@@ -11,8 +13,8 @@ class SpotPointsTableSeeder extends Seeder
      */
     public function run()
     {
-        App\Spot::all()->each(function (App\Spot $spot) {
-            $spot->points()->saveMany(factory(App\SpotPoint::class, mt_rand(1, 5))->make()->all());
+        Spot::all()->each(function (Spot $spot) {
+            $spot->points()->saveMany(factory(SpotPoint::class, mt_rand(1, 5))->make()->all());
         });
     }
 }

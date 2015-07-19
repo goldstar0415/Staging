@@ -18,10 +18,32 @@ class DatabaseSeeder extends Seeder
         $this->call(SpotTypesTableSeeder::class);
         if (App::environment('local')) {
             $this->call(UserTableSeeder::class);
+            $this->call(WallsTableSeeder::class);
+            $this->call(AreasTableSeeder::class);
+            $this->call(PlansTableSeeder::class);
+            $this->call(ActivityCategoriesTableSeeder::class);
+            $this->call(ActivitiesTableSeeder::class);
+            $this->call(ChatMessagesTableSeeder::class);
+            $this->call(FollowingsTableSeeder::class);
+
+
+            $this->call(BlogCategoriesTableSeeder::class);
+            $this->call(BlogsTableSeeder::class);
+            $this->call(BlogCommentsTableSeeder::class);
+            $this->call(BloggerRequestsTableSeeder::class);
+
             $this->call(SpotTypeCategoriesTableSeeder::class);
             $this->call(SpotTableSeeder::class);
             $this->call(SpotPointsTableSeeder::class);
             $this->call(TagsTableSeeder::class);
+            $this->call(SpotVotesTableSeeder::class);
+            $this->call(SpotReviewsTableSeeder::class);
+
+            $this->call(FavoritesTableSeeder::class);
+
+            $this->call(AlbumTableSeeder::class);
+            $this->call(AlbumPhotosTableSeeder::class);
+            $this->call(AlbumPhotoCommentsTableSeeder::class);
         }
 
         Model::reguard();
