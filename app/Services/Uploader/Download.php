@@ -12,7 +12,7 @@ class Download extends Uploader
 {
     private function prepareSession()
     {
-        $file_path = $this->getFullPath();
+        $file_path = $this->getFilePath();
         if (!$file_path) {
             return false;
         }

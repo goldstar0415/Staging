@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Services\Uploader\Download;
 use App\Services\Uploader\Upload;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
@@ -44,6 +45,15 @@ class Friend extends BaseModel
          */
         $upload = app(Upload::class);
         $upload->make($file, $this, 'avatar')->save();
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        /**
+         * @var Download $download
+         */
+        $download = app(Download::class);
+        $download->link($this, 'avatar');
     }
 
     public function user()

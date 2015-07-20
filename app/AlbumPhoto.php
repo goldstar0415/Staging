@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @property integer $album_id
  * @property string $address
  * @property Point $location
+ * @property string|UploadedFile $photo
+ * @property string|UploadedFile $photo_url
  *
  * Relation properties
  * @property Album $album

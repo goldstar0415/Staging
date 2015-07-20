@@ -16,8 +16,14 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @property string $title
  * @property string $description
  * @property string $web_site
+ * @property string|UploadedFile $cover
+ * @property string|UploadedFile $photo_url
+ * @property string|UploadedFile $photo
+ * @property float $rating
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $end_date
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  *
  * Relation properties
  * @property User $user
@@ -43,7 +49,7 @@ class Spot extends BaseModel
         return (float)$this->votes()->avg('vote');
     }
 
-    public $files_dir = 'user_rel/name/id';
+    public $files_dir = 'name/id';
 
 
     public function setCoverAttribute(UploadedFile $file)

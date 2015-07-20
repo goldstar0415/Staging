@@ -28,6 +28,11 @@ class UserTableSeeder extends Seeder
             Closure::bind(
                 function (User $user) use ($zoomer) {
                     $user->roles()->attach($zoomer);
+                    $this->saveModelFile(
+                        $user,
+                        \Faker\Factory::create()->image(storage_path('app')),
+                        'avatar'
+                    );
                 },
                 $this
             )

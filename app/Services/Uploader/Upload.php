@@ -13,7 +13,7 @@ class Upload extends Uploader
     /**
      * @var \Symfony\Component\HttpFoundation\File\UploadedFile|array
      */
-    protected $file;
+    public $file;
 
     public function save()
     {
@@ -25,7 +25,7 @@ class Upload extends Uploader
         }
         $this->file->move($file_path, $file_name . '.' . $ext);
     }
-
+    
     public function make(UploadedFile $file, BaseModel $model, $name = null)
     {
         $this->file = $file;

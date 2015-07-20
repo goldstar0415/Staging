@@ -22,6 +22,8 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property string $last_name
  * @property string $email
  * @property string $password
+ * @property string|UploadedFile $avatar_url
+ * @property string|UploadedFile $avatar
  * @property boolean $sex
  * @property \Carbon\Carbon $birth_date
  * @property string $address
@@ -100,8 +102,11 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function setAvatarAttribute(UploadedFile $file)
     {
+        /**
+         * @var Upload $upload
+         */
         $upload = app(Upload::class);
-        $upload->save($file, $this, 'avatar');
+        $upload->make($file, $this, 'avatar')->save();
     }
 
     public function getAvatarUrlAttribute()

@@ -131,12 +131,20 @@ abstract class Uploader
         return $file_name;
     }
 
-    public function getFullPath()
+    public function getFilePath()
     {
         $dir = $this->getPath();
         $name = $this->getName();
 
         return $this->isFileExists($dir . '/' . $name);
+    }
+
+    public function getFullPath()
+    {
+        $dir = $this->getPath();
+        $name = $this->getName();
+
+        return $dir . '/' . $name;
     }
 
     /**
