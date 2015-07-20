@@ -7,9 +7,19 @@
     </div>
 
     <div class="modal-body">
-      <form ng-submit="signIn($form)" novalidate>
-        <input type="email" name="email" ng-model="vm.email" required/>
-        <input type="password" name="password" ng-model="vm.password" required/>
+      <form ng-submit="modal.userLogin(form)" name="form" novalidate>
+        <input type="email" name="email" placeholder="Email..." ng-model="modal.email" required />
+        <div ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched">
+          <div ng-messages-include="error-email-messages"></div>
+        </div>
+
+
+        <input type="password" name="password" placeholder="Password..." minlength="6" ng-model="modal.password" required/>
+        <div ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched">
+          <div ng-messages-include="error-password-messages"></div>
+        </div>
+
+        <forgot-password></forgot-password>
 
         <input type="submit" value="Zoom"/>
       </form>

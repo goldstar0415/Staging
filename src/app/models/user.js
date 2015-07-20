@@ -3,11 +3,39 @@
 
   angular
     .module('zoomtivity')
-    .factory('UserModel', UserModel);
+    .factory('User', User);
 
   /** @ngInject */
-  function UserModel($resource, API_URL) {
+  function User($resource, API_URL) {
     return $resource(API_URL + '/users/:id', {id: '@id'}, {
+      currentUser: {
+        url: API_URL + '/users/me',
+        method: 'POST'
+      },
+      signIn: {
+        url: API_URL + '/users/login',
+        method: 'POST'
+      },
+      signUp: {
+        url: API_URL + '/users',
+        method: 'POST'
+      },
+      logOut: {
+        url: API_URL + '/users/logout',
+        method: 'DELETE'
+      },
+      recoveryPassword: {
+        url: API_URL + '/users/recovery',
+        method: 'POST'
+      },
+      resetPassword: {
+        url: API_URL + '/users/reset',
+        method: 'POST'
+      },
+      query: {
+        url: API_URL + '/users/list',
+        method: 'POST'
+      },
       update: {
         method: 'PUT'
       }

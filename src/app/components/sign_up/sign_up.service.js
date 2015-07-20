@@ -3,13 +3,13 @@
 
   angular
     .module('zoomtivity')
-    .factory('SignInService', SignInService);
+    .factory('SignUpService', SignUpService);
 
   /** @ngInject */
-  function SignInService($modal, $rootScope, User, toastr) {
+  function SignUpService($modal, $rootScope, User, toastr) {
     return {
       openModal: openModal,
-      userLogin: userLogin
+      signUpUser: signUpUser
     };
 
     function openModal(template, controller) {
@@ -21,9 +21,9 @@
       });
     }
 
-    function userLogin(form, vm, $modalInstance) {
+    function signUpUser(form, vm, $modalInstance) {
       if (form.$valid) {
-        User.signIn({user: this},
+        User.signUp({user: this},
           function success(user) {
             $rootScope.currentUser = user;
             $modalInstance.dismiss('close');

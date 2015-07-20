@@ -18,7 +18,8 @@
     "underscore": "~1.8.3",
     "angular": "~1.4.0",
     "angular-loading-bar": "~0.8.0",
-    "angular-dialog-service": "~5.2.8"
+    "angular-dialog-service": "~5.2.8",
+    "angular-messages": "~1.4.3"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.0"

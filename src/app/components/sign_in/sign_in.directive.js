@@ -19,11 +19,13 @@
     function SignInController(SignInService) {
       var vm = this;
 
-      vm.openSignInModal = SignInService.openModal(SignInController);
+      vm.openSignInModal = function () {
+        SignInService.openModal('SignInModal.html', 'SignInModalController');
+      };
+
       vm.userLogin = SignInService.userLogin;
-
-
     }
+
   }
 
 })();

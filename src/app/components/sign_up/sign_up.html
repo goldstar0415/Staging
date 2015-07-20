@@ -1,0 +1,59 @@
+<a ng-click="signUp.openSignUpModal()">Sign up</a>
+
+<script type="text/ng-template" id="SignUpModal.html">
+  <div>
+    <div class="modal-header">
+      <h3 class="modal-title">Sign up</h3>
+    </div>
+
+    <div class="modal-body">
+      <form ng-submit="modal.signUpUser(form)" name="form" novalidate>
+
+        <input type="text" name="first_name" placeholder="First name..." ng-model="modal.first_name" required />
+        <div ng-messages="form.first_name.$error" ng-if="form.$submitted || form.first_name.$touched">
+          <div ng-message="required">is required</div>
+        </div>
+
+        <br/>
+
+        <input type="text" name="last_name" placeholder="Last name..." ng-model="modal.last_name" required />
+        <div ng-messages="form.last_name.$error" ng-if="form.$submitted || form.last_name.$touched">
+          <div ng-message="required">is required</div>
+        </div>
+
+        <br/>
+
+        <input type="email" name="email" placeholder="Email..." ng-model="modal.email" required />
+        <div ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched">
+          <div ng-messages-include="error-email-messages"></div>
+        </div>
+
+        <br/>
+
+
+        <input type="password" name="password" placeholder="Password (min 6 symbols)..." minlength="6" ng-model="modal.password" required/>
+        <div ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched">
+          <div ng-messages-include="error-password-messages"></div>
+        </div>
+
+        <br/>
+
+        <input type="password"
+               name="password_confirmation"
+               placeholder="Password confirmation..."
+               minlength="6" ng-model="modal.password_confirmation"
+               ng-match="modal.password"
+               required/>
+        <div ng-messages="form.password_confirmation.$error" ng-if="form.$submitted || form.password_confirmation.$touched">
+          <div ng-message="match">passwords must match</div>
+          <div ng-messages-include="error-password-messages"></div>
+        </div>
+
+        <br/>
+
+        <input type="submit" value="Zoom"/>
+      </form>
+    </div>
+  </div>
+
+</script>
