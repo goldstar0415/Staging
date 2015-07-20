@@ -8,11 +8,11 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
         "zizaco/entrust": "dev-laravel-5",
-        "intervention/image": "dev-master",
         "predis/predis": "^1.1@dev",
         "laravel/socialite": "^3.0@dev",
         "phaza/laravel-postgis": "dev-master",
-        "toin0u/geotools-laravel": "~1.0"
+        "toin0u/geotools-laravel": "~1.0",
+        "codesleeve/laravel-stapler": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

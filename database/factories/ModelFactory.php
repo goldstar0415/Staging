@@ -45,6 +45,7 @@ $factory->define(App\User::class, function (Generator $faker) use ($timestamps) 
         'email' => $faker->unique()->email,
         'password' => bcrypt('password'),
         'sex' => $faker->boolean(),
+        'avatar' => $faker->imageUrl(),
         'birth_date' => $faker->date(),
         'address' => $faker->address,
         'location' => new Point($faker->latitude, $faker->longitude),

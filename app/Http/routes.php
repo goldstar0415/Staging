@@ -14,7 +14,14 @@
 /**
  * User resource
  */
+Route::get('test', function () {
+    $album = \App\AlbumPhoto::random()->first();
+    $album->addHidden('album');
+    return $album;
+});
+
 Route::post('users/login', 'Auth\AuthController@login');
+//Route::get('users/login', 'Auth\AuthController@login');
 Route::resource('users', 'Auth\AuthController', ['except' => 'create']);
 Route::controller('users', 'Auth\PasswordController');
 //-----------------------------------------------

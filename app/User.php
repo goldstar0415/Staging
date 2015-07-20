@@ -2,16 +2,15 @@
 
 namespace App;
 
-use App\Services\Uploader\Download;
-use App\Services\Uploader\Upload;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Codesleeve\Stapler\ORM\StaplerableInterface;
+use Codesleeve\Stapler\ORM\EloquentTrait;
 
 /**
  * Class User
@@ -22,8 +21,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property string $last_name
  * @property string $email
  * @property string $password
- * @property string|UploadedFile $avatar_url
- * @property string|UploadedFile $avatar
+ * @property string $avatar
  * @property boolean $sex
  * @property \Carbon\Carbon $birth_date
  * @property string $address
@@ -65,9 +63,11 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  * @property \Illuminate\Database\Eloquent\Collection $spots
  * @property BloggerRequest $bloggerRequest
  */
-class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract
+class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract, StaplerableInterface
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait, PostgisTrait;
+    use Authenticatable, CanResetPassword, EntrustUserTrait, PostgisTrait, EloquentTrait {
+        EntrustUserTrait::boot insteadof EloquentTrait;
+    }
 
     /**
      * The database table used by the model.
@@ -81,9 +81,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      *
      * @var array
      */
-    protected $fillable = ['last_name', 'first_name', 'email', 'password'];
-
-    protected $appends = ['avatar_url'];
+    protected $fillable = ['avatar', 'last_name', 'first_name', 'email', 'password'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -94,28 +92,17 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     protected $dates = ['banned_at'];
 
-    public $files_dir = 'name/id';
-
     protected $postgisFields = [
         'location' => Point::class,
     ];
 
-    public function setAvatarAttribute(UploadedFile $file)
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(array $attributes = [])
     {
-        /**
-         * @var Upload $upload
-         */
-        $upload = app(Upload::class);
-        $upload->make($file, $this, 'avatar')->save();
-    }
-
-    public function getAvatarUrlAttribute()
-    {
-        /**
-         * @var Download $upload
-         */
-        $download = app(Download::class);
-        return $download->link($this, 'avatar');
+        $this->hasAttachedFile('avatar');
+        parent::__construct($attributes);
     }
 
     public function followings()
@@ -197,4 +184,5 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     {
         return $this->hasMany(Spot::class);
     }
+
 }
