@@ -249,8 +249,8 @@
           zoomControl: true
         });
         L.tileLayer(tilesUrl, {
-          maxZoom: 15,
-          minZoom: 0
+          maxZoom: 17,
+          minZoom: 3
         }).addTo(map);
 
         //add controls
@@ -303,11 +303,11 @@
         switch (state.toLowerCase()) {
           case "big":
             showEventsLayer(true);
-            $rootScope.mapState = "big";
+            $rootScope.mapState = "full-size";
             break;
           case "small":
             showOtherLayers();
-            $rootScope.mapState = "small";
+            $rootScope.mapState = "small-size";
             break;
           case "hidden":
             $rootScope.mapState = "hidden";

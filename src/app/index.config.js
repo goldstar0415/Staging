@@ -30,7 +30,9 @@
 
     snapRemoteProvider.globalOptions = {
       disable: disable,
-      hyperextensible: false
+      hyperextensible: false,
+      maxPosition: 230,
+      minPosition: -230
     };
 
     // loading bar

@@ -26,18 +26,18 @@
 
     <div snap-drawers>
       <div snap-drawer>
-        I'm a left drawer!
+        <zm-leftmenu ng-if="options.snap.disable == 'right'"></zm-leftmenu>
       </div>
       <div snap-drawer="right">
-        I'm a right drawer!
+        <zm-rightmenu ng-if="options.snap.disable == 'left'"></zm-rightmenu>
       </div>
     </div>
 
     <div snap-content snap-options="options.snap">
       <!-- include header-->
-
+      <zm-header options="options"></zm-header>
       <!-- map container-->
-      <div id="map" class="mapResize" ng-class="mapState"></div>
+      <div id="map" class="mapResize map" ng-class="mapState"></div>
 
       <!-- content container-->
       <div ng-show="mapState != 'big'" ui-view></div>

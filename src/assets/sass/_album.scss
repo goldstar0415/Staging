@@ -1,0 +1,16 @@
+.photo {
+  width: 158px;
+  padding: 0;
+  float: left;
+  .img-wrap {
+    height: 96px;
+    overflow: hidden;
+    margin: 10px 5px;
+    float: left;
+    max-width: 146px;
+    img {
+      max-width: 146px;
+      min-height: 96px;
+    }
+  }
+}

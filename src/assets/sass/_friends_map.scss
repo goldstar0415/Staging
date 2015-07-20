@@ -1,0 +1,23 @@
+.avatar-wrap {
+  height: 60px;
+  width: 60px;
+  overflow: hidden;
+  margin: 0;
+  float: left;
+  @include white_border3;
+  border-radius: 50%;
+  img {
+    max-width: 60px;
+    min-height: 60px;
+  }
+}
+
+.edit {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: url(../img/icons/edit.png) no-repeat;
+  position: absolute;
+  top: 7px;
+  right: 13px;
+}

@@ -1,0 +1,92 @@
+header {
+  background: $dark_blue;
+  height: 70px;
+  padding: 0 0 0 20px;
+
+  .logo {
+    height: 55px;
+    width: 210px;
+    float: left;
+    @include vertical_align;
+  }
+
+  nav {
+    float: right;
+    height: 70px;
+    ul {
+      float: left;
+      margin: 0;
+      height: 100%;
+      padding: 0;
+      li {
+        display: inline-block;
+        font: $navigation_font;
+        padding-left: 24px;
+        float: left;
+        @include vertical_align;
+      }
+      .map-tab {
+        background: url(../img/icons/navigation-sep.png) no-repeat;
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        a {
+          @include vertical_align;
+          display: block;
+          padding: 0 15px;
+          .map-icon {
+            display: block;
+            width: 38px;
+            height: 38px;
+            background: url(../img/icons/map-icon.png) 0 -68px no-repeat;
+            margin: -10px 0 0 15px;
+            float: right;
+            background-size: 100%;
+
+          }
+        }
+      }
+      .profile-tab {
+        padding: 0;
+        height: 100%;
+        a {
+          @include vertical_align;
+          display: block;
+          padding: 0 15px;
+          span {
+            margin-left: 15px;
+            img {
+              width: 38px;
+              height: 38px;
+              border: 2px solid #fff;
+              border-radius: 50%;
+              box-shadow: inset 0 0 15px 3px #0c2638;
+            }
+          }
+        }
+      }
+      .active-tab {
+        background: url(../img/icons/navigation-sep.png) repeat-x;
+      }
+    }
+    .menu-btn {
+      display: block;
+      float: right;
+      background: url(../img/icons/navigation-sep.png) no-repeat;
+      .menu-icon {
+        background: url(../img/icons/menu.png) no-repeat;
+        width: 24px;
+        height: 22px;
+        display: block;
+        float: right;
+        margin: 24px 20px;
+      }
+      &:hover {
+        transition: color .3s;
+        .menu-icon {
+          background: url(../img/icons/menu.png) 0 -76px no-repeat;
+        }
+      }
+    }
+  }
+}
