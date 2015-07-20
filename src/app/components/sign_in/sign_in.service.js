@@ -16,8 +16,8 @@
       $modal.open({
         templateUrl: template,
         controller: controller,
-        controllerAs: 'modal'
-        //size: 'lg'
+        controllerAs: 'modal',
+        modalClass: 'authentication'
       });
     }
 

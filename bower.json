@@ -10,7 +10,6 @@
     "angular-resource": "~1.4.0",
     "angular-ui-router": "~0.2.15",
     "bootstrap-sass-official": "~3.3.4",
-    "angular-bootstrap": "~0.13.0",
     "toastr": "~2.1.1",
     "moment": "~2.10.3",
     "angular-snap": "~1.8.3",

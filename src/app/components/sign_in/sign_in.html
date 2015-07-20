@@ -1,29 +1,37 @@
 <a ng-click="signIn.openSignInModal()">Sign in</a>
 
 <script type="text/ng-template" id="SignInModal.html">
-  <div>
-    <div class="modal-header">
-      <h3 class="modal-title">Sign in</h3>
-    </div>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Authorization</h4>
+  </div>
+  <div class="modal-body">
+    <form ng-submit="modal.userLogin(form)" name="form" novalidate>
+      <input type="email" name="email" ng-model="modal.email" class="white" placeholder="E-mail..." required>
 
-    <div class="modal-body">
-      <form ng-submit="modal.userLogin(form)" name="form" novalidate>
-        <input type="email" name="email" placeholder="Email..." ng-model="modal.email" required />
-        <div ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched">
-          <div ng-messages-include="error-email-messages"></div>
-        </div>
+      <div ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched">
+        <div ng-messages-include="error-email-messages"></div>
+      </div>
 
+      <div>
+        <input type="password" name="password" class="white" placeholder="Password..." minlength="6"
+               ng-model="modal.password"
+               required eyepass>
+        <a href="#" class="eye"></a>
 
-        <input type="password" name="password" placeholder="Password..." minlength="6" ng-model="modal.password" required/>
         <div ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched">
           <div ng-messages-include="error-password-messages"></div>
         </div>
+      </div>
 
-        <forgot-password></forgot-password>
-
-        <input type="submit" value="Zoom"/>
-      </form>
-    </div>
+      <p>All fields are required
+        <a href="#" data-toggle="modal" data-target="#recovery_pass">Forgot password?</a>
+      </p>
+      <input type="submit" value="Zoom">
+    </form>
   </div>
-
+  <div class="modal-footer">
+    <a href="#">Sign In with Facebook</a>
+    <a href="#">Sign In with Google+</a>
+  </div>
 </script>

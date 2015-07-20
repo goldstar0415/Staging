@@ -27,7 +27,6 @@
 
           function getMatchValue() {
             var match = matchGetter(scope);
-            console.log(match);
             if (angular.isObject(match) && match.hasOwnProperty('$viewValue')) {
               match = match.$viewValue;
             }

@@ -43,6 +43,8 @@
       <div ng-show="mapState != 'big'" ui-view></div>
     </div>
 
+    <ng-include src="'app/components/ng_message_templates/error_templates.html'"></ng-include>
+
     <!-- build:js(src) scripts/vendor.js -->
     <!--<script src="assets/libs/Leaflet/leaflet.js"></script>-->
     <!-- bower:js -->
@@ -59,6 +61,9 @@
     <!-- angular templates will be automatically converted in js and inserted here -->
     <!-- endinject -->
     <!-- endbuild -->
+
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
 
   </body>
 </html>
