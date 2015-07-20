@@ -1,0 +1,146 @@
+//---<photo_viewer styles--->
+.photo-viewer {
+  margin: 0 auto;
+  z-index: 10000;
+  padding: 0;
+  border-radius: 8px;
+  box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.5);
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  .image {
+    background: $dark_blue;
+    height: 630px;
+    float: left;
+    position: relative;
+    padding: 0;
+    .previous {
+      display: block;
+      background: url(../img/icons/arrows.png) 0 0 no-repeat;
+      width: 15px;
+      height: 26px;
+      position: absolute;
+      top: 50%;
+      left: 25px;
+      outline: none;
+      display: inline-block;
+      overflow: hidden;
+      &:hover {
+        background: url(../img/icons/arrows.png) 0 -28px no-repeat;
+      }
+    }
+    .next {
+      display: block;
+      background: url(../img/icons/arrows.png) -20px 0 no-repeat;
+      width: 15px;
+      height: 26px;
+      position: absolute;
+      top: 50%;
+      right: 25px;
+      outline: none;
+      display: inline-block;
+      overflow: hidden;
+      &:hover {
+        background: url(../img/icons/arrows.png) -20px -28px no-repeat;
+      }
+    }
+  }
+  .photo-comments {
+    padding: 15px;
+    float: right;
+    background: #fff;
+    .new-post {
+      width: 100%;
+      box-sizing: border-box;
+      .min-round {
+        padding: 5px;
+        margin-bottom: 10px;
+        textarea {
+          width: 100%;
+          box-sizing: border-box;
+          height: 50px;
+          margin-bottom: 3px;
+        }
+      }
+    }
+    .reviews {
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+      height: 500px;
+      .post {
+        position: relative;
+        margin-top: 20px;
+        border-bottom: 1px solid #e9edf0;
+        &:after {
+          content: ".";
+          display: block;
+          height: 0;
+          clear: both;
+          visibility: hidden;
+        }
+        &:last-of-type {
+          border: none;
+        }
+        &:first-of-type {
+          margin-top: 0;
+        }
+        .avatar {
+          width: 40px;
+          height: 40px;
+          @include white_border3;
+          border-radius: 50%;
+          float: left;
+          .frame {
+            border: 2px solid #fff;
+            -webkit-border-radius: 30px;
+            -moz-border-radius: 30px;
+            border-radius: 30px;
+            float: left;
+          }
+          .info {
+            width: 240px;
+            padding-right: 10px;
+            float: right;
+          }
+          .small-share {
+            display: block;
+            width: 9px;
+            height: 9px;
+            text-indent: 10000px;
+            overflow: hidden;
+            background: url(../img/icons/small-share.png) 0 0 no-repeat;
+            position: absolute;
+            bottom: 15px;
+            right: 10px;
+            &:hover {
+              background: url(../img/icons/small-share.png) -9px 0 no-repeat;
+            }
+          }
+          .time {
+            color: #808080;
+            font: 11px/11px "Arial", "sans-serif";
+            margin: 8px 0 15px 0;
+          }
+          .rating {
+            position: absolute;
+            top: 0;
+            right: 10px;
+            font-size: 11px;
+          }
+        }
+      }
+    }
+    .location {
+      padding-left: 15px;
+      margin-bottom: 10px;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+      background: url(../img/icons/count.png) 0 0 no-repeat;
+    }
+  }
+}
+//---</photo_viewer styles--->

@@ -22,6 +22,7 @@
 
     $(window).resize(_.throttle(onWindowResize, 100));
     function onWindowResize() {
+      MapService.InvalidateMapSize();
       if ($(window).width() < 768) {
         $rootScope.options.snap.disable = "right";
       } else {
