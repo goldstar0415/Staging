@@ -169,6 +169,8 @@ $factory->define(App\Album::class, function (Generator $faker) use ($timestamps)
     return array_merge([
         'name' => $faker->sentence,
         'is_private' => $faker->boolean(),
+        'address' => $faker->address,
+        'location' => new Point($faker->latitude, $faker->longitude),
     ], $timestamps());
 });
 

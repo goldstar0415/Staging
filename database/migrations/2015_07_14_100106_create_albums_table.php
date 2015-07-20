@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
+use Phaza\LaravelPostgis\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateAlbumsTable extends Migration
@@ -17,6 +17,8 @@ class CreateAlbumsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('name', 128);
             $table->boolean('is_private')->default(false);
+            $table->string('address');
+            $table->point('location');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
