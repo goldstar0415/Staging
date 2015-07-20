@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, snapRemote) {
+    .factory('MapService', function ($rootScope, $timeout, $http, snapRemote) {
       var map = null;
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
       var radiusSelectionLimit = 500000; //in meters
@@ -17,6 +17,10 @@
       // Path variables
       var pathRouter = L.Routing.osrm({geometryOnly: true});
       var pathSelectionStarted = false;
+
+      //GEOCODING
+      var GeocodingSearchUrl = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&addressdetails=1&limit=3&q=';
+      var GeocodingReverseUrl = 'http://open.mapquestapi.com/nominatim/v1/reverse.php?format=json';
 
       //MAP CONTROLS
       // Lasso controls
@@ -243,22 +247,28 @@
         map = L.map(mapDOMElement, {
           attributionControl: false,
           zoomControl: true
-        }).setView({lat: 49.9, lng: 36.25}, 8);
+        });
         L.tileLayer(tilesUrl, {
           maxZoom: 15,
-          minZoom: 3
+          minZoom: 0
         }).addTo(map);
-        ChangeState("small");
 
         //add controls
         AddControls();
         map.addLayer(drawLayer);
 
+
+        window.map = map;
+        map.locate({setView: true, maxZoom: 8});
         return map;
       }
 
       function GetMap() {
         return map;
+      }
+
+      function InvalidateMapSize() {
+        map.invalidateSize();
       }
 
       function GetControlGroup() {
@@ -304,6 +314,10 @@
             removeAllLayers();
             break;
         }
+
+        $timeout(function() {
+          map.invalidateSize();
+        })
       }
 
       function showEventsLayer(clearLayers) {
@@ -404,7 +418,7 @@
             points.push(points[0]);
             var b_box = polyline.getBounds();
             drawLayer.removeLayer(polyline);
-            callback(getConcaveHull(points), b_box);
+            callback(GetConcaveHull(points), b_box);
           }
         }
       }
@@ -508,10 +522,6 @@
         }
       }
 
-      function onLineTouched(e) {
-        console.log(e);
-      }
-
       function CancelPathSelection() {
         pathSelectionStarted = false;
       }
@@ -586,12 +596,12 @@
 
       //Processing functions
       //Return concave hull from points array
-      function getConcaveHull(latLngs) {
+      function GetConcaveHull(latLngs) {
         return new ConcaveHull(latLngs).getLatLngs();
       }
 
       //Determine if point inside polygon or not
-      function pointInPolygon(point, polyPoints) {
+      function PointInPolygon(point, polyPoints) {
         if (point.lat && point.lng) {
           var p = map.latLngToLayerPoint(point);
           point = [p.x, p.y];
@@ -640,9 +650,49 @@
         return newBoundingBox;
       }
 
+      function GetAddressByLatlng (latlng, callback) {
+        var url = GeocodingReverseUrl + "&lat=" + latlng.lat + "&lon=" + latlng.lng;
+        $http.get(url).
+          success(function(data, status, headers) {
+            callback(data);
+          }).
+          error(function(data, status, headers) {
+            callback(data);
+          });
+      }
+      function GetLatlngByAddress (address, callback) {
+        var url = GeocodingSearchUrl + address
+        $http.get(url).
+          success(function(data, status, headers) {
+            callback(data);
+          }).
+          error(function(data, status, headers) {
+            callback(data);
+          });
+      }
+      function GetCurrentLocation (callback) {
+        map.on('locationfound', function onLocationFound(e){
+          map.off('locationfound');
+          map.off('locationerror');
+          callback(e);
+        });
+        map.on('locationerror', function onLocationError(e){
+          map.off('locationfound');
+          map.off('locationerror');
+          callback(e);
+        });
+
+        map.locate({setView: false});
+      }
+      function FocusMapToCurrentLocation(zoom) {
+        var zoomLevel = zoom || 8;
+        map.locate({setView: true, maxZoom: zoomLevel});
+      }
+
       return {
         Init: InitMap,
         GetMap: GetMap,
+        InvalidateMapSize: InvalidateMapSize,
         GetControlGroup: GetControlGroup,
         GetCurrentLayer: GetCurrentLayer,
         //Layers
@@ -660,7 +710,12 @@
         CreateMarker: CreateMarker,
         RemoveMarker: RemoveMarker,
         //Math
-        pointInPolygon: pointInPolygon
+        PointInPolygon: PointInPolygon,
+        //Geocoding
+        GetAddressByLatlng: GetAddressByLatlng,
+        GetLatlngByAddress: GetLatlngByAddress,
+        GetCurrentLocation: GetCurrentLocation,
+        FocusMapToCurrentLocation: FocusMapToCurrentLocation
       };
     });
 
