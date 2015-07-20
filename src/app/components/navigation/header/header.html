@@ -1,0 +1,35 @@
+<header>
+  <div class="logo">
+    <img src='assets/img/icons/logo.svg' alt="logo">
+  </div>
+  <!--for registered users-->
+  <nav ng-if="currentUser" class="j-hide">
+    <ul>
+      <li class="map-tab">
+        <a href="#">Map<span class="map-icon"></span></a>
+      </li>
+      <li class="profile-tab active-tab">
+        <a href="#">David<span><img src="assets/img/ava.png" alt="User avatar"></span></a>
+      </li>
+    </ul>
+    <a href="#" class="menu-btn" snap-toggle="{{Header.toggle}}">
+      <span class="menu-icon"></span>
+    </a>
+  </nav>
+
+
+  <!--for unregistered users-->
+  <nav ng-if="!currentUser" class="">
+    <ul>
+      <li class="map-tab">
+        <a href="#">Map<span class="map-icon"></span></a>
+      </li>
+      <li data-toggle="modal" data-target="#sign_in"><a>Sign in</a></li>
+      <li>|</li>
+      <li data-toggle="modal" data-target="#sign_up"><a>Sign up</a></li>
+    </ul>
+    <a href="#" class="menu-btn" snap-toggle="{{Header.toggle}}">
+      <span class="menu-icon"></span>
+    </a>
+  </nav>
+</header>

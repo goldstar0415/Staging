@@ -8,7 +8,6 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
     <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
     <!-- bower:css -->
     <!-- run `gulp inject` to automatically populate bower styles dependencies -->
     <!-- endbower -->
@@ -25,29 +24,24 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div snap-drawers ng-cloak>
+    <div snap-drawers>
       <div snap-drawer>
-        I'm a left drawer!
+        <zm-leftmenu ng-if="options.snap.disable == 'right'"></zm-leftmenu>
       </div>
       <div snap-drawer="right">
-        I'm a right drawer!
+        <zm-rightmenu ng-if="options.snap.disable == 'left'"></zm-rightmenu>
       </div>
     </div>
 
-    <div snap-content snap-options="options.snap" class="content" ng-cloak>
+    <div snap-content snap-options="options.snap">
       <!-- include header-->
-      <sign-in></sign-in>
-      <sign-up></sign-up>
-
+      <zm-header options="options"></zm-header>
       <!-- map container-->
-      <div id="map" ng-class="mapState"></div>
+      <div id="map" class="mapResize map" ng-class="mapState"></div>
 
       <!-- content container-->
       <div ng-show="mapState != 'big'" ui-view></div>
     </div>
-
-
-    <ng-include src="'app/components/ng_message_templates/error_templates.html'"></ng-include>
 
     <!-- build:js(src) scripts/vendor.js -->
     <!--<script src="assets/libs/Leaflet/leaflet.js"></script>-->
