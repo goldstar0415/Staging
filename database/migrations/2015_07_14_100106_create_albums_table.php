@@ -19,8 +19,6 @@ class CreateAlbumsTable extends Migration
             $table->string('address');
             $table->point('location');
             $table->boolean('is_private')->default(false);
-            $table->string('address');
-            $table->point('location');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')
