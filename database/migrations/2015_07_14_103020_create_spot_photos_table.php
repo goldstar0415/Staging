@@ -14,8 +14,11 @@ class CreateSpotPhotosTable extends Migration
     {
         Schema::create('spot_photos', function(Blueprint $table) {
             $table->increments('id');
-            
+            $table->integer('spot_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('spot_id')->references('id')->on('spots')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

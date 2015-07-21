@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'public_path' => storage_path('app'),
+    'public_path' => storage_path('app/upload'),
 
     /*
     |--------------------------------------------------------------------------

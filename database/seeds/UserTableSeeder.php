@@ -3,11 +3,9 @@
 use App\Role;
 use App\User;
 use Illuminate\Database\Seeder;
-use Seeds\FileSeeder;
 
 class UserTableSeeder extends Seeder
 {
-    use FileSeeder;
     /**
      * Run the database seeds.
      *
@@ -24,13 +22,10 @@ class UserTableSeeder extends Seeder
         $admin->roles()->attach(Role::take('admin'));
 
         $zoomer = Role::take('zoomer');
-        factory(User::class, 3)->create()->each(
-            Closure::bind(
-                function (User $user) use ($zoomer) {
-                    $user->roles()->attach($zoomer);
-                },
-                $this
-            )
+        factory(User::class, 100)->create()->each(
+            function (User $user) use ($zoomer) {
+                $user->roles()->attach($zoomer);
+            }
         );
     }
 }

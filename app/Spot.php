@@ -2,9 +2,8 @@
 
 namespace App;
 
-use App\Services\Uploader\Download;
-use App\Services\Uploader\Upload;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
+use Codesleeve\Stapler\ORM\StaplerableInterface;
 
 /**
  * Class Spot
@@ -16,9 +15,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @property string $title
  * @property string $description
  * @property string $web_site
- * @property string|UploadedFile $cover
- * @property string|UploadedFile $photo_url
- * @property string|UploadedFile $photo
+ * @property string $cover
  * @property float $rating
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $end_date
@@ -36,56 +33,28 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @property \Illuminate\Database\Eloquent\Collection $plans
  * @property \Illuminate\Database\Eloquent\Collection $points
  */
-class Spot extends BaseModel
+class Spot extends BaseModel implements StaplerableInterface
 {
+    use StaplerTrait;
+
     protected $guarder = ['id', 'user_id', 'spot_type_category_id'];
 
-    protected $appends = ['rating', 'cover_url'];
+    protected $appends = ['rating'];
 
     protected $dates = ['start_date', 'end_date'];
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(array $attributes = [])
+    {
+        $this->hasAttachedFile('cover');
+        parent::__construct($attributes);
+    }
 
     public function getRatingAttribute()
     {
         return (float)$this->votes()->avg('vote');
-    }
-
-    public $files_dir = 'name/id';
-
-
-    public function setCoverAttribute(UploadedFile $file)
-    {
-        /**
-         * @var Upload $upload
-         */
-        $upload = app(Upload::class);
-        $upload->make($file, $this, 'cover')->save();
-    }
-
-    public function getCoverUrlAttribute()
-    {
-        /**
-         * @var Download $upload
-         */
-        $download = app(Download::class);
-        return $download->link($this, 'cover');
-    }
-
-    public function setPhotoAttribute(UploadedFile $file)
-    {
-        /**
-         * @var Upload $upload
-         */
-        $upload = app(Upload::class);
-        $upload->make($file, $this)->randomName()->save();
-    }
-
-    public function getPhotoUrlAttribute()
-    {
-        /**
-         * @var Download $download
-         */
-        $download = app(Download::class);
-        return $download->randomName()->link($this);
     }
 
     public function user()
@@ -126,6 +95,11 @@ class Spot extends BaseModel
     public function points()
     {
         return $this->hasMany(SpotPoint::class);
+    }
+
+    public function photos()
+    {
+        return $this->hasMany(SpotPhoto::class);
     }
 
     public function plans()
