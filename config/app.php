@@ -152,7 +152,8 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Phaza\LaravelPostgis\DatabaseServiceProvider::class,
         Toin0u\Geotools\GeotoolsServiceProvider::class,
-        Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class
+        Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class
     ],
 
     /*
