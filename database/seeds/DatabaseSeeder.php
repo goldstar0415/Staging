@@ -26,6 +26,9 @@ class DatabaseSeeder extends Seeder
             $this->call(ChatMessagesTableSeeder::class);
             $this->call(FollowingsTableSeeder::class);
 
+            $this->call(AlbumTableSeeder::class);
+            $this->call(AlbumPhotosTableSeeder::class);
+            $this->call(AlbumPhotoCommentsTableSeeder::class);
 
             $this->call(BlogCategoriesTableSeeder::class);
             $this->call(BlogsTableSeeder::class);
@@ -34,16 +37,13 @@ class DatabaseSeeder extends Seeder
 
             $this->call(SpotTypeCategoriesTableSeeder::class);
             $this->call(SpotTableSeeder::class);
+            $this->call(SpotPhotoTableSeeder::class);
             $this->call(SpotPointsTableSeeder::class);
             $this->call(TagsTableSeeder::class);
             $this->call(SpotVotesTableSeeder::class);
             $this->call(SpotReviewsTableSeeder::class);
 
             $this->call(FavoritesTableSeeder::class);
-
-            $this->call(AlbumTableSeeder::class);
-            $this->call(AlbumPhotosTableSeeder::class);
-            $this->call(AlbumPhotoCommentsTableSeeder::class);
         }
 
         Model::reguard();

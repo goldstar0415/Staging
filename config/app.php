@@ -148,12 +148,11 @@ return [
          * Packages Services
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Phaza\LaravelPostgis\DatabaseServiceProvider::class,
-        Toin0u\Geotools\GeotoolsServiceProvider::class
-
+        Toin0u\Geotools\GeotoolsServiceProvider::class,
+        Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class
     ],
 
     /*
@@ -205,7 +204,6 @@ return [
          * Packages aliases
          */
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        'Image'     => Intervention\Image\Facades\Image::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Geotools' => Toin0u\Geotools\Facade\Geotools::class
 

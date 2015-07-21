@@ -16,12 +16,15 @@ class CreateAlbumsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('name', 128);
+            $table->string('address');
+            $table->point('location');
             $table->boolean('is_private')->default(false);
             $table->string('address');
             $table->point('location');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

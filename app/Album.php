@@ -5,7 +5,6 @@ namespace App;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
-
 /**
  * Class Album
  * @package App
@@ -13,9 +12,9 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property integer $id
  * @property integer $user_id
  * @property string $name
- * @property boolean $is_private
- * @property string $address
  * @property Point $location
+ * @property string $address
+ * @property boolean $is_private
  *
  * Relation properties
  * @property User $user
@@ -25,13 +24,11 @@ class Album extends BaseModel
 {
     use PostgisTrait;
 
+    protected $guarded = ['id', 'user_id'];
+
     protected $postgisFields = [
         'location' => Point::class,
     ];
-
-    protected $fillable = ['name', 'is_private', 'location', 'address'];
-
-    public $files_dir = 'user_rel/id';
 
     public function user()
     {

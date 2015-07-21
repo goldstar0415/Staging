@@ -14,8 +14,6 @@ use DB;
 abstract class BaseModel extends Model
 {
 
-    public $files_dir = '';
-
     public function scopeRandom($query, $count = 1)
     {
         return $query->orderBy(DB::raw(config('database.connections.' . config('database.default') . '.rand_func')))
