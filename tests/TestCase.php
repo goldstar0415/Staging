@@ -7,7 +7,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      *
      * @var string
      */
-    protected $baseUrl = 'http://zoomtivity.app';
+    protected $baseUrl = 'http://zoomtivity.app.com';
 
     /**
      * Creates the application.
