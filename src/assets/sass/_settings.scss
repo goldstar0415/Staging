@@ -1,0 +1,16 @@
+//---<settings styles--->
+.info {
+  padding: 0;
+}
+
+.edit-photo {
+  @include button;
+  background: $green;
+  height: 26px;
+  padding: 5px 15px;
+  margin-top: 15px;
+  display: block;
+  width: 86%;
+}
+
+//---</settings styles--->

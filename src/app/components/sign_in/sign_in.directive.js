@@ -20,10 +20,18 @@
       var vm = this;
 
       vm.openSignInModal = function () {
-        SignInService.openModal('SignInModal.html', 'SignInModalController');
+        SignInService.openModal('SignInModal.html', SignInModalController);
       };
 
       vm.userLogin = SignInService.userLogin;
+    }
+
+    function SignInModalController(SignInService, $modalInstance) {
+      var vm = this;
+
+      vm.userLogin = function (form) {
+        SignInService.userLogin(form, vm, $modalInstance);
+      };
     }
 
   }

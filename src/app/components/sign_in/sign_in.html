@@ -9,23 +9,23 @@
     <form ng-submit="modal.userLogin(form)" name="form" novalidate>
       <input type="email" name="email" ng-model="modal.email" class="white" placeholder="E-mail..." required>
 
-      <div ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched">
+      <div class="error-message" ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched">
         <div ng-messages-include="error-email-messages"></div>
       </div>
 
-      <div>
+      <div class="password-block">
         <input type="password" name="password" class="white" placeholder="Password..." minlength="6"
                ng-model="modal.password"
-               required eyepass>
-        <a href="#" class="eye"></a>
+               required >
+        <a href="#" class="eye" eye-password></a>
 
-        <div ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched">
+        <div class="error-message" ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched">
           <div ng-messages-include="error-password-messages"></div>
         </div>
       </div>
 
       <p>All fields are required
-        <a href="#" data-toggle="modal" data-target="#recovery_pass">Forgot password?</a>
+        <password-recovery></password-recovery>
       </p>
       <input type="submit" value="Zoom">
     </form>

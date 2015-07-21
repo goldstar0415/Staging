@@ -3,13 +3,13 @@
 
   angular
     .module('zoomtivity')
-    .factory('SignUpService', SignUpService);
+    .factory('PasswordRecoveryService', PasswordRecoveryService);
 
   /** @ngInject */
-  function SignUpService($modal, $rootScope, User, toastr) {
+  function PasswordRecoveryService($modal, $rootScope, User, toastr) {
     return {
       openModal: openModal,
-      signUpUser: signUpUser
+      recoveryPassword: recoveryPassword
     };
 
     function openModal(template, controller) {
@@ -21,9 +21,9 @@
       });
     }
 
-    function signUpUser(form, vm, $modalInstance) {
+    function recoveryPassword(form, vm, $modalInstance) {
       if (form.$valid) {
-        User.signUp({user: this},
+        User.recoveryPassword({user: vm},
           function success(user) {
             $rootScope.currentUser = user;
             $modalInstance.dismiss('close');

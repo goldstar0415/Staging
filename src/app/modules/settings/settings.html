@@ -1,5 +1,15 @@
 <div class="container">
+  <br/>
 
-test
+  <div class="col-sm-6">
+    <uploader></uploader>
+    {{Settings.images}}
+    <div ng-repeat="i in _.range(Settings.images.length)" class="col-sm-1">
+      {{i}}
+      <img ngf-src="Settings.images[i]" class="img-thumbnail"/>
+    </div>
+  </div>
+
+  <a ng-click="Settings.save()">Save</a>
 
 </div>

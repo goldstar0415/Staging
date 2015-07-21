@@ -8,9 +8,12 @@
     margin: 10px 5px;
     float: left;
     max-width: 146px;
+    border-radius: 5px;
+    border: 1px solid $dark_blue;
     img {
       max-width: 146px;
       min-height: 96px;
+      cursor: pointer;
     }
   }
 }

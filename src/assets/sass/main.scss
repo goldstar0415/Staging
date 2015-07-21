@@ -1,18 +1,30 @@
-@import "bootstrap.custom";
+@import '../../../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap';
+@import "variables";
 @import "mixins";
 @import "header";
 @import "album";
 @import "photo_viewer";
 @import "friends_map";
+@import "information_profile";
+@import "menu_profile";
+@import "contact_us";
+@import "about_us";
+@import "zoomers";
+@import "right_left_menu";
+@import "map";
+@import "modal";
+@import "settings";
+@import "photo_map";
+@import "my_spot";
 
 @font-face {
   font-family: 'Ubuntu bold';
-  src: url(../css/fonts/ubuntutitling-bold-webfont.eot);
-  src: url(../css/fonts/ubuntutitling-bold-webfont.eot?#iefix) format('embedded-opentype'),
-  url(../css/fonts/ubuntutitling-bold-webfont.woff2) format('woff2'),
-  url(../css/fonts/ubuntutitling-bold-webfont.woff) format('woff'),
-  url(../css/fonts/ubuntutitling-bold-webfont.ttf) format('truetype'),
-  url(../css/fonts/ubuntutitling-bold-webfont.svg#ubuntu_titlingbold) format('svg');
+  src: url(/assets/css/fonts/ubuntutitling-bold-webfont.eot);
+  src: url(/assets/css/fonts/ubuntutitling-bold-webfont.eot?#iefix) format('embedded-opentype'),
+  url(/assets/css/fonts/ubuntutitling-bold-webfont.woff2) format('woff2'),
+  url(/assets/css/fonts/ubuntutitling-bold-webfont.woff) format('woff'),
+  url(/assets/css/fonts/ubuntutitling-bold-webfont.ttf) format('truetype'),
+  url(/assets/css/fonts/ubuntutitling-bold-webfont.svg#ubuntu_titlingbold) format('svg');
   font-weight: normal;
   font-style: normal;
 
@@ -20,18 +32,25 @@
 
 @font-face {
   font-family: 'Ubuntu medium';
-  src: url(../css/fonts/ubuntu-m-webfont.eot);
-  src: url(../css/fonts/ubuntu-m-webfont.eot?#iefix) format('embedded-opentype'),
-  url(../css/fonts/ubuntu-m-webfont.woff2) format('woff2'),
-  url(../css/fonts/ubuntu-m-webfont.woff) format('woff'),
-  url(../css/fonts/ubuntu-m-webfont.ttf) format('truetype'),
-  url(../css/fonts/ubuntu-m-webfont.svg#ubuntumedium) format('svg');
+  src: url(/assets/css/fonts/ubuntu-m-webfont.eot);
+  src: url(/assets/css/fonts/ubuntu-m-webfont.eot?#iefix) format('embedded-opentype'),
+  url(/assets/css/fonts/ubuntu-m-webfont.woff2) format('woff2'),
+  url(/assets/css/fonts/ubuntu-m-webfont.woff) format('woff'),
+  url(/assets/css/fonts/ubuntu-m-webfont.ttf) format('truetype'),
+  url(/assets/css/fonts/ubuntu-m-webfont.svg#ubuntumedium) format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 body {
   background: #f5f8fa;
+}
+
+a {
+  cursor: pointer;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 ul {
@@ -48,105 +67,17 @@ ul {
   }
 }
 
-.right-menu, .left-menu {
-  position: absolute;
-  top: 0px;
-  right: 0;
-  bottom: 0;
-  left: auto;
-  width: 230px;
-  height: auto;
-  z-index: 1;
-  background: $dark_blue;
-  @include transition_width;
-  ul {
-    margin: 0;
-    padding: 0;
-    li {
-      border-bottom: 1px solid #173041;
-      width: 200px;
-      display: block;
-      margin: 0 15px;
-      a {
-        display: block;
-        color: #fff;
-        font: $navigation_font;
-        margin-top: 3px;
-        padding: 12px 0 15px 40px;
-        &:hover {
-          text-decoration: none;
-          color: $blue;
-          background-position-y: -41px;
-        }
-      }
-      &:last-child {
-        border-bottom: none;
-        position: absolute;
-        bottom: 15px;
-      }
-    }
-    .create-btn {
-      @include button;
-      background-color: $green;
-      height: 38px;
-      width: 140px;
-      margin: 15px auto 10px;
-      display: table;
-      &:hover {
-        background-color: $light_green;
-      }
-    }
-    .intro-link {
-      background: url(../img/icons/intro-link.png) no-repeat;
-    }
-    .zoomers-link {
-      background: url(../img/icons/zoomers.png) no-repeat;
-    }
-    .blog-link {
-      background: url(../img/icons/blog.png) no-repeat;
-    }
-    .about-link {
-      background: url(../img/icons/about.png) no-repeat;
-    }
-    .contacts-link {
-      background: url(../img/icons/contacts.png) no-repeat;
-    }
-    .sign-btn {
-      @include button;
-      background-color: $navy_blue;
-      width: 120px;
-      height: 28px;
-      margin: 0 auto;
-      display: table;
-      &:hover {
-        background-color: $light_blue;
-      }
-    }
+form {
+  .error-message div {
+    color: red;
+    display: block;
+    margin-top: -15px;
+    margin-bottom: 5px;
   }
 }
 
-.left-menu {
-  left: 0 !important;
-}
-
-//map styles
-.map {
-  position: fixed;
-  top: 70px;
-  z-index: 1;
-  width: 100%;
-}
-
-.map.full-size {
-  position: absolute;
-  height: calc(100% - 70px);
-}
-
-.map.small-size {
-  height: 400px;
-}
-.map.hidden {
-  height: 0;
+[ng-click], [ui-sref] {
+  cursor: pointer;
 }
 
 //common styles
@@ -168,6 +99,37 @@ ul {
   display: table;
 }
 
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: block;
+  overflow: hidden;
+  background: #fff;
+  @include white_border3;
+  img {
+    max-width: 120px;
+  }
+}
+
+.title {
+  h2 {
+    font: 500 22px/22px Ubuntu;
+    color: $dark_blue;
+  }
+  .back {
+    display: block;
+    height: 12px;
+    background: url(/assets/img/icons/back.png) 0 6px no-repeat;
+    float: left;
+    padding: 0px 0 20px 8px;
+    margin-right: 8px;
+    &:hover {
+      background: url(/assets/img/icons/back.png) -8px 6px no-repeat;
+    }
+  }
+}
+
 .album-tools {
   float: right;
   .add-page {
@@ -178,164 +140,40 @@ ul {
     position: absolute;
     top: 17px;
     right: 17px;
-    background: url(../img/icons/add-page.png) 9px 9px no-repeat, #0d91ec;
+    background: url(/assets/img/icons/add-page.png) 9px 9px no-repeat, #0d91ec;
     @include transition_bg;
     &:hover {
-      background: url(../img/icons/add-page.png) 9px 9px no-repeat, #0160a2;
+      background: url(/assets/img/icons/add-page.png) 9px 9px no-repeat, #0160a2;
       @include transition_bg;
     }
   }
 }
 
-.album {
-  width: 211px;
-  padding: 0;
-  float: left;
-  .img-wrap {
-    height: 110px;
-    width: 200px;
-    overflow: hidden;
-    margin: 10px 5px;
-    float: left;
-    img {
-      //max-height: 100%;
-      //position: relative;
-      //transform: translateX(-50%);
-      //left: 50%;
-      max-width: 200px;
-      min-height: 110px;
-      //position: relative;
-      //transform: translateY(-50%);
-      //top: 50%;
-    }
-  }
-}
 
 
-//modal styles
-.modal {
-  height: 100%;
-  .modal-dialog {
-    top: 50%;
-    transform: translateY(-50%) !important;
-  }
-}
+.drop-box {
+  height: 100px;
+  width: 100%;
+  border: 2px dashed #b5e0ef;
+  margin: 0 15px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-transition: border-color .3s;
+  -moz-transition: border-color .3s;
+  transition: border-color .3s;
 
-.authentication {
-  .modal-dialog {
-    width: 340px;
-  }
-  .modal-header {
-    border-bottom: none;
-  }
-  h4 {
-    font: 500 26px/26px 'Ubuntu medium';
-  }
-  input[type="email"], input[type="password"] {
-    height: 42px;
-    width: 100%;
-    padding: 5px 10px;
-    margin-bottom: 15px;
-    border: 1px solid #cecece;
-    border-radius: 3px;
-    background: #fff;
-    color: #000;
-    font: 16px Arial, sans-serif;
-    box-shadow: inset 0 1px 2px 0 #e2e2e2;
-    @include transition_shadow;
-    &:hover, &:focus {
-      border: 1px solid #76c7dc;
-      @include blue_shadow;
-      @include transition_shadow;
-      outline: none;
-    }
-  }
-
-  input[type="submit"] {
-    @include button;
-    width: 100%;
-    border: none;
-    background-color: $green;
-    &:hover {
-      background-color: $light_green;
-    }
+  &:hover {
+    cursor: pointer;
+    border: 2px dashed #00b7f3;
+    transition: border-color .3s;
   }
 
   p {
-    color: #adabab;
-    font-size: 11px;
-    a {
-      float: right;
-      color: $blue;
-      @include transition_color;
-      &:hover {
-        color: $navy_blue;
-        text-decoration: none;
-      }
-    }
+    margin-top: 40px;
+    font: 500 18px/18px Ubuntu;
+    text-align: center;
+    color: #b5e0ef;
   }
-  .modal-footer {
-    a {
-      width: 100%;
-      display: block;
-      @include button;
-      &:nth-child(1) {
-        background-color: #3C599B;
-        margin-bottom: 10px;
-        &:hover {
-          background-color: #3c66c6;
-        }
-      }
-      &:nth-child(2) {
-        background-color: $red;
-        &:hover {
-          background-color: $light_red;
-        }
-      }
-    }
-  }
-  .eye {
-    display: block;
-    width: 20px;
-    height: 12px;
-    background: url(../img/icons/eye.png) no-repeat;
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    &:hover {
-      background: url(../img/icons/eye.png) 0 -16px no-repeat;
-    }
-  }
-  form {
-    span {
-      display: block;
-      position: relative;
-    }
-  }
+
 }
-
-//---<settings styles--->
-.settings-main {
-  margin: 20px auto;
-  img {
-    border-radius: 50%;
-    @include white_border3;
-    float: left;
-    background: #ffffff;
-  }
-}
-
-//---</settings styles--->
-
-//---<menu profile styles--->
-.menu-profile {
-  background: $dark_blue;
-  padding: 0;
-  li {
-    display: inline-block;
-  }
-}
-
-//---</menu profile styles--->
-
-

@@ -1,0 +1,23 @@
+.album {
+  width: 211px;
+  padding: 0;
+  float: left;
+  .img-wrap {
+    height: 110px;
+    width: 200px;
+    overflow: hidden;
+    margin: 10px 5px;
+    float: left;
+    img {
+      //max-height: 100%;
+      //position: relative;
+      //transform: translateX(-50%);
+      //left: 50%;
+      max-width: 200px;
+      min-height: 110px;
+      //position: relative;
+      //transform: translateY(-50%);
+      //top: 50%;
+    }
+  }
+}

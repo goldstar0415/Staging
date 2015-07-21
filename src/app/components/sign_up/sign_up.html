@@ -1,124 +1,74 @@
 <a ng-click="signUp.openSignUpModal()">Sign up</a>
 
 <script type="text/ng-template" id="SignUpModal.html">
-  <div>
-    <div class="modal-header">
-      <h3 class="modal-title">Sign up</h3>
-    </div>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Registration</h4>
+  </div>
+  <div class="modal-body">
+    <form ng-submit="modal.signUpUser(form)" name="form" novalidate>
 
-    <div class="modal-body">
-      <form ng-submit="modal.signUpUser(form)" name="form" novalidate>
+      <input type="text" name="first_name" placeholder="First name..." ng-model="modal.first_name" class="white"
+             required/>
 
-        <input type="text" name="first_name" placeholder="First name..." ng-model="modal.first_name" required/>
+      <div ng-messages="form.first_name.$error" ng-if="form.$submitted || form.first_name.$touched" class="error-message">
+        <div ng-message="required">is required</div>
+      </div>
 
-        <div ng-messages="form.first_name.$error" ng-if="form.$submitted || form.first_name.$touched">
-          <div ng-message="required">is required</div>
-        </div>
+      <input type="text" name="last_name" class="white" placeholder="Last name..." ng-model="modal.last_name"
+             required/>
 
-        <br/>
+      <div ng-messages="form.last_name.$error" ng-if="form.$submitted || form.last_name.$touched" class="error-message">
+        <div ng-message="required">is required</div>
+      </div>
 
-        <input type="text" name="last_name" placeholder="Last name..." ng-model="modal.last_name" required/>
+      <input type="email" name="email" placeholder="E-mail..." class="white" ng-model="modal.email" required/>
 
-        <div ng-messages="form.last_name.$error" ng-if="form.$submitted || form.last_name.$touched">
-          <div ng-message="required">is required</div>
-        </div>
-
-        <br/>
-
-        <input type="email" name="email" placeholder="Email..." ng-model="modal.email" required/>
-
-        <div ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched">
-          <div ng-messages-include="error-email-messages"></div>
-        </div>
-
-        <br/>
+      <div ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched" class="error-message">
+        <div ng-messages-include="error-email-messages"></div>
+      </div>
 
 
-        <input type="password" name="password" placeholder="Password (min 6 symbols)..." minlength="6"
-               ng-model="modal.password" required/>
+      <div class="password-block">
+        <input type="password"
+               name="password"
+               class="white"
+               placeholder="Password (min 6 symbols)..."
+               ng-model="modal.password"
+               minlength="6"
+               required/>
+        <a href="#" class="eye" eye-password></a>
 
-        <div ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched">
+        <div ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched" class="error-message">
           <div ng-messages-include="error-password-messages"></div>
         </div>
+      </div>
 
-        <br/>
-
+      <div class="password-block">
         <input type="password"
                name="password_confirmation"
+               class="white"
                placeholder="Password confirmation..."
-               minlength="6" ng-model="modal.password_confirmation"
+               ng-model="modal.password_confirmation"
                ng-match="modal.password"
+               minlength="6"
                required/>
+        <a href="#" class="eye" eye-password></a>
 
         <div ng-messages="form.password_confirmation.$error"
-             ng-if="form.$submitted || form.password_confirmation.$touched">
-          <div ng-message="match">passwords must match</div>
+             ng-if="form.$submitted || form.password_confirmation.$touched" class="error-message">
           <div ng-messages-include="error-password-messages"></div>
+          <div ng-message="match">passwords must match</div>
         </div>
 
-        <br/>
+      </div>
 
-        <input type="submit" value="Zoom"/>
-      </form>
-    </div>
+      <p>All fields are required</p>
+      <input type="submit" value="Zoom">
+    </form>
   </div>
-
-
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title" id="myModalLabel">Registration</h4>
-    </div>
-    <div class="modal-body">
-      <form ng-submit="modal.signUpUser(form)" name="form" novalidate>
-
-        <input type="text" name="first_name" placeholder="First name..." ng-model="modal.first_name" class="white"
-               required/>
-
-        <div ng-messages="form.first_name.$error" ng-if="form.$submitted || form.first_name.$touched">
-          <div ng-message="required">is required</div>
-        </div>
-
-        <input type="text" name="last_name" class="white" placeholder="Last name..." ng-model="modal.last_name"
-               required/>
-
-        <div ng-messages="form.last_name.$error" ng-if="form.$submitted || form.last_name.$touched">
-          <div ng-message="required">is required</div>
-        </div>
-
-        <input type="email" name="email" placeholder="E-mail..." class="white" ng-model="modal.email" required/>
-
-        <div ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched">
-          <div ng-messages-include="error-email-messages"></div>
-        </div>
-
-
-        <div>
-          <input name="password" class="white" type="password" placeholder="Password (min 6 symbols)..."
-                 eyepass="">
-          <a href="#" class="eye"></a>
-
-          <input type="password" class="white" name="password" placeholder="Password (min 6 symbols)..." minlength="6"
-                 ng-model="modal.password" eyepass required/>
-          <a href="#" class="eye"></a>
-
-          <div ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched">
-            <div ng-messages-include="error-password-messages"></div>
-          </div>
-        </div>
-        <div>
-          <input name="repassword" class="white" type="password" placeholder="Password confirmation..."
-                 eyepass="">
-          <a href="#" class="eye" rollapp-href="http://zoomzoom.itechhighway.com/#"></a>
-        </div>
-
-        <p>All fields are required</p>
-        <input type="submit" value="Zoom">
-      </form>
-    </div>
-    <div class="modal-footer">
-      <a href="#">Sign In with Facebook</a>
-      <a href="#">Sign In with Google+</a>
-    </div>
+  <div class="modal-footer">
+    <a href="#">Sign In with Facebook</a>
+    <a href="#">Sign In with Google+</a>
   </div>
 </script>
