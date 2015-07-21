@@ -10,7 +10,7 @@ use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
-use Codesleeve\Stapler\ORM\EloquentTrait;
+use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 
 /**
  * Class User
@@ -65,8 +65,20 @@ use Codesleeve\Stapler\ORM\EloquentTrait;
  */
 class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract, StaplerableInterface
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait, PostgisTrait, EloquentTrait {
-        EntrustUserTrait::boot insteadof EloquentTrait;
+    use Authenticatable, CanResetPassword, EntrustUserTrait, PostgisTrait, StaplerTrait {
+        StaplerTrait::boot insteadof EntrustUserTrait;
+        EntrustUserTrait::boot insteadof StaplerTrait;
+        StaplerTrait::boot as bootStaplerT;
+        EntrustUserTrait::boot as bootEntrustUserT;
+    }
+
+    /**
+     * The "booting" method of the model.
+     */
+    public static function boot()
+    {
+        static::bootStaplerT();
+        static::bootEntrustUserT();
     }
 
     /**
