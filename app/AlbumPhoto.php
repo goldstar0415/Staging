@@ -2,11 +2,10 @@
 
 namespace App;
 
+use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
-use App\Services\Uploader\Download;
-use App\Services\Uploader\Upload;
 use Phaza\LaravelPostgis\Geometries\Point;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 
 /**
  * Class AlbumPhoto
@@ -16,8 +15,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @property integer $album_id
  * @property string $address
  * @property Point $location
- * @property string|UploadedFile $photo
- * @property string|UploadedFile $photo_url
+ * @property string $photo
  *
  * Relation properties
  * @property Album $album
@@ -25,38 +23,25 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @property \Illuminate\Database\Eloquent\Collection $walls
  * @property \Illuminate\Database\Eloquent\Collection $chatMessages
  */
-class AlbumPhoto extends BaseModel
+class AlbumPhoto extends BaseModel implements StaplerableInterface
 {
-    use PostgisTrait;
+    use PostgisTrait, StaplerTrait;
 
     protected $postgisFields = [
         'location' => Point::class,
     ];
 
-    protected $fillable = ['location', 'address'];
+    protected $fillable = ['photo', 'location', 'address'];
 
-    protected $appends = ['photo_url'];
-
-    public $files_dir = 'album_rel';
-
-    public function setPhotoAttribute(UploadedFile $file)
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(array $attributes = [])
     {
-        /**
-         * @var Upload $upload
-         */
-        $upload = app(Upload::class);
-        $upload->make($file, $this)->save();
+        $this->hasAttachedFile('photo');
+        parent::__construct($attributes);
     }
 
-    public function getPhotoUrlAttribute()
-    {
-        /**
-         * @var Download $upload
-         */
-        $download = app(Download::class);
-        return $download->link($this);
-    }
-    
     public function album()
     {
         return $this->belongsTo(Album::class);

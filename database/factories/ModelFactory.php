@@ -45,6 +45,7 @@ $factory->define(App\User::class, function (Generator $faker) use ($timestamps) 
         'email' => $faker->unique()->email,
         'password' => bcrypt('password'),
         'sex' => $faker->boolean(),
+        'avatar' => $faker->image(storage_path('app'), mt_rand(300, 1920), mt_rand(200, 1250)),
         'birth_date' => $faker->date(),
         'address' => $faker->address,
         'location' => new Point($faker->latitude, $faker->longitude),
@@ -94,10 +95,17 @@ $factory->define(App\Spot::class, function (Generator $faker) use ($timestamps, 
     $start_date = $faker->dateTimeBetween('-50 days','+50 days');
     $end_date = clone $start_date->modify('+' . mt_rand(1, 5) . ' day');
     return array_merge([
+        'cover' => $faker->image(storage_path('app'), mt_rand(300, 1920), mt_rand(200, 1250)),
         'title' => $faker->sentence,
         'description' => $faker->sentence,
         'web_site' => $faker->url,
     ], $dates(), $timestamps());
+});
+
+$factory->define(App\SpotPhoto::class, function (Generator $faker) use ($timestamps) {
+    return array_merge([
+        'photo' => $faker->image(storage_path('app'), mt_rand(300, 1920), mt_rand(200, 1250))
+    ], $timestamps());
 });
 
 $factory->define(App\SpotPoint::class, function (Generator $faker) {
@@ -169,11 +177,14 @@ $factory->define(App\Album::class, function (Generator $faker) use ($timestamps)
     return array_merge([
         'name' => $faker->sentence,
         'is_private' => $faker->boolean(),
+        'address' => $faker->address,
+        'location' => new Point($faker->latitude, $faker->longitude)
     ], $timestamps());
 });
 
 $factory->define(App\AlbumPhoto::class, function (Generator $faker) use ($timestamps) {
     return array_merge([
+        'photo' => $faker->image(storage_path('app'), mt_rand(300, 1920), mt_rand(200, 1250)),
         'address' => $faker->address,
         'location' => new Point($faker->latitude, $faker->longitude),
     ], $timestamps());
@@ -197,6 +208,7 @@ $factory->define(App\Area::class, function (Generator $faker) use ($timestamps) 
 
 $factory->define(App\Blog::class, function (Generator $faker) use ($timestamps) {
     return array_merge([
+        'cover' => $faker->image(storage_path('app'), mt_rand(300, 1920), mt_rand(200, 1250)),
         'title' => $faker->sentence,
         'body' => $faker->text(300),
         'url' => $faker->url,
@@ -211,12 +223,6 @@ $factory->define(App\BlogCategory::class, function (Generator $faker) {
         'name' => $name,
         'display_name' => ucfirst($name)
     ];
-});
-
-$factory->define(App\BlogComment::class, function (Generator $faker) use ($timestamps) {
-    return array_merge([
-        'body' => $faker->sentence(16)
-    ], $timestamps());
 });
 
 $factory->define(App\BlogComment::class, function (Generator $faker) use ($timestamps) {
@@ -241,6 +247,7 @@ $factory->define(App\ChatMessage::class, function (Generator $faker) use ($times
 
 $factory->define(App\Friend::class, function (Generator $faker) use ($timestamps) {
     return array_merge([
+        'avatar' => $faker->image(storage_path('app'), mt_rand(300, 1920), mt_rand(200, 1250)),
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'birth_date' => $faker->date(),

@@ -2,8 +2,9 @@
 
 namespace App;
 
+use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
-use Phaza\LaravelPostgis\Geometries\MultiPoint;
+use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 /**
@@ -14,6 +15,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property integer $user_id
  * @property integer $blog_category_id
  * @property string $title
+ * @property string $cover
  * @property string $body
  * @property string $address
  * @property Point $location
@@ -25,15 +27,24 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property \Illuminate\Database\Eloquent\Collection $comments
  * @property \Illuminate\Database\Eloquent\Collection $category
  */
-class Blog extends BaseModel
+class Blog extends BaseModel implements StaplerableInterface
 {
-    use PostgisTrait;
+    use PostgisTrait, StaplerTrait;
 
-    protected $guarded = ['id', 'user_id', 'count_views'];
+    protected $guarded = ['id', 'user_id', 'blog_category_id', 'count_views'];
 
     protected $postgisFields = [
-        'b_box' => MultiPoint::class
+        'b_box' => Point::class
     ];
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(array $attributes = [])
+    {
+        $this->hasAttachedFile('cover');
+        parent::__construct($attributes);
+    }
 
     public function user()
     {

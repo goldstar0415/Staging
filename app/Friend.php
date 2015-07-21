@@ -2,11 +2,11 @@
 
 namespace App;
 
-use App\Services\Uploader\Download;
-use App\Services\Uploader\Upload;
+use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 
 /**
  * Class Friend
@@ -26,9 +26,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * Relation properties
  * @property User $user
  */
-class Friend extends BaseModel
+class Friend extends BaseModel implements StaplerableInterface
 {
-    use PostgisTrait;
+    use PostgisTrait, StaplerTrait;
 
     protected $guarded = ['id', 'user_id'];
 
@@ -38,22 +38,13 @@ class Friend extends BaseModel
         'location' => Point::class,
     ];
 
-    public function setAvatarAttribute(UploadedFile $file)
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(array $attributes = [])
     {
-        /**
-         * @var Upload $upload
-         */
-        $upload = app(Upload::class);
-        $upload->make($file, $this, 'avatar')->save();
-    }
-
-    public function getAvatarUrlAttribute()
-    {
-        /**
-         * @var Download $download
-         */
-        $download = app(Download::class);
-        $download->link($this, 'avatar');
+        $this->hasAttachedFile('avatar');
+        parent::__construct($attributes);
     }
 
     public function user()

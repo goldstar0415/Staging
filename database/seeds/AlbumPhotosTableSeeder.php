@@ -3,11 +3,9 @@
 use App\Album;
 use App\AlbumPhoto;
 use Illuminate\Database\Seeder;
-use Seeds\FileSeeder;
 
 class AlbumPhotosTableSeeder extends Seeder
 {
-    use FileSeeder;
     /**
      * Run the database seeds.
      *
@@ -28,19 +26,6 @@ class AlbumPhotosTableSeeder extends Seeder
                         }
                     );
                     $album->photos()->saveMany($photos);
-                }
-                if ($photos instanceof AlbumPhoto) {
-                    $this->saveModelFile(
-                        $photos,
-                        \Faker\Factory::create()->image(storage_path('app'))
-                    );
-                } else {
-                    $photos->each(function (AlbumPhoto $photo) {
-                        $this->saveModelFile(
-                            $photo,
-                            \Faker\Factory::create()->image(storage_path('app'))
-                        );
-                    });
                 }
             }
         );

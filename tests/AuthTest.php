@@ -42,15 +42,14 @@ class AuthTest extends TestCase
                 '_token' => csrf_token()
             ],
             ['Accept' => 'application/json']
-        )->seeJsonEquals(
+        )->seeJson(
             [
                 'id' => Auth::id(),
                 'first_name' => $user->getAttributeValue('first_name'),
                 'last_name' => $user->getAttributeValue('last_name'),
                 'email' => $user->getAttributeValue('email'),
                 'created_at' => Auth::user()->created_at->format($this->date_format),
-                'updated_at' => Auth::user()->updated_at->format($this->date_format),
-                'avatar_url' => false
+                'updated_at' => Auth::user()->updated_at->format($this->date_format)
             ]
         );
         $user = Auth::user();
@@ -74,8 +73,7 @@ class AuthTest extends TestCase
                 'last_name' => $user->last_name,
                 'email' => $user->email,
                 'created_at' => $user->created_at->format($this->date_format),
-                'updated_at' => $user->updated_at->format($this->date_format),
-                'avatar_url' => false
+                'updated_at' => $user->updated_at->format($this->date_format)
             ]
         );
         $this->assertResponseStatus(200);

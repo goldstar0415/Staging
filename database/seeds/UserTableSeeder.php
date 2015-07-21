@@ -3,11 +3,9 @@
 use App\Role;
 use App\User;
 use Illuminate\Database\Seeder;
-use Seeds\FileSeeder;
 
 class UserTableSeeder extends Seeder
 {
-    use FileSeeder;
     /**
      * Run the database seeds.
      *
@@ -25,17 +23,9 @@ class UserTableSeeder extends Seeder
 
         $zoomer = Role::take('zoomer');
         factory(User::class, 100)->create()->each(
-            Closure::bind(
-                function (User $user) use ($zoomer) {
-                    $user->roles()->attach($zoomer);
-                    $this->saveModelFile(
-                        $user,
-                        \Faker\Factory::create()->image(storage_path('app')),
-                        'avatar'
-                    );
-                },
-                $this
-            )
+            function (User $user) use ($zoomer) {
+                $user->roles()->attach($zoomer);
+            }
         );
     }
 }
