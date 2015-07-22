@@ -11,7 +11,7 @@
     vm.images = UploaderService.images;
 
     vm.deleteImage = function (idx) {
-      vm.images.data.splice(idx, 1);
+      vm.images.files.splice(idx, 1);
     };
     vm.save = function () {
       UploaderService
