@@ -1,0 +1,74 @@
+<a ng-click="signUp.openSignUpModal()">Sign up</a>
+
+<script type="text/ng-template" id="SignUpModal.html">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Registration</h4>
+  </div>
+  <div class="modal-body">
+    <form ng-submit="modal.signUpUser(form)" name="form" novalidate>
+
+      <input type="text" name="first_name" placeholder="First name..." ng-model="modal.first_name" class="white"
+             required/>
+
+      <div ng-messages="form.first_name.$error" ng-if="form.$submitted || form.first_name.$touched" class="error-message">
+        <div ng-message="required">is required</div>
+      </div>
+
+      <input type="text" name="last_name" class="white" placeholder="Last name..." ng-model="modal.last_name"
+             required/>
+
+      <div ng-messages="form.last_name.$error" ng-if="form.$submitted || form.last_name.$touched" class="error-message">
+        <div ng-message="required">is required</div>
+      </div>
+
+      <input type="email" name="email" placeholder="E-mail..." class="white" ng-model="modal.email" required/>
+
+      <div ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched" class="error-message">
+        <div ng-messages-include="error-email-messages"></div>
+      </div>
+
+
+      <div class="password-block">
+        <input type="password"
+               name="password"
+               class="white"
+               placeholder="Password (min 6 symbols)..."
+               ng-model="modal.password"
+               minlength="6"
+               required/>
+        <a href="#" class="eye" eye-password></a>
+
+        <div ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched" class="error-message">
+          <div ng-messages-include="error-password-messages"></div>
+        </div>
+      </div>
+
+      <div class="password-block">
+        <input type="password"
+               name="password_confirmation"
+               class="white"
+               placeholder="Password confirmation..."
+               ng-model="modal.password_confirmation"
+               ng-match="modal.password"
+               minlength="6"
+               required/>
+        <a href="#" class="eye" eye-password></a>
+
+        <div ng-messages="form.password_confirmation.$error"
+             ng-if="form.$submitted || form.password_confirmation.$touched" class="error-message">
+          <div ng-messages-include="error-password-messages"></div>
+          <div ng-message="match">passwords must match</div>
+        </div>
+
+      </div>
+
+      <p>All fields are required</p>
+      <input type="submit" value="Zoom">
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a href="#">Sign In with Facebook</a>
+    <a href="#">Sign In with Google+</a>
+  </div>
+</script>

@@ -1,0 +1,22 @@
+//---<menu profile styles--->
+.menu-profile {
+  background: $dark_blue;
+  padding: 0;
+  ul {
+    padding: 0;
+    margin: 0;
+    height: 40px;
+    li {
+      &:first-child {
+        padding-left: 0;
+      }
+      display: inline-block;
+      font: $navigation_font;
+      padding-left: 24px;
+      float: left;
+      @include vertical_align;
+    }
+  }
+}
+
+//---</menu profile styles--->

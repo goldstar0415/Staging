@@ -1,22 +1,29 @@
 //---<photo_viewer styles--->
+.viewer-wrap {
+  width: 950px;
+}
+
 .photo-viewer {
-  margin: 0 auto;
-  z-index: 10000;
-  padding: 0;
   border-radius: 8px;
   box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.5);
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+  max-height: 600px;
+  overflow: hidden;
   .image {
     background: $dark_blue;
-    height: 630px;
+    height: 600px;
     float: left;
     position: relative;
     padding: 0;
+    img {
+      display: table;
+      margin: 0 auto;
+      max-height: 600px;
+      max-width: 780px;
+      @include vertical_align;
+    }
     .previous {
       display: block;
-      background: url(../img/icons/arrows.png) 0 0 no-repeat;
+      background: url(/assets/img/icons/arrows.png) 0 0 no-repeat;
       width: 15px;
       height: 26px;
       position: absolute;
@@ -26,12 +33,12 @@
       display: inline-block;
       overflow: hidden;
       &:hover {
-        background: url(../img/icons/arrows.png) 0 -28px no-repeat;
+        background: url(/assets/img/icons/arrows.png) 0 -28px no-repeat;
       }
     }
     .next {
       display: block;
-      background: url(../img/icons/arrows.png) -20px 0 no-repeat;
+      background: url(/assets/img/icons/arrows.png) -20px 0 no-repeat;
       width: 15px;
       height: 26px;
       position: absolute;
@@ -41,12 +48,12 @@
       display: inline-block;
       overflow: hidden;
       &:hover {
-        background: url(../img/icons/arrows.png) -20px -28px no-repeat;
+        background: url(/assets/img/icons/arrows.png) -20px -28px no-repeat;
       }
     }
   }
   .photo-comments {
-    padding: 15px;
+    padding: 10px 15px;
     float: right;
     background: #fff;
     .new-post {
@@ -68,9 +75,10 @@
       overflow-y: auto;
       position: relative;
       height: 500px;
+      padding: 0;
       .post {
         position: relative;
-        margin-top: 20px;
+        margin-top: 10px;
         border-bottom: 1px solid #e9edf0;
         &:after {
           content: ".";
@@ -82,51 +90,63 @@
         &:last-of-type {
           border: none;
         }
-        &:first-of-type {
-          margin-top: 0;
-        }
+        //&:first-of-type {
+        //  margin-top: 0;
+        //}
         .avatar {
           width: 40px;
           height: 40px;
           @include white_border3;
           border-radius: 50%;
           float: left;
-          .frame {
-            border: 2px solid #fff;
-            -webkit-border-radius: 30px;
-            -moz-border-radius: 30px;
-            border-radius: 30px;
-            float: left;
+        }
+        .frame {
+          border: 2px solid #fff;
+          -webkit-border-radius: 30px;
+          -moz-border-radius: 30px;
+          border-radius: 30px;
+          float: left;
+        }
+        .info {
+          padding: 0;
+          h3 {
+            margin: 0;
+            font: 500 18px "Ubuntu";
+            color: $dark_blue;
           }
-          .info {
-            width: 240px;
-            padding-right: 10px;
-            float: right;
+          p {
+            font: 400 12px/14px Arial, sans-serif;
           }
-          .small-share {
-            display: block;
-            width: 9px;
-            height: 9px;
-            text-indent: 10000px;
-            overflow: hidden;
-            background: url(../img/icons/small-share.png) 0 0 no-repeat;
-            position: absolute;
-            bottom: 15px;
-            right: 10px;
-            &:hover {
-              background: url(../img/icons/small-share.png) -9px 0 no-repeat;
-            }
+        }
+        .small-share {
+          display: block;
+          width: 9px;
+          height: 9px;
+          text-indent: 10000px;
+          overflow: hidden;
+          background: url(/assets/img/icons/small-share.png) 0 0 no-repeat;
+          position: absolute;
+          bottom: 15px;
+          right: 10px;
+          &:hover {
+            background: url(/assets/img/icons/small-share.png) -9px 0 no-repeat;
           }
-          .time {
-            color: #808080;
-            font: 11px/11px "Arial", "sans-serif";
-            margin: 8px 0 15px 0;
-          }
-          .rating {
-            position: absolute;
-            top: 0;
-            right: 10px;
-            font-size: 11px;
+        }
+        .time {
+          color: #808080;
+          font: 11px/11px "Arial", "sans-serif";
+          margin: 8px 0 15px 0;
+        }
+        .rating {
+          position: absolute;
+          top: 0;
+          right: 10px;
+          font-size: 11px;
+          color: $blue;
+          @include transition_color;
+          &:hover {
+            color: $navy_blue;
+            text-decoration: none;
           }
         }
       }
@@ -138,9 +158,49 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      box-sizing: border-box;
-      background: url(../img/icons/count.png) 0 0 no-repeat;
+      background: url(/assets/img/icons/count.png) 0 5px no-repeat;
     }
   }
 }
+
+.viewer-content {
+  background: transparent;
+}
+
+.new-post {
+  padding: 5px;
+  border-radius: 3px;
+  background: #e9edf0;
+  textarea {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #dee5ea;
+    padding: 5px;
+    background: #fff;
+    resize: none;
+    @include transition_shadow;
+    &:hover, &:focus {
+      border: 1px solid #76c7dc;
+      @include blue_shadow;
+      @include transition_shadow;
+      outline: none;
+    }
+  }
+  input {
+    float: right;
+    @include button;
+    height: 22px;
+    width: 54px;
+    font: 400 12px/12px "Ubuntu";
+    background: $dark_blue;
+    padding: 3px;
+    border: none;
+    outline: none;
+    &:hover {
+      background: #1a415b;
+      @include transition_bg;
+    }
+  }
+}
+
 //---</photo_viewer styles--->

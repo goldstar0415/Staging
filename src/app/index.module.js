@@ -8,6 +8,8 @@
       'ngTouch',
       'ngSanitize',
       'ngResource',
+      'ngMessages',
+      'ngFileUpload',
       'ui.router',
       'ui.bootstrap',
       'dialogs.main',

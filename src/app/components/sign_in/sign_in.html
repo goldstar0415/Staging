@@ -1,21 +1,37 @@
-<nav class="navbar navbar-static-top navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="https://github.com/Swiip/generator-gulp-angular">
-        <span class="glyphicon glyphicon-home"></span> Gulp Angular
-      </a>
-    </div>
+<a ng-click="signIn.openSignInModal()">Sign in</a>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
-      <ul class="nav navbar-nav">
-        <li class="active"><a ng-href="#">Home</a></li>
-        <li><a ng-href="#">About</a></li>
-        <li><a ng-href="#">Contact</a></li>
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right acme-navbar-text">
-        <li>Application was created {{ vm.relativeDate }}.</li>
-      </ul>
-    </div>
+<script type="text/ng-template" id="SignInModal.html">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Authorization</h4>
   </div>
-</nav>
+  <div class="modal-body">
+    <form ng-submit="modal.userLogin(form)" name="form" novalidate>
+      <input type="email" name="email" ng-model="modal.email" class="white" placeholder="E-mail..." required>
+
+      <div class="error-message" ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched">
+        <div ng-messages-include="error-email-messages"></div>
+      </div>
+
+      <div class="password-block">
+        <input type="password" name="password" class="white" placeholder="Password..." minlength="6"
+               ng-model="modal.password"
+               required >
+        <a href="#" class="eye" eye-password></a>
+
+        <div class="error-message" ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched">
+          <div ng-messages-include="error-password-messages"></div>
+        </div>
+      </div>
+
+      <p>All fields are required
+        <password-recovery></password-recovery>
+      </p>
+      <input type="submit" value="Zoom">
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a href="#">Sign In with Facebook</a>
+    <a href="#">Sign In with Google+</a>
+  </div>
+</script>

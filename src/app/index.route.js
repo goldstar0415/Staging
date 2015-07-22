@@ -14,7 +14,7 @@
       })
       .state('settings', {
         url: '/settings',
-        templateUrl: 'app/settings/settings.html',
+        templateUrl: 'app/modules/settings/settings.html',
         controller: 'SettingsController',
         controllerAs: 'Settings',
         mapState: 'hidden'

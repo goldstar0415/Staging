@@ -1,0 +1,80 @@
+.right-menu, .left-menu {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 230px;
+  height: auto;
+  z-index: 1;
+  background: $dark_blue;
+  @include transition_width;
+  ul {
+    margin: 0;
+    padding: 0;
+    li {
+      border-bottom: 1px solid #173041;
+      width: 200px;
+      display: block;
+      margin: 0 15px;
+      a {
+        display: block;
+        color: #fff;
+        font: $navigation_font;
+        margin-top: 3px;
+        padding: 12px 0 15px 40px;
+        &:hover {
+          text-decoration: none;
+          color: $blue;
+          background-position-y: -41px;
+        }
+      }
+      &:last-child {
+        border-bottom: none;
+        position: absolute;
+        bottom: 15px;
+      }
+    }
+    .create-btn {
+      @include button;
+      background-color: $green;
+      height: 38px;
+      width: 140px;
+      margin: 15px auto 10px;
+      display: table;
+      &:hover {
+        background-color: $light_green;
+      }
+    }
+    .intro-link {
+      background: url(/assets/img/icons/intro-link.png) no-repeat;
+    }
+    .zoomers-link {
+      background: url(/assets/img/icons/zoomers.png) no-repeat;
+    }
+    .blog-link {
+      background: url(/assets/img/icons/blog.png) no-repeat;
+    }
+    .about-link {
+      background: url(/assets/img/icons/about.png) no-repeat;
+    }
+    .contacts-link {
+      background: url(/assets/img/icons/contacts.png) no-repeat;
+    }
+    .sign-btn {
+      @include button;
+      background-color: $navy_blue;
+      width: 120px;
+      height: 28px;
+      margin: 0 auto;
+      display: table;
+      &:hover {
+        background-color: $light_blue;
+      }
+    }
+  }
+}
+
+.left-menu {
+  left: 0 !important;
+}

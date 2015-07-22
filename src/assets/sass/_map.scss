@@ -1,0 +1,17 @@
+//map styles
+.map {
+  background-color: #23527c;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.map.full-size {
+  position: absolute;
+  height: 100%;
+}
+
+.map.small-size {
+  height: 400px;
+}
