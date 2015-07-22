@@ -95,6 +95,8 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      */
     protected $fillable = ['avatar', 'last_name', 'first_name', 'email', 'password'];
 
+    protected $appends = ['avatar_url'];
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -117,6 +119,11 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         parent::__construct($attributes);
     }
 
+    public function getAvatarUrlAttribute()
+    {
+        return $this->avatar->url();
+    }
+    
     public function followings()
     {
         return $this->hasMany(Following::class, 'follower_id');
