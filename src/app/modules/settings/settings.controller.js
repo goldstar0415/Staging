@@ -6,12 +6,23 @@
     .controller('SettingsController', SettingsController);
 
   /** @ngInject */
-  function SettingsController(UploaderService) {
+  function SettingsController(UploaderService, toastr, API_URL) {
     var vm = this;
     vm.images = UploaderService.images;
 
+    vm.deleteImage = function (idx) {
+      vm.images.data.splice(idx, 1);
+    };
     vm.save = function () {
-      UploaderService.upload('http://api.zoomtivity/albums', {id: 1});
+      UploaderService
+        .upload(API_URL + '/albums', 'POST', {id: 1})
+        .then(function (resp) {
+          console.log(resp);
+        })
+        .catch(function (resp) {
+          toastr.error('Upload failed');
+        })
+      ;
     }
   }
 })();
