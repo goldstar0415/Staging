@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class AuthTest extends TestCase
+class AuthTest extends LaravelTestCase
 {
     use DatabaseTransactions;
 
@@ -22,7 +22,6 @@ class AuthTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        Session::start();
         $this->date_format = DB::getQueryGrammar()->getDateFormat();
     }
 
@@ -107,4 +106,5 @@ class AuthTest extends TestCase
         )->seeJson(['message' => 'user already authenticated']);
         $this->assertResponseStatus(400);
     }
+
 }

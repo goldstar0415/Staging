@@ -14,9 +14,6 @@
 /**
  * User resource
  */
-
-Route::post('users/login', 'Auth\AuthController@login');
-Route::resource('users', 'Auth\AuthController', ['except' => 'create']);
-Route::controller('users', 'Auth\PasswordController');
+Route::controller('users', 'UserController');
 //-----------------------------------------------
-Route::get('file', 'DownloadController@index');
+Route::get('link', 'DownloadController@index');

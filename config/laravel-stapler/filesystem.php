@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'url' => 'file=:class/:attachment/:id_partition/:style/:filename',
+    'url' => 'link=:class/:attachment/:id_partition/:style/:filename',
 
     /*
     |--------------------------------------------------------------------------
