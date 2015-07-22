@@ -1,6 +1,9 @@
 //---<photo_viewer styles--->
 .viewer-wrap {
-  width: 950px;
+  width: 100%;
+  .modal-dialog {
+    width: 950px!important;
+  }
 }
 
 .photo-viewer {

@@ -22,17 +22,22 @@
 
     // snap
     var disable = "";
+    var touchToDrag = false;
     if($(window).width() < 768) {
+      touchToDrag: true;
       disable = "right";
     } else {
       disable = "left";
+      touchToDrag: false;
     }
 
     snapRemoteProvider.globalOptions = {
       disable: disable,
       hyperextensible: false,
       maxPosition: 230,
-      minPosition: -230
+      minPosition: -230,
+      minDragDistance: 40,
+      touchToDrag: touchToDrag
     };
 
     // loading bar

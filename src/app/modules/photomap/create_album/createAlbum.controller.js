@@ -3,10 +3,10 @@
 
   angular
     .module('zoomtivity')
-    .controller('PhotomapController', PhotomapController);
+    .controller('CreateAlbumController', CreateAlbumController);
 
   /** @ngInject */
-  function PhotomapController(albums) {
+  function CreateAlbumController(album) {
     var vm = this;
 
 
