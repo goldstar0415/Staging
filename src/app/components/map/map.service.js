@@ -587,12 +587,9 @@
         GetCurrentLayer().removeLayer(Marker);
       }
 
-      function DragMarker(Marker, Callback) {
-        Marker.on('dragend', function (e) {
-          callback(e);
-        });
+      function BindMarkerToInput(Marker, InputValue) {
+        
       }
-
 
       //Processing functions
       //Return concave hull from points array
@@ -688,6 +685,36 @@
         var zoomLevel = zoom || 8;
         map.locate({setView: true, maxZoom: zoomLevel});
       }
+      function FocusMapToGivenLocation(location, zoom) {
+        map.setView(location, zoom);
+      }
+
+
+      //=================================================================
+      function GetDataByBBox(bbox_array) {
+        //Тут отправим запрос на сервер из кучки ббоксов и получим кучу хлама объектами
+
+      }
+
+      function AddNewData() {
+        //Тут переберем кучу хлама прибывшую с сервера. Добавляем её к общей куче оставляя только уникальные объекты
+      }
+
+      function SortByDate(date) {
+        //Тут только для ивентов. Сначала те которые ближе к текущей дате.
+
+      }
+
+      function SortByName(name) {
+        //Тут отсеять только те, в которых будет найдено совпадение в имени
+      }
+
+      function SortBySubcategory(categories) {
+        //Оставить только те, которые попадают под заданые категории и сортировать их по рейтингу.
+      }
+
+      //=================================================================
+
 
       return {
         Init: InitMap,
@@ -715,7 +742,8 @@
         GetAddressByLatlng: GetAddressByLatlng,
         GetLatlngByAddress: GetLatlngByAddress,
         GetCurrentLocation: GetCurrentLocation,
-        FocusMapToCurrentLocation: FocusMapToCurrentLocation
+        FocusMapToCurrentLocation: FocusMapToCurrentLocation,
+        FocusMapToGivenLocation: FocusMapToGivenLocation
       };
     });
 
