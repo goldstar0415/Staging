@@ -16,13 +16,16 @@
     };
 
     /** @ngInject */
-    function UploaderController(UploaderService) {
+    function UploaderController($scope, UploaderService) {
       var vm = this;
-      vm.images = UploaderService.images;
+      vm.images = UploaderService.images.files;
 
+      $scope.$watch('Uploader.images', function (val) {
+        if(val) {
+          UploaderService.images.files = val;
+        }
+      });
     }
-
-
   }
 
 })();

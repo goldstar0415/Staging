@@ -1,13 +1,14 @@
 <div class="container">
   <br/>
 
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <uploader></uploader>
-    {{Settings.images}}
-    <div ng-repeat="i in _.range(Settings.images.length)" class="col-sm-1">
-      {{i}}
-      <img ngf-src="Settings.images[i]" class="img-thumbnail"/>
+
+    <div ng-repeat="image in Settings.images.files track by $index">
+      <img ngf-src="image" class="img-thumbnail"/>
+      <a ng-click="Settings.deleteImage($index)">X</a>
     </div>
+
   </div>
 
   <a ng-click="Settings.save()">Save</a>
