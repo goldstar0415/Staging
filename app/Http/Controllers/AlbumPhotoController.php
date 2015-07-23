@@ -6,10 +6,8 @@ use App\AlbumPhoto;
 use App\Http\Requests\AlbumPhoto\AlbumPhotoRequest;
 use App\Http\Requests\AlbumPhoto\AlbumPhotoUpdateRequest;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 class AlbumPhotoController extends Controller

@@ -20,5 +20,4 @@ class DownloadController extends Controller
         $path = storage_path('app/upload/') . $link;
         return response()->download($path);
     }
-
 }

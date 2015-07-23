@@ -9,7 +9,6 @@ use App\Http\Requests\Album\PhotoUpdateRequest;
 use App\Http\Requests\Album\StoreRequest;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Validation\UnauthorizedException;
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
 

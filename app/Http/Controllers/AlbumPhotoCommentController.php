@@ -7,10 +7,8 @@ use App\AlbumPhotoComment;
 use App\Http\Requests\PhotoComments\PhotoCommentsRequest;
 use App\Http\Requests\PhotoComments\PhotoCommentStoreRequest;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class AlbumPhotoCommentController extends Controller
 {
