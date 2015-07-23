@@ -49,13 +49,23 @@ class AlbumController extends Controller
 
     /**
      * Display the specified resource.
+     * @param \App\User $user
+     * @return
+     */
+    public function showForUser($user)
+    {
+        return $user->albums;
+    }
+
+    /**
+     * Display the specified resource.
      *
      * @param  Album $album
      * @return Album
      */
     public function show($album)
     {
-        return $album;
+        return $album->load('photos');
     }
 
     /**
@@ -90,7 +100,7 @@ class AlbumController extends Controller
      *
      * @param AlbumRequest $request
      * @param Album $albums
-     * @throws \Exception
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(AlbumRequest $request, $albums)
     {

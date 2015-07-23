@@ -2,8 +2,13 @@
 
 namespace App\Providers;
 
+use App\Album;
+use App\AlbumPhoto;
+use App\AlbumPhotoComment;
+use App\User;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -24,7 +29,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $router->model('albums', \App\Album::class);
+        $router->model('albums', Album::class);
+        $router->model('photos', AlbumPhoto::class);
+        $router->model('users', User::class);
+        
+        $router->bind('comments', function ($value) use ($router) {
+            if (explode('.', $router->currentRouteName())[0] === 'photos') {
+                $comment = AlbumPhotoComment::where('id', $value)->first();
+                if ($comment) {
+                    return $comment;
+                } else {
+                    throw new NotFoundHttpException;
+                }
+            }
+            return null;
+        });
 
         parent::boot($router);
     }
