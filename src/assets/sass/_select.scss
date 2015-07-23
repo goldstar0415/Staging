@@ -1,0 +1,46 @@
+.form-group .bootstrap-select.btn-group {
+  width: 100% !important;
+  border-radius: 3px;
+  outline: none;
+  .btn-default {
+    @include input_border;
+    &:hover {
+      @include input_hover_effects;
+      background: $white;
+    }
+    &:focus {
+      outline: none !important;
+      background: #e0eaf1;
+    }
+  }
+}
+
+.bootstrap-select.btn-group .dropdown-menu {
+  top: 100%;
+  bottom: auto;
+  max-height: 300px !important;
+  padding: 0;
+  li {
+    border-bottom: 1px solid #cecece;
+    a {
+      padding: 5px 10px;
+      &:focus {
+        outline: none!important;
+      }
+    }
+  }
+}
+
+.dropup .caret {
+  border-top: 4px dashed !important;
+  border-bottom: 0;
+}
+
+.open > .btn-default.dropdown-toggle {
+  background: #e0eaf1 !important;
+}
+
+.selected {
+  outline: none;
+  background: #e0eaf1;
+}

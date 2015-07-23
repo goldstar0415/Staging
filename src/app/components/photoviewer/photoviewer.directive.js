@@ -72,7 +72,8 @@
         Photo.postComment({id: id});
       };
       vm.deleteComment = function(commentId) {
-        Photo.deleteComment({id: commentId});
+        var id  = vm.currentPhoto.id;
+        Photo.deleteComment({id: id,comment_id: commentId});
       };
       vm.fullScreen  = function() {
 

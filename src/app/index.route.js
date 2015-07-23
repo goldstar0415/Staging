@@ -12,17 +12,24 @@
         url: '/',
         mapState: 'big'
       })
+      .state('profile_menu', {
+        abstract: true,
+        templateUrl: 'app/components/profile_menu/profile_menu.html',
+        controller: 'ProfileMenuController',
+        controllerAs: 'Profile',
+      })
       .state('photomap', {
         url: '/user/:user_id/albums',
         templateUrl: 'app/modules/photomap/photomap.html',
         controller: 'PhotomapController',
         controllerAs: 'Photomap',
         resolve: {
-          albums: function (Album, $stateParams) {
+          albums: function (Album, $stateParams, MapService) {
             return Album.query({user_id: $stateParams.user_id});
           }
         },
-        mapState: 'small'
+        mapState: 'small',
+        parent: 'profile_menu'
       })
       .state('album', {
         url: '/albums/:album_id',
@@ -34,7 +41,8 @@
             return Album.get({id: $stateParams.album_id});
           }
         },
-        mapState: 'small'
+        mapState: 'small',
+        parent: 'profile_menu'
       })
       .state('editAlbum', {
         url: '/albums/:album_id/edit',
@@ -60,6 +68,9 @@
         },
         mapState: 'small'
       })
+      .state('friendsmap', {})
+      .state('friendsmap_create', {})
+      .state('friendsmap_edit', {})
       .state('settings', {
         url: '/settings',
         templateUrl: 'app/modules/settings/settings.html',

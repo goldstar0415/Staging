@@ -1,19 +1,16 @@
 .photo {
-  width: 158px;
+  width: 100%;
   padding: 0;
   float: left;
-  .img-wrap {
-    height: 96px;
-    overflow: hidden;
-    margin: 10px 5px;
-    float: left;
-    max-width: 146px;
-    border-radius: 5px;
-    border: 1px solid $dark_blue;
-    img {
-      max-width: 146px;
-      min-height: 96px;
-      cursor: pointer;
-    }
+  height: 100px;
+  overflow: hidden;
+  margin: 0 0 20px;
+  max-width: 146px;
+  border-radius: 5px;
+  border: 1px solid $light_grey;
+  img {
+    max-width: 160px;
+    min-height: 96px;
+    cursor: pointer;
   }
 }

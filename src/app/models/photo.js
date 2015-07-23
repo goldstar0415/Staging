@@ -7,7 +7,7 @@
 
   /** @ngInject */
   function Photo($resource, API_URL) {
-    return $resource(API_URL + '/photos/:id', {id: '@id'}, {
+    return $resource(API_URL + '/photos/:id', {id: '@id', comment_id: '@comment_id'}, {
       setAsAvatar: {
         url: API_URL + '/photos/:id/avatar',
         method: 'GET'
@@ -20,7 +20,7 @@
         method: 'GET'
       },
       deleteComment: {
-        url: API_URL + '/comments/:id',
+        url: API_URL + '/photos/:id/comments/:comment_id',
         method: 'DELETE'
       },
       postComment: {

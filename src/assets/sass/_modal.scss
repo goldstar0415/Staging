@@ -80,18 +80,6 @@
       }
     }
   }
-  .eye {
-    display: block;
-    width: 20px;
-    height: 12px;
-    background: url(/assets/img/icons/eye.png) no-repeat;
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    &:hover {
-      background: url(/assets/img/icons/eye.png) 0 -16px no-repeat;
-    }
-  }
   form {
     .password-block {
       display: block;
