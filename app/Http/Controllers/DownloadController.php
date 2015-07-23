@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class DownloadController extends Controller
 {
@@ -13,11 +12,12 @@ class DownloadController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return Response
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function index(Request $request)
     {
-        $path = storage_path('app/upload/') . $request->get('file');
+        $link = $request->get('link');
+        $path = storage_path('app/upload/') . $link;
         return response()->download($path);
     }
 

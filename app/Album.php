@@ -24,6 +24,8 @@ class Album extends BaseModel
 {
     use PostgisTrait;
 
+//    protected $hidden
+
     protected $guarded = ['id', 'user_id'];
 
     protected $postgisFields = [
