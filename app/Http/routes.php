@@ -15,5 +15,11 @@
  * User resource
  */
 Route::controller('users', 'UserController');
+
+Route::resource('albums', 'AlbumController', ['except' => ['create', 'edit']]);
 //-----------------------------------------------
-Route::get('link', 'DownloadController@index');
+Route::get('file', 'DownloadController@index');
+
+get('test', function () {
+    return view('form');
+});

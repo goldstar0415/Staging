@@ -15,8 +15,8 @@ class CreateAlbumPhotosTable extends Migration
         Schema::create('album_photos', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('album_id')->unsigned();
-            $table->string('address');
-            $table->point('location');
+            $table->string('address')->nullable();
+            $table->point('location')->nullable();
             $table->timestamps();
 
             $table->foreign('album_id')->references('id')->on('albums')

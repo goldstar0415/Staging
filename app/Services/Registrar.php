@@ -5,10 +5,8 @@ namespace App\Services;
 
 use App\User;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Auth;
 use Illuminate\Http\Request;
 use Lang;
-use Cache;
 use Validator;
 
 trait Registrar

@@ -15,9 +15,9 @@ class CreateAlbumsTable extends Migration
         Schema::create('albums', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->string('name', 128);
-            $table->string('address');
-            $table->point('location');
+            $table->string('title', 128);
+            $table->string('address')->nullable();
+            $table->point('location')->nullable();
             $table->boolean('is_private')->default(false);
             $table->timestamps();
 

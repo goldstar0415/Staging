@@ -5,7 +5,6 @@ namespace App;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 
 /**

@@ -15,7 +15,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property integer $album_id
  * @property string $address
  * @property Point $location
- * @property string $photo
+ * @property \Codesleeve\Stapler\Attachment $photo
  *
  * Relation properties
  * @property Album $album
@@ -31,6 +31,8 @@ class AlbumPhoto extends BaseModel implements StaplerableInterface
         'location' => Point::class,
     ];
 
+    protected $appends = ['photo_url'];
+
     protected $fillable = ['photo', 'location', 'address'];
 
     /**
@@ -40,6 +42,14 @@ class AlbumPhoto extends BaseModel implements StaplerableInterface
     {
         $this->hasAttachedFile('photo');
         parent::__construct($attributes);
+    }
+
+    public function getPhotoUrlAttribute()
+    {
+        $urls['original'] = $this->photo->url();
+        $urls['medium'] = $this->photo->url('medium');
+        $urls['thumb'] = $this->photo->url('thumb');
+        return $urls;
     }
 
     public function album()
