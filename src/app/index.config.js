@@ -6,12 +6,15 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, toastr, cfpLoadingBarProvider, snapRemoteProvider, $locationProvider, DEBUG) {
+  function config($logProvider, toastr, $httpProvider, cfpLoadingBarProvider, snapRemoteProvider, $locationProvider, DEBUG) {
     // Enable log
     $logProvider.debugEnabled(DEBUG);
     if (!DEBUG) {
       $locationProvider.html5Mode({enabled: true, requireBase: false});
     }
+
+    //fix send cookies cross domain
+    $httpProvider.defaults.withCredentials = true;
 
     // toastr
     toastr.options.timeOut = 3000;

@@ -29,6 +29,9 @@
     function SignInModalController(SignInService, $modalInstance) {
       var vm = this;
 
+      vm.close = function () {
+        $modalInstance.close();
+      };
       vm.userLogin = function (form) {
         SignInService.userLogin(form, vm, $modalInstance);
       };

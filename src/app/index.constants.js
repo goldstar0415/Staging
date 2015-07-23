@@ -5,8 +5,8 @@
   angular
     .module('zoomtivity')
     .constant('DEBUG', true)
-    .constant('API_URL', 'http://api.zoomtivity')
-    .constant('SOCKET_URL', 'http://api.zoomtivity:8080')
+    .constant('API_URL', 'http://api.zoomtivity.dev')
+    .constant('SOCKET_URL', 'http://api.zoomtivity.dev:8080')
     .constant('toastr', toastr)
     .constant('moment', moment);
 

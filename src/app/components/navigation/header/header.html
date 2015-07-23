@@ -1,35 +1,24 @@
 <header>
-  <div class="logo">
+  <div ui-sref="index" class="logo">
     <img src='assets/img/icons/logo.svg' alt="logo">
   </div>
-  <!--for registered users-->
-  <nav ng-if="currentUser" class="j-hide">
+
+  <nav>
     <ul>
       <li class="map-tab">
-        <a href="#">Map<span class="map-icon"></span></a>
+        <a ui-sref="index">Map<span class="map-icon"></span></a>
       </li>
-      <li class="profile-tab active-tab">
-        <a href="#">David<span><img src="assets/img/ava.png" alt="User avatar"></span></a>
-      </li>
-    </ul>
-    <a href="#" class="menu-btn" snap-toggle="{{Header.toggle}}">
-      <span class="menu-icon"></span>
-    </a>
-  </nav>
-
-
-  <!--for unregistered users-->
-  <nav ng-if="!currentUser" class="">
-    <ul>
-      <li class="map-tab">
-        <a href="#">Map<span class="map-icon"></span></a>
-      </li>
-      <li>
+      <li ng-if="!$root.currentUser">
         <sign-in></sign-in>
       </li>
       <li>|</li>
-      <li>
+      <li ng-if="!$root.currentUser">
         <sign-up></sign-up>
+      </li>
+      <li ng-if="$root.currentUser" class="profile-tab active-tab">
+        <a ui-sref="settings">{{$root.currentUser.first_name}}
+          <span><img src="assets/img/ava.png"></span>
+        </a>
       </li>
     </ul>
     <a href="#" class="menu-btn" snap-toggle="{{Header.toggle}}">

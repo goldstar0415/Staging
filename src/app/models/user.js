@@ -9,8 +9,7 @@
   function User($resource, API_URL) {
     return $resource(API_URL + '/users/:id', {id: '@id'}, {
       currentUser: {
-        url: API_URL + '/users/me',
-        method: 'POST'
+        url: API_URL + '/users/me'
       },
       signIn: {
         url: API_URL + '/users/login',
@@ -22,7 +21,7 @@
       },
       logOut: {
         url: API_URL + '/users/logout',
-        method: 'DELETE'
+        method: 'GET'
       },
       recoveryPassword: {
         url: API_URL + '/users/recovery',
