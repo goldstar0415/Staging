@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Contracts\Validation\UnauthorizedException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -41,6 +42,8 @@ class Handler extends ExceptionHandler
     {
         if ($e instanceof UnauthorizedException) {
             return response()->json(['message' => 'user unauthorized'], 401);
+        } elseif ($e instanceof NotFoundHttpException) {
+            return response()->json(['message' => 'not found'], 404);
         }
 
         return parent::render($request, $e);

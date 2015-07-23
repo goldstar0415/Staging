@@ -8,7 +8,6 @@ use App\AlbumPhotoComment;
 use App\User;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -39,7 +38,7 @@ class RouteServiceProvider extends ServiceProvider
                 if ($comment) {
                     return $comment;
                 } else {
-                    throw new NotFoundHttpException;
+                    abort(404);
                 }
             }
             return null;
