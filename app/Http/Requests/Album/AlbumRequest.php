@@ -3,17 +3,19 @@
 namespace App\Http\Requests\Album;
 
 use App\Http\Requests\Request;
+use Illuminate\Contracts\Auth\Guard;
 
-abstract class AlbumRequest extends Request
+class AlbumRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
      *
+     * @param Guard $auth
      * @return bool
      */
-    public function authorize()
+    public function authorize(Guard $auth)
     {
-        return false;
+        return $this->route('albums')->user_id === $auth->id();
     }
 
     /**

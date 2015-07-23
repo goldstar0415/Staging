@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Album;
 use App\AlbumPhoto;
+use App\Http\Requests\Album\AlbumRequest;
 use App\Http\Requests\Album\PhotoUpdateRequest;
 use App\Http\Requests\Album\StoreRequest;
 use Illuminate\Contracts\Auth\Guard;
@@ -87,10 +88,14 @@ class AlbumController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param AlbumRequest $request
      * @param Album $albums
+     * @throws \Exception
      */
-    public function destroy($albums)
+    public function destroy(AlbumRequest $request, $albums)
     {
         $albums->delete();
+
+        return response()->json(['message' => 'Album was successfuly deleted']);
     }
 }
