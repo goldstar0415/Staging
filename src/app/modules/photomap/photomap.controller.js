@@ -8,7 +8,6 @@
   /** @ngInject */
   function PhotomapController(albums) {
     var vm = this;
-
-
+    vm.albums = albums;
   }
 })();

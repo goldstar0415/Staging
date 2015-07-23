@@ -18,14 +18,14 @@
         controller: 'PhotomapController',
         controllerAs: 'Photomap',
         resolve: {
-          albums: function (Album) {
-            return Album.query();
+          albums: function (Album, $stateParams) {
+            return Album.query({user_id: $stateParams.user_id});
           }
         },
         mapState: 'small'
       })
       .state('album', {
-        url: '/user/:user_id/albums/:album_id',
+        url: '/albums/:album_id',
         templateUrl: 'app/modules/photomap/album/album.html',
         controller: 'AlbumController',
         controllerAs: 'Album',
@@ -40,7 +40,7 @@
         url: '/albums/:album_id/edit',
         templateUrl: 'app/modules/photomap/create_album/album_create.html',
         controller: 'EditAlbumController',
-        controllerAs: 'vm',
+        controllerAs: 'EditAlbum',
         resolve: {
           album: function (Album, $stateParams) {
             return Album.get({id: $stateParams.album_id});
@@ -52,7 +52,7 @@
         url: '/albums/create',
         templateUrl: 'app/modules/photomap/create_album/album_create.html',
         controller: 'CreateAlbumController',
-        controllerAs: 'vm',
+        controllerAs: 'CreateAlbum',
         resolve: {
           album: function (AlbumModel) {
             return new AlbumModel();
@@ -66,8 +66,7 @@
         controller: 'SettingsController',
         controllerAs: 'Settings',
         mapState: 'hidden'
-      })
-    ;
+      });
 
     $urlRouterProvider.otherwise('/');
   }
