@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\AlbumPhoto;
 use App\AlbumPhotoComment;
-use App\Http\Requests\PhotoCommentsRequest;
-use App\Http\Requests\PhotoCommentStoreRequest;
+use App\Http\Requests\PhotoComments\PhotoCommentsRequest;
+use App\Http\Requests\PhotoComments\PhotoCommentStoreRequest;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 
@@ -25,9 +25,9 @@ class AlbumPhotoCommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param PhotoCommentStoreRequest|Request $request
+     * @param PhotoCommentStoreRequest $request
      * @param \App\AlbumPhoto $photos
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(PhotoCommentStoreRequest $request, $photos)
     {
@@ -44,12 +44,13 @@ class AlbumPhotoCommentController extends Controller
      *
      * @param PhotoCommentsRequest $request
      * @param AlbumPhoto $photos
-     * @return Response
+     * @param AlbumPhotoComment $comment
+     * @return \Illuminate\Http\JsonResponse
      * @internal param int $id
      */
-    public function destroy(PhotoCommentsRequest $request, $photos)
+    public function destroy(PhotoCommentsRequest $request, $photos, $comment)
     {
-        $photos->delete();
+        $comment->delete();
 
         return response()->json(['message' => 'Comment was successfuly deleted']);
     }

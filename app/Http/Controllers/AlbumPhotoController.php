@@ -35,20 +35,23 @@ class AlbumPhotoController extends Controller
 
         return response()->json(['message' => 'Avatar was successfuly changed']);
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
+     * @param  AlbumPhotoUpdateRequest $request
      * @param  AlbumPhoto $photos
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(AlbumPhotoUpdateRequest $request, $photos)
     {
         $photos->address = $request->input('address');
-        list($lat, $lng) = $request->input('location');
+        $lat = $request->input('location.lat');
+        $lng = $request->input('location.lng');
         $photos->location = new Point($lat, $lng);
         $photos->save();
+
+        return response()->json(['message' => 'Photo was successfuly updated']);
     }
 
     /**

@@ -25,7 +25,3 @@ Route::get('photos/{photos}/avatar', 'AlbumPhotoController@setAvatar');
 Route::resource('photos.comments', 'AlbumPhotoCommentController', ['only' => ['store', 'destroy']]);
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
-
-get('test', function () {
-    return view('form');
-});

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\PhotoComments;
 
 use App\Http\Requests\Request;
 use Illuminate\Contracts\Auth\Guard;

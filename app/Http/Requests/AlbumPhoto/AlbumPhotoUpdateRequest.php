@@ -12,7 +12,7 @@ class AlbumPhotoUpdateRequest extends AlbumPhotoRequest
     public function rules()
     {
         $rules = [
-            'address' => 'string'
+            'address' => 'string|max:255'
         ];
         $rules = $this->arrayFieldRules('location', 'numeric', false);
 

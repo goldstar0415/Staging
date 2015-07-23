@@ -15,7 +15,7 @@ class AlbumPhotoRequest extends Request
      */
     public function authorize(Guard $auth)
     {
-        return $this->route('photo')->album->user->id === $auth->id();
+        return $this->route('photos')->album->user->id === $auth->id();
     }
 
     /**
