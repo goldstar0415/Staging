@@ -42,7 +42,6 @@
 
     function PhotoViewerController($modalInstance, items, index, photoData, Photo) {
       var vm = this;
-      var items = items;
       var currentIndex = index;
       vm.currentPhoto = photoData;
 
@@ -73,16 +72,11 @@
         Photo.postComment({id: id});
       };
       vm.deleteComment = function(commentId) {
-        var id = vm.currentPhoto.id;
-        Photo.deleteComment({id: id, comment_id: commentId});
+        Photo.deleteComment({id: commentId});
       };
       vm.fullScreen  = function() {
 
       };
-
-      function GetPhotoInfo(id) {
-        return Photo.get({id: id});
-      }
     }
   }
 })();
