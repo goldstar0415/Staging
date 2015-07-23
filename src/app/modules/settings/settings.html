@@ -1,16 +1,431 @@
-<div class="container">
-  <br/>
+<div class="col-xs-12">
+  <div class="container wrap">
+    <div class="col-xs-9 central">
+      <h2>Profile settings</h2>
+      <!----Personal information block---->
+      <div class="col-xs-12 settings-block">
+        <h3>Personal information</h3>
 
-  <div class="col-sm-4">
-    <uploader></uploader>
+        <div class="col-xs-4 no-pad">
+          <figure class="avatar">
+            <img src="assets/img/01.png" alt="">
+          </figure>
+          <a href="#" class="edit-photo">Edit avatar</a>
+        </div>
+        <div class="col-xs-8 no-pad">
+          <form role="form">
+            <div class="col-xs-12 form-group no-pad">
+              <div class="col-xs-3 no-pad">
+                <label>Name</label>
+              </div>
+              <div class="col-xs-9 no-pad">
+                <input class="half-width" type="text" value="Victoria" placeholder="First name...">
+                <input class="half-width" type="text" value="Stanley" placeholder="Last name...">
+              </div>
+            </div>
 
-    <div ng-repeat="image in Settings.images.files track by $index">
-      <img ngf-src="image" class="img-thumbnail"/>
-      <a ng-click="Settings.deleteImage($index)">X</a>
+            <div class="col-xs-12 form-group no-pad">
+              <div class="col-xs-3 no-pad">
+                <label>Birthday</label>
+              </div>
+              <div class="col-xs-9 no-pad">
+                <input type="date">
+              </div>
+            </div>
+
+            <div class="col-xs-12 form-group no-pad">
+              <div class="col-xs-3 no-pad">
+                <label>Gender</label>
+              </div>
+              <div class="col-xs-9 no-pad">
+                <div class="form-group half-width">
+                  <input type="radio" name="radio" value="male" id="radio1" checked="checked"
+                         class="radio">
+                  <label for="radio1">Male</label>
+                </div>
+                <div class="form-group half-width">
+                  <input type="radio" name="radio" value="female" id="radio2" class="radio">
+                  <label for="radio2">Female</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-12 form-group no-pad">
+              <div class="col-xs-3 no-pad">
+                <label>Location</label>
+              </div>
+              <div class="col-xs-9 no-pad">
+                <input type="text">
+                <a href="#" class="compass" title="Find out the location"></a>
+              </div>
+            </div>
+
+            <div class="col-xs-12 form-group no-pad">
+              <div class="col-xs-3 no-pad">
+                <label>Timezone</label>
+              </div>
+              <div class="col-xs-9 no-pad">
+                <select class="selectpicker" selectpicker ng-model="model">
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                  <option value="+2.00">+2.00</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-xs-12 form-group no-pad">
+              <div class="col-xs-3 no-pad">
+                <label>Description</label>
+              </div>
+              <div class="col-xs-9 no-pad">
+                <textarea></textarea>
+              </div>
+            </div>
+            <div class="col-xs-12 no-pad">
+              <input type="submit" value="Save" class="save-btn">
+            </div>
+          </form>
+        </div>
+      </div>
+      <!----/Personal information block---->
+
+      <!----Social networks block---->
+      <div class="col-xs-12 settings-block">
+        <h3>Social Networks</h3>
+
+        <div class="col-xs-4">
+          <div class="col-xs-3 no-pad">
+            <img src="assets/img/facebook.png" alt="">
+          </div>
+
+          <div class="col-xs-9 no-pad">
+            <div class="radio-group">
+              <input type="radio" class="radio">
+              <label>Yes</label>
+            </div>
+            <div class="radio-group">
+              <input type="radio" class="radio">
+              <label>No</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-4">
+          <div class="col-xs-3 no-pad">
+            <img src="assets/img/google-plus.png" alt="">
+          </div>
+
+          <div class="col-xs-9 no-pad">
+            <div class="radio-group">
+              <input type="radio" class="radio">
+              <label>Yes</label>
+            </div>
+            <div class="radio-group">
+              <input type="radio" class="radio">
+              <label>No</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-4">
+          <div class="col-xs-3 no-pad">
+            <img src="assets/img/twitter.png" alt="">
+          </div>
+
+          <div class="col-xs-9 no-pad">
+            <div class="radio-group">
+              <input type="radio" class="radio">
+              <label>Yes</label>
+            </div>
+            <div class="radio-group">
+              <input type="radio" class="radio">
+              <label>No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!----/Social networks block---->
+
+      <!----Security block---->
+      <div class="col-xs-12 settings-block">
+        <h3>Security</h3>
+
+        <form role="form">
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>Curent e-mail</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <span class="e-mail">itechhighway@gmail.com</span>
+            </div>
+          </div>
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>New e-mail</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <input class="white" type="text" placeholder="Enter new e-mail address...">
+            </div>
+          </div>
+          <div class="col-xs-12 no-pad">
+            <input type="submit" value="Save" class="save-btn">
+          </div>
+        </form>
+      </div>
+      <!----/Security block---->
+
+      <!----Change password block---->
+      <div class="col-xs-12 settings-block">
+        <h3>Change password</h3>
+
+        <form role="form">
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>Current password</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <input type="password" placeholder="Current password...">
+              <a href="#" class="eye"></a>
+            </div>
+          </div>
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>New password</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <input type="password" placeholder="New password...">
+              <a href="#" class="eye"></a>
+            </div>
+          </div>
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>Repassword</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <input type="password" placeholder="New password...">
+              <a href="#" class="eye"></a>
+            </div>
+          </div>
+          <div class="col-xs-12 no-pad">
+            <input type="submit" value="Save" class="save-btn">
+          </div>
+        </form>
+      </div>
+      <!----/Change password block---->
+
+      <!----Privacy settings block---->
+      <div class="col-xs-12 settings-block">
+        <h3>Privacy settings</h3>
+
+        <form role="form">
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>Events</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <select selectpicker class="selectpicker">
+                <option>All users have access</option>
+                <option>Only followers&followings have access</option>
+                <option>Only followings have access</option>
+                <option>Only authorized users have access</option>
+                <option>Nobody has access</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>Favorites</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <select selectpicker class="selectpicker">
+                <option>All users have access</option>
+                <option>Only followers&followings have access</option>
+                <option>Only followings have access</option>
+                <option>Only authorized users have access</option>
+                <option>Nobody has access</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>Followers</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <select selectpicker class="selectpicker">
+                <option>All users have access</option>
+                <option>Only followers&followings have access</option>
+                <option>Only followings have access</option>
+                <option>Only authorized users have access</option>
+                <option>Nobody has access</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>Followings</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <select selectpicker class="selectpicker">
+                <option>All users have access</option>
+                <option>Only followers&followings have access</option>
+                <option>Only followings have access</option>
+                <option>Only authorized users have access</option>
+                <option>Nobody has access</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>Wall</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <select selectpicker class="selectpicker">
+                <option>All users have access</option>
+                <option>Only followers&followings have access</option>
+                <option>Only followings have access</option>
+                <option>Only authorized users have access</option>
+                <option>Nobody has access</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>My info</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <select selectpicker class="selectpicker">
+                <option>All users have access</option>
+                <option>Only followers&followings have access</option>
+                <option>Only followings have access</option>
+                <option>Only authorized users have access</option>
+                <option>Nobody has access</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>Photo map</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <select selectpicker class="selectpicker">
+                <option>All users have access</option>
+                <option>Only followers&followings have access</option>
+                <option>Only followings have access</option>
+                <option>Only authorized users have access</option>
+                <option>Nobody has access</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!----/Privacy settings block---->
+
+      <!----Notifications block---->
+      <div class="col-xs-12 settings-block">
+        <h3>Notifications</h3>
+
+        <form role="form">
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>Received a letter</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <select selectpicker class="selectpicker">
+                <option>Receive</option>
+                <option>Don't receive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>Post on the wall</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <select selectpicker class="selectpicker">
+                <option>Receive</option>
+                <option>Don't receive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>User follow/unfollow</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <select selectpicker class="selectpicker">
+                <option>Receive</option>
+                <option>Don't receive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>New events</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <select selectpicker class="selectpicker">
+                <option>Receive</option>
+                <option>Don't receive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-xs-6 no-pad">
+              <label>Upcoming events</label>
+            </div>
+            <div class="col-xs-6 no-pad">
+              <select selectpicker class="selectpicker">
+                <option>Receive</option>
+                <option>Don't receive</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-
+    <!----/Notifications block---->
+    <div class="col-xs-3 zoomers">
+      <div class="zoomers-sidebar">
+        <ul class="settings-list">
+          <li>
+            <a href="#" class="my-spots active">My spots</a>
+          </li>
+          <li><a href="#" class="favorites">Favorites</a></li>
+          <li><a href="#" class="searches">Saved searches</a></li>
+          <li><a href="#" class="friendsmap">Friends map</a></li>
+          <li><a href="#" class="photomap">Photo map</a></li>
+          <li><a href="#" class="planner">Planner</a></li>
+          <li><a href="#" class="reviews">Reviews</a></li>
+          <li><a href="#" class="messages">Messages</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
-
-  <a ng-click="Settings.save()">Save</a>
-
 </div>

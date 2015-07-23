@@ -9,6 +9,8 @@
   function CreateAlbumController(album) {
     var vm = this;
 
+    vm.createAlbum = function() {
 
+    }
   }
 })();
