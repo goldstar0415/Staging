@@ -24,13 +24,18 @@ class Album extends BaseModel
 {
     use PostgisTrait;
 
-//    protected $hidden
+    protected $appends = ['cover'];
 
     protected $guarded = ['id', 'user_id'];
 
     protected $postgisFields = [
         'location' => Point::class,
     ];
+
+    public function getCoverAttribute()
+    {
+        return $this->photos()->first()->photo_url;
+    }
 
     public function user()
     {

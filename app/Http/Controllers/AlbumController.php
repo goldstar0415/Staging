@@ -50,7 +50,7 @@ class AlbumController extends Controller
     /**
      * Display the specified resource.
      * @param \App\User $user
-     * @return
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function showForUser($user)
     {

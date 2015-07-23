@@ -14,10 +14,11 @@
 /**
  * User resource
  */
+Route::get('users/{users}/albums', 'AlbumController@showForUser');
 Route::controller('users', 'UserController');
 
 Route::resource('albums', 'AlbumController', ['except' => ['create', 'edit']]);
-Route::get('user/{users}/albums', 'AlbumController@showForUser');
+
 
 Route::resource('photos', 'AlbumPhotoController', ['only' => ['show', 'update', 'destroy']]);
 Route::get('photos/{photos}/avatar', 'AlbumPhotoController@setAvatar');
