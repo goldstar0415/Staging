@@ -248,6 +248,7 @@
           attributionControl: false,
           zoomControl: true
         });
+        ChangeState('hidden');
         L.tileLayer(tilesUrl, {
           maxZoom: 17,
           minZoom: 3
@@ -256,7 +257,6 @@
         //add controls
         AddControls();
         map.addLayer(drawLayer);
-
 
         window.map = map;
         map.locate({setView: true, maxZoom: 8});
@@ -588,7 +588,7 @@
       }
 
       function BindMarkerToInput(Marker, InputValue) {
-        
+
       }
 
       //Processing functions
@@ -688,6 +688,10 @@
       function FocusMapToGivenLocation(location, zoom) {
         map.setView(location, zoom);
       }
+      function FitBoundsOfCurrentLayer() {
+        var bounds = drawLayer.getBounds();
+        map.fitBounds(bounds);
+      }
 
 
       //=================================================================
@@ -743,7 +747,8 @@
         GetLatlngByAddress: GetLatlngByAddress,
         GetCurrentLocation: GetCurrentLocation,
         FocusMapToCurrentLocation: FocusMapToCurrentLocation,
-        FocusMapToGivenLocation: FocusMapToGivenLocation
+        FocusMapToGivenLocation: FocusMapToGivenLocation,
+        FitBoundsOfCurrentLayer: FitBoundsOfCurrentLayer
       };
     });
 

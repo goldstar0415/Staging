@@ -14,6 +14,21 @@
     function onStateChangeSuccess(event, current, previous) {
       MapService.ChangeState(current.mapState);
       window.scrollTo(0, 0);
+      if(current.mapState == 'big'){
+        $('.map-tools').show();
+      } else {
+        $('.map-tools').hide();
+      }
+
+      switch (current.locate) {
+        case 'fit':
+              MapService.FitBoundsOfCurrentLayer();
+              break;
+        default:
+              MapService.FocusMapToCurrentLocation();
+              break;
+      };
+
     }
 
     $rootScope.options = {

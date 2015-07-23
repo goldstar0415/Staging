@@ -1,0 +1,16 @@
+<div class="title">
+  <h2>Photo map</h2>
+
+  <div class="album-tools">
+    <a title="Create new album" ui-sref="createAlbum" class="add-page"></a>
+  </div>
+</div>
+<hr>
+<div class="col-xs-12 no-pad">
+  <div ng-repeat="item in Photomap.albums" class="col-xs-4 no-pad">
+    <div class="img-wrap">
+      <img src="{{item.cover.medium}}" alt="">
+      <a ui-sref="album({album_id: item.id})">{{item.title}}</a>
+    </div>
+  </div>
+</div>

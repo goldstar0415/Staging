@@ -16,15 +16,17 @@
 @import "settings";
 @import "photo_map";
 @import "my_spot";
+@import "select";
+@import "spot_page";
 
 @font-face {
   font-family: 'Ubuntu bold';
-  src: url(/assets/css/fonts/ubuntutitling-bold-webfont.eot);
-  src: url(/assets/css/fonts/ubuntutitling-bold-webfont.eot?#iefix) format('embedded-opentype'),
-  url(/assets/css/fonts/ubuntutitling-bold-webfont.woff2) format('woff2'),
-  url(/assets/css/fonts/ubuntutitling-bold-webfont.woff) format('woff'),
-  url(/assets/css/fonts/ubuntutitling-bold-webfont.ttf) format('truetype'),
-  url(/assets/css/fonts/ubuntutitling-bold-webfont.svg#ubuntu_titlingbold) format('svg');
+  src: url(../css/fonts/ubuntutitling-bold-webfont.eot);
+  src: url(../css/fonts/ubuntutitling-bold-webfont.eot?#iefix) format('embedded-opentype'),
+  url(../css/fonts/ubuntutitling-bold-webfont.woff2) format('woff2'),
+  url(../css/fonts/ubuntutitling-bold-webfont.woff) format('woff'),
+  url(../css/fonts/ubuntutitling-bold-webfont.ttf) format('truetype'),
+  url(../css/fonts/ubuntutitling-bold-webfont.svg#ubuntu_titlingbold) format('svg');
   font-weight: normal;
   font-style: normal;
 
@@ -32,17 +34,17 @@
 
 @font-face {
   font-family: 'Ubuntu medium';
-  src: url(/assets/css/fonts/ubuntu-m-webfont.eot);
-  src: url(/assets/css/fonts/ubuntu-m-webfont.eot?#iefix) format('embedded-opentype'),
-  url(/assets/css/fonts/ubuntu-m-webfont.woff2) format('woff2'),
-  url(/assets/css/fonts/ubuntu-m-webfont.woff) format('woff'),
-  url(/assets/css/fonts/ubuntu-m-webfont.ttf) format('truetype'),
-  url(/assets/css/fonts/ubuntu-m-webfont.svg#ubuntumedium) format('svg');
+  src: url(../css/fonts/ubuntu-m-webfont.eot);
+  src: url(../css/fonts/ubuntu-m-webfont.eot?#iefix) format('embedded-opentype'),
+  url(../css/fonts/ubuntu-m-webfont.woff2) format('woff2'),
+  url(../css/fonts/ubuntu-m-webfont.woff) format('woff'),
+  url(../css/fonts/ubuntu-m-webfont.ttf) format('truetype'),
+  url(../css/fonts/ubuntu-m-webfont.svg#ubuntumedium) format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
-body {
+body, .snap-content {
   background: #f5f8fa;
 }
 
@@ -78,6 +80,31 @@ form {
 
 [ng-click], [ui-sref] {
   cursor: pointer;
+}
+
+input, textarea {
+  @include input_border;
+  width: 100%;
+  padding: 5px 10px;
+  border-radius: 3px;
+  outline: none;
+  &:hover, &:active {
+    @include input_hover_effects;
+  }
+}
+
+textarea {
+  resize: none;
+  height: 100px;
+  &:focus {
+    @include input_hover_effects;
+  }
+}
+
+h3 {
+  margin: 25px auto;
+  font: 500 20px/20px 'Ubuntu medium';
+  color: $dark_blue;
 }
 
 //common styles
@@ -149,7 +176,18 @@ form {
   }
 }
 
-
+.eye {
+  display: block;
+  width: 20px;
+  height: 12px;
+  background: url(/assets/img/icons/eye.png) no-repeat;
+  position: absolute;
+  top: 30%;
+  right: 15px;
+  &:hover {
+    background: url(/assets/img/icons/eye.png) 0 -16px no-repeat;
+  }
+}
 
 .drop-box {
   height: 100px;
