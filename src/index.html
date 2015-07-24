@@ -26,10 +26,10 @@
 
     <div snap-drawers>
       <div snap-drawer>
-        <zm-leftmenu ng-if="options.snap.disable == 'right'"></zm-leftmenu>
+        <zm-side-menu side="left" ng-if="options.snap.disable == 'right'"></zm-side-menu>
       </div>
       <div snap-drawer="right">
-        <zm-rightmenu ng-if="options.snap.disable == 'left'"></zm-rightmenu>
+        <zm-side-menu side="right" ng-if="options.snap.disable == 'left'"></zm-side-menu>
       </div>
     </div>
 

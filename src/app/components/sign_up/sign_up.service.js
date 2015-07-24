@@ -21,9 +21,9 @@
       });
     }
 
-    function signUpUser(form, vm, $modalInstance) {
+    function signUpUser(form, user, $modalInstance) {
       if (form.$valid) {
-        User.signUp({user: this},
+        User.signUp(user,
           function success(user) {
             $rootScope.currentUser = user;
             $modalInstance.dismiss('close');

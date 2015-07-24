@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, MapService, $rootScope, snapRemote) {
+  function runBlock($log, User, MapService, $rootScope, snapRemote) {
 
     MapService.Init('map');
 
@@ -37,6 +37,7 @@
       snap: snapRemote.globalOptions
     };
 
+    //make menu on left sid when small screen
     $(window).resize(_.throttle(onWindowResize, 100));
     function onWindowResize() {
       MapService.InvalidateMapSize();
@@ -48,6 +49,11 @@
       $rootScope.$apply();
     }
 
+    //get current user
+    User.currentUser().$promise.then(function (user) {
+      console.log(user);
+      $rootScope.currentUser = user;
+    });
 
     $rootScope.$apply();
   }
