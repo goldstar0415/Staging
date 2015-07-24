@@ -203,4 +203,9 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     {
         return $this->hasMany(Spot::class);
     }
+
+    public function socials()
+    {
+        return $this->hasMany(Social::class);
+    }
 }
