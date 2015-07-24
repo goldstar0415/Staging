@@ -2,14 +2,17 @@
 
 namespace App\Http\Requests\Album;
 
+use Illuminate\Contracts\Auth\Guard;
+
 class StoreRequest extends AlbumRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
+     * @param Guard $auth
      * @return bool
      */
-    public function authorize()
+    public function authorize(Guard $auth)
     {
         return true;
     }
