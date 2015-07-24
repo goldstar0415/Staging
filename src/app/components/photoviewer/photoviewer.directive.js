@@ -10,9 +10,9 @@
     return {
       restrict: 'A',
       scope: {
-        items: '@',
-        index: '@',
-        currentItem: '@'
+        items: '=',
+        index: '=',
+        currentItem: '='
       },
       link: PhotoViewerLink
     };
@@ -31,41 +31,42 @@
             },
             index: function () {
               return s.index;
-            },
-            photoData: function() {
-              return Photo.get({id: s.currentItem.id});
             }
           }
         });
       });
     }
 
-    function PhotoViewerController($modalInstance, items, index, photoData, Photo) {
+    function PhotoViewerController($modalInstance, items, index, Photo) {
       var vm = this;
-      var currentIndex = index;
-      vm.currentPhoto = photoData;
-
-      vm.nextPhoto = function () {
+      vm.currentIndex = index;
+      vm.currentPhoto = items[index];
+      vm.comments = Photo.getComments({id: items[index].id});
+      vm.nextPhoto = function (e) {
+        e.preventDefault();
         var nextIndex;
-        if(currentIndex + 1 > items.length - 1) {
+        if(vm.currentIndex + 1 > items.length - 1) {
           nextIndex = 0;
         } else {
-          nextIndex = currentIndex + 1;
+          nextIndex = vm.currentIndex + 1;
         }
 
-        vm.currentPhoto = Photo.get({id: items[nextIndex].id});
-        currentIndex = nextIndex;
+        vm.currentPhoto = items[nextIndex];//Photo.get({id: items[nextIndex].id});
+        vm.comments = Photo.getComments({id: items[nextIndex].id});
+        vm.currentIndex = nextIndex;
       };
-      vm.previousPhoto = function() {
+      vm.previousPhoto = function(e) {
+        e.preventDefault();
         var prevIndex;
-        if(currentIndex - 1 < 0) {
+        if(vm.currentIndex - 1 < 0) {
           prevIndex = items.length - 1;
         } else {
-          prevIndex = currentIndex - 1;
+          prevIndex = vm.currentIndex - 1;
         }
 
-        vm.currentPhoto = Photo.get({id: items[prevIndex].id});
-        currentIndex = prevIndex;
+        vm.currentPhoto = items[prevIndex]//Photo.get({id: items[prevIndex].id});
+        vm.comments = Photo.getComments({id: items[prevIndex].id});
+        vm.currentIndex = prevIndex;
       };
       vm.sendComment = function() {
         var id  = vm.currentPhoto.id;
@@ -74,9 +75,6 @@
       vm.deleteComment = function(commentId) {
         var id  = vm.currentPhoto.id;
         Photo.deleteComment({id: id,comment_id: commentId});
-      };
-      vm.fullScreen  = function() {
-
       };
     }
   }

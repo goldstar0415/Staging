@@ -6,8 +6,9 @@
     .controller('SettingsController', SettingsController);
 
   /** @ngInject */
-  function SettingsController(UploaderService, toastr, API_URL) {
+  function SettingsController(UploaderService, toastr, settings, API_URL) {
     var vm = this;
+    vm.settings = settings;
     vm.images = UploaderService.images;
 
     vm.deleteImage = function (idx) {

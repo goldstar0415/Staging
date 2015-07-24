@@ -78,6 +78,11 @@
         templateUrl: 'app/modules/settings/settings.html',
         controller: 'SettingsController',
         controllerAs: 'Settings',
+        resolve: {
+          settings: function() {
+            return Settings.get();
+          }
+        },
         mapState: 'hidden'
       });
 

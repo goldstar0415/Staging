@@ -8,6 +8,6 @@
   /** @ngInject */
   function AlbumController(album) {
     var vm = this;
-
+    vm.data = album;
   }
 })();

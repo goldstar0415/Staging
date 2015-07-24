@@ -10,6 +10,7 @@
 
     MapService.Init('map');
 
+
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     function onStateChangeSuccess(event, current, previous) {
       MapService.ChangeState(current.mapState);
@@ -31,6 +32,7 @@
 
     }
 
+    $rootScope.timezonesList = moment.tz.names();
     $rootScope.options = {
       snap: snapRemote.globalOptions
     };

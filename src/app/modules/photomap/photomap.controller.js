@@ -9,6 +9,5 @@
   function PhotomapController(albums) {
     var vm = this;
     vm.albums = albums;
-    console.log(albums);
   }
 })();
