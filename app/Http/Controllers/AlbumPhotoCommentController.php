@@ -27,7 +27,18 @@ class AlbumPhotoCommentController extends Controller
      */
     public function index($photos)
     {
-        return $photos->comments;
+        $comments = $photos->comments;
+        $comments->map(function ($comment) {
+            /**
+             * @var \App\AlbumPhotoComment $comment
+             */
+            $comment->addHidden('user_id');
+            return $comment->load(['user' => function ($query) {
+                $query->select(['id', 'first_name', 'last_name']);
+            }]);
+        });
+
+        return $comments;
     }
 
     /**

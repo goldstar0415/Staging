@@ -16,9 +16,9 @@
  */
 Route::get('users/{users}/albums', 'AlbumController@showForUser');
 Route::controller('users', 'UserController');
+Route::controller('settings', 'SettingsController');
 
 Route::resource('albums', 'AlbumController', ['except' => ['create', 'edit']]);
-
 
 Route::resource('photos', 'AlbumPhotoController', ['only' => ['show', 'update', 'destroy']]);
 Route::get('photos/{photos}/avatar', 'AlbumPhotoController@setAvatar');
