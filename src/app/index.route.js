@@ -79,7 +79,7 @@
         controller: 'SettingsController',
         controllerAs: 'Settings',
         resolve: {
-          settings: function() {
+          settings: function(Settings) {
             return Settings.get();
           }
         },
