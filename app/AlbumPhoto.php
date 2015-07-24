@@ -46,10 +46,7 @@ class AlbumPhoto extends BaseModel implements StaplerableInterface
 
     public function getPhotoUrlAttribute()
     {
-        $urls['original'] = $this->photo->url();
-        $urls['medium'] = $this->photo->url('medium');
-        $urls['thumb'] = $this->photo->url('thumb');
-        return $urls;
+        return $this->getPictureUrls('photo');
     }
 
     public function album()

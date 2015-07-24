@@ -30,4 +30,13 @@ abstract class BaseModel extends Model
         }
         return parent::belongsTo($related, $foreignKey, $otherKey, $relation);
     }
+
+    protected function getPictureUrls($picture)
+    {
+        $urls['original'] = $this->$picture->url();
+        $urls['medium'] = $this->$picture->url('medium');
+        $urls['thumb'] = $this->$picture->url('thumb');
+
+        return $urls;
+    }
 }
