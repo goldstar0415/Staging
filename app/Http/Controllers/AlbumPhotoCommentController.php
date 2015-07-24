@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\AlbumPhoto;
 use App\AlbumPhotoComment;
 use App\Http\Requests\PhotoComments\PhotoCommentsRequest;
 use App\Http\Requests\PhotoComments\PhotoCommentStoreRequest;
@@ -18,6 +17,28 @@ class AlbumPhotoCommentController extends Controller
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;
+    }
+
+    /**
+     * Show photo comments
+     *
+     * @param \App\AlbumPhoto $photos
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function index($photos)
+    {
+        $comments = $photos->comments;
+        $comments->map(function ($comment) {
+            /**
+             * @var \App\AlbumPhotoComment $comment
+             */
+            $comment->addHidden('user_id');
+            return $comment->load(['user' => function ($query) {
+                $query->select(['id', 'first_name', 'last_name']);
+            }]);
+        });
+
+        return $comments;
     }
 
     /**

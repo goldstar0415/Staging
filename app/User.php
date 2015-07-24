@@ -121,7 +121,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function getAvatarUrlAttribute()
     {
-        return $this->avatar->url();
+        return $this->getPictureUrls('avatar');
     }
     
     public function followings()
