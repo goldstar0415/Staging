@@ -24,6 +24,7 @@ class SocialAuthController extends Controller
         foreach (Social::all('name')->toArray() as $row) {
             $this->accepts_socials[] = $row['name'];
         }
+        $this->middleware('guest');
     }
 
     public function getAccount(Request $request, $social)
@@ -38,24 +39,35 @@ class SocialAuthController extends Controller
             /**
              * @var \Laravel\Socialite\Contracts\User $user
              */
-            dd($user);
             $user = $provider->user();
-            $exit_user = User::where('email', $user->getEmail())->first();
 
-            if ($exit_user) {
-//                return response()->
+            if (!$user) {
+                abort(400);
+            }
+
+            $exist_user = User::where('email', $user->getEmail())->first();
+
+            if ($exist_user) {
+                $this->auth->login($exist_user);
             } else {
-                $new_user = new User(
+                list($first_name, $last_name) = explode(' ', $user->getName());
+                $new_user = User::create(
                     [
                         'email' => $user->getEmail(),
-                        'first_name' => $user->getNickname(),
-                        'last_name' => $user->getName()
+                        'first_name' => $first_name,
+                        'last_name' => $last_name,
+                        'avatar' => $user->getAvatar()
                     ]
                 );
+                $social = Social::where('name', $social)->first();
+                $new_user->socials()->attach($social, ['token' => $user->token]);
+                $this->auth->login($new_user);
             }
         } else {
             return $provider->redirect();
         }
+
+        return response()->json(['message' => 'User successfuly logged in']);
     }
 
     /**
