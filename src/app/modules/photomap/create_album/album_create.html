@@ -1,35 +1,60 @@
 <div class="title">
   <h2>Create new album</h2>
+  <h2 ng-show="false">Edit album</h2>
 </div>
 <hr>
 <div class="col-xs-12 no-pad">
-  <form role="form">
+  <form ng-submit="CreateAlbum.createAlbum(form)" role="form" name="form" class="create" novalidate>
     <div class="col-xs-12 form-group">
-      <div class="col-xs-3">
+      <div class="col-xs-3 no-pad">
         <label>Title</label>
       </div>
-      <div class="col-xs-9">
-        <input placeholder="Start typing..." name="title album" type="text">
+      <div class="col-xs-9 no-pad">
+        <input placeholder="Start typing..." ng-minlength="3" name="title" ng-model="CreateAlbum.title" type="text">
+        <div class="error-message-album" ng-messages="form.title.$error" ng-if="form.$submitted || form.title.$touched">
+          <div ng-messages-include="error-title-messages"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-xs-12 form-group">
+      <div class="col-xs-3 no-pad">
+        <label>Privacy</label>
+      </div>
+      <div class="col-xs-9 no-pad">
+        <select class="selectpicker" selectpicker ng-model="CreateAlbum.isPrivate">
+          <option value="0">Public</option>
+          <option value="1">Private</option>
+        </select>
       </div>
     </div>
 
     <div class="col-xs-12 form-group">
-      <div class="col-xs-3">
-        <label>Privacy</label>
+      <div class="col-xs-3 no-pad">
+        <label>Location</label>
       </div>
       <div class="col-xs-9 no-pad">
-        <select class="form-control">
-          <option value="1">Public</option>
-          <option value="2">Privacy</option>
-        </select>
+        <location address="CreateAlbum.address" location="CreateAlbum.location" limit="15"></location>
       </div>
     </div>
-    <div class="col-xs-12">
-      <uploader></uploader>
+
+    <div class="col-xs-12 upload-photos">
+      <h3>Add photos</h3>
+      <div class="col-xs-12 no-pad">
+        <uploader></uploader>
+        <div ng-repeat="image in CreateAlbum.images.files track by $index">
+          <img ngf-src="image" class="img-thumbnail"/>
+          <a ng-click="CreateAlbum.deleteImage($index)">X</a>
+        </div>
+      </div>
     </div>
-    <div class="col-xs-12">
-      <input type="submit" value="Save">
-      <input type="submit" value="Cancel">
+
+
+
+    <div class="col-xs-12 save-cancel">
+      <input type="submit" value="Save" class="save">
+      <input type="button" value="Cancel" ui-sref="photomap({user_id: currentUser.id})" class="cancel">
     </div>
   </form>
 </div>

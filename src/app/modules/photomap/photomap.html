@@ -2,7 +2,7 @@
   <h2>Photo map</h2>
 
   <div class="album-tools">
-    <a title="Create new album" ui-sref="createAlbum" class="add-page"></a>
+    <a ng-if="Photomap.currentId == currentUser.id" title="Create new album" ui-sref="createAlbum" class="add-page"></a>
   </div>
 </div>
 <hr>
@@ -13,4 +13,5 @@
       <a ui-sref="album({album_id: item.id})">{{item.title}}</a>
     </div>
   </div>
+  <h4 ng-if="Photomap.albums.length < 1">No albums</h4>
 </div>

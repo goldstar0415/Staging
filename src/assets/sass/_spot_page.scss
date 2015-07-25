@@ -15,7 +15,6 @@
     position: relative;
     background: 0 0;
     border: 0;
-    border-bottom: 1px solid $light_grey;
     margin: 0;
     border-radius: 0;
     width: 100%;
@@ -206,6 +205,16 @@
 
 }
 
+.close-link {
+  display: block;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: url(/assets/img/icons/cross.png) no-repeat;
+}
+
 .comments-section {
 
   float: left;
@@ -218,11 +227,11 @@
   position: relative;
   padding: 0;
   .comments-content {
-    background: #e9edf0;
+    background: $light_grey;
     padding: 10px;
 
     .new-post-spot {
-      background: #e9edf0;
+      background: $light_grey;
 
       textarea {
         resize: none;
@@ -246,25 +255,19 @@
             text-overflow: ellipsis;
             padding-bottom: 1px;
             background: url(/assets/img/icons/count.png) 0 -1px no-repeat;
+            margin-bottom: 10px;
           }
           .wrap-img-event {
             padding-right: 15px;
             color: $blue;
             padding-left: 0;
+            margin-bottom: 15px;
           }
         }
         .add-location {
           margin: 10px 0;
           position: relative;
-          .close-link {
-            display: block;
-            width: 8px;
-            height: 8px;
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: url(/assets/img/icons/cross.png) no-repeat;
-          }
+
           .description-link {
             color: #666;
           }
@@ -290,6 +293,11 @@
           padding-top: 10px;
           margin-right: -10px;
           margin-bottom: 10px;
+          font-size: 100%;
+          vertical-align: baseline;
+          border: 0;
+          outline: 0;
+          background: 0 0;
         }
       }
       .add-photo {
@@ -313,6 +321,7 @@
         float: right;
         background: #0c2638;
         color: $white;
+        width: 11%;
         @include transition_bg;
         &:hover {
           background: #1a415b;
@@ -330,7 +339,7 @@
 
   .empty {
     position: relative;
-    border-bottom: 1px solid #e9edf0;
+    border-bottom: 1px solid $light_grey;
     padding: 15px;
   }
   .comment-text {
@@ -338,4 +347,31 @@
     text-align: center;
   }
 }
+
+.add-img {
+  img {
+    width: 38px;
+    height: 38px;
+    float: left;
+    margin-right: 15px;
+  }
+}
+
+.close-img {
+  display: block;
+  width: 38px;
+  height: 38px;
+  position: absolute;
+  background: url(/assets/img/icons/min-cross.png) center center no-repeat, rgba(0, 0, 0, .3);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.upload-photos {
+  .photos {
+
+  }
+}
+
 

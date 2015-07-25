@@ -18,6 +18,7 @@
 @import "my_spot";
 @import "select";
 @import "spot_page";
+@import "blog_page";
 
 @font-face {
   font-family: 'Ubuntu bold';
@@ -50,7 +51,7 @@ body, .snap-content {
 
 a {
   cursor: pointer;
-  &:hover {
+  &:hover, &:visited, &:focus {
     text-decoration: none;
   }
 }
@@ -76,6 +77,22 @@ form {
     margin-top: -15px;
     margin-bottom: 5px;
   }
+  .error-message-album div {
+    color: red;
+    display: block;
+    position: relative;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}
+
+location ul {
+  width: 100%!important;
+}
+location ul li a {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 [ng-click], [ui-sref] {
@@ -103,7 +120,7 @@ textarea {
 
 h3 {
   margin: 25px auto;
-  font: 500 20px/20px 'Ubuntu medium';
+  font: 500 20px/26px 'Ubuntu medium';
   color: $dark_blue;
 }
 
@@ -122,7 +139,8 @@ h3 {
 }
 
 .wrap {
-  margin: 20px auto;
+  margin: 0 auto;
+  padding-top: 20px;
   display: table;
 }
 
@@ -159,6 +177,10 @@ h3 {
 
 .album-tools {
   float: right;
+  a {
+    display: inline-block;
+    position: inherit;
+  }
   .add-page {
     display: block;
     width: 28px;
@@ -173,6 +195,21 @@ h3 {
       background: url(/assets/img/icons/add-page.png) 9px 9px no-repeat, #0160a2;
       @include transition_bg;
     }
+  }
+  .edit {
+    display: block;
+    float: right;
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+    background: url(/assets/img/icons/dark-edit-tools.png) no-repeat;
+  }
+  .delete {
+    display: block;
+    float: right;
+    width: 15px;
+    height: 15px;
+    background: url(/assets/img/icons/dark-edit-tools.png) 0 -20px no-repeat;
   }
 }
 
@@ -193,7 +230,7 @@ h3 {
   height: 100px;
   width: 100%;
   border: 2px dashed #b5e0ef;
-  margin: 0 15px;
+  margin-top: 10px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -214,4 +251,16 @@ h3 {
     color: #b5e0ef;
   }
 
+}
+
+.tooltip {
+  @include blue_shadow;
+
+  .tooltip-arrow {
+    display: none;
+  }
+  .tooltip-inner {
+    background: $white;
+    color: #000000;
+  }
 }

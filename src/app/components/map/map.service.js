@@ -576,6 +576,7 @@
       //Makers
       function CreateMarker(latlng, options) {
         if (currentLayer === "none") { return false; }
+
         var marker = L.marker(latlng, options);
         GetCurrentLayer().addLayer(marker);
 
@@ -587,8 +588,18 @@
         GetCurrentLayer().removeLayer(Marker);
       }
 
-      function BindMarkerToInput(Marker, InputValue) {
+      function BindMarkerToInput(Marker, Callback) {
 
+        Marker.on('dragend', function(e) {
+          var latlng = Marker.getLatLng();
+          GetAddressByLatlng(latlng, function(response) {
+            if(response.display_name) {
+              Callback({latlng: latlng, address: response.display_name})
+            } else {
+              Callback({latlng: latlng, address: 'Unknown place'});
+            }
+          })
+        });
       }
 
       //Processing functions
@@ -649,7 +660,7 @@
 
       function GetAddressByLatlng (latlng, callback) {
         var url = GeocodingReverseUrl + "&lat=" + latlng.lat + "&lon=" + latlng.lng;
-        $http.get(url).
+        $http.get(url, {withCredentials: false}).
           success(function(data, status, headers) {
             callback(data);
           }).
@@ -659,7 +670,7 @@
       }
       function GetLatlngByAddress (address, callback) {
         var url = GeocodingSearchUrl + address
-        $http.get(url).
+        $http.get(url, {withCredentials: false}).
           success(function(data, status, headers) {
             callback(data);
           }).
@@ -731,7 +742,7 @@
         showEvents: showEventsLayer,
         showPitstops: showPitstopsLayer,
         showRecreations: showRecreationsLayer,
-        showOtherLayers: showEventsLayer,
+        showOtherLayers: showOtherLayers,
         //Selections
         clearSelections: ClearSelections,
         //Controls
@@ -740,6 +751,7 @@
         //Makers
         CreateMarker: CreateMarker,
         RemoveMarker: RemoveMarker,
+        BindMarkerToInput: BindMarkerToInput,
         //Math
         PointInPolygon: PointInPolygon,
         //Geocoding

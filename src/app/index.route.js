@@ -14,7 +14,7 @@
       })
       .state('profile_menu', {
         abstract: true,
-        templateUrl: 'app/components/profile_menu/profile_menu.html',
+        templateUrl: 'app/components/navigation/profile_menu/profile_menu.html',
         controller: 'ProfileMenuController',
         controllerAs: 'Profile'
       })
@@ -36,11 +36,6 @@
         templateUrl: 'app/modules/photomap/create_album/album_create.html',
         controller: 'CreateAlbumController',
         controllerAs: 'CreateAlbum',
-        resolve: {
-          album: function (Album) {
-            return new Album();
-          }
-        },
         mapState: 'small',
         parent: 'profile_menu'
       })

@@ -1,0 +1,112 @@
+/*     my spot   */
+.main-blog-content {
+  .blog-content {
+    float: left;
+    margin: 0;
+    padding: 0;
+    border: 1px solid $light_grey;
+    background: $white;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    position: relative;
+  }
+  .position-right {
+    float: right;
+    .dropdown-menu {
+      width: 100%;
+    }
+  }
+
+  .btn-width {
+    width: 100%;
+    text-align: left;
+  }
+  .article {
+    .article-img {
+      display: block;
+      width: 100%;
+      height: 400px;
+      margin-bottom: 20px;
+      -webkit-border-radius: 5px 5px 0 0;
+      -moz-border-radius: 5px 5px 0 0;
+      border-radius: 5px 5px 0 0;
+    }
+  }
+  .article {
+    .title-blog {
+      margin: 0 0 8px 15px;
+      font: 500 24px/24px 'Ubuntu medium';
+      a {
+        color: $dark_blue;
+      }
+    }
+    .article-description {
+      font: 14px/20px Arial, sans-serif;
+      padding: 5px 15px 15px;
+    }
+    .share {
+      display: block;
+      width: 12px;
+      height: 12px;
+      text-indent: 10000px;
+      overflow: hidden;
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      background: url(/assets/img/icons/share.png) no-repeat;
+    }
+
+    .article-info {
+      float: left;
+      font: 400 12px Arial, sans-serif;
+      margin-right: 15px;
+      color: gray;
+      border-top: 1px solid #e9edf0;
+      padding: 10px 0;
+    }
+    .location-link {
+      display: block;
+      float: right;
+      margin-bottom: 15px;
+    }
+  }
+  .module-popular {
+    background: $white;
+    border: 1px solid $light_grey;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    margin: 10px 0;
+    .title-popular-new {
+      font: 500 20px/20px Ubuntu;
+      border-bottom: 1px solid $light_grey;
+      padding: 12px 15px 15px;
+      margin: 0;
+    }
+    .post {
+      padding: 15px;
+      border-bottom: 1px solid $light_grey;
+      .description {
+        word-wrap: break-word;
+      }
+      img {
+        display: block;
+        float: left;
+        width: 50px;
+        height: 50px;
+        -webkit-border-radius: 30px;
+        -moz-border-radius: 30px;
+        border-radius: 30px;
+        margin-right: 10px;
+        border: 0;
+        box-shadow: none;
+      }
+      .date {
+        font: 11px/11px Arial,sans-serif;
+        color: grey;
+        margin-top: 5px;
+      }
+    }
+  }
+}

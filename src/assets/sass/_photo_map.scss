@@ -51,11 +51,17 @@
       &:first-child {
         margin-right: 10px;
       }
-      .save {
-        background-color: $green;
-        &:hover {
-          background-color: $light_green;
-        }
+    }
+    .save {
+      background-color: $green;
+      &:hover {
+        background-color: $light_green;
+      }
+    }
+    .cancel {
+      background-color: $navy_blue;
+      &:hover {
+        background-color: $light_blue;
       }
     }
   }

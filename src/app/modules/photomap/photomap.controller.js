@@ -6,8 +6,9 @@
     .controller('PhotomapController', PhotomapController);
 
   /** @ngInject */
-  function PhotomapController(albums) {
+  function PhotomapController(albums, $stateParams) {
     var vm = this;
+    vm.currentId = $stateParams.user_id;
     vm.albums = albums;
   }
 })();

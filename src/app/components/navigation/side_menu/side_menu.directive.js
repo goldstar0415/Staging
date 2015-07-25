@@ -21,11 +21,14 @@
     return directive;
 
     /** @ngInject */
-    function SideMenuController(User, $rootScope) {
+    function SideMenuController(User, $rootScope, snapRemote) {
       var vm = this;
 
       vm.signOut = function () {
         User.logOut(function () {
+          snapRemote.getSnapper().then(function(snapper) {
+            snapper.close();
+          });
           $rootScope.currentUser = null;
         })
       }
