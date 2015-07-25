@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Validation\UnauthorizedException;
 
 use App\Http\Requests;
+use Phaza\LaravelPostgis\Geometries\Point;
 
 class AlbumController extends Controller
 {
@@ -36,14 +37,19 @@ class AlbumController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $album = new Album($request->input());
+        $params = $request->input();
+        var_dump($params);
+        if ($request->has('location')) {
+            $params['location'] = new Point($params['location']['lat'], $params['location']['lng']);
+        }
+        $album = new Album($params);
         $this->auth->user()->albums()->save($album);
         foreach ($request->file('files') as $file) {
             $album->photos()->create([
                 'photo' => $file
             ]);
         }
-        return response()->json(['message' => 'Album was successfuly created']);
+        return response()->json(['album_id' => $album->id, 'message' => 'Album was successfuly created']);
     }
 
     /**
