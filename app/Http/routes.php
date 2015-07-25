@@ -18,6 +18,8 @@ Route::get('users/{users}/albums', 'AlbumController@showForUser');
 Route::controller('users', 'UserController');
 Route::controller('settings', 'SettingsController');
 
+Route::get('account/{social}', 'SocialAuthController@getAccount');
+
 Route::resource('albums', 'AlbumController', ['except' => ['create', 'edit']]);
 
 Route::resource('photos', 'AlbumPhotoController', ['only' => ['show', 'update', 'destroy']]);

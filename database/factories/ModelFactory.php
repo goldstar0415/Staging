@@ -91,6 +91,20 @@ $factory->defineAs(App\Role::class, 'blogger', function (Generator $faker) {
     ];
 });
 
+$factory->defineAs(App\Social::class, 'facebook', function (Generator $faker) {
+    return [
+        'name' => 'facebook',
+        'display_name' => 'Facebook'
+    ];
+});
+
+$factory->defineAs(App\Social::class, 'google', function (Generator $faker) {
+    return [
+        'name' => 'google',
+        'display_name' => 'Google+',
+    ];
+});
+
 $factory->define(App\Spot::class, function (Generator $faker) use ($timestamps, $dates) {
     $start_date = $faker->dateTimeBetween('-50 days','+50 days');
     $end_date = clone $start_date->modify('+' . mt_rand(1, 5) . ' day');

@@ -7,7 +7,7 @@ class LaravelTestCase extends Illuminate\Foundation\Testing\TestCase
      *
      * @var string
      */
-    protected $baseUrl = 'http://zoomtivity.app.com';
+    protected $baseUrl = 'http://backend.zoomtivity.app.com';
 
     /**
      * Creates the application.

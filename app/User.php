@@ -95,14 +95,16 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      */
     protected $fillable = ['avatar', 'last_name', 'first_name', 'email', 'password'];
 
-    protected $appends = ['avatar_url'];
+    protected $appends = ['avatar_url', 'attached_socials', 'is_registered'];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $with = ['socials'];
+
+    protected $hidden = ['password', 'remember_token', 'socials'];
 
     protected $dates = ['banned_at'];
 
@@ -117,6 +119,20 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     {
         $this->hasAttachedFile('avatar');
         parent::__construct($attributes);
+    }
+
+    public function getIsRegisteredAttribute()
+    {
+        return isset($this->password);
+    }
+
+    public function getAttachedSocialsAttribute()
+    {
+        $socials = [];
+        foreach ($this->socials->toArray() as $row) {
+            $socials[] = $row['name'];
+        }
+        return $socials;
     }
 
     public function getAvatarUrlAttribute()
@@ -202,5 +218,10 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     public function spots()
     {
         return $this->hasMany(Spot::class);
+    }
+
+    public function socials()
+    {
+        return $this->belongsToMany(Social::class);
     }
 }
