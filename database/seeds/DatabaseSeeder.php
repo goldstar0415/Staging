@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RolesSeeder::class);
         $this->call(SpotTypesTableSeeder::class);
+        $this->call(SocialsTableSeeder::class);
         if (App::environment('local')) {
             $this->call(UserTableSeeder::class);
             $this->call(WallsTableSeeder::class);

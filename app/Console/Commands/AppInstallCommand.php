@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use File;
 use Illuminate\Console\Command;
+use Illuminate\Console\Scheduling\Schedule;
 
 class AppInstallCommand extends Command
 {
@@ -33,12 +35,14 @@ class AppInstallCommand extends Command
         $this->queue_conf = env('APP_NAME', 'laravel') . '-queue';
         $this->socket_conf = env('APP_NAME', 'laravel') . '-socket';
     }
+
     /**
      * Execute the console command.
      *
+     * @param Schedule $schedule
      * @return mixed
      */
-    public function handle()
+    public function handle(Schedule $schedule)
     {
         $app_path = base_path();
         $logs_path = storage_path('logs');
@@ -56,7 +60,7 @@ numprocs=8
 redirect_stderr=true
 stdout_logfile=$logs_path/$this->queue_conf.log
 FILE;
-        file_put_contents('/etc/supervisor/conf.d/' . $this->queue_conf . '.conf', $laravel_queue);
+        File::put('/etc/supervisor/conf.d/' . $this->queue_conf . '.conf', $laravel_queue);
 
         $laravel_socket = <<<FILE
 [program:$app_name-socket]
@@ -70,9 +74,11 @@ numprocs=1
 redirect_stderr=true
 stdout_logfile=$logs_path/$this->socket_conf.log
 FILE;
-        file_put_contents('/etc/supervisor/conf.d/' . $this->socket_conf . '.conf', $laravel_socket);
+        File::put('/etc/supervisor/conf.d/' . $this->socket_conf . '.conf', $laravel_socket);
         //Task Scheduling
-        system('* * * * * php ' . $app_path . '/artisan schedule:run 1>> /dev/null 2>&1');
+        $cron_file_path = storage_path('app/crontab');
+        File::put($cron_file_path, '* * * * * php ' . $app_path . '/artisan schedule:run 1>> /dev/null 2>&1' . "\n");
+        system("crontab -u $user $cron_file_path");
         $this->info('Application initialized successfuly!');
     }
 }
