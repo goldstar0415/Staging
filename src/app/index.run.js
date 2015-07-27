@@ -6,13 +6,20 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, User, MapService, $rootScope, snapRemote) {
+  function runBlock($log, User, MapService, $rootScope, snapRemote, $state, toastr) {
 
     MapService.Init('map');
-
+    $rootScope.timezonesList = moment.tz.names();
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     function onStateChangeSuccess(event, current, previous) {
+      if(current.require_auth) {
+        if(!$rootScope.currentUser) {
+          toastr.error('Unauthorized!');
+          $state.go('index');
+        }
+      }
+
       MapService.ChangeState(current.mapState);
       window.scrollTo(0, 0);
       if(current.mapState == 'big'){
@@ -32,7 +39,6 @@
 
     }
 
-    $rootScope.timezonesList = moment.tz.names();
     $rootScope.options = {
       snap: snapRemote.globalOptions
     };
@@ -51,8 +57,14 @@
 
     //get current user
     User.currentUser().$promise.then(function (user) {
-      console.log(user);
       $rootScope.currentUser = user;
+      if($rootScope.currentUser.location && $rootScope.currentUser.location.coordinates){
+        $rootScope.currentUser.location = {
+          lat: $rootScope.currentUser.location.coordinates[0],
+          lng: $rootScope.currentUser.location.coordinates[1]
+        }
+
+      }
     });
 
     $rootScope.$apply();

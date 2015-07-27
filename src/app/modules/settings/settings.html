@@ -7,19 +7,19 @@
         <h3>Personal information</h3>
         <div class="col-xs-4 no-pad">
           <figure class="avatar">
-            <img src="assets/img/01.png" alt="">
+            <img src="Settings.data.avatar_url" alt="">
           </figure>
           <a href="#" class="edit-photo">Edit avatar</a>
         </div>
         <div class="col-xs-8 no-pad">
-          <form role="form">
+          <form role="form" ng-submit="Settings.savePersonal()">
             <div class="col-xs-12 form-group no-pad">
               <div class="col-xs-3 no-pad">
                 <label>Name</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <input class="half-width" type="text" value="Victoria" placeholder="First name...">
-                <input class="half-width" type="text" value="Stanley" placeholder="Last name...">
+                <input class="half-width" type="text" placeholder="First name..." ng-model="Settings.data.first_name">
+                <input class="half-width" type="text" placeholder="Last name..." ng-model="Settings.data.last_name">
               </div>
             </div>
 
@@ -28,7 +28,7 @@
                 <label>Birthday</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <input type="date">
+                <input ng-model="Settings.data.birth_date" type="date">
               </div>
             </div>
 
@@ -38,12 +38,11 @@
               </div>
               <div class="col-xs-9 no-pad">
                 <div class="form-group half-width">
-                  <input type="radio" name="radio" value="male" id="radio1" checked="checked"
-                         class="radio">
+                  <input type="radio" name="radio" value="1" id="radio1" class="radio" ng-model="Settings.data.sex">
                   <label for="radio1">Male</label>
                 </div>
                 <div class="form-group half-width">
-                  <input type="radio" name="radio" value="female" id="radio2" class="radio">
+                  <input type="radio" name="radio" value="0" id="radio2" class="radio" ng-model="Settings.data.sex">
                   <label for="radio2">Female</label>
                 </div>
               </div>
@@ -54,8 +53,7 @@
                 <label>Location</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <input type="text">
-                <a href="#" class="compass" title="Find out the location"></a>
+                <location address="Settings.data.address" location="Settings.data.location" limit="15" bind-marker="false"></location>
               </div>
             </div>
 
@@ -64,8 +62,7 @@
                 <label>Timezone</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <select class="selectpicker" selectpicker ng-options="item as item for item in timezonesList">
-                </select>
+                <select class="selectpicker" ng-model="Settings.data.time_zone" ng-options="item as item for item in timezonesList" selectpicker></select>
               </div>
             </div>
 
@@ -74,7 +71,7 @@
                 <label>Description</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <textarea></textarea>
+                <textarea ng-model="Settings.data.description"></textarea>
               </div>
             </div>
             <div class="col-xs-12 no-pad">
@@ -152,7 +149,7 @@
               <label>Curent e-mail</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <span class="e-mail">itechhighway@gmail.com</span>
+              <span class="e-mail">{{Settings.data.email}}</span>
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
@@ -160,7 +157,7 @@
               <label>New e-mail</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <input class="white" type="text" placeholder="Enter new e-mail address...">
+              <input class="white" type="email" ng-model="Settings.data.newEmail" placeholder="Enter new e-mail address...">
             </div>
           </div>
           <div class="col-xs-12 no-pad">
@@ -180,7 +177,7 @@
               <label>Current password</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <input type="password" placeholder="Current password...">
+              <input type="password" ng-model="Settings.data.currentPassword" placeholder="Current password...">
               <a href="#" class="eye"></a>
             </div>
           </div>
@@ -189,7 +186,7 @@
               <label>New password</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <input type="password" placeholder="New password...">
+              <input type="password" ng-model="Settings.data.newPassword" placeholder="New password...">
               <a href="#" class="eye"></a>
             </div>
           </div>
@@ -198,7 +195,7 @@
               <label>Repassword</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <input type="password" placeholder="New password...">
+              <input type="password" ng-model="Settings.data.newPasswordConfirm" placeholder="Confirm new password...">
               <a href="#" class="eye"></a>
             </div>
           </div>
@@ -219,12 +216,12 @@
               <label>Events</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker">
-                <option>All users have access</option>
-                <option>Only followers&followings have access</option>
-                <option>Only followings have access</option>
-                <option>Only authorized users have access</option>
-                <option>Nobody has access</option>
+              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_events">
+                <option value="1">All users have access</option>
+                <option value="2">Only followers&followings have access</option>
+                <option value="3">Only followings have access</option>
+                <option value="4">Only authorized users have access</option>
+                <option value="5">Nobody has access</option>
               </select>
             </div>
           </div>
@@ -233,12 +230,12 @@
               <label>Favorites</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker">
-                <option>All users have access</option>
-                <option>Only followers&followings have access</option>
-                <option>Only followings have access</option>
-                <option>Only authorized users have access</option>
-                <option>Nobody has access</option>
+              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_favorites">
+                <option value="1">All users have access</option>
+                <option value="2">Only followers&followings have access</option>
+                <option value="3">Only followings have access</option>
+                <option value="4">Only authorized users have access</option>
+                <option value="5">Nobody has access</option>
               </select>
             </div>
           </div>
@@ -247,12 +244,12 @@
               <label>Followers</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker">
-                <option>All users have access</option>
-                <option>Only followers&followings have access</option>
-                <option>Only followings have access</option>
-                <option>Only authorized users have access</option>
-                <option>Nobody has access</option>
+              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_followers">
+                <option value="1">All users have access</option>
+                <option value="2">Only followers&followings have access</option>
+                <option value="3">Only followings have access</option>
+                <option value="4">Only authorized users have access</option>
+                <option value="5">Nobody has access</option>
               </select>
             </div>
           </div>
@@ -261,12 +258,12 @@
               <label>Followings</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker">
-                <option>All users have access</option>
-                <option>Only followers&followings have access</option>
-                <option>Only followings have access</option>
-                <option>Only authorized users have access</option>
-                <option>Nobody has access</option>
+              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_followings">
+                <option value="1">All users have access</option>
+                <option value="2">Only followers&followings have access</option>
+                <option value="3">Only followings have access</option>
+                <option value="4">Only authorized users have access</option>
+                <option value="5">Nobody has access</option>
               </select>
             </div>
           </div>
@@ -275,12 +272,12 @@
               <label>Wall</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker">
-                <option>All users have access</option>
-                <option>Only followers&followings have access</option>
-                <option>Only followings have access</option>
-                <option>Only authorized users have access</option>
-                <option>Nobody has access</option>
+              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_wall">
+                <option value="1">All users have access</option>
+                <option value="2">Only followers&followings have access</option>
+                <option value="3">Only followings have access</option>
+                <option value="4">Only authorized users have access</option>
+                <option value="5">Nobody has access</option>
               </select>
             </div>
           </div>
@@ -289,12 +286,12 @@
               <label>My info</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker">
-                <option>All users have access</option>
-                <option>Only followers&followings have access</option>
-                <option>Only followings have access</option>
-                <option>Only authorized users have access</option>
-                <option>Nobody has access</option>
+              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_info">
+                <option value="1">All users have access</option>
+                <option value="2">Only followers&followings have access</option>
+                <option value="3">Only followings have access</option>
+                <option value="4">Only authorized users have access</option>
+                <option value="5">Nobody has access</option>
               </select>
             </div>
           </div>
@@ -303,12 +300,12 @@
               <label>Photo map</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker">
-                <option>All users have access</option>
-                <option>Only followers&followings have access</option>
-                <option>Only followings have access</option>
-                <option>Only authorized users have access</option>
-                <option>Nobody has access</option>
+              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_photo_map">
+                <option value="1">All users have access</option>
+                <option value="2">Only followers&followings have access</option>
+                <option value="3">Only followings have access</option>
+                <option value="4">Only authorized users have access</option>
+                <option value="5">Nobody has access</option>
               </select>
             </div>
           </div>
@@ -329,9 +326,9 @@
               <label>Received a letter</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker">
-                <option>Receive</option>
-                <option>Don't receive</option>
+              <select selectpicker class="selectpicker" ng-model="Settings.data.notification_letter">
+                <option value="true">Receive</option>
+                <option value="false">Don't receive</option>
               </select>
             </div>
           </div>
@@ -341,9 +338,9 @@
               <label>Post on the wall</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker">
-                <option>Receive</option>
-                <option>Don't receive</option>
+              <select selectpicker class="selectpicker" ng-model="Settings.data.notification_wall_post">
+                <option value="true">Receive</option>
+                <option value="false">Don't receive</option>
               </select>
             </div>
           </div>
@@ -353,9 +350,9 @@
               <label>User follow/unfollow</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker">
-                <option>Receive</option>
-                <option>Don't receive</option>
+              <select selectpicker class="selectpicker" ng-model="Settings.data.notification_follow">
+                <option value="true">Receive</option>
+                <option value="false">Don't receive</option>
               </select>
             </div>
           </div>
@@ -365,9 +362,9 @@
               <label>New events</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker">
-                <option>Receive</option>
-                <option>Don't receive</option>
+              <select selectpicker class="selectpicker" ng-model="Settings.data.notification_new_spot">
+                <option value="true">Receive</option>
+                <option value="false">Don't receive</option>
               </select>
             </div>
           </div>
@@ -377,9 +374,9 @@
               <label>Upcoming events</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker">
-                <option>Receive</option>
-                <option>Don't receive</option>
+              <select selectpicker class="selectpicker" ng-model="Settings.data.notification_coming_spot">
+                <option value="true">Receive</option>
+                <option value="false">Don't receive</option>
               </select>
             </div>
           </div>

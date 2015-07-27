@@ -591,6 +591,7 @@
       function BindMarkerToInput(Marker, Callback) {
 
         Marker.on('dragend', function(e) {
+
           var latlng = Marker.getLatLng();
           GetAddressByLatlng(latlng, function(response) {
             if(response.display_name) {

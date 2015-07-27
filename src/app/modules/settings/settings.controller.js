@@ -6,24 +6,24 @@
     .controller('SettingsController', SettingsController);
 
   /** @ngInject */
-  function SettingsController(UploaderService, toastr, settings, API_URL) {
+  function SettingsController($rootScope, toastr, moment, $http, API_URL) {
     var vm = this;
-    vm.settings = settings;
-    vm.images = UploaderService.images;
+    vm.data = $rootScope.currentUser;
 
-    vm.deleteImage = function (idx) {
-      vm.images.files.splice(idx, 1);
+    vm.savePersonal = function () {
+      $http.put(API_URL + '/settings', {
+        type: 'personal',
+        params: {
+          first_name: vm.data.first_name,
+          last_name: vm.data.last_name,
+          birth_date: vm.data.birth_date,
+          sex: vm.data.sex,
+          time_zone: vm.data.time_zone,
+          description: vm.data.description,
+          address: vm.data.address,
+          location: vm.data.location
+        }
+      });
     };
-    vm.save = function () {
-      UploaderService
-        .upload(API_URL + '/albums', 'POST', {id: 1})
-        .then(function (resp) {
-          console.log(resp);
-        })
-        .catch(function (resp) {
-          toastr.error('Upload failed');
-        })
-      ;
-    }
   }
 })();

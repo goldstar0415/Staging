@@ -24,7 +24,7 @@
           title: vm.title,
           location: vm.location,
           address: vm.address,
-          isPrivate: vm.isPrivate
+          is_private: vm.isPrivate
         };
         UploaderService
           .upload(API_URL + '/albums', 'POST', request)

@@ -1,7 +1,13 @@
-<input typeahead="address as address.display_name for address in getData($viewValue)"
+<input ng-show="provider === 'google'" typeahead="address as address.formatted_address for address in getData($viewValue)"
        typeahead-wait-ms="100"
        typeahead-on-select="onAutocompleteSelect($item, $model, $label)"
-       typeahead-focus-first
+       ng-model="viewAddress"
+       ng-change="onChange();"
+       placeholder="Start typing..."
+       type="text">
+<input ng-show="provider != 'google'" typeahead="address as address.formatted_address for address in getData($viewValue)"
+       typeahead-wait-ms="100"
+       typeahead-on-select="onAutocompleteSelect($item, $model, $label)"
        ng-model="viewAddress"
        ng-change="onChange();"
        placeholder="Start typing..."

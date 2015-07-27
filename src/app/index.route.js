@@ -74,11 +74,12 @@
         controller: 'SettingsController',
         controllerAs: 'Settings',
         resolve: {
-          settings: function(Settings) {
-            return Settings.get();
+          user: function(User) {
+            return User.currentUser();
           }
         },
-        mapState: 'hidden'
+        mapState: 'hidden',
+        require_auth: true
       });
 
     $urlRouterProvider.otherwise('/');
