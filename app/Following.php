@@ -15,6 +15,9 @@ namespace App;
  */
 class Following extends BaseModel
 {
+
+    protected $hidden = ['id', 'follower_id', 'following_id'];
+
     public function follower()
     {
         return $this->belongsTo(User::class, 'follower_id');
