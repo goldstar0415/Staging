@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 
@@ -50,6 +51,16 @@ class Spot extends BaseModel implements StaplerableInterface
     {
         $this->hasAttachedFile('cover');
         parent::__construct($attributes);
+    }
+
+    public function setStartDateAttribute($value)
+    {
+        $this->attributes['start_date'] = Carbon::createFromFormat($this->date_format, $value);
+    }
+
+    public function setEndDateAttribute($value)
+    {
+        $this->attributes['end_date'] = Carbon::createFromFormat($this->date_format, $value);
     }
 
     public function getRatingAttribute()

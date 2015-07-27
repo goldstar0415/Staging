@@ -2,10 +2,12 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
@@ -15,7 +17,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 /**
  * Class User
  * @package App
- * 
+ *
  * @property integer $id
  * @property string $first_name
  * @property string $last_name
@@ -65,7 +67,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  */
 class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract, StaplerableInterface
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait, PostgisTrait, StaplerTrait {
+    use Authenticatable, CanResetPassword, EntrustUserTrait, PostgisTrait, StaplerTrait, SoftDeletes {
         StaplerTrait::boot insteadof EntrustUserTrait;
         EntrustUserTrait::boot insteadof StaplerTrait;
         StaplerTrait::boot as bootStaplerT;
@@ -93,7 +95,16 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      *
      * @var array
      */
-    protected $fillable = ['avatar', 'last_name', 'first_name', 'email', 'password'];
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+        'remember_token',
+        'avatar_file_name',
+        'avatar_file_size',
+        'avatar_content_type',
+        'avatar_updated_at'
+    ];
 
     protected $appends = ['avatar_url', 'attached_socials', 'is_registered'];
 
@@ -106,7 +117,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     protected $hidden = ['password', 'remember_token', 'socials'];
 
-    protected $dates = ['banned_at'];
+    protected $dates = ['deleted_at', 'banned_at', 'birth_date'];
 
     protected $postgisFields = [
         'location' => Point::class,
@@ -119,6 +130,16 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     {
         $this->hasAttachedFile('avatar');
         parent::__construct($attributes);
+    }
+
+    public function setBirthDateAttribute($value)
+    {
+        $this->attributes['birth_date'] = Carbon::createFromFormat($this->date_format, $value);
+    }
+
+    public function setBannedAtAttribute($value)
+    {
+        $this->attributes['banned_at'] = Carbon::createFromFormat($this->date_format, $value);
     }
 
     public function getIsRegisteredAttribute()
@@ -139,7 +160,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     {
         return $this->getPictureUrls('avatar');
     }
-    
+
     public function followings()
     {
         return $this->hasMany(Following::class, 'follower_id');

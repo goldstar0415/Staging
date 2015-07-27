@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
@@ -33,6 +34,16 @@ class Activity extends BaseModel
     protected $postgisFields = [
         'location' => Point::class,
     ];
+
+    public function setStartDateAttribute($value)
+    {
+        $this->attributes['start_date'] = Carbon::createFromFormat($this->date_format, $value);
+    }
+
+    public function setEndDateAttribute($value)
+    {
+        $this->attributes['end_date'] = Carbon::createFromFormat($this->date_format, $value);
+    }
 
     public function plan()
     {

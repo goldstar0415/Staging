@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
@@ -44,6 +45,11 @@ class Friend extends BaseModel implements StaplerableInterface
     {
         $this->hasAttachedFile('avatar');
         parent::__construct($attributes);
+    }
+
+    public function setBirthDateAttribute($value)
+    {
+        $this->attributes['birth_date'] = Carbon::createFromFormat($this->date_format, $value);
     }
 
     public function user()
