@@ -17,7 +17,6 @@ use Codesleeve\Stapler\ORM\StaplerableInterface;
  * @property string $description
  * @property string $web_site
  * @property string $cover
- * @property float $rating
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $end_date
  * @property \Carbon\Carbon $created_at
@@ -33,6 +32,9 @@ use Codesleeve\Stapler\ORM\StaplerableInterface;
  * @property \Illuminate\Database\Eloquent\Collection $tags
  * @property \Illuminate\Database\Eloquent\Collection $plans
  * @property \Illuminate\Database\Eloquent\Collection $points
+ *
+ * Mutators properties
+ * @property float $rating
  */
 class Spot extends BaseModel implements StaplerableInterface
 {

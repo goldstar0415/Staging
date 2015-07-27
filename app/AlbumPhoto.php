@@ -22,6 +22,9 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property \Illuminate\Database\Eloquent\Collection $comments
  * @property \Illuminate\Database\Eloquent\Collection $walls
  * @property \Illuminate\Database\Eloquent\Collection $chatMessages
+ *
+ * Mutators properties
+ * @property string $photo_url
  */
 class AlbumPhoto extends BaseModel implements StaplerableInterface
 {

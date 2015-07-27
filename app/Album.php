@@ -19,6 +19,9 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * Relation properties
  * @property User $user
  * @property \Illuminate\Database\Eloquent\Collection $photos
+ *
+ * Mutators properties
+ * @property string $cover
  */
 class Album extends BaseModel
 {

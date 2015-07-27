@@ -30,13 +30,13 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property Point $location
  * @property string $time_zone
  * @property string $description
- * @property integer $mail_events
- * @property integer $mail_favorites
- * @property integer $mail_followers
- * @property integer $mail_followings
- * @property integer $mail_wall
- * @property integer $mail_info
- * @property integer $mail_photo_map
+ * @property integer $privacy_events
+ * @property integer $privacy_favorites
+ * @property integer $privacy_followers
+ * @property integer $privacy_followings
+ * @property integer $privacy_wall
+ * @property integer $privacy_info
+ * @property integer $privacy_photo_map
  * @property boolean $notification_letter
  * @property boolean $notification_wall_post
  * @property boolean $notification_follow
@@ -64,6 +64,11 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property \Illuminate\Database\Eloquent\Collection $spotReviews
  * @property \Illuminate\Database\Eloquent\Collection $spots
  * @property BloggerRequest $bloggerRequest
+ *
+ * Mutators properties
+ * @property boolean $is_registered
+ * @property array $attached_socials
+ * @property string $avatar_url
  */
 class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract, StaplerableInterface
 {
@@ -99,6 +104,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         'id',
         'created_at',
         'updated_at',
+        'deleted_at',
         'remember_token',
         'avatar_file_name',
         'avatar_file_size',
