@@ -26,7 +26,10 @@ Route::resource('photos', 'AlbumPhotoController', ['only' => ['show', 'update', 
 Route::get('photos/{photos}/avatar', 'AlbumPhotoController@setAvatar');
 Route::resource('photos.comments', 'AlbumPhotoCommentController', ['only' => ['index', 'store', 'destroy']]);
 
-Route::controller('/', 'FollowController');
+Route::get('follow/{users}', 'FollowController@getFollow');
+Route::get('unfollow/{users}', 'FollowController@getUnfollow');
+Route::get('followers/{users}', 'FollowController@getFollowers');
+Route::get('followings/{users}', 'FollowController@getFollowings');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
 

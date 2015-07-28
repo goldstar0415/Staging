@@ -19,15 +19,14 @@ class FollowController extends Controller
     }
 
 
-    public function getFollow(Request $request, $id)
+    public function getFollow(Request $request, $follow_user)
     {
-        $follow_user = User::findOrFail($id);
         /**
          * @var \App\User $user
          */
         $user = $request->user();
 
-        if (!$user->followings()->find($id)) {
+        if (!$user->followings()->find($follow_user->id)) {
             $following = new Following();
             $following->follower()->associate($user);
             $following->following()->associate($follow_user);
@@ -41,15 +40,14 @@ class FollowController extends Controller
         return response()->json(['message' => 'You are successfuly follow user ' . $follow_user->first_name]);
     }
 
-    public function getUnfollow(Request $request, $id)
+    public function getUnfollow(Request $request, $follow_user)
     {
-        $follow_user = User::findOrFail($id);
         /**
          * @var \App\User $user
          */
         $user = $request->user();
 
-        $following = $user->followings()->where('following_id', $id)->first();
+        $following = $user->followings()->where('following_id', $follow_user->id)->first();
         if ($following) {
             $following->delete();
         } else {
@@ -61,17 +59,13 @@ class FollowController extends Controller
         return response()->json(['message' => 'You are successfuly unfollow user ' . $follow_user->first_name]);
     }
 
-    public function getFollowers($id)
+    public function getFollowers($user)
     {
-        $user = User::findOrFail($id);
-
         return $user->followers->load('follower');
     }
 
-    public function getFollowings($id)
+    public function getFollowings($user)
     {
-        $user = User::findOrFail($id);
-
         return $user->followings->load('following');
     }
 }
