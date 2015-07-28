@@ -1,10 +1,12 @@
 <div class="col-xs-12">
   <div class="container wrap">
     <div class="col-xs-9 central">
+
       <h2>Profile settings</h2>
       <!----Personal information block---->
       <div class="col-xs-12 settings-block">
         <h3>Personal information</h3>
+
         <div class="col-xs-4 no-pad">
           <figure class="avatar">
             <img src="Settings.data.avatar_url" alt="">
@@ -12,14 +14,14 @@
           <a href="#" class="edit-photo">Edit avatar</a>
         </div>
         <div class="col-xs-8 no-pad">
-          <form role="form" ng-submit="Settings.savePersonal()">
+          <form role="form" name="form" ng-submit="Settings.savePersonalSettings(form)" novalidate>
             <div class="col-xs-12 form-group no-pad">
               <div class="col-xs-3 no-pad">
                 <label>Name</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <input class="half-width" type="text" placeholder="First name..." ng-model="Settings.data.first_name">
-                <input class="half-width" type="text" placeholder="Last name..." ng-model="Settings.data.last_name">
+                <input class="half-width" type="text" placeholder="First name..." ng-minlength="3" ng-model="Settings.data.first_name" required>
+                <input class="half-width" type="text" placeholder="Last name..." ng-minlength="3" ng-model="Settings.data.last_name" required>
               </div>
             </div>
 
@@ -28,7 +30,7 @@
                 <label>Birthday</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <input ng-model="Settings.data.birth_date" type="date">
+                <input ng-datepicker ng-model="Settings.data.birth_date" type="text">
               </div>
             </div>
 
@@ -38,11 +40,13 @@
               </div>
               <div class="col-xs-9 no-pad">
                 <div class="form-group half-width">
-                  <input type="radio" name="radio" value="1" id="radio1" class="radio" ng-model="Settings.data.sex">
+                  <input type="radio" name="radio" value="1" id="radio1" class="radio" ng-selected="Settings.data.sex"
+                         ng-model="Settings.data.sex">
                   <label for="radio1">Male</label>
                 </div>
                 <div class="form-group half-width">
-                  <input type="radio" name="radio" value="0" id="radio2" class="radio" ng-model="Settings.data.sex">
+                  <input type="radio" name="radio" value="0" id="radio2" class="radio" ng-selected="Settings.data.sex"
+                         ng-model="Settings.data.sex">
                   <label for="radio2">Female</label>
                 </div>
               </div>
@@ -53,7 +57,8 @@
                 <label>Location</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <location address="Settings.data.address" location="Settings.data.location" limit="15" bind-marker="false"></location>
+                <location address="Settings.data.address" location="Settings.data.location" limit="15"
+                          bind-marker="false"></location>
               </div>
             </div>
 
@@ -62,7 +67,17 @@
                 <label>Timezone</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <select class="selectpicker" ng-model="Settings.data.time_zone" ng-options="item as item for item in timezonesList" selectpicker></select>
+                <!--<select class="selectpicker" ng-model="Settings.data.time_zone" ng-selected="Settings.data.time_zone"-->
+                <!--ng-options="item for item in timezonesList"></select>-->
+                <ui-select
+                  ng-model="Settings.data.time_zone"
+                  theme="bootstrap">
+                  <ui-select-match placeholder="Enter timezone...">{{$select.selected}}</ui-select-match>
+                  <ui-select-choices
+                    repeat="item in timezonesList | filter : $select.search track by $index">
+                    <div ng-bind-html="item |  highlight: $select.search"></div>
+                  </ui-select-choices>
+                </ui-select>
               </div>
             </div>
 
@@ -143,7 +158,7 @@
       <div class="col-xs-12 settings-block">
         <h3>Security</h3>
 
-        <form role="form">
+        <form role="form" name="emailForm" ng-submit="Settings.saveSecuritySettings(emailForm)" novalidate>
           <div class="col-xs-12 form-group no-pad">
             <div class="col-xs-6 no-pad">
               <label>Curent e-mail</label>
@@ -157,7 +172,13 @@
               <label>New e-mail</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <input class="white" type="email" ng-model="Settings.data.newEmail" placeholder="Enter new e-mail address...">
+              <input class="white" type="email" name="email" ng-model="Settings.data.newEmail"
+                     placeholder="Enter new e-mail address..." required>
+
+              <div class="error-message-inline" ng-messages="emailForm.email.$error"
+                   ng-if="emailForm.$submitted || emailForm.email.$touched">
+                <div ng-messages-include="error-title-email-form"></div>
+              </div>
             </div>
           </div>
           <div class="col-xs-12 no-pad">
@@ -171,23 +192,45 @@
       <div class="col-xs-12 settings-block">
         <h3>Change password</h3>
 
-        <form role="form">
+        <form role="form" name="passForm" ng-submit="Settings.savePasswordSettings(passForm)">
           <div class="col-xs-12 form-group no-pad">
             <div class="col-xs-6 no-pad">
               <label>Current password</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <input type="password" ng-model="Settings.data.currentPassword" placeholder="Current password...">
+              <input type="password"
+                     name="password"
+                     ng-model="Settings.data.currentPassword"
+                     placeholder="Current password..."
+                     minlength="6"
+                     required/>
               <a href="#" class="eye"></a>
+
+              <div ng-messages="passForm.password.$error" ng-if="passForm.$submitted"
+                   class="error-message-inline">
+                <div ng-messages-include="error-password-messages"></div>
+              </div>
             </div>
+
+
           </div>
           <div class="col-xs-12 form-group no-pad">
             <div class="col-xs-6 no-pad">
               <label>New password</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <input type="password" ng-model="Settings.data.newPassword" placeholder="New password...">
+              <input type="password"
+                     name="newpassword"
+                     ng-model="Settings.data.newPassword"
+                     placeholder="New password..."
+                     minlength="6"
+                     required/>
               <a href="#" class="eye"></a>
+
+              <div ng-messages="passForm.newpassword.$error" ng-if="passForm.$submitted"
+                   class="error-message-inline">
+                <div ng-messages-include="error-password-messages"></div>
+              </div>
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
@@ -195,8 +238,17 @@
               <label>Repassword</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <input type="password" ng-model="Settings.data.newPasswordConfirm" placeholder="Confirm new password...">
+              <input type="password"
+                     name="newpasswordconf"
+                     ng-model="Settings.data.newPasswordConfirm"
+                     placeholder="Confirm new password..."
+                     ng-match="Settings.data.newPassword">
               <a href="#" class="eye"></a>
+
+              <div ng-messages="passForm.newpasswordconf.$error" ng-if="passForm.$submitted"
+                   class="error-message-inline">
+                <div ng-messages-include="error-password-messages"></div>
+              </div>
             </div>
           </div>
           <div class="col-xs-12 no-pad">
@@ -210,19 +262,28 @@
       <div class="col-xs-12 settings-block">
         <h3>Privacy settings</h3>
 
-        <form role="form">
+        <form role="form" ng-submit="Settings.savePrivacySettings()">
           <div class="col-xs-12 form-group no-pad">
             <div class="col-xs-6 no-pad">
               <label>Events</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_events">
-                <option value="1">All users have access</option>
-                <option value="2">Only followers&followings have access</option>
-                <option value="3">Only followings have access</option>
-                <option value="4">Only authorized users have access</option>
-                <option value="5">Nobody has access</option>
-              </select>
+              <ui-select
+                ng-model="Settings.data.privacy_events"
+                theme="bootstrap">
+                <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_events">-->
+              <!--<option value="1">All users have access</option>-->
+              <!--<option value="2">Only followers&followings have access</option>-->
+              <!--<option value="3">Only followings have access</option>-->
+              <!--<option value="4">Only authorized users have access</option>-->
+              <!--<option value="5">Nobody has access</option>-->
+              <!--</select>-->
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
@@ -230,13 +291,22 @@
               <label>Favorites</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_favorites">
-                <option value="1">All users have access</option>
-                <option value="2">Only followers&followings have access</option>
-                <option value="3">Only followings have access</option>
-                <option value="4">Only authorized users have access</option>
-                <option value="5">Nobody has access</option>
-              </select>
+              <ui-select
+                ng-model="Settings.data.privacy_favorites"
+                theme="bootstrap">
+                <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_favorites">-->
+              <!--<option value="1">All users have access</option>-->
+              <!--<option value="2">Only followers&followings have access</option>-->
+              <!--<option value="3">Only followings have access</option>-->
+              <!--<option value="4">Only authorized users have access</option>-->
+              <!--<option value="5">Nobody has access</option>-->
+              <!--</select>-->
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
@@ -244,13 +314,22 @@
               <label>Followers</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_followers">
-                <option value="1">All users have access</option>
-                <option value="2">Only followers&followings have access</option>
-                <option value="3">Only followings have access</option>
-                <option value="4">Only authorized users have access</option>
-                <option value="5">Nobody has access</option>
-              </select>
+              <ui-select
+                ng-model="Settings.data.privacy_followers"
+                theme="bootstrap">
+                <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_followers">-->
+              <!--<option value="1">All users have access</option>-->
+              <!--<option value="2">Only followers&followings have access</option>-->
+              <!--<option value="3">Only followings have access</option>-->
+              <!--<option value="4">Only authorized users have access</option>-->
+              <!--<option value="5">Nobody has access</option>-->
+              <!--</select>-->
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
@@ -258,13 +337,22 @@
               <label>Followings</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_followings">
-                <option value="1">All users have access</option>
-                <option value="2">Only followers&followings have access</option>
-                <option value="3">Only followings have access</option>
-                <option value="4">Only authorized users have access</option>
-                <option value="5">Nobody has access</option>
-              </select>
+              <ui-select
+                ng-model="Settings.data.privacy_followings"
+                theme="bootstrap">
+                <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_followings">-->
+              <!--<option value="1">All users have access</option>-->
+              <!--<option value="2">Only followers&followings have access</option>-->
+              <!--<option value="3">Only followings have access</option>-->
+              <!--<option value="4">Only authorized users have access</option>-->
+              <!--<option value="5">Nobody has access</option>-->
+              <!--</select>-->
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
@@ -272,13 +360,22 @@
               <label>Wall</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_wall">
-                <option value="1">All users have access</option>
-                <option value="2">Only followers&followings have access</option>
-                <option value="3">Only followings have access</option>
-                <option value="4">Only authorized users have access</option>
-                <option value="5">Nobody has access</option>
-              </select>
+              <ui-select
+                ng-model="Settings.data.privacy_wall"
+                theme="bootstrap">
+                <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_wall">-->
+              <!--<option value="1">All users have access</option>-->
+              <!--<option value="2">Only followers&followings have access</option>-->
+              <!--<option value="3">Only followings have access</option>-->
+              <!--<option value="4">Only authorized users have access</option>-->
+              <!--<option value="5">Nobody has access</option>-->
+              <!--</select>-->
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
@@ -286,13 +383,22 @@
               <label>My info</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_info">
-                <option value="1">All users have access</option>
-                <option value="2">Only followers&followings have access</option>
-                <option value="3">Only followings have access</option>
-                <option value="4">Only authorized users have access</option>
-                <option value="5">Nobody has access</option>
-              </select>
+              <ui-select
+                ng-model="Settings.data.privacy_info"
+                theme="bootstrap">
+                <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_info">-->
+              <!--<option value="1">All users have access</option>-->
+              <!--<option value="2">Only followers&followings have access</option>-->
+              <!--<option value="3">Only followings have access</option>-->
+              <!--<option value="4">Only authorized users have access</option>-->
+              <!--<option value="5">Nobody has access</option>-->
+              <!--</select>-->
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
@@ -300,13 +406,22 @@
               <label>Photo map</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker" ng-model="Settings.data.privacy_photo_map">
-                <option value="1">All users have access</option>
-                <option value="2">Only followers&followings have access</option>
-                <option value="3">Only followings have access</option>
-                <option value="4">Only authorized users have access</option>
-                <option value="5">Nobody has access</option>
-              </select>
+              <ui-select
+                ng-model="Settings.data.privacy_photo_map"
+                theme="bootstrap">
+                <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_photo_map">-->
+              <!--<option value="1">All users have access</option>-->
+              <!--<option value="2">Only followers&followings have access</option>-->
+              <!--<option value="3">Only followings have access</option>-->
+              <!--<option value="4">Only authorized users have access</option>-->
+              <!--<option value="5">Nobody has access</option>-->
+              <!--</select>-->
             </div>
           </div>
           <div class="col-xs-12 no-pad">
@@ -320,16 +435,25 @@
       <div class="col-xs-12 settings-block">
         <h3>Notifications</h3>
 
-        <form role="form">
+        <form role="form" ng-submit="Settings.saveNotificationSettings()">
           <div class="col-xs-12 form-group no-pad">
             <div class="col-xs-6 no-pad">
               <label>Received a letter</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker" ng-model="Settings.data.notification_letter">
-                <option value="true">Receive</option>
-                <option value="false">Don't receive</option>
-              </select>
+              <ui-select
+                ng-model="Settings.data.notification_letter"
+                theme="bootstrap">
+                <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices
+                  repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
+                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_letter">-->
+              <!--<option value="true">Receive</option>-->
+              <!--<option value="false">Don't receive</option>-->
+              <!--</select>-->
             </div>
           </div>
 
@@ -338,10 +462,19 @@
               <label>Post on the wall</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker" ng-model="Settings.data.notification_wall_post">
-                <option value="true">Receive</option>
-                <option value="false">Don't receive</option>
-              </select>
+              <ui-select
+                ng-model="Settings.data.notification_wall_post"
+                theme="bootstrap">
+                <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices
+                  repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
+                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_wall_post">-->
+              <!--<option value="true">Receive</option>-->
+              <!--<option value="false">Don't receive</option>-->
+              <!--</select>-->
             </div>
           </div>
 
@@ -350,10 +483,19 @@
               <label>User follow/unfollow</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker" ng-model="Settings.data.notification_follow">
-                <option value="true">Receive</option>
-                <option value="false">Don't receive</option>
-              </select>
+              <ui-select
+                ng-model="Settings.data.notification_follow"
+                theme="bootstrap">
+                <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices
+                  repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
+                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_follow">-->
+              <!--<option value="true">Receive</option>-->
+              <!--<option value="false">Don't receive</option>-->
+              <!--</select>-->
             </div>
           </div>
 
@@ -362,10 +504,19 @@
               <label>New events</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker" ng-model="Settings.data.notification_new_spot">
-                <option value="true">Receive</option>
-                <option value="false">Don't receive</option>
-              </select>
+              <ui-select
+                ng-model="Settings.data.notification_new_spot"
+                theme="bootstrap">
+                <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices
+                  repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
+                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_new_spot">-->
+              <!--<option value="true">Receive</option>-->
+              <!--<option value="false">Don't receive</option>-->
+              <!--</select>-->
             </div>
           </div>
 
@@ -374,10 +525,19 @@
               <label>Upcoming events</label>
             </div>
             <div class="col-xs-6 no-pad">
-              <select selectpicker class="selectpicker" ng-model="Settings.data.notification_coming_spot">
-                <option value="true">Receive</option>
-                <option value="false">Don't receive</option>
-              </select>
+              <ui-select
+                ng-model="Settings.data.notification_coming_spot"
+                theme="bootstrap">
+                <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices
+                  repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
+                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+              <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_coming_spot">-->
+              <!--<option value="true">Receive</option>-->
+              <!--<option value="false">Don't receive</option>-->
+              <!--</select>-->
             </div>
           </div>
           <div class="col-xs-12 no-pad">
@@ -385,8 +545,9 @@
           </div>
         </form>
       </div>
+      <!----/Notifications block---->
+
     </div>
-    <!----/Notifications block---->
     <div class="col-xs-3 zoomers">
       <div class="zoomers-sidebar">
         <ul class="settings-list">

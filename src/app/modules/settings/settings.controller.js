@@ -6,11 +6,22 @@
     .controller('SettingsController', SettingsController);
 
   /** @ngInject */
-  function SettingsController($rootScope, toastr, moment, $http, API_URL) {
+  function SettingsController($rootScope, currentUser, $scope, toastr, moment, $http, API_URL) {
     var vm = this;
-    vm.data = $rootScope.currentUser;
+    vm.data = currentUser;
+    vm.privacyOptions = [
+      {value: 0, label: 'All users have access'},
+      {value: 1, label: 'Only followers&followings have access'},
+      {value: 2, label: 'Only followings have access'},
+      {value: 3, label: 'Only authorized users have access'},
+      {value: 4, label: 'Nobody has access'}
+    ];
+    vm.notificationOptions = [
+      {value: 0, label: 'Receive'},
+      {value: 1, label: 'Don\'t receive'}
+    ];
 
-    vm.savePersonal = function () {
+    vm.savePersonalSettings = function() {
       $http.put(API_URL + '/settings', {
         type: 'personal',
         params: {
@@ -23,7 +34,91 @@
           address: vm.data.address,
           location: vm.data.location
         }
-      });
+      })
+        .success(function(data, status, headers, config) {
+          toastr.success('Settings saved')
+        })
+        .error(function(data, status, headers, config) {
+          toastr.error('Incorrect input ')
+        });
+    };
+    vm.saveSecuritySettings = function(form) {
+      if(form.isValid) {
+        //send email
+        $http.put(API_URL + '/settings', {
+          type: 'personal',
+          params: {
+            email: vm.data.newEmail
+          }
+        })
+          .success(function(data, status, headers, config) {
+            toastr.success('Settings saved')
+          })
+          .error(function(data, status, headers, config) {
+            toastr.error('Incorrect input ')
+          });
+      } else {
+        toastr.error('Email is not valid');
+      }
+    };
+    vm.savePasswordSettings = function(form) {
+      if(form.isValid) {
+         //send pass settings
+        $http.put(API_URL + '/settings', {
+          type: 'personal',
+          params: {
+            current_password: vm.data.currentPassword,
+            password: vm.data.newPassword,
+            password_confirmation: vm.data.newPasswordConfirm
+          }
+        })
+          .success(function(data, status, headers, config) {
+            toastr.success('Settings saved')
+          })
+          .error(function(data, status, headers, config) {
+            toastr.error('Incorrect input ')
+          });
+      } else {
+        toastr.error('Incorrect input');
+      }
+    };
+    vm.savePrivacySettings = function() {
+      $http.put(API_URL + '/settings', {
+        type: 'personal',
+        params: {
+          privacy_events: vm.data.privacy_events,
+          privacy_favorites:vm.data.privacy_favorites,
+          privacy_followers:vm.data.privacy_followers,
+          privacy_followings:vm.data.privacy_followings,
+          privacy_wall:vm.data.privacy_wall,
+          privacy_info:vm.data.privacy_info,
+          privacy_photo_map:vm.data.privacy_photo_map
+        }
+      })
+        .success(function(data, status, headers, config) {
+          toastr.success('Settings saved')
+        })
+        .error(function(data, status, headers, config) {
+          toastr.error('Incorrect input ')
+        });
+    };
+    vm.saveNotificationSettings = function() {
+      $http.put(API_URL + '/settings', {
+        type: 'personal',
+        params: {
+          notification_letter:vm.data.notification_letter,
+          notification_wall_post:vm.data.notification_wall_post,
+          notification_follow:vm.data.notification_follow,
+          notification_new_spot:vm.data.notification_new_spot,
+          notification_coming_spot:vm.data.notification_coming_spot
+        }
+      })
+        .success(function(data, status, headers, config) {
+          toastr.success('Settings saved')
+        })
+        .error(function(data, status, headers, config) {
+          toastr.error('Incorrect input ')
+        });
     };
   }
 })();

@@ -8,6 +8,7 @@
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
       var radiusSelectionLimit = 500000; //in meters
       var drawLayer = L.featureGroup();
+      var draggableMarkerLayer = L.featureGroup();
       var eventsLayer = new L.MarkerClusterGroup();
       var pitstopsLayer = new L.MarkerClusterGroup();
       var recreationsLayer = new L.MarkerClusterGroup();
@@ -257,6 +258,7 @@
         //add controls
         AddControls();
         map.addLayer(drawLayer);
+        map.addLayer(draggableMarkerLayer);
 
         window.map = map;
         map.locate({setView: true, maxZoom: 8});
@@ -575,23 +577,33 @@
 
       //Makers
       function CreateMarker(latlng, options) {
-        if (currentLayer === "none") { return false; }
-
+        //IMPORTANT:
+        //I used this construction because L.MarkerCluster is not supporting draggable markers
+        //But we still need to cluster markers on some pages. So all draggable marker will be in draggable marker layer
         var marker = L.marker(latlng, options);
-        GetCurrentLayer().addLayer(marker);
+        if(options.draggable) {
+          draggableMarkerLayer.addLayer(marker);
+        } else {
+          GetCurrentLayer().addLayer(marker);
+        }
 
         return marker;
       }
 
       function RemoveMarker(Marker) {
-        if (currentLayer === "none") { return; }
-        GetCurrentLayer().removeLayer(Marker);
+        //IMPORTANT:
+        //I used this construction because L.MarkerCluster is not supporting draggable markers
+        //But we still need to cluster markers on some pages. So all draggable marker will be in draggable marker layer
+        if(Marker.options.draggable) {
+          draggableMarkerLayer.removeLayer(Marker);
+        } else {
+          GetCurrentLayer().removeLayer(Marker);
+        }
       }
 
       function BindMarkerToInput(Marker, Callback) {
 
         Marker.on('dragend', function(e) {
-
           var latlng = Marker.getLatLng();
           GetAddressByLatlng(latlng, function(response) {
             if(response.display_name) {

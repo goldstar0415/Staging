@@ -12,17 +12,40 @@
     $rootScope.timezonesList = moment.tz.names();
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
+    function saveCurrentUser(user) {
+      $rootScope.currentUser = user;
+      if ($rootScope.currentUser.location && $rootScope.currentUser.location.coordinates) {
+        $rootScope.currentUser.location = {
+          lat: $rootScope.currentUser.location.coordinates[0],
+          lng: $rootScope.currentUser.location.coordinates[1]
+        }
+
+      }
+    }
     function onStateChangeSuccess(event, current, previous) {
-      if(current.require_auth) {
-        if(!$rootScope.currentUser) {
-          toastr.error('Unauthorized!');
-          $state.go('index');
+      if (current.require_auth) {
+        if (!$rootScope.currentUser) {
+          User.currentUser().$promise
+            .then(function (user) {
+              saveCurrentUser(user);
+            })
+            .catch(function () {
+              toastr.error('Unauthorized!');
+              $state.go('index');
+            });
+        }
+      } else {
+        if (!$rootScope.currentUser) {
+          User.currentUser().$promise
+            .then(function (user) {
+              saveCurrentUser(user);
+            })
         }
       }
 
       MapService.ChangeState(current.mapState);
       window.scrollTo(0, 0);
-      if(current.mapState == 'big'){
+      if (current.mapState == 'big') {
         $('.map-tools').show();
       } else {
         $('.map-tools').hide();
@@ -30,12 +53,13 @@
 
       switch (current.locate) {
         case 'fit':
-              MapService.FitBoundsOfCurrentLayer();
-              break;
+          MapService.FitBoundsOfCurrentLayer();
+          break;
         default:
-              MapService.FocusMapToCurrentLocation();
-              break;
-      };
+          MapService.FocusMapToCurrentLocation();
+          break;
+      }
+      ;
 
     }
 
@@ -55,17 +79,6 @@
       $rootScope.$apply();
     }
 
-    //get current user
-    User.currentUser().$promise.then(function (user) {
-      $rootScope.currentUser = user;
-      if($rootScope.currentUser.location && $rootScope.currentUser.location.coordinates){
-        $rootScope.currentUser.location = {
-          lat: $rootScope.currentUser.location.coordinates[0],
-          lng: $rootScope.currentUser.location.coordinates[1]
-        }
-
-      }
-    });
 
     $rootScope.$apply();
   }

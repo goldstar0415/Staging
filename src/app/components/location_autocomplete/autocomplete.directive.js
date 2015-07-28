@@ -57,7 +57,6 @@
         s.onChange = function() {
           if(!s.viewAddress){
             removeMarker();
-            marker = null;
           }
         };
         s.SetCurrentLocation = function() {

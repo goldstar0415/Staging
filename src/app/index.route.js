@@ -74,8 +74,8 @@
         controller: 'SettingsController',
         controllerAs: 'Settings',
         resolve: {
-          user: function(User) {
-            return User.currentUser();
+          currentUser: function(User) {
+            return User.currentUser().$promise;
           }
         },
         mapState: 'hidden',
