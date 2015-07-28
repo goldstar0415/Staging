@@ -23,7 +23,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property string $last_name
  * @property string $email
  * @property string $password
- * @property string $avatar
+ * @property \Codesleeve\Stapler\Attachment $avatar
  * @property boolean $sex
  * @property \Carbon\Carbon $birth_date
  * @property string $address
@@ -140,12 +140,12 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function setBirthDateAttribute($value)
     {
-        $this->attributes['birth_date'] = Carbon::createFromFormat($this->date_format, $value);
+        $this->attributes['birth_date'] = Carbon::createFromFormat(config('app.date_format'), $value);
     }
 
     public function setBannedAtAttribute($value)
     {
-        $this->attributes['banned_at'] = Carbon::createFromFormat($this->date_format, $value);
+        $this->attributes['banned_at'] = Carbon::createFromFormat($this->getDateFormat(), $value);
     }
 
     public function getIsRegisteredAttribute()

@@ -25,4 +25,20 @@ class UserUnfollowEvent extends Event
         $this->follower = $follower;
         $this->following = $following;
     }
+
+    /**
+     * @return User
+     */
+    public function getFollower()
+    {
+        return $this->follower;
+    }
+
+    /**
+     * @return User
+     */
+    public function getFollowing()
+    {
+        return $this->following;
+    }
 }
