@@ -50,7 +50,7 @@ class Friend extends BaseModel implements StaplerableInterface
 
     public function setBirthDateAttribute($value)
     {
-        $this->attributes['birth_date'] = Carbon::createFromFormat(config('app.date_format'), $value);
+        $this->attributes['birth_date'] = $value ? Carbon::createFromFormat(config('app.date_format'), $value): $value;
     }
 
     public function user()
