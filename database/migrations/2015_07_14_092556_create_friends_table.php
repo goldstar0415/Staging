@@ -17,11 +17,11 @@ class CreateFriendsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('first_name', 64);
             $table->string('last_name', 64);
-            $table->date('birth_date');
-            $table->string('phone', 24)->unique();
-            $table->string('email', 128)->unique();
-            $table->string('address');
-            $table->point('location');
+            $table->date('birth_date')->nullable();
+            $table->string('phone', 24)->nullable();
+            $table->string('email', 128)->nullable();
+            $table->string('address')->nullable();
+            $table->point('location')->nullable();
             $table->string('note', 255)->nullable();
             $table->timestamps();
 

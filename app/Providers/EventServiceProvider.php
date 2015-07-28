@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\UserFollowEvent;
+use App\Events\UserUnfollowEvent;
+use App\Listeners\AddFriend;
+use App\Listeners\RemoveFriend;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -13,8 +17,11 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\SomeEvent' => [
-            'App\Listeners\EventListener',
+        UserFollowEvent::class => [
+            AddFriend::class,
+        ],
+        UserUnfollowEvent::class => [
+            RemoveFriend::class,
         ],
     ];
 

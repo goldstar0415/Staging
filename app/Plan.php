@@ -38,12 +38,12 @@ class Plan extends BaseModel
 
     public function setStartDateAttribute($value)
     {
-        $this->attributes['start_date'] = Carbon::createFromFormat($this->date_format, $value);
+        $this->attributes['start_date'] = Carbon::createFromFormat(config('app.date_format'), $value);
     }
 
     public function setEndDateAttribute($value)
     {
-        $this->attributes['end_date'] = Carbon::createFromFormat($this->date_format, $value);
+        $this->attributes['end_date'] = Carbon::createFromFormat(config('app.date_format'), $value);
     }
 
     public function user()
