@@ -33,8 +33,8 @@ $dates = function () use ($faker) {
     $end_date = clone $start_date;
     $end_date->modify('+' . mt_rand(1, 5) . ' days');
     return [
-        'start_date' => $start_date,
-        'end_date' => $end_date
+        'start_date' => $start_date->format('Y-m-d H:i:s'),
+        'end_date' => $end_date->format('Y-m-d H:i:s')
     ];
 };
 

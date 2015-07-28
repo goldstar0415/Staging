@@ -39,6 +39,7 @@ class AddFriend
         ]);
         $user = $event->getFollower();
         $friend->user()->associate($user);
+        $friend->friend()->associate($friend);
         $user->friends()->save($friend);
     }
 }

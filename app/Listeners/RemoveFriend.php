@@ -28,7 +28,7 @@ class RemoveFriend
     {
         $event->getFollower()
             ->friends()
-            ->where('user_id', $event->getFollowing()->id)
+            ->where('friend_id', $event->getFollowing()->id)
             ->first()
             ->delete();
     }

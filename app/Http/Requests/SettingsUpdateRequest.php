@@ -51,7 +51,7 @@ class SettingsUpdateRequest extends Request
                 break;
             case 'security':
                 $rules = [
-                    'email' => 'required|email|max:128|unique:users'
+                    'email' => 'required|email|max:128|unique:users,email'
                 ];
                 break;
             case 'password':

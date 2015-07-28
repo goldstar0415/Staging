@@ -14,6 +14,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  *
  * @property int $id
  * @property integer $user_id
+ * @property integer $friend_id
  * @property string $first_name
  * @property string $last_name
  * @property \Carbon\Carbon $birth_date
@@ -30,7 +31,7 @@ class Friend extends BaseModel implements StaplerableInterface
 {
     use PostgisTrait, StaplerTrait;
 
-    protected $guarded = ['id', 'user_id'];
+    protected $guarded = ['id', 'user_id', 'friend_id'];
 
     protected $dates = ['birth_date'];
 
