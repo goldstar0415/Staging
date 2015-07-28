@@ -28,7 +28,7 @@ class AddFriend
     public function handle(UserFollowEvent $event)
     {
         $friend = $event->getFollowing();
-        $friend = new Friend([
+        $friend_model = new Friend([
             'avatar' => $friend->avatar->url(),
             'first_name' => $friend->first_name,
             'last_name' => $friend->last_name,
@@ -38,8 +38,7 @@ class AddFriend
             'location' => $friend->location
         ]);
         $user = $event->getFollower();
-        $friend->user()->associate($user);
-        $friend->friend()->associate($friend);
-        $user->friends()->save($friend);
+        $friend_model->friend()->associate($friend);
+        $user->friends()->save($friend_model);
     }
 }
