@@ -26,7 +26,7 @@ class FollowController extends Controller
          */
         $user = $request->user();
 
-        if (!$user->followings()->find($follow_user->id)) {
+        if (!$user->followings()->where('following_id', $follow_user->id)->first()) {
             $following = new Following();
             $following->follower()->associate($user);
             $following->following()->associate($follow_user);
