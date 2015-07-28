@@ -21,7 +21,8 @@
     "angular-messages": "~1.4.3",
     "moment-timezone": "~0.4.0",
     "angular-ui-select": "~0.12.1",
-    "bootstrap-datepicker": "~1.4.0"
+    "bootstrap-datepicker": "~1.4.0",
+    "ngImgCrop": "~0.3.2"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.0"

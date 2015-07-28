@@ -321,12 +321,12 @@
         float: right;
         background: #0c2638;
         color: $white;
-        width: 11%;
         @include transition_bg;
         &:hover {
           background: #1a415b;
           color: $white;
           @include transition_bg;
+          box-shadow: none;
         }
       }
     }
@@ -348,29 +348,27 @@
   }
 }
 
-.add-img {
-  img {
-    width: 38px;
-    height: 38px;
-    float: left;
-    margin-right: 15px;
-  }
-}
 
-.close-img {
-  display: block;
-  width: 38px;
-  height: 38px;
-  position: absolute;
-  background: url(/assets/img/icons/min-cross.png) center center no-repeat, rgba(0, 0, 0, .3);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
 
 .upload-photos {
   .photos {
+    .add-img {
+      img {
+        width: 38px;
+        height: 38px;
+        float: left;
+        margin-right: 15px;
+      }
+    }
 
+    .close-img {
+      display: block;
+      width: 44px;
+      height: 44px;
+      position: absolute;
+      background: url(/assets/img/icons/min-cross.png) center center no-repeat, rgba(0, 0, 0, .3);
+      @include border-radius;
+    }
   }
 }
 

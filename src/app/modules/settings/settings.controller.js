@@ -9,6 +9,12 @@
   function SettingsController($rootScope, currentUser, $scope, toastr, moment, $http, API_URL) {
     var vm = this;
     vm.data = currentUser;
+    if(vm.data.location && vm.data.location.coordinates){
+      vm.data.location = {
+        lat: vm.data.location.coordinates[0],
+        lng: vm.data.location.coordinates[1]
+      }
+    }
     vm.privacyOptions = [
       {value: 0, label: 'All users have access'},
       {value: 1, label: 'Only followers&followings have access'},
@@ -43,10 +49,10 @@
         });
     };
     vm.saveSecuritySettings = function(form) {
-      if(form.isValid) {
+      if(form.$valid) {
         //send email
         $http.put(API_URL + '/settings', {
-          type: 'personal',
+          type: 'security',
           params: {
             email: vm.data.newEmail
           }
@@ -62,10 +68,10 @@
       }
     };
     vm.savePasswordSettings = function(form) {
-      if(form.isValid) {
+      if(form.$valid) {
          //send pass settings
         $http.put(API_URL + '/settings', {
-          type: 'personal',
+          type: 'password',
           params: {
             current_password: vm.data.currentPassword,
             password: vm.data.newPassword,
@@ -84,7 +90,7 @@
     };
     vm.savePrivacySettings = function() {
       $http.put(API_URL + '/settings', {
-        type: 'personal',
+        type: 'privacy',
         params: {
           privacy_events: vm.data.privacy_events,
           privacy_favorites:vm.data.privacy_favorites,
@@ -104,7 +110,7 @@
     };
     vm.saveNotificationSettings = function() {
       $http.put(API_URL + '/settings', {
-        type: 'personal',
+        type: 'notifications',
         params: {
           notification_letter:vm.data.notification_letter,
           notification_wall_post:vm.data.notification_wall_post,

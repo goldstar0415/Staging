@@ -37,7 +37,9 @@
         controller: 'CreateAlbumController',
         controllerAs: 'CreateAlbum',
         mapState: 'small',
-        parent: 'profile_menu'
+        parent: 'profile_menu',
+        edit: false,
+        require_auth: true
       })
       .state('album', {
         url: '/albums/:album_id',
@@ -55,26 +57,69 @@
       .state('editAlbum', {
         url: '/albums/:album_id/edit',
         templateUrl: 'app/modules/photomap/create_album/album_create.html',
-        controller: 'EditAlbumController',
-        controllerAs: 'EditAlbum',
+        controller: 'CreateAlbumController',
+        controllerAs: 'CreateAlbum',
         resolve: {
           album: function (Album, $stateParams) {
             return Album.get({id: $stateParams.album_id});
           }
         },
+        edit: true,
         mapState: 'small',
-        parent: 'profile_menu'
+        parent: 'profile_menu',
+        require_auth: true
       })
-      .state('friendsmap', {})
-      .state('friendsmap_create', {})
-      .state('friendsmap_edit', {})
+      .state('friendsmap', {
+        url: '/friendsmap',
+        templateUrl: 'app/modules/friendsmap/friendsmap.html',
+        controller: 'FriendsmapController',
+        controllerAs: 'Friendsmap',
+        resolve: {
+          friends: function(Friends) {
+            return Friends.query();
+          }
+        },
+        mapState: 'small',
+        parent: 'profile_menu',
+        require_auth: true
+      })
+      .state('friendsmap_create', {
+        url: '/friendsmap/create',
+        templateUrl: 'app/modules/friendsmap/create/friendsmap.create.html',
+        controller: 'CreateFriendController',
+        controllerAs: 'CreateFriend',
+        resolve: {
+          friend: function(Friends) {
+            return new Friends
+          }
+        },
+        mapState: 'small',
+        parent: 'profile_menu',
+        edit: false,
+        require_auth: true
+      })
+      .state('friendsmap_edit', {
+        url: '/friendsmap/:id/edit',
+        templateUrl: 'app/modules/friendsmap/create/friendsmap.create.html',
+        controller: 'CreateFriendController',
+        controllerAs: 'CreateFriend',
+        resolve: {
+          friend: function(Friends, $stateParams) {
+            return Friends.getFriend({id: $stateParams.id});
+          }
+        },
+        mapState: 'small',
+        edit: true,
+        parent: 'profile_menu',
+        require_auth: true
+      })
       .state('settings', {
         url: '/settings',
         templateUrl: 'app/modules/settings/settings.html',
         controller: 'SettingsController',
         controllerAs: 'Settings',
         resolve: {
-          currentUser: function(User) {
+          currentUser: function (User) {
             return User.currentUser().$promise;
           }
         },

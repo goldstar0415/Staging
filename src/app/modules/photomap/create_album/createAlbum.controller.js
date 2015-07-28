@@ -6,13 +6,14 @@
     .controller('CreateAlbumController', CreateAlbumController);
 
   /** @ngInject */
-  function CreateAlbumController(UploaderService, toastr, API_URL) {
+  function CreateAlbumController(UploaderService, toastr, API_URL, $state) {
     var vm = this;
     vm.images = UploaderService.images;
     vm.title = "";
     vm.address= "";
     vm.location= null;
     vm.isPrivate = 0;
+    vm.edit = $state.current.edit;
 
     vm.deleteImage = function (idx) {
       vm.images.files.splice(idx, 1);

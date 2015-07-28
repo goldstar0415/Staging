@@ -32,6 +32,13 @@
           moveOrCreateMarker(s.location);
           MapService.GetMap().setView(s.location, 12);
         }
+        s.$watch('location', function() {
+          if(s.location) {
+            s.viewAddress = s.address;
+            moveOrCreateMarker(s.location);
+          }
+        });
+
 
         function moveOrCreateMarker(latlng) {
           if(bindMarker) {

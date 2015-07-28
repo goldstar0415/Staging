@@ -1,5 +1,5 @@
 /*     my spot   */
-.main-blog-content {
+.main-blog-article-content {
   .blog-content {
     float: left;
     margin: 0;
@@ -133,86 +133,24 @@
       }
     }
   }
-
-  .module-banner {
-    display: block;
-    .banner-for-bloggers {
-      width: 100%;
-      height: 100%;
-      background: url(/assets/img/icons/banner_for_blogers.png) no-repeat;
-      right: 0;
-      top: 15px;
-
-      .banner-logo {
-        background: url(/assets/img/icons/blog-icon.png) center bottom no-repeat;
-        background-size: 25%;
-        padding-top: 35%;
-      }
-      .text-banner {
-        color: $white;
-        font: 500 34px/40px Ubuntu_Titling_Bold;
-        padding: 20px 15px 0;
-        text-align: center;
-        text-shadow: 0 3px 3px rgba(0, 0, 0, .4);
-      }
-      .banner-btn {
-        margin: 30px auto;
-        display: table;
-        width: 160px;
-        height: 38px;
-        font: 500 22px/26px Ubuntu;
-        box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.45);
-        padding: 3px 20px 5px;
-        background: #149e38;
-        border: 0;
-        color: #fff;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-        @include transition_bg();
-      }
-    }
-  }
+}
+.post {
+  padding: 15px 10px;
+  border-bottom: 1px solid #e9edf0;
+}
+.post .avatar,
+.content .post .avatar {
+  width: 60px;
+  height: 60px;
+  margin-top: 15px;
+  float: left;
+}
+.time {
+  font: 11px Arial, sans-serif;
+  color: #b9bdc0;
+  margin-top: 10px;
+}
+.delete-link {
+  margin-left: 15px;
 }
 
-.carousel-section {
-  border: 1px solid $light_grey;
-  border-radius: 8px;
-  margin-bottom: 5rem;
-  padding: 0;
-  background: $white;
-  width: 82%;
-  .carousel-caption {
-    position: relative;
-    left: 0;
-    right: 0;
-  }
-  .carousel-inner {
-    .item {
-      img {
-        margin: 0;
-        width: 100%;
-        border-radius: 8px 8px 0 0;
-        height: 400px;
-      }
-    }
-  }
-  .carousel-description {
-    padding: 15px;
-    text-shadow: none;
-    .carousel-title {
-      color: $dark_blue;
-      text-align: left;
-      margin: 15px 0;
-      &:hover {
-        color: $blue;
-        @include transition_color;
-      }
-    }
-    .carousel-text {
-      font: 15px/20px Arial, sans-serif;
-      color: #000;
-      text-align: left;
-    }
-  }
-}

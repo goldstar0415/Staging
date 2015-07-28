@@ -19,6 +19,8 @@
 @import "select";
 @import "spot_page";
 @import "blog_page";
+@import "blog_article_page";
+@import "uploaders";
 
 @font-face {
   font-family: 'Ubuntu bold';
@@ -84,15 +86,6 @@ form {
     margin-top: 5px;
     margin-bottom: 5px;
   }
-}
-
-location ul {
-  width: 100%!important;
-}
-location ul li a {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 [ng-click], [ui-sref] {
@@ -230,7 +223,7 @@ h3 {
   height: 100px;
   width: 100%;
   border: 2px dashed #b5e0ef;
-  margin-top: 10px;
+  margin: 0 15px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
