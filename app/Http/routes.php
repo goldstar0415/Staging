@@ -20,16 +20,22 @@ Route::controller('settings', 'SettingsController');
 
 Route::get('account/{social}', 'SocialAuthController@getAccount');
 
+/**
+ * User albums
+ */
 Route::resource('albums', 'AlbumController', ['except' => ['create', 'edit']]);
-
+/**
+ * Album photos
+ */
 Route::resource('photos', 'AlbumPhotoController', ['only' => ['show', 'update', 'destroy']]);
 Route::get('photos/{photos}/avatar', 'AlbumPhotoController@setAvatar');
 Route::resource('photos.comments', 'AlbumPhotoCommentController', ['only' => ['index', 'store', 'destroy']]);
 
 Route::controller('/', 'FollowController');
+
+/**
+ * Friends resource
+ */
+Route::resource('friends', 'FriendController', ['except' => ['create', 'edit']]);
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
-
-get('/', function () {
-    return view('form_auth');
-});
