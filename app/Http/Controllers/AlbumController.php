@@ -38,7 +38,6 @@ class AlbumController extends Controller
     public function store(StoreRequest $request)
     {
         $params = $request->input();
-        var_dump($params);
         if ($request->has('location')) {
             $params['location'] = new Point($params['location']['lat'], $params['location']['lng']);
         }

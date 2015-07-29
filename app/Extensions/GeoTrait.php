@@ -6,15 +6,17 @@ namespace App\Extensions;
 
 trait GeoTrait
 {
-    public function getLocationAttribute()
+    public function attributesToArray()
     {
-        $location = $this->attributes['location'];
+        $attributes = parent::attributesToArray();
 
-        if ($location)
-        {
-            return ['lat' => $location->getLat(), 'lng' => $location->getLng()];
+        if ($attributes['location']) {
+            $attributes['location'] = [
+                'lat' => $attributes['location']->getLat(),
+                'lng' => $attributes['location']->getLng()
+            ];
         }
 
-        return $location;
+        return $attributes;
     }
 }
