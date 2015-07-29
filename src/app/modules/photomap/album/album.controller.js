@@ -6,7 +6,7 @@
     .controller('AlbumController', AlbumController);
 
   /** @ngInject */
-  function AlbumController(album) {
+  function AlbumController(album, $state, $rootScope) {
     var vm = this;
     vm.data = album;
   }

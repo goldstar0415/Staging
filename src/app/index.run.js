@@ -15,7 +15,11 @@
     function saveCurrentUser(user) {
       $rootScope.currentUser = user;
     }
-    function onStateChangeSuccess(event, current, previous) {
+    function onStateChangeSuccess(event, current, toParams, fromState, fromParams) {
+      $rootScope.previous = {
+        state: fromState,
+        params: fromParams
+      };
       if (current.require_auth) {
         if (!$rootScope.currentUser) {
           User.currentUser().$promise
@@ -73,6 +77,11 @@
     }
 
 
+    $rootScope.goBack = function() {
+      if($rootScope.previous && $rootScope.previous.state && $rootScope.previous.state.name) {
+        $state.go($rootScope.previous.state.name, $rootScope.previous.params);
+      }
+    };
     $rootScope.$apply();
   }
 

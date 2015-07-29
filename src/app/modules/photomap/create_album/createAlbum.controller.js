@@ -14,6 +14,10 @@
     vm.location= null;
     vm.isPrivate = 0;
     vm.edit = $state.current.edit;
+    vm.privacy = [
+      {value: 0, label: 'Public'},
+      {value: 1, label: 'Private'}
+    ];
 
     vm.deleteImage = function (idx) {
       vm.images.files.splice(idx, 1);

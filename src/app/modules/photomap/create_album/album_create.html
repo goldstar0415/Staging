@@ -23,10 +23,15 @@
         <label>Privacy</label>
       </div>
       <div class="col-xs-9 no-pad">
-        <select class="selectpicker" selectpicker ng-model="CreateAlbum.isPrivate">
-          <option value="0">Public</option>
-          <option value="1">Private</option>
-        </select>
+        <ui-select
+          ng-model="CreateAlbum.isPrivate"
+          theme="bootstrap">
+          <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+          <ui-select-choices
+            repeat="item.value as item in CreateAlbum.privacy | filter : $select.search track by $index">
+            <div ng-bind-html="item.label |  highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
       </div>
     </div>
 
