@@ -8,6 +8,13 @@ trait GeoTrait
 {
     public function getLocationAttribute()
     {
-        return ['lat' => $this->attributes['location']->getLat(), 'lng' => $this->attributes['location']->getLng()];
+        $location = $this->attributes['location'];
+
+        if ($location)
+        {
+            return ['lat' => $location->getLat(), 'lng' => $location->getLng()];
+        }
+
+        return $location;
     }
 }
