@@ -39,10 +39,6 @@ class FriendController extends Controller
     {
         $inputs = $request->all();
 
-        if (isset($inputs['location'])) {
-            $inputs['location'] = new Point($inputs['location']['lat'], $inputs['location']['lng']);
-        }
-
         $request->user()->friends()->save(new Friend($inputs));
 
         return response()->json(['message' => 'Friend successfuly added']);
@@ -68,10 +64,6 @@ class FriendController extends Controller
     public function update(UpdateFriendRequest $request, $friend)
     {
         $inputs = $request->all();
-
-        if (isset($inputs['location'])) {
-            $inputs['location'] = new Point($inputs['location']['lat'], $inputs['location']['lng']);
-        }
 
         $friend->update($inputs);
 

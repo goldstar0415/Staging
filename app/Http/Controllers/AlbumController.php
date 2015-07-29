@@ -38,9 +38,6 @@ class AlbumController extends Controller
     public function store(StoreRequest $request)
     {
         $params = $request->input();
-        if ($request->has('location')) {
-            $params['location'] = new Point($params['location']['lat'], $params['location']['lng']);
-        }
         $album = new Album($params);
         $this->auth->user()->albums()->save($album);
         foreach ($request->file('files') as $file) {

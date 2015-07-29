@@ -35,9 +35,6 @@ class SettingsController extends Controller
 
         switch ($request->getType()) {
             case 'personal':
-                if (!empty($params['location'])) {
-                    $params['location'] = new Point($params['location']['lat'], $params['location']['lng']);
-                }
                 $user->update($params);
                 break;
             case 'security':
