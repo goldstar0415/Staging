@@ -60,7 +60,7 @@ return [
     |
     */
 
-    'default_url' => '/:attachment/:style/missing.png',
+    'default_url' => '/missings/:attachment/:style/missing.png',
 
     /*
     |--------------------------------------------------------------------------
