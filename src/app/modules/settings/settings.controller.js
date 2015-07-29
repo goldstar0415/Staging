@@ -9,12 +9,6 @@
   function SettingsController($rootScope, currentUser, $scope, toastr, moment, $http, API_URL) {
     var vm = this;
     vm.data = currentUser;
-    if(vm.data.location && vm.data.location.coordinates){
-      vm.data.location = {
-        lat: vm.data.location.coordinates[0],
-        lng: vm.data.location.coordinates[1]
-      }
-    }
     vm.privacyOptions = [
       {value: 0, label: 'All users have access'},
       {value: 1, label: 'Only followers&followings have access'},

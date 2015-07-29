@@ -13,7 +13,6 @@
       $locationProvider.html5Mode({enabled: true, requireBase: false});
     }
 
-    //fix send cookies cross domain
     $httpProvider.defaults.withCredentials = true;
 
     // toastr

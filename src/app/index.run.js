@@ -14,13 +14,6 @@
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     function saveCurrentUser(user) {
       $rootScope.currentUser = user;
-      if ($rootScope.currentUser.location && $rootScope.currentUser.location.coordinates) {
-        $rootScope.currentUser.location = {
-          lat: $rootScope.currentUser.location.coordinates[0],
-          lng: $rootScope.currentUser.location.coordinates[1]
-        }
-
-      }
     }
     function onStateChangeSuccess(event, current, previous) {
       if (current.require_auth) {

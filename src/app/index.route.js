@@ -76,7 +76,7 @@
         controllerAs: 'Friendsmap',
         resolve: {
           friends: function(Friends) {
-            return Friends.query();
+            return Friends.query().$promise;
           }
         },
         mapState: 'small',
