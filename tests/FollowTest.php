@@ -46,7 +46,7 @@ class FollowTest extends LaravelTestCase
         $unfollow_user = $this->user->followings()->random()->first();
 
         $this->get('/unfollow/' . $unfollow_user->id)->seeJson(
-            ['message' => 'You are successfuly follow user ' . $unfollow_user->first_name]
+            ['message' => 'You are successfuly unfollow user ' . $unfollow_user->first_name]
         );
         $this->assertResponseOk();
     }

@@ -297,7 +297,3 @@ $factory->define(App\Wall::class, function (Generator $faker) use ($timestamps) 
 $factory->define(App\Favorite::class, function (Generator $faker) use ($timestamps) {
     return $timestamps();
 });
-
-$factory->define(App\Following::class, function (Generator $faker) use ($timestamps) {
-    return $timestamps();
-});

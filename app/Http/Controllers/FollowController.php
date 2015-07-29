@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Events\UserFollowEvent;
 use App\Events\UserUnfollowEvent;
-use App\Following;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,19 +17,14 @@ class FollowController extends Controller
         $this->middleware('auth', ['only' => ['getFollow', 'getUnfollow']]);
     }
 
-
     public function getFollow(Request $request, $follow_user)
     {
         /**
          * @var \App\User $user
          */
         $user = $request->user();
-
-        if (!$user->followings()->where('following_id', $follow_user->id)->first()) {
-            $following = new Following();
-            $following->follower()->associate($user);
-            $following->following()->associate($follow_user);
-            $following->save();
+        if (!$user->followings()->find($follow_user->id)) {
+            $user->followings()->attach($follow_user);
         } else {
             return response()->json(['message' => 'You are already follow this user'], 403);
         }
@@ -47,9 +41,9 @@ class FollowController extends Controller
          */
         $user = $request->user();
 
-        $following = $user->followings()->where('following_id', $follow_user->id)->first();
+        $following = $user->followings()->find($follow_user->id);
         if ($following) {
-            $following->delete();
+            $user->followings()->detach($follow_user);
         } else {
             return response()->json(['message' => 'You are doesn\'t follow this user'], 403);
         }
@@ -61,11 +55,11 @@ class FollowController extends Controller
 
     public function getFollowers($user)
     {
-        return $user->followers->load('follower');
+        return $user->followers;
     }
 
     public function getFollowings($user)
     {
-        return $user->followings->load('following');
+        return $user->followings;
     }
 }

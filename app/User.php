@@ -178,12 +178,12 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function followers()
     {
-        return $this->hasMany(Following::class, 'following_id');
+        return $this->belongsToMany(self::class, 'followings', 'following_id', 'follower_id')->withTimestamps();
     }
 
     public function followings()
     {
-        return $this->hasMany(Following::class, 'follower_id');
+        return $this->belongsToMany(self::class, 'followings', 'follower_id', 'following_id')->withTimestamps();
     }
 
     public function albums()
