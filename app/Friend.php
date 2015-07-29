@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\GeoTrait;
 use Carbon\Carbon;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
@@ -29,11 +30,15 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  */
 class Friend extends BaseModel implements StaplerableInterface
 {
-    use PostgisTrait, StaplerTrait;
+    use PostgisTrait, StaplerTrait, GeoTrait;
 
     protected $guarded = ['id', 'user_id', 'friend_id'];
 
     protected $dates = ['birth_date'];
+
+    protected $appends = ['avatar_url'];
+
+    protected $hidden = ['avatar_file_name', 'avatar_content_type', 'avatar_file_size'];
 
     protected $postgisFields = [
         'location' => Point::class,
@@ -46,6 +51,11 @@ class Friend extends BaseModel implements StaplerableInterface
     {
         $this->hasAttachedFile('avatar');
         parent::__construct($attributes);
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        return $this->getPictureUrls('avatar');
     }
 
     public function setBirthDateAttribute($value)

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\GeoTrait;
 use Carbon\Carbon;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
@@ -25,7 +26,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  */
 class Activity extends BaseModel
 {
-    use PostgisTrait;
+    use PostgisTrait, GeoTrait;
 
     protected $dates = ['start_date', 'end_date'];
 

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\GeoTrait;
 use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -72,7 +73,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  */
 class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract, StaplerableInterface
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait, PostgisTrait, StaplerTrait, SoftDeletes {
+    use Authenticatable, CanResetPassword, EntrustUserTrait, PostgisTrait, StaplerTrait, SoftDeletes, GeoTrait {
         StaplerTrait::boot insteadof EntrustUserTrait;
         EntrustUserTrait::boot insteadof StaplerTrait;
         StaplerTrait::boot as bootStaplerT;

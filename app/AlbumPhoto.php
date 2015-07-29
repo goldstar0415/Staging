@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\GeoTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
@@ -28,7 +29,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  */
 class AlbumPhoto extends BaseModel implements StaplerableInterface
 {
-    use PostgisTrait, StaplerTrait;
+    use PostgisTrait, StaplerTrait, GeoTrait;
 
     protected $postgisFields = [
         'location' => Point::class,

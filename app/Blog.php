@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\GeoTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
@@ -29,12 +30,12 @@ use Phaza\LaravelPostgis\Geometries\Point;
  */
 class Blog extends BaseModel implements StaplerableInterface
 {
-    use PostgisTrait, StaplerTrait;
+    use PostgisTrait, StaplerTrait, GeoTrait;
 
     protected $guarded = ['id', 'user_id', 'blog_category_id', 'count_views'];
 
     protected $postgisFields = [
-        'b_box' => Point::class
+        'location' => Point::class
     ];
 
     /**

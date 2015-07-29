@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\GeoTrait;
 use Carbon\Carbon;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
@@ -26,7 +27,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  */
 class Plan extends BaseModel
 {
-    use PostgisTrait;
+    use PostgisTrait, GeoTrait;
 
     protected $guarded = ['id', 'user_id'];
 

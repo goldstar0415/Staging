@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\GeoTrait;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
@@ -19,7 +20,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  */
 class SpotPoint extends BaseModel
 {
-    use PostgisTrait;
+    use PostgisTrait, GeoTrait;
 
     protected $fillable = ['location', 'address'];
 
