@@ -583,6 +583,7 @@
         //IMPORTANT:
         //I used this construction because L.MarkerCluster is not supporting draggable markers
         //But we still need to cluster markers on some pages. So all draggable marker will be in draggable marker layer
+        options.riseOnHover = true;
         var marker = L.marker(latlng, options);
         if(options.draggable) {
           draggableMarkerLayer.addLayer(marker);
@@ -602,6 +603,15 @@
         } else {
           GetCurrentLayer().removeLayer(Marker);
         }
+      }
+
+      function CreateCustomIcon(iconUrl, className, iconSize) {
+        var iconSize = iconSize || [50, 50];
+        return L.icon({
+          iconSize: iconSize,
+          iconUrl: iconUrl,
+          className: className
+        });
       }
 
       function BindMarkerToInput(Marker, Callback) {
@@ -716,6 +726,10 @@
         map.setView(location, zoom);
       }
       function FitBoundsOfCurrentLayer() {
+        var bounds = GetCurrentLayer().getBounds();
+        map.fitBounds(bounds);
+      }
+      function FitBoundsOfDrawLayer() {
         var bounds = drawLayer.getBounds();
         map.fitBounds(bounds);
       }
@@ -767,6 +781,7 @@
         //Makers
         CreateMarker: CreateMarker,
         RemoveMarker: RemoveMarker,
+        CreateCustomIcon: CreateCustomIcon,
         BindMarkerToInput: BindMarkerToInput,
         //Math
         PointInPolygon: PointInPolygon,
@@ -776,7 +791,8 @@
         GetCurrentLocation: GetCurrentLocation,
         FocusMapToCurrentLocation: FocusMapToCurrentLocation,
         FocusMapToGivenLocation: FocusMapToGivenLocation,
-        FitBoundsOfCurrentLayer: FitBoundsOfCurrentLayer
+        FitBoundsOfCurrentLayer: FitBoundsOfCurrentLayer,
+        FitBoundsOfDrawLayer:FitBoundsOfDrawLayer
       };
     });
 

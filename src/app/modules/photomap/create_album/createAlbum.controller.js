@@ -22,7 +22,6 @@
     vm.deleteImage = function (idx) {
       vm.images.files.splice(idx, 1);
     };
-
     vm.createAlbum = function (form) {
       if(form.$valid && vm.images.files.length > 0) {
         var request = {
@@ -34,7 +33,7 @@
         UploaderService
           .upload(API_URL + '/albums', 'POST', request)
           .then(function (resp) {
-            console.log(resp);
+            $state.go('album', {album_id: resp.data.album_id});
           })
           .catch(function (resp) {
             toastr.error('Upload failed');

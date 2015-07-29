@@ -52,6 +52,8 @@
         case 'fit':
           MapService.FitBoundsOfCurrentLayer();
           break;
+        case 'none':
+          break;
         default:
           MapService.FocusMapToCurrentLocation();
           break;

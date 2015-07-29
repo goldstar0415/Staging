@@ -25,11 +25,12 @@
         controllerAs: 'Photomap',
         resolve: {
           albums: function (Album, $stateParams, MapService) {
-            return Album.query({user_id: $stateParams.user_id});
+            return Album.query({user_id: $stateParams.user_id}).$promise;
           }
         },
         mapState: 'small',
-        parent: 'profile_menu'
+        parent: 'profile_menu',
+        locate: 'none'
       })
       .state('createAlbum', {
         url: '/albums/create',
@@ -48,11 +49,12 @@
         controllerAs: 'Album',
         resolve: {
           album: function (Album, $stateParams) {
-            return Album.get({id: $stateParams.album_id});
+            return Album.get({id: $stateParams.album_id}).$promise;
           }
         },
         mapState: 'small',
-        parent: 'profile_menu'
+        parent: 'profile_menu',
+        locate: 'none'
       })
       .state('editAlbum', {
         url: '/albums/:album_id/edit',
@@ -61,13 +63,14 @@
         controllerAs: 'CreateAlbum',
         resolve: {
           album: function (Album, $stateParams) {
-            return Album.get({id: $stateParams.album_id});
+            return Album.get({id: $stateParams.album_id}).$promise;
           }
         },
         edit: true,
         mapState: 'small',
         parent: 'profile_menu',
-        require_auth: true
+        require_auth: true,
+        locate: 'none'
       })
       .state('friendsmap', {
         url: '/friendsmap',
@@ -81,7 +84,8 @@
         },
         mapState: 'small',
         parent: 'profile_menu',
-        require_auth: true
+        require_auth: true,
+        locate: 'none'
       })
       .state('friendsmap_create', {
         url: '/friendsmap/create',
@@ -105,13 +109,14 @@
         controllerAs: 'CreateFriend',
         resolve: {
           friend: function(Friends, $stateParams) {
-            return Friends.getFriend({id: $stateParams.id});
+            return Friends.getFriend({id: $stateParams.id}).$promise;
           }
         },
         mapState: 'small',
         edit: true,
         parent: 'profile_menu',
-        require_auth: true
+        require_auth: true,
+        locate: 'none'
       })
       .state('settings', {
         url: '/settings',
@@ -124,7 +129,8 @@
           }
         },
         mapState: 'hidden',
-        require_auth: true
+        require_auth: true,
+        locate: 'none'
       });
 
     $urlRouterProvider.otherwise('/');
