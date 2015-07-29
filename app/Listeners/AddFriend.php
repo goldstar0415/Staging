@@ -32,7 +32,7 @@ class AddFriend
             'avatar' => $friend->avatar->url(),
             'first_name' => $friend->first_name,
             'last_name' => $friend->last_name,
-            'birth_date' => $friend->birth_date->format(config('app.date_format')),
+            'birth_date' => $friend->birth_date,
             'email' => $friend->email,
             'address' => $friend->address,
             'location' => $friend->location

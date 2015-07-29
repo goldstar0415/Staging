@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\StartEndDatesTrait;
 use Carbon\Carbon;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
@@ -38,7 +39,7 @@ use Codesleeve\Stapler\ORM\StaplerableInterface;
  */
 class Spot extends BaseModel implements StaplerableInterface
 {
-    use StaplerTrait;
+    use StaplerTrait, StartEndDatesTrait;
 
     protected $guarder = ['id', 'user_id', 'spot_type_category_id'];
 
@@ -53,16 +54,6 @@ class Spot extends BaseModel implements StaplerableInterface
     {
         $this->hasAttachedFile('cover');
         parent::__construct($attributes);
-    }
-
-    public function setStartDateAttribute($value)
-    {
-        $this->attributes['start_date'] = Carbon::createFromFormat($this->getDateFormat(), $value);
-    }
-
-    public function setEndDateAttribute($value)
-    {
-        $this->attributes['end_date'] = Carbon::createFromFormat($this->getDateFormat(), $value);
     }
 
     public function getRatingAttribute()

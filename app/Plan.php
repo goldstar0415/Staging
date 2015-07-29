@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Extensions\GeoTrait;
+use App\Extensions\StartEndDatesTrait;
 use Carbon\Carbon;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
@@ -27,7 +28,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  */
 class Plan extends BaseModel
 {
-    use PostgisTrait, GeoTrait;
+    use PostgisTrait, GeoTrait, StartEndDatesTrait;
 
     protected $guarded = ['id', 'user_id'];
 
@@ -36,16 +37,6 @@ class Plan extends BaseModel
     protected $postgisFields = [
         'location' => Point::class,
     ];
-
-    public function setStartDateAttribute($value)
-    {
-        $this->attributes['start_date'] = Carbon::createFromFormat($this->getDateFormat(), $value);
-    }
-
-    public function setEndDateAttribute($value)
-    {
-        $this->attributes['end_date'] = Carbon::createFromFormat($this->getDateFormat(), $value);
-    }
 
     public function user()
     {

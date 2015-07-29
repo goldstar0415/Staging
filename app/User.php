@@ -141,12 +141,20 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function setBirthDateAttribute($value)
     {
-        $this->attributes['birth_date'] = $value ? Carbon::createFromFormat(config('app.date_format'), $value): $value;
+        if (!$value instanceof Carbon) {
+            $this->attributes['birth_date'] = $value ? Carbon::createFromFormat(config('app.date_format'), $value): $value;
+        } else {
+            $this->attributes['birth_date'] = $value;
+        }
     }
 
     public function setBannedAtAttribute($value)
     {
-        $this->attributes['banned_at'] = $value ? Carbon::createFromFormat($this->getDateFormat(), $value): $value;
+        if (!$value instanceof Carbon) {
+            $this->attributes['banned_at'] = $value ? Carbon::createFromFormat($this->getDateFormat(), $value): $value;
+        } else {
+            $this->attributes['banned_at'] = $value;
+        }
     }
 
     public function getIsRegisteredAttribute()
