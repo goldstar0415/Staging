@@ -1,8 +1,8 @@
 <?php
 
+use App\Events\UserFollowEvent;
 use Illuminate\Database\Seeder;
 use App\User;
-use App\Following;
 
 class FollowingsTableSeeder extends Seeder
 {
@@ -17,10 +17,10 @@ class FollowingsTableSeeder extends Seeder
             $followings_count = mt_rand(5, 20);
             $followings = User::where('id', '!=', $user->id)->random($followings_count)->get();
             for ($i = 0; $i < $followings_count; $i++) {
-                $following = new Following();
-                $following->follower()->associate($user);
-                $following->following()->associate($followings->pop());
-                $user->followings()->save($following);
+                $follow_user = $followings->pop();
+                $user->followings()->attach($follow_user);
+
+                event(new UserFollowEvent($user, $follow_user));
             }
         });
     }
