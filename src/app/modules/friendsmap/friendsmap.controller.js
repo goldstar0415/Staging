@@ -9,10 +9,5 @@
   function FriendsmapController(friends) {
     var vm = this;
     vm.friends = friends;
-    console.log(friends);
-
-    for(var k in friends){
-
-    }
   }
 })();

@@ -6,31 +6,29 @@
   </div>
 </div>
 <hr>
-<div class="col-xs-12 no-pad">
+<div ng-repeat="item in Friendsmap.friends" class="col-xs-12 no-pad">
   <div class="col-xs-2">
     <div class="avatar-wrap">
-      <img src="assets/img/img11.jpg" alt="">
+      <img src="{{item.avatar_url.medium}}" alt="">
     </div>
   </div>
   <div class="col-xs-10 info-block">
-    <h3><a href="#">Louis Austin</a></h3>
-    <a href="#" class="edit"></a>
+    <h3><a href="#">{{item.first_name + " " + item.last_name}}</a></h3>
+    <a ui-sref="friendsmap_edit({id: item.id})" class="edit"></a>
 
     <div class="col-xs-5">
-      <p>male, 11 Aug 2015</p>
+      <p ng-show="item.birth_date">{{moment(item.birth_date).format('DD-MMM-YYYY')}}</p>
 
-      <p>UA, Kharkiv Oblast, Kharkiv</p>
+      <p ng-show="item.address">{{item.address}}</p>
     </div>
     <div class="col-xs-5">
-      <p>1-844-630-3398</p>
+      <p ng-show="item.phone">{{item.phone}}</p>
 
-      <p>zoom@gmail.com</p>
+      <p ng-show="item.email">{{item.email}}</p>
     </div>
     <div class="col-xs-12">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum iste unde delectus harum
-        cum, modi eligendi sed eveniet optio vel cumque, dicta distinctio hic, explicabo, quia
-        debitis facilis ab nulla.
+      <p ng-show="item.note">
+        {{item.note}}
       </p>
     </div>
   </div>

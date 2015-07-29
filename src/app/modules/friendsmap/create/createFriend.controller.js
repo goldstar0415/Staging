@@ -14,9 +14,21 @@
     vm.SaveFriend = function(form) {
       if(form.$valid) {
         if(vm.edit) {
-          vm.friend.$update();
+          vm.friend.$update()
+            .then(function() {
+              $state.go('friendsmap');
+            })
+            .catch(function() {
+              toastr.error('Invalid input');
+            });
         } else {
-          vm.friend.$save();
+          vm.friend.$save()
+            .then(function() {
+              $state.go('friendsmap');
+            })
+            .catch(function() {
+              toastr.error('Invalid input');
+            })
         }
       } else {
         toastr.error('Invalid input');
@@ -34,4 +46,5 @@
       });
     }
   }
+
 })();

@@ -316,6 +316,8 @@
             removeAllLayers();
             break;
         }
+        draggableMarkerLayer.clearLayers();
+        drawLayer.clearLayers();
 
         $timeout(function() {
           map.invalidateSize();
@@ -547,6 +549,7 @@
       }
 
       function ClearSelections() {
+        draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
         eventsLayer.clearLayers();
         pitstopsLayer.clearLayers();

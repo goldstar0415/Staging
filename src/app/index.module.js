@@ -15,7 +15,8 @@
       'dialogs.main',
       'snap',
       'angular-loading-bar',
-      'ui.select'
+      'ui.select',
+      'ui.mask'
     ])
     .animation('.mapResize', [function() {
       return {
