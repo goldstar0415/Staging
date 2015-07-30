@@ -13,7 +13,7 @@ class PlansTableSeeder extends Seeder
      */
     public function run()
     {
-        User::random(35)->get()->each(function (User $user) {
+        User::random(7)->get()->each(function (User $user) {
             $plans = factory(Plan::class, mt_rand(1, 5))->make();
             if ($plans instanceof Plan) {
                 $plans->user()->associate($user);

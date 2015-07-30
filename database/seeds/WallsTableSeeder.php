@@ -13,7 +13,7 @@ class WallsTableSeeder extends Seeder
      */
     public function run()
     {
-        User::random(50)->get()->each(function (User $user) {
+        User::random(10)->get()->each(function (User $user) {
             $wall_posts = factory(Wall::class, mt_rand(3, 10))->make()->each(
                 function (Wall $wall) {
                     $sender = User::random()->first();

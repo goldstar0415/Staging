@@ -14,7 +14,7 @@ class SpotTypeCategoriesTableSeeder extends Seeder
     public function run()
     {
         SpotType::all()->each(function (SpotType $spot_type) {
-            $spot_type->categories()->saveMany(factory(SpotTypeCategory::class, 20)->make());
+            $spot_type->categories()->saveMany(factory(SpotTypeCategory::class, 10)->make());
         });
     }
 }

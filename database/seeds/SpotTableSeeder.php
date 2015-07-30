@@ -18,7 +18,7 @@ class SpotTableSeeder extends Seeder
          * @var App\User $user
          */
         $user = User::random()->first();
-        $models = factory(Spot::class, 25)->make()->each(function (Spot $spot) {
+        $models = factory(Spot::class, 15)->make()->each(function (Spot $spot) {
             $category = SpotTypeCategory::random()->first();
             $spot->category()->associate($category);
         });

@@ -14,8 +14,8 @@ class BlogsTableSeeder extends Seeder
      */
     public function run()
     {
-        User::random(50)->get()->each(function (User $user) {
-            $blogs = factory(Blog::class, mt_rand(1, 20))->make();
+        User::random(12)->get()->each(function (User $user) {
+            $blogs = factory(Blog::class, mt_rand(1, 12))->make();
             if ($blogs instanceof Blog) {
                 $blog_category = BlogCategory::random()->first();
                 $blogs->user()->associate($user);

@@ -22,7 +22,7 @@ class UserTableSeeder extends Seeder
         $admin->roles()->attach(Role::take('admin'));
 
         $zoomer = Role::take('zoomer');
-        factory(User::class, 100)->create()->each(
+        factory(User::class, 20)->create()->each(
             function (User $user) use ($zoomer) {
                 $user->roles()->attach($zoomer);
             }
