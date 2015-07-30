@@ -11,7 +11,7 @@ trait GeoTrait
     {
         $attributes = parent::attributesToArray();
 
-        if ($attributes['location']) {
+        if (isset($attributes['location'])) {
             $attributes['location'] = [
                 'lat' => $attributes['location']->getLat(),
                 'lng' => $attributes['location']->getLng()
