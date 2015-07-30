@@ -86,13 +86,6 @@ class AlbumController extends Controller
             ]);
         }
 
-        $deleted_ids = $request->input('deleted_ids');
-        if ($albums->photos()->find($deleted_ids)->count() === count($deleted_ids)) {
-            AlbumPhoto::destroy($deleted_ids);
-        } else {
-            throw new UnauthorizedException();
-        }
-
         return response()->json(['message' => 'Album was successfuly created']);
     }
 
