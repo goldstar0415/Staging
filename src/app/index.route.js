@@ -8,16 +8,143 @@
   /** @ngInject */
   function routeConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
+      //Main map page
       .state('index', {
         url: '/',
         mapState: 'big'
       })
+      //Abstract state for profile menu
       .state('profile_menu', {
         abstract: true,
         templateUrl: 'app/components/navigation/profile_menu/profile_menu.html',
         controller: 'ProfileMenuController',
         controllerAs: 'Profile'
       })
+
+      //Blog page
+      .state('blog', {
+        url: '/bloggers_profile',
+        templateUrl: 'app/modules/blog/blog.html',
+        controller: 'BlogController',
+        controllerAs: 'Blog',
+        mapState: 'none'
+      })
+      //Bloggers profile page
+      .state('blogger_profile', {
+        url: '/bloggers_profile',
+        templateUrl: 'app/modules/blog/bloggers_profile/bloggers_profile.html',
+        controller: 'BloggerProfileController',
+        controllerAs: 'Blogger',
+        mapState: 'none'
+      })
+      //Show blog location on map and show pop-up
+      .state('blog_article', {
+        url: '/article/:id',
+        controller: 'ArticleController',
+        controllerAs: 'Article',
+        mapState: 'big',
+        resolve: {
+          article: function() {
+            //TODO: Pass article data to controller (to show this data on pop-up)
+            return 'article'
+          }
+        }
+      })
+      //Blog article creation page
+      .state('blog_article_create', {
+        url: '/article/create',
+        templateUrl: 'app/modules/blog/article_create/article_create.html',
+        controller: 'ArticleCreateController',
+        controllerAs: 'ArticleCreate',
+        mapState: 'small',
+        locate: 'none'
+      })
+
+      .state('spot', {
+        url: '/spot/:spot_id',
+        templateUrl: 'app/modules/spot/spot.html',
+        controller: 'SpotController',
+        controllerAs: 'Spot',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small'
+      })
+      .state('spot_create', {
+        url: '/spot/create',
+        templateUrl: 'app/modules/spot/spot_create/spot_create.html',
+        controller: 'SpotCreateController',
+        controllerAs: 'SpotCreate',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small',
+        edit: true
+      })
+      .state('spot_edit', {
+        url: '/spot/:spot_id/edit',
+        templateUrl: 'app/modules/spot/spot_create/spot_create.html',
+        controller: 'SpotCreateController',
+        controllerAs: 'SpotCreate',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small',
+        edit: true
+      })
+
+      //Single plan page
+      .state('plan', {
+        url: '/plan/:plan_id',
+        templateUrl: 'app/modules/planner/plan/plan.html',
+        controller: 'PlanController',
+        controllerAs: 'Plan',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small'
+      })
+      //Plan creation page
+      .state('plan_create', {
+        url: '/plan/create',
+        templateUrl: 'app/modules/planner/plan_create/plan_create.html',
+        controller: 'PlanCreateController',
+        controllerAs: 'PlanCreate',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small',
+        edit: false
+      })
+      //Plan edit page
+      .state('plan_edit', {
+        url: '/plan/:plan_id/edit',
+        templateUrl: 'app/modules/planner/plan_create/plan_create.html',
+        controller: 'PlanCreateController',
+        controllerAs: 'PlanCreate',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small',
+        edit: true
+      })
+      //Planner (calendar + list of all plans)
+      .state('planner', {
+        url: '/profile',
+        templateUrl: 'app/modules/planner/planner.html',
+        controller: 'PlannerController',
+        controllerAs: 'Planner',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small'
+      })
+
+      //Users profile index page. (TABS: wall, feeds, reviews, chat)
+      .state('Profile', {
+        url: '/profile',
+        templateUrl: 'app/modules/wall/wall.html',
+        controller: 'ProfileController',
+        controllerAs: 'Profile',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small'
+      })
+
+      //Photomap view state
       .state('photomap', {
         url: '/users/:user_id/albums',
         templateUrl: 'app/modules/photomap/photomap.html',
@@ -32,6 +159,7 @@
         parent: 'profile_menu',
         locate: 'none'
       })
+      //Create album state
       .state('createAlbum', {
         url: '/albums/create',
         templateUrl: 'app/modules/photomap/create_album/album_create.html',
@@ -42,20 +170,7 @@
         edit: false,
         require_auth: true
       })
-      .state('album', {
-        url: '/albums/:album_id',
-        templateUrl: 'app/modules/photomap/album/album.html',
-        controller: 'AlbumController',
-        controllerAs: 'Album',
-        resolve: {
-          album: function (Album, $stateParams) {
-            return Album.get({id: $stateParams.album_id}).$promise;
-          }
-        },
-        mapState: 'small',
-        parent: 'profile_menu',
-        locate: 'none'
-      })
+      //Edit album state
       .state('editAlbum', {
         url: '/albums/:album_id/edit',
         templateUrl: 'app/modules/photomap/create_album/album_create.html',
@@ -72,6 +187,24 @@
         require_auth: true,
         locate: 'none'
       })
+      //Albums page state
+      .state('album', {
+        url: '/albums/:album_id',
+        templateUrl: 'app/modules/photomap/album/album.html',
+        controller: 'AlbumController',
+        controllerAs: 'Album',
+        resolve: {
+          album: function (Album, $stateParams) {
+            return Album.get({id: $stateParams.album_id}).$promise;
+          }
+        },
+        mapState: 'small',
+        parent: 'profile_menu',
+        locate: 'none'
+      })
+
+
+      //Friends map state
       .state('friendsmap', {
         url: '/friendsmap',
         templateUrl: 'app/modules/friendsmap/friendsmap.html',
@@ -87,6 +220,7 @@
         require_auth: true,
         locate: 'none'
       })
+      //Friends creation state
       .state('friendsmap_create', {
         url: '/friendsmap/create',
         templateUrl: 'app/modules/friendsmap/create/friendsmap.create.html',
@@ -102,6 +236,7 @@
         edit: false,
         require_auth: true
       })
+      //Friends edit state
       .state('friendsmap_edit', {
         url: '/friendsmap/:id/edit',
         templateUrl: 'app/modules/friendsmap/create/friendsmap.create.html',
@@ -118,6 +253,32 @@
         require_auth: true,
         locate: 'none'
       })
+
+      //About us page
+      .state('about_us', {
+        url: "/about-us",
+        templateUrl: 'app/modules/about_us/about_us.html',
+        mapState:'hidden'
+      })
+      //Contact us page
+      .state('contact_us', {
+        url: "/contact-us",
+        templateUrl: 'app/modules/contact_us/contact_us.html',
+        controller: 'ContactUsController',
+        controllerAs: 'ContactUs',
+        mapState: 'hidden'
+      })
+
+      //Zoomers page
+      .state('zoomers', {
+        url: '/zoomers',
+        templateUrl: 'app/modules/zoomers/zoomers.html',
+        controller: 'ZoomersController',
+        controllerAs: 'Zoomers',
+        mapState: 'hidden'
+      })
+
+      //Settings state
       .state('settings', {
         url: '/settings',
         templateUrl: 'app/modules/settings/settings.html',

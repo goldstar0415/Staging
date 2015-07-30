@@ -16,7 +16,7 @@
       'snap',
       'angular-loading-bar',
       'ui.select',
-      'ui.mask'
+      'ui.utils.masks'
     ])
     .animation('.mapResize', [function() {
       return {
