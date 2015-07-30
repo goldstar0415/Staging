@@ -24,7 +24,7 @@
             title: vm.album.title,
             location: vm.album.location,
             address: vm.album.address,
-            is_private: vm.album.is_private
+            is_private: +vm.album.is_private
           },
           url = API_URL + '/albums';
 
