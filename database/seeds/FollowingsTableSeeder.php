@@ -14,7 +14,7 @@ class FollowingsTableSeeder extends Seeder
     public function run()
     {
         User::all()->each(function (User $user) {
-            $followings_count = mt_rand(5, 20);
+            $followings_count = mt_rand(3, 17);
             $followings = User::where('id', '!=', $user->id)->random($followings_count)->get();
             for ($i = 0; $i < $followings_count; $i++) {
                 $follow_user = $followings->pop();
