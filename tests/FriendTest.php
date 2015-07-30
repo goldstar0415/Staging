@@ -74,4 +74,10 @@ class FriendTest extends LaravelTestCase
         $this->delete('/friends/' . $old_friend->id)
             ->seeJson(['message' => 'Friend successfuly deleted']);
     }
+
+    public function testShowAllFriends()
+    {
+        $this->get('/friends')
+            ->see($this->user->friends->toJson());
+    }
 }

@@ -65,7 +65,7 @@ class AuthTest extends LaravelTestCase
                 'password' => 'password'
             ],
             ['Accept' => 'application/json']
-        )->withSession([])->seeJson(
+        )->seeJson(
             [
                 'id' => $user->id,
                 'first_name' => $user->first_name,
