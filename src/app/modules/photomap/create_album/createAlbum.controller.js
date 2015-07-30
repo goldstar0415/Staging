@@ -6,14 +6,10 @@
     .controller('CreateAlbumController', CreateAlbumController);
 
   /** @ngInject */
-  function CreateAlbumController(UploaderService, toastr, API_URL, $state) {
+  function CreateAlbumController(UploaderService, album, toastr, API_URL, $state) {
     var vm = this;
     vm.images = UploaderService.images;
-    vm.title = "";
-    vm.address= "";
-    vm.location= null;
-    vm.isPrivate = 0;
-    vm.edit = $state.current.edit;
+    vm.album = album;
     vm.privacy = [
       {value: 0, label: 'Public'},
       {value: 1, label: 'Private'}
@@ -23,22 +19,29 @@
       vm.images.files.splice(idx, 1);
     };
     vm.createAlbum = function (form) {
-      if(form.$valid && vm.images.files.length > 0) {
+      if (form.$valid && vm.images.files.length > 0) {
         var request = {
-          title: vm.title,
-          location: vm.location,
-          address: vm.address,
-          is_private: vm.isPrivate
-        };
+            title: vm.album.title,
+            location: vm.album.location,
+            address: vm.album.address,
+            is_private: vm.album.is_private
+          },
+          url = API_URL + '/albums';
+
+        if (album.id) {
+          url = API_URL + '/albums/' + album.id;
+          request._method = 'PUT';
+        }
+
         UploaderService
-          .upload(API_URL + '/albums', 'POST', request)
+          .upload(url, request)
           .then(function (resp) {
             $state.go('album', {album_id: resp.data.album_id});
           })
           .catch(function (resp) {
             toastr.error('Upload failed');
           });
-      } else if(vm.images.files.length < 1 ) {
+      } else if (vm.images.files.length < 1) {
         toastr.error("You can't save album without images");
       }
     };

@@ -44,7 +44,7 @@
         controllerAs: 'Article',
         mapState: 'big',
         resolve: {
-          article: function() {
+          article: function () {
             //TODO: Pass article data to controller (to show this data on pop-up)
             return 'article'
           }
@@ -167,7 +167,15 @@
         controllerAs: 'CreateAlbum',
         mapState: 'small',
         parent: 'profile_menu',
-        edit: false,
+        resolve: {
+          album: function () {
+            return {
+              address: "",
+              location: null,
+              is_private: 0
+            };
+          }
+        },
         require_auth: true
       })
       //Edit album state
@@ -181,7 +189,6 @@
             return Album.get({id: $stateParams.album_id}).$promise;
           }
         },
-        edit: true,
         mapState: 'small',
         parent: 'profile_menu',
         require_auth: true,
@@ -211,7 +218,7 @@
         controller: 'FriendsmapController',
         controllerAs: 'Friendsmap',
         resolve: {
-          friends: function(Friends) {
+          friends: function (Friends) {
             return Friends.query().$promise;
           }
         },
@@ -227,7 +234,7 @@
         controller: 'CreateFriendController',
         controllerAs: 'CreateFriend',
         resolve: {
-          friend: function(Friends) {
+          friend: function (Friends) {
             return new Friends
           }
         },
@@ -243,7 +250,7 @@
         controller: 'CreateFriendController',
         controllerAs: 'CreateFriend',
         resolve: {
-          friend: function(Friends, $stateParams) {
+          friend: function (Friends, $stateParams) {
             return Friends.getFriend({id: $stateParams.id}).$promise;
           }
         },
@@ -258,7 +265,7 @@
       .state('about_us', {
         url: "/about-us",
         templateUrl: 'app/modules/about_us/about_us.html',
-        mapState:'hidden'
+        mapState: 'hidden'
       })
       //Contact us page
       .state('contact_us', {

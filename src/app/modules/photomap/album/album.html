@@ -1,7 +1,8 @@
 <div class="title">
   <a ng-click="goBack();" title="back" class="back"></a>
+  <a ui-sref="editAlbum({album_id: Album.data.id})" title="edit" ng-if="currentUser.id == Album.data.user_id" class="edit"></a>
 
-  <h2>Album - Profile photos</h2>
+  <h2>Album - {{Album.data.title}}</h2>
 </div>
 <div class="col-xs-12 no-pad">
 
