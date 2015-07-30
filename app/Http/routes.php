@@ -39,5 +39,9 @@ Route::get('followings/{users}', 'FollowController@getFollowings');
  * Friends resource
  */
 Route::resource('friends', 'FriendController', ['except' => ['create', 'edit']]);
+/**
+ * Spot resource
+ */
+Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');

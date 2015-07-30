@@ -9,16 +9,11 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 class FriendTest extends LaravelTestCase
 {
     use DatabaseTransactions;
-    /**
-     * @var User $user
-     */
-    private $user;
 
     public function setUp()
     {
         parent::setUp();
-        $this->user = User::random()->first();
-        Auth::login($this->user);
+        $this->randomSignIn();
     }
 
     public function testAddFriend()

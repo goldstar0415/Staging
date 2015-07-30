@@ -15,7 +15,7 @@ class SpotVotesTableSeeder extends Seeder
     public function run()
     {
         Spot::all()->each(function (Spot $spot) {
-            $votes_count = mt_rand(10, 30);
+            $votes_count = mt_rand(10, 20);
             /**
              * @var \Illuminate\Database\Eloquent\Collection $users
              */
