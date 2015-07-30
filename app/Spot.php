@@ -16,8 +16,9 @@ use Codesleeve\Stapler\ORM\StaplerableInterface;
  * @property integer $spot_type_category_id
  * @property string $title
  * @property string $description
- * @property string $web_site
+ * @property array $web_sites
  * @property string $cover
+ * @property array $videos
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $end_date
  * @property \Carbon\Carbon $created_at

@@ -13,7 +13,7 @@ class BloggerRequestsTableSeeder extends Seeder
      */
     public function run()
     {
-        User::random(10)->get()->each(function (User $user) {
+        User::random(4)->get()->each(function (User $user) {
             $request = factory(BloggerRequest::class)->make();
             $user->bloggerRequest()->save($request);
         });

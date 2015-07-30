@@ -13,7 +13,7 @@ class TagsTableSeeder extends Seeder
      */
     public function run()
     {
-        $tags = factory(Tag::class, 50)->create();
+        $tags = factory(Tag::class, 30)->create();
         Spot::all()->each(function (Spot $spot) use ($tags) {
             $rand = mt_rand(1, 5);
             if ($rand > 1) {

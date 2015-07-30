@@ -13,7 +13,7 @@ class AlbumTableSeeder extends Seeder
      */
     public function run()
     {
-        User::random(25)->get()->each(function (User $user) {
+        User::random(10)->get()->each(function (User $user) {
             $albums = factory(Album::class, mt_rand(1, 5))->make();
             if ($albums instanceof Album) {
                 $albums->user()->associate($user);

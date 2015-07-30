@@ -108,11 +108,16 @@ $factory->defineAs(App\Social::class, 'google', function (Generator $faker) {
 $factory->define(App\Spot::class, function (Generator $faker) use ($timestamps, $dates) {
     $start_date = $faker->dateTimeBetween('-50 days','+50 days');
     $end_date = clone $start_date->modify('+' . mt_rand(1, 5) . ' day');
+    $web_sites = range(0, mt_rand(1, 5));
+    $web_sites = array_fill(0, count($web_sites), $faker->url);
+    $videos = range(0, mt_rand(1, 5));
+    $videos = array_fill(0, count($videos), $faker->url);
     return array_merge([
         'cover' => $faker->image(storage_path('app'), mt_rand(300, 1920), mt_rand(200, 1250)),
         'title' => $faker->sentence,
         'description' => $faker->sentence,
-        'web_site' => $faker->url,
+        'web_sites' => json_encode($web_sites),
+        'videos' => json_encode($videos)
     ], $dates(), $timestamps());
 });
 

@@ -15,7 +15,7 @@ class AlbumPhotosTableSeeder extends Seeder
     {
         Album::all()->each(
             function (Album $album) {
-                $photos = factory(AlbumPhoto::class, mt_rand(1, 10))->make();
+                $photos = factory(AlbumPhoto::class, mt_rand(1, 3))->make();
                 if ($photos instanceof AlbumPhoto) {
                     $photos->album()->associate($album);
                     $album->photos()->save($photos);

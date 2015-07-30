@@ -13,17 +13,15 @@ class FollowTest extends LaravelTestCase
      *
      * @return void
      */
-
     /**
-     * @var User $user
+     * Setup the test environment.
+     *
+     * @return void
      */
-    private $user;
-
     public function setUp()
     {
         parent::setUp();
-        $this->user = User::random()->first();
-        Auth::login($this->user);
+        $this->randomSignIn();
     }
 
 

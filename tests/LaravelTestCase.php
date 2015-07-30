@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class LaravelTestCase extends Illuminate\Foundation\Testing\TestCase
@@ -10,6 +11,11 @@ class LaravelTestCase extends Illuminate\Foundation\Testing\TestCase
      * @var string
      */
     protected $baseUrl = 'http://backend.zoomtivity.app.com';
+
+    /**
+     * @var \App\User $user
+     */
+    protected $user;
 
     /**
      * Creates the application.
@@ -98,5 +104,11 @@ class LaravelTestCase extends Illuminate\Foundation\Testing\TestCase
         $file = new UploadedFile($path, $file->getFilename(), 'image/jpeg', $file->getSize(), 0);
 
         return $file;
+    }
+
+    protected function randomSignIn()
+    {
+        $this->user = User::random()->first();
+        Auth::login($this->user);
     }
 }

@@ -14,8 +14,8 @@ class SpotReviewsTableSeeder extends Seeder
      */
     public function run()
     {
-        Spot::random(mt_rand(10, 25))->get()->each(function (Spot $spot) {
-            $reviews_count = mt_rand(5, 10);
+        Spot::random(10)->get()->each(function (Spot $spot) {
+            $reviews_count = mt_rand(2, 6);
             /**
              * @var \Illuminate\Database\Eloquent\Collection $users
              */

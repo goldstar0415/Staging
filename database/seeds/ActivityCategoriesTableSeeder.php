@@ -12,6 +12,6 @@ class ActivityCategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(ActivityCategory::class, 30)->create();
+        factory(ActivityCategory::class, 20)->create();
     }
 }

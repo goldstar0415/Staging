@@ -13,7 +13,7 @@ class AreasTableSeeder extends Seeder
      */
     public function run()
     {
-        User::random(40)->get()->each(function (User $user) {
+        User::random(10)->get()->each(function (User $user) {
             $areas = factory(Area::class, mt_rand(2, 10))->make()->each(function (Area $area) use ($user) {
                 $area->user()->associate($user);
             });

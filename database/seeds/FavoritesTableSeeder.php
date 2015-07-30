@@ -14,7 +14,7 @@ class FavoritesTableSeeder extends Seeder
      */
     public function run()
     {
-        User::random(50)->get()->each(function (User $user) {
+        User::random(12)->get()->each(function (User $user) {
             $favorites_count = mt_rand(1, 10);
             $favorites = factory(Favorite::class, $favorites_count)->make();
             $spots = Spot::random($favorites_count)->get();
