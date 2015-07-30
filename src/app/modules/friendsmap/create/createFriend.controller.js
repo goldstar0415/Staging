@@ -6,10 +6,20 @@
     .controller('CreateFriendController', CreateFriendController);
 
   /** @ngInject */
-  function CreateFriendController(MapService, friend, toastr, $state) {
+  function CreateFriendController(MapService, friend, toastr, $state, Friends) {
     var vm = this;
     vm.friend = friend;
     vm.edit = $state.current.edit;
+    var params = {
+      first_name: vm.friend.first_name,
+      last_name: vm.friend.first_name,
+      birth_date: vm.friend.first_name,
+      phone: vm.friend.first_name,
+      email: vm.friend.first_name,
+      location: vm.friend.first_name,
+      address: vm.friend.first_name,
+      note: vm.friend.first_name
+    };
 
     vm.SaveFriend = function(form) {
       if(form.$valid) {

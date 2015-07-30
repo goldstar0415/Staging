@@ -10,15 +10,24 @@
     return $resource(API_URL + '/friends', {id: '@id'}, {
       update: {
         url: API_URL + '/friends/:id',
+        transformRequest: function(data, headers) {
+          var params = {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            birth_date: data.birth_date,
+            phone: data.phone,
+            email: data.email,
+            location: data.location,
+            address: data.address,
+            note: data.note
+          };
+          return JSON.stringify(params);
+        },
         method: 'PUT'
       },
       getFriend: {
         url: API_URL + '/friends/:id',
         method: "GET"
-      },
-      updateFriend: {
-        url: API_URL + '/friends/:id',
-        method: "PUT"
       },
       deleteFriend: {
         url: API_URL + '/friends/:id',
