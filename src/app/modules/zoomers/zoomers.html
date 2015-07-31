@@ -1,0 +1,183 @@
+<div class="col-xs-12">
+  <div class="container wrap">
+
+    <div class="col-xs-3 zoomers">
+      <div class="zoomers-sidebar">
+        <ul class="zoomers-list">
+          <li>
+            <a class="current active">Zoomers</a>
+          </li>
+          <li><a class="followers" ng-if="currentUser">Followers</a></li>
+          <li><a class="followings" ng-if="currentUser">Followings</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-xs-9 zoomers-content">
+      <div class="search-block">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+              <button class="btn btn-default search-btn" type="button">Search</button>
+            </span>
+        </div>
+      </div>
+      <!-- /search-block -->
+
+      <div class="followers col-xs-12  no-pad">
+        <div class="post col-xs-12">
+          <div class="col-xs-6 ">
+            <figure>
+              <img src="http://zoomzoom.itechhighway.com/images/avatar.png" class="avatar"
+                   alt="Joanne Zieme">
+              <figcaption class="col-xs-8">
+                <h3 class="name">
+                  <a href="http://zoomzoom.itechhighway.com/user/136">Joanne Zieme</a>
+                </h3>
+
+                <div class="info">
+                  <p class="age"> 12 years </p>
+
+                  <p class="description"></p>
+
+                  <p class="counters"><a href="http://zoomzoom.itechhighway.com/user/2586/events"
+                                         class="e-count" title="Events">0</a>
+                    <a href="#" class="f-count"
+                       ng-click="getFollowings('http://zoomzoom.itechhighway.com/user/2586/followings')"
+                       title="Followings">0</a></p>
+                  <button type="submit" class="btn btn-default unfollow-btn" style="display: none;">
+                    Unfollow
+                  </button>
+                  <button type="submit" class="btn btn-default follow-btn" style="display: none;">
+                    Follow
+                  </button>
+                </div>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+        <!-- /end post  -->
+        <div class="post col-xs-12">
+          <div class="col-xs-6 ">
+            <figure>
+              <img src="http://zoomzoom.itechhighway.com/images/avatar.png" class="avatar"
+                   alt="Myra Collier">
+              <figcaption class="col-xs-8">
+                <h3 class="name">
+                  <a href="http://zoomzoom.itechhighway.com/user/2586">Myra Collier</a>
+                </h3>
+
+                <div class="info">
+                  <p class="age"> 14 years </p>
+
+                  <p class="description"></p>
+
+                  <p class="counters"><a href="http://zoomzoom.itechhighway.com/user/2586/events"
+                                         class="e-count" title="Events">0</a>
+                    <a href="#" class="f-count"
+                       ng-click="getFollowings('http://zoomzoom.itechhighway.com/user/2586/followings')"
+                       title="Followings">0</a></p>
+                  <button type="submit" class="btn btn-default unfollow-btn" style="display: block;">
+                    Unfollow
+                  </button>
+                  <button type="submit" class="btn btn-default follow-btn" style="display: none;">
+                    Follow
+                  </button>
+                </div>
+              </figcaption>
+            </figure>
+          </div>
+          <div class="col-xs-6">
+            <ul class="events">
+              <li class="col-xs-4">
+                <img class="frame" src="http://www.thci-inc.com/wp-content/uploads/2014/05/enent10.jpg"
+                     alt="">
+                <a href="http://zoomzoom.itechhighway.com/event/show/65949" class="event-link">csv
+                  event</a>
+              </li>
+              <li class="col-xs-4">
+                <img class="frame"
+                     src="http://zoomzoom.itechhighway.com/packages/design/img/event-link.png" alt="">
+                <a href="http://zoomzoom.itechhighway.com/event/show/65939" class="event-link">csv
+                  event</a>
+              </li>
+              <li class="col-xs-4">
+                <img class="frame"
+                     src="http://zoomzoom.itechhighway.com/packages/design/img/event-link.png" alt="">
+                <a href="http://zoomzoom.itechhighway.com/event/show/65938" class="event-link">csv
+                  event</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /end post  -->
+
+        <div class="post col-xs-12">
+          <div class="col-xs-6 ">
+            <figure>
+              <img src="http://zoomzoom.itechhighway.com/images/avatar.png" class="avatar"
+                   alt="David Von">
+              <figcaption class="col-xs-8">
+                <h3 class="name">
+                  <a href="http://zoomzoom.itechhighway.com/user/4986">David Von</a>
+                </h3>
+
+                <div class="info">
+                  <p class="age"> 40 years </p>
+
+                  <p class="description"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </span>
+                  </p>
+
+                  <div class="counters"><a href="http://zoomzoom.itechhighway.com/user/2586/events"
+                                           class="e-count" title="Events">0</a>
+                    <a href="#" class="f-count"
+                       ng-click="getFollowings('http://zoomzoom.itechhighway.com/user/2586/followings')"
+                       title="Followings">0</a>
+                  </div>
+                  <button type="submit" class="btn btn-default unfollow-btn" style="display: none;">
+                    Unfollow
+                  </button>
+                  <button type="submit" class="btn btn-default follow-btn">Follow</button>
+                </div>
+                <!-- info -->
+              </figcaption>
+            </figure>
+          </div>
+          <div class="col-xs-6">
+            <ul class="events">
+              <li class="col-xs-4">
+                <img class="frame" src="http://www.thci-inc.com/wp-content/uploads/2014/05/enent10.jpg"
+                     alt="">
+                <a href="http://zoomzoom.itechhighway.com/event/show/65949" class="event-link">csv
+                  event</a>
+              </li>
+              <li class="col-xs-4">
+                <img class="frame"
+                     src="http://zoomzoom.itechhighway.com/packages/design/img/event-link.png" alt="">
+                <a href="http://zoomzoom.itechhighway.com/event/show/65939" class="event-link">csv
+                  event</a>
+              </li>
+              <li class="col-xs-4">
+                <img class="frame"
+                     src="http://zoomzoom.itechhighway.com/packages/design/img/event-link.png" alt="">
+                <a href="http://zoomzoom.itechhighway.com/event/show/65938" class="event-link">csv
+                  event</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- /end post  -->
+
+      </div>
+      <!-- end followers -->
+
+
+    </div>
+    <!-- end col-xs-9-->
+
+
+  </div>
+  <!--end container -->
+
+</div>
+<!--end col-xs-12 -->

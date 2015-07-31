@@ -16,22 +16,7 @@
     padding: 0 0 20px 15px;
     border-bottom: 1px solid $light_grey;
   }
-  .add-friend {
-    display: block;
-    width: 28px;
-    height: 28px;
-    background: url(/assets/img/icons/min-plus.png) 9px 9px no-repeat, #0d91ec;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    position: absolute;
-    top: 17px;
-    right: 17px;
-    @include transition_bg;
-    &:hover {
-      background: url(/assets/img/icons/min-plus.png) 9px 9px no-repeat, #0160a2;
-    }
-  }
+
   .event {
     position: relative;
     background: 0 0;
@@ -93,7 +78,7 @@
       font: 400 14px Ubuntu;
       color: grey;
     }
-    .date {
+    .date, .event-spot-page, .recreation, .pitstop {
       position: relative;
       top: 0;
       right: 0;
@@ -102,16 +87,18 @@
       text-align: right;
       float: right;
     }
+    .event-spot-page {
+      padding-right: 15px;
+      float: left;
+    }
     .description {
       font: 13px/19px Arial, sans-serif;
       margin: 10px 0 12px;
     }
-    .tags {
-      padding-left: 23px;
-      background: url(/assets/img/icons/tag.png) 0 2px no-repeat;
-      margin-bottom: 17px;
-    }
+
+
   }
+
   .tools {
     padding-top: 15px;
     font: 400 13px/13px Ubuntu;
@@ -223,3 +210,41 @@
   }
 }
 
+.add-friend {
+  display: block;
+  width: 28px;
+  height: 28px;
+  background: url(/assets/img/icons/min-plus.png) 9px 9px no-repeat, #0d91ec;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  @include transition_bg;
+  &:hover {
+    background: url(/assets/img/icons/min-plus.png) 9px 9px no-repeat, #0160a2;
+  }
+}
+.tags {
+  background: url(/assets/img/icons/tag.png) 0 2px no-repeat;
+}
+.attachments {
+  background: url(/assets/img/icons/clip.png) 0 2px no-repeat;
+  margin-top: 0;
+}
+.tags, .attachments  {
+  padding-left: 23px;
+  margin-bottom: 13px;
+  margin-top: 10px;
+  line-height: 1;
+  li {
+    margin-right: 7px;
+    float: left;
+    a {
+      font: 400 13px/13px Ubuntu;
+      color: #85929b;
+      @include transition_color;
+    }
+  }
+}

@@ -60,6 +60,16 @@
         locate: 'none'
       })
 
+      .state('spot_create', {
+        url: '/spot/create',
+        templateUrl: 'app/modules/spot/spot_create/spot_create.html',
+        controller: 'SpotCreateController',
+        controllerAs: 'SpotCreate',
+        parent: 'profile_menu',
+        locate: 'current',
+        mapState: 'small',
+        edit: true
+      })
       .state('spot', {
         url: '/spot/:spot_id',
         templateUrl: 'app/modules/spot/spot.html',
@@ -68,16 +78,6 @@
         parent: 'profile_menu',
         locate: 'none',
         mapState: 'small'
-      })
-      .state('spot_create', {
-        url: '/spot/create',
-        templateUrl: 'app/modules/spot/spot_create/spot_create.html',
-        controller: 'SpotCreateController',
-        controllerAs: 'SpotCreate',
-        parent: 'profile_menu',
-        locate: 'none',
-        mapState: 'small',
-        edit: true
       })
       .state('spot_edit', {
         url: '/spot/:spot_id/edit',

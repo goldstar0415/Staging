@@ -19,6 +19,7 @@
     border-radius: 0;
     width: 100%;
     padding: 15px;
+    //
     .external-link {
       padding-left: 23px;
       background: url(/assets/img/icons/arrow.png) 0 4px no-repeat;
@@ -65,30 +66,14 @@
       //margin-bottom: 7px;
       //margin-top: 15px;
     }
-    .place {
-      font: 400 14px Ubuntu;
-      color: grey;
-    }
-    .date {
-      position: relative;
-      top: 0;
-      right: 0;
-      color: grey;
-      font: 12px Arial, sans-serif;
-      text-align: right;
-      float: right;
-    }
-    .description {
-      font: 13px/19px Arial, sans-serif;
-      margin: 10px 0 12px;
-    }
+
     .tags {
       padding-left: 23px;
       background: url(/assets/img/icons/tag.png) 0 2px no-repeat;
       margin-bottom: 17px;
     }
   }
-  .tools-spot-page {
+  .tools {
     padding-top: 15px;
     font: 400 13px/13px Ubuntu;
     padding-left: 0px;
@@ -101,48 +86,15 @@
         color: $blue;
       }
     }
-    .edit-tools {
-      background: url(/assets/img/icons/edit.png) -3px -5px no-repeat;
-      &:hover {
-        color: $blue;
-        background: url(/assets/img/icons/edit.png) -3px -23px no-repeat;
-      }
-    }
-    .delete {
-      background: url(/assets/img/icons/delete.png) 1px 2px no-repeat;
-      &:hover {
-        background: url(/assets/img/icons/delete.png) 1px -13px no-repeat;
-        color: $blue;
-      }
-    }
-    .save-event {
-      background: url(/assets/img/icons/tools.png) -5px -6px no-repeat;
-      &:hover {
-        background: url(/assets/img/icons/tools.png) -5px -23px no-repeat;
-        color: $blue;
-      }
 
-    }
-    .saved {
-      background: url(/assets/img/icons/tools.png) -5px -40px no-repeat;
-    }
-    .favorited {
-      background: url(/assets/img/icons/tools.png) -4px -90px no-repeat;
-    }
-    .favorite-spot {
-      background: url(/assets/img/icons/tools.png) -4px -57px no-repeat;
-      &:hover {
-        background: url(/assets/img/icons/tools.png) -4px -74px no-repeat;
-        color: $blue;
-      }
-    }
+  }
 
-    .invite-friend {
-      background: url(/assets/img/icons/tools.png) -3px -111px no-repeat;
-      &:hover {
-        background: url(/assets/img/icons/tools.png) -3px -128px no-repeat;
-        color: $blue;
-      }
+
+  .invite-friend {
+    background: url(/assets/img/icons/tools.png) -3px -111px no-repeat;
+    &:hover {
+      background: url(/assets/img/icons/tools.png) -3px -128px no-repeat;
+      color: $blue;
     }
   }
   .share {
@@ -204,7 +156,58 @@
   }
 
 }
+.place {
+  font: 400 14px Ubuntu;
+  color: grey;
+}
+.date {
+  position: relative;
+  top: 0;
+  right: 0;
+  color: grey;
+  font: 12px Arial, sans-serif;
+  text-align: right;
+  float: right;
+}
+.description {
+  font: 13px/19px Arial, sans-serif;
+  margin: 10px 0 12px;
+}
+.edit-tools {
+  background: url(/assets/img/icons/edit.png) -3px -5px no-repeat;
+  &:hover {
+    color: $blue;
+    background: url(/assets/img/icons/edit.png) -3px -23px no-repeat;
+  }
+}
+.delete {
+  background: url(/assets/img/icons/delete.png) 1px 2px no-repeat;
+  &:hover {
+    background: url(/assets/img/icons/delete.png) 1px -13px no-repeat;
+    color: $blue;
+  }
+}
+.save-event {
+  background: url(/assets/img/icons/tools.png) -5px -6px no-repeat;
+  &:hover {
+    background: url(/assets/img/icons/tools.png) -5px -23px no-repeat;
+    color: $blue;
+  }
 
+}
+.saved {
+  background: url(/assets/img/icons/tools.png) -5px -40px no-repeat;
+}
+.favorited {
+  background: url(/assets/img/icons/tools.png) -4px -90px no-repeat;
+}
+.favorite-spot {
+  background: url(/assets/img/icons/tools.png) -4px -57px no-repeat;
+  &:hover {
+    background: url(/assets/img/icons/tools.png) -4px -74px no-repeat;
+    color: $blue;
+  }
+}
 .close-link {
   display: block;
   width: 8px;
@@ -347,8 +350,6 @@
     text-align: center;
   }
 }
-
-
 
 .upload-photos {
   .photos {

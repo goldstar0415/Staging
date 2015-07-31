@@ -1,0 +1,286 @@
+.modal {
+    .modal-dialog {
+        .modal-content {
+            .padding-0 {
+                padding: 0;
+            }
+            .no-pad-bottom {
+                padding-bottom: 0;
+            }
+            .no-pad-left-right {
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .margin-none {
+                margin: 0;
+            }
+            .border-1px {
+                border-top: 1px solid #e5e5e5;
+            }
+            .button-my {
+                font-size: 16px;
+                padding: 3px 10px;
+                line-height: 110%;
+            }
+            .border-top-none {
+                border-top: none;
+            }
+            .border-bottom-none {
+                border-bottom: none;
+            }
+            .font-weight600{font-weight: 600;}
+            .modal-header {
+                .title-new-messages {
+                    font-size: 18px;
+                    font-weight: 400;
+                    margin: 12px 0 0 50px;
+                }
+            }
+            .modal-body {
+                .search-icon {
+                    display: block;
+                    box-shadow: none;
+                    border: none;
+                    width: 16px;
+                    height: 16px;
+                    background: url(/assets/img/icons/search-friends.png) no-repeat top center;
+                    text-indent: -1000px;
+                    overflow: hidden;
+                    position: absolute;
+                    top: 21px;
+                    right: 30px;
+                    &:hover {
+                        background: url(/assets/img/icons/search-friends.png) no-repeat bottom center;
+                    }
+                }
+                .search-friends {
+                    width: 90%;
+                    margin: 0 auto;
+                    margin-bottom: 15px;
+                    border: 1px solid #dee5ea;
+                    box-shadow: none;
+                    display: block;
+                    padding: 5px 10px 4px 10px;
+                    color: #000;
+                    border-radius: 3px;
+                    font: 14px "Arial", "sans-serif";
+                    position: relative;
+                    &:hover {
+                        border: 1px solid #76c7dc;
+                        box-shadow: 0 0 3px 0 #00b7f3;
+                    }
+                }
+                .photos {
+                    padding: 0;
+                    display: block;
+                    clear: both;
+                    max-width: 100%;
+                    width: auto;
+                    height: auto;
+                    .photo {
+                        display: block;
+                        height: 38px;
+                        width: 38px;
+                        border-radius: 3px;
+                        margin-bottom: 10px;
+                        margin-right: 5px
+                    }
+                    &::after {
+                        content: ".";
+                        display: block;
+                        height: 0;
+                        clear: both;
+                        visibility: hidden;
+                    }
+                }
+                .friends {
+                    max-height: 215px;
+                    overflow: auto;
+                }
+                .choose {
+                    background: url(/assets/img/icons/ok.png) no-repeat #e9edf0;
+                    background-position: center right 15px;
+                }
+                .choose-friend {
+                    height: 54px;
+                    width: 100%;
+                    padding: 7px 5%;
+                    &:hover {
+                        background: $light-grey;
+                    }
+                    .friend-avatar {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 30px;
+                        float: left;
+                    }
+                    .name-friend {
+                        font-size: 14px;
+                        margin-top: 12px;
+                        margin-left: 55px;
+                        a {
+                            color: #0c2638;
+                            text-decoration: none;
+                            @include transition_color;
+                            &:hover {
+                                color: #124d76;
+                                @include transition_color;
+                            }
+                        }
+                    }
+                }
+                .miniatures {
+                    display: block;
+                    margin-bottom: 10px;
+                    .big-image {
+                        margin-right: 15px;
+                        float: left;
+                    }
+                    .avatar-big {
+                        width: 120px;
+                        height: 120px;
+                        border: 3px solid #fff;
+                        border-radius: 70px;
+                        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.35);
+                    }
+                    .avatar-small {
+                        width: 66px;
+                        height: 66px;
+                        border: 3px solid $white;
+                        border-radius: 70px;
+                        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.35);
+                    }
+                }
+                .upload-new {
+                    clear: both;
+                    padding: 15px 0 15px 0;
+                    //                    width: 30%;
+                }
+                .new-post {
+                    padding: 10px;
+                    background: #e9edf0;
+                    border-radius: 0 0 7px 7px;
+                    hr {
+                        margin: 0 -10px 8px -10px;
+                        height: 1px;
+                        background: #cecbcb;
+                    }
+                    textarea {
+                        resize: none;
+                        width: 100%;
+                        font-size: 12px;
+                        min-height: 85px;
+                        margin-bottom: 8px;
+                        padding: 5px 10px;
+                        background: white;
+                        border: 1px solid #dee5ea;
+                        border-radius: 3px;
+                        @include transition_shadow;
+                        &:hover {
+                            border: 1px solid #76c7dc;
+                            box-shadow: 0 0 3px #00b7f3;
+                            @include transition_shadow;
+                        }
+                    }
+                    .submit-messages {
+                        width: 54px;
+                        height: 22px;
+                        margin-left: 14px;
+                        background: #0c2638;
+                        border: none;
+                        border-radius: 3px;
+                        color: #fff;
+                        font-size: 12px;
+                        float: right;
+                        @include transition_bg;
+                        &:hover {
+                            background: #1a415b;
+                            @include transition_bg;
+                        }
+                    }
+                    .add-photo {
+                        float: right;
+                        display: block;
+                        width: 16px;
+                        height: 14px;
+                        margin: 4px 0 0 10px;
+                        background: url(/assets/img/icons/clip-photo.png) no-repeat right top;
+                        &:hover {
+                            background: url(/assets/img/icons/clip-photo.png) no-repeat right bottom;
+                        }
+                    }
+                    .add-attach {
+                        float: right;
+                        display: block;
+                        width: 16px;
+                        height: 14px;
+                        margin: 4px 0 0 10px;
+                        background: url(/assets/img/icons/clip-photo.png) no-repeat;
+                        &:hover {
+                            background: url(/assets/img/icons/clip-photo.png) no-repeat left bottom;
+                        }
+                    }
+                    &::after {
+                        content: ".";
+                        display: block;
+                        height: 0;
+                        clear: both;
+                        visibility: hidden;
+                    }
+                }
+                
+                .tab-content {
+                    .choose-some-photos-body {
+                        padding-top: 20px;
+                        height: 250px;
+                        overflow: auto;
+                        border-left: 1px solid $light-grey;
+                        .choose-album-name{
+                            margin: 0px;
+                            padding-left: 30px;
+                        }
+                        .back {
+                            height: 15px;
+                            width: 6px;
+                            background: url(/assets/img/icons/back.png) no-repeat -7px 0px;
+                            padding-left: 9px;
+                            &:hover {
+                                background: url(/assets/img/icons/back.png) no-repeat 1px 0px;
+                            }
+                        }
+                        .choose-photo-album {
+                            padding-top: 20px;
+                            img {
+                                width: 80px;
+                                height: 80px;
+                                border-radius: 5px;
+                                float: left;
+                                margin: 5px;
+                                &:hover{
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                        .choose-album {
+                            margin-bottom: 10px;
+                            img {
+                                width: 100%;
+                                border-radius: 5px 5px 0 0;
+                            }
+                            a {
+                                display: block;
+                                padding: 10px 5px;
+                                text-align: center;
+                                width: 100%;
+                                border: 1px solid #e5e5e5;
+                                border-radius: 0 0 5px 5px;
+                            }
+                        }
+                    }
+                }
+            }
+            //          /body
+            .modal-footer {}
+        }
+    }
+}

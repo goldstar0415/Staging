@@ -15,6 +15,7 @@
     function saveCurrentUser(user) {
       $rootScope.currentUser = user;
     }
+
     function onStateChangeSuccess(event, current, toParams, fromState, fromParams) {
       $rootScope.previous = {
         state: fromState,
@@ -58,8 +59,6 @@
           MapService.FocusMapToCurrentLocation();
           break;
       }
-      ;
-
     }
 
     $rootScope.options = {
@@ -79,8 +78,8 @@
     }
 
 
-    $rootScope.goBack = function() {
-      if($rootScope.previous && $rootScope.previous.state && $rootScope.previous.state.name) {
+    $rootScope.goBack = function () {
+      if ($rootScope.previous && $rootScope.previous.state && $rootScope.previous.state.name) {
         $state.go($rootScope.previous.state.name, $rootScope.previous.params);
       }
     };
