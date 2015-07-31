@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Spot\SpotCategoriesRequest;
+use App\SpotType;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -38,7 +40,7 @@ class SpotController extends Controller
      */
     public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -62,5 +64,14 @@ class SpotController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function categories(SpotCategoriesRequest $request)
+    {
+        $type = $request->get('type');
+
+        $type = SpotType::where('name', $type)->with('categories')->first();
+
+        return $type->categories;
     }
 }
