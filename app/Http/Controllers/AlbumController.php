@@ -45,7 +45,7 @@ class AlbumController extends Controller
                 'photo' => $file
             ]);
         }
-        return response()->json(['album_id' => $album->id, 'message' => 'Album was successfuly created']);
+        return $album;
     }
 
     /**
@@ -86,7 +86,7 @@ class AlbumController extends Controller
             ]);
         }
 
-        return response()->json(['message' => 'Album was successfuly created']);
+        return $albums;
     }
 
     /**
