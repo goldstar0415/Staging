@@ -74,23 +74,23 @@ class UserController extends Controller
 
         switch ($request->get('type')) {
             case 'all':
-                if (!empty($filter)) {
-                    $users = User::searchName($filter)->with(['spots' => function ($query) {
-                        $query->take(3);
-                    }])->paginate($limit);
-                } else {
-                    $users = User::paginate($limit);
-                }
+                $users = User::query();
                 break;
             case 'followers':
-                $users = $request->user()->followers()->paginate($limit);
+                $users = $request->user()->followers();
                 break;
             case 'followings':
-                $users = $request->user()->followings()->paginate($limit);
+                $users = $request->user()->followings();
                 break;
         }
 
-        return $users;
+        if (!empty($filter)) {
+            $users->search($filter);
+        }
+
+        return $users->with(['spots' => function ($query) {
+            $query->take(3);
+        }])->paginate($limit);
     }
 
     public function getMe()

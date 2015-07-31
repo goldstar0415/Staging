@@ -4,10 +4,12 @@ namespace App;
 
 use App\Extensions\GeoTrait;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
@@ -74,7 +76,8 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  */
 class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract, StaplerableInterface
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait, PostgisTrait, StaplerTrait, SoftDeletes, GeoTrait {
+    use Authenticatable, CanResetPassword, EntrustUserTrait,
+        PostgisTrait, StaplerTrait, SoftDeletes, GeoTrait {
         StaplerTrait::boot insteadof EntrustUserTrait;
         EntrustUserTrait::boot insteadof StaplerTrait;
         StaplerTrait::boot as bootStaplerT;
@@ -131,6 +134,10 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         'location' => Point::class,
     ];
 
+    public function scopeSearch($query, $filter)
+    {
+        return $query->whereRaw("LOWER(CONCAT(\"first_name\", ' ', \"last_name\")) like LOWER('%$filter%')");
+    }
     /**
      * {@inheritdoc}
      */
@@ -185,11 +192,6 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     public function getAvatarUrlAttribute()
     {
         return $this->getPictureUrls('avatar');
-    }
-
-    public function scopeSearchName($query, $filter)
-    {
-        return $query->where("first_name", 'like', "%$filter%");
     }
 
     public function followers()
