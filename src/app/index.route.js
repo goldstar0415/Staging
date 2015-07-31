@@ -124,7 +124,7 @@
       })
       //Planner (calendar + list of all plans)
       .state('planner', {
-        url: '/profile',
+        url: '/planner',
         templateUrl: 'app/modules/planner/planner.html',
         controller: 'PlannerController',
         controllerAs: 'Planner',
@@ -134,11 +134,16 @@
       })
 
       //Users profile index page. (TABS: wall, feeds, reviews, chat)
-      .state('Profile', {
-        url: '/profile',
-        templateUrl: 'app/modules/wall/wall.html',
+      .state('profile', {
+        url: '/profile/:user_id',
+        templateUrl: 'app/modules/profile/profile.html',
         controller: 'ProfileController',
         controllerAs: 'Profile',
+        resolve: {
+          user: function (User, $stateParams) {
+            return User.get({id: $stateParams.user_id});
+          }
+        },
         parent: 'profile_menu',
         locate: 'none',
         mapState: 'small'
@@ -282,6 +287,11 @@
         templateUrl: 'app/modules/zoomers/zoomers.html',
         controller: 'ZoomersController',
         controllerAs: 'Zoomers',
+        resolve: {
+          users: function (User) {
+            return User.query({type: 'all', page: 1, limit: 10})//.$promise;
+          }
+        },
         mapState: 'hidden'
       })
 

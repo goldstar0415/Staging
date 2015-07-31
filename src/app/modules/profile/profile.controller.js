@@ -6,8 +6,9 @@
     .controller('ProfileController', ProfileController);
 
   /** @ngInject */
-  function ProfileController() {
+  function ProfileController($rootScope, user) {
     var vm = this;
 
+    $rootScope.profileUser = user;
   }
 })();

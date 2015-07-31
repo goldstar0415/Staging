@@ -6,8 +6,13 @@
     .controller('ContactUsController', ContactUsController);
 
   /** @ngInject */
-  function ContactUsController() {
+  function ContactUsController(StaticPage) {
     var vm = this;
 
+    vm.save = function () {
+      StaticPage.contactUs({}, vm, function () {
+        vm.$saved = true;
+      });
+    }
   }
 })();

@@ -6,9 +6,8 @@
     .controller('ProfileMenuController', ProfileMenuController);
 
   /** @ngInject */
-  function ProfileMenuController($rootScope, toastr, API_URL) {
+  function ProfileMenuController() {
     var vm = this;
-
 
   }
 })();

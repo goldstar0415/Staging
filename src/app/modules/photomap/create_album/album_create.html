@@ -46,7 +46,7 @@
     <div class="col-xs-12 upload-photos">
       <h3>Add photos</h3>
       <div class="col-xs-12 no-pad">
-        <uploader></uploader>
+        <uploader drop-zone="true"></uploader>
         <div ng-repeat="image in CreateAlbum.images.files track by $index">
           <img ngf-src="image" class="img-thumbnail"/>
           <a ng-click="CreateAlbum.deleteImage($index)">X</a>

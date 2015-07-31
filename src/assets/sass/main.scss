@@ -99,6 +99,10 @@ form {
     margin-top: 5px;
     margin-bottom: 5px;
   }
+  .form-group .error-message div {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 [ng-click], [ui-sref] {

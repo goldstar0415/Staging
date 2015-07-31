@@ -40,7 +40,7 @@
       <div id="map" class="mapResize map" ng-class="mapState"></div>
 
       <!-- content container-->
-      <div ng-show="mapState != 'big'" ui-view></div>
+      <div ng-show="mapState != 'big'" ui-view autoscroll="true"></div>
     </div>
 
     <ng-include src="'app/components/ng_message_templates/error_templates.html'"></ng-include>
