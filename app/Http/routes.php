@@ -15,6 +15,7 @@
  * User resource
  */
 Route::get('users/{users}/albums', 'AlbumController@showForUser');
+Route::get('users/{users}', 'UserController@getIndex');
 Route::controller('users', 'UserController');
 Route::controller('settings', 'SettingsController');
 

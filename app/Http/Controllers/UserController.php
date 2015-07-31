@@ -31,9 +31,14 @@ class UserController extends Controller
      */
     public function __construct(Guard $auth)
     {
-        $this->middleware('guest', ['except' => ['getLogout', 'getMe']]);
+        $this->middleware('guest', ['except' => ['getLogout', 'getMe', 'getIndex']]);
         $this->middleware('auth', ['only' => 'getMe']);
         $this->auth = $auth;
+    }
+
+    public function getIndex($user)
+    {
+        return $user;
     }
 
     /**
