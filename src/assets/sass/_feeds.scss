@@ -1,0 +1,25 @@
+/*     feeds page */
+
+.feeds-img {
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.feeds-title {
+  a {
+    display: block;
+    font: $navigation_font;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: $dark_blue;
+  }
+}
+
+.feeds-text {
+  font: $navigation_font;
+  color: $black;
+  font-size: 13px;
+  word-wrap: break-word;
+}
+
+/*  end feeds page */

@@ -1,0 +1,228 @@
+//---<create new event--->
+.create-event-page {
+  margin-bottom: 15px;
+}
+
+.buttons-set-new-event {
+  width: 100%;
+  display: block;
+  .btn-event {
+    display: block;
+    border: 1px solid $green;
+    background: $white;
+    padding: 7px 15px;
+    font: 14px/14px Ubuntu;
+    color: $dark-green;
+    width: 20%;
+  }
+  .active-point {
+    background: $green;
+    color: $white;
+  }
+}
+
+.category-dropdown {
+  width: 100%;
+  .btn-default {
+    &:hover, &:focus, &:active {
+      @include blue_shadow;
+      background-color: $white;
+    }
+  }
+  li {
+    position: relative;
+    margin: 0;
+    font: 14px Arial, sans-serif;
+    padding: 5px 10px;
+    color: $black;
+    border-bottom: 1px solid $light_grey;
+    background: $white;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  .dropdown-toggle {
+    text-align: left;
+    width: 100%;
+
+  }
+}
+
+.caret {
+  float: right;
+  margin-top: 8px;
+}
+
+.input-group-btn {
+  &:hover, &:focus, &:active {
+    @include blue_shadow;
+    @include transition_shadow;
+  }
+}
+
+.event-main-info, .event-upload-photos, .event-additionl-info, .event-add-video {
+  border-bottom: 1px solid $light_grey;
+  padding: 15px;
+  margin-bottom: 15px;
+
+}
+
+.form-group {
+  .control-label {
+    font-weight: 500;
+    text-align: left;
+    font-size: 16px;
+    padding-top: 0px;
+  }
+}
+
+.event-title {
+  font: 500 22px 'Ubuntu medium';
+  padding-left: 15px;
+}
+
+.event-upload-photos {
+  .form-group {
+    h3 {
+      padding: 5px 0 0 15px;
+      margin: 0;
+      float: left;
+    }
+
+  }
+}
+
+.add, .add-event-btn {
+  float: right;
+  font: 500 16px Ubuntu;
+  margin-right: 18px;
+  background: $green;
+  color: $white;
+  @include border-radius;
+  @include transition_bg;
+  &:hover, &:active, &:focus {
+    background-color: $light_green;
+    color: $white;
+  }
+}
+
+.add-event-btn {
+  float: left;
+}
+
+.photos {
+  padding: 15px 10px 0;
+  display: block;
+  clear: both;
+  img {
+    width: 64px;
+    height: 64px;
+    margin: 5px;
+    @include border-radius;
+    @include transition_shadow;
+    padding: 0;
+    &:hover.cover-hover {
+      border: 3px $blue solid;
+      cursor: pointer;
+    }
+
+  }
+  li {
+    display: block;
+    position: relative;
+    z-index: 5;
+    float: left;
+  }
+  .delete {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    z-index: 10;
+    margin: 5px;
+    background: url(/assets/img/icons/min-cross.png) 5px 5px no-repeat, rgba(12, 38, 56, .6);
+    @include border-radius;
+    @include transition_shadow;
+    &:hover {
+      cursor: pointer;
+      display: block;
+    }
+  }
+}
+
+.sidebar-event {
+  min-height: 100%;
+  float: right;
+  .counter {
+    display: inline-block;
+    height: 11px;
+    font: 10px/11px Arial, sans-serif;
+    color: $white;
+    background: $blue;
+    padding: 0 4px;
+    margin: 1px 0 0 -3px;
+    vertical-align: top;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-transition: background .3s;
+    -moz-transition: background .3s;
+    -o-transition: background .3s;
+    transition: background .3s;
+  }
+  ul {
+    padding-left: 15px;
+    li {
+      a {
+        display: block;
+        height: 100px;
+        word-wrap: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -e-text-overflow: ellipsis;
+      }
+    }
+    .add-event-sidebar {
+      display: block;
+      width: 45px;
+      height: 45px;
+      background: url(/assets/img/icons/big-plus.png) center center no-repeat #dde3e6;
+      @include transition_bg;
+      -webkit-border-radius: 30px;
+      -moz-border-radius: 30px;
+      border-radius: 30px;
+      -webkit-box-shadow: inset 1px 1px 0 0 #c8d0d4;
+      -moz-box-shadow: inset 1px 1px 0 0 #c8d0d4;
+      box-shadow: inset 1px 1px 0 0 #c8d0d4;
+      &:hover {
+        background: url(/assets/img/icons/big-plus.png) center center no-repeat #d2d9dd;
+      }
+    }
+  }
+}
+
+.title-sidebar {
+  margin-top: 0;
+  margin-bottom: 15px;
+  a {
+    font: $navigation_font;
+    font-size: 22px;
+    color: $dark_blue;
+  }
+}
+
+.glyphicon {
+  font-size: 28px;
+  position: relative;
+  top: 4px;
+  line-height: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+//---</create new event--->

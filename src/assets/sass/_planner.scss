@@ -1,0 +1,26 @@
+/*     planner    */
+.export-to-ics {
+  margin: 2rem 0;
+  a {
+    font: $navigation_font;
+  }
+}
+
+.title-planner {
+  font: 500 24px/24px 'Ubuntu medium';
+  a {
+    color: $dark_blue;
+    &:hover {
+      color: $blue;
+    }
+  }
+}
+
+.sub-event {
+  margin: 15px 0;
+  padding: 2rem 0;
+}
+.time-sub {
+  font: 400 14px Ubuntu;
+  color: grey;
+}

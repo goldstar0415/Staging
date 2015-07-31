@@ -80,13 +80,11 @@
   border-radius: 8px;
   border: 1px solid #e9edf0;
 }
-
 @mixin border-radius {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
-
 @mixin clearfix {
   &:before,
   &:after {

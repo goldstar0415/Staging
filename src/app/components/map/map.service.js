@@ -306,10 +306,12 @@
           case "big":
             showEventsLayer(true);
             $rootScope.mapState = "full-size";
+            map.scrollWheelZoom.enable();
             break;
           case "small":
             showOtherLayers();
             $rootScope.mapState = "small-size";
+            map.scrollWheelZoom.disable();
             break;
           case "hidden":
             $rootScope.mapState = "hidden";

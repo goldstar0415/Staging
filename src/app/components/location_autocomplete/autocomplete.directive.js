@@ -15,7 +15,8 @@
         address: '=',
         bindMarker: '=',
         limit: '=',
-        provider: '='
+        provider: '=',
+        onEmpty: '&'
       },
       link: function autocompleteLink(s, e, a) {
         var limit = s.limit || 10;
@@ -34,9 +35,9 @@
         }
         s.$watch('location', function() {
           if(s.location) {
-            s.viewAddress = s.address;
             moveOrCreateMarker(s.location);
           }
+          s.viewAddress = s.address;
         });
 
 
@@ -64,6 +65,9 @@
         s.onChange = function() {
           if(!s.viewAddress){
             removeMarker();
+            s.location = null;
+            s.address = '';
+            s.onEmpty();
           }
         };
         s.SetCurrentLocation = function() {

@@ -16,7 +16,8 @@
       'snap',
       'angular-loading-bar',
       'ui.select',
-      'ui.utils.masks'
+      'ui.utils.masks',
+      'ngTagsInput'
     ])
     .animation('.mapResize', [function() {
       return {

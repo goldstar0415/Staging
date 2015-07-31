@@ -1,4 +1,4 @@
-/*     my spot   */
+/*    blog page   */
 .main-blog-content {
   .blog-content {
     float: left;
@@ -45,13 +45,7 @@
     }
   }
   .article {
-    .title-blog {
-      margin: 0 0 8px 15px;
-      font: 500 24px/24px 'Ubuntu medium';
-      a {
-        color: $dark_blue;
-      }
-    }
+
     .article-description {
       font: 14px/20px Arial, sans-serif;
       padding: 5px 15px 15px;
@@ -82,6 +76,8 @@
       margin-bottom: 15px;
     }
   }
+
+  
   .module-popular {
     background: $white;
     border: 1px solid $light_grey;
@@ -174,7 +170,13 @@
     }
   }
 }
-
+.title-blog {
+  margin: 0 0 8px 15px;
+  font: 500 24px/24px 'Ubuntu medium';
+  a {
+    color: $dark_blue;
+  }
+}
 .carousel-section {
   border: 1px solid $light_grey;
   border-radius: 8px;
