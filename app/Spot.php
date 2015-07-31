@@ -46,6 +46,14 @@ class Spot extends BaseModel implements StaplerableInterface
 
     protected $appends = ['rating'];
 
+    /**
+     * {@inheritdoc}
+     */
+    public function newQuery()
+    {
+        return parent::newQuery()->orderBy('created_at', 'DESC');
+    }
+
     protected $dates = ['start_date', 'end_date'];
 
     /**

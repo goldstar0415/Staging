@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
+use Request;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
@@ -113,7 +114,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         'avatar_updated_at'
     ];
 
-    protected $appends = ['avatar_url', 'attached_socials', 'is_registered'];
+    protected $appends = ['avatar_url', 'attached_socials', 'is_registered', 'can_follow'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -122,7 +123,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      */
     protected $with = ['socials'];
 
-    protected $hidden = ['password', 'remember_token', 'socials'];
+    protected $hidden = ['password', 'remember_token', 'socials', 'avatar_file_name', 'avatar_file_size', 'avatar_content_type'];
 
     protected $dates = ['deleted_at', 'banned_at', 'birth_date'];
 
@@ -157,6 +158,16 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         }
     }
 
+    public function getCanFollowAttribute()
+    {
+        $user = Request::user();
+        if (isset($user)) {
+            return $user->followings()->find($this->id) ? false : true;
+        }
+
+        return false;
+    }
+
     public function getIsRegisteredAttribute()
     {
         return isset($this->password);
@@ -174,6 +185,11 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     public function getAvatarUrlAttribute()
     {
         return $this->getPictureUrls('avatar');
+    }
+
+    public function scopeSearchName($query, $filter)
+    {
+        return $query->where("first_name", 'like', "%$filter%");
     }
 
     public function followers()

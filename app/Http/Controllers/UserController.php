@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserListRequest;
 use App\Role;
 use App\User;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -31,7 +32,7 @@ class UserController extends Controller
      */
     public function __construct(Guard $auth)
     {
-        $this->middleware('guest', ['except' => ['getLogout', 'getMe', 'getIndex']]);
+        $this->middleware('guest', ['except' => ['getLogout', 'getMe', 'getIndex', 'getList']]);
         $this->middleware('auth', ['only' => 'getMe']);
         $this->auth = $auth;
     }
@@ -60,6 +61,36 @@ class UserController extends Controller
         $user = $this->auth->user();
         $user->roles()->attach(Role::take(config('entrust.default')));
         return $user;
+    }
+
+    public function getList(UserListRequest $request)
+    {
+        $users = null;
+        $limit = $request->get('limit');
+        $filter = '';
+        if ($request->has('filter')) {
+            $filter = $request->get('filter');
+        }
+
+        switch ($request->get('type')) {
+            case 'all':
+                if (!empty($filter)) {
+                    $users = User::searchName($filter)->with(['spots' => function ($query) {
+                        $query->take(3);
+                    }])->paginate($limit);
+                } else {
+                    $users = User::paginate($limit);
+                }
+                break;
+            case 'followers':
+                $users = $request->user()->followers()->paginate($limit);
+                break;
+            case 'followings':
+                $users = $request->user()->followings()->paginate($limit);
+                break;
+        }
+
+        return $users;
     }
 
     public function getMe()

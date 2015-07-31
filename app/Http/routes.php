@@ -15,8 +15,14 @@
  * User resource
  */
 Route::get('users/{users}/albums', 'AlbumController@showForUser');
+Route::get('users/me', 'UserController@getMe');
+Route::get('users/list', 'UserController@getList');
 Route::get('users/{users}', 'UserController@getIndex');
-Route::controller('users', 'UserController');
+Route::post('users', 'UserController@postIndex');
+Route::post('users/login', 'UserController@postLogin');
+Route::get('users/logout', 'UserController@getLogout');
+Route::post('users/recovery', 'UserController@postRecovery');
+Route::get('users/reset', 'UserController@postReset');
 Route::controller('settings', 'SettingsController');
 
 Route::get('account/{social}', 'SocialAuthController@getAccount');
@@ -31,7 +37,9 @@ Route::resource('albums', 'AlbumController', ['except' => ['create', 'edit']]);
 Route::resource('photos', 'AlbumPhotoController', ['only' => ['show', 'update', 'destroy']]);
 Route::get('photos/{photos}/avatar', 'AlbumPhotoController@setAvatar');
 Route::resource('photos.comments', 'AlbumPhotoCommentController', ['only' => ['index', 'store', 'destroy']]);
-
+/**
+ * Follow
+ */
 Route::get('follow/{users}', 'FollowController@getFollow');
 Route::get('unfollow/{users}', 'FollowController@getUnfollow');
 Route::get('followers/{users}', 'FollowController@getFollowers');
