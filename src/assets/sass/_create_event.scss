@@ -53,6 +53,13 @@
   margin-top: 8px;
 }
 
+.input-group-btn {
+  &:hover, &:focus, &:active {
+    @include blue_shadow;
+    @include transition_shadow;
+  }
+}
+
 .event-main-info, .event-upload-photos, .event-additionl-info, .event-add-video {
   border-bottom: 1px solid $light_grey;
   padding: 15px;
@@ -114,6 +121,10 @@
     @include border-radius;
     @include transition_shadow;
     padding: 0;
+    &:hover.cover-hover {
+      border: 3px $blue solid;
+      cursor: pointer;
+    }
 
   }
   li {
@@ -199,6 +210,19 @@
     font-size: 22px;
     color: $dark_blue;
   }
+}
+
+.glyphicon {
+  font-size: 28px;
+  position: relative;
+  top: 4px;
+  line-height: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.input-group {
+  margin-bottom: 1rem;
 }
 
 //---</create new event--->

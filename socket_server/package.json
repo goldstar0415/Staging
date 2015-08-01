@@ -1,0 +1,19 @@
+{
+  "name": "NEANRealtimeChat",
+  "version": "0.0.1",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "chat",
+    "system"
+  ],
+  "dependencies": {
+    "compression": "~1.2",
+    "express": "~4.10",
+    "socket.io": ">= 1.0.2",
+    "underscore": "^1.8.3"
+  }
+}

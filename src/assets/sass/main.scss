@@ -31,9 +31,8 @@
 @import "calendar";
 @import "planner";
 @import "wall_page";
-
-
-
+@import "chat_messages";
+@import "chat_conversation";
 
 @font-face {
   font-family: 'Ubuntu bold';
@@ -145,13 +144,15 @@ h3 {
 }
 
 .central {
-  @include content_bg;
+    @include content_bg;
+
+    margin-bottom: 100px;
+    padding: 0;
 }
 
 .wrap {
   margin: 0 auto;
   padding-top: 20px;
-  display: table;
 }
 
 .avatar {

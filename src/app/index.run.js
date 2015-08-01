@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, User, MapService, $rootScope, snapRemote, $state, toastr, DEBUG) {
+  function runBlock($log, User, MapService, $rootScope, snapRemote, $state, toastr, socket, DEBUG) {
 
     MapService.Init('map');
     $rootScope.timezonesList = moment.tz.names();
@@ -14,6 +14,7 @@
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     function saveCurrentUser(user) {
       $rootScope.currentUser = user;
+      socket.initUser(user.id);
       if (!$rootScope.profileUser) {
         $rootScope.profileUser = user;
       }
@@ -83,6 +84,8 @@
       }
     };
     $rootScope.$apply();
+
+    socket.connect();
   }
 
 })();

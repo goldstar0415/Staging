@@ -133,12 +133,37 @@
         mapState: 'small'
       })
 
-      //Users profile index page. (TABS: wall, feeds, reviews, chat)
+      //Users profile index page. (TABS: wall, feeds, reviews)
       .state('profile', {
         url: '/profile/:user_id',
         templateUrl: 'app/modules/profile/profile.html',
         controller: 'ProfileController',
         controllerAs: 'Profile',
+        resolve: {
+          user: function (User, $stateParams) {
+            return User.get({id: $stateParams.user_id});
+          }
+        },
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small'
+      })
+
+      //chat
+      .state('chat', {
+        url: '/chat',
+        templateUrl: 'app/modules/chat/chat.html',
+        controller: 'ChatController',
+        controllerAs: 'Chat',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small'
+      })
+      .state('chatRoom', {
+        url: '/chat/:user_id',
+        templateUrl: 'app/modules/chat/chat_room/chat_room.html',
+        controller: 'ChatRoomController',
+        controllerAs: 'ChatRoom',
         resolve: {
           user: function (User, $stateParams) {
             return User.get({id: $stateParams.user_id});
