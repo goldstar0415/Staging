@@ -2,10 +2,10 @@
   <div class="container">
     <div class="col-xs-10 col-xs-offset-2 no-pad">
       <ul>
-        <li><a >My spots</a></li>
+        <li><a>My spots</a></li>
         <li><a ui-sref="blog">My blog</a></li>
-        <li><a >Favorites</a></li>
-        <li><a >Saved searches</a></li>
+        <li><a>Favorites</a></li>
+        <li><a>Saved searches</a></li>
         <li><a ui-sref="friendsmap">Friends map</a></li>
         <li><a ui-sref="photomap({user_id: $root.profileUser.id})">Photo map</a></li>
         <li><a ui-sref="planner">Planner</a></li>
@@ -18,8 +18,19 @@
 <div class="container wrap">
   <div class="col-xs-2 information-profile">
     <a ui-sref="profile({user_id: $root.profileUser.id})" class="avatar">
-      <img ng-src="{{$root.profileUser.avatar_url.medium}}" >
+      <img ng-src="{{$root.profileUser.avatar_url.medium}}">
     </a>
+
+    <div ng-if="$root.currentUser && $root.profileUser.id != $root.currentUser.id">
+      <send-message></send-message>
+
+      <button type="button" class="btn btn-default"
+              ng-click="Profile.follow($root.profileUser)"
+              ng-class="{'unfollow-btn': !$root.profileUser.can_follow, 'follow-btn': $root.profileUser.can_follow}">
+        {{$root.profileUser.can_follow ? 'Follow' : 'Unfollow'}}
+      </button>
+
+    </div>
   </div>
 
   <div class="col-xs-7 central">

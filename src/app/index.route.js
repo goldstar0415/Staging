@@ -8,17 +8,36 @@
   /** @ngInject */
   function routeConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-      //Main map page
-      .state('index', {
-        url: '/',
-        mapState: 'big'
+      .state('main', {
+        abstract: true,
+        template: '<ui-view />',
+        resolve: {
+          currentUser: function (User, $rootScope) {
+            if ($rootScope.currentUser) {
+              return $rootScope.currentUser;
+            } else {
+              return User.currentUser({}, function (user) {
+                $rootScope.currentUser = user;
+                $rootScope.profileUser = user;
+              }).$promise;
+            }
+          }
+        }
       })
       //Abstract state for profile menu
       .state('profile_menu', {
         abstract: true,
         templateUrl: 'app/components/navigation/profile_menu/profile_menu.html',
         controller: 'ProfileMenuController',
+        parent: 'main',
         controllerAs: 'Profile'
+      })
+
+      //Main map page
+      .state('index', {
+        url: '/',
+        parent: 'main',
+        mapState: 'big'
       })
 
       //Blog page
@@ -27,6 +46,7 @@
         templateUrl: 'app/modules/blog/blog.html',
         controller: 'BlogController',
         controllerAs: 'Blog',
+        parent: 'main',
         mapState: 'none'
       })
       //Bloggers profile page
@@ -35,6 +55,7 @@
         templateUrl: 'app/modules/blog/bloggers_profile/bloggers_profile.html',
         controller: 'BloggerProfileController',
         controllerAs: 'Blogger',
+        parent: 'main',
         mapState: 'none'
       })
       //Show blog location on map and show pop-up
@@ -43,6 +64,7 @@
         controller: 'ArticleController',
         controllerAs: 'Article',
         mapState: 'big',
+        parent: 'main',
         resolve: {
           article: function () {
             //TODO: Pass article data to controller (to show this data on pop-up)
@@ -57,6 +79,7 @@
         controller: 'ArticleCreateController',
         controllerAs: 'ArticleCreate',
         mapState: 'small',
+        parent: 'main',
         locate: 'none'
       })
 
@@ -295,6 +318,7 @@
       .state('about_us', {
         url: "/about-us",
         templateUrl: 'app/modules/about_us/about_us.html',
+        parent: 'main',
         mapState: 'hidden'
       })
       //Contact us page
@@ -303,6 +327,7 @@
         templateUrl: 'app/modules/contact_us/contact_us.html',
         controller: 'ContactUsController',
         controllerAs: 'ContactUs',
+        parent: 'main',
         mapState: 'hidden'
       })
 
@@ -317,6 +342,7 @@
             return User.query({type: 'all', page: 1, limit: 10})//.$promise;
           }
         },
+        parent: 'main',
         mapState: 'hidden'
       })
 
@@ -333,6 +359,7 @@
         },
         mapState: 'hidden',
         require_auth: true,
+        parent: 'main',
         locate: 'none'
       });
 

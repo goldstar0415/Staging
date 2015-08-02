@@ -8,7 +8,7 @@
   <div class="col-xs-12 padding-0">
     <h4 class="date-dialog-day">12.12.2016</h4>
 
-    <div ng-repeat="message in ChatRoom.messages.data">
+    <div ng-repeat="message in ChatRoom.messages.data track by $index">
 
 
       <!--       Dialog-User                 -->

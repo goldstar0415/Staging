@@ -6,15 +6,13 @@
     .factory('socket', function ($rootScope, SOCKET_URL) {
       var socket;
       return {
-        connect: function () {
+        connect: function (userId) {
           socket = io.connect(SOCKET_URL);
 
-          socket.on('connect', function(){
-            console.log('connect');
+          socket.on('connect', function () {
+            console.log('connect', userId);
           });
-        },
-        initUser: function (userId) {
-          socket.emit('init', userId);
+          socket.emit('initUser', userId);
         },
         on: function (eventName, callback) {
           socket.on(eventName, function () {

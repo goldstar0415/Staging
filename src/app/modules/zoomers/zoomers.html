@@ -74,7 +74,7 @@
             <ul class="events" ng-if="user.spots.length > 0">
               <li class="col-xs-4" ng-repeat="spot in user.spots">
                 <img class="frame" ng-src="{{spot.image}}" alt="{{spot.title}}">
-                <a ui-sref="spot({spot_id: spot.id}" class="event-link">
+                <a ui-sref="spot({spot_id: spot.id})" class="event-link">
                   {{spot.title}}
                 </a>
               </li>

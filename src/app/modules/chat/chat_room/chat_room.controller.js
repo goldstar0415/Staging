@@ -22,7 +22,8 @@
       console.log(form);
       if (form.$valid) {
         ChatService.sendMessage({
-          user_id: $rootScope.currentUser.id,
+          user_id: user.id,
+          sender_id: $rootScope.currentUser.id,
           message: vm.message
         });
 

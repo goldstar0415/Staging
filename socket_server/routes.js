@@ -1,4 +1,3 @@
-var gravatar = require('gravatar');
 var _ = require('underscore');
 
 module.exports = function (app, io) {
