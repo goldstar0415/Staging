@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Album;
 use App\AlbumPhoto;
 use App\AlbumPhotoComment;
+use App\ChatMessage;
 use App\Friend;
 use App\Spot;
 use App\User;
@@ -35,6 +36,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('users', User::class);
         $router->model('friends', Friend::class);
         $router->model('spots', Spot::class);
+        $router->model('message', ChatMessage::class);
 
         $router->bind('comments', function ($value) use ($router) {
             if (explode('.', $router->currentRouteName())[0] === 'photos') {

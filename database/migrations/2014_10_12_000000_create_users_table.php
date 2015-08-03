@@ -39,6 +39,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('banned_at')->nullable();
             $table->string('ban_reason', 512)->nullable();
             $table->rememberToken();
+            $table->string('random_hash', 16)->unique();
             $table->timestamps();
         });
     }
