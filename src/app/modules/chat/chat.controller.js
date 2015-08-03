@@ -6,9 +6,9 @@
     .controller('ChatController', ChatController);
 
   /** @ngInject */
-  function ChatController($rootScope, ChatService) {
+  function ChatController(dialogs) {
     var vm = this;
-    vm.dialogs = ChatService.dialogs;
+    vm.dialogs = dialogs;
 
   }
 })();

@@ -1,7 +1,7 @@
 <div class="messages ">
   <h2 class="messages-title">Messages</h2>
 
-  <div ng-repeat="dialog in Chat.dialogs.data" class="col-xs-12 message" ng-class="{new: !dialog.last_message.is_read}">
+  <div ng-repeat="dialog in Chat.dialogs" class="col-xs-12 message" ng-class="{new: !dialog.last_message.is_read}">
     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2  ">
       <a ui-sref="profile({user_id: dialog.user.id})">
         <img ng-src="{{dialog.user.avatar_url.thumb}}" class="avatar"/>

@@ -19,7 +19,7 @@
               return User.currentUser({}, function success(user) {
                 UserService.setCurrentUser(user);
               }, function fail() {
-                $rootScope.currentUserFailed  = true;
+                $rootScope.currentUserFailed = true;
               });
             }
           }
@@ -181,6 +181,11 @@
         controllerAs: 'Chat',
         parent: 'profile_menu',
         locate: 'none',
+        resolve: {
+          dialogs: function (Message) {
+            return Message.dialogs().$promise;
+          }
+        },
         require_auth: true,
         mapState: 'small'
       })
@@ -192,6 +197,13 @@
         resolve: {
           user: function (User, $stateParams) {
             return User.get({id: $stateParams.user_id});
+          },
+          messages: function (Message, $stateParams) {
+            return Message.query({
+              user_id: $stateParams.user_id,
+              page: 1,
+              limit: 20
+            }).$promise;
           }
         },
         parent: 'profile_menu',

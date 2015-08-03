@@ -6,36 +6,49 @@
     .controller('ChatRoomController', ChatRoomController);
 
   /** @ngInject */
-  function ChatRoomController($rootScope, user, ChatService) {
+  function ChatRoomController($rootScope, user, messages, Message, toastr, ChatService) {
     var vm = this;
 
     vm.user = user;
     vm.message = '';
-    vm.messages = ChatService.messages;
+    vm.messages = messages;
     vm.sendMessage = sendMessage;
     vm.markAsRead = markAsRead;
-    vm.deleteMessage = ChatService.deleteMessage;
+    vm.deleteMessage = deleteMessage;
 
-    ChatService.listenMessages();
 
     function sendMessage(form) {
       console.log(form);
       if (form.$valid) {
-        ChatService.sendMessage({
-          user_id: user.id,
-          sender_id: $rootScope.currentUser.id,
-          message: vm.message
-        });
+        Message.save({
+            user_id: user.id,
+            message: vm.message
+          },
+          function success(message) {
+            vm.message = '';
+          }, function error(resp) {
+            console.log(resp);
+            toastr.error('Send message failed');
+          });
 
-        vm.message = '';
       }
     }
 
     function markAsRead() {
       var countNew = _.where(vm.messages.data, {is_read: false});
       if (countNew.length > 0) {
-        ChatService.markAsRead();
+        Message.markAsRead({user_id: user.id}, function () {
+          angular.forEach(vm.messages, function (message) {
+            message.is_read = true;
+          })
+        });
       }
+    }
+
+    function deleteMessage(idx) {
+      Message.delete({id: vm.messages[idx].id}, function () {
+        vm.messages.splice(idx, 1);
+      });
     }
 
   }

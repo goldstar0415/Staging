@@ -6,7 +6,7 @@
     .module('zoomtivity')
     .constant('DEBUG', true)
     .constant('API_URL', 'http://api.zoomtivity.dev')
-    .constant('SOCKET_URL', 'ws://localhost:8082')
+    .constant('SOCKET_URL', 'http://api.zoomtivity.dev:8080')
     .constant('toastr', toastr)
     .constant('moment', moment)
 })();

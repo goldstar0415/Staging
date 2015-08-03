@@ -13,11 +13,11 @@
             console.log('Socket connected');
           });
 
-          socket.on('user.' + socket_id +' +:App\\Events\\OnMessage', function (data) {
+          socket.on('user.' + socket_id + ':App\\Events\\OnMessage', function (data) {
             console.log('new message ', data);
             ChatService.onNewMessage(data);
           });
-          socket.on('user.' + socket_id +' +:App\\Events\\OnReadMessage', function (data) {
+          socket.on('user.' + socket_id + ':App\\Events\\OnReadMessage', function (data) {
             console.log('read message ', data);
             ChatService.onReadMessage(data);
           });
