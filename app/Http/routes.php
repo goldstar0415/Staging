@@ -17,12 +17,12 @@
 Route::get('users/{users}/albums', 'AlbumController@showForUser');
 Route::get('users/me', 'UserController@getMe');
 Route::get('users/list', 'UserController@getList');
-Route::get('users/{users}', 'UserController@getIndex');
 Route::post('users', 'UserController@postIndex');
 Route::post('users/login', 'UserController@postLogin');
 Route::get('users/logout', 'UserController@getLogout');
 Route::post('users/recovery', 'UserController@postRecovery');
 Route::get('users/reset', 'UserController@postReset');
+Route::get('users/{users}', 'UserController@getIndex');
 Route::controller('settings', 'SettingsController');
 
 Route::get('account/{social}', 'SocialAuthController@getAccount');
@@ -53,5 +53,13 @@ Route::resource('friends', 'FriendController', ['except' => ['create', 'edit']])
  */
 Route::get('spots/categories', 'SpotController@categories');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
+/**
+ * Chat Controls
+ */
+Route::post('message', 'ChatController@sendMessage');
+Route::get('message/dialogs', 'ChatController@getDialogs');
+Route::get('message/list', 'ChatController@getList');
+Route::delete('message/{message}', 'ChatController@destroy');
+Route::get('message/{user_id}/read', 'ChatController@read');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');

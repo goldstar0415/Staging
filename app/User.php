@@ -46,6 +46,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property boolean $notification_follow
  * @property boolean $notification_new_spot
  * @property boolean $notification_coming_spot
+ * @property string $random_hash
  * @property \Carbon\Carbon $banned_at
  * @property string $ban_reason
  * @property \Carbon\Carbon $created_at
@@ -237,12 +238,12 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function chatMessages()
     {
-        return $this->belongsToMany(ChatMessage::class, null, 'sender_id');
+        return $this->belongsToMany(ChatMessage::class, null, 'sender_id')->withPivot('receiver_id');
     }
 
     public function chatMessagesReceived()
     {
-        return $this->belongsToMany(ChatMessage::class, null, 'receiver_id');
+        return $this->belongsToMany(ChatMessage::class, null, 'receiver_id')->withPivot('sender_id');
     }
 
     public function albumPhotoComments()
