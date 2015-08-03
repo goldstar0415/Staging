@@ -14,7 +14,7 @@
         </a>
       </h3>
 
-      <p class="data">{{dialog.last_message.created_at}}</p>
+      <p class="data">{{dialog.last_message.created_at | toTimezone}}</p>
     </div>
     <div ui-sref="chatRoom({user_id: dialog.user.id})" class="col-lg-8 col-md-7 col-sm-6 col-xs-6 content-messages ">
       <p ng-if="dialog.last_message.user_id != currentUser.id">{{dialog.last_message.message}}</p>

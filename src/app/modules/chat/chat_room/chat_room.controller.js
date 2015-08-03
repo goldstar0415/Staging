@@ -11,7 +11,7 @@
 
     vm.user = user;
     vm.message = '';
-    vm.messages = messages;
+    vm.messages = ChatService.groupByDate(messages);
     vm.sendMessage = sendMessage;
     vm.markAsRead = markAsRead;
     vm.deleteMessage = deleteMessage;
@@ -25,8 +25,10 @@
             message: vm.message
           },
           function success(message) {
+            vm.messages.data.push(message);
             vm.message = '';
-          }, function error(resp) {
+          },
+          function error(resp) {
             console.log(resp);
             toastr.error('Send message failed');
           });
@@ -35,19 +37,21 @@
     }
 
     function markAsRead() {
-      var countNew = _.where(vm.messages.data, {is_read: false});
-      if (countNew.length > 0) {
+      var countNewMessages = _.where(vm.messages.data, {is_read: false});
+      if (countNewMessages.length > 0) {
         Message.markAsRead({user_id: user.id}, function () {
-          angular.forEach(vm.messages, function (message) {
-            message.is_read = true;
+          angular.forEach(vm.messages.data, function (message) {
+            if (message.pivot.receiver_id == $rootScope.currentUser.id) {
+              message.is_read = true;
+            }
           })
         });
       }
     }
 
     function deleteMessage(idx) {
-      Message.delete({id: vm.messages[idx].id}, function () {
-        vm.messages.splice(idx, 1);
+      Message.delete({id: vm.messages.data[idx].id}, function () {
+        vm.messages.data.splice(idx, 1);
       });
     }
 
