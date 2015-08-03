@@ -37,14 +37,22 @@ use Codesleeve\Stapler\ORM\StaplerableInterface;
  *
  * Mutators properties
  * @property float $rating
+ * @property array $locations
  */
 class Spot extends BaseModel implements StaplerableInterface
 {
     use StaplerTrait, StartEndDatesTrait;
 
-    protected $guarder = ['id', 'user_id', 'spot_type_category_id'];
+    protected $guarded = ['id', 'user_id'];
 
-    protected $appends = ['rating'];
+    protected $appends = ['rating', 'cover_url'];
+
+    protected $hidden = ['cover_file_name', 'cover_file_size', 'cover_content_type'];
+
+    protected $casts = [
+        'web_sites' => 'array',
+        'videos' => 'array'
+    ];
 
     /**
      * {@inheritdoc}
@@ -65,11 +73,55 @@ class Spot extends BaseModel implements StaplerableInterface
         parent::__construct($attributes);
     }
 
+    public function getCoverUrlAttribute()
+    {
+        return $this->getPictureUrls('cover');
+    }
+
     public function getRatingAttribute()
     {
         return (float)$this->votes()->avg('vote');
     }
 
+    public function setWebSitesAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['web_sites'] = json_encode($value);
+        }
+    }
+
+    public function setVideosAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['videos'] = json_encode($value);
+        }
+    }
+
+    public function setTagsAttribute($value)
+    {
+        if (is_array($value)) {
+            $tags_ids = [];
+
+            foreach ($value as $tag) {
+                $tags_ids[] = Tag::firstOrCreate(['name' => $tag])->id;
+            }
+            $this->tags()->sync($tags_ids);
+        }
+    }
+
+    public function setLocationsAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->points()->delete();
+            foreach ($value as $location) {
+                $point = new SpotPoint();
+                $point->location = $location['location'];
+                $point->address = $location['address'];
+                $this->points()->save($point);
+            }
+        }
+    }
+    
     public function user()
     {
         return $this->belongsTo(User::class);

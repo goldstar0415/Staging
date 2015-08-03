@@ -13,6 +13,7 @@ class SpotTest extends LaravelTestCase
 
     public function testSpotCreate()
     {
+        $this->randomSignIn();
         /**
          * @var Spot $spot
          */
@@ -25,7 +26,8 @@ class SpotTest extends LaravelTestCase
             'description' => $spot->description,
             'web_sites' => $spot->web_sites,
             'videos' => $spot->videos,
-            'locations' => $spot_points->toArray()
+            'locations' => $spot_points->toArray(),
+            'tags' => ['rem', 'tempora', 'some', 'newtag']
         ];
         if ($spot_category->type->name === 'event') {
             $data = array_merge($data, ['start_date' => $spot->start_date, 'end_date' => $spot->end_date]);
@@ -37,7 +39,7 @@ class SpotTest extends LaravelTestCase
             [
                 'files' => [$this->makeUploadedFile(), $this->makeUploadedFile(), $this->makeUploadedFile()]
             ]
-        )->seeJson(['message' => 'Spot was successfuly created']);
+        )->seeJson($spot->toArray());
         $this->assertResponseOk();
     }
 }

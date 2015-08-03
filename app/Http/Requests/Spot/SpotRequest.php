@@ -13,7 +13,7 @@ class SpotRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return $this->route('spots')->user_id === $this->user()->id;
     }
 
     /**
@@ -28,6 +28,12 @@ class SpotRequest extends Request
             'description' => 'string|max:255',
             'start_date' => 'date',
             'end_date' => 'date',
+            'locations' => 'array|count:20',
+            'videos' => 'array|count:5',
+            'web_sites' => 'array|count:5',
+            'spot_type_category_id' => 'required|exists:spot_type_categories,id',
+            'tags' => 'array|count:7',
+            'files' => 'array|count:10'
         ];
 
         foreach ($this->input('locations') as $key => $location) {
@@ -39,6 +45,9 @@ class SpotRequest extends Request
         foreach ($this->input('videos') as $key => $location) {
             $rules['videos.' . $key] = 'string|max:255';
         }
+
+        $rules = array_merge($rules, $this->arrayFieldRules('web_sites', 'url', false));
+        $rules = array_merge($rules, $this->arrayFieldRules('files', 'image|max:5000', false));
 
         return $rules;
     }

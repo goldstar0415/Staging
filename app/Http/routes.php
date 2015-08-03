@@ -51,6 +51,7 @@ Route::resource('friends', 'FriendController', ['except' => ['create', 'edit']])
 /**
  * Spot resource
  */
+Route::get('spots/categories', 'SpotController@categories');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');

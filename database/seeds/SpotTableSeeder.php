@@ -17,11 +17,12 @@ class SpotTableSeeder extends Seeder
         /**
          * @var App\User $user
          */
-        $user = User::random()->first();
-        $models = factory(Spot::class, 15)->make()->each(function (Spot $spot) {
-            $category = SpotTypeCategory::random()->first();
-            $spot->category()->associate($category);
+        User::random(10)->get()->each(function (User $user) {
+            $models = factory(Spot::class, mt_rand(2, 5))->make()->each(function (Spot $spot) {
+                $category = SpotTypeCategory::random()->first();
+                $spot->category()->associate($category);
+            });
+            $user->spots()->saveMany($models);
         });
-        $user->spots()->saveMany($models);
     }
 }

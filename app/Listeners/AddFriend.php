@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\UserFollowEvent;
 use App\Friend;
+use File;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -28,8 +29,10 @@ class AddFriend
     public function handle(UserFollowEvent $event)
     {
         $friend = $event->getFollowing();
+        $avatar_copy_path = storage_path('tmp/') . $friend->avatar_file_name;
+        File::copy($friend->avatar->path(), $avatar_copy_path);
         $friend_model = new Friend([
-            'avatar' => $friend->avatar->url(),
+            'avatar' => $avatar_copy_path,
             'first_name' => $friend->first_name,
             'last_name' => $friend->last_name,
             'birth_date' => $friend->birth_date,

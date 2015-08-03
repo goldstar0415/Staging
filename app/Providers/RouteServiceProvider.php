@@ -6,6 +6,7 @@ use App\Album;
 use App\AlbumPhoto;
 use App\AlbumPhotoComment;
 use App\Friend;
+use App\Spot;
 use App\User;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -33,6 +34,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('photos', AlbumPhoto::class);
         $router->model('users', User::class);
         $router->model('friends', Friend::class);
+        $router->model('spots', Spot::class);
 
         $router->bind('comments', function ($value) use ($router) {
             if (explode('.', $router->currentRouteName())[0] === 'photos') {

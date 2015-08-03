@@ -109,15 +109,19 @@ $factory->define(App\Spot::class, function (Generator $faker) use ($timestamps, 
     $start_date = $faker->dateTimeBetween('-50 days','+50 days');
     $end_date = clone $start_date->modify('+' . mt_rand(1, 5) . ' day');
     $web_sites = range(0, mt_rand(1, 5));
-    $web_sites = array_fill(0, count($web_sites), $faker->url);
+    $web_sites = array_map(function ($value) use ($faker) {
+        return $faker->url;
+    }, $web_sites);
     $videos = range(0, mt_rand(1, 5));
-    $videos = array_fill(0, count($videos), $faker->url);
+    $videos = array_map(function ($value) use ($faker) {
+        return $faker->url;
+    }, $videos);
     return array_merge([
         'cover' => $faker->image(storage_path('app'), mt_rand(300, 1920), mt_rand(200, 1250)),
         'title' => $faker->sentence,
         'description' => $faker->sentence,
-        'web_sites' => json_encode($web_sites),
-        'videos' => json_encode($videos)
+        'web_sites' => $web_sites,
+        'videos' => $videos
     ], $dates(), $timestamps());
 });
 
