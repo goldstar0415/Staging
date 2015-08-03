@@ -99,7 +99,7 @@ class LaravelTestCase extends Illuminate\Foundation\Testing\TestCase
     protected function makeUploadedFile()
     {
         $faker = \Faker\Factory::create();
-        $path = $faker->image(storage_path('/test'));
+        $path = $faker->image(storage_path('/tmp'));
         $file = new SplFileInfo($path);
         $file = new UploadedFile($path, $file->getFilename(), 'image/jpeg', $file->getSize(), 0);
 

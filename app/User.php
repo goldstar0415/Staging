@@ -194,6 +194,16 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         return $this->getPictureUrls('avatar');
     }
 
+    public function getCountFollowersAttribute()
+    {
+        return $this->followers()->count();
+    }
+
+    public function getCountFollowingsAttribute()
+    {
+        return $this->followings()->count();
+    }
+
     public function followers()
     {
         return $this->belongsToMany(self::class, 'followings', 'following_id', 'follower_id')->withTimestamps();

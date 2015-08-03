@@ -21,7 +21,7 @@ class AlbumController extends Controller
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;
-        $this->middleware('auth', ['only' => 'store']);
+        $this->middleware('auth', ['except' => 'store']);
     }
 
     public function index()

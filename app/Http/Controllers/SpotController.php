@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Spot\SpotCategoriesRequest;
+use App\Http\Requests\Spot\SpotStoreRequest;
+use App\Spot;
 use App\SpotType;
+use App\SpotTypeCategory;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -11,6 +14,12 @@ use App\Http\Controllers\Controller;
 
 class SpotController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -23,13 +32,23 @@ class SpotController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
+     * @param SpotStoreRequest $request
      */
-    public function store(Request $request)
+    public function store(SpotStoreRequest $request)
     {
-        //
+        $tags = $request->input('tags');
+        $locations = $request->input('locations');
+
+        $spot = Spot::create($request->except(['locations', 'tags', 'files']));
+
+        $spot->tags = $tags;
+        $spot->locations = $locations;
+
+        foreach ($request->file('files') as $file) {
+            $spot->photos()->create([
+                'photo' => $file
+            ]);
+        }
     }
 
     /**
