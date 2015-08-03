@@ -35,18 +35,26 @@ class ChatController extends Controller
 
     public function getDialogs(Request $request)
     {
+        $user = $request->user();
+        $user_id = $user->id;
         $messages = collect(\DB::select(<<< QUERY
 SELECT DISTINCT ON(cm.sender_id+cm.receiver_id) cm.*, m.*
 FROM "chat_messages" m
 inner join "chat_message_user" cm on m."id" = cm."chat_message_id"
-WHERE  cm.receiver_id = 18 OR cm.sender_id = 18
+WHERE  cm.receiver_id = $user_id OR cm.sender_id = $user_id
 order by cm.sender_id+cm.receiver_id, m.created_at desc
 QUERY
 ));//TODO: optimize
 
-        $dialogs = $messages->map(function ($item, $key) {
+        $dialogs = $messages->map(function ($item, $key) use ($user) {
+            $last_user_id = null;
+            if ($user->id === $item->receiver_id) {
+                $last_user_id = $item->sender_id;
+            } else {
+                $last_user_id = $item->receiver_id;
+            }
             return [
-                'user' => User::find($item->receiver_id),
+                'user' => User::find($last_user_id),
                 'last_message' => [
                     'user_id' => $item->sender_id,
                     'message' => $item->body,
@@ -61,9 +69,11 @@ QUERY
 
     public function getList(MessageListRequest $request)
     {
+        $user_id = $request->get('user_id');
         return $request->user()->chatMessages()->
-                where('receiver_id', $request->get('user_id'))->
-                paginate($request->get('limit'));
+                where('receiver_id', $user_id)
+                ->orWhere('sender_id', $user_id)
+                ->paginate($request->get('limit'));
     }
 
     /**
