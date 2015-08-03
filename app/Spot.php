@@ -37,12 +37,13 @@ use Codesleeve\Stapler\ORM\StaplerableInterface;
  *
  * Mutators properties
  * @property float $rating
+ * @property array $locations
  */
 class Spot extends BaseModel implements StaplerableInterface
 {
     use StaplerTrait, StartEndDatesTrait;
 
-    protected $guarder = ['id', 'user_id', 'spot_type_category_id'];
+    protected $guarded = ['id', 'user_id'];
 
     protected $appends = ['rating', 'cover_url'];
 
@@ -111,6 +112,7 @@ class Spot extends BaseModel implements StaplerableInterface
     public function setLocationsAttribute($value)
     {
         if (is_array($value)) {
+            $this->points()->delete();
             foreach ($value as $location) {
                 $point = new SpotPoint();
                 $point->location = $location['location'];

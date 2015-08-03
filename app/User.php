@@ -117,7 +117,14 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         'avatar_updated_at'
     ];
 
-    protected $appends = ['avatar_url', 'attached_socials', 'is_registered', 'can_follow'];
+    protected $appends = [
+        'avatar_url',
+        'attached_socials',
+        'is_registered',
+        'can_follow',
+        'count_followers',
+        'count_followings'
+    ];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -126,7 +133,14 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      */
     protected $with = ['socials'];
 
-    protected $hidden = ['password', 'remember_token', 'socials', 'avatar_file_name', 'avatar_file_size', 'avatar_content_type'];
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'socials',
+        'avatar_file_name',
+        'avatar_file_size',
+        'avatar_content_type'
+    ];
 
     protected $dates = ['deleted_at', 'banned_at', 'birth_date'];
 
@@ -138,6 +152,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     {
         return $query->whereRaw("LOWER(CONCAT(\"first_name\", ' ', \"last_name\")) like LOWER('%$filter%')");
     }
+
     /**
      * {@inheritdoc}
      */
@@ -150,7 +165,8 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     public function setBirthDateAttribute($value)
     {
         if (!$value instanceof Carbon) {
-            $this->attributes['birth_date'] = $value ? Carbon::createFromFormat(config('app.date_format'), $value): $value;
+            $this->attributes['birth_date'] = $value ? Carbon::createFromFormat(config('app.date_format'),
+                $value) : $value;
         } else {
             $this->attributes['birth_date'] = $value;
         }
@@ -159,7 +175,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     public function setBannedAtAttribute($value)
     {
         if (!$value instanceof Carbon) {
-            $this->attributes['banned_at'] = $value ? Carbon::createFromFormat($this->getDateFormat(), $value): $value;
+            $this->attributes['banned_at'] = $value ? Carbon::createFromFormat($this->getDateFormat(), $value) : $value;
         } else {
             $this->attributes['banned_at'] = $value;
         }

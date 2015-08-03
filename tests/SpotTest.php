@@ -39,7 +39,7 @@ class SpotTest extends LaravelTestCase
             [
                 'files' => [$this->makeUploadedFile(), $this->makeUploadedFile(), $this->makeUploadedFile()]
             ]
-        )->seeJson(['message' => 'Spot was successfuly created']);
+        )->seeJson($spot->toArray());
         $this->assertResponseOk();
     }
 }
