@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, User, MapService, $rootScope, snapRemote, $state, toastr, socket, DEBUG) {
+  function runBlock($log, User, MapService, $rootScope, snapRemote, $state, toastr, DEBUG) {
 
     MapService.Init('map');
     $rootScope.timezonesList = moment.tz.names();
@@ -23,10 +23,8 @@
       };
 
       if (current.require_auth && !$rootScope.currentUser) {
-              toastr.error('Unauthorized!');
-              $state.go('index');
-      } else if ($rootScope.currentUser) {
-        socket.connect($rootScope.currentUser.id);
+        toastr.error('Unauthorized!');
+        $state.go('index');
       }
 
       MapService.ChangeState(current.mapState);

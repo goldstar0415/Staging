@@ -12,14 +12,15 @@
         abstract: true,
         template: '<ui-view />',
         resolve: {
-          currentUser: function (User, $rootScope) {
+          currentUser: function (User, $rootScope, UserService) {
             if ($rootScope.currentUser) {
               return $rootScope.currentUser;
-            } else {
-              return User.currentUser({}, function (user) {
-                $rootScope.currentUser = user;
-                $rootScope.profileUser = user;
-              }).$promise;
+            } else if (!$rootScope.currentUserFailed) {
+              return User.currentUser({}, function success(user) {
+                UserService.setCurrentUser(user);
+              }, function fail() {
+                $rootScope.currentUserFailed  = true;
+              });
             }
           }
         }
@@ -180,6 +181,7 @@
         controllerAs: 'Chat',
         parent: 'profile_menu',
         locate: 'none',
+        require_auth: true,
         mapState: 'small'
       })
       .state('chatRoom', {
@@ -194,6 +196,7 @@
         },
         parent: 'profile_menu',
         locate: 'none',
+        require_auth: true,
         mapState: 'small'
       })
 

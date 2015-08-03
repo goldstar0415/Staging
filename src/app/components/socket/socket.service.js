@@ -3,16 +3,28 @@
 
   angular
     .module('zoomtivity')
-    .factory('socket', function ($rootScope, SOCKET_URL) {
+    .factory('socket', function ($rootScope, SOCKET_URL, ChatService) {
       var socket;
       return {
-        connect: function (userId) {
+        connect: function (socket_id) {
           socket = io.connect(SOCKET_URL);
 
           socket.on('connect', function () {
-            console.log('connect', userId);
+            console.log('Socket connected');
           });
-          socket.emit('initUser', userId);
+
+          socket.on('user.' + socket_id +' +:App\\Events\\OnMessage', function (data) {
+            console.log('new message ', data);
+            ChatService.onNewMessage(data);
+          });
+          socket.on('user.' + socket_id +' +:App\\Events\\OnReadMessage', function (data) {
+            console.log('read message ', data);
+            ChatService.onReadMessage(data);
+          });
+        },
+        disconnect: function () {
+          socket.disconnect();
+          console.log('Socket disconnected');
         },
         on: function (eventName, callback) {
           socket.on(eventName, function () {

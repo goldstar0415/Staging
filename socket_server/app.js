@@ -98,6 +98,8 @@ var messages = [
 ];
 
 io.sockets.on('connection', function (socket) {
+  console.log('socket connected! ');
+
   var sessionId = socket.handshake.query.id || null;
   var listenEvent = channelPrefix + sessionId + ':socket:' + socket.id;
 

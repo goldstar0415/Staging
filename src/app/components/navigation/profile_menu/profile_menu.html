@@ -1,7 +1,7 @@
 <div class="col-xs-12 menu-profile">
   <div class="container">
     <div class="col-xs-10 col-xs-offset-2 no-pad">
-      <ul>
+      <ul ng-if="$root.currentUser">
         <li><a>My spots</a></li>
         <li><a ui-sref="blog">My blog</a></li>
         <li><a>Favorites</a></li>
@@ -11,6 +11,9 @@
         <li><a ui-sref="planner">Planner</a></li>
         <li><a ui-sref="settings">Settings</a></li>
       </ul>
+      <div ng-if="!$root.currentUser">
+        <b>You should <sign-in title="sign in"></sign-in> to get all features</b>
+      </div>
     </div>
   </div>
 </div>

@@ -9,7 +9,6 @@
   function ChatController($rootScope, ChatService) {
     var vm = this;
     vm.dialogs = ChatService.dialogs;
-    ChatService.listenDialogs();
 
   }
 })();

@@ -6,15 +6,15 @@
     .factory('ChatService', ChatService);
 
   /** @ngInject */
-  function ChatService(socket) {
+  function ChatService() {
     var dialogs = {data: []},
       messages = {data: []};
 
     return {
       dialogs: dialogs,
       messages: messages,
-      listenDialogs: listenDialogs,
-      listenMessages: listenMessages,
+      onNewMessage: onNewMessage,
+      onReadMessage: onReadMessage,
       markAsRead: markAsRead,
       deleteMessage: deleteMessage,
       sendMessage: sendMessage
@@ -46,6 +46,14 @@
 
         messages.data.push(data);
       })
+    }
+
+    function onReadMessage(data) {
+
+    }
+
+    function onNewMessage(data) {
+
     }
 
     function sendMessage(message) {
