@@ -10,7 +10,7 @@ trait NewestScopeTrait
      *
      * @return void
      */
-    public static function bootNewestTrait()
+    public static function bootNewestScopeTrait()
     {
         static::addGlobalScope(new NewestScope);
     }
