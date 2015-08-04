@@ -1,185 +1,210 @@
 /*     my spot   */
-.my-spots-section {
-  border-bottom: 1px solid $light_grey;
-}
 
-.event {
-  position: relative;
-  background: 0 0;
-  border: 0;
-  border-bottom: 1px solid $light_grey;
+.my-spots-content {
+  float: left;
   margin: 0;
-  border-radius: 0;
-  width: 100%;
-  padding: 15px;
-  .spot-stars {
-    margin-top: 15px;
-  }
-  .rateit {
-
-    .rateit-reset {
-      background: url(/assets/img/icons/delete.gif) 0 0;
-      width: 16px;
-      height: 16px;
-      display: -moz-inline-box;
-      display: inline-block;
-      float: left;
-      outline: none;
-      border: none;
-      padding: 0;
-    }
-    .rateit-range {
-      position: relative;
-      display: -moz-inline-box;
-      display: inline-block;
-      background: url(/assets/img/icons/star.gif);
-      height: 16px;
-      outline: none;
-    }
-    .rateit-selected {
-      background: url(/assets/img/icons/star.gif) left -16px;
-      position: absolute;
-      left: 0;
-    }
-    .rateit-hover {
-      background: url(/assets/img/icons/star.gif) left -32px;
-      position: absolute;
-      left: 0;
-    }
+  padding: 0;
+  border: 1px solid #e9edf0;
+  background: #fff;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  position: relative;
+  .my-spots-title {
+    font: $navigation_font;
+    font-size: 23px;
+    padding: 0 0 20px 15px;
+    border-bottom: 1px solid $light_grey;
   }
 
-  .place {
-    font: 400 14px Ubuntu;
-    color: grey;
-  }
-  .date, .event-spot-page, .recreation, .pitstop {
+  .event {
     position: relative;
-    top: 0;
-    right: 0;
-    color: grey;
-    font: 12px Arial, sans-serif;
-    text-align: right;
-    float: right;
-  }
-  .event-spot-page {
-    padding-right: 15px;
-    float: left;
-  }
-  .description {
-    font: 13px/19px Arial, sans-serif;
-    margin: 10px 0 12px;
+    background: 0 0;
+    border: 0;
+    border-bottom: 1px solid $light_grey;
+    margin: 0;
+    border-radius: 0;
+    width: 100%;
+    padding: 15px;
+    .spot-stars {
+      margin-top: 15px;
+    }
+    .rateit {
+      //display: -moz-inline-box;
+      //display: inline-block;
+      //position: relative;
+      //-webkit-user-select: none;
+      //-khtml-user-select: none;
+      //-moz-user-select: none;
+      //-o-user-select: none;
+      //-ms-user-select: none;
+      //user-select: none;
+
+      button.rateit-reset {
+        background: url(/assets/img/icons/delete.gif) 0 0;
+        width: 16px;
+        height: 16px;
+        display: -moz-inline-box;
+        display: inline-block;
+        float: left;
+        outline: none;
+        border: none;
+        padding: 0;
+      }
+      .rateit-range {
+        position: relative;
+        display: -moz-inline-box;
+        display: inline-block;
+        background: url(/assets/img/icons/star.gif);
+        height: 16px;
+        outline: none;
+      }
+      .rateit-selected {
+        background: url(/assets/img/icons/star.gif) left -16px;
+        position: absolute;
+        left: 0;
+      }
+      .rateit-hover {
+        background: url(/assets/img/icons/star.gif) left -32px;
+        position: absolute;
+        left: 0;
+      }
+    }
+    .rating {
+      //margin-bottom: 7px;
+      //margin-top: 15px;
+    }
+    .place {
+      font: 400 14px Ubuntu;
+      color: grey;
+    }
+    .date, .event-spot-page, .recreation, .pitstop {
+      position: relative;
+      top: 0;
+      right: 0;
+      color: grey;
+      font: 12px Arial, sans-serif;
+      text-align: right;
+      float: right;
+    }
+    .event-spot-page {
+      padding-right: 15px;
+      float: left;
+    }
+    .description {
+      font: 13px/19px Arial, sans-serif;
+      margin: 10px 0 12px;
+    }
+
+
   }
 
-}
-
-.tools {
-  padding-top: 15px;
-  font: 400 13px/13px Ubuntu;
-  padding-left: 0px;
-  li {
-    float: left;
-    margin-right: 15px;
-    a {
-      padding-left: 18px !important;
-      font: 14px Ubuntu;
-      color: #0874be;
+  .tools {
+    padding-top: 15px;
+    font: 400 13px/13px Ubuntu;
+    padding-left: 0px;
+    li {
+      float: left;
+      margin-right: 15px;
+      a {
+        padding-left: 18px !important;
+        font: 14px Ubuntu;
+        color: #0874be;
+      }
     }
-  }
-  .edit-tools {
-    background: url(/assets/img/icons/edit.png) -3px -5px no-repeat;
-    &:hover {
-      color: $blue;
-      background: url(/assets/img/icons/edit.png) -3px -23px no-repeat;
-    }
-  }
-  .delete {
-    background: url(/assets/img/icons/delete.png) 1px 2px no-repeat;
-    &:hover {
-      background: url(/assets/img/icons/delete.png) 1px -13px no-repeat;
-      color: $blue;
-    }
-  }
-  .save-event {
-    background: url(/assets/img/icons/tools.png) -5px -6px no-repeat;
-    &:hover {
-      background: url(/assets/img/icons/tools.png) -5px -23px no-repeat;
-      color: $blue;
-    }
-  }
-
-  .favorite-spot {
-    background: url(/assets/img/icons/tools.png) -4px -57px no-repeat;
-    &:hover {
-      background: url(/assets/img/icons/tools.png) -4px -74px no-repeat;
-      color: $blue;
-    }
-  }
-
-  .invite-friend {
-    background: url(/assets/img/icons/tools.png) -3px -111px no-repeat;
-    &:hover {
-      background: url(/assets/img/icons/tools.png) -3px -128px no-repeat;
-      color: $blue;
-
-    }
-  }
-}
-
-.share {
-  display: block;
-  width: 12px;
-  height: 12px;
-  text-indent: 10000px;
-  overflow: hidden;
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  background: url(/assets/img/icons/share.png) no-repeat;
-  &:hover {
-    background: url(/assets/img/icons/share.png) -12px 0 no-repeat;
-  }
-}
-
-.share-wrap {
-  display: block;
-  position: absolute;
-  bottom: -17px;
-  right: -8px;
-  padding-top: 0;
-  background: url(/assets/img/icons/min-corner.png) top 0 right 17px no-repeat;
-  z-index: 1000;
-}
-
-.share-buttons {
-  background: $white;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .2);
-  padding: 4px;
-  li {
-    float: left;
-    margin: 2px;
-    .facebook {
-      background: url(/assets/img/icons/min-social.png) -32px 0 no-repeat;
-    }
-    .google {
-      background: url(/assets/img/icons/min-social.png) -16px 0 no-repeat;
-    }
-    .twitter {
-      background: url(/assets/img/icons/min-social.png) no-repeat;
-    }
-    a {
-      display: block;
-      width: 16px;
-      height: 16px;
-      overflow: hidden;
-      text-indent: 10000px;
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      border-radius: 3px;
+    .edit-tools {
+      background: url(/assets/img/icons/edit.png) -3px -5px no-repeat;
       &:hover {
-        @include blue_shadow;
+        color: $blue;
+        background: url(/assets/img/icons/edit.png) -3px -23px no-repeat;
+      }
+    }
+    .delete {
+      background: url(/assets/img/icons/delete.png) 1px 2px no-repeat;
+      &:hover {
+        background: url(/assets/img/icons/delete.png) 1px -13px no-repeat;
+        color: $blue;
+      }
+    }
+    .save-event {
+      background: url(/assets/img/icons/tools.png) -5px -6px no-repeat;
+      &:hover {
+        background: url(/assets/img/icons/tools.png) -5px -23px no-repeat;
+        color: $blue;
+      }
+    }
+
+    .favorite-spot {
+      background: url(/assets/img/icons/tools.png) -4px -57px no-repeat;
+      &:hover {
+        background: url(/assets/img/icons/tools.png) -4px -74px no-repeat;
+        color: $blue;
+      }
+    }
+
+    .invite-friend {
+      background: url(/assets/img/icons/tools.png) -3px -111px no-repeat;
+      &:hover {
+        background: url(/assets/img/icons/tools.png) -3px -128px no-repeat;
+        color: $blue;
+
+      }
+    }
+  }
+  .share {
+    display: block;
+    width: 12px;
+    height: 12px;
+    text-indent: 10000px;
+    overflow: hidden;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: url(/assets/img/icons/share.png) no-repeat;
+    &:hover {
+      background: url(/assets/img/icons/share.png) -12px 0 no-repeat;
+    }
+  }
+  .share-wrap {
+    display: block;
+    position: absolute;
+    bottom: -17px;
+    right: -8px;
+    padding-top: 0;
+    background: url(/assets/img/icons/min-corner.png) top 0 right 17px no-repeat;
+    z-index: 1000;
+  }
+  .share-buttons {
+    background: $white;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .2);
+    padding: 4px;
+    li {
+      float: left;
+      margin: 2px;
+      .facebook {
+        background: url(/assets/img/icons/min-social.png) -32px 0 no-repeat;
+      }
+      .google {
+        background: url(/assets/img/icons/min-social.png) -16px 0 no-repeat;
+      }
+      .twitter {
+        background: url(/assets/img/icons/min-social.png) no-repeat;
+      }
+      a {
+        display: block;
+        width: 16px;
+        height: 16px;
+        overflow: hidden;
+        text-indent: 10000px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        &:hover {
+          @include blue_shadow;
+        }
       }
     }
   }
@@ -201,17 +226,14 @@
     background: url(/assets/img/icons/min-plus.png) 9px 9px no-repeat, #0160a2;
   }
 }
-
 .tags {
   background: url(/assets/img/icons/tag.png) 0 2px no-repeat;
 }
-
 .attachments {
   background: url(/assets/img/icons/clip.png) 0 2px no-repeat;
   margin-top: 0;
 }
-
-.tags, .attachments {
+.tags, .attachments  {
   padding-left: 23px;
   margin-bottom: 13px;
   margin-top: 10px;
