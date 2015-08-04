@@ -12,32 +12,19 @@
     $rootScope.timezonesList = moment.tz.names();
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
-    function saveCurrentUser(user) {
-      $rootScope.currentUser = user;
-      if (!$rootScope.profileUser) {
-        $rootScope.profileUser = user;
-      }
-    }
+    $rootScope.$on("$stateChangeError", function (e) {
+      console.log(arguments)
+    });
 
     function onStateChangeSuccess(event, current, toParams, fromState, fromParams) {
       $rootScope.previous = {
         state: fromState,
         params: fromParams
       };
-      if (current.require_auth) {
-        if (!$rootScope.currentUser) {
-          User.currentUser().$promise
-            .then(saveCurrentUser)
-            .catch(function () {
-              toastr.error('Unauthorized!');
-              $state.go('index');
-            });
-        }
-      } else {
-        if (!$rootScope.currentUser) {
-          User.currentUser().$promise
-            .then(saveCurrentUser)
-        }
+
+      if (current.require_auth && !$rootScope.currentUser) {
+        toastr.error('Unauthorized!');
+        $state.go('index');
       }
 
       MapService.ChangeState(current.mapState);

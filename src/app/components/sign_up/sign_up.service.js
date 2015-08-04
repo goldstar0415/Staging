@@ -6,7 +6,7 @@
     .factory('SignUpService', SignUpService);
 
   /** @ngInject */
-  function SignUpService($modal, $rootScope, User, toastr) {
+  function SignUpService($modal, UserService, User, toastr) {
     return {
       openModal: openModal,
       signUpUser: signUpUser
@@ -25,7 +25,8 @@
       if (form.$valid) {
         User.signUp(user,
           function success(user) {
-            $rootScope.currentUser = user;
+            UserService.setCurrentUser(user);
+
             $modalInstance.dismiss('close');
           }, function error(resp) {
             console.log(resp);

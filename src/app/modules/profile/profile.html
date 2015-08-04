@@ -1,6 +1,13 @@
 <div class="content-wall">
   <h2>My profile</h2>
 
+  <div ng-if="profileUser.id == currentUser.id">
+    <a ui-sref="profile({user_id: profileUser.id})" class="btn btn-primary">Wall</a>
+    <a ui-sref="chat" class="btn btn-primary">Messages</a>
+    <a class="btn btn-primary">Feed</a>
+    <a class="btn btn-primary">Reviews</a>
+  </div>
+
   <form action="#" method="POST" class="new-post clearfix">
     <textarea name="" placeholder="Start typing..."></textarea>
     <hr>

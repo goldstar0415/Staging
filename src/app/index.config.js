@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -25,7 +25,7 @@
     // snap
     var disable = "";
     var touchToDrag = false;
-    if($(window).width() < 768) {
+    if ($(window).width() < 768) {
       touchToDrag: true;
       disable = "right";
     } else {

@@ -10,20 +10,27 @@
     return {
       restrict: 'E',
       templateUrl: 'app/components/sign_in/sign_in.html',
+      scope: {
+        title: '@'
+      },
       controller: SignInController,
       controllerAs: 'signIn',
       bindToController: true
     };
 
     /** @ngInject */
-    function SignInController(SignInService) {
+    function SignInController($modal) {
       var vm = this;
 
       vm.openSignInModal = function () {
-        SignInService.openModal('SignInModal.html', SignInModalController);
+        $modal.open({
+          templateUrl: 'SignInModal.html',
+          controller: SignInModalController,
+          controllerAs: 'modal',
+          modalClass: 'authentication'
+        });
       };
 
-      vm.userLogin = SignInService.userLogin;
     }
 
     function SignInModalController(SignInService, $modalInstance) {

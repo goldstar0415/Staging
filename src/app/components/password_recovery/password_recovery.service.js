@@ -6,7 +6,7 @@
     .factory('PasswordRecoveryService', PasswordRecoveryService);
 
   /** @ngInject */
-  function PasswordRecoveryService($modal, $rootScope, User, toastr) {
+  function PasswordRecoveryService($modal, UserService, User, toastr) {
     return {
       openModal: openModal,
       recoveryPassword: recoveryPassword
@@ -25,7 +25,7 @@
       if (form.$valid) {
         User.recoveryPassword({user: vm},
           function success(user) {
-            $rootScope.currentUser = user;
+            UserService.setCurrentUser(user);
             $modalInstance.dismiss('close');
           }, function error(resp) {
             console.log(resp);

@@ -34,8 +34,6 @@
 @import "chat_messages";
 @import "chat_conversation";
 
-
-
 @font-face {
   font-family: 'Ubuntu bold';
   src: url(/assets/css/fonts/ubuntutitling-bold-webfont.eot);
@@ -60,19 +58,6 @@
   font-weight: normal;
   font-style: normal;
 }
-
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url(/assets/css/fonts/glyphicons-halflings-regular.eot);
-  url(/assets/css/fonts/glyphicons-halflings-regular.woff2) format('woff2'),
-  url(/assets/css/fonts/glyphicons-halflings-regular.woff) format('woff'),
-  url(/assets/css/fonts/glyphicons-halflings-regular.ttf) format('truetype'),
-  url(/assets/css/fonts/glyphicons-halflings-regular.svg) format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
-
 
 body, .snap-content {
   background: #f5f8fa;
@@ -159,10 +144,10 @@ h3 {
 }
 
 .central {
-  @include content_bg;
+    @include content_bg;
 
-  margin-bottom: 100px;
-  padding: 0;
+    margin-bottom: 100px;
+    padding: 0;
 }
 
 .wrap {
@@ -256,7 +241,7 @@ h3 {
   height: 100px;
   width: 100%;
   border: 2px dashed #b5e0ef;
-  margin: 15px  0;
+  margin: 0 15px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;

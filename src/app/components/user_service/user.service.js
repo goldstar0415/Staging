@@ -6,18 +6,26 @@
     .factory('UserService', UserService);
 
   /** @ngInject */
-  function UserService($rootScope, User, toastr) {
+  function UserService($rootScope, socket, $state) {
     return {
-      getUserProfile: getUserProfile
+      setCurrentUser: setCurrentUser,
+      logOut: logOut
     };
 
-    function getUserProfile(id) {
-      User.get({id: id}, function success(userProfile) {
-        $rootScope.userProfile = userProfile;
-      }, function error(resp) {
-        $log.error(resp);
-        toastr.error('Can\'t get user profile');
-      });
+    function setCurrentUser(user) {
+      $rootScope.currentUser = user;
+      $rootScope.profileUser = user;
+      $rootScope.currentUserFailed = false;
+      socket.connect(user.random_hash);
+    }
+
+    function logOut() {
+      $rootScope.currentUser = null;
+      socket.disconnect();
+
+      if ($state.current.require_auth) {
+        $state.go('index');
+      }
     }
   }
 

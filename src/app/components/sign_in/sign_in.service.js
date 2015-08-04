@@ -6,26 +6,16 @@
     .factory('SignInService', SignInService);
 
   /** @ngInject */
-  function SignInService($modal, $rootScope, User, toastr) {
+  function SignInService(UserService, User, toastr) {
     return {
-      openModal: openModal,
       userLogin: userLogin
     };
-
-    function openModal(template, controller) {
-      $modal.open({
-        templateUrl: template,
-        controller: controller,
-        controllerAs: 'modal',
-        modalClass: 'authentication'
-      });
-    }
 
     function userLogin(form, user, $modalInstance) {
       if (form.$valid) {
         User.signIn(user,
           function success(user) {
-            $rootScope.currentUser = user;
+            UserService.setCurrentUser(user);
             $modalInstance.dismiss('close');
           }, function error(resp) {
             console.log(resp);

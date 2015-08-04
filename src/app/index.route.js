@@ -8,17 +8,37 @@
   /** @ngInject */
   function routeConfig($stateProvider, $urlRouterProvider) {
     $stateProvider
-      //Main map page
-      .state('index', {
-        url: '/',
-        mapState: 'big'
+      .state('main', {
+        abstract: true,
+        template: '<ui-view />',
+        resolve: {
+          currentUser: function (User, $rootScope, UserService) {
+            if ($rootScope.currentUser) {
+              return $rootScope.currentUser;
+            } else if (!$rootScope.currentUserFailed) {
+              return User.currentUser({}, function success(user) {
+                UserService.setCurrentUser(user);
+              }, function fail() {
+                $rootScope.currentUserFailed = true;
+              });
+            }
+          }
+        }
       })
       //Abstract state for profile menu
       .state('profile_menu', {
         abstract: true,
         templateUrl: 'app/components/navigation/profile_menu/profile_menu.html',
         controller: 'ProfileMenuController',
+        parent: 'main',
         controllerAs: 'Profile'
+      })
+
+      //Main map page
+      .state('index', {
+        url: '/',
+        parent: 'main',
+        mapState: 'big'
       })
 
       //Blog page
@@ -27,6 +47,7 @@
         templateUrl: 'app/modules/blog/blog.html',
         controller: 'BlogController',
         controllerAs: 'Blog',
+        parent: 'main',
         mapState: 'none'
       })
       //Bloggers profile page
@@ -35,6 +56,7 @@
         templateUrl: 'app/modules/blog/bloggers_profile/bloggers_profile.html',
         controller: 'BloggerProfileController',
         controllerAs: 'Blogger',
+        parent: 'main',
         mapState: 'none'
       })
       //Show blog location on map and show pop-up
@@ -43,6 +65,7 @@
         controller: 'ArticleController',
         controllerAs: 'Article',
         mapState: 'big',
+        parent: 'main',
         resolve: {
           article: function () {
             //TODO: Pass article data to controller (to show this data on pop-up)
@@ -57,6 +80,7 @@
         controller: 'ArticleCreateController',
         controllerAs: 'ArticleCreate',
         mapState: 'small',
+        parent: 'main',
         locate: 'none'
       })
 
@@ -89,6 +113,7 @@
         mapState: 'small',
         edit: true
       })
+
       //Single plan page
       .state('plan', {
         url: '/plan/:plan_id',
@@ -132,7 +157,7 @@
         mapState: 'small'
       })
 
-      //Users profile index page. (TABS: wall, feeds, reviews, chat)
+      //Users profile index page. (TABS: wall, feeds, reviews)
       .state('profile', {
         url: '/profile/:user_id',
         templateUrl: 'app/modules/profile/profile.html',
@@ -145,6 +170,45 @@
         },
         parent: 'profile_menu',
         locate: 'none',
+        mapState: 'small'
+      })
+
+      //chat
+      .state('chat', {
+        url: '/chat',
+        templateUrl: 'app/modules/chat/chat.html',
+        controller: 'ChatController',
+        controllerAs: 'Chat',
+        parent: 'profile_menu',
+        locate: 'none',
+        resolve: {
+          dialogs: function (Message) {
+            return Message.dialogs().$promise;
+          }
+        },
+        require_auth: true,
+        mapState: 'small'
+      })
+      .state('chatRoom', {
+        url: '/chat/:user_id',
+        templateUrl: 'app/modules/chat/chat_room/chat_room.html',
+        controller: 'ChatRoomController',
+        controllerAs: 'ChatRoom',
+        resolve: {
+          user: function (User, $stateParams) {
+            return User.get({id: $stateParams.user_id});
+          },
+          messages: function (Message, $stateParams) {
+            return Message.query({
+              user_id: $stateParams.user_id,
+              page: 1,
+              limit: 20
+            }).$promise;
+          }
+        },
+        parent: 'profile_menu',
+        locate: 'none',
+        require_auth: true,
         mapState: 'small'
       })
 
@@ -269,6 +333,7 @@
       .state('about_us', {
         url: "/about-us",
         templateUrl: 'app/modules/about_us/about_us.html',
+        parent: 'main',
         mapState: 'hidden'
       })
       //Contact us page
@@ -277,6 +342,7 @@
         templateUrl: 'app/modules/contact_us/contact_us.html',
         controller: 'ContactUsController',
         controllerAs: 'ContactUs',
+        parent: 'main',
         mapState: 'hidden'
       })
 
@@ -291,6 +357,7 @@
             return User.query({type: 'all', page: 1, limit: 10})//.$promise;
           }
         },
+        parent: 'main',
         mapState: 'hidden'
       })
 
@@ -307,6 +374,7 @@
         },
         mapState: 'hidden',
         require_auth: true,
+        parent: 'main',
         locate: 'none'
       });
 
