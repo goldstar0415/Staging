@@ -166,10 +166,7 @@
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
-    -webkit-transition: background .3s;
-    -moz-transition: background .3s;
-    -o-transition: background .3s;
-    transition: background .3s;
+    @include transition_bg;
   }
   ul {
     padding-left: 15px;

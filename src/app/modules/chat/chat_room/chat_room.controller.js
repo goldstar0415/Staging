@@ -6,26 +6,26 @@
     .controller('ChatRoomController', ChatRoomController);
 
   /** @ngInject */
-  function ChatRoomController($rootScope, user, messages, Message, toastr, ChatService) {
+  function ChatRoomController($rootScope, user, messages, Message, toastr, $location, $anchorScroll, ChatService) {
     var vm = this;
 
     vm.user = user;
     vm.message = '';
-    vm.messages = ChatService.groupByDate(messages);
+    vm.messages = messages;
+    vm.messages.data = ChatService.groupByDate(messages.data);
     vm.sendMessage = sendMessage;
     vm.markAsRead = markAsRead;
     vm.deleteMessage = deleteMessage;
 
 
     function sendMessage(form) {
-      console.log(form);
       if (form.$valid) {
         Message.save({
             user_id: user.id,
             message: vm.message
           },
           function success(message) {
-            vm.messages.data.push(message);
+            ChatService.pushToToday(message);
             vm.message = '';
           },
           function error(resp) {
@@ -37,16 +37,7 @@
     }
 
     function markAsRead() {
-      var countNewMessages = _.where(vm.messages.data, {is_read: false});
-      if (countNewMessages.length > 0) {
-        Message.markAsRead({user_id: user.id}, function () {
-          angular.forEach(vm.messages.data, function (message) {
-            if (message.pivot.receiver_id == $rootScope.currentUser.id) {
-              message.is_read = true;
-            }
-          })
-        });
-      }
+      ChatService.markAsRead(user.id);
     }
 
     function deleteMessage(idx) {
