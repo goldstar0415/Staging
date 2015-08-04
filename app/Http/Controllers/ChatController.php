@@ -30,7 +30,9 @@ class ChatController extends Controller
         $message = new ChatMessage(['body' => $request->input('message')]);
         $user->chatMessages()->save($message, ['receiver_id' => $receiver_id]);
 
-        event(new OnMessage(User::find($receiver_id), $message));
+        event(new OnMessage($user, $message, User::find($receiver_id)->random_hash));
+
+        return $message;
     }
 
     public function getDialogs(Request $request)
@@ -90,7 +92,8 @@ QUERY
     {
         event(new OnMessageRead($user_id));
 
-        return $request->user()->chatMessagesReceived()
-            ->where('sender_id', $user_id)->update(['is_read' => true]);
+        return ['affected_messages' => $request->user()->chatMessagesReceived()
+                ->where('sender_id', $user_id)
+                    ->update(['is_read' => true])];
     }
 }

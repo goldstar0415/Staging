@@ -219,7 +219,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function getCountSpotsAttribute()
     {
-//        return $this->spots()->count();
+        return $this->spots()->count();
     }
 
     public function getCountFollowingsAttribute()

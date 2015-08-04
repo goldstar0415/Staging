@@ -16,16 +16,20 @@ class OnMessage extends Event implements ShouldBroadcast
 
     public $message;
 
+    private $receiver_hash;
+
     /**
      * Create a new event instance.
      *
      * @param User $user
      * @param ChatMessage $message
+     * @param $receiver_hash
      */
-    public function __construct(User $user, ChatMessage $message)
+    public function __construct(User $user, ChatMessage $message, $receiver_hash)
     {
         $this->user = $user;
         $this->message = $message;
+        $this->receiver_hash = $receiver_hash;
     }
 
     /**
@@ -35,6 +39,6 @@ class OnMessage extends Event implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['user.' . $this->user->random_hash];
+        return ['user.' . $this->receiver_hash];
     }
 }
