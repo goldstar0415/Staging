@@ -15,6 +15,7 @@
       'dialogs.main',
       'snap',
       'angular-loading-bar',
+      'luegg.directives',
       'ui.select',
       'ui.utils.masks'
     ])

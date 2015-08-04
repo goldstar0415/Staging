@@ -23,12 +23,14 @@
 
 
     function onReadMessage(data) {
+      markAsRead(data.sender_id);
+      $rootScope.$apply();
     }
 
     function onNewMessage(data) {
       console.log($state);
       if ($state.current.name == 'chatRoom' && $state.params.user_id == data.user.id) {  //if user in chat
-        data.message.pivot = {sender_id: data.user.id};
+        data.message.pivot = {sender_id: data.user.id, receiver_id: $rootScope.currentUser.id};
         pushToToday(data.message);
       } else if ($state.current.name == 'chat') {
         _.each(dialogs, function (dialog) {
@@ -49,16 +51,25 @@
 
 
     function groupByDate(chatMessages) {
-      console.log(chatMessages);
+      chatMessages = chatMessages.reverse();
       messages = [];
 
-      _.each(chatMessages, function (message) {
-        var createdAt = moment(message.created_at).add(utcOffset, 'm'),
-          day = createdAt.isSame(moment(), 'day') ? 'Today' : createdAt.format('MM.DD.YYYY');
-
-        message.created_at = _convertDate(createdAt);
-        _addToMessages(day, message);
+      var groupedMessagesObject = _.groupBy(chatMessages, function (item) {
+        var createdAt = moment(item.created_at).add(utcOffset, 'm');
+        item.created_at = _convertDate(createdAt);
+        return createdAt.format("MM.DD.YYYY");
       });
+
+      for (var k in groupedMessagesObject) {
+        var createdAt = moment(k, 'MM.DD.YYYY');
+
+        var day = createdAt.isSame(moment(), 'day') ? 'Today' : createdAt.format('MM.DD.YYYY');
+        messages.push({
+          day: day,
+          messages: groupedMessagesObject[k]
+        });
+      }
+
       console.log(messages);
       return messages;
     }
@@ -86,30 +97,13 @@
     }
 
     function markAsRead(user_id) {
-      var countNewMessages = 0;
       angular.forEach(messages, function (groupMessages) {
         angular.forEach(groupMessages.messages, function (message) {
-          if (!message.is_read && message.pivot.receiver_id == $rootScope.currentUser.id) {
-            countNewMessages++;
+          if (message.pivot.receiver_id == user_id) {
+            message.is_read = true;
           }
         });
       });
-
-      if (countNewMessages > 0) {
-        Message.markAsRead({
-            user_id: user_id
-          },
-          function () {
-            angular.forEach(messages, function (groupMessages) {
-              angular.forEach(groupMessages.messages, function (message) {
-                if (message.pivot.receiver_id == $rootScope.currentUser.id) {
-                  message.is_read = true;
-                }
-              });
-            });
-          }
-        );
-      }
     }
 
   }
