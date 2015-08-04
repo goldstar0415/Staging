@@ -7,7 +7,6 @@ use App\Events\OnMessage;
 use App\Events\OnMessageRead;
 use App\Http\Requests\Chat\MessageDestroyRequest;
 use App\Http\Requests\Chat\MessageListRequest;
-use App\Http\Requests\Chat\ReadMessageRequest;
 use App\Http\Requests\Chat\SendMessageRequest;
 use App\User;
 use Illuminate\Http\Request;
@@ -87,7 +86,7 @@ QUERY
         return $message->delete();
     }
 
-    public function read(ReadMessageRequest $request, $user_id)
+    public function read(Request $request, $user_id)
     {
         event(new OnMessageRead($user_id));
 
