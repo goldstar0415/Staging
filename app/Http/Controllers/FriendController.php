@@ -8,9 +8,7 @@ use App\Http\Requests\Friend\StoreFriendRequest;
 use App\Http\Requests\Friend\UpdateFriendRequest;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Phaza\LaravelPostgis\Geometries\Point;
 
 class FriendController extends Controller
 {

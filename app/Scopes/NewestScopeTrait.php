@@ -3,11 +3,6 @@
 
 namespace App\Scopes;
 
-use Illuminate\Database\Query\Builder as BaseBuilder;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ScopeInterface;
-
 trait NewestScopeTrait
 {
     /**

@@ -4,7 +4,6 @@ namespace App;
 
 use App\Extensions\StartEndDatesTrait;
 use App\Scopes\NewestScopeTrait;
-use Carbon\Carbon;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 

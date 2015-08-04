@@ -8,11 +8,9 @@ use App\Http\Requests\Spot\SpotStoreRequest;
 use App\Http\Requests\Spot\SpotUpdateRequest;
 use App\Spot;
 use App\SpotType;
-use App\SpotTypeCategory;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class SpotController extends Controller
 {

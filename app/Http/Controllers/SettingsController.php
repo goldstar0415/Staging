@@ -6,9 +6,7 @@ use App\Http\Requests\SettingsUpdateRequest;
 use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Hashing\Hasher;
-use Phaza\LaravelPostgis\Geometries\Point;
 
 class SettingsController extends Controller
 {

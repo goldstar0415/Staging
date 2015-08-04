@@ -4,7 +4,6 @@ namespace App;
 
 use App\Extensions\GeoTrait;
 use App\Extensions\StartEndDatesTrait;
-use Carbon\Carbon;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 

@@ -7,8 +7,6 @@ use App\Events\UserUnfollowEvent;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\User;
 
 class FollowController extends Controller
 {

@@ -5,8 +5,6 @@ namespace App\Listeners;
 use App\Events\UserFollowEvent;
 use App\Friend;
 use File;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AddFriend
 {

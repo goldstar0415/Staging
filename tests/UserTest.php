@@ -1,8 +1,6 @@
 <?php
 
 
-use App\User;
-
 class UserTest extends LaravelTestCase
 {
     public function testGetMe()

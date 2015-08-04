@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Album;
-use App\AlbumPhoto;
 use App\Http\Requests\Album\AlbumRequest;
 use App\Http\Requests\Album\PhotoUpdateRequest;
 use App\Http\Requests\Album\StoreRequest;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Contracts\Validation\UnauthorizedException;
 
 use App\Http\Requests;
-use Phaza\LaravelPostgis\Geometries\Point;
 
 class AlbumController extends Controller
 {
