@@ -30,6 +30,15 @@ class ChatController extends Controller
 
         event(new OnMessage($user, $message, User::find($receiver_id)->random_hash));
 
+        $message->setAttribute(
+            'pivot',
+            [
+                'sender_id' => $user->id,
+                'receiver_id' => $receiver_id,
+                'chat_message_id' => $message->id
+            ]
+        );
+
         return $message;
     }
 
