@@ -9,6 +9,9 @@
   function uploader() {
     return {
       restrict: 'E',
+      scope: {
+        dropZone: '='
+      },
       templateUrl: 'app/components/uploader/uploader.html',
       controller: UploaderController,
       controllerAs: 'Uploader',

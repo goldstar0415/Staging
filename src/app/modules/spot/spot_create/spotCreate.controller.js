@@ -6,7 +6,7 @@
     .controller('SpotCreateController', SpotCreateController);
 
   /** @ngInject */
-  function SpotCreateController(toastr) {
+  function SpotCreateController(toastr, $scope, MapService, UploaderService, CropService, moment) {
     var vm = this;
     vm.restrictions = {
       links: 5,
@@ -16,15 +16,66 @@
       video: 5
     };
     vm.type = 'Event';
+    vm.selectCover = false;
+    vm.startDate = moment().toDate();
 
     //vars
     vm.tags = [];
     vm.links = [];
     vm.youtube_links = [];
     vm.locations = [];
+    vm.images = UploaderService.images;
+
+    $scope.$watch('SpotCreate.images.files', function() {
+      vm.checkFilesRestrictions();
+    });
+
+    function filterLocations() {
+      var array = _.reject(vm.locations, function(item) {
+          return item.isDelete || false;
+        });
+
+      array = _.map(array, function(item) {
+        return {location: item.location, address: item.address};
+      });
+
+      return array;
+    }
+    function filterTags() {
+      var array = _.map(vm.tags, function(item) {
+        return item.text;
+      });
+
+      return array;
+    }
 
     vm.create = function(form) {
-      console.log(form.$valid);
+      if(form.$valid) {
+        var request = {};
+        request.title = vm.title;
+        request.description = vm.description;
+        request.web_site = vm.links;
+        request.tags = filterTags();
+        request.videos = vm.youtube_links;
+        request.location = filterLocations();
+        request.files = vm.images.files;
+        request.cover = vm.cover;
+
+
+        if(vm.type === 'Event') {
+          request.start_date = vm.start_date + ' ' + vm.start_time + ':00';
+          request.end_date = vm.end_date + ' ' + vm.end_time + ':00';
+        }
+
+        if(request.location.length > 0) {
+          console.log(request);
+        } else {
+          toastr.error('Please add at least one location');
+        }
+      } else {
+        toastr.error('Invalid input');
+      }
+
     };
     //links
     vm.addLink = function(validLink) {
@@ -50,6 +101,7 @@
     };
     //location
     vm.addLocation = function(item) {
+      var item = angular.copy(item);
       if(item && item.address && item.location) {
         vm.locations.unshift(item);
         vm.newLocation = {};
@@ -59,12 +111,31 @@
       }
     };
     vm.removeLocation = function(index) {
-      vm.locations.splice(index, 1);
-    };
-    vm.onChange = function() {
-      alert('test');
+      var marker = vm.locations[index].marker;
+      MapService.RemoveMarker(marker);
+      vm.locations[index].isDelete = true;
     };
     //photos
+    vm.checkFilesRestrictions = function() {
+      if(vm.images.files.length > vm.restrictions.images) {
+        toastr.error('You can\'t add more than '+ vm.restrictions.images + ' photos');
+        var l = vm.images.files.length - vm.restrictions.images;
+        vm.images.files.splice(vm.restrictions.images, l);
+      }
+    };
+    vm.deleteImage = function (idx) {
+      vm.images.files.splice(idx, 1);
+    };
+    vm.cropImage = function(image){
+      if(vm.selectCover) {
+        CropService.crop(image, function(result) {
+          if(result) {
+            vm.cover = result;
+            vm.selectCover = false;
+          }
+        });
+      }
+    };
 
     //videos
     vm.addYoutubeLink = function(validLink) {
@@ -79,5 +150,6 @@
     vm.removeYoutubeLink = function(index) {
       vm.youtube_links.splice(index, 1);
     };
+
   }
 })();

@@ -31,9 +31,25 @@
         url: API_URL + '/users/reset',
         method: 'POST'
       },
+      follow: {
+        url: API_URL + '/follow/:user_id',
+        method: 'GET'
+      },
+      unfollow: {
+        url: API_URL + '/unfollow/:user_id',
+        method: 'GET'
+      },
+      followers: {
+        url: API_URL + '/followers/:user_id',
+        method: 'GET'
+      },
+      followings: {
+        url: API_URL + '/followings/:user_id',
+        method: 'GET'
+      },
       query: {
         url: API_URL + '/users/list',
-        method: 'POST'
+        method: 'GET'
       },
       update: {
         method: 'PUT'

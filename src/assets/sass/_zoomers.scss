@@ -197,24 +197,41 @@ ul {
 
         &.current {
           @include zoomers_sidebar();
-          background: url(/assets/img/icons/zoomers.png) 0 -42px no-repeat;
+          background: url(/assets/img/icons/zoomers.png) 0 -1px no-repeat;
           color: $dark_blue;
 
           &:hover {
             color: $blue;
             text-decoration: none;
+            background: url(/assets/img/icons/zoomers.png) 0 -42px no-repeat;
+
+          }
+          &.active {
+            color: $navy_blue;
+            font: $navigation_font;
+            @include zoomers_sidebar();
+            background: url(/assets/img/icons/zoomers.png) 0 -42px no-repeat;
           }
         }
+
         &.followers {
           @include zoomers_sidebar();
-          background: url(/assets/img/icons/followers.png) 0 -42px no-repeat;
+          background: url(/assets/img/icons/followers.png) 0 -1px no-repeat;
           color: $dark_blue;
-
           &:hover {
             color: $blue;
             text-decoration: none;
+            background: url(/assets/img/icons/followers.png) 0 -42px no-repeat;
+
+          }
+          &.active {
+            color: $navy_blue;
+            font: $navigation_font;
+            @include zoomers_sidebar();
+            background: url(/assets/img/icons/followers.png) 0 -42px no-repeat;
           }
         }
+
         &.followings {
           @include zoomers_sidebar();
           background: url(/assets/img/icons/followings.png) 0 -1px no-repeat;
@@ -222,13 +239,17 @@ ul {
           &:hover {
             color: $blue;
             text-decoration: none;
+            background: url(/assets/img/icons/followings.png) 0 -42px no-repeat;
+
+          }
+          &.active {
+            color: $navy_blue;
+            font: $navigation_font;
+            @include zoomers_sidebar();
+            background: url(/assets/img/icons/followings.png) 0 -42px no-repeat;
           }
         }
-        &.active {
-          color: $navy_blue;
-          font: $navigation_font;
-          @include zoomers_sidebar();
-        }
+
       }
       &:last-child {
         border-bottom: none;

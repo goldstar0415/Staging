@@ -16,8 +16,8 @@
         <sign-up></sign-up>
       </li>
       <li ng-if="$root.currentUser" class="profile-tab active-tab">
-        <a ui-sref="settings">{{$root.currentUser.first_name}}
-          <span><img src="assets/img/ava.png"></span>
+        <a ui-sref="profile({user_id: $root.currentUser.id})">{{$root.currentUser.first_name}}
+          <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
         </a>
       </li>
     </ul>

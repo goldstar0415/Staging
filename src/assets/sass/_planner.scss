@@ -18,9 +18,23 @@
 
 .sub-event {
   margin: 15px 0;
-  padding: 2rem 0;
+  padding: 2rem 0 !important;
 }
 .time-sub {
   font: 400 14px Ubuntu;
   color: grey;
+}
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}
+.activity {
+  border: 3px dotted #3DD1EC !important;
+}
+.padding-bottom {
+  padding-bottom: 15px;
+}
+.position-min-plus {
+  top: 15px !important;
+  right: 15px !important;
+  height: 12px !important;
 }

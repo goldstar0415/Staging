@@ -15,6 +15,7 @@
       'dialogs.main',
       'snap',
       'angular-loading-bar',
+      'ngImgCrop',
       'ui.select',
       'ui.utils.masks',
       'ngTagsInput'

@@ -2,13 +2,13 @@
   <div class="container">
     <div class="col-xs-10 col-xs-offset-2 no-pad">
       <ul>
-        <li><a href="#">My spots</a></li>
-        <li><a href="#">My blog</a></li>
-        <li><a href="#">Favorites</a></li>
-        <li><a href="#">Saved searches</a></li>
+        <li><a >My spots</a></li>
+        <li><a ui-sref="blog">My blog</a></li>
+        <li><a >Favorites</a></li>
+        <li><a >Saved searches</a></li>
         <li><a ui-sref="friendsmap">Friends map</a></li>
-        <li><a ui-sref="photomap({user_id: currentUser.id})">Photo map</a></li>
-        <li><a href="#">Planner</a></li>
+        <li><a ui-sref="photomap({user_id: $root.profileUser.id})">Photo map</a></li>
+        <li><a ui-sref="planner">Planner</a></li>
         <li><a ui-sref="settings">Settings</a></li>
       </ul>
     </div>
@@ -17,8 +17,8 @@
 
 <div class="container wrap">
   <div class="col-xs-2 information-profile">
-    <a href="" class="avatar">
-      <img src="assets/img/img20.jpg" alt="User avatar">
+    <a ui-sref="profile({user_id: $root.profileUser.id})" class="avatar">
+      <img ng-src="{{$root.profileUser.avatar_url.medium}}" >
     </a>
   </div>
 
@@ -27,6 +27,6 @@
   </div>
 
   <div class="col-xs-3 activity-profile">
-    fjmlrhgeilg
+
   </div>
 </div>

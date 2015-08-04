@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, User, MapService, $rootScope, snapRemote, $state, toastr) {
+  function runBlock($log, User, MapService, $rootScope, snapRemote, $state, toastr, DEBUG) {
 
     MapService.Init('map');
     $rootScope.timezonesList = moment.tz.names();
@@ -14,7 +14,11 @@
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     function saveCurrentUser(user) {
       $rootScope.currentUser = user;
+      if (!$rootScope.profileUser) {
+        $rootScope.profileUser = user;
+      }
     }
+
     function onStateChangeSuccess(event, current, toParams, fromState, fromParams) {
       $rootScope.previous = {
         state: fromState,
@@ -23,9 +27,7 @@
       if (current.require_auth) {
         if (!$rootScope.currentUser) {
           User.currentUser().$promise
-            .then(function (user) {
-              saveCurrentUser(user);
-            })
+            .then(saveCurrentUser)
             .catch(function () {
               toastr.error('Unauthorized!');
               $state.go('index');
@@ -34,14 +36,12 @@
       } else {
         if (!$rootScope.currentUser) {
           User.currentUser().$promise
-            .then(function (user) {
-              saveCurrentUser(user);
-            })
+            .then(saveCurrentUser)
         }
       }
 
       MapService.ChangeState(current.mapState);
-      window.scrollTo(0, 0);
+
       if (current.mapState == 'big') {
         $('.map-tools').show();
       } else {
@@ -58,8 +58,6 @@
           MapService.FocusMapToCurrentLocation();
           break;
       }
-      ;
-
     }
 
     $rootScope.options = {
@@ -79,8 +77,8 @@
     }
 
 
-    $rootScope.goBack = function() {
-      if($rootScope.previous && $rootScope.previous.state && $rootScope.previous.state.name) {
+    $rootScope.goBack = function () {
+      if ($rootScope.previous && $rootScope.previous.state && $rootScope.previous.state.name) {
         $state.go($rootScope.previous.state.name, $rootScope.previous.params);
       }
     };

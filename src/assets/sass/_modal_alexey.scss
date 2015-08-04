@@ -136,6 +136,9 @@
                         margin-right: 15px;
                         float: left;
                     }
+                    .crop-area {
+                      height: 200px;
+                    }
                     .avatar-big {
                         width: 120px;
                         height: 120px;
@@ -228,7 +231,7 @@
                         visibility: hidden;
                     }
                 }
-                
+
                 .tab-content {
                     .choose-some-photos-body {
                         padding-top: 20px;
@@ -283,4 +286,8 @@
             .modal-footer {}
         }
     }
+}
+
+.modalFix .modal-content {
+  @include clearfix;
 }

@@ -2,8 +2,8 @@
      ngf-select
      ng-model="Uploader.images"
      ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
-     class="drop-box"
-     ngf-multiple="true"
+     ng-class="{'drop-box': Uploader.dropZone}"
+     ngf-multiple="Uploader.dropZone"
      ngf-keep="true"
      ngf-allow-dir="true"
      ngf-keep-distinct="true"
@@ -11,7 +11,7 @@
      ngf-max-size="10000000"
      ngf-drop-available="dropAvailable"
   >
-  <p>Drag photos here</p>
-  <!--<div>click to select</div>-->
+  <p ng-if="Uploader.dropZone">Drag photos here</p>
+  <button ng-if="!Uploader.dropZone" type="button" class="btn green-btn" >Upload</button>
 </div>
 <div ngf-no-file-drop>File Drop not available</div>

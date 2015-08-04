@@ -16,13 +16,13 @@
         bindMarker: '=',
         limit: '=',
         provider: '=',
-        onEmpty: '&'
+        onEmpty: '&',
+        marker: '='
       },
       link: function autocompleteLink(s, e, a) {
         var limit = s.limit || 10;
         var searchUrl = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&addressdetails=1&limit='+ limit +'&q=';
         var bindMarker = s.bindMarker;
-        var marker = null;
         var provider = s.provider || 'google';
         s.provider = provider;
 
@@ -43,23 +43,24 @@
 
         function moveOrCreateMarker(latlng) {
           if(bindMarker) {
-            if(marker) {
-              marker.setLatLng(latlng);
+            if(s.marker) {
+              s.marker.setLatLng(latlng);
             } else {
-              marker = MapService.CreateMarker(latlng, {draggable: true});
-              MapService.BindMarkerToInput(marker, function(data) {
+              s.marker = MapService.CreateMarker(latlng, {draggable: true});
+              MapService.BindMarkerToInput(s.marker, function(data) {
+                console.log(data, s);
                 s.location = data.latlng;
                 s.address = data.address;
                 s.viewAddress = data.address;
               })
             }
-            MapService.GetMap().setView(marker.getLatLng(), 12);
+            MapService.GetMap().setView(s.marker.getLatLng(), 12);
           }
         }
         function removeMarker() {
-          if(marker) {
-            MapService.RemoveMarker(marker);
-            marker = null;
+          if(s.marker) {
+            MapService.RemoveMarker(s.marker);
+            s.marker = null;
           }
         }
         s.onChange = function() {
@@ -90,7 +91,7 @@
             s.address = $model.display_name;
             s.viewAddress = $model.display_name;
           }
-          moveOrCreateMarker(s.location);
+          //moveOrCreateMarker(s.location);
         };
         s.getData = function(val) {
           if(provider == 'google') {
