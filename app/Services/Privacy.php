@@ -67,5 +67,4 @@ class Privacy
     {
         return !isset($this->viewer);
     }
-
 }

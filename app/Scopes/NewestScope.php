@@ -8,14 +8,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ScopeInterface;
 
-
 class NewestScope implements ScopeInterface
 {
     /**
      * Apply scope on the query.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $builder
-     * @param \Illuminate\Database\Eloquent\Model  $model
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param \Illuminate\Database\Eloquent\Model $model
      * @return void
      */
     public function apply(Builder $builder, Model $model)
@@ -24,30 +23,30 @@ class NewestScope implements ScopeInterface
         $builder->orderBy($column, 'DESC');
         $this->addWithoutOrdering($builder);
     }
+
     /**
      * Remove scope from the query.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $builder
-     * @param \Illuminate\Database\Eloquent\Model  $model
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param \Illuminate\Database\Eloquent\Model $model
      * @return void
      */
     public function remove(Builder $builder, Model $model)
     {
         $query = $builder->getQuery();
         $column = $model->getCreatedAtColumn();
-        foreach ((array) $query->orders as $key => $order)
-        {
-            if ($this->isNewestConstraint($order, $column))
-            {
+        foreach ((array)$query->orders as $key => $order) {
+            if ($this->isNewestConstraint($order, $column)) {
                 $this->removeOrder($query, $key);
             }
         }
     }
+
     /**
      * Remove scope constraint from the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $builder
-     * @param  int  $key
+     * @param  \Illuminate\Database\Query\Builder $builder
+     * @param  int $key
      * @return void
      */
     protected function removeOrder(BaseBuilder $query, $key)
@@ -60,28 +59,32 @@ class NewestScope implements ScopeInterface
             $query->$property = null;
         }
     }
+
     /**
      * Check if given where is the scope constraint.
      *
-     * @param  array   $order
-     * @param  string  $column
+     * @param  array $order
+     * @param  string $column
      * @return boolean
      */
     protected function isNewestConstraint(array $order, $column)
     {
         return ($order['column'] == $column && $order['direction'] == 'desc');
     }
+
     /**
      * Extend Builder with custom method.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $builder
+     * @param \Illuminate\Database\Eloquent\Builder $builder
      */
     protected function addWithoutOrdering(Builder $builder)
     {
-        $builder->macro('withoutOrdering', function(Builder $builder)
-        {
-            $this->remove($builder, $builder->getModel());
-            return $builder;
-        });
+        $builder->macro(
+            'withoutOrdering',
+            function (Builder $builder) {
+                $this->remove($builder, $builder->getModel());
+                return $builder;
+            }
+        );
     }
 }

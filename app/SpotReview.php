@@ -5,7 +5,7 @@ namespace App;
 /**
  * Class SpotReview
  * @package App
- * 
+ *
  * @property integer $id
  * @property integer $spot_id
  * @property integer $user_id

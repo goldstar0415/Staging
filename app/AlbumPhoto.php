@@ -11,7 +11,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 /**
  * Class AlbumPhoto
  * @package App
- * 
+ *
  * @property integer $id
  * @property integer $album_id
  * @property string $address

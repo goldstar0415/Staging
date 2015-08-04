@@ -46,7 +46,7 @@ inner join "chat_message_user" cm on m."id" = cm."chat_message_id"
 WHERE  cm.receiver_id = $user_id OR cm.sender_id = $user_id
 order by cm.sender_id+cm.receiver_id, m.created_at desc
 QUERY
-));//TODO: optimize
+        ));//TODO: optimize
 
         $dialogs = $messages->map(function ($item, $key) use ($user) {
             $last_user_id = null;

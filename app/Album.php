@@ -9,7 +9,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
 /**
  * Class Album
  * @package App
- * 
+ *
  * @property integer $id
  * @property integer $user_id
  * @property string $name

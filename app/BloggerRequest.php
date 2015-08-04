@@ -5,7 +5,7 @@ namespace App;
 /**
  * Class BloggerRequest
  * @package App
- * 
+ *
  * @property integer $id
  * @property integer $user_id
  * @property string $status

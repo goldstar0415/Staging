@@ -5,7 +5,7 @@ namespace App;
 /**
  * Class AlbumPhotoComment
  * @package App
- * 
+ *
  * @property integer $id
  * @property integer $user_id
  * @property integer $album_photo_id

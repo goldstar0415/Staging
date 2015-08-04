@@ -5,7 +5,7 @@ namespace App;
 /**
  * Class SpotVote
  * @package App
- * 
+ *
  * @property integer $id
  * @property integer $user_id
  * @property integer $spot_id

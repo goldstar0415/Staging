@@ -9,7 +9,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
 /**
  * Class SpotPoint
  * @package App
- * 
+ *
  * @property integer $id
  * @property integer $spot_id
  * @property string $address

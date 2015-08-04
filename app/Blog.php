@@ -11,7 +11,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
 /**
  * Class Blog
  * @package App
- * 
+ *
  * @property integer $id
  * @property integer $user_id
  * @property integer $blog_category_id

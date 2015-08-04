@@ -5,7 +5,7 @@ namespace App;
 /**
  * Class BlogCategory
  * @package App
- * 
+ *
  * @property integer $id
  * @property string $name
  *

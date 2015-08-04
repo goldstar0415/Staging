@@ -11,7 +11,7 @@ use Codesleeve\Stapler\ORM\StaplerableInterface;
 /**
  * Class Spot
  * @package App
- * 
+ *
  * @property integer $id
  * @property integer $user_id
  * @property integer $spot_type_category_id

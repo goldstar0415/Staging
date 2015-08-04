@@ -167,8 +167,10 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     public function setBirthDateAttribute($value)
     {
         if (!$value instanceof Carbon) {
-            $this->attributes['birth_date'] = $value ? Carbon::createFromFormat(config('app.date_format'),
-                $value) : $value;
+            $this->attributes['birth_date'] = $value ? Carbon::createFromFormat(
+                config('app.date_format'),
+                $value
+            ) : $value;
         } else {
             $this->attributes['birth_date'] = $value;
         }
