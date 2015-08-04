@@ -102,7 +102,7 @@ QUERY
 
         return [
             'affected_messages' => $user->chatMessagesReceived()
-                ->where('sender_id', $user_id)
+                ->where('sender_id', $user_id)->where('is_read', false)
                     ->update(['is_read' => true])
         ];
     }
