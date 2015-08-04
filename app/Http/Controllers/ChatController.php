@@ -7,7 +7,6 @@ use App\Events\OnMessage;
 use App\Events\OnMessageRead;
 use App\Http\Requests\Chat\MessageDestroyRequest;
 use App\Http\Requests\Chat\MessageListRequest;
-use App\Http\Requests\Chat\ReadMessageRequest;
 use App\Http\Requests\Chat\SendMessageRequest;
 use App\User;
 use Illuminate\Http\Request;
@@ -30,6 +29,15 @@ class ChatController extends Controller
         $user->chatMessages()->save($message, ['receiver_id' => $receiver_id]);
 
         event(new OnMessage($user, $message, User::find($receiver_id)->random_hash));
+
+        $message->setAttribute(
+            'pivot',
+            [
+                'sender_id' => $user->id,
+                'receiver_id' => $receiver_id,
+                'chat_message_id' => $message->id
+            ]
+        );
 
         return $message;
     }
@@ -87,7 +95,7 @@ QUERY
         return $message->delete();
     }
 
-    public function read(ReadMessageRequest $request, $user_id)
+    public function read(Request $request, $user_id)
     {
         event(new OnMessageRead($user_id));
 
