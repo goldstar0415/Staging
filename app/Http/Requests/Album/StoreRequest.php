@@ -24,7 +24,7 @@ class StoreRequest extends AlbumRequest
      */
     public function rules()
     {
-        $this->merge(['location' => json_decode($this->input('location'), true)]);
+        $this->merge(['location' => json_decode($this->input('location'), true)]);//TODO: change
         $rules = [
             'title' => 'required|max:128',
             'is_private' => 'boolean',

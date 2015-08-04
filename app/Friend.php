@@ -36,7 +36,7 @@ class Friend extends BaseModel implements StaplerableInterface
 
     protected $dates = ['birth_date'];
 
-    protected $appends = ['avatar_url'];
+    protected $appends = ['avatar_url', 'default_location'];
 
     protected $hidden = ['avatar_file_name', 'avatar_content_type', 'avatar_file_size'];
 
@@ -56,6 +56,15 @@ class Friend extends BaseModel implements StaplerableInterface
     public function getAvatarUrlAttribute()
     {
         return $this->getPictureUrls('avatar');
+    }
+
+    public function getDefaultLocationAttribute()
+    {
+        if ($this->user_id) {
+            return $this->user->location;
+        }
+
+        return null;
     }
 
     public function setBirthDateAttribute($value)

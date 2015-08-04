@@ -63,11 +63,3 @@ Route::delete('message/{message}', 'ChatController@destroy');
 Route::get('message/{user_id}/read', 'ChatController@read');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
-
-get('/', function () {
-    return view('form');
-});
-
-post('/', ['middleware' => 'base64upload:cover,some', function () {
-    dd(\Request::all());
-}]);
