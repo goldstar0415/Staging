@@ -92,8 +92,10 @@ QUERY
     {
         event(new OnMessageRead($user_id));
 
-        return ['affected_messages' => $request->user()->chatMessagesReceived()
+        return [
+            'affected_messages' => $request->user()->chatMessagesReceived()
                 ->where('sender_id', $user_id)
-                    ->update(['is_read' => true])];
+                    ->update(['is_read' => true])
+        ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Extensions\StartEndDatesTrait;
+use App\Scopes\NewestScopeTrait;
 use Carbon\Carbon;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
@@ -41,7 +42,7 @@ use Codesleeve\Stapler\ORM\StaplerableInterface;
  */
 class Spot extends BaseModel implements StaplerableInterface
 {
-    use StaplerTrait, StartEndDatesTrait;
+    use StaplerTrait, StartEndDatesTrait, NewestScopeTrait;
 
     protected $guarded = ['id', 'user_id'];
 
@@ -53,14 +54,6 @@ class Spot extends BaseModel implements StaplerableInterface
         'web_sites' => 'array',
         'videos' => 'array'
     ];
-
-    /**
-     * {@inheritdoc}
-     */
-    public function newQuery()
-    {
-        return parent::newQuery()->orderBy('created_at', 'DESC');
-    }
 
     protected $dates = ['start_date', 'end_date'];
 
