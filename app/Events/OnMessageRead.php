@@ -10,18 +10,19 @@ class OnMessageRead extends Event implements ShouldBroadcast
 {
     use SerializesModels;
 
-    public $receiver_id;
+    public $sender_id;
 
     private $receiver;
 
     /**
      * Create a new event instance.
      *
+     * @param $sender_id
      * @param $receiver_id
      */
-    public function __construct($receiver_id)
+    public function __construct($sender_id, $receiver_id)
     {
-        $this->receiver_id = $receiver_id;
+        $this->sender_id = $sender_id;
         $this->receiver = User::find($receiver_id);
     }
 

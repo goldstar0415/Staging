@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Scopes\NewestScopeTrait;
+
 /**
  * Class ChatMessage
  * @package App
@@ -16,6 +18,8 @@ namespace App;
  */
 class ChatMessage extends BaseModel
 {
+    use NewestScopeTrait;
+
     protected $fillable = ['body'];
 
     public function sender()
