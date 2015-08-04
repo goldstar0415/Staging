@@ -24,6 +24,7 @@ class SpotRequest extends Request
     public function rules()
     {
         $rules = [
+            'cover' => 'image|max:5000',
             'title' => 'required|string|max:255',
             'description' => 'string|max:255',
             'start_date' => 'date',

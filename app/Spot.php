@@ -65,6 +65,11 @@ class Spot extends BaseModel implements StaplerableInterface
         parent::__construct($attributes);
     }
 
+    public function setCoverAttribute($value)
+    {
+
+    }
+
     public function getCoverUrlAttribute()
     {
         return $this->getPictureUrls('cover');

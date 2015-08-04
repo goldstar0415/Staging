@@ -97,10 +97,11 @@ QUERY
 
     public function read(Request $request, $user_id)
     {
-        event(new OnMessageRead($user_id));
+        $user = $request->user();
+        event(new OnMessageRead($user->id, $user_id));
 
         return [
-            'affected_messages' => $request->user()->chatMessagesReceived()
+            'affected_messages' => $user->chatMessagesReceived()
                 ->where('sender_id', $user_id)
                     ->update(['is_read' => true])
         ];
