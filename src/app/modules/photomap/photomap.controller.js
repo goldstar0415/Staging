@@ -28,12 +28,16 @@
     }
 
     function initMap() {
+      var count = 0;
       for (var k in albums) {
         if (albums[k].location) {
+          count++;
           createMarker(albums[k].cover.medium, albums[k].title, albums[k].location, albums[k]);
         }
       }
-      MapService.FitBoundsOfCurrentLayer();
+      if(count > 0) {
+        MapService.FitBoundsOfCurrentLayer();
+      }
     }
   }
 })();

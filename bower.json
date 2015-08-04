@@ -24,6 +24,7 @@
     "bootstrap-datepicker": "~1.4.0",
     "ngImgCrop": "~0.3.2",
     "angular-input-masks": "~2.0.0",
+    "ng-tags-input": "~3.0.0",
     "angular-scroll-glue": "~2.0.6"
   },
   "devDependencies": {

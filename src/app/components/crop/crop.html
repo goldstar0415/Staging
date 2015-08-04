@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h3 class="margin-none">Edit thumbnail</h3>
+</div>
+<div class="modal-body">
+  <div class="miniatures">
+    <div class="col-sm-6 crop-area">
+      <img-crop image="Crop.image" result-image="Crop.resultImage" area-type="square" result-image-size="160" change-on-fly="true"></img-crop>
+    </div>
+
+    <div class="col-sm-3"><img ng-src="{{Crop.resultImage}}" class="avatar-big">
+    </div>
+    <div class="col-sm-6"><img ng-src="{{Crop.resultImage}}" class="avatar-small">
+    </div>
+  </div>
+</div>
+<div class="modal-footer col-xs-12 clearfix">
+  <button class="btn btn-success pull-left col-sm-2 col-xs-5 button-my" type="button" ng-click="Crop.save();">Save
+  </button>
+  <button class="btn btn-primary pull-left col-sm-2 col-xs-5 button-my" type="button" ng-click="Crop.cancel();">Cancel
+  </button>
+</div>

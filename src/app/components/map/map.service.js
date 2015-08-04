@@ -300,16 +300,22 @@
         return layer;
       }
 
+      function GetDraggableLayer() {
+        return draggableMarkerLayer;
+      }
+
       //Layers
       function ChangeState(state) {
         switch (state.toLowerCase()) {
           case "big":
             showEventsLayer(true);
             $rootScope.mapState = "full-size";
+            map.scrollWheelZoom.enable();
             break;
           case "small":
             showOtherLayers();
             $rootScope.mapState = "small-size";
+            map.scrollWheelZoom.disable();
             break;
           case "hidden":
             $rootScope.mapState = "hidden";
@@ -594,7 +600,7 @@
         return marker;
       }
 
-      function RemoveMarker(Marker) {
+      function RemoveMarker(Marker, callback) {
         //IMPORTANT:
         //I used this construction because L.MarkerCluster is not supporting draggable markers
         //But we still need to cluster markers on some pages. So all draggable marker will be in draggable marker layer
@@ -603,6 +609,8 @@
         } else {
           GetCurrentLayer().removeLayer(Marker);
         }
+
+        if(callback) callback();
       }
 
       function CreateCustomIcon(iconUrl, className, iconSize) {
@@ -615,7 +623,7 @@
       }
 
       function BindMarkerToInput(Marker, Callback) {
-
+        Marker.off('dragend');
         Marker.on('dragend', function(e) {
           var latlng = Marker.getLatLng();
           GetAddressByLatlng(latlng, function(response) {
@@ -767,6 +775,7 @@
         InvalidateMapSize: InvalidateMapSize,
         GetControlGroup: GetControlGroup,
         GetCurrentLayer: GetCurrentLayer,
+        GetDraggableLayer: GetDraggableLayer,
         //Layers
         ChangeState: ChangeState,
         showEvents: showEventsLayer,

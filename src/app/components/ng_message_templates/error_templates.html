@@ -18,3 +18,12 @@
   <div ng-message="required">is required</div>
   <div ng-message="email">wrong email</div>
 </script>
+
+<script type="text/ng-template" id="tags-template">
+  <div class="tag-template">
+    <div>
+      <span>{{$getDisplayText()}}</span>
+      <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+    </div>
+  </div>
+</script>

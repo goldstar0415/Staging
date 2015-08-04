@@ -8,7 +8,9 @@
   /** @ngInject */
   function SettingsController($rootScope, currentUser, $scope, toastr, moment, $http, API_URL) {
     var vm = this;
+    vm.endDate = moment().toDate();
     vm.data = currentUser;
+    vm.data.birth_date = moment(vm.data.birth_date).format('YYYY-MM-DD');
     vm.privacyOptions = [
       {value: 0, label: 'All users have access'},
       {value: 1, label: 'Only followers&followings have access'},
