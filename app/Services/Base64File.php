@@ -121,7 +121,7 @@ class Base64File
     public function save($path = null)
     {
         if ($path === null) {
-            $path = storage_path('tmp/') . str_random();
+            $path = '/tmp/php' . str_random(6) . '.' . explode('/', $this->getMime())[1]; //TODO: remove extension
         }
         if (File::put($path, $this->getDecodedData()) === false) {
             return false;

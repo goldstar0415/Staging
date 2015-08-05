@@ -7,6 +7,7 @@ use App\Http\Requests\Spot\SpotDestroyRequest;
 use App\Http\Requests\Spot\SpotStoreRequest;
 use App\Http\Requests\Spot\SpotUpdateRequest;
 use App\Spot;
+use App\SpotPhoto;
 use App\SpotType;
 use Illuminate\Http\Request;
 
@@ -36,8 +37,11 @@ class SpotController extends Controller
      */
     public function store(SpotStoreRequest $request)
     {
-        $spot = new Spot($request->except(['locations', 'tags', 'files']));
-
+        $spot = new Spot($request->except(['locations', 'tags', 'files', 'cover']));
+        if ($request->hasFile('cover')) {
+            $cover = $request->file('cover');
+            $spot->cover = $cover->getRealPath();
+        }
         $request->user()->spots()->save($spot);
 
         $spot->tags = $request->input('tags');
@@ -62,7 +66,7 @@ class SpotController extends Controller
      */
     public function show($spot)
     {
-        return $spot->load('photos');
+        return $spot->load(['photos', 'points']);
     }
 
     /**
@@ -74,10 +78,23 @@ class SpotController extends Controller
      */
     public function update(SpotUpdateRequest $request, $spot)
     {
-        $spot->update($request->except(['locations', 'tags', 'files']));
+        $spot->update($request->except(['locations', 'tags', 'files', 'cover', 'deleted_files']));
+
+        if ($request->hasFile('cover')) {
+            $cover = $request->file('cover');
+            $spot->cover = $cover->getRealPath();
+        }
 
         $spot->tags = $request->input('tags');
         $spot->locations = $request->input('locations');
+
+        $spot->save();
+
+        $deleted_files = $request->input('deleted_files');
+
+        if ($spot->photos()->find($deleted_files)->count() === count($deleted_files)) {
+            SpotPhoto::destroy($deleted_files);
+        }
 
         if ($request->has('files')) {
             foreach ($request->file('files') as $file) {
