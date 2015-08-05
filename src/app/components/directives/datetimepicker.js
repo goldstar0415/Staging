@@ -24,7 +24,7 @@
             format: format,
             formatDate: format,
             minDate: s.startDate || false,
-            maxDate: s.endDate,
+            maxDate: s.endDate || false,
             mask: true,
             closeOnDateSelect: true,
             onSelectDate: onSelectDate,
@@ -34,10 +34,6 @@
                 minDate: s.startDate || false
               });
             }
-          });
-
-          s.$watch('startDate', function() {
-            s.model = '';
           });
 
           function onSelectDate(date, $i) {

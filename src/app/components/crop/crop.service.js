@@ -39,11 +39,16 @@
     vm.image = '';
     vm.resultImage = '';
 
-    var reader = new FileReader();
-    reader.onload = function (evt) {
-      vm.image = evt.target.result;
-    };
-    reader.readAsDataURL(image);
+    if(typeof image == 'string') {
+      vm.image = image;
+    } else {
+      var reader = new FileReader();
+      reader.onload = function (evt) {
+        vm.image = evt.target.result;
+      };
+      reader.readAsDataURL(image);
+    }
+
 
     vm.save = function() {
       $modalInstance.close(vm.resultImage);
