@@ -1,0 +1,17 @@
+<form class="new-post clearfix" name="form" ng-submit="NgInput.submit(form)" novalidate>
+      <textarea name="message"
+                ng-model="NgInput.message.body"
+                placeholder="Start typing..."
+                ng-focus="NgInput.onFocus()"
+                ctrl-enter="NgInput.submit(form)"
+                required></textarea>
+
+  <hr>
+  <input type="submit" class="submit-send" value="Send">
+  <a class="add-photo" ng-click="NgInput.openPhotosModal()"></a>
+  <a class="add-attach" ng-click="NgInput.openActivityModal()"></a>
+
+</form>
+
+<div ng-include="'app/components/ng_input/photos_modal.html'"></div>
+<div ng-include="'app/components/ng_input/activity_modal.html'"></div>

@@ -2025,7 +2025,6 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
       });
 
       $modalStack.open = function (modalInstance, modal) {
-
         openedWindows.add(modalInstance, {
           deferred: modal.deferred,
           modalScope: modal.scope,
@@ -2174,7 +2173,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
                   modalScope[modalOptions.controllerAs] = ctrlInstance;
                 }
               }
-
+              console.log(modalOptions);
               $modalStack.open(modalInstance, {
                 scope: modalScope,
                 deferred: modalResultDeferred,
@@ -2183,6 +2182,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
                 keyboard: modalOptions.keyboard,
                 backdropClass: modalOptions.backdropClass,
                 modalClass: modalOptions.modalClass,
+                modalContentClass: modalOptions.modalContentClass,
                 windowClass: modalOptions.windowClass,
                 windowTemplateUrl: modalOptions.windowTemplateUrl,
                 size: modalOptions.size
@@ -4063,7 +4063,7 @@ angular.module("template/modal/backdrop.html", []).run(["$templateCache", functi
 angular.module("template/modal/window.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/modal/window.html",
     "<div tabindex=\"-1\" role=\"dialog\" class=\"modal fade {{modalClass}} \" ng-class=\"{in: animate}\" ng-style=\"{'z-index': 1050 + index*10, display: 'block'}\" ng-click=\"close($event)\">\n" +
-    "    <div class=\"modal-dialog\" ng-class=\"{'modal-sm': size == 'sm', 'modal-lg': size == 'lg'}\"><div class=\"modal-content\" modal-transclude></div></div>\n" +
+    "    <div class=\"modal-dialog\" ng-class=\"{'modal-sm': size == 'sm', 'modal-lg': size == 'lg'}\"><div class=\"modal-content {{modalContentClass}} \" modal-transclude></div></div>\n" +
     "</div>");
 }]);
 

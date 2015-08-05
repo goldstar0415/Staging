@@ -10,7 +10,7 @@
     var vm = this;
 
     vm.user = user;
-    vm.message = '';
+    vm.message = {};
     vm.glued = true;
     vm.messages = messages;
     vm.messages.data = ChatService.groupByDate(messages.data);
@@ -19,22 +19,19 @@
     vm.deleteMessage = deleteMessage;
 
 
-    function sendMessage(form) {
-      if (form.$valid) {
-        Message.save({
-            user_id: user.id,
-            message: vm.message
-          },
-          function success(message) {
-            ChatService.pushToToday(message);
-            vm.message = '';
-          },
-          function error(resp) {
-            console.log(resp);
-            toastr.error('Send message failed');
-          });
-
-      }
+    function sendMessage() {
+      Message.save({
+          user_id: user.id,
+          message: vm.message
+        },
+        function success(message) {
+          ChatService.pushToToday(message);
+          vm.message = {};
+        },
+        function error(resp) {
+          console.log(resp);
+          toastr.error('Send message failed');
+        });
     }
 
     function markAsRead() {
@@ -61,7 +58,9 @@
     function deleteMessage(id) {
       Message.delete({id: id}, function () {
         angular.forEach(vm.messages.data, function (groupMessages) {
-          groupMessages.messages = _.reject(groupMessages.messages, function(item){ return item.id == id })
+          groupMessages.messages = _.reject(groupMessages.messages, function (item) {
+            return item.id == id
+          })
         });
       });
     }

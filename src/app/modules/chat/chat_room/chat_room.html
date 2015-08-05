@@ -202,19 +202,6 @@
 
   <!--        Форма                -->
   <div class="col-xs-12 dialog-form">
-    <form class="new-post clearfix" name="form" ng-submit="ChatRoom.sendMessage(form)" novalidate>
-      <textarea name="message"
-                ng-model="ChatRoom.message"
-                placeholder="Start typing..."
-                ng-focus="ChatRoom.markAsRead()"
-                ctrl-enter="ChatRoom.sendMessage(form)"
-                required></textarea>
-
-      <hr>
-      <input type="submit" class="submit-send" value="Send">
-      <a class="add-photo"></a>
-      <a class="add-attach"></a>
-
-    </form>
+    <ng-input message="ChatRoom.message" on-submit="ChatRoom.sendMessage()" on-focus="ChatRoom.markAsRead()"></ng-input>
   </div>
 </div>
