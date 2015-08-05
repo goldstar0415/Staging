@@ -17,7 +17,7 @@
             console.log('new message ', data);
             ChatService.onNewMessage(data);
           });
-          socket.on('user.' + socket_id + ':App\\Events\\OnReadMessage', function (data) {
+          socket.on('user.' + socket_id + ':App\\Events\\OnMessageRead', function (data) {
             console.log('read message ', data);
             ChatService.onReadMessage(data);
           });

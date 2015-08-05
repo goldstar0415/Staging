@@ -11,22 +11,25 @@
 
     vm.user = user;
     vm.message = '';
+    vm.glued = true;
     vm.messages = messages;
+    vm.messages.data = ChatService.groupByDate(messages.data);
     vm.sendMessage = sendMessage;
     vm.markAsRead = markAsRead;
     vm.deleteMessage = deleteMessage;
 
 
     function sendMessage(form) {
-      console.log(form);
       if (form.$valid) {
         Message.save({
             user_id: user.id,
             message: vm.message
           },
           function success(message) {
+            ChatService.pushToToday(message);
             vm.message = '';
-          }, function error(resp) {
+          },
+          function error(resp) {
             console.log(resp);
             toastr.error('Send message failed');
           });
@@ -35,19 +38,31 @@
     }
 
     function markAsRead() {
-      var countNew = _.where(vm.messages.data, {is_read: false});
-      if (countNew.length > 0) {
-        Message.markAsRead({user_id: user.id}, function () {
-          angular.forEach(vm.messages, function (message) {
-            message.is_read = true;
-          })
+      var countNewMessages = 0;
+      angular.forEach(vm.messages.data, function (groupMessages) {
+        angular.forEach(groupMessages.messages, function (message) {
+          if (!message.is_read && message.pivot.receiver_id == $rootScope.currentUser.id) {
+            countNewMessages++;
+          }
         });
+      });
+
+      if (countNewMessages > 0) {
+        Message.markAsRead({
+            user_id: user.id
+          },
+          function () {
+            ChatService.markAsRead($rootScope.currentUser.id);
+          }
+        );
       }
     }
 
-    function deleteMessage(idx) {
-      Message.delete({id: vm.messages[idx].id}, function () {
-        vm.messages.splice(idx, 1);
+    function deleteMessage(id) {
+      Message.delete({id: id}, function () {
+        angular.forEach(vm.messages.data, function (groupMessages) {
+          groupMessages.messages = _.reject(groupMessages.messages, function(item){ return item.id == id })
+        });
       });
     }
 

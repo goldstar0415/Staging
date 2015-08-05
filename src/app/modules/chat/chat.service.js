@@ -6,66 +6,104 @@
     .factory('ChatService', ChatService);
 
   /** @ngInject */
-  function ChatService() {
-    var dialogs = {data: []},
-      messages = {data: []};
+  function ChatService($state, $rootScope, Message) {
+    var messages = [],
+      dialogs = {},
+      utcOffset = moment().utcOffset();
 
     return {
-      dialogs: dialogs,
       messages: messages,
+      dialogs: dialogs,
       onNewMessage: onNewMessage,
-      onReadMessage: onReadMessage,
+      pushToToday: pushToToday,
       markAsRead: markAsRead,
-      deleteMessage: deleteMessage,
-      sendMessage: sendMessage
+      onReadMessage: onReadMessage,
+      groupByDate: groupByDate
     };
 
-    function listenDialogs() {
-      dialogs.data = [];
-      socket.emit('dialogs');
-
-      socket.on('dialogs', function (data) {
-        console.log(data);
-
-        dialogs.data = data
-      });
-    }
-
-    function listenMessages(userId) {
-      messages.data = [];
-      socket.emit('chat', userId);
-
-      socket.on('message:list', function (data) {
-        console.log(data);
-
-        messages.data = data;
-      });
-
-      socket.on('message:new', function (data) {
-        console.log(data);
-
-        messages.data.push(data);
-      })
-    }
 
     function onReadMessage(data) {
-
+      markAsRead(data.sender_id);
+      $rootScope.$apply();
     }
 
     function onNewMessage(data) {
+      console.log($state);
+      if ($state.current.name == 'chatRoom' && $state.params.user_id == data.user.id) {  //if user in chat
+        data.message.pivot = {sender_id: data.user.id, receiver_id: $rootScope.currentUser.id};
+        pushToToday(data.message);
+      } else if ($state.current.name == 'chat') {
+        _.each(dialogs, function (dialog) {
 
+        });
+      } else {
+
+      }
+
+      $rootScope.$apply();
     }
 
-    function sendMessage(message) {
-      socket.emit('message:send', message);
+    function pushToToday(message) {
+      message.created_at = _convertDate(moment(message.created_at).add(utcOffset, 'm'));
+
+      _addToMessages('Today', message);
     }
 
-    function markAsRead() {
-      socket.emit('message:read');
+
+    function groupByDate(chatMessages) {
+      chatMessages = chatMessages.reverse();
+      messages = [];
+
+      var groupedMessagesObject = _.groupBy(chatMessages, function (item) {
+        var createdAt = moment(item.created_at).add(utcOffset, 'm');
+        item.created_at = _convertDate(createdAt);
+        return createdAt.format("MM.DD.YYYY");
+      });
+
+      for (var k in groupedMessagesObject) {
+        var createdAt = moment(k, 'MM.DD.YYYY');
+
+        var day = createdAt.isSame(moment(), 'day') ? 'Today' : createdAt.format('MM.DD.YYYY');
+        messages.push({
+          day: day,
+          messages: groupedMessagesObject[k]
+        });
+      }
+
+      console.log(messages);
+      return messages;
     }
 
-    function deleteMessage(id) {
-      socket.emit('message:delete', id);
+    function _addToMessages(day, message) {
+      var groupDay = _.find(messages, {day: day});
+      if (!groupDay) {
+        groupDay = {
+          day: day,
+          messages: []
+        };
+        messages.push(groupDay);
+      }
+      groupDay.messages.push(message);
+    }
+
+    function _convertDate(date) {
+      if (date.diff(moment(), 'hour') == 0) {
+        date = date.fromNow();
+      } else {
+        date = date.format('MMM DD, YYYY H:mm A');
+      }
+
+      return date;
+    }
+
+    function markAsRead(user_id) {
+      angular.forEach(messages, function (groupMessages) {
+        angular.forEach(groupMessages.messages, function (message) {
+          if (message.pivot.receiver_id == user_id) {
+            message.is_read = true;
+          }
+        });
+      });
     }
 
   }

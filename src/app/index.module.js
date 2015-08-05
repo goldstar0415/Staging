@@ -16,9 +16,9 @@
       'snap',
       'angular-loading-bar',
       'ngImgCrop',
+      'luegg.directives',
       'ui.select',
-      'ui.utils.masks',
-      'ngTagsInput'
+      'ui.utils.masks'
     ])
     .animation('.mapResize', [function() {
       return {

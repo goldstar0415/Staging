@@ -1,0 +1,86 @@
+.ivent {
+    padding: 15px;
+    background: rgba(239, 243, 241, 0.5);
+    border-top: 1px solid #d9d9d9;
+    box-shadow: -1px 0 5px rgba(0, 0, 0, 0.5);
+    &:hover {
+        background: rgba(211, 229, 232, .34);
+    }
+    .padding-0 {
+        padding: 0;
+    }
+    .ivent-logo {
+        img {
+            width: 42px;
+            height: 42px;
+            border: 3px solid $white;
+            border-radius: 30px;
+        }
+    }
+    .date {
+    
+        font-size: 11px;
+        color: #808080;
+        p{ margin-bottom: 0;}
+    }
+    .name {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 5px 0 0 0;
+    }
+    .location {
+        font-size: 14px;
+        color: #808080;
+    }
+    .description {
+        height: 73px;
+        overflow: hidden;
+        font-size: 13px;
+    }
+    .ivent-nav {
+       
+        margin-top: 40px;
+        .big-plus 
+        {
+            display: inline-block;
+             float: right;
+            padding: 0;
+            width:  12px;
+            background: url(/assets/img/icons/share.png) no-repeat left;
+            &:hover {
+                background: url(/assets/img/icons/share.png) no-repeat right;
+            }
+//           
+        }
+        a {
+            display: inline-block;
+            height: 13px;
+           
+            padding: 0 0 0 15px;
+            font-size: 13px;
+            color: #00b7f3;
+            margin: 0 15px 10px 0;
+            &:hover {
+                color: #0874be;
+            }
+        }
+        .save {
+            background: url(/assets/img/icons/tools.png) no-repeat -4px -6px;
+            &:hover {
+                background: url(/assets/img/icons/tools.png) no-repeat -4px -23px;
+            }
+        }
+        .favorites {
+            background: url(/assets/img/icons/tools.png) no-repeat -4px -57px;
+            &:hover {
+                background: url(/assets/img/icons/tools.png) no-repeat -4px -74px;
+            }
+        }
+        .invite {
+            background: url(/assets/img/icons/tools.png) no-repeat -4px -111px;
+            &:hover {
+                background: url(/assets/img/icons/tools.png) no-repeat -4px -128px;
+            }
+        }
+    }
+}

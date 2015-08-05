@@ -6,9 +6,10 @@
     .controller('ChatController', ChatController);
 
   /** @ngInject */
-  function ChatController(dialogs) {
+  function ChatController(dialogs, ChatService) {
     var vm = this;
     vm.dialogs = dialogs;
+    ChatService.dialogs = dialogs;
 
   }
 })();

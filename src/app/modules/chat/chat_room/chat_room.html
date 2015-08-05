@@ -5,74 +5,85 @@
   </h2>
   <hr>
 
-  <div class="col-xs-12 padding-0">
-    <h4 class="date-dialog-day">12.12.2016</h4>
+  <div class="posts-chat clearfix" scroll-glue="ChatRoom.glued">
+    <div class="show-previous">
+      <a href="#">Show previous posts</a>
+    </div>
 
-    <div ng-repeat="message in ChatRoom.messages.data track by $index">
+    <div class="col-xs-12 padding-0">
 
+      <div ng-repeat="messageGroup in ChatRoom.messages.data track by $index ">
+        <h4 class="date-dialog-day">{{messageGroup.day}}</h4>
 
-      <!--       Dialog-User                 -->
-      <div class="col-xs-12 dialog-user" ng-if="currentUser.id == message.pivot.sender_id" ng-class="{new: !message.is_read}">
-        <div class="col-xs-12 user-name">
-          <h3 class="right">
-            <a ui-sref="profile({user_id: currentUser.id})">
-              {{currentUser.first_name}} {{currentUser.last_name}}
-            </a>
-          </h3>
-        </div>
-        <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 padding-0">
+         <div  ng-repeat="message in messageGroup.messages">
 
-          <div class="col-xs-12 dialog-content">
-            <div class="dial">
-              <p>{{message.body}}</p>
+          <!--       Dialog-User                 -->
+          <div class="col-xs-12 dialog-user" ng-if="currentUser.id == message.pivot.sender_id"
+               ng-class="{new: !message.is_read}">
+            <div class="col-xs-12 user-name">
+              <h3 class="right">
+                <a ui-sref="profile({user_id: currentUser.id})">
+                  {{currentUser.first_name}} {{currentUser.last_name}}
+                </a>
+              </h3>
+            </div>
+            <div
+              class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 padding-0">
+
+              <div class="col-xs-12 dialog-content">
+                <div class="dial">
+                  <p>{{message.body}}</p>
+                </div>
+              </div>
+              <div>
+                <p class="date right">{{message.created_at }}</p>
+              </div>
+            </div>
+            <div class="col-sm-1 col-xs-2 ">
+              <a ui-sref="profile({user_id: currentUser.id})">
+                <img ng-src="{{currentUser.avatar_url.thumb}}" class="avatar">
+              </a>
+            </div>
+            <div class="delete-user">
+              <a ng-click="ChatRoom.deleteMessage(message.id)">
+                <img src="/assets/img/icons/del.png">
+              </a>
             </div>
           </div>
-          <div>
-            <p class="date right">{{message.created_at | fromNow}}</p>
-          </div>
-        </div>
-        <div class="col-sm-1 col-xs-2 ">
-          <a ui-sref="profile({user_id: currentUser.id})">
-            <img ng-src="{{currentUser.avatar_url.thumb}}" class="avatar">
-          </a>
-        </div>
-        <div class="delete-user">
-          <a ng-click="ChatRoom.deleteMessage(message.id)">
-            <img src="/assets/img/icons/del.png">
-          </a>
-        </div>
-      </div>
 
-      <!--       Dialog-friend                     -->
-      <div class="col-xs-12 dialog-friend" ng-if="ChatRoom.user.id == message.pivot.sender_id"
-           ng-class="{new: !message.is_read}">
-        <div class="col-xs-12 user-name ">
-          <h3>
-            <a ui-sref="profile({user_id: ChatRoom.user.id})">
-              {{ChatRoom.user.first_name}} {{ChatRoom.user.last_name}}
-            </a>
-          </h3>
-        </div>
-        <div class="col-sm-1 col-xs-2  ">
-          <a ui-sref="profile({user_id: ChatRoom.user.id})">
-            <img ng-src="{{ChatRoom.user.avatar_url.thumb}}" class="avatar">
-          </a>
-        </div>
-        <div class=" col-xs-10 ">
+          <!--       Dialog-friend                     -->
+          <div class="col-xs-12 dialog-friend" ng-if="ChatRoom.user.id == message.pivot.sender_id"
+               ng-class="{new: !message.is_read}">
+            <div class="col-xs-12 user-name ">
+              <h3>
+                <a ui-sref="profile({user_id: ChatRoom.user.id})">
+                  {{ChatRoom.user.first_name}} {{ChatRoom.user.last_name}}
+                </a>
+              </h3>
+            </div>
+            <div class="col-sm-1 col-xs-2  ">
+              <a ui-sref="profile({user_id: ChatRoom.user.id})">
+                <img ng-src="{{ChatRoom.user.avatar_url.thumb}}" class="avatar">
+              </a>
+            </div>
+            <div class=" col-xs-10 ">
 
-          <div class="col-xs-12 dialog-content-friend ">
-            <div class="dial">
-              <p>{{message.body}}</p>
+              <div class="col-xs-12 dialog-content-friend ">
+                <div class="dial">
+                  <p>{{message.body}}</p>
+                </div>
+              </div>
+              <div>
+                <p class="date left">{{message.created_at }}</p>
+              </div>
+            </div>
+            <div class="delete-friend">
+              <a ng-click="ChatRoom.deleteMessage(message.id)">
+                <img src="/assets/img/icons/del.png">
+              </a>
             </div>
           </div>
-          <div>
-            <p class="date ">{{message.created_at | fromNow}}</p>
-          </div>
-        </div>
-        <div class="delete-friend">
-          <a ng-click="ChatRoom.deleteMessage($index)">
-            <img src="/assets/img/icons/del.png">
-          </a>
+
         </div>
       </div>
     </div>
@@ -197,7 +208,7 @@
                 placeholder="Start typing..."
                 ng-focus="ChatRoom.markAsRead()"
                 ctrl-enter="ChatRoom.sendMessage(form)"
-                required ></textarea>
+                required></textarea>
 
       <hr>
       <input type="submit" class="submit-send" value="Send">

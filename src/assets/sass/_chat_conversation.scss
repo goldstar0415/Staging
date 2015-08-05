@@ -26,6 +26,22 @@
   hr {
     height: 1px;
     background: #e9edf0;
+    margin-bottom: 0;
+  }
+  .show-previous{
+    text-align: center;
+    font-size: 11px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9edf0;
+    a {
+      color: #337ab7;
+    }
+  }
+  .posts-chat{
+    max-height: 48rem;
+    overflow: auto;
+    padding-bottom: 10px;
   }
   .date {
     font-size: 11px;
@@ -162,7 +178,7 @@
     }
   }
   .dialog-form {
-    margin-top: 25px;
+    border-top: 1px solid #e9edf0;
     padding: 0;
 
     .new-post {
