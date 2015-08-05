@@ -6,8 +6,10 @@
     .controller('SpotCreateController', SpotCreateController);
 
   /** @ngInject */
-  function SpotCreateController(toastr, $scope, MapService, UploaderService, CropService, moment) {
+  function SpotCreateController($stateParams, $state, toastr, $scope, MapService, UploaderService, CropService, moment, API_URL, $http) {
     var vm = this;
+    vm.deletedImages = [];
+    vm.edit = $state.current.edit || false;
     vm.restrictions = {
       links: 5,
       tags: 7,
@@ -17,7 +19,9 @@
     };
     vm.type = 'Event';
     vm.selectCover = false;
+    vm.category_id = '';
     vm.startDate = moment().toDate();
+    vm.categories = {};
 
     //vars
     vm.tags = [];
@@ -26,31 +30,38 @@
     vm.locations = [];
     vm.images = UploaderService.images;
 
-    $scope.$watch('SpotCreate.images.files', function() {
+    //load data for editing
+
+
+    $scope.$watch('SpotCreate.images.files.length', function () {
       vm.checkFilesRestrictions();
+    });
+    $scope.$watch('SpotCreate.type', function () {
+      vm.category_id = '';
+      vm.getCategories(vm.type);
     });
 
     function filterLocations() {
-      var array = _.reject(vm.locations, function(item) {
-          return item.isDelete || false;
-        });
+      var array = _.reject(vm.locations, function (item) {
+        return item.isDelete || false;
+      });
 
-      array = _.map(array, function(item) {
+      array = _.map(array, function (item) {
         return {location: item.location, address: item.address};
       });
 
       return array;
     }
     function filterTags() {
-      var array = _.map(vm.tags, function(item) {
+      var array = _.map(vm.tags, function (item) {
         return item.text;
       });
 
       return array;
     }
 
-    vm.create = function(form) {
-      if(form.$valid) {
+    vm.create = function (form) {
+      if (form.$valid && vm.category_id !== '') {
         var request = {};
         request.title = vm.title;
         request.description = vm.description;
@@ -58,17 +69,30 @@
         request.tags = filterTags();
         request.videos = vm.youtube_links;
         request.location = filterLocations();
-        request.files = vm.images.files;
         request.cover = vm.cover;
+        request.spot_type_category_id = vm.category_id;
 
-
-        if(vm.type === 'Event') {
+        if(vm.edit) {
+          request.deleted_files = vm.deletedImages;
+        }
+        if (vm.type === 'Event') {
           request.start_date = vm.start_date + ' ' + vm.start_time + ':00';
           request.end_date = vm.end_date + ' ' + vm.end_time + ':00';
         }
 
-        if(request.location.length > 0) {
+        if (request.location.length > 0) {
           console.log(request);
+
+          //send request here//
+          UploaderService
+            .upload(API_URL + '/spots', request)
+            .then(function (resp) {
+              console.log(resp);
+              $state.go('spot', {spot_id: resp.data.spot_id});
+            })
+            .catch(function (resp) {
+              toastr.error('Upload failed');
+            });
         } else {
           toastr.error('Please add at least one location');
         }
@@ -78,8 +102,8 @@
 
     };
     //links
-    vm.addLink = function(validLink) {
-      if(validLink && vm.newLink) {
+    vm.addLink = function (validLink) {
+      if (validLink && vm.newLink) {
         vm.links.unshift(vm.newLink);
         vm.newLink = '';
       } else {
@@ -87,12 +111,12 @@
         vm.newLink = '';
       }
     };
-    vm.removeLink = function(index) {
+    vm.removeLink = function (index) {
       vm.links.splice(index, 1);
     };
     //tags
-    vm.onTagsAdd = function() {
-      if(vm.tags.length < vm.restrictions.tags) {
+    vm.onTagsAdd = function () {
+      if (vm.tags.length < vm.restrictions.tags) {
         return true;
       } else {
         toastr.error('You can\'t add more than ' + vm.restrictions.tags + ' tags');
@@ -100,9 +124,9 @@
       }
     };
     //location
-    vm.addLocation = function(item) {
+    vm.addLocation = function (item) {
       var item = angular.copy(item);
-      if(item && item.address && item.location) {
+      if (item && item.address && item.location) {
         vm.locations.unshift(item);
         vm.newLocation = {};
       } else {
@@ -110,36 +134,51 @@
         vm.newLocation = {};
       }
     };
-    vm.removeLocation = function(index) {
+    vm.removeLocation = function (index) {
       var marker = vm.locations[index].marker;
       MapService.RemoveMarker(marker);
       vm.locations[index].isDelete = true;
     };
     //photos
-    vm.checkFilesRestrictions = function() {
-      if(vm.images.files.length > vm.restrictions.images) {
-        toastr.error('You can\'t add more than '+ vm.restrictions.images + ' photos');
+    vm.checkFilesRestrictions = function () {
+      if (vm.images.files.length > vm.restrictions.images) {
+        toastr.error('You can\'t add more than ' + vm.restrictions.images + ' photos');
         var l = vm.images.files.length - vm.restrictions.images;
         vm.images.files.splice(vm.restrictions.images, l);
       }
     };
-    vm.deleteImage = function (idx) {
-      vm.images.files.splice(idx, 1);
+    vm.deleteImage = function (idx, id) {
+      if(id) {
+        vm.deletedImages.push(id);
+        vm.images.files.splice(idx, 1);
+      } else {
+        vm.images.files.splice(idx, 1);
+      }
     };
-    vm.cropImage = function(image){
-      if(vm.selectCover) {
-        CropService.crop(image, function(result) {
-          if(result) {
+    vm.cropImage = function (image) {
+      if (vm.selectCover) {
+        CropService.crop(image, function (result) {
+          if (result) {
+            vm.currentCover_original = image;
             vm.cover = result;
             vm.selectCover = false;
           }
         });
       }
     };
-
+    vm.editCover = function () {
+      if(vm.currentCover_original) {
+        CropService.crop(vm.currentCover_original, function (result) {
+          if (result) {
+            vm.cover = result;
+            vm.selectCover = false;
+          }
+        });
+      };
+    };
     //videos
-    vm.addYoutubeLink = function(validLink) {
-      if(validLink && vm.newYoutubeLink) {
+    vm.addYoutubeLink = function (validLink) {
+      if (validLink && vm.newYoutubeLink) {
         vm.youtube_links.unshift(vm.newYoutubeLink);
         vm.newYoutubeLink = '';
       } else {
@@ -147,9 +186,50 @@
         vm.newYoutubeLink = '';
       }
     };
-    vm.removeYoutubeLink = function(index) {
+    vm.removeYoutubeLink = function (index) {
       vm.youtube_links.splice(index, 1);
     };
+    //categories
+    vm.getCategories = function (type) {
+      if (!vm.categories[type]) {
+        $http.get(API_URL + '/spots/categories?type=' + type.toLowerCase())
+          .then(function (response) {
+            vm.categories[type] = response.data;
+          }, function (response) {
+            setTimeout(vm.getCategories(type), 1000);
+          })
+      }
+    };
+    //load data for spot editing
+    vm.getSpotData = function(spot_id) {
+      $http.get(API_URL + '/spots/'+spot_id).then(
+        function(response){
+          var data = response.data;
+          vm.title = data.title;
+          vm.description = data.description;
+          vm.links = data.web_sites;
+          vm.category_id = data.spot_type_category_id;
+          vm.tags = data.tags || [];
+          vm.currentCover_original = data.cover_url.original;
+          if(data.photos) {
+            vm.images.files = data.photos;
+          }
+          if(data.start_date && data.end_date) {
+            vm.start_date = moment(data.start_date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
+            vm.end_date = moment(data.end_date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
+            vm.start_time = moment(data.start_date, 'YYYY-MM-DD HH:mm:ss').format('HH:mm');
+            vm.end_time = moment(data.end_date, 'YYYY-MM-DD HH:mm:ss').format('HH:mm');
+          }
+          console.log(response.data);
+        },
+        function(response) {
+          console.log('Get spot data error:', response.data);
+        }
+      )
+    };
 
+    if(vm.edit) {
+      vm.getSpotData($stateParams.spot_id);
+    }
   }
 })();

@@ -8,6 +8,7 @@
   /** @ngInject */
   function CreateFriendController(MapService, friend, toastr, $state, Friends) {
     var vm = this;
+    vm.endDate = moment().toDate();
     vm.friend = friend;
     vm.edit = $state.current.edit;
     var params = {

@@ -68,16 +68,7 @@
         parent: 'profile_menu',
         locate: 'current',
         mapState: 'small',
-        edit: true
-      })
-      .state('spot', {
-        url: '/spot/:spot_id',
-        templateUrl: 'app/modules/spot/spot.html',
-        controller: 'SpotController',
-        controllerAs: 'Spot',
-        parent: 'profile_menu',
-        locate: 'none',
-        mapState: 'small'
+        edit: false
       })
       .state('spot_edit', {
         url: '/spot/:spot_id/edit',
@@ -88,6 +79,15 @@
         locate: 'none',
         mapState: 'small',
         edit: true
+      })
+      .state('spot', {
+        url: '/spot/:spot_id',
+        templateUrl: 'app/modules/spot/spot.html',
+        controller: 'SpotController',
+        controllerAs: 'Spot',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small'
       })
       //Single plan page
       .state('plan', {
