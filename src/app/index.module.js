@@ -17,6 +17,7 @@
       'angular-loading-bar',
       'ngImgCrop',
       'luegg.directives',
+      'ngTagsInput',
       'ui.select',
       'ui.utils.masks'
     ])
