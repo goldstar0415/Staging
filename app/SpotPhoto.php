@@ -11,6 +11,8 @@ class SpotPhoto extends BaseModel implements StaplerableInterface
     
     protected $fillable = ['photo'];
 
+    protected $appends = ['photo_url'];
+
     /**
      * {@inheritdoc}
      */
@@ -18,6 +20,11 @@ class SpotPhoto extends BaseModel implements StaplerableInterface
     {
         $this->hasAttachedFile('photo');
         parent::__construct($attributes);
+    }
+
+    public function getPhotoUrlAttribute()
+    {
+        return $this->getPictureUrls('photo');
     }
 
     public function spot()

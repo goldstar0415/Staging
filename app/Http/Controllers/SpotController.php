@@ -43,7 +43,7 @@ class SpotController extends Controller
         $spot->tags = $request->input('tags');
         $spot->locations = $request->input('locations');
 
-        if ($request->has('files')) {
+        if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 $spot->photos()->create([
                     'photo' => $file
@@ -57,12 +57,12 @@ class SpotController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @param  Spot $spot
+     * @return $this
      */
-    public function show($id)
+    public function show($spot)
     {
-        return $id;
+        return $spot->load('photos');
     }
 
     /**

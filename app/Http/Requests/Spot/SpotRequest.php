@@ -23,7 +23,6 @@ class SpotRequest extends Request
      */
     public function rules()
     {
-        $this->merge(['locations' => json_decode($this->input('locations'), true)]);//TODO: change
         $rules = [
             'cover' => 'image|max:5000',
             'title' => 'required|string|max:255',
@@ -55,8 +54,8 @@ class SpotRequest extends Request
             $rules = array_merge($rules, $this->arrayFieldRules('web_sites', 'url', false));
         }
 
-        if ($this->has('files')) {
-            $rules = array_merge($rules, $this->arrayFieldRules('files', 'image|max:5000', false));
+        if ($this->hasFile('files')) {
+            $rules = array_merge($rules, $this->arrayFieldRules('files', 'image|max:5000'));
         }
 
         return $rules;
