@@ -5,55 +5,38 @@
 
   <div class="modal-body ">
     <ul class="nav nav-tabs font-weight600">
-      <li class="active"><a href="#album" data-toggle="tab">Albums</a>
+      <li ng-class="{active: !modal.selectedAlbum}">
+        <a>Albums</a>
       </li>
-      <li><a href="#photos" data-toggle="tab">Photos</a>
+      <li ng-class="{active: modal.selectedAlbum}" ng-if="modal.selectedAlbum">
+        <a>Photos</a>
       </li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane active choose-some-photos-body col-sm-12" id="album">
+      <div class="tab-pane choose-some-photos-body col-sm-12" ng-class="{active: !modal.selectedAlbum}">
+        <div class="choose-album col-sm-4" ng-repeat="item in modal.albums">
+          <img ng-src="{{item.cover.medium}}">
 
-        <div class="choose-album col-sm-4">
-          <img src="/assets/img/icons/02.png" class="">
-          <p><a href="#">Album name</a>
+          <p>
+            <a ng-click="modal.selectAlbum(item.id)">{{item.title}}</a>
           </p>
         </div>
-        <div class="choose-album col-sm-4">
-          <img src="/assets/img/icons/01.png" class="img-responsive">
-          <p><a href="#">Album name</a>
-          </p>
-        </div>
-        <div class="choose-album col-sm-4">
-          <img src="/assets/img/icons/02.png" class="img-responsive">
-          <p><a href="#">Album name</a>
-          </p>
-        </div>
-        <div class="choose-album col-sm-4">
-          <img src="/assets/img/icons/01.png" class="img-responsive">
-          <p><a href="#">Album name</a>
-          </p>
-        </div>
-        <div class="choose-album col-sm-4">
-          <img src="/assets/img/icons/02.png" class="img-responsive">
-          <p><a href="#">Album name</a>
-          </p>
-        </div>
+
+        <h4 ng-if="modal.albums.length < 1">No albums</h4>
+
       </div>
-      <div class="tab-pane choose-some-photos-body col-sm-12" id="photos">
-        <h3 class="choose-album-name">Album's name</h3>
-        <a href="#" class="back"></a>
-        <div class="choose-photo-album">
-          <img class="" src="/assets/img/icons/01.png">
-          <img class="" src="/assets/img/icons/02.png"><img class="" src="/assets/img/icons/01.png">
-          <img class="" src="/assets/img/icons/02.png"><img class="" src="/assets/img/icons/01.png">
-          <img class="" src="/assets/img/icons/02.png"><img class="" src="/assets/img/icons/01.png">
-          <img class="" src="/assets/img/icons/02.png"><img class="" src="/assets/img/icons/01.png">
-          <img class="" src="/assets/img/icons/02.png"><img class="" src="/assets/img/icons/01.png">
-          <img class="" src="/assets/img/icons/02.png"><img class="" src="/assets/img/icons/01.png">
-          <img class="" src="/assets/img/icons/02.png"><img class="" src="/assets/img/icons/01.png">
-          <img class="" src="/assets/img/icons/02.png">
-          <img class="" src="/assets/img/icons/01.png">
 
+      <div class="tab-pane choose-some-photos-body col-sm-12" ng-if="modal.selectedAlbum"
+           ng-class="{active: modal.selectedAlbum}">
+        <h3 class="choose-album-name">Album's name</h3>
+        <a class="back" ng-click="modal.selectedAlbum == null"></a>
+
+        <div class="choose-photo-album">
+          <img ng-repeat="item in modal.selectedAlbum.photos"
+               ng-src="{{item.photo_url.medium}}"
+               ng-click="modal.addPhoto(idx)">
+
+          <h4 ng-if="modal.selectedAlbum.photos.length < 1">No photos in album</h4>
         </div>
       </div>
     </div>

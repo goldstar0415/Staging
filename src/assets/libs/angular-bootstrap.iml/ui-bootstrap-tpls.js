@@ -1881,6 +1881,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
       },
       link: function (scope, element, attrs) {
         element.addClass(attrs.windowClass || '');
+        element.find('.modal-content').addClass(attrs.modalContentClass || '');
         scope.size = attrs.size;
 
         $timeout(function () {
@@ -2047,13 +2048,13 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
         var angularDomEl = angular.element('<div modal-window></div>');
         angularDomEl.attr({
           class: modal.modalClass,
+          'modal-content-class': modal.modalContentClass,
           'template-url': modal.windowTemplateUrl,
           'window-class': modal.windowClass,
           'size': modal.size,
           'index': openedWindows.length() - 1,
           'animate': 'animate'
         }).html(modal.content);
-
         var modalDomEl = $compile(angularDomEl)(modal.scope);
         openedWindows.top().value.modalDomEl = modalDomEl;
         body.append(modalDomEl);
@@ -2173,7 +2174,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
                   modalScope[modalOptions.controllerAs] = ctrlInstance;
                 }
               }
-              console.log(modalOptions);
+              modalScope.modalClass = modalOptions.modalClass;
               $modalStack.open(modalInstance, {
                 scope: modalScope,
                 deferred: modalResultDeferred,
@@ -4062,8 +4063,8 @@ angular.module("template/modal/backdrop.html", []).run(["$templateCache", functi
 
 angular.module("template/modal/window.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/modal/window.html",
-    "<div tabindex=\"-1\" role=\"dialog\" class=\"modal fade {{modalClass}} \" ng-class=\"{in: animate}\" ng-style=\"{'z-index': 1050 + index*10, display: 'block'}\" ng-click=\"close($event)\">\n" +
-    "    <div class=\"modal-dialog\" ng-class=\"{'modal-sm': size == 'sm', 'modal-lg': size == 'lg'}\"><div class=\"modal-content {{modalContentClass}} \" modal-transclude></div></div>\n" +
+    "<div tabindex=\"-1\" role=\"dialog\" class=\"modal fade  \" ng-class=\"{in: animate}\" ng-style=\"{'z-index': 1050 + index*10, display: 'block'}\" ng-click=\"close($event)\">\n" +
+    "    <div class=\"modal-dialog\" ng-class=\"{'modal-sm': size == 'sm', 'modal-lg': size == 'lg'}\"><div class=\"modal-content\" modal-transclude></div></div>\n" +
     "</div>");
 }]);
 

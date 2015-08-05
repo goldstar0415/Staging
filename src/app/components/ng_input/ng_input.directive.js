@@ -21,7 +21,7 @@
     };
 
     /** @ngInject */
-    function NgInputController($modal) {
+    function NgInputController($modal, $rootScope) {
       var vm = this;
       vm.message.attachments = {};
 
@@ -36,7 +36,15 @@
           templateUrl: 'PhotosModal.html',
           controller: PhotosModalController,
           controllerAs: 'modal',
-          modalContentClass: 'clearfix'
+          modalContentClass: 'clearfix',
+          resolve: {
+            albums: function (Album) {
+              return Album.query({user_id: $rootScope.currentUser.id}).$promise;
+            },
+            attachments: function () {
+              return vm.message.attachments;
+            }
+          }
         });
       };
 
@@ -45,28 +53,22 @@
       }
     }
 
-    function PhotosModalController(toastr, $rootScope, Message, $modalInstance) {
+    function PhotosModalController(Album, albums, attachments, $modalInstance) {
       var vm = this;
+      vm.albums = albums;
+      vm.attachments = attachments;
 
-      vm.save = function (form) {
-        if (form.$valid) {
-          Message.save({
-              user_id: $rootScope.profileUser.id,
-              message: vm.message
-            },
-            function success(message) {
-              toastr.info('Message sent');
+      vm.selectAlbum = function (id) {
+        vm.selectedAlbum =  Album.get({id: id}, function (album) {
 
-              $modalInstance.close();
-            }, function error(resp) {
-              console.log(resp);
-              toastr.error('Send message failed');
-            });
-        }
+          return album;
+        });
       };
 
-      vm.close = function () {
-        $modalInstance.close();
+      vm.addPhoto = function (idx) {
+        var photo = vm.selectedAlbum.photos.splice(idx, 1);
+        vm.attachments.images = vm.attachments.images || [];
+        vm.attachments.images.push(photo);
       };
     }
 
