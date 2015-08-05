@@ -60,18 +60,72 @@
       return array;
     }
 
+    //vm.create = function (form) {
+    //  if (form.$valid && vm.category_id !== '') {
+    //    var request = {};
+    //    request.title = vm.title;
+    //    request.description = vm.description;
+    //    request.web_site = vm.links;
+    //    request.tags = filterTags();
+    //    request.videos = vm.youtube_links;
+    //    request.location = filterLocations();
+    //    request.cover = vm.cover;
+    //    request.spot_type_category_id = vm.category_id;
+    //
+    //    if(vm.edit) {
+    //      request.deleted_files = vm.deletedImages;
+    //    }
+    //    if (vm.type === 'Event') {
+    //      request.start_date = vm.start_date + ' ' + vm.start_time + ':00';
+    //      request.end_date = vm.end_date + ' ' + vm.end_time + ':00';
+    //    }
+    //
+    //    if (request.location.length > 0) {
+    //      console.log(request);
+    //
+    //      //send request here//
+    //      UploaderService
+    //        .upload(API_URL + '/spots', request)
+    //        .then(function (resp) {
+    //          console.log(resp);
+    //          $state.go('spot', {spot_id: resp.data.spot_id});
+    //        })
+    //        .catch(function (resp) {
+    //          toastr.error('Upload failed');
+    //        });
+    //    } else {
+    //      toastr.error('Please add at least one location');
+    //    }
+    //  } else {
+    //    toastr.error('Invalid input');
+    //  }
+    //
+    //};
+
     vm.create = function (form) {
       if (form.$valid && vm.category_id !== '') {
+        var tags = filterTags();
+        var locations = filterLocations();
         var request = {};
         request.title = vm.title;
         request.description = vm.description;
-        request.web_site = vm.links;
-        request.tags = filterTags();
-        request.videos = vm.youtube_links;
-        request.location = filterLocations();
-        request.cover = vm.cover;
         request.spot_type_category_id = vm.category_id;
 
+        if(vm.cover) {
+          request.cover = vm.cover;
+        }
+        if(vm.links.length > 0){
+          request.web_sites = vm.links;
+        }
+        if(vm.youtube_links.length > 0) {
+          request.videos = vm.youtube_links;
+        }
+        if(locations.length > 0) {
+          request.locations = locations;
+        }
+        if(tags.length > 0) {
+          request.tags = tags;
+        }
         if(vm.edit) {
           request.deleted_files = vm.deletedImages;
         }
@@ -79,16 +133,20 @@
           request.start_date = vm.start_date + ' ' + vm.start_time + ':00';
           request.end_date = vm.end_date + ' ' + vm.end_time + ':00';
         }
-
-        if (request.location.length > 0) {
-          console.log(request);
+        if (request.locations && request.locations.length > 0) {
+          var req;
+          if(vm.edit) {
+            req = {payload: JSON.stringify(request), _method: "PUT"};
+          } else {
+            req = {payload: JSON.stringify(request)};
+          }
 
           //send request here//
           UploaderService
-            .upload(API_URL + '/spots', request)
+            .upload(API_URL + '/spots', req)
             .then(function (resp) {
               console.log(resp);
-              $state.go('spot', {spot_id: resp.data.spot_id});
+              $state.go('spot', {spot_id: resp.id});
             })
             .catch(function (resp) {
               toastr.error('Upload failed');
@@ -101,6 +159,7 @@
       }
 
     };
+
     //links
     vm.addLink = function (validLink) {
       if (validLink && vm.newLink) {
@@ -196,7 +255,7 @@
           .then(function (response) {
             vm.categories[type] = response.data;
           }, function (response) {
-            setTimeout(vm.getCategories(type), 1000);
+            setTimeout(vm.getCategories(type), 5000);
           })
       }
     };
