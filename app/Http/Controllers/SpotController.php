@@ -123,7 +123,7 @@ class SpotController extends Controller
      */
     public function destroy(SpotDestroyRequest $request, $spot)
     {
-        return $spot->delete();
+        return ['result' => $spot->delete()];
     }
 
     public function categories(SpotCategoriesRequest $request)
