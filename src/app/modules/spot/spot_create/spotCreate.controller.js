@@ -96,14 +96,19 @@
           request.start_date = vm.start_date + ' ' + vm.start_time + ':00';
           request.end_date = vm.end_date + ' ' + vm.end_time + ':00';
         }
+        var url = API_URL + '/spots';
+        var req = {};
+        req.payload = JSON.stringify(request);
         if(vm.edit) {
-          request._method = 'PUT';
+          req._method = 'PUT';
+          url = API_URL + '/spots/' + $stateParams.spot_id;
         }
+
         if (request.locations && request.locations.length > 0) {
 
           vm.images.files = rejectOldFiles();
             UploaderService
-            .upload(API_URL + '/spots', {payload: JSON.stringify(request)})
+            .upload(url, req)
             .then(function (resp) {
               $state.go('spot', {spot_id: resp.data.id});
             })
@@ -223,6 +228,7 @@
       $http.get(API_URL + '/spots/'+spot_id).then(
         function(response){
           var data = response.data;
+          vm.type = data.category.type.display_name;
           vm.title = data.title;
           vm.description = data.description;
           vm.links = data.web_sites;
