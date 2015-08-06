@@ -54,53 +54,16 @@
     }
     function filterTags() {
       var array = _.map(vm.tags, function (item) {
-        return item.text;
+        return item.name;
       });
 
       return array;
     }
-
-    //vm.create = function (form) {
-    //  if (form.$valid && vm.category_id !== '') {
-    //    var request = {};
-    //    request.title = vm.title;
-    //    request.description = vm.description;
-    //    request.web_site = vm.links;
-    //    request.tags = filterTags();
-    //    request.videos = vm.youtube_links;
-    //    request.location = filterLocations();
-    //    request.cover = vm.cover;
-    //    request.spot_type_category_id = vm.category_id;
-    //
-    //    if(vm.edit) {
-    //      request.deleted_files = vm.deletedImages;
-    //    }
-    //    if (vm.type === 'Event') {
-    //      request.start_date = vm.start_date + ' ' + vm.start_time + ':00';
-    //      request.end_date = vm.end_date + ' ' + vm.end_time + ':00';
-    //    }
-    //
-    //    if (request.location.length > 0) {
-    //      console.log(request);
-    //
-    //      //send request here//
-    //      UploaderService
-    //        .upload(API_URL + '/spots', request)
-    //        .then(function (resp) {
-    //          console.log(resp);
-    //          $state.go('spot', {spot_id: resp.data.spot_id});
-    //        })
-    //        .catch(function (resp) {
-    //          toastr.error('Upload failed');
-    //        });
-    //    } else {
-    //      toastr.error('Please add at least one location');
-    //    }
-    //  } else {
-    //    toastr.error('Invalid input');
-    //  }
-    //
-    //};
+    function rejectOldFiles() {
+      return _.reject(vm.images.files, function(item) {
+        return item.id ? true : false;
+      })
+    }
 
     vm.create = function (form) {
       if (form.$valid && vm.category_id !== '') {
@@ -114,10 +77,10 @@
         if(vm.cover) {
           request.cover = vm.cover;
         }
-        if(vm.links.length > 0){
+        if(vm.links && vm.links.length > 0){
           request.web_sites = vm.links;
         }
-        if(vm.youtube_links.length > 0) {
+        if(vm.youtube_links && vm.youtube_links.length > 0) {
           request.videos = vm.youtube_links;
         }
         if(locations.length > 0) {
@@ -133,20 +96,16 @@
           request.start_date = vm.start_date + ' ' + vm.start_time + ':00';
           request.end_date = vm.end_date + ' ' + vm.end_time + ':00';
         }
+        if(vm.edit) {
+          request._method = 'PUT';
+        }
         if (request.locations && request.locations.length > 0) {
-          var req;
-          if(vm.edit) {
-            req = {payload: JSON.stringify(request), _method: "PUT"};
-          } else {
-            req = {payload: JSON.stringify(request)};
-          }
 
-          //send request here//
-          UploaderService
-            .upload(API_URL + '/spots', req)
+          vm.images.files = rejectOldFiles();
+            UploaderService
+            .upload(API_URL + '/spots', {payload: JSON.stringify(request)})
             .then(function (resp) {
-              console.log(resp);
-              $state.go('spot', {spot_id: resp.id});
+              $state.go('spot', {spot_id: resp.data.id});
             })
             .catch(function (resp) {
               toastr.error('Upload failed');
@@ -267,11 +226,15 @@
           vm.title = data.title;
           vm.description = data.description;
           vm.links = data.web_sites;
+          vm.youtube_links = data.videos;
           vm.category_id = data.spot_type_category_id;
           vm.tags = data.tags || [];
           vm.currentCover_original = data.cover_url.original;
+          vm.locations = data.points;
           if(data.photos) {
-            vm.images.files = data.photos;
+            for(var k in data.photos) {
+              vm.images.files.push(data.photos[k]);
+            }
           }
           if(data.start_date && data.end_date) {
             vm.start_date = moment(data.start_date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
