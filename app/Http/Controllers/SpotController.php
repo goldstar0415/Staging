@@ -66,7 +66,7 @@ class SpotController extends Controller
      */
     public function show($spot)
     {
-        return $spot->load(['photos', 'points', 'tags']);
+        return $spot->load(['photos', 'points', 'tags', 'category.type']);
     }
 
     /**
@@ -78,7 +78,14 @@ class SpotController extends Controller
      */
     public function update(SpotUpdateRequest $request, $spot)
     {
-        $spot->update($request->except(['locations', 'tags', 'files', 'cover', 'deleted_files']));
+        $spot->update($request->except([
+            'locations',
+            'tags',
+            'files',
+            'cover',
+            'deleted_files',
+            '_method'
+        ]));
 
         if ($request->hasFile('cover')) {
             $cover = $request->file('cover');
@@ -92,7 +99,7 @@ class SpotController extends Controller
 
         $deleted_files = $request->input('deleted_files');
 
-        if ($spot->photos()->find($deleted_files)->count() === count($deleted_files)) {
+        if (!empty($deleted_files) and $spot->photos()->find($deleted_files)->count() === count($deleted_files)) {
             SpotPhoto::destroy($deleted_files);
         }
 

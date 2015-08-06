@@ -37,10 +37,12 @@ class SpotRequest extends Request
         ];
 
 
-        foreach ($this->input('locations') as $key => $location) {
-            $rules['locations.' . $key . '.address'] = 'string|max:255';
-            $rules['locations.' . $key . '.location.lat'] = 'numeric';
-            $rules['locations.' . $key . '.location.lng'] = 'numeric';
+        if ($this->has('locations')) {
+            foreach ($this->input('locations') as $key => $location) {
+                $rules['locations.' . $key . '.address'] = 'string|max:255';
+                $rules['locations.' . $key . '.location.lat'] = 'numeric';
+                $rules['locations.' . $key . '.location.lng'] = 'numeric';
+            }
         }
 
         if ($this->has('videos')) {
