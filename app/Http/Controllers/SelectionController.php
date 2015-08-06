@@ -48,7 +48,7 @@ class SelectionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request $request
+     * @param SelectionRequest $request
      * @param Area $area
      * @return Area
      */

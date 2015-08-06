@@ -155,7 +155,8 @@ return [
         Phaza\LaravelPostgis\DatabaseServiceProvider::class,
         Toin0u\Geotools\GeotoolsServiceProvider::class,
         Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class
+        Barryvdh\Cors\ServiceProvider::class,
+        Nwidart\LaravelForecast\LaravelForecastServiceProvider::class
     ],
 
     /*
@@ -208,7 +209,8 @@ return [
          */
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
-        'Geotools' => Toin0u\Geotools\Facade\Geotools::class
+        'Geotools' => Toin0u\Geotools\Facade\Geotools::class,
+        'Forecast' => Nwidart\LaravelForecast\ForecastFacade::class,
 
     ],
 

@@ -66,5 +66,6 @@ Route::get('message/{user_id}/read', 'ChatController@read');
  */
 Route::get('map/search', 'MapController@getSearch');
 Route::resource('selection', 'SelectionController', ['except' => ['create', 'edit']]);
+Route::get('weather', 'MapController@getWeather');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
