@@ -225,6 +225,7 @@
     };
     //load data for spot editing
     vm.getSpotData = function(spot_id) {
+      //TODO: add array to display all kinds of images (attachments from albums, photos for upload, and old photos)
       $http.get(API_URL + '/spots/'+spot_id).then(
         function(response){
           var data = response.data;
