@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, User, MapService, $rootScope, snapRemote, $state, toastr, DEBUG) {
+  function runBlock($log, User, MapService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService) {
 
     MapService.Init('map');
     $rootScope.timezonesList = moment.tz.names();
@@ -17,6 +17,7 @@
     });
 
     function onStateChangeSuccess(event, current, toParams, fromState, fromParams) {
+      UploaderService.images.files = [];
       $rootScope.previous = {
         state: fromState,
         params: fromParams
