@@ -66,7 +66,7 @@ class SpotController extends Controller
      */
     public function show($spot)
     {
-        return $spot->load(['photos', 'points']);
+        return $spot->load(['photos', 'points', 'tags']);
     }
 
     /**
