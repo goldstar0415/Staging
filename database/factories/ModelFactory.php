@@ -222,11 +222,7 @@ $factory->define(App\AlbumPhotoComment::class, function (Generator $faker) use (
 
 $factory->define(App\Area::class, function (Generator $faker) use ($timestamps) {
     return array_merge([
-        'data' => $faker->text,
-        'b_box' => new MultiPoint([
-            new Point($faker->latitude, $faker->longitude),
-            new Point($faker->latitude, $faker->longitude),
-        ])
+        'data' => json_encode($faker->latitude)
     ], $timestamps());
 });
 
