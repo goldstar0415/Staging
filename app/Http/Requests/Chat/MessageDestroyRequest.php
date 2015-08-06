@@ -13,7 +13,7 @@ class MessageDestroyRequest extends Request
      */
     public function authorize()
     {
-        return $this->route('message')->sender()->first()->id === $this->user()->id;
+        return $this->route('message')->sender()->first()->id === $this->user()->id;//TODO: fix sender
     }
 
     /**

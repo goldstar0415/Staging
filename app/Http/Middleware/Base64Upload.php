@@ -22,7 +22,7 @@ class Base64Upload
             if ($request->has($field)) {
                 $base64_data = $request->input($field);
                 if (!empty($base64_data)) {
-                    $request->files->add([$field => $this->formatFile($base64_data, $field)]);
+                    $request->files->add([$field => $this->formatFile($base64_data)]);
                 }
             }
         }
@@ -30,7 +30,7 @@ class Base64Upload
         return $next($request);
     }
 
-    protected function formatFile($data, $field)
+    protected function formatFile($data)
     {
         $file = null;
 
