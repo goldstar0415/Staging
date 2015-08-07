@@ -154,23 +154,7 @@
 .sidebar-event {
   min-height: 100%;
   float: right;
-  .counter {
-    display: inline-block;
-    height: 11px;
-    font: 10px/11px Arial, sans-serif;
-    color: $white;
-    background: $blue;
-    padding: 0 4px;
-    margin: 1px 0 0 -3px;
-    vertical-align: top;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    -webkit-transition: background .3s;
-    -moz-transition: background .3s;
-    -o-transition: background .3s;
-    transition: background .3s;
-  }
+
   ul {
     padding-left: 15px;
     li {
@@ -201,7 +185,20 @@
     }
   }
 }
-
+.counter {
+  display: inline-block;
+  height: 11px;
+  font: 10px/11px Arial, sans-serif;
+  color: $white;
+  background: $blue;
+  padding: 0 4px;
+  margin: 1px 0 0 -3px;
+  vertical-align: top;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  @include transition_bg;
+}
 .title-sidebar {
   margin-top: 0;
   margin-bottom: 15px;

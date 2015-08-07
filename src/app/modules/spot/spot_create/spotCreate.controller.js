@@ -180,7 +180,7 @@
     };
     vm.cropImage = function (image) {
       if (vm.selectCover) {
-        CropService.crop(image, function (result) {
+        CropService.crop(image, 512, 256, function (result) {
           if (result) {
             vm.currentCover_original = image;
             vm.cover = result;

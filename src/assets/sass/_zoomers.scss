@@ -25,9 +25,16 @@ ul {
   .followers {
     background: $white;
     position: relative;
-    //border-bottom: 1px solid $light_grey;
     border: 1px solid $light_grey;
     border-radius: 0 0 8px 8px;
+    .post {
+      .media {
+        padding-bottom: 15px;
+      }
+      .media-body-content {
+        padding-left: 15px;
+      }
+    }
     .avatar {
       float: left;
       width: 120px;
@@ -43,135 +50,97 @@ ul {
       background: $white;
     }
   }
-  .post {
-    position: relative;
-    border-bottom: 1px solid #e9edf0;
-    padding: 15px;
-    .info {
-      .follow-btn {
-        @include button();
-        background: $green;
-        width: 50%;
-        padding: 5px 15px;
-        &:hover {
-          background: $light_green;
-          -webkit-border-radius: 3px;
-          -moz-border-radius: 3px;
-          border-radius: 3px;
-          -webkit-transition: background .3s;
-          -moz-transition: background .3s;
-          -o-transition: background .3s;
-          transition: background .3s;
-          color: $white;
-        }
+
+  .info {
+    .age {
+      font: 400 15px/14px ubuntu;
+      color: grey;
+      margin-bottom: 10px;
+    }
+    .counters {
+      margin: 10px 0;
+      font: 13px/13px Ubuntu;
+      display: flex;
+      .e-count {
+        float: left;
+        color: $blue;
+        display: block;
+        height: 12px;
+        padding: 0 0 2px 14px;
+        background: url(/assets/img/icons/count.png) 0 -1px no-repeat;
       }
-      .unfollow-btn {
-        @include button();
-        background: $red;
-        width: 50%;
-        padding: 5px 15px;
-        &:hover {
-          background: $light_red;
-          -webkit-border-radius: 3px;
-          -moz-border-radius: 3px;
-          border-radius: 3px;
-          -webkit-transition: background .3s;
-          -moz-transition: background .3s;
-          -o-transition: background .3s;
-          transition: background .3s;
-          color: $white;
-        }
-      }
-      .age {
-        font: 400 15px/14px ubuntu;
-        color: grey;
-        margin-bottom: 10px;
-      }
-      .counters {
-        margin: 10px 0;
-        font: 13px/13px Ubuntu;
-        display: flex;
-        .e-count {
-          float: left;
-          color: $blue;
-          display: block;
-          height: 12px;
-          padding: 0 0 2px 14px;
-          background: url(/assets/img/icons/count.png) 0 -1px no-repeat;
-        }
-        .f-count {
-          display: block;
-          height: 12px;
-          float: left;
-          padding: 0 0 2px 18px;
-          margin-left: 10px;
-          background: url(/assets/img/icons/count.png) 0 -34px no-repeat;
-          color: $blue;
-        }
+      .f-count {
+        display: block;
+        height: 12px;
+        float: left;
+        padding: 0 0 2px 18px;
+        margin-left: 10px;
+        background: url(/assets/img/icons/count.png) 0 -34px no-repeat;
+        color: $blue;
       }
     }
-    .events {
-      width: 100%;
-      padding-left: 0;
-      li {
-        float: left;
-      }
-      img {
-        display: block;
-        width: 100px;
-        height: 100px;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-        margin-bottom: 10px;
-      }
-      .frame {
-        border: 3px solid $white;
-        -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
-        -moz-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
-        background: $white;
-      }
-      .event-link {
-        text-decoration: none;
-        color: $blue;
+  }
+  .events {
+    width: 100%;
+    padding-left: 0;
+    li {
+      float: left;
+    }
+    img {
+      display: block;
+      width: 100px;
+      height: 100px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .frame {
+      border: 3px solid $white;
+      -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
+      -moz-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
+      background: $white;
+    }
+    .event-link {
+      text-decoration: none;
+      color: $blue;
+      -webkit-transition: color .3s;
+      -moz-transition: color .3s;
+      -o-transition: color .3s;
+      transition: color .3s;
+      word-wrap: break-word;
+      &:hover {
+        color: $navy_blue;
         -webkit-transition: color .3s;
         -moz-transition: color .3s;
         -o-transition: color .3s;
         transition: color .3s;
-        word-wrap: break-word;
-        &:hover {
-          color: $navy_blue;
-          -webkit-transition: color .3s;
-          -moz-transition: color .3s;
-          -o-transition: color .3s;
-          transition: color .3s;
-          cursor: pointer;
-        }
+        cursor: pointer;
       }
     }
-    .name {
-      margin-top: 0;
-      margin-bottom: 5px;
-      a {
-        font: 600 22px/22px Ubuntu;
-        color: $blue;
-        &:hover {
-          color: $navy_blue;
-          text-decoration: none;
-          -webkit-transition: color .3s;
-          -moz-transition: color .3s;
-          -o-transition: color .3s;
-          transition: color .3s;
-        }
-      }
+  }
+  .name {
+    margin-top: 0;
+    margin-bottom: 5px;
+    a {
+      font: 600 22px/22px Ubuntu;
+      color: $blue;
       &:hover {
         color: $navy_blue;
         text-decoration: none;
+        -webkit-transition: color .3s;
+        -moz-transition: color .3s;
+        -o-transition: color .3s;
+        transition: color .3s;
       }
     }
-
+    &:hover {
+      color: $navy_blue;
+      text-decoration: none;
+    }
   }
+
 }
 
 .zoomers-sidebar {
@@ -179,6 +148,7 @@ ul {
   width: 100%;
   float: right;
   display: block;
+  margin-bottom: 15px;
   border: 1px solid $light_grey;
   background: $white;
   -webkit-border-radius: 8px;
@@ -194,11 +164,11 @@ ul {
 
       a {
         border-bottom: 1px solid $light_grey;
-
         &.current {
           @include zoomers_sidebar();
           background: url(/assets/img/icons/zoomers.png) 0 -1px no-repeat;
           color: $dark_blue;
+          padding-right: 0 !important;
 
           &:hover {
             color: $blue;
@@ -218,6 +188,8 @@ ul {
           @include zoomers_sidebar();
           background: url(/assets/img/icons/followers.png) 0 -1px no-repeat;
           color: $dark_blue;
+          padding-right: 0 !important;
+
           &:hover {
             color: $blue;
             text-decoration: none;
@@ -236,6 +208,8 @@ ul {
           @include zoomers_sidebar();
           background: url(/assets/img/icons/followings.png) 0 -1px no-repeat;
           color: $dark_blue;
+          padding-right: 0 !important;
+
           &:hover {
             color: $blue;
             text-decoration: none;
@@ -247,6 +221,8 @@ ul {
             font: $navigation_font;
             @include zoomers_sidebar();
             background: url(/assets/img/icons/followings.png) 0 -42px no-repeat;
+            padding-right: 0 !important;
+
           }
         }
 
@@ -267,4 +243,7 @@ ul {
   }
 }
 
-
+.no-margin-left-right {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}

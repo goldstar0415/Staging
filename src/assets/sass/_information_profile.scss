@@ -1,6 +1,123 @@
+////information-profile//////
+
 .information-profile {
   padding: 0;
   .avatar {
     margin: -95px auto 0;
+    img {
+      width: 120px;
+      height: 120px;
+    }
+  }
+  .profile-name {
+    margin-top: 0;
+
+    a {
+      color: $blue;
+      @include transition_color;
+      position: relative;
+      font: $navigation_font;
+      font-size: 22px;
+      white-space: nowrap;
+      &:hover, &:focus, &:active {
+        color: $navy_blue;
+        @include transition_color;
+      }
+    }
+    .online {
+      width: 6px;
+      height: 6px;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+      background: $green;
+      position: absolute;
+      top: -2px;
+      right: -5px;
+    }
+    .offline {
+      width: 6px;
+      height: 6px;
+      -webkit-border-radius: 8px;
+      -moz-border-radius: 8px;
+      border-radius: 8px;
+      background: $red;
+      position: absolute;
+      top: -2px;
+      right: -5px;
+    }
+  }
+  .status {
+    float: left;
+    color: #a4a4a4;
+    font: 400 14px/14px 'Ubuntu';
+    display: block;
+    margin: 15px 0 0;
+    padding: 10px 0 0 3rem;
+  }
+  .age {
+    font: 14px 'Ubuntu';
+    color: grey;
+  }
+  .location {
+    color: grey;
+    font: 400 14px/14px 'Ubuntu';
+    margin-top: 7px;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-bottom: 10px;
+  }
+  .biography {
+    font: 12px/21px Arial, sans-serif;
+    margin-top: 20px;
+    .small, .full-text {
+      word-wrap: break-word;
+    }
+  }
+  .moderator {
+    background: url(/assets/img/icons/moderate.png) 0 7px no-repeat;
+  }
+  .info-links {
+    font: 14px/14px Arial, sans-serif;
+    margin: 5px 0;
+    width: 100%;
+    a {
+      display: block;
+      float: left;
+      margin-right: 10px;
+      border-right: 1px solid $light_grey;
+      &:last-of-type {
+        border: 0;
+      }
+    }
+    .events {
+      background: url(/assets/img/icons/event.png) -13px -10px no-repeat;
+    }
+    .followers {
+      background: url(/assets/img/icons/friends-map.png) -11px -10px no-repeat;
+    }
+    .albums {
+      background: url(/assets/img/icons/photo-map.png) -11px -10px no-repeat;
+    }
+    .fav {
+      background: url(/assets/img/icons/fav-star.png) 0px 3px no-repeat;
+    }
+    .followings {
+      background: url(/assets/img/icons/followings.png) -11px -10px no-repeat;
+    }
+    .events, .fav {
+      padding: 3px 16px 2px 20px;
+    }
+    .followers, .albums, .followings {
+      padding: 3px 16px 2px 22px;
+    }
+  }
+  .form-group {
+    .blue-btn, .red-btn {
+      width: 100%;
+      margin: 0;
+    }
   }
 }
+
+/// end information profile

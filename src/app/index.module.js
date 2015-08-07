@@ -15,11 +15,11 @@
       'dialogs.main',
       'snap',
       'angular-loading-bar',
-      'ngImgCrop',
       'luegg.directives',
       'ngTagsInput',
       'ui.select',
-      'ui.utils.masks'
+      'ui.utils.masks',
+      'angular-img-cropper'
     ])
     .animation('.mapResize', [function() {
       return {

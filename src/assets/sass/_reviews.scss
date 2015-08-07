@@ -1,0 +1,55 @@
+.reviews {
+  margin: 0 0 15px;
+  border-bottom: 1px solid $light_grey;
+.rating-likes {
+  margin-bottom: 7px;
+  padding: 0;
+}
+  .review-img {
+    //width: 12%;
+    padding: 0;
+    //float: left;
+  }
+  .rating {
+    //width: 15%;
+    //float: left;
+    padding: 0;
+    .star {
+      background: url(/assets/img/star.png) no-repeat;
+      padding: 8px 0;
+      width: 15px;
+      float: left;
+      &:hover {
+        background: url(/assets/img/star.png) 0 -19px no-repeat;
+      }
+    }
+  }
+  .text-block {
+    padding: 0;
+    width: 85%;
+    float: left;
+    h2 {
+      a {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin: 0;
+        &:hover {
+          color: #124d76;
+          @include transition_color;
+        }
+      }
+    }
+  }
+  .author-name {
+    font: 500 15px/15px 'Ubuntu medium';
+    color: #00b7f3;
+    &:hover {
+      color: #0874be;
+      @include transition_color;
+    }
+  }
+  .description {
+    margin: 0 0 10px;
+  }
+}

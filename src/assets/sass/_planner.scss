@@ -7,6 +7,7 @@
 }
 
 .title-planner {
+  margin-top: 0;
   font: 500 24px/24px 'Ubuntu medium';
   a {
     color: $dark_blue;
@@ -18,9 +19,80 @@
 
 .sub-event {
   margin: 15px 0;
-  padding: 2rem 0;
+  padding: 2rem 0 !important;
+  .title-name {
+    margin-top: 0;
+  }
 }
+
 .time-sub {
   font: 400 14px Ubuntu;
   color: grey;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}
+
+.activity {
+  border: 3px dotted #3DD1EC !important;
+}
+
+.padding-bottom {
+  padding-bottom: 15px;
+}
+
+.comments-section {
+  .media {
+    position: relative;
+
+  }
+  .plus-minus {
+    padding-right: 15px;
+    .minus.clicked {
+      background: url(/assets/img/icons/plus-minus.png) 0px -24px no-repeat;
+    }
+    .plus.clicked {
+      background: url(/assets/img/icons/plus-minus.png) -12px -24px no-repeat;
+    }
+  }
+  .fail-comment {
+    &:hover {
+      cursor: pointer;
+      background: #fdeff0;
+      @include transition_bg;
+    }
+    .fail-text {
+      //padding-left: 10rem;
+      color: #808080;
+    }
+    .rating {
+      display: block;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      height: 12px;
+      font: 12px/12px "Ubuntu medium";
+      color: $red;
+      margin-top: 3px;
+    }
+  }
+}
+
+.more {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font: 12px "Arial", "sans-serif";
+  color: #b9bdc0;
+  padding: 8px 0 8px 0;
+  @include transition_bg;
+  -webkit-border-radius: 0 0 7px 7px;
+  -moz-border-radius: 0 0 7px 7px;
+  border-radius: 0 0 7px 7px;
+  &:hover, &:visited, &:focus, &:active {
+    background: $light_grey;
+    color: $grey;
+    @include transition_bg;
+  }
 }

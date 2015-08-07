@@ -1,0 +1,41 @@
+/*activity profile*/
+
+.module-sidebar {
+  .sidebar-title {
+    font: $navigation_font;
+    font-size: 20px;
+    margin-top: 0;
+  }
+  .avatar {
+    display: block;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 10px;
+
+  }
+  .sidebar-user-name {
+    white-space: pre-wrap;
+    overflow: hidden;
+    word-wrap: normal;
+    color: $blue;
+    text-align: center;
+    text-overflow: ellipsis;
+    -e-text-overflow: ellipsis;
+    font: 200 13px/18px 'Ubuntu';
+    &:hover, &:focus, &:active {
+      color: $navy_blue;
+    }
+  }
+  .counter {
+    margin: -4px 0 0 -3px;
+  }
+  a{
+    text-overflow: ellipsis;
+    -e-text-overflow: ellipsis;
+    &:hover, &:focus, &:active {
+      color: $navy_blue;
+    }
+  }
+}
+
+/*end activity profile*/
