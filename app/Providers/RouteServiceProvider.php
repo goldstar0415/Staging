@@ -9,6 +9,7 @@ use App\Area;
 use App\ChatMessage;
 use App\Friend;
 use App\Spot;
+use App\SpotPhoto;
 use App\SpotReview;
 use App\User;
 use Illuminate\Routing\Router;
@@ -34,22 +35,22 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         $router->model('albums', Album::class);
-        $router->model('photos', AlbumPhoto::class);
+        $router->bind('photos', function ($value) {
+            if (Request::is('photos/*')) {
+                return AlbumPhoto::findOrFail($value);
+            } elseif (Request::is('spots/*')) {
+                return SpotPhoto::findOrFail($value);
+            }
+
+            return $value;
+        });
         $router->model('users', User::class);
         $router->model('friends', Friend::class);
         $router->model('spots', Spot::class);
         $router->model('message', ChatMessage::class);
         $router->model('selection', Area::class);
         $router->model('reviews', SpotReview::class);
-
-        $router->bind('comments', function ($value) use ($router) {
-            $comment = null;
-            if (Request::is('photos/*')) {
-                $comment = PhotoComment::findOrFail($value);
-            }
-
-            return $comment;
-        });
+        $router->model('comments', PhotoComment::class);
 
         parent::boot($router);
     }
