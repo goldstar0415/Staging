@@ -9,6 +9,7 @@ use App\Area;
 use App\ChatMessage;
 use App\Friend;
 use App\Spot;
+use App\SpotReview;
 use App\User;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -39,6 +40,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('spots', Spot::class);
         $router->model('message', ChatMessage::class);
         $router->model('selection', Area::class);
+        $router->model('reviews', SpotReview::class);
 
         $router->bind('comments', function ($value) use ($router) {
             if (explode('.', $router->currentRouteName())[0] === 'photos') {

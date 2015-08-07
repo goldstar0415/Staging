@@ -53,6 +53,7 @@ Route::resource('friends', 'FriendController', ['except' => ['create', 'edit']])
  */
 Route::get('spots/categories', 'SpotController@categories');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
+Route::resource('spots.reviews', 'SpotReviewController', ['except' => ['create', 'edit']]);
 /**
  * Chat Controls
  */
