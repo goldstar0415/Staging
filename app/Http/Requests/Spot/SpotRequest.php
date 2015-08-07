@@ -35,29 +35,17 @@ class SpotRequest extends Request
             'tags' => 'array|count:7',
             'files' => 'array|count:10'
         ];
-
-
-        if ($this->has('locations')) {
-            foreach ($this->input('locations') as $key => $location) {
-                $rules['locations.' . $key . '.address'] = 'string|max:255';
-                $rules['locations.' . $key . '.location.lat'] = 'numeric';
-                $rules['locations.' . $key . '.location.lng'] = 'numeric';
-            }
-        }
-
-        if ($this->has('videos')) {
-            foreach ($this->input('videos') as $key => $location) {
-                $rules['videos.' . $key] = 'string|max:255';
-            }
-        }
-
-        if ($this->has('videos')) {
-            $rules = array_merge($rules, $this->arrayFieldRules('web_sites', 'url', false));
-        }
-
-        if ($this->hasFile('files')) {
-            $rules = array_merge($rules, $this->arrayFieldRules('files', 'image|max:5000'));
-        }
+        $rules = array_merge($rules, $this->arrayFieldRules(
+            'locations',
+            [
+                'address' => 'string|max:255',
+                'location.lat' => 'numeric',
+                'location.lng' => 'numeric'
+            ]
+        ));
+        $rules = array_merge($rules, $this->arrayFieldRules('videos', 'string|max:255'));
+        $rules = array_merge($rules, $this->arrayFieldRules('web_sites', 'url'));
+        $rules = array_merge($rules, $this->arrayFieldRules('files', 'image|max:5000', true));
 
         return $rules;
     }

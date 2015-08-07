@@ -6,13 +6,28 @@ use Illuminate\Foundation\Http\FormRequest;
 
 abstract class Request extends FormRequest
 {
-    protected function arrayFieldRules($field, $rule, $files = true)
+    protected function arrayFieldRules($field, $rules, $files = false)
     {
-        $rules = [];
-        $nbr = $files ? count($this->file($field)) -1 : count($this->input($field)) -1;
-        foreach (range(0, $nbr) as $index) {
-            $rules[$field . '.' . $index] = $rule;
+        $result = [];
+        $nbr = -1;
+        if ($files and $this->hasFile($field)) {
+            $nbr = count($this->file($field)) -1;
+        } elseif (!$files and $this->has($field)) {
+            $nbr = count($this->input($field)) -1;
         }
-        return $rules;
+
+        if ($nbr != -1) {
+            foreach (range(0, $nbr) as $index) {
+                if (is_array($rules)) {
+                    foreach ($rules as $key => $rule) {
+                        $result[$field . '.' . $index . '.' . $key] = $rule;
+                    }
+                } else {
+                    $result[$field . '.' . $index] = $rules;
+                }
+            }
+        }
+
+        return $result;
     }
 }

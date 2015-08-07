@@ -24,17 +24,18 @@ class MapSearchRequest extends Request
     public function rules()
     {
         $rules = [
-            'b_boxes' => 'required|array|each:_northEast.lat,'
+            'b_boxes' => 'required|array'
         ];
-        if ($this->has('b_boxes')) {
-            foreach ($this->input('b_boxes') as $i => $b_box) {
-                $rules['b_boxes.' . $i . '._northEast.lat'] = 'required|numeric';
-                $rules['b_boxes.' . $i . '._northEast.lng'] = 'required|numeric';
-                $rules['b_boxes.' . $i . '._southWest.lat'] = 'required|numeric';
-                $rules['b_boxes.' . $i . '._southWest.lng'] = 'required|numeric';
-            }
+        $rules = array_merge($rules, $this->arrayFieldRules(
+            'b_boxes',
+            [
+                '_northEast.lat' => 'required|numeric',
+                '_northEast.lng' => 'required|numeric',
+                '_southWest.lat' => 'required|numeric',
+                '_southWest.lng' => 'required|numeric'
+            ]
+        ));
 
-        }
         return $rules;
     }
 }
