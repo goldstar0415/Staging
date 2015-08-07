@@ -181,69 +181,70 @@
     border-top: 1px solid #e9edf0;
     padding: 0;
 
-    .new-post {
-      padding: 10px;
-      background: #e9edf0;
-      textarea {
-        resize: none;
-        width: 100%;
-        min-height: 100px;
-        margin-bottom: 8px;
-        padding: 5px 10px;
-        background: white;
-        border: 1px solid #dee5ea;
-        border-radius: 3px;
-        font-size: 12px;
-        @include transition_shadow;
-        &:hover {
-          border: 1px solid #76c7dc;
-          box-shadow: 0 0 3px #00b7f3;
-          transition: box-shadow 0.3s, border-color 0.3s;
-        }
-      }
-      hr {
-        margin: 0 -10px 8px -10px;
-        height: 1px;
-        background: #cecbcb;
-      }
-      .submit-send {
-        width: 54px;
-        height: 22px;
-        margin-left: 14px;
-        background: #0c2638;
-        border: none;
-        border-radius: 3px;
-        color: #fff;
-        font-size: 12px;
-        float: right;
-        transition: background 0.3s;
-        &:hover {
-          background: #1a415b;
-          transition: background 0.3s;
-        }
-      }
-      .add-photo {
-        float: right;
-        display: block;
-        width: 16px;
-        height: 14px;
-        margin: 4px 0 0 10px;
-        background: url(/assets/img/icons/clip-photo.png) no-repeat right top;
-        &:hover {
-          background: url(/assets/img/icons/clip-photo.png) no-repeat right bottom;
-        }
-      }
-      .add-attach {
-        float: right;
-        display: block;
-        width: 16px;
-        height: 14px;
-        margin: 4px 0 0 10px;
-        background: url(/assets/img/icons/clip-photo.png) no-repeat;
-        &:hover {
-          background: url(/assets/img/clip-photo.png) no-repeat left bottom;
-        }
-      }
+  }
+}
+
+.new-post {
+  padding: 10px;
+  background: #e9edf0;
+  textarea {
+    resize: none;
+    width: 100%;
+    min-height: 100px;
+    margin-bottom: 8px;
+    padding: 5px 10px;
+    background: white;
+    border: 1px solid #dee5ea;
+    border-radius: 3px;
+    font-size: 12px;
+    @include transition_shadow;
+    &:hover {
+      border: 1px solid #76c7dc;
+      box-shadow: 0 0 3px #00b7f3;
+      transition: box-shadow 0.3s, border-color 0.3s;
+    }
+  }
+  hr {
+    margin: 0 -10px 8px -10px;
+    height: 1px;
+    background: #cecbcb;
+  }
+  .submit-send {
+    width: 54px;
+    height: 22px;
+    margin-left: 14px;
+    background: #0c2638;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 12px;
+    float: right;
+    transition: background 0.3s;
+    &:hover {
+      background: #1a415b;
+      transition: background 0.3s;
+    }
+  }
+  .add-photo {
+    float: right;
+    display: block;
+    width: 16px;
+    height: 14px;
+    margin: 4px 0 0 10px;
+    background: url(/assets/img/icons/clip-photo.png) no-repeat right top;
+    &:hover {
+      background: url(/assets/img/icons/clip-photo.png) no-repeat right bottom;
+    }
+  }
+  .add-attach {
+    float: right;
+    display: block;
+    width: 16px;
+    height: 14px;
+    margin: 4px 0 0 10px;
+    background: url(/assets/img/icons/clip-photo.png) no-repeat left top;
+    &:hover {
+      background: url(/assets/img/icons/clip-photo.png) no-repeat left bottom;
     }
   }
 }

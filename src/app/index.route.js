@@ -12,15 +12,19 @@
         abstract: true,
         template: '<ui-view />',
         resolve: {
-          currentUser: function (User, $rootScope, UserService) {
+          currentUser: function ($q, User, $rootScope, UserService) {
             if ($rootScope.currentUser) {
               return $rootScope.currentUser;
             } else if (!$rootScope.currentUserFailed) {
-              return User.currentUser({}, function success(user) {
-                UserService.setCurrentUser(user);
-              }, function fail() {
-                $rootScope.currentUserFailed = true;
-              });
+              return $q(function (resolve, reject) {
+                User.currentUser({}, function success(user) {
+                  UserService.setCurrentUser(user);
+                  resolve();
+                }, function fail() {
+                  $rootScope.currentUserFailed = true;
+                  resolve();
+                });
+              }).$promise;
             }
           }
         }
@@ -165,7 +169,7 @@
         controllerAs: 'Profile',
         resolve: {
           user: function (User, $stateParams) {
-            return User.get({id: $stateParams.user_id});
+            return User.get({id: $stateParams.user_id}).$promise;
           }
         },
         parent: 'profile_menu',
@@ -196,7 +200,7 @@
         controllerAs: 'ChatRoom',
         resolve: {
           user: function (User, $stateParams) {
-            return User.get({id: $stateParams.user_id});
+            return User.get({id: $stateParams.user_id}).$promise;
           },
           messages: function (Message, $stateParams) {
             return Message.query({
@@ -303,7 +307,7 @@
         controllerAs: 'CreateFriend',
         resolve: {
           friend: function (Friends) {
-            return new Friends
+            return new Friends();
           }
         },
         mapState: 'small',
@@ -354,7 +358,7 @@
         controllerAs: 'Zoomers',
         resolve: {
           users: function (User) {
-            return User.query({type: 'all', page: 1, limit: 10})//.$promise;
+            return User.query({type: 'all', page: 1, limit: 10}).$promise;
           }
         },
         parent: 'main',

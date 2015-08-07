@@ -10,7 +10,7 @@
     var vm = this;
 
     vm.user = user;
-    vm.message = {};
+    vm.message = '';
     vm.glued = true;
     vm.messages = messages;
     vm.messages.data = ChatService.groupByDate(messages.data);
@@ -22,11 +22,12 @@
     function sendMessage() {
       Message.save({
           user_id: user.id,
-          message: vm.message
+          message: vm.message,
+          attachments: vm.attachments
         },
         function success(message) {
           ChatService.pushToToday(message);
-          vm.message = {};
+          vm.message = '';
         },
         function error(resp) {
           console.log(resp);

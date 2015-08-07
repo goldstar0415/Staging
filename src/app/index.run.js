@@ -12,8 +12,12 @@
     $rootScope.timezonesList = moment.tz.names();
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
-    $rootScope.$on("$stateChangeError", function (e) {
-      console.log(arguments)
+    $rootScope.$on("$stateChangeError", function (event, toState, toParams) {
+      console.log('$stateChangeError', arguments);
+      if (toState.require_auth && !$rootScope.currentUser) {
+        toastr.error('Unauthorized!');
+        $state.go('index');
+      }
     });
 
     function onStateChangeSuccess(event, current, toParams, fromState, fromParams) {

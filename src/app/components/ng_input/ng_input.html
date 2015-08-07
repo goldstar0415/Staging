@@ -1,10 +1,53 @@
 <form class="new-post clearfix" name="form" ng-submit="NgInput.submit(form)" novalidate>
       <textarea name="message"
-                ng-model="NgInput.message.body"
+                ng-model="NgInput.message"
                 placeholder="Start typing..."
                 ng-focus="NgInput.onFocus()"
                 ctrl-enter="NgInput.submit(form)"
                 required></textarea>
+
+  <div class="attachments-preview" ng-if="!_.isEmpty(NgInput.attachments)">
+
+    <div class="links">
+      <figure class="clearfix add-location" ng-repeat="searches in NgInput.attachments.savedSearches">
+        <a href="#" class=" img-selection">circle</a>
+        <figcaption class="description-link ">
+          Lorem ipsum
+          <a class="close-link" href="#" title="Delete" ></a>
+        </figcaption>
+      </figure>
+
+      <figure class="add-event clearfix" ng-repeat="spot in NgInput.attachments.spots">
+        <div class="col-xs-12 col-sm-2 no-pad">
+          <a class="wrap-img-event" href="#">
+            <img ng-src="{{spot.cover_url.medium}}">
+          </a>
+        </div>
+
+        <div class="col-xs-12 col-sm-10 no-pad" >
+          <div class="col-xs-12 ">
+            <a class="close-link" title="Delete" ></a>
+            <a class="event-img clearfix" >{{spot.title}}</a>
+          </div>
+          <div class="col-xs-12 ">{{spot.description}}</div>
+        </div>
+      </figure>
+
+    </div>
+
+    <div class="upload-photos clearfix" ng-if="NgInput.attachments.photos.length > 0">
+      <div class="photos">
+        <div class="add-img"
+             ng-repeat="photo in NgInput.attachments.photos"
+             ng-mouseenter="showDelete = true" ng-mouseleave="showDelete = false">
+          <img ng-src="{{photo.photo_url.medium}}">
+          <a class="close-img" ng-show="showDelete" ng-click="NgInput.deletePhoto($index)" data-toggle="tooltip" data-placement="top" title="Delete">
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
   <hr>
   <input type="submit" class="submit-send" value="Send">

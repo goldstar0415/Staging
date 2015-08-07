@@ -5,7 +5,7 @@
 
   <div class="modal-body ">
     <ul class="nav nav-tabs font-weight600">
-      <li ng-class="{active: !modal.selectedAlbum}">
+      <li ng-click="modal.selectedAlbum = null" ng-class="{active: !modal.selectedAlbum}">
         <a>Albums</a>
       </li>
       <li ng-class="{active: modal.selectedAlbum}" ng-if="modal.selectedAlbum">
@@ -28,28 +28,18 @@
 
       <div class="tab-pane choose-some-photos-body col-sm-12" ng-if="modal.selectedAlbum"
            ng-class="{active: modal.selectedAlbum}">
-        <h3 class="choose-album-name">Album's name</h3>
-        <a class="back" ng-click="modal.selectedAlbum == null"></a>
+        <h3 class="choose-album-name">{{modal.selectedAlbum.title}}</h3>
+        <a class="back" ng-click="modal.selectedAlbum = null"></a>
 
         <div class="choose-photo-album">
           <img ng-repeat="item in modal.selectedAlbum.photos"
                ng-src="{{item.photo_url.medium}}"
-               ng-click="modal.addPhoto(idx)">
+               ng-click="modal.addPhoto($index)">
 
           <h4 ng-if="modal.selectedAlbum.photos.length < 1">No photos in album</h4>
         </div>
       </div>
     </div>
 
-  </div>
-  <div class="modal-footer col-xs-12 clearfix">
-    <!--
-    <button class="btn btn-success pull-left col-sm-2 col-xs-5 button-my" type="button"
-            data-dismiss="modal">Save
-    </button>
-    <button class="btn btn-primary pull-left col-sm-2 col-xs-5 button-my" type="button"
-            data-dismiss="modal">Cancel
-    </button>
--->
   </div>
 </script>
