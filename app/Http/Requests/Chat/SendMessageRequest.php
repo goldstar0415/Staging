@@ -23,9 +23,17 @@ class SendMessageRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'user_id' => 'required|integer',
-            'message' => 'required|string|max:5000'
+            'message' => 'required|string|max:5000',
+            'attachments.photos' => 'array|count:10',
+            'attachments.spots' => 'array|count:10',
+            'attachments.areas' => 'array|count:10'
         ];
+        $rules = array_merge($rules, $this->arrayFieldRules('attachments.photos', 'integer'));
+        $rules = array_merge($rules, $this->arrayFieldRules('attachments.spots', 'integer'));
+        $rules = array_merge($rules, $this->arrayFieldRules('attachments.areas', 'integer'));
+
+        return $rules;
     }
 }
