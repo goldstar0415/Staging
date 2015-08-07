@@ -23,4 +23,9 @@ class SpotType extends BaseModel
     {
         return $this->hasMany(SpotTypeCategory::class);
     }
+
+    public function spots()
+    {
+        return $this->hasManyThrough(Spot::class, SpotTypeCategory::class);
+    }
 }
