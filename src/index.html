@@ -36,11 +36,11 @@
     <div snap-content snap-options="options.snap">
       <!-- include header-->
       <zm-header options="options"></zm-header>
+      <ng-include src="'app/components/map_partials/unregistered_banner.html'" ng-if="mapState == 'full-size'"></ng-include>
       <!-- map container-->
       <div id="map" class="mapResize map" ng-class="mapState"></div>
-
       <!-- content container-->
-      <div ng-show="mapState != 'big'" ui-view autoscroll="true"></div>
+      <div ng-show="mapState != 'full-size'" ui-view autoscroll="true"></div>
     </div>
 
     <ng-include src="'app/components/ng_message_templates/error_templates.html'"></ng-include>

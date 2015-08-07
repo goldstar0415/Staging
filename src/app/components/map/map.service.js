@@ -3,10 +3,11 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, snapRemote) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote) {
       var map = null;
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
       var radiusSelectionLimit = 500000; //in meters
+      var markersLayer = L.featureGroup();
       var drawLayer = L.featureGroup();
       var draggableMarkerLayer = L.featureGroup();
       var eventsLayer = new L.MarkerClusterGroup();
@@ -48,8 +49,17 @@
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
           LassoSelection(function LassoCallback(points, b_box) {
+            L.polygon(points, {
+              weight: 2,
+              color: 'green',
+              opacity: 0.2,
+              fillColor: 'green',
+              fillOpacity: 0.1
+            }).addTo(drawLayer);
             snapRemote.enable();
 
+            var bboxes = GetDrawLayerBBoxes();
+            GetDataByBBox(bboxes);
           });
         }
 
@@ -82,6 +92,16 @@
           L.DomEvent.preventDefault(e);
           RadiusSelection(function (startPoing, radius, b_box) {
             snapRemote.enable();
+            L.circle(startPoing, radius, {
+              weight: 2,
+              color: 'green',
+              opacity: 0.2,
+              fillColor: 'green',
+              fillOpacity: 0.1
+            }).addTo(drawLayer);
+
+            var bboxes = GetDrawLayerBBoxes();
+            GetDataByBBox(bboxes);
           });
         }
 
@@ -112,7 +132,8 @@
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
           PathSelection(function () {
-
+            var bboxes = GetDrawLayerBBoxes();
+            GetDataByBBox(bboxes);
           });
         }
 
@@ -257,8 +278,9 @@
 
         //add controls
         AddControls();
-        map.addLayer(drawLayer);
         map.addLayer(draggableMarkerLayer);
+        map.addLayer(drawLayer);
+        map.addLayer(markersLayer);
 
         window.map = map;
         map.locate({setView: true, maxZoom: 8});
@@ -382,6 +404,14 @@
         map.removeLayer(eventsLayer);
       }
 
+      function clearLayers() {
+        eventsLayer.clearLayers();
+        recreationsLayer.clearLayers();
+        pitstopsLayer.clearLayers();
+        otherLayer.clearLayers();
+        draggableMarkerLayer.clearLayers();
+      }
+
       //Selections
 
       /* Callback output:
@@ -488,10 +518,9 @@
 
       function PathSelection(callback) {
         var markers = [],
-          line,
-          rect;
+          line;
         var lineOptions = {};
-        lineOptions.styles = [{type: 'polygon', color: 'blue', opacity: 0.2, weight: 1}, {
+        lineOptions.styles = [{type: 'polygon', color: 'blue', opacity: 0.6, weight: 3, fillOpacity: 0.2}, {
           color: 'red',
           opacity: 1,
           weight: 3
@@ -502,7 +531,7 @@
         map.on('click', onMapClick);
 
         function onMapClick(e) {
-          var marker = L.marker(e.latlng, {draggable: true}).addTo(drawLayer);
+          var marker = L.marker(e.latlng, {draggable: true}).addTo(markersLayer);
           markers.push(marker);
 
           marker.on('dragend', RecalculateRoute);
@@ -516,7 +545,6 @@
             });
             pathRouter.route(waypoints, function (err, routes) {
               if (line) {
-                drawLayer.removeLayer(rect);
                 drawLayer.removeLayer(line);
                 line.off('linetouched');
               }
@@ -525,7 +553,7 @@
                 console.log(err);
               } else {
                 line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
-                line.on('linetouched', onLineTouched);
+                callback();
               }
             }, {geometryOnly: true});
           }
@@ -586,6 +614,7 @@
 
       //Makers
       function CreateMarker(latlng, options) {
+        var options = options || {};
         //IMPORTANT:
         //I used this construction because L.MarkerCluster is not supporting draggable markers
         //But we still need to cluster markers on some pages. So all draggable marker will be in draggable marker layer
@@ -643,53 +672,28 @@
       }
 
       //Determine if point inside polygon or not
-      function PointInPolygon(point, polyPoints) {
-        if (point.lat && point.lng) {
-          var p = map.latLngToLayerPoint(point);
-          point = [p.x, p.y];
-        }
-        var x = point[0], y = point[1];
-
-        var inside = false;
-        for (var i = 0, j = polyPoints.length - 1; i < polyPoints.length; j = i++) {
-          if (polyPoints[i].lat && polyPoints[i].lng) {
-            var polyPoint = map.latLngToLayerPoint(polyPoints[i]);
-            polyPoints[i] = [polyPoint.x, polyPoint.y];
+      function PointInPolygon(point) {
+        var result = [];
+        drawLayer.eachLayer(function(layer) {
+          if(result.length < 1) {
+            if(layer._route) {
+              layer.eachLayer(function(l) {
+                if(!l._latlngs) {
+                  result = leafletPip.pointInLayer([point.lng, point.lat], l);
+                }
+              });
+            } else {
+              if(layer.toGeoJSON) {
+                var l = layer.toGeoJSON();
+                var geoJSONlayer = L.geoJson(l);
+                if(l.geometry.type != 'Point') {
+                  result = leafletPip.pointInLayer([point.lng, point.lat], geoJSONlayer);
+                }
+              }
+            }
           }
-          if (polyPoints[j].lat && polyPoints[j].lng) {
-            var polyPointSecond = map.latLngToLayerPoint(polyPoints[j]);
-            polyPoints[j] = [polyPointSecond.x, polyPointSecond.y];
-          }
-
-          var xi = polyPoints[i][0], yi = polyPoints[i][1];
-          var xj = polyPoints[j][0], yj = polyPoints[j][1];
-
-          var intersect = ((yi > y) !== (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-          if (intersect) {
-            inside = !inside;
-            break;
-          }
-        }
-
-        return inside;
-      }
-
-      //Scale bounding box
-      function scaleBoundingBox(b_box, offset) {
-        var _southWest = b_box.getSouthWest();
-        var _northEast = b_box.getNorthEast();
-        var zoomLevel = map.getZoom();
-        console.log(offset / 1000 * zoomLevel / 100);
-
-        _southWest.lat = _southWest.lat - offset / 1000 * zoomLevel / 100;
-        _southWest.lng = _southWest.lng - offset / 1000 * zoomLevel / 100;
-
-        _northEast.lat = _northEast.lat + offset / 1000 * zoomLevel / 100;
-        _northEast.lng = _northEast.lng + offset / 1000 * zoomLevel / 100;
-
-        var newBoundingBox = L.latLngBounds(_southWest, _northEast);
-
-        return newBoundingBox;
+        });
+        return result.length > 0;
       }
 
       function GetAddressByLatlng (latlng, callback) {
@@ -744,16 +748,75 @@
 
 
       //=================================================================
+      function GetDrawLayerBBoxes() {
+        var bboxes = [];
+        drawLayer.eachLayer(function(layer) {
+          if(layer._route) {
+            layer.eachLayer(function(l) {
+              if(!l._latlngs) {
+                bboxes.push(l.getBounds());
+              }
+            });
+          } else {
+            if(layer.getBounds) {
+              bboxes.push(layer.getBounds());
+            }
+          }
+        });
+
+        return bboxes;
+      }
+
       function GetDataByBBox(bbox_array) {
         //Тут отправим запрос на сервер из кучки ббоксов и получим кучу хлама объектами
+        $http.post(API_URL + '/map/search', {b_boxes: bbox_array})
+          .success(function(data) {
+            clearLayers();
+            var spots = [];
+            _.each(data, function(item) {
+              if(PointInPolygon(item.location)) {
+                spots.push(item);
+              }
+            });
+            console.log(spots);
+            spots = FilterUniqueObjects(spots);
 
+            _.each(spots, function(item) {
+              var type = item.spot.category.type.name;
+              var marker = L.marker(item.location);
+              marker.on('click', function () {
+                console.log(type)
+              });
+              switch(type) {
+                case 'pitstop':
+                      eventsLayer.addLayer(marker);
+                      break;
+                case 'recreation':
+                      eventsLayer.addLayer(marker);
+                      break;
+                case 'event':
+                      eventsLayer.addLayer(marker);
+                      break;
+              }
+            });
+          })
+      }
+
+      function FilterUniqueObjects(array) {
+        return _.uniq(array, function(item) {
+          return item.spot_id
+        })
       }
 
       function AddNewData() {
         //Тут переберем кучу хлама прибывшую с сервера. Добавляем её к общей куче оставляя только уникальные объекты
       }
 
-      function SortByDate(date) {
+      function SortByRating(array) {
+
+      }
+
+      function SortByDate() {
         //Тут только для ивентов. Сначала те которые ближе к текущей дате.
 
       }
@@ -765,6 +828,7 @@
       function SortBySubcategory(categories) {
         //Оставить только те, которые попадают под заданые категории и сортировать их по рейтингу.
       }
+
 
       //=================================================================
 

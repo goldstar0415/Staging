@@ -1,12 +1,15 @@
-.banner-wrap {
-  position: absolute;
-  bottom: 0;
-  height: auto;
-  top: 0;
-  z-index: 9999;
-  margin-top: 0;
+//.banner-wrap {
+//  bottom: 0;
+//  height: calc(100% - 70px);
+//  top: 0;
+//  z-index: 2;
+//  margin-top: 0;
   .banner-content {
-    height: 100%;
+    top: 0;
+    margin-top: 0;
+    float: right;
+    height: calc(100% - 70px);
+    z-index: 100;
     .banner-for-unregistered {
       background: linear-gradient(to top, rgba(0, 0, 0, .75) 1%, rgba(12, 38, 56, 0.75) 21%, rgba(12, 38, 56, 0.75) 46%,
               rgba(3, 181, 213, 0.75) 73%, rgba(12, 38, 56, 0.75) 100%) $dark_blue;
@@ -44,7 +47,7 @@
       }
     }
   }
-}
+//}
 
 .tools-wrap {
   width: 100%;

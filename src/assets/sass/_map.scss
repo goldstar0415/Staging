@@ -23,10 +23,21 @@
 .map-tools {
   height: 40px;
   width: 40px;
+
   .radius-selection {
     height: 100%;
     width: 100%;
+    background-color: red;
+  }
+  .lasso-selection {
+    height: 100%;
+    width: 100%;
     background-color: #ffffff;
+  }
+  .path-selection {
+    height: 100%;
+    width: 100%;
+    background-color: orange;
   }
 }
 
