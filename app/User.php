@@ -299,7 +299,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function favorites()
     {
-        return $this->hasMany(Favorite::class);
+        return $this->belongsToMany(Spot::class)->withTimestamps();
     }
 
     public function spotReviews()

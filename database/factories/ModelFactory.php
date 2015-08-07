@@ -299,7 +299,3 @@ $factory->define(App\Wall::class, function (Generator $faker) use ($timestamps) 
         'body' => $faker->sentence(24),
     ], $timestamps());
 });
-
-$factory->define(App\Favorite::class, function (Generator $faker) use ($timestamps) {
-    return $timestamps();
-});

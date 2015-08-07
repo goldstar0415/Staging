@@ -53,6 +53,8 @@ Route::resource('friends', 'FriendController', ['except' => ['create', 'edit']])
  */
 Route::get('spots/categories', 'SpotController@categories');
 Route::post('spots/{spots}/rate', 'SpotController@rate');
+Route::get('spots/{spots}/favorite', 'SpotController@favorite');
+Route::get('spots/{spots}/unfavorite', 'SpotController@unfavorite');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 Route::resource('spots.reviews', 'SpotReviewController', ['except' => ['create', 'edit']]);
 Route::resource('spots.photos.comments', 'SpotPhotoCommentController', ['only' => ['index', 'store', 'destroy']]);

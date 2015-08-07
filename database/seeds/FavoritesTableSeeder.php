@@ -16,19 +16,8 @@ class FavoritesTableSeeder extends Seeder
     {
         User::random(12)->get()->each(function (User $user) {
             $favorites_count = mt_rand(1, 10);
-            $favorites = factory(Favorite::class, $favorites_count)->make();
-            $spots = Spot::random($favorites_count)->get();
-            if ($favorites instanceof Favorite) {
-                $favorites->spot()->associate($spots->pop());
-                $favorites->user()->associate($user);
-                $user->favorites()->save($favorites);
-            } else {
-                $favorites->each(function (Favorite $favorite) use ($user, $spots) {
-                    $favorite->spot()->associate($spots->pop());
-                    $favorite->user()->associate($user);
-                });
-                $user->favorites()->saveMany($favorites);
-            }
+            $spots_ids = Spot::random($favorites_count)->get()->pluck('id')->toArray();
+            $user->favorites()->sync($spots_ids);
         });
     }
 }
