@@ -12,7 +12,7 @@ use App\Http\Requests;
 
 class MapController extends Controller
 {
-    public function getSearch(MapSearchRequest $request)
+    public function getSearch(MapSearchRequest $request)//TODO: change to GET method
     {
         return SpotPoint::getInBBoxes($request->get('b_boxes'));
     }
