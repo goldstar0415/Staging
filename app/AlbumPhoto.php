@@ -60,7 +60,7 @@ class AlbumPhoto extends BaseModel implements StaplerableInterface
 
     public function comments()
     {
-        return $this->hasMany(AlbumPhotoComment::class);
+        return $this->morphMany(PhotoComment::class, 'commentable');
     }
 
     public function walls()

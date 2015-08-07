@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\AlbumPhotoComment;
+use App\PhotoComment;
 use App\Http\Requests\PhotoComments\PhotoCommentsRequest;
 use App\Http\Requests\PhotoComments\PhotoCommentStoreRequest;
 use Illuminate\Contracts\Auth\Guard;
@@ -30,7 +30,7 @@ class AlbumPhotoCommentController extends Controller
         $comments = $photos->comments;
         $comments->map(function ($comment) {
             /**
-             * @var \App\AlbumPhotoComment $comment
+             * @var \App\PhotoComment $comment
              */
             $comment->addHidden('user_id');
             return $comment->load(['user' => function ($query) {
@@ -50,8 +50,8 @@ class AlbumPhotoCommentController extends Controller
      */
     public function store(PhotoCommentStoreRequest $request, $photos)
     {
-        $comment = new AlbumPhotoComment($request->all());
-        $comment->photo()->associate($photos);
+        $comment = new PhotoComment($request->all());
+        $comment->commentable()->associate($photos);
         $comment->user()->associate($this->auth->user());
         $photos->comments()->save($comment);
 
@@ -63,7 +63,7 @@ class AlbumPhotoCommentController extends Controller
      *
      * @param PhotoCommentsRequest $request
      * @param AlbumPhoto $photos
-     * @param AlbumPhotoComment $comment
+     * @param PhotoComment $comment
      * @return \Illuminate\Http\JsonResponse
      * @internal param int $id
      */

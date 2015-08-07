@@ -3,7 +3,7 @@
 namespace App;
 
 /**
- * Class AlbumPhotoComment
+ * Class PhotoComment
  * @package App
  *
  * @property integer $id
@@ -15,7 +15,7 @@ namespace App;
  * @property AlbumPhoto $photo
  * @property User $user
  */
-class AlbumPhotoComment extends BaseModel
+class PhotoComment extends BaseModel
 {
     protected $fillable = ['body'];
 
@@ -27,5 +27,10 @@ class AlbumPhotoComment extends BaseModel
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function commentable()
+    {
+        return $this->morphTo();
     }
 }

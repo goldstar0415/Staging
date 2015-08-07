@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SpotTypesTableSeeder::class);
         $this->call(SocialsTableSeeder::class);
         if (App::environment('local')) {
+            Storage::deleteDirectory('upload/App');
+
             $this->call(UserTableSeeder::class);
             $this->call(WallsTableSeeder::class);
             $this->call(AreasTableSeeder::class);
