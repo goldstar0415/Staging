@@ -4,14 +4,17 @@ namespace App\Providers;
 
 use App\Album;
 use App\AlbumPhoto;
-use App\AlbumPhotoComment;
+use App\PhotoComment;
 use App\Area;
 use App\ChatMessage;
 use App\Friend;
 use App\Spot;
+use App\SpotPhoto;
+use App\SpotReview;
 use App\User;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Request;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -27,30 +30,27 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * Define your route model bindings, pattern filters, etc.
      *
-     * @param  \Illuminate\Routing\Router  $router
-     * @return void
+     * @param  \Illuminate\Routing\Router $router
      */
     public function boot(Router $router)
     {
         $router->model('albums', Album::class);
-        $router->model('photos', AlbumPhoto::class);
+        $router->bind('photos', function ($value) {
+            if (Request::is('photos/*')) {
+                return AlbumPhoto::findOrFail($value);
+            } elseif (Request::is('spots/*')) {
+                return SpotPhoto::findOrFail($value);
+            }
+
+            return $value;
+        });
         $router->model('users', User::class);
         $router->model('friends', Friend::class);
         $router->model('spots', Spot::class);
         $router->model('message', ChatMessage::class);
         $router->model('selection', Area::class);
-
-        $router->bind('comments', function ($value) use ($router) {
-            if (explode('.', $router->currentRouteName())[0] === 'photos') {
-                $comment = AlbumPhotoComment::where('id', $value)->first();
-                if ($comment) {
-                    return $comment;
-                } else {
-                    abort(404);
-                }
-            }
-            return null;
-        });
+        $router->model('reviews', SpotReview::class);
+        $router->model('comments', PhotoComment::class);
 
         parent::boot($router);
     }

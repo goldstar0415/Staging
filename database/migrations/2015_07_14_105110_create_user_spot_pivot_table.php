@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFavoritesTable extends Migration
+class CreateUserSpotPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,7 @@ class CreateFavoritesTable extends Migration
      */
     public function up()
     {
-        Schema::create('favorites', function(Blueprint $table) {
-            $table->increments('id');
+        Schema::create('spot_user', function(Blueprint $table) {
             $table->integer('user_id')->unsigned();
             $table->integer('spot_id')->unsigned();
             $table->timestamps();
@@ -34,6 +33,6 @@ class CreateFavoritesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('favorites');
+        Schema::drop('spot_user');
     }
 }

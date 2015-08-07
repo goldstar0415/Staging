@@ -138,7 +138,7 @@ class Spot extends BaseModel implements StaplerableInterface
 
     public function favorites()
     {
-        return $this->hasMany(Favorite::class);
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
     public function tags()

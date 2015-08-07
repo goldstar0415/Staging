@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Spot\SpotCategoriesRequest;
 use App\Http\Requests\Spot\SpotDestroyRequest;
+use App\Http\Requests\Spot\SpotFavoriteRequest;
+use App\Http\Requests\Spot\SpotRateRequest;
 use App\Http\Requests\Spot\SpotStoreRequest;
+use App\Http\Requests\Spot\SpotUnFavoriteRequest;
 use App\Http\Requests\Spot\SpotUpdateRequest;
 use App\Spot;
 use App\SpotPhoto;
 use App\SpotType;
+use App\SpotVote;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -133,5 +137,43 @@ class SpotController extends Controller
         $type = SpotType::where('name', $type)->with('categories')->first();
 
         return $type->categories;
+    }
+
+    /**
+     * @param SpotRateRequest $request
+     * @param \App\Spot $spot
+     * @return SpotVote
+     */
+    public function rate(SpotRateRequest $request, $spot)
+    {
+        $vote = new SpotVote($request->all());
+        $vote->user()->associate($request->user());
+        $spot->votes()->save($vote);
+
+        return $vote;
+    }
+
+    /**
+     * @param SpotFavoriteRequest $request
+     * @param \App\Spot $spot
+     * @return array
+     */
+    public function favorite(SpotFavoriteRequest $request, $spot)
+    {
+        $spot->favorites()->attach($request->user());
+
+        return ['result' => true];
+    }
+
+    /**
+     * @param SpotUnFavoriteRequest $request
+     * @param \App\Spot $spot
+     * @return array
+     */
+    public function unfavorite(SpotUnFavoriteRequest $request, $spot)
+    {
+        $spot->favorites()->detach($request->user());
+
+        return ['result' => true];
     }
 }
