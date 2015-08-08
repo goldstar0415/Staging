@@ -27,9 +27,15 @@ class ChatController extends Controller
 
         $message = new ChatMessage(['body' => $request->input('message')]);
         $user->chatMessages()->save($message, ['receiver_id' => $receiver_id]);
-        $message->albumPhotos()->sync($request->input('attachments.photos'));
-        $message->spots()->sync($request->input('attachments.spots'));
-        $message->areas()->sync($request->input('attachments.areas'));
+        if ($request->has('attachments.photos')) {
+            $message->albumPhotos()->sync($request->input('attachments.photos'));
+        }
+        if ($request->has('attachments.spots')) {
+            $message->spots()->sync($request->input('attachments.spots'));
+        }
+        if ($request->has('attachments.areas')) {
+            $message->areas()->sync($request->input('attachments.areas'));
+        }
 
         event(new OnMessage($user, $message, User::find($receiver_id)->random_hash));
 

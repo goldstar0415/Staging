@@ -27,10 +27,7 @@ class AddFriend
     public function handle(UserFollowEvent $event)
     {
         $friend = $event->getFollowing();
-        $avatar_copy_path = storage_path('tmp/') . $friend->avatar_file_name;
-        File::copy($friend->avatar->path(), $avatar_copy_path);
         $friend_model = new Friend([
-            'avatar' => $avatar_copy_path,
             'first_name' => $friend->first_name,
             'last_name' => $friend->last_name,
             'birth_date' => $friend->birth_date,
@@ -38,6 +35,11 @@ class AddFriend
             'address' => $friend->address,
             'location' => $friend->location
         ]);
+        if ($friend->avatar_file_name !== null) {
+            $avatar_copy_path = storage_path('tmp/') . $friend->avatar_file_name;
+            File::copy($friend->avatar->path(), $avatar_copy_path);
+            $friend_model->avatar = $avatar_copy_path;
+        }
         $user = $event->getFollower();
         $friend_model->friend()->associate($friend);
         $user->friends()->save($friend_model);
