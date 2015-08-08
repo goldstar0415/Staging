@@ -30,9 +30,21 @@ class SendMessageRequest extends Request
                 'string',
                 'max:5000'
             ],
-            'attachments.album_photos' => 'required_without:message|array|count:10',
-            'attachments.spots' => 'required_without:message|array|count:10',
-            'attachments.areas' => 'required_without:message|array|count:10'
+            'attachments.album_photos' => [
+                'required_without:message,attachments.spots,attachments.areas',
+                'array',
+                'count:10'
+            ],
+            'attachments.spots' => [
+                'required_without:message,attachments.album_photos,attachments.areas',
+                'array',
+                'count:10'
+            ],
+            'attachments.areas' => [
+                'required_without:message,attachments.album_photos,attachments.spots',
+                'array',
+                'count:10'
+            ]
         ];
         $rules = array_merge($rules, $this->arrayFieldRules('attachments.album_photos', 'integer'));
         $rules = array_merge($rules, $this->arrayFieldRules('attachments.spots', 'integer'));

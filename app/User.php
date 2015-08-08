@@ -249,7 +249,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
             ->join('chat_message_user', 'chat_messages.id', '=', 'chat_message_user.chat_message_id')
             ->where(function ($query) {
                 $query->where('sender_id', $this->id)->orWhere('receiver_id', $this->id);
-            });
+            })->orderBy('created_at', 'DESC');
     }
 
     public function chatMessagesReceived()
