@@ -259,7 +259,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function chatMessagesSend()
     {
-        return $this->belongsToMany(ChatMessage::class, null, 'receiver_id')->withPivot('sender_id');
+        return $this->belongsToMany(ChatMessage::class, null, 'sender_id')->withPivot('receiver_id');
     }
 
     public function albumPhotoComments()

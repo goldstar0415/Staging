@@ -26,7 +26,7 @@ class ChatController extends Controller
         $receiver_id = $request->input('user_id');
 
         $message = new ChatMessage(['body' => $request->input('message')]);
-        $user->chatMessages()->save($message, ['receiver_id' => $receiver_id]);
+        $user->chatMessagesSend()->save($message, ['receiver_id' => $receiver_id]);
         if ($request->has('attachments.album_photos')) {
             $message->albumPhotos()->sync($request->input('attachments.album_photos'));
         }
@@ -96,8 +96,7 @@ QUERY
                 ->orWhere(function ($query) use ($user_id, $my_id) {
                     $query->where('sender_id', $my_id)->where('receiver_id', $user_id);
                 });
-        })
-                ->paginate($request->get('limit'));
+        })->paginate($request->get('limit'));
     }
 
     /**
