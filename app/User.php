@@ -4,6 +4,7 @@ namespace App;
 
 use App\Extensions\GeoTrait;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -244,10 +245,19 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function chatMessages()
     {
-        return $this->belongsToMany(ChatMessage::class, null, 'sender_id')->withPivot('receiver_id');
+        return DB::table('chat_messages')
+            ->join('chat_message_user', 'chat_messages.id', '=', 'chat_message_user.chat_message_id')
+            ->where(function ($query) {
+                $query->where('sender_id', $this->id)->orWhere('receiver_id', $this->id);
+            });
     }
 
     public function chatMessagesReceived()
+    {
+        return $this->belongsToMany(ChatMessage::class, null, 'receiver_id')->withPivot('sender_id');
+    }
+
+    public function chatMessagesSend()
     {
         return $this->belongsToMany(ChatMessage::class, null, 'receiver_id')->withPivot('sender_id');
     }

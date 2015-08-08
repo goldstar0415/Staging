@@ -27,8 +27,8 @@ class ChatController extends Controller
 
         $message = new ChatMessage(['body' => $request->input('message')]);
         $user->chatMessages()->save($message, ['receiver_id' => $receiver_id]);
-        if ($request->has('attachments.photos')) {
-            $message->albumPhotos()->sync($request->input('attachments.photos'));
+        if ($request->has('attachments.album_photos')) {
+            $message->albumPhotos()->sync($request->input('attachments.album_photos'));
         }
         if ($request->has('attachments.spots')) {
             $message->spots()->sync($request->input('attachments.spots'));
@@ -88,9 +88,15 @@ QUERY
     public function getList(MessageListRequest $request)
     {
         $user_id = $request->get('user_id');
-        return $request->user()->chatMessages()->
-                where('receiver_id', $user_id)
-                ->orWhere('sender_id', $user_id)
+        $my_id = $request->user()->id;
+        return $request->user()->chatMessages()->where(function ($query) use ($user_id, $my_id) {
+            $query->where(function ($query) use ($user_id, $my_id) {
+                $query->where('receiver_id', $user_id)->where('sender_id', $my_id);
+            })
+                ->orWhere(function ($query) use ($user_id, $my_id) {
+                    $query->where('sender_id', $my_id)->where('receiver_id', $user_id);
+                });
+        })
                 ->paginate($request->get('limit'));
     }
 
@@ -101,7 +107,7 @@ QUERY
      */
     public function destroy(MessageDestroyRequest $request, $message)
     {
-        return $message->delete();
+        return ['result' => $message->delete()];
     }
 
     public function read(Request $request, $user_id)

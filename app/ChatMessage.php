@@ -26,6 +26,18 @@ class ChatMessage extends BaseModel
 
     protected $with = ['spots', 'albumPhotos', 'areas'];
 
+    protected $hidden = ['spots', 'albumPhotos', 'areas'];
+
+    protected $appends = ['attachments'];
+
+    public function getAttachmentsAttribute()
+    {
+        return [
+            'spots' => $this->spots,
+            'album_photos' => $this->albumPhotos,
+            'areas' => $this->areas
+        ];
+    }
     public function sender()
     {
         return $this->belongsToMany(User::class, null, null, 'sender_id')->withPivot('receiver_id');
