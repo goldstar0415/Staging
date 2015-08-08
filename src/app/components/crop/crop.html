@@ -3,13 +3,13 @@
 </div>
 <div class="modal-body">
   <div class="miniatures">
-    <div class="col-sm-6 crop-area">
-      <img-crop image="Crop.image" result-image="Crop.resultImage" area-type="square" result-image-size="160" change-on-fly="true"></img-crop>
+    <div class="col-sm-8 crop-area">
+      <canvas height="250" image-cropper image="Crop.image" cropped-image="Crop.resultImage" keep-aspect="true" crop-width="Crop.width" crop-height="Crop.height" touch-radius="30"></canvas>
     </div>
 
     <div class="col-sm-3"><img ng-src="{{Crop.resultImage}}" class="avatar-big">
     </div>
-    <div class="col-sm-6"><img ng-src="{{Crop.resultImage}}" class="avatar-small">
+    <div class="col-sm-4"><img ng-src="{{Crop.resultImage}}" class="avatar-small">
     </div>
   </div>
 </div>

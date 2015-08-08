@@ -1,46 +1,5 @@
 /*     favorite page */
 
-.spot-page-content {
-  float: left;
-  margin: 0;
-  padding: 0;
-  border: 1px solid $light_grey;
-  background: $white;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
-  position: relative;
-  .my-spots-title {
-    font: $navigation_font;
-    font-size: 23px;
-    padding: 0 0 20px 15px;
-    border-bottom: 1px solid $light_grey;
-  }
-}
-
-.event {
-  position: relative;
-  background: 0 0;
-  border-bottom: 1px solid $light_grey !important;
-  margin: 0;
-  border-radius: 0;
-  width: 100%;
-  padding: 15px;
-  .spot-stars {
-    margin-top: 15px;
-  }
-}
-
-.date, .event-spot-page, .recreation, .pitstop {
-  position: relative;
-  top: 0;
-  right: 0;
-  color: grey;
-  font: 12px Arial, sans-serif;
-  text-align: right;
-  float: right;
-}
-
 .fav-avatar-icon {
   display: block;
   width: 64px;

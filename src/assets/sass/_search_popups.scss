@@ -1,35 +1,47 @@
-
-.banner-for-unregistered {
-  background: linear-gradient(to top, rgba(0, 0, 0, .75) 1%, rgba(12, 38, 56, 0.75) 21%, rgba(12, 38, 56, 0.75) 46%,
-          rgba(3, 181, 213, 0.75) 73%, rgba(12, 38, 56, 0.75) 100%) $dark_blue;
-  padding: 0;
-  z-index: 1;
-  .bg-image {
-    background: url(/assets/img/banner_bg.png) center right no-repeat;
-    .banner-logo {
-      background: url(/assets/img/banner-logo.png) no-repeat center bottom;
-      background-size: 25%;
-      padding-top: 46%;
-    }
-    p {
-      color: #fff;
-      font: 500 40px/52px 'Ubuntu Bold';
-      //padding: 20px 60px 0;
-      text-align: center;
-      text-shadow: 0 3px 3px rgba(0, 0, 0, .4);
-    }
-    span {
-      font: 500 52px/56px 'Ubuntu Bold';
-      display: block;
-    }
-    .zoom-now {
-      margin: 60px auto;
-      display: block;
-      width: 200px;
-      font: 500 26px/26px Ubuntu;
-      box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .45);
-      z-index: 10;
-      background-color: $green;
+.banner-wrap {
+  position: absolute;
+  bottom: 0;
+  height: auto;
+  top: 0;
+  z-index: 9999;
+  margin-top: 0;
+  .banner-content {
+    height: 100%;
+    .banner-for-unregistered {
+      background: linear-gradient(to top, rgba(0, 0, 0, .75) 1%, rgba(12, 38, 56, 0.75) 21%, rgba(12, 38, 56, 0.75) 46%,
+              rgba(3, 181, 213, 0.75) 73%, rgba(12, 38, 56, 0.75) 100%) $dark_blue;
+      padding: 0;
+      z-index: 1;
+      height: 100%;
+      .bg-image {
+        background: url(/assets/img/banner-bg.png) top center repeat-y;
+        height: 100%;
+        .banner-logo {
+          background: url(/assets/img/banner-logo.png) no-repeat center;
+          background-size: 25%;
+          padding-top: 50%;
+        }
+        p {
+          color: #fff;
+          font: 500 40px/52px 'Ubuntu Bold';
+          //padding: 20px 60px 0;
+          text-align: center;
+          text-shadow: 0 3px 3px rgba(0, 0, 0, .4);
+        }
+        span {
+          font: 500 52px/56px 'Ubuntu Bold';
+          display: block;
+        }
+        .zoom-now {
+          margin: 60px auto;
+          display: block;
+          width: 200px;
+          font: 500 26px/26px Ubuntu;
+          box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .45);
+          z-index: 10;
+          background-color: $green;
+        }
+      }
     }
   }
 }
@@ -96,11 +108,11 @@
       background-size: 100%;
       padding-top: 35%;
     }
-    .poly-map {
-      background: url(../img/poligon-map.png) no-repeat center top;
-      background-size: 100%;
-      padding-top: 35%;
-    }
+    //.poly-map {
+    //  background: url(../img/poligon-map.png) no-repeat center top;
+    //  background-size: 100%;
+    //  padding-top: 35%;
+    //}
     .radius-map {
       background: url(../img/radius-map.png) no-repeat center top;
       background-size: 100%;
@@ -129,112 +141,112 @@
 }
 
 .sidebar-menu-vertical {
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  position: absolute;
-  right: 29px;
-  transform: rotate(90deg);
-  vertical-align: middle !important;
-  height: 58px;
   ul {
-    background: #379948;
-    height: 58px !important;
-    position: absolute;
-    display: inline-flex;
-    vertical-align: middle !important;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    transform: rotate(90deg);
     li {
-      font: 500 16px/24px Ubuntu;
+      font: 500 14px/24px Ubuntu;
       color: #fff;
-      display: block;
-      border: 2px solid #379948;
-      padding: 15px 10px;
-      background: #379948;
-      display: inline-table;
+      //padding: 15px 5px;
+      background-color: #379948;
+      display: inline-block;
+      width: 20%;
+      border-right: 1px solid #fff;
+      border-left: 1px solid #fff;
+      float: left;
+      &:first-child {
+        width: 60px;
+      }
       &:hover {
-        background: #03b5d4;
-        border: 2px solid #fff;
-        padding: 15px 10px 25px;
+        background-color: #03b5d4;
+        @include transition_bg_color;
       }
 
       a {
         color: #fff;
+        display: block;
+        margin: 0 auto;
+        padding: 15px 8px 15px 30px;
+        text-align: center;
+      }
+      .full-small {
+        background: url(/assets/img/icons/vertical_menu.png) 20px 16px no-repeat;
+        padding: 27px 0px;
       }
       .events {
-        background: url(../img/events-icon.png) no-repeat left center;
-        padding: 1px 0px 2px 34px;
+        background: url(/assets/img/icons/events-icon.png) 15px 17px no-repeat;
       }
       .recreation {
-        background: url(../img/recreation-icon.png) no-repeat left center;
-        padding: 1px 0px 2px 34px;
+        background: url(/assets/img/icons/recreation-icon.png) 15px 17px no-repeat;
       }
       .pit-stops {
-        background: url(../img/pit-stops-icon.png) no-repeat left center;
-        padding: 1px 0px 2px 34px;
+        background: url(/assets/img/icons/pit-stops-icon.png) 15px 17px no-repeat;
       }
       .weather-link {
-        background: url(../img/weather-icon.png) no-repeat left center;
-        padding: 1px 0px 2px 34px;
+        background: url(/assets/img/icons/weather-icon.png) 15px 17px no-repeat;
+
       }
     }
   }
 }
 
 .sidebar-menu-horizontal {
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  float: right;
-  height: 58px;
   ul {
-    background: #379948;
-    height: 58px !important;
-    display: inline-flex;
+    padding: 0;
+    margin: 0;
+    width: 100%;
     li {
       font: 500 14px/24px Ubuntu;
       color: #fff;
-      border: 2px solid #379948;
-      padding: 15px 7px;
-      background: #379948;
-      display: inline-table;
+      //padding: 15px 5px;
+      background-color: #379948;
+      display: inline-block;
+      width: 25%;
+      border-right: 1px solid #fff;
+      border-left: 1px solid #fff;
+      float: left;
       &:hover {
-        background: #03b5d4;
-        border: 2px solid #fff;
-        /*                padding: 15px 10px 25px;*/
+        background-color: #03b5d4;
+        @include transition_bg_color;
       }
 
       a {
         color: #fff;
+        display: block;
+        margin: 0 auto;
+        padding: 15px 8px 15px 30px;
+        text-align: center;
       }
       .events {
-        background: url(../img/events-icon.png) no-repeat left center;
-        padding: 1px 0px 2px 23px;
+        background: url(/assets/img/icons/events-icon.png) 15px 17px no-repeat;
       }
       .recreation {
-        background: url(../img/recreation-icon.png) no-repeat left center;
-        padding: 1px 0px 2px 23px;
+        background: url(/assets/img/icons/recreation-icon.png) 15px 17px no-repeat;
       }
       .pit-stops {
-        background: url(../img/pit-stops-icon.png) no-repeat left center;
-        padding: 1px 0px 2px 23px;
+        background: url(/assets/img/icons/pit-stops-icon.png) 15px 17px no-repeat;
       }
       .weather-link {
-        background: url(../img/weather-icon.png) no-repeat left center;
-        padding: 1px 0px 2px 24px;
+        background: url(/assets/img/icons/weather-icon.png) 15px 17px no-repeat;
+
       }
     }
   }
 }
 
-#separate {
-  height: 100%;
-  border: none !important;
-  padding: 0 !important;
-  background: rgba(255, 255, 255, .2) !important;
-  width: 1px;
-  &:hover {
-    border: none !important;
-    padding: 0 !important;
-  }
-}
+//#separate {
+//  height: 100%;
+//  border: none !important;
+//  padding: 0 !important;
+//  background: rgba(255, 255, 255, .2) !important;
+//  width: 1px;
+//  &:hover {
+//    border: none !important;
+//    padding: 0 !important;
+//  }
+//}
 
 .not-active {
   opacity: 0.7;

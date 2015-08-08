@@ -117,6 +117,20 @@
         locate: 'none',
         mapState: 'small'
       })
+      .state('my_spots', {
+        url: '/my-spots',
+        templateUrl: 'app/modules/spot/my_spots/my_spots.html',
+        controller: 'MySpotsController',
+        controllerAs: 'MySpots',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small',
+        resolve: {
+          spots: function($http, API_URL) {
+            return $http.get(API_URL + '/spots');
+          }
+        }
+      })
 
       //Single plan page
       .state('plan', {

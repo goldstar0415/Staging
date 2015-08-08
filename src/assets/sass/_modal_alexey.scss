@@ -132,12 +132,12 @@
                 .miniatures {
                     display: block;
                     margin-bottom: 10px;
-                    .big-image {
-                        margin-right: 15px;
-                        float: left;
-                    }
                     .crop-area {
-                      height: 200px;
+                      height: 250px;
+                      canvas {
+                        height: 100%;
+                        width: 100%;
+                      }
                     }
                     .avatar-big {
                         width: 120px;
