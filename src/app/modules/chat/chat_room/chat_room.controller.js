@@ -23,11 +23,18 @@
       Message.save({
           user_id: user.id,
           message: vm.message,
-          attachments: vm.attachments
+          attachments: {
+            album_photos: _.pluck(vm.attachments.photos, 'id'),
+            spots: _.pluck(vm.attachments.spots, 'id'),
+            areas: _.pluck(vm.attachments.areas, 'id')
+          }
         },
         function success(message) {
           ChatService.pushToToday(message);
           vm.message = '';
+          vm.attachments.photos = [];
+          vm.attachments.spots = [];
+          vm.attachments.areas = [];
         },
         function error(resp) {
           console.log(resp);
