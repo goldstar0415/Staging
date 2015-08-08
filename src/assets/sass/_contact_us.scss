@@ -1,6 +1,17 @@
 /*      contact us      */
 .contact-info {
   margin-top: 3rem;
+  .contact-title {
+    margin-bottom: 3rem;
+  }
+  .contact-email{
+    a {
+      color: $blue;
+      &:hover, &:active, &:focus {
+        color: $navy_blue;
+      }
+    }
+  }
   .contact-text {
     margin-bottom: 20px;
     padding-left: 25px;
@@ -23,6 +34,10 @@
   border-radius: 8px;
   border: 1px solid $light_grey;
   position: relative;
+  .keep-touch-title {
+    padding: 0 0 20px 15px;
+    border-bottom: 1px solid $light_grey;
+  }
   .form-group {
     .control-label {
       text-align: left;

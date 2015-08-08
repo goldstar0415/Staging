@@ -11,6 +11,7 @@
       restrict: 'E',
       scope: {
         message: '=',
+        attachments: '=',
         onSubmit: '&',
         onFocus: '&'
       },
@@ -23,18 +24,30 @@
     /** @ngInject */
     function NgInputController($modal, $rootScope) {
       var vm = this;
-      vm.message.attachments = {};
+      vm.attachments = {
+        photos: [],
+        spots: [],
+        areas: []
+      };
 
-      vm.submit = function (form) {
-        if (form.$valid) {
+      vm.submit = function () {
+        if (vm.message || vm.attachments.photos.length || vm.attachments.spots.length || vm.attachments.spots.length) {
           vm.onSubmit();
         }
+      };
+
+      vm.deletePhoto = function (idx) {
+        vm.attachments.photos.splice(idx, 1);
+      };
+
+      vm.deleteSpot = function (idx) {
+        vm.attachments.spots.splice(idx, 1);
       };
 
       vm.openPhotosModal = function () {
         $modal.open({
           templateUrl: 'PhotosModal.html',
-          controller: PhotosModalController,
+          controller: 'PhotosModalController',
           controllerAs: 'modal',
           modalContentClass: 'clearfix',
           resolve: {
@@ -42,35 +55,37 @@
               return Album.query({user_id: $rootScope.currentUser.id}).$promise;
             },
             attachments: function () {
-              return vm.message.attachments;
+              return vm.attachments;
             }
           }
         });
       };
 
       vm.openActivityModal = function () {
-
-      }
-    }
-
-    function PhotosModalController(Album, albums, attachments, $modalInstance) {
-      var vm = this;
-      vm.albums = albums;
-      vm.attachments = attachments;
-
-      vm.selectAlbum = function (id) {
-        vm.selectedAlbum =  Album.get({id: id}, function (album) {
-
-          return album;
+        $modal.open({
+          templateUrl: 'ActivityModal.html',
+          controller: 'ActivityModalController',
+          controllerAs: 'modal',
+          //modalContentClass: 'clearfix',
+          resolve: {
+            spots: function (Spot) {
+              return Spot.query().$promise;
+            },
+            //favorites: function () {
+            //  return Spot.query().$promise;
+            //},
+            areas: function (Area) {
+              return Area.query().$promise;
+            },
+            attachments: function () {
+              return vm.attachments;
+            }
+          }
         });
       };
-
-      vm.addPhoto = function (idx) {
-        var photo = vm.selectedAlbum.photos.splice(idx, 1);
-        vm.attachments.images = vm.attachments.images || [];
-        vm.attachments.images.push(photo);
-      };
     }
+
+
 
   }
 

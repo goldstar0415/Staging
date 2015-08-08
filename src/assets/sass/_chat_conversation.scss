@@ -1,190 +1,193 @@
 .chat-conversation {
-  background: $white;
-  padding: 0;
-  margin-top: 20px;
-  border: 1px solid #e9edf0;
-  border-radius: 8px 8px 0 0;
-  .left {
-    float: left;
-  }
-  .right {
-    float: right;
-  }
-  .padding-0 {
+    background: $white;
     padding: 0;
-  }
-  .date-dialog-day {
-    font-size: 12px;
-    color: #9f9f9f;
-    text-align: center;
-  }
-  .dialog-title {
-    font-size: 26px;
-    font-weight: 500;
-    margin: 20px 15px;
-  }
-  hr {
-    height: 1px;
-    background: #e9edf0;
-    margin-bottom: 0;
-  }
-  .show-previous{
-    text-align: center;
-    font-size: 11px;
-    margin-top: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e9edf0;
-    a {
-      color: #337ab7;
-    }
-  }
-  .posts-chat{
-    max-height: 48rem;
-    overflow: auto;
-    padding-bottom: 10px;
-  }
-  .date {
-    font-size: 11px;
-    color: #cdd0d2;
-    margin: 3px 10% 4px 5%;
-    margin-right: 5%;
-    margin-bottom: 4px;
-    margin-left: 5%;
-  }
-  .dialog-user {
-    position: relative;
-    &.new, &:hover {
-      background: #e9edf0;
-    }
-    .user-name {
-      h3 {
-        font-size: 14px;
-        font-weight: 600;
-        padding: 5px;
-        margin-bottom: 5px;
-      }
-    }
-    .delete-user {
-      display: none;
-      position: absolute;
-      top: 5px;
-      left: 20px;
-      width: 10px;
-      height: 12px;
-    }
-    &:hover .delete-user {
-      display: block;
-    }
-    .avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 25px;
-    }
-    .dialog-content {
-      .dial {
-        display: block;
-        border: 1px solid #e9edf0;
-        border-radius: 7px;
-        background: #f5f8fa;
-        position: relative;
-        padding: 10px;
-        font-size: 11px;
-        float: right;
-        &:after {
-          content: '';
-          position: absolute;
-          right: -7px;
-          top: 10px;
-          width: 12px;
-          height: 12px;
-          background: #f5f8fa;
-          transform: rotate(134deg);
-          border-top: 1px solid #e9edf0;
-          border-left: 1px solid #e9edf0;
-        }
-        p {
-          margin-bottom: 0;
-        }
-        img {
-          max-width: 100%;
-          width: auto;
-          height: auto;
-          padding: 5px;
-        }
-      }
-    }
-  }
-  .dialog-friend {
-    position: relative;
-    &.new, &:hover {
-      background: #e9edf0;
-    }
-    &:hover .delete-friend {
-      display: block;
-    }
-    .delete-friend {
-      display: none;
-      position: absolute;
-      top: 5px;
-      right: 20px;
-      width: 10px;
-      height: 12px;
-    }
-    .avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 25px;
-    }
-    .dialog-content-friend {
-      .dial {
-        display: block;
-        border: 1px solid #e9edf0;
-        border-radius: 7px;
-        background: #f5f8fa;
-        position: relative;
-        padding: 10px;
-        font-size: 11px;
+    margin-top: 20px;
+    border: 1px solid #e9edf0;
+    border-radius: 8px 8px 0 0;
+    .left {
         float: left;
-        &:after {
-          content: '';
-          position: absolute;
-          left: -7px;
-          top: 10px;
-          width: 12px;
-          height: 12px;
-          background: #f5f8fa;
-          transform: rotate(134deg);
-          border-bottom: 1px solid #e9edf0;
-          border-right: 1px solid #e9edf0;
-        }
-        p {
-          margin-bottom: 0;
-        }
-        img {
-          max-width: 100%;
-          width: auto;
-          height: auto;
-          padding: 5px;
-        }
-      }
     }
-    .user-name {
-      h3 {
-        font-size: 14px;
-        font-weight: 600;
-        padding: 5px;
-        margin-bottom: 5px;
-      }
+    .right {
+        float: right;
     }
-  }
-  .dialog-form {
-    border-top: 1px solid #e9edf0;
-    padding: 0;
+    .padding-0 {
+        padding: 0;
+    }
+    .date-dialog-day {
+        font-size: 12px;
+        color: #9f9f9f;
+        text-align: center;
+    }
+    .dialog-title {
+        font-size: 26px;
+        font-weight: 500;
+        margin: 20px 15px;
+    }
+    hr {
+        height: 1px;
+        background: #e9edf0;
+        margin-bottom: 0;
+    }
+    .show-previous{
+        text-align: center;
+        font-size: 11px;
+        margin-top: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e9edf0;
+        a {
+            color: #337ab7;
+        }
+    }
+    .posts-chat{
+        max-height: 48rem;
+        overflow: auto;
+        padding-bottom: 10px;
+    }
+    .date {
+        font-size: 11px;
+        color: #cdd0d2;
+        margin: 3px 10% 4px 5%;
+        margin-right: 5%;
+        margin-bottom: 4px;
+        margin-left: 5%;
+    }
+    .dialog-user {
+        position: relative;
+        &.new, &:hover {
+            background: #e9edf0;
+        }
+        .user-name {
+            h3 {
+                font-size: 14px;
+                font-weight: 600;
+                padding: 5px;
+                margin-bottom: 5px;
+            }
+        }
+        .delete-user {
+            display: none;
+            position: absolute;
+            top: 5px;
+            left: 20px;
+            width: 10px;
+            height: 12px;
+        }
+        &:hover .delete-user {
+            display: block;
+        }
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 25px;
+        }
+        .dialog-content {
+            .dial {
+                display: block;
+                border: 1px solid #e9edf0;
+                border-radius: 7px;
+                background: #f5f8fa;
+                position: relative;
+                padding: 10px;
+                font-size: 11px;
+                float: right;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    right: -7px;
+                    top: 10px;
+                    width: 12px;
+                    height: 12px;
+                    background: #f5f8fa;
+                    transform: rotate(134deg);
+                    border-top: 1px solid #e9edf0;
+                    border-left: 1px solid #e9edf0;
+                }
+                p {
+                    margin-bottom: 0;
+                }
+                img {
+                    max-width: 100%;
+                    width: auto;
+                    height: auto;
+                    padding: 5px;
+                }
+            }
+        }
+    }
+    .dialog-friend {
+        position: relative;
+        &.new, &:hover {
+            background: #e9edf0;
+        }
+        &:hover .delete-friend {
+            display: block;
+        }
+        .delete-friend {
+            display: none;
+            position: absolute;
+            top: 5px;
+            right: 20px;
+            width: 10px;
+            height: 12px;
+        }
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 25px;
+        }
+        .dialog-content-friend {
+            .dial {
+                display: block;
+                border: 1px solid #e9edf0;
+                border-radius: 7px;
+                background: #f5f8fa;
+                position: relative;
+                padding: 10px;
+                font-size: 11px;
+                float: left;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    left: -7px;
+                    top: 10px;
+                    width: 12px;
+                    height: 12px;
+                    background: #f5f8fa;
+                    transform: rotate(134deg);
+                    border-bottom: 1px solid #e9edf0;
+                    border-right: 1px solid #e9edf0;
+                }
+                p {
+                    margin-bottom: 0;
+                }
+                img {
+                    max-width: 100%;
+                    width: auto;
+                    height: auto;
+                    padding: 5px;
+                }
+            }
+        }
+        .user-name {
+            h3 {
+                font-size: 14px;
+                font-weight: 600;
+                padding: 5px;
+                margin-bottom: 5px;
+            }
+        }
+    }
+    .dialog-form {
+        border-top: 1px solid #e9edf0;
+        padding: 0;
 
-    .new-post {
-      padding: 10px;
-      background: #e9edf0;
-      textarea {
+    }
+}
+
+.new-post {
+    padding: 10px;
+    background: #e9edf0;
+    textarea {
         resize: none;
         width: 100%;
         min-height: 100px;
@@ -196,17 +199,17 @@
         font-size: 12px;
         @include transition_shadow;
         &:hover {
-          border: 1px solid #76c7dc;
-          box-shadow: 0 0 3px #00b7f3;
-          transition: box-shadow 0.3s, border-color 0.3s;
+            border: 1px solid #76c7dc;
+            box-shadow: 0 0 3px #00b7f3;
+            transition: box-shadow 0.3s, border-color 0.3s;
         }
-      }
-      hr {
+    }
+    hr {
         margin: 0 -10px 8px -10px;
         height: 1px;
         background: #cecbcb;
-      }
-      .submit-send {
+    }
+    .submit-send {
         width: 54px;
         height: 22px;
         margin-left: 14px;
@@ -218,11 +221,11 @@
         float: right;
         transition: background 0.3s;
         &:hover {
-          background: #1a415b;
-          transition: background 0.3s;
+            background: #1a415b;
+            transition: background 0.3s;
         }
-      }
-      .add-photo {
+    }
+    .add-photo {
         float: right;
         display: block;
         width: 16px;
@@ -230,20 +233,18 @@
         margin: 4px 0 0 10px;
         background: url(/assets/img/icons/clip-photo.png) no-repeat right top;
         &:hover {
-          background: url(/assets/img/icons/clip-photo.png) no-repeat right bottom;
+            background: url(/assets/img/icons/clip-photo.png) no-repeat right bottom;
         }
-      }
-      .add-attach {
+    }
+    .add-attach {
         float: right;
         display: block;
         width: 16px;
         height: 14px;
         margin: 4px 0 0 10px;
-        background: url(/assets/img/icons/clip-photo.png) no-repeat;
+        background: url(/assets/img/icons/clip-photo.png) no-repeat left top;
         &:hover {
-          background: url(/assets/img/clip-photo.png) no-repeat left bottom;
+            background: url(/assets/img/icons/clip-photo.png) no-repeat left bottom;
         }
-      }
     }
-  }
 }

@@ -33,7 +33,7 @@
   font: 500 16px/18px "Ubuntu medium";
   font-size: 23px;
   padding: 0 0 20px 15px;
-  border-bottom: 1px solid #e9edf0;
+  border-bottom: 1px solid $light_grey;
 }
 
 .position-right {
@@ -160,11 +160,7 @@
       box-shadow: none;
       padding: 0;
     }
-    .date {
-      font: 11px/11px Arial, sans-serif;
-      color: grey;
-      margin-top: 5px;
-    }
+
   }
 }
 

@@ -30,9 +30,26 @@
 @import "create_new_plan";
 @import "calendar";
 @import "planner";
-@import "wall_page";
+@import "user_profile";
 @import "chat_messages";
 @import "chat_conversation";
+@import "search_popups";
+@import "ivent_map";
+@import "new_message";
+@import "activity_profile";
+@import "remove_or_cancel";
+@import "admin_about_us";
+@import "admin_menu";
+@import "admin_users";
+@import "reviews";
+@import "saved_searches";
+@import "admin_user_info_page";
+@import "admin_edit_user_page";
+@import "admin_spot_categories";
+@import "admin_create_spot_category";
+@import "admin_activity_category";
+@import "admin_activity_level_create";
+@import "admin_reaction_requests";
 
 @font-face {
   font-family: 'Ubuntu bold';
@@ -143,11 +160,19 @@ h3 {
   padding-right: 0;
 }
 
-.central {
-    @include content_bg;
+.no-pad-left {
+  padding-left: 0;
+}
 
-    margin-bottom: 100px;
-    padding: 0;
+.no-pad-right {
+  padding-right: 0;
+}
+
+.central {
+  @include content_bg;
+
+  margin-bottom: 100px;
+  padding: 0;
 }
 
 .wrap {
@@ -241,7 +266,7 @@ h3 {
   height: 100px;
   width: 100%;
   border: 2px dashed #b5e0ef;
-  margin: 0 15px;
+  margin: 15px 0;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -275,3 +300,201 @@ h3 {
     color: #000000;
   }
 }
+
+.date, .views, .author {
+  font: 11px/11px Arial, sans-serif;
+  color: grey;
+  margin-top: 5px;
+}
+
+.views, .author {
+  float: left;
+}
+
+/*buttons*/
+.green-btn {
+  @include button;
+  background-color: $green;
+  padding: 5px 25px;
+  border: none;
+  @include transition_bg_color;
+  @include border-radius;
+  margin: 0 15px;
+  &:hover, &:focus, &:active {
+    background-color: $light_green;
+    box-shadow: none;
+    border: none;
+  }
+}
+
+.blue-btn {
+  @include button;
+  background-color: $light_blue;
+  padding: 5px 25px;
+  border: none;
+  @include transition_bg_color;
+  @include border-radius;
+  margin: 0 15px;
+  &:hover, &:focus, &:active {
+    background-color: $blue;
+    box-shadow: none;
+    border: none;
+  }
+}
+
+.red-btn {
+  @include button;
+  background-color: $red;
+  padding: 5px 25px;
+  border: none;
+  @include transition_bg_color;
+  @include border-radius;
+  margin: 0 15px;
+  &:hover, &:focus, &:active {
+    background-color: $light_red;
+    box-shadow: none;
+    border: none;
+  }
+}
+
+/*end buttons*/
+
+/*responsive*/
+
+@media (max-width: 992px) {
+  /*about us page*/
+  .about-page {
+    .about-text {
+      font: 16px/24px Arial, sans-serif;
+    }
+  }
+  /*end about us page*/
+
+  /*blog page*/
+  .position-right {
+    padding: 0;
+    margin-bottom: 15px;
+  }
+  /*end blog page*/
+}
+
+@media (max-width: 768px) {
+  /*about us page*/
+  .about-page {
+    .about-text {
+      font: 100 25px 'Ubuntu';
+    }
+  }
+  /*end about us page*/
+
+  /*zoomers page*/
+  .zoomers-content {
+    .followers {
+      .avatar {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  }
+  /*end zoomers page*/
+
+  /*blog article page*/
+  .article {
+    .article-description {
+      font: 24px/20px Arial, sans-serif;
+      word-wrap: break-word;
+    }
+    .title-blog {
+      font: 500 32px/24px 'Ubuntu medium';
+      word-wrap: break-word;
+    }
+    .location-link {
+      font: 500 25px/24px 'Ubuntu medium';
+      word-wrap: break-word;
+    }
+    .date, .views, .category, .author {
+      font: 500 22px/24px 'Ubuntu';
+    }
+  }
+  /*end blog article page*/
+  .tools {
+    padding-bottom: 15px;
+  }
+}
+
+@media (min-width: 767px) {
+  /*about us page*/
+  .about-page {
+    .about-text {
+      font: 100 23px 'Ubuntu';
+    }
+  }
+  /*end about us page*/
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  /*blog page*/
+
+  .position-right {
+    padding: 0;
+  }
+  /*end blog page*/
+}
+
+@media (min-width: 1199px) {
+  /*about us page*/
+  .about-page {
+    .about-text {
+      font: 16px/24px Arial, sans-serif;
+    }
+  }
+  /*end about us page*/
+
+}
+
+@media (max-width: 491px) {
+  /*zoomers*/
+  .events {
+    .events-width {
+      width: 50%;
+    }
+  }
+  /*end zoomers*/
+
+  /*blog page*/
+  .article {
+    .article-img {
+      height: 200px;
+    }
+  }
+  /*end blog page*/
+  .tools {
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 200px) and (max-width: 345px) {
+  /*zoomers*/
+  .events {
+    .events-width {
+      width: 100%;
+    }
+  }
+  .zoomers {
+    .followers {
+      .post {
+        .media-body-content {
+          padding-left: 0;
+        }
+      }
+    }
+  }
+  /*end zoomers*/
+
+  .tools {
+    padding-bottom: 5rem;
+  }
+}
+
+/*end responsive*/

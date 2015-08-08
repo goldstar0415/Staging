@@ -1,17 +1,68 @@
-<form class="new-post clearfix" name="form" ng-submit="NgInput.submit(form)" novalidate>
+<section class="col-xs-12 comments-section">
+  <form class="new-post clearfix" name="form" ng-submit="NgInput.submit(form)" novalidate>
       <textarea name="message"
-                ng-model="NgInput.message.body"
+                ng-model="NgInput.message"
                 placeholder="Start typing..."
                 ng-focus="NgInput.onFocus()"
-                ctrl-enter="NgInput.submit(form)"
+                ctrl-enter="NgInput.submit()"
                 required></textarea>
 
-  <hr>
-  <input type="submit" class="submit-send" value="Send">
-  <a class="add-photo" ng-click="NgInput.openPhotosModal()"></a>
-  <a class="add-attach" ng-click="NgInput.openActivityModal()"></a>
+    <div class="attachments-preview" ng-if="!_.isEmpty(NgInput.attachments)">
 
-</form>
+      <div class="links">
+        <div class="media media-visible padding-bottom add-location clearfix"
+             ng-repeat="area in NgInput.attachments.areas">
+          <a class=" img-selection">circle</a>
 
-<div ng-include="'app/components/ng_input/photos_modal.html'"></div>
-<div ng-include="'app/components/ng_input/activity_modal.html'"></div>
+          <div class="media-body">
+            <div class="description-link">
+              Lorem ipsum
+              <a class="close-link" title="Delete"></a>
+            </div>
+          </div>
+        </div>
+
+        <div ng-repeat="spot in NgInput.attachments.spots" class="media media-visible padding-bottom add-event">
+          <a class="pull-left wrap-img-event">
+            <img class="media-object attachment-link" ng-src="{{spot.cover_url.medium}}">
+          </a>
+
+          <div class="media-body">
+            <a class="close-link" title="Delete" ng-click="NgInput.deleteSpot($index)"></a>
+
+            <h3 class="media-heading ">
+              <a class="event-img clearfix">{{spot.title}}</a>
+            </h3>
+
+            <div class="description-link">{{spot.description}}</div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="upload-photos clearfix" ng-if="NgInput.attachments.photos.length > 0">
+        <div class="photos">
+          <div class="add-img"
+               ng-repeat="photo in NgInput.attachments.photos"
+               ng-mouseenter="showDelete = true" ng-mouseleave="showDelete = false">
+            <img ng-src="{{photo.photo_url.medium}}">
+            <a class="close-img" ng-show="showDelete" ng-click="NgInput.deletePhoto($index)" data-toggle="tooltip"
+               data-placement="top" title="Delete">
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr>
+    <input type="submit" class="submit-send" value="Send">
+    <a class="add-photo" ng-click="NgInput.openPhotosModal()"></a>
+    <a class="add-attach" ng-click="NgInput.openActivityModal()"></a>
+
+  </form>
+
+  <div ng-include="'app/components/ng_input/photos_modal.html'"></div>
+  <div ng-include="'app/components/ng_input/activity_modal.html'"></div>
+</section>

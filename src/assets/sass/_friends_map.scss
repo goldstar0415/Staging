@@ -1,30 +1,90 @@
-.avatar-wrap {
-  height: 60px;
-  width: 60px;
-  overflow: hidden;
-  margin: 0;
-  float: left;
-  @include white_border3;
-  border-radius: 50%;
-  img {
-    max-width: 60px;
-    min-height: 60px;
+.friends-block {
+  margin: 0 0 15px;
+  border-bottom: 1px solid $light_grey;
+  .review-img {
+    padding: 0;
+    //float: left;
+  }
+  .text-block {
+    padding: 0;
+    width: 87%;
+    float: left;
+    h3 {
+      margin: 0 0 5px;
+      a {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        margin: 0;
+        &:hover {
+          color: #124d76;
+          @include transition_color;
+        }
+      }
+    }
+    p {
+      margin: 0 0 5px;
+      //font-family: 'Ubuntu medium';
+    }
+    .description {
+      font: 13px/19px Arial, sans-serif !important;
+      margin: 10px 0 !important;
+    }
+    .location-btn {
+      border: 1px solid $green;
+      border-radius: 5px;
+      padding: 0;
+      width: initial;
+      float: right;
+      a {
+        display: block;
+        float: left;
+        @include transition_bg_color;
+        &:hover {
+          @include transition_bg_color;
+          background-color: $light_green;
+          background-position: center 7px;
+        }
+      }
+      .custom-location {
+        background: url(/assets/img/icons/button-compass.png) center -20px no-repeat;
+        padding: 15px 26px;
+        border-right: 1px solid $green;
+      }
+      .default-location {
+        background: url(/assets/img/icons/button-location.png) center -20px no-repeat;
+        padding: 15px 26px;
+      }
+    }
   }
 }
 
-.edit {
-  display: block;
-  width: 20px;
-  height: 20px;
-  background: url(/assets/img/icons/edit.png) no-repeat;
-  position: absolute;
-  top: 7px;
-  right: 13px;
-}
-
-.info-block {
-  padding: 0 15px 0 0;
-  h3 {
-    margin: 0;
+.edit-delete {
+  padding: 0;
+  a {
+    display: inline-block;
+    float: right;
+    margin-right: 15px;
+    color: $blue;
+    font: 13px/13px Arial;
+    &:first-child {
+      margin-right: 0;
+    }
+    &:hover {
+      color: $navy_blue;
+      @include transition_color;
+    }
+  }
+  .delete {
+    padding: 1px 0 0 12px;
+  }
+  .edit {
+    background: url(/assets/img/icons/ed.png) 1px 2px no-repeat;
+    padding: 1px 0 0 14px;
+    &:hover {
+      background: url(/assets/img/icons/ed.png) 1px -13px no-repeat;
+    }
   }
 }
+
+
