@@ -92,10 +92,9 @@ QUERY
         return $request->user()->chatMessages()->where(function ($query) use ($user_id, $my_id) {
             $query->where(function ($query) use ($user_id, $my_id) {
                 $query->where('receiver_id', $user_id)->where('sender_id', $my_id);
-            })
-                ->orWhere(function ($query) use ($user_id, $my_id) {
-                    $query->where('sender_id', $my_id)->where('receiver_id', $user_id);
-                });
+            })->orWhere(function ($query) use ($user_id, $my_id) {
+                    $query->where('sender_id', $user_id)->where('receiver_id', $my_id);
+            });
         })->paginate($request->get('limit'));
     }
 

@@ -19,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
         Validator::resolver(function ($translator, $data, $rules, $messages) {
             return new Validations($translator, $data, $rules, $messages);
         });
+
+        \DB::listen(function($sql, $bindings, $time) {
+            \Log::info($sql, $bindings);
+        });//TODO: delete after development
     }
 
     /**
