@@ -1,16 +1,4 @@
 /*     my spot   */
-//
-//.spot-page-content {
-//  float: left;
-//  margin: 0;
-//  padding: 0;
-//  border: 1px solid $light_grey;
-//  background: $white;
-//  -webkit-border-radius: 8px;
-//  -moz-border-radius: 8px;
-//  border-radius: 8px;
-//  position: relative;
-//}
 
 .invite-friend {
   background: url(/assets/img/icons/tools.png) -3px -111px no-repeat;
@@ -44,7 +32,6 @@
 .event {
   position: relative;
   background: 0 0;
-  border: 0;
   margin: 0;
   border-radius: 0;
   width: 100%;
@@ -149,7 +136,7 @@
   color: grey;
 }
 
-.date {
+.date  {
   position: relative;
   top: 0;
   right: 0;
@@ -307,6 +294,7 @@
       padding-bottom: 1px;
       background: url(/assets/img/icons/count.png) 0 -1px no-repeat;
       margin-bottom: 10px;
+      width: 100%;
     }
     .wrap-img-event {
       padding-right: 15px;
@@ -319,9 +307,7 @@
     margin: 10px 0;
     position: relative;
 
-    .description-link {
-      color: #666;
-    }
+
     a {
       display: block;
       float: left;
@@ -334,6 +320,9 @@
       background: url(/assets/img/icons/poly.png) 0 1px no-repeat;
       color: $blue;
     }
+  }
+  .description-link {
+    color: #666;
   }
   .links {
     margin: 0 -10px 10px;

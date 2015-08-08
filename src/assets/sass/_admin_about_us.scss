@@ -1,0 +1,39 @@
+/*      about us      */
+
+.about-page {
+    margin-top: 7rem;
+    .about-title {
+        font: 500 36px/26px 'Ubuntu medium';
+        margin-bottom: 30px;
+    }
+    .about-text {
+        font: 16px/24px Arial, sans-serif;
+    }
+}
+
+.team-section {
+    margin: 70px auto;
+    display: block;
+    .team-item {
+        margin-bottom: 50px;
+    }
+    .img-user-circle {
+        width: 160px;
+        border-radius: 55%;
+        margin-bottom: 15px;
+    }
+    .name-user {
+        font: 22px Ubuntu;
+        color: $dark_blue;
+        margin-bottom: 5px;
+    }
+    .job-user {
+        font: 14px Arial;
+        color: grey;
+        text-transform: uppercase;
+    }
+    
+}
+.button-admin-about-us{
+       padding: 20px;
+    }

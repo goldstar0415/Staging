@@ -134,10 +134,9 @@
                     margin-bottom: 10px;
                     .big-image {
                         margin-right: 15px;
+                        max-width: 100%;
+                        width: auto;
                         float: left;
-                    }
-                    .crop-area {
-                      height: 200px;
                     }
                     .avatar-big {
                         width: 120px;
@@ -231,7 +230,7 @@
                         visibility: hidden;
                     }
                 }
-
+                
                 .tab-content {
                     .choose-some-photos-body {
                         padding-top: 20px;
@@ -286,8 +285,4 @@
             .modal-footer {}
         }
     }
-}
-
-.modalFix .modal-content {
-  @include clearfix;
 }

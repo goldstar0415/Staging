@@ -1,0 +1,75 @@
+.users {
+    border: 1px solid #e9edf0;
+    border-radius: 10px;
+    background: #fff;
+    hr{
+        margin: 0 -15px;
+    }
+        form {
+        margin: 15px 0 20px 0;
+        position: relative;
+        input[type='text'] {}
+        input[type='submit'] {
+            position: absolute;
+            top: 1px;
+            right: 0;
+            display: block;
+            width: 30px;
+            height: 30px;
+            background: url(/assets/img/icons/search_icon.png) 0 -5px no-repeat;
+            text-indent: -10000px;
+            overflow: hidden;
+            border: none;
+            margin-right: 10px;
+            box-shadow: none;
+            &:hover {
+                background: url(/assets/img/icons/search_icon.png) 0 -46px no-repeat;
+            }
+        }
+    }
+    table {
+        border: 1px solid #e9edf0;
+        border-collapse: collapse;
+        tr {
+            height: 40px;
+        }
+        thead {
+            font: 500 16px/16px 'Ubuntu medium';
+            th {
+                border: 1px solid #e9edf0;
+            }
+        }
+        tbody {
+            font: 14px/14px Arial, sans-serif;
+            tr:nth-child(even) {
+                background: #e9edf0;
+                td {
+                    border-color: #fff;
+                }
+                &:last-child {
+                    border-right-color: #e9edf0;
+                   
+                }
+            }
+            td {
+                border-right: 1px solid #e9edf0;
+                padding-left: 15px;
+                a {
+                    color: #00b7f3;
+                    @include transition_color;
+                    &:hover {
+                        color: #0874be;
+                        @include transition_color;
+                    }
+                }
+                .delete {
+                    padding-right: 40px;
+                    background: url(/assets/img/icons/trash.png) no-repeat 1px -12px;
+                    &:hover {
+                        background: url(/assets/img/icons/trash.png) no-repeat 1px -53px;
+                    }
+                }
+            }
+        }
+    }
+}

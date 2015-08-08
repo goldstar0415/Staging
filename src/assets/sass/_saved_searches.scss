@@ -1,0 +1,45 @@
+.saved-search {
+  margin: 0 0 15px;
+  border-bottom: 1px solid $light_grey;
+  .search-container {
+    overflow: hidden;
+    padding: 0;
+    .search-img {
+      width: 100%;
+      max-height: 90px;
+    }
+  }
+  h2 {
+    margin: 0;
+    a {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      margin: 0;
+      &:hover {
+        color: #124d76;
+        @include transition_color;
+      }
+    }
+  }
+  .delete {
+    float: right;
+    padding: 0 0 0 15px;
+    margin-right: 30px;
+    color: $blue;
+    font: 13px/13px Arial;
+    &:hover {
+      color: $navy_blue;
+      @include transition_color;
+    }
+  }
+  .sharing {
+    float: right;
+    padding: 0 6px;
+    height: 12px;
+    background: url(/assets/img/icons/share.png) no-repeat left;
+    &:hover {
+      background: url(/assets/img/icons/share.png) -12px 0 no-repeat;
+    }
+  }
+}

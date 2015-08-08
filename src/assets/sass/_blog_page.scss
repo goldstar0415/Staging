@@ -1,16 +1,5 @@
 /*    blog page   */
 .main-blog-content {
-  .blog-content {
-    float: left;
-    margin: 0;
-    padding: 0;
-    border: 1px solid $light_grey;
-    background: $white;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
-    position: relative;
-  }
   .position-right {
     float: right;
     .dropdown-blog {
@@ -122,11 +111,7 @@
         box-shadow: none;
         padding: 0;
       }
-      .date {
-        font: 11px/11px Arial, sans-serif;
-        color: grey;
-        margin-top: 5px;
-      }
+
     }
   }
 
