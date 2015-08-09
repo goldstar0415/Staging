@@ -19,6 +19,8 @@ class SpotReview extends BaseModel
 {
     protected $fillable = ['body'];
 
+    protected $with = ['user'];
+
     public function spot()
     {
         return $this->belongsTo(Spot::class);

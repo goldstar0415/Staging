@@ -153,6 +153,11 @@ class SpotController extends Controller
         return $vote;
     }
 
+    public function favorites(Request $request)
+    {
+        return $request->user()->favorites;
+    }
+
     /**
      * @param SpotFavoriteRequest $request
      * @param \App\Spot $spot

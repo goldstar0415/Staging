@@ -41,10 +41,9 @@ class SpotReviewController extends Controller
     public function store(SpotReviewStoreRequest $request, $spot)
     {
         $review = new SpotReview($request->all());
-        $review->spot()->associate($spot);
-        $review->user()->associate($request->user());
+//        $review->user()->associate($request->user());
 
-        $review->save();
+        $spot->reviews()->save($review);
 
         return $review;
     }
