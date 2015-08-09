@@ -47,7 +47,7 @@
       var countNewMessages = 0;
       angular.forEach(vm.messages.data, function (groupMessages) {
         angular.forEach(groupMessages.messages, function (message) {
-          if (!message.is_read && message.receiver_id == $rootScope.currentUser.id) {
+          if (!message.is_read && message.pivot.receiver_id == $rootScope.currentUser.id) {
             countNewMessages++;
           }
         });

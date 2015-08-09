@@ -221,12 +221,12 @@
 .comments-section {
 
   float: left;
-  margin: 20px 0;
+  //margin: 20px 0;
   border: 1px solid #e9edf0;
   background: $white;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
+  -webkit-border-radius:  8px 8px 0 0;
+  -moz-border-radius:  8px 8px 0 0;
+  border-radius: 8px 8px 0 0;
   position: relative;
   padding: 0;
   .comments-content {

@@ -19,14 +19,18 @@
       <p class="data">{{dialog.last_message.created_at | toTimezone}}</p>
     </div>
     <div  class="col-lg-8 col-md-7 col-sm-6 col-xs-6 content-messages ">
-      <p ng-if="dialog.last_message.user_id != currentUser.id">{{dialog.last_message.message}}</p>
+      <div ng-if="dialog.last_message.user_id != currentUser.id">
+        <p ng-if="dialog.last_message.message">{{dialog.last_message.message}}</p>
+        <p ng-if="!dialog.last_message.message"><b>attached files</b></p>
+      </div>
 
       <div ng-if="dialog.last_message.user_id == currentUser.id"
            class="col-xs-12 incoming-messages padding-0"
            ng-class="{new: !dialog.last_message.is_read}">
         <div class="col-md-10 col-sm-9 col-xs-8 padding-0">
           <div class="message-in">
-            <p>{{dialog.last_message.message}}</p>
+            <p ng-if="dialog.last_message.message">{{dialog.last_message.message}}</p>
+            <p ng-if="!dialog.last_message.message"><b>attached files</b></p>
           </div>
         </div>
         <div class=" col-md-2 col-sm-3 col-xs-4 incoming-avatar">

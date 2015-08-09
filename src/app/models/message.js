@@ -15,8 +15,13 @@
       query: {
         url: API_URL + '/message/list'
       },
+      save: {
+        method: 'POST',
+        ignoreLoadingBar: true
+      },
       markAsRead: {
-        url: API_URL + '/message/:user_id/read'
+        url: API_URL + '/message/:user_id/read',
+        ignoreLoadingBar: true
       }
     });
   }
