@@ -14,7 +14,11 @@
 
     function setCurrentUser(user) {
       $rootScope.currentUser = user;
-      $rootScope.profileUser = user;
+
+      if (!$rootScope.profileUser) {
+        $rootScope.profileUser = user;
+      }
+
       $rootScope.currentUserFailed = false;
       socket.connect(user.random_hash);
     }

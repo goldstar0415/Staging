@@ -17,7 +17,7 @@
         <div class="choose-album col-sm-4"
              ng-repeat="item in modal.albums"
              ng-click="modal.selectAlbum(item.id)">
-          <img ng-src="{{item.cover.medium}}">
+          <img class="img-responsive tab-photo" ng-src="{{item.cover.medium}}">
 
           <p><a>{{item.title}}</a></p>
         </div>

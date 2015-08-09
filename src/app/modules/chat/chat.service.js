@@ -6,7 +6,7 @@
     .factory('ChatService', ChatService);
 
   /** @ngInject */
-  function ChatService($state, $rootScope, Message) {
+  function ChatService($state, $rootScope, NewMessageService) {
     var messages = [],
       dialogs = {},
       utcOffset = moment().utcOffset();
@@ -28,17 +28,18 @@
     }
 
     function onNewMessage(data) {
-      console.log($state);
+      //TODO: update dialogs
+
       if ($state.current.name == 'chatRoom' && $state.params.user_id == data.user.id) {  //if user in chat
         data.message.sender_id = data.user.id;
         data.message.receiver_id = $rootScope.currentUser.id;
         pushToToday(data.message);
-      } else if ($state.current.name == 'chat') {
-        _.each(dialogs, function (dialog) {
-
-        });
+        //} else if ($state.current.name == 'chat') {
+        //  _.each(dialogs, function (dialog) {
+        //
+        //  });
       } else {
-
+        NewMessageService.show(data);
       }
 
       $rootScope.$apply();

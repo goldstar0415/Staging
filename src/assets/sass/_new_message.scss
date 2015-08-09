@@ -1,42 +1,43 @@
 .new-messages {
-    position: absolute;
-    left: 50px;
-    bottom: 50px;
-    width: 200px;
-    border: 1px solid #e5e5e5;
-    border-radius: 10px;
-    background: rgba(239, 243, 241, 0.5);
-    &:hover {
-        background: rgba(211, 229, 232, .34);
+  z-index: 2;
+  position: absolute;
+  left: 50px;
+  bottom: 50px;
+  width: 200px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  background: rgba(239, 243, 241, 0.5);
+  &:hover {
+    background: rgba(211, 229, 232, .34);
+  }
+  h5 {
+    color: #696464;
+    padding: 5px 0 0 5px;
+    margin: 0;
+  }
+  img {
+    float: left;
+    width: 36px;
+    height: 36px;
+    margin: 5px;
+    border-radius: 30px;
+    border: 3px solid $white;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  .message {
+    margin-left: 50px;
+    max-width: 135px;
+    .user-name {
+      font-size: 14px;
+      font-weight: 600;
     }
-    h5 {
-        color: #696464;
-        padding: 5px 0 0 5px;
-        margin: 0;
+    p {
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-left: 5px;
     }
-    img {
-        float: left;
-        width: 36px;
-        height: 36px;
-        margin: 5px;
-        border-radius: 30px;
-        border: 3px solid $white;
-         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.35);
-    }
-   
-    .message {
-        margin-left: 50px;
-        max-width: 135px;
-         .user-name {
-        font-size: 14px;
-        font-weight: 600;
-    }
-        p{
-         
-            font-size: 12px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-    }
+  }
 }
