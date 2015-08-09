@@ -31,21 +31,24 @@
     function SendMessageModalController(toastr, $rootScope, Message, $modalInstance) {
       var vm = this;
 
-      vm.send = function (form) {
-        if (form.$valid) {
-          Message.save({
-              user_id: $rootScope.profileUser.id,
-              message: vm.message
-            },
-            function success(message) {
-              toastr.info('Message sent');
+      vm.send = function () {
+        Message.save({
+            user_id: $rootScope.profileUser.id,
+            message: vm.message,
+            attachments: {
+              album_photos: _.pluck(vm.attachments.photos, 'id'),
+              spots: _.pluck(vm.attachments.spots, 'id'),
+              areas: _.pluck(vm.attachments.areas, 'id')
+            }
+          },
+          function success(message) {
+            toastr.info('Message sent');
 
-              $modalInstance.close();
-            }, function error(resp) {
-              console.log(resp);
-              toastr.error('Send message failed');
-            });
-        }
+            $modalInstance.close();
+          }, function error(resp) {
+            console.log(resp);
+            toastr.error('Send message failed');
+          });
       };
 
       vm.close = function () {

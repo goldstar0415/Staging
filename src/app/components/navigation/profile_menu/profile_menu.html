@@ -12,35 +12,133 @@
         <li><a ui-sref="settings">Settings</a></li>
       </ul>
       <div ng-if="!$root.currentUser">
-        <b>You should <sign-in title="sign in"></sign-in> to get all features</b>
+        <b>You should
+          <sign-in title="sign in"></sign-in>
+          to get all features</b>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container wrap">
-  <div class="col-xs-2 information-profile">
-    <a ui-sref="profile({user_id: $root.profileUser.id})" class="avatar">
-      <img ng-src="{{$root.profileUser.avatar_url.medium}}">
-    </a>
 
-    <div ng-if="$root.currentUser && $root.profileUser.id != $root.currentUser.id">
-      <send-message></send-message>
+<div class="col-xs-12">
+  <div class="container wrap">
 
-      <button type="button" class="btn btn-default"
-              ng-click="Profile.follow($root.profileUser)"
-              ng-class="{'unfollow-btn': !$root.profileUser.can_follow, 'follow-btn': $root.profileUser.can_follow}">
-        {{$root.profileUser.can_follow ? 'Follow' : 'Unfollow'}}
-      </button>
+    <div class="col-sm-2 col-xs-12 information-profile">
+      <section class="col-xs-3 col-sm-11">
+        <a ui-sref="profile({user_id: $root.profileUser.id})" class="avatar">
+          <img ng-src="{{profileUser.avatar_url.medium}}"/>
+        </a>
+      </section>
+      <section class="col-xs-9 col-sm-11">
+        <div class="status moderator" ng-if="profileUser.status">{{profileUser.status}}</div>
+        <h2 class="profile-name ">
+          <a  ui-sref="profile({user_id: $root.profileUser.id})"  >
+            {{profileUser.first_name}} {{profileUser.last_name}}
+            <div class="online" title="Online"></div>
+          </a>
+        </h2>
+        <div class="age">
+          <span ng-if="profileUser.sex != null">{{profileUser.sex ? 'male' : 'female'}}</span>
+          <span ng-if="profileUser.birth_date">, {{profileUser.birth_date | age}} years</span>
+        </div>
+        <div class="location" ng-if="profileUser.location"> Location here</div>
 
+        <div ng-if="profileUser.description">
+          <div ng-init="Profile.textLimit = 50"
+               ng-class="{small: Profile.textLimit == 50, 'full-text': Profile.textLimit == 1000}"
+               class="biography">
+            {{profileUser.description | limitTo: Profile.textLimit}}
+          </div>
+          <div ng-if="profileUser.description.length > 50">
+            <a class="more"  ng-click="Profile.textLimit = 1000">
+              see more
+            </a>
+          </div>
+        </div>
+
+
+        <div ng-if="$root.currentUser && $root.profileUser.id != $root.currentUser.id">
+          <send-message></send-message>
+
+          <div class="form-group">
+            <button type="button" class="btn btn-default"
+                    ng-click="Profile.follow($root.profileUser)"
+                    ng-class="{'red-btn': !$root.profileUser.can_follow, 'green-btn': $root.profileUser.can_follow}">
+              {{$root.profileUser.can_follow ? 'Follow' : 'Unfollow'}}
+            </button>
+          </div>
+        </div>
+
+        <div class="info-links hidden-lg hidden-md hidden-sm visible-xs  ng-show col-xs-12">
+          <a class="events"> {{ profileUser.count_spots }} </a>
+          <a class="followers">000</a>
+          <a class="followings">{{ profileUser.count_followings }}</a>
+          <a class="albums">000</a>
+          <a class="fav">000</a>
+        </div>
+
+      </section>
+    </div>
+
+    <div class="col-xs-7 central">
+      <div ui-view></div>
+    </div>
+
+    <div class="col-sm-3 hidden-xs activity-profile">
+      <aside class="module-sidebar">
+        <h2 class="sidebar-title">
+          <a>Followers
+            <span class="counter">5</span>
+          </a>
+        </h2>
+
+        <div class="col-sm-4 no-pad">
+          <a href="http://zoomzoom.itechhighway.com/user/1">
+            <img src="http://zoomzoom.itechhighway.com/upload/albums/Y5jGP0j4wu4Sn08/thumb_Cxjqj4czupHZLr8k.jpg"
+                 alt="" class="avatar"/>
+
+            <p class="sidebar-user-name">Margarita Grach</p>
+          </a>
+        </div>
+
+        <div class="col-sm-4 no-pad">
+          <a>
+            <img src="http://zoomzoom.itechhighway.com/upload/albums/iPCS4Oigc1tpFvS/thumb_gKRXtOHql9wGL52K.jpg"
+                 alt="" class="avatar"/>
+
+            <p class="sidebar-user-name">Eduard Chernykh</p>
+          </a>
+        </div>
+
+        <div class="col-sm-4 no-pad">
+          <a>
+            <img src="http://zoomzoom.itechhighway.com/upload/albums/ooF4rGP023RIxTR/thumb_UxF4MX2BnEQthzny.jpg"
+                 alt="" class="avatar"/>
+
+            <p class="sidebar-user-name">Denchik  Grinko</p>
+          </a>
+        </div>
+
+        <div class="col-sm-4 no-pad">
+          <a>
+            <img src="http://zoomzoom.itechhighway.com/upload/albums/wOvYXR56ygBul3A/thumb_ZTARlXXQ5qUm4bxU.jpg"
+                 alt="" class="avatar"/>
+
+            <p class="sidebar-user-name">Valery Zakharchenko</p>
+          </a>
+        </div>
+
+        <div class="col-sm-4 no-pad">
+          <a>
+            <img src="http://zoomzoom.itechhighway.com/upload/albums/YH5ZuPs0hOkXg0F/thumb_kWYiC6FtceGfACtD.jpg"
+                 alt="" class="avatar"/>
+
+            <p class="sidebar-user-name">Josh  Petersen</p>
+          </a>
+        </div>
+      </aside>
     </div>
   </div>
-
-  <div class="col-xs-7 central">
-    <div ui-view></div>
-  </div>
-
-  <div class="col-xs-3 activity-profile">
-
-  </div>
 </div>
+

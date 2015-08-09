@@ -1,0 +1,28 @@
+<h2 class="title-name">Feeds</h2>
+
+<div class="col-xs-12">
+  <section class="section-event" ng-repeat="item in Feed.feeds">
+    <div class="event">
+
+      <div class="media media-visible">
+        <a class="pull-left" href="http://zoomtivity.com/event/show/23">
+          <img class="media-object fav-avatar-icon feeds-img"
+               src="http://zoomtivity.com/packages/design/img/event-link.png" alt="...">
+        </a>
+
+        <div class="media-body">
+          <h2 class="media-heading feeds-title">
+            <a href="http://zoomzoom.itechhighway.com/event/show/296">Lorem</a>
+          </h2>
+
+          <p class=" feeds-text">Lorem lorem lorem lorem</p>
+
+          <p class="time">Apr 01 2015 at 1.25 pm</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <h4 ng-if="Feed.feeds.length == 0">No feeds yet.</h4>
+</div>

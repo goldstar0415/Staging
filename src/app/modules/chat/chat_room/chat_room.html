@@ -18,7 +18,7 @@
          <div  ng-repeat="message in messageGroup.messages">
 
           <!--       Dialog-User                 -->
-          <div class="col-xs-12 dialog-user" ng-if="currentUser.id == message.pivot.sender_id"
+          <div class="col-xs-12 dialog-user" ng-if="currentUser.id == message.sender_id"
                ng-class="{new: !message.is_read}">
             <div class="col-xs-12 user-name">
               <h3 class="right">
@@ -44,15 +44,15 @@
                 <img ng-src="{{currentUser.avatar_url.thumb}}" class="avatar">
               </a>
             </div>
-            <div class="delete-user">
-              <a ng-click="ChatRoom.deleteMessage(message.id)">
-                <img src="/assets/img/icons/del.png">
-              </a>
-            </div>
+            <!--<div class="delete-user">-->
+              <!--<a ng-click="ChatRoom.deleteMessage(message.id)">-->
+                <!--<img src="/assets/img/icons/del.png">-->
+              <!--</a>-->
+            <!--</div>-->
           </div>
 
           <!--       Dialog-friend                     -->
-          <div class="col-xs-12 dialog-friend" ng-if="ChatRoom.user.id == message.pivot.sender_id"
+          <div class="col-xs-12 dialog-friend" ng-if="ChatRoom.user.id == message.sender_id"
                ng-class="{new: !message.is_read}">
             <div class="col-xs-12 user-name ">
               <h3>
@@ -77,11 +77,11 @@
                 <p class="date left">{{message.created_at }}</p>
               </div>
             </div>
-            <div class="delete-friend">
-              <a ng-click="ChatRoom.deleteMessage(message.id)">
-                <img src="/assets/img/icons/del.png">
-              </a>
-            </div>
+            <!--<div class="delete-friend">-->
+              <!--<a ng-click="ChatRoom.deleteMessage(message.id)">-->
+                <!--<img src="/assets/img/icons/del.png">-->
+              <!--</a>-->
+            <!--</div>-->
           </div>
 
         </div>
@@ -201,7 +201,5 @@
 
 
   <!--        Форма                -->
-  <div class="col-xs-12 dialog-form">
-    <ng-input message="ChatRoom.message" attachments="ChatRoom.attachments" on-submit="ChatRoom.sendMessage()" on-focus="ChatRoom.markAsRead()"></ng-input>
-  </div>
+  <ng-input message="ChatRoom.message" attachments="ChatRoom.attachments" on-submit="ChatRoom.sendMessage()" on-focus="ChatRoom.markAsRead()"></ng-input>
 </div>

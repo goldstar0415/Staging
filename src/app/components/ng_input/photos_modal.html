@@ -14,12 +14,12 @@
     </ul>
     <div class="tab-content">
       <div class="tab-pane choose-some-photos-body col-sm-12" ng-class="{active: !modal.selectedAlbum}">
-        <div class="choose-album col-sm-4" ng-repeat="item in modal.albums">
-          <img ng-src="{{item.cover.medium}}">
+        <div class="choose-album col-sm-4"
+             ng-repeat="item in modal.albums"
+             ng-click="modal.selectAlbum(item.id)">
+          <img class="img-responsive tab-photo" ng-src="{{item.cover.medium}}">
 
-          <p>
-            <a ng-click="modal.selectAlbum(item.id)">{{item.title}}</a>
-          </p>
+          <p><a>{{item.title}}</a></p>
         </div>
 
         <h4 ng-if="modal.albums.length < 1">No albums</h4>

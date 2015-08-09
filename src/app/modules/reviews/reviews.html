@@ -1,0 +1,45 @@
+<h2 class="title-name">Reviews</h2>
+
+<div class="reviews col-xs-12" ng-repeat="item in Review.reviews">
+  <div class="col-xs-12 rating-likes">
+    <div class="rating col-xs-6">
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+      <div class="star"></div>
+    </div>
+    <div class="col-xs-6 no-pad">
+      <div class="plus-minus">
+        <a href="#" class="plus" rollapp-href="http://localhost:8080/wall_page.html#"></a>
+        <norb>0</norb>
+        <a href="#" class="minus" rollapp-href="http://localhost:8080/wall_page.html#"></a>
+      </div>
+    </div>
+  </div>
+  <a class="review-img" href="#">
+    <img class="media-object fav-avatar-icon feeds-img"
+         src="assets/img/img14.jpg" alt="">
+  </a>
+
+  <div class="text-block">
+    <h2 class="media-heading feeds-title">
+      <a href="#">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+        Ipsum has been the industry's standard dummy text ever since the 1500s</a>
+    </h2>
+    <a class="author-name" href="#">Author name</a>
+
+    <p class="description">Nulla quis lorem ut libero malesuada feugiat. Curabitur aliquet quam id dui
+      posuere blandit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eget tortor
+      risus. Cras ultricies ligula sed magna dictum porta. Vivamus suscipit tortor eget felis
+      porttitor volutpat. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Donec
+      sollicitudin molestie malesuada. Nulla porttitor accumsan tincidunt. Vestibulum ac diam sit amet
+      quam vehicula elementum sed sit amet dui.</p>
+
+    <p class="time">May 12, 2015 at 1.25 PM</p>
+  </div>
+</div>
+
+<div class="col-xs-12">
+  <h4 ng-if="Review.reviews.length == 0">No feeds yet.</h4>
+</div>

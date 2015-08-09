@@ -6,23 +6,44 @@
     .controller('ActivityModalController', ActivityModalController);
 
   /** @ngInject */
-  function ActivityModalController(spots, attachments, $modalInstance) {
+  function ActivityModalController(spots, areas, attachments, $modalInstance) {
     var vm = this;
     vm.tab = 'events';
-    vm.spots = spots;
+    vm.spots = _markAsSelected(spots, attachments.spots);
+    vm.areas = _markAsSelected(areas, attachments.areas);
     vm.attachments = attachments;
 
     vm.addSpot = function (spot) {
-      if (_.findWhere(vm.attachments.spots, {id: spot.id})) {
-        vm.attachments.spots = _.reject(vm.attachments.spots, function (item) {
-          return item.id == spot.id;
-        });
-      } else {
-        vm.attachments.spots.push(spot);
-      }
+      _toggleItem(vm.attachments.spots, spot);
+    };
 
-      spot.selected = !spot.selected;
+    vm.addArea = function (area) {
+      _toggleItem(vm.attachments.areas, area);
+    };
+
+    vm.close = function () {
+      $modalInstance.close();
+    };
+
+    function _markAsSelected(items, attachments) {
+      _.each(attachments, function (attachment) {
+        var item = _.findWhere(items, {id: attachment.id});
+        item.selected = true;
+      });
+
+      return items;
     }
 
+    function _toggleItem(items, attachment) {
+      if (_.findWhere(items, {id: attachment.id})) {
+        items = _.reject(items, function (item) {
+          return item.id == attachment.id;
+        });
+      } else {
+        items.push(attachment);
+      }
+
+      attachment.selected = !attachment.selected;
+    }
   }
 })();

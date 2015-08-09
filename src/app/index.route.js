@@ -16,15 +16,17 @@
             if ($rootScope.currentUser) {
               return $rootScope.currentUser;
             } else if (!$rootScope.currentUserFailed) {
-              return $q(function (resolve, reject) {
-                User.currentUser({}, function success(user) {
-                  UserService.setCurrentUser(user);
-                  resolve();
-                }, function fail() {
-                  $rootScope.currentUserFailed = true;
-                  resolve();
-                });
-              }).$promise;
+              var deferred = $q.defer();
+
+              User.currentUser({}, function success(user) {
+                UserService.setCurrentUser(user);
+                deferred.resolve();
+              }, function fail() {
+                $rootScope.currentUserFailed = true;
+                deferred.resolve();
+              });
+
+              return deferred.$promise;
             }
           }
         }
@@ -184,6 +186,13 @@
         resolve: {
           user: function (User, $stateParams) {
             return User.get({id: $stateParams.user_id}).$promise;
+          },
+          wall: function (Wall, $stateParams) {
+            return Wall.query({
+              user_id: $stateParams.user_id,
+              page: 1,
+              limit: 20
+            })//.$promise;
           }
         },
         parent: 'profile_menu',
@@ -222,6 +231,42 @@
               page: 1,
               limit: 20
             }).$promise;
+          }
+        },
+        parent: 'profile_menu',
+        locate: 'none',
+        require_auth: true,
+        mapState: 'small'
+      })
+      .state('feeds', {
+        url: '/feeds',
+        templateUrl: 'app/modules/feed/feed.html',
+        controller: 'FeedsController',
+        controllerAs: 'Feed',
+        resolve: {
+          feeds: function (Feed) {
+            return Feed.query({
+              page: 1,
+              limit: 20
+            })//.$promise;
+          }
+        },
+        parent: 'profile_menu',
+        locate: 'none',
+        require_auth: true,
+        mapState: 'small'
+      })
+      .state('reviews', {
+        url: '/reviews',
+        templateUrl: 'app/modules/reviews/reviews.html',
+        controller: 'ReviewsController',
+        controllerAs: 'Review',
+        resolve: {
+          reviews: function (Feed) {
+            return Feed.reviews({
+              page: 1,
+              limit: 20
+            })//.$promise;
           }
         },
         parent: 'profile_menu',

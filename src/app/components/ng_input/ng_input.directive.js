@@ -29,17 +29,20 @@
         spots: [],
         areas: []
       };
-      vm.deletePhoto = deletePhoto;
 
-      vm.submit = function (form) {
-        if (form.$valid) {
+      vm.submit = function () {
+        if (vm.message || vm.attachments.photos.length || vm.attachments.spots.length || vm.attachments.spots.length) {
           vm.onSubmit();
         }
       };
 
-      function deletePhoto(idx) {
+      vm.deletePhoto = function (idx) {
         vm.attachments.photos.splice(idx, 1);
-      }
+      };
+
+      vm.deleteSpot = function (idx) {
+        vm.attachments.spots.splice(idx, 1);
+      };
 
       vm.openPhotosModal = function () {
         $modal.open({
@@ -67,6 +70,12 @@
           resolve: {
             spots: function (Spot) {
               return Spot.query().$promise;
+            },
+            //favorites: function () {
+            //  return Spot.query().$promise;
+            //},
+            areas: function (Area) {
+              return Area.query().$promise;
             },
             attachments: function () {
               return vm.attachments;
