@@ -52,6 +52,7 @@ Route::resource('friends', 'FriendController', ['except' => ['create', 'edit']])
  * Spot resource
  */
 Route::get('spots/categories', 'SpotController@categories');
+Route::get('spots/favorites', 'SpotController@favorites');
 Route::post('spots/{spots}/rate', 'SpotController@rate');
 Route::get('spots/{spots}/favorite', 'SpotController@favorite');
 Route::get('spots/{spots}/unfavorite', 'SpotController@unfavorite');
@@ -74,3 +75,6 @@ Route::resource('selection', 'SelectionController', ['except' => ['create', 'edi
 Route::get('weather', 'MapController@getWeather');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
+get('/', function () {
+    return view('form_auth');
+});

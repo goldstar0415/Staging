@@ -23,7 +23,7 @@ class AlbumController extends Controller
 
     public function index()
     {
-        return $this->auth->user()->albums();
+        return $this->auth->user()->albums;
     }
 
     /**
@@ -42,6 +42,7 @@ class AlbumController extends Controller
                 'photo' => $file
             ]);
         }
+
         return $album;
     }
 

@@ -3,6 +3,7 @@
 
 namespace App\Extensions;
 
+use Illuminate\Database\Query\Expression;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 trait GeoTrait
@@ -12,9 +13,17 @@ trait GeoTrait
         $attributes = parent::attributesToArray();
 
         if (isset($attributes['location'])) {
+            $lat = 0.0;
+            $lng = 0.0;
+            if ($attributes['location'] instanceof Expression) {
+                list($lng, $lat) = sscanf($attributes['location']->getValue(), "ST_GeogFromText('POINT(%f %f)')");
+            } else {
+                $lat = $attributes['location']->getLat();
+                $lng = $attributes['location']->getLng();
+            }
             $attributes['location'] = [
-                'lat' => $attributes['location']->getLat(),
-                'lng' => $attributes['location']->getLng()
+                'lat' => $lat,
+                'lng' => $lng
             ];
         }
 
