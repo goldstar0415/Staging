@@ -39,15 +39,6 @@ class ChatController extends Controller
 
         event(new OnMessage($user, $message, User::find($receiver_id)->random_hash));
 
-        $message->setAttribute(
-            'pivot',
-            [
-                'sender_id' => $user->id,
-                'receiver_id' => $receiver_id,
-                'chat_message_id' => $message->id
-            ]
-        );
-
         return $message;
     }
 
@@ -87,15 +78,13 @@ QUERY
 
     public function getList(MessageListRequest $request)
     {
-        $user_id = $request->get('user_id');
+        $user_id = (int)$request->get('user_id');
         $my_id = $request->user()->id;
-        return $request->user()->chatMessages()->where(function ($query) use ($user_id, $my_id) {
-            $query->where(function ($query) use ($user_id, $my_id) {
-                $query->where('receiver_id', $user_id)->where('sender_id', $my_id);
-            })->orWhere(function ($query) use ($user_id, $my_id) {
-                    $query->where('sender_id', $user_id)->where('receiver_id', $my_id);
-            });
-        })->paginate($request->get('limit'));
+        return $request->user()->chatMessagesSend()
+            ->wherePivot('receiver_id', '=', $user_id)
+            ->orWherePivot('sender_id', '=', $user_id)
+            ->wherePivot('receiver_id', '=', $my_id)
+                ->paginate($request->get('limit'));
     }
 
     /**
@@ -116,7 +105,7 @@ QUERY
         return [
             'affected_messages' => $user->chatMessagesReceived()
                 ->where('sender_id', $user_id)->where('is_read', false)
-                    ->update(['is_read' => true])
+                ->update(['is_read' => true])
         ];
     }
 }

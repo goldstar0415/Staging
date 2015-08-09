@@ -28,7 +28,7 @@ class ChatMessage extends BaseModel
 
     protected $hidden = ['spots', 'albumPhotos', 'areas'];
 
-    protected $appends = ['attachments'];
+    protected $appends = ['attachments', 'pivot'];
 
     public function getAttachmentsAttribute()
     {
@@ -38,6 +38,12 @@ class ChatMessage extends BaseModel
             'areas' => $this->areas
         ];
     }
+
+    public function getPivotAttribute()
+    {
+        return $this->sender()->first()->pivot;
+    }
+    
     public function sender()
     {
         return $this->belongsToMany(User::class, null, null, 'sender_id')->withPivot('receiver_id');

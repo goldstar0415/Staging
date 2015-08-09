@@ -26,22 +26,22 @@ class SendMessageRequest extends Request
         $rules = [
             'user_id' => 'required|integer',
             'message' => [
-                'required_without:attachments.album_photos,attachments.spots,attachments.areas',
+                'required_without_all:attachments.album_photos,attachments.spots,attachments.areas',
                 'string',
                 'max:5000'
             ],
             'attachments.album_photos' => [
-                'required_without:message,attachments.spots,attachments.areas',
+                'required_without_all:message,attachments.spots,attachments.areas',
                 'array',
                 'count:10'
             ],
             'attachments.spots' => [
-                'required_without:message,attachments.album_photos,attachments.areas',
+                'required_without_all:message,attachments.album_photos,attachments.areas',
                 'array',
                 'count:10'
             ],
             'attachments.areas' => [
-                'required_without:message,attachments.album_photos,attachments.spots',
+                'required_without_all:message,attachments.album_photos,attachments.spots',
                 'array',
                 'count:10'
             ]
