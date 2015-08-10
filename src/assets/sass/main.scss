@@ -30,7 +30,7 @@
 @import "create_new_plan";
 @import "calendar";
 @import "planner";
-@import "user_profile";
+@import "wall_page";
 @import "chat_messages";
 @import "chat_conversation";
 @import "search_popups";
@@ -50,6 +50,7 @@
 @import "admin_activity_category";
 @import "admin_activity_level_create";
 @import "admin_reaction_requests";
+@import "popup";
 
 @font-face {
   font-family: 'Ubuntu bold';
@@ -266,7 +267,6 @@ h3 {
   height: 100px;
   width: 100%;
   border: 2px dashed #b5e0ef;
-  margin: 15px 0;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;

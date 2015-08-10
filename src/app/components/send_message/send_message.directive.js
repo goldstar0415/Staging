@@ -34,7 +34,7 @@
       vm.send = function () {
         Message.save({
             user_id: $rootScope.profileUser.id,
-            message: vm.message,
+            message: vm.message || '',
             attachments: {
               album_photos: _.pluck(vm.attachments.photos, 'id'),
               spots: _.pluck(vm.attachments.spots, 'id'),
