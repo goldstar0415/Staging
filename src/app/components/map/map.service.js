@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile) {
       var map = null;
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
       var radiusSelectionLimit = 500000; //in meters
@@ -92,13 +92,30 @@
           L.DomEvent.preventDefault(e);
           RadiusSelection(function (startPoing, radius, b_box) {
             snapRemote.enable();
-            L.circle(startPoing, radius, {
+
+            var circleToGeoJSON = L.Circle.prototype.toGeoJSON;
+            L.Circle.include({
+              toGeoJSON: function() {
+                var feature = circleToGeoJSON.call(this);
+                feature.properties = {
+                  point_type: 'circle',
+                  radius: this.getRadius()
+                };
+                return feature;
+              }
+            });
+
+            var circle = L.circle(startPoing, radius, {
               weight: 2,
               color: 'green',
               opacity: 0.2,
               fillColor: 'green',
               fillOpacity: 0.1
-            }).addTo(drawLayer);
+            });
+
+
+
+            circle.addTo(drawLayer);
 
             var bboxes = GetDrawLayerBBoxes();
             GetDataByBBox(bboxes);
@@ -665,6 +682,18 @@
         });
       }
 
+      function BindSpotPopup(marker, spot) {
+        var scope = $rootScope.$new();
+        scope.item = spot;
+        var popupContent = $compile('<spot-popup spot="item"></spot-popup>')(scope);
+        var popup = L.popup({
+          closeButton: false,
+          className: 'popup'
+        }).setContent(popupContent[0]);
+
+        marker.bindPopup(popup);
+      }
+
       //Processing functions
       //Return concave hull from points array
       function GetConcaveHull(latLngs) {
@@ -688,6 +717,13 @@
                 var geoJSONlayer = L.geoJson(l);
                 if(l.geometry.type != 'Point') {
                   result = leafletPip.pointInLayer([point.lng, point.lat], geoJSONlayer);
+                } else {
+                  if(l.properties.point_type == 'circle') {
+                    var latlng = L.GeoJSON.coordsToLatLng(l.geometry.coordinates);
+                    if(latlng.distanceTo(point) < l.properties.radius) {
+                      result.push({PointInCircle: true});
+                    }
+                  }
                 }
               }
             }
@@ -784,9 +820,9 @@
             _.each(spots, function(item) {
               var type = item.spot.category.type.name;
               var marker = L.marker(item.location);
-              marker.on('click', function () {
-                console.log(type)
-              });
+
+              BindSpotPopup(marker, item.spot);
+
               switch(type) {
                 case 'pitstop':
                       eventsLayer.addLayer(marker);
