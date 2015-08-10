@@ -1,21 +1,21 @@
 .popup {
-    background: white;
     max-width: 440px;
     padding: 0;
-    border-radius: 10px;
-    border: 1px solid #eee;
+    border: none;
     position: relative;
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, .35);
-    &:after {
-        content: '';
-        position: absolute;
-        right: 50%;
-        bottom: -9px;
-        width: 17px;
-        height: 17px;
-        background: white;
-        box-shadow: 2px 2px 2px rgba(0, 0, 0, .35);
-        transform: rotate(45deg);
+    spot-popup {
+      display: block;
+      height: 100%;
+    }
+    .leaflet-popup-content-wrapper {
+      padding: 0;
+      margin: 0;
+    }
+    .leaflet-popup-content {
+      border-radius: 10px;
+      display: inline-block;
+      background: white;
+      margin: 0;
     }
     .nav-popup {
         padding: 0;
@@ -197,12 +197,12 @@
                     &:hover {
                         color: #0874be;
                         @include transition_color;
-                        
+
                         background: url(/assets/img/icons/next.png) 23px -7px no-repeat;
-                        
+
                     }
                 }
-                
+
                 .default-next {
                     color:#ace2f2;
                     background: none;
