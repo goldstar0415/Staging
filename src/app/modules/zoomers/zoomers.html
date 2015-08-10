@@ -1,11 +1,11 @@
 <div class="col-xs-12">
-  <div class="container wrap">
+  <div class="container wrap col-xs-12">
 
     <div class="col-md-3  col-sm-12 col-xs-12 zoomers">
       <div class="zoomers-sidebar">
         <ul class="zoomers-list">
           <li>
-            <a class="current" ng-class="{active: Zoomers.type == 'all'}"
+            <a class="current active" ng-class="{active: Zoomers.type == 'all'}"
                ng-click="Zoomers.setType('all')">Zoomers</a>
           </li>
           <li ng-if="currentUser">
@@ -21,6 +21,7 @@
     </div>
 
     <div class="col-md-9 col-sm-12 col-xs-12 zoomers-content">
+      <!-- search block -->
       <div class="search-block">
         <form ng-submit="Zoomers.getUsers()">
           <div class="input-group">
@@ -34,45 +35,53 @@
       <!-- /search-block -->
 
       <div class="followers col-xs-12  no-pad">
-        <div class="post col-xs-12" ng-repeat="user in Zoomers.users.data" ng-if="Zoomers.users.data.length > 0">
-          <div class="col-xs-6 ">
-            <figure>
+        <!-- section post -->
+        <section class="post col-xs-12" ng-repeat="user in Zoomers.users.data" ng-if="Zoomers.users.data.length > 0">
+          <div class="media media-visible col-md-6 col-sm-12 col-xs-12 no-pad ">
+            <a href="#">
               <img ng-src="{{user.avatar_url.medium}}" class="avatar"
                    alt="{{user.first_name}} {{user.last_name}}">
-              <figcaption class="col-xs-8">
-                <h3 class="name">
-                  <a ui-sref="profile({user_id: user.id})">{{user.first_name}} {{user.last_name}}</a>
-                </h3>
+            </a>
 
-                <div class="info">
-                  <p class="age">
-                    <span ng-if="user.sex != null">{{user.sex ? 'male' : 'female'}}</span>
-                    <span ng-if="user.birth_date">, {{user.birth_date | age}} years</span>
-                  </p>
+            <!-- media-body-content -->
+            <div class="media-body media-body-content">
+              <h3 class=" media-heading name">
+                <a ui-sref="profile({user_id: user.id})">{{user.first_name}} {{user.last_name}}</a>
+              </h3>
 
-                  <p class="description"> {{user.description}} </p>
+              <div class="info">
+                <p class="age">
+                  <span ng-if="user.sex != null">{{user.sex ? 'male' : 'female'}}</span>
+                  <span ng-if="user.birth_date">, {{user.birth_date | age}} years</span>
+                </p>
 
-                  <p class="counters">
-                    <a class="e-count" title="Events">
-                      {{ user.count_spots }}
-                    </a>
-                    <a class="f-count" title="Followings">
-                      {{ user.count_followings }}
-                    </a>
-                  </p>
+                <p class="description"> {{user.description}} </p>
 
-                  <button type="button" ng-if="currentUser" class="btn btn-default"
+                <p class="counters">
+                  <a class="e-count" title="Events">
+                    {{ user.count_spots }}
+                  </a>
+                  <a class="f-count" title="Followings">
+                    {{ user.count_followings }}
+                  </a>
+                </p>
+
+                <div class="clearfix">
+                  <button type="button" ng-if="currentUser" class="btn btn-default no-margin-left-right"
                           ng-click="Zoomers.follow(user)"
-                          ng-class="{'unfollow-btn': !user.can_follow, 'follow-btn': user.can_follow}">
+                          ng-class="{'red-btn': !user.can_follow, 'green-btn': user.can_follow}">
                     {{user.can_follow ? 'Follow' : 'Unfollow'}}
                   </button>
                 </div>
-              </figcaption>
-            </figure>
+              </div>
+            </div>
+            <!--end media-body-content  -->
+
           </div>
-          <div class="col-xs-6">
+
+          <div class="col-md-6 col-sm-12 col-xs-12 no-pad">
             <ul class="events" ng-if="user.spots.length > 0">
-              <li class="col-xs-4" ng-repeat="spot in user.spots">
+              <li class="col-xs-4 events-width" ng-repeat="spot in user.spots">
                 <img class="frame" ng-src="{{spot.cover_url.medium}}" alt="{{spot.title}}">
                 <a ui-sref="spot({spot_id: spot.id})" class="event-link">
                   {{spot.title}}
@@ -80,7 +89,10 @@
               </li>
             </ul>
           </div>
-        </div>
+
+        </section>
+        <!-- end section post -->
+
         <div class="col-xs-12" ng-if="Zoomers.users.data.length == 0">
           <b>No entries found!</b>
         </div>
