@@ -254,17 +254,15 @@
   padding: 25px 0;
 }
 
-.content-wall {
-  .nav-tabs {
-    padding-left: 15px;
-    margin-bottom: 15px;
-  }
-  .active-wall {
+.user-menu-tabs.nav-tabs {
+  padding-left: 15px;
+  margin-bottom: 15px;
+
+  li.active {
     a {
       background-color: $navy_blue;
       color: $white;
-      margin-right: 15px;
-      font-size: 16px;
+      font-size: 14px;
       &:hover, &:focus {
         background-color: $blue;
         color: $white;
@@ -274,7 +272,7 @@
   }
   .nav-tabs-default {
     a {
-      font-size: 16px;
+      font-size: 14px;
       color: $gray-dark;
       margin-right: 0;
       &:hover, &:focus {

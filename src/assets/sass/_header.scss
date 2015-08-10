@@ -2,6 +2,7 @@ header {
   background: $dark_blue;
   height: 70px;
   padding: 0 0 0 20px;
+  z-index: 50;
 
   .logo {
     height: 55px;
@@ -34,6 +35,10 @@ header {
           @include vertical_align;
           display: block;
           padding: 0 15px;
+
+          &.active {
+            color: $blue;
+          }
           .map-icon {
             display: block;
             width: 38px;

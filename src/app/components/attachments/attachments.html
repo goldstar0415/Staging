@@ -3,11 +3,11 @@
   <div class="links">
     <div class="media media-visible padding-bottom add-location clearfix"
          ng-repeat="area in Attachments.items.areas">
-      <a class=" img-selection">circle</a>
+      <a class="img-selection"> {{area.data}} </a>
 
       <div class="media-body">
         <div class="description-link">
-          Lorem ipsum
+          {{area.data}}
         </div>
       </div>
     </div>
@@ -18,7 +18,6 @@
       </a>
 
       <div class="media-body">
-        <a class="close-link" title="Delete" ng-click="NgInput.deleteSpot($index)"></a>
 
         <h3 class="media-heading ">
           <a class="event-img clearfix">{{spot.title}}</a>
@@ -35,7 +34,7 @@
     <div class="photos">
       <div class="add-img"
            ng-repeat="photo in Attachments.items.album_photos"
-           ng-mouseenter="showDelete = true" ng-mouseleave="showDelete = false">
+        >
         <img ng-src="{{photo.photo_url.medium}}">
 
         </a>

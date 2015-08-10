@@ -529,7 +529,7 @@ if (typeof module !== undefined) module.exports = polyline;
 				boundsSize = bounds.getSize();
 				return (boundsSize.x > mapSize.x / 5 ||
 					boundsSize.y > mapSize.y / 5) && this._waypointsInViewport();
-					
+
 			} catch (e) {
 				return false;
 			}
@@ -1192,7 +1192,6 @@ if (typeof module !== undefined) module.exports = polyline;
 
 					//Buffer it with turf library :)
 					var geoJSONPoly = turf.buffer(line, 10, 'miles');
-
 					//return geoJson layer
 					pl = L.geoJson(geoJSONPoly);
 				} else {

@@ -23,13 +23,6 @@
   .title-name {
     margin-top: 0;
   }
-  .media {
-    padding-left: 15px;
-    padding-right: 15px;
-    .fav-avatar-icon{
-     margin-left: 0;
-    }
-  }
 }
 
 .time-sub {
@@ -102,9 +95,4 @@
     color: $grey;
     @include transition_bg;
   }
-}
-
-.attachment-link {
-  width: 64px;
-  height: 64px;
 }

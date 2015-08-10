@@ -7,7 +7,7 @@
 
   /** @ngInject */
   function CropService($modal) {
-    function CropImage(image, callback) {
+    function CropImage(image, outputWidth, outputHeight, callback) {
       var modalInstance = $modal.open({
         animation: true,
         templateUrl: 'app/components/crop/crop.html',
@@ -16,13 +16,14 @@
         modalClass: 'modalFix',
         backdrop: 'static',
         resolve: {
-          image: function () {
-            return image;
-          }
+          image: function() { return image },
+          width: function() { return outputWidth },
+          height: function() { return outputHeight }
         }
       });
 
       modalInstance.result.then(function (CroppedImage) {
+        console.log(CroppedImage);
         callback(CroppedImage);
       }, function () {
         callback(null);
@@ -34,8 +35,11 @@
     }
   }
 
-  function CropModalController($modalInstance, $scope, image) {
+  function CropModalController($modalInstance, $scope, image, width, height) {
+    console.log(image, width, height);
     var vm = this;
+    vm.width = width || 512;
+    vm.height = height || 512;
     vm.image = '';
     vm.resultImage = '';
 

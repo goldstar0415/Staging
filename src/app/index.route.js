@@ -119,6 +119,20 @@
         locate: 'none',
         mapState: 'small'
       })
+      .state('my_spots', {
+        url: '/my-spots',
+        templateUrl: 'app/modules/spot/my_spots/my_spots.html',
+        controller: 'MySpotsController',
+        controllerAs: 'MySpots',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small',
+        resolve: {
+          spots: function($http, API_URL) {
+            return $http.get(API_URL + '/spots');
+          }
+        }
+      })
 
       //Single plan page
       .state('plan', {
@@ -163,7 +177,6 @@
         mapState: 'small'
       })
 
-      //Users profile index page. (TABS: wall, feeds, reviews)
       .state('profile', {
         url: '/profile/:user_id',
         templateUrl: 'app/modules/profile/profile.html',
@@ -253,6 +266,26 @@
               page: 1,
               limit: 20
             })//.$promise;
+          }
+        },
+        parent: 'profile_menu',
+        locate: 'none',
+        require_auth: true,
+        mapState: 'small'
+      })
+
+      .state('favorites', {
+        url: '/favorites/:user_id',
+        templateUrl: 'app/modules/favorites/favorites.html',
+        controller: 'FavoritesController',
+        controllerAs: 'Favorite',
+        resolve: {
+          favorites: function (Spot, $stateParams) {
+            return Spot.favorites({
+              user_id: $stateParams.user_id,
+              page: 1,
+              limit: 20
+            }).$promise;
           }
         },
         parent: 'profile_menu',

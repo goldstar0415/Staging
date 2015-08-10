@@ -6,10 +6,11 @@
     .controller('ActivityModalController', ActivityModalController);
 
   /** @ngInject */
-  function ActivityModalController(spots, areas, attachments, $modalInstance) {
+  function ActivityModalController(spots, favorites, areas, attachments, $modalInstance) {
     var vm = this;
     vm.tab = 'events';
     vm.spots = _markAsSelected(spots, attachments.spots);
+    vm.favorites = _markAsSelected(favorites, attachments.spots);
     vm.areas = _markAsSelected(areas, attachments.areas);
 
     vm.addSpot = function (spot) {
@@ -27,7 +28,9 @@
     function _markAsSelected(items, attachments) {
       _.each(attachments, function (attachment) {
         var item = _.findWhere(items, {id: attachment.id});
-        item.selected = true;
+        if (item) {
+          item.selected = true;
+        }
       });
 
       return items;

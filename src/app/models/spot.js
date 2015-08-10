@@ -8,7 +8,10 @@
   /** @ngInject */
   function Spot($resource, API_URL) {
     return $resource(API_URL + '/spots/:id', {id: '@id'}, {
-
+      favorites: {
+        url: API_URL + '/spots/favorites',
+        isArray: true
+      }
     });
   }
 
