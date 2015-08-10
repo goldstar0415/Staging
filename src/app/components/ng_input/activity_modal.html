@@ -3,13 +3,13 @@
     <h3 class="margin-none">Choose some activities</h3>
   </div>
 
-  <div class="modal-body clearfix">
+  <div class="modal-body activity-modal-body clearfix">
 
-    <ul class="nav nav-tabs" role="tablist">
-      <li ng-click="modal.tab = 'events'" ng-class="{active: modal.tab == 'events'}">
+    <ul class="nav nav-tabs " role="tablist">
+      <li class="nav-tabs-default" ng-click="modal.tab = 'events'" ng-class="{active: modal.tab == 'events'}">
         <a>My events</a>
       </li>
-      <li ng-click="modal.tab = 'favorites'" ng-class="{active: modal.tab == 'favorites'}">
+      <li class="nav-tabs-default" ng-click="modal.tab = 'favorites'" ng-class="{active: modal.tab == 'favorites'}">
         <a>Favorites</a>
       </li>
       <li ng-click="modal.tab = 'areas'" ng-class="{active: modal.tab == 'areas'}">
@@ -19,7 +19,7 @@
 
 
     <div class="tab-content">
-      <div class="col-sm-12 no-pad">
+      <div class="col-sm-12">
         <div class="search-block">
           <input type="text" name="search" ng-model="search" class="search-friends" placeholder="Start typing...">
           <input type="button" class="search-icon">
@@ -29,7 +29,7 @@
       <div class="tab-pane col-sm-12 no-pad " ng-if="modal.tab == 'events'"
            ng-class="{active: modal.tab == 'events'}">
         <div class="col-sm-12 no-pad choose-friend-block">
-          <div class="border-1px">
+          <div class="">
             <div ng-repeat="spot in modal.spots | filter: {title: search}"
                  class="choose-friend"
                  ng-class="{choose: spot.selected}"
@@ -48,7 +48,7 @@
       <div class="tab-pane col-sm-12 no-pad " ng-if="modal.tab == 'favorites'"
            ng-class="{active: modal.tab == 'favorites'}">
         <div class="col-sm-12 no-pad choose-friend-block">
-          <div class="border-1px">
+          <div class="">
             <div ng-repeat="spot in modal.favorites | filter: {title: search}"
                  class="choose-friend"
                  ng-class="{choose: spot.selected}"
@@ -64,11 +64,12 @@
         </div>
       </div>
 
-      <div class="tab-pane choose-some-photos-body col-sm-12" ng-if="modal.tab == 'areas'"
+      <div class="tab-pane saved-search-block col-sm-12 no-pad" ng-if="modal.tab == 'areas'"
            ng-class="{active: modal.tab == 'areas'}">
-        <div class="friends border-1px" ng-repeat="area in modal.areas | filter: {title: search}">
-          <div class="choose-friend" ng-class="{choose: area.selected}" ng-click="modal.addArea(area)">
-            <h4 class="name-friend"><a>{{area.title}}</a></h4>
+        <div class="block-item" ng-repeat="area in modal.areas | filter: {title: search}">
+          <div class="clearfix" ng-class="{choose: area.selected}" ng-click="modal.addArea(area)">
+            <h4 class="activity-title"><a>Lorem ipsum{{area.data}}</a></h4>
+            <p class="saved-search-description">Lorem ipsum dolor sit</p>
           </div>
         </div>
       </div>

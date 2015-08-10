@@ -270,10 +270,12 @@
   max-height: 215px;
   overflow: auto;
 }
+
 .choose {
   background: url(/assets/img/icons/ok.png) no-repeat #e9edf0;
   background-position: center right 15px;
 }
+
 .choose-friend {
   height: 54px;
   width: 100%;
@@ -308,11 +310,73 @@
     }
   }
 }
+
 .choose-friend-block {
   overflow: auto;
   max-height: 210px;
   display: block;
 }
+
 .tab-content {
   margin-top: 15px;
+}
+
+.saved-search-block {
+  height: 250px;
+  overflow: auto;
+  padding-left: 0;
+
+}
+
+.block-item {
+  width: 100%;
+  border-bottom: 1px solid $light_grey;
+  &:hover, &:focus, &:active {
+    background: $light_grey;
+  }
+}
+
+.saved-search-description {
+  display: block;
+  font: 12px Arial, sans-serif;
+  color: grey;
+  margin-top: 6px;
+}
+
+.activity-title, .saved-search-description {
+  padding-left: 15px;
+
+}
+
+.activity-title {
+  a {
+    color: #46799b;
+    font: 400 14px/16px Ubuntu;
+    &:hover {
+      color: #124d76;
+      @include transition_color;
+    }
+  }
+}
+
+.activity-modal-body {
+  padding-left: 0;
+  padding-right: 0;
+  .nav-tabs {
+    padding-left: 15px;
+
+  }
+
+}
+.nav-tabs-default {
+  background: $light_grey;
+  color: #969ea4;
+  border-radius: 4px 4px 0 0;
+  margin-right: 15px;
+  a {
+    &:hover, &:focus {
+      background: $light_grey;
+      color: $grey;
+    }
+  }
 }

@@ -1,6 +1,6 @@
 /*     bloggers profile   */
 
-.blog-content{
+.blog-content {
   float: left;
   border: 1px solid $light_grey;
   background: $white;
@@ -29,6 +29,7 @@
   border-radius: 8px;
   position: relative;
 }
+
 .my-bloggers-profile-title {
   font: 500 16px/18px "Ubuntu medium";
   font-size: 23px;
@@ -245,9 +246,42 @@
     }
   }
 }
+
 .show-more {
   text-align: center;
   color: gray;
   font-size: larger;
   padding: 25px 0;
+}
+
+.content-wall {
+  .nav-tabs {
+    padding-left: 15px;
+    margin-bottom: 15px;
+  }
+  .active-wall {
+    a {
+      background-color: $navy_blue;
+      color: $white;
+      margin-right: 15px;
+      font-size: 16px;
+      &:hover, &:focus {
+        background-color: $blue;
+        color: $white;
+
+      }
+    }
+  }
+  .nav-tabs-default {
+    a {
+      font-size: 16px;
+      color: $gray-dark;
+      margin-right: 0;
+      &:hover, &:focus {
+        background-color: $blue;
+        color: $white;
+
+      }
+    }
+  }
 }
