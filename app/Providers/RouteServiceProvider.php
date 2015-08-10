@@ -12,6 +12,7 @@ use App\Spot;
 use App\SpotPhoto;
 use App\SpotReview;
 use App\User;
+use App\Wall;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Request;
@@ -51,6 +52,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('selection', Area::class);
         $router->model('reviews', SpotReview::class);
         $router->model('comments', PhotoComment::class);
+        $router->model('wall', Wall::class);
 
         parent::boot($router);
     }

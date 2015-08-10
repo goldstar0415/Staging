@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\Attachments;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -23,11 +24,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Wall extends BaseModel
 {
-    use SoftDeletes;
+    use SoftDeletes, Attachments;
 
     protected $fillable = ['body'];
 
     protected $dates = ['deleted_at'];
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->addAttachments();
+    }
 
     public function receiver()
     {
@@ -37,20 +47,5 @@ class Wall extends BaseModel
     public function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');
-    }
-
-    public function spots()
-    {
-        return $this->belongsToMany(Spot::class);
-    }
-
-    public function albumPhotos()
-    {
-        return $this->belongsToMany(AlbumPhoto::class);
-    }
-
-    public function areas()
-    {
-        return $this->belongsToMany(Area::class);
     }
 }

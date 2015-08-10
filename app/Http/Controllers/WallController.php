@@ -1,0 +1,95 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\Wall\WallDestroyRequest;
+use App\Http\Requests\Wall\WallStoreRequest;
+use App\Http\Requests\Wall\WallUpdateRequest;
+use App\Services\Attachments;
+use App\User;
+use App\Wall;
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+
+class WallController extends Controller
+{
+    private $attachments;
+
+    /**
+     * WallController constructor.
+     * @param Attachments $attachments
+     */
+    public function __construct(Attachments $attachments)
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->attachments = $attachments;
+    }
+
+    /**
+     * Display a listing of the resource.
+     * @param Request $request
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function index(Request $request)
+    {
+        return $request->user()->walls;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     * @param WallStoreRequest $request
+     * @return Wall
+     */
+    public function store(WallStoreRequest $request)
+    {
+        $receiver = User::findOrFail((int) $request->input('user_id'));
+
+        $wall = new Wall(['body' => $request->input('message')]);
+        $wall->sender()->associate($request->user());
+
+        $receiver->walls()->save($wall);
+        $this->attachments->make($wall);
+
+        return $wall;
+    }
+
+    /**
+     * Display the specified resource.
+     * @param Wall $wall
+     * @return Wall
+     */
+    public function show($wall)
+    {
+        return $wall->load('sender', 'receiver');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     * @param WallUpdateRequest $request
+     * @param Wall $wall
+     * @return Wall
+     */
+    public function update(WallUpdateRequest $request, $wall)
+    {
+
+        $wall->body = $request->input('message');
+        $wall->save();
+
+        $this->attachments->make($wall);
+
+        return $wall;
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param WallDestroyRequest $request
+     * @param $wall
+     * @return array
+     */
+    public function destroy(WallDestroyRequest $request, $wall)
+    {
+        return ['result' => $wall->delete()];
+    }
+}

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\Attachments;
 use App\Scopes\NewestScopeTrait;
 
 /**
@@ -20,24 +21,21 @@ use App\Scopes\NewestScopeTrait;
  */
 class ChatMessage extends BaseModel
 {
-    use NewestScopeTrait;
+    use NewestScopeTrait, Attachments;
 
     protected $fillable = ['body'];
 
-    protected $with = ['spots', 'albumPhotos', 'areas'];
+    protected $appends = ['pivot'];
 
-    protected $hidden = ['spots', 'albumPhotos', 'areas'];
-
-    protected $appends = ['attachments', 'pivot'];
-
-    public function getAttachmentsAttribute()
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(array $attributes = [])
     {
-        return [
-            'spots' => $this->spots,
-            'album_photos' => $this->albumPhotos,
-            'areas' => $this->areas
-        ];
+        parent::__construct($attributes);
+        $this->addAttachments();
     }
+
 
     public function getPivotAttribute()
     {
@@ -52,20 +50,5 @@ class ChatMessage extends BaseModel
     public function receiver()
     {
         return $this->belongsToMany(User::class, null, null, 'receiver_id')->withPivot('sender_id');
-    }
-
-    public function albumPhotos()
-    {
-        return $this->belongsToMany(AlbumPhoto::class);
-    }
-
-    public function spots()
-    {
-        return $this->belongsToMany(Spot::class);
-    }
-
-    public function areas()
-    {
-        return $this->belongsToMany(Area::class);
     }
 }

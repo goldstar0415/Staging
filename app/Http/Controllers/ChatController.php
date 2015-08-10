@@ -8,6 +8,7 @@ use App\Events\OnMessageRead;
 use App\Http\Requests\Chat\MessageDestroyRequest;
 use App\Http\Requests\Chat\MessageListRequest;
 use App\Http\Requests\Chat\SendMessageRequest;
+use App\Services\Attachments;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -20,22 +21,14 @@ class ChatController extends Controller
         $this->middleware('auth');
     }
 
-    public function sendMessage(SendMessageRequest $request)
+    public function sendMessage(SendMessageRequest $request, Attachments $attachments)
     {
         $user = $request->user();
         $receiver_id = $request->input('user_id');
 
         $message = new ChatMessage(['body' => $request->input('message')]);
         $user->chatMessagesSend()->save($message, ['receiver_id' => $receiver_id]);
-        if ($request->has('attachments.album_photos')) {
-            $message->albumPhotos()->sync($request->input('attachments.album_photos'));
-        }
-        if ($request->has('attachments.spots')) {
-            $message->spots()->sync($request->input('attachments.spots'));
-        }
-        if ($request->has('attachments.areas')) {
-            $message->areas()->sync($request->input('attachments.areas'));
-        }
+        $attachments->make($message);
 
         event(new OnMessage($user, $message, User::find($receiver_id)->random_hash));
 
