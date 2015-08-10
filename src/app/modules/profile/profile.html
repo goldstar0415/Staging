@@ -1,26 +1,9 @@
 <div class="content-wall">
   <h2 class="title-name">My profile</h2>
 
-  <!--<a ui-sref="profile({user_id: profileUser.id})" class="btn btn-primary">Wall</a>-->
-  <!--<a ui-sref="chat" class="btn btn-primary">Messages</a>-->
-  <!--<a ui-sref="feeds" class="btn btn-primary">Feed</a>-->
-  <!--<a ui-sref="reviews" class="btn btn-primary">Reviews</a>-->
 
   <div ng-if="profileUser.id == currentUser.id">
-    <ul class="nav nav-tabs">
-      <li role="presentation" class="active-wall">
-        <a ui-sref="profile({user_id: profileUser.id})" class="">Wall</a>
-      </li>
-      <li role="presentation" class="nav-tabs-default">
-        <a ui-sref="chat" class="">Messages</a>
-      </li>
-      <li role="presentation" class="nav-tabs-default">
-        <a ui-sref="feeds" class="">Feed</a>
-      </li>
-      <li role="presentation" class="nav-tabs-default">
-        <a ui-sref="reviews" class="">Reviews</a>
-      </li>
-    </ul>
+    <div ng-include="'app/components/user_tab_menu/user_tab_menu.html'"></div>
   </div>
 
   <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()"></ng-input>
@@ -39,6 +22,8 @@
       </h3>
 
       <p>{{post.message}}</p>
+      <attachments items="message.attachments"></attachments>
+
 
       <!--<div class="col-xs-12 external-link padding-0">-->
       <!--<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 padding-0">-->

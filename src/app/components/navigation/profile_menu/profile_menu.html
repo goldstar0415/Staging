@@ -2,14 +2,14 @@
   <div class="container">
     <div class="col-xs-10 col-xs-offset-2 no-pad">
       <ul ng-if="$root.currentUser">
-        <li><a>My spots</a></li>
-        <li><a ui-sref="blog">My blog</a></li>
-        <li><a ui-sref="favorites({user_id: $root.profileUser.id})">Favorites</a></li>
+        <li><a ui-sref-active="active">My spots</a></li>
+        <li><a ui-sref-active="active">My blog</a></li>
+        <li><a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active">Favorites</a></li>
         <li><a>Saved searches</a></li>
-        <li><a ui-sref="friendsmap">Friends map</a></li>
-        <li><a ui-sref="photomap({user_id: $root.profileUser.id})">Photo map</a></li>
-        <li><a ui-sref="planner">Planner</a></li>
-        <li><a ui-sref="settings">Settings</a></li>
+        <li><a ui-sref="friendsmap" ui-sref-active="active">Friends map</a></li>
+        <li><a ui-sref="photomap({user_id: $root.profileUser.id})" ui-sref-active="active">Photo map</a></li>
+        <li><a ui-sref="planner" ui-sref-active="active">Planner</a></li>
+        <li><a ui-sref="settings" ui-sref-active="active">Settings</a></li>
       </ul>
       <div ng-if="!$root.currentUser">
         <b>You should

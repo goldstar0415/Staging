@@ -23,7 +23,8 @@
         font: $navigation_font;
         margin-top: 3px;
         padding: 12px 0 15px 40px;
-        &:hover {
+
+        &.active, &:hover, &:focus, &:active {
           text-decoration: none;
           color: $blue;
           background-position-y: -41px;

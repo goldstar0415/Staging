@@ -1,84 +1,75 @@
 <h2 class="title-name">Favorites</h2>
 
-<section class="my-spots-section" ng-repeat="item in Favorite.spots">
+<section ng-repeat="item in ::Favorite.spots">
   <div class="event">
-                    <span class="rating clear rateit spot-stars" rate="5" event-id="97777798">
-                            <button id="rateit-reset-2" type="button" data-role="none" class="rateit-reset"
-                                    aria-label="reset rating" aria-controls="rateit-range-2"
-                                    style="display: none;"></button>
-                            <div id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating"
-                                 aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="5"
-                                 style="width: 80px; height: 16px;" aria-readonly="false">
-                              <div class="rateit-selected" style="height: 16px; width: 80px;"></div>
-                              <div class="rateit-hover" style="height: 16px;"></div>
-                            </div>
-                    </span>
 
-                    <span ng-class="{'event-spot-page':item.type == 'Event',
+    <span class="date">
+       <span ng-class="{'event-spot-page':item.type == 'Event',
                                      'recreation':item.type == 'Recreation',
                                      'pitstop':item.type == 'PitStop'}">
-                        {{::item.type}}
-                    </span>
+            {{item.type}}
+        </span>
 
-                    <span
-                      ng-if="item.type == 'Event'"
-                      class="date">
-                            {{item.start_date + ' - ' + item.end_date}}
-                            <br>
-                            {{item.start_time + ' - ' + item.end_time}}
-                    </span>
+        <span
+          ng-if="item.type == 'Event'"
+          class="date">
+                {{item.start_date + ' - ' + item.end_date}}
+                <br>
+                {{item.start_time + ' - ' + item.end_time}}
+        </span>
+    </span>
 
-    <h2 class="">
-      <a>{{::item.title}}</a>
-    </h2>
+    <div class="media media-visible">
+      <a class="pull-left" >
+        <img class="media-object fav-avatar-icon" src="/assets/img/icons/airport.png" alt="...">
+      </a>
 
-    <p class="place"></p>
+      <div class="media-body">
+        <h2 class="media-heading favorites-article-title">
+          <a >{{item.title}}</a>
+        </h2>
 
-    <p class="description"><span>{{::item.description}}</span></p>
-
-    <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">
-      <li ng-repeat="tag in item.tags"><a ui-sref="spot({spot_id:item.id})">{{tag.name}}</a></li>
-    </ul>
-    <!--  tags -->
+        <p class="place"></p>
+      </div>
+    </div>
 
     <ul class="tools">
       <li>
-        <a ui-sref="spot_edit({spot_id: item.id})" class="edit-tools">Edit</a>
+        <a class="save-event ng-isolate-scope" >Save</a>
       </li>
       <li>
-        <a ng-click="Favorite.removeSpot(item.id);" class="delete">Delete</a>
-      </li>
-
-      <li>
-        <a class="save-event">Save</a>
-      </li>
-
-      <li>
-        <a class="favorite-spot">Favorite</a>
+        <a class="save-event saved ng-isolate-scope clicked" >Remove</a>
       </li>
       <li>
-        <a class="invite-friend">Invite friends</a>
+        <a class="favorite-spot ng-isolate-scope" >Favorite</a>
+      </li>
+      <li>
+        <a class="fav favorited ng-isolate-scope" >Unfavorite</a>
+      </li>
+      <li>
+        <a  class="invite-friend ng-isolate-scope" >Invite
+          friends</a>
       </li>
 
     </ul>
 
-    <a ng-show="false" href="#" ng-click="share($event)" class="share">Share</a>
+    <!--<a href="#" ng-click="share($event)" class="share">Share</a>-->
 
-    <div ng-show="false" class="share-wrap">
-      <ul class="share-buttons clearfix">
-        <li>
-          <a
-            href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
-            target="_blank" class="facebook">facebook</a></li>
-        <li>
-          <a href="https://plus.google.com/share?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
-             target="_blank" class="google">google</a></li>
-        <li>
-          <a
-            href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
-            target="_blank" class="twitter">twitter</a></li>
-      </ul>
-    </div>
+    <!--<div class="share-wrap" style="display: none;">-->
+      <!--<ul class="share-buttons clearfix">-->
+        <!--<li>-->
+          <!--<a-->
+            <!--href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"-->
+            <!--target="_blank" class="facebook">facebook</a></li>-->
+        <!--<li>-->
+          <!--<a href="https://plus.google.com/share?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"-->
+             <!--target="_blank" class="google">google</a></li>-->
+        <!--<li>-->
+          <!--<a-->
+            <!--href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"-->
+            <!--target="_blank" class="twitter">twitter</a></li>-->
+      <!--</ul>-->
+    <!--</div>-->
     <!-- share-wrap -->
 
   </div>

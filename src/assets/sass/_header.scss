@@ -35,6 +35,10 @@ header {
           @include vertical_align;
           display: block;
           padding: 0 15px;
+
+          &.active {
+            color: $blue;
+          }
           .map-icon {
             display: block;
             width: 38px;

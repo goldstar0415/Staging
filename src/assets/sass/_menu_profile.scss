@@ -10,6 +10,9 @@
       &:first-child {
         padding-left: 0;
       }
+      a.active {
+        color: $blue;
+      }
       display: inline-block;
       font: $navigation_font;
       padding-left: 24px;
