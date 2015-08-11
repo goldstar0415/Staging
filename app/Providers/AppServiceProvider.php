@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Extensions\Validations;
+use App\Services\Attachments;
 use App\Services\Privacy;
 use Illuminate\Support\ServiceProvider;
 use Validator;
@@ -37,6 +38,9 @@ class AppServiceProvider extends ServiceProvider
         }
         $this->app->bind(Privacy::class, function ($app) {
             return new Privacy($app['request']->user(), $app['auth']);
+        });
+        $this->app->bind(Attachments::class, function ($app) {
+            return new Attachments($app['request']);
         });
     }
 }
