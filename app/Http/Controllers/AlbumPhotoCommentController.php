@@ -55,22 +55,20 @@ class AlbumPhotoCommentController extends Controller
         $comment->user()->associate($this->auth->user());
         $photos->comments()->save($comment);
 
-        return response()->json(['message' => 'Comment was successfuly created']);
+        return $comment->load('user');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param PhotoCommentsRequest $request
-     * @param AlbumPhoto $photos
+     * @param \App\AlbumPhoto $photos
      * @param PhotoComment $comment
      * @return \Illuminate\Http\JsonResponse
      * @internal param int $id
      */
     public function destroy(PhotoCommentsRequest $request, $photos, $comment)
     {
-        $comment->delete();
-
-        return response()->json(['message' => 'Comment was successfuly deleted']);
+        return response()->json(['result' => $comment->delete()]);
     }
 }

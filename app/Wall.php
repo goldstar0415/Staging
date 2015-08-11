@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Extensions\Attachments;
+use App\Scopes\NewestScopeTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -24,11 +25,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Wall extends BaseModel
 {
-    use SoftDeletes, Attachments;
+    use SoftDeletes, Attachments, NewestScopeTrait;
 
     protected $fillable = ['body'];
 
     protected $dates = ['deleted_at'];
+
+    protected $appends = ['rating'];
+
+    protected $with = ['sender'];
 
     /**
      * {@inheritdoc}
@@ -47,5 +52,15 @@ class Wall extends BaseModel
     public function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(WallRate::class);
+    }
+
+    public function getRatingAttribute()
+    {
+        return (int) $this->ratings()->sum('rate');
     }
 }

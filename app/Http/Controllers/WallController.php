@@ -8,6 +8,7 @@ use App\Http\Requests\Wall\WallUpdateRequest;
 use App\Services\Attachments;
 use App\User;
 use App\Wall;
+use App\WallRate;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -91,5 +92,71 @@ class WallController extends Controller
     public function destroy(WallDestroyRequest $request, $wall)
     {
         return ['result' => $wall->delete()];
+    }
+
+    /**
+     * @param Request $request
+     * @param Wall $wall
+     * @return WallRate
+     */
+    public function like(Request $request, $wall)
+    {
+        $user = $request->user();
+        /**
+         * @var WallRate $wall_rate
+         */
+        $wall_rate = WallRate::where('user_id', $user->id)->first();
+
+        if ($wall_rate === null) {
+            $wall_rate = new WallRate(['rate' => 1]);
+            $wall_rate->user()->associate($user);
+
+            $wall->ratings()->save($wall_rate);
+        } else {
+            switch ($wall_rate->rate) {
+                case 0:
+                    $wall_rate->rate = 1;
+                    break;
+                case -1:
+                    $wall_rate->rate = 0;
+                    break;
+            }
+            $wall_rate->save();
+        }
+
+        return $wall_rate;
+    }
+
+    /**
+     * @param Request $request
+     * @param Wall $wall
+     * @return WallRate
+     */
+    public function dislike(Request $request, $wall)
+    {
+        $user = $request->user();
+        /**
+         * @var WallRate $wall_rate
+         */
+        $wall_rate = WallRate::where('user_id', $user->id)->first();
+
+        if ($wall_rate === null) {
+            $wall_rate = new WallRate(['rate' => -1]);
+            $wall_rate->user()->associate($user);
+
+            $wall->ratings()->save($wall_rate);
+        } else {
+            switch ($wall_rate->rate) {
+                case 0:
+                    $wall_rate->rate = -1;
+                    break;
+                case 1:
+                    $wall_rate->rate = 0;
+                    break;
+            }
+            $wall_rate->save();
+        }
+
+        return $wall_rate;
     }
 }
