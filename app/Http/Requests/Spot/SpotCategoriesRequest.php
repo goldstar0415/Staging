@@ -26,7 +26,7 @@ class SpotCategoriesRequest extends Request
     {
         $types = implode(',', array_flatten(SpotType::all('name')->toArray()));
         return [
-            'type' => 'required|in:' . $types
+            'type' => 'in:' . $types
         ];
     }
 }

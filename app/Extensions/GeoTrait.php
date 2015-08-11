@@ -46,14 +46,16 @@ trait GeoTrait
         $search_areas = [];
         foreach ($b_boxes as $b_box) {
             $search_areas[] = sprintf(
-                '"location" && ST_MakeEnvelope(%s, %s, %s, %s, 4326)',
+                '"location" && ST_MakeEnvelope(%s, %s, %s, %s, 4326) AND
+                ("spots"."end_date" > NOW() AND "spots"."end_date" is not null OR "spots"."end_date" is null)',
                 $b_box['_southWest']['lng'],
                 $b_box['_southWest']['lat'],
                 $b_box['_northEast']['lng'],
                 $b_box['_northEast']['lat']
             );
         }
-        $points = self::with('spot')->whereRaw(implode(' OR ', $search_areas))->get();
+        $points = self::with(['spot', 'spot.user', 'spot.photos', 'spot.reviews'])->select('spot_points.*')
+            ->join('spots', 'spot_points.spot_id', '=', 'spots.id')->whereRaw(implode(' OR ', $search_areas))->get();
 
         return $points;
     }

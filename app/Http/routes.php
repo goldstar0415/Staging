@@ -75,6 +75,3 @@ Route::resource('selection', 'SelectionController', ['except' => ['create', 'edi
 Route::get('weather', 'MapController@getWeather');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
-get('/', function () {
-    return view('form_auth');
-});
