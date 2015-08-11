@@ -21,8 +21,9 @@
     return directive;
 
     /** @ngInject */
-    function SideMenuController(User, snapRemote, UserService) {
+    function SideMenuController($state, User, snapRemote, UserService) {
       var vm = this;
+      vm.$state = $state;
 
       vm.signOut = function () {
         User.logOut(function () {

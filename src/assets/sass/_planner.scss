@@ -23,6 +23,13 @@
   .title-name {
     margin-top: 0;
   }
+  .media {
+    padding-left: 15px;
+    padding-right: 15px;
+    .fav-avatar-icon{
+      margin-left: 0;
+    }
+  }
 }
 
 .time-sub {
@@ -97,3 +104,10 @@
     background: url(/assets/img/icons/plus-minus.png) -12px -24px no-repeat;
   }
 }
+
+
+.attachment-link {
+  width: 64px;
+  height: 64px;
+}
+

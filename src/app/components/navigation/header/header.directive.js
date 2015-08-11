@@ -6,7 +6,7 @@
     .directive('zmHeader', ZoomtivityHeader);
 
   /** @ngInject */
-  function ZoomtivityHeader($rootScope) {
+  function ZoomtivityHeader() {
     var directive = {
       restrict: 'E',
       templateUrl: 'app/components/navigation/header/header.html',
@@ -21,8 +21,9 @@
     return directive;
 
     /** @ngInject */
-    function HeaderController() {
+    function HeaderController($state) {
       var vm = this;
+      vm.$state = $state;
 
       if(vm.options.snap.disable == "left") {
         vm.toggle = "right";

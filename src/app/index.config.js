@@ -23,9 +23,9 @@
 
 
     // snap
-    var disable = "",
-      touchToDrag = false;
-    if ($(window).width() < 768) {
+    var disable = "";
+    var touchToDrag = false;
+    if ($(window).width() < 992) {
       touchToDrag: true;
       disable = "right";
     } else {
