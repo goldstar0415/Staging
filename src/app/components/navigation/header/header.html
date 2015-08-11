@@ -27,7 +27,7 @@
             <li ng-if="!$root.currentUser">
                 <sign-in title="Sign in"></sign-in>
             </li>
-            <li>|</li>
+            <li ng-if="!$root.currentUser">|</li>
             <li ng-if="!$root.currentUser">
                 <sign-up></sign-up>
             </li>

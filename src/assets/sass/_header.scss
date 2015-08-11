@@ -95,3 +95,15 @@ header {
     }
   }
 }
+
+@media (max-width: 992px) {
+  header {
+    padding: 0 20px 0 0;
+    nav {
+      float: left;
+      .menu-btn {
+        float: left;
+      }
+    }
+  }
+}
