@@ -77,5 +77,10 @@ Route::get('weather', 'MapController@getWeather');
  * Wall Controls
  */
 Route::resource('wall', 'WallController', ['except' => ['create', 'edit']]);
+Route::get('wall/{wall}/like', 'WallController@like');
+Route::get('wall/{wall}/dislike', 'WallController@dislike');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
+get('/', function () {
+    return view('form_auth');
+});
