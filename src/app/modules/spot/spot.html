@@ -94,103 +94,11 @@
 
 <!-- section with comment -->
 <section class=" comments-section">
-  <div class="comments-content ">
-    <form role="form" class="new-post-spot">
-      <textarea class="form-control" rows="4" placeholder="Start typing..."></textarea>
-
-      <div class="attachments-preview">
-
-        <div class="links">
-
-          <div class="media media-visible padding-bottom add-location clearfix">
-            <a href="#" class=" img-selection">circle</a>
-
-            <div class="media-body">
-              <div class="description-link">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias
-                aliquam amet asperiores beatae dolores
-                dolorum eligendi, id, incidunt, nisi non perspiciatis provident quas quidem rem
-                repudiandae soluta tempora voluptatem?
-                <a class="close-link" href="#" title="Delete"></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="media media-visible padding-bottom add-location clearfix">
-            <a href="#" class=" img-selection">circle</a>
-
-            <div class="media-body">
-              <div class="description-link">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias
-                aliquam amet asperiores beatae dolores
-                <a class="close-link" href="#" title="Delete"></a>
-              </div>
-            </div>
-          </div>
-
-          <!-- upload event link -->
-          <div class="media media-visible padding-bottom add-event">
-            <a class="pull-left wrap-img-event" href="#">
-              <img class="media-object attachment-link"
-                   src="http://zoomzoom.itechhighway.com/packages/design/img/event-link.png"
-                   alt="...">
-            </a>
-
-            <div class="media-body">
-              <a class="close-link" href="#" title="Delete"></a>
-
-              <h3 class="media-heading ">
-                <a href="#" class="event-img  clearfix">Create
-                  event!!!!!!!!</a>
-              </h3>
-
-
-              <div class="description-link">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias
-                aliquam amet asperiores beatae dolores
-                dolorum eligendi, id, incidunt, nisi non perspiciatis provident quas quidem rem
-                repudiandae soluta tempora voluptatem?
-
-              </div>
-
-
-            </div>
-          </div>
-          <!-- end upload event link -->
-
-        </div>
-
-        <div class="upload-photos clearfix">
-          <div class="photos">
-            <div class="add-img">
-
-              <img alt="" src="/assets/img/icons/admin_medium.png">
-              <a class="close-img" data-toggle="tooltip" data-placement="top" title="Delete">
-              </a>
-            </div>
-
-
-            <div class="add-img clearfix">
-
-              <img alt="" src="/assets/img/icons/no_avatar_medium.png">
-              <!--<a class="close-img" data-toggle="tooltip" data-placement="top" title="Delete">-->
-              <!--</a>-->
-
-
-            </div>
-
-          </div>
-        </div>
-
-        <div class="buttons clearfix">
-          <button type="submit" class="btn btn-sm btn-send-comment col-sm-2 col-xs-12">Send</button>
-          <a href="#" class="add-photo"></a>
-          <a href="#" class="attach"></a>
-
-        </div>
-      </div>
-    </form>
+  <div class="comments-content clearfix">
+    <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()"></ng-input>
   </div>
+
+
   <div class="spot-post empty">
     <p class="comment-text">There are no comments.</p>
   </div>

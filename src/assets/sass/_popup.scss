@@ -8,6 +8,7 @@
       height: 100%;
     }
     .leaflet-popup-content-wrapper {
+      max-height: 197px;
       padding: 0;
       margin: 0;
     }
@@ -155,7 +156,8 @@
                 font-size: 12px;
                 font-weight: 500;
                 line-height: 14px;
-                overflow: hidden;
+                overflow-y: scroll;
+                word-wrap: break-word;
                 margin: 0;
             }
             .previous-next {
@@ -310,12 +312,12 @@
             width: 16px;
             height: 10px;
             a {
-                height: 9px;
+                height: 16px;
                 line-height: 11px;
                 padding-left: 16px;
-                background: url(/assets/img/icons/dark-edit-tools.png) no-repeat 0px -19px;
+                background: url(/assets/img/icons/dark-edit-tools.png) no-repeat 0px -20px;
                 &:hover {
-                    background: url(/assets/img/icons/dark-edit-tools.png) no-repeat -18px -19px;
+                    background: url(/assets/img/icons/dark-edit-tools.png) no-repeat -18px -20px;
                 }
                 .content-popup {
                     height: 85px;

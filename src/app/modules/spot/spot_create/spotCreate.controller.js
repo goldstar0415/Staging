@@ -162,6 +162,7 @@
       MapService.RemoveMarker(marker);
       vm.locations[index].isDelete = true;
     };
+
     //photos
     vm.checkFilesRestrictions = function () {
       if (vm.images.files.length > vm.restrictions.images) {
@@ -170,6 +171,7 @@
         vm.images.files.splice(vm.restrictions.images, l);
       }
     };
+
     vm.deleteImage = function (idx, id) {
       if(id) {
         vm.deletedImages.push(id);
@@ -178,6 +180,7 @@
         vm.images.files.splice(idx, 1);
       }
     };
+
     vm.cropImage = function (image) {
       if (vm.selectCover) {
         CropService.crop(image, 512, 256, function (result) {
@@ -189,9 +192,10 @@
         });
       }
     };
+
     vm.editCover = function () {
       if(vm.currentCover_original) {
-        CropService.crop(vm.currentCover_original, function (result) {
+        CropService.crop(vm.currentCover_original, 512, 256, function (result) {
           if (result) {
             vm.cover = result;
             vm.selectCover = false;
@@ -199,6 +203,7 @@
         });
       };
     };
+
     //videos
     vm.addYoutubeLink = function (validLink) {
       if (validLink && vm.newYoutubeLink) {

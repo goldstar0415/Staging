@@ -215,7 +215,6 @@
 
 .comments-section {
 
-  float: left;
   //margin: 20px 0;
   border: 1px solid #e9edf0;
   background: $white;
@@ -226,7 +225,6 @@
   padding: 0;
   .comments-content {
     background: $light_grey;
-    padding: 10px;
 
     .new-post-spot {
       background: $light_grey;
@@ -271,6 +269,7 @@
 }
 
 .attachments-preview {
+  padding: 10px;
   .add-event {
     margin-bottom: 15px;
     .wrap-link {

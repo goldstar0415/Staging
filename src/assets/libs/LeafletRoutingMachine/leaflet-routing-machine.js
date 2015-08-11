@@ -571,7 +571,7 @@ if (typeof module !== undefined) module.exports = polyline;
 
 		_hookEvents: function(l) {
 			l.on('linetouched', function(e) {
-				this._plan.dragNewWaypoint(e);
+        this._plan.dragNewWaypoint(e);
 			}, this);
 		},
 
@@ -1181,11 +1181,12 @@ if (typeof module !== undefined) module.exports = polyline;
 		},
 
 		_addSegment: function(coords, styles, mouselistener) {
-			var i,
-				pl;
+			var i,pl;
+      var that = this;
+
 
 			for (i = 0; i < styles.length; i++) {
-				if(styles[i].type == "polygon") {
+        if(styles[i].type == "polygon") {
 					//create line and simplify it with turf :)
 					var line = L.polyline(coords, styles[i]).toGeoJSON();
 					line = turf.simplify(line, 0.02, false);
@@ -1193,14 +1194,17 @@ if (typeof module !== undefined) module.exports = polyline;
 					//Buffer it with turf library :)
 					var geoJSONPoly = turf.buffer(line, 10, 'miles');
 					//return geoJson layer
-					pl = L.geoJson(geoJSONPoly);
+					pl = L.geoJson(geoJSONPoly, {
+            onEachFeature: function(f, l) {
+              if (mouselistener && styles[i].type == "polygon") {
+                l.on('click', that._onLineTouched, that);
+              }
+            }
+          });
 				} else {
 					pl = L.polyline(coords, styles[i]);
 				}
 				this.addLayer(pl);
-				if (mouselistener && styles[i].type == "polygon") {
-					pl.on('mousedown', this._onLineTouched, this);
-				}
 			}
 
 
