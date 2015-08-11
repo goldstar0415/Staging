@@ -41,11 +41,11 @@
       },
       followers: {
         url: API_URL + '/followers/:user_id',
-        method: 'GET'
+        isArray: true
       },
       followings: {
         url: API_URL + '/followings/:user_id',
-        method: 'GET'
+        isArray: true
       },
       query: {
         url: API_URL + '/users/list',

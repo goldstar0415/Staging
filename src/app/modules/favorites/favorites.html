@@ -10,9 +10,7 @@
             {{item.type}}
         </span>
 
-        <span
-          ng-if="item.type == 'Event'"
-          class="date">
+        <span class="date">
                 {{item.start_date + ' - ' + item.end_date}}
                 <br>
                 {{item.start_time + ' - ' + item.end_time}}
@@ -35,20 +33,19 @@
 
     <ul class="tools">
       <li>
-        <a class="save-event ng-isolate-scope" >Save</a>
+        <a class="save-event" >Save</a>
       </li>
       <li>
-        <a class="save-event saved ng-isolate-scope clicked" >Remove</a>
+        <a class="save-event saved clicked" >Remove</a>
       </li>
       <li>
-        <a class="favorite-spot ng-isolate-scope" >Favorite</a>
+        <a class="favorite-spot" >Favorite</a>
       </li>
       <li>
-        <a class="fav favorited ng-isolate-scope" >Unfavorite</a>
+        <a class="fav favorited" >Unfavorite</a>
       </li>
       <li>
-        <a  class="invite-friend ng-isolate-scope" >Invite
-          friends</a>
+        <invite-friends spot="item"></invite-friends>
       </li>
 
     </ul>

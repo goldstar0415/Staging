@@ -11,6 +11,10 @@
       favorites: {
         url: API_URL + '/spots/favorites',
         isArray: true
+      },
+      inviteFriends: {
+        url: API_URL + '/spots/invite',
+        method: 'POST'
       }
     });
   }

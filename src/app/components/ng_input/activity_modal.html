@@ -29,18 +29,16 @@
       <div class="tab-pane col-sm-12 no-pad " ng-if="modal.tab == 'events'"
            ng-class="{active: modal.tab == 'events'}">
         <div class="col-sm-12 no-pad choose-friend-block">
-          <div class="">
-            <div ng-repeat="spot in modal.spots | filter: {title: search}"
-                 class="choose-friend"
-                 ng-class="{choose: spot.selected}"
-                 ng-click="modal.addSpot(spot)">
-              <img class="friend-avatar" ng-src="{{spot.cover_url.thumb}}">
-              <h4 class="name-friend">
-                <a>{{spot.title}}</a>
+          <div ng-repeat="spot in modal.spots | filter: {title: search}"
+               class="choose-friend"
+               ng-class="{choose: spot.selected}"
+               ng-click="modal.addSpot(spot)">
+            <img class="friend-avatar" ng-src="{{spot.cover_url.thumb}}">
+            <h4 class="name-friend">
+              <a>{{spot.title}}</a>
 
-                <p class="date"> {{spot.start_date | toTimezone}} - {{spot.end_date | toTimezone}} </p>
-              </h4>
-            </div>
+              <p class="date"> {{spot.start_date | toTimezone}} - {{spot.end_date | toTimezone}} </p>
+            </h4>
           </div>
         </div>
       </div>
@@ -69,6 +67,7 @@
         <div class="block-item" ng-repeat="area in modal.areas | filter: {title: search}">
           <div class="clearfix" ng-class="{choose: area.selected}" ng-click="modal.addArea(area)">
             <h4 class="activity-title"><a>Lorem ipsum{{area.data}}</a></h4>
+
             <p class="saved-search-description">Lorem ipsum dolor sit</p>
           </div>
         </div>

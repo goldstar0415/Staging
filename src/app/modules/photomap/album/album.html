@@ -1,14 +1,28 @@
-<div class="title">
+<div class="title col-xs-12 ">
   <a ng-click="goBack();" title="back" class="back"></a>
-  <a ui-sref="editAlbum({album_id: Album.data.id})" title="edit" ng-if="currentUser.id == Album.data.user_id" class="edit"></a>
 
-  <h2>Album - {{Album.data.title}}</h2>
+  <div class="col-xs-8 no-pad">
+    <h2>Album - {{Album.data.title}}</h2>
+  </div>
+
+
+  <div class="album-tools" ng-if="currentUser.id == Album.data.user_id">
+    <a title="Delete album" ng-click="Album.delete()" class="delete"></a>
+    <a title="Edit album"
+       ui-sref="editAlbum({album_id: Album.data.id})"
+       title="edit" class="edit"></a>
+  </div>
+</div>
+
+
+<div class="col-xs-12 no-pad">
+  <hr>
 </div>
 <div class="col-xs-12 no-pad">
 
   <div ng-repeat="item in Album.data.photos" class="col-xs-3 no-pad">
     <div class="photo" photo-viewer items="Album.data.photos" index="$index" current-item="item">
-      <img src="{{item.photo_url.medium}}" alt="Photo not found">
+      <img ng-src="{{item.photo_url.medium}}" alt="Photo not found">
     </div>
   </div>
 </div>

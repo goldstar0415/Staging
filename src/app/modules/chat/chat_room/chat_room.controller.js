@@ -30,7 +30,7 @@
           }
         },
         function success(message) {
-          message = _.extend(message, message.pivot);
+          //message = _.extend(message, message.pivot);
           ChatService.pushToToday(message);
           vm.message = '';
           vm.attachments.photos = [];

@@ -6,7 +6,7 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, toastr, $httpProvider, cfpLoadingBarProvider, snapRemoteProvider, $locationProvider, DEBUG) {
+  function config($logProvider, toastr, $httpProvider, cfpLoadingBarProvider, snapRemoteProvider, $locationProvider, DEBUG, $translateProvider) {
     // Enable log
     $logProvider.debugEnabled(DEBUG);
     if (!DEBUG) {
@@ -23,14 +23,14 @@
 
 
     // snap
-    var disable = "";
-    var touchToDrag = false;
+    var disable = "",
+      touchToDrag = false;
     if ($(window).width() < 768) {
       touchToDrag: true;
       disable = "right";
     } else {
-      disable = "left";
       touchToDrag: false;
+      disable = "left";
     }
 
     snapRemoteProvider.globalOptions = {
@@ -46,6 +46,12 @@
     cfpLoadingBarProvider.includeBar = true;
     cfpLoadingBarProvider.includeSpinner = true;
     cfpLoadingBarProvider.latencyThreshold = 100;
+
+    $translateProvider.preferredLanguage('en');
+    $translateProvider.translations('en', {
+      DIALOGS_YES: 'Yes',
+      DIALOGS_NO: 'No'
+    });
   }
 
 })();

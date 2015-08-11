@@ -21,30 +21,29 @@
         <a ui-sref="profile({user_id: post.seder.id})">{{post.seder.first_name}} {{post.seder.last_name}}</a>
       </h3>
 
-      <p>{{post.message}}</p>
-      <attachments items="message.attachments"></attachments>
-
+      <p>{{post.body}}</p>
+      <attachments items="post.attachments"></attachments>
 
       <!--<div class="col-xs-12 external-link padding-0">-->
       <!--<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 padding-0">-->
-      <!--<a href="#" class="wrap"><img src="/assets/img/icons/avatar.jpg"></a>-->
+      <!--<a  class="wrap"><img src="/assets/img/icons/avatar.jpg"></a>-->
       <!--</div>-->
       <!--<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 second-info padding-0">-->
-      <!--<a href="#" class="second-link">Mitchel Brunings - Redemption Song</a>-->
+      <!--<a  class="second-link">Mitchel Brunings - Redemption Song</a>-->
 
       <!--<p class="description">The Blind Audition van Mitchell Brunings. Hij zingt "Redemption Song" van-->
       <!--Bob Marley. Bezoek de officiële site: http://www.thevoiceofholland.com/ ABONNEER vo...</p>-->
 
-      <!--<div class="photo-info"><a href="#"><a href="#"><img src="/assets/img/img13.jpg"></a></a></div>-->
+      <!--<div class="photo-info"><a ><a ><img src="/assets/img/img13.jpg"></a></a></div>-->
       <!--</div>-->
       <!--</div>-->
 
       <p class="time">{{post.created_at | fromNow}}</p>
 
       <div class="plus-minus">
-        <a href="#" class="plus"></a>
-        <norb>0</norb>
-        <a href="#" class="minus"></a>
+        <a class="plus" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)"></a>
+        {{post.rating || 0}}
+        <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
       </div>
     </div>
   </div>

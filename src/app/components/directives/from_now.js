@@ -5,7 +5,8 @@
     .module('zoomtivity')
     .filter('fromNow', function () {
       return function (input) {
-        return moment(input).fromNow();
+        var utcOffset = moment().utcOffset();
+        return moment(input).add(utcOffset, 'm').fromNow();
       }
     })
 
