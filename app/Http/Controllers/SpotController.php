@@ -132,11 +132,14 @@ class SpotController extends Controller
 
     public function categories(SpotCategoriesRequest $request)
     {
-        $type = $request->get('type');
+        $type_categories = null;
+        if ($request->has('type')) {
+            $type_categories = SpotType::where('name', $request->get('type'))->with('categories')->first()->categories;
+        } else {
+            $type_categories = SpotType::with('categories')->get();
+        }
 
-        $type = SpotType::where('name', $type)->with('categories')->first();
-
-        return $type->categories;
+        return $type_categories;
     }
 
     /**
