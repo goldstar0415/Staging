@@ -93,75 +93,7 @@
 <!-- section with comment -->
 <section class="comments-section">
   <div class="comments-content ng-scope">
-    <form role="form" class="new-post-spot">
-      <textarea class="form-control" rows="4" placeholder="Start typing..."></textarea>
-
-      <div class="attachments-preview">
-
-        <div class="links">
-          <figure class=" clearfix add-location">
-            <a href="#" class="ng-binding img-selection">circle</a>
-            <figcaption class="description-link ng-binding">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aperiam
-              corporis dignissimos dolore ducimus eius explicabo inventore iste magnam nostrum
-              nulla, quam quidem ratione similique suscipit totam vel voluptas voluptates.
-              <a class="close-link" href="#" title="Delete" ng-click="toggleItem(item)"></a>
-            </figcaption>
-          </figure>
-
-          <figure class=" clearfix add-location">
-            <a href="#" class="ng-binding img-selection">Lorem</a>
-            <figcaption class="description-link ng-binding">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aperiam
-              <a class="close-link" href="#" title="Delete" ng-click="toggleItem(item)"></a>
-            </figcaption>
-          </figure>
-
-
-          <figure class="add-event clearfix">
-            <div class="col-xs-12 col-sm-2 no-pad">
-              <a class="wrap-img-event" href="#">
-                <img ng-src="http://zoomzoom.itechhighway.com/packages/design/img/event-link.png"
-                     alt=""
-                     src="http://zoomzoom.itechhighway.com/packages/design/img/event-link.png">
-              </a>
-            </div>
-
-            <div class="col-xs-12 col-sm-10 no-pad">
-              <div class="col-xs-12 ">
-                <a class="close-link" href="#" title="Delete"></a>
-                <a href="#" class="event-img ng-binding clearfix">Create
-                  event!!!!!!!!</a>
-              </div>
-              <div class="col-xs-12 ">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi earum
-                enim
-                error
-              </div>
-            </div>
-          </figure>
-
-        </div>
-
-        <div class="upload-photos clearfix">
-          <div class="photos">
-            <div class="add-img">
-
-              <img alt="" src="/assets/img/icons/admin_medium.png">
-              <a class="close-img" data-toggle="tooltip" data-placement="top" title="Delete">
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="buttons clearfix">
-          <button type="submit" class="btn btn-sm btn-send-comment col-sm-2 col-xs-12">Send</button>
-          <a href="#" class="add-photo"></a>
-          <a href="#" class="attach"></a>
-
-        </div>
-      </div>
-    </form>
+    <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()"></ng-input>
   </div>
   <div class="spot-post empty">
     <p class="comment-text">There are no comments.</p>

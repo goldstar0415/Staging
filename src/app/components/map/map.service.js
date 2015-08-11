@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment) {
       var map = null;
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
       var radiusSelectionLimit = 500000; //in meters
@@ -49,13 +49,25 @@
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
           LassoSelection(function LassoCallback(points, b_box) {
-            L.polygon(points, {
+            var poly = L.polygon(points, {
               weight: 2,
               color: 'green',
               opacity: 0.2,
               fillColor: 'green',
               fillOpacity: 0.1
             }).addTo(drawLayer);
+
+            var popup = RemoveMarkerPopup(
+              function() {
+                drawLayer.removeLayer(poly);
+                var bboxes = GetDrawLayerBBoxes();
+                GetDataByBBox(bboxes);
+              },
+              function() {
+                poly.closePopup();
+              });
+
+            poly.bindPopup(popup);
             snapRemote.enable();
 
             var bboxes = GetDrawLayerBBoxes();
@@ -113,6 +125,18 @@
               fillOpacity: 0.1
             });
 
+            var popup = RemoveMarkerPopup(
+              function() {
+                drawLayer.removeLayer(circle);
+                var bboxes = GetDrawLayerBBoxes();
+                GetDataByBBox(bboxes);
+              },
+              function() {
+                circle.closePopup();
+              });
+
+            circle.bindPopup(popup);
+
 
 
             circle.addTo(drawLayer);
@@ -161,7 +185,7 @@
       // Save selection
       L.Control.saveSelection = L.Control.extend({
         options: {
-          position: 'bottomleft',
+          position: 'topright',
           title: {
             'false': 'Save selection',
             'true': 'Save selection'
@@ -190,7 +214,7 @@
       // Clean selection
       L.Control.clearSelection = L.Control.extend({
         options: {
-          position: 'bottomleft',
+          position: 'topright',
           title: {
             'false': 'Clear selection',
             'true': 'Clear selection'
@@ -361,6 +385,8 @@
             removeAllLayers();
             break;
         }
+        map.closePopup();
+        markersLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
 
@@ -535,7 +561,8 @@
 
       function PathSelection(callback) {
         var markers = [],
-          line;
+          line,
+          cancelPopup;
         var lineOptions = {};
         lineOptions.styles = [{type: 'polygon', color: 'blue', opacity: 0.6, weight: 3, fillOpacity: 0.2}, {
           color: 'red',
@@ -547,15 +574,73 @@
         pathSelectionStarted = true;
         map.on('click', onMapClick);
 
-        function onMapClick(e) {
+        function onMapClick(e, idx) {
           var marker = L.marker(e.latlng, {draggable: true}).addTo(markersLayer);
-          markers.push(marker);
+          if(!isNaN(idx)) {
+            markers.splice(idx + 1, 0, marker);
+          } else {
+            markers.push(marker);
+          }
 
-          marker.on('dragend', RecalculateRoute);
+          var popup = RemoveMarkerPopup(
+            function() {
+              for(var k in markers) {
+                if(markers[k]._leaflet_id == marker._leaflet_id) {
+                  markersLayer.removeLayer(marker);
+                  markers.splice(k, 1);
+                  RecalculateRoute();
+                }
+              }
+            },
+            function() {
+              marker.closePopup();
+            });
+
+          marker.bindPopup(popup);
+          marker.on('dragend',  function() {
+            if(cancelPopup && pathSelectionStarted) {
+              cancelPopup
+                .setLatLng(marker.getLatLng())
+                .openOn(map);
+            }
+
+            angular.element('.cancel-selection').on('click', function() {
+              ClearSelectionListeners();
+              map.closePopup();
+            });
+            RecalculateRoute();
+          });
+
+          if(markers.length > 1) {
+            if(!cancelPopup) {
+              cancelPopup = L.popup({
+                offset: L.point(0, -15),
+                closeButton: false,
+                keepInView: true,
+                autoPan: true
+              })
+                .setLatLng(marker.getLatLng())
+                .setContent('<button class="btn btn-block btn-success cancel-selection">Cancel selection</button>')
+                .openOn(map);
+
+
+            } else {
+              cancelPopup
+                .setLatLng(marker.getLatLng())
+                .openOn(map);
+            }
+
+            angular.element('.cancel-selection').on('click', function() {
+              console.log('qweqwe');
+              ClearSelectionListeners();
+              map.closePopup();
+            });
+          }
           RecalculateRoute();
         }
-
         function RecalculateRoute() {
+
+
           if (markers.length >= 2) {
             var waypoints = _.map(markers, function (m) {
               return {latLng: m.getLatLng()};
@@ -565,14 +650,45 @@
                 drawLayer.removeLayer(line);
                 line.off('linetouched');
               }
-
               if (err) {
                 console.log(err);
               } else {
                 line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
+                line.on('linetouched', function(e) {
+                  function remove() {
+                    for(var k in markers) {
+                      markersLayer.removeLayer(markers[k]);
+                    }
+                    drawLayer.removeLayer(line);
+                    map.closePopup();
+                    ClearSelectionListeners();
+                  }
+
+                  function cancel() {
+                    map.closePopup();
+                  }
+
+                  function addmarker() {
+                    onMapClick(e, e.afterIndex);
+                    map.closePopup();
+                  }
+                  var popup = RemoveMarkerPopup(remove, cancel, addmarker, e.latlng);
+
+                  popup.openOn(map);
+                });
                 callback();
               }
             }, {geometryOnly: true});
+          } else {
+            if(!pathSelectionStarted) {
+              for(var k in markers) {
+                markersLayer.removeLayer(markers[k]);
+              }
+            }
+            if (line) {
+              drawLayer.removeLayer(line);
+              line.off('linetouched');
+            }
           }
         }
       }
@@ -600,6 +716,7 @@
       }
 
       function ClearSelections() {
+        markersLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
         eventsLayer.clearLayers();
@@ -685,13 +802,37 @@
       function BindSpotPopup(marker, spot) {
         var scope = $rootScope.$new();
         scope.item = spot;
-        var popupContent = $compile('<spot-popup spot="item"></spot-popup>')(scope);
+        scope.marker = marker;
+        var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
         var popup = L.popup({
+          keepInView: true,
+          autoPan: true,
           closeButton: false,
           className: 'popup'
         }).setContent(popupContent[0]);
 
         marker.bindPopup(popup);
+
+      }
+
+      function RemoveMarkerPopup(remove, cancel, addmarker, location) {
+        var scope = $rootScope.$new();
+        scope.remove = remove;
+        scope.cancel = cancel;
+        scope.addmarker = addmarker;
+
+        scope.popup = L.popup({
+          keepInView: true,
+          autoPan: true,
+          offset: L.point(-40, 0),
+          closeButton: false,
+          className: 'remove-popup clearfix'
+        }).setLatLng(location);
+        var popupContent = $compile('<confirm-popup></confirm-popup>')(scope);
+        scope.popup.setContent(popupContent[0]);
+
+
+        return scope.popup;
       }
 
       //Processing functions
@@ -804,38 +945,42 @@
       }
 
       function GetDataByBBox(bbox_array) {
-        //Тут отправим запрос на сервер из кучки ббоксов и получим кучу хлама объектами
-        $http.post(API_URL + '/map/search', {b_boxes: bbox_array})
-          .success(function(data) {
-            clearLayers();
-            var spots = [];
-            _.each(data, function(item) {
-              if(PointInPolygon(item.location)) {
-                spots.push(item);
-              }
-            });
-            console.log(spots);
-            spots = FilterUniqueObjects(spots);
+        if(bbox_array.length > 0) {
+          $http.post(API_URL + '/map/search', {b_boxes: bbox_array})
+            .success(function(data) {
+              console.log(data[0]);
+              clearLayers();
+              var spots = [];
+              _.each(data, function(item) {
+                if(PointInPolygon(item.location)) {
+                  spots.push(item);
+                }
+              });
+              spots = FilterUniqueObjects(spots);
 
-            _.each(spots, function(item) {
-              var type = item.spot.category.type.name;
-              var marker = L.marker(item.location);
+              _.each(spots, function(item) {
+                var type = item.spot.category.type.name;
+                var marker = L.marker(item.location);
 
-              BindSpotPopup(marker, item.spot);
+                BindSpotPopup(marker, item);
 
-              switch(type) {
-                case 'pitstop':
-                      eventsLayer.addLayer(marker);
-                      break;
-                case 'recreation':
-                      eventsLayer.addLayer(marker);
-                      break;
-                case 'event':
-                      eventsLayer.addLayer(marker);
-                      break;
-              }
-            });
-          })
+                switch(type) {
+                  case 'pitstop':
+                    eventsLayer.addLayer(marker);
+                    break;
+                  case 'recreation':
+                    eventsLayer.addLayer(marker);
+                    break;
+                  case 'event':
+                    eventsLayer.addLayer(marker);
+                    break;
+                }
+              });
+            })
+        } else {
+          clearLayers();
+        }
+
       }
 
       function FilterUniqueObjects(array) {
@@ -844,25 +989,32 @@
         })
       }
 
-      function AddNewData() {
-        //Тут переберем кучу хлама прибывшую с сервера. Добавляем её к общей куче оставляя только уникальные объекты
-      }
-
+      //return sorted by rating array
       function SortByRating(array) {
-
+        return _.sortBy(array, 'rating');
       }
 
-      function SortByDate() {
-        //Тут только для ивентов. Сначала те которые ближе к текущей дате.
-
+      //return sorted by end_date array
+      function SortByDate(array) {
+        return _.sortBy(array, function(item) {
+            return moment(item.endDate, 'YYYY-MM-DD HH:mm:ss').format('x');
+        });
       }
 
-      function SortByName(name) {
-        //Тут отсеять только те, в которых будет найдено совпадение в имени
-      }
+      //return sorted by rating only for selected categories
+      function SortBySubcategory(array, categories) {
+        var resultArray = _.reject(array, function(item) {
+          var result = true;
 
-      function SortBySubcategory(categories) {
-        //Оставить только те, которые попадают под заданые категории и сортировать их по рейтингу.
+          for(var k in categories) {
+            if(categories[k].id == item.id) {
+              result = false;
+              break;
+            }
+          }
+        });
+
+        return SortByDate(resultArray);
       }
 
 
@@ -901,7 +1053,11 @@
         FocusMapToCurrentLocation: FocusMapToCurrentLocation,
         FocusMapToGivenLocation: FocusMapToGivenLocation,
         FitBoundsOfCurrentLayer: FitBoundsOfCurrentLayer,
-        FitBoundsOfDrawLayer:FitBoundsOfDrawLayer
+        FitBoundsOfDrawLayer:FitBoundsOfDrawLayer,
+        //sorting
+        SortByRating: SortByRating,
+        SortByDate: SortByDate,
+        SortBySubcategory: SortBySubcategory
       };
     });
 

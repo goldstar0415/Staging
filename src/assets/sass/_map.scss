@@ -39,5 +39,26 @@
     width: 100%;
     background-color: orange;
   }
+  .save-selection {
+    height: 100%;
+    width: 100%;
+    background-color: cyan;
+  }
+  .clear-selection {
+    height: 100%;
+    width: 100%;
+    background-color: blue;
+  }
+}
+
+.leaflet-top.leaflet-right {
+  transform: rotate(90deg);
+  right: 50%;
+}
+
+.remove-popup {
+  .leaflet-popup-content {
+    width:auto !important;
+  }
 }
 
