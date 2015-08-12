@@ -1,5 +1,5 @@
 <a ng-click="signIn.openSignInModal()">
-  <span>{{signIn.title}}</span>
+  {{signIn.title}}
 </a>
 
 <script type="text/ng-template" id="SignInModal.html">
@@ -25,7 +25,7 @@
              ng-if="form.$submitted || form.password.$touched">
           <div ng-messages-include="error-password-messages"></div>
         </div>
-        </div>
+      </div>
 
       <p>All fields are required
         <password-recovery></password-recovery>

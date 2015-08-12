@@ -4,11 +4,11 @@
       <span class="menu-icon"></span>
     </a>
     <ul>
-      <li ng-if="Header.$state.current.name == 'index'" class="separate-bg">
-        <a ui-sref="index" ui-sref-active="active">Map<span class="map-icon"></span></a>
+      <li ng-if="Header.$state.current.name == 'index'" class="separator-bg map-profile">
+        <a ui-sref="index" ui-sref-active="active"><span>Map</span><span class="map-icon"></span></a>
       </li>
-      <li ng-if="$root.currentUser && Header.$state.current.name != 'index'">
-        <a ui-sref="profile({user_id: $root.currentUser.id})" ui-sref-active="active">{{$root.currentUser.first_name}}
+      <li ng-if="$root.currentUser && Header.$state.current.name != 'index'" class="map-profile">
+        <a ui-sref="profile({user_id: $root.currentUser.id})" ui-sref-active="active"><span>{{$root.currentUser.first_name}}</span>
           <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
         </a>
       </li>
@@ -21,20 +21,20 @@
 
   <nav class="hidden-sm hidden-xs">
     <ul>
-      <li class="map-profile">
+      <li class="map-profile separator-bg">
         <a ui-sref="index" ui-sref-active="active">
           <span>Map</span>
           <span class="map-icon"></span>
         </a>
       </li>
-      <li ng-if="!$root.currentUser" class="map-profile">
+      <li ng-if="!$root.currentUser" class="separator-bg authorisation">
         <sign-in title="Sign in"></sign-in>
       </li>
-      <li ng-if="!$root.currentUser">|</li>
-      <li ng-if="!$root.currentUser">
+      <li ng-if="!$root.currentUser" class="sep">|</li>
+      <li ng-if="!$root.currentUser" class="authorisation">
         <sign-up></sign-up>
       </li>
-      <li ng-if="$root.currentUser" class="map-profile">
+      <li ng-if="$root.currentUser" class="map-profile separator-bg">
         <a ui-sref="profile({user_id: $root.currentUser.id})" ui-sref-active="active">
           <span>{{$root.currentUser.first_name}}</span>
           <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
