@@ -62,6 +62,10 @@ Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 Route::resource('spots.reviews', 'SpotReviewController', ['except' => ['create', 'edit']]);
 Route::resource('spots.photos.comments', 'SpotPhotoCommentController', ['only' => ['index', 'store', 'destroy']]);
 /**
+ * Plan controls
+ */
+Route::resource('plans', 'PlanController', ['except' => ['create', 'edit']]);
+/**
  * Chat Controls
  */
 Route::post('message', 'ChatController@sendMessage');
