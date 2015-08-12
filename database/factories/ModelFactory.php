@@ -169,6 +169,7 @@ $factory->defineAs(App\SpotType::class, 'pitstop', function (Generator $faker) {
 $factory->define(App\SpotTypeCategory::class, function (Generator $faker) {
     $name = $faker->unique()->word;
     return [
+        'icon' => $faker->image(storage_path('app'), 60, 60),
         'name' => $name,
         'display_name' => ucfirst($name)
     ];
