@@ -10,7 +10,6 @@ header {
     float: left;
     @include vertical_align;
   }
-
   nav {
     float: right;
     height: 70px;
@@ -22,42 +21,16 @@ header {
       li {
         display: block;
         font: $navigation_font;
-        //padding-left: 24px;
         float: left;
-        @include vertical_align;
         a {
-          padding: 0 15px;
-        }
-      }
-      .separate-bg {
-        background: url(/assets/img/icons/navigation-sep.png) no-repeat;
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        a {
-          @include vertical_align;
-          display: inline-block;
-
-          &.active {
-            color: $blue;
-          }
-          .map-icon {
-            background: url(/assets/img/icons/map-icon.png) 0 -68px no-repeat;
-            margin: 0 0 0 10px;
-            padding: 8px 36px 8px 0px;
-
-          }
-        }
-      }
-      .profile-tab {
-        padding: 0;
-        height: 100%;
-        a {
-          @include vertical_align;
           display: block;
           padding: 0 15px;
           span {
-            margin-left: 15px;
+            display: inline-block;
+            &:nth-child(2) {
+              float: right;
+              margin-left: 10px;
+            }
             img {
               width: 38px;
               height: 38px;
@@ -66,10 +39,36 @@ header {
               box-shadow: inset 0 0 15px 3px #0c2638;
             }
           }
+          .map-icon {
+            background: url(/assets/img/icons/map-icon.png) 0 0 no-repeat;
+            width: 38px;
+            height: 38px;
+          }
         }
       }
-      .active-tab {
-        background: url(/assets/img/icons/navigation-sep.png) repeat-x;
+      .map-profile {
+        background: url(/assets/img/icons/navigation-sep.png) no-repeat;
+        height: 100%;
+        a {
+          height: 100%;
+          display: block;
+          padding: 0 15px;
+          span {
+            @include vertical_align;
+          }
+        }
+        .active {
+          color: $blue;
+          background: url(/assets/img/icons/navigation-sep.png) repeat-x;
+          .map-icon {
+            background: url(/assets/img/icons/map-icon.png) 0 -67px no-repeat;
+          }
+        }
+        &:hover {
+          .map-icon {
+            background: url(/assets/img/icons/map-icon.png) 0 -67px no-repeat;
+          }
+        }
       }
     }
     .menu-btn {

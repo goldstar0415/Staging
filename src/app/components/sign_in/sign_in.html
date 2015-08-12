@@ -1,4 +1,6 @@
-<a ng-click="signIn.openSignInModal()">{{signIn.title}}</a>
+<a ng-click="signIn.openSignInModal()">
+  <span>{{signIn.title}}</span>
+</a>
 
 <script type="text/ng-template" id="SignInModal.html">
   <div class="modal-header">
@@ -16,13 +18,14 @@
       <div class="password-block">
         <input type="password" name="password" class="white" placeholder="Password..." minlength="6"
                ng-model="modal.password"
-               required >
+               required>
         <a href="#" class="eye" eye-password></a>
 
-        <div class="error-message" ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched">
+        <div class="error-message" ng-messages="form.password.$error"
+             ng-if="form.$submitted || form.password.$touched">
           <div ng-messages-include="error-password-messages"></div>
         </div>
-      </div>
+        </div>
 
       <p>All fields are required
         <password-recovery></password-recovery>
