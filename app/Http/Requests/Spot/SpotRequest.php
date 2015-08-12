@@ -28,12 +28,12 @@ class SpotRequest extends Request
             'description' => 'string|max:255',
             'start_date' => 'date',
             'end_date' => 'date',
-            'locations' => 'array|count:20',
-            'videos' => 'array|count:5',
-            'web_sites' => 'array|count:5',
+            'locations' => 'array|count_max:20',
+            'videos' => 'array|count_max:5',
+            'web_sites' => 'array|count_max:5',
             'spot_type_category_id' => 'required|exists:spot_type_categories,id',
-            'tags' => 'array|count:7',
-            'files' => 'array|count:10'
+            'tags' => 'array|count_max:7',
+            'files' => 'array|count_max:10'
         ];
         $rules = array_merge($rules, $this->arrayFieldRules(
             'locations',

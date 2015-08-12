@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\ChatMessage;
+use App\Events\OnMessage;
 use App\Http\Requests\Spot\SpotCategoriesRequest;
 use App\Http\Requests\Spot\SpotDestroyRequest;
 use App\Http\Requests\Spot\SpotFavoriteRequest;
+use App\Http\Requests\Spot\SpotInviteRequest;
 use App\Http\Requests\Spot\SpotRateRequest;
 use App\Http\Requests\Spot\SpotStoreRequest;
 use App\Http\Requests\Spot\SpotUnFavoriteRequest;
@@ -13,6 +16,7 @@ use App\Spot;
 use App\SpotPhoto;
 use App\SpotType;
 use App\SpotVote;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -183,5 +187,20 @@ class SpotController extends Controller
         $spot->favorites()->detach($request->user());
 
         return ['result' => true];
+    }
+
+    public function invite(SpotInviteRequest $request)
+    {
+        $user = $request->user();
+        foreach ($request->input('users') as $user_id) {
+
+            $message = new ChatMessage(['body' => '']);
+            $user->chatMessagesSend()->save($message, ['receiver_id' => $user_id]);
+            $message->spots()->attach((int) $request->input('spot_id'));
+
+            event(new OnMessage($user, $message, User::find($user_id)->random_hash));
+        }
+
+        return response('Ok');
     }
 }

@@ -33,17 +33,17 @@ class SendMessageRequest extends Request
             'attachments.album_photos' => [
                 'required_without_all:message,attachments.spots,attachments.areas',
                 'array',
-                'count:10'
+                'count_max:10'
             ],
             'attachments.spots' => [
                 'required_without_all:message,attachments.album_photos,attachments.areas',
                 'array',
-                'count:10'
+                'count_max:10'
             ],
             'attachments.areas' => [
                 'required_without_all:message,attachments.album_photos,attachments.spots',
                 'array',
-                'count:10'
+                'count_max:10'
             ]
         ];
         $rules = array_merge($rules, $this->arrayFieldRules('attachments.album_photos', 'integer'));
