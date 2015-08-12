@@ -25,7 +25,7 @@ class SpotController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'categories']]);
         $this->middleware('base64upload:cover', ['only' => ['store', 'update']]);
     }
 
