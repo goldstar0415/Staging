@@ -22,6 +22,25 @@ class SpotReviewController extends Controller
     }
 
     /**
+     * Display a listing of the my spots reviews.
+     *
+     * @param Request $request
+     * @return \Illuminate\Database\Eloquent\Collection
+     * @internal param Spot $spot
+     */
+    public function mySpotsReviews(Request $request)
+    {
+        $reviews = collect();
+        foreach ($request->user()->spots as $spot) {
+            if ($spot_reviews = $spot->reviews->load('spot')->all()) {
+                $reviews = $reviews->merge($spot_reviews);
+            }
+        }
+
+        return $reviews;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param Spot $spot

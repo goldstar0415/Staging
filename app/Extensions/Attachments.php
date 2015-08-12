@@ -28,16 +28,25 @@ trait Attachments
         ];
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function spots()
     {
         return $this->belongsToMany(Spot::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function albumPhotos()
     {
         return $this->belongsToMany(AlbumPhoto::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function areas()
     {
         return $this->belongsToMany(Area::class);
