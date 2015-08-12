@@ -4,7 +4,7 @@
             <span class="menu-icon"></span>
         </a>
         <ul>
-            <li ng-if="Header.$state.current.name == 'index'" class="map-tab">
+          <li ng-if="Header.$state.current.name == 'index'" class="separate-bg">
                 <a ui-sref="index" ui-sref-active="active">Map<span class="map-icon"></span></a>
             </li>
             <li ng-if="$root.currentUser && Header.$state.current.name != 'index'" class="profile-tab active-tab">
@@ -21,10 +21,10 @@
 
     <nav class="hidden-sm hidden-xs">
         <ul>
-            <li class="map-tab">
+          <li class="separate-bg">
                 <a ui-sref="index" ui-sref-active="active">Map<span class="map-icon"></span></a>
             </li>
-            <li ng-if="!$root.currentUser">
+          <li ng-if="!$root.currentUser" class="separate-bg">
                 <sign-in title="Sign in"></sign-in>
             </li>
             <li ng-if="!$root.currentUser">|</li>
