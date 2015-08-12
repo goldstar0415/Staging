@@ -31,8 +31,8 @@ class SpotController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return Response
+     * @param Request $request
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function index(Request $request)
     {
@@ -42,6 +42,7 @@ class SpotController extends Controller
     /**
      * Store a newly created resource in storage.
      * @param SpotStoreRequest $request
+     * @return Spot
      */
     public function store(SpotStoreRequest $request)
     {
@@ -193,7 +194,6 @@ class SpotController extends Controller
     {
         $user = $request->user();
         foreach ($request->input('users') as $user_id) {
-
             $message = new ChatMessage(['body' => '']);
             $user->chatMessagesSend()->save($message, ['receiver_id' => $user_id]);
             $message->spots()->attach((int) $request->input('spot_id'));

@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
             return new Validations($translator, $data, $rules, $messages);
         });
 
-        \DB::listen(function($sql, $bindings, $time) {
+        \DB::listen(function ($sql, $bindings, $time) {
             \Log::info($sql, $bindings);
         });//TODO: delete after development
     }
