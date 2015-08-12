@@ -5,6 +5,7 @@ namespace App;
 use App\Extensions\Attachments;
 use App\Scopes\NewestScopeTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Request;
 
 /**
  * Class Wall
@@ -31,7 +32,7 @@ class Wall extends BaseModel
 
     protected $dates = ['deleted_at'];
 
-    protected $appends = ['rating'];
+    protected $appends = ['rating', 'user_rating'];
 
     protected $with = ['sender'];
 
@@ -62,5 +63,20 @@ class Wall extends BaseModel
     public function getRatingAttribute()
     {
         return (int) $this->ratings()->sum('rate');
+    }
+
+    public function getUserRatingAttribute()
+    {
+        if ($user = Request::user()) {
+            $wall_rate = $this->ratings()->where('user_id', $user->id)->first();
+
+            if ($wall_rate) {
+                return $wall_rate->rate;
+            } else {
+                return 0;
+            }
+        }
+
+        return null;
     }
 }
