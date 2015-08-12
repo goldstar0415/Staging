@@ -9,7 +9,7 @@
   function ZoomtivitySideMenu() {
     var directive = {
       restrict: 'E',
-      templateUrl: 'app/components/navigation/side_menu/side_menu.html',
+      templateUrl: '/app/components/navigation/side_menu/side_menu.html',
       scope: {
         side: '@'
       },

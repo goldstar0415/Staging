@@ -9,7 +9,7 @@
   function Attachments() {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/attachments/attachments.html',
+      templateUrl: '/app/components/attachments/attachments.html',
       scope: {
         items: '='
       },
@@ -18,6 +18,7 @@
       bindToController: true
     };
 
+    /** @ngInject */
     function AttachmentsController() {
       var vm = this;
 

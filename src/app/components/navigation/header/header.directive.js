@@ -9,7 +9,7 @@
   function ZoomtivityHeader() {
     var directive = {
       restrict: 'E',
-      templateUrl: 'app/components/navigation/header/header.html',
+      templateUrl: '/app/components/navigation/header/header.html',
       scope: {
         options: "="
       },

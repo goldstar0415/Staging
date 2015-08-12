@@ -1,7 +1,7 @@
 <div class="messages ">
   <h2 class="title-name">Messages</h2>
 
-  <div ng-include="'app/components/user_tab_menu/user_tab_menu.html'"></div>
+  <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
 
   <div ng-repeat="dialog in Chat.dialogs" class="col-xs-12 message"
        ui-sref="chatRoom({user_id: dialog.user.id})"

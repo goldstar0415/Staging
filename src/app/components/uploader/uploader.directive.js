@@ -12,7 +12,7 @@
       scope: {
         dropZone: '='
       },
-      templateUrl: 'app/components/uploader/uploader.html',
+      templateUrl: '/app/components/uploader/uploader.html',
       controller: UploaderController,
       controllerAs: 'Uploader',
       bindToController: true

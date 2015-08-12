@@ -10,7 +10,7 @@
     function CropImage(image, outputWidth, outputHeight, callback) {
       var modalInstance = $modal.open({
         animation: true,
-        templateUrl: 'app/components/crop/crop.html',
+        templateUrl: '/app/components/crop/crop.html',
         controller: CropModalController,
         controllerAs: 'Crop',
         modalClass: 'modalFix',

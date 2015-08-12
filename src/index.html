@@ -36,7 +36,7 @@
     <div snap-content snap-options="options.snap">
       <!-- include header-->
       <zm-header options="options"></zm-header>
-      <ng-include src="'app/components/map_partials/unregistered_banner.html'" ng-if="mapState == 'full-size'"></ng-include>
+      <ng-include src="'/app/components/map_partials/unregistered_banner.html'" ng-if="mapState == 'full-size'"></ng-include>
       <!-- map container-->
       <div id="map" class="mapResize map {{mapState}}"
            ng-class="{'hidden-sm': mapState != 'full-size' && options.snap.disable == 'right', 'hidden-xs': mapState != 'full-size' && options.snap.disable == 'right'}"></div>
@@ -44,8 +44,8 @@
       <div ng-show="mapState != 'full-size'" ui-view autoscroll="true"></div>
     </div>
 
-    <ng-include src="'app/components/ng_message_templates/error_templates.html'"></ng-include>
-    <ng-include src="'app/components/photoviewer/photoviewer.html'"></ng-include>
+    <ng-include src="'/app/components/ng_message_templates/error_templates.html'"></ng-include>
+    <ng-include src="'/app/components/photoviewer/photoviewer.html'"></ng-include>
 
     <new-message></new-message>
 
@@ -66,7 +66,7 @@
     <!-- endinject -->
     <!-- endbuild -->
 
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!--<script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>-->
 
 
   </body>

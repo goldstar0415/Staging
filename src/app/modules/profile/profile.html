@@ -3,7 +3,7 @@
 
 
   <div ng-if="profileUser.id == currentUser.id">
-    <div ng-include="'app/components/user_tab_menu/user_tab_menu.html'"></div>
+    <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
   </div>
 
   <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()"></ng-input>

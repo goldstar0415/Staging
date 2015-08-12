@@ -9,7 +9,7 @@
   function spotPopup() {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/spot_popup/spot_popup.html',
+      templateUrl: '/app/components/spot_popup/spot_popup.html',
       //template: '<p>test</p>',
       controller: SpotPopupController,
       controllerAs: 'SpotPopup',
@@ -19,6 +19,7 @@
     };
   }
 
+  /** @ngInject */
   function SpotPopupController($scope) {
 
   }
