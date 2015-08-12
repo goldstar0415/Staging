@@ -9,7 +9,7 @@
   function signUp() {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/sign_up/sign_up.html',
+      templateUrl: '/app/components/sign_up/sign_up.html',
       controller: SignUpController,
       controllerAs: 'signUp',
       bindToController: true
@@ -24,6 +24,7 @@
       };
     }
 
+    /** @ngInject */
     function SignUpModalController(SignUpService, $modalInstance) {
       var vm = this;
 

@@ -37,6 +37,7 @@
       });
     }
 
+    /** @ngInject */
     function PhotoViewerController($modalInstance, items, index, Photo) {
       var vm = this;
       vm.currentIndex = index;

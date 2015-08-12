@@ -9,7 +9,7 @@
   function location(MapService, $http) {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/location_autocomplete/location.html',
+      templateUrl: '/app/components/location_autocomplete/location.html',
       scope: {
         location: '=',
         address: '=',

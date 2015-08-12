@@ -9,7 +9,7 @@
   function SendMessage() {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/send_message/send_message.html',
+      templateUrl: '/app/components/send_message/send_message.html',
       controller: SendMessageController,
       controllerAs: 'SendMessage',
       bindToController: true
@@ -28,6 +28,7 @@
       };
     }
 
+    /** @ngInject */
     function SendMessageModalController(toastr, $rootScope, Message, $modalInstance) {
       var vm = this;
 
