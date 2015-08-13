@@ -5,7 +5,7 @@
 
   <div ng-repeat="dialog in Chat.dialogs" class="col-xs-12 message"
        ui-sref="chatRoom({user_id: dialog.user.id})"
-       ng-class="{new: !dialog.last_message.is_read}">
+       ng-class="{new: !dialog.last_message.is_read && dialog.last_message.user_id != currentUser.id}">
     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2  ">
       <a >
         <img ng-src="{{dialog.user.avatar_url.thumb}}" class="avatar"/>
