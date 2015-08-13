@@ -168,6 +168,9 @@ h3 {
 .no-pad-right {
   padding-right: 0;
 }
+.no-pad-bottom {
+  padding-right: 0;
+}
 
 .central {
   @include content_bg;
@@ -362,6 +365,12 @@ h3 {
 }
 
 /*end buttons*/
+
+.no-background {
+  background: none;
+  border-radius: 0;
+  border: none;
+}
 
 /*responsive*/
 

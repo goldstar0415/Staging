@@ -134,18 +134,17 @@
         }
       })
 
-      //Single plan page
-      .state('plan', {
-        url: '/plan/:plan_id',
-        templateUrl: '/app/modules/planner/plan/plan.html',
-        controller: 'PlanController',
-        controllerAs: 'Plan',
+      //Planner (calendar + list of all plans)
+      .state('planner', {
+        url: '/planner',
+        templateUrl: '/app/modules/planner/planner.html',
+        controller: 'PlannerController',
+        controllerAs: 'Planner',
         parent: 'profile_menu',
         locate: 'none',
         mapState: 'small'
       })
-      //Plan creation page
-      .state('plan_create', {
+      .state('planner.create', {
         url: '/plan/create',
         templateUrl: '/app/modules/planner/plan_create/plan_create.html',
         controller: 'PlanCreateController',
@@ -155,8 +154,7 @@
         mapState: 'small',
         edit: false
       })
-      //Plan edit page
-      .state('plan_edit', {
+      .state('planner.edit', {
         url: '/plan/:plan_id/edit',
         templateUrl: '/app/modules/planner/plan_create/plan_create.html',
         controller: 'PlanCreateController',
@@ -166,12 +164,11 @@
         mapState: 'small',
         edit: true
       })
-      //Planner (calendar + list of all plans)
-      .state('planner', {
-        url: '/planner',
-        templateUrl: '/app/modules/planner/planner.html',
-        controller: 'PlannerController',
-        controllerAs: 'Planner',
+      .state('planner.view', {
+        url: '/plan/:plan_id',
+        templateUrl: '/app/modules/planner/plan/plan.html',
+        controller: 'PlanController',
+        controllerAs: 'Plan',
         parent: 'profile_menu',
         locate: 'none',
         mapState: 'small'
