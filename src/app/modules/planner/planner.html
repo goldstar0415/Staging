@@ -1,15 +1,15 @@
-<div class="col-xs-12" >
-  <div class="container wrap">
+<div class="col-xs-12">
+  <div class=" wrap">
     <!-- section with calendar -->
     <section class="col-xs-12  no-pad create-new-plan">
-      <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
+      <div ui-calendar="Planner.calendarConfig" class="span8 calendar" ng-model="Planner.events"></div>
     </section>
     <!-- end section with calendar -->
 
     <!-- section with export -->
     <section class="col-xs-12  no-pad ">
       <div class="export-to-ics">
-        <a href="#">Export to ICS</a>
+        <a>Export to ICS</a>
       </div>
     </section>
     <!--end section with export -->
@@ -18,14 +18,14 @@
     <!-- sub event -->
     <section class="central   col-xs-12">
       <h2 class="title-name">Plans</h2>
-      <a href="http://zoomzoom.itechhighway.com/event/create" class="add-friend" title="Create new spot"></a>
+      <a ui-sref="planner.create" class="add-friend" title="Create new spot"></a>
 
       <div class="event">
         <h3 class="title-planner">
-          <a href="http://zoomzoom.itechhighway.com/event/show/97777798">Lorem</a>
-                      <span class="date">
-                            05 Aug 2016 — 08 Aug 2016
-                        </span>
+          <a ui-sref="planner.view({plan_id: 1})">Lorem</a>
+          <span class="date">
+            05 Aug 2016 — 08 Aug 2016
+          </span>
         </h3>
 
         <p class="place"></p>
@@ -34,16 +34,15 @@
         </p>
 
         <ul class="tools">
-          <li style="display: block">
-            <a href="http://zoomzoom.itechhighway.com/event/edit/98989898" class="edit-tools ">Edit</a>
+          <li>
+            <a ui-sref="planner.edit({plan_id: 1})" class="edit-tools">Edit</a>
           </li>
           <li>
-            <a class="delete" ng-click="areYouSure($event)"
-               href="http://zoomzoom.itechhighway.com/event/delete/97777798">Delete</a>
+            <a class="delete">Delete</a>
           </li>
 
           <li>
-            <a href="#" class="invite-friend ng-isolate-scope" invite-friends="" event-id="97777798">Invite
+            <a class="invite-friend">Invite
               friends</a>
           </li>
 

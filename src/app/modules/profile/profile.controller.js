@@ -36,15 +36,17 @@
 
     vm.like = function (post) {
       if (post.user_rating < 1) {
-        post.$like();
+        Wall.like({id: post.id});
         post.user_rating++;
+        post.rating++;
       }
     };
 
     vm.dislike = function (post) {
       if (post.user_rating > -1) {
-        post.$dislike();
+        Wall.dislike({id: post.id});
         post.user_rating--;
+        post.rating--;
       }
     }
   }
