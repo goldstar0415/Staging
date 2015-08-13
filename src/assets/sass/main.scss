@@ -363,6 +363,12 @@ h3 {
 
 /*end buttons*/
 
+.no-background {
+  background: none;
+  border-radius: 0;
+  border: none;
+}
+
 /*responsive*/
 
 @media (max-width: 992px) {
