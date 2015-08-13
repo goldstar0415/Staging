@@ -34,7 +34,9 @@ class WallController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->walls;
+        return User::find($request->get('user_id', $request->user()->id))
+            ->walls()
+                ->paginate((int) $request->get('limit', 10));
     }
 
     /**
@@ -105,7 +107,7 @@ class WallController extends Controller
         /**
          * @var WallRate $wall_rate
          */
-        $wall_rate = WallRate::where('user_id', $user->id)->first();
+        $wall_rate = WallRate::where('user_id', $user->id)->where('wall_id', $wall->id)->first();
 
         if ($wall_rate === null) {
             $wall_rate = new WallRate(['rate' => 1]);
@@ -138,7 +140,7 @@ class WallController extends Controller
         /**
          * @var WallRate $wall_rate
          */
-        $wall_rate = WallRate::where('user_id', $user->id)->first();
+        $wall_rate = WallRate::where('user_id', $user->id)->where('wall_id', $wall->id)->first();
 
         if ($wall_rate === null) {
             $wall_rate = new WallRate(['rate' => -1]);
