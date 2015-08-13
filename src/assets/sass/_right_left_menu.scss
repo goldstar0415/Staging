@@ -33,11 +33,11 @@
           background-position-y: -41px;
         }
       }
-      &:last-child {
-        border-bottom: none;
-        position: absolute;
-        bottom: 15px;
-      }
+    }
+    .sign-out {
+      border-bottom: none;
+      position: absolute;
+      bottom: 15px;
     }
     .map-profile {
       height: 100%;
@@ -137,7 +137,22 @@
         background: url(/assets/img/icons/fav.png) no-repeat;
       }
       .planner-link {
-        background: url(/assets/img/icons/calendar.png) no-repeat;
+        background: url(/assets/img/icons/planner.png) no-repeat;
+      }
+      .spots-link {
+        background: url(/assets/img/icons/event.png) no-repeat;
+      }
+      .friends-link {
+        background: url(/assets/img/icons/friends-map.png) no-repeat;
+      }
+      .photo-link {
+        background: url(/assets/img/icons/photo-map.png) no-repeat;
+      }
+      .searches-link {
+        background: url(/assets/img/icons/searches.png) no-repeat;
+      }
+      .settings-link {
+        background: url(/assets/img/icons/settings.png) no-repeat;
       }
     }
     .create-wrap {
