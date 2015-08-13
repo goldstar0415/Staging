@@ -188,7 +188,7 @@
               user_id: $stateParams.user_id,
               page: 1,
               limit: 20
-            })//.$promise;
+            }).$promise;
           }
         },
         parent: 'profile_menu',
