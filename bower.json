@@ -25,7 +25,8 @@
     "angular-input-masks": "~2.0.0",
     "ng-tags-input": "~3.0.0",
     "angular-scroll-glue": "~2.0.6",
-    "angular-img-cropper": "~1.1.0"
+    "angular-img-cropper": "~1.1.0",
+    "angular-ui-calendar": "~1.0.1"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.0"

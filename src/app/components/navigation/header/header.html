@@ -1,44 +1,48 @@
 <header>
-    <nav class="hidden-md hidden-lg">
-        <a class="menu-btn" snap-toggle="left">
-            <span class="menu-icon"></span>
+  <nav class="hidden-md hidden-lg">
+    <a class="menu-btn" snap-toggle="left">
+      <span class="menu-icon"></span>
+    </a>
+    <ul>
+      <li ng-if="Header.$state.current.name == 'index'" class="separator-bg map-profile">
+        <a ui-sref="index" ui-sref-active="active"><span>Map</span><span class="map-icon"></span></a>
+      </li>
+      <li ng-if="$root.currentUser && Header.$state.current.name != 'index'" class="map-profile">
+        <a ui-sref="profile({user_id: $root.currentUser.id})" ui-sref-active="active"><span>{{$root.currentUser.first_name}}</span>
+          <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
         </a>
-        <ul>
-            <li ng-if="Header.$state.current.name == 'index'" class="map-tab">
-                <a ui-sref="index" ui-sref-active="active">Map<span class="map-icon"></span></a>
-            </li>
-            <li ng-if="$root.currentUser && Header.$state.current.name != 'index'" class="profile-tab active-tab">
-                <a ui-sref="profile({user_id: $root.currentUser.id})">{{$root.currentUser.first_name}}
-                    <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+      </li>
+    </ul>
+  </nav>
 
-    <div ui-sref="index" class="logo">
-        <img src='assets/img/icons/logo.svg' alt="logo">
-    </div>
+  <div ui-sref="index" class="logo">
+    <img src='assets/img/icons/logo.svg' alt="logo">
+  </div>
 
-    <nav class="hidden-sm hidden-xs">
-        <ul>
-            <li class="map-tab">
-                <a ui-sref="index" ui-sref-active="active">Map<span class="map-icon"></span></a>
-            </li>
-            <li ng-if="!$root.currentUser">
-                <sign-in title="Sign in"></sign-in>
-            </li>
-            <li ng-if="!$root.currentUser">|</li>
-            <li ng-if="!$root.currentUser">
-                <sign-up></sign-up>
-            </li>
-            <li ng-if="$root.currentUser" class="profile-tab active-tab">
-                <a ui-sref="profile({user_id: $root.currentUser.id})">{{$root.currentUser.first_name}}
-                    <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
-                </a>
-            </li>
-        </ul>
-        <a href="#" class="menu-btn" snap-toggle="right">
-            <span class="menu-icon"></span>
+  <nav class="hidden-sm hidden-xs">
+    <ul>
+      <li class="map-profile separator-bg">
+        <a ui-sref="index" ui-sref-active="active">
+          <span>Map</span>
+          <span class="map-icon"></span>
         </a>
-    </nav>
+      </li>
+      <li ng-if="!$root.currentUser" class="separator-bg authorisation">
+        <sign-in title="Sign in"></sign-in>
+      </li>
+      <li ng-if="!$root.currentUser" class="sep">|</li>
+      <li ng-if="!$root.currentUser" class="authorisation">
+        <sign-up></sign-up>
+      </li>
+      <li ng-if="$root.currentUser" class="map-profile separator-bg">
+        <a ui-sref="profile({user_id: $root.currentUser.id})" ui-sref-active="active">
+          <span>{{$root.currentUser.first_name}}</span>
+          <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
+        </a>
+      </li>
+    </ul>
+    <a href="#" class="menu-btn" snap-toggle="right">
+      <span class="menu-icon"></span>
+    </a>
+  </nav>
 </header>

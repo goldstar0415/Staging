@@ -9,7 +9,7 @@
   function inviteFriends() {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/invite_friends/invite_friends.html',
+      templateUrl: '/app/components/invite_friends/invite_friends.html',
       scope: {
         spot: '='
       },
@@ -41,6 +41,7 @@
 
     }
 
+    /** @ngInject */
     function InviteFriendsModalController(spot, friends, $modalInstance, Spot) {
       var vm = this;
       vm.friends = friends;

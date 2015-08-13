@@ -15,7 +15,7 @@
         onSubmit: '&',
         onFocus: '&'
       },
-      templateUrl: 'app/components/ng_input/ng_input.html',
+      templateUrl: '/app/components/ng_input/ng_input.html',
       controller: NgInputController,
       controllerAs: 'NgInput',
       bindToController: true
