@@ -10,10 +10,12 @@
       var markersLayer = L.featureGroup();
       var drawLayer = L.featureGroup();
       var draggableMarkerLayer = L.featureGroup();
+      //============================================
       var eventsLayer = new L.MarkerClusterGroup();
       var pitstopsLayer = new L.MarkerClusterGroup();
       var recreationsLayer = new L.MarkerClusterGroup();
       var otherLayer = new L.MarkerClusterGroup();
+      //===============================================
       var currentLayer = "";
 
       // Path variables
@@ -251,6 +253,7 @@
 
       //initialization
       function InitMap(mapDOMElement) {
+
         //Leaflet touch hook
         L.Map.mergeOptions({
           touchExtend: true
@@ -312,7 +315,6 @@
           attributionControl: false,
           zoomControl: true
         });
-        ChangeState('hidden');
         L.tileLayer(tilesUrl, {
           maxZoom: 17,
           minZoom: 3
@@ -323,6 +325,11 @@
         map.addLayer(draggableMarkerLayer);
         map.addLayer(drawLayer);
         map.addLayer(markersLayer);
+        ChangeState('big');
+
+
+        eventsLayer.addLayer(L.marker({lat:49.9, lng:36.25}));
+
 
         window.map = map;
         map.locate({setView: true, maxZoom: 8});
@@ -398,9 +405,7 @@
 
       function showEventsLayer(clearLayers) {
         if (clearLayers) { eventsLayer.clearLayers(); }
-        if (currentLayer !== "events") {
-          map.addLayer(eventsLayer);
-        }
+        map.addLayer(eventsLayer);
         map.removeLayer(recreationsLayer);
         map.removeLayer(pitstopsLayer);
         map.removeLayer(otherLayer);
@@ -409,9 +414,7 @@
 
       function showPitstopsLayer(clearLayers) {
         if (clearLayers) { pitstopsLayer.clearLayers(); }
-        if (currentLayer !== "pitstops") {
-          map.addLayer(pitstopsLayer);
-        }
+        map.addLayer(pitstopsLayer);
         map.removeLayer(recreationsLayer);
         map.removeLayer(eventsLayer);
         map.removeLayer(otherLayer);
@@ -420,9 +423,7 @@
 
       function showRecreationsLayer(clearLayers) {
         if (clearLayers) { recreationsLayer.clearLayers(); }
-        if (currentLayer !== "recreations") {
-          map.addLayer(recreationsLayer);
-        }
+        map.addLayer(recreationsLayer);
         map.removeLayer(eventsLayer);
         map.removeLayer(pitstopsLayer);
         map.removeLayer(otherLayer);
@@ -431,9 +432,7 @@
 
       function showOtherLayers() {
         otherLayer.clearLayers();
-        if (currentLayer !== "other") {
-          map.addLayer(otherLayer);
-        }
+        map.addLayer(otherLayer);
         map.removeLayer(recreationsLayer);
         map.removeLayer(pitstopsLayer);
         map.removeLayer(eventsLayer);
@@ -963,6 +962,7 @@
             })
         } else {
           clearLayers();
+          $rootScope.$emit('update-map-data', []);
         }
       }
 
@@ -988,43 +988,54 @@
 
       //return sorted by rating only for selected categories
       function SortBySubcategory(array, categories) {
-        var resultArray = _.reject(array, function(item) {
-          var result = true;
+        var resultArray = array;
+        if(categories.length > 0) {
+          resultArray = _.reject(array, function(item) {
+            var result = true;
 
-          for(var k in categories) {
-            if(categories[k].id == item.id) {
-              result = false;
-              break;
+            for(var k in categories) {
+              if(categories[k].id == item.spot.category.id) {
+                result = false;
+                break;
+              }
             }
-          }
-        });
 
-        return SortByDate(resultArray);
+            return result;
+          });
+        }
+
+        return SortByRating(resultArray);
       }
 
-      function drawSpotMarkers(spots, clear) {
+      function drawSpotMarkers(spots, type, clear) {
+        console.log('events layer ', map.hasLayer(eventsLayer));
+        console.log('recreations layer ', map.hasLayer(recreationsLayer));
+        console.log('pitstops layer ', map.hasLayer(pitstopsLayer));
+        console.log('other layer ', map.hasLayer(otherLayer));
+        console.log('==================================================');
         if(clear) {
           GetCurrentLayer().clearLayers();
         }
-        _.each(spots, function(item) {
-          //TODO: add marker icon depending on spot category
-          var type = item.spot.category.type.name;
-          var marker = L.marker(item.location);
+        var markers = [];
 
+        _.each(spots, function(item) {
+          var marker = L.marker(item.location);
           BindSpotPopup(marker, item);
 
-          switch(type) {
-            case 'pitstop':
-              pitstopsLayer.addLayer(marker);
-              break;
-            case 'recreation':
-              recreationsLayer.addLayer(marker);
-              break;
-            case 'event':
-              eventsLayer.addLayer(marker);
-              break;
-          }
+          markers.push(marker);
         });
+
+        switch(type) {
+          case 'pitstop':
+            pitstopsLayer.addLayers(markers);
+            break;
+          case 'recreation':
+            recreationsLayer.addLayers(markers);
+            break;
+          case 'event':
+            eventsLayer.addLayers(markers);
+            break;
+        }
       }
 
 
@@ -1076,3 +1087,5 @@
     });
 
 })();
+
+//TODO: move forward events, recreation & pitstop layers

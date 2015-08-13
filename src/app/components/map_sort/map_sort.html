@@ -1,67 +1,228 @@
-<div ng-if="MapSort.vertical" class="col-xs-4 no-pad">
-  <div class="sidebar-menu-vertical">
-  <ul>
-  <li><a href="#" class="full-small"></a></li>
-  <li><a href="#" class="events">Events</a></li>
-  <li><a href="#" class="recreation">Recreation</a></li>
-  <li><a href="#" class="pit-stops">Pit Stops</a></li>
-  <li><a href="#" class="weather-link">Weather</a></li>
-  </ul>
-  </div>
-</div>
-
-<div ng-if="!MapSort.vertical" class="col-xs-3 no-pad sort-menu">
-  <div class="sidebar-menu-horizontal">
-    <ul>
-      <li><a href="#" class="events">Events</a></li>
-      <li><a href="#" class="recreation">Recreation</a></li>
-      <li><a href="#" class="pit-stops">Pit Stops</a></li>
-      <li><a href="#" class="weather-link">Weather</a></li>
-    </ul>
+  <div ng-if="MapSort.vertical" class="col-xs-4 no-pad">
+    <div class="sidebar-menu-vertical">
+      <ul>
+        <li><a href="#" class="full-small"></a></li>
+        <li><a href="#" class="events">Events</a></li>
+        <li><a href="#" class="recreation">Recreation</a></li>
+        <li><a href="#" class="pit-stops">Pit Stops</a></li>
+        <li><a href="#" class="weather-link">Weather</a></li>
+      </ul>
+    </div>
   </div>
 
-  <div class="search-filters">
-    <div class="numbers-events">
-      <a href="" class="hide" title="Close"></a>
-
-      <p>10 events found</p>
+  <div ng-if="!MapSort.vertical" class="col-xs-3 no-pad sort-menu">
+    <div class="sidebar-menu-horizontal">
+      <ul>
+        <li><a ng-click="MapSort.toggleLayer('events')" class="events">Events</a></li>
+        <li><a ng-click="MapSort.toggleLayer('recreations')" href="#" class="recreation">Recreation</a></li>
+        <li><a ng-click="MapSort.toggleLayer('pitstops')" href="#" class="pit-stops">Pit Stops</a></li>
+        <li><a ng-click="MapSort.toggleLayer('other')" href="#" class="weather-link">Weather</a></li>
+      </ul>
     </div>
 
-    <div class="search-by-name">
-      <input type="text" placeholder="Search by name" class="search-input">
-      <input type="submit" value="Search">
-    </div>
+    <div class="search-filters">
+      <div ng-show="MapSort.sortLayer == 'event'">
+        <div class="numbers-events">
+          <a href="" class="hide" title="Close"></a>
 
-    <div class="sort-date">
-      <p>Sort by date <span class="open-arrow filters-arrow"></span></p>
+          <p>10 Events found</p>
+        </div>
 
-      <div class="date-filters">
-        <label>From</label>
-        <input placeholder="10.10.2014" class="date" type="zoomdate">
-        <label>to</label>
-        <input placeholder="10.10.2014" class="date" type="zoomdate">
-        <input type="submit" value="Go">
+        <div class="sort-date">
+          <p ng-click="eventsNameToggle = !eventsNameToggle">Sort by date
+            <span class="filters-arrow"
+                  ng-class="{'open-arrow': eventsNameToggle}">
+            </span>
+          </p>
+
+          <div ng-show="eventsNameToggle" class="date-filters">
+            <label>From</label>
+            <input placeholder="10.10.2014" class="date" type="zoomdate">
+            <label>to</label>
+            <input placeholder="10.10.2014" class="date" type="zoomdate">
+            <input type="submit" value="Go">
+          </div>
+        </div>
+
+        <div class="categories">
+          <p ng-click="eventsCategoryToggle = !eventsCategoryToggle">{{eventsCategoryToggle ? 'Hide': 'Show all'}} sub-categories
+            <span class="filters-arrow"
+                  ng-class="{'open-arrow': eventsCategoryToggle}">
+            </span>
+          </p>
+
+          <div ng-show="eventsCategoryToggle" class="hide-block-subcategory">
+            <div ng-click="toggleEventCategories(); sortPitstopsByCategories();">
+              <p>Select all sub-categories</p>
+            </div>
+            <ul>
+              <li ng-repeat="item in eventCategories track by item.id"
+                  ng-click="item.selected = !item.selected; sortEventsByCategories();">
+                <a href="#" ng-class="{'active': item.selected}">{{item.display_name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="results">
+          <div class="search-by-name">
+            <input type="text" ng-model="eventsSearch" placeholder="Search by name" class="search-input">
+            <input type="submit" value="Search">
+          </div>
+        </div>
+      </div>
+
+      <div ng-show="MapSort.sortLayer == 'recreation'">
+        <div class="numbers-events">
+          <a href="" class="hide" title="Close"></a>
+
+          <p>10 Recreations found</p>
+        </div>
+
+        <div class="categories">
+          <p ng-click="recreationsCategoryToggle = !recreationsCategoryToggle">Show all sub-categories
+            <span class="filters-arrow"
+                  ng-class="{'open-arrow': recreationsCategoryToggle}">
+            </span>
+          </p>
+
+          <div ng-show="recreationsCategoryToggle" class="hide-block-subcategory">
+            <div ng-click="toggleRecreationCategories(); sortPitstopsByCategories();">
+              <p>Select all sub-categories</p>
+            </div>
+            <ul>
+              <li ng-repeat="item in recreationCategories track by item.id"
+                  ng-click="item.selected = !item.selected; sortRecreationsByCategories();">
+                <a href="#" ng-class="{'active': item.selected}">{{item.display_name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="results">
+          <div class="search-by-name">
+            <input type="text" ng-model="recreationsSearch" placeholder="Search by name" class="search-input">
+            <input type="submit" value="Search">
+          </div>
+        </div>
+      </div>
+
+      <div ng-show="MapSort.sortLayer == 'pitstop'">
+        <div class="numbers-events">
+          <a href="" class="hide" title="Close"></a>
+
+          <p>10 Pit Stops found</p>
+        </div>
+
+
+
+        <div class="categories">
+          <p ng-click="pitstopsCategoryToggle = !pitstopsCategoryToggle">Show all sub-categories
+            <span class="filters-arrow"
+                  ng-class="{'open-arrow' : pitstopsCategoryToggle}">
+            </span>
+          </p>
+
+          <div ng-show="pitstopsCategoryToggle" class="hide-block-subcategory">
+            <div ng-click="togglePitstopCategories(); sortPitstopsByCategories();">
+              <p>Select all sub-categories</p>
+            </div>
+            <ul>
+              <li ng-repeat="item in pitstopCategories track by item.id"
+                  ng-click="item.selected = !item.selected; sortPitstopsByCategories();">
+                <a href="#" ng-class="{'active': item.selected}">{{item.display_name}}</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="results">
+            <div class="search-by-name">
+              <input type="text" ng-model="pitstopsSearch" placeholder="Search by name" class="search-input">
+              <input type="submit" value="Search">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div ng-show="MapSort.sortLayer == 'weather'">
+        <div class="col-xs-12 no-pad">
+          <div class="firstBlock-wrapper">
+            <div class="weatherImg-block">
+              <p class="weatherName">Cold</p>
+
+              <p class="weatherData">05.29.2015</p>
+
+              <div class="weatherImg-wrapper">
+                <div class="weatherImg"></div>
+              </div>
+              <div class="temperature-block">
+                <span class="temperature">22</span>
+                <span class="unit">°C</span>
+
+                <p class="unit2"><span>H</span>4° </p>
+
+                <p class="unit2"><span>L</span>8°</p>
+              </div>
+            </div>
+            <div class="parameters">
+              <div>
+                <p class="mainParameters">6:22 <span>am</span></p>
+
+                <p class="description">sunrize</p>
+              </div>
+              <div>
+                <p class="mainParameters">8:38 <span>pm</span></p>
+
+                <p class="description">sunset</p>
+              </div>
+              <div>
+                <p class="mainParameters">13 <span>km/h</span></p>
+
+                <p class="description">wind</p>
+              </div>
+              <div>
+                <p class="mainParameters">9,9 <span>km</span></p>
+
+                <p class="description">visibility</p>
+              </div>
+              <div>
+                <p class="mainParameters">88 <span>%</span></p>
+
+                <p class="description">humidity</p>
+              </div>
+            </div>
+          </div>
+          <div class="wrapperHr">
+            <hr/>
+          </div>
+          <div class="weekForecast">
+            <div class="weekForecast-wrapper">
+              <span class="data"> 25 February</span>
+
+              <div class="weatherIcon"></div>
+              <span class="temperatureWeek">12°/28°</span>
+            </div>
+            <div class="wrapperHr">
+              <hr/>
+            </div>
+            <div class="weekForecast-wrapper">
+              <span class="data"> 26 February</span>
+
+              <div class="weatherIcon"></div>
+              <span class="temperatureWeek">14°/6°</span>
+            </div>
+            <div class="wrapperHr">
+              <hr/>
+            </div>
+            <div class="weekForecast-wrapper">
+              <span class="data"> 27 February</span>
+
+              <div class="weatherIcon"></div>
+              <span class="temperatureWeek">2°/15°</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="categories">
-      <p>Show all sub-categories<span class="filters-arrow"></span></p>
-
-      <div class="hide-block-subcategory">
-        <input type="checkbox">
-
-        <p>Select all sub-categories</p>
-        <ul>
-          <li><a href="#">Concert</a></li>
-          <li><a href="#">Festivals</a></li>
-          <li><a href="#">Craft Shows</a></li>
-          <li><a href="#" class="active">Beer Fests</a></li>
-          <li><a href="#">Fairs</a></li>
-          <li><a href="#">Parades</a></li>
-          <li><a href="#">Marathons</a></li>
-          <li><a href="#">Conferences</a></li>
-        </ul>
-      </div>
-    </div>
   </div>
-</div>
+
