@@ -1,9 +1,12 @@
-.banner-content {
-    top: 0;
-    margin-top: 0;
+  .banner-wrap {
+  bottom: 0;
+  height: calc(100% - 70px);
+  top: 0;
+  z-index: 9999;
+  margin-top: 0;
+  .banner-content {
+    height: 100%;
     float: right;
-    height: calc(100% - 70px);
-    z-index: 100;
     .banner-for-unregistered {
       background: linear-gradient(to top, rgba(0, 0, 0, .75) 1%, rgba(12, 38, 56, 0.75) 21%, rgba(12, 38, 56, 0.75) 46%,
               rgba(3, 181, 213, 0.75) 73%, rgba(12, 38, 56, 0.75) 100%) $dark_blue;
@@ -21,7 +24,6 @@
         p {
           color: #fff;
           font: 500 40px/52px 'Ubuntu Bold';
-          //padding: 20px 60px 0;
           text-align: center;
           text-shadow: 0 3px 3px rgba(0, 0, 0, .4);
         }
@@ -37,12 +39,11 @@
           box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .45);
           z-index: 10;
           background-color: $green;
-          color: #fff;
         }
       }
     }
   }
-//}
+}
 
 .tools-wrap {
   width: 100%;
@@ -57,7 +58,7 @@
       display: block;
       width: 8px;
       height: 8px;
-      background: url(../img/cross.png) no-repeat;
+      background: url(/assets/img/cross.png) no-repeat;
       position: absolute;
       top: 15px;
       right: 15px;
@@ -70,7 +71,7 @@
       }
     }
     p {
-      font: 500 20px/26px Ubuntu;
+      font: 500 20px/26px 'Ubuntu medium';
     }
     ul {
       padding: 0;
@@ -81,7 +82,7 @@
         border: 1px solid #fff;
         display: inline-block;
         margin: 22px 22px 15px;
-        font: 400 14px/20px Ubuntu;
+        font: 400 14px/20px 'Ubuntu medium';
         &:hover {
           border: 1px solid #0874be;
           background-color: #fff;
@@ -101,25 +102,18 @@
     border: 2px solid #bdbdbd;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .28);
     margin: 0 auto;
-    .path-map {
-      background: url(../img/path-map.png) no-repeat center top;
+    div {
       background-size: 100%;
       padding-top: 35%;
     }
-    //.poly-map {
-    //  background: url(../img/poligon-map.png) no-repeat center top;
-    //  background-size: 100%;
-    //  padding-top: 35%;
-    //}
+    .path-map {
+      background: url(../img/path-map.png) no-repeat center top;
+    }
     .radius-map {
       background: url(../img/radius-map.png) no-repeat center top;
-      background-size: 100%;
-      padding-top: 35%;
     }
     .lasso-map {
       background: url(../img/lasso-map.png) no-repeat center top;
-      background-size: 100%;
-      padding-top: 35%;
     }
   }
 }
@@ -131,7 +125,7 @@
   position: relative;
   border-radius: 6px;
   p {
-    font: 500 28px/34px Ubuntu;
+    font: 500 28px/34px 'Ubuntu medium';
     color: #0c2638;
     text-align: center;
     padding: 1em;
@@ -145,9 +139,8 @@
     width: 100%;
     transform: rotate(90deg);
     li {
-      font: 500 14px/24px Ubuntu;
+      font: 500 14px/24px 'Ubuntu medium';
       color: #fff;
-      //padding: 15px 5px;
       background-color: #379948;
       display: inline-block;
       width: 20%;
@@ -190,15 +183,18 @@
   }
 }
 
+.sort-menu {
+  z-index: 101;
+}
+
 .sidebar-menu-horizontal {
   ul {
     padding: 0;
     margin: 0;
     width: 100%;
     li {
-      font: 500 14px/24px Ubuntu;
+      font: 500 14px/24px 'Ubuntu medium';
       color: #fff;
-      //padding: 15px 5px;
       background-color: #379948;
       display: inline-block;
       width: 25%;
@@ -234,18 +230,6 @@
   }
 }
 
-//#separate {
-//  height: 100%;
-//  border: none !important;
-//  padding: 0 !important;
-//  background: rgba(255, 255, 255, .2) !important;
-//  width: 1px;
-//  &:hover {
-//    border: none !important;
-//    padding: 0 !important;
-//  }
-//}
-
 .not-active {
   opacity: 0.7;
   li {
@@ -260,30 +244,22 @@
   }
 }
 
-/*.menu-btn {
-    display: block;
-    width: 26px;
-    height: 24px;
-    background: url(../img/menu-side-btn.png) -28px 0 no-repeat;
-    transform: rotate(90deg);
-}*/
-
 .search-filters {
-  width: 100%;
   background: #fff;
   float: right;
+  width: 100%;
   .numbers-events {
     padding: 10px 15px;
     border-bottom: 1px solid rgba(217, 217, 217, .6);
     p {
-      font: 500 20px/26px Ubuntu;
+      font: 500 20px/26px 'Ubuntu medium';
       color: #000;
     }
     .hide {
       display: block;
       width: 8px;
       height: 8px;
-      background: url(../img/cross.png) no-repeat;
+      background: url(/assets/img/cross.png) no-repeat;
       position: absolute;
       top: 10px;
       right: 10px;
@@ -293,29 +269,34 @@
     padding: 10px 15px;;
     border-bottom: 1px solid rgba(217, 217, 217, .6);
     p {
-      font: 500 20px/26px Ubuntu;
+      font: 500 20px/26px 'Ubuntu medium';
       color: #000;
       display: inline-block;
     }
     .date-filters {
       margin: 10px 0 0;
-      label {
-        font: 14px Arial, sans-serif;
-        color: #3a3a3a;
+      .form-group {
+        padding: 0;
+        width: 42%;
         float: left;
-        margin: 5px 10px 5px 0;
-      }
-      input[class=date], input[type=zoomdate] {
-        width: 80px;
-        float: left;
-        margin: 0 10px 0 0;
-        border: 1px solid #cecece;
-        background: #fff;
-        color: #000;
-        border-radius: 3px;
-        font: 14px Arial, sans-serif;
-        box-shadow: inset 0 1px 2px 0 #e2e2e2;
-        transition: box-shadow .3s, border-colors .3s;
+        label {
+          font: 14px Arial, sans-serif;
+          color: #3a3a3a;
+          float: left;
+          margin: 5px 10px 5px 0;
+          width: auto;
+        }
+        input {
+          width: 70%;
+          float: left;
+          margin: 0 10px 0 0;
+          border: 1px solid #cecece;
+          background: #fff;
+          color: #000;
+          border-radius: 3px;
+          font: 14px Arial, sans-serif;
+          height: 32px;
+        }
       }
     }
   }
@@ -324,44 +305,48 @@
     padding: 10px 15px;
     border-bottom: 1px solid rgba(217, 217, 217, .6);
     p {
-      font: 500 20px/26px Ubuntu;
+      font: 500 20px/26px 'Ubuntu medium';
       color: #000;
       display: inline-block;
     }
     .hide-block-subcategory {
-      p {
-        font: 500 16px/24px Ubuntu;
+      label {
+        font: 500 16px/24px 'Ubuntu medium';
         color: #656565;
-        padding: 13px 0 13px 30px;
+        padding: 13px 0 13px 15px;
       }
       input {
         float: left;
         margin: 18px 0 13px 0;
+        width: auto;
       }
     }
     li {
-      font: 500 16px/24px Ubuntu;
+      font: 500 16px/24px 'Ubuntu medium';
       color: #656565;
       a {
         color: #656565;
         display: block;
         padding: 13px 30px;
+        @include transition_color;
         &:hover {
           color: rgba(0, 183, 243, .8);
+          background: url(/assets/img/selected-category.png) no-repeat left center;
         }
         &:focus, &:active {
           color: rgba(0, 183, 243, 1);
+          background: url(/assets/img/selected-category.png) no-repeat left center;
         }
       }
       .active {
-        background: url(../img/selected-category.png) no-repeat left center;
+        background: url(/assets/img/selected-category.png) no-repeat left center;
         padding: 13px 0 13px 30px;
       }
     }
   }
 
   .filters-arrow {
-    background: url(../img/filters-arrow.png) no-repeat left center;
+    background: url(/assets/img/icons/filters-arrow.png) no-repeat left center;
     width: 11px;
     height: 18px;
     margin: 5px;
@@ -376,27 +361,44 @@
     border-bottom: 1px solid rgba(217, 217, 217, .6);
     .search-input {
       float: left;
-      background: url(../img/search-icon.png) no-repeat left center;
+      background: url(/assets/img/icons/search-icon.png) no-repeat left center;
       background-position: 8px 6px;
       padding-left: 30px;
-      width: 67%;
-      margin: 0 10px 0 0;
+      width: 84%;
+      margin: 0 1% 0 0;
     }
-    input[type=submit] {
-      padding: 3px 7px 5px;
+  }
+  .filters-button {
+    font: 500 16px 'Ubuntu medium';
+    padding: 3px 7px 5px;
+    background-color: $green;
+    border: 0;
+    color: #fff;
+    border-radius: 3px;
+    display: inline-block;
+    width: 15%;
+    height: 32px;
+    @include transition_bg_color;
+    &:hover {
+      background-color: $light_green;
+      box-shadow: none;
     }
+  }
+  .green-btn {
+    margin: 20px 0 30px;
+    width: 100%;
   }
 }
 
 .weatherImg {
-  background: url(../img/cloud.png) no-repeat center center;
+  background: url(/assets/img/cloud.png) no-repeat center center;
   width: 100%;
   height: 100%;
   margin: 0 auto;
 }
 
 .weatherIcon {
-  background: url(../img/snow.png) no-repeat center center;
+  background: url(/assets/img/snow.png) no-repeat center center;
   width: 40%;
   height: 34px;
   margin: 0 auto;
@@ -404,75 +406,23 @@
 }
 
 .unit {
-  font: 500 50px Ubuntu;
+  font: 500 50px 'Ubuntu medium';
 }
 
 .temperature {
-  font: 500 88px Ubuntu;
-}
-
-.mark-area-tools {
-  float: right;
-  .leaflet-control {
-    float: left;
-  }
-  .share-tool {
-    background: url(../img/map-tools.png) -384px -39px no-repeat;
-    &:hover {
-      background: url(../img/map-tools.png) -384px -8px no-repeat #0874be;
-      transition: background-color .5s;
-    }
-  }
-  .save-tool {
-    background: url(../img/map-tools.png) -417px -39px no-repeat;
-    &:hover {
-      background: url(../img/map-tools.png) -417px -8px no-repeat #0874be;
-      transition: background-color .5s;
-    }
-  }
-  .delete-tool {
-    background: url(../img/map-tools.png) -145px -39px no-repeat;
-    &:hover {
-      background: url(../img/map-tools.png) -145px -8px no-repeat #0874be;
-      transition: background-color .5s;
-    }
-  }
-  .share-wrap {
-    margin-top: 35px;
-    width: 102px;
-    background: rgba(255, 255, 255, .79);
-    border-radius: 5px;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .2);
-    display: block;
-    position: relative;
-    bottom: 0;
-    right: 0;
-    z-index: 1000;
-    .share-buttons {
-      background: none;
-      -moz-border-radius: 5px;
-      box-shadow: none;
-      display: table;
-      margin: 0 auto;
-    }
-  }
-}
-
-.j-hide {
-  display: none !important;
+  font: 500 88px 'Ubuntu medium';
 }
 
 .banner-for-blogers {
-  width: 306px;
+  width: 100%;
   height: 100%;
-  /*    background-color: #0c2638;*/
-  background: url(../img/banner_for_blogers.png) 0 0 no-repeat;
+  background: url(/assets/img/banner_for_blogers.png) 0 0 no-repeat;
   /*    background-color: linear-gradient(to top, rgba(0,0,0,.75) 1%, rgba(12,38,56,0.75) 21%, rgba(12,38,56,0.75) 46%,
           rgba(3,181,213,0.75) 73%, rgba(12,38,56,0.75) 100%);*/
   right: 0;
   top: 66px;
   .banner-logo {
-    background: url(../img/blog-icon.png) no-repeat center bottom;
+    background: url(/assets/img/blog-icon.png) no-repeat center bottom;
     background-size: 25%;
     padding-top: 46%;
   }
@@ -488,343 +438,142 @@
     display: table;
     width: 200px;
     height: 47px;
-    font: 500 22px/26px Ubuntu;
+    font: 500 22px/26px 'Ubuntu medium';
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .45);
   }
 }
 
-.my-blog {
-  background: transparent;
-  border: none;
-  h2 {
-    font: 500 26px/28px Ubuntu;
-    padding: 20px 0 20px 20px;
-    margin-bottom: 15px;
-    background: #fff;
-    border: 1px solid #e9edf0;
-    border-radius: 8px;
-  }
-  a.add-friend {
-    display: block;
-    width: 28px;
-    height: 28px;
-    background: url(../img/min-plus.png) 9px 9px no-repeat, #0d91ec;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    position: absolute;
-    top: 17px;
-    right: 17px;
-    -webkit-transition: background .3s;
-    -moz-transition: background .3s;
-    -o-transition: background .3s;
-    transition: background .3s;
-  }
-  .article {
-    overflow: hidden;
-    background: #fff;
-    border-radius: 8px;
-    border: 1px solid #e9edf0;
-    margin-bottom: 15px;
-    h2 {
-      font: 500 24px/24px Ubuntu;
-      color: #0c2638;
-      padding: 20px 15px 8px;
-      margin: 0;
-      background: transparent;
-      border: none;
-    }
-    img {
-      width: 100%;
-    }
-    .info {
-      border-top: 1px solid #e9edf0;
-      margin: 0 15px;
-      padding: 10px 0;
-      display: flex;
-      p {
-        float: left;
-        font: 400 12px Arial, sans-serif;
-        margin-right: 15px;
-        color: grey;
+/** WEATHER **/
+.popUp-wrapper {
+  float: right;
+  top: 128px;
+  height: 100%;
+  bottom: 0;
+  width: 400px;
+  display: table;
+  background-color: #fff;
+
+  .firstBlock-wrapper {
+    padding: 15px 20px;
+    width: 400px;
+    height: 320px;
+    box-sizing: border-box;
+    .weatherImg-block {
+      width: 230px;
+      height: 305px;
+      float: left;
+      .weatherName {
+        text-align: center;
+        font: 500 32px Ubuntu;
+        color: #0c2638;
+        margin: 10px 0 0;
+        color: #00b7f3;
       }
-      a {
-        font: 400 12px Arial, sans-serif;
-        text-decoration: underline;
-        color: grey;
+
+      .weatherData {
+        text-align: center;
+        font: 200 14px Ubuntu;
+        color: darkgrey;
+        margin: 0 0 10px;
+      }
+      .weatherImg-wrapper {
+        width: 230px;
+        height: 130px;
+        .weatherImg {
+          margin: 0 auto;
+          display: table;
+        }
+      }
+    }
+  }
+  .parameters {
+    float: left;
+    width: 130px;
+    height: 250px;
+    padding: 15px 0 0 10px;
+    box-sizing: border-box;
+    .mainParameters {
+      font: 500 22px 'Ubuntu medium';
+      color: #0c2638;
+      margin: 0;
+      span {
+        font-size: 16px;
       }
     }
     .description {
-      font: 14px/20px Arial, sans-serif;
-      padding: 5px 15px 15px;
+      color: #ccc;
+      font: 400 14px 'Ubuntu medium';
+      margin-top: 0;
     }
-    .bottom-panel {
-      display: block;
-      margin: 20px 15px;
-      :first-child {
-        margin-right: 50px;
-      }
-      a {
-        display: inline-block;
-        font: 500 14px/14px Arial;
-      }
+  }
 
-      .share {
-        display: block;
-        width: 12px;
-        height: 12px;
-        text-indent: 10000px;
-        overflow: hidden;
-        position: inherit;
-        bottom: 0;
-        float: right;
-        right: 0;
-        margin-top: 2px;
-        background: url(../img/share.png) no-repeat;
-        &:hover {
-          background: url(../img/share.png) -12px 0 no-repeat;
-        }
-      }
-    }
-  }
-}
-
-.mb-new-post {
-  .ui-selectmenu-button {
-    height: 19px;
-  }
-  div {
-    border-bottom: none;
-  }
-  .wrap-upload {
-    width: 392px;
-    float: right;
-    display: block;
-    font: 500 14px/28px Arial;
-    color: #848484;
-    .upload {
-      float: left;
-      display: block;
-      margin-right: 15px;
-      font: 500 16px Ubuntu;
-      padding: 3px 20px 6px;
-      background: #149e38;
-      height: 18px;
-      border: 0;
-      color: #fff;
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      border-radius: 3px;
-      -webkit-transition: background .3s;
-      -moz-transition: background .3s;
-      -o-transition: background .3s;
-      transition: background .3s;
-      &:hover {
-        background: #0fb23a;
-      }
-    }
-  }
-  input {
-    &:focus {
-      font-weight: 700;
-    }
-  }
-  .buttons {
-    input[type=submit] {
-      float: right;
-      margin-right: 0;
-      width: 120px;
-    }
-  }
-}
-
-.dialog {
-  .message {
-    &:last-child {
-      padding: 5px 15px 20px;
-    }
-    padding: 5px 15px 0;
-    border: none;
-    &:hover {
-      background: transparent;
-      .text-wrap, .diamond {
-        background: #f5f8fa;
-      }
-    }
-  }
-  .dialog-day {
-    font: 500 14px/20px Arial;
-    text-align: center;
-    color: rgba(12, 38, 56, .5);
-  }
-  .new-post {
-    border-radius: 0;
-  }
-}
-
-.menu-btn {
-  float: right;
-  display: block;
-  background: url(../img/main-menu-sep.png) no-repeat;
-  width: 60px;
-  height: 100%;
-  &:hover {
-    .menu-icon {
-      background: url(../img/menu.png) 0 -76px no-repeat;
-    }
-  }
-  .menu-icon {
-    background: url(../img/menu.png) no-repeat 0 0;
-    width: 24px;
-    height: 22px;
-    display: block;
-  }
-}
-
-.right-menu {
-  position: absolute;
-  top: 50px;
-  right: 0;
-  bottom: 0;
-  left: auto;
-  width: 230px;
-  height: auto;
-  -webkit-overflow-scrolling: touch;
-  -webkit-transition: width 0.3s ease;
-  -moz-transition: width 0.3s ease;
-  -ms-transition: width 0.3s ease;
-  -o-transition: width 0.3s ease;
-  transition: width 0.3s ease;
-  z-index: 1;
-  .list-right-menu {
-    background: #0c2638;
+  .temperature-block {
+    width: 170px;
     height: 100%;
-    margin: 0;
-    li {
-      border-bottom: 1px solid #173041;
-      width: 200px;
-      /*            margin-top: 15px;*/
-      .button {
-        height: 42px;
-        width: 140px;
-        padding: 12px 15px;
-        box-sizing: border-box;
-        margin: 20px auto 8px;
-        text-align: center;
-        &:hover, &:active {
-          color: #fff;
-        }
-      }
-      a {
-        display: block;
-        height: 19px;
-        color: #fff;
-        font: 500 16px/16px Ubuntu;
-        margin-top: 3px;
-        padding: 12px 0 15px 40px;
-        width: initial;
-        &:hover, &:active {
-          color: #00b7f3;
-        }
-      }
-      .friends-map {
-        background: url(../img/friends-map.png) 0 -1px no-repeat;
-        &:hover {
-          background: url(../img/friends-map.png) 0 -42px no-repeat;
-        }
-      }
-      .blog {
-        background: url(../img/blog.png) 0 -1px no-repeat;
-        &:hover {
-          background: url(../img/blog.png) 0 -42px no-repeat;
-        }
-      }
-      .about {
-        background: url(../img/about.png) no-repeat;
-        margin: 0;
-        &:hover {
-          background: url(../img/about.png) 0 -41px no-repeat;
-        }
-      }
-      .contacts {
-        background: url(../img/contacts.png) no-repeat;
-        &:hover {
-          background: url(../img/contacts.png) 0 -41px no-repeat;
-        }
-      }
-      .intro-link {
-        background: url(../img/intro-link.png) no-repeat;
-        &:hover {
-          background: url(../img/intro-link.png) 0 -41px no-repeat;
-        }
-      }
+    display: table;
+    margin: 0 auto;
+    .temperature {
+      font: 500 80px 'Ubuntu medium';
+      float: left;
+      color: #00b7f3;
     }
-    .sign-out-bt {
-      border-bottom: 1px solid #e5e5e5;
-      border: none;
-      width: 200px;
-      position: absolute;
-      bottom: 20px;
-      .btn {
-        text-align: center;
-        display: block;
-        background: #0874be;
-        color: #fff;
-        width: 92px;
-        height: 16px;
-        padding: 5px 5px 7px;
-        margin: 0 auto;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-        -webkit-transition: background .3s;
-        -moz-transition: background .3s;
-        -o-transition: background .3s;
-        transition: background .3s;
-        &:hover {
-          background: #0486df;
-          -webkit-transition: background .3s;
-          -moz-transition: background .3s;
-          -o-transition: background .3s;
-          transition: background .3s;
-        }
-      }
+    .unit {
+      float: left;
+      margin-top: 10px;
+      font: 500 28px 'Ubuntu medium';
+      color: #00b7f3;
+    }
+    .unit2 {
+      margin: 0px 2px;
+      display: table;
+      float: left;
+      font: 500 17px 'Ubuntu medium';
+      color: gray;
+    }
+
+    .unit2 span {
+      color: #ccc;
     }
   }
-}
 
-.tabs-profile {
-  ul {
-    margin: 24px 0 30px;
-    border-bottom: 1px solid #e9edf0;
-    &:first-child {
-      margin-left: 1px;
+  .wrapperHr {
+    float: left;
+    width: 100%;
+    hr {
+      margin: 0;
+      border: 0;
+      border-top: 1px solid #eee;
     }
-    li {
-      display: inline-block;
-      background: #e6e9eb;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
-      padding: 10px 20px 8px;
-      margin-right: 5px;
-      a {
-        font: 500 16px/16px Ubuntu;
-        color: #0c2638;
+  }
+
+  .weekForecast {
+    width: 100%;
+    height: 100%;
+    .weekForecast-wrapper {
+      float: left;
+      width: 100%;
+      padding: 10px 15px;
+      box-sizing: border-box;
+      .weatherIcon {
+        height: 34px;
+        margin-left: 65px;
+        float: left;
       }
-      &:hover {
-        background: #00b7f3;
-        transition: background .3s;
-        a {
-          color: #fff;
-          transition: color .3s;
-        }
+      .data, .temperatureWeek {
+        float: left;
+        text-align: center;
+        color: gray;
       }
-    }
-    .active {
-      background: #0486df;
-      transition: background .3s;
-      a {
-        color: #fff
+      .data {
+        float: left;
+        width: 35%;
+        font: 400 20px 'Ubuntu medium';
+      }
+
+      .temperatureWeek {
+        float: right;
+        width: 25%;
+        font: 400 18px 'Ubuntu medium';
       }
     }
   }
