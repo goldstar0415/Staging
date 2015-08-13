@@ -21,7 +21,11 @@
     });
 
     function onStateChangeSuccess(event, current, toParams, fromState, fromParams) {
+      snapRemote.getSnapper().then(function(snapper) {
+        snapper.close();
+      });
       UploaderService.images.files = [];
+
       $rootScope.previous = {
         state: fromState,
         params: fromParams

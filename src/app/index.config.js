@@ -39,7 +39,8 @@
       maxPosition: 230,
       minPosition: -230,
       minDragDistance: 40,
-      touchToDrag: touchToDrag
+      touchToDrag: touchToDrag,
+      tapToClose: true
     };
 
     // loading bar

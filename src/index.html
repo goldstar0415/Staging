@@ -47,10 +47,11 @@
   <div ng-show="mapState != 'full-size'" ui-view autoscroll="true"></div>
 </div>
 
-<ng-include src="'/app/components/ng_message_templates/error_templates.html'"></ng-include>
-<ng-include src="'/app/components/photoviewer/photoviewer.html'"></ng-include>
+    <ng-include src="'/app/components/ng_message_templates/error_templates.html'"></ng-include>
+    <ng-include src="'/app/components/photoviewer/photoviewer.html'"></ng-include>
 
-<new-message></new-message>
+    <map-sort ng-if="mapState == 'full-size'"></map-sort>
+    <new-message></new-message>
 
 <!-- build:js(src) scripts/vendor.js -->
 <!--<script src="assets/libs/Leaflet/leaflet.js"></script>-->

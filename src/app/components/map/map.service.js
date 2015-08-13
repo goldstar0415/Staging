@@ -234,6 +234,7 @@
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
           ClearSelections();
+          map.closePopup();
         }
 
       });
@@ -631,7 +632,6 @@
             }
 
             angular.element('.cancel-selection').on('click', function() {
-              console.log('qweqwe');
               ClearSelectionListeners();
               map.closePopup();
             });
@@ -658,6 +658,8 @@
                   function remove() {
                     for(var k in markers) {
                       markersLayer.removeLayer(markers[k]);
+                      var bboxes = GetDrawLayerBBoxes();
+                      GetDataByBBox(bboxes);
                     }
                     drawLayer.removeLayer(line);
                     map.closePopup();
@@ -945,12 +947,10 @@
       }
 
       function GetDataByBBox(bbox_array) {
+        var spots = [];
         if(bbox_array.length > 0) {
           $http.post(API_URL + '/map/search', {b_boxes: bbox_array})
             .success(function(data) {
-              console.log(data[0]);
-              clearLayers();
-              var spots = [];
               _.each(data, function(item) {
                 if(PointInPolygon(item.location)) {
                   spots.push(item);
@@ -958,29 +958,12 @@
               });
               spots = FilterUniqueObjects(spots);
 
-              _.each(spots, function(item) {
-                var type = item.spot.category.type.name;
-                var marker = L.marker(item.location);
-
-                BindSpotPopup(marker, item);
-
-                switch(type) {
-                  case 'pitstop':
-                    eventsLayer.addLayer(marker);
-                    break;
-                  case 'recreation':
-                    eventsLayer.addLayer(marker);
-                    break;
-                  case 'event':
-                    eventsLayer.addLayer(marker);
-                    break;
-                }
-              });
+              $rootScope.$emit('update-map-data', spots);
+              clearLayers();
             })
         } else {
           clearLayers();
         }
-
       }
 
       function FilterUniqueObjects(array) {
@@ -991,7 +974,9 @@
 
       //return sorted by rating array
       function SortByRating(array) {
-        return _.sortBy(array, 'rating');
+        return _.sortBy(array, function(item) {
+          return item.spot.rating;
+        }).reverse();
       }
 
       //return sorted by end_date array
@@ -1015,6 +1000,31 @@
         });
 
         return SortByDate(resultArray);
+      }
+
+      function drawSpotMarkers(spots, clear) {
+        if(clear) {
+          GetCurrentLayer().clearLayers();
+        }
+        _.each(spots, function(item) {
+          //TODO: add marker icon depending on spot category
+          var type = item.spot.category.type.name;
+          var marker = L.marker(item.location);
+
+          BindSpotPopup(marker, item);
+
+          switch(type) {
+            case 'pitstop':
+              pitstopsLayer.addLayer(marker);
+              break;
+            case 'recreation':
+              recreationsLayer.addLayer(marker);
+              break;
+            case 'event':
+              eventsLayer.addLayer(marker);
+              break;
+          }
+        });
       }
 
 
@@ -1057,7 +1067,11 @@
         //sorting
         SortByRating: SortByRating,
         SortByDate: SortByDate,
-        SortBySubcategory: SortBySubcategory
+        SortBySubcategory: SortBySubcategory,
+
+        GetBBoxes: GetDrawLayerBBoxes,
+        GetDataByBBox: GetDataByBBox,
+        drawSpotMarkers: drawSpotMarkers
       };
     });
 
