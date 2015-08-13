@@ -1,7 +1,7 @@
 ////information-profile//////
 
 .information-profile {
-  padding: 0;
+  padding: 0 0 20px;
   .avatar {
     margin: -95px auto 0;
     img {
@@ -81,6 +81,7 @@
     font: 14px/14px Arial, sans-serif;
     margin: 5px 0;
     width: 100%;
+    padding: 0;
     a {
       display: block;
       float: left;
