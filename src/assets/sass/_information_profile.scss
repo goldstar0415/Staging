@@ -18,7 +18,7 @@
       position: relative;
       font: $navigation_font;
       font-size: 22px;
-      white-space: nowrap;
+      word-wrap: break-word;
       &:hover, &:focus, &:active {
         color: $navy_blue;
         @include transition_color;
@@ -113,7 +113,7 @@
     }
   }
   .form-group {
-    .blue-btn, .red-btn {
+    .blue-btn, .red-btn, .green-btn {
       width: 100%;
       margin: 0;
     }
