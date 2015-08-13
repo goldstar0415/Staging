@@ -7,7 +7,7 @@
     <button type="button" class="close" ng-click="modal.close()">&times;</button>
     <h4 class="modal-title">New message to {{$root.profileUser.first_name}} {{$root.profileUser.last_name}}</h4>
   </div>
-  <div class="modal-body clearfix">
+  <div class="modal-body clearfix no-pad no-pad-bottom">
 
     <ng-input message="modal.message" attachments="modal.attachments" on-submit="modal.send()" ></ng-input>
 

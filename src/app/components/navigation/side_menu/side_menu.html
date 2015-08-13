@@ -11,22 +11,23 @@
     <li ng-if="!$root.currentUser">
       <sign-in title="Sign in"></sign-in>
     </li>
-    <li>|</li>
+    <li class="hidden-xs hidden-sm">|</li>
     <li ng-if="!$root.currentUser">
       <sign-up></sign-up>
     </li>
   </ul>
 
   <ul ng-if="$root.currentUser && SideMenu.side == 'left' && SideMenu.$state.current.name != 'index'">
-    <li><a ui-sref-active="active">My spots</a></li>
-    <li><a ui-sref-active="active">My blog</a></li>
+    <li><a ui-sref-active="active" class="spots-link">My spots</a></li>
+    <li><a ui-sref-active="active" class="blog-link">My blog</a></li>
     <li><a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active"
            class="favorites-link">Favorites</a></li>
-    <li><a>Saved searches</a></li>
-    <li><a ui-sref="friendsmap" ui-sref-active="active">Friends map</a></li>
-    <li><a ui-sref="photomap({user_id: $root.profileUser.id})" ui-sref-active="active">Photo map</a></li>
+    <li><a class="searches-link">Saved searches</a></li>
+    <li><a ui-sref="friendsmap" ui-sref-active="active" class="friends-link">Friends map</a></li>
+    <li><a ui-sref="photomap({user_id: $root.profileUser.id})" ui-sref-active="active" class="photo-link">Photo map</a>
+    </li>
     <li><a ui-sref="planner" ui-sref-active="active" class="planner-link">Planner</a></li>
-    <li><a ui-sref="settings" ui-sref-active="active">Settings</a></li>
+    <li><a ui-sref="settings" ui-sref-active="active" class="settings-link">Settings</a></li>
   </ul>
 
   <ul>
@@ -35,6 +36,6 @@
     <li><a class="blog-link" ui-sref-active="active">Blog</a></li>
     <li><a ui-sref="about_us" class="about-link" ui-sref-active="active">About us</a></li>
     <li><a ui-sref="contact_us" class="contacts-link" ui-sref-active="active">Contact us</a></li>
-    <li><a ng-if="$root.currentUser" ng-click="SideMenu.signOut()" class="sign-btn">Sign out</a></li>
+    <li class="sign-out"><a ng-if="$root.currentUser" ng-click="SideMenu.signOut()" class="sign-btn">Sign out</a></li>
   </ul>
 </div>
