@@ -15,6 +15,6 @@ return [
     | https://developer.forecast.io/docs/v2
     */
     'options' => [
-        'exclude' => 'hourly,daily'
+        'exclude' => 'hourly'
     ],
 ];
