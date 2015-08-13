@@ -1,10 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<div class="col-xs-12" >
+  <div class=" wrap">
+    <!-- section with calendar -->
+    <section class="col-xs-12  no-pad create-new-plan">
+      <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
+    </section>
+    <!-- end section with calendar -->
 
-</body>
-</html>
+    <!-- section with export -->
+    <section class="col-xs-12  no-pad ">
+      <div class="export-to-ics">
+        <a href="#">Export to ICS</a>
+      </div>
+    </section>
+    <!--end section with export -->
+
+
+    <!-- sub event -->
+    <section class="central   col-xs-12">
+      <h2 class="title-name">Plans</h2>
+      <a href="http://zoomzoom.itechhighway.com/event/create" class="add-friend" title="Create new spot"></a>
+
+      <div class="event">
+        <h3 class="title-planner">
+          <a href="http://zoomzoom.itechhighway.com/event/show/97777798">Lorem</a>
+                      <span class="date">
+                            05 Aug 2016 — 08 Aug 2016
+                        </span>
+        </h3>
+
+        <p class="place"></p>
+
+        <p class="description"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad adipisci al soluta temporibus voluptate! Accusamus aperiam debitis nemo perspiciatis tempore.</span>
+        </p>
+
+        <ul class="tools">
+          <li style="display: block">
+            <a href="http://zoomzoom.itechhighway.com/event/edit/98989898" class="edit-tools ">Edit</a>
+          </li>
+          <li>
+            <a class="delete" ng-click="areYouSure($event)"
+               href="http://zoomzoom.itechhighway.com/event/delete/97777798">Delete</a>
+          </li>
+
+          <li>
+            <a href="#" class="invite-friend ng-isolate-scope" invite-friends="" event-id="97777798">Invite
+              friends</a>
+          </li>
+
+        </ul>
+
+      </div>
+    </section>
+  </div>
+</div>
