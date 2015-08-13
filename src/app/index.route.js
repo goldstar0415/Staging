@@ -262,7 +262,7 @@
             return Feed.reviews({
               page: 1,
               limit: 20
-            })//.$promise;
+            }).$promise;
           }
         },
         parent: 'profile_menu',

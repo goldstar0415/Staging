@@ -13,22 +13,14 @@
       <div class="star"></div>
       <div class="star"></div>
     </div>
-    <div class="col-xs-6 no-pad">
-      <!--<div class="plus-minus">-->
-      <!--<a href="#" class="plus" rollapp-href="http://localhost:8080/wall_page.html#"></a>-->
-      <!--<norb>0</norb>-->
-      <!--<a href="#" class="minus" rollapp-href="http://localhost:8080/wall_page.html#"></a>-->
-      <!--</div>-->
-    </div>
   </div>
-  <a class="review-img" href="#">
-    <img class="media-object fav-avatar-icon feeds-img"
-         src="assets/img/img14.jpg" alt="">
+  <a class="review-img" ui-sref="spot({spot_id: item.spot.id})">
+    <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.spot.cover_url.medium}}">
   </a>
 
   <div class="text-block">
     <h2 class="media-heading feeds-title">
-      <a href="#">Spot name</a>
+      <a ui-sref="spot({spot_id: item.spot.id})">{{item.spot.title}}</a>
     </h2>
     <a class="author-name" ui-sref="profile({user_id: item.user.id})">{{item.user.first_name}}
       {{item.user.last_name}}</a>

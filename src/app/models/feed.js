@@ -13,7 +13,7 @@
         isArray: true
       },
       reviews: {
-        url: API_URL + '/reviews',
+        url: API_URL + '/spots/reviews',
         method: 'GET',
         isArray: true
       }
