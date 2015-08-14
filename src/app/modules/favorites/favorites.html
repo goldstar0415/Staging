@@ -32,17 +32,17 @@
     </div>
 
     <ul class="tools">
-      <li>
-        <a class="save-event" ng-if="!item.is_saved" ng-click="Favorite.saveToCalendar(item)">Save</a>
+      <li ng-if="!item.is_saved">
+        <a class="save-event"  ng-click="Favorite.saveToCalendar(item)">Save</a>
       </li>
-      <li>
-        <a class="save-event saved clicked" ng-if="item.is_saved" ng-click="Favorite.removeFromCalendar(item)">Remove</a>
+      <li ng-if="item.is_saved">
+        <a class="save-event saved clicked"  ng-click="Favorite.removeFromCalendar(item)">Remove</a>
       </li>
-      <li>
-        <a class="favorite-spot" ng-if="!item.is_favorite" ng-click="Favorite.addToFavorite(item)">Favorite</a>
+      <li ng-if="!item.is_favorite">
+        <a class="favorite-spot"  ng-click="Favorite.addToFavorite(item)">Favorite</a>
       </li>
-      <li>
-        <a class="fav favorited" ng-if="item.is_favorite" ng-click="Favorite.removeFromFavorite(item)">Unfavorite</a>
+      <li ng-if="item.is_favorite">
+        <a class="fav favorited"  ng-click="Favorite.removeFromFavorite(item)">Unfavorite</a>
       </li>
       <li>
         <invite-friends spot="item"></invite-friends>

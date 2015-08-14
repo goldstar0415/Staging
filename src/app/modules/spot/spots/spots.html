@@ -1,7 +1,8 @@
 <h2 class="title-name">My spots</h2>
 <a ui-sref="spot_create" class="add-friend" title="Create new spot"></a>
 
-<section class="my-spots-section" ng-repeat="item in MySpots.spots">
+<section class="my-spots-section" ng-repeat="item in Spots.spots">
+
   <div class="event">
                     <span class="rating clear rateit spot-stars" rate="5" event-id="97777798">
                             <button id="rateit-reset-2" type="button" data-role="none" class="rateit-reset"
@@ -51,23 +52,28 @@
         <a ui-sref="spot_edit({spot_id: item.id})" class="edit-tools">Edit</a>
       </li>
       <li>
-        <a ng-click="MySpots.removeSpot(item.id);" class="delete">Delete</a>
+        <a ng-click="Spots.removeSpot(item, $index);" class="delete">Delete</a>
       </li>
 
-      <li>
-        <a class="save-event">Save</a>
+      <li ng-if="!item.is_saved">
+        <a class="save-event" ng-click="Spots.saveToCalendar(item)">Save</a>
       </li>
-
-      <li>
-        <a class="favorite-spot">Favorite</a>
+      <li ng-if="item.is_saved">
+        <a class="save-event saved clicked" ng-click="Spots.removeFromCalendar(item)">Remove</a>
+      </li>
+      <li ng-if="!item.is_favorite">
+        <a class="favorite-spot" ng-click="Spots.addToFavorite(item)">Favorite</a>
+      </li>
+      <li ng-if="item.is_favorite">
+        <a class="fav favorited" ng-click="Spots.removeFromFavorite(item)">Unfavorite</a>
       </li>
       <li>
-        <a class="invite-friend">Invite friends</a>
+        <invite-friends spot="item"></invite-friends>
       </li>
-
     </ul>
 
     <a ng-show="false" href="#" ng-click="share($event)" class="share">Share</a>
+
     <div ng-show="false" class="share-wrap">
       <ul class="share-buttons clearfix">
         <li>

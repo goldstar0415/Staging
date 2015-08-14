@@ -97,6 +97,11 @@
         controllerAs: 'SpotCreate',
         parent: 'profile_menu',
         locate: 'current',
+        resolve: {
+          spot: function(Spot) {
+            return new Spot();
+          }
+        },
         mapState: 'small',
         edit: false
       })
@@ -107,6 +112,11 @@
         controllerAs: 'SpotCreate',
         parent: 'profile_menu',
         locate: 'none',
+        resolve: {
+          spot: function(Spot, $stateParams) {
+            return Spot.get({id: $stateParams.spot_id}).$promise;
+          }
+        },
         mapState: 'small',
         edit: true
       })
@@ -116,20 +126,25 @@
         controller: 'SpotController',
         controllerAs: 'Spot',
         parent: 'profile_menu',
+        resolve: {
+          spot: function(Spot, $stateParams) {
+            return Spot.get({id: $stateParams.spot_id}).$promise;
+          }
+        },
         locate: 'none',
         mapState: 'small'
       })
-      .state('my_spots', {
-        url: '/my-spots',
-        templateUrl: '/app/modules/spot/my_spots/my_spots.html',
-        controller: 'MySpotsController',
-        controllerAs: 'MySpots',
+      .state('spots', {
+        url: '/spots/:user_id',
+        templateUrl: '/app/modules/spot/spots/spots.html',
+        controller: 'SpotsController',
+        controllerAs: 'Spots',
         parent: 'profile_menu',
         locate: 'none',
         mapState: 'small',
         resolve: {
-          spots: function($http, API_URL) {
-            return $http.get(API_URL + '/spots');
+          spots: function(Spot, $stateParams) {
+            return Spot.query({user_id: $stateParams.user_id}).$promise;
           }
         }
       })

@@ -6,7 +6,7 @@
     .controller('SpotCreateController', SpotCreateController);
 
   /** @ngInject */
-  function SpotCreateController($stateParams, $state, toastr, $scope, MapService, UploaderService, CropService, moment, API_URL, $http) {
+  function SpotCreateController(spot, $stateParams, $state, toastr, $scope, MapService, UploaderService, CropService, moment, API_URL, $http) {
     var vm = this;
     vm.deletedImages = [];
     vm.edit = $state.current.edit || false;
@@ -52,6 +52,7 @@
 
       return array;
     }
+
     function filterTags() {
       var array = _.map(vm.tags, function (item) {
         return item.name;
@@ -59,8 +60,9 @@
 
       return array;
     }
+
     function rejectOldFiles() {
-      return _.reject(vm.images.files, function(item) {
+      return _.reject(vm.images.files, function (item) {
         return item.id ? true : false;
       })
     }
@@ -74,22 +76,22 @@
         request.description = vm.description;
         request.spot_type_category_id = vm.category_id;
 
-        if(vm.cover) {
+        if (vm.cover) {
           request.cover = vm.cover;
         }
-        if(vm.links && vm.links.length > 0){
+        if (vm.links && vm.links.length > 0) {
           request.web_sites = vm.links;
         }
-        if(vm.youtube_links && vm.youtube_links.length > 0) {
+        if (vm.youtube_links && vm.youtube_links.length > 0) {
           request.videos = vm.youtube_links;
         }
-        if(locations.length > 0) {
+        if (locations.length > 0) {
           request.locations = locations;
         }
-        if(tags.length > 0) {
+        if (tags.length > 0) {
           request.tags = tags;
         }
-        if(vm.edit) {
+        if (vm.edit) {
           request.deleted_files = vm.deletedImages;
         }
         if (vm.type === 'Event') {
@@ -99,7 +101,7 @@
         var url = API_URL + '/spots';
         var req = {};
         req.payload = JSON.stringify(request);
-        if(vm.edit) {
+        if (vm.edit) {
           req._method = 'PUT';
           url = API_URL + '/spots/' + $stateParams.spot_id;
         }
@@ -107,7 +109,7 @@
         if (request.locations && request.locations.length > 0) {
 
           vm.images.files = rejectOldFiles();
-            UploaderService
+          UploaderService
             .upload(url, req)
             .then(function (resp) {
               $state.go('spot', {spot_id: resp.data.id});
@@ -173,7 +175,7 @@
     };
 
     vm.deleteImage = function (idx, id) {
-      if(id) {
+      if (id) {
         vm.deletedImages.push(id);
         vm.images.files.splice(idx, 1);
       } else {
@@ -194,14 +196,14 @@
     };
 
     vm.editCover = function () {
-      if(vm.currentCover_original) {
+      if (vm.currentCover_original) {
         CropService.crop(vm.currentCover_original, 512, 256, function (result) {
           if (result) {
             vm.cover = result;
             vm.selectCover = false;
           }
         });
-      };
+      }
     };
 
     //videos
@@ -229,41 +231,35 @@
       }
     };
     //load data for spot editing
-    vm.getSpotData = function(spot_id) {
+    vm.getSpotData = function () {
       //TODO: add array to display all kinds of images (attachments from albums, photos for upload, and old photos)
-      $http.get(API_URL + '/spots/'+spot_id).then(
-        function(response){
-          var data = response.data;
-          vm.type = data.category.type.display_name;
-          vm.title = data.title;
-          vm.description = data.description;
-          vm.links = data.web_sites;
-          vm.youtube_links = data.videos;
-          vm.category_id = data.spot_type_category_id;
-          vm.tags = data.tags || [];
-          vm.currentCover_original = data.cover_url.original;
-          vm.locations = data.points;
-          if(data.photos) {
-            for(var k in data.photos) {
-              vm.images.files.push(data.photos[k]);
-            }
-          }
-          if(data.start_date && data.end_date) {
-            vm.start_date = moment(data.start_date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
-            vm.end_date = moment(data.end_date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
-            vm.start_time = moment(data.start_date, 'YYYY-MM-DD HH:mm:ss').format('HH:mm');
-            vm.end_time = moment(data.end_date, 'YYYY-MM-DD HH:mm:ss').format('HH:mm');
-          }
-          console.log(response.data);
-        },
-        function(response) {
-          console.log('Get spot data error:', response.data);
+      var data = spot;
+      vm.type = data.category.type.display_name;
+      vm.title = data.title;
+      vm.description = data.description;
+      vm.links = data.web_sites;
+      vm.youtube_links = data.videos;
+      vm.category_id = data.spot_type_category_id;
+      vm.tags = data.tags || [];
+      vm.currentCover_original = data.cover_url.original;
+      vm.locations = data.points;
+      if (data.photos) {
+        for (var k in data.photos) {
+          vm.images.files.push(data.photos[k]);
         }
-      )
+      }
+      if (data.start_date && data.end_date) {
+        vm.start_date = moment(data.start_date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
+        vm.end_date = moment(data.end_date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
+        vm.start_time = moment(data.start_date, 'YYYY-MM-DD HH:mm:ss').format('HH:mm');
+        vm.end_time = moment(data.end_date, 'YYYY-MM-DD HH:mm:ss').format('HH:mm');
+      }
+      console.log(spot);
+
     };
 
-    if(vm.edit) {
-      vm.getSpotData($stateParams.spot_id);
+    if (vm.edit) {
+      vm.getSpotData();
     }
   }
 })();
