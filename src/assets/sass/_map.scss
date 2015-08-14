@@ -35,35 +35,35 @@
   }
 
   .radius-selection {
-    background: url(/assets/img/icons/radius.png) 5px 5px no-repeat rgba(255, 255, 255, .6);
+    background: url(/assets/img/icons/map-radius.png) 5px 5px no-repeat rgba(255, 255, 255, .6);
     &:hover {
-      background: url(/assets/img/icons/radius.png) -64px 5px no-repeat $navy_blue;
+      background: url(/assets/img/icons/map-radius.png) -64px 5px no-repeat $navy_blue;
     }
   }
   .lasso-selection {
-    background: url(/assets/img/icons/lasso.png) 4px 7px no-repeat rgba(255, 255, 255, .6);
+    background: url(/assets/img/icons/map-lasso.png) 4px 7px no-repeat rgba(255, 255, 255, .6);
     &:hover {
-      background: url(/assets/img/icons/lasso.png) -62px 7px no-repeat $navy_blue;
+      background: url(/assets/img/icons/map-lasso.png) -62px 7px no-repeat $navy_blue;
     }
   }
   .path-selection {
-    background: url(/assets/img/icons/path.png) 3px 7px no-repeat rgba(255, 255, 255, .6);
+    background: url(/assets/img/icons/map-path.png) 3px 7px no-repeat rgba(255, 255, 255, .6);
     &:hover {
-      background: url(/assets/img/icons/path.png) -64px 7px no-repeat $navy_blue;
+      background: url(/assets/img/icons/map-path.png) -64px 7px no-repeat $navy_blue;
     }
   }
   .save-selection {
-    background: url(/assets/img/icons/save.png) 7px 7px no-repeat rgba(255, 255, 255, .6);
+    background: url(/assets/img/icons/map-save.png) 7px 7px no-repeat rgba(255, 255, 255, .6);
     transform: rotate(-90deg);
     &:hover {
-      background: url(/assets/img/icons/save.png) -67px 7px no-repeat $navy_blue;
+      background: url(/assets/img/icons/map-save.png) -67px 7px no-repeat $navy_blue;
     }
   }
   .clear-selection {
-    background: url(/assets/img/icons/clear.png) 6px 7px no-repeat rgba(255, 255, 255, .6);
+    background: url(/assets/img/icons/map-clear.png) 6px 7px no-repeat rgba(255, 255, 255, .6);
     transform: rotate(-90deg);
     &:hover {
-      background: url(/assets/img/icons/clear.png) -65px 7px no-repeat $navy_blue;
+      background: url(/assets/img/icons/map-clear.png) -65px 7px no-repeat $navy_blue;
     }
   }
 }

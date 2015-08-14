@@ -1,4 +1,4 @@
-  .banner-wrap {
+.banner-wrap {
   bottom: 0;
   height: calc(100% - 70px);
   top: 0;
@@ -9,7 +9,7 @@
     float: right;
     .banner-for-unregistered {
       background: linear-gradient(to top, rgba(0, 0, 0, .75) 1%, rgba(12, 38, 56, 0.75) 21%, rgba(12, 38, 56, 0.75) 46%,
-              rgba(3, 181, 213, 0.75) 73%, rgba(12, 38, 56, 0.75) 100%) $dark_blue;
+        rgba(3, 181, 213, 0.75) 73%, rgba(12, 38, 56, 0.75) 100%) $dark_blue;
       padding: 0;
       z-index: 1;
       height: 100%;
@@ -46,7 +46,11 @@
 }
 
 .tools-wrap {
-  width: 100%;
+  z-index: 10 !important;
+  padding: 0;
+  display: table;
+  margin: 0 auto;
+  float: none;
   .tools-hint-block {
     padding: 20px;
     background: #0c2638;
@@ -107,13 +111,13 @@
       padding-top: 35%;
     }
     .path-map {
-      background: url(../img/path-map.png) no-repeat center top;
+      background: url(/assets/img/path-map.png) no-repeat center top;
     }
     .radius-map {
-      background: url(../img/radius-map.png) no-repeat center top;
+      background: url(/assets//img/radius-map.png) no-repeat center top;
     }
     .lasso-map {
-      background: url(../img/lasso-map.png) no-repeat center top;
+      background: url(/assets/img/lasso-map.png) no-repeat center top;
     }
   }
 }
@@ -187,7 +191,7 @@
   position: absolute;
   top: 70px;
   right: 0;
-  bottom:0;
+  bottom: 0;
   height: auto;
   z-index: 101;
   background: #fff;
@@ -250,9 +254,6 @@
     }
   }
 }
-
-
-
 
 .search-filters {
   float: right;
