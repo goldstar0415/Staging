@@ -37,6 +37,11 @@ header {
             width: 38px;
             height: 38px;
           }
+          .admin-icon {
+            background: url(/assets/img/icons/admin-icon.png) 0 0 no-repeat;
+            width: 38px;
+            height: 38px;
+          }
         }
       }
     }
@@ -63,10 +68,16 @@ header {
         .map-icon {
           background: url(/assets/img/icons/map-icon.png) 0 -67px no-repeat;
         }
+        .admin-icon {
+          background: url(/assets/img/icons/admin-icon.png) 0 -67px no-repeat;
+        }
       }
       &:hover {
         .map-icon {
           background: url(/assets/img/icons/map-icon.png) 0 -67px no-repeat;
+        }
+        .admin-icon {
+          background: url(/assets/img/icons/admin-icon.png) 0 -67px no-repeat;
         }
       }
     }

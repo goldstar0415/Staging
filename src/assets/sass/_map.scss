@@ -23,31 +23,48 @@
 .map-tools {
   height: 40px;
   width: 40px;
+  div {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    @include transition_bg_color;
+    &:hover {
+      @include transition_bg_color;
+    }
+  }
 
   .radius-selection {
-    height: 100%;
-    width: 100%;
-    background-color: red;
+    background: url(/assets/img/icons/radius.png) 5px 5px no-repeat rgba(255, 255, 255, .6);
+    &:hover {
+      background: url(/assets/img/icons/radius.png) -64px 5px no-repeat $navy_blue;
+    }
   }
   .lasso-selection {
-    height: 100%;
-    width: 100%;
-    background-color: #ffffff;
+    background: url(/assets/img/icons/lasso.png) 4px 7px no-repeat rgba(255, 255, 255, .6);
+    &:hover {
+      background: url(/assets/img/icons/lasso.png) -62px 7px no-repeat $navy_blue;
+    }
   }
   .path-selection {
-    height: 100%;
-    width: 100%;
-    background-color: orange;
+    background: url(/assets/img/icons/path.png) 3px 7px no-repeat rgba(255, 255, 255, .6);
+    &:hover {
+      background: url(/assets/img/icons/path.png) -64px 7px no-repeat $navy_blue;
+    }
   }
   .save-selection {
-    height: 100%;
-    width: 100%;
-    background-color: cyan;
+    background: url(/assets/img/icons/save.png) 7px 7px no-repeat rgba(255, 255, 255, .6);
+    transform: rotate(-90deg);
+    &:hover {
+      background: url(/assets/img/icons/save.png) -67px 7px no-repeat $navy_blue;
+    }
   }
   .clear-selection {
-    height: 100%;
-    width: 100%;
-    background-color: blue;
+    background: url(/assets/img/icons/clear.png) 6px 7px no-repeat rgba(255, 255, 255, .6);
+    transform: rotate(-90deg);
+    &:hover {
+      background: url(/assets/img/icons/clear.png) -65px 7px no-repeat $navy_blue;
+    }
   }
 }
 
@@ -58,7 +75,16 @@
 
 .remove-popup {
   .leaflet-popup-content {
-    width:auto !important;
+    width: auto !important;
   }
+}
+
+.custom-map-icons {
+  border-radius: 50%;
+  display: block;
+  overflow: hidden;
+  background: #fff;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.35);
 }
 
