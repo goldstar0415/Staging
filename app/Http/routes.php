@@ -62,6 +62,12 @@ Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 Route::resource('spots.reviews', 'SpotReviewController', ['except' => ['create', 'edit']]);
 Route::resource('spots.photos.comments', 'SpotPhotoCommentController', ['only' => ['index', 'store', 'destroy']]);
 /**
+ * Calendar controls
+ */
+Route::post('calendar/{spots}', 'CalendarController@add');
+Route::delete('calendar/{spots}', 'CalendarController@remove');
+Route::get('calendar/plans', 'CalendarController@getPlans');
+/**
  * Chat Controls
  */
 Route::post('message', 'ChatController@sendMessage');

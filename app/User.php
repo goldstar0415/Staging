@@ -312,6 +312,11 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         return $this->belongsToMany(Spot::class)->withTimestamps();
     }
 
+    public function calendarSpots()
+    {
+        return $this->belongsToMany(Spot::class, 'calendar_spots')->withTimestamps();
+    }
+
     public function spotReviews()
     {
         return $this->hasMany(SpotReview::class);
