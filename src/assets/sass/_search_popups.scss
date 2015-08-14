@@ -191,6 +191,7 @@
   height: auto;
   z-index: 101;
   background: #fff;
+  width: 450px;
 }
 
 .sidebar-menu-horizontal {
@@ -256,6 +257,8 @@
 .search-filters {
   float: right;
   width: 100%;
+  height: calc(100% - 70px);
+  overflow-y: scroll;
   .numbers-events {
     padding: 10px 15px;
     border-bottom: 1px solid rgba(217, 217, 217, .6);

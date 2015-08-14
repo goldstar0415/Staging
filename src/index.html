@@ -20,11 +20,40 @@
   <!-- endinject -->
   <!-- endbuild -->
 </head>
-<body >
+<body>
 <!--[if lt IE 10]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
   your browser</a> to improve your experience.</p>
 <![endif]-->
+
+<!--Preloader-->
+<div class="preloader" ng-if="!pageLoaded">
+  <div class="windows8">
+    <div class="loading">Loading...</div>
+    <div class="wBall" id="wBall_1">
+      <div class="wInnerBall">
+      </div>
+    </div>
+    <div class="wBall" id="wBall_2">
+      <div class="wInnerBall">
+      </div>
+    </div>
+    <div class="wBall" id="wBall_3">
+      <div class="wInnerBall">
+      </div>
+    </div>
+    <div class="wBall" id="wBall_4">
+      <div class="wInnerBall">
+      </div>
+    </div>
+    <div class="wBall" id="wBall_5">
+      <div class="wInnerBall">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Preloader-->
+
 
 <div snap-drawers>
   <div snap-drawer>
@@ -48,11 +77,11 @@
   <div ng-show="mapState != 'full-size'" ui-view autoscroll="true"></div>
 </div>
 
-    <ng-include src="'/app/components/ng_message_templates/error_templates.html'"></ng-include>
-    <ng-include src="'/app/components/photoviewer/photoviewer.html'"></ng-include>
+<ng-include src="'/app/components/ng_message_templates/error_templates.html'"></ng-include>
+<ng-include src="'/app/components/photoviewer/photoviewer.html'"></ng-include>
 
 <map-sort ng-if="mapState == 'full-size'"></map-sort>
-    <new-message></new-message>
+<new-message></new-message>
 
 <!-- build:js(src) scripts/vendor.js -->
 <!--<script src="assets/libs/Leaflet/leaflet.js"></script>-->
