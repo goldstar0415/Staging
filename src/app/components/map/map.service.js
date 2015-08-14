@@ -327,10 +327,6 @@
         map.addLayer(markersLayer);
         ChangeState('big');
 
-
-        eventsLayer.addLayer(L.marker({lat:49.9, lng:36.25}));
-
-
         window.map = map;
         map.locate({setView: true, maxZoom: 8});
         return map;
@@ -377,6 +373,7 @@
 
       //Layers
       function ChangeState(state) {
+
         switch (state.toLowerCase()) {
           case "big":
             showEventsLayer(true);
@@ -398,13 +395,24 @@
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
 
+
+        console.log('state ', state);
+        console.log('draw layer ', map.hasLayer(drawLayer));
+        console.log('draggable layer ', map.hasLayer(draggableMarkerLayer));
+        console.log('marker layer ', map.hasLayer(markersLayer));
+        console.log('events layer ', map.hasLayer(eventsLayer));
+        console.log('recreations layer ', map.hasLayer(recreationsLayer));
+        console.log('pitstops layer ', map.hasLayer(pitstopsLayer));
+        console.log('other layer ', map.hasLayer(otherLayer));
+        console.log('==================================================');
         $timeout(function() {
           map.invalidateSize();
         })
       }
 
       function showEventsLayer(clearLayers) {
-        if (clearLayers) { eventsLayer.clearLayers(); }
+        ClearSelectionListeners();
+        //if (clearLayers) { eventsLayer.clearLayers(); }
         map.addLayer(eventsLayer);
         map.removeLayer(recreationsLayer);
         map.removeLayer(pitstopsLayer);
@@ -413,7 +421,8 @@
       }
 
       function showPitstopsLayer(clearLayers) {
-        if (clearLayers) { pitstopsLayer.clearLayers(); }
+        ClearSelectionListeners();
+        //if (clearLayers) { pitstopsLayer.clearLayers(); }
         map.addLayer(pitstopsLayer);
         map.removeLayer(recreationsLayer);
         map.removeLayer(eventsLayer);
@@ -422,7 +431,8 @@
       }
 
       function showRecreationsLayer(clearLayers) {
-        if (clearLayers) { recreationsLayer.clearLayers(); }
+        ClearSelectionListeners();
+        //if (clearLayers) { recreationsLayer.clearLayers(); }
         map.addLayer(recreationsLayer);
         map.removeLayer(eventsLayer);
         map.removeLayer(pitstopsLayer);
@@ -431,6 +441,7 @@
       }
 
       function showOtherLayers() {
+        ClearSelectionListeners();
         otherLayer.clearLayers();
         map.addLayer(otherLayer);
         map.removeLayer(recreationsLayer);
@@ -698,6 +709,18 @@
         pathSelectionStarted = false;
       }
 
+      function WeatherSelection(callback) {
+        map.on('click', function(e) {
+          $http.get(API_URL + '/weather?lat='+ e.latlng.lat + '&lng=' + e.latlng.lng)
+            .success(function(data) {
+              callback(data);
+            })
+            .error(function(data) {
+              callback(null);
+            })
+        });
+      }
+
       function ClearSelectionListeners() {
         map.off('mousedown');
         map.off('mousemove');
@@ -958,7 +981,6 @@
               spots = FilterUniqueObjects(spots);
 
               $rootScope.$emit('update-map-data', spots);
-              clearLayers();
             })
         } else {
           clearLayers();
@@ -1008,11 +1030,6 @@
       }
 
       function drawSpotMarkers(spots, type, clear) {
-        console.log('events layer ', map.hasLayer(eventsLayer));
-        console.log('recreations layer ', map.hasLayer(recreationsLayer));
-        console.log('pitstops layer ', map.hasLayer(pitstopsLayer));
-        console.log('other layer ', map.hasLayer(otherLayer));
-        console.log('==================================================');
         if(clear) {
           GetCurrentLayer().clearLayers();
         }
@@ -1036,6 +1053,7 @@
             eventsLayer.addLayers(markers);
             break;
         }
+
       }
 
 
@@ -1082,7 +1100,8 @@
 
         GetBBoxes: GetDrawLayerBBoxes,
         GetDataByBBox: GetDataByBBox,
-        drawSpotMarkers: drawSpotMarkers
+        drawSpotMarkers: drawSpotMarkers,
+        WeatherSelection: WeatherSelection
       };
     });
 

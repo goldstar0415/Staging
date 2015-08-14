@@ -52,7 +52,7 @@
           </p>
 
           <div ng-show="eventsCategoryToggle" class="hide-block-subcategory">
-            <div ng-click="toggleEventCategories(); sortPitstopsByCategories();">
+            <div ng-click="toggleEventCategories(); sortEventsByCategories();">
               <p>Select all sub-categories</p>
             </div>
             <ul>
@@ -87,7 +87,7 @@
           </p>
 
           <div ng-show="recreationsCategoryToggle" class="hide-block-subcategory">
-            <div ng-click="toggleRecreationCategories(); sortPitstopsByCategories();">
+            <div ng-click="toggleRecreationCategories(); sortRecreationsByCategories();">
               <p>Select all sub-categories</p>
             </div>
             <ul>
@@ -145,19 +145,19 @@
       </div>
 
       <div ng-show="MapSort.sortLayer == 'weather'">
-        <div class="col-xs-12 no-pad">
+        <div ng-show="weather" class="col-xs-12 no-pad">
           <div class="firstBlock-wrapper">
             <div class="weatherImg-block">
-              <p class="weatherName">Cold</p>
+              <p class="weatherName">{{weather.currently.summary}}</p>
 
-              <p class="weatherData">05.29.2015</p>
+              <p class="weatherData">{{weather.date}}</p>
 
               <div class="weatherImg-wrapper">
                 <div class="weatherImg"></div>
               </div>
               <div class="temperature-block">
-                <span class="temperature">22</span>
-                <span class="unit">°C</span>
+                <span class="temperature">{{weather.currently.temperature}}</span>
+                <span class="unit">°F</span>
 
                 <p class="unit2"><span>H</span>4° </p>
 
@@ -176,7 +176,7 @@
                 <p class="description">sunset</p>
               </div>
               <div>
-                <p class="mainParameters">13 <span>km/h</span></p>
+                <p class="mainParameters">{{weather.currently.windSpeed}} <span>km/h</span></p>
 
                 <p class="description">wind</p>
               </div>
@@ -221,6 +221,9 @@
               <span class="temperatureWeek">2°/15°</span>
             </div>
           </div>
+        </div>
+        <div ng-show="!weather" class="col-xs-12 no-pad">
+          <p>Click on map to check weather in this area</p>
         </div>
       </div>
     </div>

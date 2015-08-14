@@ -46,9 +46,17 @@
       vm.recreationsArray = MapService.SortByRating(vm.recreationsArray);
       vm.pitstopsArray = MapService.SortByRating(vm.pitstopsArray);
 
-      $scope.sortEventsByCategories();
-      $scope.sortRecreationsByCategories();
-      $scope.sortPitstopsByCategories();
+      switch(vm.sortLayer) {
+        case 'event':
+          $scope.sortEventsByCategories();
+          break;
+        case 'recreation':
+          $scope.sortRecreationsByCategories();
+          break;
+        case 'pitstop':
+          $scope.sortPitstopsByCategories();
+          break;
+      }
     });
 
 
@@ -62,17 +70,24 @@
         case 'events':
               MapService.showEvents();
               vm.sortLayer = 'event';
+              $scope.sortEventsByCategories();
               break;
         case 'pitstops':
               MapService.showPitstops();
               vm.sortLayer = 'pitstop';
+              $scope.sortPitstopsByCategories();
               break;
         case 'recreations':
               MapService.showRecreations();
               vm.sortLayer = 'recreation';
+              $scope.sortRecreationsByCategories();
               break;
         case 'other':
               MapService.showOtherLayers();
+              MapService.WeatherSelection(function(data) {
+                $scope.weather = data;
+                $scope.weather.date = moment().format('DD.MM.YYYY');
+              });
               vm.sortLayer = 'weather';
               break;
       }
