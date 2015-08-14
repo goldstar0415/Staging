@@ -154,6 +154,7 @@
       .settings-link {
         background: url(/assets/img/icons/settings.png) no-repeat;
       }
+
     }
     .create-wrap {
       height: 80px;
@@ -162,7 +163,16 @@
         @include vertical_align;
       }
     }
+    .sign-out {
+      position: inherit;
+      bottom: 0;
+      margin: 15px auto 0;
+    }
   }
+}
+
+.snap-drawer-left {
+  background-color: #0C2635;
 }
 
 @media (max-width: 991px) {

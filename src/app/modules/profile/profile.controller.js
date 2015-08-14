@@ -22,7 +22,7 @@
             areas: _.pluck(vm.attachments.areas, 'id')
           }
         }, function success(message) {
-          vm.wall.unshift(message);
+          vm.wall.data.unshift(message);
           vm.message = '';
           vm.attachments.photos = [];
           vm.attachments.spots = [];

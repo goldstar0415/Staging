@@ -6,9 +6,29 @@
     .controller('PlannerController', PlannerController);
 
   /** @ngInject */
-  function PlannerController(Plan) {
+  function PlannerController(Plan, API_URL, $state) {
     var vm = this;
-    vm.events = [];
+    vm.sourceEvents = [
+      [{
+        "id": 6521,
+        "title": "Artem Onoprienko has a birthday",
+        "start": "2015-08-13",
+        "birthday": "1988-08-13",
+        "type": "user",
+        "url": "http:\/\/zoomzoom.itechhighway.com\/user\/6521",
+        "avatar": {
+          "thumb": "\/images\/avatar.png",
+          "medium": "\/images\/avatar.png",
+          "large": "\/images\/avatar.png",
+          "full": "\/images\/avatar.png"
+        },
+        "years": "27",
+        "events_count": 2,
+        "followings_count": 7
+      }],
+      getEvents,
+      eventRender
+    ];
 
     vm.calendarConfig = {
       height: 450,
@@ -18,9 +38,9 @@
         center: 'title',
         right: 'today prev,next'
       },
-      eventLimit: true,
+      eventLimit: true
       //events: getEvents,
-      eventRender: eventRender
+      //eventRender: eventRender
       //eventClick: vm.alertOnEventClick,
       //eventDrop: vm.alertOnDrop,
       //eventResize: vm.alertOnResize,
@@ -28,50 +48,35 @@
     };
 
     function getEvents(start, end, timezone, callback) {
+      console.log(arguments);
       Plan.events({
-        start: start,
-        end: end
-      }, function success(data) {
+        start_date: start.format('YYYY-MM-DD'),
+        end_date: end.format('YYYY-MM-DD')
+      }, function success(events) {
+        //_.each(events, function (event) {
+        //  event.url = $state.href('spot', {spot_id: event.id})
+        //});
+        events = _.union(events.plans, events.spots);
+        console.log(events);
         callback(events);
         //vm.events = data;
       });
     }
 
-    function eventRender(data, element) {
+    function eventRender(start, end, timezone, callback) {
       console.log(arguments);
-      var description;
-      if (data.type == 'event' || data.type == 'plan') {
-        description = {
-          text: data.description,
-          title: data.title
-        };
-        if (data.type == 'plan') {
-          $(element).css('border-color', '#28ce9d');
-          $(element).css('background-color', '#28ce9d');
-        }
-      } else if (data.type == 'user') {
-        description = data.title;
-      }
 
-      //Attach tooltip
-      $(element).qtip({
-        overwrite: true,
-        content: description,
-        //Position config
-        position: {
-          my: 'top center',
-          at: 'bottom center'
-        },
-        //Show config
-        show: {
-          event: 'click mouseenter',
-          solo: true
-        },
-        //Style config
-        style: {
-          classes: 'qtip-light qtip-shadow'
-        }
-      });
+      var s = new Date(start).getTime() / 1000;
+      var e = new Date(end).getTime() / 1000;
+      var m = new Date(start).getMonth();
+      var events = [{
+        title: 'Feed Me ' + m,
+        start: s + (50000),
+        end: s + (100000),
+        allDay: false,
+        className: ['customFeed']
+      }];
+      callback(events);
     }
   }
 })();
