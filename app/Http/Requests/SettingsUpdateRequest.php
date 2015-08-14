@@ -38,7 +38,7 @@ class SettingsUpdateRequest extends Request
                 $rules = [
                     'first_name' => 'required|max:64',
                     'last_name' => 'required|max:64',
-                    'birth_date' => 'date',
+                    'birth_date' => 'date_format:Y-m-d',
                     'sex' => 'boolean',
                     'time_zone' => 'timezone',
                     'description' => 'string|max:255',

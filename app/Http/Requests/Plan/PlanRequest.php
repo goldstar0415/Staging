@@ -26,8 +26,8 @@ class PlanRequest extends Request
         $rules = [
             'title' => 'required|string|max:255',
             'description' => 'string|max:255',
-            'start_date' => 'date',
-            'end_date' => 'date',
+            'start_date' => 'date_format:Y-m-d H:i:s',
+            'end_date' => 'date_format:Y-m-d H:i:s',
             'address' => 'required|string|max:255',
             'location.lat' => 'required|numeric',
             'location.lng' => 'required|numeric',
@@ -40,8 +40,8 @@ class PlanRequest extends Request
                 'title' => 'required|string|max:255',
                 'activity_category_id' => 'required|exists:activity_categories,id',
                 'description' => 'string|max:255',
-                'start_date' => 'date',
-                'end_date' => 'date',
+                'start_date' => 'date_format:Y-m-d H:i:s',
+                'end_date' => 'date_format:Y-m-d H:i:s',
                 'address' => 'string|max:255',
                 'location.lat' => 'numeric',
                 'location.lng' => 'numeric'

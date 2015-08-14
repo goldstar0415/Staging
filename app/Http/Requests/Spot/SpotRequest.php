@@ -26,8 +26,8 @@ class SpotRequest extends Request
         $rules = [//TODO: cover validation
             'title' => 'required|string|max:255',
             'description' => 'string|max:255',
-            'start_date' => 'date',
-            'end_date' => 'date',
+            'start_date' => 'date_format:Y-m-d H:i:s',
+            'end_date' => 'date_format:Y-m-d H:i:s',
             'locations' => 'array|count_max:20',
             'videos' => 'array|count_max:5',
             'web_sites' => 'array|count_max:5',

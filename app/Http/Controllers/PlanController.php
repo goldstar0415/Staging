@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Activity;
+use App\ActivityCategory;
 use App\Http\Requests\Plan\PlanStoreRequest;
 use App\Plan;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class PlanController extends Controller
      */
     public function index()
     {
-        //
+        return '';
     }
 
     /**
@@ -59,6 +60,8 @@ class PlanController extends Controller
                 $plan->activities()->save($activity);
             }
         }
+
+        return $plan;
     }
 
     /**

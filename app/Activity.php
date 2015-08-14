@@ -30,7 +30,7 @@ class Activity extends BaseModel
 
     protected $dates = ['start_date', 'end_date'];
 
-    protected $guarded = ['id', 'plan_id', 'activity_category_id'];
+    protected $guarded = ['id', 'plan_id'];
 
     protected $postgisFields = [
         'location' => Point::class,
