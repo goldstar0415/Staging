@@ -16,6 +16,7 @@
       'snap',
       'angular-loading-bar',
       'luegg.directives',
+      'ui.calendar',
       'ngTagsInput',
       'ui.select',
       'ui.utils.masks',

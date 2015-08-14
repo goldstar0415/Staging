@@ -168,6 +168,9 @@ h3 {
 .no-pad-right {
   padding-right: 0;
 }
+.no-pad-bottom {
+  padding-right: 0;
+}
 
 .central {
   @include content_bg;
@@ -267,7 +270,6 @@ h3 {
   height: 100px;
   width: 100%;
   border: 2px dashed #b5e0ef;
-  margin: 0 15px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -325,6 +327,7 @@ h3 {
     background-color: $light_green;
     box-shadow: none;
     border: none;
+    color: $white;
   }
 }
 
@@ -340,6 +343,7 @@ h3 {
     background-color: $blue;
     box-shadow: none;
     border: none;
+    color: $white;
   }
 }
 
@@ -355,10 +359,18 @@ h3 {
     background-color: $light_red;
     box-shadow: none;
     border: none;
+    color: $white;
+
   }
 }
 
 /*end buttons*/
+
+.no-background {
+  background: none;
+  border-radius: 0;
+  border: none;
+}
 
 /*responsive*/
 

@@ -9,7 +9,7 @@
   function ZoomtivitySideMenu() {
     var directive = {
       restrict: 'E',
-      templateUrl: 'app/components/navigation/side_menu/side_menu.html',
+      templateUrl: '/app/components/navigation/side_menu/side_menu.html',
       scope: {
         side: '@'
       },
@@ -21,8 +21,9 @@
     return directive;
 
     /** @ngInject */
-    function SideMenuController(User, snapRemote, UserService) {
+    function SideMenuController($state, User, snapRemote, UserService) {
       var vm = this;
+      vm.$state = $state;
 
       vm.signOut = function () {
         User.logOut(function () {

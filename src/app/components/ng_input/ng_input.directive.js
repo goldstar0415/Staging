@@ -15,7 +15,7 @@
         onSubmit: '&',
         onFocus: '&'
       },
-      templateUrl: 'app/components/ng_input/ng_input.html',
+      templateUrl: '/app/components/ng_input/ng_input.html',
       controller: NgInputController,
       controllerAs: 'NgInput',
       bindToController: true
@@ -42,6 +42,10 @@
 
       vm.deleteSpot = function (idx) {
         vm.attachments.spots.splice(idx, 1);
+      };
+
+      vm.deleteArea = function (idx) {
+        vm.attachments.areas.splice(idx, 1);
       };
 
       vm.openPhotosModal = function () {
@@ -71,9 +75,9 @@
             spots: function (Spot) {
               return Spot.query().$promise;
             },
-            //favorites: function () {
-            //  return Spot.query().$promise;
-            //},
+            favorites: function (Spot) {
+              return Spot.favorites().$promise;
+            },
             areas: function (Area) {
               return Area.query().$promise;
             },

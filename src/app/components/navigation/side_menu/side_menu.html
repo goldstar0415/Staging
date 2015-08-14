@@ -1,10 +1,41 @@
 <div class="{{SideMenu.side}}-menu-snap">
+  <ul ng-if="SideMenu.side == 'left'">
+    <li ng-if="SideMenu.$state.current.name != 'index'" class="map-profile side">
+      <a ui-sref="index" ui-sref-active="active"><span>Map</span><span class="map-icon"></span></a>
+    </li>
+    <li ng-if="$root.currentUser && SideMenu.$state.current.name == 'index'" class="map-profile side">
+      <a ui-sref="profile({user_id: $root.currentUser.id})"><span>{{$root.currentUser.first_name}}</span>
+        <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
+      </a>
+    </li>
+    <li ng-if="!$root.currentUser">
+      <sign-in title="Sign in"></sign-in>
+    </li>
+    <li class="hidden-xs hidden-sm">|</li>
+    <li ng-if="!$root.currentUser">
+      <sign-up></sign-up>
+    </li>
+  </ul>
+
+  <ul ng-if="$root.currentUser && SideMenu.side == 'left' && SideMenu.$state.current.name != 'index'">
+    <li><a ui-sref-active="active" class="spots-link">My spots</a></li>
+    <li><a ui-sref-active="active" class="blog-link">My blog</a></li>
+    <li><a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active"
+           class="favorites-link">Favorites</a></li>
+    <li><a class="searches-link">Saved searches</a></li>
+    <li><a ui-sref="friendsmap" ui-sref-active="active" class="friends-link">Friends map</a></li>
+    <li><a ui-sref="photomap({user_id: $root.profileUser.id})" ui-sref-active="active" class="photo-link">Photo map</a>
+    </li>
+    <li><a ui-sref="planner" ui-sref-active="active" class="planner-link">Planner</a></li>
+    <li><a ui-sref="settings" ui-sref-active="active" class="settings-link">Settings</a></li>
+  </ul>
+
   <ul>
-    <li><a ui-sref="spot_create" class="create-btn">Create spot</a></li>
-    <li><a ui-sref="zoomers" class="zoomers-link">Zoomers</a></li>
-    <li><a ui-sref="blog" class="blog-link">Blog</a></li>
-    <li><a ui-sref="about_us" class="about-link">About us</a></li>
-    <li><a ui-sref="contact_us" class="contacts-link">Contact us</a></li>
-    <li><a ng-click="SideMenu.signOut()" class="sign-btn">Sign out</a></li>
+    <li class="create-wrap"><a ui-sref="spot_create" class="create-btn" ui-sref-active="active">Create spot</a></li>
+    <li><a ui-sref="zoomers" class="zoomers-link" ui-sref-active="active">Zoomers</a></li>
+    <li><a class="blog-link" ui-sref-active="active">Blog</a></li>
+    <li><a ui-sref="about_us" class="about-link" ui-sref-active="active">About us</a></li>
+    <li><a ui-sref="contact_us" class="contacts-link" ui-sref-active="active">Contact us</a></li>
+    <li class="sign-out"><a ng-if="$root.currentUser" ng-click="SideMenu.signOut()" class="sign-btn">Sign out</a></li>
   </ul>
 </div>

@@ -6,9 +6,9 @@
     .controller('ProfileMenuController', ProfileMenuController);
 
   /** @ngInject */
-  function ProfileMenuController(User) {
+  function ProfileMenuController(User, $state) {
     var vm = this;
-
+    vm.$state = $state;
 
     vm.follow = function (user) {
       if (user.can_follow) {

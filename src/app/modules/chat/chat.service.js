@@ -31,8 +31,7 @@
       //TODO: update dialogs
 
       if ($state.current.name == 'chatRoom' && $state.params.user_id == data.user.id) {  //if user in chat
-        data.message.sender_id = data.user.id;
-        data.message.receiver_id = $rootScope.currentUser.id;
+        //data.message.pivot = {sender_id: data.user.id, receiver_id: $rootScope.currentUser.id}
         pushToToday(data.message);
         //} else if ($state.current.name == 'chat') {
         //  _.each(dialogs, function (dialog) {
@@ -53,7 +52,7 @@
 
 
     function groupByDate(chatMessages) {
-      //chatMessages = chatMessages.reverse();
+      chatMessages = chatMessages.reverse();
       messages = [];
 
       var groupedMessagesObject = _.groupBy(chatMessages, function (item) {
@@ -101,7 +100,7 @@
     function markAsRead(user_id) {
       angular.forEach(messages, function (groupMessages) {
         angular.forEach(groupMessages.messages, function (message) {
-          if (message.receiver_id == user_id) {
+          if (message.pivot.receiver_id == user_id) {
             message.is_read = true;
           }
         });

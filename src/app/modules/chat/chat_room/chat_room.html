@@ -18,7 +18,7 @@
          <div  ng-repeat="message in messageGroup.messages">
 
           <!--       Dialog-User                 -->
-          <div class="col-xs-12 dialog-user" ng-if="currentUser.id == message.sender_id"
+          <div class="col-xs-12 dialog-user" ng-if="currentUser.id == message.pivot.sender_id"
                ng-class="{new: !message.is_read}">
             <div class="col-xs-12 user-name">
               <h3 class="right">
@@ -33,6 +33,7 @@
               <div class="col-xs-12 dialog-content">
                 <div class="dial">
                   <p>{{message.body}}</p>
+                  <attachments items="message.attachments"></attachments>
                 </div>
               </div>
               <div>
@@ -52,7 +53,7 @@
           </div>
 
           <!--       Dialog-friend                     -->
-          <div class="col-xs-12 dialog-friend" ng-if="ChatRoom.user.id == message.sender_id"
+          <div class="col-xs-12 dialog-friend" ng-if="ChatRoom.user.id == message.pivot.sender_id"
                ng-class="{new: !message.is_read}">
             <div class="col-xs-12 user-name ">
               <h3>
@@ -71,6 +72,7 @@
               <div class="col-xs-12 dialog-content-friend ">
                 <div class="dial">
                   <p>{{message.body}}</p>
+                  <attachments items="message.attachments"></attachments>
                 </div>
               </div>
               <div>
@@ -89,117 +91,5 @@
     </div>
   </div>
 
-
-  <!--<div class="col-xs-12 padding-0 ">-->
-  <!--<h4 class="date-dialog-day">Today</h4>-->
-  <!--&lt;!&ndash;       Dialog-User                 &ndash;&gt;-->
-  <!--<div class="col-xs-12 dialog-user">-->
-  <!--<div class="col-xs-12 user-name">-->
-  <!--<h3 class="right"><a href="#">Louis Austin</a></h3>-->
-  <!--</div>-->
-  <!--<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 padding-0">-->
-
-  <!--<div class="col-xs-12 dialog-content">-->
-  <!--<div class="dial">-->
-  <!--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit am Lorem ipsum dolor sit amet,-->
-  <!--consectetur adipisicing elit ipsum dolor sit am Lorem ipsum dolor sit amet, consectetur adipisicing elit-->
-  <!--ipsum dolor sit am Lorem ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit am</p>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div>-->
-  <!--<p class=" date right"> 4:02 AM</p>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div class="col-sm-1 col-xs-2 ">-->
-  <!--<a href="#"><img src="/assets/img/icons/avatar-user.png" class="avatar">-->
-  <!--</a>-->
-  <!--</div>-->
-  <!--<div class="delete-user">-->
-  <!--<a href="#"><img src="/assets/img/icons/del.png">-->
-  <!--</a>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--&lt;!&ndash;       Dialog-friend                     &ndash;&gt;-->
-  <!--<div class="col-xs-12 dialog-friend  ">-->
-  <!--<div class="col-xs-12 user-name ">-->
-  <!--<h3><a href="#">Esther Mason</a></h3>-->
-  <!--</div>-->
-  <!--<div class="col-sm-1 col-xs-2  ">-->
-  <!--<a href="#"><img src="/assets/img/icons/avatar-user.png" class="avatar">-->
-  <!--</a>-->
-  <!--</div>-->
-  <!--<div class="col-xs-10 ">-->
-
-  <!--<div class="col-xs-12 dialog-content-friend ">-->
-  <!--<div class="dial">-->
-  <!--<p>Lorem ipsum dolor sit amet, consectetur consectetur consectetur consecteturv consectetur consectetur-->
-  <!--consectetur adipisicing elit ipsum dolor sit am</p>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div>-->
-  <!--<p class="date ">4:25 AM</p>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div class="delete-friend">-->
-  <!--<a href="#"><img src="/assets/img/icons/del.png">-->
-  <!--</a>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--&lt;!&ndash;       Dialog-user-image               &ndash;&gt;-->
-  <!--<div class="col-xs-12 dialog-user ">-->
-  <!--<div class="col-xs-12 user-name">-->
-  <!--<h3 class="right"><a href="#">Louis Austin</a></h3>-->
-  <!--</div>-->
-  <!--<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 padding-0">-->
-
-  <!--<div class="col-xs-12 dialog-content">-->
-  <!--<div class="dial">-->
-  <!--<p>Lorem ipsum dolor sit amet, consectetur consectetur consectetur consecteturv consectetur consectetur-->
-  <!--consectetur adipisicing elit ipsum dolor sit a </p>-->
-  <!--<img src="/assets/img/icons/q.png">-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div>-->
-  <!--<p class=" date right"> 4:27 AM</p>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div class="col-sm-1 col-xs-2">-->
-  <!--<a href="#"><img src="/assets/img/icons/avatar-user.png " class="avatar">-->
-  <!--</a>-->
-  <!--</div>-->
-  <!--<div class="delete-user">-->
-  <!--<a href="#"><img src="/assets/img/icons/del.png">-->
-  <!--</a>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div class="col-xs-12  dialog-friend  ">-->
-  <!--<div class="col-xs-12 user-name">-->
-  <!--<h3><a href="#">Esther Mason</a></h3>-->
-  <!--</div>-->
-  <!--<div class="col-sm-1 col-xs-2  ">-->
-  <!--<a href="#"><img src="/assets/img/icons/avatar-user.png" class="avatar">-->
-  <!--</a>-->
-  <!--</div>-->
-  <!--<div class="col-xs-10">-->
-
-  <!--<div class="col-xs-12 dialog-content-friend ">-->
-  <!--<div class="dial">-->
-  <!--<p>Lorem ipsum dolor sit amet, consectetur consectetur consectetur consecteturv consectetur consectetur-->
-  <!--consectetur adipisicing elit ipsum dolor sit am</p><img src="/assets/img/icons/avatar-user.png">-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div>-->
-  <!--<p class="date ">4:45 AM</p>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div class="delete-friend">-->
-  <!--<a href="#"><img src="/assets/img/icons/del.png">-->
-  <!--</a>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-
-
-  <!--        Форма                -->
   <ng-input message="ChatRoom.message" attachments="ChatRoom.attachments" on-submit="ChatRoom.sendMessage()" on-focus="ChatRoom.markAsRead()"></ng-input>
 </div>

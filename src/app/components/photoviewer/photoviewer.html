@@ -1,33 +1,38 @@
 <script type="text/ng-template" id="photoViewer.html">
-    <div class="viewer-content">
-      <div class="photo-viewer">
-        <div class="image col-xs-8">
-          <img src="{{PV.currentPhoto.photo_url.original}}">
-          <a href="#" ng-click="PV.nextPhoto($event)" class="previous"></a>
-          <a href="#" ng-click="PV.previousPhoto($event)" class="next"></a>
-        </div>
-        <div class="photo-comments col-xs-4">
-          <p class="location">{{PV.currentPhoto.address}}</p>
+  <div class="viewer-content">
+    <div class="photo-viewer">
+      <div class="image col-xs-8">
+        <img ng-src="{{PV.currentPhoto.photo_url.original}}">
+        <a ng-click="PV.nextPhoto($event)" class="previous"></a>
+        <a ng-click="PV.previousPhoto($event)" class="next"></a>
+      </div>
+      <div class="photo-comments col-xs-4">
+        <p class="location">{{PV.currentPhoto.address}}</p>
 
-          <form role="form" class="col-xs-12 new-post">
-            <textarea placeholder="Start typing..."></textarea>
-            <input type="submit" value="Send">
-          </form>
-          <div class="col-xs-12 reviews">
-            <div class="post" ng-repeat="comment in PV.comments">
-              <div class="col-xs-2 no-pad">
-                <img class="avatar" src="{{comment.user_avatar}}" alt="Louis Austin">
-              </div>
-              <div class=" col-xs-10 info">
-                <h3 class="name">{{comment.user_firstname + " " + comment.user_lastname}}</h3>
+        <form name="form" ng-submit="PV.sendComment()" class="col-xs-12 new-post">
+          <textarea ng-model="PV.comment" name="comment" placeholder="Start typing..."></textarea>
 
-                <p>{{comment.body}}</p>
+          <div ng-messages="form.comment.$error" ng-if="form.$submitted" class="error-message">
+            <div ng-message="required">is required</div>
+          </div>
 
-                <p class="time">{{comment.created_at}}</p>
-              </div>
+          <input type="submit" value="Send">
+        </form>
+        <div class="col-xs-12 reviews">
+          <div class="post" ng-repeat="comment in PV.comments">
+            <div class="col-xs-2 no-pad">
+              <img class="avatar" ng-src="{{comment.user.avatar_url.thumb}}" alt="Louis Austin">
+            </div>
+            <div class=" col-xs-10 info">
+              <h3 class="name">{{comment.user.first_name}} {{comment.user.last_name}}</h3>
+
+              <p>{{comment.body}}</p>
+
+              <p class="time">{{comment.created_at}}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </script>

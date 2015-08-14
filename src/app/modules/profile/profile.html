@@ -1,54 +1,38 @@
 <div class="content-wall">
   <h2 class="title-name">My profile</h2>
 
+
   <div ng-if="profileUser.id == currentUser.id">
-    <a ui-sref="profile({user_id: profileUser.id})" class="btn btn-primary">Wall</a>
-    <a ui-sref="chat" class="btn btn-primary">Messages</a>
-    <a ui-sref="feeds" class="btn btn-primary">Feed</a>
-    <a ui-sref="reviews" class="btn btn-primary">Reviews</a>
+    <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
   </div>
 
-  <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()" ></ng-input>
+  <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()"></ng-input>
 
 
   <!--                        -->
   <div class="col-xs-12 post" ng-repeat="post in Profile.wall">
     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 padding-0">
-      <a ui-sref="profile({user_id: post.seder.id})">
+      <a ui-sref="profile({user_id: post.sender.id})">
         <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
       </a>
     </div>
     <div class="col-lg-11 col-md-10 col-sm-10 col-xs-10 info">
       <h3 class="name">
-        <a ui-sref="profile({user_id: post.seder.id})">{{post.seder.first_name}} {{post.seder.last_name}}</a>
+        <a ui-sref="profile({user_id: post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
       </h3>
 
-      <p>{{post.message}}</p>
-
-      <!--<div class="col-xs-12 external-link padding-0">-->
-        <!--<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 padding-0">-->
-          <!--<a href="#" class="wrap"><img src="/assets/img/icons/avatar.jpg"></a>-->
-        <!--</div>-->
-        <!--<div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 second-info padding-0">-->
-          <!--<a href="#" class="second-link">Mitchel Brunings - Redemption Song</a>-->
-
-          <!--<p class="description">The Blind Audition van Mitchell Brunings. Hij zingt "Redemption Song" van-->
-            <!--Bob Marley. Bezoek de officiële site: http://www.thevoiceofholland.com/ ABONNEER vo...</p>-->
-
-          <!--<div class="photo-info"><a href="#"><a href="#"><img src="/assets/img/img13.jpg"></a></a></div>-->
-        <!--</div>-->
-      <!--</div>-->
+      <p>{{post.body}}</p>
+      <attachments items="post.attachments"></attachments>
 
       <p class="time">{{post.created_at | fromNow}}</p>
 
       <div class="plus-minus">
-        <a href="#" class="plus"></a>
-        <norb>0</norb>
-        <a href="#" class="minus"></a>
+        <a class="plus" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)"></a>
+        {{post.rating}}
+        <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
       </div>
     </div>
   </div>
-
 
 
 </div>

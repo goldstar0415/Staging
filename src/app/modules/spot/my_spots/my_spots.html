@@ -30,7 +30,7 @@
                     </span>
 
     <h2 class="">
-      <a>{{::item.title}}</a>
+      <a ui-sref="spot({spot_id: item.id})">{{::item.title}}</a>
     </h2>
 
     <p class="place"></p>
@@ -38,7 +38,7 @@
     <p class="description"><span>{{::item.description}}</span></p>
     <figure>
       <img ng-src="{{item.cover_url.original}}"
-           style="position: relative; width: 100%;" alt="{{item.title}}">
+           style="position: relative; width: 100%;" alt="{{item.title}}" class="img-size">
     </figure>
 
     <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">

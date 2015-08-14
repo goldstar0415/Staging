@@ -1,10 +1,54 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<div class="col-xs-12" >
+  <div class=" wrap">
+    <!-- section with calendar -->
+    <section class="col-xs-12  no-pad create-new-plan">
+      <div ui-calendar="Planner.calendarConfig" class="span8 calendar" ng-model="Planner.events"></div>
+    </section>
+    <!-- end section with calendar -->
 
-</body>
-</html>
+    <!-- section with export -->
+    <section class="col-xs-12  no-pad ">
+      <div class="export-to-ics">
+        <a>Export to ICS</a>
+      </div>
+    </section>
+    <!--end section with export -->
+
+
+    <!-- sub event -->
+    <section class="central   col-xs-12">
+      <h2 class="title-name">Plans</h2>
+      <a ui-sref="planner.create" class="add-friend" title="Create new spot"></a>
+
+      <div class="event">
+        <h3 class="title-planner">
+          <a ui-sref="planner.view({plan_id: 1})">Lorem</a>
+          <span class="date">
+            05 Aug 2016 — 08 Aug 2016
+          </span>
+        </h3>
+
+        <p class="place"></p>
+
+        <p class="description"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad adipisci al soluta temporibus voluptate! Accusamus aperiam debitis nemo perspiciatis tempore.</span>
+        </p>
+
+        <ul class="tools">
+          <li>
+            <a ui-sref="planner.edit({plan_id: 1})" class="edit-tools">Edit</a>
+          </li>
+          <li>
+            <a class="delete">Delete</a>
+          </li>
+
+          <li>
+            <a class="invite-friend">Invite
+              friends</a>
+          </li>
+
+        </ul>
+
+      </div>
+    </section>
+  </div>
+</div>

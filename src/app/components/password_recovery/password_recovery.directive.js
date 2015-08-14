@@ -9,7 +9,7 @@
   function passwordRecovery() {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/password_recovery/password_recovery.html',
+      templateUrl: '/app/components/password_recovery/password_recovery.html',
       controller: PasswordRecoveryController,
       controllerAs: 'password',
       bindToController: true
@@ -24,6 +24,7 @@
       };
     }
 
+    /** @ngInject */
     function PasswordRecoveryModalController(PasswordRecoveryService, $modalInstance) {
       var vm = this;
 

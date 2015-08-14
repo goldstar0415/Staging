@@ -16,34 +16,87 @@
       border-bottom: 1px solid #173041;
       width: 200px;
       display: block;
-      margin: 0 15px;
+      margin: 0;
+      float: left;
+      margin: 0;
+      padding: 0;
       a {
         display: block;
         color: #fff;
         font: $navigation_font;
         margin-top: 3px;
         padding: 12px 0 15px 40px;
-        &:hover {
+
+        &.active, &:hover, &:focus, &:active {
           text-decoration: none;
           color: $blue;
           background-position-y: -41px;
         }
       }
-      &:last-child {
-        border-bottom: none;
-        position: absolute;
-        bottom: 15px;
+    }
+    .sign-out {
+      border-bottom: none;
+      position: absolute;
+      bottom: 15px;
+    }
+    .map-profile {
+      height: 100%;
+      a {
+        height: 100%;
+        display: block;
+        padding: 0 15px;
+        margin: 0;
+        span {
+          @include vertical_align;
+          display: inline-block;
+          img {
+            width: 38px;
+            height: 38px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            box-shadow: inset 0 0 15px 3px #0c2638;
+          }
+          &:first-of-type {
+            float: left;
+          }
+          &:last-of-type {
+            float: right;
+            margin-left: 10px;
+          }
+        }
+        .map-icon {
+          background: url(/assets/img/icons/map-icon.png) 0 0 no-repeat;
+          width: 38px;
+          height: 38px;
+        }
+      }
+      .active {
+        color: $blue;
+        background: url(/assets/img/icons/navigation-sep.png) repeat-x;
+        .map-icon {
+          background: url(/assets/img/icons/map-icon.png) 0 -67px no-repeat;
+        }
+      }
+      &:hover {
+        .map-icon {
+          background: url(/assets/img/icons/map-icon.png) 0 -67px no-repeat;
+        }
       }
     }
-    .create-btn {
-      @include button;
-      background-color: $green;
-      height: 38px;
-      width: 140px;
-      margin: 15px auto 10px;
-      display: table;
-      &:hover {
-        background-color: $light_green;
+    .map-profile.side {
+      height: 70px;
+    }
+    .create-wrap {
+      .create-btn {
+        @include button;
+        background-color: $green;
+        height: 38px;
+        width: 140px;
+        margin: 15px auto 10px;
+        display: table;
+        &:hover {
+          background-color: $light_green;
+        }
       }
     }
     .intro-link {
@@ -75,6 +128,43 @@
   }
 }
 
-.left-menu {
+.left-menu-snap {
   left: 0 !important;
+  ul {
+    li {
+      height: 50px;
+      .favorites-link {
+        background: url(/assets/img/icons/fav.png) no-repeat;
+      }
+      .planner-link {
+        background: url(/assets/img/icons/planner.png) no-repeat;
+      }
+      .spots-link {
+        background: url(/assets/img/icons/event.png) no-repeat;
+      }
+      .friends-link {
+        background: url(/assets/img/icons/friends-map.png) no-repeat;
+      }
+      .photo-link {
+        background: url(/assets/img/icons/photo-map.png) no-repeat;
+      }
+      .searches-link {
+        background: url(/assets/img/icons/searches.png) no-repeat;
+      }
+      .settings-link {
+        background: url(/assets/img/icons/settings.png) no-repeat;
+      }
+    }
+    .create-wrap {
+      height: 80px;
+      .create-btn {
+        margin: 0 auto;
+        @include vertical_align;
+      }
+    }
+  }
+}
+
+@media (max-width: 991px) {
+
 }

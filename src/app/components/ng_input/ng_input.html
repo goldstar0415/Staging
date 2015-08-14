@@ -12,12 +12,12 @@
       <div class="links">
         <div class="media media-visible padding-bottom add-location clearfix"
              ng-repeat="area in NgInput.attachments.areas">
-          <a class=" img-selection">circle</a>
+          <a class="img-selection">{{area.data}}</a>
 
           <div class="media-body">
             <div class="description-link">
-              Lorem ipsum
-              <a class="close-link" title="Delete"></a>
+              {{area.description}}
+              <a class="close-link" title="Delete" ng-click="NgInput.deleteArea($index)"></a>
             </div>
           </div>
         </div>
@@ -63,6 +63,6 @@
 
   </form>
 
-  <div ng-include="'app/components/ng_input/photos_modal.html'"></div>
-  <div ng-include="'app/components/ng_input/activity_modal.html'"></div>
+  <div ng-include="'/app/components/ng_input/photos_modal.html'"></div>
+  <div ng-include="'/app/components/ng_input/activity_modal.html'"></div>
 </section>

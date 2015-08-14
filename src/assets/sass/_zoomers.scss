@@ -126,6 +126,7 @@ ul {
     a {
       font: 600 22px/22px Ubuntu;
       color: $blue;
+      word-break: break-all;
       &:hover {
         color: $navy_blue;
         text-decoration: none;

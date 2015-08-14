@@ -9,7 +9,7 @@
   function newMessage() {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/new_message/new_message.html',
+      templateUrl: '/app/components/new_message/new_message.html',
       controller: NewMessageController,
       controllerAs: 'Message',
       bindToController: true

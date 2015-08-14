@@ -34,7 +34,7 @@
       //Abstract state for profile menu
       .state('profile_menu', {
         abstract: true,
-        templateUrl: 'app/components/navigation/profile_menu/profile_menu.html',
+        templateUrl: '/app/components/navigation/profile_menu/profile_menu.html',
         controller: 'ProfileMenuController',
         parent: 'main',
         controllerAs: 'Profile'
@@ -50,7 +50,7 @@
       //Blog page
       .state('blog', {
         url: '/bloggers_profile',
-        templateUrl: 'app/modules/blog/blog.html',
+        templateUrl: '/app/modules/blog/blog.html',
         controller: 'BlogController',
         controllerAs: 'Blog',
         parent: 'main',
@@ -59,7 +59,7 @@
       //Bloggers profile page
       .state('blogger_profile', {
         url: '/bloggers_profile',
-        templateUrl: 'app/modules/blog/bloggers_profile/bloggers_profile.html',
+        templateUrl: '/app/modules/blog/bloggers_profile/bloggers_profile.html',
         controller: 'BloggerProfileController',
         controllerAs: 'Blogger',
         parent: 'main',
@@ -82,7 +82,7 @@
       //Blog article creation page
       .state('blog_article_create', {
         url: '/article/create',
-        templateUrl: 'app/modules/blog/article_create/article_create.html',
+        templateUrl: '/app/modules/blog/article_create/article_create.html',
         controller: 'ArticleCreateController',
         controllerAs: 'ArticleCreate',
         mapState: 'small',
@@ -92,7 +92,7 @@
 
       .state('spot_create', {
         url: '/spot/create',
-        templateUrl: 'app/modules/spot/spot_create/spot_create.html',
+        templateUrl: '/app/modules/spot/spot_create/spot_create.html',
         controller: 'SpotCreateController',
         controllerAs: 'SpotCreate',
         parent: 'profile_menu',
@@ -102,7 +102,7 @@
       })
       .state('spot_edit', {
         url: '/spot/:spot_id/edit',
-        templateUrl: 'app/modules/spot/spot_create/spot_create.html',
+        templateUrl: '/app/modules/spot/spot_create/spot_create.html',
         controller: 'SpotCreateController',
         controllerAs: 'SpotCreate',
         parent: 'profile_menu',
@@ -112,7 +112,7 @@
       })
       .state('spot', {
         url: '/spot/:spot_id',
-        templateUrl: 'app/modules/spot/spot.html',
+        templateUrl: '/app/modules/spot/spot.html',
         controller: 'SpotController',
         controllerAs: 'Spot',
         parent: 'profile_menu',
@@ -121,7 +121,7 @@
       })
       .state('my_spots', {
         url: '/my-spots',
-        templateUrl: 'app/modules/spot/my_spots/my_spots.html',
+        templateUrl: '/app/modules/spot/my_spots/my_spots.html',
         controller: 'MySpotsController',
         controllerAs: 'MySpots',
         parent: 'profile_menu',
@@ -134,20 +134,19 @@
         }
       })
 
-      //Single plan page
-      .state('plan', {
-        url: '/plan/:plan_id',
-        templateUrl: 'app/modules/planner/plan/plan.html',
-        controller: 'PlanController',
-        controllerAs: 'Plan',
+      //Planner (calendar + list of all plans)
+      .state('planner', {
+        url: '/planner',
+        templateUrl: '/app/modules/planner/planner.html',
+        controller: 'PlannerController',
+        controllerAs: 'Planner',
         parent: 'profile_menu',
         locate: 'none',
         mapState: 'small'
       })
-      //Plan creation page
-      .state('plan_create', {
+      .state('planner.create', {
         url: '/plan/create',
-        templateUrl: 'app/modules/planner/plan_create/plan_create.html',
+        templateUrl: '/app/modules/planner/plan_create/plan_create.html',
         controller: 'PlanCreateController',
         controllerAs: 'PlanCreate',
         parent: 'profile_menu',
@@ -155,10 +154,9 @@
         mapState: 'small',
         edit: false
       })
-      //Plan edit page
-      .state('plan_edit', {
+      .state('planner.edit', {
         url: '/plan/:plan_id/edit',
-        templateUrl: 'app/modules/planner/plan_create/plan_create.html',
+        templateUrl: '/app/modules/planner/plan_create/plan_create.html',
         controller: 'PlanCreateController',
         controllerAs: 'PlanCreate',
         parent: 'profile_menu',
@@ -166,21 +164,19 @@
         mapState: 'small',
         edit: true
       })
-      //Planner (calendar + list of all plans)
-      .state('planner', {
-        url: '/planner',
-        templateUrl: 'app/modules/planner/planner.html',
-        controller: 'PlannerController',
-        controllerAs: 'Planner',
+      .state('planner.view', {
+        url: '/plan/:plan_id',
+        templateUrl: '/app/modules/planner/plan/plan.html',
+        controller: 'PlanController',
+        controllerAs: 'Plan',
         parent: 'profile_menu',
         locate: 'none',
         mapState: 'small'
       })
 
-      //Users profile index page. (TABS: wall, feeds, reviews)
       .state('profile', {
         url: '/profile/:user_id',
-        templateUrl: 'app/modules/profile/profile.html',
+        templateUrl: '/app/modules/profile/profile.html',
         controller: 'ProfileController',
         controllerAs: 'Profile',
         resolve: {
@@ -203,7 +199,7 @@
       //chat
       .state('chat', {
         url: '/chat',
-        templateUrl: 'app/modules/chat/chat.html',
+        templateUrl: '/app/modules/chat/chat.html',
         controller: 'ChatController',
         controllerAs: 'Chat',
         parent: 'profile_menu',
@@ -218,7 +214,7 @@
       })
       .state('chatRoom', {
         url: '/chat/:user_id',
-        templateUrl: 'app/modules/chat/chat_room/chat_room.html',
+        templateUrl: '/app/modules/chat/chat_room/chat_room.html',
         controller: 'ChatRoomController',
         controllerAs: 'ChatRoom',
         resolve: {
@@ -240,7 +236,7 @@
       })
       .state('feeds', {
         url: '/feeds',
-        templateUrl: 'app/modules/feed/feed.html',
+        templateUrl: '/app/modules/feed/feed.html',
         controller: 'FeedsController',
         controllerAs: 'Feed',
         resolve: {
@@ -258,7 +254,7 @@
       })
       .state('reviews', {
         url: '/reviews',
-        templateUrl: 'app/modules/reviews/reviews.html',
+        templateUrl: '/app/modules/reviews/reviews.html',
         controller: 'ReviewsController',
         controllerAs: 'Review',
         resolve: {
@@ -266,7 +262,27 @@
             return Feed.reviews({
               page: 1,
               limit: 20
-            })//.$promise;
+            }).$promise;
+          }
+        },
+        parent: 'profile_menu',
+        locate: 'none',
+        require_auth: true,
+        mapState: 'small'
+      })
+
+      .state('favorites', {
+        url: '/favorites/:user_id',
+        templateUrl: '/app/modules/favorites/favorites.html',
+        controller: 'FavoritesController',
+        controllerAs: 'Favorite',
+        resolve: {
+          favorites: function (Spot, $stateParams) {
+            return Spot.favorites({
+              user_id: $stateParams.user_id,
+              page: 1,
+              limit: 20
+            }).$promise;
           }
         },
         parent: 'profile_menu',
@@ -278,7 +294,7 @@
       //Photomap view state
       .state('photomap', {
         url: '/users/:user_id/albums',
-        templateUrl: 'app/modules/photomap/photomap.html',
+        templateUrl: '/app/modules/photomap/photomap.html',
         controller: 'PhotomapController',
         controllerAs: 'Photomap',
         resolve: {
@@ -293,7 +309,7 @@
       //Create album state
       .state('createAlbum', {
         url: '/albums/create',
-        templateUrl: 'app/modules/photomap/create_album/album_create.html',
+        templateUrl: '/app/modules/photomap/create_album/album_create.html',
         controller: 'CreateAlbumController',
         controllerAs: 'CreateAlbum',
         mapState: 'small',
@@ -312,7 +328,7 @@
       //Edit album state
       .state('editAlbum', {
         url: '/albums/:album_id/edit',
-        templateUrl: 'app/modules/photomap/create_album/album_create.html',
+        templateUrl: '/app/modules/photomap/create_album/album_create.html',
         controller: 'CreateAlbumController',
         controllerAs: 'CreateAlbum',
         resolve: {
@@ -328,7 +344,7 @@
       //Albums page state
       .state('album', {
         url: '/albums/:album_id',
-        templateUrl: 'app/modules/photomap/album/album.html',
+        templateUrl: '/app/modules/photomap/album/album.html',
         controller: 'AlbumController',
         controllerAs: 'Album',
         resolve: {
@@ -345,7 +361,7 @@
       //Friends map state
       .state('friendsmap', {
         url: '/friendsmap',
-        templateUrl: 'app/modules/friendsmap/friendsmap.html',
+        templateUrl: '/app/modules/friendsmap/friendsmap.html',
         controller: 'FriendsmapController',
         controllerAs: 'Friendsmap',
         resolve: {
@@ -361,7 +377,7 @@
       //Friends creation state
       .state('friendsmap_create', {
         url: '/friendsmap/create',
-        templateUrl: 'app/modules/friendsmap/create/friendsmap.create.html',
+        templateUrl: '/app/modules/friendsmap/create/friendsmap.create.html',
         controller: 'CreateFriendController',
         controllerAs: 'CreateFriend',
         resolve: {
@@ -377,7 +393,7 @@
       //Friends edit state
       .state('friendsmap_edit', {
         url: '/friendsmap/:id/edit',
-        templateUrl: 'app/modules/friendsmap/create/friendsmap.create.html',
+        templateUrl: '/app/modules/friendsmap/create/friendsmap.create.html',
         controller: 'CreateFriendController',
         controllerAs: 'CreateFriend',
         resolve: {
@@ -395,14 +411,14 @@
       //About us page
       .state('about_us', {
         url: "/about-us",
-        templateUrl: 'app/modules/about_us/about_us.html',
+        templateUrl: '/app/modules/about_us/about_us.html',
         parent: 'main',
         mapState: 'hidden'
       })
       //Contact us page
       .state('contact_us', {
         url: "/contact-us",
-        templateUrl: 'app/modules/contact_us/contact_us.html',
+        templateUrl: '/app/modules/contact_us/contact_us.html',
         controller: 'ContactUsController',
         controllerAs: 'ContactUs',
         parent: 'main',
@@ -412,7 +428,7 @@
       //Zoomers page
       .state('zoomers', {
         url: '/zoomers',
-        templateUrl: 'app/modules/zoomers/zoomers.html',
+        templateUrl: '/app/modules/zoomers/zoomers.html',
         controller: 'ZoomersController',
         controllerAs: 'Zoomers',
         resolve: {
@@ -427,7 +443,7 @@
       //Settings state
       .state('settings', {
         url: '/settings',
-        templateUrl: 'app/modules/settings/settings.html',
+        templateUrl: '/app/modules/settings/settings.html',
         controller: 'SettingsController',
         controllerAs: 'Settings',
         resolve: {

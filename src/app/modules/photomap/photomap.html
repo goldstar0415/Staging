@@ -7,9 +7,9 @@
 </div>
 <div class="col-xs-12 no-pad">
   <div ng-repeat="item in Photomap.albums" class="col-xs-4 no-pad">
-    <div class="img-wrap">
-      <img src="{{item.cover.medium}}" alt="">
-      <a ui-sref="album({album_id: item.id})">{{item.title}}</a>
+    <div class="img-wrap" ui-sref="album({album_id: item.id})">
+      <img ng-src="{{item.cover.medium}}" alt="">
+      <a >{{item.title}}</a>
     </div>
   </div>
   <h4 ng-if="Photomap.albums.length < 1">No albums</h4>

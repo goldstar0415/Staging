@@ -2,14 +2,14 @@
   <div class="container">
     <div class="col-xs-10 col-xs-offset-2 no-pad">
       <ul ng-if="$root.currentUser">
-        <li><a>My spots</a></li>
-        <li><a ui-sref="blog">My blog</a></li>
-        <li><a>Favorites</a></li>
+        <li><a ui-sref-active="active">My spots</a></li>
+        <li><a ui-sref-active="active">My blog</a></li>
+        <li><a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active">Favorites</a></li>
         <li><a>Saved searches</a></li>
-        <li><a ui-sref="friendsmap">Friends map</a></li>
-        <li><a ui-sref="photomap({user_id: $root.profileUser.id})">Photo map</a></li>
-        <li><a ui-sref="planner">Planner</a></li>
-        <li><a ui-sref="settings">Settings</a></li>
+        <li><a ui-sref="friendsmap" ui-sref-active="active">Friends map</a></li>
+        <li><a ui-sref="photomap({user_id: $root.profileUser.id})" ui-sref-active="active">Photo map</a></li>
+        <li><a ui-sref="planner" ui-sref-active="active">Planner</a></li>
+        <li><a ui-sref="settings" ui-sref-active="active">Settings</a></li>
       </ul>
       <div ng-if="!$root.currentUser">
         <b>You should
@@ -24,16 +24,16 @@
 <div class="col-xs-12">
   <div class="container wrap">
 
-    <div class="col-sm-2 col-xs-12 information-profile">
-      <section class="col-xs-3 col-sm-11">
+    <div class="col-xs-12 information-profile">
+      <section class="col-xs-2 no-pad">
         <a ui-sref="profile({user_id: $root.profileUser.id})" class="avatar">
           <img ng-src="{{profileUser.avatar_url.medium}}"/>
         </a>
       </section>
-      <section class="col-xs-9 col-sm-11">
+      <section class="col-xs-10">
         <div class="status moderator" ng-if="profileUser.status">{{profileUser.status}}</div>
         <h2 class="profile-name ">
-          <a  ui-sref="profile({user_id: $root.profileUser.id})"  >
+          <a ui-sref="profile({user_id: $root.profileUser.id})">
             {{profileUser.first_name}} {{profileUser.last_name}}
             <div class="online" title="Online"></div>
           </a>
@@ -51,7 +51,7 @@
             {{profileUser.description | limitTo: Profile.textLimit}}
           </div>
           <div ng-if="profileUser.description.length > 50">
-            <a class="more"  ng-click="Profile.textLimit = 1000">
+            <a class="more" ng-click="Profile.textLimit = 1000">
               see more
             </a>
           </div>
@@ -70,7 +70,7 @@
           </div>
         </div>
 
-        <div class="info-links hidden-lg hidden-md hidden-sm visible-xs  ng-show col-xs-12">
+        <div class="info-links hidden-lg hidden-md visible-sm visible-xs  ng-show col-xs-12">
           <a class="events"> {{ profileUser.count_spots }} </a>
           <a class="followers">000</a>
           <a class="followings">{{ profileUser.count_followings }}</a>
@@ -81,63 +81,78 @@
       </section>
     </div>
 
-    <div class="col-xs-7 central">
+    <div class="col-xs-12 central " ng-class="{'no-background': Profile.$state.is('planner')}">
       <div ui-view></div>
     </div>
 
     <div class="col-sm-3 hidden-xs activity-profile">
-      <aside class="module-sidebar">
-        <h2 class="sidebar-title">
-          <a>Followers
-            <span class="counter">5</span>
-          </a>
-        </h2>
 
-        <div class="col-sm-4 no-pad">
-          <a href="http://zoomzoom.itechhighway.com/user/1">
-            <img src="http://zoomzoom.itechhighway.com/upload/albums/Y5jGP0j4wu4Sn08/thumb_Cxjqj4czupHZLr8k.jpg"
-                 alt="" class="avatar"/>
+      <div class="zoomers-sidebar" ng-if="$root.profileUser.id != $root.currentUser.id">
+        <ul class="settings-list">
+          <li>
+            <a class="my-spots">Events</a>
+          </li>
+          <li>
+            <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active" class="favorites">Favorites</a>
+          </li>
+          <li>
+            <a ui-sref="photomap({user_id: $root.profileUser.id})" ui-sref-active="active" class="photomap">Photo map</a>
+          </li>
+        </ul>
+      </div>
 
-            <p class="sidebar-user-name">Margarita Grach</p>
-          </a>
-        </div>
+      <!--<aside class="module-sidebar">-->
+      <!--<h2 class="sidebar-title">-->
+      <!--<a>Followers-->
+      <!--<span class="counter">5</span>-->
+      <!--</a>-->
+      <!--</h2>-->
 
-        <div class="col-sm-4 no-pad">
-          <a>
-            <img src="http://zoomzoom.itechhighway.com/upload/albums/iPCS4Oigc1tpFvS/thumb_gKRXtOHql9wGL52K.jpg"
-                 alt="" class="avatar"/>
+      <!--<div class="col-sm-4 no-pad">-->
+      <!--<a href="http://zoomzoom.itechhighway.com/user/1">-->
+      <!--<img src="http://zoomzoom.itechhighway.com/upload/albums/Y5jGP0j4wu4Sn08/thumb_Cxjqj4czupHZLr8k.jpg"-->
+      <!--alt="" class="avatar"/>-->
 
-            <p class="sidebar-user-name">Eduard Chernykh</p>
-          </a>
-        </div>
+      <!--<p class="sidebar-user-name">Margarita Grach</p>-->
+      <!--</a>-->
+      <!--</div>-->
 
-        <div class="col-sm-4 no-pad">
-          <a>
-            <img src="http://zoomzoom.itechhighway.com/upload/albums/ooF4rGP023RIxTR/thumb_UxF4MX2BnEQthzny.jpg"
-                 alt="" class="avatar"/>
+      <!--<div class="col-sm-4 no-pad">-->
+      <!--<a>-->
+      <!--<img src="http://zoomzoom.itechhighway.com/upload/albums/iPCS4Oigc1tpFvS/thumb_gKRXtOHql9wGL52K.jpg"-->
+      <!--alt="" class="avatar"/>-->
 
-            <p class="sidebar-user-name">Denchik  Grinko</p>
-          </a>
-        </div>
+      <!--<p class="sidebar-user-name">Eduard Chernykh</p>-->
+      <!--</a>-->
+      <!--</div>-->
 
-        <div class="col-sm-4 no-pad">
-          <a>
-            <img src="http://zoomzoom.itechhighway.com/upload/albums/wOvYXR56ygBul3A/thumb_ZTARlXXQ5qUm4bxU.jpg"
-                 alt="" class="avatar"/>
+      <!--<div class="col-sm-4 no-pad">-->
+      <!--<a>-->
+      <!--<img src="http://zoomzoom.itechhighway.com/upload/albums/ooF4rGP023RIxTR/thumb_UxF4MX2BnEQthzny.jpg"-->
+      <!--alt="" class="avatar"/>-->
 
-            <p class="sidebar-user-name">Valery Zakharchenko</p>
-          </a>
-        </div>
+      <!--<p class="sidebar-user-name">Denchik  Grinko</p>-->
+      <!--</a>-->
+      <!--</div>-->
 
-        <div class="col-sm-4 no-pad">
-          <a>
-            <img src="http://zoomzoom.itechhighway.com/upload/albums/YH5ZuPs0hOkXg0F/thumb_kWYiC6FtceGfACtD.jpg"
-                 alt="" class="avatar"/>
+      <!--<div class="col-sm-4 no-pad">-->
+      <!--<a>-->
+      <!--<img src="http://zoomzoom.itechhighway.com/upload/albums/wOvYXR56ygBul3A/thumb_ZTARlXXQ5qUm4bxU.jpg"-->
+      <!--alt="" class="avatar"/>-->
 
-            <p class="sidebar-user-name">Josh  Petersen</p>
-          </a>
-        </div>
-      </aside>
+      <!--<p class="sidebar-user-name">Valery Zakharchenko</p>-->
+      <!--</a>-->
+      <!--</div>-->
+
+      <!--<div class="col-sm-4 no-pad">-->
+      <!--<a>-->
+      <!--<img src="http://zoomzoom.itechhighway.com/upload/albums/YH5ZuPs0hOkXg0F/thumb_kWYiC6FtceGfACtD.jpg"-->
+      <!--alt="" class="avatar"/>-->
+
+      <!--<p class="sidebar-user-name">Josh  Petersen</p>-->
+      <!--</a>-->
+      <!--</div>-->
+      <!--</aside>-->
     </div>
   </div>
 </div>

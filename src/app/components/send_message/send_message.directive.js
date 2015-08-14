@@ -9,7 +9,7 @@
   function SendMessage() {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/send_message/send_message.html',
+      templateUrl: '/app/components/send_message/send_message.html',
       controller: SendMessageController,
       controllerAs: 'SendMessage',
       bindToController: true
@@ -28,13 +28,14 @@
       };
     }
 
+    /** @ngInject */
     function SendMessageModalController(toastr, $rootScope, Message, $modalInstance) {
       var vm = this;
 
       vm.send = function () {
         Message.save({
             user_id: $rootScope.profileUser.id,
-            message: vm.message,
+            message: vm.message || '',
             attachments: {
               album_photos: _.pluck(vm.attachments.photos, 'id'),
               spots: _.pluck(vm.attachments.spots, 'id'),

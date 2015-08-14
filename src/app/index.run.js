@@ -21,7 +21,11 @@
     });
 
     function onStateChangeSuccess(event, current, toParams, fromState, fromParams) {
+      snapRemote.getSnapper().then(function(snapper) {
+        snapper.close();
+      });
       UploaderService.images.files = [];
+
       $rootScope.previous = {
         state: fromState,
         params: fromParams
@@ -60,7 +64,7 @@
     $(window).resize(_.throttle(onWindowResize, 100));
     function onWindowResize() {
       MapService.InvalidateMapSize();
-      if ($(window).width() < 768) {
+      if ($(window).width() < 992) {
         $rootScope.options.snap.disable = "right";
       } else {
         $rootScope.options.snap.disable = "left";

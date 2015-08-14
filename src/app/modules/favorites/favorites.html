@@ -1,0 +1,73 @@
+<h2 class="title-name">Favorites</h2>
+
+<section ng-repeat="item in ::Favorite.spots">
+  <div class="event">
+
+    <span class="date">
+       <span ng-class="{'event-spot-page':item.type == 'Event',
+                                     'recreation':item.type == 'Recreation',
+                                     'pitstop':item.type == 'PitStop'}">
+            {{item.type}}
+        </span>
+
+        <span class="date">
+                {{item.start_date + ' - ' + item.end_date}}
+                <br>
+                {{item.start_time + ' - ' + item.end_time}}
+        </span>
+    </span>
+
+    <div class="media media-visible">
+      <a class="pull-left" >
+        <img class="media-object fav-avatar-icon" src="/assets/img/icons/airport.png" alt="...">
+      </a>
+
+      <div class="media-body">
+        <h2 class="media-heading favorites-article-title">
+          <a >{{item.title}}</a>
+        </h2>
+
+        <p class="place"></p>
+      </div>
+    </div>
+
+    <ul class="tools">
+      <li>
+        <a class="save-event" >Save</a>
+      </li>
+      <li>
+        <a class="save-event saved clicked" >Remove</a>
+      </li>
+      <li>
+        <a class="favorite-spot" >Favorite</a>
+      </li>
+      <li>
+        <a class="fav favorited" >Unfavorite</a>
+      </li>
+      <li>
+        <invite-friends spot="item"></invite-friends>
+      </li>
+
+    </ul>
+
+    <!--<a href="#"  class="share">Share</a>-->
+
+    <!--<div class="share-wrap" style="display: none;">-->
+      <!--<ul class="share-buttons clearfix">-->
+        <!--<li>-->
+          <!--<a-->
+            <!--href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"-->
+            <!--target="_blank" class="facebook">facebook</a></li>-->
+        <!--<li>-->
+          <!--<a href="https://plus.google.com/share?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"-->
+             <!--target="_blank" class="google">google</a></li>-->
+        <!--<li>-->
+          <!--<a-->
+            <!--href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"-->
+            <!--target="_blank" class="twitter">twitter</a></li>-->
+      <!--</ul>-->
+    <!--</div>-->
+    <!-- share-wrap -->
+
+  </div>
+</section>

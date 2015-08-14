@@ -9,7 +9,7 @@
   function signIn() {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/sign_in/sign_in.html',
+      templateUrl: '/app/components/sign_in/sign_in.html',
       scope: {
         title: '@'
       },
@@ -33,6 +33,7 @@
 
     }
 
+    /** @ngInject */
     function SignInModalController(SignInService, $modalInstance) {
       var vm = this;
 

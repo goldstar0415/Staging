@@ -22,7 +22,7 @@
     function sendMessage() {
       Message.save({
           user_id: user.id,
-          message: vm.message,
+          message: vm.message || '',
           attachments: {
             album_photos: _.pluck(vm.attachments.photos, 'id'),
             spots: _.pluck(vm.attachments.spots, 'id'),
@@ -30,7 +30,7 @@
           }
         },
         function success(message) {
-          message = _.extend(message, message.pivot);
+          //message = _.extend(message, message.pivot);
           ChatService.pushToToday(message);
           vm.message = '';
           vm.attachments.photos = [];
@@ -47,7 +47,7 @@
       var countNewMessages = 0;
       angular.forEach(vm.messages.data, function (groupMessages) {
         angular.forEach(groupMessages.messages, function (message) {
-          if (!message.is_read && message.receiver_id == $rootScope.currentUser.id) {
+          if (!message.is_read && message.pivot.receiver_id == $rootScope.currentUser.id) {
             countNewMessages++;
           }
         });
