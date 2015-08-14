@@ -184,7 +184,13 @@
 }
 
 .sort-menu {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  bottom:0;
+  height: auto;
   z-index: 101;
+  background: #fff;
 }
 
 .sidebar-menu-horizontal {
@@ -244,8 +250,10 @@
   }
 }
 
+
+
+
 .search-filters {
-  background: #fff;
   float: right;
   width: 100%;
   .numbers-events {
@@ -331,9 +339,9 @@
         @include transition_color;
         &:hover {
           color: rgba(0, 183, 243, .8);
-          background: url(/assets/img/selected-category.png) no-repeat left center;
+          //background: url(/assets/img/selected-category.png) no-repeat left center;
         }
-        &:focus, &:active {
+        &:active {
           color: rgba(0, 183, 243, 1);
           background: url(/assets/img/selected-category.png) no-repeat left center;
         }
@@ -359,6 +367,11 @@
   .search-by-name {
     padding: 20px;
     border-bottom: 1px solid rgba(217, 217, 217, .6);
+    p {
+      font: 500 20px/26px 'Ubuntu medium';
+      color: #000;
+      display: inline-block;
+    }
     .search-input {
       float: left;
       background: url(/assets/img/icons/search-icon.png) no-repeat left center;
