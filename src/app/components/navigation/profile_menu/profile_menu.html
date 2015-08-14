@@ -2,7 +2,7 @@
   <div class="container">
     <div class="col-xs-10 col-xs-offset-2 no-pad">
       <ul ng-if="$root.currentUser">
-        <li><a ui-sref-active="active">My spots</a></li>
+        <li><a ui-sref="spots({user_id: $root.currentUser.id})" ui-sref-active="active">My spots</a></li>
         <li><a ui-sref-active="active">My blog</a></li>
         <li><a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active">Favorites</a></li>
         <li><a>Saved searches</a></li>
@@ -90,7 +90,7 @@
       <div class="zoomers-sidebar" ng-if="$root.profileUser.id != $root.currentUser.id">
         <ul class="settings-list">
           <li>
-            <a class="my-spots">Events</a>
+            <a ui-sref="spots({user_id: $root.profileUser.id})" ui-sref-active="active" class="my-spots">Events</a>
           </li>
           <li>
             <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active" class="favorites">Favorites</a>

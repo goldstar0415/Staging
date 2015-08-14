@@ -8,6 +8,9 @@
   /** @ngInject */
   function Spot($resource, API_URL) {
     return $resource(API_URL + '/spots/:id', {id: '@id'}, {
+      query: {
+        isArray: false
+      },
       favorites: {
         url: API_URL + '/spots/favorites',
         isArray: true
@@ -17,11 +20,11 @@
         method: 'POST'
       },
       saveToCalendar: {
-        url: API_URL + '/spots/:id/calendar',
+        url: API_URL + '/calendar/:id',
         method: 'POST'
       },
       removeFromCalendar: {
-        url: API_URL + '/spots/:id/calendar',
+        url: API_URL + '/calendar/:id',
         method: 'DELETE'
       },
       favorite: {

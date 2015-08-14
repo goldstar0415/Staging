@@ -3,16 +3,25 @@
 
   angular
     .module('zoomtivity')
-    .controller('SpotController', SpotController);
+    .controller('SpotsController', SpotsController);
 
   /** @ngInject */
-  function SpotController(spot, SpotService) {
+  function SpotsController(spots, SpotService) {
     var vm = this;
-    vm.spot = SpotService.formatSpot(spot);
+    vm.spots = spots;
+    vm.spots.data = formatSpots(vm.spots.data);
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
     vm.removeFromFavorite = SpotService.removeFromFavorite;
     vm.removeSpot = SpotService.removeSpot;
+
+    function formatSpots(spots) {
+      _.each(spots, function (spot) {
+        SpotService.formatSpot(spot);
+      });
+
+      return spots;
+    }
   }
 })();

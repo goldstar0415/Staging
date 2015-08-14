@@ -2,70 +2,64 @@
   <!-- section with spot -->
   <section class="one-spot-section">
     <div>
-                        <span class="rating clear rateit spot-stars" rate="5" event-id="97777798">
-                            <button id="rateit-reset-2" type="button" data-role="none" class="rateit-reset"
-                                    aria-label="reset rating" aria-controls="rateit-range-2"
-                                    style="display: none;"></button>
-                            <div id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating"
-                                 aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="5"
-                                 style="width: 80px; height: 16px;" aria-readonly="false">
-                              <div class="rateit-selected" style="height: 16px; width: 80px;"></div>
-                              <div class="rateit-hover" style="height: 16px;"></div>
-                            </div>
-                        </span>
-                        <span class="date">
-                            05.11.2016 — 015.11.2016
-                            <br>
-                            12:00 am
-                            — 12:00 am
-                        </span>
+        <span class="rating clear rateit spot-stars" rate="5" event-id="97777798">
+            <button id="rateit-reset-2" type="button" data-role="none" class="rateit-reset"
+                    aria-label="reset rating" aria-controls="rateit-range-2"
+                    style="display: none;"></button>
+            <div id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating"
+                 aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="5"
+                 style="width: 80px; height: 16px;" aria-readonly="false">
+              <div class="rateit-selected" style="height: 16px; width: 80px;"></div>
+              <div class="rateit-hover" style="height: 16px;"></div>
+            </div>
+        </span>
+
+        <span ng-if="Spot.spot.type == 'Event'" class="date">
+          {{Spot.spot.start_date}} - {{Spot.spot.end_date}}
+          <br>
+          {{Spot.spot.start_time}} - {{Spot.spot.end_time}}
+        </span>
 
       <h2 class="">
-        <a href="http://zoomzoom.itechhighway.com/event/show/97777798">ITSITS</a>
+        <a >{{Spot.spot.title}}</a>
       </h2>
 
       <p class="place"></p>
 
-      <p class="description"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad adipisci al soluta temporibus voluptate! Accusamus aperiam debitis nemo perspiciatis tempore.</span>
+      <p class="description"><span>{{Spot.spot.description}}</span>
       </p>
 
       <div class="external-link">
-        <a href="/redirect?url=http://test.com" noturbo="" target="_blank">http://test.com</a>
+        <a  target="_blank">http://test.com</a>
       </div>
 
-      <ul class="tags "></ul>
+      <ul class="tags ">
+        <li ng-repeat="tag in Spot.spot.tags">
+          {{tag.name}}
+        </li>
+      </ul>
       <!--  tags -->
 
       <ul class="tools">
-        <li style="display: block">
-          <a href="http://zoomzoom.itechhighway.com/event/edit/98989898" class="edit-tools ">Edit</a>
-        </li>
         <li>
-          <a class="delete"
-             href="http://zoomzoom.itechhighway.com/event/delete/97777798">Delete</a>
+          <a ng-click="Spot.removeSpot(Spot.spot, $index);" class="delete">Delete</a>
         </li>
 
-        <li>
-          <a href="http://zoomzoom.itechhighway.com/event/add-to-calendar/97777798"
-             class="save-event">Save</a>
+        <li ng-if="!Spot.spot.is_saved">
+          <a class="save-event" ng-click="Spot.saveToCalendar(Spot.spot)">Save</a>
+        </li>
+        <li ng-if="Spot.spot.is_saved">
+          <a class="save-event saved clicked" ng-click="Spot.removeFromCalendar(Spot.spot)">Remove</a>
+        </li>
+        <li ng-if="!Spot.spot.is_favorite">
+          <a class="favorite-spot" ng-click="Spot.addToFavorite(Spot.spot)">Favorite</a>
+        </li>
+        <li ng-if="Spot.spot.is_favorite">
+          <a class="fav favorited" ng-click="Spot.removeFromFavorite(Spot.spot)">Unfavorite</a>
         </li>
         <li>
-          <a href="http://zoomzoom.itechhighway.com/event/del-from-calendar/32"
-             class="save-event saved">Remove</a>
+          <invite-friends spot="Spot.spot"></invite-friends>
         </li>
-        <li>
-          <a href="http://zoomzoom.itechhighway.com/event/add-to-favourites/97777798"
-             class="favorite-spot">Favorite</a>
-        </li>
-        <li>
-          <a href="http://zoomzoom.itechhighway.com/event/del-from-favourites/32"
-             class="fav favorited">Unfavorite</a>
-        </li>
-        <li>
-          <a href="#" class="invite-friend ">Invite
-            friends</a>
-        </li>
-
       </ul>
 
       <a href="#" class="share">Share</a>
