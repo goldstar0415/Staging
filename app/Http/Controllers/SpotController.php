@@ -37,8 +37,7 @@ class SpotController extends Controller
      */
     public function index(SpotIndexRequest $request)
     {
-        return Spot::find($request->get('user_id', $request->user()->id))
-            ->walls()
+        return Spot::where('user_id', $request->get('user_id', $request->user()->id))
                 ->paginate((int) $request->get('limit', 10));
     }
 
