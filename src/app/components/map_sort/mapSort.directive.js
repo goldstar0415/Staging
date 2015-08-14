@@ -17,12 +17,14 @@
   function mapSort($rootScope, $scope, MapService, $http, API_URL) {
     var vm = this;
     var originalSpotsArray = [];
+    $scope.weatherForecast = [];
 
     $rootScope.$on('update-map-data', function(event, spots) {
       originalSpotsArray = spots;
       vm.eventsArray = [];
       vm.recreationsArray = [];
       vm.pitstopsArray = [];
+
 
       _.each(spots, function(item) {
 
@@ -84,10 +86,7 @@
               break;
         case 'other':
               MapService.showOtherLayers();
-              MapService.WeatherSelection(function(data) {
-                $scope.weather = data;
-                $scope.weather.date = moment().format('DD.MM.YYYY');
-              });
+              MapService.WeatherSelection(weather);
               vm.sortLayer = 'weather';
               break;
       }
@@ -117,6 +116,7 @@
     vm.eventsSelectAll = false;
 
     $scope.toggleEventCategories = function() {
+      $scope.sortEventsByCategories();
       if(!vm.eventsSelectAll) {
         _.map($scope.eventCategories, function(item) {
           item.selected = true;
@@ -140,6 +140,7 @@
     vm.recreationSelectAll = false;
 
     $scope.toggleRecreationCategories = function() {
+      $scope.sortRecreationsByCategories();
       if(!vm.recreationSelectAll) {
         _.map($scope.recreationCategories, function(item) {
           item.selected = true;
@@ -163,6 +164,7 @@
     vm.pitstopSelectAll = false;
 
     $scope.togglePitstopCategories = function() {
+      $scope.sortPitstopsByCategories();
       if(!vm.pitstopSelectAll) {
         _.map($scope.pitstopCategories, function(item) {
           item.selected = true;
@@ -182,6 +184,22 @@
       MapService.drawSpotMarkers(vm.displayPitstopsArray, 'pitstop', true);
     };
     //============================ weather section =========================
+
+
+    function weather(resp) {
+      var daily = resp.daily.data;
+      for(var k in daily) {
+        daily[k].formattedDate = moment(daily[k].time * 1000).format('DD MMMM');
+        if(k != 0) {
+          $scope.weatherForecast.push(daily[k]);
+        }
+      }
+      $scope.currentWeather = daily[0];
+      $scope.currentWeather.sunrise = moment(daily[0].sunriseTime * 1000).format('HH:mm a');
+      $scope.currentWeather.sunset = moment(daily[0].sunsetTime * 1000).format('HH:mm a');
+      $scope.currentWeather.temperature = ((daily[0].temperatureMax + daily[0].temperatureMin) / 2).toFixed(2);
+
+    }
   }
 })();
 
