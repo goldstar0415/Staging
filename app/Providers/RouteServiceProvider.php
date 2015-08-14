@@ -8,6 +8,7 @@ use App\PhotoComment;
 use App\Area;
 use App\ChatMessage;
 use App\Friend;
+use App\Plan;
 use App\Spot;
 use App\SpotPhoto;
 use App\SpotReview;
@@ -53,6 +54,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('reviews', SpotReview::class);
         $router->model('comments', PhotoComment::class);
         $router->model('wall', Wall::class);
+        $router->model('plans', Plan::class);
 
         parent::boot($router);
     }

@@ -68,6 +68,10 @@ Route::post('calendar/{spots}', 'CalendarController@add');
 Route::delete('calendar/{spots}', 'CalendarController@remove');
 Route::get('calendar/plans', 'CalendarController@getPlans');
 /**
+ * Plan controls
+ */
+Route::resource('plans', 'PlanController', ['except' => ['create', 'edit']]);
+/**
  * Chat Controls
  */
 Route::post('message', 'ChatController@sendMessage');

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Spot;
+namespace App\Http\Requests\Plan;
 
 use App\Http\Requests\Request;
 
-class SpotRequest extends Request
+class PlanRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class SpotRequest extends Request
      */
     public function authorize()
     {
-        return $this->route('spots')->user_id === $this->user()->id;
+        return $this->route('plans')->user_id === $this->user()->id;
     }
 
     /**
@@ -23,29 +23,31 @@ class SpotRequest extends Request
      */
     public function rules()
     {
-        $rules = [//TODO: cover validation
+        $rules = [
             'title' => 'required|string|max:255',
             'description' => 'string|max:255',
             'start_date' => 'date_format:Y-m-d H:i:s',
             'end_date' => 'date_format:Y-m-d H:i:s',
-            'locations' => 'array|count_max:20',
-            'videos' => 'array|count_max:5',
-            'web_sites' => 'array|count_max:5',
-            'spot_type_category_id' => 'required|exists:spot_type_categories,id',
-            'tags' => 'array|count_max:7',
-            'files' => 'array|count_max:10'
+            'address' => 'required|string|max:255',
+            'location.lat' => 'required|numeric',
+            'location.lng' => 'required|numeric',
+            'activities' => 'array',
+            'spots' => 'array'
         ];
         $rules = array_merge($rules, $this->arrayFieldRules(
-            'locations',
+            'activities',
             [
+                'title' => 'required|string|max:255',
+                'activity_category_id' => 'required|exists:activity_categories,id',
+                'description' => 'string|max:255',
+                'start_date' => 'date_format:Y-m-d H:i:s',
+                'end_date' => 'date_format:Y-m-d H:i:s',
                 'address' => 'string|max:255',
                 'location.lat' => 'numeric',
                 'location.lng' => 'numeric'
             ]
         ));
-        $rules = array_merge($rules, $this->arrayFieldRules('videos', 'string|max:255'));
-        $rules = array_merge($rules, $this->arrayFieldRules('web_sites', 'url'));
-        $rules = array_merge($rules, $this->arrayFieldRules('files', 'image|max:5000', true));
+        $rules = array_merge($rules, $this->arrayFieldRules('spots', 'integer'));
 
         return $rules;
     }

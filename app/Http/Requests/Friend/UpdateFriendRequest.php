@@ -17,7 +17,7 @@ class UpdateFriendRequest extends FriendRequest
             'last_name' => 'required|max:64',
             'email' => 'email|max:128',
             'phone' => 'string|max:24',
-            'birth_date' => 'date',
+            'birth_date' => 'date_format:Y-m-d',
             'note' => 'string|max:255',
             'address' => 'string|max:255',
             'location.lat' => 'numeric',
