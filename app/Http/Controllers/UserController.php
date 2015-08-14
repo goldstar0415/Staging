@@ -66,7 +66,7 @@ class UserController extends Controller
     public function getList(UserListRequest $request)
     {
         $users = null;
-        $limit = $request->get('limit');
+        $limit = $request->get('limit', 10);
         $filter = '';
         if ($request->has('filter')) {
             $filter = $request->get('filter');
