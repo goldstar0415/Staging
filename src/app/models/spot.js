@@ -21,17 +21,21 @@
       },
       saveToCalendar: {
         url: API_URL + '/calendar/:id',
-        method: 'POST'
+        method: 'POST',
+        ignoreLoadingBar: true
       },
       removeFromCalendar: {
         url: API_URL + '/calendar/:id',
-        method: 'DELETE'
+        method: 'DELETE',
+        ignoreLoadingBar: true
       },
       favorite: {
-        url: API_URL + '/spots/:id/favorite'
+        url: API_URL + '/spots/:id/favorite',
+        ignoreLoadingBar: true
       },
       unfavorite: {
-        url: API_URL + '/spots/:id/unfavorite'
+        url: API_URL + '/spots/:id/unfavorite',
+        ignoreLoadingBar: true
       }
     });
   }

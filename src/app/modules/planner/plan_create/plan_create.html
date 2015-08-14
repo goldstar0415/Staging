@@ -1,50 +1,93 @@
-<form class="form-horizontal col-xs-12  no-pad" role="form">
-  <h2 class="title-name">Create new plan</h2>
+<form class="form-horizontal col-xs-12  no-pad" name="form" onsubmit="Plan.save(form)" role="form" novalidate>
+  <h2 class="title-name">{{Plan.id ? 'Edit plan' : 'Create new plan'}}</h2>
+
   <!-- section  event-main-info-->
   <section class="event-main-info">
     <div class="form-group">
-      <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
+      <label for="title" class="col-sm-2 control-label">Title</label>
 
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputPassword3" placeholder="Start typing...">
+        <input type="text" class="form-control" name="title" ng-model="Plan.title" id="title"
+               placeholder="Start typing..."
+               ng-minlength="3" ng-maxlength="255" required>
+
+        <div ng-messages="form.title.$error" ng-if="form.$submitted || form.title.$touched" class="error-message">
+          <div ng-message="required">is required</div>
+          <div ng-message="minlength">too short</div>
+          <div ng-message="maxlength">can't be longer then 255 symbols</div>
+        </div>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col-sm-2 control-label">Description</label>
+      <label class="col-sm-2 control-label" for="description">Description</label>
 
       <div class="col-sm-10">
-        <textarea class="form-control" rows="5"></textarea>
+        <textarea class="form-control" rows="5" name="description" ng-maxlength="5000" ng-model="Plan.description"
+                  id="description" required></textarea>
+
+        <div ng-messages="form.description.$error" ng-if="form.$submitted || form.description.$touched"
+             class="error-message">
+          <div ng-message="required">is required</div>
+          <div ng-message="maxlength">Description can't be longer then 5000 symbols</div>
+        </div>
       </div>
     </div>
     <div class="form-group">
-      <label for="inputPassword3" class="col-sm-2 control-label">Location</label>
+      <label class="col-sm-2 control-label">Location</label>
 
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="inputPassword3" placeholder="Address...">
+        <location address="Plan.address" location="Plan.location" limit="15"></location>
       </div>
     </div>
-    <div class="form-group ng-show">
-      <label class="col-sm-2 control-label">Date</label>
+    <div class="form-group ">
+      <label class="col-md-2 col-sm-12 col-xs-12 control-label">Date</label>
 
-      <div class="col-sm-10">
-        <input placeholder="01.01.2015" type="text"
-               class="col-sm-4 col-xs-12">
+      <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class="col-sm-4 col-xs-12 no-pad">
+          <input ng-datepicker name="start_date" ng-model="Plan.start_date" start-date="Plan.startDate"
+                 type="text" required>
+
+          <div ng-messages="form.start_date.$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-message="required">Start date field can't be empty</div>
+          </div>
+        </div>
+
         <span class="hidden-xs col-sm-1">—</span>
-        <input placeholder="01.01.2015" type="text"
-               class=" col-sm-4 col-xs-12">
+
+        <div class="col-sm-4 col-xs-12 no-pad">
+          <input ng-datepicker name="end_date" ng-model="Plan.end_date" start-date="Plan.start_date"
+                 type="text" required>
+
+          <div ng-messages="form.end_date.$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-message="required">End date field can't be empty</div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="form-group ng-show">
-      <label class="col-sm-2 control-label">Time </label>
+    <div class="form-group ">
+      <label class="col-md-2 col-sm-12 col-xs-12 control-label">Time</label>
 
-      <div class="col-sm-10">
-        <input placeholder="12:00..." type="text"
-               class="col-sm-4 col-xs-12">
+      <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class="col-sm-4 col-xs-12 no-pad">
+          <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.start_time" name="start_time"
+                 type="text" required>
+
+          <div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-message="required">Start time field can't be empty</div>
+          </div>
+        </div>
         <span class="hidden-xs col-sm-1">—</span>
-        <input placeholder="12:00..." type="text"
-               class=" col-sm-4 col-xs-12">
+
+        <div class="col-sm-4 col-xs-12 no-pad">
+          <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.end_time" name="end_time"
+                 type="text" required>
+
+          <div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-message="required">End time field can't be empty</div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -53,7 +96,7 @@
   <!-- end section  event-main-info -->
 
   <!-- section  event-additionl-infoo-->
-  <section class="event-additionl-info">
+  <section class="event-additionl-info" ng-repeat="activity in Plan.activities">
     <div class="form-group">
       <h3 class="sub-title">Activity
         <button class="close">x</button>
@@ -101,7 +144,7 @@
       </div>
     </div>
 
-    <div class="form-group ng-show">
+    <div class="form-group ">
       <label class="col-sm-2 control-label">Date</label>
 
       <div class="col-sm-10">
@@ -113,7 +156,7 @@
       </div>
     </div>
 
-    <div class="form-group ng-show">
+    <div class="form-group ">
       <label class="col-sm-2 control-label">Time </label>
 
       <div class="col-sm-10">
@@ -130,7 +173,7 @@
 
   <!-- section  event-add-location-->
   <section class="event-add-location">
-    <div class="event">
+    <div class="event" ng-repeat="event in Plan.spots">
       <div class="media media-visible">
         <a class="pull-left" href="#">
           <img class="media-object fav-avatar-icon feeds-img"
@@ -151,36 +194,15 @@
         </div>
       </div>
     </div>
-    <div class="event">
-      <div class="media media-visible">
-        <a class="pull-left" href="#">
-          <img class="media-object fav-avatar-icon feeds-img"
-               src="/assets/img/icons/landmark.png"
-               alt="...">
-        </a>
-
-        <div class="media-body">
-          <h2 class="media-heading feeds-title">
-            <button class="close">x</button>
-            <a href="http://zoomzoom.itechhighway.com/event/show/296">Lorem</a>
-          </h2>
-
-          <p class="time">03.31.2015 - 04.01.2015</p>
-
-          <p class=" feeds-text">Lorem lorem lorem lorem</p>
-
-        </div>
-      </div>
-    </div>
   </section>
   <!-- end section  event-add-location -->
 
   <!-- buttons block -->
   <div class="form-group">
     <div class="col-xs-12 buttons-block">
-      <button type="submit" class="btn  btn-primary col-sm-3  add-btn col-xs-12">Add activity</button>
-      <button type="submit" class="btn btn-primary col-sm-3 add-btn col-xs-12">Add event</button>
-      <button type="submit" class="btn btn-default green-btn col-sm-2 col-xs-12 pull-right">Save</button>
+      <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12">Add activity</button>
+      <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12">Add event</button>
+      <button type="button" class="btn btn-default green-btn col-sm-2 col-xs-12 pull-right">Save</button>
     </div>
   </div>
   <!-- end buttons block -->

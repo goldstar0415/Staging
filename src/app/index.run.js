@@ -18,6 +18,8 @@
         toastr.error('Unauthorized!');
         $state.go('index');
       }
+
+      $rootScope.pageLoaded = true;
     });
 
     function onStateChangeSuccess(event, current, toParams, fromState, fromParams) {
@@ -54,6 +56,8 @@
           MapService.FocusMapToCurrentLocation();
           break;
       }
+
+      $rootScope.pageLoaded = true;
     }
 
     $rootScope.options = {
