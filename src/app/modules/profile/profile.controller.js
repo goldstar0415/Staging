@@ -6,7 +6,7 @@
     .controller('ProfileController', ProfileController);
 
   /** @ngInject */
-  function ProfileController($rootScope, user, wall, Wall) {
+  function ProfileController($rootScope, user, wall, Wall, Spot) {
     var vm = this;
     vm.wall = wall;
 
@@ -48,6 +48,6 @@
         post.user_rating--;
         post.rating--;
       }
-    }
+    };
   }
 })();

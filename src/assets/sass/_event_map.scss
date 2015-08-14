@@ -1,4 +1,4 @@
-.ivent {
+.event-result {
     padding: 15px;
     background: rgba(239, 243, 241, 0.5);
     border-top: 1px solid #d9d9d9;
@@ -9,7 +9,7 @@
     .padding-0 {
         padding: 0;
     }
-    .ivent-logo {
+    .event-result-logo {
         img {
             width: 42px;
             height: 42px;
@@ -18,7 +18,7 @@
         }
     }
     .date {
-    
+
         font-size: 11px;
         color: #808080;
         p{ margin-bottom: 0;}
@@ -37,10 +37,10 @@
         overflow: hidden;
         font-size: 13px;
     }
-    .ivent-nav {
-       
+    .event-result-nav {
+
         margin-top: 40px;
-        .big-plus 
+        .big-plus
         {
             display: inline-block;
              float: right;
@@ -50,12 +50,12 @@
             &:hover {
                 background: url(/assets/img/icons/share.png) no-repeat right;
             }
-//           
+//
         }
         a {
             display: inline-block;
             height: 13px;
-           
+
             padding: 0 0 0 15px;
             font-size: 13px;
             color: #00b7f3;

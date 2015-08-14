@@ -395,16 +395,6 @@
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
 
-
-        console.log('state ', state);
-        console.log('draw layer ', map.hasLayer(drawLayer));
-        console.log('draggable layer ', map.hasLayer(draggableMarkerLayer));
-        console.log('marker layer ', map.hasLayer(markersLayer));
-        console.log('events layer ', map.hasLayer(eventsLayer));
-        console.log('recreations layer ', map.hasLayer(recreationsLayer));
-        console.log('pitstops layer ', map.hasLayer(pitstopsLayer));
-        console.log('other layer ', map.hasLayer(otherLayer));
-        console.log('==================================================');
         $timeout(function() {
           map.invalidateSize();
         })
