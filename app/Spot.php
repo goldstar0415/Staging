@@ -6,6 +6,7 @@ use App\Extensions\StartEndDatesTrait;
 use App\Scopes\NewestScopeTrait;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
+use Request;
 
 /**
  * Class Spot
@@ -45,7 +46,7 @@ class Spot extends BaseModel implements StaplerableInterface
 
     protected $guarded = ['id', 'user_id'];
 
-    protected $appends = ['rating', 'cover_url'];
+    protected $appends = ['rating', 'cover_url', 'is_favorite', 'is_saved'];
 
     protected $with = ['category.type'];
 
@@ -75,6 +76,24 @@ class Spot extends BaseModel implements StaplerableInterface
     public function getRatingAttribute()
     {
         return (float)$this->votes()->avg('vote');
+    }
+
+    public function getIsFavoriteAttribute()
+    {
+        if ($user = Request::user()) {
+            return $user->favorites()->find($this->id) ? true : false;
+        }
+
+        return false;
+    }
+
+    public function getIsSavedAttribute()
+    {
+        if ($user = Request::user()) {
+            return $user->calendarSpots()->find($this->id) ? true : false;
+        }
+
+        return false;
     }
 
     public function setWebSitesAttribute($value)

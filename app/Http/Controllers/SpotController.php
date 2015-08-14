@@ -7,6 +7,7 @@ use App\Events\OnMessage;
 use App\Http\Requests\Spot\SpotCategoriesRequest;
 use App\Http\Requests\Spot\SpotDestroyRequest;
 use App\Http\Requests\Spot\SpotFavoriteRequest;
+use App\Http\Requests\Spot\SpotIndexRequest;
 use App\Http\Requests\Spot\SpotInviteRequest;
 use App\Http\Requests\Spot\SpotRateRequest;
 use App\Http\Requests\Spot\SpotStoreRequest;
@@ -34,9 +35,11 @@ class SpotController extends Controller
      * @param Request $request
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index(Request $request)
+    public function index(SpotIndexRequest $request)
     {
-        return $request->user()->spots;
+        return Spot::find($request->get('user_id', $request->user()->id))
+            ->walls()
+                ->paginate((int) $request->get('limit', 10));
     }
 
     /**

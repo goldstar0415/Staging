@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Wall\WallDestroyRequest;
 use App\Http\Requests\Wall\WallStoreRequest;
 use App\Http\Requests\Wall\WallUpdateRequest;
+use App\Http\Requests\WallIndexRequest;
 use App\Services\Attachments;
 use App\User;
 use App\Wall;
@@ -32,7 +33,7 @@ class WallController extends Controller
      * @param Request $request
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index(Request $request)
+    public function index(WallIndexRequest $request)
     {
         return User::find($request->get('user_id', $request->user()->id))
             ->walls()
