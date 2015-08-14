@@ -6,28 +6,11 @@
     .controller('PlannerController', PlannerController);
 
   /** @ngInject */
-  function PlannerController(Plan, API_URL, $state) {
+  function PlannerController(Plan, $state, $compile, $scope) {
     var vm = this;
     vm.sourceEvents = [
-      [{
-        "id": 6521,
-        "title": "Artem Onoprienko has a birthday",
-        "start": "2015-08-13",
-        "birthday": "1988-08-13",
-        "type": "user",
-        "url": "http:\/\/zoomzoom.itechhighway.com\/user\/6521",
-        "avatar": {
-          "thumb": "\/images\/avatar.png",
-          "medium": "\/images\/avatar.png",
-          "large": "\/images\/avatar.png",
-          "full": "\/images\/avatar.png"
-        },
-        "years": "27",
-        "events_count": 2,
-        "followings_count": 7
-      }],
-      getEvents,
-      eventRender
+      [],
+      getEvents
     ];
 
     vm.calendarConfig = {
@@ -38,45 +21,37 @@
         center: 'title',
         right: 'today prev,next'
       },
-      eventLimit: true
-      //events: getEvents,
-      //eventRender: eventRender
+      eventLimit: true,
       //eventClick: vm.alertOnEventClick,
       //eventDrop: vm.alertOnDrop,
       //eventResize: vm.alertOnResize,
-      //eventRender: vm.eventRender
+      eventRender: eventRender
     };
 
     function getEvents(start, end, timezone, callback) {
-      console.log(arguments);
       Plan.events({
         start_date: start.format('YYYY-MM-DD'),
         end_date: end.format('YYYY-MM-DD')
       }, function success(events) {
-        //_.each(events, function (event) {
-        //  event.url = $state.href('spot', {spot_id: event.id})
-        //});
-        events = _.union(events.plans, events.spots);
+        _.each(events.spots, function (event) {
+          event.url = $state.href('spot', {spot_id: event.id});
+          event.start = event.start_date;
+          event.end = event.end_date;
+        });
+
+
         console.log(events);
+        events = _.union(events.plans, events.spots);
         callback(events);
-        //vm.events = data;
       });
     }
 
-    function eventRender(start, end, timezone, callback) {
-      console.log(arguments);
-
-      var s = new Date(start).getTime() / 1000;
-      var e = new Date(end).getTime() / 1000;
-      var m = new Date(start).getMonth();
-      var events = [{
-        title: 'Feed Me ' + m,
-        start: s + (50000),
-        end: s + (100000),
-        allDay: false,
-        className: ['customFeed']
-      }];
-      callback(events);
+    function eventRender(event, element, view) {
+      element.attr({
+        'tooltip': event.title,
+        'tooltip-append-to-body': true
+      });
+      $compile(element)($scope);
     }
   }
 })();

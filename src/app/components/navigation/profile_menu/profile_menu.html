@@ -4,11 +4,11 @@
       <ul ng-if="$root.currentUser">
         <li><a ui-sref="spots({user_id: $root.currentUser.id})" ui-sref-active="active">My spots</a></li>
         <li><a ui-sref-active="active">My blog</a></li>
-        <li><a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active">Favorites</a></li>
+        <li><a ui-sref="favorites({user_id: $root.currentUser.id})" ui-sref-active="active">Favorites</a></li>
         <li><a>Saved searches</a></li>
         <li><a ui-sref="friendsmap" ui-sref-active="active">Friends map</a></li>
-        <li><a ui-sref="photomap({user_id: $root.profileUser.id})" ui-sref-active="active">Photo map</a></li>
-        <li><a ui-sref="planner" ui-sref-active="active">Planner</a></li>
+        <li><a ui-sref="photomap({user_id: $root.currentUser.id})" ui-sref-active="active">Photo map</a></li>
+        <li><a ui-sref="planner" ng-class="{active: Profile.$state.includes('planner')}">Planner </a></li>
         <li><a ui-sref="settings" ui-sref-active="active">Settings</a></li>
       </ul>
       <div ng-if="!$root.currentUser">

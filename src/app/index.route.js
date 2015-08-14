@@ -98,7 +98,7 @@
         parent: 'profile_menu',
         locate: 'current',
         resolve: {
-          spot: function(Spot) {
+          spot: function (Spot) {
             return new Spot();
           }
         },
@@ -113,7 +113,7 @@
         parent: 'profile_menu',
         locate: 'none',
         resolve: {
-          spot: function(Spot, $stateParams) {
+          spot: function (Spot, $stateParams) {
             return Spot.get({id: $stateParams.spot_id}).$promise;
           }
         },
@@ -127,7 +127,7 @@
         controllerAs: 'Spot',
         parent: 'profile_menu',
         resolve: {
-          spot: function(Spot, $stateParams) {
+          spot: function (Spot, $stateParams) {
             return Spot.get({id: $stateParams.spot_id}).$promise;
           }
         },
@@ -143,8 +143,12 @@
         locate: 'none',
         mapState: 'small',
         resolve: {
-          spots: function(Spot, $stateParams) {
-            return Spot.query({user_id: $stateParams.user_id}).$promise;
+          spots: function (Spot, $stateParams) {
+            return Spot.query({
+              user_id: $stateParams.user_id,
+              page: 1,
+              limit: 10
+            }).$promise;
           }
         }
       })
@@ -163,21 +167,29 @@
         url: '/plan/create',
         templateUrl: '/app/modules/planner/plan_create/plan_create.html',
         controller: 'PlanCreateController',
-        controllerAs: 'PlanCreate',
+        controllerAs: 'Plan',
         parent: 'profile_menu',
         locate: 'none',
-        mapState: 'small',
-        edit: false
+        resolve: {
+          plan: function (Plan) {
+            return new Plan();
+          }
+        },
+        mapState: 'small'
       })
       .state('planner.edit', {
         url: '/plan/:plan_id/edit',
         templateUrl: '/app/modules/planner/plan_create/plan_create.html',
         controller: 'PlanCreateController',
-        controllerAs: 'PlanCreate',
+        controllerAs: 'Plan',
         parent: 'profile_menu',
         locate: 'none',
-        mapState: 'small',
-        edit: true
+        resolve: {
+          plan: function (Plan, $stateParams) {
+            return Plan.get({id: $stateParams.spot_id}).$promise;
+          }
+        },
+        mapState: 'small'
       })
       .state('planner.view', {
         url: '/plan/:plan_id',
@@ -185,6 +197,11 @@
         controller: 'PlanController',
         controllerAs: 'Plan',
         parent: 'profile_menu',
+        resolve: {
+          plan: function (Plan, $stateParams) {
+            return Plan.get({id: $stateParams.spot_id}).$promise;
+          }
+        },
         locate: 'none',
         mapState: 'small'
       })
