@@ -20,7 +20,6 @@
   }
 
   function SpotPopupController($scope, moment) {
-    console.log($scope.data);
     var firstPhotoIndex, secondPhotoIndex, reviewIndex;
     $scope.view = 'about';
     $scope.showNextPhoto = false;
