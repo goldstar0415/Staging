@@ -1064,6 +1064,7 @@
         showPitstops: showPitstopsLayer,
         showRecreations: showRecreationsLayer,
         showOtherLayers: showOtherLayers,
+        clearLayers: clearLayers,
         //Selections
         clearSelections: ClearSelections,
         LassoSelection: LassoSelection,

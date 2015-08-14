@@ -221,6 +221,9 @@
               page: 1,
               limit: 20
             }).$promise;
+          },
+          mySpots: function () {
+
           }
         },
         parent: 'profile_menu',

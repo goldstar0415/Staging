@@ -38,6 +38,7 @@
         $state.go('index');
       }
 
+      MapService.clearLayers();
       MapService.ChangeState(current.mapState);
 
       if (current.mapState == 'big') {
