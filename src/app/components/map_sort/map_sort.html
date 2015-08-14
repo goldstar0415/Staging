@@ -22,10 +22,10 @@
 
   <div class="search-filters">
     <div ng-show="MapSort.sortLayer == 'event'">
-      <div class="numbers-events">
+      <div ng-show="MapSort.displayEventsArray.length > 0" class="numbers-events">
         <a href="" class="hide" title="Close"></a>
 
-        <p>10 Events found</p>
+        <p>{{MapSort.displayEventsArray.length}} Events found</p>
       </div>
 
       <div class="sort-date">
@@ -80,10 +80,10 @@
     </div>
 
     <div ng-show="MapSort.sortLayer == 'recreation'">
-      <div class="numbers-events">
+      <div ng-show="MapSort.displayRrecreationsArray.length > 0" class="numbers-events">
         <a href="" class="hide" title="Close"></a>
 
-        <p>10 Recreations found</p>
+        <p>{{MapSort.displayRrecreationsArray.length}} Recreations found</p>
       </div>
 
 
@@ -117,10 +117,10 @@
     </div>
 
     <div ng-show="MapSort.sortLayer == 'pitstop'">
-      <div class="numbers-events">
+      <div ng-show="MapSort.displayPitstopsArray.length > 0" class="numbers-events">
         <a href="" class="hide" title="Close"></a>
 
-        <p>10 Pit Stops found</p>
+        <p>{{MapSort.displayPitstopsArray.length}} Pit Stops found</p>
       </div>
 
 

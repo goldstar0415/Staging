@@ -1026,7 +1026,8 @@
         var markers = [];
 
         _.each(spots, function(item) {
-          var marker = L.marker(item.location);
+          var icon = CreateCustomIcon(item.spot.category.icon_url, 'custom-map-icons', [50, 50]);
+          var marker = L.marker(item.location, {icon: icon});
           BindSpotPopup(marker, item);
 
           markers.push(marker);
@@ -1065,6 +1066,9 @@
         showOtherLayers: showOtherLayers,
         //Selections
         clearSelections: ClearSelections,
+        LassoSelection: LassoSelection,
+        PathSelection: PathSelection,
+        RadiusSelection: RadiusSelection,
         //Controls
         AddControls: AddControls,
         RemoveControls: RemoveControls,
