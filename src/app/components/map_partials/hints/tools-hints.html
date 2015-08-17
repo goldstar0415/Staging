@@ -6,14 +6,20 @@
 
     <p>Choose a tool for search:</p>
     <ul>
-      <li class="path"><a ng-click="PathSelectionTool()"><img src="assets/img/icons/path.png"></a>Path</li>
-      <li class="radius"><a ng-click="RadiusSelectionTool()"><img src="assets/img/icons/radius.png"></a>Radius</li>
-      <li class="lasso"><a ng-click="LassoSelectionTool()"><img src="assets/img/icons/lasso.png"></a>Lasso</li>
+      <li class="path"><a ng-click="PathSelectionTool()"><img src="assets/img/icons/path.png"></a>Path
+        <div class="path-map"></div>
+      </li>
+      <li class="radius"><a ng-click="RadiusSelectionTool()"><img src="assets/img/icons/radius.png"></a>Radius
+        <div class="radius-map"></div>
+      </li>
+      <li class="lasso"><a ng-click="LassoSelectionTool()"><img src="assets/img/icons/lasso.png"></a>Lasso
+        <div class="lasso-map"></div>
+      </li>
     </ul>
   </div>
-  <div class="tools-maps-wrap">
-    <div class="path-map"></div>
-    <div class="radius-map"></div>
-    <div class="lasso-map"></div>
-  </div>
+  <!--<div class="tools-maps-wrap">-->
+  <!--<div class="path-map active-hint"></div>-->
+  <!--<div class="radius-map active-hint"></div>-->
+  <!--<div class="lasso-map active-hint"></div>-->
+  <!--</div>-->
 </div>

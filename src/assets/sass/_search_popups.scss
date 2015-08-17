@@ -87,37 +87,52 @@
         display: inline-block;
         margin: 22px 22px 15px;
         font: 400 14px/20px 'Ubuntu medium';
+
+        a {
+          display: block;
+        }
+        .path-map, .radius-map, .lasso-map {
+          border-bottom-left-radius: 8px;
+          border-bottom-right-radius: 8px;
+          border: 2px solid #bdbdbd;
+          box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .28);
+          background-size: 100%;
+          //padding-top: 35%;
+          overflow: hidden;
+          height: 0;
+          display: none;
+          //transition: height 5s;
+
+        }
+        .path-map {
+          background: url(/assets/img/path-map.png) no-repeat center top;
+          transition: background 5s ease;
+        }
+        .radius-map {
+          background: url(/assets//img/radius-map.png) no-repeat center top;
+          transition: background 5s ease;
+        }
+        .lasso-map {
+          background: url(/assets/img/lasso-map.png) no-repeat center top;
+          transition: background 5s ease;
+        }
         &:hover {
           border: 1px solid #0874be;
           background-color: #fff;
           @include transition_bg_color;
-        }
-        a {
-          display: block;
+          .path-map, .radius-map, .lasso-map {
+            position: absolute;
+            width: 100%;
+            //bottom: -171px;
+            left: 0;
+            display: block;
+            height: 170px;
+            //transition: height 5s;
+            //transition: display 5s;
+            transition: background 5s ease;
+          }
         }
       }
-    }
-  }
-  .tools-maps-wrap {
-    height: 170px;
-    overflow: hidden;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border: 2px solid #bdbdbd;
-    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .28);
-    margin: 0 auto;
-    div {
-      background-size: 100%;
-      padding-top: 35%;
-    }
-    .path-map {
-      background: url(/assets/img/path-map.png) no-repeat center top;
-    }
-    .radius-map {
-      background: url(/assets//img/radius-map.png) no-repeat center top;
-    }
-    .lasso-map {
-      background: url(/assets/img/lasso-map.png) no-repeat center top;
     }
   }
 }
