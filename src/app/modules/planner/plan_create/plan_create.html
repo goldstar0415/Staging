@@ -24,11 +24,10 @@
 
       <div class="col-sm-10">
         <textarea class="form-control" rows="5" name="description" ng-maxlength="5000" ng-model="Plan.description"
-                  id="description" required></textarea>
+                  id="description" ></textarea>
 
         <div ng-messages="form.description.$error" ng-if="form.$submitted || form.description.$touched"
              class="error-message">
-          <div ng-message="required">is required</div>
           <div ng-message="maxlength">Description can't be longer then 5000 symbols</div>
         </div>
       </div>
@@ -45,8 +44,7 @@
 
       <div class="col-md-10 col-sm-12 col-xs-12">
         <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-datepicker name="start_date" ng-model="Plan.start_date" start-date="Plan.startDate"
-                 type="text" required>
+          <input ng-datepicker name="start_date" ng-model="Plan.start_date" type="text" required>
 
           <div ng-messages="form.start_date.$error" ng-if="form.$submitted" class="error-message-inline">
             <div ng-message="required">Start date field can't be empty</div>
@@ -66,31 +64,6 @@
       </div>
     </div>
 
-    <div class="form-group ">
-      <label class="col-md-2 col-sm-12 col-xs-12 control-label">Time</label>
-
-      <div class="col-md-10 col-sm-12 col-xs-12">
-        <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.start_time" name="start_time"
-                 type="text" required>
-
-          <div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">Start time field can't be empty</div>
-          </div>
-        </div>
-        <span class="hidden-xs col-sm-1">—</span>
-
-        <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.end_time" name="end_time"
-                 type="text" required>
-
-          <div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">End time field can't be empty</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
 
   </section>
   <!-- end section  event-main-info -->
@@ -99,7 +72,7 @@
   <section class="event-additionl-info" ng-repeat="activity in Plan.activities">
     <div class="form-group">
       <h3 class="sub-title">Activity
-        <button class="close">x</button>
+        <button type="button" ng-click="Plan.deleteActivity($index)" class="close">x</button>
       </h3>
     </div>
 
@@ -156,41 +129,27 @@
       </div>
     </div>
 
-    <div class="form-group ">
-      <label class="col-sm-2 control-label">Time </label>
-
-      <div class="col-sm-10">
-        <input placeholder="12:00..." type="text"
-               class=" col-sm-4 col-xs-12">
-        <span class="hidden-xs col-sm-1">—</span>
-        <input placeholder="12:00..." type="text"
-               class=" col-sm-4 col-xs-12">
-      </div>
-    </div>
-
   </section>
   <!-- end section  event-additionl-info -->
 
   <!-- section  event-add-location-->
   <section class="event-add-location">
-    <div class="event" ng-repeat="event in Plan.spots">
+    <div class="event" ng-repeat="spot in Plan.spots">
       <div class="media media-visible">
-        <a class="pull-left" href="#">
+        <a class="pull-left" >
           <img class="media-object fav-avatar-icon feeds-img"
-               src="/assets/img/icons/landmark.png"
-               alt="...">
+               ng-src="{{spot.cover_url.thumb}}">
         </a>
 
         <div class="media-body">
           <h2 class="media-heading feeds-title">
-            <button class="close">x</button>
-            <a href="http://zoomzoom.itechhighway.com/event/show/296">Lorem</a>
+            <button type="button" ng-click="Plan.deleteSpot($index)" class="close">x</button>
+            <a ui-sref="spot({spot_id: spot.id})">{{spot.title}}</a>
           </h2>
 
-          <p class="time">03.31.2015 - 04.01.2015</p>
+          <p class="time">{{spot.start_date | toTimezone:'MM.DD.YYYY'}} - {{spot.end_date | toTimezone:'MM.DD.YYYY'}}</p>
 
-          <p class="feeds-text">Lorem lorem lorem lorem</p>
-
+          <p class="feeds-text">{{spot.description}}</p>
         </div>
       </div>
     </div>
@@ -200,9 +159,10 @@
   <!-- buttons block -->
   <div class="form-group">
     <div class="col-xs-12 buttons-block">
-      <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12">Add activity</button>
-      <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12">Add event</button>
-      <button type="button" class="btn btn-default green-btn col-sm-2 col-xs-12 pull-right">Save</button>
+      <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12" ng-click="Plan.addActivity()">Add activity</button>
+      <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12"
+              spots-modal items="Plan.spots">Add event</button>
+      <button type="submit" class="btn btn-default green-btn col-sm-2 col-xs-12 pull-right">Save</button>
     </div>
   </div>
   <!-- end buttons block -->

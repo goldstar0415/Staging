@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .directive('ngDatepicker', function () {
+    .directive('ngDatepicker', function (moment) {
       return {
         restrict: 'A',
         scope: {
@@ -13,7 +13,8 @@
           model: '=ngModel'
         },
         link: function (s, e, a) {
-          var format = s.format || 'Y-m-d';
+          var format = s.format || 'd/m/Y',
+            today = moment().format('DD/MM/YYYY');
           $(e).datetimepicker({
             value: s.model || null,
             scrollMonth: false,
@@ -23,21 +24,22 @@
             validateOnBlur: false,
             format: format,
             formatDate: format,
-            minDate: s.startDate || false,
+            minDate: s.startDate || today,
             maxDate: s.endDate || false,
             mask: true,
             closeOnDateSelect: true,
             onSelectDate: onSelectDate,
-            onShow:function() {
+            onShow: function () {
               this.setOptions({
-                maxDate: s.endDate || false,
-                minDate: s.startDate || false
+                minDate: s.startDate || today,
+                maxDate: s.endDate || false
               });
             }
-          });
+          })
+            .attr('placeholder', today);
 
           function onSelectDate(date, $i) {
-            s.model = date.dateFormat('Y-m-d');
+            s.model = date.dateFormat('d/m/Y');
             s.$apply();
           }
         }
@@ -56,7 +58,7 @@
           $(e).datetimepicker({
             value: s.model || null,
             defaultTime: '01:00',
-            datepicker:false,
+            datepicker: false,
             validateOnBlur: false,
             step: step,
             mask: '29:59',
