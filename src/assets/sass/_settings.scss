@@ -57,9 +57,9 @@
 .settings-block {
   border-bottom: 1px solid $light_grey;
   padding-bottom: 20px;
-  &:first-of-type {
-    border-top: 1px solid $light_grey;
-  }
+  //&:first-of-type {
+  //  border-top: 1px solid $light_grey;
+  //}
   &:last-child {
     border-bottom: none;
   }

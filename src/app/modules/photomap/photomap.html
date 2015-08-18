@@ -1,11 +1,11 @@
 <div class="title">
-  <h2>Photo map</h2>
+  <h2 class="title-name">Photo map</h2>
 
   <div class="album-tools">
     <a ng-if="Photomap.currentId == currentUser.id" title="Create new album" ui-sref="createAlbum" class="add-page"></a>
   </div>
 </div>
-<div class="col-xs-12 no-pad">
+<div class="col-xs-12">
   <div ng-repeat="item in Photomap.albums" class="col-xs-4 no-pad">
     <div class="img-wrap" ui-sref="album({album_id: item.id})">
       <img ng-src="{{item.cover.medium}}" alt="">
