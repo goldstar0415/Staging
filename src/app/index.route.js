@@ -202,7 +202,7 @@
         parent: 'profile_menu',
         resolve: {
           plan: function (Plan, $stateParams) {
-            return Plan.get({id: $stateParams.spot_id}).$promise;
+            return Plan.get({id: $stateParams.plan_id}).$promise;
           }
         },
         locate: 'none',

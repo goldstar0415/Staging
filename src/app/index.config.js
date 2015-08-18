@@ -3,7 +3,8 @@
 
   angular
     .module('zoomtivity')
-    .config(config);
+    .config(config)
+    .animation('.mapResize', mapResizeAnimation);
 
   /** @ngInject */
   function config($logProvider, toastr, $httpProvider, cfpLoadingBarProvider, snapRemoteProvider, $locationProvider, DEBUG, $translateProvider) {
@@ -53,6 +54,19 @@
       DIALOGS_YES: 'Yes',
       DIALOGS_NO: 'No'
     });
+  }
+
+  /** @ngInject */
+  function mapResizeAnimation() {
+    return {
+      setClass: function (element, addedClass, removedClass, doneFn) {
+        if (window.map) {
+          window.map.invalidateSize();
+        }
+        doneFn();
+      }
+    }
+
   }
 
 })();

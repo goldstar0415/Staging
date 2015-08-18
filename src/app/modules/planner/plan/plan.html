@@ -14,87 +14,19 @@
                             </div>
                         </span>
                         <span class="date">
-                            05.11.2016 — 015.11.2016
-                            <br>
-                            12:00 am
+                           {{Plan.start_date | toTimezone}} - {{Plan.end_date | toTimezone}}
                         </span>
 
       <h2 class="title-planner">
-        <a href="http://zoomzoom.itechhighway.com/event/show/97777798">Some text</a>
+        {{Plan.title}}
       </h2>
 
-      <p class="place">Детройт, оз. Мічіґан, Сполучені Штати Америки</p>
+      <p class="place">{{Plan.address}}</p>
 
       <p class="description">
-                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad adipisci al soluta temporibus voluptate! Accusamus aperiam debitis nemo perspiciatis tempore.
-                        </span>
+        <span>{{Plan.description}}</span>
       </p>
 
-      <!-- tags -->
-      <ul class="tags clearfix">
-        <li><a href="#">#hotel</a>
-        </li>
-        <li><a href="#">#rest</a>
-        </li>
-        <li><a href="#">#relax</a>
-        </li>
-      </ul>
-      <!--  tags -->
-
-      <!-- attachments -->
-      <ul class="attachments clearfix" title="Attached documents">
-        <li><a href="#">filename,</a>
-        </li>
-        <li><a href="#">filemane,</a>
-        </li>
-        <li><a href="#">filename</a>
-        </li>
-      </ul>
-      <!-- end attachments -->
-
-      <!-- tools -->
-      <ul class="tools">
-
-        <li>
-          <a href="http://zoomzoom.itechhighway.com/event/add-to-calendar/97777798"
-             class="save-event ">Save</a>
-        </li>
-        <li>
-          <a href="http://zoomzoom.itechhighway.com/event/del-from-calendar/32"
-             class="save-event saved  clicked" >Remove</a>
-        </li>
-        <li>
-          <a href="http://zoomzoom.itechhighway.com/event/add-to-favourites/97777798"
-             class="favorite-spot ">Favorite</a>
-        </li>
-        <li>
-          <a href="http://zoomzoom.itechhighway.com/event/del-from-favourites/32"
-             class="fav favorited " >Unfavorite</a>
-        </li>
-        <li>
-          <a href="#" class="invite-friend">Invite
-            friends</a>
-        </li>
-
-      </ul>
-      <!-- end tools -->
-
-      <a href="#" class="share">Share</a>
-
-      <div class="share-wrap" ng-hide="">
-        <ul class="share-buttons clearfix">
-          <li>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
-               target="_blank" class="facebook">facebook</a></li>
-          <li>
-            <a href="https://plus.google.com/share?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
-               target="_blank" class="google">google</a></li>
-          <li>
-            <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
-               target="_blank" class="twitter">twitter</a></li>
-        </ul>
-      </div>
-      <!-- share-wrap -->
 
     </div>
   </section>

@@ -8,7 +8,7 @@
   /** @ngInject */
   function PlanController(plan) {
     var vm = this;
-    vm.plan = plan;
+    vm = _.extend(vm, plan);
 
   }
 })();

@@ -21,17 +21,6 @@
       'ui.select',
       'ui.utils.masks',
       'angular-img-cropper'
-    ])
-    .animation('.mapResize', [function() {
-      return {
-        setClass: function(element, addedClass, removedClass, doneFn) {
-          if(window.map) {
-            window.map.invalidateSize();
-          }
-          doneFn();
-        }
-      }
-
-    }]);
+    ]);
 
 })();
