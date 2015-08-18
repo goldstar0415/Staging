@@ -1,34 +1,48 @@
 <div class="title">
-  <h2 class="title-name">Friend map</h2>
+  <h2 class="title-name">Friends map</h2>
 
   <div class="album-tools">
     <a title="Create new album" ui-sref="friendsmap_create" class="add-page"></a>
   </div>
 </div>
-<div ng-repeat="item in Friendsmap.friends" class="col-xs-12 no-pad">
-  <div class="col-xs-2">
-    <div class="avatar-wrap">
-      <img src="{{item.avatar_url.medium}}" alt="">
-    </div>
+<div ng-repeat="item in Friendsmap.friends" class="col-xs-12 friends-block">
+  <div class="avatar-wrap">
+    <a class="review-img" href="#">
+      <img src="{{item.avatar_url.medium}}" alt="Friends avatar" class="fav-avatar-icon feeds-img">
+    </a>
   </div>
-  <div class="col-xs-10 info-block">
-    <h3><a href="#">{{item.first_name + " " + item.last_name}}</a></h3>
-    <a ui-sref="friendsmap_edit({id: item.id})" class="edit"></a>
+  <div class="text-block">
+    <h3 class="feeds-title"><a href="#">{{item.first_name + " " + item.last_name}}</a></h3>
+    <!--<a ui-sref="friendsmap_edit({id: item.id})" class="edit"></a>-->
 
-    <div class="col-xs-5">
+    <div class="col-xs-6 no-pad">
       <p ng-show="item.birth_date">{{moment(item.birth_date).format('DD-MMM-YYYY')}}</p>
-
-      <p ng-show="item.address">{{item.address}}</p>
-    </div>
-    <div class="col-xs-5">
-      <p ng-show="item.phone">{{item.phone}}</p>
 
       <p ng-show="item.email">{{item.email}}</p>
     </div>
-    <div class="col-xs-12">
-      <p ng-show="item.note">
+    <div class="col-xs-6 no-pad">
+      <p ng-show="item.phone">{{item.phone}}</p>
+    </div>
+
+    <div class="col-xs-12 no-pad">
+      <div class="col-xs-8 no-pad">
+        <p ng-show="item.address">{{item.address}}</p>
+      </div>
+      <div class="col-xs-4 location-btn">
+        <a class="custom-location" href="#"></a>
+        <a class="default-location" href="#"></a>
+      </div>
+    </div>
+
+
+    <div class="col-xs-12 no-pad">
+      <p ng-show="item.note" class="description">
         {{item.note}}
       </p>
+    </div>
+    <div class="col-xs-12 edit-delete">
+      <a href="#" class="delete">Delete</a>
+      <a href="#" class="edit" ui-sref="friendsmap_edit({id: item.id})">Edit</a>
     </div>
   </div>
 </div>
