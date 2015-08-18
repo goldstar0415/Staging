@@ -1,4 +1,4 @@
-<form class="form-horizontal col-xs-12 no-pad" name="form" ng-submit="Plan.save(form)"  novalidate>
+<form class="form-horizontal col-xs-12  no-pad" name="form" onsubmit="Plan.save(form)" role="form" novalidate>
   <h2 class="title-name">{{Plan.id ? 'Edit plan' : 'Create new plan'}}</h2>
 
   <!-- section  event-main-info-->
@@ -24,10 +24,11 @@
 
       <div class="col-sm-10">
         <textarea class="form-control" rows="5" name="description" ng-maxlength="5000" ng-model="Plan.description"
-                  id="description"></textarea>
+                  id="description" required></textarea>
 
         <div ng-messages="form.description.$error" ng-if="form.$submitted || form.description.$touched"
              class="error-message">
+          <div ng-message="required">is required</div>
           <div ng-message="maxlength">Description can't be longer then 5000 symbols</div>
         </div>
       </div>
@@ -36,11 +37,7 @@
       <label class="col-sm-2 control-label">Location</label>
 
       <div class="col-sm-10">
-        <location address="Plan.address" location="Plan.location" limit="15" ></location>
-
-        <div ng-if="form.$submitted && !Plan.address" class="error-message-inline">
-          <div>Start date field can't be empty</div>
-        </div>
+        <location address="Plan.address" location="Plan.location" limit="15"></location>
       </div>
     </div>
     <div class="form-group ">
@@ -48,7 +45,8 @@
 
       <div class="col-md-10 col-sm-12 col-xs-12">
         <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-datepicker name="start_date" ng-model="Plan.start_date" type="text" required>
+          <input ng-datepicker name="start_date" ng-model="Plan.start_date" start-date="Plan.startDate"
+                 type="text" required>
 
           <div ng-messages="form.start_date.$error" ng-if="form.$submitted" class="error-message-inline">
             <div ng-message="required">Start date field can't be empty</div>
@@ -68,6 +66,31 @@
       </div>
     </div>
 
+    <div class="form-group ">
+      <label class="col-md-2 col-sm-12 col-xs-12 control-label">Time</label>
+
+      <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class="col-sm-4 col-xs-12 no-pad">
+          <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.start_time" name="start_time"
+                 type="text" required>
+
+          <div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-message="required">Start time field can't be empty</div>
+          </div>
+        </div>
+        <span class="hidden-xs col-sm-1">—</span>
+
+        <div class="col-sm-4 col-xs-12 no-pad">
+          <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.end_time" name="end_time"
+                 type="text" required>
+
+          <div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-message="required">End time field can't be empty</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </section>
   <!-- end section  event-main-info -->
@@ -76,36 +99,32 @@
   <section class="event-additionl-info" ng-repeat="activity in Plan.activities">
     <div class="form-group">
       <h3 class="sub-title">Activity
-        <button type="button" ng-click="Plan.deleteActivity($index)" class="close">x</button>
+        <button class="close">x</button>
       </h3>
     </div>
 
     <div class="form-group">
-      <label class="col-sm-2 control-label">Title</label>
+      <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
 
       <div class="col-sm-10">
-        <input type="text" class="form-control" name="title_activity_{{$index}}" ng-model="activity.title"
-               placeholder="Start typing..." ng-minlength="3" ng-maxlength="255" required>
-
-        <div ng-messages="form['title_activity_' + $index].$error"
-             ng-if="form.$submitted || form['title_activity_' +$index].$touched" class="error-message">
-          <div ng-message="required">is required</div>
-          <div ng-message="minlength">too short</div>
-          <div ng-message="maxlength">can't be longer then 255 symbols</div>
-        </div>
+        <input type="text" class="form-control" id="inputPassword3" placeholder="Start typing...">
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col-sm-2 control-label">Category</label>
+      <label for="inputPassword3" class="col-sm-2 control-label">Category</label>
 
       <div class="col-sm-10">
-        <ui-select ng-model="activity.activity_category_id" theme="bootstrap">
-          <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
-          <ui-select-choices repeat="item.id as item in Plan.categories | filter : $select.search track by $index">
-            <div ng-bind-html="item.display_name |  highlight: $select.search"></div>
-          </ui-select-choices>
-        </ui-select>
+        <div class="btn-group category-dropdown">
+          <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown">
+            Landmark
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu category-dropdown">
+            <li>Music</li>
+            <li>Technological</li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -113,40 +132,39 @@
       <label class="col-sm-2 control-label">Description</label>
 
       <div class="col-sm-10">
-         <textarea class="form-control" rows="5" ng-model="activity.description" ></textarea>
+        <textarea class="form-control" rows="5"></textarea>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col-sm-2 control-label">Location</label>
+      <label for="inputPassword3" class="col-sm-2 control-label">Location</label>
 
       <div class="col-sm-10">
-        <location address="activity.address" location="activity.location" limit="15"></location>
+        <input type="text" class="form-control" id="" placeholder="Address...">
       </div>
     </div>
 
     <div class="form-group ">
       <label class="col-sm-2 control-label">Date</label>
 
-      <div class="col-md-10 col-sm-12 col-xs-12">
-        <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-datepicker name="start_date_{{$index}}" ng-model="activity.start_date" type="text" required>
-
-          <div ng-messages="form['start_date_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">Start date field can't be empty</div>
-          </div>
-        </div>
-
+      <div class="col-sm-10">
+        <input placeholder="01.01.2015" type="text"
+               class=" col-sm-4 col-xs-12">
         <span class="hidden-xs col-sm-1">—</span>
+        <input placeholder="01.01.2015" type="text"
+               class=" col-sm-4 col-xs-12">
+      </div>
+    </div>
 
-        <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-datepicker name="end_date_{{$index}}" ng-model="activity.end_date" start-date="activity.start_date"
-                 type="text" required>
+    <div class="form-group ">
+      <label class="col-sm-2 control-label">Time </label>
 
-          <div ng-messages="form['end_date_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">End date field can't be empty</div>
-          </div>
-        </div>
+      <div class="col-sm-10">
+        <input placeholder="12:00..." type="text"
+               class=" col-sm-4 col-xs-12">
+        <span class="hidden-xs col-sm-1">—</span>
+        <input placeholder="12:00..." type="text"
+               class=" col-sm-4 col-xs-12">
       </div>
     </div>
 
@@ -155,23 +173,24 @@
 
   <!-- section  event-add-location-->
   <section class="event-add-location">
-    <div class="event" ng-repeat="spot in Plan.spots">
+    <div class="event" ng-repeat="event in Plan.spots">
       <div class="media media-visible">
-        <a class="pull-left">
+        <a class="pull-left" href="#">
           <img class="media-object fav-avatar-icon feeds-img"
-               ng-src="{{spot.cover_url.thumb}}">
+               src="/assets/img/icons/landmark.png"
+               alt="...">
         </a>
 
         <div class="media-body">
           <h2 class="media-heading feeds-title">
-            <button type="button" ng-click="Plan.deleteSpot($index)" class="close">x</button>
-            <a ui-sref="spot({spot_id: spot.id})">{{spot.title}}</a>
+            <button class="close">x</button>
+            <a href="http://zoomzoom.itechhighway.com/event/show/296">Lorem</a>
           </h2>
 
-          <p class="time">{{spot.start_date | toTimezone:'MM.DD.YYYY'}} - {{spot.end_date |
-            toTimezone:'MM.DD.YYYY'}}</p>
+          <p class="time">03.31.2015 - 04.01.2015</p>
 
-          <p class="feeds-text">{{spot.description}}</p>
+          <p class="feeds-text">Lorem lorem lorem lorem</p>
+
         </div>
       </div>
     </div>
@@ -187,7 +206,7 @@
       <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12" spots-modal items="Plan.spots">Add
         event
       </button>
-      <button type="submit" class="btn btn-default green-btn col-sm-2 col-xs-12 pull-right">Save</button>
+      <button type="submit" class="btn btn-default green-btn col-sm-2 col-xs-12 pull-right no-margin-left-right">Save</button>
     </div>
   </div>
   <!-- end buttons block -->
