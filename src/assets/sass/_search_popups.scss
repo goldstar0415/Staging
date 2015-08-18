@@ -441,6 +441,14 @@
   float: left;
 }
 
+.weather-info {
+  padding: 10px 15px;
+  p {
+    font: 500 20px/26px "Ubuntu medium";
+    color: #000;
+  }
+}
+
 .unit {
   font: 500 50px 'Ubuntu medium';
 }
@@ -612,5 +620,11 @@
         font: 400 18px 'Ubuntu medium';
       }
     }
+  }
+}
+
+@media (max-width: 767px) {
+  .sort-menu {
+    width: 100%;
   }
 }

@@ -1,6 +1,7 @@
-<div class="title-name">
-  <h2 ng-hide="CreateAlbum.album.id">Create new album</h2>
-  <h2 ng-show="CreateAlbum.album.id">Edit album</h2>
+<div class="title">
+  <h2 ng-hide="CreateAlbum.album.id" class="title-name">Create new album</h2>
+
+  <h2 ng-show="CreateAlbum.album.id" class="title-name">Edit album</h2>
 </div>
 <div class="col-xs-12 no-pad">
   <form ng-submit="CreateAlbum.createAlbum(form)" role="form" name="form" class="create" novalidate>

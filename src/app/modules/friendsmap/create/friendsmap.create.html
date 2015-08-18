@@ -1,6 +1,7 @@
 <div class="title">
-  <h2 ng-hide="CreateFriend.edit">Create new friend</h2>
-  <h2 ng-show="CreateFriend.edit">Update friend</h2>
+  <h2 ng-hide="CreateFriend.edit" class="title-name">Create new friend</h2>
+
+  <h2 ng-show="CreateFriend.edit" class="title-name">Update friend</h2>
 </div>
 <div class="col-xs-12 no-pad">
   <form role="form" name="form" ng-submit="CreateFriend.SaveFriend(form)" class="create" novalidate>
