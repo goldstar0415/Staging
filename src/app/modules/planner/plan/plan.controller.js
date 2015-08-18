@@ -6,8 +6,9 @@
     .controller('PlanController', PlanController);
 
   /** @ngInject */
-  function PlanController() {
+  function PlanController(plan) {
     var vm = this;
+    vm.plan = plan;
 
   }
 })();

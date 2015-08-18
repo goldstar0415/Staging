@@ -13,35 +13,34 @@
           model: '=ngModel'
         },
         link: function (s, e, a) {
-          var format = s.format || 'd/m/Y',
-            today = moment().format('DD/MM/YYYY');
-          $(e).datetimepicker({
-            value: s.model || null,
-            scrollMonth: false,
-            scrollTime: false,
-            scrollInput: false,
-            timepicker: false,
-            validateOnBlur: false,
-            format: format,
-            formatDate: format,
-            minDate: s.startDate || today,
-            maxDate: s.endDate || false,
-            mask: true,
-            closeOnDateSelect: true,
-            onSelectDate: onSelectDate,
-            onShow: function () {
-              this.setOptions({
-                minDate: s.startDate || today,
-                maxDate: s.endDate || false
-              });
-            }
-          })
+          var format = s.format || 'm/d/Y',
+            today = moment().format('MM/DD/YYYY');
+
+          $(e)
+            .datetimepicker({
+              value: s.model || null,
+              scrollMonth: false,
+              scrollTime: false,
+              scrollInput: false,
+              timepicker: false,
+              validateOnBlur: false,
+              format: format,
+              formatDate: format,
+              minDate: s.startDate || today,
+              maxDate: s.endDate || false,
+              mask: true,
+              closeOnDateSelect: true,
+              //onSelectDate: onSelectDate,
+              onShow: function () {
+                this.setOptions({
+                  minDate: s.startDate || today,
+                  maxDate: s.endDate || false
+                });
+              }
+            })
             .attr('placeholder', today);
 
-          function onSelectDate(date, $i) {
-            s.model = date.dateFormat('d/m/Y');
-            s.$apply();
-          }
+
         }
       }
     })

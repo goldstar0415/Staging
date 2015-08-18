@@ -49,7 +49,12 @@
       },
       query: {
         url: API_URL + '/users/list',
-        method: 'GET'
+        method: 'GET',
+        params: {
+          type: 'all',
+          page: 1,
+          limit: 10
+        }
       },
       update: {
         method: 'PUT'

@@ -9,11 +9,19 @@
   function Spot($resource, API_URL) {
     return $resource(API_URL + '/spots/:id', {id: '@id'}, {
       query: {
-        isArray: false
+        isArray: false,
+        params: {
+          page: 1,
+          limit: 10
+        }
       },
       favorites: {
         url: API_URL + '/spots/favorites',
-        isArray: true
+        isArray: true,
+        params: {
+          page: 1,
+          limit: 20
+        }
       },
       inviteFriends: {
         url: API_URL + '/spots/invite',

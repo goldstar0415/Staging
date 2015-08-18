@@ -13,7 +13,11 @@
         isArray: true
       },
       query: {
-        url: API_URL + '/message/list'
+        url: API_URL + '/message/list',
+        params: {
+          page: 1,
+          limit: 10
+        }
       },
       save: {
         method: 'POST',

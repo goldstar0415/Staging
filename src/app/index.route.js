@@ -145,9 +145,7 @@
         resolve: {
           spots: function (Spot, $stateParams) {
             return Spot.query({
-              user_id: $stateParams.user_id,
-              page: 1,
-              limit: 10
+              user_id: $stateParams.user_id
             }).$promise;
           }
         }
@@ -160,6 +158,11 @@
         controller: 'PlannerController',
         controllerAs: 'Planner',
         parent: 'profile_menu',
+        resolve: {
+          plans: function (Plan) {
+            return new Plan.query().$promise;
+          }
+        },
         locate: 'none',
         mapState: 'small'
       })
@@ -217,9 +220,7 @@
           },
           wall: function (Wall, $stateParams) {
             return Wall.query({
-              user_id: $stateParams.user_id,
-              page: 1,
-              limit: 20
+              user_id: $stateParams.user_id
             }).$promise;
           },
           mySpots: function () {
@@ -258,9 +259,7 @@
           },
           messages: function (Message, $stateParams) {
             return Message.query({
-              user_id: $stateParams.user_id,
-              page: 1,
-              limit: 20
+              user_id: $stateParams.user_id
             }).$promise;
           }
         },
@@ -276,10 +275,7 @@
         controllerAs: 'Feed',
         resolve: {
           feeds: function (Feed) {
-            return Feed.query({
-              page: 1,
-              limit: 20
-            })//.$promise;
+            return Feed.query()//.$promise;
           }
         },
         parent: 'profile_menu',
@@ -294,10 +290,7 @@
         controllerAs: 'Review',
         resolve: {
           reviews: function (Feed) {
-            return Feed.reviews({
-              page: 1,
-              limit: 20
-            }).$promise;
+            return Feed.reviews().$promise;
           }
         },
         parent: 'profile_menu',
@@ -314,9 +307,7 @@
         resolve: {
           favorites: function (Spot, $stateParams) {
             return Spot.favorites({
-              user_id: $stateParams.user_id,
-              page: 1,
-              limit: 20
+              user_id: $stateParams.user_id
             }).$promise;
           }
         },
@@ -468,7 +459,7 @@
         controllerAs: 'Zoomers',
         resolve: {
           users: function (User) {
-            return User.query({type: 'all', page: 1, limit: 10}).$promise;
+            return User.query().$promise;
           }
         },
         parent: 'main',
