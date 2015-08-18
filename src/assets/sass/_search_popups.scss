@@ -52,7 +52,7 @@
   margin: 0 auto;
   float: none;
   width: 420px;
-  height: 100%;
+  //height: 100%;
   position: relative;
   .tools-hint-block {
     padding: 20px;
@@ -220,6 +220,19 @@
   z-index: 101;
   background: #fff;
   width: 450px;
+  .close-popup {
+    position: fixed;
+    width: 100%;
+    color: #fff;
+    background-color: $navy_blue;
+    font: 500 20px/30px 'Ubuntu medium';
+    bottom: 0;
+    text-align: center;
+    @include transition_bg_color;
+    &:hover {
+      background-color: $blue;
+    }
+  }
 }
 
 .sidebar-menu-horizontal {
@@ -628,6 +641,22 @@
   }
 }
 
+.results-btn {
+  display: block;
+  color: #fff;
+  background-color: $green;
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  top: 0;
+  font: 500 20px/30px "Ubuntu medium";
+  &:hover {
+    background-color: $light_green;
+    @include transition_bg_color;
+    color: #fff;
+  }
+}
+
 @media (max-width: 767px) {
   .sort-menu {
     width: 100%;
@@ -649,6 +678,28 @@
         &:nth-child(3), &:nth-child(4) {
           margin-top: 5px;
         }
+      }
+    }
+  }
+  .search-filters {
+    height: calc(100% - 130px);
+    .sort-date {
+      .date-filters {
+        .form-group {
+          width: 100%;
+          input {
+            float: right;
+          }
+        }
+      }
+    }
+    .filters-button {
+      width: 100%;
+    }
+    .search-by-name {
+      .search-input {
+        width: 100%;
+        margin-bottom: 15px;
       }
     }
   }
