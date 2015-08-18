@@ -9,7 +9,7 @@
   function hintsPopup() {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/map_partials/hints/tools-hints.html',
+      templateUrl: '/app/components/map_partials/hints/tools-hints.html',
       controller: HintsPopupController,
       controllerAs: 'ConfirmPopup'
     };

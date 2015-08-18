@@ -9,7 +9,7 @@
   function confirmPopup() {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/map_popups/confirm_box/confirm.html',
+      templateUrl: '/app/components/map_popups/confirm_box/confirm.html',
       controller: ConfirmPopupController,
       controllerAs: 'ConfirmPopup'
     };

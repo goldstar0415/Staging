@@ -9,7 +9,7 @@
   function spotPopup() {
     return {
       restrict: 'E',
-      templateUrl: 'app/components/map_popups/spot_popup/spot_popup.html',
+      templateUrl: '/app/components/map_popups/spot_popup/spot_popup.html',
       controller: SpotPopupController,
       controllerAs: 'SpotPopup',
       scope: {

@@ -5,7 +5,7 @@
     .directive('mapSort', function() {
       return {
         restrict: 'E',
-        templateUrl: 'app/components/map_sort/map_sort.html',
+        templateUrl: '/app/components/map_sort/map_sort.html',
         controller: mapSort,
         controllerAs: 'MapSort',
         scope: {
