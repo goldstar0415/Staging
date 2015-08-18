@@ -59,7 +59,7 @@
     color: #fff;
     text-align: center;
     a.hide {
-      display: block;
+      display: block !important;
       width: 8px;
       height: 8px;
       background: url(/assets/img/cross.png) no-repeat;
@@ -96,25 +96,28 @@
           border-bottom-right-radius: 8px;
           border: 2px solid #bdbdbd;
           box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .28);
-          background-size: 100%;
+          //background-size: 100%;
           //padding-top: 35%;
-          overflow: hidden;
+          //overflow: hidden;
           height: 0;
-          display: none;
+          //display: none;
           //transition: height 5s;
 
         }
         .path-map {
           background: url(/assets/img/path-map.png) no-repeat center top;
-          transition: background 5s ease;
+          transition: display 5s ease;
+          border: none;
         }
         .radius-map {
           background: url(/assets//img/radius-map.png) no-repeat center top;
-          transition: background 5s ease;
+          transition: display 5s ease;
+          border: none;
         }
         .lasso-map {
           background: url(/assets/img/lasso-map.png) no-repeat center top;
-          transition: background 5s ease;
+          transition: display 5s ease;
+          border: none;
         }
         &:hover {
           border: 1px solid #0874be;
@@ -123,13 +126,14 @@
           .path-map, .radius-map, .lasso-map {
             position: absolute;
             width: 100%;
-            //bottom: -171px;
+            //bottom: -170px;
+            top: 284px;
             left: 0;
             display: block;
             height: 170px;
             //transition: height 5s;
             //transition: display 5s;
-            transition: background 5s ease;
+            transition: height .5s ease;
           }
         }
       }

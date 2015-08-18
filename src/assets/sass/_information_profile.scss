@@ -2,11 +2,14 @@
 
 .information-profile {
   padding: 0 0 20px;
-  .avatar {
-    margin: -95px auto 0;
-    img {
-      width: 120px;
-      height: 120px;
+  .avatar-wrap {
+    padding: 0;
+    .avatar {
+      margin: -95px auto 0;
+      img {
+        width: 120px;
+        height: 120px;
+      }
     }
   }
   .profile-name {
@@ -123,13 +126,19 @@
 
 @media (max-width: 992px) {
   .information-profile {
-    .avatar {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      img {
+    .avatar-wrap {
+      height: 120px;
+      width: 120px;
+      margin-right: 15px;
+      float: left;
+      .avatar {
+        margin: 0;
         width: 100%;
         height: 100%;
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
     }
   }
