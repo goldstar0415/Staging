@@ -1,13 +1,16 @@
+.album-container {
+  padding: 0 5px;
 .img-wrap {
-  width: 160px;
-  overflow: hidden;
-  margin: 0 auto 25px;
-  display: table;
+  width: 100%;
+  margin: 0 auto 20px;
+  display: block;
   border: 1px solid $light_grey;
   border-radius: 5px;
   img {
-    width: 160px;
+    width: 100%;
     height: 160px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
   a {
     display: block;
@@ -15,11 +18,13 @@
     color: $dark_blue;
     font: 500 16px/22px 'Ubuntu medium';
     transition: color .3s;
+    border-top: 1px solid $light_grey;
     &:hover {
       color: $blue;
       transition: color .3s;
     }
   }
+}
 }
 
 .create {
@@ -64,5 +69,17 @@
         background-color: $light_blue;
       }
     }
+  }
+}
+
+@media (max-width: 550px) {
+  .album-container {
+    width: 50%;
+  }
+}
+
+@media (max-width: 350px) {
+  .album-container {
+    width: 100%;
   }
 }

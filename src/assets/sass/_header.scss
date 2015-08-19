@@ -134,3 +134,57 @@ header {
     }
   }
 }
+
+@media (max-width: 400px) {
+  header {
+    padding: 0 10px 0 0;
+    .logo {
+      width: 120px;
+    }
+    .menu-btn {
+      .menu-icon {
+        margin: 24px 10px;
+        background-size: 100%;
+      }
+    }
+    nav {
+      .map-profile {
+        a {
+          padding: 0 10px;
+          span {
+            img {
+              width: 26px;
+              height: 26px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 300px) {
+  header {
+    .logo {
+      width: 100px;
+    }
+    .menu-btn {
+      .menu-icon {
+        width: 20px;
+      }
+    }
+    nav {
+      .map-profile {
+        a {
+          padding: 0 10px 0 5px;
+          span {
+            img {
+              width: 26px;
+              height: 26px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

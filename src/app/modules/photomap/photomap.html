@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="col-xs-12">
-  <div ng-repeat="item in Photomap.albums" class="col-xs-4 no-pad">
+  <div ng-repeat="item in Photomap.albums" class="col-xs-4 album-container">
     <div class="img-wrap" ui-sref="album({album_id: item.id})">
       <img ng-src="{{item.cover.medium}}" alt="">
       <a >{{item.title}}</a>

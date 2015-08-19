@@ -242,8 +242,11 @@ h3 {
     float: right;
     width: 15px;
     height: 15px;
-    margin-left: 10px;
+    margin-right: 10px;
     background: url(/assets/img/icons/dark-edit-tools.png) no-repeat;
+    &:hover {
+      background: url(/assets/img/icons/dark-edit-tools.png) -18px 0 no-repeat;
+    }
   }
   .delete {
     display: block;
@@ -251,6 +254,9 @@ h3 {
     width: 15px;
     height: 15px;
     background: url(/assets/img/icons/dark-edit-tools.png) 0 -20px no-repeat;
+    &:hover {
+      background: url(/assets/img/icons/dark-edit-tools.png) -18px -20px no-repeat;
+    }
   }
 }
 

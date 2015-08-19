@@ -3,6 +3,10 @@
   width: 100%;
   .modal-dialog {
     width: 950px!important;
+    .modal-content {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
   }
 }
 
