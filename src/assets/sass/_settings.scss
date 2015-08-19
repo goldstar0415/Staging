@@ -127,8 +127,8 @@
   background: url(/assets/img/icons/compass.png) no-repeat;
   position: absolute;
   top: 30%;
-  right: 15px;
-  &:hover {
+  right: 2.7rem;
+  &:hover, &:active, &:focus {
     background-position: 0 -16px;
   }
 }
