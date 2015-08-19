@@ -55,7 +55,7 @@ class EventServiceProvider extends ServiceProvider
         OnSpotUpdate::class => [
             Feeder::class
         ],
-        OnUserBirthday::class => [//TODO:add
+        OnUserBirthday::class => [
             Feeder::class
         ],
         OnSpotReview::class => [

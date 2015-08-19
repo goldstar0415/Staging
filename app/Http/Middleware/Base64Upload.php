@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use App\Services\Base64File;
 use Closure;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class Base64Upload
 {
@@ -41,12 +42,7 @@ class Base64Upload
         }
 
         $file->save();
-        return [
-            'name' => $file->getName(),
-            'type' => $file->getMime(),
-            'tmp_name' => $file->getPath(),
-            'error' => 0,
-            'size' => $file->getSize()
-        ];
+
+        return new UploadedFile($file->getPath(), $file->getName(), $file->getMime(), $file->getSize(), 0, true);
     }
 }
