@@ -71,6 +71,7 @@ Route::get('calendar/plans', 'CalendarController@getPlans');
  * Plan controls
  */
 Route::resource('plans', 'PlanController', ['except' => ['create', 'edit']]);
+Route::get('activity-categories', 'PlanController@getActivityCategories');
 /**
  * Chat Controls
  */

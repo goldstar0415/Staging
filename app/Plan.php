@@ -33,6 +33,8 @@ class Plan extends BaseModel
 
     protected $dates = ['start_date', 'end_date'];
 
+    protected $with = ['activities', 'spots'];
+
     protected $postgisFields = [
         'location' => Point::class,
     ];

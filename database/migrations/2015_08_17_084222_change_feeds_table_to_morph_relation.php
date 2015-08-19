@@ -31,8 +31,8 @@ class ChangeFeedsTableToMorphRelation extends Migration
     public function down()
     {
         Schema::table('feeds', function (Blueprint $table) {
-            $table->dropColumn(['feedable_id', 'feedable_type', 'event_type']);
-            $table->string('action_type', 128);
+            $table->dropColumn(['feedable_id', 'feedable_type']);
+            $table->renameColumn('event_type', 'action_type');
         });
     }
 }
