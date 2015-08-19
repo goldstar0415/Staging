@@ -5,7 +5,7 @@ namespace App\Events;
 use App\User;
 use Illuminate\Queue\SerializesModels;
 
-class UserUnfollowEvent extends Event
+class UserUnfollowEvent extends Event implements Feedable
 {
     use SerializesModels;
 
@@ -38,5 +38,15 @@ class UserUnfollowEvent extends Event
     public function getFollowing()
     {
         return $this->following;
+    }
+
+    public function getFeedable()
+    {
+        return $this->getFollowing();
+    }
+
+    public function getFeedSender()
+    {
+        return $this->getFollower();
     }
 }

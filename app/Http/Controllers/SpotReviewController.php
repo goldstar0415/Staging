@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OnSpotReview;
+use App\Events\OnSpotReviewDelete;
 use App\Http\Requests\Spot\Review\SpotReviewRequest;
 use App\Http\Requests\Spot\Review\SpotReviewStoreRequest;
 use App\Spot;
@@ -9,7 +11,6 @@ use App\SpotReview;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class SpotReviewController extends Controller
 {
@@ -60,9 +61,10 @@ class SpotReviewController extends Controller
     public function store(SpotReviewStoreRequest $request, $spot)
     {
         $review = new SpotReview($request->all());
-//        $review->user()->associate($request->user());
 
         $spot->reviews()->save($review);
+
+        event(new OnSpotReview($review));
 
         return $review;
     }
@@ -103,6 +105,8 @@ class SpotReviewController extends Controller
      */
     public function destroy($spot, $review)
     {
+        event(new OnSpotReviewDelete($review));
+
         return ['result' => $review->delete()];
     }
 }

@@ -52,6 +52,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property \Carbon\Carbon $updated_at
  *
  * Relation properties
+ * @property \Illuminate\Database\Eloquent\Collection $followers
  * @property \Illuminate\Database\Eloquent\Collection $followings
  * @property \Illuminate\Database\Eloquent\Collection $albums
  * @property \Illuminate\Database\Eloquent\Collection $chatMessages
@@ -275,6 +276,11 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     public function friends()
     {
         return $this->hasMany(Friend::class);
+    }
+
+    public function feeds()
+    {
+        return $this->hasMany(Feed::class);
     }
 
     public function areas()

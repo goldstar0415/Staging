@@ -6,10 +6,8 @@ use App\Http\Requests\PhotoComments\PhotoCommentsRequest;
 use App\Http\Requests\PhotoComments\PhotoCommentStoreRequest;
 use App\PhotoComment;
 use App\SpotPhoto;
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class SpotPhotoCommentController extends Controller
 {

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OnWallMessage;
+use App\Events\OnWallPostDelete;
+use App\Events\OnWallPostDislike;
+use App\Events\OnWallPostLike;
 use App\Http\Requests\Wall\WallDestroyRequest;
 use App\Http\Requests\Wall\WallStoreRequest;
 use App\Http\Requests\Wall\WallUpdateRequest;
@@ -35,9 +39,12 @@ class WallController extends Controller
      */
     public function index(WallIndexRequest $request)
     {
-        return User::find($request->get('user_id', $request->user()->id))
-            ->walls()
-                ->paginate((int) $request->get('limit', 10));
+        return User::find($request->get(
+            'user_id',
+            $request->user() ? $request->user()->id : null
+        ))
+        ->walls()
+        ->paginate((int)$request->get('limit', 10));
     }
 
     /**
@@ -54,6 +61,8 @@ class WallController extends Controller
 
         $receiver->walls()->save($wall);
         $this->attachments->make($wall);
+
+        event(new OnWallMessage($wall));
 
         return $wall;
     }
@@ -94,6 +103,8 @@ class WallController extends Controller
      */
     public function destroy(WallDestroyRequest $request, $wall)
     {
+        event(new OnWallPostDelete($wall));
+
         return ['result' => $wall->delete()];
     }
 
@@ -127,6 +138,8 @@ class WallController extends Controller
             $wall_rate->save();
         }
 
+        event(new OnWallPostLike($wall, $wall_rate));
+
         return $wall_rate;
     }
 
@@ -159,6 +172,8 @@ class WallController extends Controller
             }
             $wall_rate->save();
         }
+
+        event(new OnWallPostDislike($wall, $wall_rate));
 
         return $wall_rate;
     }

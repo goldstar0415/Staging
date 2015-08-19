@@ -3,16 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Activity;
-use App\ActivityCategory;
 use App\Http\Requests\Plan\PlanDestroyRequest;
 use App\Http\Requests\Plan\PlanIndexRequest;
 use App\Http\Requests\Plan\PlanStoreRequest;
 use App\Http\Requests\Plan\PlanUpdateRequest;
 use App\Plan;
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class PlanController extends Controller
 {
@@ -31,8 +28,10 @@ class PlanController extends Controller
      */
     public function index(PlanIndexRequest $request)
     {
-        return Plan::where('user_id', $request->get('user_id', $request->user()->id))
-            ->paginate((int) $request->get('limit', 10));
+        return Plan::where('user_id', $request->get(
+            'user_id',
+            $request->user() ? $request->user()->id : null
+        ))->paginate((int)$request->get('limit', 10));
     }
 
     /**

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Map\MapSearchRequest;
 use App\Http\Requests\WeatherRequest;
 use App\SpotPoint;
-use Illuminate\Http\Request;
 use Nwidart\ForecastPhp\Forecast;
 
 use App\Http\Requests;

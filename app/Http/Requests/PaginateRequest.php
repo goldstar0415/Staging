@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class WallIndexRequest extends Request
+class PaginateRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
