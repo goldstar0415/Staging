@@ -25,7 +25,7 @@
   <section class="central no-margin-bottom sub-event" ng-repeat="item in ::Plan.spots">
     <div class="media media-visible">
       <a class="pull-left" href="#">
-        <img ng-src="{{item.cover_url.original}}" alt="{{item.title}}" class="img-size">
+        <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" class="img-size">
       </a>
 
       <div class="media-body">
@@ -33,25 +33,20 @@
           <a ui-sref="spot({spot_id: item.id})">{{item.title}}</a>
         </h2>
 
-        <p class="place">Детройт, оз. Мічіґан, Сполучені Штати Америки</p>
+        <p class="place">{{item.address}}</p>
 
         <div class="time-sub">
           05.11.2016 — 015.11.2016 &nbsp; 12:00 am
         </div>
         <div class="description">
-                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias aliquam amet asperiores beatae dolores
-                        dolorum eligendi, id, incidunt, nisi non perspiciatis provident quas quidem rem repudiandae soluta tempora voluptatem?
-                    </span>
+          <span>{{item.description}}</span>
         </div>
         <ul class="tools">
-
-          <li>
-            <a href="http://zoomzoom.itechhighway.com/event/add-to-calendar/97777798"
-               class="save-event ">Save</a>
+          <li ng-if="!item.is_saved">
+            <a class="save-event" ng-click="Plan.saveToCalendar(item)">Save</a>
           </li>
-          <li>
-            <a href="http://zoomzoom.itechhighway.com/event/del-from-calendar/32"
-               class="save-event saved  clicked">Remove</a>
+          <li ng-if="item.is_saved">
+            <a class="save-event saved clicked" ng-click="Plan.removeFromCalendar(item)">Remove</a>
           </li>
         </ul>
       </div>
