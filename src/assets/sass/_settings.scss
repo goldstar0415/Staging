@@ -1,4 +1,8 @@
 //---<settings styles--->
+.settings {
+  padding: 0 !important;
+}
+
 .edit-photo {
   @include button;
   background-color: $green;
@@ -57,15 +61,29 @@
 .settings-block {
   border-bottom: 1px solid $light_grey;
   padding-bottom: 20px;
-  //&:first-of-type {
-  //  border-top: 1px solid $light_grey;
-  //}
+  .avatar-block {
+    padding: 0;
+  }
+  .main-information {
+    padding: 0;
+  }
   &:last-child {
     border-bottom: none;
   }
-
   label {
     font: 200 16px/22px 'Ubuntu medium';
+  }
+  .label-width, .input-width {
+    width: 50%;
+    float: left;
+  }
+  .input-width {
+    .ui-select-match-text {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 10px;
+    }
   }
 }
 
@@ -80,6 +98,7 @@
       border-bottom: 1px solid $light_grey;
       @include zoomers_sidebar;
       color: $dark_blue;
+      margin: 0;
       &:hover {
         color: $blue;
         text-decoration: none;
@@ -130,6 +149,58 @@
   right: 15px;
   &:hover {
     background-position: 0 -16px;
+  }
+}
+
+@media (max-width: 650px) {
+  .settings-block {
+    .avatar-block, .main-information {
+      width: 100%;
+    }
+    .label-width {
+      width: 40%;
+    }
+    .input-width {
+      width: 60%;
+    }
+    .social-section {
+      width: 50%;
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .settings-block {
+    .label-width {
+      width: 100%;
+    }
+    .input-width {
+      width: 100%;
+    }
+    .eye {
+      top: 62%;
+    }
+    .main-information {
+      .col-xs-3, .col-xs-9 {
+        width: 100% !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .settings-block {
+    .social-section {
+      width: 100%;
+    }
+    .main-information {
+      input.half-width {
+        width: 100%;
+        &:last-child {
+          margin-top: 15px;
+        }
+      }
+    }
   }
 }
 

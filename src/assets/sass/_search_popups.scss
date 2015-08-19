@@ -663,10 +663,13 @@
     width: 100%;
   }
   .tools-wrap {
-    width: 100%;
-    padding: 0 10px;
+    width: 80%;
+    height: 100%;
     .tools-hint-block {
       border-radius: 10px;
+      position: relative;
+      top: 40%;
+      transform: translateY(-60%);
     }
   }
 }
