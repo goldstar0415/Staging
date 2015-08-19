@@ -15,6 +15,7 @@
         time: 'H:i'
       },
       date: 'MM.DD.YYYY',
-      time: 'HH:mm'
+      time: 'HH:mm',
+      backend: 'YYYY-MM-DD HH:mm:ss'
     })
 })();

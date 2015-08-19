@@ -29,9 +29,12 @@
         vm.start_date = start_date.format(DATE_FORMAT.date);
         vm.end_date = end_date.format(DATE_FORMAT.date);
 
-        if (start_date.format('H') != 0 || end_date.format('H') != 0) {
+        if (vm.item.start_time) {
+          vm.start_time = vm.item.start_time;
+          vm.end_time = vm.item.start_time;
+        } else if (start_date.format('H') != 0 || end_date.format('H') != 0) {
           vm.start_time = start_date.format(DATE_FORMAT.time);
-          vm.start_time = end_date.format(DATE_FORMAT.time);
+          vm.end_time = end_date.format(DATE_FORMAT.time);
         }
       }
     }

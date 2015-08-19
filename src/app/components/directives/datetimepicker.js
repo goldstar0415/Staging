@@ -48,7 +48,7 @@
       }
     })
 
-    .directive('ngTimepicker', function (moment) {
+    .directive('ngTimepicker', function (moment, DATE_FORMAT) {
       return {
         restrict: 'A',
         scope: {
@@ -68,8 +68,8 @@
             validateOnBlur: false,
             step: step,
             mask: '29:59',
-            formatTime: DATE_FORMAT.datepicker.time
-            //onChangeDateTime: onSelectTime
+            formatTime: DATE_FORMAT.datepicker.time,
+            onChangeDateTime: onSelectTime
           });
 
           function onSelectTime(time) {

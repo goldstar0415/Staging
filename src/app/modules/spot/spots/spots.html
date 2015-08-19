@@ -23,9 +23,7 @@
                     </span>
 
                     <span ng-if="item.type == 'Event'" class="date">
-                            {{item.start_date + ' - ' + item.end_date}}
-                            <br>
-                            {{item.start_time + ' - ' + item.end_time}}
+                        <date-range item="item"></date-range>
                     </span>
 
     <h2>
