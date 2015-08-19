@@ -30,10 +30,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('inspire')
                  ->hourly();
         $schedule->call(function () {
-             $users = User::whereRaw(
-                 "date_part('day', birth_date) = date_part('day', CURRENT_DATE) + 1
-                 and date_part('month', birth_date) = date_part('month', CURRENT_DATE)"
-             );
+            $users = User::whereRaw("date_part('day', birth_date) = date_part('day', CURRENT_DATE) + 1
+             and date_part('month', birth_date) = date_part('month', CURRENT_DATE)");
 
             foreach ($users as $user) {
                 event(new OnUserBirthday($user));
