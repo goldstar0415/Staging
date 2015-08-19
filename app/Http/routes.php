@@ -91,5 +91,9 @@ Route::get('weather', 'MapController@getWeather');
 Route::resource('wall', 'WallController', ['except' => ['create', 'edit']]);
 Route::get('wall/{wall}/like', 'WallController@like');
 Route::get('wall/{wall}/dislike', 'WallController@dislike');
+/**
+ * Feed Controls
+ */
+Route::get('feeds', 'FeedController@index');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');

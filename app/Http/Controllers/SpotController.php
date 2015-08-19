@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\ChatMessage;
 use App\Events\OnMessage;
+use App\Events\OnSpotCreate;
+use App\Events\OnSpotUpdate;
 use App\Http\Requests\Spot\SpotCategoriesRequest;
 use App\Http\Requests\Spot\SpotDestroyRequest;
 use App\Http\Requests\Spot\SpotFavoriteRequest;
@@ -37,8 +39,10 @@ class SpotController extends Controller
      */
     public function index(SpotIndexRequest $request)
     {
-        return Spot::where('user_id', $request->get('user_id', $request->user()->id))
-                ->paginate((int) $request->get('limit', 10));
+        return Spot::where('user_id', $request->get(
+            'user_id',
+            $request->user() ? $request->user()->id : null
+        ))->paginate((int)$request->get('limit', 10));
     }
 
     /**
@@ -65,6 +69,8 @@ class SpotController extends Controller
                 ]);
             }
         }
+
+        event(new OnSpotCreate($spot));
 
         return $spot;
     }
@@ -121,6 +127,8 @@ class SpotController extends Controller
                 ]);
             }
         }
+
+        event(new OnSpotUpdate($spot));
 
         return $spot;
     }

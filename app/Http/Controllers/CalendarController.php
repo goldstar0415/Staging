@@ -2,25 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OnAddToCalendar;
 use App\Http\Requests\Calendar\AddToCalendarRequest;
 use App\Http\Requests\Calendar\GetCalendarPlansRequest;
 use App\Http\Requests\Calendar\RemoveFromCalendarRequest;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class CalendarController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @param Request $request
+     * @param AddToCalendarRequest|Request $request
      * @param \App\Spot $spot
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function add(AddToCalendarRequest $request, $spot)
     {
-        $request->user()->calendarSpots()->attach($spot);
+        $user = $request->user();
+        $user->calendarSpots()->attach($spot);
+
+        event(new OnAddToCalendar($user, $spot));
 
         return response('Ok');
     }
