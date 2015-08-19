@@ -221,7 +221,7 @@
   background: #fff;
   width: 450px;
   .close-popup {
-    position: fixed;
+    position: absolute;
     width: 100%;
     color: #fff;
     background-color: $navy_blue;
@@ -295,8 +295,9 @@
 .search-filters {
   float: right;
   width: 100%;
-  height: calc(100% - 70px);
+  height: calc(100% - 55px);
   overflow-y: scroll;
+  padding-bottom: 30px;
   .numbers-events {
     padding: 10px 15px;
     border-bottom: 1px solid rgba(217, 217, 217, .6);
@@ -682,7 +683,7 @@
     }
   }
   .search-filters {
-    height: calc(100% - 130px);
+    height: calc(100% - 114px);
     .sort-date {
       .date-filters {
         .form-group {

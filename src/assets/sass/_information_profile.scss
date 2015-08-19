@@ -141,15 +141,13 @@
         }
       }
     }
+    .activity-mobile {
+      width: auto
+    }
   }
 }
 
 @media (max-width: 767px) {
-  .information-profile {
-    .activity-mobile {
-      width: auto;
-    }
-  }
 }
 
 /// end information profile

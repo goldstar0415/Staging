@@ -1,26 +1,18 @@
 <div class="title col-xs-12 ">
-  <a ng-click="goBack();" title="back" class="back"></a>
-
-  <div class="col-xs-8 no-pad">
-    <h2>Album - {{Album.data.title}}</h2>
-  </div>
-
-
-  <div class="album-tools" ng-if="currentUser.id == Album.data.user_id">
-    <a title="Delete album" ng-click="Album.delete()" class="delete"></a>
-    <a title="Edit album"
-       ui-sref="editAlbum({album_id: Album.data.id})"
-       title="edit" class="edit"></a>
-  </div>
+  <h2 class="title-name">
+    <a ng-click="goBack();" title="back" class="back"></a>
+    Album - {{Album.data.title}}
+        <span class="album-tools" ng-if="currentUser.id == Album.data.user_id">
+      <a title="Delete album" ng-click="Album.delete()" class="delete"></a>
+      <a title="Edit album"
+         ui-sref="editAlbum({album_id: Album.data.id})"
+         title="edit" class="edit"></a>
+    </span>
+  </h2>
 </div>
 
-
-<div class="col-xs-12 no-pad">
-  <hr>
-</div>
-<div class="col-xs-12 no-pad">
-
-  <div ng-repeat="item in Album.data.photos" class="col-xs-3 no-pad">
+<div class="col-xs-12">
+  <div ng-repeat="item in Album.data.photos" class="col-xs-3 photo-wrap">
     <div class="photo" photo-viewer items="Album.data.photos" index="$index" current-item="item">
       <img ng-src="{{item.photo_url.medium}}" alt="Photo not found">
     </div>
