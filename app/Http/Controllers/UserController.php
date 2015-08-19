@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserListRequest;
 use App\Role;
 use App\User;
+use DB;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -37,9 +38,27 @@ class UserController extends Controller
         $this->auth = $auth;
     }
 
+    /**
+     * @param \App\User $user
+     * @return mixed
+     */
     public function getIndex($user)
     {
-        return $user;
+        $rand_func = config('database.connections.' . config('database.default') . '.rand_func');
+        return $user->load(
+            ['followers' => function ($query) use ($rand_func) {
+                $query->orderBy(DB::raw($rand_func))
+                    ->take(6);
+            },
+            'followings' => function ($query) use ($rand_func) {
+                $query->orderBy(DB::raw($rand_func))
+                    ->take(6);
+            },
+            'spots' => function ($query) use ($rand_func) {
+                $query->orderBy(DB::raw($rand_func))
+                    ->take(6);
+            }]
+        );
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Activity;
+use App\ActivityCategory;
 use App\Http\Requests\Plan\PlanDestroyRequest;
 use App\Http\Requests\Plan\PlanIndexRequest;
 use App\Http\Requests\Plan\PlanStoreRequest;
@@ -122,5 +123,10 @@ class PlanController extends Controller
     public function destroy(PlanDestroyRequest $plan)
     {
         return ['result' => $plan->delete()];
+    }
+
+    public function getActivityCategories()
+    {
+        return ActivityCategory::all();
     }
 }

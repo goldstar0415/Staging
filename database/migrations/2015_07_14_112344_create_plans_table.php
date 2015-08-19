@@ -16,7 +16,7 @@ class CreatePlansTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('title');
-            $table->string('description', 5000);
+            $table->string('description', 5000)->default('');
             $table->string('address');
             $table->point('location');
             $table->datetime('start_date');

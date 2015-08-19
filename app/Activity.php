@@ -32,6 +32,10 @@ class Activity extends BaseModel
 
     protected $guarded = ['id', 'plan_id'];
 
+    protected $with = ['category'];
+
+    protected $hidden = ['activity_category_id'];
+
     protected $postgisFields = [
         'location' => Point::class,
     ];
