@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SetAvatarRequest;
 use App\Http\Requests\SettingsUpdateRequest;
 use Illuminate\Contracts\Auth\Guard;
 
@@ -14,6 +15,8 @@ class SettingsController extends Controller
 
     public function __construct(Guard $auth)
     {
+        $this->middleware('auth');
+        $this->middleware('base64upload:avatar', ['only' => 'setAvatar']);
         $this->auth = $auth;
     }
 
@@ -56,5 +59,14 @@ class SettingsController extends Controller
         }
 
         return response()->json(['message' => 'Settings successfuly changed']);
+    }
+
+    public function postSetavatar(SetAvatarRequest $request)
+    {
+        $user = $request->user();
+        $user->avatar = $request->file('avatar');
+        $user->save();
+
+        return response('Ok');
     }
 }
