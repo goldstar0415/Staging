@@ -11,7 +11,7 @@ class Feed extends BaseModel
 {
     protected $fillable = ['event_type'];
 
-    protected $with = ['feedable'];
+    protected $with = ['feedable', 'sender'];
 
     public function feedable()
     {
