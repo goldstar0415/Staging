@@ -21,7 +21,7 @@
 
   <nav class="hidden-sm hidden-xs">
     <ul>
-      <li class="separator-bg map-profile">
+      <li class="separator-bg map-profile" ng-if="$root.currentUser.role == 'admin'">
         <a href="#">
           <span>Admin</span>
           <span class="admin-icon"></span>

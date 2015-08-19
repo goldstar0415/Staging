@@ -17,11 +17,16 @@
     vm.activities = [];
     vm.categories = [{"id": 1, "spot_type_id": 1, "name": "praesentium", "display_name": "Praesentium"}];
 
+    if (vm.id) {
+      vm.start_time = vm.start_date;
+      vm.end_time = vm.end_date;
+    }
+
     function save(form) {
       if (form.$valid) {
         Plan.save(_convertData(), function (resp) {
             console.log(resp);
-          $state.go('planner');
+          $state.go('planner.list');
           });
       }
     }
@@ -40,8 +45,8 @@
     }
 
     function _convertDates(data){
-      data.start_date = moment(data.start_date, 'MM/DD/YYYY').format('YYYY-MM-DD HH:mm:ss');
-      data.end_date = moment(data.end_date, 'MM/DD/YYYY').format('YYYY-MM-DD HH:mm:ss');
+      data.start_date = moment(data.start_date + ' ' +  data.start_time, 'MM/DD/YYYY HH:mm').format('YYYY-MM-DD HH:mm:ss');
+      data.end_date = moment(data.end_date + ' ' +  data.end_time, 'MM/DD/YYYY HH:mm').format('YYYY-MM-DD HH:mm:ss');
       return data;
     }
 

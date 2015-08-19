@@ -22,15 +22,13 @@
                         {{::item.type}}
                     </span>
 
-                    <span
-                      ng-if="item.type == 'Event'"
-                      class="date">
+                    <span ng-if="item.type == 'Event'" class="date">
                             {{item.start_date + ' - ' + item.end_date}}
                             <br>
                             {{item.start_time + ' - ' + item.end_time}}
                     </span>
 
-    <h2 class="">
+    <h2>
       <a ui-sref="spot({spot_id: item.id})">{{::item.title}}</a>
     </h2>
 
@@ -38,8 +36,7 @@
 
     <p class="description"><span>{{::item.description}}</span></p>
     <figure>
-      <img ng-src="{{item.cover_url.original}}"
-           style="position: relative; width: 100%;" alt="{{item.title}}" class="img-size">
+      <img ng-src="{{item.cover_url.original}}" alt="{{item.title}}" class="img-size">
     </figure>
 
     <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">

@@ -15,10 +15,13 @@
         link: function (s, e, a) {
           var format = s.format || 'm/d/Y',
             today = moment().format('MM/DD/YYYY');
+          if (s.model) {
+            s.model = moment(s.model).format('MM/DD/YYYY');
+          }
 
           $(e)
             .datetimepicker({
-              value: s.model || null,
+              value: s.model,
               scrollMonth: false,
               scrollTime: false,
               scrollInput: false,
@@ -54,6 +57,10 @@
         },
         link: function (s, e, a) {
           var step = s.step || 15;
+          if (s.model) {
+            s.model = moment(s.model).format('HH:mm');
+          }
+
           $(e).datetimepicker({
             value: s.model || null,
             defaultTime: '01:00',
