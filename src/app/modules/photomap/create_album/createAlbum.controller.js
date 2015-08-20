@@ -36,7 +36,7 @@
         UploaderService
           .upload(url, request)
           .then(function (resp) {
-            $state.go('album', {album_id: resp.data.album_id});
+            $state.go('album', {album_id: resp.data.id});
           })
           .catch(function (resp) {
             toastr.error('Upload failed');

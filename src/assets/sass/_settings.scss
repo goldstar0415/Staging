@@ -146,8 +146,8 @@
   background: url(/assets/img/icons/compass.png) no-repeat;
   position: absolute;
   top: 30%;
-  right: 15px;
-  &:hover {
+  right: 1.5rem;
+  &:hover, &:active, &:focus {
     background-position: 0 -16px;
   }
 }
@@ -203,5 +203,9 @@
     }
   }
 }
-
+.event-main-info {
+  .compass {
+    right: 2.7rem;
+  }
+}
 //---</settings styles--->

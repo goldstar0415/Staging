@@ -6,7 +6,7 @@
     .controller('SpotCreateController', SpotCreateController);
 
   /** @ngInject */
-  function SpotCreateController(spot, $stateParams, $state, toastr, $scope, MapService, UploaderService, CropService, moment, API_URL, $http) {
+  function SpotCreateController(spot, $stateParams, $state, toastr, $scope, MapService, UploaderService, CropService, moment, API_URL, $http, DATE_FORMAT) {
     var vm = this;
     vm.deletedImages = [];
     vm.edit = $state.current.edit || false;
@@ -95,8 +95,8 @@
           request.deleted_files = vm.deletedImages;
         }
         if (vm.type === 'Event') {
-          request.start_date = vm.start_date + ' ' + vm.start_time + ':00';
-          request.end_date = vm.end_date + ' ' + vm.end_time + ':00';
+          request.start_date = moment(vm.start_date + ' ' + vm.start_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.time).format(DATE_FORMAT.backend);
+          request.end_date = moment(vm.end_date + ' ' + vm.end_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.time).format(DATE_FORMAT.backend);
         }
         var url = API_URL + '/spots';
         var req = {};
@@ -231,7 +231,7 @@
       }
     };
     //load data for spot editing
-    vm.getSpotData = function () {
+    vm.convertSpot = function () {
       //TODO: add array to display all kinds of images (attachments from albums, photos for upload, and old photos)
       var data = spot;
       vm.type = data.category.type.display_name;
@@ -249,17 +249,17 @@
         }
       }
       if (data.start_date && data.end_date) {
-        vm.start_date = moment(data.start_date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
-        vm.end_date = moment(data.end_date, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD');
-        vm.start_time = moment(data.start_date, 'YYYY-MM-DD HH:mm:ss').format('HH:mm');
-        vm.end_time = moment(data.end_date, 'YYYY-MM-DD HH:mm:ss').format('HH:mm');
+        vm.start_date = data.start_date;
+        vm.end_date = data.end_date;
+        vm.start_time = data.start_date;
+        vm.end_time = data.end_date;
       }
       console.log(spot);
 
     };
 
     if (vm.edit) {
-      vm.getSpotData();
+      vm.convertSpot();
     }
   }
 })();

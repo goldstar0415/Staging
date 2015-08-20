@@ -163,7 +163,7 @@
 
       <div class="col-md-10 col-sm-12 col-xs-12">
         <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-datepicker name="start_date" nmodel="SpotCreate.start_date" start-date="SpotCreate.startDate"
+          <input ng-datepicker name="start_date" ng-model="SpotCreate.start_date" start-date="SpotCreate.startDate"
                  type="text" required>
 
           <div ng-messages="form.start_date.$error" ng-if="form.$submitted" class="error-message-inline">
@@ -174,7 +174,7 @@
         <span class="hidden-xs col-sm-1">—</span>
 
         <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-datepicker name="end_date" model="SpotCreate.end_date" start-date="SpotCreate.start_date"
+          <input ng-datepicker name="end_date" ng-model="SpotCreate.end_date" start-date="SpotCreate.start_date"
                  type="text" required>
 
           <div ng-messages="form.end_date.$error" ng-if="form.$submitted" class="error-message-inline">

@@ -23,10 +23,7 @@
       <div ng-repeat="plan in Planner.plans.data" class="event">
         <h3 class="title-planner">
           <a ui-sref="planner.view({plan_id: plan.id})">{{plan.title}}</a>
-          <span class="date">
-            {{plan.start_date | toTimezone:'MMM DD, YYYY'}}
-            -
-            {{plan.end_date | toTimezone:'MMM DD, YYYY'}}
+          <span class="date"> <date-range item="plan"></date-range>
           </span>
         </h3>
 
@@ -45,15 +42,14 @@
           </li>
 
           <li>
-            <a class="invite-friend">Invite
-              friends</a>
+            <invite-friends spot="plan"></invite-friends>
           </li>
 
         </ul>
 
       </div>
 
-      <h3 ng-if="Planner.plans.data.length == 0">There are no plans...</h3>
+      <h3 ng-if="Planner.plans.data.length == 0" class="text-center">There are no plans...</h3>
     </section>
   </div>
 </div>

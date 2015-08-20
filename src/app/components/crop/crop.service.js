@@ -14,6 +14,7 @@
         controller: CropModalController,
         controllerAs: 'Crop',
         modalClass: 'modalFix',
+        modalContentClass: 'clearfix',
         backdrop: 'static',
         resolve: {
           image: function() { return image },

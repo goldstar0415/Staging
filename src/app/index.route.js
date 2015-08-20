@@ -6,7 +6,7 @@
     .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider, $urlRouterProvider) {
+  function routeConfig($stateProvider, $urlRouterProvider, DEBUG) {
     $stateProvider
       .state('main', {
         abstract: true,
@@ -153,11 +153,16 @@
 
       //Planner (calendar + list of all plans)
       .state('planner', {
+        abstract: true,
+        template: '<ui-view />',
+        parent: 'profile_menu'
+      })
+      .state('planner.list', {
         url: '/planner',
         templateUrl: '/app/modules/planner/planner.html',
         controller: 'PlannerController',
         controllerAs: 'Planner',
-        parent: 'profile_menu',
+        parent: 'planner',
         resolve: {
           plans: function (Plan) {
             return new Plan.query().$promise;
@@ -171,7 +176,7 @@
         templateUrl: '/app/modules/planner/plan_create/plan_create.html',
         controller: 'PlanCreateController',
         controllerAs: 'Plan',
-        parent: 'profile_menu',
+        parent: 'planner',
         locate: 'none',
         resolve: {
           plan: function (Plan) {
@@ -185,11 +190,11 @@
         templateUrl: '/app/modules/planner/plan_create/plan_create.html',
         controller: 'PlanCreateController',
         controllerAs: 'Plan',
-        parent: 'profile_menu',
+        parent: 'planner',
         locate: 'none',
         resolve: {
           plan: function (Plan, $stateParams) {
-            return Plan.get({id: $stateParams.spot_id}).$promise;
+            return Plan.get({id: $stateParams.plan_id}).$promise;
           }
         },
         mapState: 'small'
@@ -199,7 +204,7 @@
         templateUrl: '/app/modules/planner/plan/plan.html',
         controller: 'PlanController',
         controllerAs: 'Plan',
-        parent: 'profile_menu',
+        parent: 'planner',
         resolve: {
           plan: function (Plan, $stateParams) {
             return Plan.get({id: $stateParams.plan_id}).$promise;
@@ -484,6 +489,7 @@
       });
 
     $urlRouterProvider.otherwise('/');
+    //$locationProvider.html5Mode(!DEBUG);
   }
 
 })();

@@ -21,7 +21,7 @@
       if (form.$valid) {
         Plan.save(_convertData(), function (resp) {
             console.log(resp);
-          $state.go('planner');
+          $state.go('planner.list');
           });
       }
     }

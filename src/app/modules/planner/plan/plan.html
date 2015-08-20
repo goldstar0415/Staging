@@ -1,21 +1,10 @@
-<div class=" col-xs-12" >
+<div class=" col-xs-12">
   <!-- section with spot -->
   <section class="central no-margin-bottom clearfix ">
     <div class="one-spot-section">
-                        <span class="rating clear rateit spot-stars" rate="5" event-id="97777798">
-                            <button id="rateit-reset-2" type="button" data-role="none" class="rateit-reset"
-                                    aria-label="reset rating" aria-controls="rateit-range-2"
-                                    style="display: none;"></button>
-                            <div id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating"
-                                 aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="5"
-                                 style="width: 80px; height: 16px;" aria-readonly="false">
-                              <div class="rateit-selected" style="height: 16px; width: 80px;"></div>
-                              <div class="rateit-hover" style="height: 16px;"></div>
-                            </div>
-                        </span>
-                        <span class="date">
-                           {{Plan.start_date | toTimezone}} - {{Plan.end_date | toTimezone}}
-                        </span>
+      <span class="date">
+         {{Plan.start_date | toTimezone}} - {{Plan.end_date | toTimezone}}
+      </span>
 
       <h2 class="title-planner">
         {{Plan.title}}
@@ -33,36 +22,31 @@
   <!-- end section with spot -->
 
   <!-- sub event -->
-  <section class="central no-margin-bottom sub-event ">
+  <section class="central no-margin-bottom sub-event" ng-repeat="item in ::Plan.spots">
     <div class="media media-visible">
       <a class="pull-left" href="#">
-        <img class="media-object fav-avatar-icon" src="/assets/img/icons/park.png" alt="...">
+        <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" class="img-size">
       </a>
 
       <div class="media-body">
         <h2 class="media-heading title-planner">
-          <a href="http://zoomzoom.itechhighway.com/event/show/296">Innovation Camp</a>
+          <a ui-sref="spot({spot_id: item.id})">{{item.title}}</a>
         </h2>
 
-        <p class="place">Детройт, оз. Мічіґан, Сполучені Штати Америки</p>
+        <p class="place">{{item.address}}</p>
 
         <div class="time-sub">
           05.11.2016 — 015.11.2016 &nbsp; 12:00 am
         </div>
         <div class="description">
-                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias aliquam amet asperiores beatae dolores
-                        dolorum eligendi, id, incidunt, nisi non perspiciatis provident quas quidem rem repudiandae soluta tempora voluptatem?
-                    </span>
+          <span>{{item.description}}</span>
         </div>
         <ul class="tools">
-
-          <li>
-            <a href="http://zoomzoom.itechhighway.com/event/add-to-calendar/97777798"
-               class="save-event ">Save</a>
+          <li ng-if="!item.is_saved">
+            <a class="save-event" ng-click="Plan.saveToCalendar(item)">Save</a>
           </li>
-          <li>
-            <a href="http://zoomzoom.itechhighway.com/event/del-from-calendar/32"
-               class="save-event saved  clicked">Remove</a>
+          <li ng-if="item.is_saved">
+            <a class="save-event saved clicked" ng-click="Plan.removeFromCalendar(item)">Remove</a>
           </li>
         </ul>
       </div>
@@ -70,218 +54,32 @@
   </section>
   <!--end sub event -->
 
-  <!-- sub event -->
-  <section class="central sub-event ">
-    <div class="media media-visible">
-      <a class="pull-left" href="#">
-        <img class="media-object fav-avatar-icon activity" src="/assets/img/icons/park.png" alt="...">
+  <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()"></ng-input>
+
+
+  <div class="col-xs-12 post" ng-repeat="post in Profile.wall.data">
+    <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 padding-0">
+      <a ui-sref="profile({user_id: post.sender.id})">
+        <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
       </a>
+    </div>
+    <div class="col-lg-11 col-md-10 col-sm-10 col-xs-10 info">
+      <h3 class="name">
+        <a ui-sref="profile({user_id: post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
+      </h3>
 
-      <div class="media-body">
-        <h2 class="media-heading title-planner">
-          <a href="http://zoomzoom.itechhighway.com/event/show/296">Innovation Camp</a>
-        </h2>
+      <p>{{post.body}}</p>
+      <attachments items="post.attachments"></attachments>
 
-        <p class="place">Детройт, оз. Мічіґан, Сполучені Штати Америки</p>
+      <p class="time">{{post.created_at | fromNow}}</p>
 
-        <div class="time-sub">
-          05.11.2016 — 015.11.2016 &nbsp; 12:00 am
-        </div>
-        <div class="description">
-                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias aliquam amet asperiores beatae dolores
-                        dolorum eligendi, id, incidunt, nisi non perspiciatis provident quas quidem rem repudiandae soluta tempora voluptatem?
-                    </span>
-        </div>
-        <ul class="tools">
-
-          <li>
-            <a href="http://zoomzoom.itechhighway.com/event/add-to-calendar/97777798"
-               class="save-event ">Save</a>
-          </li>
-          <li>
-            <a href="http://zoomzoom.itechhighway.com/event/del-from-calendar/32"
-               class="save-event saved  clicked">Remove</a>
-          </li>
-        </ul>
+      <div class="plus-minus">
+        <a class="plus" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)"></a>
+        {{post.rating}}
+        <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
       </div>
     </div>
-  </section>
-  <!--end sub event -->
+  </div>
 
-  <!-- comments section -->
-  <section class="comments-section">
-
-    <!-- send comment -->
-    <div class="comments-content">
-      <form role="form" class="new-post-spot ">
-        <textarea class="form-control" rows="4" placeholder="Start typing..."></textarea>
-
-        <div class="attachments-preview">
-
-          <div class="buttons clearfix">
-            <button type="submit" class="btn btn-sm btn-send-comment col-sm-2 col-xs-12">Send</button>
-            <a href="#" class="add-photo"></a>
-            <a href="#" class="attach"></a>
-
-          </div>
-        </div>
-      </form>
-    </div>
-    <!-- end comment -->
-
-    <section class="post">
-      <div class="media media-visible padding-bottom">
-        <a class="pull-left" href="#">
-          <img class="media-object fav-avatar-icon" src="/assets/img/icons/01.png" alt="...">
-        </a>
-
-        <div class="media-body">
-
-          <h3 class="media-heading ">
-            <a href="http://zoomzoom.itechhighway.com/event/show/296">Louis Austin</a>
-
-
-          </h3>
-
-          <div class="plus-minus">
-            10
-          </div>
-
-          <div class="description">
-                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias aliquam amet asperiores beatae dolores
-                        dolorum eligendi, id, incidunt, nisi non perspiciatis provident quas quidem rem repudiandae soluta tempora voluptatem?
-                    </span>
-          </div>
-
-          <div class="time">
-            05 Aug 2015 &nbsp; 12:00 am
-          </div>
-          <a href="#" class="share">Share</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="post fail-comment">
-      <div class="media media-visible padding-bottom">
-        <div class="media-body">
-          <a href="#" class="rating">-5</a>
-
-          <div class="description ">
-            <span class="fail-text col-sm-offset-2 col-sm-10 no-pad">An unhelpful review</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <section class="post">
-      <div class="media media-visible padding-bottom">
-        <a class="pull-left" href="#">
-          <img class="media-object fav-avatar-icon" src="/assets/img/icons/01.png" alt="...">
-        </a>
-
-        <div class="media-body">
-
-          <h3 class="media-heading ">
-            <a href="http://zoomzoom.itechhighway.com/event/show/296">Louis Austin</a>
-
-
-          </h3>
-
-          <div class="plus-minus">
-            <a href="#" class="plus"></a>
-            10
-            <a href="#" class="minus"></a>
-          </div>
-
-          <div class="description">
-                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias aliquam amet asperiores beatae dolores
-                        dolorum eligendi, id, incidunt, nisi non perspiciatis provident quas quidem rem repudiandae soluta tempora voluptatem?
-                    </span>
-          </div>
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object attachment-link" src="/assets/img/icons/external-link.png"
-                  >
-              </a>
-            </div>
-            <div class="media-body">
-              <div class="external-link">
-                <a href="/redirect?url=http://test.com"
-                   target="_blank">http://test.com</a>
-              </div>
-
-              <div class="description">
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus
-
-              </div>
-            </div>
-          </div>
-          <div class="time">
-            05 Aug 2015 &nbsp; 12:00 am
-          </div>
-          <a href="#" class="share">Share</a>
-        </div>
-      </div>
-    </section>
-
-
-    <section class="post">
-      <div class="media media-visible padding-bottom">
-        <a class="pull-left" href="#">
-          <img class="media-object fav-avatar-icon" src="/assets/img/icons/01.png" alt="...">
-        </a>
-
-        <div class="media-body">
-
-          <h3 class="media-heading ">
-            <a href="http://zoomzoom.itechhighway.com/event/show/296">Louis Austin</a>
-
-          </h3>
-
-          <div class="plus-minus">
-            <a href="#" class="plus clicked"></a>
-            10
-            <a href="#" class="minus clicked"></a>
-          </div>
-
-          <div class="description">
-                    <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias aliquam amet asperiores beatae dolores
-                        dolorum eligendi, id, incidunt, nisi non perspiciatis provident quas quidem rem repudiandae soluta tempora voluptatem?
-                    </span>
-          </div>
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object attachment-link" src="/assets/img/icons/internal-link.png"
-                  >
-              </a>
-            </div>
-            <div class="media-body">
-              <div class="external-link">
-                <a href="/redirect?url=http://test.com"
-                   target="_blank">http://test.com</a>
-              </div>
-
-              <div class="description">
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus
-
-              </div>
-            </div>
-          </div>
-          <div class="time">
-            05 Aug 2015 &nbsp; 12:00 am
-          </div>
-          <a href="#"  class="share">Share</a>
-        </div>
-      </div>
-    </section>
-    <a href="#" class="more">Show more...</a>
-  </section>
-  <!--  end comments section -->
 
 </div>
