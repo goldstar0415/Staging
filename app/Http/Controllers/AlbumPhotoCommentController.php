@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\PhotoComment;
-use App\Http\Requests\PhotoComments\PhotoCommentsRequest;
-use App\Http\Requests\PhotoComments\PhotoCommentStoreRequest;
+use App\Http\Requests\CommentsRequest;
+use App\Http\Requests\CommentStoreRequest;
 use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests;
@@ -44,11 +44,11 @@ class AlbumPhotoCommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param PhotoCommentStoreRequest $request
+     * @param CommentStoreRequest $request
      * @param \App\AlbumPhoto $photos
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(PhotoCommentStoreRequest $request, $photos)
+    public function store(CommentStoreRequest $request, $photos)
     {
         $comment = new PhotoComment($request->all());
         $comment->commentable()->associate($photos);
@@ -61,13 +61,13 @@ class AlbumPhotoCommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param PhotoCommentsRequest $request
+     * @param CommentsRequest $request
      * @param \App\AlbumPhoto $photos
      * @param PhotoComment $comment
      * @return \Illuminate\Http\JsonResponse
      * @internal param int $id
      */
-    public function destroy(PhotoCommentsRequest $request, $photos, $comment)
+    public function destroy(CommentsRequest $request, $photos, $comment)
     {
         return response()->json(['result' => $comment->delete()]);
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\PhotoComments;
+namespace App\Http\Requests;
 
 use Illuminate\Contracts\Auth\Guard;
 
-class PhotoCommentStoreRequest extends PhotoCommentsRequest
+class CommentStoreRequest extends CommentsRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PhotoComments\PhotoCommentsRequest;
-use App\Http\Requests\PhotoComments\PhotoCommentStoreRequest;
+use App\Http\Requests\CommentsRequest;
+use App\Http\Requests\CommentStoreRequest;
 use App\PhotoComment;
 use App\SpotPhoto;
 
@@ -36,12 +36,12 @@ class SpotPhotoCommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param PhotoCommentStoreRequest $request
+     * @param CommentStoreRequest $request
      * @param \App\Spot $spot
      * @param \App\SpotPhoto $photo
      * @return SpotPhoto
      */
-    public function store(PhotoCommentStoreRequest $request, $spot, $photo)
+    public function store(CommentStoreRequest $request, $spot, $photo)
     {
         $comment = new PhotoComment($request->all());
         $comment->commentable()->associate($photo);
@@ -54,14 +54,14 @@ class SpotPhotoCommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param PhotoCommentsRequest $request
+     * @param CommentsRequest $request
      * @param \App\Spot $spot
      * @param SpotPhoto $photo
      * @param PhotoComment $comment
      * @return array
      * @throws \Exception
      */
-    public function destroy(PhotoCommentsRequest $request, $spot, $photo, $comment)
+    public function destroy(CommentsRequest $request, $spot, $photo, $comment)
     {
         return ['result' => $comment->delete()];
     }
