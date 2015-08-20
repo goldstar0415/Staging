@@ -59,7 +59,7 @@ class PlanCommentController extends Controller
      */
     public function store(CommentStoreRequest $request, $plan)
     {
-        $comment = new PlanComment($request->all());
+        $comment = new PlanComment(['body' => $request->input('message')]);
         $comment->user()->associate($request->user());
         $plan->comments()->save($comment);
 
