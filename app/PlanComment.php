@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\Attachments;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,6 +16,17 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PlanComment extends BaseModel
 {
+    use Attachments;
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->addAttachments();
+    }
+
     protected $fillable = ['body'];
 
     public function plan()

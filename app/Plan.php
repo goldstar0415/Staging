@@ -24,6 +24,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property User $user
  * @property \Illuminate\Database\Eloquent\Collection $activities
  * @property \Illuminate\Database\Eloquent\Collection $spots
+ * @property \Illuminate\Database\Eloquent\Collection $comments
  */
 class Plan extends BaseModel
 {
