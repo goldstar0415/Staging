@@ -27,10 +27,17 @@ abstract class BaseModel extends Model
      */
     public function belongsTo($related, $foreignKey = null, $otherKey = null, $relation = null)
     {
-        $relation_name = class_basename($related);
-        if ($foreignKey === null) {
-            $foreignKey = snake_case($relation_name) . '_id';
+        $relation_name = '';//TODO:change this
+
+        if (is_null($relation)) {
+            list(, $caller) = debug_backtrace(false, 2);
+
+            $relation_name = $caller['function'];
         }
+        if ($foreignKey === null) {
+            $foreignKey = snake_case(class_basename($related)) . '_id';
+        }
+
         return parent::belongsTo($related, $foreignKey, $otherKey, $relation_name);
     }
 

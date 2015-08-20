@@ -38,13 +38,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $request = $router->getCurrentRequest();
-
         $router->model('albums', Album::class);
-        $router->bind('photos', function ($value) use ($request) {
-            if ($request->is('photos/*')) {
+        $router->bind('photos', function ($value) {
+            if (Request::is('photos/*')) {
                 return AlbumPhoto::findOrFail($value);
-            } elseif ($request->is('spots/*')) {
+            } elseif (Request::is('spots/*')) {
                 return SpotPhoto::findOrFail($value);
             }
 
@@ -56,10 +54,10 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('message', ChatMessage::class);
         $router->model('selection', Area::class);
         $router->model('reviews', SpotReview::class);
-        $router->model('comments', function ($value) use ($request) {
-            if ($request->is('spots/*/photos/*')) {
+        $router->model('comments', function ($value) {
+            if (Request::is('spots/*/photos/*')) {
                 return PhotoComment::findOrFail($value);
-            } elseif ($request->is('plans/*')) {
+            } elseif (Request::is('plans/*')) {
                 return PlanComment::findOrFail($value);
             }
 
