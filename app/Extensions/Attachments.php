@@ -33,7 +33,7 @@ trait Attachments
      */
     public function spots()
     {
-        return $this->belongsToMany(Spot::class);
+        return $this->morphToMany(Spot::class, 'spotable', 'spot_attachable')->withTimestamps();
     }
 
     /**
@@ -41,7 +41,7 @@ trait Attachments
      */
     public function albumPhotos()
     {
-        return $this->belongsToMany(AlbumPhoto::class);
+        return $this->morphToMany(AlbumPhoto::class, 'album_photoable', 'album_photo_attachable')->withTimestamps();
     }
 
     /**
@@ -49,6 +49,6 @@ trait Attachments
      */
     public function areas()
     {
-        return $this->belongsToMany(Area::class);
+        return $this->morphToMany(Area::class, 'areable', 'area_attachable')->withTimestamps();
     }
 }
