@@ -20,7 +20,7 @@ trait NewestScopeTrait
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function withoutOrdering()
+    public static function withoutNewest()
     {
         return with(new static)->newQueryWithoutScope(new NewestScope);
     }

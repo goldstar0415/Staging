@@ -21,7 +21,7 @@ class NewestScope implements ScopeInterface
     {
         $column = $model->getCreatedAtColumn();
         $builder->orderBy($column, 'DESC');
-        $this->addWithoutOrdering($builder);
+        $this->addWithoutNewest($builder);
     }
 
     /**
@@ -77,10 +77,10 @@ class NewestScope implements ScopeInterface
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
      */
-    protected function addWithoutOrdering(Builder $builder)
+    protected function addWithoutNewest(Builder $builder)
     {
         $builder->macro(
-            'withoutOrdering',
+            'withoutNewest',
             function (Builder $builder) {
                 $this->remove($builder, $builder->getModel());
                 return $builder;

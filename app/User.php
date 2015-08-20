@@ -185,6 +185,16 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         }
     }
 
+    public function getCountFavoritesAttribute()
+    {
+        return $this->favorites()->withoutNewest()->count();
+    }
+
+    public function getCountPhotosAttribute()
+    {
+        return $this->albums()->join('album_photos', 'album_photos.album_id', '=', 'albums.id')->count();
+    }
+
     public function getCanFollowAttribute()
     {
         $user = Request::user();
@@ -221,7 +231,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function getCountSpotsAttribute()
     {
-        return $this->spots()->withoutOrdering()->count();
+        return $this->spots()->withoutNewest()->count();
     }
 
     public function getCountFollowingsAttribute()

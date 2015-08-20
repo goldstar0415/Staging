@@ -44,27 +44,13 @@ class UserController extends Controller
      */
     public function getIndex($user)
     {
-        $rand_func = config('database.connections.' . config('database.default') . '.rand_func');
-        return $user->load(
-            ['followers' => function ($query) use ($rand_func) {
-                $query->orderBy(DB::raw($rand_func))
-                    ->take(6);
-            },
-            'followings' => function ($query) use ($rand_func) {
-                $query->orderBy(DB::raw($rand_func))
-                    ->take(6);
-            },
-            'spots' => function ($query) use ($rand_func) {
-                $query->orderBy(DB::raw($rand_func))
-                    ->take(6);
-            }]
-        );
+        return $this->appendUserRelations($user);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  Request $request
      * @return User
      */
     public function postIndex(Request $request)
@@ -114,7 +100,7 @@ class UserController extends Controller
 
     public function getMe()
     {
-        return $this->auth->user();
+        return $this->appendUserRelations($this->auth->user());
     }
 
     /**
@@ -231,7 +217,7 @@ class UserController extends Controller
 
     protected function sendLockoutResponse(Request $request)
     {
-        $seconds = (int) \Cache::get($this->getLoginLockExpirationKey($request)) - time();
+        $seconds = (int)\Cache::get($this->getLoginLockExpirationKey($request)) - time();
 
         return response()->json(['message' => $this->getLockoutErrorMessage($seconds)], 503);
     }
@@ -260,5 +246,29 @@ class UserController extends Controller
         $user->save();
 
         Auth::login($user);
+    }
+
+    /**
+     * @param \App\User $user
+     * @return mixed
+     */
+    protected function appendUserRelations($user)
+    {
+        $rand_func = config('database.connections.' . config('database.default') . '.rand_func');
+        $user->append(['count_favorites', 'count_photos']);
+        return $user->load(
+            ['followers' => function ($query) use ($rand_func) {
+                $query->orderBy(DB::raw($rand_func))
+                    ->take(6);
+            },
+            'followings' => function ($query) use ($rand_func) {
+                $query->orderBy(DB::raw($rand_func))
+                    ->take(6);
+            },
+            'spots' => function ($query) use ($rand_func) {
+                $query->orderBy(DB::raw($rand_func))
+                    ->take(6);
+            }]
+        );
     }
 }
