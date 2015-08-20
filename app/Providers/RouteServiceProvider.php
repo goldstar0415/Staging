@@ -9,11 +9,13 @@ use App\Area;
 use App\ChatMessage;
 use App\Friend;
 use App\Plan;
+use App\PlanComment;
 use App\Spot;
 use App\SpotPhoto;
 use App\SpotReview;
 use App\User;
 use App\Wall;
+use Codesleeve\Stapler\Fixtures\Models\Photo;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Request;
@@ -36,11 +38,13 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
+        $request = $router->getCurrentRequest();
+
         $router->model('albums', Album::class);
-        $router->bind('photos', function ($value) {
-            if (Request::is('photos/*')) {
+        $router->bind('photos', function ($value) use ($request) {
+            if ($request->is('photos/*')) {
                 return AlbumPhoto::findOrFail($value);
-            } elseif (Request::is('spots/*')) {
+            } elseif ($request->is('spots/*')) {
                 return SpotPhoto::findOrFail($value);
             }
 
@@ -52,7 +56,15 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('message', ChatMessage::class);
         $router->model('selection', Area::class);
         $router->model('reviews', SpotReview::class);
-        $router->model('comments', PhotoComment::class);
+        $router->model('comments', function ($value) use ($request) {
+            if ($request->is('spots/*/photos/*')) {
+                return PhotoComment::findOrFail($value);
+            } elseif ($request->is('plans/*')) {
+                return PlanComment::findOrFail($value);
+            }
+
+            return $value;
+        });
         $router->model('wall', Wall::class);
         $router->model('plans', Plan::class);
 

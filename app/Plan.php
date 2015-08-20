@@ -53,4 +53,9 @@ class Plan extends BaseModel
     {
         return $this->belongsToMany(Spot::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(PlanComment::class);
+    }
 }
