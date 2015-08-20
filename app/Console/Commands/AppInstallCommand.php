@@ -39,10 +39,9 @@ class AppInstallCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param Schedule $schedule
      * @return mixed
      */
-    public function handle(Schedule $schedule)
+    public function handle()
     {
         $app_path = base_path();
         $logs_path = storage_path('logs');
