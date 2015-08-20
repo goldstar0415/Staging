@@ -9,6 +9,7 @@
   function UserService($rootScope, socket, $state) {
     return {
       setCurrentUser: setCurrentUser,
+      setProfileUser: setProfileUser,
       logOut: logOut
     };
 
@@ -16,11 +17,15 @@
       $rootScope.currentUser = user;
 
       if (!$rootScope.profileUser) {
-        $rootScope.profileUser = user;
+        setProfileUser(user);
       }
 
       $rootScope.currentUserFailed = false;
       socket.connect(user.random_hash);
+    }
+
+    function setProfileUser(user) {
+        $rootScope.profileUser = user;
     }
 
     function logOut() {

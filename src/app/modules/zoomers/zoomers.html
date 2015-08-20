@@ -46,7 +46,7 @@
             <!-- media-body-content -->
             <div class="media-body media-body-content">
               <h3 class=" media-heading name">
-                <a ui-sref="profile({user_id: user.id})">{{user.first_name}} {{user.last_name}}</a>
+                <a ui-sref="profile.main({user_id: user.id})">{{user.first_name}} {{user.last_name}}</a>
               </h3>
 
               <div class="info">
@@ -83,7 +83,7 @@
             <ul class="events" ng-if="user.spots.length > 0">
               <li class="col-xs-4 events-width" ng-repeat="spot in user.spots">
                 <img class="frame" ng-src="{{spot.cover_url.medium}}" alt="{{spot.title}}">
-                <a ui-sref="spot({spot_id: spot.id})" class="event-link">
+                <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-link">
                   {{spot.title}}
                 </a>
               </li>

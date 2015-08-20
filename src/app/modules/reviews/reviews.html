@@ -14,15 +14,15 @@
       <div class="star"></div>
     </div>
   </div>
-  <a class="review-img" ui-sref="spot({spot_id: item.spot.id})">
+  <a class="review-img" ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
     <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.spot.cover_url.medium}}">
   </a>
 
   <div class="text-block">
     <h2 class="media-heading feeds-title">
-      <a ui-sref="spot({spot_id: item.spot.id})">{{item.spot.title}}</a>
+      <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">{{item.spot.title}}</a>
     </h2>
-    <a class="author-name" ui-sref="profile({user_id: item.user.id})">{{item.user.first_name}}
+    <a class="author-name" ui-sref="profile.main({user_id: item.user.id})">{{item.user.first_name}}
       {{item.user.last_name}}</a>
 
     <p class="description">{{item.body}}</p>

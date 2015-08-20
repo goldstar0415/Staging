@@ -49,13 +49,13 @@
   <!-- sub event -->
   <section class="central no-margin-bottom sub-event" ng-repeat="item in ::Plan.spots">
     <div class="media media-visible">
-      <a ui-sref="spot({spot_id: item.id})" class="pull-left" >
+      <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="pull-left" >
         <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" class="media-object fav-avatar-icon">
       </a>
 
       <div class="media-body">
         <h2 class="media-heading title-planner">
-          <a ui-sref="spot({spot_id: item.id})">{{item.title}}</a>
+          <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a>
         </h2>
 
         <p class="place">{{item.address}}</p>
@@ -84,13 +84,13 @@
 
   <div class="col-xs-12 post" ng-repeat="post in Plan.comments.data">
     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 padding-0">
-      <a ui-sref="profile({user_id: post.sender.id})">
+      <a ui-sref="profile.main({user_id: post.sender.id})">
         <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
       </a>
     </div>
     <div class="col-lg-11 col-md-10 col-sm-10 col-xs-10 info">
       <h3 class="name">
-        <a ui-sref="profile({user_id: post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
+        <a ui-sref="profile.main({user_id: post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
       </h3>
 
       <p>{{post.body}}</p>

@@ -6,7 +6,7 @@
     .controller('ProfileMenuController', ProfileMenuController);
 
   /** @ngInject */
-  function ProfileMenuController(User, $state) {
+  function ProfileMenuController(User, $state, $stateParams) {
     var vm = this;
     vm.$state = $state;
 

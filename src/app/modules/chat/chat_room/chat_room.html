@@ -1,7 +1,7 @@
 <div class="chat-conversation clearfix">
   <h2 class="dialog-title">
     <a>&larr;</a>
-    <a ui-sref="profile({user_id: ChatRoom.user.id})">{{ChatRoom.user.first_name}} {{ChatRoom.user.last_name}}</a>
+    <a ui-sref="profile.main({user_id: ChatRoom.user.id})">{{ChatRoom.user.first_name}} {{ChatRoom.user.last_name}}</a>
     dialog
   </h2>
   <hr>
@@ -23,7 +23,7 @@
                ng-class="{new: !message.is_read}">
             <div class="col-xs-12 user-name">
               <h3 class="right">
-                <a ui-sref="profile({user_id: currentUser.id})">
+                <a ui-sref="profile.main({user_id: currentUser.id})">
                   {{currentUser.first_name}} {{currentUser.last_name}}
                 </a>
               </h3>
@@ -42,7 +42,7 @@
               </div>
             </div>
             <div class="col-sm-1 col-xs-2 ">
-              <a ui-sref="profile({user_id: currentUser.id})">
+              <a ui-sref="profile.main({user_id: currentUser.id})">
                 <img ng-src="{{currentUser.avatar_url.thumb}}" class="avatar">
               </a>
             </div>
@@ -58,13 +58,13 @@
                ng-class="{new: !message.is_read}">
             <div class="col-xs-12 user-name ">
               <h3>
-                <a ui-sref="profile({user_id: ChatRoom.user.id})">
+                <a ui-sref="profile.main({user_id: ChatRoom.user.id})">
                   {{ChatRoom.user.first_name}} {{ChatRoom.user.last_name}}
                 </a>
               </h3>
             </div>
             <div class="col-sm-1 col-xs-2  ">
-              <a ui-sref="profile({user_id: ChatRoom.user.id})">
+              <a ui-sref="profile.main({user_id: ChatRoom.user.id})">
                 <img ng-src="{{ChatRoom.user.avatar_url.thumb}}" class="avatar">
               </a>
             </div>

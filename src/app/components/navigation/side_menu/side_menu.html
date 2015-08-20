@@ -4,7 +4,7 @@
       <a ui-sref="index" ui-sref-active="active"><span>Map</span><span class="map-icon"></span></a>
     </li>
     <li ng-if="$root.currentUser && SideMenu.$state.current.name == 'index'" class="map-profile side">
-      <a ui-sref="profile({user_id: $root.currentUser.id})"><span>{{$root.currentUser.first_name}}</span>
+      <a ui-sref="profile.main({user_id: $root.currentUser.id})"><span>{{$root.currentUser.first_name}}</span>
         <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
       </a>
     </li>

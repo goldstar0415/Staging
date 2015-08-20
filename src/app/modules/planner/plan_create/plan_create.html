@@ -165,7 +165,7 @@
         <div class="media-body">
           <h2 class="media-heading feeds-title">
             <button type="button" ng-click="Plan.deleteSpot($index)" class="close">x</button>
-            <a ui-sref="spot({spot_id: spot.id})">{{spot.title}}</a>
+            <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">{{spot.title}}</a>
           </h2>
 
           <p class="time">

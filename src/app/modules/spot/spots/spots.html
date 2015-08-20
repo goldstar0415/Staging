@@ -27,7 +27,7 @@
                     </span>
 
     <h2>
-      <a ui-sref="spot({spot_id: item.id})">{{::item.title}}</a>
+      <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{::item.title}}</a>
     </h2>
 
     <p class="place"></p>
@@ -38,15 +38,15 @@
     </figure>
 
     <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">
-      <li ng-repeat="tag in item.tags"><a ui-sref="spot({spot_id:item.id})">{{tag.name}}</a></li>
+      <li ng-repeat="tag in item.tags"><a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{tag.name}}</a></li>
     </ul>
     <!--  tags -->
 
     <ul class="tools">
-      <li>
+      <li ng-if="currentUser.id == item.user_id">
         <a ui-sref="spot_edit({spot_id: item.id})" class="edit-tools">Edit</a>
       </li>
-      <li>
+      <li ng-if="currentUser.id == item.user_id">
         <a ng-click="Spots.removeSpot(item, $index);" class="delete">Delete</a>
       </li>
 

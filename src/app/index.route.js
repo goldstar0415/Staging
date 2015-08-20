@@ -34,10 +34,24 @@
       //Abstract state for profile menu
       .state('profile_menu', {
         abstract: true,
+        parent: 'main',
         templateUrl: '/app/components/navigation/profile_menu/profile_menu.html',
         controller: 'ProfileMenuController',
-        parent: 'main',
         controllerAs: 'Profile'
+      })
+      .state('profile', {
+        url: '/user/:user_id',
+        template: '<ui-view />',
+        abstract: true,
+        resolve: {
+          user: function (User, $stateParams, UserService) {
+            return User.get({id: $stateParams.user_id}, function (user) {
+              UserService.setProfileUser(user);
+              return user;
+            }).$promise;
+          }
+        },
+        parent: 'profile_menu'
       })
 
       //Main map page
@@ -125,7 +139,7 @@
         templateUrl: '/app/modules/spot/spot.html',
         controller: 'SpotController',
         controllerAs: 'Spot',
-        parent: 'profile_menu',
+        parent: 'profile',
         resolve: {
           spot: function (Spot, $stateParams) {
             return Spot.get({id: $stateParams.spot_id}).$promise;
@@ -135,11 +149,11 @@
         mapState: 'small'
       })
       .state('spots', {
-        url: '/spots/:user_id',
+        url: '/spots',
         templateUrl: '/app/modules/spot/spots/spots.html',
         controller: 'SpotsController',
         controllerAs: 'Spots',
-        parent: 'profile_menu',
+        parent: 'profile',
         locate: 'none',
         mapState: 'small',
         resolve: {
@@ -223,25 +237,19 @@
         mapState: 'small'
       })
 
-      .state('profile', {
-        url: '/profile/:user_id',
+      .state('profile.main', {
+        url: '',
         templateUrl: '/app/modules/profile/profile.html',
         controller: 'ProfileController',
         controllerAs: 'Profile',
         resolve: {
-          user: function (User, $stateParams) {
-            return User.get({id: $stateParams.user_id}).$promise;
-          },
           wall: function (Wall, $stateParams) {
             return Wall.query({
               user_id: $stateParams.user_id
             }).$promise;
-          },
-          mySpots: function () {
-
           }
         },
-        parent: 'profile_menu',
+        parent: 'profile',
         locate: 'none',
         mapState: 'small'
       })
@@ -314,7 +322,7 @@
       })
 
       .state('favorites', {
-        url: '/favorites/:user_id',
+        url: '/favorites',
         templateUrl: '/app/modules/favorites/favorites.html',
         controller: 'FavoritesController',
         controllerAs: 'Favorite',
@@ -325,7 +333,7 @@
             }).$promise;
           }
         },
-        parent: 'profile_menu',
+        parent: 'profile',
         locate: 'none',
         require_auth: true,
         mapState: 'small'

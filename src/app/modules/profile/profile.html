@@ -12,13 +12,13 @@
   <!--                        -->
   <div class="col-xs-12 post" ng-repeat="post in Profile.wall.data">
     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 padding-0">
-      <a ui-sref="profile({user_id: post.sender.id})">
+      <a ui-sref="profile.main({user_id: post.sender.id})">
         <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
       </a>
     </div>
     <div class="col-lg-11 col-md-10 col-sm-10 col-xs-10 info">
       <h3 class="name">
-        <a ui-sref="profile({user_id: post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
+        <a ui-sref="profile.main({user_id: post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
       </h3>
 
       <p>{{post.body}}</p>
