@@ -100,7 +100,7 @@
       <label class="col-sm-2 control-label">Category</label>
 
       <div class="col-sm-10">
-        <ui-select ng-model="activity.activity_category_id" theme="bootstrap">
+        <ui-select ng-model="activity.category.id"  theme="bootstrap">
           <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
           <ui-select-choices repeat="item.id as item in Plan.categories | filter : $select.search track by $index">
             <div ng-bind-html="item.display_name |  highlight: $select.search"></div>

@@ -1,4 +1,4 @@
-<div ng-if="MapSort.vertical" class="col-xs-4 no-pad">
+<div ng-if="MapSort.vertical && !MapSort.close" class="col-xs-4 no-pad">
   <div class="sidebar-menu-vertical">
     <ul>
       <li><a href="#" class="full-small"></a></li>
@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<div ng-if="!MapSort.vertical" class="col-xs-3 no-pad sort-menu">
+<div ng-if="!MapSort.vertical && !MapSort.close" class="col-xs-3 no-pad sort-menu">
   <div class="sidebar-menu-horizontal">
     <ul>
       <li><a ng-click="MapSort.toggleLayer('events')" class="events">Events</a></li>
@@ -219,7 +219,7 @@
     </div>
   </div>
   <div class="col-xs-12 no-pad">
-    <a href="#" class="close-popup">Close</a>
+    <a class="close-popup" ng-click="MapSort.close = true">Close</a>
   </div>
 </div>
 
