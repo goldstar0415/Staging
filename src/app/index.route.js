@@ -339,9 +339,10 @@
         mapState: 'small'
       })
 
+
       //Photomap view state
-      .state('photomap', {
-        url: '/users/:user_id/albums',
+      .state('photos', {
+        url: '/albums',
         templateUrl: '/app/modules/photomap/photomap.html',
         controller: 'PhotomapController',
         controllerAs: 'Photomap',
@@ -351,11 +352,11 @@
           }
         },
         mapState: 'small',
-        parent: 'profile_menu',
+        parent: 'profile',
         locate: 'none'
       })
       //Create album state
-      .state('createAlbum', {
+      .state('photos.createAlbum', {
         url: '/albums/create',
         templateUrl: '/app/modules/photomap/create_album/album_create.html',
         controller: 'CreateAlbumController',
@@ -374,7 +375,7 @@
         require_auth: true
       })
       //Edit album state
-      .state('editAlbum', {
+      .state('photos.editAlbum', {
         url: '/albums/:album_id/edit',
         templateUrl: '/app/modules/photomap/create_album/album_create.html',
         controller: 'CreateAlbumController',
@@ -390,7 +391,7 @@
         locate: 'none'
       })
       //Albums page state
-      .state('album', {
+      .state('photos.album', {
         url: '/albums/:album_id',
         templateUrl: '/app/modules/photomap/album/album.html',
         controller: 'AlbumController',
@@ -401,7 +402,7 @@
           }
         },
         mapState: 'small',
-        parent: 'profile_menu',
+        parent: 'profile',
         locate: 'none'
       })
 

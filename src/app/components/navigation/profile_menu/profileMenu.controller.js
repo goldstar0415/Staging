@@ -18,5 +18,12 @@
       }
       user.can_follow = !user.can_follow;
     };
+
+    vm.isActive = function (state) {
+      return {
+        //active: $state.includes()
+        active: state == $state.current.name || $state.current.name.indexOf(state + '.') >= 0
+      };
+    }
   }
 })();
