@@ -32,5 +32,9 @@
         angular.element('.radius-selection').trigger('click');
         $scope.showHintPopup = false;
     };
+
+    $scope.close = function () {
+      $scope.showHintPopup = false;
+    };
   }
 })();
