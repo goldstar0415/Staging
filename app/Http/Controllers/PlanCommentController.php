@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommentsRequest;
 use App\Http\Requests\CommentStoreRequest;
 use App\PlanComment;
+use App\Services\Attachments;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -13,12 +14,27 @@ use App\Http\Controllers\Controller;
 class PlanCommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * @param CommentsRequest $request
-     * @param \App\Plan $plan
-     * @return
+     * @var Attachments
      */
-    public function index(CommentsRequest $request, $plan)
+    private $attachments;
+
+    /**
+     * PlanCommentController constructor.
+     * @param Attachments $attachments
+     */
+    public function __construct(Attachments $attachments)
+    {
+        $this->middleware('auth', ['except' => 'index']);
+        $this->attachments = $attachments;
+    }
+
+    /**
+     * Display a listing of the resource.
+     * @param Request $request
+     * @param \App\Plan $plan
+     * @return mixed
+     */
+    public function index(Request $request, $plan)
     {
         $comments = $plan->comments;
         $comments->map(function ($comment) {
@@ -46,6 +62,8 @@ class PlanCommentController extends Controller
         $comment = new PlanComment($request->all());
         $comment->user()->associate($request->user());
         $plan->comments()->save($comment);
+
+        $this->attachments->make($comment);
 
         return $comment;
     }
