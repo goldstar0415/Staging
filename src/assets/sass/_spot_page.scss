@@ -162,17 +162,9 @@
 
 }
 
-.edit-tools {
-  background: url(/assets/img/icons/edit.png) -3px -5px no-repeat;
-  &:hover {
-    color: $blue;
-    background: url(/assets/img/icons/edit.png) -3px -23px no-repeat;
-  }
-}
-
 .delete {
   background: url(/assets/img/icons/delete.png) 1px 2px no-repeat;
-  &:hover {
+  &:hover, &:active, &:focus {
     background: url(/assets/img/icons/delete.png) 1px -13px no-repeat;
     color: $blue;
   }
@@ -180,7 +172,7 @@
 
 .save-event {
   background: url(/assets/img/icons/tools.png) -5px -6px no-repeat;
-  &:hover {
+  &:hover, &:active, &:focus {
     background: url(/assets/img/icons/tools.png) -5px -23px no-repeat;
     color: $blue;
   }
@@ -197,7 +189,7 @@
 
 .favorite-spot {
   background: url(/assets/img/icons/tools.png) -4px -57px no-repeat;
-  &:hover {
+  &:hover, &:active, &:focus {
     background: url(/assets/img/icons/tools.png) -4px -74px no-repeat;
     color: $blue;
   }
