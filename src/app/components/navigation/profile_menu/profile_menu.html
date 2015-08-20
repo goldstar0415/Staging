@@ -112,7 +112,7 @@
           </a>
         </h2>
 
-        <div class="sidebar-row ">
+        <div class="sidebar-row clearfix">
           <div class="col-sm-4 no-pad" ng-repeat="item in $root.profileUser.followers">
             <a ui-sref="profile.main({user_id: item.id})">
               <img ng-src="{{item.avatar_url.thumb}}" class="avatar"/>
