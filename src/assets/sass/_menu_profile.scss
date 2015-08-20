@@ -21,7 +21,20 @@
     }
   }
 }
-
+.module-sidebar {
+  margin-bottom: 2.5rem;
+}
+.sidebar-row {
+  display: block;
+  a {
+    height: 14rem;
+    display: block;
+    word-wrap: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -e-text-overflow: ellipsis;
+  }
+}
 @media (max-width: 992px) {
   .menu-profile {
     display: none;

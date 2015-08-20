@@ -104,7 +104,7 @@
         </ul>
       </div>
 
-      <aside class="module-sidebar">
+      <aside class="module-sidebar clearfix">
         <h2 class="sidebar-title">
           <a>
             Followers
@@ -112,12 +112,14 @@
           </a>
         </h2>
 
-        <div class="col-sm-4 no-pad" ng-repeat="item in $root.profileUser.followers">
-          <a ui-sref="profile({user_id: item.id})">
-            <img ng-src="{{item.avatar_url.thumb}}" class="avatar"/>
+        <div class="sidebar-row ">
+          <div class="col-sm-4 no-pad" ng-repeat="item in $root.profileUser.followers">
+            <a ui-sref="profile({user_id: item.id})">
+              <img ng-src="{{item.avatar_url.thumb}}" class="avatar"/>
 
-            <p class="sidebar-user-name">{{item.first_name}} {{item.last_name}}</p>
-          </a>
+              <p class="sidebar-user-name">{{item.first_name}} {{item.last_name}}</p>
+            </a>
+          </div>
         </div>
 
       </aside>
