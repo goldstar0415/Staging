@@ -277,9 +277,10 @@
 }
 
 .choose-friend {
-  height: 54px;
+  height: 5.5rem;
   width: 100%;
-  padding: 7px 5%;
+  padding: 3px 5%;
+  min-height: 2.4rem;
   a {
     display: block;
   }
@@ -368,6 +369,7 @@
   }
 
 }
+
 .nav-tabs-default {
   background: $light_grey;
   color: #969ea4;

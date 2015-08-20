@@ -82,16 +82,19 @@
     a {
       padding-left: 18px !important;
       font: 14px Ubuntu;
-      color: #0874be;
+      color: $blue;
+      &:hover, &:active, &:focus {
+        color:  #0874be;
+      }
     }
   }
 }
 
 .edit-tools {
-  background: url(/assets/img/icons/ed.png) 2px 2px no-repeat;
+  background: url(/assets/img/icons/ed.png) 1px 3px no-repeat;
   &:hover, &:active, &:focus {
     color: $blue;
-    background: url(/assets/img/icons/ed.png) 2px -12px no-repeat;
+    background: url(/assets/img/icons/ed.png) 1px -12px no-repeat;
   }
 }
 
