@@ -3,7 +3,7 @@
   <section class="central no-margin-bottom clearfix ">
     <div class="one-spot-section">
       <span class="date">
-         {{Plan.start_date | toTimezone}} - {{Plan.end_date | toTimezone}}
+        <date-range item="Plan"></date-range>
       </span>
 
       <h2 class="title-planner">
@@ -21,11 +21,36 @@
   </section>
   <!-- end section with spot -->
 
+  <!-- activity -->
+  <section class="central no-margin-bottom sub-event" ng-repeat="item in ::Plan.activities">
+    <div class="media media-visible">
+      <a  class="pull-left" >
+        <img ng-src="{{item.category.thumb}}" class="media-object fav-avatar-icon">
+      </a>
+
+      <div class="media-body">
+        <h2 class="media-heading title-planner">
+          {{item.title}}
+        </h2>
+
+        <p class="place">{{item.address}}</p>
+
+        <div class="time-sub">
+          <date-range item="item"></date-range>
+        </div>
+        <div class="description">
+          <span>{{item.description}}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--end activity -->
+
   <!-- sub event -->
   <section class="central no-margin-bottom sub-event" ng-repeat="item in ::Plan.spots">
     <div class="media media-visible">
-      <a class="pull-left" href="#">
-        <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" class="img-size">
+      <a ui-sref="spot({spot_id: item.id})" class="pull-left" >
+        <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" class="media-object fav-avatar-icon">
       </a>
 
       <div class="media-body">
@@ -36,7 +61,7 @@
         <p class="place">{{item.address}}</p>
 
         <div class="time-sub">
-          05.11.2016 — 015.11.2016 &nbsp; 12:00 am
+          <date-range item="item"></date-range>
         </div>
         <div class="description">
           <span>{{item.description}}</span>
@@ -54,10 +79,10 @@
   </section>
   <!--end sub event -->
 
-  <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()"></ng-input>
+  <ng-input message="Plan.message" attachments="Plan.attachments" on-submit="Plan.send()"></ng-input>
 
 
-  <div class="col-xs-12 post" ng-repeat="post in Profile.wall.data">
+  <div class="col-xs-12 post" ng-repeat="post in Plan.comments.data">
     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 padding-0">
       <a ui-sref="profile({user_id: post.sender.id})">
         <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
@@ -73,11 +98,6 @@
 
       <p class="time">{{post.created_at | fromNow}}</p>
 
-      <div class="plus-minus">
-        <a class="plus" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)"></a>
-        {{post.rating}}
-        <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
-      </div>
     </div>
   </div>
 

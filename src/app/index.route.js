@@ -181,6 +181,9 @@
         resolve: {
           plan: function (Plan) {
             return new Plan();
+          },
+          categories: function (Plan) {
+            return Plan.activityCategories().$promise;
           }
         },
         mapState: 'small'
@@ -195,6 +198,9 @@
         resolve: {
           plan: function (Plan, $stateParams) {
             return Plan.get({id: $stateParams.plan_id}).$promise;
+          },
+          categories: function (Plan) {
+            return Plan.activityCategories().$promise;
           }
         },
         mapState: 'small'
@@ -208,6 +214,9 @@
         resolve: {
           plan: function (Plan, $stateParams) {
             return Plan.get({id: $stateParams.plan_id}).$promise;
+          },
+          comments: function (PlanComment, $stateParams) {
+            return PlanComment.get({plan_id: $stateParams.plan_id})//.$promise;
           }
         },
         locate: 'none',

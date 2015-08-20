@@ -6,23 +6,30 @@
     .controller('PlanCreateController', PlanCreateController);
 
   /** @ngInject */
-  function PlanCreateController(Plan, plan, $state) {
+  function PlanCreateController(Plan, plan, categories, $state) {
     var vm = this;
     vm = _.extend(vm, plan);
+    console.log(vm);
+    vm.spots = vm.spots || [];
+    vm.activities = vm.activities || [];
+    vm.categories = categories;
+
     vm.save = save;
     vm.deleteSpot = deleteSpot;
     vm.deleteActivity = deleteActivity;
     vm.addActivity = addActivity;
-    vm.spots = [];
-    vm.activities = [];
-    vm.categories = [{"id": 1, "spot_type_id": 1, "name": "praesentium", "display_name": "Praesentium"}];
 
     function save(form) {
       if (form.$valid) {
-        Plan.save(_convertData(), function (resp) {
-            console.log(resp);
-          $state.go('planner.list');
+        if (vm.id) {
+          Plan.update(_convertData(), function (resp) {
+            $state.go('planner.list');
           });
+        } else {
+          Plan.save(_convertData(), function (resp) {
+            $state.go('planner.list');
+          });
+        }
       }
     }
 
@@ -33,6 +40,8 @@
 
       _.each(data.activities, function (activity) {
         activity = _convertDates(activity);
+        activity.activity_category_id = activity.category.id;
+        delete activity.category;
       });
 
       console.log(data);
