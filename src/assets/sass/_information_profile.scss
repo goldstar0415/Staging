@@ -1,7 +1,7 @@
 ////information-profile//////
 
 .information-profile {
-  padding: 0 0 20px;
+  padding: 0 15px 20px;
   .avatar-wrap {
     padding: 0;
     .avatar {
@@ -19,8 +19,7 @@
       color: $blue;
       @include transition_color;
       position: relative;
-      font: $navigation_font;
-      font-size: 22px;
+      font: 500 20px/20px 'Ubuntu medium';
       word-wrap: break-word;
       &:hover, &:focus, &:active {
         color: $navy_blue;
