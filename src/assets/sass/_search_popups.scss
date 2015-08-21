@@ -251,22 +251,22 @@
 
       a {
         color: #fff;
-        display: block;
+        display: table;
         margin: 0 auto;
         padding: 15px 8px 15px 30px;
-        text-align: center;
+        text-align: left;
       }
       .events {
-        background: url(/assets/img/icons/events-icon.png) 15px 17px no-repeat;
+        background: url(/assets/img/icons/events-icon.png) 10px 17px no-repeat;
       }
       .recreation {
-        background: url(/assets/img/icons/recreation-icon.png) 15px 17px no-repeat;
+        background: url(/assets/img/icons/recreation-icon.png) 10px 17px no-repeat;
       }
       .pit-stops {
-        background: url(/assets/img/icons/pit-stops-icon.png) 15px 17px no-repeat;
+        background: url(/assets/img/icons/pit-stops-icon.png) 10px 17px no-repeat;
       }
       .weather-link {
-        background: url(/assets/img/icons/weather-icon.png) 15px 17px no-repeat;
+        background: url(/assets/img/icons/weather-icon.png) 7px 17px no-repeat;
 
       }
     }
