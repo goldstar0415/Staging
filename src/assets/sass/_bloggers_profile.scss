@@ -293,3 +293,16 @@
     }
   }
 }
+
+@media (max-width: 400px) {
+  .nav-tabs {
+    border-bottom: none;
+    li {
+      margin: 10px 10px 0 0;
+      border-radius: 5px;
+      a {
+        border-radius: 5px;
+      }
+    }
+  }
+}
