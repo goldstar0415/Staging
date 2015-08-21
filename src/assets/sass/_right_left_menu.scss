@@ -33,6 +33,17 @@
           background-position-y: -41px;
         }
       }
+      .user-name {
+        max-width: 200px;
+        span {
+          &:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 70%;
+          }
+        }
+      }
     }
     .sign-out {
       border-bottom: none;
