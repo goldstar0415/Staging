@@ -90,6 +90,8 @@
         background: #f5f8fa;
         position: relative;
         padding: 10px;
+        max-width: 100%;
+        word-wrap: break-word;
         font-size: 11px;
         float: right;
         &:after {
@@ -149,6 +151,8 @@
         background: #f5f8fa;
         position: relative;
         padding: 10px;
+        max-width: 100%;
+        word-wrap: break-word;
         font-size: 11px;
         float: left;
         &:after {
