@@ -169,6 +169,7 @@ h3 {
 .no-pad-right {
   padding-right: 0;
 }
+
 .no-pad-bottom {
   padding-right: 0;
 }
@@ -330,11 +331,16 @@ h3 {
   @include transition_bg_color;
   @include border-radius;
   margin: 0 15px;
+  outline: none !important;
+
   &:hover, &:focus, &:active {
-    background-color: $light_green;
+    background-color: $light_green !important;
     box-shadow: none;
     border: none;
-    color: $white;
+    outline: none !important;
+    color: $white !important;
+    @include transition_none;
+    @include box_shadow_none;
   }
 }
 
@@ -346,11 +352,16 @@ h3 {
   @include transition_bg_color;
   @include border-radius;
   margin: 0 15px;
+  outline: none !important;
+
   &:hover, &:focus, &:active {
-    background-color: $blue;
+    background-color: $blue !important;
     box-shadow: none;
     border: none;
-    color: $white;
+    outline: none !important;
+    color: $white !important;
+    @include transition_none;
+    @include box_shadow_none;
   }
 }
 
@@ -362,12 +373,15 @@ h3 {
   @include transition_bg_color;
   @include border-radius;
   margin: 0 15px;
-  &:hover, &:focus, &:active {
-    background-color: $light_red;
-    box-shadow: none;
-    border: none;
-    color: $white;
+  outline: none !important;
 
+  &:hover, &:focus, &:active {
+    background-color: $light_red !important;
+    border: none;
+    outline: none !important;
+    color: $white !important;
+    @include transition_none;
+    @include box_shadow_none;
   }
 }
 
