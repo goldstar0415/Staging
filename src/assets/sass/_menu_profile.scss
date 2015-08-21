@@ -10,20 +10,24 @@
       &:first-child {
         padding-left: 0;
       }
+      a {
+        font: $navigation_font;
+      }
       a.active {
         color: $blue;
       }
       display: inline-block;
-      font: $navigation_font;
       padding-left: 24px;
       float: left;
       @include vertical_align;
     }
   }
 }
+
 .module-sidebar {
   margin-bottom: 2.5rem;
 }
+
 .sidebar-row {
   display: block;
   a {
@@ -35,6 +39,7 @@
     -e-text-overflow: ellipsis;
   }
 }
+
 @media (max-width: 992px) {
   .menu-profile {
     display: none;
