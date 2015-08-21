@@ -272,13 +272,23 @@
   }
   .nav-tabs-default {
     a {
-      font-size: 14px;
+      font: 500 14px/14px 'Ubuntu medium';
       color: $gray-dark;
       margin-right: 0;
       &:hover, &:focus {
         background-color: $blue;
         color: $white;
 
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .user-menu-tabs {
+    li {
+      a {
+        padding: 10px;
       }
     }
   }
