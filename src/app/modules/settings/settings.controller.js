@@ -6,11 +6,11 @@
     .controller('SettingsController', SettingsController);
 
   /** @ngInject */
-  function SettingsController($rootScope, currentUser, $scope, toastr, moment, $http, API_URL) {
+  function SettingsController(currentUser, DATE_FORMAT, toastr, moment, $http, API_URL) {
     var vm = this;
     vm.endDate = moment().toDate();
     vm.data = currentUser;
-    vm.data.birth_date = moment(vm.data.birth_date).format('YYYY-MM-DD');
+    //vm.data.birth_date = moment(vm.data.birth_date).format('YYYY-MM-DD');
     vm.privacyOptions = [
       {value: 0, label: 'All users have access'},
       {value: 1, label: 'Only followers&followings have access'},
@@ -29,7 +29,7 @@
         params: {
           first_name: vm.data.first_name,
           last_name: vm.data.last_name,
-          birth_date: vm.data.birth_date,
+          birth_date: moment(vm.data.birth_date).format('YYYY-MM-DD'),
           sex: vm.data.sex || '',
           time_zone: vm.data.time_zone,
           description: vm.data.description,
