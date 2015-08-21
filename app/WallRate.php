@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $rate
  *
  * Relation properties
- * @property Spot $spot
+ * @property Wall $wall
  * @property User $user
  */
 
