@@ -8,6 +8,15 @@
   /** @ngInject */
   function User($resource, API_URL) {
     return $resource(API_URL + '/users/:id', {id: '@id'}, {
+      query: {
+        url: API_URL + '/users/list',
+        method: 'GET',
+        params: {
+          type: 'all',
+          page: 1,
+          limit: 10
+        }
+      },
       currentUser: {
         url: API_URL + '/users/me'
       },
@@ -47,19 +56,13 @@
         url: API_URL + '/followings/:user_id',
         isArray: true
       },
-      query: {
-        url: API_URL + '/users/list',
-        method: 'GET',
-        params: {
-          type: 'all',
-          page: 1,
-          limit: 10
-        }
-      },
       update: {
         method: 'PUT'
+      },
+      setAvatar: {
+        url: API_URL + '/settings/setavatar',
+        method: 'POST'
       }
     });
   }
-
 })();

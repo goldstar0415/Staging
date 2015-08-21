@@ -25,9 +25,10 @@
 
         <div class="col-xs-4 avatar-block">
           <figure class="avatar">
-            <img src="Settings.data.avatar_url" alt="">
+            <img ng-src="{{Settings.data.avatar_url.thumb}}" />
           </figure>
-          <a href="#" class="edit-photo">Edit avatar</a>
+          <!--<a ng-click="Setting.setAvatar()" class="edit-photo">Edit avatar</a>-->
+          <uploader button-text="Edit avatar"></uploader>
         </div>
         <div class="col-xs-8 main-information">
           <form role="form" name="form" ng-submit="Settings.savePersonalSettings(form)" novalidate>

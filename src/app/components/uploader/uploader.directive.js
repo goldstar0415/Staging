@@ -10,7 +10,8 @@
     return {
       restrict: 'E',
       scope: {
-        dropZone: '='
+        dropZone: '=',
+        buttonText: '@'
       },
       templateUrl: '/app/components/uploader/uploader.html',
       controller: UploaderController,
