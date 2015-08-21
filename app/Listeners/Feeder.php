@@ -39,8 +39,11 @@ class Feeder implements ShouldQueue
     {
         switch (true) {
             case $event instanceof UserFollowEvent:
-                $this->addFeed($event, $event->getFollower()->followers);
-                $this->addFeed($event, $event->getFollowing());
+                $following = $event->getFollowing();
+                $this->addFeed($event, $event->getFollower()->followers->reject(function ($item) use ($following) {
+                    return $item == $following;
+                }));
+                $this->addFeed($event, $following);
                 break;
             case $event instanceof UserUnfollowEvent:
                 $this->addFeed($event, $event->getFollowing());
@@ -54,7 +57,9 @@ class Feeder implements ShouldQueue
             case $event instanceof OnPlanRemind:
                 break;
             case $event instanceof OnWallMessage:
-                $this->addFeed($event, $event->wall->sender->followers);
+                if ($event->isSelf()) {
+                    $this->addFeed($event, $event->wall->sender->followers);
+                }
                 break;
             case $event instanceof OnWallPostDelete:
                 $this->addFeed($event, $event->wall->sender);

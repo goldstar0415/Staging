@@ -30,4 +30,9 @@ class OnWallMessage extends Event implements Feedable
     {
         return $this->wall->sender;
     }
+
+    public function isSelf()
+    {
+        return $this->wall->sender->id === $this->wall->receiver->id;
+    }
 }

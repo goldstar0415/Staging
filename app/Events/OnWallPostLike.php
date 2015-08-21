@@ -32,7 +32,7 @@ class OnWallPostLike extends Event implements Feedable
 
     public function getFeedable()
     {
-        return $this->rate;
+        return $this->rate->wall;
     }
 
     public function getFeedSender()
