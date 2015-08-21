@@ -9,8 +9,8 @@
   function ActivityModalController(spots, favorites, areas, attachments, $modalInstance) {
     var vm = this;
     vm.tab = 'events';
-    vm.spots = _markAsSelected(spots, attachments.spots);
-    vm.favorites = _markAsSelected(favorites, attachments.spots);
+    vm.spots = _markAsSelected(spots.data, attachments.spots);
+    vm.favorites = _markAsSelected(favorites.data, attachments.spots);
     vm.areas = _markAsSelected(areas, attachments.areas);
 
     vm.addSpot = function (spot) {

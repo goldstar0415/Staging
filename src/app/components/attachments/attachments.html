@@ -30,16 +30,10 @@
   </div>
 
 
-  <div class="upload-photos clearfix" ng-if="Attachments.items.album_photos.length > 0">
-    <div class="photos">
-      <div class="add-img"
-           ng-repeat="photo in Attachments.items.album_photos"
-        >
-        <img ng-src="{{photo.photo_url.medium}}">
-
-        </a>
+  <div class="row" ng-if="Attachments.items.album_photos.length > 0">
+      <div class="col-sm-4 no-pad" ng-repeat="photo in Attachments.items.album_photos">
+        <img ng-src="{{photo.photo_url.medium}}" class="img-responsive" />
       </div>
-    </div>
   </div>
 
 </div>

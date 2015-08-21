@@ -73,10 +73,14 @@
           //modalContentClass: 'clearfix',
           resolve: {
             spots: function (Spot) {
-              return Spot.query().$promise;
+              return Spot.query({
+                  user_id: $rootScope.currentUser.id
+              }).$promise;
             },
             favorites: function (Spot) {
-              return Spot.favorites().$promise;
+              return Spot.favorites({
+                user_id: $rootScope.currentUser.id
+              }).$promise;
             },
             areas: function (Area) {
               return Area.query().$promise;
