@@ -35,7 +35,7 @@
         <div class="status moderator" ng-if="$root.profileUser.status">{{$root.profileUser.status}}</div>
         <h2 class="profile-name ">
           <a ui-sref="profile.main({user_id: $root.profileUser.id})">
-            {{$root.profileUser.first_name}} {{$root.profileUser.last_name}}
+            {{$root.profileUser.first_name}}<br/> {{$root.profileUser.last_name}}
             <div class="online" title="Online"></div>
           </a>
         </h2>
@@ -83,7 +83,7 @@
     </div>
 
     <div class="col-xs-12 col-md-7 central " ng-class="{'no-background': Profile.$state.includes('planner')}">
-      <div ui-view autoscroll="true"></div>
+      <div ui-view ></div>
     </div>
 
     <div class="col-md-3 hidden-sm hidden-xs activity-profile">

@@ -10,7 +10,7 @@
     return $resource(API_URL + '/feeds', {}, {
       query: {
         url: API_URL + '/feeds',
-        isArray: true,
+        isArray: false,
         params: {
           page: 1,
           limit: 10

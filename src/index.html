@@ -94,7 +94,7 @@
   <div id="map" class="mapResize map {{mapState}}"
        ng-class="{'hidden-sm': mapState != 'full-size' && options.snap.disable == 'right', 'hidden-xs': mapState != 'full-size' && options.snap.disable == 'right'}"></div>
   <!-- content container-->
-  <div ng-show="mapState != 'full-size'" ui-view autoscroll="true"></div>
+  <div ng-show="mapState != 'full-size'" ui-view ></div>
 </div>
 
 <ng-include src="'/app/components/ng_message_templates/error_templates.html'"></ng-include>
