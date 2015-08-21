@@ -112,7 +112,7 @@
           UploaderService
             .upload(url, req)
             .then(function (resp) {
-              $state.go('spot', {spot_id: resp.data.id});
+              $state.go('spot', {spot_id: resp.data.id, user_id: resp.data.user_id});
             })
             .catch(function (resp) {
               toastr.error('Upload failed');
