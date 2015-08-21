@@ -44,7 +44,7 @@ $factory->define(App\User::class, function (Generator $faker) use ($timestamps) 
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->email,
         'password' => bcrypt('password'),
-        'sex' => $faker->boolean(),
+        'sex' => $faker->randomElement(['m', '', 'f']),
         'avatar' => $faker->image(storage_path('app'), mt_rand(300, 1920), mt_rand(200, 1250)),
         'birth_date' => $faker->date(),
         'address' => $faker->address,

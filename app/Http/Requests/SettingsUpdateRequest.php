@@ -39,7 +39,7 @@ class SettingsUpdateRequest extends Request
                     'first_name' => 'required|max:64',
                     'last_name' => 'required|max:64',
                     'birth_date' => 'date_format:Y-m-d',
-                    'sex' => 'boolean',
+                    'sex' => 'string|in:m,,f',
                     'time_zone' => 'timezone',
                     'description' => 'string|max:255',
                     'address' => 'string|max:255',
