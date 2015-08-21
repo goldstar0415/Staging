@@ -57,8 +57,7 @@
   .tools-hint-block {
     padding: 20px;
     background: #0c2638;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-radius: 8px 8px 0 0;
     color: #fff;
     text-align: center;
     position: relative;
@@ -101,13 +100,7 @@
           border-bottom-right-radius: 8px;
           border: 2px solid #bdbdbd;
           box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .28);
-          //background-size: 100%;
-          //padding-top: 35%;
-          //overflow: hidden;
           height: 0;
-          //display: none;
-          //transition: height 5s;
-
         }
         .path-map {
           background: url(/assets/img/path-map.png) no-repeat center top;
@@ -225,7 +218,9 @@
     width: 100%;
     color: #fff;
     background-color: $navy_blue;
-    font: 500 20px/30px 'Ubuntu medium';
+    font: 500 20px/20px 'Ubuntu medium';
+    padding: 12px 15px;
+    border-radius: 5px 5px 0 0;
     bottom: 0;
     text-align: center;
     @include transition_bg_color;
@@ -655,6 +650,23 @@
     background-color: $light_green;
     @include transition_bg_color;
     color: #fff;
+  }
+}
+
+@media (max-width: 992px) {
+  .tools-wrap {
+    .tools-hint-block {
+      border-radius: 8px;
+      ul {
+        li {
+          &:hover {
+            .path-map, .radius-map, .lasso-map {
+              display: none;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
