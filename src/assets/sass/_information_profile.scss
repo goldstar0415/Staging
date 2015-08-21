@@ -13,14 +13,20 @@
     }
   }
   .profile-name {
-    margin-top: 0;
+    margin-top: 10px;
+    font: 500 24px/26px 'Ubuntu medium';
+    text-align: center;
 
     a {
       color: $blue;
       @include transition_color;
       position: relative;
       font: 500 20px/20px 'Ubuntu medium';
-      word-wrap: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+      display: block;
       &:hover, &:focus, &:active {
         color: $navy_blue;
         @include transition_color;
@@ -34,8 +40,8 @@
       border-radius: 8px;
       background: $green;
       position: absolute;
-      top: -2px;
-      right: -5px;
+      top: 0;
+      right: 0;
     }
     .offline {
       width: 6px;
