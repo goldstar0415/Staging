@@ -297,7 +297,7 @@
         controllerAs: 'Feed',
         resolve: {
           feeds: function (Feed) {
-            return Feed.query()//.$promise;
+            return Feed.query().$promise;
           }
         },
         parent: 'profile_menu',

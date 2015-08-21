@@ -19,12 +19,54 @@
           </h2>
 
           <div ng-switch="item.event_type">
-            <p ng-switch-when="UserFollowEvent" class="feeds-text">
-              add <a ui-sref="profile.main({user_id: item.feedable.id})">
+            <div ng-switch-when="UserFollowEvent">
+              <span ng-if="currentUser.id == item.feedable.id">
+                follows you
+              </span>
+              <span ng-if="currentUser.id != item.feedable.id">
+                add <a ui-sref="profile.main({user_id: item.feedable.id})">
                   {{item.feedable.first_name}} {{item.feedable.last_name}}
                 </a> to following
-            </p>
+              </span>
+            </div>
 
+            <div ng-switch-when="UserUnfollowEvent">
+              <span ng-if="currentUser.id == item.feedable.id">
+                unfollows you
+              </span>
+              <span ng-if="currentUser.id != item.feedable.id">
+                unfollow <a ui-sref="profile.main({user_id: item.feedable.id})">
+                  {{item.feedable.first_name}} {{item.feedable.last_name}}
+                </a>
+              </span>
+            </div>
+
+            <div ng-switch-when="OnSpotUpdate">
+              update event
+              <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})">
+                {{item.feedable.title}}
+              </a>
+            </div>
+
+            <div ng-switch-when="OnSpotCreate">
+              create event
+              <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})">
+                {{item.feedable.title}}
+              </a>
+            </div>
+
+            <div ng-switch-when="OnWallMessage">
+              <p>{{item.feedable.body}}</p>
+              <attachments items="item.feedable.attachments"></attachments>
+            </div>
+
+            <div ng-switch-when="OnWallPostLike">
+              likes your post "{{item.feedable.body | limitTo: 30}}{{item.feedable.body.lenght > 30 ? '...' : ''}}"
+            </div>
+
+            <div ng-switch-when="OnWallPostDislike">
+              doesn't like your post "{{item.feedable.body | limitTo: 30}}{{item.feedable.body.lenght > 30 ? '...' : ''}}"
+            </div>
 
           </div>
 
