@@ -37,7 +37,9 @@
             <h4 class="name-friend">
               <a>{{spot.title}}</a>
 
-              <p class="date"> {{spot.start_date | toTimezone}} - {{spot.end_date | toTimezone}} </p>
+              <p class="date">
+                <date-range item="spot"></date-range>
+              </p>
             </h4>
           </div>
         </div>
@@ -55,7 +57,9 @@
               <h4 class="name-friend">
                 <a>{{spot.title}}</a>
 
-                <p class="date"> {{spot.start_date | toTimezone}} - {{spot.end_date | toTimezone}} </p>
+                <p class="date">
+                  <date-range item="spot"></date-range>
+                </p>
               </h4>
             </div>
           </div>

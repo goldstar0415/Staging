@@ -5,7 +5,7 @@
         <li><a ui-sref="spots({user_id: $root.currentUser.id})" ui-sref-active="active">My spots</a></li>
         <li><a ui-sref-active="active">My blog</a></li>
         <li><a ui-sref="favorites({user_id: $root.currentUser.id})" ui-sref-active="active">Favorites</a></li>
-        <li><a>Saved searches</a></li>
+        <li><a ui-sref="areas" ui-sref-active="active">Saved searches</a></li>
         <li><a ui-sref="friendsmap" ui-sref-active="active">Friends map</a></li>
         <li><a ui-sref="photos({user_id: $root.currentUser.id})" ui-sref-active="active">Photo map</a></li>
         <li><a ui-sref="planner.list" ng-class="Profile.isActive('planner')">Planner </a></li>
@@ -43,7 +43,7 @@
           <span ng-if="$root.profileUser.sex != null">{{$root.profileUser.sex ? 'male' : 'female'}}</span>
           <span ng-if="$root.profileUser.birth_date">, {{$root.profileUser.birth_date | age}} years</span>
         </div>
-        <div class="location" ng-if="$root.profileUser.location"> Location here</div>
+        <div class="location" ng-if="$root.profileUser.address">{{$root.profileUser.address}}</div>
 
         <div ng-if="$root.profileUser.description">
           <div ng-init="Profile.textLimit = 50"
@@ -83,7 +83,7 @@
     </div>
 
     <div class="col-xs-12 col-md-7 central " ng-class="{'no-background': Profile.$state.includes('planner')}">
-      <div ui-view></div>
+      <div ui-view autoscroll="true"></div>
     </div>
 
     <div class="col-md-3 hidden-sm hidden-xs activity-profile">
