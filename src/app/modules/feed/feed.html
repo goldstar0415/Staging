@@ -4,28 +4,36 @@
 
 
 <div class="col-xs-12">
-  <section class="section-event" ng-repeat="item in Feed.feeds">
+  <section class="section-event" ng-repeat="item in Feed.feeds.data">
     <div class="event">
 
       <div class="media media-visible">
-        <a class="pull-left" href="http://zoomtivity.com/event/show/23">
-          <img class="media-object fav-avatar-icon feeds-img"
-               src="http://zoomtivity.com/packages/design/img/event-link.png" alt="...">
+        <a class="pull-left" ui-sref="profile.main({user_id: item.sender.id})">
+          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.sender.avatar_url.thumb}}">
         </a>
 
         <div class="media-body">
           <h2 class="media-heading feeds-title">
-            <a href="http://zoomzoom.itechhighway.com/event/show/296">Lorem</a>
+            <a ui-sref="profile.main({user_id: item.sender.id})">{{item.sender.first_name}}
+              {{item.sender.last_name}}</a>
           </h2>
 
-          <p class=" feeds-text">Lorem lorem lorem lorem</p>
+          <div ng-switch="item.event_type">
+            <p ng-switch-when="UserFollowEvent" class="feeds-text">
+              add <a ui-sref="profile.main({user_id: item.feedable.id})">
+                  {{item.feedable.first_name}} {{item.feedable.last_name}}
+                </a> to following
+            </p>
 
-          <p class="time">Apr 01 2015 at 1.25 pm</p>
+
+          </div>
+
+          <p class="time">{{item.created_at | toTimezone}}</p>
         </div>
       </div>
     </div>
   </section>
 
 
-  <h4 ng-if="Feed.feeds.length == 0">No feeds yet.</h4>
+  <h4 ng-if="Feed.feeds.data.length == 0">No feeds yet.</h4>
 </div>
