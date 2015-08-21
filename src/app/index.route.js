@@ -34,10 +34,24 @@
       //Abstract state for profile menu
       .state('profile_menu', {
         abstract: true,
+        parent: 'main',
         templateUrl: '/app/components/navigation/profile_menu/profile_menu.html',
         controller: 'ProfileMenuController',
-        parent: 'main',
         controllerAs: 'Profile'
+      })
+      .state('profile', {
+        url: '/user/:user_id',
+        template: '<ui-view />',
+        abstract: true,
+        resolve: {
+          user: function (User, $stateParams, UserService) {
+            return User.get({id: $stateParams.user_id}, function (user) {
+              UserService.setProfileUser(user);
+              return user;
+            }).$promise;
+          }
+        },
+        parent: 'profile_menu'
       })
 
       //Main map page
@@ -125,7 +139,7 @@
         templateUrl: '/app/modules/spot/spot.html',
         controller: 'SpotController',
         controllerAs: 'Spot',
-        parent: 'profile_menu',
+        parent: 'profile',
         resolve: {
           spot: function (Spot, $stateParams) {
             return Spot.get({id: $stateParams.spot_id}).$promise;
@@ -135,11 +149,11 @@
         mapState: 'small'
       })
       .state('spots', {
-        url: '/spots/:user_id',
+        url: '/spots',
         templateUrl: '/app/modules/spot/spots/spots.html',
         controller: 'SpotsController',
         controllerAs: 'Spots',
-        parent: 'profile_menu',
+        parent: 'profile',
         locate: 'none',
         mapState: 'small',
         resolve: {
@@ -181,6 +195,9 @@
         resolve: {
           plan: function (Plan) {
             return new Plan();
+          },
+          categories: function (Plan) {
+            return Plan.activityCategories().$promise;
           }
         },
         mapState: 'small'
@@ -195,6 +212,9 @@
         resolve: {
           plan: function (Plan, $stateParams) {
             return Plan.get({id: $stateParams.plan_id}).$promise;
+          },
+          categories: function (Plan) {
+            return Plan.activityCategories().$promise;
           }
         },
         mapState: 'small'
@@ -208,31 +228,28 @@
         resolve: {
           plan: function (Plan, $stateParams) {
             return Plan.get({id: $stateParams.plan_id}).$promise;
+          },
+          comments: function (PlanComment, $stateParams) {
+            return PlanComment.get({plan_id: $stateParams.plan_id})//.$promise;
           }
         },
         locate: 'none',
         mapState: 'small'
       })
 
-      .state('profile', {
-        url: '/profile/:user_id',
+      .state('profile.main', {
+        url: '',
         templateUrl: '/app/modules/profile/profile.html',
         controller: 'ProfileController',
         controllerAs: 'Profile',
         resolve: {
-          user: function (User, $stateParams) {
-            return User.get({id: $stateParams.user_id}).$promise;
-          },
           wall: function (Wall, $stateParams) {
             return Wall.query({
               user_id: $stateParams.user_id
             }).$promise;
-          },
-          mySpots: function () {
-
           }
         },
-        parent: 'profile_menu',
+        parent: 'profile',
         locate: 'none',
         mapState: 'small'
       })
@@ -305,7 +322,7 @@
       })
 
       .state('favorites', {
-        url: '/favorites/:user_id',
+        url: '/favorites',
         templateUrl: '/app/modules/favorites/favorites.html',
         controller: 'FavoritesController',
         controllerAs: 'Favorite',
@@ -316,15 +333,16 @@
             }).$promise;
           }
         },
-        parent: 'profile_menu',
+        parent: 'profile',
         locate: 'none',
         require_auth: true,
         mapState: 'small'
       })
 
+
       //Photomap view state
-      .state('photomap', {
-        url: '/users/:user_id/albums',
+      .state('photos', {
+        url: '/albums',
         templateUrl: '/app/modules/photomap/photomap.html',
         controller: 'PhotomapController',
         controllerAs: 'Photomap',
@@ -334,11 +352,11 @@
           }
         },
         mapState: 'small',
-        parent: 'profile_menu',
+        parent: 'profile',
         locate: 'none'
       })
       //Create album state
-      .state('createAlbum', {
+      .state('photos.createAlbum', {
         url: '/albums/create',
         templateUrl: '/app/modules/photomap/create_album/album_create.html',
         controller: 'CreateAlbumController',
@@ -357,7 +375,7 @@
         require_auth: true
       })
       //Edit album state
-      .state('editAlbum', {
+      .state('photos.editAlbum', {
         url: '/albums/:album_id/edit',
         templateUrl: '/app/modules/photomap/create_album/album_create.html',
         controller: 'CreateAlbumController',
@@ -373,7 +391,7 @@
         locate: 'none'
       })
       //Albums page state
-      .state('album', {
+      .state('photos.album', {
         url: '/albums/:album_id',
         templateUrl: '/app/modules/photomap/album/album.html',
         controller: 'AlbumController',
@@ -384,7 +402,7 @@
           }
         },
         mapState: 'small',
-        parent: 'profile_menu',
+        parent: 'profile',
         locate: 'none'
       })
 

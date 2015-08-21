@@ -3,9 +3,9 @@
 
   angular
     .module('zoomtivity')
-    .filter('toTimezone', function () {
+    .filter('toTimezone', function (DATE_FORMAT) {
       return function (input, format) {
-        format = format || 'MMM DD, YYYY H:mm A';
+        format = format || DATE_FORMAT.full;
         var utcOffset = moment().utcOffset();
         return moment(input).add(utcOffset, 'm').format(format);
       }

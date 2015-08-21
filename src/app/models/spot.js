@@ -17,7 +17,6 @@
       },
       favorites: {
         url: API_URL + '/spots/favorites',
-        isArray: true,
         params: {
           page: 1,
           limit: 20

@@ -14,9 +14,10 @@
 
   }
   .sidebar-user-name {
-    white-space: pre-wrap;
-    overflow: hidden;
-    word-wrap: normal;
+    //white-space: pre-wrap;
+    //overflow: hidden;
+    //word-wrap: normal;
+    //word-break: break-word;
     color: $blue;
     text-align: center;
     text-overflow: ellipsis;

@@ -17,6 +17,13 @@
       events: {
         url: API_URL + '/calendar/plans',
         isArray: false
+      },
+      activityCategories: {
+        url: API_URL + '/activity-categories',
+        isArray: true
+      },
+      update: {
+        method: 'PUT'
       }
     });
   }

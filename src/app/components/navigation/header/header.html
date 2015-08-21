@@ -8,7 +8,7 @@
         <a ui-sref="index" ui-sref-active="active"><span>Map</span><span class="map-icon"></span></a>
       </li>
       <li ng-if="$root.currentUser && Header.$state.current.name != 'index'" class="map-profile">
-        <a ui-sref="profile({user_id: $root.currentUser.id})" ui-sref-active="active"><span>{{$root.currentUser.first_name}}</span>
+        <a ui-sref="profile.main({user_id: $root.currentUser.id})" ui-sref-active="active"><span>{{$root.currentUser.first_name}}</span>
           <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
         </a>
       </li>
@@ -41,7 +41,7 @@
         <sign-up></sign-up>
       </li>
       <li ng-if="$root.currentUser" class="map-profile separator-bg">
-        <a ui-sref="profile({user_id: $root.currentUser.id})" ui-sref-active="active">
+        <a ui-sref="profile.main({user_id: $root.currentUser.id})" ui-sref-active="active">
           <span>{{$root.currentUser.first_name}}</span>
           <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
         </a>

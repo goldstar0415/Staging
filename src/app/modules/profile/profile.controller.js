@@ -6,11 +6,10 @@
     .controller('ProfileController', ProfileController);
 
   /** @ngInject */
-  function ProfileController($rootScope, user, wall, Wall, Spot) {
+  function ProfileController(user, wall, Wall) {
     var vm = this;
     vm.wall = wall;
 
-    $rootScope.profileUser = user;
 
     vm.send = function () {
       Wall.save({
