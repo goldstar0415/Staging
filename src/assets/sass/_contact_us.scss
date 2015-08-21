@@ -3,18 +3,21 @@
   margin-top: 3rem;
   .contact-title {
     margin-bottom: 3rem;
+    font: 500 32px 'Ubuntu medium';
   }
-  .contact-email{
+  .contact-email {
     a {
       color: $blue;
       &:hover, &:active, &:focus {
         color: $navy_blue;
+        @include transition_color;
       }
     }
   }
   .contact-text {
     margin-bottom: 20px;
     padding-left: 25px;
+    font: 400 16px Arial,sans-serif;
   }
   .contact-location {
     background: url(/assets/img/icons/contact.png) -9px -6px no-repeat;
@@ -37,10 +40,13 @@
   .keep-touch-title {
     padding: 0 0 20px 15px;
     border-bottom: 1px solid $light_grey;
+    font: 500 24px 'Ubuntu medium';
+
   }
   .form-group {
     .control-label {
       text-align: left;
+      font: 400 16px Arial,sans-serif;
     }
     .send-btn {
       background: $green;
