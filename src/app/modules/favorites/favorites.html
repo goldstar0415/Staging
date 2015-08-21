@@ -11,15 +11,13 @@
         </span>
 
         <span class="date">
-                {{item.start_date + ' - ' + item.end_date}}
-                <br>
-                {{item.start_time + ' - ' + item.end_time}}
+            <date-range item="item"></date-range>
         </span>
     </span>
 
     <div class="media media-visible">
       <a class="pull-left">
-        <img class="media-object fav-avatar-icon" src="/assets/img/icons/airport.png" alt="...">
+        <img class="media-object fav-avatar-icon" ng-src="{{item.cover_url.thumb}}">
       </a>
 
       <div class="media-body">
@@ -27,7 +25,7 @@
           <a>{{item.title}}</a>
         </h2>
 
-        <p class="place"></p>
+        <p class="place">{{item.description}}</p>
       </div>
     </div>
 

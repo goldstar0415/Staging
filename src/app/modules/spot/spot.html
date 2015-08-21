@@ -15,9 +15,7 @@
         </span>
 
         <span ng-if="Spot.spot.type == 'Event'" class="date">
-          {{Spot.spot.start_date}} - {{Spot.spot.end_date}}
-          <br>
-          {{Spot.spot.start_time}} - {{Spot.spot.end_time}}
+            <date-range item="Spot.spot"></date-range>
         </span>
 
       <h2 class="">

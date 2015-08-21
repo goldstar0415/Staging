@@ -339,6 +339,22 @@
         mapState: 'small'
       })
 
+      .state('areas', {
+        url: '/areas',
+        templateUrl: '/app/modules/areas/areas.html',
+        controller: 'AreasController',
+        controllerAs: 'Area',
+        resolve: {
+          areas: function (Area) {
+            return Area.query().$promise;
+          }
+        },
+        parent: 'profile_menu',
+        locate: 'none',
+        require_auth: true,
+        mapState: 'small'
+      })
+
 
       //Photomap view state
       .state('photos', {
