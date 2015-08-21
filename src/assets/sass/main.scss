@@ -404,6 +404,16 @@ h3 {
   }
   /*end about us page*/
 
+  /*zoomers*/
+  .events {
+    .events-width {
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+  }
+  /*end zoomers*/
+
   /*blog page*/
   .position-right {
     padding: 0;
@@ -500,6 +510,9 @@ h3 {
   .events {
     .events-width {
       width: 50%;
+      &:first-child {
+        padding-left: 0;
+      }
     }
   }
   /*end zoomers*/
@@ -521,6 +534,7 @@ h3 {
   .events {
     .events-width {
       width: 100%;
+      padding-left: 0;
     }
   }
   .zoomers {
