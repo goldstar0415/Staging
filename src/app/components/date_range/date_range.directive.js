@@ -22,7 +22,6 @@
     function DateRangeCtrl(DATE_FORMAT) {
       var vm = this;
 
-      console.log(vm.item);
       if (vm.item.start_date && vm.item.end_date) {
         var start_date = moment(vm.item.start_date),
           end_date  = moment(vm.item.end_date);

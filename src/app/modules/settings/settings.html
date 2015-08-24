@@ -1,21 +1,19 @@
 <div class="col-xs-12">
   <div class="container wrap">
-    <div class="col-xs-12 col-md-3 zoomers settings">
-      <div class="zoomers-sidebar">
-        <ul class="settings-list">
-          <li>
-            <a href="#" class="my-spots active">My spots</a>
-          </li>
-          <li><a href="#" class="favorites">Favorites</a></li>
-          <li><a href="#" class="searches">Saved searches</a></li>
-          <li><a href="#" class="friendsmap">Friends map</a></li>
-          <li><a href="#" class="photomap">Photo map</a></li>
-          <li><a href="#" class="planner">Planner</a></li>
-          <li><a href="#" class="reviews">Reviews</a></li>
-          <li><a href="#" class="messages">Messages</a></li>
-        </ul>
-      </div>
-    </div>
+    <!--<div class="col-xs-12 col-md-3 zoomers settings">-->
+      <!--<div class="zoomers-sidebar">-->
+        <!--<ul class="settings-list">-->
+          <!--<li><a  class="my-spots">My spots</a></li>-->
+          <!--<li><a  class="favorites">Favorites</a></li>-->
+          <!--<li><a  class="searches">Saved searches</a></li>-->
+          <!--<li><a  class="friendsmap">Friends map</a></li>-->
+          <!--<li><a  class="photomap">Photo map</a></li>-->
+          <!--<li><a  class="planner">Planner</a></li>-->
+          <!--<li><a  class="reviews">Reviews</a></li>-->
+          <!--<li><a  class="messages">Messages</a></li>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
     <div class="col-xs-12 col-md-9 central">
 
       <h2 class="title-name">Profile settings</h2>
@@ -25,7 +23,7 @@
 
         <div class="col-xs-4 avatar-block">
           <figure class="avatar">
-            <img ng-src="{{Settings.data.avatar_url.thumb}}" />
+            <img ng-src="{{Settings.data.avatar_url.thumb}}" class="img-responsive"/>
           </figure>
           <!--<a ng-click="Setting.setAvatar()" class="edit-photo">Edit avatar</a>-->
           <uploader button-text="Edit avatar"></uploader>
@@ -49,7 +47,7 @@
                 <label>Birthday</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <input ng-datepicker name="date" ng-model="Settings.data.birth_date" end-date="Settings.endDate" type="text">
+                <input ng-datepicker name="date" ng-model="Settings.data.birth_date" start-date="Settings.minDate"  type="text">
               </div>
             </div>
 
@@ -215,7 +213,7 @@
                    placeholder="Current password..."
                    minlength="6"
                    required class="input-width"/>
-            <a href="#" class="eye"></a>
+            <a  class="eye"></a>
 
             <div ng-messages="passForm.password.$error" ng-if="passForm.$submitted"
                  class="error-message-inline">
@@ -231,7 +229,7 @@
                    placeholder="New password..."
                    minlength="6"
                    required class="input-width"/>
-            <a href="#" class="eye"></a>
+            <a  class="eye"></a>
 
             <div ng-messages="passForm.newpassword.$error" ng-if="passForm.$submitted"
                  class="error-message-inline">
@@ -246,7 +244,7 @@
                    ng-model="Settings.data.newPasswordConfirm"
                    placeholder="Confirm new password..."
                    ng-match="Settings.data.newPassword" class="input-width">
-            <a href="#" class="eye"></a>
+            <a  class="eye"></a>
 
             <div ng-messages="passForm.newpasswordconf.$error" ng-if="passForm.$submitted"
                  class="error-message-inline">

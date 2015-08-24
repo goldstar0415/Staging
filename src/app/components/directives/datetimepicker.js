@@ -18,7 +18,7 @@
           if (s.model) {
             s.model = moment(s.model).format(DATE_FORMAT.date);
           }
-
+          console.log(s.startDate);
           $(e)
             .datetimepicker({
               value: s.model,

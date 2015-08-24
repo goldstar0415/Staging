@@ -8,7 +8,7 @@
 <div ng-repeat="item in Friendsmap.friends" class="col-xs-12 friends-block">
   <div class="avatar-wrap">
     <a class="review-img" href="#">
-      <img src="{{item.avatar_url.medium}}" alt="Friends avatar" class="fav-avatar-icon feeds-img">
+      <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar" class="fav-avatar-icon feeds-img">
     </a>
   </div>
   <div class="text-block">

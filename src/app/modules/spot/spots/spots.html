@@ -1,4 +1,6 @@
-<h2 class="title-name">My spots</h2>
+<h2 class="title-name">
+  {{currentUser.id == profileUser.id ? 'My spots' : 'Spots of ' + profileUser.first_name + ' ' + profileUser.last_name}}
+</h2>
 <a ui-sref="spot_create" class="add-friend" title="Create new spot"></a>
 
 <section class="my-spots-section" ng-repeat="item in Spots.spots.data">
@@ -38,7 +40,8 @@
     </figure>
 
     <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">
-      <li ng-repeat="tag in item.tags"><a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{tag.name}}</a></li>
+      <li ng-repeat="tag in item.tags"><a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{tag.name}}</a>
+      </li>
     </ul>
     <!--  tags -->
 
@@ -73,15 +76,15 @@
       <ul class="share-buttons clearfix">
         <li>
           <a
-            href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
-            target="_blank" class="facebook">facebook</a></li>
+              href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
+              target="_blank" class="facebook">facebook</a></li>
         <li>
           <a href="https://plus.google.com/share?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
              target="_blank" class="google">google</a></li>
         <li>
           <a
-            href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
-            target="_blank" class="twitter">twitter</a></li>
+              href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
+              target="_blank" class="twitter">twitter</a></li>
       </ul>
     </div>
     <!-- share-wrap -->

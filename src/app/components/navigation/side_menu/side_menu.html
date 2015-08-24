@@ -18,15 +18,15 @@
   </ul>
 
   <ul ng-if="$root.currentUser && SideMenu.side == 'left' && SideMenu.$state.current.name != 'index'">
-    <li><a ui-sref-active="active" class="spots-link">My spots</a></li>
+    <li><a ui-sref="spots({user_id: $root.currentUser.id})" ui-sref-active="active" class="spots-link">My spots</a></li>
     <li><a ui-sref-active="active" class="blog-link">My blog</a></li>
-    <li><a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active"
+    <li><a ui-sref="favorites({user_id: $root.currentUser.id})" ui-sref-active="active"
            class="favorites-link">Favorites</a></li>
-    <li><a class="searches-link">Saved searches</a></li>
+    <li><a ui-sref="areas" ui-sref-active="active" class="searches-link">Saved searches</a></li>
     <li><a ui-sref="friendsmap" ui-sref-active="active" class="friends-link">Friends map</a></li>
-    <li><a ui-sref="photos({user_id: $root.profileUser.id})" ui-sref-active="active" class="photo-link">Photo map</a>
+    <li><a ui-sref="photos({user_id: $root.currentUser.id})" ui-sref-active="active" class="photo-link">Photo map</a>
     </li>
-    <li><a ui-sref="planner" ui-sref-active="active" class="planner-link">Planner</a></li>
+    <li><a ui-sref="planner.list" ng-class="Profile.isActive('planner')" class="planner-link">Planner</a></li>
     <li><a ui-sref="settings" ui-sref-active="active" class="settings-link">Settings</a></li>
   </ul>
 

@@ -11,6 +11,7 @@
     vm.endDate = moment().toDate();
     vm.data = currentUser;
     vm.images = UploaderService.images;
+    vm.minDate = '01.01.1940';
 
     vm.privacyOptions = [
       {value: 0, label: 'All users have access'},
@@ -30,7 +31,7 @@
         params: {
           first_name: vm.data.first_name,
           last_name: vm.data.last_name,
-          birth_date: moment(vm.data.birth_date).format('YYYY-MM-DD'),
+          birth_date: vm.data.birth_date ? moment(vm.data.birth_date).format('YYYY-MM-DD') : null,
           sex: vm.data.sex || '',
           time_zone: vm.data.time_zone,
           description: vm.data.description,
@@ -127,7 +128,7 @@
     //change avatar
     $scope.$watch('Settings.images.files', function (val, test) {
       if (vm.images.files.length > 0) {
-        CropService.crop(vm.images.files[0], 512, 512, function (result) {
+        CropService.crop(vm.images. files[0], 512, 512, function (result) {
           if (result) {
             vm.images.files = [];
             User.setAvatar({}, {avatar: result},

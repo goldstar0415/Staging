@@ -51,7 +51,7 @@
                class="biography">
             {{$root.profileUser.description | limitTo: Profile.textLimit}}
           </div>
-          <div ng-if="$root.profileUser.description.length > 50">
+          <div ng-if="Profile.textLimit == 50">
             <a class="more" ng-click="Profile.textLimit = 1000">
               see more
             </a>
@@ -72,18 +72,18 @@
         </div>
 
         <div class="info-links hidden-lg hidden-md visible-sm visible-xs  ng-show col-xs-12">
-          <a class="events"> {{$root.profileUser.count_spots}} </a>
+          <a ui-sref="spots({user_id: $root.profileUser.id})" class="events"> {{$root.profileUser.count_spots}} </a>
           <a class="followers">{{$root.profileUser.count_followers}}</a>
           <a class="followings">{{ $root.profileUser.count_followings }}</a>
-          <a class="albums">0</a>
-          <a class="fav">0</a>
+          <a ui-sref="photos({user_id: $root.profileUser.id})" class="albums">{{$root.profileUser.count_photos}}</a>
+          <a ui-sref="favorites({user_id: $root.profileUser.id})" class="fav">{{$root.profileUser.count_favorites}}</a>
         </div>
 
       </section>
     </div>
 
     <div class="col-xs-12 col-md-7 central " ng-class="{'no-background': Profile.$state.includes('planner')}">
-      <div ui-view ></div>
+      <div ui-view></div>
     </div>
 
     <div class="col-md-3 hidden-sm hidden-xs activity-profile">
