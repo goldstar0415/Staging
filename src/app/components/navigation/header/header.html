@@ -9,7 +9,7 @@
       </li>
       <li ng-if="$root.currentUser && Header.$state.current.name != 'index'" class="map-profile">
         <a ui-sref="profile.main({user_id: $root.currentUser.id})" ui-sref-active="active" class="user-name"><span>{{$root.currentUser.first_name}}</span>
-          <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
+          <span class="avatar-thumb"><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
         </a>
       </li>
     </ul>
