@@ -152,6 +152,10 @@
   }
 }
 
+.settings .avatar img{
+  width: 100%;
+}
+
 @media (max-width: 650px) {
   .settings-block {
     .avatar-block, .main-information {
