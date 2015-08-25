@@ -335,7 +335,6 @@
         },
         parent: 'profile',
         locate: 'none',
-        require_auth: true,
         mapState: 'small'
       })
 

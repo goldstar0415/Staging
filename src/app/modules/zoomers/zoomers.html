@@ -52,13 +52,13 @@
               <div class="info">
                 <p class="age">
                   <span ng-if="user.sex">{{user.sex == 'm' ? 'male' : 'female'}}</span>
-                  <span ng-if="user.birth_date">, {{user.birth_date | age}} years</span>
+                  <span ng-if="user.birth_date"><span ng-if="user.sex">,</span> {{user.birth_date | age}} years</span>
                 </p>
 
                 <p class="description"> {{user.description}} </p>
 
                 <p class="counters">
-                  <a class="e-count" title="Events">
+                  <a class="e-count" title="Spots">
                     {{ user.count_spots }}
                   </a>
                   <a class="f-count" title="Followings">
@@ -94,7 +94,7 @@
         <!-- end section post -->
 
         <div class="col-xs-12" ng-if="Zoomers.users.data.length == 0">
-          <b>No entries found!</b>
+          <h4 class="text-center description">No entries found</h4>
         </div>
       </div>
       <!-- end followers -->

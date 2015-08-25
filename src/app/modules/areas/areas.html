@@ -1,9 +1,23 @@
 <h2 class="title-name">Saved Searches</h2>
 
-<section ng-repeat="item in ::Area.areas">
+<div class="saved-search col-xs-12" ng-repeat="item in ::Area.areas">
+  <div class="col-xs-3 search-container">
+    <img class="search-img" src="assets/img/img14.jpg">
+  </div>
+  <div class="col-xs-9 no-pad-right">
+    <h2 class="feeds-title">
+      <a >{{item.title}}</a>
+    </h2>
 
-</section>
+    <p class="description">{{item.description}}</p>
 
-<div class="col-xs-12" >
-  <h4 >No saved searches yet.</h4>
+    <p class="time">{{item.created_at | toTimezone}}
+      <a class="sharing"></a>
+      <a class="delete">Delete</a>
+    </p>
+  </div>
+</div>
+
+<div class="col-xs-12">
+  <h4 class="text-center description">No saved searches yet.</h4>
 </div>

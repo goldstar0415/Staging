@@ -1,5 +1,7 @@
 <div class="content-wall">
-  <h2 class="title-name">My profile</h2>
+  <h2 class="title-name">
+    {{currentUser.id == profileUser.id ? 'My profile' : profileUser.first_name + ' ' + profileUser.last_name + "'s profile"}}
+  </h2>
 
 
   <div ng-if="profileUser.id == currentUser.id">
@@ -9,7 +11,6 @@
   <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()"></ng-input>
 
 
-  <!--                        -->
   <div class="col-xs-12 post" ng-repeat="post in Profile.wall.data">
     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 padding-0">
       <a ui-sref="profile.main({user_id: post.sender.id})">
@@ -26,12 +27,16 @@
 
       <p class="time">{{post.created_at | fromNow}}</p>
 
-      <div class="plus-minus">
+      <div class="plus-minus" ng-if="currentUser">
         <a class="plus" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)"></a>
         {{post.rating}}
         <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
       </div>
     </div>
+  </div>
+
+  <div class="col-xs-12">
+    <h4 class="text-center description" ng-if="Profile.wall.data.length == 0">Wall is empty</h4>
   </div>
 
 
