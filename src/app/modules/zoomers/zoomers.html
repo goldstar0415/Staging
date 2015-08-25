@@ -51,7 +51,7 @@
 
               <div class="info">
                 <p class="age">
-                  <span ng-if="user.sex != null">{{user.sex ? 'male' : 'female'}}</span>
+                  <span ng-if="user.sex">{{user.sex == 'm' ? 'male' : 'female'}}</span>
                   <span ng-if="user.birth_date">, {{user.birth_date | age}} years</span>
                 </p>
 
