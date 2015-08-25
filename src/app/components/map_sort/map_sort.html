@@ -1,19 +1,19 @@
-<div ng-if="MapSort.vertical && !MapSort.close" class="col-xs-4 no-pad">
+<div ng-if="MapSort.vertical" class="sidebar-menu-wrap" style="width: 60px; padding: 0; position: absolute; right: 0">
   <div class="sidebar-menu-vertical">
     <ul>
-      <li><a href="#" class="full-small"></a></li>
-      <li><a href="#" class="events">Spots</a></li>
-      <li><a href="#" class="recreation">Recreation</a></li>
-      <li><a href="#" class="pit-stops">Pit Stops</a></li>
-      <li><a href="#" class="weather-link">Weather</a></li>
+      <li><a href="#" ng-click="MapSort.vertical = !MapSort.vertical" class="full-small"></a></li>
+      <li><a href="#" ng-click="MapSort.toggleLayer('events')" class="events">Events</a></li>
+      <li><a href="#" ng-click="MapSort.toggleLayer('recreations')" class="recreation">Recreation</a></li>
+      <li><a href="#" ng-click="MapSort.toggleLayer('pitstops')" class="pit-stops">Pit Stops</a></li>
+      <li><a href="#" ng-click="" class="weather-link">Weather</a></li>
     </ul>
   </div>
 </div>
 
-<div ng-if="!MapSort.vertical && !MapSort.close" class="col-xs-3 no-pad sort-menu">
+<div ng-if="!MapSort.vertical" class="col-xs-3 no-pad sort-menu">
   <div class="sidebar-menu-horizontal">
     <ul>
-      <li><a ng-click="MapSort.toggleLayer('events')" class="events">Spots</a></li>
+      <li><a ng-click="MapSort.toggleLayer('events')" class="events">Events</a></li>
       <li><a ng-click="MapSort.toggleLayer('recreations')" href="#" class="recreation">Recreation</a></li>
       <li><a ng-click="MapSort.toggleLayer('pitstops')" href="#" class="pit-stops">Pit Stops</a></li>
       <li><a ng-click="MapSort.toggleLayer('other')" href="#" class="weather-link">Weather</a></li>
@@ -219,7 +219,7 @@
     </div>
   </div>
   <div class="col-xs-12 no-pad">
-    <a class="close-popup" ng-click="MapSort.close = true">Close</a>
+    <a class="close-popup" ng-click="MapSort.toggleMenu() ">Close</a>
   </div>
 </div>
 

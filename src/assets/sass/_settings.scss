@@ -152,6 +152,13 @@
   }
 }
 
+.avatar-block {
+  .avatar {
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
 @media (max-width: 650px) {
   .settings-block {
     .avatar-block, .main-information {
@@ -203,9 +210,11 @@
     }
   }
 }
+
 .event-main-info {
   .compass {
     right: 2.7rem;
   }
 }
+
 //---</settings styles--->
