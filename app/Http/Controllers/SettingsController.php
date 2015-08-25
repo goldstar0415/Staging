@@ -16,7 +16,7 @@ class SettingsController extends Controller
     public function __construct(Guard $auth)
     {
         $this->middleware('auth');
-        $this->middleware('base64upload:avatar', ['only' => 'setAvatar']);
+        $this->middleware('base64upload:avatar', ['only' => 'postSetavatar']);
         $this->auth = $auth;
     }
 
