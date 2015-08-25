@@ -2,8 +2,7 @@
 
 namespace App;
 
-use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
-use Phaza\LaravelPostgis\Geometries\MultiPoint;
+use App\Services\SocialSharing;
 
 /**
  * Class Area
@@ -12,7 +11,8 @@ use Phaza\LaravelPostgis\Geometries\MultiPoint;
  * @property integer $id
  * @property integer $user_id
  * @property string $data
- * @property MultiPoint $b_box
+ * @property string $b_box
+ * @property string $waypoints
  *
  * Relation properties
  * @property User $user
@@ -20,12 +20,13 @@ use Phaza\LaravelPostgis\Geometries\MultiPoint;
  */
 class Area extends BaseModel
 {
-    use PostgisTrait;
-
     protected $fillable = ['data', 'b_box'];
 
-    protected $postgisFields = [
-        'b_box' => MultiPoint::class
+    protected $appends = ['share_links'];
+
+    protected $casts = [
+        'data' => 'array',
+        'waypoints' => 'array'
     ];
 
     public function user()
@@ -36,5 +37,16 @@ class Area extends BaseModel
     public function walls()
     {
         return $this->belongsToMany(Wall::class);
+    }
+
+    public function getShareLinksAttribute()
+    {
+        $url = url('areas', $this->id);
+
+        return [
+            'facebook' => SocialSharing::facebook($url),
+            'twitter' => SocialSharing::twitter($url),
+            'google' => SocialSharing::google($url)
+        ];
     }
 }

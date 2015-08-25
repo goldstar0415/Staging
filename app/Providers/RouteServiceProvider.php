@@ -52,7 +52,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('friends', Friend::class);
         $router->model('spots', Spot::class);
         $router->model('message', ChatMessage::class);
-        $router->model('selection', Area::class);
+        $router->model('areas', Area::class);
         $router->model('reviews', SpotReview::class);
         $router->model('comments', function ($value) {
             if (Request::is('spots/*/photos/*')) {

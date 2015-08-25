@@ -85,7 +85,7 @@ Route::get('message/{user_id}/read', 'ChatController@read');
  * Map Controls
  */
 Route::post('map/search', 'MapController@getSearch');
-Route::resource('selection', 'SelectionController', ['except' => ['create', 'edit']]);
+Route::resource('areas', 'SelectionController', ['except' => ['create', 'edit']]);
 Route::get('weather', 'MapController@getWeather');
 /**
  * Wall Controls
