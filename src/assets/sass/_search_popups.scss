@@ -153,12 +153,25 @@
   }
 }
 
+.sidebar-menu-wrap {
+  width: 60px;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+}
+
 .sidebar-menu-vertical {
+  height: 100%;
   ul {
     padding: 0;
     margin: 0;
     width: 100%;
-    //transform: rotate(90deg);
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    display: table;
     li {
       font: 500 14px/24px 'Ubuntu medium';
       color: #fff;
@@ -169,6 +182,9 @@
       float: left;
       &:first-child {
         width: 60px;
+      }
+      &:last-child {
+        border-bottom: 1px solid #fff;
       }
       &:hover {
         background-color: #03b5d4;
@@ -183,6 +199,8 @@
         text-align: center;
         -webkit-writing-mode: vertical-rl;
         writing-mode: tb-rl;
+        filter: flipV flipH;
+        white-space: nowrap;
       }
       .full-small {
         background: url(/assets/img/icons/vertical_menu.png) 20px 16px no-repeat;
@@ -660,10 +678,8 @@
       border-radius: 8px;
       ul {
         li {
-          &:hover {
-            .path-map, .radius-map, .lasso-map {
-              display: none;
-            }
+          .path-map, .radius-map, .lasso-map {
+            display: none !important;
           }
         }
       }
