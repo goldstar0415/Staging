@@ -277,15 +277,25 @@
 }
 
 .choose-friend {
+  clear: both;
   height: 5.5rem;
+  margin-bottom: 10px;
   width: 100%;
   padding: 3px 3%;
   min-height: 2.4rem;
+  .time{
+    margin: 10px 10px 0 50px;
+
+  }
   a {
     display: block;
   }
+  h4{
+    margin: 0px;
+  }
   .date {
     float: left;
+    margin: 5px 10px;
   }
   &:hover {
     background-color: $light-grey;
@@ -298,7 +308,7 @@
   }
   .name-friend {
     font-size: 14px;
-    margin-top: 12px;
+
     margin-left: 55px;
     a {
       color: #0c2638;
@@ -309,10 +319,16 @@
         @include transition_color;
       }
     }
+    p{
+      float: none;
+      display: inline;
+
+    }
   }
 }
 
 .choose-friend-block {
+
   overflow: auto;
   max-height: 210px;
   display: block;

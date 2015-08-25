@@ -36,11 +36,11 @@
             <img class="friend-avatar" ng-src="{{spot.cover_url.thumb}}">
             <h4 class="name-friend">
               <a>{{spot.title}}</a>
-
+            </h4>
               <p class="date">
                 <date-range item="spot"></date-range>
               </p>
-            </h4>
+
           </div>
         </div>
       </div>
@@ -50,17 +50,17 @@
         <div class="col-sm-12 no-pad choose-friend-block">
           <div class="">
             <div ng-repeat="spot in modal.favorites | filter: {title: search}"
-                 class="choose-friend"
+                 class="choose-friend col-sm-12"
                  ng-class="{choose: spot.selected}"
                  ng-click="modal.addSpot(spot)">
               <img class="friend-avatar" ng-src="{{spot.cover_url.thumb}}">
               <h4 class="name-friend">
                 <a>{{spot.title}}</a>
-
+              </h4>
                 <p class="date">
                   <date-range item="spot"></date-range>
                 </p>
-              </h4>
+
             </div>
           </div>
         </div>
