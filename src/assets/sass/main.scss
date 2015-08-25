@@ -333,7 +333,7 @@ h3 {
   margin: 0 15px;
   outline: none !important;
 
-  &:hover, &:focus, &:active {
+  &:hover, &:focus, &:active, &:visited {
     background-color: $light_green !important;
     box-shadow: none;
     border: none;
@@ -354,7 +354,7 @@ h3 {
   margin: 0 15px;
   outline: none !important;
 
-  &:hover, &:focus, &:active {
+  &:hover, &:focus, &:active, &:visited {
     background-color: $blue !important;
     box-shadow: none;
     border: none;
@@ -375,7 +375,7 @@ h3 {
   margin: 0 15px;
   outline: none !important;
 
-  &:hover, &:focus, &:active {
+  &:hover, &:focus, &:active, &:visited {
     background-color: $light_red !important;
     border: none;
     outline: none !important;
