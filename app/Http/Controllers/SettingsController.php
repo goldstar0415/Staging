@@ -39,7 +39,7 @@ class SettingsController extends Controller
                 $user->update($params);
                 break;
             case 'security':
-                $user->update($params['email']);
+                $user->update(['email' => $params['email']]);
                 break;
             case 'password':
                 if ($hash->check($params['current_password'], $user->password)) {
