@@ -40,7 +40,7 @@
           </a>
         </h2>
         <div class="age">
-          <span ng-if="$root.profileUser.sex != null">{{$root.profileUser.sex ? 'male' : 'female'}}</span>
+          <span ng-if="$root.profileUser.sex != null">{{$root.profileUser.sex == 'm' ? 'male' : 'female'}}</span>
           <span ng-if="$root.profileUser.birth_date">, {{$root.profileUser.birth_date | age}} years</span>
         </div>
         <div class="location" ng-if="$root.profileUser.address">{{$root.profileUser.address}}</div>
@@ -147,7 +147,7 @@
       <aside class="module-sidebar clearfix" ng-if="$root.profileUser.count_spots > 0">
         <h2 class="sidebar-title">
           <a>
-            Events
+            Spots
             <span class="counter">{{$root.profileUser.count_spots}}</span>
           </a>
         </h2>
