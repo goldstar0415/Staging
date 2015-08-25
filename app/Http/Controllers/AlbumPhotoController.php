@@ -26,6 +26,7 @@ class AlbumPhotoController extends Controller
     /**
      * @param Guard $auth
      * @param AlbumPhoto $photos
+     * @return \Illuminate\Http\JsonResponse
      */
     public function setAvatar(Guard $auth, AlbumPhoto $photos)
     {
@@ -57,7 +58,6 @@ class AlbumPhotoController extends Controller
      *
      * @param AlbumPhotoRequest $request
      * @param AlbumPhoto $photos
-     * @internal param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(AlbumPhotoRequest $request, $photos)
