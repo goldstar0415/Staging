@@ -158,8 +158,8 @@
   padding: 0;
   position: absolute;
   right: 0;
-  top: 0;
-  height: 100%;
+  top: 70px;
+  height: calc(100% - 70px);
 }
 
 .sidebar-menu-vertical {
