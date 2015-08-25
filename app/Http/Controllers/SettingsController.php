@@ -66,7 +66,7 @@ class SettingsController extends Controller
         $user = $request->user();
         $user->avatar = $request->file('avatar');
         $user->save();
-
+        
         return $user;
     }
 }
