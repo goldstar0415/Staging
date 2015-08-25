@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, MapService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService) {
+  function runBlock($log, MapService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, $modalStack) {
 
     MapService.Init('map');
     $rootScope.timezonesList = moment.tz.names();
@@ -60,6 +60,9 @@
 
       //scroll top
       window.scrollTo(0, 0);
+
+      //close all modals
+      $modalStack.dismissAll();
 
       $rootScope.pageLoaded = true;
     }

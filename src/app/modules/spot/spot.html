@@ -38,7 +38,7 @@
       </ul>
       <!--  tags -->
 
-      <ul class="tools">
+      <ul class="tools" ng-if="currentUser">
         <li>
           <a ng-click="Spot.removeSpot(Spot.spot, $index);" class="delete">Delete</a>
         </li>

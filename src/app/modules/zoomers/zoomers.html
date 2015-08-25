@@ -58,7 +58,7 @@
                 <p class="description"> {{user.description}} </p>
 
                 <p class="counters">
-                  <a class="e-count" title="Spots">
+                  <a ui-sref="spots({user_id: user.id})" class="e-count" title="Spots">
                     {{ user.count_spots }}
                   </a>
                   <a class="f-count" title="Followings">

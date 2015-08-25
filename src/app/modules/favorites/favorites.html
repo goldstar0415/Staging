@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <ul class="tools">
+    <ul class="tools" ng-if="currentUser">
       <li ng-if="!item.is_saved">
         <a class="save-event" ng-click="Favorite.saveToCalendar(item)">Save</a>
       </li>
@@ -71,5 +71,5 @@
 </section>
 
 <div class="col-xs-12" ng-if="Favorite.spots.data.length == 0">
-  <h4 >No favorites yet.</h4>
+  <h4 class="text-center description">No favorites yet.</h4>
 </div>
