@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <ul class="tools">
+    <ul class="tools" ng-if="currentUser">
       <li ng-if="!item.is_saved">
         <a class="save-event" ng-click="Favorite.saveToCalendar(item)">Save</a>
       </li>
