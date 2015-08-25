@@ -7,20 +7,20 @@
 
       <div class="media-body">
         <div class="description-link">
-          {{area.data}}
+          {{area.title}}
         </div>
       </div>
     </div>
 
     <div ng-repeat="spot in Attachments.items.spots" class="media media-visible padding-bottom add-event">
-      <a class="pull-left wrap-img-event">
+      <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="pull-left wrap-img-event">
         <img class="media-object attachment-link" ng-src="{{spot.cover_url.medium}}">
       </a>
 
       <div class="media-body">
 
         <h3 class="media-heading ">
-          <a class="event-img clearfix">{{spot.title}}</a>
+          <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-img clearfix">{{spot.title}}</a>
         </h3>
 
         <div class="description-link">{{spot.description}}</div>

@@ -44,7 +44,7 @@
         template: '<ui-view />',
         abstract: true,
         resolve: {
-          user: function (User, $stateParams, UserService) {
+          user: function (User, $stateParams,  UserService) {
             return User.get({id: $stateParams.user_id}, function (user) {
               UserService.setProfileUser(user);
               return user;
