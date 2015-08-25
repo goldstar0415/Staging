@@ -165,8 +165,7 @@
       background-color: #379948;
       display: inline-block;
       width: 100%;
-      border-right: 1px solid #fff;
-      border-left: 1px solid #fff;
+      border-top: 1px solid #fff;
       float: left;
       &:first-child {
         width: 60px;
@@ -180,24 +179,26 @@
         color: #fff;
         display: block;
         margin: 0 auto;
-        padding: 15px 8px 15px 30px;
+        padding: 40px 10px 15px 15px;
         text-align: center;
+        -webkit-writing-mode: vertical-rl;
+        writing-mode: tb-rl;
       }
       .full-small {
         background: url(/assets/img/icons/vertical_menu.png) 20px 16px no-repeat;
-        padding: 27px 0px;
+        padding: 27px 30px;
       }
       .events {
-        background: url(/assets/img/icons/events-icon.png) 15px 17px no-repeat;
+        background: url(/assets/img/icons/events-icon-vertical.png) 20px 17px no-repeat;
       }
       .recreation {
-        background: url(/assets/img/icons/recreation-icon.png) 15px 17px no-repeat;
+        background: url(/assets/img/icons/recreation-icon-vertical.png) 20px 17px no-repeat;
       }
       .pit-stops {
-        background: url(/assets/img/icons/pit-stops-icon.png) 15px 17px no-repeat;
+        background: url(/assets/img/icons/pit-stops-icon-vertical.png) 20px 17px no-repeat;
       }
       .weather-link {
-        background: url(/assets/img/icons/weather-icon.png) 15px 17px no-repeat;
+        background: url(/assets/img/icons/weather-icon-vertical.png) 20px 17px no-repeat;
 
       }
     }
