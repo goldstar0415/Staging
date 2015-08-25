@@ -39,10 +39,16 @@ class SpotController extends Controller
      */
     public function index(SpotIndexRequest $request)
     {
-        return Spot::where('user_id', $request->get(
+        $spots = Spot::where('user_id', $request->get(
             'user_id',
             $request->user() ? $request->user()->id : null
-        ))->paginate((int)$request->get('limit', 10));
+        ));
+
+        if ($request->has('page') or $request->has('limit')) {
+            return $spots->paginate((int)$request->get('limit', 10));
+        }
+
+        return $spots->get();
     }
 
     /**
