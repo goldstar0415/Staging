@@ -62,7 +62,7 @@
     });
 
 
-    vm.vertical = false;
+    vm.vertical = true;
     vm.sortLayer = 'event';
     vm.toggleMenu = function() {
       vm.vertical = !vm.vertical;
@@ -90,6 +90,10 @@
               vm.sortLayer = 'weather';
               break;
       }
+    };
+    vm.toggleWeather = function() {
+        vm.toggleLayer('other');
+        vm.vertical = false;
     };
 
     $http.get(API_URL+ '/spots/categories')

@@ -88,6 +88,7 @@
   <!-- include header-->
   <zm-header options="options"></zm-header>
   <hints-popup></hints-popup>
+  <map-sort ng-if="mapState == 'full-size'"></map-sort>
   <ng-include src="'/app/components/map_partials/unregistered_banner.html'"
               ng-if="mapState == 'full-size'"></ng-include>
   <!-- map container-->
@@ -100,7 +101,6 @@
 <ng-include src="'/app/components/ng_message_templates/error_templates.html'"></ng-include>
 <ng-include src="'/app/components/photoviewer/photoviewer.html'"></ng-include>
 
-<map-sort ng-if="mapState == 'full-size'"></map-sort>
 <new-message></new-message>
 
 
