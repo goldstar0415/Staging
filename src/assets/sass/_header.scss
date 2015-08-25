@@ -4,15 +4,18 @@ header {
   padding: 0 0 0 20px;
   z-index: 50;
 
+
   .logo {
     height: 55px;
     width: 210px;
     float: left;
     @include vertical_align;
+    a {outline: none;}
   }
   nav {
     float: right;
     height: 70px;
+
     ul {
       float: left;
       margin: 0;
@@ -25,6 +28,7 @@ header {
         a {
           display: block;
           padding: 0 15px;
+          outline: none !important;
           span {
             display: inline-block;
             &:nth-child(2) {
