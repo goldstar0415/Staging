@@ -20,7 +20,7 @@
     a {
       color: $blue;
       @include transition_color;
-      position: relative;
+
       font: 500 20px/20px 'Ubuntu medium';
       overflow: hidden;
       text-overflow: ellipsis;
@@ -31,6 +31,12 @@
         color: $navy_blue;
         @include transition_color;
       }
+      .avatar-first-name {
+        max-width: 100%;
+        position: relative;
+        padding-right: 10px;
+
+      }
     }
     .online {
       width: 6px;
@@ -40,7 +46,7 @@
       border-radius: 8px;
       background: $green;
       position: absolute;
-      top: 0;
+      top: 4px;
       right: 0;
     }
     .offline {
