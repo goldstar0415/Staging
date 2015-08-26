@@ -43,6 +43,11 @@
       unfavorite: {
         url: API_URL + '/spots/:id/unfavorite',
         ignoreLoadingBar: true
+      },
+      rate: {
+        url: API_URL + '/spots/:id/rate',
+        method: 'POST',
+        ignoreLoadingBar: true
       }
     });
   }

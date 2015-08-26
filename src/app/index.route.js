@@ -10,7 +10,7 @@
     $stateProvider
       .state('main', {
         abstract: true,
-        template: '<ui-view />',
+        template: '<ui-view autoscroll="true" />',
         resolve: {
           currentUser: function ($q, User, $rootScope, UserService) {
             if ($rootScope.currentUser) {
@@ -41,7 +41,7 @@
       })
       .state('profile', {
         url: '/user/:user_id',
-        template: '<ui-view />',
+        template: '<ui-view autoscroll="true" />',
         abstract: true,
         resolve: {
           user: function (User, $stateParams,  UserService) {
@@ -168,7 +168,7 @@
       //Planner (calendar + list of all plans)
       .state('planner', {
         abstract: true,
-        template: '<ui-view />',
+        template: '<ui-view autoscroll="true"/>',
         parent: 'profile_menu'
       })
       .state('planner.list', {
@@ -230,7 +230,7 @@
             return Plan.get({id: $stateParams.plan_id}).$promise;
           },
           comments: function (PlanComment, $stateParams) {
-            return PlanComment.get({plan_id: $stateParams.plan_id})//.$promise;
+            return PlanComment.get({plan_id: $stateParams.plan_id}).$promise;
           }
         },
         locate: 'none',
