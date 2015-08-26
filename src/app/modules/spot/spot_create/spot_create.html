@@ -1,5 +1,5 @@
 <form name="form" class="form-horizontal" ng-submit="SpotCreate.create(form)" role="form" novalidate>
-  <h2 ng-if="!SpotCreate.edit" class="event-title">Create new Spot</h2>
+  <h2 ng-if="!SpotCreate.edit" class="event-title">Create new spot</h2>
   <h2 ng-if="SpotCreate.edit" class="event-title">Update Spot</h2>
   <section class="event-main-info">
     <div ng-if="!SpotCreate.edit" class="form-group">
@@ -10,7 +10,7 @@
           <button ng-click="SpotCreate.type = 'Event'"
                   type="button"
                   class="btn btn-default btn-event"
-                  ng-class="SpotCreate.type == 'Event' ? 'active-point' : ''">Event
+                  ng-class="SpotCreate.type == 'Event' ? 'active-point' : ''">Spot
           </button>
 
           <button ng-click="SpotCreate.type = 'Recreation'"
@@ -30,7 +30,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 control-label">Title</label>
 
       <div class="col-md-10 col-sm-12 col-xs-12">
-        <input type="text" name="title" ng-model="SpotCreate.title" class="form-control" placeholder="Start typing..."
+        <input type="text" name="title" ng-model="SpotCreate.title" class="form-control"
                ng-minlength="3" ng-maxlength="255" required>
 
         <div ng-messages="form.title.$error" ng-if="form.$submitted || form.title.$touched"
