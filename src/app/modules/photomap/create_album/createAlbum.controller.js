@@ -19,7 +19,7 @@
       vm.images.files.splice(idx, 1);
     };
     vm.createAlbum = function (form) {
-      if (form.$valid && vm.images.files.length > 0) {
+      if (form.$valid && (vm.images.files.length > 0 || album.id)) {
         var request = {
             title: vm.album.title,
             location: vm.album.location,
@@ -41,7 +41,7 @@
           .catch(function (resp) {
             toastr.error('Upload failed');
           });
-      } else if (vm.images.files.length < 1) {
+      } else if (vm.images.files.length < 1 && !album.id) {
         toastr.error("You can't save album without images");
       }
     };

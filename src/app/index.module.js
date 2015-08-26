@@ -4,7 +4,7 @@
   angular
     .module('zoomtivity', [
       'ngAnimate',
-      'ngCookies',
+      //'ngCookies',
       //'ngTouch',
       'ngSanitize',
       'ngResource',
@@ -15,7 +15,7 @@
       'dialogs.main',
       'snap',
       'angular-loading-bar',
-      'luegg.directives',
+      //'luegg.directives',
       'ui.calendar',
       'ngTagsInput',
       'ui.select',

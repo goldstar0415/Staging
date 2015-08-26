@@ -12,15 +12,7 @@
     $rootScope.timezonesList = moment.tz.names();
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
-    $rootScope.$on("$stateChangeError", function (event, toState, toParams) {
-      console.log('$stateChangeError', arguments);
-      if (toState.require_auth && !$rootScope.currentUser) {
-        toastr.error('Unauthorized!');
-        $state.go('index');
-      }
-
-      $rootScope.pageLoaded = true;
-    });
+    $rootScope.$on("$stateChangeError", onStateChangeError);
 
     function onStateChangeSuccess(event, current, toParams, fromState, fromParams) {
       snapRemote.getSnapper().then(function (snapper) {
@@ -59,10 +51,20 @@
       }
 
       //scroll top
-      window.scrollTo(0, 0);
+      //window.scrollTo(0, 0);
 
       //close all modals
       $modalStack.dismissAll();
+
+      $rootScope.pageLoaded = true;
+    }
+
+    function onStateChangeError(event, toState, toParams) {
+      console.log('$stateChangeError', event);
+      if (toState.require_auth && !$rootScope.currentUser) {
+        toastr.error('Unauthorized!');
+        $state.go('index');
+      }
 
       $rootScope.pageLoaded = true;
     }

@@ -22,7 +22,7 @@
   <!-- endinject -->
   <!-- endbuild -->
 </head>
-<body>
+<body autoscroll="true">
 <!--[if lt IE 10]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
   your browser</a> to improve your experience.</p>
@@ -71,15 +71,14 @@
   <zm-header options="options"></zm-header>
   <hints-popup></hints-popup>
   <map-sort ng-if="mapState == 'full-size'"></map-sort>
-  <ng-include src="'/app/components/map_partials/unregistered_banner.html'"
-              ng-if="mapState == 'full-size'"></ng-include>
   <!-- map container-->
   <div id="map" class="mapResize map {{mapState}}"
        ng-class="{'hidden-sm': mapState != 'full-size' && options.snap.disable == 'right', 'hidden-xs': mapState != 'full-size' && options.snap.disable == 'right'}"></div>
   <!-- content container-->
-  <div ng-show="mapState != 'full-size'" ui-view ></div>
+  <div ng-show="mapState != 'full-size'" ui-view autoscroll="true"></div>
 </div>
 
+<ng-include src="'/app/components/map_partials/unregistered_banner.html'" ng-if="mapState=='full-size'"></ng-include>
 <ng-include src="'/app/components/ng_message_templates/error_templates.html'"></ng-include>
 <ng-include src="'/app/components/photoviewer/photoviewer.html'"></ng-include>
 <ng-include src="'/app/components/users_modal/users_modal.html'"></ng-include>
