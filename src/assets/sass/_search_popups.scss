@@ -89,10 +89,9 @@
         border: 1px solid #fff;
         display: inline-block;
         margin: 22px 22px 15px;
-        font: 400 14px/20px 'Ubuntu medium';
-
         a {
           display: block;
+          font: 400 14px/20px 'Ubuntu medium';
         }
         .path-map, .radius-map, .lasso-map {
           border-bottom-left-radius: 8px;
@@ -169,7 +168,6 @@
     padding: 0;
     margin: 0;
     li {
-      font: 500 14px/24px 'Ubuntu medium';
       color: #fff;
       background-color: #379948;
       display: inline-block;
@@ -192,6 +190,7 @@
         margin: 0 auto;
         padding: 15px 10px 15px 44px;
         text-align: center;
+        font: 500 14px/24px 'Ubuntu medium';
       }
       .full-small {
         background: url(/assets/img/icons/vertical_menu.png) 20px 16px no-repeat;
