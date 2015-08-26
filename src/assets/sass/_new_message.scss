@@ -6,8 +6,8 @@
   width: 200px;
   border: 1px solid #e5e5e5;
   border-radius: 10px;
-  background: $grey;
-  color: $white;
+  background: $white;
+
 
   &:hover {
     background: rgba(0, 0, 0, .34);
@@ -21,6 +21,7 @@
     color: $white;
     border-radius: 5px 5px 0 0;
   }
+
   img {
     float: left;
     width: 36px;
