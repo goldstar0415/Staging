@@ -417,9 +417,27 @@ h3 {
     word-break: break-all;
   }
 }
+
 .description {
   word-wrap: break-word;
 }
+
+.outline-none {
+  outline: none;
+  span {
+    outline: none;
+    &:hover, &:focus, &:active, &:visited {
+      outline: none;
+    }
+  }
+  .star-active {
+    color: #ffd700;
+  }
+  .star-default {
+    color: #ffef99;
+  }
+}
+
 /*responsive*/
 
 @media (max-width: 992px) {
