@@ -169,9 +169,11 @@
         .tab-content {
           .choose-some-photos-body {
             padding-top: 20px;
+            margin-top: -15px;
             height: 250px;
             overflow: auto;
-            border-left: 1px solid $light-grey;
+            border: 1px solid $light-grey;
+            border-top: none;
             padding-left: 0;
             .choose-album-name {
               margin: 0px;
