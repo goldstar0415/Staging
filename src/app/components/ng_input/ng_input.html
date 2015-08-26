@@ -1,4 +1,4 @@
-<section class="col-xs-12 comments-section">
+<section class="col-xs-12 comments-section" ng-if="$root.currentUser">
   <form class="new-post clearfix" name="form" ng-submit="NgInput.submit(form)" novalidate>
       <textarea name="message"
                 ng-model="NgInput.message"

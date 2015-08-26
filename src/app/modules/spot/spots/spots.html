@@ -1,7 +1,7 @@
 <h2 class="title-name">
-  {{currentUser.id == profileUser.id ? 'My spots' : 'Spots of ' + profileUser.first_name + ' ' + profileUser.last_name}}
+  {{currentUser.id == profileUser.id ? 'My spots' :  profileUser.first_name + ' ' + profileUser.last_name + "'s spots"}}
 </h2>
-<a ui-sref="spot_create" class="add-friend" title="Create new spot"></a>
+<a ui-sref="spot_create" ng-if="currentUser.id == profileUser.id" class="add-friend" title="Create new spot"></a>
 
 <section class="my-spots-section" ng-repeat="item in Spots.spots.data">
 
@@ -45,7 +45,7 @@
     </ul>
     <!--  tags -->
 
-    <ul class="tools">
+    <ul class="tools" ng-if="currentUser">
       <li ng-if="currentUser.id == item.user_id">
         <a ui-sref="spot_edit({spot_id: item.id})" class="edit-tools">Edit</a>
       </li>
@@ -93,5 +93,5 @@
 </section>
 
 <div class="col-xs-12">
-  <h4 ng-if="Spots.spots.data.length == 0">No spots yet.</h4>
+  <h4 class="text-center description" ng-if="Spots.spots.data.length == 0">No spots yet.</h4>
 </div>

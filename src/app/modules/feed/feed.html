@@ -55,6 +55,13 @@
               </a>
             </div>
 
+            <div ng-switch-when="OnAddToCalendar">
+              add event
+              <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})">
+                {{item.feedable.title}}
+              </a> to calendar
+            </div>
+
             <div ng-switch-when="OnWallMessage">
               <p>{{item.feedable.body}}</p>
               <attachments items="item.feedable.attachments"></attachments>
@@ -77,5 +84,5 @@
   </section>
 
 
-  <h4 ng-if="Feed.feeds.data.length == 0">No feeds yet.</h4>
+  <h4 class="text-center description" ng-if="Feed.feeds.data.length == 0">No feeds yet.</h4>
 </div>

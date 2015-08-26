@@ -22,7 +22,7 @@
           <p><a>{{item.title}}</a></p>
         </div>
 
-        <h4 ng-if="modal.albums.length < 1">No albums</h4>
+        <h4 ng-if="modal.albums.length < 1" class="text-center description">No albums yet.</h4>
 
       </div>
 
@@ -36,7 +36,7 @@
                ng-src="{{item.photo_url.medium}}"
                ng-click="modal.addPhoto($index)">
 
-          <h4 ng-if="modal.selectedAlbum.photos.length < 1">No photos in album</h4>
+          <h4 ng-if="modal.selectedAlbum.photos.length < 1" class="text-center description">No photos in album</h4>
         </div>
       </div>
     </div>

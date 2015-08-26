@@ -37,11 +37,12 @@
             <h4 class="name-friend">
               <a>{{spot.title}}</a>
             </h4>
-              <p class="date">
-                <date-range item="spot"></date-range>
-              </p>
 
+            <p class="date">
+              <date-range item="spot"></date-range>
+            </p>
           </div>
+          <p ng-if="modal.spots.length == 0" class="text-center description">No spots yet.</p>
         </div>
       </div>
 
@@ -57,11 +58,13 @@
               <h4 class="name-friend">
                 <a>{{spot.title}}</a>
               </h4>
-                <p class="date">
-                  <date-range item="spot"></date-range>
-                </p>
 
+              <p class="date">
+                <date-range item="spot"></date-range>
+              </p>
             </div>
+
+            <p ng-if="modal.favorites.length == 0" class="text-center description">No favorites yet.</p>
           </div>
         </div>
       </div>
@@ -70,11 +73,13 @@
            ng-class="{active: modal.tab == 'areas'}">
         <div class="block-item" ng-repeat="area in modal.areas | filter: {title: search}">
           <div class="clearfix" ng-class="{choose: area.selected}" ng-click="modal.addArea(area)">
-            <h4 class="activity-title"><a>Lorem ipsum{{area.data}}</a></h4>
+            <h4 class="activity-title"><a>{{area.title}}</a></h4>
 
-            <p class="saved-search-description">Lorem ipsum dolor sit</p>
+            <p class="saved-search-description">{{area.description}}</p>
           </div>
         </div>
+
+        <p ng-if="modal.areas.length == 0" class="text-center description">No saved searches yet.</p>
       </div>
     </div>
   </div>
