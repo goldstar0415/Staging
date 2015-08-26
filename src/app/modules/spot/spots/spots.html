@@ -6,17 +6,7 @@
 <section class="my-spots-section" ng-repeat="item in Spots.spots.data">
 
   <div class="event">
-                    <span class="rating clear rateit spot-stars" rate="5" event-id="97777798">
-                            <button id="rateit-reset-2" type="button" data-role="none" class="rateit-reset"
-                                    aria-label="reset rating" aria-controls="rateit-range-2"
-                                    style="display: none;"></button>
-                            <div id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating"
-                                 aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="5"
-                                 style="width: 80px; height: 16px;" aria-readonly="false">
-                              <div class="rateit-selected" style="height: 16px; width: 80px;"></div>
-                              <div class="rateit-hover" style="height: 16px;"></div>
-                            </div>
-                    </span>
+                   <stars item="item"></stars>
 
                     <span ng-class="{'event-spot-page':item.type == 'Event',
                                      'recreation-spot':item.type == 'Recreation',

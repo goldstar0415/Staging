@@ -10,7 +10,7 @@
     display: block;
     width: 70px;
     height: 70px;
-    margin: 0 auto 10px;
+    margin: 0 auto 3px;
 
   }
   .sidebar-user-name {
@@ -22,7 +22,7 @@
     text-align: center;
     text-overflow: ellipsis;
     -e-text-overflow: ellipsis;
-    font: 200 13px/18px 'Ubuntu';
+    font: 500 13px/16px 'Ubuntu light';
     &:hover, &:focus, &:active {
       color: $navy_blue;
     }

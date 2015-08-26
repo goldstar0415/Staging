@@ -17,10 +17,13 @@
     $httpProvider.defaults.withCredentials = true;
 
     // toastr
-    toastr.options.timeOut = 3000;
+    toastr.options.timeOut = 1500;
     toastr.options.positionClass = 'toast-top-right';
     toastr.options.preventDuplicates = true;
     toastr.options.progressBar = true;
+    toastr.options.onShown = function() {
+      //TODO: make smart margin of top
+    };
 
 
     // snap
