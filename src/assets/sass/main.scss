@@ -393,6 +393,12 @@ h3 {
   border: none;
 }
 
+.media-body {
+  p {
+    word-break: break-all;
+  }
+}
+
 /*responsive*/
 
 @media (max-width: 992px) {
