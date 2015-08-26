@@ -59,7 +59,7 @@ class SelectionController extends Controller
                 ->type('selection')
                 ->image('http://blog.guybarrette.com/image.axd?picture=2012%2f8%2fSelection.jpg')//TODO: change image
                 ->description($area->description)
-                ->url(config('app.frontend_url') . '/selection/' . $area->id);
+                ->url(config('app.frontend_url') . '/selection/' . $area->id);//TODO: change frontend url
     }
 
     /**
