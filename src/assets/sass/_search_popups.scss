@@ -89,8 +89,7 @@
         border: 1px solid #fff;
         display: inline-block;
         margin: 22px 22px 15px;
-        font: 400 14px/20px 'Ubuntu medium';
-
+        font: 600 14px/20px 'Ubuntu light';
         a {
           display: block;
         }
@@ -169,7 +168,7 @@
     padding: 0;
     margin: 0;
     li {
-      font: 500 14px/24px 'Ubuntu medium';
+      font: 600 14px/24px 'Ubuntu light';
       color: #fff;
       background-color: #379948;
       display: inline-block;
@@ -429,8 +428,8 @@
     }
   }
   .filters-button {
-    font: 500 16px 'Ubuntu medium';
-    padding: 3px 7px 5px;
+    font: 500 12px/12px 'Ubuntu medium';
+    padding: 5px 7px 5px;
     background-color: $green;
     border: 0;
     color: #fff;

@@ -10,7 +10,7 @@
         <label>Title</label>
       </div>
       <div class="col-xs-9 no-pad">
-        <input placeholder="Start typing..." ng-minlength="3" name="title" ng-model="CreateAlbum.album.title" type="text">
+        <input placeholder="Start typing..." ng-minlength="3" ng-maxlength="128" name="title" ng-model="CreateAlbum.album.title" type="text">
         <div class="error-message-inline" ng-messages="form.title.$error" ng-if="form.$submitted || form.title.$touched">
           <div ng-messages-include="error-title-messages"></div>
         </div>

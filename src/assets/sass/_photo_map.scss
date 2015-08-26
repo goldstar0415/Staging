@@ -1,30 +1,33 @@
 .album-container {
   padding: 0 5px;
-.img-wrap {
-  width: 100%;
-  margin: 0 auto 20px;
-  display: block;
-  border: 1px solid $light_grey;
-  border-radius: 5px;
-  img {
+  .img-wrap {
     width: 100%;
-    height: 160px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-  a {
+    margin: 0 auto 20px;
     display: block;
-    padding: 10px;
-    color: $dark_blue;
-    font: 500 16px/22px 'Ubuntu medium';
-    transition: color .3s;
-    border-top: 1px solid $light_grey;
-    &:hover {
-      color: $blue;
+    border: 1px solid $light_grey;
+    border-radius: 5px;
+    img {
+      width: 100%;
+      height: 160px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    a {
+      display: block;
+      padding: 10px;
+      color: $dark_blue;
+      font: 500 16px/22px 'Ubuntu medium';
       transition: color .3s;
+      border-top: 1px solid $light_grey;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &:hover {
+        color: $blue;
+        transition: color .3s;
+      }
     }
   }
-}
 }
 
 .create {
