@@ -14,7 +14,8 @@
         "toin0u/geotools-laravel": "~1.0",
         "codesleeve/laravel-stapler": "dev-master",
         "barryvdh/laravel-cors": "^0.7.0@dev",
-        "nwidart/laravel-forecast": "~2.0"
+        "nwidart/laravel-forecast": "~2.0",
+        "chriskonnertz/open-graph": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
