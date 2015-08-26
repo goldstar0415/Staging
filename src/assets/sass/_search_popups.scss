@@ -52,7 +52,6 @@
   margin: 0 auto;
   float: none;
   width: 420px;
-  //height: 100%;
   position: relative;
   .tools-hint-block {
     padding: 20px;
@@ -124,7 +123,6 @@
           .path-map, .radius-map, .lasso-map {
             position: absolute;
             width: 100%;
-            //bottom: -170px;
             top: 284px;
             left: 0;
             display: block;
@@ -154,37 +152,34 @@
 }
 
 .sidebar-menu-wrap {
-  width: 60px;
+  //width: 500px;
   padding: 0;
   position: absolute;
   right: 0;
-  top: 70px;
-  height: calc(100% - 70px);
+  top: 25%;
+  bottom: 25%;
+  display: block;
+  width: 510px;
+  height: 510px;
+  transform: rotate(90deg);
 }
 
 .sidebar-menu-vertical {
-  height: 100%;
   ul {
     padding: 0;
     margin: 0;
-    width: 100%;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    display: table;
     li {
       font: 500 14px/24px 'Ubuntu medium';
       color: #fff;
       background-color: #379948;
       display: inline-block;
-      width: 100%;
-      border-top: 1px solid #fff;
+      border-left: 1px solid #fff;
       float: left;
       &:first-child {
         width: 60px;
       }
       &:last-child {
-        border-bottom: 1px solid #fff;
+        border-right: 1px solid #fff;
       }
       &:hover {
         background-color: #03b5d4;
@@ -195,28 +190,24 @@
         color: #fff;
         display: block;
         margin: 0 auto;
-        padding: 40px 10px 15px 15px;
+        padding: 15px 10px 15px 44px;
         text-align: center;
-        -webkit-writing-mode: vertical-rl;
-        writing-mode: tb-rl;
-        filter: flipV flipH;
-        white-space: nowrap;
       }
       .full-small {
         background: url(/assets/img/icons/vertical_menu.png) 20px 16px no-repeat;
         padding: 27px 30px;
       }
       .events {
-        background: url(/assets/img/icons/events-icon-vertical.png) 20px 17px no-repeat;
+        background: url(/assets/img/icons/events-icon.png) 20px 17px no-repeat;
       }
       .recreation {
-        background: url(/assets/img/icons/recreation-icon-vertical.png) 20px 17px no-repeat;
+        background: url(/assets/img/icons/recreation-icon.png) 20px 17px no-repeat;
       }
       .pit-stops {
-        background: url(/assets/img/icons/pit-stops-icon-vertical.png) 20px 17px no-repeat;
+        background: url(/assets/img/icons/pit-stops-icon.png) 20px 17px no-repeat;
       }
       .weather-link {
-        background: url(/assets/img/icons/weather-icon-vertical.png) 20px 17px no-repeat;
+        background: url(/assets/img/icons/weather-icon.png) 20px 17px no-repeat;
 
       }
     }
@@ -684,6 +675,9 @@
         }
       }
     }
+  }
+  .sidebar-menu-vertical {
+    display: none !important;
   }
 }
 
