@@ -6,7 +6,7 @@
     .controller('PlannerController', PlannerController);
 
   /** @ngInject */
-  function PlannerController(Plan, plans, $state, $compile, $scope, dialogs) {
+  function PlannerController(Plan, plans, $state, $compile, $scope, dialogs, DATE_FORMAT) {
     var vm = this;
     vm.plans = plans;
     vm.deletePlan = deletePlan;
@@ -23,7 +23,7 @@
         center: 'title',
         right: 'today prev,next'
       },
-      eventLimit: true,
+      eventLimit: false,
       //eventClick: vm.alertOnEventClick,
       //eventDrop: vm.alertOnDrop,
       //eventResize: vm.alertOnResize,
@@ -60,8 +60,9 @@
     }
 
     function eventRender(event, element, view) {
+      var tooltip = moment(event.start_date, DATE_FORMAT.backend).format(DATE_FORMAT.date) + '-' + moment(event.end_date, DATE_FORMAT.backend).format(DATE_FORMAT.date);
       element.attr({
-        'tooltip': event.title,
+        'tooltip': tooltip,
         'tooltip-append-to-body': true
       });
       $compile(element)($scope);
