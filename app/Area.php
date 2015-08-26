@@ -10,6 +10,8 @@ use App\Services\SocialSharing;
  *
  * @property integer $id
  * @property integer $user_id
+ * @property string $title
+ * @property string $description
  * @property string $data
  * @property string $b_box
  * @property string $waypoints
@@ -41,7 +43,7 @@ class Area extends BaseModel
 
     public function getShareLinksAttribute()
     {
-        $url = url('areas', $this->id);
+        $url = url('areas', [$this->id, 'preview']);
 
         return [
             'facebook' => SocialSharing::facebook($url),

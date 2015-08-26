@@ -158,7 +158,8 @@ return [
         Toin0u\Geotools\GeotoolsServiceProvider::class,
         Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
-        Nwidart\LaravelForecast\LaravelForecastServiceProvider::class
+        Nwidart\LaravelForecast\LaravelForecastServiceProvider::class,
+        ChrisKonnertz\OpenGraph\OpenGraphServiceProvider::class
     ],
 
     /*
@@ -213,7 +214,7 @@ return [
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Geotools' => Toin0u\Geotools\Facade\Geotools::class,
         'Forecast' => Nwidart\LaravelForecast\ForecastFacade::class,
-
+        'OpenGraph' => ChrisKonnertz\OpenGraph\OpenGraph::class
     ],
 
 ];
