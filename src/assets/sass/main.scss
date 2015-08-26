@@ -412,7 +412,9 @@ h3 {
     word-break: break-all;
   }
 }
-
+.description {
+  word-wrap: break-word;
+}
 /*responsive*/
 
 @media (max-width: 992px) {

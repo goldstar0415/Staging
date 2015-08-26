@@ -9,6 +9,7 @@
 .title-planner {
   margin-top: 0;
   font: 500 24px/24px 'Ubuntu medium';
+  overflow: hidden;
   a {
     color: $dark_blue;
     &:hover {

@@ -6,15 +6,23 @@
   width: 200px;
   border: 1px solid #e5e5e5;
   border-radius: 10px;
-  background: rgba(239, 243, 241, 0.5);
+  background: $white;
+
+
   &:hover {
-    background: rgba(211, 229, 232, .34);
+    background: rgba(0, 0, 0, .34);
   }
   h5 {
-    color: #696464;
     padding: 5px 0 0 5px;
     margin: 0;
   }
+  .new-message{
+    background: $dark_blue;
+    color: $white;
+    border-radius: 5px 5px 0 0;
+    margin-bottom: 5px;
+  }
+
   img {
     float: left;
     width: 36px;
