@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesSeeder::class);
         $this->call(SpotTypesTableSeeder::class);
         $this->call(SocialsTableSeeder::class);
+        $this->call(ActivityLevelSeeder::class);
         if (App::environment('local')) {
             Storage::deleteDirectory('upload/App');
 
