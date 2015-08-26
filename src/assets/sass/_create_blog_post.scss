@@ -28,6 +28,12 @@
   .active-point {
     background: $green;
     color: $white;
+    &:hover, &:focus, &:active {
+      background-color: $light_green !important;
+      box-shadow: none;
+      outline: none;
+      color: $white;
+    }
   }
 }
 
