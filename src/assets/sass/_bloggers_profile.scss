@@ -254,7 +254,7 @@
   padding: 25px 0;
 }
 
-.user-menu-tabs.nav-tabs {
+.user-menu-tabs {
   padding-left: 15px;
   margin-bottom: 15px;
 
@@ -271,8 +271,9 @@
     }
   }
   .nav-tabs-default {
+    font: 500 14px/14px 'Ubuntu medium';
     a {
-      font: 500 14px/14px 'Ubuntu medium';
+
       color: $gray-dark;
       margin-right: 0;
       &:hover, &:focus {
