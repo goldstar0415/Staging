@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $modal, toastr) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $modal, toastr, Area) {
       var map = null;
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
       var radiusSelectionLimit = 500000; //in meters
@@ -61,12 +61,12 @@
             }).addTo(drawLayer);
 
             var popup = RemoveMarkerPopup(
-              function() {
+              function () {
                 drawLayer.removeLayer(poly);
                 var bboxes = GetDrawLayerBBoxes();
                 GetDataByBBox(bboxes);
               },
-              function() {
+              function () {
                 poly.closePopup();
               });
 
@@ -108,18 +108,6 @@
           RadiusSelection(function (startPoing, radius, b_box) {
             snapRemote.enable();
 
-            var circleToGeoJSON = L.Circle.prototype.toGeoJSON;
-            L.Circle.include({
-              toGeoJSON: function() {
-                var feature = circleToGeoJSON.call(this);
-                feature.properties = {
-                  point_type: 'circle',
-                  radius: this.getRadius()
-                };
-                return feature;
-              }
-            });
-
             var circle = L.circle(startPoing, radius, {
               weight: 2,
               color: 'green',
@@ -129,17 +117,16 @@
             });
 
             var popup = RemoveMarkerPopup(
-              function() {
+              function () {
                 drawLayer.removeLayer(circle);
                 var bboxes = GetDrawLayerBBoxes();
                 GetDataByBBox(bboxes);
               },
-              function() {
+              function () {
                 circle.closePopup();
               });
 
             circle.bindPopup(popup);
-
 
 
             circle.addTo(drawLayer);
@@ -175,7 +162,7 @@
         _click: function (e) {
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
-          PathSelection(function () {
+          PathSelection(null, function () {
             var bboxes = GetDrawLayerBBoxes();
             GetDataByBBox(bboxes);
           });
@@ -311,6 +298,19 @@
         });
         L.Map.addInitHook('addHandler', 'touchExtend', L.Map.TouchExtend);
 
+        //Circle geoJson hook
+        var circleToGeoJSON = L.Circle.prototype.toGeoJSON;
+        L.Circle.include({
+          toGeoJSON: function () {
+            var feature = circleToGeoJSON.call(this);
+            feature.properties = {
+              point_type: 'circle',
+              radius: this.getRadius()
+            };
+            return feature;
+          }
+        });
+
         //map init
         map = L.map(mapDOMElement, {
           attributionControl: false,
@@ -332,15 +332,19 @@
         map.locate({setView: true, maxZoom: 8});
         return map;
       }
+
       function GetMap() {
         return map;
       }
+
       function InvalidateMapSize() {
         map.invalidateSize();
       }
+
       function GetControlGroup() {
         return controlGroup;
       }
+
       function GetCurrentLayer() {
         var layer = null;
         switch (currentLayer) {
@@ -363,9 +367,11 @@
 
         return layer;
       }
+
       function GetDraggableLayer() {
         return draggableMarkerLayer;
       }
+
       //Layers
       function ChangeState(state) {
 
@@ -390,10 +396,11 @@
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
 
-        $timeout(function() {
+        $timeout(function () {
           map.invalidateSize();
         })
       }
+
       function showEventsLayer(clearLayers) {
         ClearSelectionListeners();
         //if (clearLayers) { eventsLayer.clearLayers(); }
@@ -403,6 +410,7 @@
         map.removeLayer(otherLayer);
         currentLayer = "events";
       }
+
       function showPitstopsLayer(clearLayers) {
         ClearSelectionListeners();
         //if (clearLayers) { pitstopsLayer.clearLayers(); }
@@ -412,6 +420,7 @@
         map.removeLayer(otherLayer);
         currentLayer = "pitstops";
       }
+
       function showRecreationsLayer(clearLayers) {
         ClearSelectionListeners();
         //if (clearLayers) { recreationsLayer.clearLayers(); }
@@ -421,6 +430,7 @@
         map.removeLayer(otherLayer);
         currentLayer = "recreations";
       }
+
       function showOtherLayers() {
         ClearSelectionListeners();
         otherLayer.clearLayers();
@@ -430,6 +440,7 @@
         map.removeLayer(eventsLayer);
         currentLayer = "other";
       }
+
       function removeAllLayers() {
         currentLayer = "none";
         map.removeLayer(otherLayer);
@@ -437,6 +448,7 @@
         map.removeLayer(pitstopsLayer);
         map.removeLayer(eventsLayer);
       }
+
       function clearLayers() {
         eventsLayer.clearLayers();
         recreationsLayer.clearLayers();
@@ -444,11 +456,7 @@
         otherLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
       }
-      //Selections
-      /* Callback output:
-       * points - array of latlng points
-       * b_box - bounding box of the shape
-       */
+
       function LassoSelection(callback) {
         ClearSelectionListeners();
         map.dragging.disable();
@@ -493,11 +501,7 @@
           }
         }
       }
-      /* Callback output:
-       * startPoint - latlng of the circles center
-       * radius - radius of the circle in meters
-       * b_box - bounding box of the circle
-       */
+
       function RadiusSelection(callback) {
         ClearSelectionListeners();
         map.dragging.disable();
@@ -545,10 +549,12 @@
           }
         }
       }
-      function PathSelection(callback) {
+
+      function PathSelection(wpArray, callback) {
         var markers = [],
           line,
           cancelPopup;
+        var showCancelPopup = true;
         var lineOptions = {};
         lineOptions.styles = [{type: 'polygon', color: 'blue', opacity: 0.6, weight: 3, fillOpacity: 0.2}, {
           color: 'red',
@@ -558,71 +564,82 @@
         ClearSelectionListeners();
 
         pathSelectionStarted = true;
-        map.on('click', onMapClick);
+        if (wpArray) {
+          showCancelPopup = false;
+          for (var k in wpArray) {
+            onMapClick({latlng: wpArray[k]}, null, true);
+          }
+          RecalculateRoute();
+        } else {
+          map.on('click', onMapClick);
+        }
 
-        function onMapClick(e, idx) {
+        function onMapClick(e, idx, dontBuildPath) {
           var marker = L.marker(e.latlng, {draggable: true}).addTo(markersLayer);
-          if(!isNaN(idx)) {
+          if (!isNaN(idx)) {
             markers.splice(idx + 1, 0, marker);
           } else {
             markers.push(marker);
           }
 
           var popup = RemoveMarkerPopup(
-            function() {
-              for(var k in markers) {
-                if(markers[k]._leaflet_id == marker._leaflet_id) {
+            function () {
+              for (var k in markers) {
+                if (markers[k]._leaflet_id == marker._leaflet_id) {
                   markersLayer.removeLayer(marker);
                   markers.splice(k, 1);
                   RecalculateRoute();
                 }
               }
             },
-            function() {
+            function () {
               marker.closePopup();
             });
 
           marker.bindPopup(popup);
-          marker.on('dragend',  function() {
-            if(cancelPopup && pathSelectionStarted) {
+          marker.on('dragend', function () {
+            if (cancelPopup && pathSelectionStarted) {
               cancelPopup
                 .setLatLng(marker.getLatLng())
                 .openOn(map);
             }
 
-            angular.element('.cancel-selection').on('click', function() {
+            angular.element('.cancel-selection').on('click', function () {
               ClearSelectionListeners();
               map.closePopup();
             });
             RecalculateRoute();
           });
 
-          if(markers.length > 1) {
-            if(!cancelPopup) {
-              cancelPopup = L.popup({
-                offset: L.point(0, -15),
-                closeButton: false,
-                keepInView: true,
-                autoPan: true
-              })
-                .setLatLng(marker.getLatLng())
-                .setContent('<button class="btn btn-block btn-success cancel-selection">Cancel selection</button>')
-                .openOn(map);
+          if(!dontBuildPath) {
+            if (markers.length > 1 && showCancelPopup) {
+              if (!cancelPopup) {
+                cancelPopup = L.popup({
+                  offset: L.point(0, -15),
+                  closeButton: false,
+                  keepInView: true,
+                  autoPan: true
+                })
+                  .setLatLng(marker.getLatLng())
+                  .setContent('<button class="btn btn-block btn-success cancel-selection">Cancel selection</button>')
+                  .openOn(map);
 
 
-            } else {
-              cancelPopup
-                .setLatLng(marker.getLatLng())
-                .openOn(map);
+              } else {
+                cancelPopup
+                  .setLatLng(marker.getLatLng())
+                  .openOn(map);
+              }
+
+              angular.element('.cancel-selection').on('click', function () {
+                ClearSelectionListeners();
+                map.closePopup();
+              });
             }
-
-            angular.element('.cancel-selection').on('click', function() {
-              ClearSelectionListeners();
-              map.closePopup();
-            });
+            RecalculateRoute();
           }
-          RecalculateRoute();
         }
+
         function RecalculateRoute() {
           if (markers.length >= 2) {
             var waypoints = _.map(markers, function (m) {
@@ -638,9 +655,9 @@
                 console.log(err);
               } else {
                 line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
-                line.on('linetouched', function(e) {
+                line.on('linetouched', function (e) {
                   function remove() {
-                    for(var k in markers) {
+                    for (var k in markers) {
                       markersLayer.removeLayer(markers[k]);
                       var bboxes = GetDrawLayerBBoxes();
                       GetDataByBBox(bboxes);
@@ -658,6 +675,7 @@
                     onMapClick(e, e.afterIndex);
                     map.closePopup();
                   }
+
                   var popup = RemoveMarkerPopup(remove, cancel, addmarker, e.latlng);
 
                   popup.openOn(map);
@@ -666,8 +684,8 @@
               }
             }, {geometryOnly: true});
           } else {
-            if(!pathSelectionStarted) {
-              for(var k in markers) {
+            if (!pathSelectionStarted) {
+              for (var k in markers) {
                 markersLayer.removeLayer(markers[k]);
               }
             }
@@ -678,20 +696,23 @@
           }
         }
       }
+
       function CancelPathSelection() {
         pathSelectionStarted = false;
       }
+
       function WeatherSelection(callback) {
-        map.on('click', function(e) {
-          $http.get(API_URL + '/weather?lat='+ e.latlng.lat + '&lng=' + e.latlng.lng)
-            .success(function(data) {
+        map.on('click', function (e) {
+          $http.get(API_URL + '/weather?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng)
+            .success(function (data) {
               callback(data);
             })
-            .error(function(data) {
+            .error(function (data) {
               callback(null);
             })
         });
       }
+
       function ClearSelectionListeners() {
         map.off('mousedown');
         map.off('mousemove');
@@ -702,13 +723,14 @@
         map.off('click');
         CancelPathSelection();
       }
-      function OpenSaveSelectionsPopup() {
+
+      function OpenSaveSelectionsPopup(share) {
         var wp = GetDrawLayerPathWaypoints();
         var geoJson = GetDrawLayerGeoJSON();
 
         var modalInstance;
-        if(wp.length > 0 || geoJson && geoJson.features.length > 0) {
-          modalInstance= $modal.open({
+        if (wp.length > 0 || geoJson && geoJson.features.length > 0) {
+          modalInstance = $modal.open({
             animation: true,
             templateUrl: '/app/components/map_partials/saveSelection/saveSelection.html',
             controller: SaveSelectionController,
@@ -719,18 +741,16 @@
 
           modalInstance.result.then(function (data) {
             //success
-            SaveSelections(data.title, data.description);
+            SaveSelections(data.title, data.description, share);
           });
         } else {
           toastr.error('You can\'t save empty selection.');
         }
 
 
-
         function SaveSelectionController($modalInstance, $scope) {
-          $scope.data
-          $scope.save = function() {
-            if($scope.data.title) {
+          $scope.save = function () {
+            if ($scope.data.title) {
               $modalInstance.close($scope.data);
             } else {
               //can't save without server;
@@ -738,19 +758,20 @@
             }
           };
 
-          $scope.cancel = function() {
+          $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
           };
         }
       }
 
-      function SaveSelections(title, description) {
+      function SaveSelections(title, description, share) {
         ClearSelectionListeners();
         if (pathSelectionStarted) {
           CancelPathSelection();
         }
         var wp = GetDrawLayerPathWaypoints();
         var geoJson = drawLayerGeoJSON;
+
 
         var req = {
           title: title,
@@ -759,15 +780,99 @@
           data: geoJson
         };
 
-        $http.post(API_URL + '/areas', req)
-          .success(function(data) {
-            console.log(data);
-            toastr.success('Selection saved!');
-          })
-          .error(function(data) {
-            toastr.error('Error!')
-          })
+        if(share) {
+          //TODO: отдельный route под selection шаринг. В начале сейв селекшена, а потом его шаринг.
+
+        } else {
+          if($rootScope.currentParams.area_id) {
+            req.area_id = $rootScope.currentParams.area_id;
+            Area.update(req, function(data) {
+              toastr.success('Selection saved!');
+            }, function(data) {
+              toastr.error('Error!')
+            })
+          } else {
+            Area.save(req, function(data) {
+              toastr.success('Selection saved!');
+            }, function(data) {
+              toastr.error('Error!')
+            });
+          }
+        }
       }
+
+      function LoadSelections(selection) {
+        if (selection.waypoints && selection.waypoints.length > 0) {
+          _.each(selection.waypoints, function (array) {
+            PathSelection(array, function () {
+              var bboxes = GetDrawLayerBBoxes();
+              GetDataByBBox(bboxes);
+            });
+          });
+        }
+
+        if(selection.data) {
+          L.geoJson(selection.data, {
+            onEachFeature: function(feature) {
+              if(feature.geometry.type = 'Point' && feature.properties.radius) {
+                var startPoint = L.GeoJSON.coordsToLatLng(feature.geometry.coordinates);
+                var radius = feature.properties.radius;
+
+                var circle = L.circle(startPoint, radius, {
+                  weight: 2,
+                  color: 'green',
+                  opacity: 0.2,
+                  fillColor: 'green',
+                  fillOpacity: 0.1
+                });
+
+                var popup = RemoveMarkerPopup(
+                  function () {
+                    drawLayer.removeLayer(circle);
+                    var bboxes = GetDrawLayerBBoxes();
+                    GetDataByBBox(bboxes);
+                  },
+                  function () {
+                    circle.closePopup();
+                  });
+
+                circle.bindPopup(popup);
+
+                circle.addTo(drawLayer);
+
+              } else {
+                _.each(feature.geometry.coordinates, function(coords) {
+                  var points  = L.GeoJSON.coordsToLatLngs(coords);
+
+                  var poly = L.polygon(points, {
+                    weight: 2,
+                    color: 'green',
+                    opacity: 0.2,
+                    fillColor: 'green',
+                    fillOpacity: 0.1
+                  }).addTo(drawLayer);
+
+                  var popup = RemoveMarkerPopup(
+                    function () {
+                      drawLayer.removeLayer(poly);
+                      var bboxes = GetDrawLayerBBoxes();
+                      GetDataByBBox(bboxes);
+                    },
+                    function () {
+                      poly.closePopup();
+                    });
+
+                  poly.bindPopup(popup);
+                });
+              }
+            }
+          });
+        }
+
+        var bboxes = GetDrawLayerBBoxes();
+        GetDataByBBox(bboxes);
+      }
+
       function ClearSelections() {
         markersLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
@@ -785,6 +890,7 @@
         GetDrawLayerBBoxes();
         GetDataByBBox([]);
       }
+
       //Controls
       function RemoveControls() {
         map.removeLayer(radiusControl);
@@ -793,6 +899,7 @@
         map.removeLayer(saveSelectionControl);
         map.removeLayer(clearSelectionControl);
       }
+
       function AddControls() {
         clearSelectionControl.addTo(map);
         saveSelectionControl.addTo(map);
@@ -800,6 +907,7 @@
         lassoControl.addTo(map);
         radiusControl.addTo(map);
       }
+
       //Makers
       function CreateMarker(latlng, options) {
         var options = options || {};
@@ -808,7 +916,7 @@
         //But we still need to cluster markers on some pages. So all draggable marker will be in draggable marker layer
         options.riseOnHover = true;
         var marker = L.marker(latlng, options);
-        if(options.draggable) {
+        if (options.draggable) {
           draggableMarkerLayer.addLayer(marker);
         } else {
           GetCurrentLayer().addLayer(marker);
@@ -816,18 +924,20 @@
 
         return marker;
       }
+
       function RemoveMarker(Marker, callback) {
         //IMPORTANT:
         //I used this construction because L.MarkerCluster is not supporting draggable markers
         //But we still need to cluster markers on some pages. So all draggable marker will be in draggable marker layer
-        if(Marker.options.draggable) {
+        if (Marker.options.draggable) {
           draggableMarkerLayer.removeLayer(Marker);
         } else {
           GetCurrentLayer().removeLayer(Marker);
         }
 
-        if(callback) callback();
+        if (callback) callback();
       }
+
       function CreateCustomIcon(iconUrl, className, iconSize) {
         var iconSize = iconSize || [50, 50];
         return L.icon({
@@ -836,12 +946,13 @@
           className: className
         });
       }
+
       function BindMarkerToInput(Marker, Callback) {
         Marker.off('dragend');
-        Marker.on('dragend', function(e) {
+        Marker.on('dragend', function (e) {
           var latlng = Marker.getLatLng();
-          GetAddressByLatlng(latlng, function(response) {
-            if(response.display_name) {
+          GetAddressByLatlng(latlng, function (response) {
+            if (response.display_name) {
               Callback({latlng: latlng, address: response.display_name})
             } else {
               Callback({latlng: latlng, address: 'Unknown place'});
@@ -849,6 +960,7 @@
           })
         });
       }
+
       function BindSpotPopup(marker, spot) {
         var scope = $rootScope.$new();
         scope.item = spot;
@@ -864,6 +976,7 @@
         marker.bindPopup(popup);
 
       }
+
       function RemoveMarkerPopup(remove, cancel, addmarker, location) {
         var scope = $rootScope.$new();
         scope.remove = remove;
@@ -883,32 +996,34 @@
 
         return scope.popup;
       }
+
       //Processing functions
       //Return concave hull from points array
       function GetConcaveHull(latLngs) {
         return new ConcaveHull(latLngs).getLatLngs();
       }
+
       //Determine if point inside polygon or not
       function PointInPolygon(point) {
         var result = [];
-        drawLayer.eachLayer(function(layer) {
-          if(result.length < 1) {
-            if(layer._route) {
-              layer.eachLayer(function(l) {
-                if(!l._latlngs) {
+        drawLayer.eachLayer(function (layer) {
+          if (result.length < 1) {
+            if (layer._route) {
+              layer.eachLayer(function (l) {
+                if (!l._latlngs) {
                   result = leafletPip.pointInLayer([point.lng, point.lat], l);
                 }
               });
             } else {
-              if(layer.toGeoJSON) {
+              if (layer.toGeoJSON) {
                 var l = layer.toGeoJSON();
                 var geoJSONlayer = L.geoJson(l);
-                if(l.geometry.type != 'Point') {
+                if (l.geometry.type != 'Point') {
                   result = leafletPip.pointInLayer([point.lng, point.lat], geoJSONlayer);
                 } else {
-                  if(l.properties.point_type == 'circle') {
+                  if (l.properties.point_type == 'circle') {
                     var latlng = L.GeoJSON.coordsToLatLng(l.geometry.coordinates);
-                    if(latlng.distanceTo(point) < l.properties.radius) {
+                    if (latlng.distanceTo(point) < l.properties.radius) {
                       result.push({PointInCircle: true});
                     }
                   }
@@ -919,33 +1034,36 @@
         });
         return result.length > 0;
       }
-      function GetAddressByLatlng (latlng, callback) {
+
+      function GetAddressByLatlng(latlng, callback) {
         var url = GeocodingReverseUrl + "&lat=" + latlng.lat + "&lon=" + latlng.lng;
         $http.get(url, {withCredentials: false}).
-          success(function(data, status, headers) {
+          success(function (data, status, headers) {
             callback(data);
           }).
-          error(function(data, status, headers) {
+          error(function (data, status, headers) {
             callback(data);
           });
       }
-      function GetLatlngByAddress (address, callback) {
+
+      function GetLatlngByAddress(address, callback) {
         var url = GeocodingSearchUrl + address
         $http.get(url, {withCredentials: false}).
-          success(function(data, status, headers) {
+          success(function (data, status, headers) {
             callback(data);
           }).
-          error(function(data, status, headers) {
+          error(function (data, status, headers) {
             callback(data);
           });
       }
-      function GetCurrentLocation (callback) {
-        map.on('locationfound', function onLocationFound(e){
+
+      function GetCurrentLocation(callback) {
+        map.on('locationfound', function onLocationFound(e) {
           map.off('locationfound');
           map.off('locationerror');
           callback(e);
         });
-        map.on('locationerror', function onLocationError(e){
+        map.on('locationerror', function onLocationError(e) {
           map.off('locationfound');
           map.off('locationerror');
           callback(e);
@@ -953,17 +1071,21 @@
 
         map.locate({setView: false});
       }
+
       function FocusMapToCurrentLocation(zoom) {
         var zoomLevel = zoom || 8;
         map.locate({setView: true, maxZoom: zoomLevel});
       }
+
       function FocusMapToGivenLocation(location, zoom) {
         map.setView(location, zoom);
       }
+
       function FitBoundsOfCurrentLayer() {
         var bounds = GetCurrentLayer().getBounds();
         map.fitBounds(bounds);
       }
+
       function FitBoundsOfDrawLayer() {
         var bounds = drawLayer.getBounds();
         map.fitBounds(bounds);
@@ -971,15 +1093,15 @@
 
       function GetDrawLayerBBoxes() {
         var bboxes = [];
-        drawLayer.eachLayer(function(layer) {
-          if(layer._route) {
-            layer.eachLayer(function(l) {
-              if(!l._latlngs) {
+        drawLayer.eachLayer(function (layer) {
+          if (layer._route) {
+            layer.eachLayer(function (l) {
+              if (!l._latlngs) {
                 bboxes.push(l.getBounds());
               }
             });
           } else {
-            if(layer.getBounds) {
+            if (layer.getBounds) {
               bboxes.push(layer.getBounds());
             }
           }
@@ -988,20 +1110,22 @@
         drawLayerGeoJSON = GetDrawLayerGeoJSON();
         return bboxes;
       }
+
       function GetDrawLayerGeoJSON() {
-          var json = drawLayer.toGeoJSON();
+        var json = drawLayer.toGeoJSON();
 
-          json.features = _.reject(json.features, function(item) {
-            return item.geometry.type == "FeatureCollection";
-          });
+        json.features = _.reject(json.features, function (item) {
+          return item.geometry.type == "FeatureCollection";
+        });
 
-          return json;
+        return json;
       }
+
       function GetDrawLayerPathWaypoints() {
         var waypoints = [];
-        drawLayer.eachLayer(function(layer) {
-          if(layer._route) {
-            var points = _.map(layer._route.waypoints, function(item) {
+        drawLayer.eachLayer(function (layer) {
+          if (layer._route) {
+            var points = _.map(layer._route.waypoints, function (item) {
               return item.latLng;
             });
             waypoints.push(points);
@@ -1010,13 +1134,14 @@
 
         return waypoints;
       }
+
       function GetDataByBBox(bbox_array) {
         var spots = [];
-        if(bbox_array.length > 0) {
+        if (bbox_array.length > 0) {
           $http.post(API_URL + '/map/search', {b_boxes: bbox_array})
-            .success(function(data) {
-              _.each(data, function(item) {
-                if(PointInPolygon(item.location)) {
+            .success(function (data) {
+              _.each(data, function (item) {
+                if (PointInPolygon(item.location)) {
                   spots.push(item);
                 }
               });
@@ -1029,32 +1154,36 @@
           $rootScope.$emit('update-map-data', []);
         }
       }
+
       function FilterUniqueObjects(array) {
-        return _.uniq(array, function(item) {
+        return _.uniq(array, function (item) {
           return item.spot_id
         })
       }
+
       //return sorted by rating array
       function SortByRating(array) {
-        return _.sortBy(array, function(item) {
+        return _.sortBy(array, function (item) {
           return item.spot.rating;
         }).reverse();
       }
+
       //return sorted by end_date array
       function SortByDate(array) {
-        return _.sortBy(array, function(item) {
-            return moment(item.endDate, 'YYYY-MM-DD HH:mm:ss').format('x');
+        return _.sortBy(array, function (item) {
+          return moment(item.endDate, 'YYYY-MM-DD HH:mm:ss').format('x');
         });
       }
+
       //return sorted by rating only for selected categories
       function SortBySubcategory(array, categories) {
         var resultArray = array;
-        if(categories.length > 0) {
-          resultArray = _.reject(array, function(item) {
+        if (categories.length > 0) {
+          resultArray = _.reject(array, function (item) {
             var result = true;
 
-            for(var k in categories) {
-              if(categories[k].id == item.spot.category.id) {
+            for (var k in categories) {
+              if (categories[k].id == item.spot.category.id) {
                 result = false;
                 break;
               }
@@ -1066,21 +1195,34 @@
 
         return SortByRating(resultArray);
       }
+
       function drawSpotMarkers(spots, type, clear) {
-        if(clear) {
+        if (clear) {
           GetCurrentLayer().clearLayers();
         }
         var markers = [];
 
-        _.each(spots, function(item) {
+        _.each(spots, function (item) {
           var icon = CreateCustomIcon(item.spot.category.icon_url, 'custom-map-icons', [50, 50]);
-          var marker = L.marker(item.location, {icon: icon});
-          BindSpotPopup(marker, item);
+          if(item.location) {
+            var marker = L.marker(item.location, {icon: icon});
+            BindSpotPopup(marker, item);
 
-          markers.push(marker);
+            markers.push(marker);
+          } else if( item.locations ){
+            _.each(item.locations, function(point) {
+              item.address = point.address;
+              item.location = point.location;
+
+              var marker = L.marker(item.location, {icon: icon});
+              BindSpotPopup(marker, item);
+
+              markers.push(marker);
+            });
+          }
         });
 
-        switch(type) {
+        switch (type) {
           case 'pitstop':
             pitstopsLayer.addLayers(markers);
             break;
@@ -1090,8 +1232,10 @@
           case 'event':
             eventsLayer.addLayers(markers);
             break;
+          case 'other':
+            otherLayer.addLayers(markers);
+            break;
         }
-
       }
 
       return {
@@ -1114,6 +1258,7 @@
         PathSelection: PathSelection,
         RadiusSelection: RadiusSelection,
         SaveSelections: SaveSelections,
+        LoadSelections: LoadSelections,
         //Controls
         AddControls: AddControls,
         RemoveControls: RemoveControls,
@@ -1132,7 +1277,7 @@
         FocusMapToCurrentLocation: FocusMapToCurrentLocation,
         FocusMapToGivenLocation: FocusMapToGivenLocation,
         FitBoundsOfCurrentLayer: FitBoundsOfCurrentLayer,
-        FitBoundsOfDrawLayer:FitBoundsOfDrawLayer,
+        FitBoundsOfDrawLayer: FitBoundsOfDrawLayer,
         //sorting
         SortByRating: SortByRating,
         SortByDate: SortByDate,

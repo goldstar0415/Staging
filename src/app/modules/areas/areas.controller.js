@@ -6,9 +6,10 @@
     .controller('AreasController', AreasController);
 
   /** @ngInject */
-  function AreasController(areas) {
+  function AreasController(areas, $rootScope) {
     var vm = this;
     vm.areas = areas;
+    console.log(areas);
 
   }
 })();

@@ -23,10 +23,16 @@
       });
     }
     function ShowMarkers(spots) {
-      console.log(spots);
-      _.each(spots, function(spot) {
-
+      var spotsArray = _.map(spots, function(item) {
+        return {
+          id: item.id,
+          spot_id: item.spot_id,
+          locations: item.points,
+          address: '',
+          spot: item
+        };
       });
+      MapService.drawSpotMarkers(spotsArray, 'other', true);
     }
   }
 })();

@@ -247,6 +247,11 @@
             return Wall.query({
               user_id: $stateParams.user_id
             }).$promise;
+          },
+          spots: function (Spot, $stateParams) {
+            return Spot.query({
+              user_id: $stateParams.user_id
+            }).$promise;
           }
         },
         parent: 'profile',
@@ -338,7 +343,6 @@
         require_auth: true,
         mapState: 'small'
       })
-
       .state('areas', {
         url: '/areas',
         templateUrl: '/app/modules/areas/areas.html',
@@ -354,6 +358,21 @@
         require_auth: true,
         mapState: 'small'
       })
+      .state('areasPreview', {
+        url: '/areas/:area_id',
+        template: '',
+        controller: 'AreasPreviewController',
+        controllerAs: 'AreasPreview',
+        resolve: {
+          selection: function (Area, $stateParams) {
+            return Area.get({
+              area_id: $stateParams.area_id
+            }).$promise;
+          }
+        },
+        locate: 'none',
+        mapState: 'big'
+      })
 
 
       //Photomap view state
@@ -363,7 +382,7 @@
         controller: 'PhotomapController',
         controllerAs: 'Photomap',
         resolve: {
-          albums: function (Album, $stateParams, MapService) {
+          albums: function (Album, $stateParams) {
             return Album.query({user_id: $stateParams.user_id}).$promise;
           }
         },
