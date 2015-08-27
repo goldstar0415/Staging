@@ -118,7 +118,7 @@
           padding: 0;
           h3 {
             margin: 0;
-            font: 500 18px "Ubuntu";
+            font: 500 18px "Ubuntu medium";
             color: $dark_blue;
           }
           p {
@@ -198,7 +198,7 @@
     @include button;
     height: 22px;
     width: 54px;
-    font: 400 12px/12px "Ubuntu";
+    font: 400 12px/12px "Ubuntu medium";
     background: $dark_blue;
     padding: 3px;
     border: none;

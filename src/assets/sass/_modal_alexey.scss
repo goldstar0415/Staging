@@ -370,7 +370,7 @@
 .activity-title {
   a {
     color: #46799b;
-    font: 400 14px/16px Ubuntu;
+    font: 400 14px/16px 'Ubuntu medium';
     &:hover {
       color: #124d76;
       @include transition_color;

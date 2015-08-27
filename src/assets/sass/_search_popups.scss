@@ -23,12 +23,12 @@
         }
         p {
           color: #fff;
-          font: 500 40px/52px 'Ubuntu Bold';
+          font: 500 40px/52px 'Ubuntu titling bold';
           text-align: center;
           text-shadow: 0 3px 3px rgba(0, 0, 0, .4);
         }
         span {
-          font: 500 52px/56px 'Ubuntu Bold';
+          font: 500 52px/56px 'Ubuntu titling bold';
           display: block;
         }
         .zoom-now {
@@ -495,7 +495,7 @@
   }
   p {
     color: #fff;
-    font: 500 34px/40px 'Ubuntu_Titling_Bold';
+    font: 500 34px/40px 'Ubuntu titling bold';
     padding: 20px 15px 0;
     text-align: center;
     text-shadow: 0 3px 3px rgba(0, 0, 0, .4);
@@ -531,7 +531,7 @@
       float: left;
       .weatherName {
         text-align: center;
-        font: 500 32px Ubuntu;
+        font: 500 32px 'Ubuntu medium';
         color: #0c2638;
         margin: 10px 0 0;
         color: #00b7f3;
@@ -539,7 +539,7 @@
 
       .weatherData {
         text-align: center;
-        font: 200 14px Ubuntu;
+        font: 200 14px 'Ubuntu medium';
         color: darkgrey;
         margin: 0 0 10px;
       }

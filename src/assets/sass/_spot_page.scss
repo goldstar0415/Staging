@@ -122,7 +122,7 @@
 }
 
 .place {
-  font: 400 14px Ubuntu;
+  font: 400 14px 'Ubuntu medium';
   color: grey;
 }
 
@@ -143,14 +143,14 @@
 
 .tools {
   padding-top: 15px;
-  font: 400 13px/13px Ubuntu;
+  font: 400 13px/13px 'Ubuntu medium';
   padding-left: 0px;
   li {
     float: left;
     margin-right: 15px;
     a {
       padding-left: 18px !important;
-      font: 14px Ubuntu;
+      font: 14px 'Ubuntu medium';
       color: $blue;
     }
   }
