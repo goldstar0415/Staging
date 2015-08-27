@@ -52,7 +52,7 @@
               <div class="info">
                 <p class="age">
                   <span ng-if="user.sex">{{user.sex == 'm' ? 'male' : 'female'}}</span>
-                  <span ng-if="user.birth_date">, {{user.birth_date | age}} years</span>
+                  <span ng-if="user.birth_date"><span ng-if="user.sex">,</span> {{user.birth_date | age}} years</span>
                 </p>
 
                 <p class="description"> {{user.description}} </p>
@@ -82,7 +82,9 @@
           <div class="col-md-6 col-sm-12 col-xs-12 no-pad">
             <ul class="events" ng-if="user.spots.length > 0">
               <li class="col-xs-4 events-width" ng-repeat="spot in user.spots">
+                <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
                 <img class="frame" ng-src="{{spot.cover_url.medium}}" alt="{{spot.title}}">
+                </a>
                 <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-link">
                   {{spot.title}}
                 </a>

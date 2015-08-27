@@ -24,6 +24,7 @@
           if (!this.totalItems) {
             this.totalItems = resp.total;
           }
+          this.items.data = this.items.data || [];
           this.items.data = _.union(this.items.data, resp.data);
           this.busy = false;
         }.bind(this));

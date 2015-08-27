@@ -64,7 +64,7 @@
                class="biography">
             {{$root.profileUser.description | limitTo: Profile.textLimit}}
           </div>
-          <div ng-if="Profile.textLimit == 50">
+          <div ng-if="Profile.textLimit == 50 && $root.profileUser.description.length > 50">
             <a class="more" ng-click="Profile.textLimit = 1000">
               see more
             </a>

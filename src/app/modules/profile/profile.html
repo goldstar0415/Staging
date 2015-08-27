@@ -39,8 +39,8 @@
     <preloader ng-show="Profile.pagination.busy"></preloader>
   </div>
 
-  <div class="col-xs-12">
-    <h4 class="text-center description" ng-if="Profile.wall.data.length == 0 && !Profile.pagination.busy">Wall is empty</h4>
+  <div class="col-xs-12" ng-if="Profile.wall.data.length == 0 && !Profile.pagination.busy">
+    <h4 class="text-center description" >Wall is empty</h4>
   </div>
 
 
