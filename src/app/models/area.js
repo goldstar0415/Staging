@@ -7,7 +7,7 @@
 
   /** @ngInject */
   function Area($resource, API_URL) {
-    return $resource(API_URL + '/areas/:id', {id: '@id'}, {
+    return $resource(API_URL + '/areas/:area_id', {area_id: '@area_id'}, {
       update: {
         method: 'PUT'
       }

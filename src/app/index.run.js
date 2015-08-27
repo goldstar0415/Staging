@@ -25,6 +25,7 @@
         params: fromParams
       };
 
+      $rootScope.currentParams = toParams;
       if (current.require_auth && !$rootScope.currentUser) {
         toastr.error('Unauthorized!');
         $state.go('index');
