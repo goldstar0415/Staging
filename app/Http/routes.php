@@ -71,6 +71,7 @@ Route::get('calendar/plans', 'CalendarController@getPlans');
  * Plan controls
  */
 Route::resource('plans', 'PlanController', ['except' => ['create', 'edit']]);
+Route::post('plans/invite', 'PlanController@invite');
 Route::get('activity-categories', 'PlanController@getActivityCategories');
 Route::resource('plans.comments', 'PlanCommentController', ['only' => ['index', 'store', 'destroy']]);
 /**

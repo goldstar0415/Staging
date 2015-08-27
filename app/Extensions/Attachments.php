@@ -4,6 +4,7 @@ namespace App\Extensions;
 
 use App\AlbumPhoto;
 use App\Area;
+use App\Plan;
 use App\Spot;
 
 trait Attachments
@@ -12,6 +13,7 @@ trait Attachments
     {
         $attachments_relations = [
             'spots',
+            'plans',
             'albumPhotos',
             'areas'
         ];
@@ -23,6 +25,7 @@ trait Attachments
     {
         return [
             'spots' => $this->spots,
+            'plans' => $this->plans,
             'album_photos' => $this->albumPhotos,
             'areas' => $this->areas
         ];
@@ -34,6 +37,14 @@ trait Attachments
     public function spots()
     {
         return $this->morphToMany(Spot::class, 'spotable', 'spot_attachable')->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function plans()
+    {
+        return $this->morphToMany(Plan::class, 'planable', 'plan_attachable')->withTimestamps();
     }
 
     /**

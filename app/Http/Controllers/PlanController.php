@@ -6,6 +6,7 @@ use App\Activity;
 use App\ActivityCategory;
 use App\Http\Requests\Plan\PlanDestroyRequest;
 use App\Http\Requests\Plan\PlanIndexRequest;
+use App\Http\Requests\Plan\PlanInviteRequest;
 use App\Http\Requests\Plan\PlanStoreRequest;
 use App\Http\Requests\Plan\PlanUpdateRequest;
 use App\Plan;
@@ -128,5 +129,19 @@ class PlanController extends Controller
     public function getActivityCategories()
     {
         return ActivityCategory::all();
+    }
+
+    public function invite(PlanInviteRequest $request)
+    {
+        $user = $request->user();
+        foreach ($request->input('users') as $user_id) {
+            $message = new ChatMessage(['body' => '']);
+            $user->chatMessagesSend()->save($message, ['receiver_id' => $user_id]);
+            $message->spots()->attach((int) $request->input('spot_id'));
+
+            event(new OnMessage($user, $message, User::find($user_id)->random_hash));
+        }
+
+        return response('Ok');
     }
 }

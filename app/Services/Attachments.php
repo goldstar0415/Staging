@@ -8,6 +8,29 @@ class Attachments
 {
     protected $request;
 
+    public static $rules = [
+        'attachments.album_photos' => [
+            'required_without_all:message,attachments.spots,attachments.areas,attachments.plans',
+            'array',
+            'count_max:10'
+        ],
+        'attachments.spots' => [
+            'required_without_all:message,attachments.album_photos,attachments.areas,attachments.plans',
+            'array',
+            'count_max:10'
+        ],
+        'attachments.areas' => [
+            'required_without_all:message,attachments.album_photos,attachments.spots,attachments.plans',
+            'array',
+            'count_max:10'
+        ],
+        'attachments.plans' => [
+            'required_without_all:message,attachments.album_photos,attachments.spots,attachments.areas',
+            'array',
+            'count_max:10'
+        ]
+    ];
+
     /**
      * Attachments constructor.
      * @param Request $request
@@ -27,6 +50,9 @@ class Attachments
         }
         if ($this->request->has('attachments.areas')) {
             $model->areas()->sync($this->request->input('attachments.areas'));
+        }
+        if ($this->request->has('attachments.plans')) {
+            $model->plans()->sync($this->request->input('attachments.plans'));
         }
     }
 }
