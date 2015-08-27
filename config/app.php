@@ -160,7 +160,8 @@ return [
         Codesleeve\LaravelStapler\Providers\L5ServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Nwidart\LaravelForecast\LaravelForecastServiceProvider::class,
-        ChrisKonnertz\OpenGraph\OpenGraphServiceProvider::class
+        ChrisKonnertz\OpenGraph\OpenGraphServiceProvider::class,
+        Frozennode\Administrator\AdministratorServiceProvider::class
     ],
 
     /*

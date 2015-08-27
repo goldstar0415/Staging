@@ -16,7 +16,8 @@
         "barryvdh/laravel-cors": "^0.7.0@dev",
         "nwidart/laravel-forecast": "~2.0",
         "chriskonnertz/open-graph": "dev-master",
-        "illuminate/html": "^5.0@dev"
+        "illuminate/html": "^5.0@dev",
+        "frozennode/administrator": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
