@@ -27,7 +27,6 @@
 
 
       _.each(spots, function(item) {
-
         var type = item.spot.category.type.name;
 
         switch(type) {

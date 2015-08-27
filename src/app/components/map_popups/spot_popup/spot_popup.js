@@ -33,15 +33,15 @@
         getPhotosIndex(0);
       }
 
-      if($scope.data.spot.reviews.length > 0) {
+      if($scope.data.spot.comments.length > 0) {
         getReviewIndex(0)
       }
 
       $scope.showPhotos = $scope.data.spot.photos.length > 0;
       $scope.showPhotosControls = $scope.data.spot.photos.length > 2;
 
-      if($scope.data.spot.reviews.length > 0) {
-        $scope.currentReview = $scope.data.spot.reviews[0];
+      if($scope.data.spot.comments.length > 0) {
+        $scope.currentReview = $scope.data.spot.comments[0];
       }
       $scope.view = 'about';
       $scope.$apply();
@@ -85,17 +85,17 @@
 
 
     $scope.nextReview = function() {
-      if($scope.data.spot.reviews.length > 1) {
+      if($scope.data.spot.comments.length > 1) {
         getReviewIndex(reviewIndex + 1)
       }
     };
     $scope.prevReview = function() {
-      if($scope.data.spot.reviews.length > 1) {
+      if($scope.data.spot.comments.length > 1) {
         getReviewIndex(reviewIndex - 1);
       }
     };
     function getReviewIndex(idx) {
-      var reviews = $scope.data.spot.reviews;
+      var reviews = $scope.data.spot.comments;
       if(idx > reviews.length -1) {
         idx = 0;
       }

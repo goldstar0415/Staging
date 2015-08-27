@@ -15,8 +15,12 @@
     };
   }
 
-  function HintsPopupController($scope) {
+  function HintsPopupController($scope, $state) {
     $scope.showHintPopup = true;
+
+    //if($state.params.area_id) {
+    //  $scope.showHintPopup = false;
+    //}
 
     $scope.currentLayer = 'path';
 

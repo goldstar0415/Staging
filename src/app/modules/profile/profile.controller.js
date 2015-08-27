@@ -6,7 +6,7 @@
     .controller('ProfileController', ProfileController);
 
   /** @ngInject */
-  function ProfileController(user, Wall, ScrollService) {
+  function ProfileController(user, wall, Wall, spots, SpotService, MapService) {
     var vm = this;
     vm.wall = {
       data: []
@@ -17,6 +17,28 @@
       user_id: user.id
     };
     vm.pagination = new ScrollService(Wall.query, vm.wall, params);
+    vm.spots = spots;
+    vm.spots.data = formatSpots(vm.spots.data);
+
+    ShowMarkers(vm.spots.data);
+
+    function formatSpots(spots) {
+      return _.each(spots, function (spot) {
+        SpotService.formatSpot(spot);
+      });
+    }
+    function ShowMarkers(spots) {
+      var spotsArray = _.map(spots, function(item) {
+        return {
+          id: item.id,
+          spot_id: item.spot_id,
+          locations: item.points,
+          address: '',
+          spot: item
+        };
+      });
+      MapService.drawSpotMarkers(spotsArray, 'other', true);
+    }
 
     vm.send = function () {
       Wall.save({
