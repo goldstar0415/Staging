@@ -85,7 +85,19 @@
   url(/assets/css/fonts/ubuntu-l.woff2) format('woff2'),
   url(/assets/css/fonts/ubuntu-l.woff) format('woff'),
   url(/assets/css/fonts/ubuntu-l.ttf) format('truetype'),
-  url(/assets/css/fonts/ubuntu-l.svg#ubuntumedium) format('svg');
+  url(/assets/css/fonts/ubuntu-l.svg#ubuntulight) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ubuntu titling bold';
+  src: url(/assets/css/fonts/ubuntu-titling-bold.eot);
+  src: url(/assets/css/fonts/ubuntu-titling-bold.eot?#iefix) format('embedded-opentype'),
+  url(/assets/css/fonts/ubuntu-titling-bold.woff2) format('woff2'),
+  url(/assets/css/fonts/ubuntu-titling-bold.woff) format('woff'),
+  url(/assets/css/fonts/ubuntu-titling-bold.ttf) format('truetype'),
+  url(/assets/css/fonts/ubuntu-titling-bold.svg#ubuntutitlingbold) format('svg');
   font-weight: normal;
   font-style: normal;
 }
