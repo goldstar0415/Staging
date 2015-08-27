@@ -441,6 +441,21 @@ h3 {
   }
 }
 
+.unauthorized {
+  color: $white;
+  font: $navigation_font;
+  font-size: 18px;
+  padding: 1rem 0;
+}
+sign-in {
+  a {
+    color: $blue;
+    &:hover, &:focus, &:active, &:visited {
+      color: $navy_blue;
+    }
+  }
+}
+
 /*responsive*/
 
 @media (max-width: 992px) {
