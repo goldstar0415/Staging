@@ -3,13 +3,14 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $modal, toastr) {
       var map = null;
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
       var radiusSelectionLimit = 500000; //in meters
       var markersLayer = L.featureGroup();
       var drawLayer = L.featureGroup();
       var draggableMarkerLayer = L.featureGroup();
+      var drawLayerGeoJSON;
       //============================================
       var eventsLayer = new L.MarkerClusterGroup();
       var pitstopsLayer = new L.MarkerClusterGroup();
@@ -206,7 +207,7 @@
         _click: function (e) {
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
-          SaveSelections();
+          OpenSaveSelectionsPopup();
         }
 
       });
@@ -331,19 +332,15 @@
         map.locate({setView: true, maxZoom: 8});
         return map;
       }
-
       function GetMap() {
         return map;
       }
-
       function InvalidateMapSize() {
         map.invalidateSize();
       }
-
       function GetControlGroup() {
         return controlGroup;
       }
-
       function GetCurrentLayer() {
         var layer = null;
         switch (currentLayer) {
@@ -366,11 +363,9 @@
 
         return layer;
       }
-
       function GetDraggableLayer() {
         return draggableMarkerLayer;
       }
-
       //Layers
       function ChangeState(state) {
 
@@ -399,7 +394,6 @@
           map.invalidateSize();
         })
       }
-
       function showEventsLayer(clearLayers) {
         ClearSelectionListeners();
         //if (clearLayers) { eventsLayer.clearLayers(); }
@@ -409,7 +403,6 @@
         map.removeLayer(otherLayer);
         currentLayer = "events";
       }
-
       function showPitstopsLayer(clearLayers) {
         ClearSelectionListeners();
         //if (clearLayers) { pitstopsLayer.clearLayers(); }
@@ -419,7 +412,6 @@
         map.removeLayer(otherLayer);
         currentLayer = "pitstops";
       }
-
       function showRecreationsLayer(clearLayers) {
         ClearSelectionListeners();
         //if (clearLayers) { recreationsLayer.clearLayers(); }
@@ -429,7 +421,6 @@
         map.removeLayer(otherLayer);
         currentLayer = "recreations";
       }
-
       function showOtherLayers() {
         ClearSelectionListeners();
         otherLayer.clearLayers();
@@ -439,7 +430,6 @@
         map.removeLayer(eventsLayer);
         currentLayer = "other";
       }
-
       function removeAllLayers() {
         currentLayer = "none";
         map.removeLayer(otherLayer);
@@ -447,7 +437,6 @@
         map.removeLayer(pitstopsLayer);
         map.removeLayer(eventsLayer);
       }
-
       function clearLayers() {
         eventsLayer.clearLayers();
         recreationsLayer.clearLayers();
@@ -455,9 +444,7 @@
         otherLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
       }
-
       //Selections
-
       /* Callback output:
        * points - array of latlng points
        * b_box - bounding box of the shape
@@ -506,7 +493,6 @@
           }
         }
       }
-
       /* Callback output:
        * startPoint - latlng of the circles center
        * radius - radius of the circle in meters
@@ -559,7 +545,6 @@
           }
         }
       }
-
       function PathSelection(callback) {
         var markers = [],
           line,
@@ -639,12 +624,11 @@
           RecalculateRoute();
         }
         function RecalculateRoute() {
-
-
           if (markers.length >= 2) {
             var waypoints = _.map(markers, function (m) {
               return {latLng: m.getLatLng()};
             });
+
             pathRouter.route(waypoints, function (err, routes) {
               if (line) {
                 drawLayer.removeLayer(line);
@@ -694,11 +678,9 @@
           }
         }
       }
-
       function CancelPathSelection() {
         pathSelectionStarted = false;
       }
-
       function WeatherSelection(callback) {
         map.on('click', function(e) {
           $http.get(API_URL + '/weather?lat='+ e.latlng.lat + '&lng=' + e.latlng.lng)
@@ -710,7 +692,6 @@
             })
         });
       }
-
       function ClearSelectionListeners() {
         map.off('mousedown');
         map.off('mousemove');
@@ -721,14 +702,72 @@
         map.off('click');
         CancelPathSelection();
       }
+      function OpenSaveSelectionsPopup() {
+        var wp = GetDrawLayerPathWaypoints();
+        var geoJson = GetDrawLayerGeoJSON();
 
-      function SaveSelections() {
+        var modalInstance;
+        if(wp.length > 0 || geoJson && geoJson.features.length > 0) {
+          modalInstance= $modal.open({
+            animation: true,
+            templateUrl: '/app/components/map_partials/saveSelection/saveSelection.html',
+            controller: SaveSelectionController,
+            controllerAs: 'Crop',
+            modalClass: 'save-selection-modal',
+            modalContentClass: 'clearfix'
+          });
+
+          modalInstance.result.then(function (data) {
+            //success
+            SaveSelections(data.title, data.description);
+          });
+        } else {
+          toastr.error('You can\'t save empty selection.');
+        }
+
+
+
+        function SaveSelectionController($modalInstance, $scope) {
+          $scope.data
+          $scope.save = function() {
+            if($scope.data.title) {
+              $modalInstance.close($scope.data);
+            } else {
+              //can't save without server;
+              toastr.error('Title is required!');
+            }
+          };
+
+          $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
+          };
+        }
+      }
+
+      function SaveSelections(title, description) {
         ClearSelectionListeners();
         if (pathSelectionStarted) {
           CancelPathSelection();
         }
-      }
+        var wp = GetDrawLayerPathWaypoints();
+        var geoJson = drawLayerGeoJSON;
 
+        var req = {
+          title: title,
+          description: description,
+          waypoints: wp,
+          data: geoJson
+        };
+
+        $http.post(API_URL + '/areas', req)
+          .success(function(data) {
+            console.log(data);
+            toastr.success('Selection saved!');
+          })
+          .error(function(data) {
+            toastr.error('Error!')
+          })
+      }
       function ClearSelections() {
         markersLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
@@ -737,12 +776,15 @@
         pitstopsLayer.clearLayers();
         recreationsLayer.clearLayers();
         otherLayer.clearLayers();
+
         ClearSelectionListeners();
         if (pathSelectionStarted) {
           CancelPathSelection();
         }
-      }
 
+        GetDrawLayerBBoxes();
+        GetDataByBBox([]);
+      }
       //Controls
       function RemoveControls() {
         map.removeLayer(radiusControl);
@@ -751,7 +793,6 @@
         map.removeLayer(saveSelectionControl);
         map.removeLayer(clearSelectionControl);
       }
-
       function AddControls() {
         clearSelectionControl.addTo(map);
         saveSelectionControl.addTo(map);
@@ -759,7 +800,6 @@
         lassoControl.addTo(map);
         radiusControl.addTo(map);
       }
-
       //Makers
       function CreateMarker(latlng, options) {
         var options = options || {};
@@ -776,7 +816,6 @@
 
         return marker;
       }
-
       function RemoveMarker(Marker, callback) {
         //IMPORTANT:
         //I used this construction because L.MarkerCluster is not supporting draggable markers
@@ -789,7 +828,6 @@
 
         if(callback) callback();
       }
-
       function CreateCustomIcon(iconUrl, className, iconSize) {
         var iconSize = iconSize || [50, 50];
         return L.icon({
@@ -798,7 +836,6 @@
           className: className
         });
       }
-
       function BindMarkerToInput(Marker, Callback) {
         Marker.off('dragend');
         Marker.on('dragend', function(e) {
@@ -812,7 +849,6 @@
           })
         });
       }
-
       function BindSpotPopup(marker, spot) {
         var scope = $rootScope.$new();
         scope.item = spot;
@@ -828,7 +864,6 @@
         marker.bindPopup(popup);
 
       }
-
       function RemoveMarkerPopup(remove, cancel, addmarker, location) {
         var scope = $rootScope.$new();
         scope.remove = remove;
@@ -848,13 +883,11 @@
 
         return scope.popup;
       }
-
       //Processing functions
       //Return concave hull from points array
       function GetConcaveHull(latLngs) {
         return new ConcaveHull(latLngs).getLatLngs();
       }
-
       //Determine if point inside polygon or not
       function PointInPolygon(point) {
         var result = [];
@@ -886,7 +919,6 @@
         });
         return result.length > 0;
       }
-
       function GetAddressByLatlng (latlng, callback) {
         var url = GeocodingReverseUrl + "&lat=" + latlng.lat + "&lon=" + latlng.lng;
         $http.get(url, {withCredentials: false}).
@@ -937,8 +969,6 @@
         map.fitBounds(bounds);
       }
 
-
-      //=================================================================
       function GetDrawLayerBBoxes() {
         var bboxes = [];
         drawLayer.eachLayer(function(layer) {
@@ -955,9 +985,31 @@
           }
         });
 
+        drawLayerGeoJSON = GetDrawLayerGeoJSON();
         return bboxes;
       }
+      function GetDrawLayerGeoJSON() {
+          var json = drawLayer.toGeoJSON();
 
+          json.features = _.reject(json.features, function(item) {
+            return item.geometry.type == "FeatureCollection";
+          });
+
+          return json;
+      }
+      function GetDrawLayerPathWaypoints() {
+        var waypoints = [];
+        drawLayer.eachLayer(function(layer) {
+          if(layer._route) {
+            var points = _.map(layer._route.waypoints, function(item) {
+              return item.latLng;
+            });
+            waypoints.push(points);
+          }
+        });
+
+        return waypoints;
+      }
       function GetDataByBBox(bbox_array) {
         var spots = [];
         if(bbox_array.length > 0) {
@@ -977,27 +1029,23 @@
           $rootScope.$emit('update-map-data', []);
         }
       }
-
       function FilterUniqueObjects(array) {
         return _.uniq(array, function(item) {
           return item.spot_id
         })
       }
-
       //return sorted by rating array
       function SortByRating(array) {
         return _.sortBy(array, function(item) {
           return item.spot.rating;
         }).reverse();
       }
-
       //return sorted by end_date array
       function SortByDate(array) {
         return _.sortBy(array, function(item) {
             return moment(item.endDate, 'YYYY-MM-DD HH:mm:ss').format('x');
         });
       }
-
       //return sorted by rating only for selected categories
       function SortBySubcategory(array, categories) {
         var resultArray = array;
@@ -1018,7 +1066,6 @@
 
         return SortByRating(resultArray);
       }
-
       function drawSpotMarkers(spots, type, clear) {
         if(clear) {
           GetCurrentLayer().clearLayers();
@@ -1047,10 +1094,6 @@
 
       }
 
-
-      //=================================================================
-
-
       return {
         Init: InitMap,
         GetMap: GetMap,
@@ -1070,6 +1113,7 @@
         LassoSelection: LassoSelection,
         PathSelection: PathSelection,
         RadiusSelection: RadiusSelection,
+        SaveSelections: SaveSelections,
         //Controls
         AddControls: AddControls,
         RemoveControls: RemoveControls,
@@ -1077,6 +1121,7 @@
         CreateMarker: CreateMarker,
         RemoveMarker: RemoveMarker,
         CreateCustomIcon: CreateCustomIcon,
+        BindSpotPopup: BindSpotPopup,
         BindMarkerToInput: BindMarkerToInput,
         //Math
         PointInPolygon: PointInPolygon,
@@ -1101,5 +1146,3 @@
     });
 
 })();
-
-//TODO: move forward events, recreation & pitstop layers
