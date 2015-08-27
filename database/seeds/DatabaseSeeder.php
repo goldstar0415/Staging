@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             $this->call(SpotPointsTableSeeder::class);
             $this->call(TagsTableSeeder::class);
             $this->call(SpotVotesTableSeeder::class);
-            $this->call(SpotReviewsTableSeeder::class);
+            $this->call(SpotCommentsTableSeeder::class);
 
             $this->call(FavoritesTableSeeder::class);
         }

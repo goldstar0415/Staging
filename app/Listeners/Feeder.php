@@ -9,8 +9,8 @@ use App\Events\OnAlbumPhotoComment;
 use App\Events\OnSpotRemind;
 use App\Events\OnPlanRemind;
 use App\Events\OnSpotCreate;
-use App\Events\OnSpotReview;
-use App\Events\OnSpotReviewDelete;
+use App\Events\OnSpotComment;
+use App\Events\OnSpotCommentDelete;
 use App\Events\OnSpotUpdate;
 use App\Events\OnUserBirthday;
 use App\Events\OnWallMessage;
@@ -76,11 +76,11 @@ class Feeder implements ShouldQueue
             case $event instanceof OnSpotUpdate:
                 $this->addFeed($event, $event->spot->user->followers);
                 break;
-            case $event instanceof OnSpotReview:
-                $this->addFeed($event, $event->review->spot->user);
+            case $event instanceof OnSpotComment:
+                $this->addFeed($event, $event->comment->spot->user);
                 break;
-            case $event instanceof OnSpotReviewDelete:
-                $this->addFeed($event, $event->review->user);
+            case $event instanceof OnSpotCommentDelete:
+                $this->addFeed($event, $event->comment->user);
                 break;
             case $event instanceof OnAlbumPhotoComment:
                 $this->addFeed($event, $event->comment->photo->album->user);

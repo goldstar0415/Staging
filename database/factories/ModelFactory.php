@@ -139,7 +139,7 @@ $factory->define(App\SpotPoint::class, function (Generator $faker) {
     ];
 });
 
-$factory->define(App\SpotReview::class, function (Generator $faker) use ($timestamps) {
+$factory->define(App\SpotComment::class, function (Generator $faker) use ($timestamps) {
     return array_merge([
         'body' => $faker->text
     ], $timestamps());

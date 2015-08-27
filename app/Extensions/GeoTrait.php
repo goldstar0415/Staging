@@ -54,7 +54,7 @@ trait GeoTrait
                 $b_box['_northEast']['lat']
             );
         }
-        $points = self::with(['spot', 'spot.user', 'spot.photos', 'spot.reviews'])->select('spot_points.*')
+        $points = self::with(['spot', 'spot.user', 'spot.photos', 'spot.comments'])->select('spot_points.*')
             ->join('spots', 'spot_points.spot_id', '=', 'spots.id')->whereRaw(implode(' OR ', $search_areas))->get();
 
         return $points;

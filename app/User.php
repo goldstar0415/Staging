@@ -66,7 +66,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property \Illuminate\Database\Eloquent\Collection $spotVotes
  * @property \Illuminate\Database\Eloquent\Collection $plans
  * @property \Illuminate\Database\Eloquent\Collection $favorites
- * @property \Illuminate\Database\Eloquent\Collection $spotReviews
+ * @property \Illuminate\Database\Eloquent\Collection $spotComments
  * @property \Illuminate\Database\Eloquent\Collection $spots
  * @property BloggerRequest $bloggerRequest
  *
@@ -333,9 +333,9 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         return $this->belongsToMany(Spot::class, 'calendar_spots')->withTimestamps();
     }
 
-    public function spotReviews()
+    public function spotComments()
     {
-        return $this->hasMany(SpotReview::class);
+        return $this->hasMany(SpotComment::class);
     }
 
     public function spots()

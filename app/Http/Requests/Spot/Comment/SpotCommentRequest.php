@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Spot\Review;
+namespace App\Http\Requests\Spot\Comment;
 
 use App\Http\Requests\Request;
 
-class SpotReviewRequest extends Request
+class SpotCommentRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class SpotReviewRequest extends Request
      */
     public function authorize()
     {
-        return $this->route('reviews')->user_id === $this->user()->id;
+        return $this->route('comments')->user_id === $this->user()->id;
     }
 
     /**

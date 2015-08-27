@@ -9,8 +9,8 @@ use App\Events\OnAddToCalendar;
 use App\Events\OnSpotCreate;
 use App\Events\OnSpotUpdate;
 use App\Events\OnUserBirthday;
-use App\Events\OnSpotReview;
-use App\Events\OnSpotReviewDelete;
+use App\Events\OnSpotComment;
+use App\Events\OnSpotCommentDelete;
 use App\Events\OnWallPostDelete;
 use App\Events\OnWallPostLike;
 use App\Events\OnWallPostDislike;
@@ -58,13 +58,13 @@ class EventServiceProvider extends ServiceProvider
         OnUserBirthday::class => [
             Feeder::class
         ],
-        OnSpotReview::class => [
+        OnSpotComment::class => [
             Feeder::class
         ],
         OnAlbumPhotoComment::class => [
             Feeder::class
         ],
-        OnSpotReviewDelete::class => [
+        OnSpotCommentDelete::class => [
             Feeder::class
         ],
         OnWallPostLike::class => [

@@ -1,11 +1,11 @@
 <?php
 
 use App\Spot;
-use App\SpotReview;
+use App\SpotComment;
 use App\User;
 use Illuminate\Database\Seeder;
 
-class SpotReviewsTableSeeder extends Seeder
+class SpotCommentsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,17 +15,17 @@ class SpotReviewsTableSeeder extends Seeder
     public function run()
     {
         Spot::random(10)->get()->each(function (Spot $spot) {
-            $reviews_count = mt_rand(2, 6);
+            $comments_count = mt_rand(2, 6);
             /**
              * @var \Illuminate\Database\Eloquent\Collection $users
              */
-            $users = User::random($reviews_count)->get();
-            $votes = factory(SpotReview::class, $reviews_count)
+            $users = User::random($comments_count)->get();
+            $votes = factory(SpotComment::class, $comments_count)
                 ->make()
                 ->each(
-                    function (SpotReview $spot_review) use ($spot, $users) {
-                        $spot_review->spot()->associate($spot);
-                        $spot_review->user()->associate($users->shift());
+                    function (SpotComment $spot_comment) use ($spot, $users) {
+                        $spot_comment->spot()->associate($spot);
+                        $spot_comment->user()->associate($users->shift());
                     }
                 );
             $spot->votes()->saveMany($votes);

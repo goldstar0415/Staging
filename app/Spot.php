@@ -30,7 +30,7 @@ use Request;
  * @property SpotTypeCategory $category
  * @property \Illuminate\Database\Eloquent\Collection $walls
  * @property \Illuminate\Database\Eloquent\Collection $votes
- * @property \Illuminate\Database\Eloquent\Collection $reviews
+ * @property \Illuminate\Database\Eloquent\Collection $comments
  * @property \Illuminate\Database\Eloquent\Collection $favorites
  * @property \Illuminate\Database\Eloquent\Collection $tags
  * @property \Illuminate\Database\Eloquent\Collection $plans
@@ -150,9 +150,9 @@ class Spot extends BaseModel implements StaplerableInterface
         return $this->hasMany(SpotVote::class);
     }
 
-    public function reviews()
+    public function comments()
     {
-        return $this->hasMany(SpotReview::class);
+        return $this->hasMany(SpotComment::class);
     }
 
     public function favorites()

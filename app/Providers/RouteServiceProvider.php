@@ -12,7 +12,7 @@ use App\Plan;
 use App\PlanComment;
 use App\Spot;
 use App\SpotPhoto;
-use App\SpotReview;
+use App\SpotComment;
 use App\User;
 use App\Wall;
 use Codesleeve\Stapler\Fixtures\Models\Photo;
@@ -53,12 +53,13 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('spots', Spot::class);
         $router->model('message', ChatMessage::class);
         $router->model('areas', Area::class);
-        $router->model('reviews', SpotReview::class);
-        $router->model('comments', function ($value) {
+        $router->bind('comments', function ($value) {
             if (Request::is('spots/*/photos/*')) {
                 return PhotoComment::findOrFail($value);
             } elseif (Request::is('plans/*')) {
                 return PlanComment::findOrFail($value);
+            } elseif (Request::is('spots/*')) {
+                return SpotComment::findOrFail($value);
             }
 
             return $value;

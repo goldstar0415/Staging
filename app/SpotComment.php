@@ -3,7 +3,7 @@
 namespace App;
 
 /**
- * Class SpotReview
+ * Class SpotComment
  * @package App
  *
  * @property integer $id
@@ -15,7 +15,7 @@ namespace App;
  * @property User $user
  * @property Spot $spot
  */
-class SpotReview extends BaseModel
+class SpotComment extends BaseModel
 {
     protected $fillable = ['body'];
 

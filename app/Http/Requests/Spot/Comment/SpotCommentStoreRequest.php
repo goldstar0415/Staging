@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Spot\Review;
+namespace App\Http\Requests\Spot\Comment;
 
-class SpotReviewStoreRequest extends SpotReviewRequest
+class SpotCommentStoreRequest extends SpotCommentRequest
 {
     /**
      * Determine if the user is authorized to make this request.

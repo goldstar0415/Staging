@@ -52,15 +52,15 @@ Route::resource('friends', 'FriendController', ['except' => ['create', 'edit']])
  * Spot resource
  */
 Route::get('spots/categories', 'SpotController@categories');
-Route::get('spots/reviews', 'SpotReviewController@mySpotsReviews');
+Route::get('spots/reviews', 'SpotCommentController@mySpotsComments');
 Route::get('spots/favorites', 'SpotController@favorites');
 Route::post('spots/invite', 'SpotController@invite');
 Route::post('spots/{spots}/rate', 'SpotController@rate');
 Route::get('spots/{spots}/favorite', 'SpotController@favorite');
 Route::get('spots/{spots}/unfavorite', 'SpotController@unfavorite');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
-Route::resource('spots.reviews', 'SpotReviewController', ['except' => ['create', 'edit']]);
-Route::resource('spots.photos.comments', 'SpotPhotoCommentController', ['only' => ['index', 'store', 'destroy']]);
+Route::resource('spots.comments', 'SpotCommentController', ['except' => ['create', 'edit']]);
+Route::resource('spots.photos.comments', 'SpotPhotoCommentController', ['only' => ['index', 'store', 'destroy', 'update']]);
 /**
  * Calendar controls
  */
