@@ -52,7 +52,7 @@ Route::resource('friends', 'FriendController', ['except' => ['create', 'edit']])
  * Spot resource
  */
 Route::get('spots/categories', 'SpotController@categories');
-Route::get('spots/reviews', 'SpotCommentController@mySpotsComments');
+Route::get('reviews', 'UserController@reviews');
 Route::get('spots/favorites', 'SpotController@favorites');
 Route::post('spots/invite', 'SpotController@invite');
 Route::post('spots/{spots}/rate', 'SpotController@rate');

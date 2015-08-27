@@ -23,25 +23,6 @@ class SpotCommentController extends Controller
     }
 
     /**
-     * Display a listing of the my spots comments.
-     *
-     * @param Request $request
-     * @return \Illuminate\Database\Eloquent\Collection
-     * @internal param Spot $spot
-     */
-    public function mySpotsComments(Request $request)
-    {
-        $comments = collect();
-        foreach ($request->user()->spots as $spot) {
-            if ($spot_comments = $spot->comments->load('spot')->all()) {
-                $comments = $comments->merge($spot_comments);
-            }
-        }
-
-        return $comments;
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @param Spot $spot

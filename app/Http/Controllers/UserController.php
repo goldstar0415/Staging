@@ -33,7 +33,7 @@ class UserController extends Controller
      */
     public function __construct(Guard $auth)
     {
-        $this->middleware('guest', ['except' => ['getLogout', 'getMe', 'getIndex', 'getList']]);
+        $this->middleware('guest', ['except' => ['getLogout', 'getMe', 'getIndex', 'getList', 'reviews']]);
         $this->middleware('auth', ['only' => 'getMe']);
         $this->auth = $auth;
     }
@@ -208,6 +208,46 @@ class UserController extends Controller
                     ->withInput($request->only('email'))
                     ->withErrors(['email' => trans($response)]);
         }
+    }
+
+    /**
+     * Display a listing of the my reviews.
+     *
+     * @param Request $request
+     * @return \Illuminate\Database\Eloquent\Collection
+     * @internal param Spot $spot
+     */
+    public function reviews(Request $request)
+    {
+        $spots_comments = collect();
+        $plans_comments = collect();
+        $photos_comments = collect();
+        /**
+         * @var \App\User $user
+         */
+        $user = $request->user();
+
+        foreach ($user->spots as $spot) {
+            if ($spot_comments = $spot->comments->load('spot')->all()) {
+                $spots_comments = $spots_comments->merge($spot_comments);
+            }
+        }
+
+        foreach ($user->plans as $album) {
+            if ($plan_comments = $album->comments->load('plan')->all()) {
+                $plans_comments = $spots_comments->merge($plan_comments);
+            }
+        }
+
+        foreach ($user->albums as $album) {
+            foreach ($album->photos as $photo) {
+                if ($photo_comments = $photo->comments->load('commentable')->all()) {
+                    $photos_comments = $photos_comments->merge($photo_comments);
+                }
+            }
+        }
+
+        return collect(compact('spots_comments', 'plans_comments', 'photos_comments'));
     }
 
     protected function authenticated(Request $request, Authenticatable $user)
