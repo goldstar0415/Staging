@@ -19,4 +19,5 @@
       full: 'MMM DD, YYYY H:mm A',
       backend: 'YYYY-MM-DD HH:mm:ss'
     })
+
 })();
