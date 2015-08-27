@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Activity;
 use App\ActivityCategory;
+use App\ChatMessage;
+use App\Events\OnMessage;
 use App\Http\Requests\Plan\PlanDestroyRequest;
 use App\Http\Requests\Plan\PlanIndexRequest;
 use App\Http\Requests\Plan\PlanInviteRequest;
+use App\Http\Requests\Plan\PlanShowRequest;
 use App\Http\Requests\Plan\PlanStoreRequest;
 use App\Http\Requests\Plan\PlanUpdateRequest;
 use App\Plan;
 
 use App\Http\Requests;
+use App\User;
 
 class PlanController extends Controller
 {
@@ -70,10 +74,11 @@ class PlanController extends Controller
 
     /**
      * Display the specified resource.
-     * @param Plan $plan
+     * @param PlanShowRequest $request
+     * @param \App\Plan $plan
      * @return Plan
      */
-    public function show($plan)
+    public function show(PlanShowRequest $request, $plan)
     {
         return $plan;
     }
@@ -135,13 +140,16 @@ class PlanController extends Controller
     {
         $user = $request->user();
         foreach ($request->input('users') as $user_id) {
+            $plan_id = (int)$request->input('plan_id');
+            User::findOrFail($user_id)->invitedPlans()->attach($plan_id);
+
             $message = new ChatMessage(['body' => '']);
             $user->chatMessagesSend()->save($message, ['receiver_id' => $user_id]);
-            $message->spots()->attach((int) $request->input('spot_id'));
+            $message->plans()->attach($plan_id);
 
             event(new OnMessage($user, $message, User::find($user_id)->random_hash));
         }
 
-        return response('Ok');
+        return response('OK');
     }
 }

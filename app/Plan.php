@@ -55,6 +55,11 @@ class Plan extends BaseModel
         return $this->belongsToMany(Spot::class);
     }
 
+    public function invitedUsers()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function comments()
     {
         return $this->hasMany(PlanComment::class);
