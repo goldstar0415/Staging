@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Plan;
 
 use App\Http\Requests\Request;
+use App\User;
 
 class PlanInviteRequest extends Request
 {
@@ -13,6 +14,19 @@ class PlanInviteRequest extends Request
      */
     public function authorize()
     {
+        $plan_id = $this->input('plan_id');
+
+        if ($this->user()->plans()->find($plan_id) === null) {
+            return false;
+        }
+
+        foreach ($this->input('users') as $user_id) {
+            $user = User::findOrFail($user_id);
+            if ($user->invitedPlans()->find($plan_id)) {
+                return false;
+            }
+        }
+
         return true;
     }
 

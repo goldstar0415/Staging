@@ -323,6 +323,11 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         return $this->hasMany(Plan::class);
     }
 
+    public function invitedPlans()
+    {
+        return $this->belongsToMany(Plan::class);
+    }
+
     public function favorites()
     {
         return $this->belongsToMany(Spot::class)->withTimestamps();
