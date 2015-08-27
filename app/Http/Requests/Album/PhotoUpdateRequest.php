@@ -13,8 +13,7 @@ class PhotoUpdateRequest extends AlbumRequest
     {
         $rules = [
             'title' => 'required|max:128',
-            'is_private' => 'boolean',
-            'files' => 'required'
+            'is_private' => 'boolean'
         ];
         $rules = array_merge($rules, $this->arrayFieldRules('files', 'image|max:5000', true));
         $rules = array_merge($rules, $this->arrayFieldRules('deleted_ids', 'integer'));
