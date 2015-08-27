@@ -127,7 +127,7 @@
   padding: 0;
   width: 100%;
   .title-popular-new {
-    font: 500 20px/20px Ubuntu;
+    font: 500 20px/20px 'Ubuntu medium';
     border-bottom: 1px solid $light_grey;
     padding: 12px 15px 15px;
     margin: 0;
@@ -181,7 +181,7 @@
     }
     .text-banner {
       color: $white;
-      font: 500 34px/40px Ubuntu_Titling_Bold;
+      font: 500 34px/40px 'Ubuntu titling bold';
       padding: 20px 15px 0;
       text-align: center;
       text-shadow: 0 3px 3px rgba(0, 0, 0, .4);
@@ -191,7 +191,7 @@
       display: table;
       width: 160px;
       height: 38px;
-      font: 500 22px/26px Ubuntu;
+      font: 500 22px/26px 'Ubuntu medium';
       box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.45);
       padding: 3px 20px 5px;
       background: #149e38;
@@ -254,39 +254,54 @@
   padding: 25px 0;
 }
 
-.user-menu-tabs {
-  padding-left: 15px;
+.wall-tabs {
+  padding: 0 15px;
   margin-bottom: 15px;
-
+  border-bottom: 1px solid #ddd;
+  list-style: none;
+  li {
+    font: 600 14px/14px "Ubuntu light";
+    display: inline-block;
+    padding-left: 10px;
+    &:first-child {
+      padding-left: 0;
+    }
+    a {
+      color: $gray-dark;
+      margin-right: 0;
+      border-radius: 5px 5px 0 0;
+      display: block;
+      padding: 10px 15px;
+      border: 1px solid $light_grey;
+      border-bottom: 0;
+      @include transition_bg_color;
+      @include transition_color;
+      &:hover, &:focus {
+        background-color: $blue;
+        color: $white;
+        @include transition_bg_color;
+        @include transition_color;
+      }
+    }
+  }
   li.active {
     a {
       background-color: $navy_blue;
       color: $white;
-      //font-size: 14px;
+      border: 1px solid #ffffff;
+      border-bottom: 0;
+      @include transition_bg_color;
+      @include transition_color;
       &:hover, &:focus {
         background-color: $blue;
-        color: $white;
-
-      }
-    }
-  }
-  .nav-tabs-default {
-    font: 600 14px/14px "Ubuntu light";;
-    a {
-
-      color: $gray-dark;
-      margin-right: 0;
-      &:hover, &:focus {
-        background-color: $blue;
-        color: $white;
-
+        @include transition_bg_color;
       }
     }
   }
 }
 
 @media (max-width: 767px) {
-  .user-menu-tabs {
+  .wall-tabs {
     li {
       a {
         padding: 10px;
@@ -296,7 +311,7 @@
 }
 
 @media (max-width: 400px) {
-  .nav-tabs {
+  .wall-tabs {
     border-bottom: none;
     li {
       margin: 10px 10px 0 0;

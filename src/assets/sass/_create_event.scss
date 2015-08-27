@@ -11,7 +11,7 @@
     border: 1px solid $green;
     background: $white;
     padding: 7px 15px;
-    font: 14px/14px Ubuntu;
+    font: 14px/14px 'Ubuntu medium';
     color: $dark-green;
     width: 30%;
     &:hover, &:focus, &:active {
@@ -101,7 +101,7 @@
 
 .add, .add-event-btn {
   float: right;
-  font: 500 16px Ubuntu;
+  font: 500 16px 'Ubuntu medium';
   margin-right: 18px;
   background: $green;
   color: $white;

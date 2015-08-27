@@ -6,29 +6,28 @@
     .factory('ScrollService', ScrollService);
 
   /** @ngInject */
-  function ScrollService($http) {
-    var Reddit = function(url, limit) {
-      this.page = 1;
-      this.limit = limit;
-      this.items = [];
+  function ScrollService($http, API_URL) {
+    var Reddit = function (action, items, params) {
+      this.action = action;
+      this.items = items;
+      this.params = params;
       this.busy = false;
-      this.after = '';
     };
 
-    Reddit.prototype.nextPage = function() {
-      console.log(111);
+    Reddit.prototype.nextPage = function () {
       if (this.busy) return;
-      this.busy = true;
+      if (!this.totalItems || (this.params.page * this.params.limit) < this.totalItems) {
+        this.busy = true;
+        this.params.page++;
 
-      var url = "http://api.reddit.com/hot?after=" + this.after + "&jsonp=JSON_CALLBACK";
-      $http.jsonp(url).success(function(data) {
-        var items = data.data.children;
-        for (var i = 0; i < items.length; i++) {
-          this.items.push(items[i].data);
-        }
-        this.after = "t3_" + this.items[this.items.length - 1].id;
-        this.busy = false;
-      }.bind(this));
+        this.action.call(this, this.params).$promise.then(function (resp) {
+          if (!this.totalItems) {
+            this.totalItems = resp.total;
+          }
+          this.items.data = _.union(this.items.data, resp.data);
+          this.busy = false;
+        }.bind(this));
+      }
     };
 
     return Reddit;

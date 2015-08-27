@@ -55,13 +55,13 @@ ul {
 
   .info {
     .age {
-      font: 400 15px/14px ubuntu;
+      font: 400 15px/14px 'Ubuntu medium';
       color: grey;
       margin-bottom: 10px;
     }
     .counters {
       margin: 10px 0;
-      font: 13px/13px Ubuntu;
+      font: 13px/13px 'Ubuntu medium';
       display: flex;
       .e-count {
         float: left;
@@ -126,7 +126,7 @@ ul {
     margin-top: 0;
     margin-bottom: 5px;
     a {
-      font: 600 22px/22px Ubuntu;
+      font: 600 22px/22px 'Ubuntu medium';
       color: $blue;
       word-break: break-all;
       &:hover {
