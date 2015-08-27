@@ -43,7 +43,9 @@ class Handler extends ExceptionHandler
         if ($e instanceof UnauthorizedException) {
             return response()->json(['message' => 'user unauthorized'], 401);
         } elseif ($e instanceof NotFoundHttpException) {
-            return response()->json(['message' => 'not found'], 404);
+            return response()->json(['message' => $e->getMessage()], $e->getStatusCode());
+        } elseif ($e instanceof PermissionDeniedException) {
+            return response()->json(['message' => $e->getMessage()], $e->getStatusCode());
         }
 
         return parent::render($request, $e);
