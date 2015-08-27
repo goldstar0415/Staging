@@ -6,7 +6,7 @@
     .controller('ProfileController', ProfileController);
 
   /** @ngInject */
-  function ProfileController(user, wall, Wall, spots, SpotService, MapService) {
+  function ProfileController(user, Wall, spots, SpotService, MapService, ScrollService) {
     var vm = this;
     vm.wall = {
       data: []
