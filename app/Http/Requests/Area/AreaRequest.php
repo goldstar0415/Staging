@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Selection;
+namespace App\Http\Requests\Area;
 
 use App\Http\Requests\Request;
 
-class SelectionRequest extends Request
+class AreaRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class SelectionRequest extends Request
      */
     public function authorize()
     {
-        return $this->route('selection')->user_id === $this->user()->id;
+        return $this->route('areas')->user_id === $this->user()->id;
     }
 
     /**

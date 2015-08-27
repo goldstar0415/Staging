@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Area;
-use App\Http\Requests\Selection\SelectionRequest;
+use App\Http\Requests\Area\AreaStoreRequest;
+use App\Http\Requests\Selection\AreaRequest;
 use ChrisKonnertz\OpenGraph\OpenGraph;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class SelectionController extends Controller
+class AreaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,14 +25,13 @@ class SelectionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request $request
+     * @param  AreaStoreRequest $request
      * @return Area
      */
-    public function store(Request $request)
+    public function store(AreaStoreRequest $request)
     {
-        $area = new Area(['data' => $request->input('selection')]);
-        $area->user()->associate($request->user());
-        $area->save();
+        $area = new Area($request->all());
+        $request->user()->areas()->save($area);
 
         return $area;
     }
@@ -65,11 +65,11 @@ class SelectionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param SelectionRequest $request
+     * @param AreaRequest $request
      * @param Area $area
      * @return Area
      */
-    public function update(SelectionRequest $request, $area)
+    public function update(AreaRequest $request, $area)
     {
         $area->update(['data' => $request->input('selection')]);
 
@@ -79,11 +79,11 @@ class SelectionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param SelectionRequest $request
+     * @param AreaRequest $request
      * @param Area $area
      * @return array
      */
-    public function destroy(SelectionRequest $request, $area)
+    public function destroy(AreaRequest $request, $area)
     {
         return ['result' => $area->delete()];
     }

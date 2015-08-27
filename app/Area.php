@@ -22,7 +22,7 @@ use App\Services\SocialSharing;
  */
 class Area extends BaseModel
 {
-    protected $fillable = ['data', 'b_box'];
+    protected $fillable = ['title', 'description', 'data', 'waypoints'];
 
     protected $appends = ['share_links'];
 
