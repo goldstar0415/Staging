@@ -242,13 +242,6 @@
         templateUrl: '/app/modules/profile/profile.html',
         controller: 'ProfileController',
         controllerAs: 'Profile',
-        resolve: {
-          wall: function (Wall, $stateParams) {
-            return Wall.query({
-              user_id: $stateParams.user_id
-            }).$promise;
-          }
-        },
         parent: 'profile',
         locate: 'none',
         mapState: 'small'

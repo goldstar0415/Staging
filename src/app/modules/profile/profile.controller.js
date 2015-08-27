@@ -6,10 +6,17 @@
     .controller('ProfileController', ProfileController);
 
   /** @ngInject */
-  function ProfileController(user, wall, Wall, ScrollService) {
+  function ProfileController(user, Wall, ScrollService) {
     var vm = this;
-    vm.wall = wall;
-    vm.pagination = new ScrollService();
+    vm.wall = {
+      data: []
+    };
+    var params = {
+      page: 0,
+      limit: 10,
+      user_id: user.id
+    };
+    vm.pagination = new ScrollService(Wall.query, vm.wall, params);
 
     vm.send = function () {
       Wall.save({
