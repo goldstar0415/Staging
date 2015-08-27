@@ -17,8 +17,11 @@
     margin: 0;
   }
   .new-message{
+    text-align: center;
     background: $dark_blue;
     color: $white;
+    padding-bottom: 5px;
+    font: 500 16px 'Ubuntu medium';
     border-radius: 5px 5px 0 0;
     margin-bottom: 5px;
   }
