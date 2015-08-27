@@ -10,6 +10,7 @@
     return $resource(API_URL + '/wall/:id', {id: '@id'}, {
       query: {
         isArray:false,
+        ignoreLoadingBar: true,
         params: {
           page: 1,
           limit: 10
