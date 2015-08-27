@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\UserListRequest;
+use App\Plan;
 use App\Role;
+use App\Spot;
 use App\User;
 use DB;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -213,19 +216,17 @@ class UserController extends Controller
     /**
      * Display a listing of the my reviews.
      *
-     * @param Request $request
+     * @param PaginateRequest $request
      * @return \Illuminate\Database\Eloquent\Collection
      * @internal param Spot $spot
      */
-    public function reviews(Request $request)
+    public function reviews(PaginateRequest $request)
     {
         $comments = collect();
         /**
          * @var \App\User $user
          */
         $user = $request->user();
-
-        $user_spots = $user->spots()->get(['id']);
 
         foreach ($user->spots as $spot) {
             if ($spot_comments = $spot->comments->load('commentable')->all()) {
