@@ -44,6 +44,7 @@
 
   }
   .form-group {
+
     .control-label {
       text-align: left;
       font: 400 16px Arial,sans-serif;
@@ -56,4 +57,8 @@
       float: right;
     }
   }
+
+}
+:-ms-input-placeholder  {
+  color: #999;
 }
