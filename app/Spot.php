@@ -48,7 +48,7 @@ class Spot extends BaseModel implements StaplerableInterface
 
     protected $appends = ['rating', 'cover_url', 'is_favorite', 'is_saved'];
 
-    protected $with = ['category.type'];
+    protected $with = ['category.type', 'points'];
 
     protected $hidden = ['cover_file_name', 'cover_file_size', 'cover_content_type'];
 
@@ -108,6 +108,11 @@ class Spot extends BaseModel implements StaplerableInterface
         if (is_array($value)) {
             $this->attributes['videos'] = json_encode($value);
         }
+    }
+
+    public function getLocationsAttribute()
+    {
+        return $this->points;
     }
 
     public function setTagsAttribute($value)
