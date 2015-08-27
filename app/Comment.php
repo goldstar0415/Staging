@@ -3,26 +3,22 @@
 namespace App;
 
 /**
- * Class PhotoComment
+ * Class Comment
  * @package App
  *
  * @property integer $id
  * @property integer $user_id
- * @property integer $album_photo_id
+ * @property integer $commentable_id
+ * @property string $commentable_type
  * @property string $body
  *
  * Relation properties
  * @property AlbumPhoto $photo
  * @property User $user
  */
-class PhotoComment extends BaseModel
+class Comment extends BaseModel
 {
     protected $fillable = ['body'];
-
-    public function photo()
-    {
-        return $this->belongsTo(AlbumPhoto::class);
-    }
 
     public function user()
     {

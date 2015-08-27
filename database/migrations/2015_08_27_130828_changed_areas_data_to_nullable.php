@@ -23,7 +23,7 @@ class ChangedAreasDataToNullable extends Migration
      */
     public function down()
     {
-        DB::statement('ALTER TABLE areas ALTER COLUMN "data" NOT NULL;');
-        DB::statement('ALTER TABLE areas ALTER COLUMN "waypoints" NOT NULL;');
+        DB::statement('ALTER TABLE areas ALTER COLUMN "data" SET NOT NULL;');
+        DB::statement('ALTER TABLE areas ALTER COLUMN "waypoints" SET NOT NULL;');
     }
 }

@@ -275,7 +275,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function albumPhotoComments()
     {
-        return $this->morphMany(PhotoComment::class, 'commentable');
+        return $this->morphMany(Comment::class, 'commentable', AlbumPhoto::class);
     }
 
     public function walls()

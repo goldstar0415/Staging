@@ -39,7 +39,7 @@ class PlanCommentController extends Controller
         $comments = $plan->comments;
         $comments->map(function ($comment) {
             /**
-             * @var \App\PhotoComment $comment
+             * @var \App\Comment $comment
              */
             $comment->addHidden('user_id');
             return $comment->load(['user' => function ($query) {

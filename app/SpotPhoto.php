@@ -49,6 +49,6 @@ class SpotPhoto extends BaseModel implements StaplerableInterface
 
     public function comments()
     {
-        return $this->morphMany(PhotoComment::class, 'commentable');
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }

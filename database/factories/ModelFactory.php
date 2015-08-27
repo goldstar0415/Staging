@@ -215,7 +215,7 @@ $factory->define(App\AlbumPhoto::class, function (Generator $faker) use ($timest
     ], $timestamps());
 });
 
-$factory->define(App\PhotoComment::class, function (Generator $faker) use ($timestamps) {
+$factory->define(App\Comment::class, function (Generator $faker) use ($timestamps) {
     return array_merge([
         'body' => $faker->sentence(16)
     ], $timestamps());

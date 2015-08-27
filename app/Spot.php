@@ -157,7 +157,7 @@ class Spot extends BaseModel implements StaplerableInterface
 
     public function comments()
     {
-        return $this->hasMany(SpotComment::class);
+        return $this->morphToMany(Comment::class, 'commentable');
     }
 
     public function favorites()

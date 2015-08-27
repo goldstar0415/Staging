@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Album;
 use App\AlbumPhoto;
-use App\PhotoComment;
+use App\Comment;
 use App\Area;
 use App\ChatMessage;
 use App\Friend;
@@ -55,7 +55,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('areas', Area::class);
         $router->bind('comments', function ($value) {
             if (Request::is('spots/*/photos/*')) {
-                return PhotoComment::findOrFail($value);
+                return Comment::findOrFail($value);
             } elseif (Request::is('plans/*')) {
                 return PlanComment::findOrFail($value);
             } elseif (Request::is('spots/*')) {

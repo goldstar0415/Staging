@@ -62,6 +62,6 @@ class Plan extends BaseModel
 
     public function comments()
     {
-        return $this->hasMany(PlanComment::class);
+        return $this->morphToMany(Comment::class, 'commentable');
     }
 }

@@ -2,23 +2,23 @@
 
 namespace App\Events;
 
-use App\PhotoComment;
+use App\Comment;
 use Illuminate\Queue\SerializesModels;
 
 class OnAlbumPhotoComment extends Event implements Feedable
 {
     use SerializesModels;
     /**
-     * @var PhotoComment
+     * @var Comment
      */
     public $comment;
 
     /**
      * Create a new event instance.
      *
-     * @param PhotoComment $comment
+     * @param Comment $comment
      */
-    public function __construct(PhotoComment $comment)
+    public function __construct(Comment $comment)
     {
         $this->comment = $comment;
     }
