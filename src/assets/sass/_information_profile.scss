@@ -152,7 +152,12 @@
       }
     }
     .activity-mobile {
-      width: auto
+      width: auto;
+      .profile-name {
+        a {
+          text-align: left;
+        }
+      }
     }
   }
 }

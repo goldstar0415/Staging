@@ -262,7 +262,7 @@
     a {
       background-color: $navy_blue;
       color: $white;
-      font-size: 14px;
+      //font-size: 14px;
       &:hover, &:focus {
         background-color: $blue;
         color: $white;
@@ -271,7 +271,7 @@
     }
   }
   .nav-tabs-default {
-    font: 500 14px/14px 'Ubuntu medium';
+    font: 600 14px/14px "Ubuntu light";;
     a {
 
       color: $gray-dark;
