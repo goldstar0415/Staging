@@ -7,7 +7,7 @@
 
   /** @ngInject */
   function PlanComment($resource, API_URL) {
-    return $resource(API_URL + '/plan/:plan_id/comments/:id', {id: '@id', plan_id: '@plan_id'}, {
+    return $resource(API_URL + '/plans/:plan_id/comments/:id', {id: '@id', plan_id: '@plan_id'}, {
       query: {
         isArray:false,
         params: {

@@ -1,7 +1,7 @@
 <div class="col-xs-12 menu-profile">
   <div class="container">
-    <div class="col-xs-10 col-xs-offset-2 no-pad">
-      <ul ng-if="$root.currentUser">
+    <div class="col-xs-10 col-xs-offset-2 no-pad" >
+      <ul ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
         <li><a ui-sref="spots({user_id: $root.currentUser.id})" ui-sref-active="active">My spots</a></li>
         <li><a ui-sref-active="active">My blog</a></li>
         <li><a ui-sref="favorites({user_id: $root.currentUser.id})" ui-sref-active="active">Favorites</a></li>
@@ -11,7 +11,20 @@
         <li><a ui-sref="planner.list" ng-class="Profile.isActive('planner')">Planner </a></li>
         <li><a ui-sref="settings" ui-sref-active="active">Settings</a></li>
       </ul>
-      <div ng-if="!$root.currentUser">
+      <ul ng-if="$root.currentUser && $root.currentUser.id != $root.profileUser.id">
+        <li>
+          <a ui-sref="spots({user_id: $root.profileUser.id})" ui-sref-active="active" class="my-spots">Spots</a>
+        </li>
+        <li>
+          <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active" class="favorites">Favorites</a>
+        </li>
+        <li>
+          <a ui-sref="photos({user_id: $root.profileUser.id})" ng-class="Profile.isActive('photos')" class="photomap">Photo
+            map</a>
+        </li>
+      </ul>
+
+      <div ng-if="!$root.currentUser" class="unauthorized">
         <b>You should
           <sign-in title="sign in"></sign-in>
           to get all features</b>
@@ -87,22 +100,6 @@
     </div>
 
     <div class="col-md-3 hidden-sm hidden-xs activity-profile">
-
-      <div class="zoomers-sidebar" ng-if="$root.profileUser.id != $root.currentUser.id">
-        <ul class="settings-list">
-          <li>
-            <a ui-sref="spots({user_id: $root.profileUser.id})" ui-sref-active="active" class="my-spots">Spots</a>
-          </li>
-          <li>
-            <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active"
-               class="favorites">Favorites</a>
-          </li>
-          <li>
-            <a ui-sref="photos({user_id: $root.profileUser.id})" ng-class="Profile.isActive('photos')" class="photomap">Photo
-              map</a>
-          </li>
-        </ul>
-      </div>
 
       <aside class="module-sidebar clearfix" ng-if="$root.profileUser.count_followers > 0">
         <h2 class="sidebar-title">
