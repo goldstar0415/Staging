@@ -2,24 +2,14 @@
   <!-- section with spot -->
   <section class="one-spot-section">
     <div>
-        <span class="rating clear rateit spot-stars" >
-            <button id="rateit-reset-2" type="button" data-role="none" class="rateit-reset"
-                    aria-label="reset rating" aria-controls="rateit-range-2"
-                    style="display: none;"></button>
-            <div id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating"
-                 aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="5"
-                 style="width: 80px; height: 16px;" aria-readonly="false">
-              <div class="rateit-selected" style="height: 16px; width: 80px;"></div>
-              <div class="rateit-hover" style="height: 16px;"></div>
-            </div>
-        </span>
+      <stars item="item"></stars>
 
-        <span ng-if="Spot.spot.type == 'Event'" class="date">
-            <date-range item="Spot.spot"></date-range>
-        </span>
+      <span ng-if="Spot.spot.type == 'Event'" class="date">
+          <date-range item="Spot.spot"></date-range>
+      </span>
 
       <h2 class="">
-        <a >{{Spot.spot.title}}</a>
+        <a>{{Spot.spot.title}}</a>
       </h2>
 
       <p class="place"></p>
@@ -28,7 +18,7 @@
       </p>
 
       <div class="external-link">
-        <a  target="_blank">http://test.com</a>
+        <a target="_blank">http://test.com</a>
       </div>
 
       <ul class="tags ">

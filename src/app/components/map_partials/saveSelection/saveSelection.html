@@ -1,0 +1,17 @@
+<form action="#" method="post" name="#">
+  <div class="modal-header">
+    <h4> Save selections</h4>
+  </div>
+  <div class="modal-body">
+    <input ng-model="data.title" type="text" class="" placeholder="Title...">
+    <textarea ng-model="data.description" placeholder="Description..." class="description"></textarea>
+  </div>
+  <div class="modal-footer">
+    <button ng-click="save()" class="btn btn-success pull-left col-sm-4 col-xs-5 button-my" type="button">
+      Save
+    </button>
+    <button ng-click="cancel()" class="btn btn-primary pull-left col-sm-4 col-xs-5 button-my" type="button">
+      Cancel
+    </button>
+  </div>
+</form>
