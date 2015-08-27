@@ -8,7 +8,15 @@
   /** @ngInject */
   function ProfileController(user, wall, Wall, spots, SpotService, MapService) {
     var vm = this;
-    vm.wall = wall;
+    vm.wall = {
+      data: []
+    };
+    var params = {
+      page: 0,
+      limit: 10,
+      user_id: user.id
+    };
+    vm.pagination = new ScrollService(Wall.query, vm.wall, params);
     vm.spots = spots;
     vm.spots.data = formatSpots(vm.spots.data);
 
