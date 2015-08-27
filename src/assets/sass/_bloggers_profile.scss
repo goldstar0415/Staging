@@ -254,39 +254,50 @@
   padding: 25px 0;
 }
 
-.user-menu-tabs {
+.wall-tabs {
   padding-left: 15px;
   margin-bottom: 15px;
-
+  border-bottom: 1px solid #ddd;
+  list-style: none;
+  li {
+    font: 600 14px/14px "Ubuntu light";
+    display: inline-block;
+    a {
+      color: $gray-dark;
+      margin-right: 0;
+      border-radius: 5px 5px 0 0;
+      display: block;
+      padding: 10px 15px;
+      border: 1px solid $light_grey;
+      border-bottom: 0;
+      @include transition_bg_color;
+      @include transition_color;
+      &:hover, &:focus {
+        background-color: $blue;
+        color: $white;
+        @include transition_bg_color;
+        @include transition_color;
+      }
+    }
+  }
   li.active {
     a {
       background-color: $navy_blue;
       color: $white;
-      //font-size: 14px;
+      border: 1px solid #ffffff;
+      border-bottom: 0;
+      @include transition_bg_color;
+      @include transition_color;
       &:hover, &:focus {
         background-color: $blue;
-        color: $white;
-
-      }
-    }
-  }
-  .nav-tabs-default {
-    font: 600 14px/14px "Ubuntu light";;
-    a {
-
-      color: $gray-dark;
-      margin-right: 0;
-      &:hover, &:focus {
-        background-color: $blue;
-        color: $white;
-
+        @include transition_bg_color;
       }
     }
   }
 }
 
 @media (max-width: 767px) {
-  .user-menu-tabs {
+  .wall-tabs {
     li {
       a {
         padding: 10px;
@@ -296,7 +307,7 @@
 }
 
 @media (max-width: 400px) {
-  .nav-tabs {
+  .wall-tabs {
     border-bottom: none;
     li {
       margin: 10px 10px 0 0;
