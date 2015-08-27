@@ -28,6 +28,9 @@
     function PasswordRecoveryModalController(PasswordRecoveryService, $modalInstance) {
       var vm = this;
 
+      vm.close = function () {
+        $modalInstance.close();
+      };
       vm.recoveryPassword = function (form) {
         PasswordRecoveryService.recoveryPassword(form, vm, $modalInstance);
       };
