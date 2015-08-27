@@ -219,35 +219,35 @@ class UserController extends Controller
      */
     public function reviews(Request $request)
     {
-        $spots_comments = collect();
-        $plans_comments = collect();
-        $photos_comments = collect();
+        $comments = collect();
         /**
          * @var \App\User $user
          */
         $user = $request->user();
 
+        $user_spots = $user->spots()->get(['id']);
+
         foreach ($user->spots as $spot) {
-            if ($spot_comments = $spot->comments->load('spot')->all()) {
-                $spots_comments = $spots_comments->merge($spot_comments);
+            if ($spot_comments = $spot->comments->load('commentable')->all()) {
+                $comments = $comments->merge($spot_comments);
             }
         }
 
         foreach ($user->plans as $album) {
-            if ($plan_comments = $album->comments->load('plan')->all()) {
-                $plans_comments = $spots_comments->merge($plan_comments);
+            if ($plan_comments = $album->comments->load('commentable')->all()) {
+                $comments = $comments->merge($plan_comments);
             }
         }
 
         foreach ($user->albums as $album) {
             foreach ($album->photos as $photo) {
                 if ($photo_comments = $photo->comments->load('commentable')->all()) {
-                    $photos_comments = $photos_comments->merge($photo_comments);
+                    $comments = $comments->merge($photo_comments);
                 }
             }
         }
 
-        return collect(compact('spots_comments', 'plans_comments', 'photos_comments'));
+        return $comments;
     }
 
     protected function authenticated(Request $request, Authenticatable $user)

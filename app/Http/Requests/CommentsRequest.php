@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
 use Illuminate\Contracts\Auth\Guard;
 
 class CommentsRequest extends Request

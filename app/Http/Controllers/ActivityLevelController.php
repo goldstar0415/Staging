@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\ActivityLevel;
 use App\Http\Requests\Admin\ActivityLevelRequest;
-use App\Http\Requests\Admin\ActivityLevelStoreRequest;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class ActivityLevelController extends Controller
 {

@@ -1,7 +1,7 @@
 <?php
 
 use App\Spot;
-use App\SpotComment;
+use App\Comment;
 use App\User;
 use Illuminate\Database\Seeder;
 
@@ -20,15 +20,15 @@ class SpotCommentsTableSeeder extends Seeder
              * @var \Illuminate\Database\Eloquent\Collection $users
              */
             $users = User::random($comments_count)->get();
-            $votes = factory(SpotComment::class, $comments_count)
+            $comments = factory(Comment::class, $comments_count)
                 ->make()
                 ->each(
-                    function (SpotComment $spot_comment) use ($spot, $users) {
-                        $spot_comment->spot()->associate($spot);
+                    function (Comment $spot_comment) use ($spot, $users) {
+                        $spot_comment->commentable()->associate($spot);
                         $spot_comment->user()->associate($users->shift());
                     }
                 );
-            $spot->votes()->saveMany($votes);
+            $spot->comments()->saveMany($comments);
         });
     }
 }

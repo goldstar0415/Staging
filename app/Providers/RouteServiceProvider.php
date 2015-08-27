@@ -10,13 +10,10 @@ use App\Area;
 use App\ChatMessage;
 use App\Friend;
 use App\Plan;
-use App\PlanComment;
 use App\Spot;
 use App\SpotPhoto;
-use App\SpotComment;
 use App\User;
 use App\Wall;
-use Codesleeve\Stapler\Fixtures\Models\Photo;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Request;
@@ -54,17 +51,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('spots', Spot::class);
         $router->model('message', ChatMessage::class);
         $router->model('areas', Area::class);
-        $router->bind('comments', function ($value) {
-            if (Request::is('spots/*/photos/*')) {
-                return Comment::findOrFail($value);
-            } elseif (Request::is('plans/*')) {
-                return PlanComment::findOrFail($value);
-            } elseif (Request::is('spots/*')) {
-                return SpotComment::findOrFail($value);
-            }
-
-            return $value;
-        });
+        $router->model('comments', Comment::class);
         $router->model('wall', Wall::class);
         $router->model('plans', Plan::class);
 

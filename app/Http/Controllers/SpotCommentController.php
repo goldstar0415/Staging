@@ -7,8 +7,7 @@ use App\Events\OnSpotCommentDelete;
 use App\Http\Requests\Spot\Comment\SpotCommentRequest;
 use App\Http\Requests\Spot\Comment\SpotCommentStoreRequest;
 use App\Spot;
-use App\SpotComment;
-use Illuminate\Http\Request;
+use App\Comment;
 
 use App\Http\Requests;
 
@@ -37,11 +36,11 @@ class SpotCommentController extends Controller
      * Store a newly created resource in storage.
      * @param SpotCommentStoreRequest $request
      * @param Spot $spot
-     * @return SpotComment
+     * @return Comment
      */
     public function store(SpotCommentStoreRequest $request, $spot)
     {
-        $comment = new SpotComment($request->all());
+        $comment = new Comment($request->all());
         $comment->user()->associate($request->user());
 
         $spot->comments()->save($comment);
@@ -55,8 +54,8 @@ class SpotCommentController extends Controller
      * Display the specified resource.
      *
      * @param Spot $spot
-     * @param SpotComment $comment
-     * @return SpotComment
+     * @param Comment $comment
+     * @return Comment
      */
     public function show($spot, $comment)
     {
@@ -68,8 +67,8 @@ class SpotCommentController extends Controller
      *
      * @param SpotCommentRequest $request
      * @param Spot $spot
-     * @param SpotComment $comment
-     * @return SpotComment
+     * @param Comment $comment
+     * @return Comment
      */
     public function update(SpotCommentRequest $request, $spot, $comment)
     {
@@ -82,7 +81,7 @@ class SpotCommentController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Spot $spot
-     * @param SpotComment $comment
+     * @param Comment $comment
      * @return array
      */
     public function destroy($spot, $comment)

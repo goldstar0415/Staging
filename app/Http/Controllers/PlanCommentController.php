@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentsRequest;
 use App\Http\Requests\CommentStoreRequest;
-use App\PlanComment;
+use App\Comment;
 use App\Services\Attachments;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class PlanCommentController extends Controller
 {
@@ -55,11 +54,11 @@ class PlanCommentController extends Controller
      *
      * @param CommentStoreRequest|Request $request
      * @param \App\Plan $plan
-     * @return \App\PlanComment
+     * @return \App\Comment
      */
     public function store(CommentStoreRequest $request, $plan)
     {
-        $comment = new PlanComment(['body' => $request->input('message')]);
+        $comment = new Comment(['body' => $request->input('message')]);
         $comment->user()->associate($request->user());
         $plan->comments()->save($comment);
 
@@ -73,7 +72,7 @@ class PlanCommentController extends Controller
      *
      * @param CommentsRequest $request
      * @param \App\Plan $plan
-     * @param \App\PlanComment $comment
+     * @param \App\Comment $comment
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(CommentsRequest $request, $plan, $comment)

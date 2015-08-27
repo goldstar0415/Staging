@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\SpotComment;
+use App\Comment;
 use Illuminate\Queue\SerializesModels;
 
 class OnSpotCommentDelete extends Event implements Feedable
@@ -10,16 +10,16 @@ class OnSpotCommentDelete extends Event implements Feedable
     use SerializesModels;
 
     /**
-     * @var SpotComment
+     * @var Comment
      */
     public $comment;
 
     /**
      * Create a new event instance.
      *
-     * @param SpotComment $comment
+     * @param Comment $comment
      */
-    public function __construct(SpotComment $comment)
+    public function __construct(Comment $comment)
     {
         $this->comment = $comment;
     }

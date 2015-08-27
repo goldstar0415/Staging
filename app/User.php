@@ -340,7 +340,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function spotComments()
     {
-        return $this->hasMany(SpotComment::class);
+        return $this->morphMany(Comment::class, 'commentable', Spot::class);
     }
 
     public function spots()

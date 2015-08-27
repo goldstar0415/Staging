@@ -139,12 +139,6 @@ $factory->define(App\SpotPoint::class, function (Generator $faker) {
     ];
 });
 
-$factory->define(App\SpotComment::class, function (Generator $faker) use ($timestamps) {
-    return array_merge([
-        'body' => $faker->text
-    ], $timestamps());
-});
-
 $factory->defineAs(App\SpotType::class, 'event', function (Generator $faker) {
     return [
         'name' => 'event',
@@ -223,7 +217,10 @@ $factory->define(App\Comment::class, function (Generator $faker) use ($timestamp
 
 $factory->define(App\Area::class, function (Generator $faker) use ($timestamps) {
     return array_merge([
-        'data' => json_encode($faker->latitude)
+        'title' => $faker->sentence,
+        'description' => $faker->sentence(12),
+        'data' => json_encode($faker->latitude),
+        'waypoints' => json_encode($faker->latitude)
     ], $timestamps());
 });
 

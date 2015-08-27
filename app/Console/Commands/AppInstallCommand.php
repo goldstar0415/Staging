@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use File;
 use Illuminate\Console\Command;
-use Illuminate\Console\Scheduling\Schedule;
 
 class AppInstallCommand extends Command
 {

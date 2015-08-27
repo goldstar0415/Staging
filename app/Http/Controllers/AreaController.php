@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Area;
 use App\Http\Requests\Area\AreaStoreRequest;
-use App\Http\Requests\Selection\AreaRequest;
+use App\Http\Requests\Area\AreaRequest;
 use ChrisKonnertz\OpenGraph\OpenGraph;
 use Illuminate\Http\Request;
 
@@ -71,7 +71,7 @@ class AreaController extends Controller
      */
     public function update(AreaRequest $request, $area)
     {
-        $area->update(['data' => $request->input('selection')]);
+        $area->update($request->all());
 
         return $area;
     }
