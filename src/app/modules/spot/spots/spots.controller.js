@@ -6,7 +6,7 @@
     .controller('SpotsController', SpotsController);
 
   /** @ngInject */
-  function SpotsController(spots, SpotService) {
+  function SpotsController(spots, SpotService, MapService) {
     var vm = this;
     vm.spots = spots;
     vm.spots.data = formatSpots(vm.spots.data);
@@ -15,13 +15,18 @@
     vm.addToFavorite = SpotService.addToFavorite;
     vm.removeFromFavorite = SpotService.removeFromFavorite;
     vm.removeSpot = SpotService.removeSpot;
+    ShowMarkers(vm.spots.data);
 
     function formatSpots(spots) {
-      _.each(spots, function (spot) {
+      return _.each(spots, function (spot) {
         SpotService.formatSpot(spot);
       });
+    }
+    function ShowMarkers(spots) {
+      console.log(spots);
+      _.each(spots, function(spot) {
 
-      return spots;
+      });
     }
   }
 })();
