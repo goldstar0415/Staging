@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\ActivityLevel;
 use App\Album;
 use App\AlbumPhoto;
 use App\PhotoComment;
@@ -65,6 +66,10 @@ class RouteServiceProvider extends ServiceProvider
         });
         $router->model('wall', Wall::class);
         $router->model('plans', Plan::class);
+
+        // Admin
+
+        $router->model('activitylevel', ActivityLevel::class);
 
         parent::boot($router);
     }

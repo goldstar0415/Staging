@@ -101,6 +101,6 @@ Route::get('feeds', 'FeedController@index');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
 
-Route::group(['prefix' => 'admin'], function () {
-    Route::resource('activitylevel', 'ActivityTypeController');
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+    Route::resource('activitylevel', 'ActivityLevelController', ['except' => 'show']);
 });
