@@ -98,6 +98,7 @@ a {
   cursor: pointer;
   &:hover, &:visited, &:focus {
     text-decoration: none;
+    outline: none;
   }
 }
 
@@ -215,7 +216,8 @@ h3 {
   h2 {
     font: 500 22px/22px 'Ubuntu medium';
     color: $dark_blue;
-    display: inline-table;
+    display: inline-block;
+    word-break: break-all;
     width: 100%;
   }
   .back {
