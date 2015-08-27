@@ -243,11 +243,6 @@
         controller: 'ProfileController',
         controllerAs: 'Profile',
         resolve: {
-          wall: function (Wall, $stateParams) {
-            return Wall.query({
-              user_id: $stateParams.user_id
-            }).$promise;
-          },
           spots: function (Spot, $stateParams) {
             return Spot.query({
               user_id: $stateParams.user_id
