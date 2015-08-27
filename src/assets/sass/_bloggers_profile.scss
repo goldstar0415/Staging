@@ -255,13 +255,17 @@
 }
 
 .wall-tabs {
-  padding-left: 15px;
+  padding: 0 15px;
   margin-bottom: 15px;
   border-bottom: 1px solid #ddd;
   list-style: none;
   li {
     font: 600 14px/14px "Ubuntu light";
     display: inline-block;
+    padding-left: 10px;
+    &:first-child {
+      padding-left: 0;
+    }
     a {
       color: $gray-dark;
       margin-right: 0;
