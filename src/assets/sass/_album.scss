@@ -12,8 +12,44 @@
       min-height: 100px;
       cursor: pointer;
     }
+    .album-tools-wrap {
+      padding: 0;
+      display: none;
+      a {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        border-radius: 3px;
+        display: block;
+        float: left;
+        @include transition_bg_color;
+        &:nth-child(2) {
+          display: table;
+          margin: 0 auto;
+        }
+        &:nth-child(3) {
+          float: right;
+        }
+        &:hover {
+          background-color: $dark_blue;
+          @include transition_bg_color;
+        }
+      }
+      .set-avatar {
+        background: url(/assets/img/icons/photo-tools.png) 6px -53px no-repeat rgba(12, 38, 56, .5);
+      }
+      .set-location {
+        background: url(/assets/img/icons/photo-tools.png) 6px -83px no-repeat rgba(12, 38, 56, .5);
+      }
+      .delete {
+        background: url(/assets/img/icons/photo-tools.png) 6px -23px no-repeat rgba(12, 38, 56, .5);
+      }
+    }
     &:hover {
-
+      .album-tools-wrap {
+        display: flex;
+        margin-bottom: -34px;
+      }
     }
   }
 }

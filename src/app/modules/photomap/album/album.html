@@ -13,7 +13,12 @@
 
 <div class="col-xs-12">
   <div ng-repeat="item in Album.data.photos" class="col-xs-3 photo-wrap">
-    <div class="photo" photo-viewer items="Album.data.photos" index="$index" >
+    <div class="photo" photo-viewer items="Album.data.photos" index="$index">
+      <div class="album-tools-wrap col-xs-12">
+        <a class="set-avatar" href="#" title="Set as avatar"></a>
+        <a class="set-location" href="#" title="Set location"></a>
+        <a class="delete" href="#" title="Delete"></a>
+      </div>
       <img ng-src="{{item.photo_url.medium}}" alt="Photo not found">
     </div>
   </div>
