@@ -86,8 +86,8 @@
       };
 
       function getComments(id) {
-        if (!hideComments) {
-          Photo.getComments({id: id});
+        if (_.isUndefined(hideComments) || !hideComments) {
+          return Photo.getComments({id: id});
         }
       }
     }

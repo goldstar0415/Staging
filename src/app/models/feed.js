@@ -19,7 +19,7 @@
       reviews: {
         url: API_URL + '/reviews',
         method: 'GET',
-        isArray: true,
+        isArray: false,
         params: {
           page: 1,
           limit: 20

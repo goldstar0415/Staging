@@ -4,26 +4,17 @@
   <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
 </div>
 
-<div class="reviews col-xs-12" ng-repeat="item in Review.reviews">
-  <div class="col-xs-12 rating-likes">
-    <div class="rating col-xs-6">
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-    </div>
-  </div>
+<div class="reviews col-xs-12" ng-repeat="item in Review.reviews.data">
   <a class="review-img" ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
-    <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.spot.cover_url.medium}}">
+    <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.sender.avatar_url.medium}}">
   </a>
 
   <div class="text-block">
-    <h2 class="media-heading feeds-title">
-      <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">{{item.spot.title}}</a>
-    </h2>
-    <a class="author-name" ui-sref="profile.main({user_id: item.user.id})">{{item.user.first_name}}
-      {{item.user.last_name}}</a>
+    <!--<h2 class="media-heading feeds-title">-->
+      <!--<a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">{{item.body}}</a>-->
+    <!--</h2>-->
+    <a class="author-name" ui-sref="profile.main({user_id: item.user.id})">{{item.sender.first_name}}
+      {{item.sender.last_name}}</a>
 
     <p class="description">{{item.body}}</p>
 
