@@ -1,5 +1,7 @@
 <div class="title">
-  <h2 class="title-name">Photo map</h2>
+  <h2 class="title-name">
+    {{currentUser.id == profileUser.id ? 'Photo map' : profileUser.first_name + "'s photo map"}}
+  </h2>
 
   <div class="album-tools">
     <a ng-if="Photomap.currentId == currentUser.id" title="Create new album" ui-sref="photos.createAlbum" class="add-page"></a>

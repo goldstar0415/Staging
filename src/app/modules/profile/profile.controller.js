@@ -8,9 +8,7 @@
   /** @ngInject */
   function ProfileController(user, Wall, spots, SpotService, MapService, ScrollService) {
     var vm = this;
-    vm.wall = {
-      data: []
-    };
+    vm.wall = {};
     var params = {
       page: 0,
       limit: 10,

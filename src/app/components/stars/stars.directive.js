@@ -19,11 +19,11 @@
     };
 
     /** @ngInject */
-    function StarsController($scope, Spot) {
+    function StarsController($scope, Spot, $rootScope) {
       var vm = this;
 
       $scope.$watch('Stars.item.rating', function (value, old) {
-        if (value != old) {
+        if (value != old && $rootScope.currentUser) {
           console.log(vm.item.rating);
           Spot.rate({id: vm.item.id}, {vote: parseInt(value)});
         }

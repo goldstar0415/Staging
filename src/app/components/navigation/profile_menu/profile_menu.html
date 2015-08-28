@@ -3,7 +3,7 @@
     <div class="col-xs-10 col-xs-offset-2 no-pad" >
       <ul ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
         <li><a ui-sref="spots({user_id: $root.currentUser.id})" ui-sref-active="active">My spots</a></li>
-        <li><a ui-sref-active="active">My blog</a></li>
+        <!--<li><a ui-sref-active="active">My blog</a></li>-->
         <li><a ui-sref="favorites({user_id: $root.currentUser.id})" ui-sref-active="active">Favorites</a></li>
         <li><a ui-sref="areas" ui-sref-active="active">Saved searches</a></li>
         <li><a ui-sref="friendsmap" ui-sref-active="active">Friends map</a></li>
@@ -64,7 +64,7 @@
                class="biography">
             {{$root.profileUser.description | limitTo: Profile.textLimit}}
           </div>
-          <div ng-if="Profile.textLimit == 50">
+          <div ng-if="Profile.textLimit == 50 && $root.profileUser.description.length > 50">
             <a class="more" ng-click="Profile.textLimit = 1000">
               see more
             </a>

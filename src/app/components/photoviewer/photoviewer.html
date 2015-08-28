@@ -1,12 +1,12 @@
 <script type="text/ng-template" id="photoViewer.html">
   <div class="viewer-content">
     <div class="photo-viewer">
-      <div class="image" ng-class="{'col-xs-8': !PV.hideComments, 'col-xs-12': PV.hideComments}">
+      <div class="image" ng-class="{'col-xs-8': !PV.hideComments && $root.currentUser, 'col-xs-12': PV.hideComments || !$root.currentUser}">
         <img ng-src="{{PV.currentPhoto.photo_url.original}}">
         <a ng-click="PV.previousPhoto($event)" class="previous"></a>
         <a ng-click="PV.nextPhoto($event)" class="next"></a>
       </div>
-      <div class="photo-comments col-xs-4" ng-if="!PV.hideComments">
+      <div class="photo-comments col-xs-4" ng-if="!PV.hideComments && $root.currentUser">
         <p class="location">{{PV.currentPhoto.address}}</p>
 
         <form name="form" ng-submit="PV.sendComment()" class="col-xs-12 new-post">

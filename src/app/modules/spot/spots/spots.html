@@ -1,5 +1,5 @@
 <h2 class="title-name">
-  {{currentUser.id == profileUser.id ? 'My spots' :  profileUser.first_name + ' ' + profileUser.last_name + "'s spots"}}
+  {{currentUser.id == profileUser.id ? 'My spots' :  profileUser.first_name + "'s spots"}}
 </h2>
 <a ui-sref="spot_create" ng-if="currentUser.id == profileUser.id" class="add-friend" title="Create new spot"></a>
 
