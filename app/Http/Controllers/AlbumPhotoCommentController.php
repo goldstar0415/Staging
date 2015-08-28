@@ -33,7 +33,7 @@ class AlbumPhotoCommentController extends Controller
              * @var \App\Comment $comment
              */
             $comment->addHidden('user_id');
-            return $comment->load(['user' => function ($query) {
+            return $comment->load(['sender' => function ($query) {
                 $query->select(['id', 'first_name', 'last_name']);
             }]);
         });
@@ -52,10 +52,10 @@ class AlbumPhotoCommentController extends Controller
     {
         $comment = new Comment($request->all());
         $comment->commentable()->associate($photos);
-        $comment->user()->associate($this->auth->user());
+        $comment->sender()->associate($this->auth->user());
         $photos->comments()->save($comment);
 
-        return $comment->load('user');
+        return $comment;
     }
 
     /**

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\UserListRequest;
-use App\Plan;
 use App\Role;
-use App\Spot;
 use App\User;
 use DB;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 use Illuminate\Mail\Message;
@@ -222,33 +222,7 @@ class UserController extends Controller
      */
     public function reviews(PaginateRequest $request)
     {
-        $comments = collect();
-        /**
-         * @var \App\User $user
-         */
-        $user = $request->user();
-
-        foreach ($user->spots as $spot) {
-            if ($spot_comments = $spot->comments->load('commentable')->all()) {
-                $comments = $comments->merge($spot_comments);
-            }
-        }
-
-        foreach ($user->plans as $album) {
-            if ($plan_comments = $album->comments->load('commentable')->all()) {
-                $comments = $comments->merge($plan_comments);
-            }
-        }
-
-        foreach ($user->albums as $album) {
-            foreach ($album->photos as $photo) {
-                if ($photo_comments = $photo->comments->load('commentable')->all()) {
-                    $comments = $comments->merge($photo_comments);
-                }
-            }
-        }
-
-        return $comments;
+        return $this->paginatealbe($request, $request->user()->reviews());
     }
 
     protected function authenticated(Request $request, Authenticatable $user)

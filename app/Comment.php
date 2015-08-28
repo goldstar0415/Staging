@@ -1,6 +1,8 @@
 <?php
 
 namespace App;
+use App\Extensions\Attachments;
+use App\Scopes\NewestScopeTrait;
 
 /**
  * Class Comment
@@ -10,6 +12,7 @@ namespace App;
  * @property integer $user_id
  * @property integer $commentable_id
  * @property string $commentable_type
+ * @property object $commentable
  * @property string $body
  *
  * Relation properties
@@ -18,9 +21,23 @@ namespace App;
  */
 class Comment extends BaseModel
 {
+    use Attachments, NewestScopeTrait;
+
     protected $fillable = ['body'];
 
-    public function user()
+    protected $with = ['sender', 'commentable'];
+
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->addAttachments();
+    }
+
+    public function sender()
     {
         return $this->belongsTo(User::class);
     }

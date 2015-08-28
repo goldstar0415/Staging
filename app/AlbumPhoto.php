@@ -35,6 +35,8 @@ class AlbumPhoto extends BaseModel implements StaplerableInterface
         'location' => Point::class,
     ];
 
+    protected $with = ['album'];
+
     protected $appends = ['photo_url'];
 
     protected $fillable = ['photo', 'location', 'address'];

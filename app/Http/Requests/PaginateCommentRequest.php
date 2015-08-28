@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Plan;
+namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-
-class PlanShowRequest extends Request
+class PaginateCommentRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,10 +11,7 @@ class PlanShowRequest extends Request
      */
     public function authorize()
     {
-        $plan = $this->route('plans');
-
-        return $plan->invitedUsers()->find($this->user()->id) !== null
-        or $plan->user_id == $this->user()->id;
+        return true;
     }
 
     /**
@@ -26,6 +21,9 @@ class PlanShowRequest extends Request
      */
     public function rules()
     {
-        return [];
+        return [
+            'page' => 'integer',
+            'limit' => 'integer'
+        ];
     }
 }

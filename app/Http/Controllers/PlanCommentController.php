@@ -35,18 +35,9 @@ class PlanCommentController extends Controller
      */
     public function index(Request $request, $plan)
     {
-        $comments = $plan->comments;
-        $comments->map(function ($comment) {
-            /**
-             * @var \App\Comment $comment
-             */
-            $comment->addHidden('user_id');
-            return $comment->load(['user' => function ($query) {
-                $query->select(['id', 'first_name', 'last_name']);
-            }]);
-        });
+        $comments = $plan->comments();
 
-        return $comments;
+        return $this->paginatealbe($request, $comments);
     }
 
     /**
@@ -58,10 +49,10 @@ class PlanCommentController extends Controller
      */
     public function store(CommentStoreRequest $request, $plan)
     {
-        $comment = new Comment(['body' => $request->input('message')]);
-        $comment->user()->associate($request->user());
-        $plan->comments()->save($comment);
+        $comment = new Comment($request->except('attachments'));
+        $comment->sender()->associate($request->user());
 
+        $plan->comments()->save($comment);
         $this->attachments->make($comment);
 
         return $comment;

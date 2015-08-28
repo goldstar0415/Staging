@@ -45,7 +45,7 @@ class SpotPhotoCommentController extends Controller
     {
         $comment = new Comment($request->all());
         $comment->commentable()->associate($photo);
-        $comment->user()->associate($request->user());
+        $comment->sender()->associate($request->user());
         $photo->comments()->save($comment);
 
         return $photo;
