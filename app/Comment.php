@@ -23,7 +23,10 @@ class Comment extends BaseModel
 {
     use Attachments, NewestScopeTrait;
 
+    protected $fillable = ['body'];
+
     protected $with = ['sender'];
+
 
     /**
      * @inheritdoc
@@ -33,9 +36,6 @@ class Comment extends BaseModel
         parent::__construct($attributes);
         $this->addAttachments();
     }
-
-
-    protected $fillable = ['body'];
 
     public function sender()
     {
