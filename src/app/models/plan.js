@@ -24,6 +24,10 @@
       },
       update: {
         method: 'PUT'
+      },
+      inviteFriends: {
+        url: API_URL + '/plans/invite',
+        method: 'POST'
       }
     });
   }
