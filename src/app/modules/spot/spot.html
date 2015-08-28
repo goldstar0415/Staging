@@ -17,8 +17,8 @@
       <p class="description"><span>{{Spot.spot.description}}</span>
       </p>
 
-      <div class="external-link">
-        <a target="_blank">http://test.com</a>
+      <div class="external-link" ng-repeat="item in Spot.spot.web_sites">
+        <a target="_blank">{{item}}</a>
       </div>
 
       <ul class="tags ">
