@@ -9,7 +9,7 @@
     <!-- section with export -->
     <section class="col-xs-12  no-pad ">
       <!--<div class="export-to-ics">-->
-        <!--<a>Export to ICS</a>-->
+      <!--<a>Export to ICS</a>-->
       <!--</div>-->
     </section>
     <!--end section with export -->
@@ -20,34 +20,38 @@
       <h2 class="title-name">Plans</h2>
       <a ui-sref="planner.create" class="add-friend" title="Create new spot"></a>
 
-      <div ng-repeat="plan in Planner.plans.data" class="event border-bottom">
-        <h3 class="title-planner">
-          <a ui-sref="planner.view({plan_id: plan.id})">{{plan.title}}</a>
+      <div infinite-scroll="Planner.pagination.nextPage()" infinite-scroll-disabled="Planner.pagination.busy"
+           class="clearfix" infinite-scroll-distance="1">
+        <div ng-repeat="plan in Planner.plans.data" class="event border-bottom">
+          <h3 class="title-planner">
+            <a ui-sref="planner.view({plan_id: plan.id})">{{plan.title}}</a>
           <span class="date"> <date-range item="plan"></date-range>
           </span>
-        </h3>
+          </h3>
 
-        <p class="place">{{plan.address}}</p>
+          <p class="place">{{plan.address}}</p>
 
-        <p class="description">
-          <span>{{plan.description}}</span>
-        </p>
+          <p class="description">
+            <span>{{plan.description}}</span>
+          </p>
 
-        <ul class="tools">
-          <li>
-            <a ui-sref="planner.edit({plan_id: plan.id})" class="edit-tools">Edit</a>
-          </li>
-          <li>
-            <a class="delete" ng-click="Planner.deletePlan(plan, $index)">Delete</a>
-          </li>
+          <ul class="tools">
+            <li>
+              <a ui-sref="planner.edit({plan_id: plan.id})" class="edit-tools">Edit</a>
+            </li>
+            <li>
+              <a class="delete" ng-click="Planner.deletePlan(plan, $index)">Delete</a>
+            </li>
 
-          <li>
-            <invite-friends spot="plan"></invite-friends>
-          </li>
+            <li>
+              <invite-friends spot="plan"></invite-friends>
+            </li>
 
-        </ul>
+          </ul>
 
+        </div>
       </div>
+      <preloader ng-show="Planner.pagination.busy"></preloader>
 
       <h3 ng-if="Planner.plans.data.length == 0" class="text-center description">There are no plans...</h3>
     </section>

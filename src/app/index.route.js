@@ -176,11 +176,6 @@
         controller: 'PlannerController',
         controllerAs: 'Planner',
         parent: 'planner',
-        resolve: {
-          plans: function (Plan) {
-            return new Plan.query().$promise;
-          }
-        },
         locate: 'none',
         mapState: 'small'
       })
