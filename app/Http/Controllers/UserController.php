@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\UserListRequest;
-use App\Plan;
 use App\Role;
-use App\Spot;
 use App\User;
 use DB;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 use Illuminate\Mail\Message;
@@ -227,6 +227,13 @@ class UserController extends Controller
          * @var \App\User $user
          */
         $user = $request->user();
+
+        $comments = Comment::whereHas('commentable', function ($query) {
+            /**
+             * @var Builder
+             */
+            $query->join('albums', '', '')->where('albums.user_id', '=', 1);
+        });
 
         foreach ($user->spots as $spot) {
             if ($spot_comments = $spot->comments->load('commentable')->all()) {

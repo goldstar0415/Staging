@@ -41,11 +41,7 @@ class SpotCommentController extends Controller
     {
         $comments = Comment::where('commentable_id', $spot->id)->where('commentable_type', Spot::class);
 
-        if ($request->has('page') or $request->has('limit')) {
-            return $comments->paginate((int)$request->get('limit', 10));
-        }
-
-        return $comments->get();
+        return $this->paginatealbe($request, $comments);
     }
 
     /**
@@ -57,7 +53,7 @@ class SpotCommentController extends Controller
     public function store(SpotCommentStoreRequest $request, $spot)
     {
         $comment = new Comment($request->except('attachments'));
-        $comment->user()->associate($request->user());
+        $comment->sender()->associate($request->user());
 
         $spot->comments()->save($comment);
         $this->attachments->make($comment);

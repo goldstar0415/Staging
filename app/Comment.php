@@ -22,7 +22,7 @@ class Comment extends BaseModel
 {
     use Attachments, NewestScopeTrait;
 
-    protected $with = ['sender'];
+    protected $with = ['sender', 'commentable'];
 
     /**
      * @inheritdoc

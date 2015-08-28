@@ -52,7 +52,7 @@ class AlbumPhotoCommentController extends Controller
     {
         $comment = new Comment($request->all());
         $comment->commentable()->associate($photos);
-        $comment->user()->associate($this->auth->user());
+        $comment->sender()->associate($this->auth->user());
         $photos->comments()->save($comment);
 
         return $comment->load('user');
