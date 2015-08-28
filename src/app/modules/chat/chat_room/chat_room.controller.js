@@ -6,7 +6,7 @@
     .controller('ChatRoomController', ChatRoomController);
 
   /** @ngInject */
-  function ChatRoomController($rootScope, user, messages, Message, toastr, ChatService) {
+  function ChatRoomController(currentUser, user, messages, Message, toastr, ChatService) {
     var vm = this;
 
     vm.user = user;
@@ -17,7 +17,7 @@
     vm.sendMessage = sendMessage;
     vm.markAsRead = markAsRead;
     vm.deleteMessage = deleteMessage;
-
+    markAsRead();
 
     function sendMessage() {
       Message.save({
@@ -47,7 +47,7 @@
       var countNewMessages = 0;
       angular.forEach(vm.messages.data, function (groupMessages) {
         angular.forEach(groupMessages.messages, function (message) {
-          if (!message.is_read && message.pivot.receiver_id == $rootScope.currentUser.id) {
+          if (!message.is_read && message.pivot.receiver_id == currentUser.id) {
             countNewMessages++;
           }
         });
@@ -58,7 +58,7 @@
             user_id: user.id
           },
           function () {
-            ChatService.markAsRead($rootScope.currentUser.id);
+            ChatService.markAsRead(currentUser.id);
           }
         );
       }

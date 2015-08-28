@@ -38,14 +38,14 @@
         <div ng-show="eventsNameToggle" class="date-filters">
           <div class="form-group">
             <label>From</label>
-            <input placeholder="10.10.2014" class="date" type="zoomdate">
+            <input ng-datepicker ng-model="MapSort.startDate" class="date" type="zoomdate">
           </div>
 
           <div class="form-group">
             <label>to</label>
-            <input placeholder="10.10.2014" class="date" type="zoomdate">
+            <input ng-datepicker ng-model="MapSort.endDate" class="date" type="zoomdate">
           </div>
-          <input type="submit" value="Go" class="filters-button">
+          <input type="button" ng-click="eventsSortByDate()" value="Go" class="filters-button">
         </div>
       </div>
 
@@ -59,12 +59,12 @@
 
         <div ng-show="eventsCategoryToggle" class="hide-block-subcategory form-group">
           <div ng-click="toggleEventCategories();">
-            <input type="checkbox">
+            <input type="checkbox" ng-model="MapSort.eventsSelectAll">
             <label>Select all sub-categories</label>
           </div>
           <ul>
             <li ng-repeat="item in eventCategories track by item.id"
-                ng-click="item.selected = !item.selected; sortEventsByCategories();">
+                ng-click="item.selected = !item.selected; checkItem(item, eventCategories, 'event'); sortEventsByCategories();">
               <a href="#" ng-class="{'active': item.selected}">{{item.display_name}}</a>
             </li>
           </ul>
@@ -96,12 +96,12 @@
 
         <div ng-show="recreationsCategoryToggle" class="hide-block-subcategory form-group">
           <div ng-click="toggleRecreationCategories();">
-            <input type="checkbox">
+            <input type="checkbox" ng-model="MapSort.recreationSelectAll">
             <label>Select all sub-categories</label>
           </div>
           <ul>
             <li ng-repeat="item in recreationCategories track by item.id"
-                ng-click="item.selected = !item.selected; sortRecreationsByCategories();">
+                ng-click="item.selected = !item.selected; checkItem(item, recreationCategories, 'recreation'); sortRecreationsByCategories();">
               <a href="#" ng-class="{'active': item.selected}">{{item.display_name}}</a>
             </li>
           </ul>
@@ -133,12 +133,12 @@
 
         <div ng-show="pitstopsCategoryToggle" class="hide-block-subcategory form-group">
           <div ng-click="togglePitstopCategories();">
-            <input type="checkbox">
+            <input type="checkbox" ng-model="MapSort.pitstopSelectAll">
             <label>Select all sub-categories</label>
           </div>
           <ul>
             <li ng-repeat="item in pitstopCategories track by item.id"
-                ng-click="item.selected = !item.selected; sortPitstopsByCategories();">
+                ng-click="item.selected = !item.selected; checkItem(item, pitstopCategories, 'pitstop'); sortPitstopsByCategories();">
               <a href="#" ng-class="{'active': item.selected}">{{item.display_name}}</a>
             </li>
           </ul>
