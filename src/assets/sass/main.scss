@@ -467,7 +467,7 @@ h3 {
 sign-in, sign-up {
   a {
     color: $white;
-    &:hover, &:focus, &:active, &:visited {
+    &:hover, &:focus, &:active {
       color: $blue;
     }
   }
