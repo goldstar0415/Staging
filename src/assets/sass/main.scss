@@ -476,7 +476,6 @@ section {
   }
 }
 
-
 /*responsive*/
 
 @media (max-width: 992px) {
@@ -644,13 +643,13 @@ section {
     position: fixed;
   }
   .snap-content {
-    //overflow: visible;
+    overflow: hidden;
   }
 }
 
-.snap-content {
-  overflow: visible;
-}
+//.snap-content {
+//  overflow: visible;
+//}
 
 html {
   overflow-y: scroll;
