@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Comment;
+use App\Events\OnComment;
 use App\Extensions\Validations;
 use App\Services\Attachments;
 use App\Services\Privacy;
@@ -17,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Comment::created(function ($comment) {
+            event(new OnComment($comment));
+        });
+
         Validator::resolver(function ($translator, $data, $rules, $messages) {
             return new Validations($translator, $data, $rules, $messages);
         });

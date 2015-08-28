@@ -283,6 +283,11 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         return $this->hasMany(Wall::class, 'receiver_id');
     }
 
+    public function reviews()
+    {
+        return $this->belongsToMany(Comment::class, 'reviews');
+    }
+
     public function friends()
     {
         return $this->hasMany(Friend::class);

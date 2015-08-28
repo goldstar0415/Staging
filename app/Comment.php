@@ -12,6 +12,7 @@ use App\Scopes\NewestScopeTrait;
  * @property integer $user_id
  * @property integer $commentable_id
  * @property string $commentable_type
+ * @property object $commentable
  * @property string $body
  *
  * Relation properties
