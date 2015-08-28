@@ -6,16 +6,25 @@
     .controller('SpotsController', SpotsController);
 
   /** @ngInject */
-  function SpotsController(spots, SpotService, MapService) {
+  function SpotsController($rootScope, $scope, Spot, SpotService, MapService, ScrollService) {
     var vm = this;
-    vm.spots = spots;
-    vm.spots.data = formatSpots(vm.spots.data);
+    vm.spots = {};
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
     vm.removeFromFavorite = SpotService.removeFromFavorite;
     vm.removeSpot = SpotService.removeSpot;
     ShowMarkers(vm.spots.data);
+
+    var params = {
+      page: 0,
+      limit: 10,
+      user_id: $rootScope.profileUser.id
+    };
+    vm.pagination = new ScrollService(Spot.query, vm.spots, params);
+    $scope.$watch('Spots.spots.data', function (value) {
+      value = formatSpots(value);
+    });
 
     function formatSpots(spots) {
       return _.each(spots, function (spot) {
