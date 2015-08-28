@@ -113,10 +113,11 @@
       <label class="col-sm-2 control-label">Description</label>
 
       <div class="col-sm-10">
-        <textarea class="form-control" rows="5" ng-model="description_activity_{{$index}}" ng-maxlength="5000"></textarea>
+        <textarea class="form-control" rows="5" name="description_activity_{{$index}}" ng-model="activity.description" ng-maxlength="5000" required></textarea>
 
-        <div ng-messages="form['title_activity_' + $index].$error" ng-if="form.$submitted || form['title_activity_' + $index].$touched"
-             class="error-message">
+        <div ng-messages="form['description_activity_' + $index].$error"
+             ng-if="form.$submitted || form['description_activity_' + $index].$touched" class="error-message">
+          <div ng-message="required">is required</div>
           <div ng-message="maxlength">Description can't be longer then 5000 symbols</div>
         </div>
       </div>
