@@ -28,7 +28,7 @@
     function postComment() {
       SpotComment.save({spot_id: spot.id},
         {
-          body: vm.message || '',
+          message: vm.message || '',
           attachments: {
             album_photos: _.pluck(vm.attachments.photos, 'id'),
             spots: _.pluck(vm.attachments.spots, 'id'),

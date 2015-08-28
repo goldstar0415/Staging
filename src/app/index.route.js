@@ -6,7 +6,7 @@
     .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider, $urlRouterProvider, DEBUG) {
+  function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, DEBUG) {
     $stateProvider
       .state('main', {
         abstract: true,
@@ -537,7 +537,7 @@
       });
 
     $urlRouterProvider.otherwise('/');
-    //$locationProvider.html5Mode(!DEBUG);
+    $locationProvider.html5Mode(true);
   }
 
 })();

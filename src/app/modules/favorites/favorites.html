@@ -1,4 +1,6 @@
-<h2 class="title-name">Favorites</h2>
+<h2 class="title-name">
+  {{currentUser.id == profileUser.id ? 'Favorites' : profileUser.first_name + "'s favorites"}}
+</h2>
 
 <section ng-repeat="item in ::Favorite.spots.data">
   <div class="event">
