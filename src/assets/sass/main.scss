@@ -639,14 +639,17 @@ section {
 /*end responsive*/
 
 .snapjs-right {
+  .right-menu-snap, .left-menu-snap {
+    position: fixed;
+  }
   .snap-content {
-    overflow: visible;
+    //overflow: visible;
   }
 }
 
-//.snap-content {
-//  overflow: visible;
-//}
+.snap-content {
+  overflow: visible;
+}
 
 html {
   overflow-y: scroll;
