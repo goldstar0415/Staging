@@ -115,6 +115,9 @@
         resolve: {
           spot: function (Spot) {
             return new Spot();
+          },
+          categories: function($http, API_URL) {
+            return $http.get(API_URL + '/spots/categories')
           }
         },
         mapState: 'small',
@@ -130,6 +133,9 @@
         resolve: {
           spot: function (Spot, $stateParams) {
             return Spot.get({id: $stateParams.spot_id}).$promise;
+          },
+          categories: function($http, API_URL) {
+            return $http.get(API_URL + '/spots/categories')
           }
         },
         mapState: 'small',

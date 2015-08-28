@@ -48,6 +48,7 @@
           return container;
         },
         _click: function (e) {
+          $rootScope.hideHints = true;
           snapRemote.disable();
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
@@ -102,6 +103,7 @@
           return container;
         },
         _click: function (e) {
+          $rootScope.hideHints = true;
           snapRemote.disable();
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
@@ -160,6 +162,7 @@
           return container;
         },
         _click: function (e) {
+          $rootScope.hideHints = true;
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
           PathSelection(null, function () {
@@ -192,6 +195,7 @@
           return container;
         },
         _click: function (e) {
+
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
           OpenSaveSelectionsPopup();
@@ -1181,6 +1185,50 @@
         });
       }
 
+      function ClampByDate(array, startDate, endDate) {
+        if(startDate && endDate) {
+          var start = moment(startDate, 'MM.DD.YYYY');
+          var end = moment(endDate, 'MM.DD.YYYY');
+
+          var newArray = _.reject(array, function(item) {
+            var itemStart = moment(item.spot.start_date, 'YYYY-MM-DD HH:mm:ss');
+            var itemEnd = moment(item.spot.end_date, 'YYYY-MM-DD HH:mm:ss');
+            var byStart = itemStart.isAfter(start, 'seconds') && itemStart.isBefore(end, 'seconds');
+            var byEnd =  itemEnd.isAfter(start, 'seconds') && itemEnd.isBefore(end, 'seconds');
+
+            return !(byStart || byEnd);
+          });
+          return SortByDate(newArray);
+        }
+
+        if(startDate && !endDate) {
+          var start = moment(startDate, 'MM.DD.YYYY');
+
+          var newArray = _.reject(array, function(item) {
+            var itemStart = moment(item.spot.start_date, 'YYYY-MM-DD HH:mm:ss');
+            var itemEnd = moment(item.spot.end_date, 'YYYY-MM-DD HH:mm:ss');
+
+
+            return !(itemStart.isAfter(start, 'seconds') || itemEnd.isAfter(start, 'seconds'))
+          });
+          return SortByDate(newArray);
+        }
+
+        if(!startDate && endDate) {
+          var end = moment(endDate, 'MM.DD.YYYY');
+
+
+          var newArray = _.reject(array, function(item) {
+            var itemStart = moment(item.spot.start_date, 'YYYY-MM-DD HH:mm:ss');
+            var itemEnd = moment(item.spot.end_date, 'YYYY-MM-DD HH:mm:ss');
+
+
+            return !(itemStart.isBefore(end, 'seconds') || itemEnd.isBefore(end, 'seconds'))
+          });
+          return SortByDate(newArray);
+        }
+      }
+
       //return sorted by rating only for selected categories
       function SortBySubcategory(array, categories) {
         var resultArray = array;
@@ -1198,6 +1246,8 @@
             return result;
           });
         }
+
+        console.log(resultArray);
 
         return SortByRating(resultArray);
       }
@@ -1291,6 +1341,7 @@
         //sorting
         SortByRating: SortByRating,
         SortByDate: SortByDate,
+        ClampByDate: ClampByDate,
         SortBySubcategory: SortBySubcategory,
 
         GetBBoxes: GetDrawLayerBBoxes,

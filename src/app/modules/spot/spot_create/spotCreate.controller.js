@@ -6,7 +6,7 @@
     .controller('SpotCreateController', SpotCreateController);
 
   /** @ngInject */
-  function SpotCreateController(spot, $stateParams, $state, toastr, $scope, MapService, UploaderService, CropService, moment, API_URL, $http, DATE_FORMAT) {
+  function SpotCreateController(spot, $stateParams, $state, toastr, $scope, MapService, UploaderService, CropService, moment, API_URL, $http, DATE_FORMAT, categories) {
     var vm = this;
     vm.deletedImages = [];
     vm.edit = $state.current.edit || false;
@@ -23,6 +23,11 @@
     vm.startDate = moment().toDate();
     vm.categories = {};
 
+    _.each(categories.data, function (item) {
+      vm.categories[item.name] = item.categories;
+    });
+
+
     //vars
     vm.tags = [];
     vm.links = [];
@@ -36,10 +41,11 @@
     $scope.$watch('SpotCreate.images.files.length', function () {
       vm.checkFilesRestrictions();
     });
-    $scope.$watch('SpotCreate.type', function () {
-      vm.category_id = '';
-      vm.getCategories(vm.type);
-    });
+    if(!vm.edit) {
+      $scope.$watch('SpotCreate.type', function () {
+        vm.category_id = '';
+      });
+    }
 
     function filterLocations() {
       var array = _.reject(vm.locations, function (item) {
@@ -209,7 +215,6 @@
       if (vm.selectCover) {
         CropService.crop(image, 512, 256, function (result) {
           if (result) {
-            vm.currentCover_original = image;
             vm.cover = result;
             vm.selectCover = false;
           }
@@ -218,8 +223,8 @@
     };
 
     vm.editCover = function () {
-      if (vm.currentCover_original) {
-        CropService.crop(vm.currentCover_original, 512, 256, function (result) {
+      if (vm.cover) {
+        CropService.crop(vm.cover, 512, 256, function (result) {
           if (result) {
             vm.cover = result;
             vm.selectCover = false;
@@ -227,7 +232,9 @@
         });
       }
     };
-
+    setTimeout(function(){
+      console.log(vm.category_id);
+    }, 10000);
     //videos
     vm.addYoutubeLink = function (validLink) {
       if (validLink && vm.newYoutubeLink) {
@@ -241,29 +248,18 @@
     vm.removeYoutubeLink = function (index) {
       vm.youtube_links.splice(index, 1);
     };
-    //categories
-    vm.getCategories = function (type) {
-      if (!vm.categories[type]) {
-        $http.get(API_URL + '/spots/categories?type=' + type.toLowerCase())
-          .then(function (response) {
-            vm.categories[type] = response.data;
-          }, function (response) {
-            setTimeout(vm.getCategories(type), 5000);
-          })
-      }
-    };
     //load data for spot editing
     vm.convertSpot = function () {
       //TODO: add array to display all kinds of images (attachments from albums, photos for upload, and old photos)
       var data = spot;
-      vm.type = data.category.type.display_name;
+      vm.type = data.category.type.display_name.toLowerCase();
       vm.title = data.title;
       vm.description = data.description;
       vm.links = data.web_sites;
       vm.youtube_links = data.videos;
       vm.category_id = data.spot_type_category_id;
       vm.tags = data.tags || [];
-      vm.currentCover_original = data.cover_url.original;
+      vm.cover = data.cover_url.original;
       vm.locations = data.points;
       if (data.photos) {
         for (var k in data.photos) {
@@ -276,7 +272,6 @@
         vm.start_time = data.start_date;
         vm.end_time = data.end_date;
       }
-      console.log(spot);
 
     };
 

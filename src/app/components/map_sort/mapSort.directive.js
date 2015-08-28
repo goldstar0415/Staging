@@ -118,6 +118,53 @@
     $scope.eventsCategoryToggle = false;
     vm.eventsSelectAll = false;
 
+    $scope.checkItem = function(item, items, type) {
+      if(!item.selected) {
+        switch(type) {
+          case 'event':
+            vm.eventsSelectAll = false;
+            break;
+          case 'recreation':
+            vm.recreationSelectAll = false;
+            break;
+          case 'pitstop':
+            vm.pitstopSelectAll = false;
+            break;
+        }
+      } else {
+        switch(type) {
+          case 'event':
+            vm.eventsSelectAll = checkAll(items);
+            break;
+          case 'recreation':
+            vm.recreationSelectAll = checkAll(items);
+            break;
+          case 'pitstop':
+            vm.pitstopSelectAll = checkAll(items);
+            break;
+        }
+      }
+
+      function checkAll(items) {
+        var selected = true;
+        for(var k in items) {
+          if(items[k].selected == false) {
+            selected = false;
+            break;
+          }
+        }
+
+        return selected;
+      }
+    };
+
+    $scope.eventsSortByDate = function() {
+      if(vm.startDate || vm.endDate) {
+        vm.displayEventsArray = MapService.ClampByDate(vm.eventsArray, vm.startDate, vm.endDate);
+        MapService.drawSpotMarkers(vm.displayEventsArray, 'event', true);
+      }
+    };
+
     $scope.toggleEventCategories = function() {
       $scope.sortEventsByCategories();
       if(!vm.eventsSelectAll) {
