@@ -8,8 +8,14 @@
   /** @ngInject */
   function FriendsmapController(friends, MapService) {
     var vm = this;
-    vm.friends = friends;
+    vm.friends = format(friends);
     initMap();
+
+    function format(friends) {
+      return _.each(friends, function (friend) {
+        friend.birth_date = moment(friend.birth_date).format('MM.DD.YYYY')
+      })
+    }
 
     function createMarker(iconUrl, title, location) {
       var icon = MapService.CreateCustomIcon(iconUrl, 'custom-map-icons');

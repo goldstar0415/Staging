@@ -105,7 +105,29 @@
     }
   }
 }
+.plan-invitation {
+  padding: 5px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 500;
+  background-color: $dark_blue;
+  color: $white;
+  text-transform: uppercase;
+  word-break: break-all;
+}
 
+.invitation-title {
+  a {
+    color: $blue;
+    margin: 0 0 5px 0;
+    padding-left: 15px;
+    background: url(/assets/img/icons/tools.png) -5px -2px no-repeat;
+    &:hover, &:focus, &:active {
+      background: url(/assets/img/icons/tools.png) -5px -19px no-repeat;
+      color: $navy_blue;
+    }
+  }
+}
 
 
 .message-in .incoming-avatar a img {
