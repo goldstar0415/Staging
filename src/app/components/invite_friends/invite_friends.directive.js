@@ -11,7 +11,8 @@
       restrict: 'E',
       templateUrl: '/app/components/invite_friends/invite_friends.html',
       scope: {
-        spot: '='
+        item: '=',
+        type: '@'
       },
       controller: InviteFriendsController,
       controllerAs: 'InviteFriends',
@@ -21,6 +22,7 @@
     /** @ngInject */
     function InviteFriendsController($modal, $rootScope) {
       var vm = this;
+      vm.type = vm.type || 'spot';
 
       vm.openModal = function () {
         $modal.open({
@@ -29,8 +31,11 @@
           controllerAs: 'modal',
           modalClass: 'authentication',
           resolve: {
-            spot: function () {
-              return vm.spot;
+            type: function () {
+              return vm.type;
+            },
+            item: function () {
+              return vm.item;
             },
             friends: function (User) {
               return User.followers({user_id: $rootScope.currentUser.id}).$promise;
@@ -42,7 +47,7 @@
     }
 
     /** @ngInject */
-    function InviteFriendsModalController(spot, friends, $modalInstance, Spot) {
+    function InviteFriendsModalController(type, item, friends, $modalInstance, Spot, Plan) {
       var vm = this;
       vm.friends = friends;
 
@@ -52,12 +57,22 @@
       vm.inviteFriends = function () {
         var selectedUsers = _.where(vm.friends, {selected: true});
         if (selectedUsers.length > 0) {
-          Spot.inviteFriends({
-            spot_id: spot.id,
-            users: _.pluck(selectedUsers, 'id')
-          }, function success() {
-            $modalInstance.close();
-          })
+          var userIds = _.pluck(selectedUsers, 'id');
+          if (type == 'spot') {
+            Spot.inviteFriends({
+              spot_id: item.id,
+              users: userIds
+            }, function success() {
+              $modalInstance.close();
+            });
+          } else {
+            Plan.inviteFriends({
+              plan_id: item.id,
+              users: userIds
+            }, function success() {
+              $modalInstance.close();
+            });
+          }
         }
       };
     }

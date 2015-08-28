@@ -6,14 +6,20 @@
     .controller('PlannerController', PlannerController);
 
   /** @ngInject */
-  function PlannerController(Plan, plans, $state, $compile, $scope, dialogs, DATE_FORMAT) {
+  function PlannerController(Plan, $state, $compile, $scope, dialogs, ScrollService, DATE_FORMAT) {
     var vm = this;
-    vm.plans = plans;
+    vm.plans = {};
     vm.deletePlan = deletePlan;
     vm.sourceEvents = [
       [],
       getEvents
     ];
+
+    var params = {
+      page: 0,
+      limit: 10
+    };
+    vm.pagination = new ScrollService(Plan.query, vm.plans, params);
 
     vm.calendarConfig = {
       height: 450,
