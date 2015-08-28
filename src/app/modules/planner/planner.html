@@ -16,11 +16,11 @@
 
 
     <!-- sub event -->
-    <section class="central col-xs-12">
+    <section class="central  col-xs-12">
       <h2 class="title-name">Plans</h2>
       <a ui-sref="planner.create" class="add-friend" title="Create new spot"></a>
 
-      <div ng-repeat="plan in Planner.plans.data" class="event">
+      <div ng-repeat="plan in Planner.plans.data" class="event border-bottom">
         <h3 class="title-planner">
           <a ui-sref="planner.view({plan_id: plan.id})">{{plan.title}}</a>
           <span class="date"> <date-range item="plan"></date-range>

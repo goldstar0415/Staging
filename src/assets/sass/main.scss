@@ -449,12 +449,19 @@ h3 {
   font-size: 18px;
   padding: 1rem 0;
 }
+
 sign-in, sign-up {
   a {
     color: $white;
     &:hover, &:focus, &:active {
       color: $blue;
     }
+  }
+}
+
+section {
+  .border-bottom {
+    border-bottom: 1px solid #e9edf0 !important;
   }
 }
 
@@ -619,7 +626,6 @@ sign-in, sign-up {
 }
 
 /*end responsive*/
-
 
 .snap-content {
   overflow: visible;
