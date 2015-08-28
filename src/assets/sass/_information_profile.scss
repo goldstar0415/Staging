@@ -137,10 +137,6 @@
 @media (max-width: 992px) {
   .information-profile {
     .avatar-wrap {
-      height: 120px;
-      width: 120px;
-      margin-right: 15px;
-      float: left;
       .avatar {
         margin: 0;
         width: 100%;
@@ -148,11 +144,12 @@
         img {
           width: 100%;
           height: 100%;
+          max-width: 160px;
         }
       }
     }
     .activity-mobile {
-      width: auto;
+      padding-left: 15px;
       .profile-name {
         a {
           text-align: left;
@@ -162,7 +159,17 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 450px) {
+  .information-profile {
+    .avatar-wrap {
+      width: 160px;
+      height: 160px;
+    }
+    .activity-mobile {
+      width: 100%;
+      padding: 0;
+    }
+  }
 }
 
 /// end information profile

@@ -3,11 +3,11 @@
 
   angular
     .module('zoomtivity')
-    .factory('PlanComment', PlanComment);
+    .factory('SpotComment', SpotComment);
 
   /** @ngInject */
-  function PlanComment($resource, API_URL) {
-    return $resource(API_URL + '/plans/:plan_id/comments/:id', {id: '@id', plan_id: '@plan_id'}, {
+  function SpotComment($resource, API_URL) {
+    return $resource(API_URL + '/spots/:spot_id/comments/:id', {id: '@id', spot_id: '@spot_id'}, {
       query: {
         isArray:false,
         params: {

@@ -31,7 +31,7 @@
             console.log(resp);
             //form.email.$setValidity('wrong', true);
             //form.inputName.$setValidity('required', false);
-            toastr.error('Wrong email or password');
+            toastr.error('Wrong email');
           });
       }
     }

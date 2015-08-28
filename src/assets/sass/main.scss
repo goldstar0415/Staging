@@ -54,29 +54,14 @@
 @import "preloader";
 @import "preload_scroll";
 
-
 @font-face {
-  font-family: 'Ubuntu medium';
-  src: url(/assets/css/fonts/ubuntu-m-webfont.eot);
-  src: url(/assets/css/fonts/ubuntu-m-webfont.eot?#iefix) format('embedded-opentype'),
-  url(/assets/css/fonts/ubuntu-m-webfont.woff2) format('woff2'),
-  url(/assets/css/fonts/ubuntu-m-webfont.woff) format('woff'),
-  url(/assets/css/fonts/ubuntu-m-webfont.ttf) format('truetype'),
-  url(/assets/css/fonts/ubuntu-m-webfont.svg#ubuntumedium) format('svg');
-  font-weight: normal;
+  font-family: "Ubuntu light";
+  src: url("/assets/css/fonts/UbuntuLight.eot");
+  src: url("/assets/css/fonts/UbuntuLight.eot?#iefix") format("embedded-opentype"),
+  url("/assets/css/fonts/UbuntuLight.woff") format("woff"),
+  url("/assets/css/fonts/UbuntuLight.ttf") format("truetype");
   font-style: normal;
-}
-
-@font-face {
-  font-family: 'Ubuntu light';
-  src: url(/assets/css/fonts/ubuntu-l.eot);
-  src: url(/assets/css/fonts/ubuntu-l.eot?#iefix) format('embedded-opentype'),
-  url(/assets/css/fonts/ubuntu-l.woff2) format('woff2'),
-  url(/assets/css/fonts/ubuntu-l.woff) format('woff'),
-  url(/assets/css/fonts/ubuntu-l.ttf) format('truetype'),
-  url(/assets/css/fonts/ubuntu-l.svg#ubuntulight) format('svg');
   font-weight: normal;
-  font-style: normal;
 }
 
 @font-face {
@@ -91,8 +76,25 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Ubuntu medium";
+  src: url("/assets/css/fonts/UbuntuMedium.eot");
+  src: url("/assets/css/fonts/UbuntuMedium.eot?#iefix") format("embedded-opentype"),
+  url("/assets/css/fonts/UbuntuMedium.woff") format("woff"),
+  url("/assets/css/fonts/UbuntuMedium.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
 body, .snap-content {
   background: #f5f8fa;
+}
+
+body {
+  font-family: 'Ubuntu medium' !important;;
+  :lang(ru) {
+    font-family: 'Ubuntu medium' !important;
+  }
 }
 
 a {
@@ -438,6 +440,21 @@ h3 {
   }
   .star-default {
     color: #ffef99;
+  }
+}
+
+.unauthorized {
+  color: $white;
+  font: $navigation_font;
+  font-size: 18px;
+  padding: 1rem 0;
+}
+sign-in, sign-up {
+  a {
+    color: $white;
+    &:hover, &:focus, &:active {
+      color: $blue;
+    }
   }
 }
 

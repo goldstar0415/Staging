@@ -6,7 +6,7 @@
     .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider, $urlRouterProvider, DEBUG) {
+  function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, DEBUG) {
     $stateProvider
       .state('main', {
         abstract: true,
@@ -20,6 +20,7 @@
 
               User.currentUser({}, function success(user) {
                 UserService.setCurrentUser(user);
+                console.log('resolve');
                 deferred.resolve();
               }, function fail() {
                 $rootScope.currentUserFailed = true;
@@ -44,7 +45,7 @@
         template: '<ui-view autoscroll="true" />',
         abstract: true,
         resolve: {
-          user: function (User, $stateParams,  UserService) {
+          user: function (User, currentUser, $stateParams,  UserService) {
             return User.get({id: $stateParams.user_id}, function (user) {
               UserService.setProfileUser(user);
               return user;
@@ -536,7 +537,7 @@
       });
 
     $urlRouterProvider.otherwise('/');
-    //$locationProvider.html5Mode(!DEBUG);
+    $locationProvider.html5Mode(true);
   }
 
 })();

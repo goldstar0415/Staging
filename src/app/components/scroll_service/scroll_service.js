@@ -16,7 +16,7 @@
 
     Reddit.prototype.nextPage = function () {
       if (this.busy) return;
-      if (!this.totalItems || (this.params.page * this.params.limit) < this.totalItems) {
+      if (_.isUndefined(this.totalItems) || this.totalItems > 0 && (this.params.page * this.params.limit) < this.totalItems) {
         this.busy = true;
         this.params.page++;
 
@@ -24,6 +24,7 @@
           if (!this.totalItems) {
             this.totalItems = resp.total;
           }
+          this.items.data = this.items.data || [];
           this.items.data = _.union(this.items.data, resp.data);
           this.busy = false;
         }.bind(this));

@@ -1,7 +1,6 @@
 <div class="content-wall">
   <h2 class="title-name">
-    {{currentUser.id == profileUser.id ? 'My profile'
-    : profileUser.first_name + ' ' + profileUser.last_name + "'s profile"}}
+    {{currentUser.id == profileUser.id ? 'My profile' : profileUser.first_name + "'s profile"}}
   </h2>
 
 
@@ -11,7 +10,8 @@
 
   <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()"></ng-input>
 
-  <div infinite-scroll="Profile.pagination.nextPage()" infinite-scroll-disabled="Profile.pagination.busy" class="clearfix" infinite-scroll-distance="0">
+  <div infinite-scroll="Profile.pagination.nextPage()" infinite-scroll-disabled="Profile.pagination.busy"
+       class="clearfix" infinite-scroll-distance="1">
     <div class="col-xs-12 post" ng-repeat="post in Profile.wall.data">
       <div class="col-lg-1 col-md-2 col-sm-2 col-xs-2 padding-0">
         <a ui-sref="profile.main({user_id: post.sender.id})">
@@ -35,16 +35,13 @@
         </div>
       </div>
     </div>
-    <div >
-      <div id="movingBallG">
-        <div class="movingBallLineG"></div>
-        <div id="movingBallG_1" class="movingBallG"></div>
-      </div>
+    <div class="col-xs-12">
+      <preloader ng-show="Profile.pagination.busy"></preloader>
     </div>
   </div>
 
-  <div class="col-xs-12">
-    <h4 class="text-center description" ng-if="Profile.wall.data.length == 0 && !Profile.pagination.busy">Wall is empty</h4>
+  <div class="col-xs-12" ng-if="Profile.wall.data.length == 0 && !Profile.pagination.busy">
+    <h4 class="text-center description">Wall is empty</h4>
   </div>
 
 
