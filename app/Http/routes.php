@@ -101,7 +101,3 @@ Route::get('wall/{wall}/dislike', 'WallController@dislike');
 Route::get('feeds', 'FeedController@index');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
-
-Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-    Route::resource('activitylevel', 'ActivityLevelController', ['except' => 'show']);
-});

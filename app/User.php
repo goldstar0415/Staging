@@ -178,10 +178,12 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function setBannedAtAttribute($value)
     {
-        if (!$value instanceof Carbon) {
-            $this->attributes['banned_at'] = $value ? Carbon::createFromFormat($this->getDateFormat(), $value) : $value;
+        $value = (bool)$value;
+
+        if (is_bool($value) and $value === true) {
+            $this->attributes['banned_at'] = (string)Carbon::now();
         } else {
-            $this->attributes['banned_at'] = $value;
+            $this->attributes['banned_at'] = null;
         }
     }
 
