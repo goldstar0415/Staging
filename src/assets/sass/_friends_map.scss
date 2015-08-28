@@ -11,15 +11,18 @@
     float: left;
     h3 {
       margin: 0 0 5px;
-      a {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        margin: 0;
+      .wrap-name {
         padding-left: 0;
-        &:hover {
-          color: #124d76;
-          @include transition_color;
+        a {
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          margin: 0;
+          line-height: 28px;
+          &:hover {
+            color: #124d76;
+            @include transition_color;
+          }
         }
       }
     }
@@ -40,6 +43,7 @@
         display: block;
         float: left;
         @include transition_bg_color;
+        margin-bottom: 0;
         &:hover {
           @include transition_bg_color;
           background-color: $light_green;
@@ -63,13 +67,9 @@
   padding: 15px 0;
   a {
     display: inline-block;
-    float: right;
     margin-right: 15px;
     color: $blue;
     font: 13px/13px Arial;
-    &:first-child {
-      margin-right: 0;
-    }
     &:hover {
       color: $navy_blue;
       @include transition_color;

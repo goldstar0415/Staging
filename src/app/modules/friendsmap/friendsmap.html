@@ -12,7 +12,14 @@
     </a>
   </div>
   <div class="text-block">
-    <h3 class="feeds-title"><a href="#" class="col-xs-8">{{item.first_name + " " + item.last_name}}</a></h3>
+    <h3 class="feeds-title">
+      <span class="col-xs-8 wrap-name"><a href="#">{{item.first_name + " " + item.last_name}}</a></span>
+
+      <div class="col-xs-4 location-btn">
+        <a class="custom-location" href="#"></a>
+        <a class="default-location" href="#"></a>
+      </div>
+    </h3>
     <!--<a ui-sref="friendsmap_edit({id: item.id})" class="edit"></a>-->
 
     <div class="col-xs-6 no-pad">
@@ -25,13 +32,10 @@
     </div>
 
     <div class="col-xs-12 no-pad">
-      <div class="col-xs-8 no-pad">
+      <div class="col-xs-12 no-pad">
         <p ng-show="item.address">{{item.address}}</p>
       </div>
-      <div class="col-xs-4 location-btn">
-        <a class="custom-location" href="#"></a>
-        <a class="default-location" href="#"></a>
-      </div>
+
     </div>
 
 
@@ -41,8 +45,8 @@
       </p>
     </div>
     <div class="col-xs-12 edit-delete">
-      <a href="#" class="delete">Delete</a>
       <a href="#" class="edit" ui-sref="friendsmap_edit({id: item.id})">Edit</a>
+      <a href="#" class="delete">Delete</a>
     </div>
   </div>
 </div>
