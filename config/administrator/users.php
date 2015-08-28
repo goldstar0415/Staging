@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'title' => 'Users',
     'single' => 'user',
     'model' => App\User::class,
@@ -61,7 +61,13 @@ return array(
         ],
         'banned_at' => [
             'title' => 'Ban',
-            'type' => 'bool'
+            'type' => 'bool',
+//            'setter' => true
+        ],
+        'ban_reason' => [
+            'title' => 'Ban Reason',
+            'type' => 'text'
         ]
     ],
-);
+    'form_width' => 600
+];
