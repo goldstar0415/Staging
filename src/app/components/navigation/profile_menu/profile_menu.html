@@ -38,13 +38,12 @@
   <div class="container wrap">
 
     <div class="col-xs-12 col-md-2 information-profile">
-      <section class="col-md-12 avatar-wrap">
+      <section class="col-xs-2 col-sm-2 col-md-12 avatar-wrap">
         <a ui-sref="profile.main({user_id: $root.profileUser.id})" class="avatar">
           <img ng-src="{{$root.profileUser.avatar_url.medium}}"/>
-
         </a>
       </section>
-      <section class="col-xs-12 col-md-12 no-pad activity-mobile">
+      <section class="col-xs-10 col-sm-10 col-md-12 no-pad activity-mobile">
         <div class="status moderator" ng-if="$root.profileUser.status">{{$root.profileUser.status}}</div>
         <h2 class="profile-name ">
           <a ui-sref="profile.main({user_id: $root.profileUser.id})">
