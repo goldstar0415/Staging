@@ -464,11 +464,11 @@ h3 {
   font-size: 18px;
   padding: 1rem 0;
 }
-sign-in {
+sign-in, sign-up {
   a {
-    color: $blue;
+    color: $white;
     &:hover, &:focus, &:active, &:visited {
-      color: $navy_blue;
+      color: $blue;
     }
   }
 }
