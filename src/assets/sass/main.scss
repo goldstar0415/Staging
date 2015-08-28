@@ -54,45 +54,62 @@
 @import "preloader";
 @import "preload_scroll";
 
+//@font-face {
+//  font-family: 'Ubuntu medium';
+//  src: url(/assets/css/fonts/ubuntu-m-webfont.eot);
+//  src: url(/assets/css/fonts/ubuntu-m-webfont.eot?#iefix) format('embedded-opentype'),
+//  url(/assets/css/fonts/ubuntu-m-webfont.woff2) format('woff2'),
+//  url(/assets/css/fonts/ubuntu-m-webfont.woff) format('woff'),
+//  url(/assets/css/fonts/ubuntu-m-webfont.ttf) format('truetype'),
+//  url(/assets/css/fonts/ubuntu-m-webfont.svg#ubuntumedium) format('svg');
+//  font-weight: normal;
+//  font-style: normal;
+//}
+
+//@font-face {
+//  font-family: 'Ubuntu light';
+//  src: url(/assets/css/fonts/ubuntu-l.eot);
+//  src: url(/assets/css/fonts/ubuntu-l.eot?#iefix) format('embedded-opentype'),
+//  url(/assets/css/fonts/ubuntu-l.woff2) format('woff2'),
+//  url(/assets/css/fonts/ubuntu-l.woff) format('woff'),
+//  url(/assets/css/fonts/ubuntu-l.ttf) format('truetype'),
+//  url(/assets/css/fonts/ubuntu-l.svg#ubuntulight) format('svg');
+//  font-weight: normal;
+//  font-style: normal;
+//}
+
+//@font-face {
+//  font-family: 'Ubuntu titling bold';
+//  src: url(/assets/css/fonts/ubuntu-titling-bold.eot);
+//  src: url(/assets/css/fonts/ubuntu-titling-bold.eot?#iefix) format('embedded-opentype'),
+//  url(/assets/css/fonts/ubuntu-titling-bold.woff2) format('woff2'),
+//  url(/assets/css/fonts/ubuntu-titling-bold.woff) format('woff'),
+//  url(/assets/css/fonts/ubuntu-titling-bold.ttf) format('truetype'),
+//  url(/assets/css/fonts/ubuntu-titling-bold.svg#ubuntutitlingbold) format('svg');
+//  font-weight: normal;
+//  font-style: normal;
+//}
+
 
 @font-face {
-  font-family: 'Ubuntu medium';
-  src: url(/assets/css/fonts/ubuntu-m-webfont.eot);
-  src: url(/assets/css/fonts/ubuntu-m-webfont.eot?#iefix) format('embedded-opentype'),
-  url(/assets/css/fonts/ubuntu-m-webfont.woff2) format('woff2'),
-  url(/assets/css/fonts/ubuntu-m-webfont.woff) format('woff'),
-  url(/assets/css/fonts/ubuntu-m-webfont.ttf) format('truetype'),
-  url(/assets/css/fonts/ubuntu-m-webfont.svg#ubuntumedium) format('svg');
-  font-weight: normal;
+  font-family: "Ubuntu medium";
+  src: url("/assets/css/fonts/UbuntuMedium.eot");
+  src: url("/assets/css/fonts/UbuntuMedium.eot?#iefix") format("embedded-opentype"),
+  url("/assets/css/fonts/UbuntuMedium.woff") format("woff"),
+  url("/assets/css/fonts/UbuntuMedium.ttf") format("truetype");
   font-style: normal;
-}
-
-@font-face {
-  font-family: 'Ubuntu light';
-  src: url(/assets/css/fonts/ubuntu-l.eot);
-  src: url(/assets/css/fonts/ubuntu-l.eot?#iefix) format('embedded-opentype'),
-  url(/assets/css/fonts/ubuntu-l.woff2) format('woff2'),
-  url(/assets/css/fonts/ubuntu-l.woff) format('woff'),
-  url(/assets/css/fonts/ubuntu-l.ttf) format('truetype'),
-  url(/assets/css/fonts/ubuntu-l.svg#ubuntulight) format('svg');
   font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Ubuntu titling bold';
-  src: url(/assets/css/fonts/ubuntu-titling-bold.eot);
-  src: url(/assets/css/fonts/ubuntu-titling-bold.eot?#iefix) format('embedded-opentype'),
-  url(/assets/css/fonts/ubuntu-titling-bold.woff2) format('woff2'),
-  url(/assets/css/fonts/ubuntu-titling-bold.woff) format('woff'),
-  url(/assets/css/fonts/ubuntu-titling-bold.ttf) format('truetype'),
-  url(/assets/css/fonts/ubuntu-titling-bold.svg#ubuntutitlingbold) format('svg');
-  font-weight: normal;
-  font-style: normal;
 }
 
 body, .snap-content {
   background: #f5f8fa;
+}
+
+body {
+  font-family: 'Ubuntu medium' !important;;
+  :lang(ru) {
+    font-family: 'Ubuntu medium' !important;
+  }
 }
 
 a {
