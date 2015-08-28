@@ -6,7 +6,7 @@
     .controller('SpotController', SpotController);
 
   /** @ngInject */
-  function SpotController(spot, SpotService, ScrollService, SpotComment, $state) {
+  function SpotController(spot, SpotService, ScrollService, SpotComment, $state, MapService, $rootScope) {
     var vm = this;
     vm.spot = SpotService.formatSpot(spot);
     vm.saveToCalendar = SpotService.saveToCalendar;
@@ -15,9 +15,12 @@
     vm.removeFromFavorite = SpotService.removeFromFavorite;
     vm.removeSpot = function(spot, idx) {
       SpotService.removeSpot(spot, idx, function() {
+        console.log('test');
         $state.go('spots', {user_id: $rootScope.currentUser.id});
       });
     };
+
+    ShowMarkers([vm.spot]);
 
     vm.postComment = postComment;
 
@@ -49,6 +52,19 @@
           console.log(resp);
           toastr.error('Send message failed');
         })
+    }
+
+    function ShowMarkers(spots) {
+      var spotsArray = _.map(spots, function(item) {
+        return {
+          id: item.id,
+          spot_id: item.spot_id,
+          locations: item.points,
+          address: '',
+          spot: item
+        };
+      });
+      MapService.drawSpotMarkers(spotsArray, 'other', true);
     }
   }
 })();
