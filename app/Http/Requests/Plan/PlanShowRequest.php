@@ -13,7 +13,10 @@ class PlanShowRequest extends Request
      */
     public function authorize()
     {
-        return $this->route('plans')->invitedUsers()->find($this->user()->id) !== null;
+        $plan = $this->route('plans');
+
+        return $plan->invitedUsers()->find($this->user()->id) !== null
+        or $plan->user_id == $this->user()->id;
     }
 
     /**
