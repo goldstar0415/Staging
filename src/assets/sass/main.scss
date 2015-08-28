@@ -627,9 +627,15 @@ section {
 
 /*end responsive*/
 
-.snap-content {
-  overflow: visible;
+.snapjs-right {
+  .snap-content {
+    overflow: visible;
+  }
 }
+
+//.snap-content {
+//  overflow: visible;
+//}
 
 html {
   overflow-y: scroll;
