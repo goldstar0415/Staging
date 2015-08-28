@@ -48,7 +48,7 @@ class Spot extends BaseModel implements StaplerableInterface
 
     protected $appends = ['rating', 'cover_url', 'is_favorite', 'is_saved', 'is_rated'];
 
-    protected $with = ['category.type', 'points', 'photos', 'user', 'comments'];
+    protected $with = ['category.type', 'points', 'photos', 'user'];
 
     protected $hidden = ['cover_file_name', 'cover_file_size', 'cover_content_type'];
 

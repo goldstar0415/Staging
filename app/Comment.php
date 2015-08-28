@@ -25,7 +25,7 @@ class Comment extends BaseModel
 
     protected $fillable = ['body'];
 
-    protected $with = ['sender'];
+    protected $with = ['sender', 'commentable'];
 
 
     /**

@@ -42,7 +42,7 @@ class SpotController extends Controller
         $spots = Spot::where('user_id', $request->get(
             'user_id',
             $request->user() ? $request->user()->id : null
-        ));
+        ))->with('comments');
 
         if ($request->has('page') or $request->has('limit')) {
             return $spots->paginate((int)$request->get('limit', 10));
@@ -89,7 +89,7 @@ class SpotController extends Controller
      */
     public function show($spot)
     {
-        return $spot->load(['photos', 'points', 'tags']);
+        return $spot->load(['photos', 'points', 'tags', 'comments']);
     }
 
     /**
