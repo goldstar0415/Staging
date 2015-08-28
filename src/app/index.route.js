@@ -156,7 +156,12 @@
         controllerAs: 'Spots',
         parent: 'profile',
         locate: 'none',
-        mapState: 'small'
+        mapState: 'small',
+        resolve: {
+          allSpots: function(Spot, $stateParams) {
+            return Spot.query({user_id: $stateParams.user_id}).$promise;
+          }
+        }
       })
 
       //Planner (calendar + list of all plans)
