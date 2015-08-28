@@ -189,9 +189,11 @@
   border-radius: 8px 8px 0 0;
   position: relative;
   padding: 0;
+  .name{
+    margin-bottom: 10px;
+  }
   .comments-content {
     background: $light_grey;
-
     .new-post-spot {
       background: $light_grey;
 
@@ -286,6 +288,10 @@
   .links {
     margin: 0 -10px 10px;
     padding: 0 10px;
+    a{
+      float: none;
+      font-size: 18px;
+    }
   }
   .photos {
     padding-top: 10px;
@@ -345,4 +351,65 @@
 }
 .spot-block {
   margin-bottom: 15px;
+}
+@media  (max-width: 475px){
+ .comments-section {
+   .post {
+     padding-left: 5px;
+     padding-right: 5px;
+     .padding-0{
+       padding-left: 0;
+       padding-right: 0;
+     }
+     .avatar {
+       width: 55px;
+       height: 55px;
+       margin-top: 20px;
+     }
+     .info{
+       padding-right: 0;
+       padding-left: 0;
+       .name{
+         margin-bottom: 5px;
+         margin-left: 5px;
+       }
+     }
+   }
+ }
+}
+@media  (max-width: 400px){
+  .comments-section {
+    .post {
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+
+      }
+      .info{
+
+        .name{
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
+@media  (max-width: 290px){
+  .comments-section {
+    .post {
+      .avatar {
+        width: 35px;
+        height: 35px;
+
+      }
+      .info{
+
+        .name{
+          font-size: 17px;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
 }
