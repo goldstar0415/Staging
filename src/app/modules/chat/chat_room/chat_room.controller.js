@@ -17,7 +17,7 @@
     vm.sendMessage = sendMessage;
     vm.markAsRead = markAsRead;
     vm.deleteMessage = deleteMessage;
-
+    markAsRead();
 
     function sendMessage() {
       Message.save({
