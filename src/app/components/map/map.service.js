@@ -1212,10 +1212,12 @@
           var icon = CreateCustomIcon(item.spot.category.icon_url, 'custom-map-icons', [50, 50]);
           if(item.location) {
             var marker = L.marker(item.location, {icon: icon});
+            item.marker = marker;
             BindSpotPopup(marker, item);
 
             markers.push(marker);
           } else if( item.locations ){
+            var spotMarkers = [];
             _.each(item.locations, function(point) {
               item.address = point.address;
               item.location = point.location;
@@ -1223,11 +1225,13 @@
               var marker = L.marker(item.location, {icon: icon});
               BindSpotPopup(marker, item);
 
+              spotMarkers.push(marker);
               markers.push(marker);
             });
+
+            item.markers = spotMarkers;
           }
         });
-
         switch (type) {
           case 'pitstop':
             pitstopsLayer.addLayers(markers);

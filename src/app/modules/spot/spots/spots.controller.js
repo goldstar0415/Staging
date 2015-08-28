@@ -18,9 +18,19 @@
     vm.removeSpot = function(spot, idx) {
       SpotService.removeSpot(spot, idx, function() {
         vm.spots.data.splice(idx, 1);
+        if(vm.markersSpots[idx].marker) {
+          console.log('single marker', vm.markersSpots[idx].marker);
+          MapService.GetCurrentLayer().removeLayer(vm.markersSpots[idx].marker);
+        } else {
+          console.log('Multiple markers');
+          MapService.GetCurrentLayer().removeLayers(vm.markersSpots[idx].markers)
+        }
       });
     };
-    ShowMarkers(vm.markersSpots);
+    vm.markersSpots = ShowMarkers(vm.markersSpots);
+    console.log(vm.markersSpots);
+
+
 
     var params = {
       page: 0,
@@ -48,6 +58,8 @@
         };
       });
       MapService.drawSpotMarkers(spotsArray, 'other', true);
+
+      return spotsArray;
     }
   }
 })();
