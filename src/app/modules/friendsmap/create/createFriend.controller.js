@@ -23,9 +23,12 @@
     };
 
     vm.SaveFriend = function(form) {
+      var friend = angular.copy(vm.friend);
+      friend.birth_date = friend.birth_date ? moment(friend.birth_date).format('YYYY-MM-DD') : null;
+
       if(form.$valid) {
         if(vm.edit) {
-          vm.friend.$update()
+          friend.$update()
             .then(function() {
               $state.go('friendsmap');
             })
@@ -33,7 +36,7 @@
               toastr.error('Invalid input');
             });
         } else {
-          vm.friend.$save()
+          friend.$save()
             .then(function() {
               $state.go('friendsmap');
             })
