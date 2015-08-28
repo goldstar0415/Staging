@@ -352,7 +352,7 @@
         require_auth: true,
         mapState: 'small'
       })
-      .state('areasPreview', {
+      .state('areas.preview', {
         url: '/areas/:area_id',
         template: '',
         controller: 'AreasPreviewController',

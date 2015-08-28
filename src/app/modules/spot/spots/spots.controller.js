@@ -14,7 +14,12 @@
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
     vm.removeFromFavorite = SpotService.removeFromFavorite;
-    vm.removeSpot = SpotService.removeSpot;
+    vm.removeSpot = function(spot, idx) {
+      SpotService.removeSpot(spot, idx, function() {
+        console.log('callback');
+        vm.spots.data.splice(idx, 1);
+      });
+    };
     ShowMarkers(vm.spots.data);
 
     function formatSpots(spots) {
