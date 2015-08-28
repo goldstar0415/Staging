@@ -1,4 +1,5 @@
-<div class="attachments-preview" ng-if="!_.isEmpty(Attachments.items.areas) || !_.isEmpty(Attachments.items.spots) || !_.isEmpty(Attachments.items.album_photos)">
+<div class="attachments-preview"
+     ng-if="!_.isEmpty(Attachments.items.areas) || !_.isEmpty(Attachments.items.spots) || !_.isEmpty(Attachments.items.album_photos)">
 
   <div class="links">
     <div class="media media-visible padding-bottom add-location clearfix"
@@ -27,19 +28,45 @@
       </div>
     </div>
 
+    <div ng-if="Attachments.items.plans.length > 0" ng-repeat="plan in Attachments.items.plans"
+         class="media media-visible padding-bottom add-event">
+      <div class="col-xs-12 dialog-content-friend ">
+        <div class="dial">
+          <p class="plan-invitation">plan invitation</p>
+
+          <div class="media media-visible">
+            <a class="pull-left" href="#">
+              <img class="media-object fav-avatar-icon activity" src="/assets/img/icons/planner-invite.png"
+                   alt="...">
+            </a>
+
+            <div class="media-body">
+              <h4 class="media-heading invitation-title">
+                <a ui-sref="planner.view({plan_id: plan.id})">{{plan.title}}</a>
+              </h4>
+
+              <div class="description">
+                    <span>{{plan.description}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 
   <div class="row" justified-gallery ng-if="Attachments.items.album_photos.length > 0">
-      <div class="col-sm-4 no-pad"
-           ng-repeat="photo in Attachments.items.album_photos"
-           photo-viewer
-           index="$index"
-           hide-comments="1"
-           items="Attachments.items.album_photos"
-           repeat-done>
-        <img ng-src="{{photo.photo_url.medium}}" class="img-responsive" />
-      </div>
+    <div class="col-sm-4 no-pad"
+         ng-repeat="photo in Attachments.items.album_photos"
+         photo-viewer
+         index="$index"
+         hide-comments="1"
+         items="Attachments.items.album_photos"
+         repeat-done>
+      <img ng-src="{{photo.photo_url.medium}}" class="img-responsive"/>
+    </div>
   </div>
 
 </div>

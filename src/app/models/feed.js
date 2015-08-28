@@ -17,7 +17,7 @@
         }
       },
       reviews: {
-        url: API_URL + '/spots/reviews',
+        url: API_URL + '/reviews',
         method: 'GET',
         isArray: true,
         params: {
