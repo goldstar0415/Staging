@@ -14,7 +14,7 @@ return array(
 	 *
 	 * @type string
 	 */
-	'title' => 'Admin',
+	'title' => 'Zoomtivity Admin',
 
 	/**
 	 * The path to your model config directory
@@ -54,7 +54,8 @@ return array(
 	'menu' => [
 		'users',
 		'Settings' => 'settings.site',
-		'activity_level'
+		'activity_level',
+		'spot_requests'
 	],
 
 	/**
@@ -65,7 +66,15 @@ return array(
 	 */
 	'permission'=> function()
 	{
-		return Auth::check();
+		if (Auth::check()) {
+			$user = Auth::user();
+
+			if (!isset($user) or !$user->hasRole('admin')) {
+				throw new App\Exceptions\PermissionDeniedException;
+			}
+		}
+
+		return true;
 	},
 
 	/**

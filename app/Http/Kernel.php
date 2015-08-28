@@ -32,7 +32,6 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'base64upload' => \App\Http\Middleware\Base64Upload::class,
-        'admin' => \App\Http\Middleware\AdminPermission::class
+        'base64upload' => \App\Http\Middleware\Base64Upload::class
     ];
 }

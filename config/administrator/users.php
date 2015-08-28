@@ -62,7 +62,6 @@ return [
         'banned_at' => [
             'title' => 'Ban',
             'type' => 'bool',
-//            'setter' => true
         ],
         'ban_reason' => [
             'title' => 'Ban Reason',
