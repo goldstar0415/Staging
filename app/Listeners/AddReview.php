@@ -8,9 +8,9 @@ use App\User;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class AddReview implements ShouldQueue
+class AddReview /*implements ShouldQueue*/
 {
-    use InteractsWithQueue;
+//    use InteractsWithQueue;
     /**
      * Handle the event.
      *

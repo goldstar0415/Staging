@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\OnComment;
 use App\Events\OnWallMessage;
 use App\Events\UserFollowEvent;
 use App\Events\UserUnfollowEvent;
@@ -19,6 +20,7 @@ use App\Events\OnPlanRemind;
 use App\Events\OnAlbumPhotoComment;
 
 use App\Listeners\AddFriend;
+use App\Listeners\AddReview;
 use App\Listeners\Feeder;
 use App\Listeners\RemoveFriend;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
@@ -78,6 +80,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         OnPlanRemind::class => [
             Feeder::class
+        ],
+        OnComment::class => [
+            AddReview::class
         ]
     ];
 
