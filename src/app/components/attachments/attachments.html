@@ -30,25 +30,20 @@
 
     <div ng-if="Attachments.items.plans.length > 0" ng-repeat="plan in Attachments.items.plans"
          class="media media-visible padding-bottom add-event">
-      <div class="col-xs-12 dialog-content-friend ">
-        <div class="dial">
-          <p class="plan-invitation">plan invitation</p>
+      <p class="plan-invitation">plan invitation</p>
 
-          <div class="media media-visible">
-            <a class="pull-left" href="#">
-              <img class="media-object fav-avatar-icon activity" src="/assets/img/icons/planner-invite.png"
-                   alt="...">
-            </a>
+      <div class="media media-visible">
+        <a class="pull-left" ui-sref="planner.view({plan_id: plan.id})">
+          <img class="media-object fav-avatar-icon activity" src="/assets/img/icons/planner-invite.png" />
+        </a>
 
-            <div class="media-body">
-              <h4 class="media-heading invitation-title">
-                <a ui-sref="planner.view({plan_id: plan.id})">{{plan.title}}</a>
-              </h4>
+        <div class="media-body">
+          <h4 class="media-heading invitation-title">
+            <a ui-sref="planner.view({plan_id: plan.id})">{{plan.title}}</a>
+          </h4>
 
-              <div class="description">
-                    <span>{{plan.description}}</span>
-              </div>
-            </div>
+          <div class="description">
+            <span>{{plan.description}}</span>
           </div>
         </div>
       </div>
