@@ -10,15 +10,21 @@
           format: '=',
           startDate: '=',
           endDate: '=',
-          model: '=ngModel'
+          model: '=ngModel',
+          today: '='
         },
         link: function (s, e, a) {
-          var format = s.format || DATE_FORMAT.datepicker.date,
-            today = moment().format(DATE_FORMAT.date);
+          var format = s.format || DATE_FORMAT.datepicker.date;
+          var placeholder = moment().format(DATE_FORMAT.date);
+
+          if(s.today) {
+            s.startDate = moment().format(DATE_FORMAT.date);
+          }
+
           if (s.model) {
             s.model = moment(s.model).format(DATE_FORMAT.date);
           }
-          console.log(s.startDate);
+
           $(e)
             .datetimepicker({
               value: s.model,
@@ -29,19 +35,19 @@
               validateOnBlur: false,
               format: format,
               formatDate: format,
-              minDate: s.startDate || today,
+              minDate: s.startDate || false,
               maxDate: s.endDate || false,
               mask: true,
               closeOnDateSelect: true,
               //onSelectDate: onSelectDate,
               onShow: function () {
                 this.setOptions({
-                  minDate: s.startDate || today,
+                  minDate: s.startDate || false,
                   maxDate: s.endDate || false
                 });
               }
             })
-            .attr('placeholder', today);
+            .attr('placeholder', placeholder);
 
 
         }

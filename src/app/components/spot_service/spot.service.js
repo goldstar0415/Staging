@@ -36,11 +36,11 @@
       Spot.unfavorite({id: spot.id});
     }
 
-    function removeSpot(spot, idx) {
+    function removeSpot(spot, idx, callback) {
       dialogs.confirm('Confirmation', 'Are you sure you want to delete spot?').result.then(function () {
-        spot.$delete(function () {
-          vm.spots.splice(idx, 1);
+        Spot.delete({id: spot.id}, function () {
           toastr.info('Spot successfully deleted');
+          callback()
         });
       });
     }

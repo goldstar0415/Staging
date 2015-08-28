@@ -2,8 +2,10 @@
   {{currentUser.id == profileUser.id ? 'Favorites' : profileUser.first_name + "'s favorites"}}
 </h2>
 
-<section ng-repeat="item in ::Favorite.spots.data">
-  <div class="event">
+<div infinite-scroll="Favorite.pagination.nextPage()" infinite-scroll-disabled="Favorite.pagination.busy"
+     class="clearfix" infinite-scroll-distance="1">
+  <section ng-repeat="item in Favorite.spots.data">
+    <div class="event">
 
     <span class="date">
        <span ng-class="{'event-spot-page':item.type == 'Event',
@@ -17,60 +19,43 @@
         </span>
     </span>
 
-    <div class="media media-visible">
-      <a class="pull-left">
-        <img class="media-object fav-avatar-icon" ng-src="{{item.cover_url.thumb}}">
-      </a>
+      <div class="media media-visible">
+        <a class="pull-left">
+          <img class="media-object fav-avatar-icon" ng-src="{{item.cover_url.thumb}}">
+        </a>
 
-      <div class="media-body">
-        <h2 class="media-heading favorites-article-title">
-          <a>{{item.title}}</a>
-        </h2>
+        <div class="media-body">
+          <h2 class="media-heading favorites-article-title">
+            <a>{{item.title}}</a>
+          </h2>
 
-        <p class="place">{{item.description}}</p>
+          <p class="place">{{item.description}}</p>
+        </div>
       </div>
+
+      <ul class="tools" ng-if="currentUser">
+        <li ng-if="!item.is_saved">
+          <a class="save-event" ng-click="Favorite.saveToCalendar(item)">Save</a>
+        </li>
+        <li ng-if="item.is_saved">
+          <a class="save-event saved clicked" ng-click="Favorite.removeFromCalendar(item)">Remove</a>
+        </li>
+        <li ng-if="!item.is_favorite">
+          <a class="favorite-spot" ng-click="Favorite.addToFavorite(item)">Favorite</a>
+        </li>
+        <li ng-if="item.is_favorite">
+          <a class="fav favorited" ng-click="Favorite.removeFromFavorite(item)">Unfavorite</a>
+        </li>
+        <li>
+          <invite-friends spot="item"></invite-friends>
+        </li>
+
+      </ul>
+
     </div>
-
-    <ul class="tools" ng-if="currentUser">
-      <li ng-if="!item.is_saved">
-        <a class="save-event" ng-click="Favorite.saveToCalendar(item)">Save</a>
-      </li>
-      <li ng-if="item.is_saved">
-        <a class="save-event saved clicked" ng-click="Favorite.removeFromCalendar(item)">Remove</a>
-      </li>
-      <li ng-if="!item.is_favorite">
-        <a class="favorite-spot" ng-click="Favorite.addToFavorite(item)">Favorite</a>
-      </li>
-      <li ng-if="item.is_favorite">
-        <a class="fav favorited" ng-click="Favorite.removeFromFavorite(item)">Unfavorite</a>
-      </li>
-      <li>
-        <invite-friends spot="item"></invite-friends>
-      </li>
-
-    </ul>
-
-    <!--<a href="#"  class="share">Share</a>-->
-
-    <!--<div class="share-wrap" style="display: none;">-->
-    <!--<ul class="share-buttons clearfix">-->
-    <!--<li>-->
-    <!--<a-->
-    <!--href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"-->
-    <!--target="_blank" class="facebook">facebook</a></li>-->
-    <!--<li>-->
-    <!--<a href="https://plus.google.com/share?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"-->
-    <!--target="_blank" class="google">google</a></li>-->
-    <!--<li>-->
-    <!--<a-->
-    <!--href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"-->
-    <!--target="_blank" class="twitter">twitter</a></li>-->
-    <!--</ul>-->
-    <!--</div>-->
-    <!-- share-wrap -->
-
-  </div>
-</section>
+  </section>
+</div>
+<preloader ng-show="Favorite.pagination.busy"></preloader>
 
 <div class="col-xs-12" ng-if="Favorite.spots.data.length == 0">
   <h4 class="text-center description">No favorites yet.</h4>

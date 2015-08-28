@@ -53,7 +53,7 @@
       }
 
       //scroll top
-      //window.scrollTo(0, 0);
+      window.scrollTo(0, 0);
 
       //close all modals
       $modalStack.dismissAll();

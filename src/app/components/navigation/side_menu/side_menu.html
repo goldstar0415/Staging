@@ -31,7 +31,7 @@
   </ul>
 
   <ul>
-    <li class="create-wrap"><a ui-sref="spot_create" class="create-btn" ui-sref-active="active">Create spot</a></li>
+    <li ng-show="$root.currentUser" class="create-wrap"><a ui-sref="spot_create" class="create-btn" ui-sref-active="active">Create spot</a></li>
     <li><a ui-sref="zoomers" class="zoomers-link" ui-sref-active="active">Zoomers</a></li>
     <!--<li><a class="blog-link" ui-sref-active="active">Blog</a></li>-->
     <li><a ui-sref="about_us" class="about-link" ui-sref-active="active">About us</a></li>

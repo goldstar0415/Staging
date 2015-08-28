@@ -6,18 +6,25 @@
     .controller('PlanController', PlanController);
 
   /** @ngInject */
-  function PlanController(plan, comments, PlanComment, SpotService) {
+  function PlanController(plan, PlanComment, SpotService, ScrollService) {
     var vm = this;
     vm = _.extend(vm, plan);
-    vm.comments = comments;
+    vm.comments = {};
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.send = send;
 
+    var params = {
+      page: 0,
+      limit: 10,
+      plan_id: plan.id
+    };
+    vm.pagination = new ScrollService(PlanComment.query, vm.comments, params);
+
     function send() {
       PlanComment.save({plan_id: plan.id},
         {
-          message: vm.message || '',
+          body: vm.message || '',
           attachments: {
             album_photos: _.pluck(vm.attachments.photos, 'id'),
             spots: _.pluck(vm.attachments.spots, 'id'),

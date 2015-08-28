@@ -8,12 +8,8 @@
   /** @ngInject */
   function Spot($resource, API_URL) {
     return $resource(API_URL + '/spots/:id', {id: '@id'}, {
-      query: {
-        isArray: false,
-        params: {
-          page: 1,
-          limit: 10
-        }
+      paginate: {
+        isArray: false
       },
       favorites: {
         url: API_URL + '/spots/favorites',

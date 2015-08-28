@@ -22,7 +22,7 @@
         require: '?ngModel',
         restrict: 'A',
         link: function (scope, elem, attrs, ctrl) {
-          var LINK_REGEXP = /^((http(s)?:\/\/)?)(www\.)?((youtube\.com\/((watch\?v=)[\w]+))|(youtu.be\/([\w]+)))$/i;
+          var LINK_REGEXP = /^((http(s)?:\/\/)?)(www\.)?((youtube\.com\/((watch\?v=)[\S]+))|(youtu.be\/([\S]+)))$/i;
           if(ctrl) {
             ctrl.$validators.link = function(modelValue) {
               return ctrl.$isEmpty(modelValue) || LINK_REGEXP.test(modelValue);
