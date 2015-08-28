@@ -68,6 +68,7 @@
     }
 
     vm.create = function (form) {
+      form.$submitted = true;
       if (form.$valid && vm.category_id !== '') {
         var tags = filterTags();
         var locations = filterLocations();
@@ -121,7 +122,28 @@
           toastr.error('Please add at least one location');
         }
       } else {
-        toastr.error('Invalid input');
+        if(!vm.title) {
+          return toastr.error('Title is required!');
+        }
+
+        if(!vm.category_id) {
+          return toastr.error('Category is required!');
+        }
+
+        if (vm.type === 'Event') {
+          if(!vm.start_date) {
+            return toastr.error('Start date is required!');
+          }
+          if(!vm.end_date) {
+            return toastr.error('End date is required!');
+          }
+          if(!vm.start_time) {
+            return toastr.error('Start time is required!');
+          }
+          if(!vm.end_time) {
+            return toastr.error('End time is required!');
+          }
+        }
       }
 
     };

@@ -182,7 +182,7 @@
           }
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools');
+          var container = L.DomUtil.create('div', 'map-tools map-tools-top hide-tools');
 
           this.link = L.DomUtil.create('div', 'save-selection', container);
           this.link.href = '#';
@@ -211,7 +211,7 @@
           }
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools');
+          var container = L.DomUtil.create('div', 'map-tools map-tools-top hide-tools');
 
           this.link = L.DomUtil.create('div', 'clear-selection', container);
           this.link.href = '#';
@@ -241,7 +241,6 @@
 
       //initialization
       function InitMap(mapDOMElement) {
-
         //Leaflet touch hook
         L.Map.mergeOptions({
           touchExtend: true
@@ -1107,7 +1106,14 @@
           }
         });
 
+        var wp = GetDrawLayerPathWaypoints();
         drawLayerGeoJSON = GetDrawLayerGeoJSON();
+
+        if((wp.length > 0 || drawLayerGeoJSON.features.length > 0) && $rootScope.currentUser) {
+          angular.element('.map-tools-top').removeClass('hide-tools');
+        } else {
+          angular.element('.map-tools-top').addClass('hide-tools');
+        }
         return bboxes;
       }
 

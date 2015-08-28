@@ -1,12 +1,14 @@
 <h2 class="title-name">
-  {{currentUser.id == profileUser.id ? 'My spots' :  profileUser.first_name + "'s spots"}}
+  {{currentUser.id == profileUser.id ? 'My spots' : profileUser.first_name + "'s spots"}}
 </h2>
 <a ui-sref="spot_create" ng-if="currentUser.id == profileUser.id" class="add-friend" title="Create new spot"></a>
 
-<section class="my-spots-section" ng-repeat="item in Spots.spots.data">
+<div infinite-scroll="Spots.pagination.nextPage()" infinite-scroll-disabled="Spots.pagination.busy"
+     class="clearfix" infinite-scroll-distance="1">
+  <section class="my-spots-section" ng-repeat="item in Spots.spots.data">
 
-  <div class="event">
-                   <stars item="item"></stars>
+    <div class="event">
+      <stars item="item"></stars>
 
                     <span ng-class="{'event-spot-page':item.type == 'Event',
                                      'recreation-spot':item.type == 'Recreation',
@@ -18,69 +20,71 @@
                         <date-range item="item"></date-range>
                     </span>
 
-    <h2>
-      <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{::item.title}}</a>
-    </h2>
+      <h2>
+        <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{::item.title}}</a>
+      </h2>
 
-    <p class="place"></p>
+      <p class="place"></p>
 
-    <p class="description"><span>{{::item.description}}</span></p>
-    <figure>
-      <img ng-src="{{item.cover_url.original}}" alt="{{item.title}}" class="img-size">
-    </figure>
+      <p class="description"><span>{{::item.description}}</span></p>
+      <figure>
+        <img ng-src="{{item.cover_url.original}}" alt="{{item.title}}" class="img-size">
+      </figure>
 
-    <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">
-      <li ng-repeat="tag in item.tags"><a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{tag.name}}</a>
-      </li>
-    </ul>
-    <!--  tags -->
+      <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">
+        <li ng-repeat="tag in item.tags"><a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{tag.name}}</a>
+        </li>
+      </ul>
+      <!--  tags -->
 
-    <ul class="tools" ng-if="currentUser">
-      <li ng-if="currentUser.id == item.user_id">
-        <a ui-sref="spot_edit({spot_id: item.id})" class="edit-tools">Edit</a>
-      </li>
-      <li ng-if="currentUser.id == item.user_id">
-        <a ng-click="Spots.removeSpot(item, $index);" class="delete">Delete</a>
-      </li>
+      <ul class="tools" ng-if="currentUser">
+        <li ng-if="currentUser.id == item.user_id">
+          <a ui-sref="spot_edit({spot_id: item.id})" class="edit-tools">Edit</a>
+        </li>
+        <li ng-if="currentUser.id == item.user_id">
+          <a ng-click="Spots.removeSpot(item, $index);" class="delete">Delete</a>
+        </li>
 
-      <li ng-if="!item.is_saved">
-        <a class="save-event" ng-click="Spots.saveToCalendar(item)">Save</a>
-      </li>
-      <li ng-if="item.is_saved">
-        <a class="save-event saved clicked" ng-click="Spots.removeFromCalendar(item)">Remove</a>
-      </li>
-      <li ng-if="!item.is_favorite">
-        <a class="favorite-spot" ng-click="Spots.addToFavorite(item)">Favorite</a>
-      </li>
-      <li ng-if="item.is_favorite">
-        <a class="fav favorited" ng-click="Spots.removeFromFavorite(item)">Unfavorite</a>
-      </li>
-      <li>
-        <invite-friends spot="item"></invite-friends>
-      </li>
-    </ul>
-
-    <a ng-show="false" href="#" ng-click="share($event)" class="share">Share</a>
-
-    <div ng-show="false" class="share-wrap">
-      <ul class="share-buttons clearfix">
+        <li ng-if="!item.is_saved">
+          <a class="save-event" ng-click="Spots.saveToCalendar(item)">Save</a>
+        </li>
+        <li ng-if="item.is_saved">
+          <a class="save-event saved clicked" ng-click="Spots.removeFromCalendar(item)">Remove</a>
+        </li>
+        <li ng-if="!item.is_favorite">
+          <a class="favorite-spot" ng-click="Spots.addToFavorite(item)">Favorite</a>
+        </li>
+        <li ng-if="item.is_favorite">
+          <a class="fav favorited" ng-click="Spots.removeFromFavorite(item)">Unfavorite</a>
+        </li>
         <li>
-          <a
+          <invite-friends spot="item"></invite-friends>
+        </li>
+      </ul>
+
+      <a ng-show="false" href="#" ng-click="share($event)" class="share">Share</a>
+
+      <div ng-show="false" class="share-wrap">
+        <ul class="share-buttons clearfix">
+          <li>
+            <a
               href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
               target="_blank" class="facebook">facebook</a></li>
-        <li>
-          <a href="https://plus.google.com/share?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
-             target="_blank" class="google">google</a></li>
-        <li>
-          <a
+          <li>
+            <a href="https://plus.google.com/share?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
+               target="_blank" class="google">google</a></li>
+          <li>
+            <a
               href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fzoomzoom.itechhighway.com%2Fevent%2Fshow%2F97777798"
               target="_blank" class="twitter">twitter</a></li>
-      </ul>
-    </div>
-    <!-- share-wrap -->
+        </ul>
+      </div>
+      <!-- share-wrap -->
 
-  </div>
-</section>
+    </div>
+  </section>
+</div>
+<preloader ng-show="Spots.pagination.busy"></preloader>
 
 <div class="col-xs-12">
   <h4 class="text-center description" ng-if="Spots.spots.data.length == 0">No spots yet.</h4>

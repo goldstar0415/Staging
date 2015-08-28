@@ -10,7 +10,7 @@
     $stateProvider
       .state('main', {
         abstract: true,
-        template: '<ui-view autoscroll="true" />',
+        template: '<ui-view  />',
         resolve: {
           currentUser: function ($q, User, $rootScope, UserService) {
             if ($rootScope.currentUser) {
@@ -42,7 +42,7 @@
       })
       .state('profile', {
         url: '/user/:user_id',
-        template: '<ui-view autoscroll="true" />',
+        template: '<ui-view  />',
         abstract: true,
         resolve: {
           user: function (User, currentUser, $stateParams,  UserService) {
@@ -156,14 +156,7 @@
         controllerAs: 'Spots',
         parent: 'profile',
         locate: 'none',
-        mapState: 'small',
-        resolve: {
-          spots: function (Spot, $stateParams) {
-            return Spot.query({
-              user_id: $stateParams.user_id
-            }).$promise;
-          }
-        }
+        mapState: 'small'
       })
 
       //Planner (calendar + list of all plans)
@@ -229,9 +222,6 @@
         resolve: {
           plan: function (Plan, $stateParams) {
             return Plan.get({id: $stateParams.plan_id}).$promise;
-          },
-          comments: function (PlanComment, $stateParams) {
-            return PlanComment.get({plan_id: $stateParams.plan_id}).$promise;
           }
         },
         locate: 'none',
@@ -296,11 +286,6 @@
         templateUrl: '/app/modules/feed/feed.html',
         controller: 'FeedsController',
         controllerAs: 'Feed',
-        resolve: {
-          feeds: function (Feed) {
-            return Feed.query().$promise;
-          }
-        },
         parent: 'profile_menu',
         locate: 'none',
         require_auth: true,
@@ -327,13 +312,6 @@
         templateUrl: '/app/modules/favorites/favorites.html',
         controller: 'FavoritesController',
         controllerAs: 'Favorite',
-        resolve: {
-          favorites: function (Spot, $stateParams) {
-            return Spot.favorites({
-              user_id: $stateParams.user_id
-            }).$promise;
-          }
-        },
         parent: 'profile',
         locate: 'none',
         mapState: 'small'
@@ -353,7 +331,7 @@
         require_auth: true,
         mapState: 'small'
       })
-      .state('areasPreview', {
+      .state('areas.preview', {
         url: '/areas/:area_id',
         template: '',
         controller: 'AreasPreviewController',

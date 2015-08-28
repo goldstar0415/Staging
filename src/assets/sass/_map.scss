@@ -11,6 +11,10 @@
   height: calc(100% - 70px);
 }
 
+.hide-tools {
+  display: none!important;
+}
+
 .map.small-size {
   height: 400px;
   top: 0;

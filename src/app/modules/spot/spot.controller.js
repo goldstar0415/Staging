@@ -6,14 +6,19 @@
     .controller('SpotController', SpotController);
 
   /** @ngInject */
-  function SpotController(spot, SpotService, ScrollService, SpotComment) {
+  function SpotController(spot, SpotService, ScrollService, SpotComment, $state) {
     var vm = this;
     vm.spot = SpotService.formatSpot(spot);
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
     vm.removeFromFavorite = SpotService.removeFromFavorite;
-    vm.removeSpot = SpotService.removeSpot;
+    vm.removeSpot = function(spot, idx) {
+      SpotService.removeSpot(spot, idx, function() {
+        $state.go('spots', {user_id: $rootScope.currentUser.id});
+      });
+    };
+
     vm.postComment = postComment;
 
     vm.comments = {};
@@ -28,7 +33,7 @@
     function postComment() {
       SpotComment.save({spot_id: spot.id},
         {
-          message: vm.message || '',
+          body: vm.message || '',
           attachments: {
             album_photos: _.pluck(vm.attachments.photos, 'id'),
             spots: _.pluck(vm.attachments.spots, 'id'),

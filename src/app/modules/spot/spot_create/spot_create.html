@@ -1,4 +1,4 @@
-<form name="form" class="form-horizontal" ng-submit="SpotCreate.create(form)" role="form" novalidate>
+<form name="form" class="form-horizontal" role="form" novalidate>
   <h2 ng-if="!SpotCreate.edit" class="event-title">Create new spot</h2>
   <h2 ng-if="SpotCreate.edit" class="event-title">Update Spot</h2>
   <section class="event-main-info">
@@ -305,8 +305,8 @@
   </section>
   <div class="form-group">
     <div class="col-xs-12">
-      <button ng-if="!SpotCreate.edit" type="submit" class="btn btn-default green-btn pull-left">Create</button>
-      <button ng-if="SpotCreate.edit" type="submit" class="btn btn-default green-btn pull-left">Update</button>
+      <button ng-if="!SpotCreate.edit" type="button" ng-click="SpotCreate.create(form)" class="btn btn-default green-btn pull-left">Create</button>
+      <button ng-if="SpotCreate.edit" type="button" ng-click="SpotCreate.create(form)" class="btn btn-default green-btn pull-left">Update</button>
     </div>
   </div>
 </form>

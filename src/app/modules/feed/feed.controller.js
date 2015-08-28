@@ -6,12 +6,14 @@
     .controller('FeedsController', FeedsController);
 
   /** @ngInject */
-  function FeedsController(feeds) {
+  function FeedsController(Feed, ScrollService) {
     var vm = this;
-    vm.limit = 10;
-    vm.page = 1;
-    vm.feeds = feeds;
+    vm.feeds = {};
 
-
+    var params = {
+      page: 0,
+      limit: 10
+    };
+    vm.pagination = new ScrollService(Feed.query, vm.feeds, params);
   }
 })();
