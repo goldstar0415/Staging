@@ -459,6 +459,17 @@ sign-in, sign-up {
   }
 }
 
+.unauthorized {
+  .sign-in {
+    a {
+      color: $blue !important;
+      &:hover, &:focus, &:active {
+        color: $navy_blue !important;
+      }
+    }
+  }
+}
+
 section {
   .border-bottom {
     border-bottom: 1px solid #e9edf0 !important;
