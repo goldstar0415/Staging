@@ -21,13 +21,13 @@
               User.currentUser({}, function success(user) {
                 UserService.setCurrentUser(user);
                 console.log('resolve');
-                deferred.resolve();
+                deferred.resolve(user);
               }, function fail() {
                 $rootScope.currentUserFailed = true;
                 deferred.resolve();
               });
 
-              return deferred.$promise;
+              return deferred.promise;
             }
           }
         }
@@ -302,11 +302,6 @@
         templateUrl: '/app/modules/reviews/reviews.html',
         controller: 'ReviewsController',
         controllerAs: 'Review',
-        resolve: {
-          reviews: function (Feed) {
-            return Feed.reviews().$promise;
-          }
-        },
         parent: 'profile_menu',
         locate: 'none',
         require_auth: true,
