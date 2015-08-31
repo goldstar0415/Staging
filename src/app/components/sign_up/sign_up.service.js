@@ -6,7 +6,7 @@
     .factory('SignUpService', SignUpService);
 
   /** @ngInject */
-  function SignUpService($modal, UserService, User, toastr) {
+  function SignUpService($modal, UserService, User, toastr, $state) {
     return {
       openModal: openModal,
       signUpUser: signUpUser
@@ -29,10 +29,12 @@
 
             $modalInstance.dismiss('close');
           }, function error(resp) {
-            console.log(resp);
-            //form.email.$setValidity('wrong', true);
-            //form.inputName.$setValidity('required', false);
-            toastr.error('Wrong email or password');
+            if (resp.status == 400) {
+              $state.go($state.current, {}, {reload: true});
+            } else {
+              var message = resp.data.email || resp.data.message || 'Wrong data';
+              toastr.error(message);
+            }
           });
       }
     }
