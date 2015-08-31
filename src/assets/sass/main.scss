@@ -475,6 +475,11 @@ section {
     border-bottom: 1px solid #e9edf0 !important;
   }
 }
+.row {
+  img.img-responsive {
+    cursor: pointer;
+  }
+}
 
 /*responsive*/
 
