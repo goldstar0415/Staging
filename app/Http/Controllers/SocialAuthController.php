@@ -49,6 +49,11 @@ class SocialAuthController extends Controller
             if ($exist_user) {
                 $this->auth->login($exist_user);
 
+                if ($this->auth->user()->socials()->where('name', $social)->first() === null) {
+                    $social = Social::where('name', $social)->first();
+                    $this->auth->user()->socials()->attach($social, ['token' => $user->token]);
+                }
+
                 return redirect(config('app.frontend_url'));
             } else {
                 list($first_name, $last_name) = explode(' ', $user->getName());
