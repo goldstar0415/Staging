@@ -27,7 +27,8 @@
         params: fromParams
       };
 
-      //$rootScope.currentParams = toParams;
+      $rootScope.currentParams = toParams;
+
       //if (current.require_auth && !$rootScope.currentUser) {
       //  console.log($rootScope.currentUser, arguments);
       //  toastr.error('Unauthorized!');

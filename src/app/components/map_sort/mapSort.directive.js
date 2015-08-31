@@ -167,7 +167,6 @@
     };
 
     $scope.toggleEventCategories = function() {
-      $scope.sortEventsByCategories();
       if(!vm.eventsSelectAll) {
         _.map($scope.eventCategories, function(item) {
           item.selected = true;
@@ -178,6 +177,7 @@
         });
       }
       vm.eventsSelectAll = !vm.eventsSelectAll;
+      $scope.sortEventsByCategories();
     };
     $scope.sortEventsByCategories = function() {
       var categories = _.reject($scope.eventCategories, function(item) {
@@ -191,7 +191,6 @@
     vm.recreationSelectAll = false;
 
     $scope.toggleRecreationCategories = function() {
-      $scope.sortRecreationsByCategories();
       if(!vm.recreationSelectAll) {
         _.map($scope.recreationCategories, function(item) {
           item.selected = true;
@@ -202,6 +201,7 @@
         });
       }
       vm.recreationSelectAll = !vm.recreationSelectAll;
+      $scope.sortRecreationsByCategories();
     };
     $scope.sortRecreationsByCategories = function() {
       var categories = _.reject($scope.recreationCategories, function(item) {
@@ -215,7 +215,6 @@
     vm.pitstopSelectAll = false;
 
     $scope.togglePitstopCategories = function() {
-      $scope.sortPitstopsByCategories();
       if(!vm.pitstopSelectAll) {
         _.map($scope.pitstopCategories, function(item) {
           item.selected = true;
@@ -226,6 +225,7 @@
         });
       }
       vm.pitstopSelectAll = !vm.pitstopSelectAll;
+      $scope.sortPitstopsByCategories();
     };
     $scope.sortPitstopsByCategories = function() {
       var categories = _.reject($scope.pitstopCategories, function(item) {

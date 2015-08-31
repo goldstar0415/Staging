@@ -6,7 +6,7 @@
     .factory('SignInService', SignInService);
 
   /** @ngInject */
-  function SignInService(UserService, User, toastr) {
+  function SignInService(UserService, User, toastr, $state) {
     return {
       userLogin: userLogin
     };
@@ -18,10 +18,11 @@
             UserService.setCurrentUser(user);
             $modalInstance.dismiss('close');
           }, function error(resp) {
-            console.log(resp);
-            //form.email.$setValidity('wrong', true);
-            //form.inputName.$setValidity('required', false);
-            toastr.error('Wrong email or password');
+            if (resp.status == 400) {
+              $state.go($state.current, {}, {reload: true});
+            } else {
+              toastr.error('Wrong email or password');
+            }
           });
       }
     }

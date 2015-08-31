@@ -7,14 +7,13 @@
       return {
         restrict: 'A',
         scope: {
-          format: '=',
           startDate: '=',
           endDate: '=',
           model: '=ngModel',
           today: '='
         },
         link: function (s, e, a) {
-          var format = s.format || DATE_FORMAT.datepicker.date;
+          var format = DATE_FORMAT.datepicker.date;
           var placeholder = moment().format(DATE_FORMAT.date);
 
           if(s.today) {
@@ -25,8 +24,7 @@
             s.model = moment(s.model).format(DATE_FORMAT.date);
           }
 
-          $(e)
-            .datetimepicker({
+          $(e).datetimepicker({
               value: s.model,
               scrollMonth: false,
               scrollTime: false,
@@ -37,9 +35,8 @@
               formatDate: format,
               minDate: s.startDate || false,
               maxDate: s.endDate || false,
-              mask: true,
               closeOnDateSelect: true,
-              //onSelectDate: onSelectDate,
+              onSelectDate: onSelectDate,
               onShow: function () {
                 this.setOptions({
                   minDate: s.startDate || false,
@@ -48,6 +45,21 @@
               }
             })
             .attr('placeholder', placeholder);
+
+          $(e).on('keydown', function(e) {
+            if(e.which != 8 && e.which != 13) {
+              e.preventDefault();
+            }
+
+            if(e.which == 8) {
+              s.model = '';
+              s.$apply();
+            }
+          });
+
+          function onSelectDate(ct,$i) {
+            s.model = moment(ct).format(DATE_FORMAT.date);
+          }
 
 
         }
@@ -73,10 +85,24 @@
             datepicker: false,
             validateOnBlur: false,
             step: step,
-            mask: '29:59',
             formatTime: DATE_FORMAT.datepicker.time,
             onChangeDateTime: onSelectTime
           });
+
+          $(e).on('keydown', function(e) {
+            if(e.which != 8 && e.which != 13) {
+              e.preventDefault();
+            }
+
+            if(e.which == 8) {
+              s.model = '';
+              s.$apply();
+            }
+          });
+
+          function onSelectDate(ct,$i) {
+            s.model = moment(ct).format(DATE_FORMAT.date);
+          }
 
           function onSelectTime(time) {
             s.model = moment(time).format(DATE_FORMAT.time);
