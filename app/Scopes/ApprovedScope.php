@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ScopeInterface;
 
-class NewestScope implements ScopeInterface
+class ApprovedScope implements ScopeInterface
 {
+    protected $column = 'is_approved';
+
     /**
      * Apply scope on the query.
      *
@@ -19,9 +21,8 @@ class NewestScope implements ScopeInterface
      */
     public function apply(Builder $builder, Model $model)
     {
-        $column = $model->getCreatedAtColumn();
-        $builder->orderBy($column, 'DESC');
-        $this->addWithoutNewest($builder);
+        $builder->whereNull($this->column)->orWhere($this->column, true);
+        $this->addWithRequested($builder);
     }
 
     /**
@@ -34,42 +35,24 @@ class NewestScope implements ScopeInterface
     public function remove(Builder $builder, Model $model)
     {
         $query = $builder->getQuery();
-        $column = $model->getCreatedAtColumn();
-        foreach ((array)$query->orders as $key => $order) {
-            if ($this->isNewestConstraint($order, $column)) {
-                $this->removeOrder($query, $key);
-            }
-        }
-    }
+        $column = $this->column;
 
-    /**
-     * Remove scope constraint from the query.
-     *
-     * @param BaseBuilder $query
-     * @param  int $key
-     * @internal param BaseBuilder $builder
-     */
-    protected function removeOrder(BaseBuilder $query, $key)
-    {
-        $property = $query->unions ? 'unionOrders' : 'orders';
-        unset($query->{$property}[$key]);
-        $query->$property = array_values($query->$property);
-
-        if (empty($query->$property)) {
-            $query->$property = null;
-        }
+        $query->wheres = collect($query->wheres)->reject(function ($where) use ($column) {
+            return $this->isWithRequestedConstraint($where, $column);
+        })->values()->all();
     }
 
     /**
      * Check if given where is the scope constraint.
      *
-     * @param  array $order
+     * @param  array $where
      * @param  string $column
      * @return boolean
      */
-    protected function isNewestConstraint(array $order, $column)
+    protected function isWithRequestedConstraint(array $where, $column)
     {
-        return ($order['column'] == $column && $order['direction'] == 'desc');
+        return ($where['type'] == 'Null' && $where['column'] == $column
+            or $where['column'] == $column && $where['value'] == true);
     }
 
     /**
@@ -77,10 +60,10 @@ class NewestScope implements ScopeInterface
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
      */
-    protected function addWithoutNewest(Builder $builder)
+    protected function addWithRequested(Builder $builder)
     {
         $builder->macro(
-            'withoutNewest',
+            'withRequested',
             function (Builder $builder) {
                 $this->remove($builder, $builder->getModel());
                 return $builder;
