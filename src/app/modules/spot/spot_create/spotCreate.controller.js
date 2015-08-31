@@ -235,6 +235,9 @@
         });
       }
     };
+    vm.InvalidTag = function () {
+      toastr.error('Invalid input.');
+    };
     //videos
     vm.addYoutubeLink = function (validLink) {
       if (validLink && vm.newYoutubeLink) {
