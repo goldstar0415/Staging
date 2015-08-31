@@ -17,7 +17,7 @@
       images: 10,
       video: 5
     };
-    vm.type = 'Event';
+    vm.type = 'event';
     vm.selectCover = false;
     vm.category_id = '';
     vm.startDate = moment().toDate();
@@ -40,6 +40,9 @@
 
     $scope.$watch('SpotCreate.images.files.length', function () {
       vm.checkFilesRestrictions();
+    });
+    $scope.$watch('SpotCreate.start_date', function() {
+      vm.end_date = '';
     });
     if(!vm.edit) {
       $scope.$watch('SpotCreate.type', function () {
@@ -232,9 +235,6 @@
         });
       }
     };
-    setTimeout(function(){
-      console.log(vm.category_id);
-    }, 10000);
     //videos
     vm.addYoutubeLink = function (validLink) {
       if (validLink && vm.newYoutubeLink) {
