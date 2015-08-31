@@ -10,20 +10,10 @@
     return $resource(API_URL + '/feeds', {}, {
       query: {
         url: API_URL + '/feeds',
-        isArray: false,
-        params: {
-          page: 1,
-          limit: 20
-        }
+        isArray: false
       },
       reviews: {
-        url: API_URL + '/reviews',
-        method: 'GET',
-        isArray: false,
-        params: {
-          page: 1,
-          limit: 20
-        }
+        url: API_URL + '/reviews'
       }
     });
   }

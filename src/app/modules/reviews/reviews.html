@@ -4,22 +4,82 @@
   <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
 </div>
 
-<div class="reviews col-xs-12" ng-repeat="item in Review.reviews.data">
-  <a class="review-img" ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
-    <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.sender.avatar_url.medium}}">
-  </a>
+<div infinite-scroll="Review.pagination.nextPage()" infinite-scroll-disabled="Review.pagination.busy"
+     class="clearfix" infinite-scroll-distance="1">
+  <div class="reviews col-xs-12" ng-repeat="item in Review.reviews.data">
+    <div ng-switch="item.commentable_type">
+      <div ng-switch-when="App\Plan">
 
-  <div class="text-block">
-    <!--<h2 class="media-heading feeds-title">-->
-    <!--<a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">{{item.body}}</a>-->
-    <!--</h2>-->
-    <a class="author-name" ui-sref="profile.main({user_id: item.user.id})">{{item.sender.first_name}}
-      {{item.sender.last_name}}</a>
+        <a class="review-img" ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
+          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.cover_url.medium}}">
+        </a>
 
-    <p class="description">{{item.body}}</p>
+        <div class="text-block">
 
-    <p class="time">{{item.created_at | toTimezone}}</p>
+          <h2 class="media-heading feeds-title">
+            <a
+              ui-sref="planner.view({user_id: spot.user_id, plan_id: item.commentable.id})">{{item.commentable.title}}</a>
+          </h2>
+          <a class="author-name" ui-sref="profile.main({user_id: item.user.id})">{{item.sender.first_name}}
+            {{item.sender.last_name}}</a>
+
+          <p class="description">{{item.body}}</p>
+
+          <p class="time">{{item.created_at | toTimezone}}</p>
+
+        </div>
+
+      </div>
+
+      <div ng-switch-when="App\Spot">
+
+        <a class="review-img" ui-sref="spot({user_id: spot.user_id, spot_id: item.id})">
+          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.cover_url.medium}}">
+        </a>
+
+        <div class="text-block">
+
+          <h2 class="media-heading feeds-title">
+            <a
+              ui-sref="spot({user_id: spot.user_id, spot_id: item.commentable.id})">{{item.commentable.title}}</a>
+          </h2>
+          <a class="author-name" ui-sref="profile.main({user_id: item.user.id})">{{item.sender.first_name}}
+            {{item.sender.last_name}}</a>
+
+          <p class="description">{{item.body}}</p>
+
+          <p class="time">{{item.created_at | toTimezone}}</p>
+
+        </div>
+
+      </div>
+
+      <div ng-switch-when="App\AlbumPhoto">
+
+        <a class="review-img" ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
+          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.cover_url.medium}}">
+        </a>
+
+        <div class="text-block">
+
+          <h2 class="media-heading feeds-title">
+            <a
+              ui-sref="planner.view({user_id: spot.user_id, plan_id: item.commentable.id})">{{item.commentable.title}}</a>
+          </h2>
+          <a class="author-name" ui-sref="profile.main({user_id: item.user.id})">{{item.sender.first_name}}
+            {{item.sender.last_name}}</a>
+
+          <p class="description">{{item.body}}</p>
+
+          <p class="time">{{item.created_at | toTimezone}}</p>
+
+        </div>
+
+      </div>
+    </div>
   </div>
+
+  <preloader ng-show="Review.pagination.busy"></preloader>
 </div>
 
 <div class="col-xs-12">
