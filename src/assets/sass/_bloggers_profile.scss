@@ -290,10 +290,12 @@
       color: $white;
       border: 1px solid $white;
       border-bottom: 0;
+      padding-bottom: 12px;
       @include transition_bg_color;
       @include transition_color;
       &:hover, &:focus {
         background-color: $blue;
+        padding-bottom: 12px;
         @include transition_bg_color;
       }
     }
