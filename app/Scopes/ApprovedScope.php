@@ -53,8 +53,14 @@ class ApprovedScope implements ScopeInterface
      */
     protected function isWithRequestedConstraint(array $where, $column)
     {
-        return ($where['type'] == 'Null' && $where['column'] == $column
-            or $where['column'] == $column && $where['value'] == true);
+        if ($where['type'] === 'Nested') {
+            foreach ($where['query']->wheres as $where) {
+                return ($where['type'] == 'Null' && $where['column'] == $column
+                    or $where['column'] == $column && $where['value'] == true);
+            }
+        }
+
+        return false;
     }
 
     /**
