@@ -79,6 +79,7 @@
     };
 
     //make menu on left sid when small screen
+    $rootScope.windowWidth = $(window).width();
     $(window).resize(_.throttle(onWindowResize, 100));
     function onWindowResize() {
       $rootScope.windowWidth = $(window).width();
