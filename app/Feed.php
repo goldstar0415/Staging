@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\Scopes\NewestScopeTrait;
 
 /**
  * Class Feed
@@ -9,6 +10,8 @@ namespace App;
  */
 class Feed extends BaseModel
 {
+    use NewestScopeTrait;
+
     protected $fillable = ['event_type'];
 
     protected $with = ['feedable', 'sender'];
