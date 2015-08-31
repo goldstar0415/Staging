@@ -81,5 +81,5 @@
 </div>
 
 <div class="col-xs-12">
-  <h4 class="text-center description" ng-if="Review.reviews.length == 0">No reviews yet.</h4>
+  <h4 class="text-center description" ng-if="Review.reviews.data.length == 0 && !Review.pagination.busy">No reviews yet.</h4>
 </div>

@@ -53,7 +53,7 @@
       </div>
       <preloader ng-show="Planner.pagination.busy"></preloader>
 
-      <h3 ng-if="Planner.plans.data.length == 0" class="text-center description">There are no plans...</h3>
+      <h3 ng-if="Planner.plans.data.length == 0 && !Planner.pagination.busy" class="text-center description">No plans yet.</h3>
     </section>
   </div>
 </div>
