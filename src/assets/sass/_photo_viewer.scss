@@ -3,6 +3,9 @@
   width: 100%;
   .modal-dialog {
     width: 950px !important;
+    top: 50%;
+    position: relative;
+    transform: translate(0,-50%) !important;
     .modal-content {
       border-top-left-radius: 10px;
       border-bottom-left-radius: 10px;
@@ -222,6 +225,39 @@
     &:hover {
       background: #1a415b;
       @include transition_bg;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .viewer-wrap {
+    .modal-dialog {
+      width: 80% !important;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .viewer-wrap {
+    .modal-dialog {
+      display: table;
+      margin: 0 auto;
+      width: 90% !important;
+      .photo-viewer {
+        max-height: 100%;
+        .image {
+          width: 100%;
+        }
+        .photo-comments {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .modal {
+    .modal-dialog {
+      top: 10% !important;
+      transform: translate(0, 0) !important;
     }
   }
 }
