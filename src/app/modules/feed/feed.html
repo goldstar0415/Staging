@@ -88,5 +88,5 @@
   <preloader ng-show="Feed.pagination.busy"></preloader>
 
 
-  <h4 class="text-center description" ng-if="Feed.feeds.data.length == 0">No feeds yet.</h4>
+  <h4 class="text-center description" ng-if="Feed.feeds.data.length == 0 && !Feed.pagination.busy">No feeds yet.</h4>
 </div>
