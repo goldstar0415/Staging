@@ -6,13 +6,13 @@
   <div class="modal-body activity-modal-body clearfix">
 
     <ul class="nav nav-tabs " role="tablist">
-      <li class="nav-tabs-default choose-tab" ng-click="modal.tab = 'events'" ng-class="{active: modal.tab == 'events'}">
+      <li class="nav-tabs-default choose-tab" ng-click="modal.changeTab('spots')" ng-class="{active: modal.tab == 'spots'}">
         <a>My spots</a>
       </li>
-      <li class="nav-tabs-default choose-tab" ng-click="modal.tab = 'favorites'" ng-class="{active: modal.tab == 'favorites'}">
+      <li class="nav-tabs-default choose-tab" ng-click="modal.changeTab('favorites')" ng-class="{active: modal.tab == 'favorites'}">
         <a>Favorites</a>
       </li>
-      <li class="nav-tabs-default choose-tab" ng-click="modal.tab = 'areas'" ng-class="{active: modal.tab == 'areas'}">
+      <li class="nav-tabs-default choose-tab" ng-click="modal.changeTab('areas')" ng-class="{active: modal.tab == 'areas'}">
         <a>Saved searches</a>
       </li>
     </ul>
@@ -26,8 +26,8 @@
         </div>
       </div>
 
-      <div class="tab-pane col-sm-12 no-pad " ng-if="modal.tab == 'events'"
-           ng-class="{active: modal.tab == 'events'}">
+      <div class="tab-pane col-sm-12 no-pad " ng-if="modal.tab == 'spots'"
+           ng-class="{active: modal.tab == 'spots'}">
         <div class="col-sm-12 no-pad choose-friend-block">
           <div ng-repeat="spot in modal.spots | filter: {title: search}"
                class="choose-friend"

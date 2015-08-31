@@ -24,8 +24,8 @@
 
       $scope.$watch('Stars.item.rating', function (value, old) {
         if (value != old && $rootScope.currentUser) {
-          console.log(vm.item.rating);
           Spot.rate({id: vm.item.id}, {vote: parseInt(value)});
+          vm.item.is_rated = true;
         }
       });
     }
