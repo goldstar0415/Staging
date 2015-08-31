@@ -12,11 +12,7 @@
         isArray: false
       },
       favorites: {
-        url: API_URL + '/spots/favorites',
-        params: {
-          page: 1,
-          limit: 20
-        }
+        url: API_URL + '/spots/favorites'
       },
       inviteFriends: {
         url: API_URL + '/spots/invite',

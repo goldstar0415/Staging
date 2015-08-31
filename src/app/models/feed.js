@@ -11,19 +11,11 @@
       query: {
         url: API_URL + '/feeds',
         isArray: false,
-        params: {
-          page: 1,
-          limit: 20
-        }
+        ignoreLoadingBar: true
       },
       reviews: {
         url: API_URL + '/reviews',
-        method: 'GET',
-        isArray: false,
-        params: {
-          page: 1,
-          limit: 20
-        }
+        ignoreLoadingBar: true
       }
     });
   }

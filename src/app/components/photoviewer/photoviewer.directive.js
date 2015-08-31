@@ -43,6 +43,7 @@
     /** @ngInject */
     function PhotoViewerController($modalInstance, items, index, hideComments, Photo) {
       var vm = this;
+      vm.countPhotos = items.length;
       vm.hideComments = hideComments;
       vm.currentIndex = index;
       vm.currentPhoto = items[index];

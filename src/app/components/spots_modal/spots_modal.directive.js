@@ -47,7 +47,7 @@
     /** @ngInject */
     function SpotsModalController(selectedSpots, spots, $modalInstance, Spot) {
       var vm = this;
-      vm.spots = _markAsSelected(spots.data);
+      vm.spots = _markAsSelected(spots);
       vm.close = close;
       vm.addSpot = addSpot;
 

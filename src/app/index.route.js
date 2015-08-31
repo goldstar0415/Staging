@@ -20,14 +20,13 @@
 
               User.currentUser({}, function success(user) {
                 UserService.setCurrentUser(user);
-                console.log('resolve');
-                deferred.resolve();
+                deferred.resolve(user);
               }, function fail() {
                 $rootScope.currentUserFailed = true;
                 deferred.resolve();
               });
 
-              return deferred.$promise;
+              return deferred.promise;
             }
           }
         }
@@ -224,7 +223,7 @@
         templateUrl: '/app/modules/planner/plan/plan.html',
         controller: 'PlanController',
         controllerAs: 'Plan',
-        parent: 'planner',
+        parent: 'profile',
         resolve: {
           plan: function (Plan, $stateParams) {
             return Plan.get({id: $stateParams.plan_id}).$promise;
@@ -302,11 +301,6 @@
         templateUrl: '/app/modules/reviews/reviews.html',
         controller: 'ReviewsController',
         controllerAs: 'Review',
-        resolve: {
-          reviews: function (Feed) {
-            return Feed.reviews().$promise;
-          }
-        },
         parent: 'profile_menu',
         locate: 'none',
         require_auth: true,
@@ -413,6 +407,9 @@
         resolve: {
           album: function (Album, $stateParams) {
             return Album.get({id: $stateParams.album_id}).$promise;
+          },
+          photos: function (Album, $stateParams) {
+            return Album.photos({album_id: $stateParams.album_id}).$promise;
           }
         },
         mapState: 'small',
