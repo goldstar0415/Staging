@@ -124,6 +124,7 @@
         <tags-input class="tags-input-custom"
                     ng-model="SpotCreate.tags"
                     on-tag-adding="SpotCreate.onTagsAdd()"
+                    on-invalid-tag="SpotCreate.InvalidTag()"
                     display-property="name"
                     key-property="name">
         </tags-input>
