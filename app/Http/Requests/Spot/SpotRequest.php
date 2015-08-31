@@ -47,6 +47,7 @@ class SpotRequest extends Request
         $rules = array_merge($rules, $this->arrayFieldRules('videos', 'string|max:255'));
         $rules = array_merge($rules, $this->arrayFieldRules('web_sites', 'url'));
         $rules = array_merge($rules, $this->arrayFieldRules('files', 'image|max:5000', true));
+        $rules = array_merge($rules, $this->arrayFieldRules('tags', 'string|max:64'));
 
         return $rules;
     }

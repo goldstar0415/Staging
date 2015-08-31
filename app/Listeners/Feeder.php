@@ -22,6 +22,7 @@ use App\Events\UserUnfollowEvent;
 
 use App\Feed;
 use App\User;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,6 +30,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class Feeder implements ShouldQueue
 {
     use InteractsWithQueue;
+    /**
+     * @var Guard
+     */
+    private $auth;
+
+    /**
+     * Feeder constructor.
+     * @param Guard $auth
+     */
+    public function __construct(Guard $auth)
+    {
+        $this->auth = $auth;
+    }
 
     /**
      * Handle the event.
@@ -99,16 +113,18 @@ class Feeder implements ShouldQueue
      */
     protected function addFeed(Feedable $event, $users)
     {
-        $feed = new Feed(['event_type' => class_basename($event)]);
-        $feed->feedable()->associate($event->getFeedable());
-        $feed->sender()->associate($event->getFeedSender());
+        if ($event->getFeedSender()->id !== $this->auth->id()) {
+            $feed = new Feed(['event_type' => class_basename($event)]);
+            $feed->feedable()->associate($event->getFeedable());
+            $feed->sender()->associate($event->getFeedSender());
 
-        if ($users instanceof Collection) {
-            foreach ($users as $user) {
-                $user->feeds()->save($feed);
+            if ($users instanceof Collection) {
+                foreach ($users as $user) {
+                    $user->feeds()->save($feed);
+                }
+            } elseif ($users instanceof User) {
+                $users->feeds()->save($feed);
             }
-        } elseif ($users instanceof User) {
-            $users->feeds()->save($feed);
         }
     }
 }
