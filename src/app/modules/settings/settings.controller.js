@@ -10,6 +10,7 @@
     var vm = this;
     vm.endDate = moment().toDate();
     vm.data = currentUser;
+    vm.addSocial = addSocial;
     vm.images = UploaderService.images;
     vm.minDate = '01.01.1940';
 
@@ -124,6 +125,10 @@
           toastr.error('Incorrect input ')
         });
     };
+
+    function addSocial(type) {
+
+    }
 
     //change avatar
     $scope.$watch('Settings.images.files', function (val, test) {

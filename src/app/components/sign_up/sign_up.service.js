@@ -38,8 +38,9 @@
     }
 
     /** @ngInject */
-    function SignUpModalController(SignUpService, $modalInstance) {
+    function SignUpModalController(SignUpService, $modalInstance, API_URL) {
       var vm = this;
+      vm.API_URL = API_URL;
 
       vm.close = function () {
         $modalInstance.close();
