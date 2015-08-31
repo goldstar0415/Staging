@@ -68,7 +68,7 @@ class SocialAuthController extends Controller
             return $provider->redirect();
         }
 
-        return response()->json(['message' => 'User successfuly logged in']);
+        return redirect(config('app.frontend_url'));
     }
 
     /**
