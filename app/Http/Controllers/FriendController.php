@@ -16,6 +16,7 @@ class FriendController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('base64upload:avatar', ['only' => ['store', 'update']]);
     }
 
     /**

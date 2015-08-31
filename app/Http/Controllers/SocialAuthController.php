@@ -61,6 +61,8 @@ class SocialAuthController extends Controller
                 $social = Social::where('name', $social)->first();
                 $new_user->socials()->attach($social, ['token' => $user->token]);
                 $this->auth->login($new_user);
+
+                return redirect(config('app.frontend_url'));
             }
         } else {
             return $provider->redirect();
