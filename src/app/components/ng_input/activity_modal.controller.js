@@ -8,8 +8,8 @@
   /** @ngInject */
   function ActivityModalController(spots, favorites, areas, attachments, $modalInstance) {
     var vm = this;
-    vm.tab = 'events';
-    vm.spots = _markAsSelected(spots.data, attachments.spots);
+    vm.tab = 'spots';
+    vm.spots = _markAsSelected(spots, attachments.spots);
     vm.favorites = _markAsSelected(favorites.data, attachments.spots);
     vm.areas = _markAsSelected(areas, attachments.areas);
 
@@ -25,12 +25,19 @@
       $modalInstance.close();
     };
 
+    vm.changeTab = function (tab) {
+      vm.tab = tab;
+      if (tab == 'spots' || tab == 'favorites') {
+        _markAsSelected(vm[tab], attachments.spots);
+      } else {
+        _markAsSelected(vm.areas, attachments.areas);
+      }
+    };
+
     function _markAsSelected(items, attachments) {
-      _.each(attachments, function (attachment) {
-        var item = _.findWhere(items, {id: attachment.id});
-        if (item) {
-          item.selected = true;
-        }
+      _.each(items, function (item) {
+        var isFound = _.findWhere(attachments, {id: item.id});
+        item.selected = !!isFound;
       });
 
       return items;

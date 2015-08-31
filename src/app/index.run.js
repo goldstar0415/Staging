@@ -8,6 +8,8 @@
   /** @ngInject */
   function runBlock($log, MapService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, $modalStack) {
 
+    L.Icon.Default.imagePath = '/assets/libs/Leaflet/images';
+
     MapService.Init('map');
     $rootScope.timezonesList = moment.tz.names();
 
