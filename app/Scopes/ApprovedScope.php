@@ -21,7 +21,9 @@ class ApprovedScope implements ScopeInterface
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->whereNull($this->column)->orWhere($this->column, true);
+        $builder->where(function ($query) {
+            $query->whereNull($this->column)->orWhere($this->column, true);
+        });
         $this->addWithRequested($builder);
     }
 

@@ -39,7 +39,7 @@ class SpotController extends Controller
      */
     public function index(SpotIndexRequest $request)
     {
-        $spots = Spot::where('user_id', $request->get(
+        $spots = Spot::where('user_id', (int)$request->get(
             'user_id',
             $request->user() ? $request->user()->id : null
         ))->with('comments');

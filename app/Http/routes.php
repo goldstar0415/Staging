@@ -61,7 +61,12 @@ Route::get('spots/{spots}/favorite', 'SpotController@favorite');
 Route::get('spots/{spots}/unfavorite', 'SpotController@unfavorite');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 Route::resource('spots.comments', 'SpotCommentController', ['except' => ['create', 'edit']]);
-Route::resource('spots.photos.comments', 'SpotPhotoCommentController', ['only' => ['index', 'store', 'destroy', 'update']]);
+Route::resource(
+    'spots.photos.comments',
+    'SpotPhotoCommentController',
+    ['only' => ['index', 'store', 'destroy', 'update']]
+);
+
 /**
  * Calendar controls
  */

@@ -11,10 +11,9 @@ class PermissionDeniedException extends HttpException
         $statusCode = 403,
         $message = "Permission denied",
         \Exception $previous = null,
-        array $headers = array(), $code = 0
-    )
-    {
+        array $headers = array(),
+        $code = 0
+    ) {
         parent::__construct($statusCode, $message, $previous, $headers, $code);
     }
-
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+
 use App\Extensions\Attachments;
 use App\Scopes\NewestScopeTrait;
 
