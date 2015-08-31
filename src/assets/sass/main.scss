@@ -486,6 +486,9 @@ section {
   background: $dark_blue;
   font-size: 10px;
 }
+.tags {
+  float: left;
+}
 /*responsive*/
 
 @media (max-width: 992px) {
@@ -533,7 +536,11 @@ section {
   /*end about us page*/
 
   /*zoomers page*/
+  .zoomers {
+    padding: 0;
+  }
   .zoomers-content {
+    padding: 0;
     .followers {
       .avatar {
         width: 80px;
