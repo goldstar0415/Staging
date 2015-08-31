@@ -20,13 +20,13 @@
     </span>
 
       <div class="media media-visible">
-        <a class="pull-left">
+        <a class="pull-left" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
           <img class="media-object fav-avatar-icon" ng-src="{{item.cover_url.thumb}}">
         </a>
 
         <div class="media-body">
           <h2 class="media-heading favorites-article-title">
-            <a>{{item.title}}</a>
+            <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a>
           </h2>
 
           <p class="place">{{item.description}}</p>

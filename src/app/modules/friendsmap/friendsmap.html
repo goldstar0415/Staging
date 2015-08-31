@@ -7,17 +7,17 @@
 </div>
 <div ng-repeat="item in Friendsmap.friends" class="col-xs-12 friends-block">
   <div class="avatar-wrap">
-    <a class="review-img" href="#" title="Edit avatar">
+    <a class="review-img"  title="Edit avatar">
       <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar" class="fav-avatar-icon feeds-img">
     </a>
   </div>
   <div class="text-block">
     <h3 class="feeds-title">
-      <span class="col-xs-8 wrap-name"><a href="#">{{item.first_name + " " + item.last_name}}</a></span>
+      <span class="col-xs-8 wrap-name"><a >{{item.first_name + " " + item.last_name}}</a></span>
 
       <!--<div class="col-xs-4 location-btn">-->
-        <!--<a class="custom-location" href="#"></a>-->
-        <!--<a class="default-location" href="#"></a>-->
+        <!--<a class="custom-location" ></a>-->
+        <!--<a class="default-location" ></a>-->
       <!--</div>-->
     </h3>
     <!--<a ui-sref="friendsmap_edit({id: item.id})" class="edit"></a>-->
@@ -37,8 +37,8 @@
       </div>
 
       <!--<div class="col-xs-4 location-btn" >-->
-      <!--<a class="custom-location" href="#"></a>-->
-      <!--<a class="default-location" href="#"></a>-->
+      <!--<a class="custom-location" ></a>-->
+      <!--<a class="default-location" ></a>-->
       <!--</div>-->
     </div>
 
@@ -49,8 +49,8 @@
       </p>
     </div>
     <div class="col-xs-12 edit-delete">
-      <a href="#" class="edit" ui-sref="friendsmap_edit({id: item.id})">Edit</a>
-      <a href="#" class="delete">Delete</a>
+      <a  class="edit" ui-sref="friendsmap_edit({id: item.id})">Edit</a>
+      <a  class="delete">Delete</a>
     </div>
   </div>
 </div>

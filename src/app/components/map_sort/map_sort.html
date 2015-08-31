@@ -1,11 +1,11 @@
 <div ng-if="MapSort.vertical" class="sidebar-menu-wrap">
   <div class="sidebar-menu-vertical">
     <ul>
-      <li><a href="#" ng-click="MapSort.vertical = !MapSort.vertical" class="full-small"></a></li>
-      <li><a href="#" ng-click="MapSort.toggleLayer('events')" class="events"><span>Events</span></a></li>
-      <li><a href="#" ng-click="MapSort.toggleLayer('recreations')" class="recreation">Recreation</a></li>
-      <li><a href="#" ng-click="MapSort.toggleLayer('pitstops')" class="pit-stops">Pit Stops</a></li>
-      <li><a href="#" ng-click="MapSort.toggleWeather()" class="weather-link">Weather</a></li>
+      <li><a  ng-click="MapSort.vertical = !MapSort.vertical" class="full-small"></a></li>
+      <li><a  ng-click="MapSort.toggleLayer('events')" class="events"><span>Events</span></a></li>
+      <li><a  ng-click="MapSort.toggleLayer('recreations')" class="recreation">Recreation</a></li>
+      <li><a  ng-click="MapSort.toggleLayer('pitstops')" class="pit-stops">Pit Stops</a></li>
+      <li><a  ng-click="MapSort.toggleWeather()" ng-if="$root.windowWidth < 992" class="weather-link">Weather</a></li>
     </ul>
   </div>
 </div>
@@ -14,9 +14,9 @@
   <div class="sidebar-menu-horizontal">
     <ul>
       <li><a ng-click="MapSort.toggleLayer('events')" class="events">Events</a></li>
-      <li><a ng-click="MapSort.toggleLayer('recreations')" href="#" class="recreation">Recreation</a></li>
-      <li><a ng-click="MapSort.toggleLayer('pitstops')" href="#" class="pit-stops">Pit Stops</a></li>
-      <li><a ng-click="MapSort.toggleLayer('other')" href="#" class="weather-link">Weather</a></li>
+      <li><a ng-click="MapSort.toggleLayer('recreations')"  class="recreation">Recreation</a></li>
+      <li><a ng-click="MapSort.toggleLayer('pitstops')"  class="pit-stops">Pit Stops</a></li>
+      <li><a ng-click="MapSort.toggleLayer('other')" ng-if="$root.windowWidth < 992" class="weather-link">Weather</a></li>
     </ul>
   </div>
 
@@ -65,7 +65,7 @@
           <ul>
             <li ng-repeat="item in eventCategories track by item.id"
                 ng-click="item.selected = !item.selected; checkItem(item, eventCategories, 'event'); sortEventsByCategories();">
-              <a href="#" ng-class="{'active': item.selected}">{{item.display_name}}</a>
+              <a  ng-class="{'active': item.selected}">{{item.display_name}}</a>
             </li>
           </ul>
         </div>
@@ -95,13 +95,13 @@
                 <p class="description">{{item.spot.description}}</p>
                 <div class="event-result-nav col-xs-12 padding-0">
 
-                  <a class="save padding-0" href="#">Save</a>
+                  <a class="save padding-0" >Save</a>
 
-                  <a class="favorites padding-0" href="#">Favorite</a>
+                  <a class="favorites padding-0" >Favorite</a>
 
-                  <a class="invite padding-0" href="#">Invite friends</a>
+                  <a class="invite padding-0" >Invite friends</a>
 
-                  <a class="big-plus padding-0" href="#"></a>
+                  <a class="big-plus padding-0" ></a>
                 </div>
               </div>
             </div>
@@ -133,7 +133,7 @@
           <ul>
             <li ng-repeat="item in recreationCategories track by item.id"
                 ng-click="item.selected = !item.selected; checkItem(item, recreationCategories, 'recreation'); sortRecreationsByCategories();">
-              <a href="#" ng-class="{'active': item.selected}">{{item.display_name}}</a>
+              <a  ng-class="{'active': item.selected}">{{item.display_name}}</a>
             </li>
           </ul>
         </div>
@@ -163,11 +163,11 @@
                 <p class="description">{{item.spot.description}}</p>
                 <div class="event-result-nav col-xs-12 padding-0">
 
-                  <a class="favorites padding-0" href="#">Favorite</a>
+                  <a class="favorites padding-0" >Favorite</a>
 
-                  <a class="invite padding-0" href="#">Invite friends</a>
+                  <a class="invite padding-0" >Invite friends</a>
 
-                  <a class="big-plus padding-0" href="#"></a>
+                  <a class="big-plus padding-0" ></a>
                 </div>
               </div>
             </div>
@@ -199,7 +199,7 @@
           <ul>
             <li ng-repeat="item in pitstopCategories track by item.id"
                 ng-click="item.selected = !item.selected; checkItem(item, pitstopCategories, 'pitstop'); sortPitstopsByCategories();">
-              <a href="#" ng-class="{'active': item.selected}">{{item.display_name}}</a>
+              <a  ng-class="{'active': item.selected}">{{item.display_name}}</a>
             </li>
           </ul>
         </div>
@@ -229,11 +229,11 @@
                 <p class="description">{{item.spot.description}}</p>
                 <div class="event-result-nav col-xs-12 padding-0">
 
-                  <a class="favorites padding-0" href="#">Favorite</a>
+                  <a class="favorites padding-0" >Favorite</a>
 
-                  <a class="invite padding-0" href="#">Invite friends</a>
+                  <a class="invite padding-0" >Invite friends</a>
 
-                  <a class="big-plus padding-0" href="#"></a>
+                  <a class="big-plus padding-0" ></a>
                 </div>
               </div>
             </div>

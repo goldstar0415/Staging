@@ -10,6 +10,8 @@
     var vm = this;
     vm.endDate = moment().toDate();
     vm.data = currentUser;
+    vm.data.social_facebook = isSocial('facebook');
+    vm.data.social_google = isSocial('google');
     vm.addSocial = addSocial;
     vm.images = UploaderService.images;
     vm.minDate = '01.01.1940';
@@ -127,7 +129,13 @@
     };
 
     function addSocial(type) {
-      window.location.href = API_URL + '/account/' + type;
+      if (!isSocial(type)) {
+        window.location.href = API_URL + '/account/' + type;
+      }
+    }
+
+    function isSocial(type) {
+      return currentUser.attached_socials.indexOf(type) >= 0 ? 1 : 0;
     }
 
     //change avatar
