@@ -2,7 +2,7 @@
 .viewer-wrap {
   width: 100%;
   .modal-dialog {
-    width: 950px!important;
+    width: 950px !important;
     .modal-content {
       border-top-left-radius: 10px;
       border-bottom-left-radius: 10px;
@@ -87,6 +87,7 @@
         position: relative;
         margin-top: 10px;
         border-bottom: 1px solid #e9edf0;
+        padding: 10px 0 10px 10px;
         &:after {
           content: ".";
           display: block;
@@ -97,15 +98,18 @@
         &:last-of-type {
           border: none;
         }
-        //&:first-of-type {
-        //  margin-top: 0;
-        //}
+        &:hover {
+          .delete-reviews {
+            display: block;
+          }
+        }
         .avatar {
           width: 40px;
           height: 40px;
           @include white_border3;
           border-radius: 50%;
           float: left;
+          margin-top: 0;
         }
         .frame {
           border: 2px solid #fff;
@@ -115,7 +119,7 @@
           float: left;
         }
         .info {
-          padding: 0;
+          padding: 0 15px 0 0;
           h3 {
             margin: 0;
             font: 500 18px "Ubuntu medium";
@@ -123,6 +127,18 @@
           }
           p {
             font: 400 12px/14px Arial, sans-serif;
+          }
+        }
+        .delete-reviews {
+          display: none;
+          width: 8px;
+          height: 8px;
+          background: url(/assets/img/cross.png) no-repeat;
+          position: absolute;
+          padding-top: 8px;
+          right: 0;
+          &:hover {
+            background: url(/assets/img/cross.png) 0 -8px no-repeat;
           }
         }
         .small-share {
@@ -142,7 +158,7 @@
         .time {
           color: #808080;
           font: 11px/11px "Arial", "sans-serif";
-          margin: 8px 0 15px 0;
+          margin: 8px 0 0 0;
         }
         .rating {
           position: absolute;

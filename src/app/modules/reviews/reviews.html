@@ -1,72 +1,67 @@
 <h2 class="title-name">Reviews</h2>
 
-<div ng-if="profileUser.id == currentUser.id">
-  <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
-</div>
+<div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
 
 <div infinite-scroll="Review.pagination.nextPage()" infinite-scroll-disabled="Review.pagination.busy"
      class="clearfix" infinite-scroll-distance="1">
   <div class="reviews col-xs-12" ng-repeat="item in Review.reviews.data">
     <div ng-switch="item.commentable_type">
       <div ng-switch-when="App\Plan">
-
-        <a class="review-img" ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
-          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.cover_url.medium}}">
+        <a class="review-img" ui-sref="planner.view({user_id: item.commentable.user_id, plan_id: item.commentable.id})">
+          <img class="media-object fav-avatar-icon feeds-img" src="/assets/img/missing_thumb.png">
         </a>
 
         <div class="text-block">
-
           <h2 class="media-heading feeds-title">
             <a
-              ui-sref="planner.view({user_id: spot.user_id, plan_id: item.commentable.id})">{{item.commentable.title}}</a>
+              ui-sref="planner.view({user_id: item.commentable.user_id, plan_id: item.commentable.id})">
+              {{item.commentable.title}}
+            </a>
           </h2>
-          <a class="author-name" ui-sref="profile.main({user_id: item.user.id})">{{item.sender.first_name}}
-            {{item.sender.last_name}}</a>
+          <a class="author-name" ui-sref="profile.main({user_id: item.sender.id})">
+            {{item.sender.first_name}}
+            {{item.sender.last_name}}
+          </a>
+          at
 
           <p class="description">{{item.body}}</p>
 
           <p class="time">{{item.created_at | toTimezone}}</p>
 
         </div>
-
       </div>
 
       <div ng-switch-when="App\Spot">
+        <!--<stars item="item" class="rating-stars"></stars>-->
 
-        <a class="review-img" ui-sref="spot({user_id: spot.user_id, spot_id: item.id})">
+        <a class="review-img" ui-sref="spot({user_id: item.commentable.user_id, spot_id: item.commentable.id})">
           <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.cover_url.medium}}">
         </a>
 
         <div class="text-block">
-
           <h2 class="media-heading feeds-title">
             <a
-              ui-sref="spot({user_id: spot.user_id, spot_id: item.commentable.id})">{{item.commentable.title}}</a>
+              ui-sref="spot({user_id: item.commentable.user_id, spot_id: item.commentable.id})">{{item.commentable.title}}</a>
           </h2>
-          <a class="author-name" ui-sref="profile.main({user_id: item.user.id})">{{item.sender.first_name}}
-            {{item.sender.last_name}}</a>
-
+          <a class="author-name" ui-sref="profile.main({user_id: item.sender.id})">
+            {{item.sender.first_name}} {{item.sender.last_name}}
+          </a>
+          <!--at-->
           <p class="description">{{item.body}}</p>
 
           <p class="time">{{item.created_at | toTimezone}}</p>
 
         </div>
-
       </div>
 
       <div ng-switch-when="App\AlbumPhoto">
-
-        <a class="review-img" ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
-          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.cover_url.medium}}">
+        <a class="review-img" photo-viewer items="[item.commentable]" index="0">
+          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.photo_url.medium}}">
         </a>
 
         <div class="text-block">
 
-          <h2 class="media-heading feeds-title">
-            <a
-              ui-sref="planner.view({user_id: spot.user_id, plan_id: item.commentable.id})">{{item.commentable.title}}</a>
-          </h2>
-          <a class="author-name" ui-sref="profile.main({user_id: item.user.id})">{{item.sender.first_name}}
+          <a class="author-name" ui-sref="profile.main({user_id: item.sender.id})">{{item.sender.first_name}}
             {{item.sender.last_name}}</a>
 
           <p class="description">{{item.body}}</p>
@@ -74,14 +69,15 @@
           <p class="time">{{item.created_at | toTimezone}}</p>
 
         </div>
-
       </div>
     </div>
   </div>
 
-  <preloader ng-show="Review.pagination.busy"></preloader>
+  <div class="col-xs-12">
+    <preloader ng-show="Review.pagination.busy"></preloader>
+  </div>
 </div>
 
 <div class="col-xs-12">
-  <h4 class="text-center description" ng-if="Review.reviews.length == 0">No reviews yet.</h4>
+  <h4 class="text-center description" ng-if="Review.reviews.data.length == 0 && !Review.pagination.busy">No reviews yet.</h4>
 </div>

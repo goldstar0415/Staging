@@ -24,7 +24,7 @@
            class="clearfix" infinite-scroll-distance="1">
         <div ng-repeat="plan in Planner.plans.data" class="event border-bottom">
           <h3 class="title-planner">
-            <a ui-sref="planner.view({plan_id: plan.id})">{{plan.title}}</a>
+            <a ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})">{{plan.title}}</a>
           <span class="date"> <date-range item="plan"></date-range>
           </span>
           </h3>
@@ -53,7 +53,7 @@
       </div>
       <preloader ng-show="Planner.pagination.busy"></preloader>
 
-      <h3 ng-if="Planner.plans.data.length == 0" class="text-center description">There are no plans...</h3>
+      <h3 ng-if="Planner.plans.data.length == 0 && !Planner.pagination.busy" class="text-center description">No plans yet.</h3>
     </section>
   </div>
 </div>

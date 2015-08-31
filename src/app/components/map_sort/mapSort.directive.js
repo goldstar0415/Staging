@@ -162,6 +162,7 @@
       if(vm.startDate || vm.endDate) {
         vm.displayEventsArray = MapService.ClampByDate(vm.eventsArray, vm.startDate, vm.endDate);
         MapService.drawSpotMarkers(vm.displayEventsArray, 'event', true);
+        console.log(vm.displayEventsArray);
       }
     };
 

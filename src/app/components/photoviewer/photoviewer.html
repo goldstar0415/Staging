@@ -3,8 +3,8 @@
     <div class="photo-viewer">
       <div class="image" ng-class="{'col-xs-8': !PV.hideComments && $root.currentUser, 'col-xs-12': PV.hideComments || !$root.currentUser}">
         <img ng-src="{{PV.currentPhoto.photo_url.original}}">
-        <a ng-click="PV.previousPhoto($event)" class="previous"></a>
-        <a ng-click="PV.nextPhoto($event)" class="next"></a>
+        <a ng-click="PV.previousPhoto($event)" ng-if="PV.countPhotos > 1" class="previous"></a>
+        <a ng-click="PV.nextPhoto($event)" ng-if="PV.countPhotos > 1" class="next"></a>
       </div>
       <div class="photo-comments col-xs-4" ng-if="!PV.hideComments && $root.currentUser">
         <p class="location">{{PV.currentPhoto.address}}</p>
@@ -30,6 +30,7 @@
 
               <p class="time">{{comment.created_at}}</p>
             </div>
+            <a class="delete-reviews" href="#"></a>
           </div>
         </div>
       </div>
