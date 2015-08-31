@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AlbumPhoto;
 use App\Http\Requests\AlbumPhoto\AlbumPhotoRequest;
 use App\Http\Requests\AlbumPhoto\AlbumPhotoUpdateRequest;
+use App\Http\Requests\PaginateRequest;
 use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests;
@@ -65,5 +66,14 @@ class AlbumPhotoController extends Controller
         $photos->delete();
 
         return response()->json(['message' => 'Photo was successfuly deleted']);
+    }
+
+    /**
+     * @param PaginateRequest $request
+     * @param \App\Album $album
+     */
+    public function photos(PaginateRequest $request, $album)
+    {
+        return $this->paginatealbe($request, $album->photos());
     }
 }

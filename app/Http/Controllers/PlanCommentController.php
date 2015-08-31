@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommentsRequest;
 use App\Http\Requests\CommentStoreRequest;
 use App\Comment;
+use App\Http\Requests\PaginateRequest;
 use App\Services\Attachments;
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
@@ -29,11 +29,11 @@ class PlanCommentController extends Controller
 
     /**
      * Display a listing of the resource.
-     * @param Request $request
+     * @param PaginateRequest $request
      * @param \App\Plan $plan
      * @return mixed
      */
-    public function index(Request $request, $plan)
+    public function index(PaginateRequest $request, $plan)
     {
         $comments = $plan->comments();
 

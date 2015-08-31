@@ -6,6 +6,7 @@ use App\Album;
 use App\Http\Requests\Album\AlbumRequest;
 use App\Http\Requests\Album\PhotoUpdateRequest;
 use App\Http\Requests\Album\StoreRequest;
+use App\Http\Requests\PaginateRequest;
 use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests;
@@ -48,12 +49,13 @@ class AlbumController extends Controller
 
     /**
      * Display the specified resource.
+     * @param PaginateRequest $request
      * @param \App\User $user
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function showForUser($user)
+    public function showForUser(PaginateRequest $request, $user)
     {
-        return $user->albums;
+        return $this->paginatealbe($request, $user->albums());
     }
 
     /**
@@ -64,7 +66,7 @@ class AlbumController extends Controller
      */
     public function show($album)
     {
-        return $album->load('photos');
+        return $album;
     }
 
     /**

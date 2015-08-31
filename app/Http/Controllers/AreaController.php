@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Area;
 use App\Http\Requests\Area\AreaStoreRequest;
 use App\Http\Requests\Area\AreaRequest;
+use App\Http\Requests\PaginateRequest;
 use ChrisKonnertz\OpenGraph\OpenGraph;
-use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
@@ -15,11 +15,11 @@ class AreaController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param Request $request
+     * @param PaginateRequest $request
      */
-    public function index(Request $request)
+    public function index(PaginateRequest $request)
     {
-        return $request->user()->areas;
+        return $this->paginatealbe($request, $request->user()->areas());
     }
 
     /**

@@ -8,7 +8,7 @@ use App\Http\Requests\Friend\StoreFriendRequest;
 use App\Http\Requests\Friend\UpdateFriendRequest;
 
 use App\Http\Requests;
-use Illuminate\Http\Request;
+use App\Http\Requests\PaginateRequest;
 
 class FriendController extends Controller
 {
@@ -20,12 +20,12 @@ class FriendController extends Controller
 
     /**
      * Display a listing of the resource.
-     * @param Request $request
+     * @param PaginateRequest $request
      * @return
      */
-    public function index(Request $request)
+    public function index(PaginateRequest $request)
     {
-        return $request->user()->friends;
+        return $this->paginatealbe($request, $request->user()->friends());
     }
 
     /**
