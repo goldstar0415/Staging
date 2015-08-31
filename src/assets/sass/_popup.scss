@@ -1,5 +1,5 @@
 .popup {
-    max-width: 440px;
+    max-width: 445px;
     padding: 0;
     border: none;
     position: relative;
@@ -56,7 +56,7 @@
                 }
             }
         }
-        .popup-links {}
+        .popup-links {
         ul {
             list-style: none;
             padding: 0;
@@ -89,11 +89,16 @@
                 }
             }
         }
+        }
     }
     .popup-main {
       position: relative;
+      height: 197px;
         .links-nav {
-            margin-top: 10px;
+
+            position: absolute;
+            bottom: 10px;
+            width: 95%;
             .big-plus {
                 display: inline-block;
                 float: right;
@@ -151,18 +156,29 @@
         .location-event {
             line-height: 11px;
             font-size: 11px;
-            line-height: 11px;
+             height: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: pre-wrap;
             color: #333333;
             margin: 0;
         }
         .date-event {
             font-size: 11px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             color: #333333;
             margin: 0;
         }
         .author-event {
+            display: block;
+            width: 95%;
             color: #00b7f3;
             font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             @include transition_color;
             &:hover {
                 color: #0874be;
@@ -326,10 +342,140 @@
                 }
             }
         }
-
-
-
-
-
     }
+}
+@media (max-width: 500px) {
+.popup {
+  max-width: 350px;
+  width: auto;
+  .close-event{
+    top: -49px;
+    right: 11px;
+  }
+  .leaflet-popup-tip-container{display: none;}
+  .leaflet-popup-content-wrapper {
+    max-height: auto;
+  }
+  .popup-width {
+    width: 350px;
+    .nav-popup {
+      width: 100%;
+      background: $dark_blue;
+      border-radius: 10px 10px 0 0;
+      .img-event {
+        display: none;
+        .star-event {
+          width: 100%;
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          img {
+            width: 14px;
+            height: 14px;
+            margin: 1px;
+          }
+        }
+      }
+      .popup-links {
+        ul {
+
+          li {
+            width: auto;
+            float: left;
+
+            &:nth-child(3) {
+              a {
+                border-radius: none;
+                border-right: none;
+
+              }
+            }
+            a {
+              padding: 10px 20px;
+              border-bottom: none;
+              border-right: 1px solid #304656;
+              border-radius: 10px 0 0 0;
+              font-size: 20px;
+            }
+          }
+        }
+      }
+    }
+    .popup-main {
+      width: 100%;
+      height: 200px;
+      .title {
+        font-size: 24px;
+        line-height: 26px;
+        margin: 5px 0;
+      }
+      .location-event {
+        line-height: 12px;
+        font-size: 12px;
+      }
+      .date-event {
+
+        font-size: 11px;
+      }
+      .author-event {
+        font-size: 16px;
+        padding-top: 10px;
+      }
+    }
+  }
+}
+}
+@media (max-width: 370px){
+  .popup {
+    max-width: 320px;
+    .close-event{
+      top: -32px;
+      right: 7px;
+    }
+    .popup-width {
+      width: 320px;
+    }
+    .nav-popup {
+      .popup-links {
+        ul {
+          li {
+            a {
+              padding: 0 15px !important;
+              font-size: 20px !important;
+            }
+          }
+        }
+      }
+    }
+    .popup-main{
+      height: 215px !important;
+    }
+  }
+}
+@media (max-width: 300px){
+  .popup {
+    max-width: 220px;
+    .close-event{
+      top: -32px;
+      right: 7px;
+    }
+    .popup-width {
+      width: 220px;
+    }
+    .nav-popup {
+      .popup-links {
+        ul {
+          li {
+            a {
+              padding: 0 7px !important;
+              font-size: 15px !important;
+            }
+          }
+        }
+      }
+    }
+    .popup-main{
+     height: 230px !important;
+    }
+  }
 }

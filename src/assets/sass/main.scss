@@ -91,7 +91,7 @@ body, .snap-content {
 }
 
 body {
-  font-family: 'Ubuntu medium' !important;;
+  font-family: 'Ubuntu medium' !important;
   :lang(ru) {
     font-family: 'Ubuntu medium' !important;
   }
@@ -475,12 +475,20 @@ section {
     border-bottom: 1px solid #e9edf0 !important;
   }
 }
+
 .row {
   img.img-responsive {
     cursor: pointer;
   }
 }
 
+.badge {
+  background: $dark_blue;
+  font-size: 10px;
+}
+.tags {
+  float: left;
+}
 /*responsive*/
 
 @media (max-width: 992px) {
@@ -528,7 +536,11 @@ section {
   /*end about us page*/
 
   /*zoomers page*/
+  .zoomers {
+    padding: 0;
+  }
   .zoomers-content {
+    padding: 0;
     .followers {
       .avatar {
         width: 80px;
@@ -659,3 +671,11 @@ section {
 html {
   overflow-y: scroll;
 }
+
+.leaflet-popup-content {
+  width: auto!important;
+  .btn {
+    width: auto!important;
+  }
+}
+
