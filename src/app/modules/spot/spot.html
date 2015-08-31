@@ -2,7 +2,11 @@
   <!-- section with spot -->
   <section class="one-spot-section">
     <div>
-      <stars item="item" class="clearfix"></stars>
+      <stars item="Spot.spot" class="clearfix"></stars>
+
+      <div ng-if="!is_approved">
+        This submittal is under review and will be posted shortly.
+      </div>
 
       <span ng-if="Spot.spot.type == 'Event'" class="date">
           <date-range item="Spot.spot"></date-range>
@@ -72,10 +76,11 @@
     </div>
   </section>
   <!-- end section with spot -->
+
 </div>
 
 <!-- section with comment -->
-<section class="comments-section">
+<section class="comments-section" ng-if="Spot.spot.is_approved">
   <div class="comments-content clearfix">
     <ng-input message="Spot.message" attachments="Spot.attachments" on-submit="Spot.postComment()"></ng-input>
   </div>

@@ -122,6 +122,9 @@
           UploaderService
             .upload(url, req)
             .then(function (resp) {
+              if(vm.type != 'event') {
+                toastr.info('Your submittal is under review and will be posted shortly.');
+              }
               $state.go('spot', {spot_id: resp.data.id, user_id: resp.data.user_id});
             })
             .catch(function (resp) {

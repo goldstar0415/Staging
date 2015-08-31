@@ -45,10 +45,10 @@
           <a ng-click="Spots.removeSpot(item, $index);" class="delete">Delete</a>
         </li>
 
-        <li ng-if="!item.is_saved">
+        <li ng-if="!item.is_saved && item.type == 'Event'">
           <a class="save-event" ng-click="Spots.saveToCalendar(item)">Save</a>
         </li>
-        <li ng-if="item.is_saved">
+        <li ng-if="item.is_saved && item.type == 'Event'">
           <a class="save-event saved clicked" ng-click="Spots.removeFromCalendar(item)">Remove</a>
         </li>
         <li ng-if="!item.is_favorite">
@@ -87,5 +87,5 @@
 <preloader ng-show="Spots.pagination.busy"></preloader>
 
 <div class="col-xs-12">
-  <h4 class="text-center description" ng-if="Spots.spots.data.length == 0">No spots yet.</h4>
+  <h4 class="text-center description" ng-if="Spots.spots.data.length == 0 && !Spots.pagination.busy">No spots yet.</h4>
 </div>

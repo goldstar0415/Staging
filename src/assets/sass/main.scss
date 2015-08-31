@@ -91,7 +91,7 @@ body, .snap-content {
 }
 
 body {
-  font-family: 'Ubuntu medium' !important;;
+  font-family: 'Ubuntu medium' !important;
   :lang(ru) {
     font-family: 'Ubuntu medium' !important;
   }
@@ -475,6 +475,7 @@ section {
     border-bottom: 1px solid #e9edf0 !important;
   }
 }
+
 .row {
   img.img-responsive {
     cursor: pointer;
@@ -655,10 +656,18 @@ section {
   }
 }
 
-//.snap-content {
-//  overflow: visible;
-//}
+.snap-content {
+  overflow: visible;
+}
 
 html {
   overflow-y: scroll;
 }
+
+.leaflet-popup-content {
+  width: auto!important;
+  .btn {
+    width: auto!important;
+  }
+}
+

@@ -11,6 +11,10 @@
       query: {
         url: API_URL + '/users/:user_id/albums',
         isArray: true
+      },
+      photos: {
+        url: API_URL + '/albums/:album_id/photos',
+        isArray: true
       }
     });
   }

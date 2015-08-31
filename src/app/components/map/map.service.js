@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $modal, toastr, Area) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $modal, toastr, Area, SignUpService) {
       var map = null;
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
       var radiusSelectionLimit = 500000; //in meters
@@ -195,10 +195,14 @@
           return container;
         },
         _click: function (e) {
+          if($rootScope.currentUser) {
+            L.DomEvent.stopPropagation(e);
+            L.DomEvent.preventDefault(e);
+            OpenSaveSelectionsPopup();
+          } else {
+            SignUpService.openModal('SignUpModal.html');
+          }
 
-          L.DomEvent.stopPropagation(e);
-          L.DomEvent.preventDefault(e);
-          OpenSaveSelectionsPopup();
         }
 
       });
@@ -336,18 +340,23 @@
         return map;
       }
 
+      //return current map instance
       function GetMap() {
         return map;
       }
 
+      //adjust map canvas size after block resize
       function InvalidateMapSize() {
         map.invalidateSize();
       }
 
+      //Control group: return group with all map contols
+      //aka wrapper for: lasso, radius, path, clear-selection, save-selection
       function GetControlGroup() {
         return controlGroup;
       }
 
+      //return current active layer
       function GetCurrentLayer() {
         var layer = null;
         switch (currentLayer) {
@@ -371,11 +380,14 @@
         return layer;
       }
 
+      //get layer with draggable markers. (used for spot create markers, path markers etc.)
       function GetDraggableLayer() {
         return draggableMarkerLayer;
       }
 
       //Layers
+
+      //switch map states;
       function ChangeState(state) {
 
         switch (state.toLowerCase()) {
@@ -404,9 +416,10 @@
         })
       }
 
+      //show events layer on map.
       function showEventsLayer(clearLayers) {
         ClearSelectionListeners();
-        //if (clearLayers) { eventsLayer.clearLayers(); }
+        if (clearLayers) { eventsLayer.clearLayers(); }
         map.addLayer(eventsLayer);
         map.removeLayer(recreationsLayer);
         map.removeLayer(pitstopsLayer);
@@ -414,9 +427,10 @@
         currentLayer = "events";
       }
 
+      //show pitstops layer on map
       function showPitstopsLayer(clearLayers) {
         ClearSelectionListeners();
-        //if (clearLayers) { pitstopsLayer.clearLayers(); }
+        if (clearLayers) { pitstopsLayer.clearLayers(); }
         map.addLayer(pitstopsLayer);
         map.removeLayer(recreationsLayer);
         map.removeLayer(eventsLayer);
@@ -424,9 +438,10 @@
         currentLayer = "pitstops";
       }
 
+      //show recreations layer
       function showRecreationsLayer(clearLayers) {
         ClearSelectionListeners();
-        //if (clearLayers) { recreationsLayer.clearLayers(); }
+        if (clearLayers) { recreationsLayer.clearLayers(); }
         map.addLayer(recreationsLayer);
         map.removeLayer(eventsLayer);
         map.removeLayer(pitstopsLayer);
@@ -434,6 +449,7 @@
         currentLayer = "recreations";
       }
 
+      //show other layers
       function showOtherLayers() {
         ClearSelectionListeners();
         otherLayer.clearLayers();
@@ -444,6 +460,7 @@
         currentLayer = "other";
       }
 
+      //remove all layers from map
       function removeAllLayers() {
         currentLayer = "none";
         map.removeLayer(otherLayer);
@@ -452,6 +469,7 @@
         map.removeLayer(eventsLayer);
       }
 
+      //clear all layers
       function clearLayers() {
         eventsLayer.clearLayers();
         recreationsLayer.clearLayers();
@@ -460,6 +478,7 @@
         draggableMarkerLayer.clearLayers();
       }
 
+      //lasso selection.
       function LassoSelection(callback) {
         ClearSelectionListeners();
         map.dragging.disable();
@@ -505,6 +524,7 @@
         }
       }
 
+      //Radius selection
       function RadiusSelection(callback) {
         ClearSelectionListeners();
         map.dragging.disable();
@@ -553,6 +573,7 @@
         }
       }
 
+      //Path selection
       function PathSelection(wpArray, callback) {
         var markers = [],
           line,
@@ -700,10 +721,12 @@
         }
       }
 
+      //cancel path selection
       function CancelPathSelection() {
         pathSelectionStarted = false;
       }
 
+      //weather selection
       function WeatherSelection(callback) {
         map.on('click', function (e) {
           $http.get(API_URL + '/weather?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng)
@@ -716,6 +739,7 @@
         });
       }
 
+      //remove all selection listeners
       function ClearSelectionListeners() {
         map.off('mousedown');
         map.off('mousemove');
@@ -767,6 +791,7 @@
         }
       }
 
+      //save selection
       function SaveSelections(title, description, share) {
         ClearSelectionListeners();
         if (pathSelectionStarted) {
@@ -804,6 +829,7 @@
         }
       }
 
+      //load selection from server
       function LoadSelections(selection) {
         if (selection.waypoints && selection.waypoints.length > 0) {
           _.each(selection.waypoints, function (array) {
@@ -1113,7 +1139,7 @@
         var wp = GetDrawLayerPathWaypoints();
         drawLayerGeoJSON = GetDrawLayerGeoJSON();
 
-        if((wp.length > 0 || drawLayerGeoJSON.features.length > 0) && $rootScope.currentUser) {
+        if((wp.length > 0 || drawLayerGeoJSON.features.length > 0)) {
           angular.element('.map-tools-top').removeClass('hide-tools');
         } else {
           angular.element('.map-tools-top').addClass('hide-tools');

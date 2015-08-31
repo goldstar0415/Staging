@@ -6,12 +6,17 @@
     .controller('ReviewsController', ReviewsController);
 
   /** @ngInject */
-  function ReviewsController(reviews) {
+  function ReviewsController(Feed, ScrollService) {
     var vm = this;
     vm.limit = 10;
     vm.page = 1;
-    vm.reviews = reviews;
+    vm.reviews = {};
 
+    var params = {
+      page: 0,
+      limit: 10
+    };
+    vm.pagination = new ScrollService(Feed.reviews, vm.reviews, params);
 
   }
 })();

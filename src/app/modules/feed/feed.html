@@ -2,7 +2,6 @@
 
 <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
 
-
 <div class="col-xs-12">
   <div infinite-scroll="Feed.pagination.nextPage()" infinite-scroll-disabled="Feed.pagination.busy"
        class="clearfix" infinite-scroll-distance="1">
@@ -89,5 +88,5 @@
   <preloader ng-show="Feed.pagination.busy"></preloader>
 
 
-  <h4 class="text-center description" ng-if="Feed.feeds.data.length == 0">No feeds yet.</h4>
+  <h4 class="text-center description" ng-if="Feed.feeds.data.length == 0 && !Feed.pagination.busy">No feeds yet.</h4>
 </div>

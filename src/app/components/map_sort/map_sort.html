@@ -73,8 +73,39 @@
 
       <div class="results">
         <div class="search-by-name">
-          <input type="text" ng-model="eventsSearch" placeholder="Search by name" class="search-input">
+          <input type="text" ng-model="eventsSearch.spot.title" placeholder="Search by name" class="search-input">
           <input type="submit" value="Search" class="filters-button">
+        </div>
+
+        <div ng-repeat="item in MapSort.displayEventsArray | filter: eventsSearch">
+          <div class="event-result clearfix">
+            <div class="col-xs-2 padding-0">
+              <div class="event-result-logo">
+                <img src="assets/img/icons/bed.png">
+              </div>
+            </div>
+            <div class="col-xs-10 padding-0">
+              <stars item="item"></stars>
+              <div class=" col-xs-8 date">
+                <date-range item="item.spot"></date-range>
+              </div>
+              <div class="col-xs-12 padding-0">
+                <h2 class="name  ">{{item.spot.title}}</h2>
+                <p class="location">{{item.address}}</p>
+                <p class="description">{{item.spot.description}}</p>
+                <div class="event-result-nav col-xs-12 padding-0">
+
+                  <a class="save padding-0" href="#">Save</a>
+
+                  <a class="favorites padding-0" href="#">Favorite</a>
+
+                  <a class="invite padding-0" href="#">Invite friends</a>
+
+                  <a class="big-plus padding-0" href="#"></a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -110,8 +141,37 @@
 
       <div class="results">
         <div class="search-by-name">
-          <input type="text" ng-model="recreationsSearch" placeholder="Search by name" class="search-input">
+          <input type="text" ng-model="recreationsSearch.spot.title" placeholder="Search by name" class="search-input">
           <input type="submit" value="Search" class="filters-button">
+        </div>
+
+        <div ng-repeat="item in MapSort.displayRrecreationsArray | filter: recreationsSearch">
+          <div class="event-result clearfix">
+            <div class="col-xs-2 padding-0">
+              <div class="event-result-logo">
+                <img src="assets/img/icons/bed.png">
+              </div>
+            </div>
+            <div class="col-xs-10 padding-0">
+              <stars item="item"></stars>
+              <div class=" col-xs-8 date">
+                <date-range item="item.spot"></date-range>
+              </div>
+              <div class="col-xs-12 padding-0">
+                <h2 class="name  ">{{item.spot.title}}</h2>
+                <p class="location">{{item.address}}</p>
+                <p class="description">{{item.spot.description}}</p>
+                <div class="event-result-nav col-xs-12 padding-0">
+
+                  <a class="favorites padding-0" href="#">Favorite</a>
+
+                  <a class="invite padding-0" href="#">Invite friends</a>
+
+                  <a class="big-plus padding-0" href="#"></a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -147,8 +207,37 @@
 
       <div class="results">
         <div class="search-by-name">
-          <input type="text" ng-model="pitstopsSearch" placeholder="Search by name" class="search-input">
+          <input type="text" ng-model="pitstopsSearch.spot.title" placeholder="Search by name" class="search-input">
           <input type="submit" value="Search" class="filters-button">
+        </div>
+
+        <div ng-repeat="item in MapSort.displayPitstopsArray | filter: pitstopsSearch">
+          <div class="event-result clearfix">
+            <div class="col-xs-2 padding-0">
+              <div class="event-result-logo">
+                <img src="assets/img/icons/bed.png">
+              </div>
+            </div>
+            <div class="col-xs-10 padding-0">
+              <stars item="item"></stars>
+              <div class=" col-xs-8 date">
+                <date-range item="item.spot"></date-range>
+              </div>
+              <div class="col-xs-12 padding-0">
+                <h2 class="name  ">{{item.spot.title}}</h2>
+                <p class="location">{{item.address}}</p>
+                <p class="description">{{item.spot.description}}</p>
+                <div class="event-result-nav col-xs-12 padding-0">
+
+                  <a class="favorites padding-0" href="#">Favorite</a>
+
+                  <a class="invite padding-0" href="#">Invite friends</a>
+
+                  <a class="big-plus padding-0" href="#"></a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

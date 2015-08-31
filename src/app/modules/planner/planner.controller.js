@@ -44,9 +44,9 @@
         _.each(events, function (type, key) {
           _.each(type, function (event) {
             if (key == 'spots') {
-              event.url = $state.href('spot', {spot_id: event.id});
+              event.url = $state.href('spot', {user_id: event.user_id, spot_id: event.id});
             } else if (key == 'plans') {
-              event.url = $state.href('planner.view', {plan_id: event.id});
+              event.url = $state.href('planner.view', {user_id: event.user_id, plan_id: event.id});
             }
 
             if (event.start_date) {
