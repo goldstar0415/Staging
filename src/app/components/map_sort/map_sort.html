@@ -59,7 +59,7 @@
 
         <div ng-show="eventsCategoryToggle" class="hide-block-subcategory form-group">
           <div ng-click="toggleEventCategories();">
-            <input type="checkbox" ng-model="MapSort.eventsSelectAll">
+            <input ng-click="toggleEventCategories();" type="checkbox" ng-model="MapSort.eventsSelectAll">
             <label>Select all sub-categories</label>
           </div>
           <ul>
@@ -119,7 +119,7 @@
 
 
       <div class="categories">
-        <p ng-click="recreationsCategoryToggle = !recreationsCategoryToggle">Show all sub-categories
+        <p ng-click="recreationsCategoryToggle = !recreationsCategoryToggle">{{recreationsCategoryToggle ? 'Hide': 'Show all'}} sub-categories
             <span class="filters-arrow"
                   ng-class="{'open-arrow': recreationsCategoryToggle}">
             </span>
@@ -127,7 +127,7 @@
 
         <div ng-show="recreationsCategoryToggle" class="hide-block-subcategory form-group">
           <div ng-click="toggleRecreationCategories();">
-            <input type="checkbox" ng-model="MapSort.recreationSelectAll">
+            <input ng-click="toggleRecreationCategories();" type="checkbox" ng-model="MapSort.recreationSelectAll">
             <label>Select all sub-categories</label>
           </div>
           <ul>
@@ -185,7 +185,7 @@
 
 
       <div class="categories">
-        <p ng-click="pitstopsCategoryToggle = !pitstopsCategoryToggle">Show all sub-categories
+        <p ng-click="pitstopsCategoryToggle = !pitstopsCategoryToggle">{{pitstopsCategoryToggle ? 'Hide': 'Show all'}} sub-categories
             <span class="filters-arrow"
                   ng-class="{'open-arrow' : pitstopsCategoryToggle}">
             </span>
@@ -193,7 +193,7 @@
 
         <div ng-show="pitstopsCategoryToggle" class="hide-block-subcategory form-group">
           <div ng-click="togglePitstopCategories();">
-            <input type="checkbox" ng-model="MapSort.pitstopSelectAll">
+            <input ng-click="togglePitstopCategories();" type="checkbox" ng-model="MapSort.pitstopSelectAll">
             <label>Select all sub-categories</label>
           </div>
           <ul>

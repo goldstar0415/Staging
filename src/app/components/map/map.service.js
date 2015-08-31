@@ -49,6 +49,9 @@
         },
         _click: function (e) {
           $rootScope.hideHints = true;
+          $timeout(function() {
+            $rootScope.$apply();
+          });
           snapRemote.disable();
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
@@ -104,6 +107,9 @@
         },
         _click: function (e) {
           $rootScope.hideHints = true;
+          $timeout(function() {
+            $rootScope.$apply();
+          });
           snapRemote.disable();
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
@@ -163,6 +169,9 @@
         },
         _click: function (e) {
           $rootScope.hideHints = true;
+          $timeout(function() {
+            $rootScope.$apply();
+          });
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
           PathSelection(null, function () {
@@ -641,11 +650,11 @@
                 cancelPopup = L.popup({
                   offset: L.point(0, -15),
                   closeButton: false,
-                  keepInView: true,
+                  keepInView: false,
                   autoPan: true
                 })
                   .setLatLng(marker.getLatLng())
-                  .setContent('<button class="btn btn-block btn-success cancel-selection">Cancel selection</button>')
+                  .setContent('<button class="btn btn-block btn-success cancel-selection">Finish selection</button>')
                   .openOn(map);
 
 
@@ -996,7 +1005,7 @@
         scope.marker = marker;
         var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
         var popup = L.popup({
-          keepInView: true,
+          keepInView: false,
           autoPan: true,
           closeButton: false,
           className: 'popup'

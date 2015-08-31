@@ -1192,7 +1192,7 @@ if (typeof module !== undefined) module.exports = polyline;
 					line = turf.simplify(line, 0.02, false);
 
 					//Buffer it with turf library :)
-					var geoJSONPoly = turf.buffer(line, 10, 'miles');
+					var geoJSONPoly = turf.buffer(line, 5, 'miles');
 					//return geoJson layer
 					pl = L.geoJson(geoJSONPoly, {
             onEachFeature: function(f, l) {
