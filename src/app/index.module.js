@@ -15,7 +15,7 @@
       'dialogs.main',
       'snap',
       'angular-loading-bar',
-      //'luegg.directives',
+      'luegg.directives',
       'ui.calendar',
       'ngTagsInput',
       'ui.select',

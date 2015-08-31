@@ -2,22 +2,24 @@
 
 <div class="saved-search col-xs-12" ng-repeat="item in ::Area.areas">
   <div class="col-xs-3 search-container">
-    <img class="search-img" src="assets/img/img14.jpg">
+    <a ui-sref="areas.preview({area_id: item.id})">
+      <img class="search-img" src="/assets/img/missing_thumb.png">
+    </a>
   </div>
   <div class="col-xs-9 no-pad-right">
     <h2 class="feeds-title">
-      <a >{{item.title}}</a>
+      <a ui-sref="areas.preview({area_id: item.id})">{{item.title}}</a>
     </h2>
 
     <p class="description">{{item.description}}</p>
 
     <p class="time">{{item.created_at | toTimezone}}
-      <a class="sharing"></a>
-      <a class="delete">Delete</a>
+      <!--<a class="sharing"></a>-->
+      <!--<a class="delete">Delete</a>-->
     </p>
   </div>
 </div>
 
 <div class="col-xs-12">
-  <h4 class="text-center description">No saved searches yet.</h4>
+  <h4 class="text-center description" ng-if="Area.areas.length == 0">No saved searches yet.</h4>
 </div>

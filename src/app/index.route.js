@@ -343,6 +343,7 @@
             }).$promise;
           }
         },
+        parent: 'main',
         locate: 'none',
         mapState: 'big'
       })

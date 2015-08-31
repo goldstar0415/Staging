@@ -31,7 +31,7 @@
       };
 
       vm.submit = function () {
-        if (vm.message || vm.attachments.photos.length || vm.attachments.spots.length || vm.attachments.spots.length) {
+        if (vm.message || vm.attachments.photos.length || vm.attachments.spots.length || vm.attachments.areas.length) {
           vm.onSubmit();
         }
       };

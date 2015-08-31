@@ -11,12 +11,12 @@
     vm.albums = albums;
     vm.attachments = attachments;
 
-    vm.selectAlbum = function (id) {
-      vm.selectedAlbum =  Album.get({id: id}, function (album) {
-        album.photos = _.filter(album.photos, function (photo) {
+    vm.selectAlbum = function (id, idx) {
+      vm.selectedAlbum = vm.albums[idx];
+      Album.photos({album_id: id}, function (photos) {
+        vm.selectedAlbum.photos = _.filter(photos, function (photo) {
           return !_.findWhere(vm.attachments.photos, {id: photo.id});
         });
-        return album;
       });
     };
 

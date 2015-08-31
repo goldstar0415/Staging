@@ -3,11 +3,13 @@
 
   <div class="links">
     <div class="media media-visible padding-bottom add-location clearfix" ng-repeat="area in Attachments.items.areas">
-      <a class="img-selection"> {{area.data}} </a>
+      <a class="img-selection">
+        {{area.title}}
+      </a>
 
       <div class="media-body">
         <div class="description-link">
-          {{area.title}}
+          {{area.description}}
         </div>
       </div>
     </div>
