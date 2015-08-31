@@ -20,6 +20,11 @@ class SpotTableSeeder extends Seeder
         User::random(10)->get()->each(function (User $user) {
             $models = factory(Spot::class, mt_rand(2, 5))->make()->each(function (Spot $spot) {
                 $category = SpotTypeCategory::random()->first();
+                $type = $category->type['name'];
+
+                if ($type === 'recreation' or $type === 'pitstop') {
+                    $spot->is_approved = true;
+                }
                 $spot->category()->associate($category);
             });
             $user->spots()->saveMany($models);

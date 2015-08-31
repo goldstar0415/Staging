@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Extensions\StartEndDatesTrait;
+use App\Scopes\ApprovedScopeTrait;
 use App\Scopes\NewestScopeTrait;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
@@ -20,6 +21,7 @@ use Request;
  * @property array $web_sites
  * @property string $cover
  * @property array $videos
+ * @property bool $is_approved
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $end_date
  * @property \Carbon\Carbon $created_at
@@ -42,7 +44,7 @@ use Request;
  */
 class Spot extends BaseModel implements StaplerableInterface
 {
-    use StaplerTrait, StartEndDatesTrait, NewestScopeTrait;
+    use StaplerTrait, StartEndDatesTrait, NewestScopeTrait, ApprovedScopeTrait;
 
     protected $guarded = ['id', 'user_id'];
 

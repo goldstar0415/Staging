@@ -26,6 +26,8 @@ return [
         /**
          * @var \Illuminate\Database\Query\Builder $query
          */
+        $query->setBindings([]);
+        $query->wheres = [];
         $query->join('spot_type_categories', 'spots.spot_type_category_id', '=', 'spot_type_categories.id')
         ->whereIn('spot_type_categories.spot_type_id', function ($query) {
             $query->select('id')->from('spot_types')
