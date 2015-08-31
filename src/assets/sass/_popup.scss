@@ -156,18 +156,29 @@
         .location-event {
             line-height: 11px;
             font-size: 11px;
-            line-height: 11px;
+             height: 22px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: pre-wrap;
             color: #333333;
             margin: 0;
         }
         .date-event {
             font-size: 11px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             color: #333333;
             margin: 0;
         }
         .author-event {
+            display: block;
+            width: 95%;
             color: #00b7f3;
             font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             @include transition_color;
             &:hover {
                 color: #0874be;
