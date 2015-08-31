@@ -2,7 +2,7 @@
   <div class="sidebar-menu-vertical">
     <ul>
       <li><a href="#" ng-click="MapSort.vertical = !MapSort.vertical" class="full-small"></a></li>
-      <li><a href="#" ng-click="MapSort.toggleLayer('events')" class="events"><span>Spots</span></a></li>
+      <li><a href="#" ng-click="MapSort.toggleLayer('events')" class="events"><span>Events</span></a></li>
       <li><a href="#" ng-click="MapSort.toggleLayer('recreations')" class="recreation">Recreation</a></li>
       <li><a href="#" ng-click="MapSort.toggleLayer('pitstops')" class="pit-stops">Pit Stops</a></li>
       <li><a href="#" ng-click="MapSort.toggleWeather()" class="weather-link">Weather</a></li>
@@ -13,7 +13,7 @@
 <div ng-if="!MapSort.vertical" class="col-xs-3 no-pad sort-menu">
   <div class="sidebar-menu-horizontal">
     <ul>
-      <li><a ng-click="MapSort.toggleLayer('events')" class="events">Spots</a></li>
+      <li><a ng-click="MapSort.toggleLayer('events')" class="events">Events</a></li>
       <li><a ng-click="MapSort.toggleLayer('recreations')" href="#" class="recreation">Recreation</a></li>
       <li><a ng-click="MapSort.toggleLayer('pitstops')" href="#" class="pit-stops">Pit Stops</a></li>
       <li><a ng-click="MapSort.toggleLayer('other')" href="#" class="weather-link">Weather</a></li>
@@ -25,7 +25,7 @@
       <div ng-show="MapSort.displayEventsArray.length > 0" class="numbers-events">
         <a href="" class="hide" title="Close"></a>
 
-        <p>{{MapSort.displayEventsArray.length}} Spots found</p>
+        <p>{{MapSort.displayEventsArray.length}} Events found</p>
       </div>
 
       <div class="sort-date">
