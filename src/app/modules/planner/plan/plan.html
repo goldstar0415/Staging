@@ -104,7 +104,10 @@
 
         </div>
       </div>
-      <preloader ng-show="Plan.pagination.busy"></preloader>
+
+      <div class="col-xs-12">
+        <preloader ng-show="Plan.pagination.busy"></preloader>
+      </div>
     </div>
 
     <div class="spot-post empty" ng-if="Plan.comments.data.length == 0 && !Plan.pagination.busy">
