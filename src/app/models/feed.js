@@ -10,10 +10,12 @@
     return $resource(API_URL + '/feeds', {}, {
       query: {
         url: API_URL + '/feeds',
-        isArray: false
+        isArray: false,
+        ignoreLoadingBar: true
       },
       reviews: {
-        url: API_URL + '/reviews'
+        url: API_URL + '/reviews',
+        ignoreLoadingBar: true
       }
     });
   }

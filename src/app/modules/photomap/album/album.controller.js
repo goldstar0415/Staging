@@ -6,10 +6,12 @@
     .controller('AlbumController', AlbumController);
 
   /** @ngInject */
-  function AlbumController(album, $rootScope, MapService, dialogs, toastr, $state, Album) {
+  function AlbumController(album, photos, $rootScope, MapService, dialogs, toastr, $state, Album) {
     var vm = this;
-    var photos = album.photos;
-    vm.data = album;
+    vm.photos = photos;
+    vm.album = album;
+
+
     initMap();
 
     function createMarker(iconUrl, title, location) {
