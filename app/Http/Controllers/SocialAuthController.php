@@ -57,7 +57,8 @@ class SocialAuthController extends Controller
                         'email' => $user->getEmail(),
                         'first_name' => $first_name,
                         'last_name' => $last_name,
-                        'avatar' => $user->getAvatar()
+                        'avatar' => $user->getAvatar(),
+                        'random_hash' => str_random()
                     ]
                 );
                 $social = Social::where('name', $social)->first();
