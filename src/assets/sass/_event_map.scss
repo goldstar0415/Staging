@@ -1,8 +1,7 @@
 .event-result {
     padding: 15px;
     background: rgba(239, 243, 241, 0.5);
-    border-top: 1px solid #d9d9d9;
-    box-shadow: -1px 0 5px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid #d9d9d9;
     &:hover {
         background: rgba(211, 229, 232, .34);
     }

@@ -34,10 +34,10 @@
       </div>
 
       <ul class="tools" ng-if="currentUser">
-        <li ng-if="!item.is_saved">
+        <li ng-if="!item.is_saved && item.type == 'Event'">
           <a class="save-event" ng-click="Favorite.saveToCalendar(item)">Save</a>
         </li>
-        <li ng-if="item.is_saved">
+        <li ng-if="item.is_saved && item.type == 'Event'">
           <a class="save-event saved clicked" ng-click="Favorite.removeFromCalendar(item)">Remove</a>
         </li>
         <li ng-if="!item.is_favorite">

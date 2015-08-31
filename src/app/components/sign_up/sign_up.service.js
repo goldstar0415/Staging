@@ -12,10 +12,10 @@
       signUpUser: signUpUser
     };
 
-    function openModal(template, controller) {
+    function openModal(template) {
       $modal.open({
         templateUrl: template,
-        controller: controller,
+        controller: SignUpModalController,
         controllerAs: 'modal',
         modalClass: 'authentication'
       });
@@ -37,7 +37,17 @@
       }
     }
 
+    /** @ngInject */
+    function SignUpModalController(SignUpService, $modalInstance) {
+      var vm = this;
 
+      vm.close = function () {
+        $modalInstance.close();
+      };
+      vm.signUpUser = function (form) {
+        SignUpService.signUpUser(form, vm, $modalInstance);
+      };
+    }
   }
 
 })();
