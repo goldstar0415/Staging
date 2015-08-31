@@ -127,7 +127,7 @@
     };
 
     function addSocial(type) {
-
+      window.location.href = API_URL + '/account/' + type;
     }
 
     //change avatar
