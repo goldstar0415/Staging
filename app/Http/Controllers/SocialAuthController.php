@@ -48,6 +48,8 @@ class SocialAuthController extends Controller
 
             if ($exist_user) {
                 $this->auth->login($exist_user);
+
+                return redirect(config('app.frontend_url'));
             } else {
                 list($first_name, $last_name) = explode(' ', $user->getName());
                 $new_user = User::create(
@@ -67,8 +69,6 @@ class SocialAuthController extends Controller
         } else {
             return $provider->redirect();
         }
-
-        return redirect(config('app.frontend_url'));
     }
 
     /**
