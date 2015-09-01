@@ -243,10 +243,10 @@
     </div>
 
     <div ng-show="MapSort.sortLayer == 'weather'">
-      <div ng-show="currentWeather" class="col-xs-12 no-pad">
+      <div ng-show="currentWeather" class="weather-wrap">
         <div class="firstBlock-wrapper">
+          <p class="weatherName">{{currentWeather.summary}}</p>
           <div class="weatherImg-block">
-            <p class="weatherName">{{currentWeather.summary}}</p>
 
             <p class="weatherData">{{currentWeather.formattedDate}}</p>
 

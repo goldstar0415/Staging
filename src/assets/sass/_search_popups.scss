@@ -456,14 +456,6 @@
   margin: 0 auto;
 }
 
-.weatherIcon {
-  background: url(/assets/img/snow.png) no-repeat center center;
-  width: 40%;
-  height: 34px;
-  margin: 0 auto;
-  float: left;
-}
-
 .weather-info {
   padding: 10px 15px;
   p {
@@ -511,32 +503,29 @@
 }
 
 /** WEATHER **/
-.popUp-wrapper {
-  float: right;
-  top: 128px;
+.weather-wrap {
   height: 100%;
   bottom: 0;
-  width: 400px;
+  width: 450px;
   display: table;
   background-color: #fff;
 
   .firstBlock-wrapper {
     padding: 15px 20px;
-    width: 400px;
+    width: 100%;
     height: 320px;
-    box-sizing: border-box;
+    overflow: scroll;
+    display: inline-block;
+    .weatherName {
+      text-align: center;
+      font: 500 24px 'Ubuntu medium';
+      margin: 0 0 10px;
+      color: #00b7f3;
+    }
     .weatherImg-block {
-      width: 230px;
-      height: 305px;
+      width: 60%;
+      //height: 305px;
       float: left;
-      .weatherName {
-        text-align: center;
-        font: 500 32px 'Ubuntu medium';
-        color: #0c2638;
-        margin: 10px 0 0;
-        color: #00b7f3;
-      }
-
       .weatherData {
         text-align: center;
         font: 200 14px 'Ubuntu medium';
@@ -544,7 +533,7 @@
         margin: 0 0 10px;
       }
       .weatherImg-wrapper {
-        width: 230px;
+        width: 100%;
         height: 130px;
         .weatherImg {
           margin: 0 auto;
@@ -552,19 +541,24 @@
         }
       }
     }
-  }
-  .parameters {
-    float: left;
-    width: 130px;
-    height: 250px;
-    padding: 15px 0 0 10px;
-    box-sizing: border-box;
-    .mainParameters {
-      font: 500 22px 'Ubuntu medium';
-      color: #0c2638;
-      margin: 0;
-      span {
-        font-size: 16px;
+    .parameters {
+      float: left;
+      width: 40%;
+      padding: 15px 0 0 10px;
+      box-sizing: border-box;
+      div {
+        word-wrap: break-word;
+        p {
+          white-space: pre;
+        }
+        .mainParameters {
+          font: 500 22px 'Ubuntu medium';
+          color: #0c2638;
+          margin: 0;
+          span {
+            font-size: 16px;
+          }
+        }
       }
     }
     .description {
@@ -580,7 +574,7 @@
     display: table;
     margin: 0 auto;
     .temperature {
-      font: 500 80px 'Ubuntu medium';
+      font: 500 54px 'Ubuntu medium';
       float: left;
       color: #00b7f3;
     }
@@ -596,6 +590,9 @@
       float: left;
       font: 500 17px 'Ubuntu medium';
       color: gray;
+      &:last-child {
+        float: right;
+      }
     }
 
     .unit2 span {
@@ -623,24 +620,26 @@
       box-sizing: border-box;
       .weatherIcon {
         height: 34px;
-        margin-left: 65px;
         float: left;
+        background: url(/assets/img/snow.png) no-repeat center center;
+        width: 30%;
+        margin: 0 auto;
       }
       .data, .temperatureWeek {
         float: left;
-        text-align: center;
+        //text-align: center;
         color: gray;
       }
       .data {
         float: left;
         width: 35%;
-        font: 400 20px 'Ubuntu medium';
+        font: 400 20px 'Ubuntu light';
       }
 
       .temperatureWeek {
         float: right;
-        width: 25%;
-        font: 400 18px 'Ubuntu medium';
+        width: 35%;
+        font: 400 18px 'Ubuntu light';
       }
     }
   }
@@ -690,6 +689,9 @@
     .tools-hint-block {
       border-radius: 10px;
     }
+  }
+  .weather-wrap {
+    width: 100%;
   }
 }
 
@@ -744,6 +746,27 @@
           a {
             transform: rotate(90deg);
           }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .weather-wrap {
+    .firstBlock-wrapper {
+      height: 100%;
+      .weatherImg-block, .parameters {
+        width: 100%;
+      }
+    }
+    .weekForecast {
+      .weekForecast-wrapper {
+        .data {
+          width: 100%;
+        }
+        .weatherIcon, .temperatureWeek {
+          width: 50%;
         }
       }
     }
