@@ -67,32 +67,45 @@
       vm.vertical = !vm.vertical;
     };
     vm.toggleLayer = function(layer) {
+      var wp = MapService.GetPathWaypoints();
+      var geoJson = MapService.GetGeoJSON();
+
+
       switch(layer) {
         case 'events':
               MapService.showEvents();
               vm.sortLayer = 'event';
               $scope.sortEventsByCategories();
+              if (wp.length < 1 && geoJson && geoJson.features.length < 1) {
+                toastr.info('Draw the search area');
+              }
               break;
         case 'pitstops':
               MapService.showPitstops();
               vm.sortLayer = 'pitstop';
               $scope.sortPitstopsByCategories();
+              if (wp.length < 1 && geoJson && geoJson.features.length < 1) {
+                toastr.info('Draw the search area');
+              }
               break;
         case 'recreations':
               MapService.showRecreations();
               vm.sortLayer = 'recreation';
               $scope.sortRecreationsByCategories();
+              if (wp.length < 1 && geoJson && geoJson.features.length < 1) {
+                toastr.info('Draw the search area');
+              }
               break;
         case 'other':
               MapService.showOtherLayers();
               MapService.WeatherSelection(weather);
               vm.sortLayer = 'weather';
+              toastr.info('Click on map to check weather in this area');
               break;
       }
     };
     vm.toggleWeather = function() {
         vm.toggleLayer('other');
-        vm.vertical = false;
     };
 
     $http.get(API_URL+ '/spots/categories')
@@ -238,6 +251,8 @@
 
 
     function weather(resp) {
+      vm.vertical = false;
+      $scope.weatherForecast = [];
       var daily = resp.daily.data;
       for(var k in daily) {
         daily[k].formattedDate = moment(daily[k].time * 1000).format('DD MMMM');

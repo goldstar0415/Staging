@@ -191,21 +191,21 @@
       <div class="col-md-10 col-sm-12 col-xs-12">
         <div class="col-sm-4 col-xs-12 no-pad">
           <input ng-timepicker step="30" placeholder="12:00..." ng-model="SpotCreate.start_time" name="start_time"
-                 type="text" required>
+                 type="text">
 
-          <div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">Start time field can't be empty</div>
-          </div>
+          <!--<div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
+            <!--<div ng-message="required">Start time field can't be empty</div>-->
+          <!--</div>-->
         </div>
         <span class="hidden-xs col-sm-1">—</span>
 
         <div class="col-sm-4 col-xs-12 no-pad">
           <input ng-timepicker step="30" placeholder="12:00..." ng-model="SpotCreate.end_time" name="end_time"
-                 type="text" required>
+                 type="text">
 
-          <div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">End time field can't be empty</div>
-          </div>
+          <!--<div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
+            <!--<div ng-message="required">End time field can't be empty</div>-->
+          <!--</div>-->
         </div>
       </div>
     </div>
@@ -305,8 +305,9 @@
   </section>
   <div class="form-group">
     <div class="col-xs-12">
-      <button ng-if="!SpotCreate.edit" type="button" ng-click="SpotCreate.create(form)" class="btn btn-default green-btn pull-left">Create</button>
-      <button ng-if="SpotCreate.edit" type="button" ng-click="SpotCreate.create(form)" class="btn btn-default green-btn pull-left">Update</button>
+      <button ng-if="!SpotCreate.edit && !SpotCreate.loading" type="button" ng-click="SpotCreate.create(form)" class="btn btn-default green-btn pull-left">Create</button>
+      <button ng-if="SpotCreate.edit && !SpotCreate.loading" type="button" ng-click="SpotCreate.create(form)" class="btn btn-default green-btn pull-left">Update</button>
+      <h4 ng-if="SpotCreate.loading">Wait please...</h4>
     </div>
   </div>
 </form>
