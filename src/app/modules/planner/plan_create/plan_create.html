@@ -9,12 +9,12 @@
       <div class="col-sm-10">
         <input type="text" class="form-control" name="title" ng-model="Plan.title" id="title"
                placeholder="Start typing..."
-               ng-minlength="3" ng-maxlength="255" required>
+               ng-minlength="3" ng-maxlength="250" required>
 
         <div ng-messages="form.title.$error" ng-if="form.$submitted || form.title.$touched" class="error-message">
           <div ng-message="required">is required</div>
           <div ng-message="minlength">too short</div>
-          <div ng-message="maxlength">can't be longer then 255 symbols</div>
+          <div ng-message="maxlength">can't be longer then 250 symbols</div>
         </div>
       </div>
     </div>
@@ -23,12 +23,12 @@
       <label class="col-sm-2 control-label" for="description">Description</label>
 
       <div class="col-sm-10">
-        <textarea class="form-control" rows="5" name="description" ng-maxlength="5000" ng-model="Plan.description"
+        <textarea class="form-control" rows="5" name="description" ng-maxlength="250" ng-model="Plan.description"
                   id="description"></textarea>
 
         <div ng-messages="form.description.$error" ng-if="form.$submitted || form.description.$touched"
              class="error-message">
-          <div ng-message="maxlength">Description can't be longer then 5000 symbols</div>
+          <div ng-message="maxlength">Description can't be longer then 250 symbols</div>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
         <location address="Plan.address" location="Plan.location" limit="15" ></location>
 
         <div ng-if="form.$submitted && !Plan.address" class="error-message-inline">
-          <div>Start date field can't be empty</div>
+          <div>is required</div>
         </div>
       </div>
     </div>
