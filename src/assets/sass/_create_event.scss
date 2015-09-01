@@ -71,7 +71,9 @@
   border-bottom: 1px solid $light_grey;
   padding: 15px;
   margin-bottom: 15px;
-
+  .drop-box {
+    display: inline-table;
+  }
 }
 
 .form-group {
@@ -230,14 +232,17 @@
     border-color: #ccc;
   }
 }
+
 .input-group {
   input {
     height: 34px;
   }
 }
+
 .input-group-btn {
   .btn {
     height: 34px;
   }
 }
+
 //---</create new event--->
