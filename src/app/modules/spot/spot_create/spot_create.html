@@ -163,7 +163,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 control-label">Date</label>
 
       <div class="col-md-10 col-sm-12 col-xs-12">
-        <div class="col-sm-4 col-xs-12 no-pad">
+        <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
           <input ng-datepicker name="start_date" ng-model="SpotCreate.start_date" start-date="SpotCreate.startDate" type="text" required>
 
           <div ng-messages="form.start_date.$error" ng-if="form.$submitted" class="error-message-inline">
@@ -173,7 +173,7 @@
 
         <span class="hidden-xs col-sm-1">—</span>
 
-        <div class="col-sm-4 col-xs-12 no-pad">
+        <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
           <input ng-datepicker name="end_date" ng-model="SpotCreate.end_date" start-date="SpotCreate.start_date"
                  type="text" required>
 
@@ -189,7 +189,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 control-label">Time</label>
 
       <div class="col-md-10 col-sm-12 col-xs-12">
-        <div class="col-sm-4 col-xs-12 no-pad">
+        <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
           <input ng-timepicker step="30" placeholder="12:00..." ng-model="SpotCreate.start_time" name="start_time"
                  type="text">
 
@@ -199,7 +199,7 @@
         </div>
         <span class="hidden-xs col-sm-1">—</span>
 
-        <div class="col-sm-4 col-xs-12 no-pad">
+        <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
           <input ng-timepicker step="30" placeholder="12:00..." ng-model="SpotCreate.end_time" name="end_time"
                  type="text">
 
@@ -237,14 +237,14 @@
         </ul>
       </div>
       <div ng-if="SpotCreate.images.files.length > 0">
-        <button type="button" ng-click="SpotCreate.selectCover = true" class="btn btn-default green-btn pull-left"
+        <button type="button" ng-click="SpotCreate.selectCover = true" class="btn btn-default green-btn pull-left margin-bottom"
                 ng-if="!SpotCreate.selectCover">Select cover
         </button>
         <button type="button" ng-click="SpotCreate.selectCover = false" class="btn btn-primary blue-btn pull-left"
                 ng-if="SpotCreate.selectCover">Cancel
         </button>
       </div>
-      <button type="button" ng-click="SpotCreate.editCover();" class="btn btn-default green-btn pull-left"
+      <button type="button" ng-click="SpotCreate.editCover();" class="btn btn-default green-btn pull-left margin-bottom"
               ng-if="SpotCreate.cover">Edit current cover
       </button>
 

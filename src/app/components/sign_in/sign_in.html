@@ -16,10 +16,9 @@
       </div>
 
       <div class="password-block">
-        <input type="password" name="password" class="white" placeholder="Password..." minlength="6"
-               ng-model="modal.password"
+        <input type="password" name="password" class="white" placeholder="Password..." ng-model="modal.password"
                required>
-        <a href="#" class="eye" eye-password></a>
+        <a class="eye" eye-password></a>
 
         <div class="error-message" ng-messages="form.password.$error"
              ng-if="form.$submitted || form.password.$touched">
