@@ -56,16 +56,19 @@
   .event-spot-page {
     padding-right: 15px;
     padding-left: 5px;
+    line-height: 2;
     float: left;
   }
   .description {
     font: 13px/19px Arial, sans-serif;
     margin: 10px 0 12px;
   }
-
+  .date {
+    line-height: 1;
+  }
 }
 
- .event .date, .event-spot-page, .recreation-spot, .pitstop-spot {
+.event .date, .event-spot-page, .recreation-spot, .pitstop-spot {
   position: relative;
   top: 0;
   right: 0;
@@ -87,7 +90,7 @@
       font: 14px 'Ubuntu medium';
       color: $blue;
       &:hover, &:active, &:focus {
-        color:  #0874be;
+        color: #0874be;
       }
     }
   }
