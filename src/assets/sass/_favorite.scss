@@ -55,9 +55,21 @@
   }
 }
 
-@media (max-width: 516px) and (min-width: 320px) {
-  .tools, .event {
-    padding-bottom: 25px;
+//@media (max-width: 516px) and (min-width: 320px) {
+//  .tools, .event {
+//    padding-bottom: 25px;
+//  }
+//}
+
+@media (max-width: 500px) {
+  .event.block{
+    .text-content {
+      width: 100%;
+      display: block;
+    }
+    .fav-avatar-icon {
+      margin-bottom: 10px;
+    }
   }
 }
 

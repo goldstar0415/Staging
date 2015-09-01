@@ -5,7 +5,7 @@
 <div infinite-scroll="Favorite.pagination.nextPage()" infinite-scroll-disabled="Favorite.pagination.busy"
      class="clearfix" infinite-scroll-distance="1">
   <section ng-repeat="item in Favorite.spots.data">
-    <div class="event">
+    <div class="event block">
       <div class="date">
         <date-range item="item"></date-range>
       </div>
@@ -23,7 +23,7 @@
           <img class="media-object fav-avatar-icon mo-margin-left" ng-src="{{item.cover_url.thumb}}">
         </a>
 
-        <div class="media-body">
+        <div class="media-body text-content">
           <h2 class="media-heading favorites-article-title">
             <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})" ng-bind-html="item.title"></a>
           </h2>
