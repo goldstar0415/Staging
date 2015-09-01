@@ -22,7 +22,7 @@
     </div>
     <div  class="col-lg-8 col-md-7 col-sm-6 col-xs-6 content-messages ">
       <div ng-if="dialog.last_message.user_id != currentUser.id">
-        <p ng-if="dialog.last_message.message">{{dialog.last_message.message}}</p>
+        <p ng-if="dialog.last_message.message" ng-bind-html="dialog.last_message.message"></p>
         <p ng-if="!dialog.last_message.message"><b>attached files</b></p>
       </div>
 
@@ -31,7 +31,7 @@
            ng-class="{new: !dialog.last_message.is_read}">
         <div class="col-md-10 col-sm-9 col-xs-8 padding-0">
           <div class="message-in">
-            <p ng-if="dialog.last_message.message">{{dialog.last_message.message}}</p>
+            <p ng-if="dialog.last_message.message" ng-bind-html="dialog.last_message.message"></p>
             <p ng-if="!dialog.last_message.message"><b>attached files</b></p>
           </div>
         </div>

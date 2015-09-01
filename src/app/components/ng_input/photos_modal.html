@@ -19,7 +19,7 @@
              ng-click="modal.selectAlbum(item.id, $index)">
           <img class="img-responsive tab-photo" ng-src="{{item.cover.medium}}">
 
-          <p><a>{{item.title}}</a></p>
+          <p><a ng-bind-html="item.title"></a></p>
         </div>
 
         <h4 ng-if="modal.albums.length < 1" class="text-center description">No albums yet.</h4>
@@ -30,7 +30,7 @@
            ng-class="{active: modal.selectedAlbum}">
         <div class="col-xs-12 no-pad">
         <a class="back" ng-click="modal.selectedAlbum = null"></a>
-        <h3 class="choose-album-name">{{modal.selectedAlbum.title}}</h3>
+        <h3 class="choose-album-name" ng-bind-html="modal.selectedAlbum.title"></h3>
         </div>
         <div class="choose-photo-album">
           <img ng-repeat="item in modal.selectedAlbum.photos"

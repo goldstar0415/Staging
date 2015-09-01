@@ -55,7 +55,7 @@
                   <span ng-if="user.birth_date"><span ng-if="user.sex">,</span> {{user.birth_date | age}} years</span>
                 </p>
 
-                <p class="description"> {{user.description}} </p>
+                <p class="description" ng-bind-html="user.description"></p>
 
                 <p class="counters">
                   <a ui-sref="spots({user_id: user.id})" class="e-count" title="Spots">
@@ -83,10 +83,10 @@
             <ul class="events" ng-if="user.spots.length > 0">
               <li class="col-xs-4 events-width" ng-repeat="spot in user.spots">
                 <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
-                <img class="frame" ng-src="{{spot.cover_url.medium}}" alt="{{spot.title}}">
+                  <img class="frame" ng-src="{{spot.cover_url.medium}}" alt="{{spot.title}}">
                 </a>
-                <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-link">
-                  {{spot.title}}
+                <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-link"
+                   ng-bind-html="spot.title">
                 </a>
               </li>
             </ul>

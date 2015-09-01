@@ -27,10 +27,10 @@
 
         <div class="media-body">
           <h2 class="media-heading favorites-article-title">
-            <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a>
+            <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})" ng-bind-html="item.title"></a>
           </h2>
 
-          <p class="place">{{item.description}}</p>
+          <p class="place" ng-bind-html="item.description"></p>
         </div>
       </div>
 
