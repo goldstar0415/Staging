@@ -733,5 +733,19 @@
     bottom: 0;
     width: 100%;
     transform: rotate(0deg);
+    height: initial;
+    .sidebar-menu-vertical {
+      li {
+        display: none;
+        &:first-child {
+          display: block;
+          float: right;
+          border: none;
+          a {
+            transform: rotate(90deg);
+          }
+        }
+      }
+    }
   }
 }
