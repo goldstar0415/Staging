@@ -87,7 +87,13 @@
         request.spot_type_category_id = vm.category_id;
 
         if (vm.cover) {
-          request.cover = vm.cover;
+          if(vm.edit && vm.coverChanged) {
+            request.cover = vm.cover;
+          }
+
+          if(!vm.edit) {
+            request.cover = vm.cover;
+          }
         }
         if (vm.links && vm.links.length > 0) {
           request.web_sites = vm.links;
@@ -104,7 +110,7 @@
         if (vm.edit) {
           request.deleted_files = vm.deletedImages;
         }
-        if (vm.type === 'Event') {
+        if (vm.type === 'event') {
           request.start_date = moment(vm.start_date + ' ' + vm.start_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.time).format(DATE_FORMAT.backend);
           request.end_date = moment(vm.end_date + ' ' + vm.end_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.time).format(DATE_FORMAT.backend);
         }
@@ -119,6 +125,7 @@
         if (request.locations && request.locations.length > 0) {
 
           vm.images.files = rejectOldFiles();
+          vm.loading = true;
           UploaderService
             .upload(url, req)
             .then(function (resp) {
@@ -128,6 +135,7 @@
               $state.go('spot', {spot_id: resp.data.id, user_id: resp.data.user_id});
             })
             .catch(function (resp) {
+              vm.loading = false;
               toastr.error('Upload failed');
             });
         } else {
@@ -223,6 +231,10 @@
           if (result) {
             vm.cover = result;
             vm.selectCover = false;
+
+            if(vm.edit) {
+              vm.coverChanged = true;
+            }
           }
         });
       }
@@ -234,6 +246,10 @@
           if (result) {
             vm.cover = result;
             vm.selectCover = false;
+
+            if(vm.edit) {
+              vm.coverChanged = true;
+            }
           }
         });
       }
@@ -266,6 +282,7 @@
       vm.category_id = data.spot_type_category_id;
       vm.tags = data.tags || [];
       vm.cover = data.cover_url.original;
+      vm.coverChanged = false;
       vm.locations = data.points;
       if (data.photos) {
         for (var k in data.photos) {

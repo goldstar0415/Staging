@@ -11,8 +11,8 @@
     .constant('moment', moment)
     .constant('DATE_FORMAT', {
       datepicker: {
-        date: 'm.d.Y',
-        time: 'H:i'
+        date: 'MM.DD.YYYY',
+        time: 'h:mm a'
       },
       date: 'MM.DD.YYYY',
       time: 'HH:mm',
