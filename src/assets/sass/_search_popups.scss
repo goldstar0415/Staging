@@ -772,3 +772,34 @@
     }
   }
 }
+
+@media (min-device-width: 240px) and (max-device-width: 767px) and (orientation: landscape) {
+  .sidebar-menu-wrap {
+    position: relative;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+    height: initial;
+    .sidebar-menu-vertical {
+      li {
+        display: none;
+        &:first-child {
+          display: block;
+          float: right;
+          border: none;
+          a {
+            transform: rotate(90deg);
+          }
+        }
+      }
+    }
+  }
+  .map-tools {
+    float: left;
+    clear: inherit!important;
+  }
+}
