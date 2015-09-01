@@ -7,9 +7,8 @@
   <section ng-repeat="item in Favorite.spots.data">
     <div class="event">
       <stars item="item"></stars>
-    <div class="event favorites-page">
 
-    <div class="date">
+    <span class="date">
        <span ng-class="{'event-spot-page':item.type == 'Event',
                         'recreation':item.type == 'Recreation',
                         'pitstop':item.type == 'PitStop'}">
@@ -19,7 +18,7 @@
         <span class="date">
             <date-range item="item"></date-range>
         </span>
-    </div>
+    </span>
 
       <div class="media media-visible">
         <a class="pull-left" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
