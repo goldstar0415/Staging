@@ -26,7 +26,7 @@
   </div>
   <div class="col-xs-8 popup-main">
     <a  class="title" ng-bind-html="::data.spot.title"></a>
-    <stars item="data.spot" class="star-event-mobile"></stars><br>
+    <p class="star-event-mobile"><stars item="data.spot" ></stars></p>
     <p class="location-event">{{::data.address}}</p>
     <p class="date-event" ng-if="data.spot.category.type.name == 'event'">
       <span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>

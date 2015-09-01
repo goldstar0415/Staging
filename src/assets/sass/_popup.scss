@@ -151,6 +151,7 @@
         }
         .star-event-mobile{
           display: none;
+          height: 1px;
         }
         .location-event {
             line-height: 11px;
@@ -402,7 +403,7 @@
     }
     .popup-main {
       width: 100%;
-      height: 200px;
+      height: 220px;
       .title {
         font-size: 24px;
         line-height: 26px;
@@ -410,7 +411,8 @@
       }
       .star-event-mobile{
         display: block;
-        margin-bottom: 5px;
+        height: auto;
+        margin: 0;
       }
       .location-event {
         line-height: 12px;
