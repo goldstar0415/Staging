@@ -26,7 +26,6 @@
           }
 
           $(e).datetimepicker({
-              value: s.model,
               scrollMonth: false,
               scrollTime: false,
               scrollInput: false,

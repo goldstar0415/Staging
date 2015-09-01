@@ -6,7 +6,7 @@
     .directive('location', location);
 
   /** @ngInject */
-  function location(MapService, $http) {
+  function location(MapService, $http, toastr) {
     return {
       restrict: 'E',
       templateUrl: '/app/components/location_autocomplete/location.html',
@@ -73,12 +73,16 @@
         };
         s.SetCurrentLocation = function() {
           MapService.GetCurrentLocation(function(e) {
-            MapService.GetAddressByLatlng(e.latlng, function(data) {
-              s.location = e.latlng;
-              s.address = data.display_name;
-              s.viewAddress = data.display_name;
-              moveOrCreateMarker(e.latlng);
-            })
+            if(e.type == 'locationerror') {
+              toastr.error('Geolocation error!');
+            } else {
+              MapService.GetAddressByLatlng(e.latlng, function(data) {
+                s.location = e.latlng;
+                s.address = data.display_name;
+                s.viewAddress = data.display_name;
+                moveOrCreateMarker(e.latlng);
+              })
+            }
           });
         };
         s.onAutocompleteSelect = function($item, $model, $label) {

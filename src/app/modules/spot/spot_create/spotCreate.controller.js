@@ -44,11 +44,17 @@
     $scope.$watch('SpotCreate.start_date', function() {
       vm.end_date = '';
     });
-    if(!vm.edit) {
-      $scope.$watch('SpotCreate.type', function () {
+    $scope.$watch('SpotCreate.type', function () {
+      if(!vm.edit) {
         vm.category_id = '';
-      });
-    }
+      }
+
+      vm.start_date = null;
+      vm.start_time = null;
+      vm.end_date = null;
+      vm.end_time = null;
+    });
+
 
     function filterLocations() {
       var array = _.reject(vm.locations, function (item) {
