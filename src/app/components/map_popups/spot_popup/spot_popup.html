@@ -1,7 +1,7 @@
 <div class="popup-width">
   <div class="col-xs-4 nav-popup">
     <div class="img-event">
-      <stars item="data.spot"></stars>
+      <stars item="data.spot" class="star-event"></stars>
       <img ng-src="{{data.spot.cover_url.medium}}">
     </div>
     <div class="popup-links">
@@ -19,6 +19,7 @@
 
 
     <a  class="title">{{::data.spot.title}}</a>
+    <stars item="data.spot" class="star-event-mobile"></stars><br>
     <p class="location-event">{{::data.address}}</p>
     <p class="date-event" ng-if="data.spot.category.type.name == 'event'">
       <span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>
