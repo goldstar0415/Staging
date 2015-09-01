@@ -181,6 +181,9 @@ h3 {
 .no-pad-left {
   padding-left: 0;
 }
+.mo-margin-left{
+  margin-left: 0;
+}
 
 .no-pad-right {
   padding-right: 0;
@@ -416,9 +419,11 @@ h3 {
   border-radius: 0;
   border: none;
 }
-
+.media {
+  width: 100%;
+}
 .media-body, .info {
-  p, div {
+  p, div, h2 {
     word-break: break-all;
   }
 }
@@ -489,6 +494,7 @@ section {
 
 .tags {
   float: left;
+  width: 100%;
 }
 
 .margin-bottom {
