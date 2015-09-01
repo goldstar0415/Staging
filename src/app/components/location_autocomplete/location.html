@@ -3,13 +3,13 @@
        typeahead-on-select="onAutocompleteSelect($item, $model, $label)"
        ng-model="viewAddress"
        ng-change="onChange();"
-       placeholder="Start typing..."
+       placeholder="{{placeHolder}}"
        type="text">
 <input ng-show="provider != 'google'" typeahead="address as address.formatted_address for address in getData($viewValue)"
        typeahead-wait-ms="100"
        typeahead-on-select="onAutocompleteSelect($item, $model, $label)"
        ng-model="viewAddress"
        ng-change="onChange();"
-       placeholder="Start typing..."
+       placeholder={{placeHolder}}
        type="text">
 <a ng-click="SetCurrentLocation();" class="compass compass-location" title="Find out the location"></a>
