@@ -6,14 +6,12 @@
         <date-range item="Plan"></date-range>
       </div>
 
-      <h2 class="title-planner">
-        {{Plan.title}}
-      </h2>
+      <h2 class="title-planner" ng-bind-html="Plan.title"></h2>
 
       <p class="place">{{Plan.address}}</p>
 
-      <p class="description">
-        <span>{{Plan.description}}</span>
+      <p class="description" >
+        <span ng-bind-html="Plan.description"></span>
       </p>
 
     </div>
@@ -28,8 +26,7 @@
       </a>
 
       <div class="media-body">
-        <h2 class="media-heading title-planner">
-          {{item.title}}
+        <h2 class="media-heading title-planner" ng-bind-html="item.title">
         </h2>
 
         <p class="place">{{item.address}}</p>
@@ -38,7 +35,7 @@
           <date-range item="item"></date-range>
         </div>
         <div class="description">
-          <span>{{item.description}}</span>
+          <span ng-bind-html="item.description"></span>
         </div>
       </div>
     </div>
@@ -54,7 +51,7 @@
 
       <div class="media-body">
         <h2 class="media-heading title-planner">
-          <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a>
+          <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})" ng-bind-html="item.title"></a>
         </h2>
 
         <p class="place">{{item.address}}</p>
@@ -63,7 +60,7 @@
           <date-range item="item"></date-range>
         </div>
         <div class="description">
-          <span>{{item.description}}</span>
+          <span ng-bind-html="item.description"></span>
         </div>
         <ul class="tools">
           <li ng-if="!item.is_saved">
@@ -96,7 +93,7 @@
             <a ui-sref="profile.main({user_id: post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
           </h3>
 
-          <p>{{post.body}}</p>
+          <p ng-bind-html="post.body | htmlLinky:'_blank'"></p>
           <attachments items="post.attachments"></attachments>
 
           <p class="time">{{post.created_at | fromNow}}</p>

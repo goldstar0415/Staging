@@ -20,12 +20,12 @@
                     </span>
       </div>
       <h2>
-        <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{::item.title}}</a>
+        <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})" ng-bind-html="::item.title"></a>
       </h2>
 
       <p class="place"></p>
 
-      <p class="description"><span>{{::item.description}}</span></p>
+      <p class="description"><span ng-bind-html="::item.description"></span></p>
       <figure>
         <img ng-src="{{item.cover_url.original}}" alt="{{item.title}}" class="img-size">
       </figure>

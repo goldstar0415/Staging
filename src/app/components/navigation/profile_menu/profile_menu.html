@@ -153,7 +153,7 @@
             <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
               <img ng-src="{{item.cover_url.thumb}}" class="avatar"/>
 
-              <p class="sidebar-user-name">{{item.title}}</p>
+              <p class="sidebar-user-name" ng-bind-html="item.title"></p>
             </a>
           </div>
         </div>

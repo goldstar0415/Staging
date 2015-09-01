@@ -1,7 +1,7 @@
 <div class="title col-xs-12 ">
   <h2 class="title-name">
     <a ui-sref="photos({user_id: profileUser.id})" title="back" class="back"></a>
-    <span class="album-name">Album - {{Album.album.title}}</span>
+    <span class="album-name">Album - <span ng-bind-html="Album.album.title"></span></span>
     <span class="album-tools" ng-if="currentUser.id == Album.album.user_id">
       <a title="Delete album" ng-click="Album.delete()" class="delete"></a>
       <a title="Edit album" ui-sref="photos.editAlbum({album_id: Album.album.id})" class="edit"></a>
