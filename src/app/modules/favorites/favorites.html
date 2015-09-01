@@ -22,7 +22,7 @@
 
       <div class="media media-visible">
         <a class="pull-left" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
-          <img class="media-object fav-avatar-icon" ng-src="{{item.cover_url.thumb}}">
+          <img class="media-object fav-avatar-icon mo-margin-left" ng-src="{{item.cover_url.thumb}}">
         </a>
 
         <div class="media-body">
@@ -56,6 +56,8 @@
     </div>
   </section>
 </div>
+
+
 <preloader ng-show="Favorite.pagination.busy"></preloader>
 
 <div class="col-xs-12" ng-if="Favorite.spots.data.length == 0 && !Favorite.pagination.busy">

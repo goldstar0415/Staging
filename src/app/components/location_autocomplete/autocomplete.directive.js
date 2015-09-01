@@ -17,9 +17,11 @@
         limit: '=',
         provider: '=',
         onEmpty: '&',
-        marker: '='
+        marker: '=',
+        inputPlaceholder: '@'
       },
       link: function autocompleteLink(s, e, a) {
+        s.placeHolder = s.inputPlaceholder || "Start typing...";
         var limit = s.limit || 10;
         var searchUrl = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&addressdetails=1&limit='+ limit +'&q=';
         var bindMarker = s.bindMarker;
