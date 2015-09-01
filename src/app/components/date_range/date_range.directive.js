@@ -30,7 +30,7 @@
 
         if (vm.item.start_time) {
           vm.start_time = vm.item.start_time;
-          vm.end_time = vm.item.start_time;
+          vm.end_time = vm.item.end_time;
         } else if (start_date.format('H') != 0 || end_date.format('H') != 0) {
           vm.start_time = start_date.format(DATE_FORMAT.time);
           vm.end_time = end_date.format(DATE_FORMAT.time);
