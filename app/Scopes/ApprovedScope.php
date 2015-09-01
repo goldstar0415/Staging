@@ -7,6 +7,7 @@ use Illuminate\Database\Query\Builder as BaseBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ScopeInterface;
+use Request;
 
 class ApprovedScope implements ScopeInterface
 {
@@ -21,10 +22,12 @@ class ApprovedScope implements ScopeInterface
      */
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where(function ($query) {
-            $query->whereNull($this->column)->orWhere($this->column, true);
-        });
-        $this->addWithRequested($builder);
+        if (!Request::is('admin/*')) {
+            $builder->where(function ($query) {
+                $query->whereNull($this->column)->orWhere($this->column, true);
+            });
+            $this->addWithRequested($builder);
+        }
     }
 
     /**

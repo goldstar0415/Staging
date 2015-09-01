@@ -26,18 +26,12 @@ return [
         /**
          * @var \Illuminate\Database\Query\Builder $query
          */
-//        $query->setBindings([]);
-//        $query->wheres = null;
-        /**
-         * @var \Frozennode\Administrator\Config\Factory $this
-         */
-        $query = $this->getConfig()->getDataModel()->withRequested()->getQuery();
         $query->join('spot_type_categories', 'spots.spot_type_category_id', '=', 'spot_type_categories.id')
             ->whereIn('spot_type_categories.spot_type_id', function ($query) {
                 $query->select('id')->from('spot_types')
                     ->where('spot_types.name', '=', DB::raw("'recreation'"))
                     ->orWhere('spot_types.name', '=', DB::raw("'pitstop'"));
-            })->where('is_approved', '=', false);//TODO: change
+            })->where('is_approved', '=', false);
     },
     /**
      * The filter set
