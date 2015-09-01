@@ -74,12 +74,14 @@
 
         vm.currentIndex = prevIndex;
       };
-      vm.sendComment = function () {
-        var id = vm.currentPhoto.id;
-        Photo.postComment({id: id}, {body: vm.comment}, function (comment) {
-          vm.comments.unshift(comment);
-          vm.comment = '';
-        });
+      vm.sendComment = function (form) {
+        if (form.$valid) {
+          var id = vm.currentPhoto.id;
+          Photo.postComment({id: id}, {body: vm.comment}, function (comment) {
+            vm.comments.unshift(comment);
+            vm.comment = '';
+          });
+        }
       };
       vm.deleteComment = function (commentId) {
         var id = vm.currentPhoto.id;

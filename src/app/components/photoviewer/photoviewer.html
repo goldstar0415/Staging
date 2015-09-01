@@ -9,7 +9,7 @@
       <div class="photo-comments col-xs-4" ng-if="!PV.hideComments && $root.currentUser">
         <p class="location">{{PV.currentPhoto.address}}</p>
 
-        <form name="form" ng-submit="PV.sendComment()" class="col-xs-12 new-post">
+        <form name="form" ng-submit="PV.sendComment(form)" class="col-xs-12 new-post">
           <textarea ng-model="PV.comment" name="comment" placeholder="Start typing..."></textarea>
 
           <div ng-messages="form.comment.$error" ng-if="form.$submitted" class="error-message">
