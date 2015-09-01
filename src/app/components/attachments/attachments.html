@@ -3,14 +3,10 @@
 
   <div class="links">
     <div class="media media-visible padding-bottom add-location clearfix" ng-repeat="area in Attachments.items.areas">
-      <a class="img-selection">
-        {{area.title}}
-      </a>
+      <a class="img-selection" ng-bind-html="area.title"></a>
 
       <div class="media-body">
-        <div class="description-link">
-          {{area.description}}
-        </div>
+        <div class="description-link" ng-bind-html="area.description"></div>
       </div>
     </div>
 
@@ -22,10 +18,11 @@
       <div class="media-body attach-event">
 
         <h3 class="media-heading ">
-          <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-img clearfix">{{spot.title}}</a>
+          <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-img clearfix"
+             ng-bind-html="spot.title"></a>
         </h3>
 
-        <div class="description-link">{{spot.description}}</div>
+        <div class="description-link" ng-bind-html="spot.description"></div>
       </div>
     </div>
 
@@ -35,16 +32,16 @@
 
       <div class="media media-visible">
         <a class="pull-left" ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})">
-          <img class="media-object fav-avatar-icon activity" src="/assets/img/icons/planner-invite.png" />
+          <img class="media-object fav-avatar-icon activity" src="/assets/img/icons/planner-invite.png"/>
         </a>
 
         <div class="media-body">
           <h4 class="media-heading invitation-title clearfix">
-            <a ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})">{{plan.title}}</a>
+            <a ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})" ng-bind-html="plan.title"></a>
           </h4>
 
           <div class="description">
-            <span>{{plan.description}}</span>
+            <span ng-bind-html="plan.description"></span>
           </div>
         </div>
       </div>

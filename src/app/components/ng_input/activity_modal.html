@@ -35,7 +35,7 @@
                ng-click="modal.addSpot(spot)">
             <img class="friend-avatar" ng-src="{{spot.cover_url.thumb}}">
             <h4 class="name-friend">
-              <a>{{spot.title}}</a>
+              <a ng-bind-html="spot.title"></a>
             </h4>
 
             <p class="date">
@@ -56,7 +56,7 @@
                  ng-click="modal.addSpot(spot)">
               <img class="friend-avatar" ng-src="{{spot.cover_url.thumb}}">
               <h4 class="name-friend">
-                <a>{{spot.title}}</a>
+                <a ng-bind-html="spot.title"></a>
               </h4>
 
               <p class="date">
@@ -73,9 +73,9 @@
            ng-class="{active: modal.tab == 'areas'}">
         <div class="block-item" ng-repeat="area in modal.areas | filter: {title: search}">
           <div class="clearfix" ng-class="{choose: area.selected}" ng-click="modal.addArea(area)">
-            <h4 class="activity-title"><a>{{area.title}}</a></h4>
+            <h4 class="activity-title"><a ng-bind-html="area.title"></a></h4>
 
-            <p class="saved-search-description">{{area.description}}</p>
+            <p class="saved-search-description" ng-bind-html="area.description"></p>
           </div>
         </div>
 

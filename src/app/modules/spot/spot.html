@@ -13,12 +13,12 @@
       </span>
 
       <h2 class="">
-        <a>{{Spot.spot.title}}</a>
+        <a ng-bind-html="Spot.spot.title"></a>
       </h2>
 
       <p class="place"></p>
 
-      <p class="description"><span>{{Spot.spot.description}}</span>
+      <p class="description"><span ng-bind-html="Spot.spot.description"></span>
       </p>
 
       <div class="external-link" ng-repeat="item in Spot.spot.web_sites">
@@ -98,7 +98,7 @@
           <a ui-sref="profile.main({user_id: post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
         </h3>
 
-        <p>{{post.body}}</p>
+        <p ng-bind-html="post.body | htmlLinky:'_blank'"></p>
         <attachments items="post.attachments"></attachments>
 
         <p class="time">{{post.created_at | fromNow}}</p>
