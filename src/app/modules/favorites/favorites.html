@@ -6,11 +6,12 @@
      class="clearfix" infinite-scroll-distance="1">
   <section ng-repeat="item in Favorite.spots.data">
     <div class="event">
+      <stars item="item"></stars>
 
     <span class="date">
        <span ng-class="{'event-spot-page':item.type == 'Event',
-                                     'recreation':item.type == 'Recreation',
-                                     'pitstop':item.type == 'PitStop'}">
+                        'recreation':item.type == 'Recreation',
+                        'pitstop':item.type == 'PitStop'}">
             {{item.type}}
         </span>
 
