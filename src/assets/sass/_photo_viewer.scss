@@ -3,12 +3,12 @@
   width: 100%;
   .modal-dialog {
     width: 950px !important;
-    top: 50%;
-    position: relative;
-    transform: translate(0,-50%) !important;
+    height: 100%;
     .modal-content {
       border-top-left-radius: 10px;
       border-bottom-left-radius: 10px;
+      position: relative;
+      top: 50%;transform: translateY(-50%);
     }
   }
 }
@@ -27,8 +27,8 @@
     img {
       display: table;
       margin: 0 auto;
-      max-height: 600px;
-      max-width: 780px;
+      //max-height: 600px;
+      //max-width: 780px;
       @include vertical_align;
     }
     .previous {
@@ -240,7 +240,7 @@
 @media (max-width: 767px) {
   .viewer-wrap {
     .modal-dialog {
-      display: table;
+      display: block;
       margin: 0 auto;
       width: 90% !important;
       .photo-viewer {
@@ -251,6 +251,10 @@
         .photo-comments {
           width: 100%;
         }
+      }
+      .modal-content {
+        top: 80px;
+        transform: translateY(0);
       }
     }
   }
