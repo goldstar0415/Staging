@@ -27,6 +27,12 @@
     }
   }
 }
+.favorites-page {
+  .date {
+    width: 100%;
+    margin: 0;
+  }
+}
 
 @media (max-width: 980px) and (min-width: 768px) {
   .tools, .event {
@@ -39,6 +45,13 @@
     .media, .media-body, .media-visible {
       overflow: visible!important;
     }
+  }
+}
+
+.favorites-page {
+  .media-body {
+    width: 100%;
+    display: block;
   }
 }
 
