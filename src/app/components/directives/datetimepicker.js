@@ -13,6 +13,7 @@
           today: '='
         },
         link: function (s, e, a) {
+          console.log(s.endDate);
           var format = DATE_FORMAT.datepicker.date;
           var placeholder = moment().format(DATE_FORMAT.date);
 
@@ -25,7 +26,6 @@
           }
 
           $(e).datetimepicker({
-              value: s.model,
               scrollMonth: false,
               scrollTime: false,
               scrollInput: false,
@@ -81,7 +81,7 @@
 
           $(e).datetimepicker({
             value: s.model || null,
-            defaultTime: '01:00',
+            defaultTime: '01:00 am',
             datepicker: false,
             validateOnBlur: false,
             step: step,
@@ -110,6 +110,15 @@
           }
         }
       }
-    })
+    });
+
+
+  //Extension to support moment inside datepicker
+  Date.parseDate = function( input, format ){
+    return moment(input,format).toDate();
+  };
+  Date.prototype.dateFormat = function( format ){
+    return moment(this).format(format);
+  };
 
 })();

@@ -304,7 +304,6 @@ h3 {
   -moz-transition: border-color .3s;
   transition: border-color .3s;
 
-
   &:hover {
     cursor: pointer;
     border: 2px dashed #00b7f3;
@@ -487,9 +486,15 @@ section {
   background: $dark_blue;
   font-size: 10px;
 }
+
 .tags {
   float: left;
 }
+
+.margin-bottom {
+  margin-bottom: 1.5rem;
+}
+
 /*responsive*/
 
 @media (max-width: 992px) {
@@ -630,7 +635,59 @@ section {
   }
 }
 
+@media (min-width: 302px) and (max-width: 415px) {
+
+  .fc-toolbar {
+    .fc-left {
+      width: 100%;
+      margin-bottom: 1.5rem;
+      .fc-month-button, .fc-agendaWeek-button, .fc-agendaDay-button {
+        width: 30%;
+      }
+    }
+    .fc-right {
+      width: 100%;
+      .fc-today-button {
+        width: 30%;
+      }
+    }
+  }
+}
+
+@media (min-width: 200px) and (max-width: 301px) {
+  .fc-toolbar {
+    .fc-left {
+      width: 100%;
+      .fc-month-button, .fc-agendaWeek-button, .fc-agendaDay-button {
+        width: 100%;
+      }
+      .fc-agendaWeek-button, .fc-agendaDay-button {
+        margin-left: 0px;
+      }
+    }
+    .fc-right {
+      width: 100%;
+      margin-left: 0px;
+      .fc-today-button {
+        width: 100%;
+      }
+    }
+    .fc-button-group {
+      margin-left: 0px;
+      width: 100%;
+      .fc-prev-button, .fc-next-button {
+        width: 50%;
+      }
+    }
+  }
+}
+
 @media (min-width: 200px) and (max-width: 345px) {
+  .buttons-set-new-event {
+    .btn-event {
+      width: 100%;
+    }
+  }
   /*zoomers*/
   .events {
     .events-width {
@@ -674,9 +731,9 @@ html {
 }
 
 .leaflet-popup-content {
-  width: auto!important;
+  width: auto !important;
   .btn {
-    width: auto!important;
+    width: auto !important;
   }
 }
 
