@@ -102,9 +102,15 @@
           }
         }
         if (vm.links && vm.links.length > 0) {
+          if(vm.newLink) {
+            vm.links.push(vm.newLink);
+          }
           request.web_sites = vm.links;
         }
         if (vm.youtube_links && vm.youtube_links.length > 0) {
+          if(vm.newYoutubeLink) {
+            vm.youtube_links.push(vm.newYoutubeLink);
+          }
           request.videos = vm.youtube_links;
         }
         if (locations.length > 0) {
@@ -178,10 +184,10 @@
     vm.addLink = function (validLink) {
       if (validLink && vm.newLink) {
         vm.links.unshift(vm.newLink);
-        vm.newLink = '';
+        vm.newLink = null;
       } else {
         toastr.error('Link is not valid');
-        vm.newLink = '';
+        vm.newLink = null;
       }
     };
     vm.removeLink = function (index) {
