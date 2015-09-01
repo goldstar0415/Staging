@@ -238,6 +238,7 @@
 
 .attachments-preview {
 //  padding: 10px;
+
   .add-event {
     margin-bottom: 15px;
     .wrap-link {
@@ -247,9 +248,10 @@
       display: block;
       float: left;
       padding-left: 13px;
-      font: 700 13px/13px Arial, sans-serif;
+      font: 700 13px/15px Arial, sans-serif;
     }
     .event-img {
+
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -344,8 +346,21 @@
       @include border-radius;
     }
   }
-}
 
+}
+.attach-event{
+  width: 100%;
+  display: block;
+  .media-heading{
+    max-width: 100%;
+    .event-img{
+      display: block;
+    }
+  }
+  .description-link{
+    word-break: break-word;
+  }
+}
 .nav-tabs > li > a {
   color: #555555;
 }

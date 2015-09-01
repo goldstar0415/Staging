@@ -81,7 +81,7 @@
         .avatar {
             width: 60px;
             height: 60px;
-            border-radius: 40px;
+            border-radius: 50%;
             border: 3px solid #fff;
             box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
         }
@@ -209,4 +209,39 @@
             background: url(/assets/img/icons/plus-minus.png) no-repeat center left;
         }
     }
+}
+@media (max-width: 700px) {
+  .content-wall {
+    .post {
+      .avatar {
+      }
+      .info {
+        padding-left: 20px;
+      }
+    }
+  }
+}
+@media (max-width: 600px) {
+  .content-wall {
+    .post {
+      .avatar {
+        height: 50px;
+        width: 50px;
+      }
+      .info {
+      }
+    }
+  }
+}@media (max-width: 500px) {
+  .content-wall {
+    .post {
+      .avatar {
+        height: 160px;
+        width: 160px;
+      }
+      .info {
+        width: 100%;
+      }
+    }
+  }
 }

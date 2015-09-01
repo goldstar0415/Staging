@@ -11,6 +11,7 @@
       var drawLayer = L.featureGroup();
       var draggableMarkerLayer = L.featureGroup();
       var drawLayerGeoJSON;
+      var controlGroup = L.featureGroup();
       //============================================
       var eventsLayer = new L.MarkerClusterGroup();
       var pitstopsLayer = new L.MarkerClusterGroup();
@@ -650,8 +651,7 @@
                 cancelPopup = L.popup({
                   offset: L.point(0, -15),
                   closeButton: false,
-                  keepInView: false,
-                  autoPan: true
+                  keepInView: false
                 })
                   .setLatLng(marker.getLatLng())
                   .setContent('<button class="btn btn-block btn-success cancel-selection">Finish selection</button>')
