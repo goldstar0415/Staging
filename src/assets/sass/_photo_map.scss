@@ -51,6 +51,7 @@
       @include button;
       padding: 6px 15px;
       @include transition_bg_color;
+      margin-bottom: 20px;
       &:hover {
         box-shadow: none;
         border: none;
@@ -78,6 +79,17 @@
 @media (max-width: 550px) {
   .album-container {
     width: 50%;
+  }
+}
+
+@media (max-width: 500px) {
+  .create {
+    .label-width {
+      width: 100%;
+    }
+    .input-width {
+      width: 100%;
+    }
   }
 }
 
