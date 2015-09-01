@@ -241,6 +241,30 @@
       }
       .info {
         width: 100%;
+          .plus-minus{
+
+            position: relative;
+            font-size: 24px;
+            height: 30px;
+            text-align: center;
+            .plus{
+              height: 30px;
+              width: 30px;
+              background: url(/assets/img/icons/plus-minus-mobile.jpg) no-repeat top right;
+              &:hover {
+                background: url(/assets/img/icons/plus-minus-mobile.jpg) no-repeat center right;
+              }
+            }
+
+            .minus{
+              height: 30px;
+              width: 30px;
+              background: url(/assets/img/icons/plus-minus-mobile.jpg) no-repeat top left;
+              &:hover {
+                background: url(/assets/img/icons/plus-minus-mobile.jpg) no-repeat center left;
+              }
+            }
+          }
       }
     }
   }
