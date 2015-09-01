@@ -1380,6 +1380,8 @@
         SortBySubcategory: SortBySubcategory,
 
         GetBBoxes: GetDrawLayerBBoxes,
+        GetPathWaypoints: GetDrawLayerPathWaypoints,
+        GetGeoJSON: GetDrawLayerGeoJSON,
         GetDataByBBox: GetDataByBBox,
         drawSpotMarkers: drawSpotMarkers,
         WeatherSelection: WeatherSelection

@@ -6,9 +6,10 @@
     .controller('CreateFriendController', CreateFriendController);
 
   /** @ngInject */
-  function CreateFriendController(MapService, friend, toastr, $state, Friends) {
+  function CreateFriendController(MapService, friend, toastr, $state, Friends, DATE_FORMAT) {
     var vm = this;
-    vm.endDate = moment().toDate();
+    vm.endDate = moment().format(DATE_FORMAT.datepicker.date);
+
     vm.friend = friend;
     vm.edit = $state.current.edit;
     var params = {
