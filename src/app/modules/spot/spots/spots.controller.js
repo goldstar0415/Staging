@@ -15,22 +15,8 @@
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
     vm.removeFromFavorite = SpotService.removeFromFavorite;
-    vm.removeSpot = function(spot, idx) {
-      SpotService.removeSpot(spot, idx, function() {
-        vm.spots.data.splice(idx, 1);
-        if(vm.markersSpots[idx].marker) {
-          console.log('single marker', vm.markersSpots[idx].marker);
-          MapService.GetCurrentLayer().removeLayer(vm.markersSpots[idx].marker);
-        } else {
-          console.log('Multiple markers');
-          MapService.GetCurrentLayer().removeLayers(vm.markersSpots[idx].markers)
-        }
-      });
-    };
+    vm.removeSpot = removeSpot;
     vm.markersSpots = ShowMarkers(vm.markersSpots);
-    console.log(vm.markersSpots);
-
-
 
     var params = {
       page: 0,
@@ -47,8 +33,22 @@
         SpotService.formatSpot(spot);
       });
     }
+
+    function removeSpot(spot, idx) {
+      SpotService.removeSpot(spot, idx, function () {
+        vm.spots.data.splice(idx, 1);
+        if (vm.markersSpots[idx].marker) {
+          console.log('single marker', vm.markersSpots[idx].marker);
+          MapService.GetCurrentLayer().removeLayer(vm.markersSpots[idx].marker);
+        } else {
+          console.log('Multiple markers');
+          MapService.GetCurrentLayer().removeLayers(vm.markersSpots[idx].markers)
+        }
+      });
+    }
+
     function ShowMarkers(spots) {
-      var spotsArray = _.map(spots, function(item) {
+      var spotsArray = _.map(spots, function (item) {
         return {
           id: item.id,
           spot_id: item.spot_id,

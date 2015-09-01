@@ -21,10 +21,10 @@
         <div class="col-xs-12 reviews">
           <div class="post" ng-repeat="comment in PV.comments">
             <div class="col-xs-2 no-pad">
-              <img class="avatar" ng-src="{{comment.user.avatar_url.thumb}}" alt="Louis Austin">
+              <img class="avatar" ng-src="{{comment.sender.avatar_url.thumb}}" >
             </div>
             <div class=" col-xs-10 info">
-              <h3 class="name">{{comment.user.first_name}} {{comment.user.last_name}}</h3>
+              <h3 class="name">{{comment.sender.first_name}} {{comment.sender.last_name}}</h3>
 
               <p>{{comment.body}}</p>
 

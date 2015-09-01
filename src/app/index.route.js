@@ -104,6 +104,20 @@
         locate: 'none'
       })
 
+      .state('spots', {
+        url: '/spots',
+        templateUrl: '/app/modules/spot/spots/spots.html',
+        controller: 'SpotsController',
+        controllerAs: 'Spots',
+        parent: 'profile',
+        locate: 'none',
+        mapState: 'small',
+        resolve: {
+          allSpots: function(Spot, $stateParams) {
+            return Spot.query({user_id: $stateParams.user_id}).$promise;
+          }
+        }
+      })
       .state('spot_create', {
         url: '/spot/create',
         templateUrl: '/app/modules/spot/spot_create/spot_create.html',
@@ -153,20 +167,6 @@
         },
         locate: 'none',
         mapState: 'small'
-      })
-      .state('spots', {
-        url: '/spots',
-        templateUrl: '/app/modules/spot/spots/spots.html',
-        controller: 'SpotsController',
-        controllerAs: 'Spots',
-        parent: 'profile',
-        locate: 'none',
-        mapState: 'small',
-        resolve: {
-          allSpots: function(Spot, $stateParams) {
-            return Spot.query({user_id: $stateParams.user_id}).$promise;
-          }
-        }
       })
 
       //Planner (calendar + list of all plans)
