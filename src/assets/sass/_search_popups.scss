@@ -727,6 +727,11 @@
     }
   }
   .sidebar-menu-wrap {
-    top: 43%;
+    position: relative;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    transform: rotate(0deg);
   }
 }
