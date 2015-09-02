@@ -62,7 +62,7 @@
         <div class="description">
           <span ng-bind-html="item.description"></span>
         </div>
-        <ul class="tools">
+        <ul class="tools clearfix">
           <li ng-if="!item.is_saved">
             <a class="save-event" ng-click="Plan.saveToCalendar(item)">Save</a>
           </li>
