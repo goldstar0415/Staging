@@ -126,7 +126,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         'count_followers',
         'count_followings',
         'count_spots',
-        'is_following'
+        'is_following',
     ];
 
     /**
@@ -191,6 +191,11 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     public function getCountFavoritesAttribute()
     {
         return $this->favorites()->withoutNewest()->count();
+    }
+
+    public function getNewMessagesAttribute()
+    {
+        return $this->chatMessagesReceived()->withoutNewest()->where('is_read', false)->count();
     }
 
     public function getCountPhotosAttribute()

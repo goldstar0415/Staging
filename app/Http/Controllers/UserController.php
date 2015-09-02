@@ -6,6 +6,7 @@ use App\Comment;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\UserListRequest;
 use App\Role;
+use App\Services\Privacy;
 use App\User;
 use DB;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -103,7 +104,7 @@ class UserController extends Controller
 
     public function getMe()
     {
-        return $this->appendUserRelations($this->auth->user());
+        return $this->appendUserRelations($this->auth->user())->append('new_messages');
     }
 
     /**
@@ -265,25 +266,35 @@ class UserController extends Controller
 
     /**
      * @param \App\User $user
-     * @return mixed
+     * @return \App\User
      */
     protected function appendUserRelations($user)
     {
         $rand_func = config('database.connections.' . config('database.default') . '.rand_func');
         $user->append(['count_favorites', 'count_photos']);
-        return $user->load(
-            ['followers' => function ($query) use ($rand_func) {
-                $query->orderBy(DB::raw($rand_func))
-                    ->take(6);
-            },
-            'followings' => function ($query) use ($rand_func) {
-                $query->orderBy(DB::raw($rand_func))
-                    ->take(6);
-            },
-            'spots' => function ($query) use ($rand_func) {
-                $query->orderBy(DB::raw($rand_func))
-                    ->take(6);
-            }]
-        );
+
+        $append = [];
+        /**
+         * @var Privacy $privacy
+         */
+        $privacy = app(Privacy::class);
+        $rand_callback = function ($query) use ($rand_func) {
+            $query->orderBy(DB::raw($rand_func))
+                ->take(6);
+        };
+
+        if ($privacy->hasPermission($user, $user->privacy_followers)) {
+            $append['followers'] = $rand_callback;
+        }
+
+        if ($privacy->hasPermission($user, $user->privacy_followings)) {
+            $append['followings'] = $rand_callback;
+        }
+
+        if ($privacy->hasPermission($user, $user->privacy_events)) {
+            $append['spots'] = $rand_callback;
+        }
+
+        return $user->load($append);
     }
 }
