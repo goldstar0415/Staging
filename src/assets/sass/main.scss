@@ -181,7 +181,8 @@ h3 {
 .no-pad-left {
   padding-left: 0;
 }
-.mo-margin-left{
+
+.mo-margin-left {
   margin-left: 0;
 }
 
@@ -419,9 +420,11 @@ h3 {
   border-radius: 0;
   border: none;
 }
+
 .media-full-width {
   width: 100%;
 }
+
 .media-body, .info {
   p, div, h2 {
     word-break: break-all;
@@ -653,7 +656,7 @@ section {
   }
   /*end wall tabs*/
 
-    /*calendar*/
+  /*calendar*/
   .fc-toolbar {
     .fc-left {
       width: 100%;
