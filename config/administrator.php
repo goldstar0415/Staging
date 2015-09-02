@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Package URI
@@ -53,9 +53,10 @@ return array(
 	 */
 	'menu' => [
 		'users',
-		'Settings' => 'settings.site',
 		'activity_level',
-		'spot_requests'
+		'spot_requests',
+		'activity_categories',
+		'spot_categories'
 	],
 
 	/**
@@ -140,6 +141,6 @@ return array(
 	 *
 	 * @type array
 	 */
-	'locales' => array(),
+	'locales' => [],
 
-);
+];
