@@ -17,20 +17,20 @@
 
       var access = false;
       switch (accessLevel) {
-        case 0: //all users
+        case 1: //all users
           access = true;
           break;
-        case 1: //followers&followings
+        case 2: //followers&followings
           if (!user.can_follow || user.is_following) {
             access = true;
           }
           break;
-        case 2: //followings
+        case 3: //followings
           if (user.is_following) {
             access = true;
           }
           break;
-        case 3: //authorized users
+        case 4: //authorized users
           if ($rootScope.currentUser) {
             access = true;
           }

@@ -41,6 +41,7 @@
         NewMessageService.show(data);
       }
 
+      $rootScope.currentUser.new_messages++;
       $rootScope.$apply();
     }
 
@@ -102,6 +103,7 @@
         angular.forEach(groupMessages.messages, function (message) {
           if (message.pivot.receiver_id == user_id) {
             message.is_read = true;
+            $rootScope.currentUser.new_messages--;
           }
         });
       });
