@@ -15,7 +15,6 @@
     vm.removeFromFavorite = SpotService.removeFromFavorite;
     vm.removeSpot = function(spot, idx) {
       SpotService.removeSpot(spot, idx, function() {
-        console.log('test');
         $state.go('spots', {user_id: $rootScope.currentUser.id});
       });
     };

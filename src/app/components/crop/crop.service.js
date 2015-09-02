@@ -36,7 +36,6 @@
   }
 
   function CropModalController($modalInstance, $scope, image, width, height) {
-    console.log(image, width, height);
     var vm = this;
     vm.width = width || 512;
     vm.height = height || 512;

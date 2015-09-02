@@ -1,6 +1,6 @@
 <div class="col-xs-12 menu-profile">
   <div class="container">
-    <div class="col-xs-10 col-xs-offset-2 no-pad" >
+    <div class="col-xs-10 col-xs-offset-2 no-pad">
       <ul ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
         <li><a ui-sref="spots({user_id: $root.currentUser.id})" ui-sref-active="active">My spots</a></li>
         <!--<li><a ui-sref-active="active">My blog</a></li>-->
@@ -12,13 +12,14 @@
         <li><a ui-sref="settings" ui-sref-active="active">Settings</a></li>
       </ul>
       <ul ng-if="$root.currentUser && $root.currentUser.id != $root.profileUser.id">
-        <li>
+        <li ng-if="Profile.checkPermision(profileUser.privacy_events)">
           <a ui-sref="spots({user_id: $root.profileUser.id})" ui-sref-active="active" class="my-spots">Spots</a>
         </li>
-        <li>
-          <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active" class="favorites">Favorites</a>
+        <li ng-if="Profile.checkPermision(profileUser.privacy_favorites)">
+          <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active"
+             class="favorites">Favorites</a>
         </li>
-        <li>
+        <li ng-if="Profile.checkPermision(profileUser.privacy_photo_map)">
           <a ui-sref="photos({user_id: $root.profileUser.id})" ng-class="Profile.isActive('photos')" class="photomap">Photo
             map</a>
         </li>
@@ -47,26 +48,30 @@
         <div class="status moderator" ng-if="$root.profileUser.status">{{$root.profileUser.status}}</div>
         <h2 class="profile-name ">
           <a ui-sref="profile.main({user_id: $root.profileUser.id})">
-            <span class="avatar-first-name">{{$root.profileUser.first_name}}<span class="online" title="Online"></span></span> <br/>
+            <span class="avatar-first-name">{{$root.profileUser.first_name}}<span class="online" title="Online"></span></span>
+            <br/>
             {{$root.profileUser.last_name}}
           </a>
         </h2>
-        <div class="age">
-          <span ng-if="$root.profileUser.sex != null">{{$root.profileUser.sex == 'm' ? 'male' : 'female'}}</span>
-          <span ng-if="$root.profileUser.birth_date">, {{$root.profileUser.birth_date | age}} years</span>
-        </div>
-        <div class="location" ng-if="$root.profileUser.address">{{$root.profileUser.address}}</div>
 
-        <div ng-if="$root.profileUser.description">
-          <div ng-init="Profile.textLimit = 50"
-               ng-class="{small: Profile.textLimit == 50, 'full-text': Profile.textLimit == 1000}"
-               class="biography">
-            {{$root.profileUser.description | limitTo: Profile.textLimit}}
+        <div ng-if="Profile.checkPermision(profileUser.privacy_info)">
+          <div class="age">
+            <span ng-if="$root.profileUser.sex != null">{{$root.profileUser.sex == 'm' ? 'male' : 'female'}}</span>
+            <span ng-if="$root.profileUser.birth_date">, {{$root.profileUser.birth_date | age}} years</span>
           </div>
-          <div ng-if="Profile.textLimit == 50 && $root.profileUser.description.length > 50">
-            <a class="more" ng-click="Profile.textLimit = 1000">
-              see more
-            </a>
+          <div class="location" ng-if="$root.profileUser.address">{{$root.profileUser.address}}</div>
+
+          <div ng-if="$root.profileUser.description">
+            <div ng-init="Profile.textLimit = 50"
+                 ng-class="{small: Profile.textLimit == 50, 'full-text': Profile.textLimit == 1000}"
+                 class="biography">
+              {{$root.profileUser.description | limitTo: Profile.textLimit}}
+            </div>
+            <div ng-if="Profile.textLimit == 50 && $root.profileUser.description.length > 50">
+              <a class="more" ng-click="Profile.textLimit = 1000">
+                see more
+              </a>
+            </div>
           </div>
         </div>
 
@@ -84,17 +89,33 @@
         </div>
 
         <div class="info-links hidden-lg hidden-md visible-sm visible-xs  ng-show col-xs-12">
-          <a ui-sref="spots({user_id: $root.profileUser.id})" class="events"> {{$root.profileUser.count_spots}} </a>
-          <a users-modal="followers" user="$root.profileUser" class="followers">{{$root.profileUser.count_followers}}</a>
-          <a users-modal="followings" user="$root.profileUser" class="followings">{{ $root.profileUser.count_followings }}</a>
-          <a ui-sref="photos({user_id: $root.profileUser.id})" class="albums">{{$root.profileUser.count_photos}}</a>
-          <a ui-sref="favorites({user_id: $root.profileUser.id})" class="fav">{{$root.profileUser.count_favorites}}</a>
+          <a ui-sref="spots({user_id: $root.profileUser.id})" class="events"
+             ng-if="Profile.checkPermision(profileUser.privacy_events)">
+            {{$root.profileUser.count_spots}}
+          </a>
+          <a users-modal="followers" user="$root.profileUser" class="followers"
+             ng-if="Profile.checkPermision(profileUser.privacy_followers)">
+            {{$root.profileUser.count_followers}}
+          </a>
+          <a users-modal="followings" user="$root.profileUser" class="followings"
+             ng-if="Profile.checkPermision(profileUser.privacy_followings)">
+            {{ $root.profileUser.count_followings
+            }}
+          </a>
+          <a ui-sref="photos({user_id: $root.profileUser.id})" class="albums"
+             ng-if="Profile.checkPermision(profileUser.privacy_photo_map)">
+            {{$root.profileUser.count_photos}}
+          </a>
+          <a ui-sref="favorites({user_id: $root.profileUser.id})" class="fav"
+             ng-if="Profile.checkPermision(profileUser.privacy_favorites)">
+            {{$root.profileUser.count_favorites}}
+          </a>
         </div>
 
       </section>
     </div>
 
-    <div class="col-xs-12 col-md-7 central " ng-class="{'no-background': Profile.$state.includes('planner')}">
+    <div class="col-xs-12 col-md-7 central" ng-class="{'no-background': Profile.$state.includes('planner')}">
       <div ui-view></div>
     </div>
 

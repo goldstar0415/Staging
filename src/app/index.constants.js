@@ -7,6 +7,7 @@
     .constant('DEBUG', true)
     .constant('API_URL', 'http://api.zoomtivity.com')
     .constant('SOCKET_URL', 'http://api.zoomtivity.com:8080')
+    .constant('JS_CONSOLE_KEY', 'FASSX1CD-12A0-4SD3-AE36-757BVB26SBEZX')
     .constant('toastr', toastr)
     .constant('moment', moment)
     .constant('DATE_FORMAT', {

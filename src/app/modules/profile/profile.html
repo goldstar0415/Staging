@@ -1,4 +1,4 @@
-<div class="content-wall">
+<div class="content-wall" ng-if="Profile.checkPermision(profileUser.privacy_wall)">
   <h2 class="title-name">
     {{currentUser.id == profileUser.id ? 'My profile' : profileUser.first_name + "'s profile"}}
   </h2>
