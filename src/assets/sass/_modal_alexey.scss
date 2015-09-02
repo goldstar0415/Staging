@@ -168,16 +168,16 @@
 
         .tab-content {
           .choose-some-photos-body {
-            padding-top: 20px;
+            padding: 20px 10px;
             margin-top: -15px;
             height: 250px;
             overflow: auto;
             border: 1px solid $light-grey;
             border-top: none;
-            padding-left: 0;
             .choose-album-name {
               margin: 0px;
-              padding-left: 30px;
+              padding-left: 10px;
+              font: 500 20px/26px 'Ubuntu medium';
             }
             .back {
               height: 15px;
@@ -222,6 +222,11 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
               }
+            }
+            .album-title {
+              padding: 0;
+              width: 100%;
+              word-wrap: break-word;
             }
           }
         }

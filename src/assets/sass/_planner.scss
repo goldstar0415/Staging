@@ -10,6 +10,8 @@
   margin-top: 0;
   font: 500 24px/24px 'Ubuntu medium';
   word-wrap: break-word;
+  display: inline-block;
+  width: 100%;
   a {
     color: $dark_blue;
     &:hover {

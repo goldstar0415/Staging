@@ -60,6 +60,13 @@
   float: left;
 }
 
+.edit-delete.album {
+  padding: 0 15px 15px 20px;
+  .delete {
+    background: url(/assets/img/icons/delete.png) 1px 2px no-repeat;
+  }
+}
+
 @media (max-width: 992px) {
   .photo-wrap {
     .photo {

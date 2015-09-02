@@ -47,13 +47,9 @@
             .star-event {
                 width: 100%;
                 position: absolute;
-                top: 2px;
-                left: 2px;
-                img {
-                    width: 14px;
-                    height: 14px;
-                    margin: 1px;
-                }
+                top: 5px;
+                left: 10px;
+                font-size: 20px;
             }
         }
         .popup-links {
@@ -152,6 +148,10 @@
           white-space: nowrap;
           width: 95%;
           display: block;
+        }
+        .star-event-mobile{
+          display: none;
+          height: 1px;
         }
         .location-event {
             line-height: 11px;
@@ -403,11 +403,16 @@
     }
     .popup-main {
       width: 100%;
-      height: 200px;
+      height: 220px;
       .title {
         font-size: 24px;
         line-height: 26px;
-        margin: 5px 0;
+        margin: 5px 0 2px 0;
+      }
+      .star-event-mobile{
+        display: block;
+        height: auto;
+        margin: 0;
       }
       .location-event {
         line-height: 12px;

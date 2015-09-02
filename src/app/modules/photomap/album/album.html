@@ -1,23 +1,28 @@
 <div class="title col-xs-12 ">
   <h2 class="title-name">
     <a ui-sref="photos({user_id: profileUser.id})" title="back" class="back"></a>
-    <span class="album-name">Album - {{Album.album.title}}</span>
-    <span class="album-tools" ng-if="currentUser.id == Album.album.user_id">
-      <a title="Delete album" ng-click="Album.delete()" class="delete"></a>
-      <a title="Edit album" ui-sref="photos.editAlbum({album_id: Album.album.id})" class="edit"></a>
-    </span>
+    Album - <span ng-bind-html="Album.album.title"></span>
+    <!--<span class="album-tools" ng-if="currentUser.id == Album.album.user_id">-->
+    <!--<a title="Delete album" ng-click="Album.delete()" class="delete"></a>-->
+    <!--<a title="Edit album" ui-sref="photos.editAlbum({album_id: Album.album.id})" class="edit"></a>-->
+    <!--</span>-->
   </h2>
+</div>
+
+<div class="col-xs-12 edit-delete album"  ng-if="currentUser.id == Album.album.user_id">
+  <a class="edit" title="Edit album" ui-sref="photos.editAlbum({album_id: Album.album.id})">Edit</a>
+  <a class="delete" title="Delete album" ng-click="Album.delete()">Delete</a>
 </div>
 
 <div class="col-xs-12">
   <div ng-repeat="item in Album.photos" class="col-xs-3 photo-wrap">
     <div class="photo" photo-viewer items="Album.photos" index="$index">
       <!--<div class="album-tools-wrap col-xs-12" >-->
-        <!--<a class="set-avatar" title="Set as avatar"></a>-->
-        <!--<a class="set-location" title="Set location"></a>-->
-        <!--<a class="delete" title="Delete"></a>-->
+      <!--<a class="set-avatar" title="Set as avatar"></a>-->
+      <!--<a class="set-location" title="Set location"></a>-->
+      <!--<a class="delete" title="Delete"></a>-->
       <!--</div>-->
-      <img ng-src="{{item.photo_url.medium}}" alt="Photo not found" />
+      <img ng-src="{{item.photo_url.medium}}" alt="Photo not found"/>
     </div>
   </div>
 </div>

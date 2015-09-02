@@ -8,25 +8,24 @@
   <section class="my-spots-section" ng-repeat="item in Spots.spots.data">
 
     <div class="event">
-      <stars item="item"></stars>
-
+      <div ng-if="item.type == 'Event'" class="date">
+        <date-range item="item"></date-range>
+      </div>
+      <div class="col-xs-12 no-pad">
+        <stars item="item"></stars>
                     <span ng-class="{'event-spot-page':item.type == 'Event',
                                      'recreation-spot':item.type == 'Recreation',
                                      'pitstop-spot':item.type == 'PitStop'}">
                         {{item.type}}
                     </span>
-
-                    <span ng-if="item.type == 'Event'" class="date">
-                        <date-range item="item"></date-range>
-                    </span>
-
+      </div>
       <h2>
-        <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{::item.title}}</a>
+        <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})" ng-bind-html="::item.title"></a>
       </h2>
 
       <p class="place"></p>
 
-      <p class="description"><span>{{::item.description}}</span></p>
+      <p class="description"><span ng-bind-html="::item.description"></span></p>
       <figure>
         <img ng-src="{{item.cover_url.original}}" alt="{{item.title}}" class="img-size">
       </figure>

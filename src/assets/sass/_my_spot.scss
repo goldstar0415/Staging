@@ -54,10 +54,10 @@
   }
 
   .event-spot-page {
-    padding-right: 15px;
+    padding-right: 0;
     padding-left: 5px;
     line-height: 2;
-    float: left;
+    float: right;
   }
   .description {
     font: 13px/19px Arial, sans-serif;
@@ -65,6 +65,9 @@
   }
   .date {
     line-height: 1;
+    display: block;
+    margin: 0;
+    width: 100%;
   }
 }
 

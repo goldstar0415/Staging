@@ -23,16 +23,19 @@
       <div infinite-scroll="Planner.pagination.nextPage()" infinite-scroll-disabled="Planner.pagination.busy"
            class="clearfix" infinite-scroll-distance="1">
         <div ng-repeat="plan in Planner.plans.data" class="event border-bottom">
+          <div class="date">
+            <date-range item="plan"></date-range>
+          </div>
+
           <h3 class="title-planner">
-            <a ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})">{{plan.title}}</a>
-          <span class="date"> <date-range item="plan"></date-range>
+            <a ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})" ng-bind-html="plan.title"></a>
           </span>
           </h3>
 
           <p class="place">{{plan.address}}</p>
 
           <p class="description">
-            <span>{{plan.description}}</span>
+            <span ng-bind-html="plan.description"></span>
           </p>
 
           <ul class="tools">

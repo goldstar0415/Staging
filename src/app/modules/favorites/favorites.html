@@ -5,32 +5,30 @@
 <div infinite-scroll="Favorite.pagination.nextPage()" infinite-scroll-disabled="Favorite.pagination.busy"
      class="clearfix" infinite-scroll-distance="1">
   <section ng-repeat="item in Favorite.spots.data">
-    <div class="event">
-      <stars item="item"></stars>
+    <div class="event block">
+      <div class="date">
+        <date-range item="item"></date-range>
+      </div>
 
-    <span class="date">
+      <div class="col-xs-12 no-pad">
+        <stars item="item"></stars>
        <span ng-class="{'event-spot-page':item.type == 'Event',
                         'recreation':item.type == 'Recreation',
                         'pitstop':item.type == 'PitStop'}">
             {{item.type}}
         </span>
-
-        <span class="date">
-            <date-range item="item"></date-range>
-        </span>
-    </span>
-
+      </div>
       <div class="media media-visible">
         <a class="pull-left" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
           <img class="media-object fav-avatar-icon mo-margin-left" ng-src="{{item.cover_url.thumb}}">
         </a>
 
-        <div class="media-body">
+        <div class="media-body text-content">
           <h2 class="media-heading favorites-article-title">
-            <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a>
+            <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})" ng-bind-html="item.title"></a>
           </h2>
 
-          <p class="place">{{item.description}}</p>
+          <p class="place" ng-bind-html="item.description"></p>
         </div>
       </div>
 
