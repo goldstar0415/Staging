@@ -2,12 +2,12 @@
   position: fixed;
   left: 0;
   right: 0;
-  top: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   background: -webkit-linear-gradient(0deg, #4CB8C4 10%, #3CD3AD 90%);
   background: linear-gradient(90deg, #4CB8C4 10%, #3CD3AD 90%);
   z-index: 999999;
-  height: 100%;
 
   *, *:before, *:after {
     box-sizing: content-box;
