@@ -732,6 +732,12 @@ section {
   overflow: visible;
 }
 
+.modal-open {
+  .snap-content {
+    overflow: hidden;
+  }
+}
+
 html {
   overflow-y: scroll;
 }

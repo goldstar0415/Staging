@@ -20,8 +20,7 @@
     a {
       color: $blue;
       @include transition_color;
-
-      font: 500 20px/20px 'Ubuntu medium';
+      font: 500 20px/24px 'Ubuntu medium';
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
