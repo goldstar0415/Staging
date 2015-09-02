@@ -6,8 +6,9 @@
     .controller('FriendsmapController', FriendsmapController);
 
   /** @ngInject */
-  function FriendsmapController(friends, MapService) {
+  function FriendsmapController(friends, MapService, Friends, CropService) {
     var vm = this;
+    var markers = [];
     vm.friends = format(friends);
     initMap();
 
@@ -16,7 +17,6 @@
         friend.birth_date = moment(friend.birth_date).format('MM.DD.YYYY')
       })
     }
-
     function createMarker(iconUrl, title, location) {
       var icon = MapService.CreateCustomIcon(iconUrl, 'custom-map-icons');
       var options = {};
@@ -24,14 +24,15 @@
       if(icon) options.icon = icon;
       if(title) options.title = title;
 
-      MapService.CreateMarker(location, options);
+      return MapService.CreateMarker(location, options);
     }
     function initMap() {
       for(var k in friends) {
         var obj = friends[k];
         var title = obj.first_name + " " + obj.last_name;
         if(obj.location) {
-          createMarker(obj.avatar_url.thumb, title, obj.location);
+          var m = createMarker(obj.avatar_url.thumb, title, obj.location);
+          markers.push({marker: m, id: obj.id});
         }
       }
 
@@ -43,5 +44,29 @@
         }
       }
     }
+
+    //TODO: test it.
+    vm.setAvatar = function(id, files) {
+      if(files.length > 0) {
+        CropService.crop(files[0], 512, 512, function(result) {
+          if (result) {
+            Friends.setAvatar({id: id}, {avatar:result}, function(res) {
+              var marker = null;
+
+              for(var k in markers) {
+                if(markers[k].id == id) {
+                  marker = markers[k].marker;
+                }
+              }
+
+              if(marker) {
+                var icon = MapService.CreateCustomIcon(result,'custom-map-icons');
+                marker.setIcon(icon);
+              }
+            });
+          }
+        });
+      }
+    };
   }
 })();

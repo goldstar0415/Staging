@@ -10,7 +10,7 @@
         <date-range item="item"></date-range>
       </div>
 
-      <div class="col-xs-12 no-pad">
+      <div class="col-xs-12 no-pad-left-right">
         <stars item="item"></stars>
        <span ng-class="{'event-spot-page':item.type == 'Event',
                         'recreation':item.type == 'Recreation',
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <ul class="tools" ng-if="currentUser">
+      <ul class="tools clearfix" ng-if="currentUser">
         <li ng-if="!item.is_saved && item.type == 'Event'">
           <a class="save-event" ng-click="Favorite.saveToCalendar(item)">Save</a>
         </li>

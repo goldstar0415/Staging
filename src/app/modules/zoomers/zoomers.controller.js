@@ -6,12 +6,13 @@
     .controller('ZoomersController', ZoomersController);
 
   /** @ngInject */
-  function ZoomersController(User, users) {
+  function ZoomersController(User, users, PermissionService) {
     var vm = this;
     vm.type = 'all';
     vm.limit = 10;
     vm.page = 1;
     vm.users = users;
+    vm.checkPermision = PermissionService.checkPermission;
 
     vm.setType = function (type) {
       vm.type = type;
