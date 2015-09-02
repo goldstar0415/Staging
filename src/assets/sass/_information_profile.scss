@@ -155,6 +155,11 @@
         }
       }
     }
+    .form-group {
+      .blue-btn, .red-btn, .green-btn {
+        width: inherit;
+      }
+    }
   }
 }
 
