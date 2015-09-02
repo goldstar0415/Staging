@@ -4,7 +4,7 @@
     <div>
       <stars item="Spot.spot" class="clearfix"></stars>
 
-      <div ng-if="!Spot.spot.is_approved == false">
+      <div ng-if="Spot.spot.is_approved == false">
         This submittal is under review and will be posted shortly.
       </div>
 
@@ -32,7 +32,7 @@
       </ul>
       <!--  tags -->
 
-      <ul class="tools" ng-if="currentUser">
+      <ul class="tools clearfix" ng-if="currentUser">
         <li>
           <a ui-sref="spot_edit({spot_id: Spot.spot.id})" class="edit-tools">Edit</a>
         </li>
@@ -83,7 +83,7 @@
 </div>
 
 <!-- section with comment -->
-<section class="comments-section" ng-if="Spot.spot.is_approved">
+<section class="comments-section" ng-if="Spot.spot.is_approved != false">
   <div class="comments-content clearfix">
     <ng-input message="Spot.message" attachments="Spot.attachments" on-submit="Spot.postComment()"></ng-input>
   </div>
