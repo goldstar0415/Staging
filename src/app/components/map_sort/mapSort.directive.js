@@ -254,6 +254,7 @@
       vm.vertical = false;
       $scope.weatherForecast = [];
       var daily = resp.daily.data;
+      console.log(daily);
       for(var k in daily) {
         daily[k].formattedDate = moment(daily[k].time * 1000).format('DD MMMM');
         if(k != 0) {
