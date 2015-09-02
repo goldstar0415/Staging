@@ -798,8 +798,10 @@
       }
     }
   }
-  .map-tools {
-    float: left;
-    clear: inherit!important;
+  .leaflet-bottom {
+    .map-tools {
+      float: left;
+      clear: inherit !important;
+    }
   }
 }
