@@ -419,7 +419,7 @@ h3 {
   border-radius: 0;
   border: none;
 }
-.media {
+.media-full-width {
   width: 100%;
 }
 .media-body, .info {
@@ -643,6 +643,17 @@ section {
 
 @media (min-width: 302px) and (max-width: 415px) {
 
+  /*wall tabs*/
+  .wall-tabs {
+    li {
+      width: 100%;
+      padding-left: 0;
+      margin-top: 0;
+    }
+  }
+  /*end wall tabs*/
+
+    /*calendar*/
   .fc-toolbar {
     .fc-left {
       width: 100%;
@@ -658,9 +669,18 @@ section {
       }
     }
   }
+  /*end calendar*/
+
 }
 
 @media (min-width: 200px) and (max-width: 301px) {
+  .wall-tabs {
+    li {
+      width: 100%;
+      padding-left: 0;
+      margin-top: 0;
+    }
+  }
   .fc-toolbar {
     .fc-left {
       width: 100%;
