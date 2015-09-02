@@ -125,7 +125,8 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         'can_follow',
         'count_followers',
         'count_followings',
-        'count_spots'
+        'count_spots',
+        'is_following'
     ];
 
     /**
@@ -202,6 +203,16 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         $user = Request::user();
         if (isset($user)) {
             return $user->followings()->find($this->id) ? false : true;
+        }
+
+        return false;
+    }
+
+    public function getIsFollowingAttribute()
+    {
+        $user = Request::user();
+        if (isset($user)) {
+            return $this->followers()->find($user->id) ? false : true;
         }
 
         return false;
