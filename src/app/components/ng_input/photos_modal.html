@@ -28,9 +28,9 @@
 
       <div class="tab-pane choose-some-photos-body col-sm-12" ng-if="modal.selectedAlbum"
            ng-class="{active: modal.selectedAlbum}">
-        <div class="col-xs-12 no-pad">
-        <a class="back" ng-click="modal.selectedAlbum = null"></a>
-        <h3 class="choose-album-name" ng-bind-html="modal.selectedAlbum.title"></h3>
+        <div class="album-title">
+          <a class="back" ng-click="modal.selectedAlbum = null"></a>
+          <span class="choose-album-name" ng-bind-html="modal.selectedAlbum.title"></span>
         </div>
         <div class="choose-photo-album">
           <img ng-repeat="item in modal.selectedAlbum.photos"
