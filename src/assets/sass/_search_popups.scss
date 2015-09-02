@@ -210,6 +210,10 @@
 
       }
     }
+    .active {
+      background-color: #03b5d4;
+      @include transition_bg_color;
+    }
   }
 }
 
@@ -277,6 +281,10 @@
         background: url(/assets/img/icons/weather-icon.png) 7px 17px no-repeat;
 
       }
+    }
+    .active {
+      background-color: #03b5d4;
+      @include transition_bg_color;
     }
   }
 }

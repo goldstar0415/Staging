@@ -111,17 +111,25 @@
     $http.get(API_URL+ '/spots/categories')
       .success(function(data) {
         for(var k in data) {
-          data[k].selected = false;
           if(data[k].name == 'event'){
             $scope.eventCategories = data[k].categories;
+            for(var i in $scope.eventCategories) {
+              $scope.eventCategories[i].selected = false;
+            }
           }
 
           if(data[k].name == 'recreation'){
             $scope.recreationCategories = data[k].categories;
+            for(var i in $scope.recreationCategories) {
+              $scope.recreationCategories[i].selected = false;
+            }
           }
 
           if(data[k].name == 'pitstop'){
             $scope.pitstopCategories = data[k].categories;
+            for(var i in $scope.pitstopCategories) {
+              $scope.pitstopCategories[i].selected = false;
+            }
           }
         }
       });
@@ -132,6 +140,7 @@
     vm.eventsSelectAll = false;
 
     $scope.checkItem = function(item, items, type) {
+      item.selected = !item.selected;
       if(!item.selected) {
         switch(type) {
           case 'event':
@@ -161,12 +170,14 @@
       function checkAll(items) {
         var selected = true;
         for(var k in items) {
-          if(items[k].selected == false) {
+          if(!items[k].selected) {
+            console.log(items[k].selected);
             selected = false;
             break;
           }
         }
 
+        console.log(selected);
         return selected;
       }
     };
@@ -254,6 +265,7 @@
       vm.vertical = false;
       $scope.weatherForecast = [];
       var daily = resp.daily.data;
+      console.log(daily);
       for(var k in daily) {
         daily[k].formattedDate = moment(daily[k].time * 1000).format('DD MMMM');
         if(k != 0) {

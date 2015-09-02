@@ -2,10 +2,10 @@
   <div class="sidebar-menu-vertical">
     <ul>
       <li><a  ng-click="MapSort.vertical = !MapSort.vertical" class="full-small"></a></li>
-      <li><a  ng-click="MapSort.toggleLayer('events')" class="events"><span>Events</span></a></li>
-      <li><a  ng-click="MapSort.toggleLayer('recreations')" class="recreation">Recreation</a></li>
-      <li><a  ng-click="MapSort.toggleLayer('pitstops')" class="pit-stops">Pit Stops</a></li>
-      <li><a  ng-click="MapSort.toggleWeather()" class="weather-link">Weather</a></li>
+      <li ng-class="{'active': MapSort.sortLayer == 'event'}"><a  ng-click="MapSort.toggleLayer('events')" class="events"><span>Events</span></a></li>
+      <li ng-class="{'active': MapSort.sortLayer == 'recreation'}"><a  ng-click="MapSort.toggleLayer('recreations')" class="recreation">Recreation</a></li>
+      <li ng-class="{'active': MapSort.sortLayer == 'pitstop'}"><a  ng-click="MapSort.toggleLayer('pitstops')" class="pit-stops">Pit Stops</a></li>
+      <li ng-class="{'active': MapSort.sortLayer == 'weather'}"><a  ng-click="MapSort.toggleWeather()" class="weather-link">Weather</a></li>
     </ul>
   </div>
 </div>
@@ -13,10 +13,10 @@
 <div ng-if="!MapSort.vertical" class="col-xs-3 no-pad sort-menu">
   <div class="sidebar-menu-horizontal">
     <ul>
-      <li><a ng-click="MapSort.toggleLayer('events')" class="events">Events</a></li>
-      <li><a ng-click="MapSort.toggleLayer('recreations')"  class="recreation">Recreation</a></li>
-      <li><a ng-click="MapSort.toggleLayer('pitstops')"  class="pit-stops">Pit Stops</a></li>
-      <li><a ng-click="MapSort.toggleLayer('other')" class="weather-link">Weather</a></li>
+      <li ng-class="{'active': MapSort.sortLayer == 'event'}"><a ng-click="MapSort.toggleLayer('events')" class="events">Events</a></li>
+      <li ng-class="{'active': MapSort.sortLayer == 'recreation'}"><a ng-click="MapSort.toggleLayer('recreations')"  class="recreation">Recreation</a></li>
+      <li ng-class="{'active': MapSort.sortLayer == 'pitstop'}"><a ng-click="MapSort.toggleLayer('pitstops')"  class="pit-stops">Pit Stops</a></li>
+      <li ng-class="{'active': MapSort.sortLayer == 'weather'}"><a ng-click="MapSort.toggleLayer('other')" class="weather-link">Weather</a></li>
     </ul>
   </div>
 
@@ -63,8 +63,7 @@
             <label>Select all sub-categories</label>
           </div>
           <ul>
-            <li ng-repeat="item in eventCategories track by item.id"
-                ng-click="item.selected = !item.selected; checkItem(item, eventCategories, 'event'); sortEventsByCategories();">
+            <li ng-repeat="item in eventCategories track by item.id" ng-click="checkItem(item, eventCategories, 'event'); sortEventsByCategories();">
               <a  ng-class="{'active': item.selected}">{{item.display_name}}</a>
             </li>
           </ul>
@@ -132,7 +131,7 @@
           </div>
           <ul>
             <li ng-repeat="item in recreationCategories track by item.id"
-                ng-click="item.selected = !item.selected; checkItem(item, recreationCategories, 'recreation'); sortRecreationsByCategories();">
+                ng-click="checkItem(item, recreationCategories, 'recreation'); sortRecreationsByCategories();">
               <a  ng-class="{'active': item.selected}">{{item.display_name}}</a>
             </li>
           </ul>
@@ -198,7 +197,7 @@
           </div>
           <ul>
             <li ng-repeat="item in pitstopCategories track by item.id"
-                ng-click="item.selected = !item.selected; checkItem(item, pitstopCategories, 'pitstop'); sortPitstopsByCategories();">
+                ng-click="checkItem(item, pitstopCategories, 'pitstop'); sortPitstopsByCategories();">
               <a  ng-class="{'active': item.selected}">{{item.display_name}}</a>
             </li>
           </ul>
@@ -251,7 +250,7 @@
             <p class="weatherData">{{currentWeather.formattedDate}}</p>
 
             <div class="weatherImg-wrapper">
-              <div class="weatherImg"></div>
+              <div class="weatherImg" ng-class="currentWeather.icon"></div>
             </div>
             <div class="temperature-block">
               <span class="temperature">{{currentWeather.temperature}}</span>
@@ -293,7 +292,7 @@
             <div class="weekForecast-wrapper">
               <span class="data">{{item.formattedDate}}</span>
 
-              <div class="weatherIcon"></div>
+              <div class="weatherIcon" ng-class="item.icon"></div>
               <span class="temperatureWeek">{{item.temperatureMax}}°F /{{item.temperatureMin}}°F </span>
             </div>
             <div class="wrapperHr">

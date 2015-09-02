@@ -6,10 +6,14 @@
     .controller('AreasController', AreasController);
 
   /** @ngInject */
-  function AreasController(areas, $rootScope) {
+  function AreasController(areas, Area) {
     var vm = this;
     vm.areas = areas;
-    console.log(areas);
 
+    vm.RemoveArea = function(id, idx) {
+      Area.delete({area_id: id}, function() {
+        vm.areas.splice(idx, 1);
+      });
+    };
   }
 })();
