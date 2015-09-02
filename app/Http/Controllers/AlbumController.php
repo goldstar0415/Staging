@@ -20,6 +20,7 @@ class AlbumController extends Controller
     {
         $this->auth = $auth;
         $this->middleware('auth', ['except' => ['index', 'show', 'showForUser']]);
+        $this->middleware('privacy', ['only' => 'showForUser']);
     }
 
     public function index()
