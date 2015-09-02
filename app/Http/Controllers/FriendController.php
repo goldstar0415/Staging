@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Friend;
 use App\Http\Requests\Friend\FriendRequest;
+use App\Http\Requests\Friend\SetFriendAvatar;
 use App\Http\Requests\Friend\StoreFriendRequest;
 use App\Http\Requests\Friend\UpdateFriendRequest;
 
@@ -82,4 +83,17 @@ class FriendController extends Controller
 
         return response()->json(['message' => 'Friend successfuly deleted']);
     }
+
+    /**
+     * @param SetFriendAvatar $request
+     * @param \App\Friend $friend
+     * @return Friend
+     */
+    public function setAvatar(SetFriendAvatar $request, $friend)
+    {
+        $friend->avatar = $request->file('avatar');
+        $friend->save();
+
+        return $friend;
+    }   
 }

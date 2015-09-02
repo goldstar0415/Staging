@@ -49,6 +49,7 @@ Route::get('followings/{users}', 'FollowController@getFollowings');
  * Friends resource
  */
 Route::resource('friends', 'FriendController', ['except' => ['create', 'edit']]);
+Route::get('friends/{friends}/setavatar', 'FriendController@setAvatar');
 /**
  * Spot resource
  */

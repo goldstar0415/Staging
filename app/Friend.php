@@ -16,6 +16,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property int $id
  * @property integer $user_id
  * @property integer $friend_id
+ * @property string $avatar
  * @property string $first_name
  * @property string $last_name
  * @property \Carbon\Carbon $birth_date
