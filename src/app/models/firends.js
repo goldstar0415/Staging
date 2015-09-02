@@ -32,6 +32,10 @@
       deleteFriend: {
         url: API_URL + '/friends/:id',
         method: "DELETE"
+      },
+      setAvatar: {
+        url: API_URL + '/friends/:id',
+        method: "POST"
       }
     });
   }
