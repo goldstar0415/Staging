@@ -120,22 +120,6 @@
   margin: 10px 0 12px;
 }
 
-.tools {
-  padding-top: 15px;
-  font: 600 13px/13px 'Ubuntu light';
-  padding-left: 0px;
-  li {
-    float: left;
-    margin-right: 15px;
-    a {
-      padding-left: 18px !important;
-      font: 14px 'Ubuntu medium';
-      color: $blue;
-    }
-  }
-
-}
-
 .delete {
   background: url(/assets/img/icons/delete.png) 1px 4px no-repeat;
   &:hover, &:active, &:focus {
