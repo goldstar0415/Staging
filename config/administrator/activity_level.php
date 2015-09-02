@@ -6,25 +6,25 @@ return [
     'model' => \App\ActivityLevel::class,
 
     'columns' => [
-        'id' => [
-            'title' => 'ID'
-        ],
-        'name' => [
-            'title' => 'Title'
-        ],
-        'favorites_count' => [
-            'title' => 'Quantity'
-        ]
+    'id' => [
+        'title' => 'ID'
     ],
+    'name' => [
+        'name' => 'Title'
+    ],
+    'favorites_count' => [
+        'title' => 'Quantity'
+    ]
+],
 
     'edit_fields' => [
-        'name' => [
-            'title' => 'Title',
-            'type' => 'text'
-        ],
-        'favorites_count' => [
-            'title' => 'Quantity',
-            'type' => 'number'
-        ]
+    'name' => [
+        'title' => 'Title',
+        'type' => 'text'
+    ],
+    'favorites_count' => [
+        'title' => 'Quantity',
+        'type' => 'number'
     ]
+]
 ];
