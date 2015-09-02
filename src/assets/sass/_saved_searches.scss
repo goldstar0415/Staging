@@ -34,13 +34,16 @@
       @include transition_color;
     }
   }
-  .sharing {
-    float: right;
-    padding: 0 6px;
-    height: 12px;
-    background: url(/assets/img/icons/share.png) no-repeat left;
-    &:hover {
-      background: url(/assets/img/icons/share.png) -12px 0 no-repeat;
-    }
+}
+
+
+.sharing {
+  display: block;
+  width: 12px!important;
+  height: 15px!important;
+  padding: 0!important;
+  background: url(/assets/img/icons/share.png) 0 3px no-repeat;
+  &:hover {
+    background: url(/assets/img/icons/share.png) -12px 3px no-repeat;
   }
 }
