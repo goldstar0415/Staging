@@ -24,7 +24,6 @@
       });
 
       modalInstance.result.then(function (CroppedImage) {
-        console.log(CroppedImage);
         callback(CroppedImage);
       }, function () {
         callback(null);
