@@ -6,12 +6,27 @@
     .factory('UserService', UserService);
 
   /** @ngInject */
-  function UserService($rootScope, socket, $state) {
+  function UserService($rootScope, $q, User, socket, $state) {
     return {
+      getCurrentUserPromise: getCurrentUserPromise,
       setCurrentUser: setCurrentUser,
       setProfileUser: setProfileUser,
       logOut: logOut
     };
+
+    function getCurrentUserPromise() {
+      var deferred = $q.defer();
+
+      User.currentUser({}, function success(user) {
+        setCurrentUser(user);
+        deferred.resolve(user);
+      }, function fail() {
+        $rootScope.currentUserFailed = true;
+        deferred.resolve();
+      });
+
+      return deferred.promise;
+    }
 
     function setCurrentUser(user) {
       $rootScope.currentUser = user;

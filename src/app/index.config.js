@@ -27,7 +27,8 @@
     // snap
     var disable = "";
     var touchToDrag = false;
-    if ($(window).width() < 992) {
+    var windowWidth = angular.element(window).width();
+    if (windowWidth < 992) {
       touchToDrag: true;
       disable = "right";
     } else {
@@ -57,7 +58,7 @@
     });
 
     //enable js console
-    if (DEBUG) {
+    if (DEBUG && windowWidth < 992) {
       var script = angular.element('<script>')
         .attr('src', 'http://jsconsole.com/remote.js?' + JS_CONSOLE_KEY);
       angular.element('head').append(script);

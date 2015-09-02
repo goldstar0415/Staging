@@ -16,17 +16,7 @@
             if ($rootScope.currentUser) {
               return $rootScope.currentUser;
             } else if (!$rootScope.currentUserFailed) {
-              var deferred = $q.defer();
-
-              User.currentUser({}, function success(user) {
-                UserService.setCurrentUser(user);
-                deferred.resolve(user);
-              }, function fail() {
-                $rootScope.currentUserFailed = true;
-                deferred.resolve();
-              });
-
-              return deferred.promise;
+             return UserService.getCurrentUserPromise();
             }
           }
         }
@@ -44,11 +34,19 @@
         template: '<ui-view  />',
         abstract: true,
         resolve: {
-          user: function (User, currentUser, $stateParams,  UserService) {
-            return User.get({id: $stateParams.user_id}, function (user) {
-              UserService.setProfileUser(user);
-              return user;
-            }).$promise;
+          user: function ($rootScope, User, currentUser, $stateParams,  UserService) {
+            if (currentUser && currentUser.id == $stateParams.user_id) {
+              return User.currentUser({}, function (user) {
+                $rootScope.currentUser = user;
+                UserService.setProfileUser(user);
+                return user;
+              }).$promise;
+            } else {
+              return User.get({id: $stateParams.user_id}, function (user) {
+                UserService.setProfileUser(user);
+                return user;
+              }).$promise;
+            }
           }
         },
         parent: 'profile_menu'
