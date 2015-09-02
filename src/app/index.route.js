@@ -239,10 +239,12 @@
         controller: 'ProfileController',
         controllerAs: 'Profile',
         resolve: {
-          spots: function (Spot, $stateParams) {
-            return Spot.query({
-              user_id: $stateParams.user_id
-            }).$promise;
+          spots: function (user, Spot, $stateParams, PermissionService) {
+            if (PermissionService.checkPermission(user.privacy_events, user)) {
+              return Spot.query({
+                user_id: $stateParams.user_id
+              }).$promise;
+            }
           }
         },
         parent: 'profile',
@@ -519,7 +521,6 @@
       });
 
     $urlRouterProvider.otherwise('/');
-    $locationProvider.html5Mode(true);
   }
 
 })();

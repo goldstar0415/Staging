@@ -6,8 +6,10 @@
     .controller('ProfileController', ProfileController);
 
   /** @ngInject */
-  function ProfileController(user, Wall, spots, SpotService, MapService, ScrollService) {
+  function ProfileController(user, Wall, spots, SpotService, MapService, ScrollService, PermissionService) {
     var vm = this;
+    vm.checkPermision = PermissionService.checkPermission;
+
     vm.wall = {};
     var params = {
       page: 0,
@@ -15,10 +17,11 @@
       user_id: user.id
     };
     vm.pagination = new ScrollService(Wall.query, vm.wall, params);
-    vm.spots = spots;
-    vm.spots.data = formatSpots(vm.spots.data);
 
-    ShowMarkers(vm.spots.data);
+    if (spots) {
+      var formatedSpots = formatSpots(spots);
+      ShowMarkers(formatedSpots);
+    }
 
     function formatSpots(spots) {
       return _.each(spots, function (spot) {
@@ -35,6 +38,7 @@
           spot: item
         };
       });
+      console.log(spotsArray);
       MapService.drawSpotMarkers(spotsArray, 'other', true);
     }
 
