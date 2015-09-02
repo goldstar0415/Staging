@@ -7,12 +7,10 @@
     .animation('.mapResize', mapResizeAnimation);
 
   /** @ngInject */
-  function config($logProvider, toastr, $httpProvider, cfpLoadingBarProvider, snapRemoteProvider, $locationProvider, DEBUG, $translateProvider) {
+  function config($logProvider, toastr, $httpProvider, cfpLoadingBarProvider, snapRemoteProvider, $locationProvider, DEBUG, JS_CONSOLE_KEY, $translateProvider) {
     // Enable log
     $logProvider.debugEnabled(DEBUG);
-    if (!DEBUG) {
-      $locationProvider.html5Mode({enabled: true, requireBase: false});
-    }
+    $locationProvider.html5Mode(true);
 
     $httpProvider.defaults.withCredentials = true;
 
@@ -21,7 +19,7 @@
     toastr.options.positionClass = 'toast-top-right';
     toastr.options.preventDuplicates = true;
     toastr.options.progressBar = true;
-    toastr.options.onShown = function() {
+    toastr.options.onShown = function () {
       //TODO: make smart margin of top
     };
 
@@ -57,6 +55,13 @@
       DIALOGS_YES: 'Yes',
       DIALOGS_NO: 'No'
     });
+
+    //enable js console
+    if (DEBUG) {
+      var script = angular.element('<script>')
+        .attr('src', 'http://jsconsole.com/remote.js?' + JS_CONSOLE_KEY);
+      angular.element('head').append(script);
+    }
   }
 
   /** @ngInject */
