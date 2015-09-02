@@ -29,6 +29,11 @@ class Privacy
         $is_permitted = false;
 
         if ($this->viewer !== null) {
+
+            if ($this->auth->id() === $target->id) {
+                return true;
+            }
+
             switch ($permission) {
                 case self::ALL:
                     $is_permitted = true;

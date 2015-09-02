@@ -217,7 +217,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     {
         $user = Request::user();
         if (isset($user)) {
-            return $this->followers()->find($user->id) ? false : true;
+            return $this->followers()->find($user->id) ? true : false;
         }
 
         return false;
