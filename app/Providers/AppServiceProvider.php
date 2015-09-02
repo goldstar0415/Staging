@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Laracasts\Generators\GeneratorsServiceProvider::class);
         }
         $this->app->bind(Privacy::class, function ($app) {
-            return new Privacy($app['request']->user(), $app['auth']);
+            return new Privacy($app[\Illuminate\Contracts\Auth\Guard::class]);
         });
         $this->app->bind(Attachments::class, function ($app) {
             return new Attachments($app['request']);

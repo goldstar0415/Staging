@@ -29,6 +29,7 @@ class WallController extends Controller
     public function __construct(Attachments $attachments)
     {
         $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('privacy', ['only' => ['index', 'like', 'dislike']]);
         $this->attachments = $attachments;
     }
 

@@ -30,11 +30,12 @@ class SpotController extends Controller
     {
         $this->middleware('auth', ['except' => ['index', 'show', 'categories', 'favorites']]);
         $this->middleware('base64upload:cover', ['only' => ['store', 'update']]);
+        $this->middleware('privacy', ['except' => ['store', 'update', 'destroy']]);
     }
 
     /**
      * Display a listing of the resource.
-     * @param Request $request
+     * @param SpotIndexRequest $request
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function index(SpotIndexRequest $request)

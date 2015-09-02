@@ -13,6 +13,7 @@ class FollowController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['only' => ['getFollow', 'getUnfollow']]);
+        $this->middleware('privacy', ['only' => ['getFollowers', 'getFollowings']]);
     }
 
     public function getFollow(Request $request, $follow_user)

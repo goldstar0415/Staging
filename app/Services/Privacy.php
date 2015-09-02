@@ -18,9 +18,9 @@ class Privacy
     protected $viewer;
     protected $auth;
 
-    public function __construct(User $viewer, Guard $auth)
+    public function __construct(Guard $auth)
     {
-        $this->viewer = $viewer;
+        $this->viewer = $auth->user();
         $this->auth = $auth;
     }
 
@@ -28,36 +28,42 @@ class Privacy
     {
         $is_permitted = false;
 
-        switch ($permission) {
-            case self::ALL:
+        if ($this->viewer !== null) {
+            switch ($permission) {
+                case self::ALL:
+                    $is_permitted = true;
+                    break;
+                case self::AUTHORIZED:
+                    $is_permitted = $this->auth->check();
+                    break;
+                case self::FOLLOWERS_FOLLOWINGS:
+                    if (!$this->isGuestViewer()) {
+                        $is_permitted = $target
+                            ->followers()
+                            ->where('follower_id', $this->viewer->id)
+                            ->first()
+                        ||
+                        $target
+                            ->followings()
+                            ->where('following_id', $this->viewer->id)
+                            ->first();
+                    }
+                    break;
+                case self::FOLLOWINGS:
+                    if (!$this->isGuestViewer()) {
+                        $is_permitted = $target
+                            ->followings()
+                            ->where('following_id', $this->viewer->id)
+                            ->first();
+                    }
+                    break;
+                case self::NOBODY:
+                    break;
+            }
+        } else {
+            if ($permission === self::ALL) {
                 $is_permitted = true;
-                break;
-            case self::AUTHORIZED:
-                $is_permitted = $this->auth->check();
-                break;
-            case self::FOLLOWERS_FOLLOWINGS:
-                if (!$this->isGuestViewer()) {
-                    $is_permitted = $target
-                        ->followers()
-                        ->where('follower_id', $this->viewer->id)
-                        ->first()
-                    or
-                    $target
-                        ->followings()
-                        ->where('following_id', $this->viewer->id)
-                        ->first();
-                }
-                break;
-            case self::FOLLOWINGS:
-                if (!$this->isGuestViewer()) {
-                    $is_permitted = $target
-                        ->followings()
-                        ->where('following_id', $this->viewer->id)
-                        ->first();
-                }
-                break;
-            case self::NOBODY:
-                break;
+            }
         }
 
         return $is_permitted;
