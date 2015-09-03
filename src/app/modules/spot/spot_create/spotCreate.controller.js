@@ -19,6 +19,7 @@
     };
     vm.type = 'event';
     vm.selectCover = false;
+    vm.firstload = true;
     vm.category_id = '';
     vm.startDate = moment().toDate();
     vm.categories = {};
@@ -42,17 +43,28 @@
       vm.checkFilesRestrictions();
     });
     $scope.$watch('SpotCreate.start_date', function() {
-      vm.end_date = '';
+      if(!vm.firstload) {
+        if(vm.start_date) {
+          console.log('inside');
+          var start = moment(vm.start_date, DATE_FORMAT.date);
+          var end = moment(vm.end_date, DATE_FORMAT.date);
+
+          if(start.isAfter(end, 'seconds')) {
+            vm.end_date = '';
+          }
+        }
+      } else {
+        vm.firstload = false;
+      }
     });
     $scope.$watch('SpotCreate.type', function () {
       if(!vm.edit) {
         vm.category_id = '';
+        vm.start_date = null;
+        vm.start_time = null;
+        vm.end_date = null;
+        vm.end_time = null;
       }
-
-      vm.start_date = null;
-      vm.start_time = null;
-      vm.end_date = null;
-      vm.end_time = null;
     });
 
 
@@ -307,7 +319,6 @@
         vm.start_time = data.start_date;
         vm.end_time = data.end_date;
       }
-
     };
 
     if (vm.edit) {

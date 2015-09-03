@@ -20,8 +20,7 @@
       'ngTagsInput',
       'ui.select',
       'ui.utils.masks',
-      'infinite-scroll',
-      'angular-img-cropper'
+      'infinite-scroll'
     ]);
 
 })();
