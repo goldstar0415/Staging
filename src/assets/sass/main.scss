@@ -439,6 +439,7 @@ h3 {
 
 .outline-none {
   outline: none;
+  opacity: 0.7;
   span {
     outline: none;
     &:hover, &:focus, &:active, &:visited {
