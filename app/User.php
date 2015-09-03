@@ -126,7 +126,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         'count_followers',
         'count_followings',
         'count_spots',
-        'is_following',
+        'is_following'
     ];
 
     /**
@@ -134,7 +134,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      *
      * @var array
      */
-    protected $with = ['socials'];
+    protected $with = ['socials', 'roles'];
 
     protected $hidden = [
         'password',
