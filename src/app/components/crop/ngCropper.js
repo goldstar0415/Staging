@@ -29,6 +29,10 @@
               cropend: onCropEnd,
               strict: true
             });
+
+            $image.on('built.cropper', function() {
+              onCropEnd();
+            });
           });
 
           function onCropChange() {
