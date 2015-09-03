@@ -183,7 +183,7 @@ class SpotController extends Controller
         return User::find($request->get(
             'user_id',
             $request->user() ? $request->user()->id : null
-        ))->favorites()->paginate((int)$request->get('limit', 10));
+        ))->favorites()->with('comments')->paginate((int)$request->get('limit', 10));
     }
 
     /**
