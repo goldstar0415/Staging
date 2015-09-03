@@ -20,7 +20,8 @@
         marker: '=',
         inputPlaceholder: '@',
         addClassOnchange: '=',
-        inputClass: '@'
+        inputClass: '@',
+        customClasses: '@'
       },
       link: function autocompleteLink(s, e, a) {
         var classname = s.inputClass || 'location-changed';

@@ -5,6 +5,7 @@
        ng-change="onChange();"
        placeholder="{{placeHolder}}"
        type="text"
+       class="{{customClasses}}"
        ng-class="className">
 <input ng-show="provider != 'google'" typeahead="address as address.formatted_address for address in getData($viewValue)"
        typeahead-wait-ms="100"
@@ -13,5 +14,6 @@
        ng-change="onChange();"
        placeholder={{placeHolder}}
        type="text"
+       class="{{customClasses}}"
        ng-class="className">
 <a ng-click="SetCurrentLocation();" class="compass compass-location" title="Find out the location"></a>

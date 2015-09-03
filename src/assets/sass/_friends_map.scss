@@ -87,6 +87,12 @@
   }
 }
 
+.location-friend {
+  input {
+    background: red;
+  }
+}
+
 @media (max-width: 1200px) {
   .friends-block {
     .avatar-wrap {
