@@ -104,6 +104,7 @@
         idx = reviews.length -1;
       }
       reviewIndex = idx;
+      console.log(idx);
       $scope.currentReview = reviews[idx];
     }
   }
