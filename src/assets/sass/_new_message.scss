@@ -42,9 +42,14 @@
     .user-name {
       font-size: 14px;
       font-weight: 600;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     p {
       font-size: 12px;
+      width: 100%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;

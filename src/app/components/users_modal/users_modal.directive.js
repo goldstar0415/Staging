@@ -26,15 +26,20 @@
           modalClass: 'authentication',
           resolve: {
             usersType: function () {
-              return s.type;
+                return _.include(s.type) ? s.type : 'followings';
             },
             user: function () {
               return s.user;
             },
             users: function (User) {
-              return s.type == 'followers' ?
-                User.followers({user_id: s.user.id}).$promise :
-                User.followings({user_id: s.user.id}).$promise;
+              switch (s.type) {
+                case 'followers':
+                  return User.followers({user_id: s.user.id}).$promise;
+                case 'followings':
+                  return User.followings({user_id: s.user.id}).$promise;
+                case 'members':
+                  return Spot.members({id: s.user.id}).$promise;
+              }
             }
           }
         });
@@ -45,7 +50,7 @@
     /** @ngInject */
     function FollowersModalController(usersType, user, users, $modalInstance) {
       var vm = this;
-      vm.usersType = usersType == 'followers' ? 'followers' : 'followings';
+      vm.usersType = usersType;
       vm.user = user;
       vm.users = users;
     }
