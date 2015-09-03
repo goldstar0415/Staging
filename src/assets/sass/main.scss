@@ -621,6 +621,11 @@ section {
   /*end about us page*/
 
 }
+@media (max-width: 570px) {
+  .text-content {
+    width: 100%;
+  }
+}
 
 @media (max-width: 491px) {
   /*zoomers*/
