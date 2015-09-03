@@ -41,8 +41,9 @@
     }
 
     /** @ngInject */
-    function PhotoViewerController($modalInstance, items, index, hideComments, PhotoComment) {
+    function PhotoViewerController($modalInstance, items, index, hideComments, PhotoComment, SpotPhotoComments) {
       var vm = this;
+      var isAlbumComments = angular.isDefined(items[0].album_id);
       vm.countPhotos = items.length;
       vm.hideComments = hideComments;
       setPhoto(index);
@@ -55,18 +56,33 @@
       };
       vm.sendComment = function (form) {
         if (form.$valid) {
-          var id = vm.currentPhoto.id;
-          PhotoComment.save({photo_id: id}, {body: vm.comment}, function (comment) {
-            vm.comments.unshift(comment);
-            vm.comment = '';
-          });
+          if (isAlbumComments) {
+            PhotoComment.save({photo_id: vm.currentPhoto.id}, {body: vm.comment}, afterSave);
+          } else {
+            SpotPhotoComments.save({
+              photo_id: vm.currentPhoto.id,
+              spot_id: vm.currentPhoto.spot_id
+            }, {body: vm.comment}, afterSave);
+          }
         }
       };
       vm.deleteComment = function (commentId, idx) {
-        var id = vm.currentPhoto.id;
-        PhotoComment.delete({photo_id: id, id: commentId}, function () {
+        if (isAlbumComments) {
+          PhotoComment.delete({
+            photo_id: vm.currentPhoto.id,
+            id: commentId
+          }, afterDelete);
+        } else {
+          SpotPhotoComments.delete({
+            photo_id: vm.currentPhoto.id,
+            spot_id: vm.currentPhoto.spot_id,
+            id: commentId
+          }, afterDelete);
+        }
+
+        function afterDelete() {
           vm.comments.splice(idx, 1);
-        });
+        }
       };
 
       function setPhoto(idx) {
@@ -77,13 +93,20 @@
         }
 
         vm.currentPhoto = items[idx];
-        vm.comments = getComments(items[idx].id);
+        vm.comments = getComments(items[idx]);
         vm.currentIndex = idx;
       }
 
-      function getComments(id) {
+      function afterSave(comment) {
+        vm.comments.unshift(comment);
+        vm.comment = '';
+      }
+
+      function getComments(item) {
         if (_.isUndefined(hideComments) || !hideComments) {
-          return PhotoComment.query({photo_id: id});
+          return isAlbumComments ?
+            PhotoComment.query({photo_id: item.id}) :
+            SpotPhotoComments.query({photo_id: item.id, spot_id: item.spot_id})
         }
       }
     }
