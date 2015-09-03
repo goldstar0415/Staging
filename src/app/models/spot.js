@@ -14,6 +14,9 @@
       favorites: {
         url: API_URL + '/spots/favorites'
       },
+      members: {
+        url: API_URL + '/spots/:id/members'
+      },
       inviteFriends: {
         url: API_URL + '/spots/invite',
         method: 'POST'
