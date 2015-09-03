@@ -1,6 +1,5 @@
 .j-carousel {
-
-  width: 240px;
+  width: 250px;
   &:after {
     content: ".";
     display: block;
@@ -11,13 +10,12 @@
   position: relative;
   overflow: hidden;
   .prev {
-    display: block;
     background: url(/assets/img/icons/arrows_carousel.png) 0 0 no-repeat;
     width: 15px;
     height: 26px;
     position: absolute;
-    top: 70px;
-    left: 10px;
+    top: 7rem;
+    left: 1rem;
     outline: none;
     display: inline-block;
     overflow: hidden;
@@ -26,13 +24,12 @@
     }
   }
   .next {
-    display: block;
     background: url(/assets/img/icons/arrows_carousel.png) -20px 0 no-repeat;
     width: 15px;
     height: 26px;
     position: absolute;
-    top: 70px;
-    right: 10px;
+    top: 7rem;
+    right: 1rem;
     outline: none;
     display: inline-block;
     overflow: hidden;
@@ -41,11 +38,16 @@
     }
   }
   .carousel-stage img {
-    width: 237px;
+    width: 250px;
     margin-bottom: 10px;
-    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
-    -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
+    border: 4px solid $white;
+    background: $white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .35);
+    -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .35);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .35);
   }
   .jcarousel {
     img {
@@ -57,7 +59,16 @@
     }
   }
   .navigation {
-    width: 240px;
+    width: 250px;
     overflow: hidden;
+  }
+}
+
+.connected-carousels {
+  .prev-stage, .next-stage {
+    top: 7rem;
+  }
+  .prev-navigation, .next-navigation {
+    top: 1.1rem
   }
 }
