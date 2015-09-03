@@ -4,7 +4,7 @@
 
 <div infinite-scroll="Favorite.pagination.nextPage()" infinite-scroll-disabled="Favorite.pagination.busy"
      class="clearfix" infinite-scroll-distance="1">
-  <section ng-repeat="item in Favorite.spots.data">
+  <section ng-repeat="item in Favorite.spots.data" class="border-bottom">
     <div class="event block">
       <div class="date">
         <date-range item="item"></date-range>
