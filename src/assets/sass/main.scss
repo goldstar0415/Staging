@@ -178,10 +178,16 @@ h3 {
   padding-right: 0;
 }
 
+.no-pad-left-right {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .no-pad-left {
   padding-left: 0;
 }
-.mo-margin-left{
+
+.mo-margin-left {
   margin-left: 0;
 }
 
@@ -419,9 +425,11 @@ h3 {
   border-radius: 0;
   border: none;
 }
+
 .media-full-width {
   width: 100%;
 }
+
 .media-body, .info {
   p, div, h2 {
     word-break: break-all;
@@ -653,7 +661,7 @@ section {
   }
   /*end wall tabs*/
 
-    /*calendar*/
+  /*calendar*/
   .fc-toolbar {
     .fc-left {
       width: 100%;
@@ -676,9 +684,9 @@ section {
 @media (min-width: 200px) and (max-width: 301px) {
   .wall-tabs {
     li {
-      width: 100%;
       padding-left: 0;
       margin-top: 0;
+      width: 100%;
     }
   }
   .fc-toolbar {

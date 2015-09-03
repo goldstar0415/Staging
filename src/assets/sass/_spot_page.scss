@@ -128,7 +128,7 @@
     float: left;
     margin-right: 15px;
     a {
-      padding-left: 18px !important;
+      padding-left: 18px;
       font: 14px 'Ubuntu medium';
       color: $blue;
     }
@@ -407,6 +407,11 @@
           font-size: 18px;
         }
       }
+    }
+  }
+  .tools {
+    .sharing-wrap {
+      float: left;
     }
   }
 }
