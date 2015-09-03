@@ -9,7 +9,6 @@
   function jcarousel($timeout) {
     return {
       restrict: 'A',
-      replace: true,
       transclude: false,
       scope: {
         images: "="
