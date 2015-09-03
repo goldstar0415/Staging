@@ -53,6 +53,7 @@
 @import "popup";
 @import "preloader";
 @import "preload_scroll";
+@import "jcarousel";
 
 @font-face {
   font-family: "Ubuntu light";
@@ -620,6 +621,16 @@ section {
   }
   /*end about us page*/
 
+}
+@media (max-width: 570px) {
+  .text-content {
+    width: 100%;
+  }
+  .event.block {
+    .text-content {
+      width: 100%;
+    }
+  }
 }
 
 @media (max-width: 491px) {

@@ -1,22 +1,27 @@
 <div class="module-carousel">
-  <div class="connected-carousels">
+  <div class="connected-carousels j-carousel">
     <div class="stage">
       <div class="carousel carousel-stage">
         <ul>
-          <li ng-repeat="img in images">
+          <li repeat-done ng-repeat="img in images">
             <img ng-src="{{img.photo_url.medium}}"/>
           </li>
         </ul>
       </div>
-      <a class="prev prev-stage"><span>&lsaquo;</span></a>
-      <a class="next next-stage"><span>&rsaquo;</span></a>
+      <a class="prev prev-stage" ng-if="images.length > 1"><span>&lsaquo;</span></a>
+      <a class="next next-stage" ng-if="images.length > 1"><span>&rsaquo;</span></a>
     </div>
 
     <div class="navigation">
-      <div class="carousel col-sm-12">
+      <a class="prev-navigation" ng-if="images.length > 3">&lsaquo;</a>
+      <a class="next-navigation" ng-if="images.length > 3">&rsaquo;</a>
+
+      <div class="jcarousel carousel carousel-navigation">
         <ul>
-          <li ng-repeat="img in images | limitTo: 3">
-            <img ng-src="{{img.photo_url.thumb}}" width="50" height="50"/>
+          <li repeat-done ng-repeat="img in images">
+            <a rel="nofollow">
+              <img ng-src="{{img.photo_url.thumb}}" />
+            </a>
           </li>
         </ul>
       </div>
