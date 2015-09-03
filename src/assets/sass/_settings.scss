@@ -162,6 +162,10 @@
   }
 }
 
+.location-changed {
+  @include input_hover_effects;
+}
+
 @media (max-width: 650px) {
   .settings-block {
     .avatar-block, .main-information {
@@ -187,9 +191,6 @@
     .input-width {
       width: 100%;
     }
-    //.eye {
-    //  top: 62%;
-    //}
     .main-information {
       .col-xs-3, .col-xs-9 {
         width: 100% !important;
