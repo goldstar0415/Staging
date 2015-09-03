@@ -206,7 +206,7 @@
       vm.links.splice(index, 1);
     };
     //tags
-    vm.onTagsAdd = function () {
+    vm.onTagsAdd = function (q, w, e) {
       if (vm.tags.length < vm.restrictions.tags) {
         return true;
       } else {
@@ -278,8 +278,12 @@
         });
       }
     };
-    vm.InvalidTag = function () {
-      toastr.error('Invalid input.');
+    vm.InvalidTag = function (tag) {
+      if(tag.name.length > 64) {
+        toastr.error('Your tag is too long. Max 64 symbols.');
+      } else {
+        toastr.error('Invalid input.');
+      }
     };
     //videos
     vm.addYoutubeLink = function (validLink) {
@@ -294,6 +298,7 @@
     vm.removeYoutubeLink = function (index) {
       vm.youtube_links.splice(index, 1);
     };
+
     //load data for spot editing
     vm.convertSpot = function () {
       //TODO: add array to display all kinds of images (attachments from albums, photos for upload, and old photos)
