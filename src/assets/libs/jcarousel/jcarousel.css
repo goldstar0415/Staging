@@ -1,0 +1,140 @@
+.connected-carousels .stage {
+  width: 240px;
+  position: relative;
+}
+
+.connected-carousels .photo-credits {
+  position: absolute;
+  right: 15px;
+  bottom: 0;
+  font-size: 13px;
+  color: #fff;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.85);
+  opacity: .66;
+}
+
+.connected-carousels .photo-credits a {
+  color: #fff;
+}
+
+.connected-carousels .navigation {
+  width: 240px;
+  position: relative;
+}
+
+.connected-carousels .carousel {
+  overflow: hidden;
+  position: relative;
+}
+
+.connected-carousels .carousel ul {
+  width: 20000em;
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.connected-carousels .carousel li {
+  float: left;
+}
+
+.connected-carousels .carousel-stage {
+  height: auto;
+}
+
+.connected-carousels .carousel-navigation {
+  height: 69px;
+  width: 240px;
+}
+
+.connected-carousels .carousel-navigation li {
+  cursor: pointer;
+}
+
+.connected-carousels .carousel-navigation li img {
+  display: block;
+}
+
+.connected-carousels .carousel-navigation li.active img {
+  border-color: #ccc;
+}
+
+.connected-carousels .prev-stage, .connected-carousels .next-stage {
+  display: block;
+  position: absolute;
+  top: 60px;
+  height: 25px;
+  color: #fff;
+}
+
+.connected-carousels .prev-stage {
+  left: 10px;
+}
+
+.connected-carousels .next-stage {
+  right: 10px;
+}
+
+.connected-carousels .prev-stage.inactive, .connected-carousels .next-stage.inactive {
+  display: none;
+}
+
+.connected-carousels .prev-stage span, .connected-carousels .next-stage span {
+  display: none;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  background: url('/assets/img/icons/arrows_carousel.png') no-repeat scroll -20px 0 rgba(0, 0, 0, 0);
+  color: #fff;
+  text-decoration: none;
+  font: 24px/27px Arial, sans-serif;
+}
+
+.connected-carousels .prev-stage span {
+  left: 20px;
+}
+
+.connected-carousels .next-stage span {
+  right: 50px;
+}
+
+.connected-carousels .prev-stage:hover span, .connected-carousels .next-stage:hover span {
+  display: block;
+}
+
+.connected-carousels .prev-navigation, .connected-carousels .next-navigation {
+  display: block;
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: #4E443C;
+  color: #fff;
+  text-decoration: none;
+  z-index: 100;
+  font: 12px Arial, sans-serif;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  -webkit-box-shadow: 0 0 2px #999;
+  -moz-box-shadow: 0 0 2px #999;
+  box-shadow: 0 0 2px #999;
+}
+
+.connected-carousels .prev-navigation {
+  left: 0px;
+  top: 25px;
+  text-indent: 6px;
+}
+
+.connected-carousels .next-navigation {
+  right: 0px;
+  top: 25px;
+  text-indent: 6px;
+}
+
+.connected-carousels .prev-navigation.inactive, .connected-carousels .next-navigation.inactive {
+  opacity: .5;
+  cursor: default;
+}

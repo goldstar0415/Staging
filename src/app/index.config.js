@@ -58,11 +58,11 @@
     });
 
     //enable js console
-    if (DEBUG && windowWidth < 992) {
-      var script = angular.element('<script>')
-        .attr('src', 'http://jsconsole.com/remote.js?' + JS_CONSOLE_KEY);
-      angular.element('head').append(script);
-    }
+    //if (DEBUG && windowWidth < 992) {
+    //  var script = angular.element('<script>')
+    //    .attr('src', 'http://jsconsole.com/remote.js?' + JS_CONSOLE_KEY);
+    //  angular.element('head').append(script);
+    //}
   }
 
   /** @ngInject */

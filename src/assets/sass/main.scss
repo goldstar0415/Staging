@@ -53,6 +53,7 @@
 @import "popup";
 @import "preloader";
 @import "preload_scroll";
+@import "jcarousel";
 
 @font-face {
   font-family: "Ubuntu light";
@@ -128,10 +129,8 @@ form {
   }
   .error-message-inline div {
     color: red;
-    display: block;
-    position: relative;
-    margin-top: 5px;
     margin-bottom: 5px;
+    float: left;
   }
   .form-group .error-message div {
     margin-top: 0;
@@ -294,9 +293,8 @@ h3 {
   width: 20px;
   height: 12px;
   background: url(/assets/img/icons/eye.png) no-repeat;
-  position: absolute;
-  top: 30%;
-  right: 15px;
+  float: right;
+  margin: -21px 10px 0 0;
   &:hover {
     background: url(/assets/img/icons/eye.png) 0 -16px no-repeat;
   }
@@ -623,6 +621,16 @@ section {
   }
   /*end about us page*/
 
+}
+@media (max-width: 570px) {
+  .text-content {
+    width: 100%;
+  }
+  .event.block {
+    .text-content {
+      width: 100%;
+    }
+  }
 }
 
 @media (max-width: 491px) {

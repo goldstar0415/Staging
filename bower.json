@@ -20,6 +20,7 @@
     "animate.css": "~3.3.0",
     "bootstrap-datepicker": "~1.4.0",
     "bootstrap-sass-official": "~3.3.4",
+    "jcarousel": "~0.3.3",
     "jquery": "~2.1.4",
     "Justified-Gallery": "~3.6.0",
     "moment": "~2.10.3",

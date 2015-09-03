@@ -9,8 +9,8 @@
       <li class="nav-tabs-default choose-tab" ng-click="modal.changeTab('spots')" ng-class="{active: modal.tab == 'spots'}">
         <a>My spots</a>
       </li>
-      <li class="nav-tabs-default choose-tab" ng-click="modal.changeTab('favorites')" ng-class="{active: modal.tab == 'favorites'}">
-        <a>Favorites</a>
+      <li class="nav-tabs-default choose-tab " ng-click="modal.changeTab('favorites')" ng-class="{active: modal.tab == 'favorites'}">
+        <a class="favorites-mobile">Favorites</a>
       </li>
       <li class="nav-tabs-default choose-tab" ng-click="modal.changeTab('areas')" ng-class="{active: modal.tab == 'areas'}">
         <a>Saved searches</a>
@@ -35,7 +35,7 @@
                ng-click="modal.addSpot(spot)">
             <img class="friend-avatar" ng-src="{{spot.cover_url.thumb}}">
             <h4 class="name-friend">
-              <a ng-bind-html="spot.title"></a>
+              <a ng-bind-html="spot.title" class="spot-name-friend"></a>
             </h4>
 
             <p class="date">
@@ -56,7 +56,7 @@
                  ng-click="modal.addSpot(spot)">
               <img class="friend-avatar" ng-src="{{spot.cover_url.thumb}}">
               <h4 class="name-friend">
-                <a ng-bind-html="spot.title"></a>
+                <a ng-bind-html="spot.title" class="favorites-name-friend"></a>
               </h4>
 
               <p class="date">

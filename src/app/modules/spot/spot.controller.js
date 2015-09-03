@@ -9,6 +9,7 @@
   function SpotController(spot, SpotService, ScrollService, SpotComment, $state, MapService, $rootScope) {
     var vm = this;
     vm.spot = SpotService.formatSpot(spot);
+    $rootScope.currentSpot = vm.spot;
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;

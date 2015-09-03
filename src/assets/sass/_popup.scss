@@ -403,14 +403,14 @@
     }
     .popup-main {
       width: 100%;
-      height: 220px;
+      height: 235px;
       .title {
         font-size: 24px;
         line-height: 26px;
         margin: 5px 0 2px 0;
       }
       .star-event-mobile{
-        display: block;
+        display: inline-block;
         height: auto;
         margin: 0;
       }
@@ -453,11 +453,11 @@
       }
     }
     .popup-main{
-      height: 215px !important;
+
     }
   }
 }
-@media (max-width: 300px){
+@media (max-width: 340px){
   .popup {
     max-width: 220px;
     .close-event{
@@ -480,7 +480,12 @@
       }
     }
     .popup-main{
-     height: 230px !important;
+     height: 250px !important;
+      .links-nav{
+        .big-plus{
+          float: none;
+        }
+      }
     }
   }
 }

@@ -335,10 +335,16 @@
 }
 
 .choose-friend-block {
-
   overflow: auto;
   max-height: 210px;
   display: block;
+  .favorites-name-friend, .spot-name-friend{
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
 }
 
 .tab-content {
@@ -390,6 +396,14 @@
     padding-left: 15px;
 
   }
+  .activity-title, .saved-search-description{
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+  }
+
 
 }
 
@@ -403,5 +417,67 @@
       background: $light_grey;
       color: $grey;
     }
+  }
+}
+
+@media (max-width: 420px){
+  .activity-modal-body {
+      ul {
+        li {
+          a{
+            padding: 10px 5px;
+          }
+        }
+     }
+
+  }
+}
+@media (max-width: 360px){
+  .activity-modal-body {
+    .nav-tabs{
+      padding-left: 5px;
+    }
+    ul {
+      li {
+        margin-right: 5px;
+        a{
+          padding: 10px 5px;
+        }
+      }
+    }
+
+  }
+}
+
+@media (max-width: 320px){
+  .activity-modal-body {
+    .nav-tabs{
+      padding-left: 2px;
+      display: inline-flex;
+    }
+
+    ul {
+      li {
+        margin-right: 2px;
+        a{
+          text-align: center;
+          padding: 10px 3px;
+        }
+      }
+    }
+
+  }
+}
+
+@media (max-width: 296px) {
+  .activity-modal-body {
+    ul {
+     li {
+        .favorites-mobile{
+          padding: 19.5px 3px;
+        }
+      }
+    }
+
   }
 }

@@ -1,0 +1,30 @@
+<div class="module-carousel">
+  <div class="connected-carousels j-carousel">
+    <div class="stage">
+      <div class="carousel carousel-stage">
+        <ul>
+          <li repeat-done ng-repeat="img in images">
+            <img ng-src="{{img.photo_url.medium}}"/>
+          </li>
+        </ul>
+      </div>
+      <a class="prev prev-stage" ng-if="images.length > 1"><span>&lsaquo;</span></a>
+      <a class="next next-stage" ng-if="images.length > 1"><span>&rsaquo;</span></a>
+    </div>
+
+    <div class="navigation">
+      <a class="prev-navigation" ng-if="images.length > 3">&lsaquo;</a>
+      <a class="next-navigation" ng-if="images.length > 3">&rsaquo;</a>
+
+      <div class="jcarousel carousel carousel-navigation">
+        <ul>
+          <li repeat-done ng-repeat="img in images">
+            <a rel="nofollow">
+              <img ng-src="{{img.photo_url.thumb}}" />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
