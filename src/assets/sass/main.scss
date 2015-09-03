@@ -625,6 +625,11 @@ section {
   .text-content {
     width: 100%;
   }
+  .event.block {
+    .text-content {
+      width: 100%;
+    }
+  }
 }
 
 @media (max-width: 491px) {
