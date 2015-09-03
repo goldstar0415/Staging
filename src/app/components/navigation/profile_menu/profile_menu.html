@@ -183,7 +183,7 @@
 
       <aside class="module-sidebar clearfix" ng-if="Profile.$state.is('spot') && $root.currentSpot.photos.length > 0">
         <h2 class="sidebar-title">
-          <a users-modal="members" user="$root.currentSpot">
+          <a >
             Photos
             <span class="counter">{{$root.currentSpot.photos.length}}</span>
           </a>
@@ -191,6 +191,26 @@
 
         <div class="sidebar-row ">
           <div jcarousel images="$root.currentSpot.photos" ></div>
+        </div>
+
+      </aside>
+
+      <aside class="module-sidebar clearfix" ng-if="Profile.$state.is('spot') && $root.currentSpot.count_members > 0">
+        <h2 class="sidebar-title">
+          <a users-modal="members" user="$root.currentSpot">
+            Members
+            <span class="counter">{{$root.profileUser.count_members}}</span>
+          </a>
+        </h2>
+
+        <div class="sidebar-row ">
+          <div class="col-sm-4 no-pad" ng-repeat="item in $root.currentSpot.members">
+            <a ui-sref="profile.main({user_id: item.id})">
+              <img ng-src="{{item.avatar_url.thumb}}" class="avatar"/>
+
+              <p class="sidebar-user-name">{{item.first_name}}<br> {{item.last_name}}</p>
+            </a>
+          </div>
         </div>
 
       </aside>
