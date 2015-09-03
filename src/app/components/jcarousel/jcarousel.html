@@ -1,0 +1,25 @@
+<div class="module-carousel">
+  <div class="connected-carousels">
+    <div class="stage">
+      <div class="carousel carousel-stage">
+        <ul>
+          <li ng-repeat="img in images">
+            <img ng-src="{{img.photo_url.medium}}"/>
+          </li>
+        </ul>
+      </div>
+      <a class="prev prev-stage"><span>&lsaquo;</span></a>
+      <a class="next next-stage"><span>&rsaquo;</span></a>
+    </div>
+
+    <div class="navigation">
+      <div class="carousel col-sm-12">
+        <ul>
+          <li ng-repeat="img in images | limitTo: 3">
+            <img ng-src="{{img.photo_url.thumb}}" width="50" height="50"/>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
