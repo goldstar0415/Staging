@@ -17,11 +17,11 @@
     vm.minDate = '01.01.1940';
 
     vm.privacyOptions = [
-      {value: 0, label: 'All users have access'},
-      {value: 1, label: 'Only followers&followings have access'},
-      {value: 2, label: 'Only followings have access'},
-      {value: 3, label: 'Only authorized users have access'},
-      {value: 4, label: 'Nobody has access'}
+      {value: 1, label: 'All users have access'},
+      {value: 2, label: 'Only followers&followings have access'},
+      {value: 3, label: 'Only followings have access'},
+      {value: 4, label: 'Only authorized users have access'},
+      {value: 5, label: 'Nobody has access'}
     ];
     vm.notificationOptions = [
       {value: 0, label: 'Receive'},

@@ -22,17 +22,21 @@
       }
     }
   }
-  .delete {
+  //.delete {
+  //  //float: right;
+  //  padding: 0 0 0 15px;
+  //  margin-right: 30px;
+  //  color: $blue;
+  //  font: 13px/13px Arial;
+  //  background: url(/assets/img/icons/delete.png) 1px 1px no-repeat;
+  //  &:hover {
+  //    color: $navy_blue;
+  //    @include transition_color;
+  //  }
+  //}
+  .sharing {
     float: right;
-    padding: 0 0 0 15px;
-    margin-right: 30px;
-    color: $blue;
-    font: 13px/13px Arial;
-    background: url(/assets/img/icons/delete.png) 1px 1px no-repeat;
-    &:hover {
-      color: $navy_blue;
-      @include transition_color;
-    }
+    margin-right: 0;
   }
 }
 

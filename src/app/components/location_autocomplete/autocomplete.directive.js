@@ -18,15 +18,19 @@
         provider: '=',
         onEmpty: '&',
         marker: '=',
-        inputPlaceholder: '@'
+        inputPlaceholder: '@',
+        addClassOnchange: '=',
+        inputClass: '@'
       },
       link: function autocompleteLink(s, e, a) {
+        var classname = s.inputClass || 'location-changed';
         s.placeHolder = s.inputPlaceholder || "Start typing...";
         var limit = s.limit || 10;
         var searchUrl = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&addressdetails=1&limit='+ limit +'&q=';
         var bindMarker = s.bindMarker;
         var provider = s.provider || 'google';
         s.provider = provider;
+        s.className = '';
 
 
 
@@ -71,6 +75,10 @@
             s.location = null;
             s.address = '';
             s.onEmpty();
+          } else {
+            if(s.addClassOnchange) {
+              s.className = classname;
+            }
           }
         };
         s.SetCurrentLocation = function() {

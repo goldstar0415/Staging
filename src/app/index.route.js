@@ -314,7 +314,12 @@
         controllerAs: 'Favorite',
         parent: 'profile',
         locate: 'none',
-        mapState: 'small'
+        mapState: 'small',
+        resolve: {
+          allSpots: function(Spot, $stateParams) {
+            return Spot.favorites({user_id: $stateParams.user_id}).$promise;
+          }
+        }
       })
       .state('areas', {
         url: '/areas',

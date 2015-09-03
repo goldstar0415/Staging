@@ -13,12 +13,16 @@
 
     vm.follow = function (user) {
       if (user.can_follow) {
-        User.follow({user_id: user.id});
+        User.follow({user_id: user.id}, reloadPage);
       } else {
-        User.unfollow({user_id: user.id});
+        User.unfollow({user_id: user.id}, reloadPage);
       }
       user.can_follow = !user.can_follow;
     };
+
+    function reloadPage() {
+      $state.go($state.current, {}, {reload: true});
+    }
 
     vm.isActive = function (state) {
       return {

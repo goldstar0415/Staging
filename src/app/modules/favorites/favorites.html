@@ -43,7 +43,7 @@
           <a class="favorite-spot" ng-click="Favorite.addToFavorite(item)">Favorite</a>
         </li>
         <li ng-if="item.is_favorite">
-          <a class="fav favorited" ng-click="Favorite.removeFromFavorite(item)">Unfavorite</a>
+          <a class="fav favorited" ng-click="Favorite.removeFromFavorite(item, $index)">Unfavorite</a>
         </li>
         <li>
           <invite-friends item="item"></invite-friends>

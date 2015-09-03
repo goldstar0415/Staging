@@ -14,8 +14,13 @@
     <p class="description" ng-bind-html="item.description"></p>
 
     <p class="time">{{item.created_at | toTimezone}}
-      <a class="sharing"></a>
+
+    <div class="col-xs-12 edit-delete">
+      <a class="edit">Edit</a>
       <a class="delete" ng-click="Area.RemoveArea(item.id, $index)">Delete</a>
+      <a class="sharing"></a>
+    </div>
+
     </p>
   </div>
 </div>
