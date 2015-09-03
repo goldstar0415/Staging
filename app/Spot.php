@@ -155,7 +155,7 @@ class Spot extends BaseModel implements StaplerableInterface
 
     public function getCountMembersAttribute()
     {
-        return $this->calendarUsers()->withoutNewest()->count();
+        return $this->calendarUsers()->count();
     }
 
     public function getMembersAttribute()
@@ -217,7 +217,7 @@ class Spot extends BaseModel implements StaplerableInterface
 
     public function calendarUsers()
     {
-        return $this->belongsToMany(Spot::class, 'calendar_spots')->withTimestamps();
+        return $this->belongsToMany(User::class, 'calendar_spots')->withTimestamps();
     }
 
 }
