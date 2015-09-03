@@ -755,17 +755,14 @@ section {
 
 /*end responsive*/
 
-.snapjs-right {
-  .right-menu-snap, .left-menu-snap {
-    position: fixed;
-  }
+.snapjs-right, .snapjs-left {
   .snap-content {
     overflow: hidden;
   }
 }
 
 .snap-content {
-  overflow: visible;
+  overflow: initial;
 }
 
 .modal-open {
@@ -775,7 +772,7 @@ section {
 }
 
 html {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .leaflet-popup-content {

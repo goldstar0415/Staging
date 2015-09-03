@@ -4,7 +4,7 @@
 <div class="modal-body clearfix">
   <div class="miniatures">
     <div class="col-sm-8 col-xs-12 crop-area">
-      <canvas height="250" class="col-xs-12" image-cropper image="Crop.image" cropped-image="Crop.resultImage" keep-aspect="true" crop-width="Crop.width" crop-height="Crop.height" touch-radius="30"></canvas>
+      <image-cropper source-image="Crop.image" result-image="Crop.resultImage" auto-crop="false" crop-height="Crop.height" crop-width="Crop.width"></image-cropper>
     </div>
 
     <div class="col-sm-3 col-xs-12"><img ng-src="{{Crop.resultImage}}" class="avatar-big">

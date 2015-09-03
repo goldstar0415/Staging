@@ -7,7 +7,7 @@
 </div>
 <div ng-repeat="item in Friendsmap.friends" class="col-xs-12 friends-block">
   <div class="avatar-wrap">
-    <a class="review-img" title="Edit avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)" ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="10000000">
+    <a class="review-img" tooltip="Edit avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)" ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="10000000">
       <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar" class="fav-avatar-icon feeds-img">
     </a>
   </div>

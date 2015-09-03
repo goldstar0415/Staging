@@ -1,10 +1,10 @@
-<div class="module-carousel col-xs-12 no-pad">
+<div class="module-carousel">
   <div class="connected-carousels j-carousel">
-    <div class="">
+    <div class="stage">
       <div class="carousel carousel-stage">
         <ul>
-          <li repeat-done ng-repeat="img in images">
-            <img ng-src="{{img.photo_url.medium}}" class="img-responsive"/>
+          <li repeat-done ng-repeat="img in images" photo-viewer items="images" index="$index">
+            <img ng-src="{{img.photo_url.medium}}"  class="img-responsive"/>
           </li>
         </ul>
       </div>
@@ -19,7 +19,9 @@
       <div class="jcarousel carousel carousel-navigation">
         <ul>
           <li repeat-done ng-repeat="img in images">
-            <img ng-src="{{img.photo_url.thumb}}"/>
+            <a rel="nofollow">
+              <img ng-src="{{img.photo_url.thumb}}" />
+            </a>
           </li>
         </ul>
       </div>

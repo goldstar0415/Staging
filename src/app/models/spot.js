@@ -15,7 +15,8 @@
         url: API_URL + '/spots/favorites'
       },
       members: {
-        url: API_URL + '/spots/:id/members'
+        url: API_URL + '/spots/:id/members',
+        isArray: true
       },
       inviteFriends: {
         url: API_URL + '/spots/invite',
