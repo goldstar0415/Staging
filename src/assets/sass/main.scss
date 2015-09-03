@@ -87,6 +87,16 @@
   font-weight: normal;
 }
 
+@font-face {
+  font-family: "Ubuntu bold";
+  src: url("/assets/css/fonts/UbuntuBold.eot");
+  src: url("/assets/css/fonts/UbuntuBold.eot?#iefix") format("embedded-opentype"),
+  url("/assets/css/fonts/UbuntuBold.woff") format("woff"),
+  url("/assets/css/fonts/UbuntuBold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
 body, .snap-content {
   background: #f5f8fa;
 }
