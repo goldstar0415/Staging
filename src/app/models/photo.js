@@ -14,19 +14,6 @@
       },
       update: {
         method: 'PUT'
-      },
-      getComments: {
-        url: API_URL + '/photos/:id/comments',
-        method: 'GET',
-        isArray: true
-      },
-      deleteComment: {
-        url: API_URL + '/photos/:id/comments/:comment_id',
-        method: 'DELETE'
-      },
-      postComment: {
-        url: API_URL + '/photos/:id/comments',
-        method: 'POST'
       }
     });
   }

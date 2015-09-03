@@ -26,7 +26,7 @@
           }
           break;
         case 3: //followings
-          if (user.is_following) {
+          if ($rootScope.currentUser && user.is_following) {
             access = true;
           }
           break;
