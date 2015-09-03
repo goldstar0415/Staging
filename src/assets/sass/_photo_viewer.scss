@@ -8,7 +8,8 @@
       border-top-left-radius: 10px;
       border-bottom-left-radius: 10px;
       position: relative;
-      top: 50%;transform: translateY(-50%);
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 }
@@ -32,7 +33,6 @@
       @include vertical_align;
     }
     .previous {
-      display: block;
       background: url(/assets/img/icons/arrows.png) 0 0 no-repeat;
       width: 15px;
       height: 26px;
@@ -42,12 +42,12 @@
       outline: none;
       display: inline-block;
       overflow: hidden;
+      cursor: pointer;
       &:hover {
         background: url(/assets/img/icons/arrows.png) 0 -28px no-repeat;
       }
     }
     .next {
-      display: block;
       background: url(/assets/img/icons/arrows.png) -20px 0 no-repeat;
       width: 15px;
       height: 26px;
@@ -57,6 +57,7 @@
       outline: none;
       display: inline-block;
       overflow: hidden;
+      cursor: pointer;
       &:hover {
         background: url(/assets/img/icons/arrows.png) -20px -28px no-repeat;
       }
@@ -232,7 +233,23 @@
 @media (max-width: 992px) {
   .viewer-wrap {
     .modal-dialog {
-      width: 80% !important;
+      width: 90% !important;
+      .photo-viewer {
+        max-height: 100%;
+        .image {
+          width: 100%;
+        }
+        .photo-comments {
+          width: 100%;
+          .reviews {
+            height: inherit;
+          }
+        }
+      }
+      .modal-content {
+        top: 80px;
+        transform: translateY(0);
+      }
     }
   }
 }
@@ -242,20 +259,19 @@
     .modal-dialog {
       display: block;
       margin: 0 auto;
-      width: 90% !important;
-      .photo-viewer {
-        max-height: 100%;
-        .image {
-          width: 100%;
-        }
-        .photo-comments {
-          width: 100%;
-        }
-      }
-      .modal-content {
-        top: 80px;
-        transform: translateY(0);
-      }
+      //.photo-viewer {
+      //  max-height: 100%;
+      //  .image {
+      //    width: 100%;
+      //  }
+      //  .photo-comments {
+      //    width: 100%;
+      //  }
+      //}
+      //.modal-content {
+      //  top: 80px;
+      //  transform: translateY(0);
+      //}
     }
   }
   .modal {
