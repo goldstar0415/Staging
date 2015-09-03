@@ -90,7 +90,7 @@ class SpotController extends Controller
      */
     public function show($spot)
     {
-        return $spot->load(['photos', 'points', 'tags', 'comments']);
+        return $spot->load(['photos', 'points', 'tags', 'comments'])->append(['count_members', 'members']);
     }
 
     /**
@@ -222,5 +222,15 @@ class SpotController extends Controller
         }
 
         return response('Ok');
+    }
+
+    /**
+     * @param Request $request
+     * @param \App\Spot $spot
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function members(Request $request, $spot)
+    {
+        return $spot->calendarUsers;
     }
 }

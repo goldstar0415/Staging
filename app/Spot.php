@@ -7,6 +7,7 @@ use App\Scopes\ApprovedScopeTrait;
 use App\Scopes\NewestScopeTrait;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
+use DB;
 use Request;
 
 /**
@@ -37,6 +38,7 @@ use Request;
  * @property \Illuminate\Database\Eloquent\Collection $tags
  * @property \Illuminate\Database\Eloquent\Collection $plans
  * @property \Illuminate\Database\Eloquent\Collection $points
+ * @property \Illuminate\Database\Eloquent\Collection $calendarUsers
  *
  * Mutators properties
  * @property float $rating
@@ -151,6 +153,18 @@ class Spot extends BaseModel implements StaplerableInterface
         }
     }
 
+    public function getCountMembersAttribute()
+    {
+        return $this->calendarUsers()->withoutNewest()->count();
+    }
+
+    public function getMembersAttribute()
+    {
+        return $this->calendarUsers()
+            ->orderBy(DB::raw(config('database.connections.' . config('database.default') . '.rand_func')))
+            ->take(6)->get();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -200,4 +214,10 @@ class Spot extends BaseModel implements StaplerableInterface
     {
         return $this->belongsToMany(Plan::class);
     }
+
+    public function calendarUsers()
+    {
+        return $this->belongsToMany(Spot::class, 'calendar_spots')->withTimestamps();
+    }
+
 }
