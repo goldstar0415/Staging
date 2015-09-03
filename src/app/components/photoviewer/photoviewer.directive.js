@@ -41,56 +41,49 @@
     }
 
     /** @ngInject */
-    function PhotoViewerController($modalInstance, items, index, hideComments, Photo) {
+    function PhotoViewerController($modalInstance, items, index, hideComments, PhotoComment) {
       var vm = this;
       vm.countPhotos = items.length;
       vm.hideComments = hideComments;
-      vm.currentIndex = index;
-      vm.currentPhoto = items[index];
-      vm.comments = getComments(items[index].id);
+      setPhoto(index);
 
       vm.nextPhoto = function nextPhoto() {
-        var nextIndex;
-        if (vm.currentIndex + 1 > items.length - 1) {
-          nextIndex = 0;
-        } else {
-          nextIndex = vm.currentIndex + 1;
-        }
-
-        vm.currentPhoto = items[nextIndex];//Photo.get({id: items[nextIndex].id});
-        vm.comments = getComments(items[nextIndex].id);
-        vm.currentIndex = nextIndex;
+        setPhoto(vm.currentIndex + 1);
       };
       vm.previousPhoto = function () {
-        var prevIndex;
-        if (vm.currentIndex - 1 < 0) {
-          prevIndex = items.length - 1;
-        } else {
-          prevIndex = vm.currentIndex - 1;
-        }
-
-        vm.currentPhoto = items[prevIndex];//Photo.get({id: items[prevIndex].id});
-        vm.comments = getComments(items[prevIndex].id);
-
-        vm.currentIndex = prevIndex;
+        setPhoto(vm.currentIndex - 1);
       };
       vm.sendComment = function (form) {
         if (form.$valid) {
           var id = vm.currentPhoto.id;
-          Photo.save({id: id}, {body: vm.comment}, function (comment) {
+          PhotoComment.save({photo_id: id}, {body: vm.comment}, function (comment) {
             vm.comments.unshift(comment);
             vm.comment = '';
           });
         }
       };
-      vm.deleteComment = function (commentId) {
+      vm.deleteComment = function (commentId, idx) {
         var id = vm.currentPhoto.id;
-        Photo.deleteComment({id: id, comment_id: commentId});
+        PhotoComment.delete({photo_id: id, id: commentId}, function () {
+          vm.comments.splice(idx, 1);
+        });
       };
+
+      function setPhoto(idx) {
+        if (idx > items.length - 1) {
+          idx = 0;
+        } else if (idx < 0) {
+          idx = items.length - 1;
+        }
+
+        vm.currentPhoto = items[idx];
+        vm.comments = getComments(items[idx].id);
+        vm.currentIndex = idx;
+      }
 
       function getComments(id) {
         if (_.isUndefined(hideComments) || !hideComments) {
-          return Photo.getComments({id: id});
+          return PhotoComment.query({photo_id: id});
         }
       }
     }
