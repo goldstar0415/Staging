@@ -33,9 +33,7 @@ class AlbumPhotoCommentController extends Controller
              * @var \App\Comment $comment
              */
             $comment->addHidden('user_id');
-            return $comment->load(['sender' => function ($query) {
-                $query->select(['id', 'first_name', 'last_name']);
-            }]);
+            return $comment->load('sender');
         });
 
         return $comments;
