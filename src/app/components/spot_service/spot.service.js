@@ -31,9 +31,11 @@
       Spot.favorite({id: spot.id});
     }
 
-    function removeFromFavorite(spot) {
+    function removeFromFavorite(spot, callback) {
       spot.is_favorite = false;
-      Spot.unfavorite({id: spot.id});
+      Spot.unfavorite({id: spot.id}, function() {
+        callback()
+      });
     }
 
     function removeSpot(spot, idx, callback) {

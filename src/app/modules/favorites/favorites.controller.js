@@ -6,13 +6,44 @@
     .controller('FavoritesController', FavoritesController);
 
   /** @ngInject */
-  function FavoritesController($scope, $rootScope, Spot, ScrollService, SpotService) {
+  function FavoritesController($scope, $rootScope, Spot, ScrollService, SpotService, allSpots, MapService) {
     var vm = this;
     vm.spots = {};
+
+    console.log(allSpots.data);
+    vm.markersSpots = formatSpots(allSpots.data);
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
-    vm.removeFromFavorite = SpotService.removeFromFavorite;
+    vm.markersSpots = ShowMarkers(vm.markersSpots);
+
+    vm.removeFromFavorite = UnFavorite;
+
+    function UnFavorite(spot, idx) {
+      SpotService.removeFromFavorite(spot, function () {
+        vm.spots.data.splice(idx, 1);
+        if (vm.markersSpots[idx].marker) {
+          MapService.GetCurrentLayer().removeLayer(vm.markersSpots[idx].marker);
+        } else {
+          MapService.GetCurrentLayer().removeLayers(vm.markersSpots[idx].markers)
+        }
+      })
+    };
+
+    function ShowMarkers(spots) {
+      var spotsArray = _.map(spots, function (item) {
+        return {
+          id: item.id,
+          spot_id: item.spot_id,
+          locations: item.points,
+          address: '',
+          spot: item
+        };
+      });
+      MapService.drawSpotMarkers(spotsArray, 'other', true);
+
+      return spotsArray;
+    }
 
     var params = {
       page: 0,
@@ -25,7 +56,7 @@
     });
 
     function formatSpots(spots) {
-      _.each(spots, function (spot) {
+      return _.each(spots, function (spot) {
         SpotService.formatSpot(spot);
       });
     }
