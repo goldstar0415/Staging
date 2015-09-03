@@ -31,7 +31,7 @@
             user: function () {
               return s.user;
             },
-            users: function (User) {
+            users: function (User, Spot) {
               switch (s.type) {
                 case 'followers':
                   return User.followers({user_id: s.user.id}).$promise;
