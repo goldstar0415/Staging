@@ -45,18 +45,28 @@
       }
     }
 
-    //TODO: test it.
     vm.setAvatar = function(id, files) {
       if(files.length > 0) {
         CropService.crop(files[0], 512, 512, function(result) {
           if (result) {
             Friends.setAvatar({id: id}, {avatar:result}, function(res) {
               var marker = null;
+              var friend = null;
 
               for(var k in markers) {
                 if(markers[k].id == id) {
                   marker = markers[k].marker;
                 }
+              }
+
+              for(var k in vm.friends) {
+                if(vm.friends[k].id == id) {
+                  friend = vm.friends[k]
+                }
+              }
+
+              if(friend) {
+                friend.avatar_url.medium = result;
               }
 
               if(marker) {

@@ -459,12 +459,12 @@
   }
 }
 
-.weatherImg {
-  background: url(/assets/img/cloud.png) no-repeat center center;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-}
+//.weatherImg {
+//  background: url(/assets/img/cloud.png) no-repeat center center;
+//  width: 100%;
+//  height: 100%;
+//  margin: 0 auto;
+//}
 
 .weather-info {
   padding: 10px 15px;
@@ -546,8 +546,38 @@
         width: 100%;
         height: 130px;
         .weatherImg {
-          margin: 0 auto;
-          display: table;
+          width: 100%;
+          height: 100%;
+        }
+        .clear-day {
+          background: url(/assets/img/weather/clear-day.png) no-repeat center center;
+        }
+        .clear-night {
+          background: url(/assets/img/weather/clear-night.png) no-repeat center center;
+        }
+        .rain {
+          background: url(/assets/img/weather/rain.png) no-repeat center center;
+        }
+        .snow {
+          background: url(/assets/img/weather/snow.png) no-repeat center center;
+        }
+        .sleet {
+          background: url(/assets/img/weather/sleet.png) no-repeat center center;
+        }
+        .wind {
+          background: url(/assets/img/weather/wind.png) no-repeat center center;
+        }
+        .fog {
+          background: url(/assets/img/weather/fog.png) no-repeat center center;
+        }
+        .cloudy {
+          background: url(/assets/img/weather/cloudy.png) no-repeat center center;
+        }
+        .partly-cloudy-day {
+          background: url(/assets/img/weather/partly-cloudy-day.png) no-repeat center center;
+        }
+        .partly-cloudy-night {
+          background: url(/assets/img/weather/partly-cloudy-night.png) no-repeat center center;
         }
       }
     }
@@ -629,11 +659,42 @@
       padding: 10px 15px;
       box-sizing: border-box;
       .weatherIcon {
-        height: 34px;
         float: left;
-        background: url(/assets/img/snow.png) no-repeat center center;
         width: 30%;
-        margin: 0 auto;
+        div {
+          background-size: contain!important;
+          padding-top: 28%;
+        }
+        .clear-day {
+          background: url(/assets/img/weather/clear-day-dark.png) no-repeat center center;
+        }
+        .clear-night {
+          background: url(/assets/img/weather/clear-night-dark.png) no-repeat center center;
+        }
+        .rain {
+          background: url(/assets/img/weather/rain-dark.png) no-repeat center center;
+        }
+        .snow {
+          background: url(/assets/img/weather/snow-dark.png) no-repeat center center;
+        }
+        .sleet {
+          background: url(/assets/img/weather/sleet-dark.png) no-repeat center center;
+        }
+        .wind {
+          background: url(/assets/img/weather/wind-dark.png) no-repeat center center;
+        }
+        .fog {
+          background: url(/assets/img/weather/fog-dark.png) no-repeat center center;
+        }
+        .cloudy {
+          background: url(/assets/img/weather/cloudy-dark.png) no-repeat center center;
+        }
+        .partly-cloudy-day {
+          background: url(/assets/img/weather/partly-cloudy-day-dark.png) no-repeat center center;
+        }
+        .partly-cloudy-night {
+          background: url(/assets/img/weather/partly-cloudy-night-dark.png) no-repeat center center;
+        }
       }
       .data, .temperatureWeek {
         float: left;
