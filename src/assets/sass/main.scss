@@ -211,6 +211,12 @@ h3 {
 .padding {
   padding: 15px;
 }
+
+.padding-top-bottom {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
 .central {
   @include content_bg;
   margin-bottom: 100px;
@@ -522,6 +528,13 @@ sign-in, sign-up {
 }
 
 .close {
+  outline: none;
+  border: none;
+  color: $grey;
+  &:active, &:focus, &:hover {
+    outline: none;
+
+  }
   span {
     padding: 1rem;
     outline: none;
