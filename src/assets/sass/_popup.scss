@@ -350,7 +350,8 @@
   .popup{
     .close-event{
       .close{
-        background: url(/assets/img/icons/cross2.png);
+        padding: 8px;
+        background-size: 95%;
       }
     }
   }
@@ -362,6 +363,7 @@
   .close-event{
     top: -49px;
     right: 11px;
+
   }
   .leaflet-popup-tip-container{display: none;}
   .leaflet-popup-content-wrapper {
