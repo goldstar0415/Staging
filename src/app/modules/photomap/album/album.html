@@ -9,7 +9,7 @@
   </h2>
 </div>
 
-<div class="col-xs-12 edit-delete album"  ng-if="currentUser.id == Album.album.user_id">
+<div class="col-xs-12 edit-delete album" ng-if="currentUser.id == Album.album.user_id">
   <a class="edit" title="Edit album" ui-sref="photos.editAlbum({album_id: Album.album.id})">Edit</a>
   <a class="delete" title="Delete album" ng-click="Album.delete()">Delete</a>
 </div>
@@ -17,11 +17,12 @@
 <div class="col-xs-12">
   <div ng-repeat="item in Album.photos" class="col-xs-3 photo-wrap">
     <div class="photo" photo-viewer items="Album.photos" index="$index">
-      <!--<div class="album-tools-wrap col-xs-12" >-->
-      <!--<a class="set-avatar" title="Set as avatar"></a>-->
-      <!--<a class="set-location" title="Set location"></a>-->
-      <!--<a class="delete" title="Delete"></a>-->
-      <!--</div>-->
+      <div class="album-tools-wrap col-xs-12" ng-if="currentUser.id == Album.album.user_id">
+        <a class="set-avatar" title="Set as avatar"></a>
+        <a class="set-location" title="Set location" ui-sref="photos.edit_photo({photo_id: item.id})"></a>
+        <a class="delete" title="Delete"></a>
+      </div>
+
       <img ng-src="{{item.photo_url.medium}}" alt="Photo not found"/>
     </div>
   </div>

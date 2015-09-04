@@ -15,7 +15,7 @@
     };
   }
 
-  function HintsPopupController($scope, $state) {
+  function HintsPopupController($scope, $state, $rootScope) {
     $scope.showHintPopup = true;
 
     //if($state.params.area_id) {
@@ -38,6 +38,7 @@
     };
 
     $scope.close = function () {
+      $rootScope.hideHints = true;
       $scope.showHintPopup = false;
     };
   }

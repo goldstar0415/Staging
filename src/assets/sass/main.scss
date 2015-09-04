@@ -491,10 +491,8 @@ sign-in, sign-up {
   }
 }
 
-section {
-  .border-bottom {
-    border-bottom: 1px solid #e9edf0 !important;
-  }
+.border-bottom {
+  border-bottom: 1px solid #e9edf0 !important;
 }
 
 .row {
@@ -517,6 +515,9 @@ section {
   margin-bottom: 1.5rem;
 }
 
+.indent-padding {
+  padding: 2rem 1rem 3rem;
+}
 /*responsive*/
 
 @media (max-width: 992px) {
@@ -784,6 +785,12 @@ section {
     height: 100%;
     .modal-dialog {
       @include vertical_align;
+    }
+  }
+  .modalFix {
+    .modal-dialog {
+      height: 350px;
+      overflow: scroll;
     }
   }
 }

@@ -330,7 +330,7 @@
             <div class="weekForecast-wrapper">
               <span class="data">{{item.formattedDate}}</span>
 
-              <div class="weatherIcon">
+              <div class="weatherIcon" title="{{item.summary}}">
                 <div ng-class="item.icon"></div>
               </div>
               <span class="temperatureWeek">{{item.temperatureMax}}°F /{{item.temperatureMin}}°F </span>
