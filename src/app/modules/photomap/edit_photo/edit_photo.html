@@ -3,9 +3,9 @@
 </div>
 <div class="col-xs-12 no-pad">
   <form ng-submit="CreateAlbum.createAlbum(form)" role="form" name="form" class="create" novalidate>
-    <div class="col-xs-12 form-group">
-      <div class="col-xs-3 no-pad label-width">
-        <label>Title</label>
+    <div class="col-xs-12 form-group border-bottom">
+      <div class="col-xs-3 no-pad label-width ">
+        <label>Album</label>
       </div>
       <div class="col-xs-9 no-pad input-width">
         <input placeholder="Start typing..." ng-minlength="3" ng-maxlength="128" name="title" ng-model="CreateAlbum.album.title" type="text">
@@ -19,7 +19,7 @@
 
     <div class="col-xs-12 form-group">
       <div class="col-xs-3 no-pad label-width">
-        <label>Location</label>
+        <label>Address</label>
       </div>
       <div class="col-xs-9 no-pad input-width">
         <location address="CreateAlbum.album.address" location="CreateAlbum.album.location" limit="15" bind-marker="true"></location>
