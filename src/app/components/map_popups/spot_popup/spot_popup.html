@@ -71,11 +71,11 @@
         </div>
 
         <div ng-if="showPhotos" class="photos-event clearfix">
-          <a photo-viewer items="data.spot.photos" index="firstPhotoIndex" current-item="firstItem"><img
-            ng-src="{{firstPhoto}}">
+          <a photo-viewer items="data.spot.photos" index="firstPhotoIndex" current-item="firstItem">
+            <img ng-src="{{firstPhoto}}">
           </a>
-          <a ng-if="secondItem" photo-viewer items="data.spot.photos" index="secondPhotoIndex"
-             current-item="secondItem"><img ng-src="{{secondPhoto}}">
+          <a ng-if="secondItem" photo-viewer items="data.spot.photos" index="secondPhotoIndex" current-item="secondItem">
+            <img ng-src="{{secondPhoto}}">
           </a>
           <!--<a ><img src="/assets/img/icons/q.png">-->
           <!--</a>-->
