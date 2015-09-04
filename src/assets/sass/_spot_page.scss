@@ -28,9 +28,11 @@
     }
   }
 }
+
 .one-spot-section {
   padding: 15px;
 }
+
 .spot-stars {
   margin-top: 15px;
 }
@@ -189,8 +191,12 @@
   border-radius: 8px 8px 0 0;
   position: relative;
   padding: 0;
-  .name{
+  .name {
     margin-bottom: 10px;
+    a {
+      word-wrap: break-word;
+      white-space: pre-line;
+    }
   }
   .comments-content {
     background: $light_grey;
@@ -237,7 +243,7 @@
 }
 
 .attachments-preview {
-//  padding: 10px;
+  //  padding: 10px;
 
   .add-event {
     margin-bottom: 15px;
@@ -290,7 +296,7 @@
   .links {
     margin: 0 -10px 10px;
     padding: 0 10px;
-    a{
+    a {
       float: none;
       font-size: 18px;
     }
@@ -348,51 +354,56 @@
   }
 
 }
-.attach-event{
+
+.attach-event {
   width: 100%;
   display: inline-block;
-  .media-heading{
+  .media-heading {
     max-width: 100%;
-    .event-img{
+    .event-img {
       display: block;
     }
   }
-  .description-link{
+  .description-link {
     word-break: break-word;
   }
 }
+
 .nav-tabs > li > a {
   color: #555555;
 }
+
 .spot-block {
   margin-bottom: 15px;
 }
-@media  (max-width: 475px){
- .comments-section {
-   .post {
-     padding-left: 5px;
-     padding-right: 5px;
-     .padding-0{
-       padding-left: 0;
-       padding-right: 0;
-     }
-     .avatar {
-       width: 55px;
-       height: 55px;
-       margin-top: 20px;
-     }
-     .info{
-       padding-right: 0;
-       padding-left: 0;
-       .name{
-         margin-bottom: 5px;
-         margin-left: 5px;
-       }
-     }
-   }
- }
+
+@media (max-width: 475px) {
+  .comments-section {
+    .post {
+      padding-left: 5px;
+      padding-right: 5px;
+      .padding-0 {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .avatar {
+        width: 55px;
+        height: 55px;
+        margin-top: 20px;
+      }
+      .info {
+        padding-right: 0;
+        padding-left: 0;
+        .name {
+          margin-bottom: 5px;
+          margin-left: 5px;
+        }
+      }
+    }
+  }
 }
-@media  (max-width: 400px){
+
+@media (max-width: 400px) {
   .comments-section {
     .post {
 
@@ -401,9 +412,9 @@
         height: 40px;
 
       }
-      .info{
+      .info {
 
-        .name{
+        .name {
           font-size: 18px;
         }
       }
@@ -415,7 +426,8 @@
     }
   }
 }
-@media  (max-width: 290px){
+
+@media (max-width: 290px) {
   .comments-section {
     .post {
       .avatar {
@@ -423,9 +435,9 @@
         height: 35px;
 
       }
-      .info{
+      .info {
 
-        .name{
+        .name {
           font-size: 17px;
           margin-left: 10px;
         }

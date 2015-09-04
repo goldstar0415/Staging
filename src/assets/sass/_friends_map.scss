@@ -54,10 +54,18 @@
         background: url(/assets/img/icons/button-compass.png) center -20px no-repeat;
         padding: 15px 26px;
         border-right: 1px solid $green;
+        &.active {
+          background-color: $light_green;
+          background-position: center 7px;
+        }
       }
       .default-location {
         background: url(/assets/img/icons/button-location.png) center -20px no-repeat;
         padding: 15px 26px;
+        &.active {
+          background-color: $light_green;
+          background-position: center 7px;
+        }
       }
     }
   }
