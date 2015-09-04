@@ -34,7 +34,7 @@
         method: "DELETE"
       },
       setAvatar: {
-        url: API_URL + '/friends/:id',
+        url: API_URL + '/friends/:id/setavatar',
         method: "POST"
       }
     });

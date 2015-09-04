@@ -1282,8 +1282,6 @@
           });
         }
 
-        console.log(resultArray);
-
         return SortByRating(resultArray);
       }
 
