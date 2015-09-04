@@ -98,7 +98,7 @@
       <a class="fav favorited" ng-show="data.spot.is_favorite" ng-click="removeFromFavorite(data.spot)">Unfavorite</a>
       <invite-friends item="data.spot"></invite-friends>
 
-      <a class="big-plus"></a>
+      <share links="data.spot.share_links" ></share>
     </div>
     <div class="close-event">
       <a ng-click="marker.closePopup()" class="close" ></a>

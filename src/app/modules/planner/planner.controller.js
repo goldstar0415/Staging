@@ -66,7 +66,7 @@
     }
 
     function eventRender(event, element, view) {
-      var tooltip = moment(event.start_date, DATE_FORMAT.backend).format(DATE_FORMAT.date) + '-' + moment(event.end_date, DATE_FORMAT.backend).format(DATE_FORMAT.date);
+      var tooltip = moment(event.start_date, DATE_FORMAT.backend).format(DATE_FORMAT.full) + '\n - \n' + moment(event.end_date, DATE_FORMAT.backend).format(DATE_FORMAT.full);
       element.attr({
         'tooltip': tooltip,
         'tooltip-append-to-body': true

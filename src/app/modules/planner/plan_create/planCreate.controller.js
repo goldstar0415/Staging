@@ -6,7 +6,7 @@
     .controller('PlanCreateController', PlanCreateController);
 
   /** @ngInject */
-  function PlanCreateController(Plan, plan, categories, $state) {
+  function PlanCreateController(Plan, plan, categories, $state, DATE_FORMAT) {
     var vm = this;
     vm = _.extend(vm, plan);
     console.log(vm);
@@ -37,6 +37,8 @@
       var data = angular.copy(vm);
       data = _convertDates(data);
       data.spots = _.pluck(data.spots, 'id');
+      console.log(data);
+
 
       _.each(data.activities, function (activity) {
         activity = _convertDates(activity);
@@ -48,9 +50,11 @@
       return data;
     }
 
-    function _convertDates(data){
-      data.start_date = moment(data.start_date, 'MM/DD/YYYY').format('YYYY-MM-DD HH:mm:ss');
-      data.end_date = moment(data.end_date, 'MM/DD/YYYY').format('YYYY-MM-DD HH:mm:ss');
+    function _convertDates(data) {
+      data.start_date = moment(data.start_date + ' ' + data.start_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.datepicker.time).format(DATE_FORMAT.backend);
+      data.end_date = moment(data.end_date + ' ' + data.end_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.datepicker.time).format(DATE_FORMAT.backend);
+      delete data.start_time;
+      delete data.end_time;
       return data;
     }
 

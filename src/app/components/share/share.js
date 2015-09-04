@@ -6,7 +6,7 @@
     .directive('share', share);
 
   /** @ngInject */
-  function share(API_URL) {
+  function share() {
     return {
       restrict: 'E',
       templateUrl: '/app/components/share/share.html',

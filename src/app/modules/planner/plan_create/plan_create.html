@@ -1,4 +1,4 @@
-<form class="form-horizontal col-xs-12  central no-pad " name="form" ng-submit="Plan.save(form)"  novalidate>
+<form class="form-horizontal col-xs-12  central no-pad " name="form" ng-submit="Plan.save(form)" novalidate>
   <h2 class="title-name">{{Plan.id ? 'Edit plan' : 'Create new plan'}}</h2>
 
   <!-- section  event-main-info-->
@@ -36,7 +36,7 @@
       <label class="col-sm-2 control-label">Location</label>
 
       <div class="col-sm-10">
-        <location address="Plan.address" location="Plan.location" limit="15" ></location>
+        <location address="Plan.address" location="Plan.location" limit="15"></location>
 
         <div ng-if="form.$submitted && !Plan.address" class="error-message-inline">
           <div>is required</div>
@@ -63,6 +63,31 @@
 
           <div ng-messages="form.end_date.$error" ng-if="form.$submitted" class="error-message-inline">
             <div ng-message="required">End date field can't be empty</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 col-sm-12 col-xs-12 control-label">Time</label>
+
+      <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class="col-sm-4 col-xs-12 no-pad">
+          <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.start_time" name="start_time"
+                 type="text" required>
+
+          <div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-message="required">Start time field can't be empty</div>
+          </div>
+        </div>
+        <span class="hidden-xs col-sm-1">—</span>
+
+        <div class="col-sm-4 col-xs-12 no-pad">
+          <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.end_time" name="end_time"
+                 type="text" required>
+
+          <div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-message="required">End time field can't be empty</div>
           </div>
         </div>
       </div>
@@ -100,7 +125,7 @@
       <label class="col-sm-2 control-label">Category</label>
 
       <div class="col-sm-10">
-        <ui-select ng-model="activity.category.id"  theme="bootstrap">
+        <ui-select ng-model="activity.category.id" theme="bootstrap">
           <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
           <ui-select-choices repeat="item.id as item in Plan.categories | filter : $select.search track by $index">
             <div ng-bind-html="item.display_name |  highlight: $select.search"></div>
@@ -113,7 +138,8 @@
       <label class="col-sm-2 control-label">Description</label>
 
       <div class="col-sm-10">
-        <textarea class="form-control" rows="5" name="description_activity_{{$index}}" ng-model="activity.description" ng-maxlength="250" ></textarea>
+        <textarea class="form-control" rows="5" name="description_activity_{{$index}}" ng-model="activity.description"
+                  ng-maxlength="250"></textarea>
 
         <div ng-messages="form['description_activity_' + $index].$error"
              ng-if="form.$submitted || form['description_activity_' + $index].$touched" class="error-message">
@@ -155,6 +181,33 @@
       </div>
     </div>
 
+    <div class="form-group ">
+      <label class="col-sm-2 control-label">Time</label>
+
+      <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class="col-sm-4 col-xs-12 no-pad">
+          <input ng-timepicker step="30" placeholder="12:00..." name="start_time_{{$index}}"
+                 ng-model="activity.start_time" type="text" required>
+
+          <div ng-messages="form['start_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-message="required">Start time field can't be empty</div>
+          </div>
+        </div>
+
+        <span class="hidden-xs col-sm-1">—</span>
+
+        <div class="col-sm-4 col-xs-12 no-pad">
+          <input ng-timepicker step="30" placeholder="12:00..." name="end_time_{{$index}}" ng-model="activity.end_time"
+                 type="text" required>
+
+          <div ng-messages="form['end_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-message="required">End time field can't be empty</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </section>
   <!-- end section  event-additionl-info -->
 
@@ -195,7 +248,8 @@
       <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12" spots-modal items="Plan.spots">Add
         spot
       </button>
-      <button type="submit" class="btn btn-default green-btn col-sm-2 col-xs-12 pull-right no-margin-left-right">Save</button>
+      <button type="submit" class="btn btn-default green-btn col-sm-2 col-xs-12 pull-right no-margin-left-right">Save
+      </button>
     </div>
   </div>
   <!-- end buttons block -->

@@ -42,14 +42,14 @@
     $scope.$watch('SpotCreate.images.files.length', function () {
       vm.checkFilesRestrictions();
     });
-    $scope.$watch('SpotCreate.start_date', function() {
-      if(!vm.firstload) {
-        if(vm.start_date) {
+    $scope.$watch('SpotCreate.start_date', function () {
+      if (!vm.firstload) {
+        if (vm.start_date) {
           console.log('inside');
           var start = moment(vm.start_date, DATE_FORMAT.date);
           var end = moment(vm.end_date, DATE_FORMAT.date);
 
-          if(start.isAfter(end, 'seconds')) {
+          if (start.isAfter(end, 'seconds')) {
             vm.end_date = '';
           }
         }
@@ -58,7 +58,7 @@
       }
     });
     $scope.$watch('SpotCreate.type', function () {
-      if(!vm.edit) {
+      if (!vm.edit) {
         vm.category_id = '';
         vm.start_date = null;
         vm.start_time = null;
@@ -105,22 +105,22 @@
         request.spot_type_category_id = vm.category_id;
 
         if (vm.cover) {
-          if(vm.edit && vm.coverChanged) {
+          if (vm.edit && vm.coverChanged) {
             request.cover = vm.cover;
           }
 
-          if(!vm.edit) {
+          if (!vm.edit) {
             request.cover = vm.cover;
           }
         }
         if (vm.links && vm.links.length > 0) {
-          if(vm.newLink) {
+          if (vm.newLink) {
             vm.links.push(vm.newLink);
           }
           request.web_sites = vm.links;
         }
         if (vm.youtube_links && vm.youtube_links.length > 0) {
-          if(vm.newYoutubeLink) {
+          if (vm.newYoutubeLink) {
             vm.youtube_links.push(vm.newYoutubeLink);
           }
           request.videos = vm.youtube_links;
@@ -153,7 +153,7 @@
           UploaderService
             .upload(url, req)
             .then(function (resp) {
-              if(vm.type != 'event') {
+              if (vm.type != 'event') {
                 toastr.info('Your submittal is under review and will be posted shortly.');
               }
               $state.go('spot', {spot_id: resp.data.id, user_id: resp.data.user_id});
@@ -166,26 +166,21 @@
           toastr.error('Please add at least one location');
         }
       } else {
-        if(!vm.title) {
-          return toastr.error('Title is required!');
-        }
-
-        if(!vm.category_id) {
-          return toastr.error('Category is required!');
+        if (!vm.title) {
+          toastr.error('Title is required!');
+        } else if (!vm.category_id) {
+          toastr.error('Category is required!');
         }
 
         if (vm.type === 'Event') {
-          if(!vm.start_date) {
-            return toastr.error('Start date is required!');
-          }
-          if(!vm.end_date) {
-            return toastr.error('End date is required!');
-          }
-          if(!vm.start_time) {
-            return toastr.error('Start time is required!');
-          }
-          if(!vm.end_time) {
-            return toastr.error('End time is required!');
+          if (!vm.start_date) {
+            toastr.error('Start date is required!');
+          } else if (!vm.end_date) {
+            toastr.error('End date is required!');
+          } else if (!vm.start_time) {
+            toastr.error('Start time is required!');
+          } else if (!vm.end_time) {
+            toastr.error('End time is required!');
           }
         }
       }
@@ -256,7 +251,7 @@
             vm.cover = result;
             vm.selectCover = false;
 
-            if(vm.edit) {
+            if (vm.edit) {
               vm.coverChanged = true;
             }
           }
@@ -271,7 +266,7 @@
             vm.cover = result;
             vm.selectCover = false;
 
-            if(vm.edit) {
+            if (vm.edit) {
               vm.coverChanged = true;
             }
           }
@@ -279,7 +274,7 @@
       }
     };
     vm.InvalidTag = function (tag) {
-      if(tag.name.length > 64) {
+      if (tag.name.length > 64) {
         toastr.error('Your tag is too long. Max 64 symbols.');
       } else {
         toastr.error('Invalid input.');

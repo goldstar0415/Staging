@@ -99,6 +99,7 @@
         controllerAs: 'ArticleCreate',
         mapState: 'small',
         parent: 'main',
+        require_auth: true,
         locate: 'none'
       })
 
@@ -131,6 +132,7 @@
             return $http.get(API_URL + '/spots/categories')
           }
         },
+        require_auth: true,
         mapState: 'small',
         edit: false
       })
@@ -149,6 +151,7 @@
             return $http.get(API_URL + '/spots/categories')
           }
         },
+        require_auth: true,
         mapState: 'small',
         edit: true
       })
@@ -180,6 +183,7 @@
         controllerAs: 'Planner',
         parent: 'planner',
         locate: 'none',
+        require_auth: true,
         mapState: 'small'
       })
       .state('planner.create', {
@@ -187,8 +191,6 @@
         templateUrl: '/app/modules/planner/plan_create/plan_create.html',
         controller: 'PlanCreateController',
         controllerAs: 'Plan',
-        parent: 'planner',
-        locate: 'none',
         resolve: {
           plan: function (Plan) {
             return new Plan();
@@ -197,6 +199,9 @@
             return Plan.activityCategories().$promise;
           }
         },
+        parent: 'planner',
+        locate: 'none',
+        require_auth: true,
         mapState: 'small'
       })
       .state('planner.edit', {
@@ -214,6 +219,7 @@
             return Plan.activityCategories().$promise;
           }
         },
+        require_auth: true,
         mapState: 'small'
       })
       .state('planner.view', {
@@ -227,6 +233,7 @@
             return Plan.get({id: $stateParams.plan_id}).$promise;
           }
         },
+        require_auth: true,
         locate: 'none',
         mapState: 'small'
       })
