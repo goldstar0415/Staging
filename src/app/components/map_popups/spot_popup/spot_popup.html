@@ -90,13 +90,25 @@
       </div>
 
     </div>
-    <div class="links-nav" ng-if="$root.currentUser" ng-cloak>
+    <div class="links-nav"  >
+      <ul class="tools clearfix" ng-if="$root.currentUser">
 
-      <a class="save" ng-show="!data.spot.is_saved && data.spot.type == 'Event'" ng-click="saveToCalendar(data.spot)">Save</a>
-      <a class="save saved clicked" ng-show="data.spot.is_saved && data.spot.type == 'Event'" ng-click="removeFromCalendar(data.spot)">Remove</a>
-      <a class="favorite-spot" ng-show="!data.spot.is_favorite" ng-click="addToFavorite(data.spot)">Favorite</a>
-      <a class="fav favorited" ng-show="data.spot.is_favorite" ng-click="removeFromFavorite(data.spot)">Unfavorite</a>
-      <invite-friends item="data.spot"></invite-friends>
+        <li ng-if="!data.spot.is_saved">
+          <a class="save-event" ng-click="saveToCalendar(data.spot)">Save</a>
+        </li>
+        <li ng-if="data.spot.is_saved">
+          <a class="save-event saved clicked" ng-click="removeFromCalendar(data.spot)">Remove</a>
+        </li>
+        <li ng-if="!data.spot.is_favorite">
+          <a class="favorite-spot" ng-click="addToFavorite(data.spot)">Favorite</a>
+        </li>
+        <li ng-if="data.spot.is_favorite">
+          <a class="fav favorited" ng-click="removeFromFavorite(data.spot)">Unfavorite</a>
+        </li>
+        <li>
+          <invite-friends item="data.spot"></invite-friends>
+        </li>
+      </ul>
 
       <share links="data.spot.share_links" ></share>
     </div>
