@@ -14,6 +14,14 @@
 
     function format(friends) {
       return _.each(friends, function (friend) {
+        friend.showCustom = true;
+        friend.showSwitch = false;
+        if(friend.location && friend.default_location) {
+          if(friend.location.lat != friend.default_location.lat && friend.location.lng != friend.default_location.lng) {
+            friend.showSwitch = true;
+          }
+        }
+        friend.displayAddress = friend.address;
         friend.birth_date = moment(friend.birth_date).format('MM.DD.YYYY')
       })
     }
@@ -45,6 +53,19 @@
       }
     }
 
+    vm.switchLocation = function(item, custom) {
+      if(item.showCustom != custom){
+        item.showCustom = custom;
+        if(custom) {
+          item.displayAddress = item.address;
+          moveMarkerToLocation(item.id, item.location);
+        } else {
+          item.displayAddress = item.default_location.address;
+          moveMarkerToLocation(item.id, item.default_location);
+        }
+      }
+
+    };
     vm.setAvatar = function(id, files) {
       if(files.length > 0) {
         CropService.crop(files[0], 512, 512, function(result) {
@@ -78,5 +99,24 @@
         });
       }
     };
+    vm.removeFriend = function(id, idx) {
+      Friends.deleteFriend({id: id}, function() {
+        for(var k in markers) {
+          if(markers[k].id == id) {
+            MapService.RemoveMarker(markers[k].marker);
+            vm.friends.splice(idx, 1);
+          }
+        }
+      })
+    };
+
+
+    function moveMarkerToLocation(id, latlng) {
+      for(var k in markers) {
+        if(markers[k].id == id) {
+          markers[k].marker.setLatLng(latlng);
+        }
+      }
+    }
   }
 })();
