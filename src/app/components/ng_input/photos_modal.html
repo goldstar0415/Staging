@@ -1,6 +1,9 @@
 <script type="text/ng-template" id="PhotosModal.html">
   <div class="modal-header border-bottom-none no-pad-bottom">
-    <h3 class="margin-none">Choose some photos</h3>
+    <h3 class="margin-none">Choose some photos
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+    </h3>
   </div>
 
   <div class="modal-body ">
@@ -39,6 +42,9 @@
 
           <h4 ng-if="modal.selectedAlbum.photos.length < 1" class="text-center description">No photos in album</h4>
         </div>
+      </div>
+      <div class="col-xs-12">
+        <button type="button" class="btn btn-default green-btn pull-left ng-scope">OK</button>
       </div>
     </div>
 

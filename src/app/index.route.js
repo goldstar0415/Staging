@@ -405,6 +405,21 @@
         locate: 'none'
       })
       //Albums page state
+      .state('photos.edit_photo', {
+        url: '/photos/:photo_id',
+        templateUrl: '/app/modules/photomap/edit_photo/edit_photo.html',
+        controller: 'PhotoEditController',
+        controllerAs: 'Photo',
+        //resolve: {
+        //  photo: function (Album, $stateParams) {
+        //    return Album.photos({album_id: $stateParams.album_id}).$promise;
+        //  }
+        //},
+        mapState: 'small',
+        parent: 'profile',
+        require_auth: true,
+        locate: 'none'
+      })
       .state('photos.album', {
         url: '/albums/:album_id',
         templateUrl: '/app/modules/photomap/album/album.html',

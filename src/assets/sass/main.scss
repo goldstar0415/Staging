@@ -210,7 +210,6 @@ h3 {
 
 .central {
   @include content_bg;
-
   margin-bottom: 100px;
   padding: 0;
 }
@@ -491,10 +490,8 @@ sign-in, sign-up {
   }
 }
 
-section {
-  .border-bottom {
-    border-bottom: 1px solid #e9edf0 !important;
-  }
+.border-bottom {
+  border-bottom: 1px solid #e9edf0 !important;
 }
 
 .row {
@@ -515,6 +512,21 @@ section {
 
 .margin-bottom {
   margin-bottom: 1.5rem;
+}
+
+.indent-padding {
+  padding: 2rem 1rem 3rem;
+}
+
+.close {
+  span {
+    padding: 1rem;
+    outline: none;
+    &:active, &:focus {
+      padding: 1rem;
+      outline: none;
+    }
+  }
 }
 
 /*responsive*/

@@ -4,13 +4,14 @@ header {
   padding: 0 0 0 20px;
   z-index: 50;
 
-
   .logo {
     height: 55px;
     width: 210px;
     float: left;
     @include vertical_align;
-    a {outline: none;}
+    a {
+      outline: none;
+    }
   }
   nav {
     float: right;
@@ -151,11 +152,31 @@ header {
   }
 }
 
+@media (max-width: 500px) {
+  header {
+    nav {
+      ul {
+        li {
+          .user-name {
+            max-width: 140px;
+            padding: 0 5px;
+            span {
+              &:first-of-type {
+                max-width: 60%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 400px) {
   header {
     padding: 0 10px 0 0;
     .logo {
-      width: 120px;
+      width: 90px;
     }
     .menu-btn {
       .menu-icon {
@@ -164,14 +185,21 @@ header {
       }
     }
     nav {
-      .map-profile {
-        a {
-          padding: 0 10px;
-          span {
-            img {
-              width: 26px;
-              height: 26px;
+      ul {
+        .map-profile {
+          a {
+            padding: 0 10px;
+            span {
+              img {
+                width: 26px;
+                height: 26px;
+              }
             }
+          }
+        }
+        li {
+          .user-name {
+            max-width: 120px;
           }
         }
       }
@@ -190,13 +218,26 @@ header {
       }
     }
     nav {
-      .map-profile {
-        a {
-          padding: 0 10px 0 5px;
-          span {
-            img {
-              width: 26px;
-              height: 26px;
+      ul {
+        .map-profile {
+          a {
+            span {
+              img {
+                width: 26px;
+                height: 26px;
+              }
+            }
+          }
+        }
+        li {
+          .user-name {
+            span {
+              &:first-of-type {
+                display: none;
+              }
+              &:nth-child(2) {
+                margin: 0;
+              }
             }
           }
         }

@@ -1,18 +1,24 @@
 <script type="text/ng-template" id="ActivityModal.html">
   <div class="modal-header">
-    <h3 class="margin-none">Choose some activities</h3>
+    <h3 class="margin-none">Choose some activities
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+    </h3>
   </div>
 
   <div class="modal-body activity-modal-body clearfix">
 
     <ul class="nav nav-tabs " role="tablist">
-      <li class="nav-tabs-default choose-tab" ng-click="modal.changeTab('spots')" ng-class="{active: modal.tab == 'spots'}">
+      <li class="nav-tabs-default choose-tab" ng-click="modal.changeTab('spots')"
+          ng-class="{active: modal.tab == 'spots'}">
         <a>My spots</a>
       </li>
-      <li class="nav-tabs-default choose-tab " ng-click="modal.changeTab('favorites')" ng-class="{active: modal.tab == 'favorites'}">
+      <li class="nav-tabs-default choose-tab " ng-click="modal.changeTab('favorites')"
+          ng-class="{active: modal.tab == 'favorites'}">
         <a class="favorites-mobile">Favorites</a>
       </li>
-      <li class="nav-tabs-default choose-tab" ng-click="modal.changeTab('areas')" ng-class="{active: modal.tab == 'areas'}">
+      <li class="nav-tabs-default choose-tab" ng-click="modal.changeTab('areas')"
+          ng-class="{active: modal.tab == 'areas'}">
         <a>Saved searches</a>
       </li>
     </ul>

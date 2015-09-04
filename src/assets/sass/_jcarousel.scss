@@ -1,6 +1,5 @@
 .j-carousel {
-
-  width: 240px;
+  width: 250px;
   &:after {
     content: ".";
     display: block;
@@ -15,8 +14,8 @@
     width: 15px;
     height: 26px;
     position: absolute;
-    top: 70px;
-    left: 10px;
+    top: 7rem;
+    left: 1rem;
     outline: none;
     display: inline-block;
     overflow: hidden;
@@ -29,8 +28,8 @@
     width: 15px;
     height: 26px;
     position: absolute;
-    top: 70px;
-    right: 10px;
+    top: 7rem;
+    right: 1rem;
     outline: none;
     display: inline-block;
     overflow: hidden;
@@ -39,23 +38,55 @@
     }
   }
   .carousel-stage img {
-    width: 237px;
-    margin-bottom: 10px;
-    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
-    -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.35);
+    width: 250px;
+    margin-bottom: 2rem;
+    border: 4px solid $white;
+    background: $white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .35);
+    -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .35);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .35);
   }
   .jcarousel {
     img {
-      display: block;
-      width: 60px;
+      width: 66px;
+      height: 66px;
+      -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
+      -moz-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
+      background: $white;
       -webkit-border-radius: 40px;
       -moz-border-radius: 40px;
       border-radius: 40px;
+      margin-right: 1.5rem;
     }
   }
   .navigation {
-    width: 240px;
+    width: 250px;
     overflow: hidden;
   }
 }
+
+.connected-carousels {
+  .prev-stage, .next-stage {
+    top: 7rem !important;
+  }
+  .prev-navigation, .next-navigation {
+    top: 2.7rem !important;
+  }
+}
+
+.carousel-navigation {
+  .active {
+    img {
+      border: 3px solid $grey;
+    }
+  }
+  img {
+    border: 3px solid $white;
+  }
+}
+
+

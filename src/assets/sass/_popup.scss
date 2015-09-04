@@ -346,6 +346,16 @@
         }
     }
 }
+@media (max-width: 767px) {
+  .popup{
+    .close-event{
+      .close{
+        padding: 8px;
+        background-size: 95%;
+      }
+    }
+  }
+}
 @media (max-width: 500px) {
 .popup {
   max-width: 350px;
@@ -353,6 +363,7 @@
   .close-event{
     top: -49px;
     right: 11px;
+
   }
   .leaflet-popup-tip-container{display: none;}
   .leaflet-popup-content-wrapper {

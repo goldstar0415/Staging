@@ -17,24 +17,29 @@
     };
 
     function saveToCalendar(spot) {
-      spot.is_saved = true;
-      Spot.saveToCalendar({id: spot.id});
+      Spot.saveToCalendar({id: spot.id}, function () {
+        spot.is_saved = true;
+      });
     }
 
     function removeFromCalendar(spot) {
-      spot.is_saved = false;
-      Spot.removeFromCalendar({id: spot.id});
+      Spot.removeFromCalendar({id: spot.id}, function () {
+        spot.is_saved = false;
+      });
     }
 
     function addToFavorite(spot) {
-      spot.is_favorite = true;
-      Spot.favorite({id: spot.id});
+      Spot.favorite({id: spot.id}, function () {
+        spot.is_favorite = true;
+      });
     }
 
     function removeFromFavorite(spot, callback) {
-      spot.is_favorite = false;
       Spot.unfavorite({id: spot.id}, function() {
-        callback()
+        spot.is_favorite = false;
+        if (callback) {
+          callback();
+        }
       });
     }
 
@@ -42,7 +47,9 @@
       dialogs.confirm('Confirmation', 'Are you sure you want to delete spot?').result.then(function () {
         Spot.delete({id: spot.id}, function () {
           toastr.info('Spot successfully deleted');
-          callback()
+          if (callback) {
+            callback();
+          }
         });
       });
     }
