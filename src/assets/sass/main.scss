@@ -210,7 +210,6 @@ h3 {
 
 .central {
   @include content_bg;
-
   margin-bottom: 100px;
   padding: 0;
 }
@@ -518,6 +517,18 @@ sign-in, sign-up {
 .indent-padding {
   padding: 2rem 1rem 3rem;
 }
+
+.close {
+  span {
+    padding: 1rem;
+    outline: none;
+    &:active, &:focus {
+      padding: 1rem;
+      outline: none;
+    }
+  }
+}
+
 /*responsive*/
 
 @media (max-width: 992px) {

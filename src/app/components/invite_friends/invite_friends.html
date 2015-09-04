@@ -2,7 +2,10 @@
 
 <script type="text/ng-template" id="InviteFriendsModal.html">
   <div class="modal-header">
-    <h3 class="margin-none">Choose some friends</h3>
+    <h3 class="margin-none">Choose some friends
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span></button>
+    </h3>
   </div>
   <div class="modal-body no-pad-left-right no-pad-bottom">
     <div class="col-sm-12">
@@ -26,7 +29,8 @@
   </div>
 
   <div class="modal-footer">
-    <button class="btn btn-success pull-left col-sm-4  col-xs-5 button-my" type="button" ng-click="modal.inviteFriends()">
+    <button class="btn btn-success pull-left col-sm-4  col-xs-5 button-my" type="button"
+            ng-click="modal.inviteFriends()">
       Invite
     </button>
     <button class="btn btn-primary pull-left col-sm-4  col-xs-5 button-my" type="button" ng-click="modal.close()">

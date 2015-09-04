@@ -1,12 +1,15 @@
 <script type="text/ng-template" id="photoViewer.html">
   <div class="viewer-content">
     <div class="photo-viewer">
-      <div class="image" ng-class="{'col-xs-8': !PV.hideComments && $root.currentUser, 'col-xs-12': PV.hideComments || !$root.currentUser}">
+      <div class="image"
+           ng-class="{'col-xs-8': !PV.hideComments && $root.currentUser, 'col-xs-12': PV.hideComments || !$root.currentUser}">
         <img ng-src="{{PV.currentPhoto.photo_url.original}}">
         <a ng-click="PV.previousPhoto($event)" ng-if="PV.countPhotos > 1" class="previous"></a>
         <a ng-click="PV.nextPhoto($event)" ng-if="PV.countPhotos > 1" class="next"></a>
       </div>
       <div class="photo-comments col-xs-4" ng-if="!PV.hideComments && $root.currentUser">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
         <p class="location">{{PV.currentPhoto.address}}</p>
 
         <form name="form" ng-submit="PV.sendComment(form)" class="col-xs-12 new-post">
@@ -21,7 +24,7 @@
         <div class="col-xs-12 reviews">
           <div class="post" ng-repeat="comment in PV.comments">
             <div class="avatar-wrap">
-              <img class="avatar" ng-src="{{comment.sender.avatar_url.thumb}}" >
+              <img class="avatar" ng-src="{{comment.sender.avatar_url.thumb}}">
             </div>
             <div class=" col-xs-10 info">
               <h3 class="name">{{comment.sender.first_name}} {{comment.sender.last_name}}</h3>
@@ -30,7 +33,8 @@
 
               <p class="time">{{comment.created_at}}</p>
             </div>
-            <a class="delete-reviews" ng-if="$root.profileUser.id == $root.currentUser.id" ng-click="PV.deleteComment(comment.id, $index)"></a>
+            <a class="delete-reviews" ng-if="$root.profileUser.id == $root.currentUser.id"
+               ng-click="PV.deleteComment(comment.id, $index)"></a>
           </div>
         </div>
       </div>
