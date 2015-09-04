@@ -196,8 +196,8 @@ h3 {
   padding-left: 0;
 }
 
-.mo-margin-left {
-  margin-left: 0;
+.no-margin-left {
+  margin-left: 0 !important;
 }
 
 .no-pad-right {
@@ -208,6 +208,9 @@ h3 {
   padding-right: 0;
 }
 
+.padding {
+  padding: 15px;
+}
 .central {
   @include content_bg;
   margin-bottom: 100px;
