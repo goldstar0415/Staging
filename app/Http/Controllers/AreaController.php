@@ -57,9 +57,9 @@ class AreaController extends Controller
 
         return $og->title($area->title)
                 ->type('selection')
-                ->image('http://blog.guybarrette.com/image.axd?picture=2012%2f8%2fSelection.jpg')//TODO: change image
+                ->image('')//TODO: change image
                 ->description($area->description)
-                ->url(config('app.frontend_url') . '/selection/' . $area->id);//TODO: change frontend url
+                ->url(config('app.frontend_url') . '/areas/' . $area->id);//TODO: change frontend url
     }
 
     /**

@@ -61,6 +61,7 @@ Route::post('spots/{spots}/rate', 'SpotController@rate');
 Route::get('spots/{spots}/favorite', 'SpotController@favorite');
 Route::get('spots/{spots}/unfavorite', 'SpotController@unfavorite');
 Route::get('spots/{spots}/members', 'SpotController@members');
+Route::get('spots/{spots}/preview', 'SpotController@preview');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 Route::resource('spots.comments', 'SpotCommentController', ['except' => ['create', 'edit']]);
 Route::resource(

@@ -5,6 +5,7 @@ namespace App;
 use App\Extensions\StartEndDatesTrait;
 use App\Scopes\ApprovedScopeTrait;
 use App\Scopes\NewestScopeTrait;
+use App\Services\SocialSharing;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use DB;
@@ -50,7 +51,7 @@ class Spot extends BaseModel implements StaplerableInterface
 
     protected $guarded = ['id', 'user_id'];
 
-    protected $appends = ['rating', 'cover_url', 'is_favorite', 'is_saved', 'is_rated'];
+    protected $appends = ['rating', 'cover_url', 'is_favorite', 'is_saved', 'is_rated', 'share_links'];
 
     protected $with = ['category.type', 'points', 'photos', 'user'];
 
@@ -163,6 +164,17 @@ class Spot extends BaseModel implements StaplerableInterface
         return $this->calendarUsers()
             ->orderBy(DB::raw(config('database.connections.' . config('database.default') . '.rand_func')))
             ->take(6)->get();
+    }
+
+    public function getShareLinksAttribute()
+    {
+        $url = url('spots', [$this->id, 'preview']);
+
+        return [
+            'facebook' => SocialSharing::facebook($url),
+            'twitter' => SocialSharing::twitter($url),
+            'google' => SocialSharing::google($url)
+        ];
     }
 
     public function user()

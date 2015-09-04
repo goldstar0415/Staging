@@ -20,6 +20,7 @@ use App\SpotPhoto;
 use App\SpotType;
 use App\SpotVote;
 use App\User;
+use ChrisKonnertz\OpenGraph\OpenGraph;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -222,6 +223,22 @@ class SpotController extends Controller
         }
 
         return response('Ok');
+    }
+
+    /**
+     * Display the specified resource preview.
+     * @param Spot $spot
+     * @return Spot
+     */
+    public function preview($spot)
+    {
+        $og = new OpenGraph();
+
+        return $og->title($spot->title)
+            ->type('spot')
+            ->image($spot->cover->url())//TODO: change image
+            ->description($spot->description)
+            ->url(config('app.frontend_url') . '/spots/' . $spot->id);//TODO: change frontend url
     }
 
     /**
