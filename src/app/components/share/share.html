@@ -3,13 +3,13 @@
 <div class="share-wrap" ng-show="isOpen">
   <ul class="share-buttons clearfix">
     <li>
-      <a href="https://www.facebook.com/sharer/sharer.php?u={{link}}" target="_blank" class="facebook">facebook</a>
+      <a ng-href="{{links.facebook}}" target="_blank" class="facebook">facebook</a>
     </li>
     <li>
-      <a href="https://plus.google.com/share?url={{link}}" target="_blank" class="google">google</a>
+      <a ng-href="{{links.google}}" target="_blank" class="google">google</a>
     </li>
     <li>
-      <a href="https://twitter.com/intent/tweet?url={{link}}" target="_blank" class="twitter">twitter</a>
+      <a ng-href="{{links.twitter}}" target="_blank" class="twitter">twitter</a>
     </li>
   </ul>
 </div>
