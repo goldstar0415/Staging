@@ -17,11 +17,7 @@
         <p class="location">{{PV.currentPhoto.address}}</p>
 
         <form name="form" ng-submit="PV.sendComment(form)" class="col-xs-12 new-post">
-          <textarea ng-model="PV.comment" name="comment" placeholder="Start typing..."></textarea>
-
-          <div ng-messages="form.comment.$error" ng-if="form.$submitted" class="error-message">
-            <div ng-message="required">is required</div>
-          </div>
+          <textarea ng-model="PV.comment" name="comment" placeholder="Start typing..." required></textarea>
 
           <input type="submit" value="Send">
         </form>

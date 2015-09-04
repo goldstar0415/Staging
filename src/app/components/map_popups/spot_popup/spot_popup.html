@@ -15,17 +15,17 @@
     </div>
     <div class="popup-links">
       <ul>
-        <li><a ng-click="view = 'about'" href="">About</a>
+        <li><a ng-click="view = 'about'" >About</a>
         </li>
-        <li><a ng-click="view = 'reviews'" href="">Reviews</a>
+        <li><a ng-click="view = 'reviews'" >Reviews</a>
         </li>
-        <li><a ng-click="view = 'photos'" href="">Photos</a>
+        <li><a ng-click="view = 'photos'" >Photos</a>
         </li>
       </ul>
     </div>
   </div>
   <div class="col-xs-8 popup-main">
-    <a class="title" ng-bind-html="::data.spot.title"></a>
+    <a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})" ng-bind-html="::data.spot.title"></a>
 
     <p class="star-event-mobile">
       <stars item="data.spot"></stars>
@@ -35,7 +35,7 @@
     <p class="date-event" ng-if="data.spot.category.type.name == 'event'">
       <span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>
     </p>
-    <a class="author-event">{{'by ' + data.spot.user.first_name + ' ' + data.spot.user.last_name}}</a>
+    <a class="author-event" ui-sref="profile.main({user_id: data.spot.user_id})">{{'by ' + data.spot.user.first_name + ' ' + data.spot.user.last_name}}</a>
 
     <div class="content-popup clearfix">
 
