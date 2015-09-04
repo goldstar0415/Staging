@@ -1,0 +1,15 @@
+<a ng-click="isOpen = !isOpen" class="share">Share</a>
+
+<div class="share-wrap" ng-show="isOpen">
+  <ul class="share-buttons clearfix">
+    <li>
+      <a ng-href="{{links.facebook}}" target="_blank" class="facebook">facebook</a>
+    </li>
+    <li>
+      <a ng-href="{{links.google}}" target="_blank" class="google">google</a>
+    </li>
+    <li>
+      <a ng-href="{{links.twitter}}" target="_blank" class="twitter">twitter</a>
+    </li>
+  </ul>
+</div>
