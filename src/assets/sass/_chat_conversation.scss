@@ -97,7 +97,7 @@
         max-width: 100%;
         word-wrap: break-word;
         font-size: 11px;
-        float: right;
+       text-align: right;
         &:after {
           content: '';
           position: absolute;
@@ -163,7 +163,7 @@
         max-width: 100%;
         word-wrap: break-word;
         font-size: 11px;
-        float: left;
+       text-align: left;
         &:after {
           content: '';
           position: absolute;
