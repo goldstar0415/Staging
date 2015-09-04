@@ -62,7 +62,19 @@ class Friend extends BaseModel implements StaplerableInterface
     public function getDefaultLocationAttribute()
     {
         if ($this->user_id) {
-            return $this->user->location;
+            $user = $this->user;
+            $default_location = $user->location;
+            $address = $user->address;
+
+            if ($default_location) {
+                $location['lat'] = $default_location->getLat();
+                $location['lng'] = $default_location->getLng();
+
+                if ($address) {
+                    $location['address'] = $address;
+                }
+                return $location;
+            }
         }
 
         return null;
