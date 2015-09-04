@@ -1003,6 +1003,7 @@
         var scope = $rootScope.$new();
         scope.item = spot;
         scope.marker = marker;
+
         var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
         var popup = L.popup({
           keepInView: false,
@@ -1010,9 +1011,7 @@
           closeButton: false,
           className: 'popup'
         }).setContent(popupContent[0]);
-
         marker.bindPopup(popup);
-
       }
 
       function RemoveMarkerPopup(remove, cancel, addmarker, location) {

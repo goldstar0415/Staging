@@ -15,10 +15,10 @@
     <h3 class="feeds-title">
       <span class="col-xs-8 wrap-name"><a>{{item.first_name + " " + item.last_name}}</a></span>
 
-      <!--<div class="col-xs-4 location-btn">-->
-      <!--<a class="custom-location" ></a>-->
-      <!--<a class="default-location" ></a>-->
-      <!--</div>-->
+      <div class="col-xs-4 location-btn" ng-if="item.showSwitch">
+      <a class="custom-location" ng-class="{'active': item.showCustom}" ng-click="Friendsmap.switchLocation(item, true)"></a>
+      <a class="default-location" ng-class="{'active': !item.showCustom}" ng-click="Friendsmap.switchLocation(item, false)"></a>
+      </div>
     </h3>
     <!--<a ui-sref="friendsmap_edit({id: item.id})" class="edit"></a>-->
 
@@ -33,7 +33,7 @@
 
     <div class="col-xs-12 no-pad">
       <div class="col-xs-12 no-pad">
-        <p ng-show="item.address">{{item.address}}</p>
+        <p ng-show="item.displayAddress">{{item.displayAddress}}</p>
       </div>
 
       <!--<div class="col-xs-4 location-btn" >-->
@@ -50,7 +50,7 @@
     </div>
     <div class="col-xs-12 edit-delete">
       <a class="edit" ui-sref="friendsmap_edit({id: item.id})">Edit</a>
-      <a class="delete">Delete</a>
+      <a class="delete" ng-click="Friendsmap.removeFriend(item.id, $index)">Delete</a>
     </div>
   </div>
 </div>
