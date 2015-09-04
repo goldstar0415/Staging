@@ -28,6 +28,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  *
  * Relation properties
  * @property User $user
+ * @property User $friend
  */
 class Friend extends BaseModel implements StaplerableInterface
 {
@@ -61,8 +62,8 @@ class Friend extends BaseModel implements StaplerableInterface
 
     public function getDefaultLocationAttribute()
     {
-        if ($this->user_id) {
-            $user = $this->user;
+        if ($this->friend_id !== null) {
+            $user = $this->friend;
             $default_location = $user->location;
             $address = $user->address;
 
