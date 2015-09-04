@@ -121,7 +121,8 @@
 
     <div class="col-md-3 hidden-sm hidden-xs activity-profile">
 
-      <aside class="module-sidebar clearfix" ng-if="!Profile.$state.is('spot') && $root.profileUser.followers.length > 0">
+      <aside class="module-sidebar clearfix"
+             ng-if="!Profile.$state.is('spot') && $root.profileUser.followers.length > 0 && Profile.checkPermision(profileUser.privacy_followers)">
         <h2 class="sidebar-title">
           <a users-modal="followers" user="$root.profileUser">
             Followers
@@ -141,7 +142,8 @@
 
       </aside>
 
-      <aside class="module-sidebar clearfix" ng-if="!Profile.$state.is('spot') && $root.profileUser.followings.length > 0">
+      <aside class="module-sidebar clearfix"
+             ng-if="!Profile.$state.is('spot') && $root.profileUser.followings.length > 0 && Profile.checkPermision(profileUser.privacy_followings)">
         <h2 class="sidebar-title">
           <a users-modal="followings" user="$root.profileUser">
             Followings
@@ -161,7 +163,8 @@
 
       </aside>
 
-      <aside class="module-sidebar clearfix" ng-if="!Profile.$state.is('spot') && $root.profileUser.spots.length > 0">
+      <aside class="module-sidebar clearfix"
+             ng-if="!Profile.$state.is('spot') && $root.profileUser.spots.length > 0 && Profile.checkPermision(profileUser.privacy_events)">
         <h2 class="sidebar-title">
           <a ui-sref="spots({user_id: $root.currentUser.id})">
             Spots
@@ -183,21 +186,21 @@
 
       <aside class="module-sidebar clearfix" ng-if="Profile.$state.is('spot') && $root.currentSpot.photos.length > 0">
         <h2 class="sidebar-title">
-          <a >
+          <a>
             Photos
             <span class="counter">{{$root.currentSpot.photos.length}}</span>
           </a>
         </h2>
 
         <div class="sidebar-row ">
-          <div jcarousel images="$root.currentSpot.photos" ></div>
+          <div jcarousel images="$root.currentSpot.photos"></div>
         </div>
 
       </aside>
 
       <aside class="module-sidebar clearfix" ng-if="Profile.$state.is('spot') && $root.currentSpot.count_members > 0">
         <h2 class="sidebar-title">
-          <a users-modal="members" user="$root.currentSpot" >
+          <a users-modal="members" user="$root.currentSpot">
             Members
             <span class="counter">{{$root.currentSpot.count_members}}</span>
           </a>
