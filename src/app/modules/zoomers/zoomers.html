@@ -64,7 +64,8 @@
                      ng-if="Zoomers.checkPermision(user.privacy_events, user)">
                     {{ user.count_spots }}
                   </a>
-                  <a class="f-count" title="Followings" ng-if="Zoomers.checkPermision(user.privacy_followings, user)">
+                  <a class="f-count" title="Followings" users-modal="followings" user="user"
+                     ng-if="Zoomers.checkPermision(user.privacy_followings, user)">
                     {{ user.count_followings }}
                   </a>
                 </p>

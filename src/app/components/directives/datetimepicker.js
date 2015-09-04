@@ -76,7 +76,7 @@
         link: function (s, e, a) {
           var step = s.step || 15;
           if (s.model) {
-            s.model = moment(s.model).format(DATE_FORMAT.time);
+            s.model = moment(s.model).format(DATE_FORMAT.datepicker.time);
           }
 
           $(e).datetimepicker({
@@ -100,12 +100,8 @@
             }
           });
 
-          function onSelectDate(ct,$i) {
-            s.model = moment(ct).format(DATE_FORMAT.date);
-          }
-
           function onSelectTime(time) {
-            s.model = moment(time).format(DATE_FORMAT.time);
+            s.model = moment(time).format(DATE_FORMAT.datepicker.time);
             s.$apply();
           }
         }

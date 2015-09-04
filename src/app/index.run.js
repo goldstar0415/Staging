@@ -30,11 +30,11 @@
 
       $rootScope.currentParams = toParams;
 
-      //if (current.require_auth && !$rootScope.currentUser) {
-      //  console.log($rootScope.currentUser, arguments);
-      //  toastr.error('Unauthorized!');
-      //  $state.go('index');
-      //}
+      if (current.require_auth && !$rootScope.currentUser) {
+        console.log($rootScope.currentUser, arguments);
+        toastr.error('Unauthorized!');
+        $state.go('index');
+      }
 
       MapService.clearLayers();
       MapService.ChangeState(current.mapState);

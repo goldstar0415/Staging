@@ -7,7 +7,7 @@
       return function (input, format) {
         format = format || DATE_FORMAT.full;
         var utcOffset = moment().utcOffset();
-        return moment(input).add(utcOffset, 'm').format(format);
+        return moment(input, DATE_FORMAT.backend).add(utcOffset, 'm').format(format);
       }
     })
 
