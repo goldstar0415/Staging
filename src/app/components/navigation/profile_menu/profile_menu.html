@@ -166,7 +166,7 @@
       <aside class="module-sidebar clearfix"
              ng-if="!Profile.$state.is('spot') && $root.profileUser.spots.length > 0 && Profile.checkPermision(profileUser.privacy_events)">
         <h2 class="sidebar-title">
-          <a ui-sref="spots({user_id: $root.currentUser.id})">
+          <a ui-sref="spots({user_id: $root.profileUser.id})">
             Spots
             <span class="counter">{{$root.profileUser.count_spots}}</span>
           </a>
