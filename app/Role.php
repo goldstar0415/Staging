@@ -12,4 +12,9 @@ class Role extends EntrustRole
     {
         return self::where('name', $role_name)->first();
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

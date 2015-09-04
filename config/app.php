@@ -161,7 +161,8 @@ return [
         Barryvdh\Cors\ServiceProvider::class,
         Nwidart\LaravelForecast\LaravelForecastServiceProvider::class,
         ChrisKonnertz\OpenGraph\OpenGraphServiceProvider::class,
-        Frozennode\Administrator\AdministratorServiceProvider::class
+        Frozennode\Administrator\AdministratorServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class
     ],
 
     /*
@@ -219,7 +220,8 @@ return [
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Geotools' => Toin0u\Geotools\Facade\Geotools::class,
         'Forecast' => Nwidart\LaravelForecast\ForecastFacade::class,
-        'OpenGraph' => ChrisKonnertz\OpenGraph\OpenGraph::class
+        'OpenGraph' => ChrisKonnertz\OpenGraph\OpenGraph::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class
     ],
 
 ];

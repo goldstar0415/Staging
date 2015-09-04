@@ -2,6 +2,9 @@
 
 namespace App;
 
+use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
+use Codesleeve\Stapler\ORM\StaplerableInterface;
+
 /**
  * Class ActivityCategory
  * @package App
@@ -9,18 +12,57 @@ namespace App;
  * @property integer $id
  * @property string $name
  * @property string $display_name
+ * @property \Codesleeve\Stapler\Attachment $icon
+ * @property string $icon_url
  *
  * Relation properties
  * @property \Illuminate\Database\Eloquent\Collection $activities
  */
-class ActivityCategory extends BaseModel
+class ActivityCategory extends BaseModel implements StaplerableInterface
 {
-    protected $fillable = ['name', 'display_name'];
+    use StaplerTrait;
+
+    protected $fillable = ['name', 'display_name', 'icon'];
+
+    protected $appends = ['icon_url'];
 
     public $timestamps = false;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(array $attributes = [])
+    {
+        $this->hasAttachedFile(
+            'icon',
+            [
+                'styles' => ['original' => '60x60']
+            ]
+        );
+        parent::__construct($attributes);
+    }
     
     public function activities()
     {
         return $this->hasMany(Activity::class);
+    }
+
+    public function getIconUrlAttribute()
+    {
+        if ($this->icon) {
+            return $this->icon->url();
+        }
+        return null;
+    }
+
+    public function setIconPutAttribute($value)
+    {
+        $path = public_path('tmp/' . $value);
+        $this->icon = $path;
+    }
+
+    public function getIconPutAttribute()
+    {
+        //TODO: get icon for admin panel
     }
 }
