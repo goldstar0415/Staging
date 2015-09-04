@@ -8,6 +8,7 @@
   /** @ngInject */
   function runBlock($log, MapService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, $modalStack) {
 
+    $rootScope.isMobile = L.Browser.touch;
     L.Icon.Default.imagePath = '/assets/libs/Leaflet/images';
 
     MapService.Init('map');
