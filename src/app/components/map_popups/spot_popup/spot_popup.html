@@ -91,18 +91,18 @@
 
     </div>
     <div class="links-nav"  >
-      <ul class="tools clearfix" ng-if="$root.currentUser">
+      <ul class="tools clearfix" >
 
         <li ng-if="!data.spot.is_saved">
           <a class="save-event" ng-click="saveToCalendar(data.spot)">Save</a>
         </li>
-        <li ng-if="data.spot.is_saved">
+        <li ng-if="$root.currentUser && data.spot.is_saved">
           <a class="save-event saved clicked" ng-click="removeFromCalendar(data.spot)">Remove</a>
         </li>
         <li ng-if="!data.spot.is_favorite">
           <a class="favorite-spot" ng-click="addToFavorite(data.spot)">Favorite</a>
         </li>
-        <li ng-if="data.spot.is_favorite">
+        <li ng-if="$root.currentUser && data.spot.is_favorite">
           <a class="fav favorited" ng-click="removeFromFavorite(data.spot)">Unfavorite</a>
         </li>
         <li>

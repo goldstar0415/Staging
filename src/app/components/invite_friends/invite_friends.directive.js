@@ -20,11 +20,16 @@
     };
 
     /** @ngInject */
-    function InviteFriendsController($modal, $rootScope) {
+    function InviteFriendsController($modal, $rootScope, SignUpService) {
       var vm = this;
       vm.type = vm.type || 'spot';
 
       vm.openModal = function () {
+        if (!$rootScope.currentUser) {
+          SignUpService.openModal('SignUpModal.html');
+          return;
+        }
+
         $modal.open({
           templateUrl: 'InviteFriendsModal.html',
           controller: InviteFriendsModalController,

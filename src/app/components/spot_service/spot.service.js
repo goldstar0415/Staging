@@ -6,7 +6,7 @@
     .factory('SpotService', SpotService);
 
   /** @ngInject */
-  function SpotService(Spot, moment, toastr, dialogs) {
+  function SpotService(Spot, moment, toastr, dialogs, $rootScope, SignUpService) {
     return {
       removeSpot: removeSpot,
       formatSpot: formatSpot,
@@ -17,9 +17,11 @@
     };
 
     function saveToCalendar(spot) {
-      Spot.saveToCalendar({id: spot.id}, function () {
-        spot.is_saved = true;
-      });
+      if (checkUser()) {
+        Spot.saveToCalendar({id: spot.id}, function () {
+          spot.is_saved = true;
+        });
+      }
     }
 
     function removeFromCalendar(spot) {
@@ -29,13 +31,15 @@
     }
 
     function addToFavorite(spot) {
-      Spot.favorite({id: spot.id}, function () {
-        spot.is_favorite = true;
-      });
+      if (checkUser()) {
+        Spot.favorite({id: spot.id}, function () {
+          spot.is_favorite = true;
+        });
+      }
     }
 
     function removeFromFavorite(spot, callback) {
-      Spot.unfavorite({id: spot.id}, function() {
+      Spot.unfavorite({id: spot.id}, function () {
         spot.is_favorite = false;
         if (callback) {
           callback();
@@ -64,6 +68,14 @@
       spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
 
       return spot;
+    }
+
+    function checkUser() {
+      if (!$rootScope.currentUser) {
+        SignUpService.openModal('SignUpModal.html');
+        return false;
+      }
+      return true;
     }
   }
 })();

@@ -114,18 +114,18 @@
                 <!--<a class="big-plus padding-0" ></a>-->
                 <!--</div>-->
                 <div class="links-nav"  >
-                  <ul class="tools clearfix" ng-if="$root.currentUser">
+                  <ul class="tools clearfix" >
 
                     <li ng-if="!item.spot.is_saved">
                       <a class="save-event" ng-click="saveToCalendar(item.spot)">Save</a>
                     </li>
-                    <li ng-if="item.spot.is_saved">
+                    <li ng-if="$root.currentUser && item.spot.is_saved">
                       <a class="save-event saved clicked" ng-click="removeFromCalendar(item.spot)">Remove</a>
                     </li>
                     <li ng-if="!item.spot.is_favorite">
                       <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
                     </li>
-                    <li ng-if="item.spot.is_favorite">
+                    <li ng-if="$root.currentUser && item.spot.is_favorite">
                       <a class="fav favorited" ng-click="removeFromFavorite(item.spot)">Unfavorite</a>
                     </li>
                     <li>
@@ -201,12 +201,12 @@
                 <div class="event-result-nav col-xs-12 padding-0">
 
                   <div class="links-nav"  >
-                    <ul class="tools clearfix" ng-if="$root.currentUser">
+                    <ul class="tools clearfix" >
 
                       <li ng-if="!item.spot.is_favorite">
                         <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
                       </li>
-                      <li ng-if="item.spot.is_favorite">
+                      <li ng-if="$root.currentUser && item.spot.is_favorite">
                         <a class="fav favorited" ng-click="removeFromFavorite(item.spot)">Unfavorite</a>
                       </li>
                       <li>
@@ -281,12 +281,12 @@
 
                 <div class="event-result-nav col-xs-12 padding-0">
 
-                  <ul class="tools clearfix" ng-if="$root.currentUser">
+                  <ul class="tools clearfix">
 
                     <li ng-if="!item.spot.is_favorite">
                       <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
                     </li>
-                    <li ng-if="item.spot.is_favorite">
+                    <li ng-if="$root.currentUser && item.spot.is_favorite">
                       <a class="fav favorited" ng-click="removeFromFavorite(item.spot)">Unfavorite</a>
                     </li>
                     <li>
