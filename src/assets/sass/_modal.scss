@@ -18,6 +18,11 @@
   }
   .modal-header {
     border-bottom: none;
+    h3 {
+      width: 100%;
+      white-space: pre-line;
+      word-wrap: break-word;
+    }
   }
   h4 {
     font: 500 26px/26px 'Ubuntu medium';
