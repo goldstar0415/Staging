@@ -166,6 +166,7 @@
         font-size: 11px;
         text-align: left;
         text-overflow: ellipsis;
+        overflow: hidden;
         &:after {
           content: '';
           position: absolute;
