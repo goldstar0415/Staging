@@ -29,8 +29,7 @@
     img {
       display: table;
       margin: 0 auto;
-      //max-height: 600px;
-      //max-width: 780px;
+      width: 100%;
       @include vertical_align;
     }
     .previous {
@@ -92,7 +91,7 @@
         position: relative;
         margin-top: 10px;
         border-bottom: 1px solid #e9edf0;
-        padding: 10px 0 10px 10px;
+        padding: 10px 0 10px;
         &:after {
           content: ".";
           display: block;
@@ -124,7 +123,7 @@
           float: left;
         }
         .info {
-          padding: 0 15px 0 0;
+          padding: 0 0 0 10px;
           h3 {
             margin: 0;
             font: 500 18px "Ubuntu medium";
@@ -176,6 +175,10 @@
             color: $navy_blue;
             text-decoration: none;
           }
+        }
+        .avatar-wrap {
+          padding: 0;
+          width: auto;
         }
       }
     }
@@ -248,6 +251,11 @@
           width: 100%;
           .reviews {
             height: inherit;
+            .post {
+              .delete-reviews {
+                display: block;
+              }
+            }
           }
         }
       }

@@ -786,6 +786,12 @@ section {
       @include vertical_align;
     }
   }
+  .modalFix {
+    .modal-dialog {
+      height: 350px;
+      overflow: scroll;
+    }
+  }
 }
 
 html {

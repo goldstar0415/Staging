@@ -45,6 +45,7 @@
                 border-radius: 10px 0 0 0;
             }
             .star-event {
+                opacity: 0.6;
                 width: 100%;
                 position: absolute;
                 top: 5px;
@@ -152,6 +153,7 @@
         .star-event-mobile{
           display: none;
           height: 1px;
+          opacity: .6;
         }
         .location-event {
             line-height: 11px;
@@ -453,7 +455,10 @@
       }
     }
     .popup-main{
-
+    height: 237px;
+      .location-event{
+        height: 25px !important;
+      }
     }
   }
 }
