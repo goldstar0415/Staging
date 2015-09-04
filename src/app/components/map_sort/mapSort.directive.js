@@ -14,10 +14,14 @@
       }
     });
 
-  function mapSort($rootScope, $scope, MapService, $http, API_URL) {
+  function mapSort($rootScope, $scope, MapService, $http, SpotService, API_URL) {
     var vm = this;
     var originalSpotsArray = [];
     $scope.weatherForecast = [];
+    $scope.saveToCalendar = SpotService.saveToCalendar;
+    $scope.removeFromCalendar = SpotService.removeFromCalendar;
+    $scope.addToFavorite = SpotService.addToFavorite;
+    $scope.removeFromFavorite = SpotService.removeFromFavorite;
 
     $rootScope.$on('update-map-data', function(event, spots) {
       originalSpotsArray = spots;

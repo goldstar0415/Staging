@@ -103,7 +103,7 @@
                 <p class="location">{{item.address}}</p>
 
                 <p class="description" ng-bind-html="item.spot.description"></p>
-                <!--<div class="event-result-nav col-xs-12 padding-0">-->
+              1  <!--<div class="event-result-nav col-xs-12 padding-0">-->
 
                 <!--<a class="save padding-0" >Save</a>-->
 
@@ -113,23 +113,28 @@
 
                 <!--<a class="big-plus padding-0" ></a>-->
                 <!--</div>-->
-                <ul class="tools">
-                  <li>
-                    <a class="save-event">Save</a>
-                  </li>
-                  <li>
-                    <a class="favorite-spot">Favorite</a>
-                  </li>
-                  <li style="display: none">
-                    <a class="fav favorited">Unfavorite</a>
-                  </li>
-                  <li>
-                    <invite-friends item="Spot.spot"></invite-friends>
-                  </li>
-                  <li class="sharing-wrap">
-                    <a class="sharing"></a>
-                  </li>
-                </ul>
+                <div class="links-nav"  >
+                  <ul class="tools clearfix" ng-if="$root.currentUser">
+
+                    <li ng-if="!item.spot.is_saved">
+                      <a class="save-event" ng-click="saveToCalendar(item.spot)">Save</a>
+                    </li>
+                    <li ng-if="item.spot.is_saved">
+                      <a class="save-event saved clicked" ng-click="removeFromCalendar(item.spot)">Remove</a>
+                    </li>
+                    <li ng-if="!item.spot.is_favorite">
+                      <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
+                    </li>
+                    <li ng-if="item.spot.is_favorite">
+                      <a class="fav favorited" ng-click="removeFromFavorite(item.spot)">Unfavorite</a>
+                    </li>
+                    <li>
+                      <invite-friends item="item.spot"></invite-friends>
+                    </li>
+                  </ul>
+
+                  <share links="item.spot.share_links" ></share>
+                </div>
 
               </div>
             </div>
@@ -195,11 +200,22 @@
 
                 <div class="event-result-nav col-xs-12 padding-0">
 
-                  <a class="favorites padding-0">Favorite</a>
+                  <div class="links-nav"  >
+                    <ul class="tools clearfix" ng-if="$root.currentUser">
 
-                  <a class="invite padding-0">Invite friends</a>
+                      <li ng-if="!item.spot.is_favorite">
+                        <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
+                      </li>
+                      <li ng-if="item.spot.is_favorite">
+                        <a class="fav favorited" ng-click="removeFromFavorite(item.spot)">Unfavorite</a>
+                      </li>
+                      <li>
+                        <invite-friends item="item.spot"></invite-friends>
+                      </li>
+                    </ul>
 
-                  <a class="big-plus padding-0"></a>
+                    <share links="item.spot.share_links" ></share>
+                  </div>
                 </div>
               </div>
             </div>
@@ -265,11 +281,18 @@
 
                 <div class="event-result-nav col-xs-12 padding-0">
 
-                  <a class="favorites padding-0">Favorite</a>
+                  <ul class="tools clearfix" ng-if="$root.currentUser">
 
-                  <a class="invite padding-0">Invite friends</a>
-
-                  <a class="big-plus padding-0"></a>
+                    <li ng-if="!item.spot.is_favorite">
+                      <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
+                    </li>
+                    <li ng-if="item.spot.is_favorite">
+                      <a class="fav favorited" ng-click="removeFromFavorite(item.spot)">Unfavorite</a>
+                    </li>
+                    <li>
+                      <invite-friends item="item.spot"></invite-friends>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
