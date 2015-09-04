@@ -21,7 +21,7 @@
           access = true;
           break;
         case 2: //followers&followings
-          if ($rootScope.currentUser && !user.can_follow || user.is_following) {
+          if ($rootScope.currentUser && (!user.can_follow || user.is_following)) {
             access = true;
           }
           break;

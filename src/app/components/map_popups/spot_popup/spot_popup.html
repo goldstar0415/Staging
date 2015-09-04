@@ -5,8 +5,8 @@
       <stars item="data.spot" class="star-event"></stars>
 
 
-
       <img ng-src="{{data.spot.cover_url.medium}}">
+
       <div class="star-event">
         <!--<img src="/assets/img/icons/star.png"><img src="/assets/img/icons/star.png">-->
         <!--<img src="/assets/img/icons/star.png"><img src="/assets/img/icons/star.png">-->
@@ -25,13 +25,18 @@
     </div>
   </div>
   <div class="col-xs-8 popup-main">
-    <a  class="title" ng-bind-html="::data.spot.title"></a>
-    <p class="star-event-mobile"><stars item="data.spot" ></stars></p>
+    <a class="title" ng-bind-html="::data.spot.title"></a>
+
+    <p class="star-event-mobile">
+      <stars item="data.spot"></stars>
+    </p>
     <p class="location-event">{{::data.address}}</p>
+
     <p class="date-event" ng-if="data.spot.category.type.name == 'event'">
       <span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>
     </p>
-    <a class="author-event" >{{'by ' + data.spot.user.first_name + ' ' + data.spot.user.last_name}}</a>
+    <a class="author-event">{{'by ' + data.spot.user.first_name + ' ' + data.spot.user.last_name}}</a>
+
     <div class="content-popup clearfix">
 
       <p ng-show="view == 'about'" class="description" ng-bind-html="data.spot.description"></p>
@@ -44,9 +49,12 @@
           <img ng-src="{{currentReview.sender.avatar_url.thumb}}">
         </div>
         <div class="col-xs-10 content">
-          <a  class="reviews-user">{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}</a>
+          <a class="reviews-user">{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}</a>
+
           <p class="description" ng-bind-html="currentReview.body | htmlLinky:'_blank'"></p>
+
           <p class="date-reviews ">{{currentReview.created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>
+
           <div class="plus-minus">
             <a class="plus"></a>
             <norb>0</norb>
@@ -63,9 +71,11 @@
         </div>
 
         <div ng-if="showPhotos" class="photos-event clearfix">
-          <a photo-viewer items="data.spot.photos" index="firstPhotoIndex" current-item="firstItem"><img ng-src="{{firstPhoto}}">
+          <a photo-viewer items="data.spot.photos" index="firstPhotoIndex" current-item="firstItem"><img
+            ng-src="{{firstPhoto}}">
           </a>
-          <a ng-if="secondItem" photo-viewer items="data.spot.photos" index="secondPhotoIndex" current-item="secondItem"><img ng-src="{{secondPhoto}}">
+          <a ng-if="secondItem" photo-viewer items="data.spot.photos" index="secondPhotoIndex"
+             current-item="secondItem"><img ng-src="{{secondPhoto}}">
           </a>
           <!--<a ><img src="/assets/img/icons/q.png">-->
           <!--</a>-->
@@ -80,14 +90,18 @@
       </div>
 
     </div>
-    <div class="links-nav">
-      <a class="save" >Save</a>
-      <a class="favorites" >Favorite</a>
-      <a class="invite" >Invite friends</a>
-      <a class="big-plus" ></a>
+    <div class="links-nav" ng-if="$root.currentUser" ng-cloak>
+
+      <a class="save" ng-show="!data.spot.is_saved && data.spot.type == 'Event'" ng-click="saveToCalendar(data.spot)">Save</a>
+      <a class="save saved clicked" ng-show="data.spot.is_saved && data.spot.type == 'Event'" ng-click="removeFromCalendar(data.spot)">Remove</a>
+      <a class="favorite-spot" ng-show="!data.spot.is_favorite" ng-click="addToFavorite(data.spot)">Favorite</a>
+      <a class="fav favorited" ng-show="data.spot.is_favorite" ng-click="removeFromFavorite(data.spot)">Unfavorite</a>
+      <invite-friends item="data.spot"></invite-friends>
+
+      <a class="big-plus"></a>
     </div>
     <div class="close-event">
-      <a ng-click="marker.closePopup()" class="close" href=""></a>
+      <a ng-click="marker.closePopup()" class="close" ></a>
     </div>
   </div>
 </div>
