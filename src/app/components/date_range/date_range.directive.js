@@ -22,12 +22,11 @@
     function DateRangeCtrl(DATE_FORMAT) {
       var vm = this;
 
-      if (vm.item.start_date && vm.item.end_date) {
+      if (vm.item.type == 'Event' && vm.item.start_date && vm.item.end_date) {
         var start_date = moment(vm.item.start_date),
           end_date  = moment(vm.item.end_date);
         vm.start_date = start_date.format(DATE_FORMAT.date);
         vm.end_date = end_date.format(DATE_FORMAT.date);
-
         if (vm.item.start_time) {
           vm.start_time = vm.item.start_time;
           vm.end_time = vm.item.end_time;
