@@ -19,8 +19,12 @@
     };
   }
 
-  function SpotPopupController($scope, moment) {
+  function SpotPopupController($scope, SpotService) {
     var firstPhotoIndex, secondPhotoIndex, reviewIndex;
+    $scope.saveToCalendar = SpotService.saveToCalendar;
+    $scope.removeFromCalendar = SpotService.removeFromCalendar;
+    $scope.addToFavorite = SpotService.addToFavorite;
+    $scope.removeFromFavorite = SpotService.removeFromFavorite;
     $scope.view = 'about';
     $scope.showNextPhoto = false;
     $scope.showPrevPhoto = false;
