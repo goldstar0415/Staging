@@ -161,7 +161,8 @@
 
       <div class="col-md-10 col-sm-12 col-xs-12">
         <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-datepicker name="start_date_{{$index}}" ng-model="activity.start_date" type="text" required>
+          <input ng-datepicker name="start_date_{{$index}}" ng-model="activity.start_date"
+                 start-date="Plan.start_date" end-date="Plan.end_date" type="text" required>
 
           <div ng-messages="form['start_date_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
             <div ng-message="required">Start date field can't be empty</div>
@@ -171,8 +172,8 @@
         <span class="hidden-xs col-sm-1">—</span>
 
         <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-datepicker name="end_date_{{$index}}" ng-model="activity.end_date" start-date="activity.start_date"
-                 type="text" required>
+          <input ng-datepicker name="end_date_{{$index}}" ng-model="activity.end_date"
+                 start-date="Plan.start_date" end-date="Plan.end_date" type="text" required>
 
           <div ng-messages="form['end_date_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
             <div ng-message="required">End date field can't be empty</div>
