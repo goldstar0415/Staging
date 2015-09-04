@@ -208,6 +208,9 @@ h3 {
   padding-right: 0;
 }
 
+.padding {
+  padding: 15px;
+}
 .central {
   @include content_bg;
   margin-bottom: 100px;

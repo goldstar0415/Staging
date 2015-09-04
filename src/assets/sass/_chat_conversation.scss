@@ -97,7 +97,8 @@
         max-width: 100%;
         word-wrap: break-word;
         font-size: 11px;
-       text-align: right;
+        text-align: right;
+        overflow: hidden;
         &:after {
           content: '';
           position: absolute;
@@ -163,7 +164,8 @@
         max-width: 100%;
         word-wrap: break-word;
         font-size: 11px;
-       text-align: left;
+        text-align: left;
+        text-overflow: ellipsis;
         &:after {
           content: '';
           position: absolute;
