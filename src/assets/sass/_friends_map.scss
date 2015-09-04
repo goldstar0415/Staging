@@ -88,8 +88,10 @@
 }
 
 .location-friend {
-  input {
-    background: red;
+  &:focus {
+    font-family: 'Ubuntu bold';
+    font-weight: 700;
+    @include input_hover_effects;
   }
 }
 
