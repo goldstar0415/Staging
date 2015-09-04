@@ -346,7 +346,15 @@
         }
     }
 }
-
+@media (max-width: 767px) {
+  .popup{
+    .close-event{
+      .close{
+        background: url(/assets/img/icons/cross2.png);
+      }
+    }
+  }
+}
 @media (max-width: 500px) {
 .popup {
   max-width: 350px;
