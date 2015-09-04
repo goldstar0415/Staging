@@ -632,6 +632,7 @@ section {
   /*end about us page*/
 
 }
+
 @media (max-width: 570px) {
   .text-content {
     width: 100%;
@@ -775,10 +776,15 @@ section {
   overflow: initial;
 }
 
-
 .modal-open {
   .snap-content {
-    overflow: hidden;
+    overflow: initial;
+  }
+  .modal {
+    height: 100%;
+    .modal-dialog {
+      @include vertical_align;
+    }
   }
 }
 
