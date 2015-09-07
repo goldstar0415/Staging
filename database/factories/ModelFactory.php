@@ -187,6 +187,7 @@ $factory->define(App\Activity::class, function (Generator $faker) use ($timestam
 $factory->define(App\ActivityCategory::class, function (Generator $faker) {
     $name = $faker->unique()->word;
     return [
+        'icon' => $faker->image(storage_path('app'), 60, 60),
         'name' => $name,
         'display_name' => ucfirst($name)
     ];

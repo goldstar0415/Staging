@@ -52,7 +52,7 @@ class Plan extends BaseModel
 
     public function spots()
     {
-        return $this->belongsToMany(Spot::class);
+        return $this->belongsToMany(Spot::class)->withPivot('position');
     }
 
     public function invitedUsers()

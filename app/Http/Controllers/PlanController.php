@@ -24,7 +24,7 @@ class PlanController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth');
     }
 
     /**
@@ -60,7 +60,9 @@ class PlanController extends Controller
         $request->user()->plans()->save($plan);
 
         if ($request->has('spots')) {
-            $plan->spots()->sync($request->input('spots'));
+            foreach ($request->input('spots') as $spot) {
+                $plan->spots()->attach($spot['id'], ['position' => $spot['position']]);
+            }
         }
         if ($request->has('activities')) {
             foreach ($request->input('activities') as $activity_data) {
@@ -107,7 +109,10 @@ class PlanController extends Controller
         $plan->save();
 
         if ($request->has('spots')) {
-            $plan->spots()->sync($request->input('spots'));
+            $plan->spots()->detach();
+            foreach ($request->input('spots') as $spot) {
+                $plan->spots()->attach($spot['id'], ['position' => $spot['position']]);
+            }
         }
         $plan->activities()->delete();
         if ($request->has('activities')) {
