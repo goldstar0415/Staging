@@ -134,7 +134,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      *
      * @var array
      */
-    protected $with = ['socials', 'roles'];
+    protected $with = ['socials'];
 
     protected $hidden = [
         'password',
