@@ -6,7 +6,7 @@ use Illuminate\Foundation\Application;
 use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Files\ExcelFile;
 
-class SpotsImport extends ExcelFile
+class SpotsImportFile extends ExcelFile
 {
 
     protected $delimiter = ';';

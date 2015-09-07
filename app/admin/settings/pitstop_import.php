@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\SpotsImportFile;
+
 return [
     /**
      * Settings page title
@@ -18,6 +20,11 @@ return [
             'type' => 'enum',
             'options' => App\SpotType::where('name', 'pitstop')->first()->categories->pluck('display_name', 'name')
                 ->toArray()
+        ],
+        'admin' => [
+            'title' => 'Attached admin',
+            'type' => 'enum',
+            'options' => App\Role::take('admin')->users->pluck('first_name', 'email')->toArray()
         ],
         'document' => [
             'title' => 'CSV file',
@@ -72,6 +79,14 @@ return [
             //the settings data is passed to the closure and saved if a truthy response is returned
             'action' => function(&$data)
             {
+                /**
+                 * @var SpotsImportFile $import
+                 */
+                $import = app(SpotsImportFile::class, [app(), app(Maatwebsite\Excel\Excel::class), $data['document']]);
+
+                app(\Illuminate\Contracts\Bus\Dispatcher::class)
+                    ->dispatch(new \App\Jobs\SpotsImport($import, $data, \App\Jobs\SpotsImport::PITSTOP));
+
                 return true;
             }
         ],

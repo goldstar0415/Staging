@@ -1,9 +1,6 @@
 <?php
 
-use App\Services\SpotsImport;
-use App\Spot;
-use App\SpotTypeCategory;
-use App\User;
+use App\Services\SpotsImportFile;
 
 return [
     /**
@@ -83,32 +80,12 @@ return [
             'action' => function(&$data)
             {
                 /**
-                 * @var SpotsImport $import
+                 * @var SpotsImportFile $import
                  */
-                $import = app(SpotsImport::class, [app(), app(Maatwebsite\Excel\Excel::class), $data['document']]);
+                $import = app(SpotsImportFile::class, [app(), app(Maatwebsite\Excel\Excel::class), $data['document']]);
 
-                $import->each(function($row) use ($data, $import) {
-                    $admin = User::where('email', $data['admin'])->first();
-                    $photos = explode(',', $row->image_links);
-                    $spot = new Spot;
-                    $spot->category()->associate(SpotTypeCategory::where('name', $data['spot_category'])->first());
-                    $spot->cover = $photos[0];
-                    $spot->title = $row->title;
-                    $spot->description = $row->description;
-                    $spot->start_date = $row->start_date;
-                    $spot->end_date = $row->end_date;
-                    $admin->spots()->save($spot);
-                    foreach ($photos as $photo) {
-                        $spot->photos()->create([
-                            'photo' => $photo
-                        ]);
-                    }
-                });
-
-                File::delete([
-                    storage_path('app/csvs/event_import.json'),
-                    storage_path('app/' . $data['document'])
-                ]);
+                app(\Illuminate\Contracts\Bus\Dispatcher::class)
+                    ->dispatch(new \App\Jobs\SpotsImport($import, $data, \App\Jobs\SpotsImport::PITSTOP));
 
                 return true;
             }
