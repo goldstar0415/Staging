@@ -49,7 +49,7 @@
   }
 
   .place {
-    font: 400 14px 'Ubuntu medium';
+    font: 400 14px 'Questrial';
     color: grey;
   }
 
@@ -60,7 +60,7 @@
     float: right;
   }
   .description {
-    font: 13px/19px Arial, sans-serif;
+    font: 13px/19px 'Pontano';
     margin: 10px 0 12px;
   }
   .date {
@@ -76,14 +76,14 @@
   top: 0;
   right: 0;
   color: grey;
-  font: 12px Arial, sans-serif;
+  font: 12px 'Pontano';
   text-align: right;
   float: right;
 }
 
 .tools {
   padding-top: 15px;
-  font: 600 13px/13px 'Ubuntu light';
+  font: 600 13px/13px 'Questrial';
   padding-left: 0px;
   width: 100%;
   display: inline-block;
@@ -92,7 +92,7 @@
     margin-right: 15px;
     a {
       padding-left: 18px;
-      font: 14px 'Ubuntu medium';
+      font: 14px 'Questrial';
       color: $blue;
       &:hover, &:active, &:focus {
         color: #0874be;
@@ -242,7 +242,7 @@
     margin-right: 7px;
     float: left;
     a {
-      font: 400 13px/13px 'Ubuntu medium';
+      font: 400 13px/13px 'Questrial';
       color: #85929b;
       @include transition_color;
     }

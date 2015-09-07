@@ -3,11 +3,11 @@
 .about-page {
     margin-top: 7rem;
     .about-title {
-        font: 500 36px/26px 'Ubuntu medium';
+        font: 500 36px/26px 'Questrial';
         margin-bottom: 30px;
     }
     .about-text {
-        font: 16px/24px Arial, sans-serif;
+        font: 16px/24px 'Pontano';
     }
 }
 
@@ -23,12 +23,12 @@
         margin-bottom: 15px;
     }
     .name-user {
-      font: 22px 'Ubuntu medium';
+      font: 22px 'Questrial';
         color: $dark_blue;
         margin-bottom: 5px;
     }
     .job-user {
-        font: 14px Arial;
+        font: 14px 'Pontano';
         color: grey;
         text-transform: uppercase;
     }

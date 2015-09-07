@@ -5,7 +5,7 @@
     border-radius: 10px;
     .padding-0{padding: 0;}
     .button-category{
-        font: 500 16px/18px 'Ubuntu medium';
+        font: 500 16px/18px 'Questrial';
             padding: 3px 15px;
             line-height: 110%;
         float: right;
@@ -20,13 +20,13 @@
             height: 40px;
         }
         thead {
-            font: 500 16px/16px 'Ubuntu medium';
+            font: 500 16px/16px 'Questrial';
             th {
                 border: 1px solid #e9edf0;
             }
         }
         tbody {
-            font: 14px/14px Arial, sans-serif;
+            font: 14px/14px 'Pontano';
             tr:nth-child(even) {
                 background: #e9edf0;
                 td {
@@ -34,7 +34,7 @@
                 }
                 &:last-child {
                     border-right-color: #e9edf0;
-                   
+
                 }
             }
             td {
@@ -63,7 +63,7 @@
                         background: url(/assets/img/icons/trash.png) no-repeat -5px -53px;
                     }
                 }
-                
+
             }
         }
     }

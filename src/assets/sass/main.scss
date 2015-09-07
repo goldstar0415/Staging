@@ -127,9 +127,9 @@ body, .snap-content {
 }
 
 body {
-  font-family: 'Ubuntu medium' !important;
+  font-family: 'Questrial' !important;
   :lang(ru) {
-    font-family: 'Ubuntu medium' !important;
+    font-family: 'Questrial' !important;
   }
 }
 
@@ -198,7 +198,7 @@ textarea {
 
 h3 {
   margin: 25px auto;
-  font: 500 20px/26px 'Ubuntu medium';
+  font: 500 20px/26px 'Questrial';
   color: $dark_blue;
 }
 
@@ -268,7 +268,7 @@ h3 {
 
 .title {
   h2 {
-    font: 500 22px/22px 'Ubuntu medium';
+    font: 500 22px/22px 'Questrial';
     color: $dark_blue;
     display: inline-block;
     word-break: break-all;
@@ -362,7 +362,7 @@ h3 {
 
   p {
     margin-top: 40px;
-    font: 500 18px/18px 'Ubuntu medium';
+    font: 500 18px/18px 'Questrial';
     text-align: center;
     color: #b5e0ef;
   }
@@ -382,7 +382,7 @@ h3 {
 }
 
 .date, .views, .author {
-  font: 11px/11px Arial, sans-serif;
+  font: 11px/11px 'Pontano';
   color: grey;
   margin-top: 5px;
 }
@@ -597,7 +597,7 @@ sign-in, sign-up {
   /*about us page*/
   .about-page {
     .about-text {
-      font: 16px/24px Arial, sans-serif;
+      font: 16px/24px 'Pontano';
     }
   }
   /*end about us page*/
@@ -632,7 +632,7 @@ sign-in, sign-up {
   /*about us page*/
   .about-page {
     .about-text {
-      font: 100 25px 'Ubuntu medium';
+      font: 100 25px 'Questrial';
     }
   }
   /*end about us page*/
@@ -655,19 +655,19 @@ sign-in, sign-up {
   /*blog article page*/
   .article {
     .article-description {
-      font: 24px/20px Arial, sans-serif;
+      font: 24px/20px 'Pontano';
       word-wrap: break-word;
     }
     .title-blog {
-      font: 500 32px/24px 'Ubuntu medium';
+      font: 500 32px/24px 'Questrial';
       word-wrap: break-word;
     }
     .location-link {
-      font: 500 25px/24px 'Ubuntu medium';
+      font: 500 25px/24px 'Questrial';
       word-wrap: break-word;
     }
     .date, .views, .category, .author {
-      font: 500 22px/24px 'Ubuntu medium';
+      font: 500 22px/24px 'Questrial';
     }
   }
   /*end blog article page*/
@@ -680,7 +680,7 @@ sign-in, sign-up {
   /*about us page*/
   .about-page {
     .about-text {
-      font: 100 23px 'Ubuntu medium';
+      font: 100 23px 'Questrial';
     }
   }
   /*end about us page*/
@@ -700,7 +700,7 @@ sign-in, sign-up {
   /*about us page*/
   .about-page {
     .about-text {
-      font: 16px/24px Arial, sans-serif;
+      font: 16px/24px 'Pontano';
     }
   }
   /*end about us page*/

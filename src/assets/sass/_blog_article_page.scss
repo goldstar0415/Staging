@@ -47,13 +47,13 @@
   .article {
     .title-blog {
       margin: 0 0 8px 15px;
-      font: 500 24px/24px 'Ubuntu medium';
+      font: 500 24px/24px 'Questrial';
       a {
         color: $dark_blue;
       }
     }
     .article-description {
-      font: 14px/20px Arial, sans-serif;
+      font: 14px/20px 'Pontano';
       padding: 5px 15px 15px;
     }
     .share {
@@ -70,7 +70,7 @@
 
     .article-info {
       float: left;
-      font: 400 12px Arial, sans-serif;
+      font: 400 12px 'Pontano';
       margin-right: 15px;
       color: gray;
       border-top: 1px solid $light_grey;
@@ -92,7 +92,7 @@
     padding: 0;
     width: 100%;
     .title-popular-new {
-      font: 500 20px/20px 'Ubuntu medium';
+      font: 500 20px/20px 'Questrial';
       border-bottom: 1px solid $light_grey;
       padding: 12px 15px 15px;
       margin: 0;
@@ -142,7 +142,7 @@
   float: left;
 }
 .time {
-  font: 11px Arial, sans-serif;
+  font: 11px 'Pontano';
   color: #b9bdc0;
   margin-top: 10px;
 }

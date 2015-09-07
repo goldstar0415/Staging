@@ -34,20 +34,20 @@
             height: 40px;
         }
         thead {
-            font: 500 16px/16px 'Ubuntu medium';
+            font: 500 16px/16px 'Questrial';
             border-bottom: 1px solid #e9edf0;
         }
         tbody {
-            font: 14px/14px Arial, sans-serif;
+            font: 14px/14px 'Pontano';
             tr:nth-child(even) {
                 background: #e9edf0;
                 td {
                     border-color: #fff;
                 }
-               
+
             }
             td {
-               
+
                 padding-left: 15px;
                 a {
                     color: #00b7f3;
@@ -58,7 +58,7 @@
                     }
                 }
                 .button-my{
-                    font: 500 12px/12px 'Ubuntu medium';
+                    font: 500 12px/12px 'Questrial';
                     padding: 3px 15px;
                     color: #fff;
                     &:hover{

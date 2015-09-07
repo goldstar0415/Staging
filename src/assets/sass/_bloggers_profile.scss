@@ -31,7 +31,7 @@
 }
 
 .my-bloggers-profile-title {
-  font: 500 16px/18px "Ubuntu medium";
+  font: 500 16px/18px "Questrial";
   font-size: 23px;
   padding: 0 0 20px 15px;
   border-bottom: 1px solid $light_grey;
@@ -75,13 +75,13 @@
 .article {
   .title-blog {
     margin: 0 0 8px 15px;
-    font: 500 24px/24px 'Ubuntu medium';
+    font: 500 24px/24px 'Questrial';
     a {
       color: $dark_blue;
     }
   }
   .article-description {
-    font: 14px/20px Arial, sans-serif;
+    font: 14px/20px 'Pontano';
     padding: 5px 15px 15px;
   }
   .edit-blog-article, .delete-blog-article {
@@ -104,7 +104,7 @@
 
   .article-info {
     float: left;
-    font: 400 12px Arial, sans-serif;
+    font: 400 12px 'Pontano';
     margin-right: 15px;
     color: gray;
     border-top: 1px solid $light_grey;
@@ -127,7 +127,7 @@
   padding: 0;
   width: 100%;
   .title-popular-new {
-    font: 500 20px/20px 'Ubuntu medium';
+    font: 500 20px/20px 'Questrial';
     border-bottom: 1px solid $light_grey;
     padding: 12px 15px 15px;
     margin: 0;
@@ -191,7 +191,7 @@
       display: table;
       width: 160px;
       height: 38px;
-      font: 500 22px/26px 'Ubuntu medium';
+      font: 500 22px/26px 'Questrial';
       box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.45);
       padding: 3px 20px 5px;
       background: #149e38;
@@ -240,7 +240,7 @@
       }
     }
     .carousel-text {
-      font: 15px/20px Arial, sans-serif;
+      font: 15px/20px 'Pontano';
       color: #000;
       text-align: left;
     }
@@ -260,7 +260,7 @@
   border-bottom: 1px solid #ddd;
   list-style: none;
   li {
-    font: 500 14px/14px "Ubuntu medium";
+    font: 500 14px/14px "Questrial";
     display: inline-block;
     padding-left: 10px;
     &:first-child {

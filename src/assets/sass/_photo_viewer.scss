@@ -126,12 +126,12 @@
           display: table;
           h3 {
             margin: 0;
-            font: 500 18px "Ubuntu medium";
+            font: 500 18px "Questrial";
             color: $dark_blue;
             word-break: break-all;
           }
           p {
-            font: 400 12px/14px Arial, sans-serif;
+            font: 400 12px/14px 'Pontano';
           }
         }
         .delete-reviews {
@@ -225,7 +225,7 @@
     @include button;
     height: 22px;
     width: 54px;
-    font: 400 12px/12px "Ubuntu medium";
+    font: 400 12px/12px "Questrial";
     background: $dark_blue;
     padding: 3px;
     border: none;

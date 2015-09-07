@@ -30,7 +30,7 @@
       margin: 0 0 5px;
     }
     .description {
-      font: 13px/19px Arial, sans-serif !important;
+      font: 13px/19px 'Pontano'!important;
       margin: 10px 0 !important;
     }
     .location-btn {
@@ -77,7 +77,7 @@
     display: inline-block;
     margin-right: 15px;
     color: $blue;
-    font: 13px/13px Arial;
+    font: 13px/13px 'Pontano';
     &:hover {
       color: $navy_blue;
       @include transition_color;

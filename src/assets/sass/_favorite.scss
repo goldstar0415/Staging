@@ -27,7 +27,7 @@
   a {
     color: $dark_blue;
     @include transition_color;
-    font: 500 26px 'Ubuntu medium';
+    font: 500 26px 'Questrial';
     &:hover {
       color: $navy_blue;
       @include transition_color;

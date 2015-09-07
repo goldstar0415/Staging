@@ -34,7 +34,7 @@
         text-overflow: ellipsis;
         overflow: hidden;
         margin: 0;
-        font: 500 19px/22px 'Ubuntu medium';
+        font: 500 19px/22px 'Questrial';
         &:hover {
           color: #124d76;
           @include transition_color;
@@ -43,7 +43,7 @@
     }
   }
   .author-name {
-    font: 500 15px/15px 'Ubuntu medium';
+    font: 500 15px/15px 'Questrial';
     color: #00b7f3;
     &:hover {
       color: #0874be;

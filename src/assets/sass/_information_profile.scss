@@ -14,13 +14,13 @@
   }
   .profile-name {
     margin-top: 10px;
-    font: 500 24px/26px 'Ubuntu medium';
+    font: 500 24px/26px 'Questrial';
     text-align: center;
 
     a {
       color: $blue;
       @include transition_color;
-      font: 500 20px/24px 'Ubuntu medium';
+      font: 500 20px/24px 'Questrial';
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -62,25 +62,25 @@
   .status {
     float: left;
     color: #a4a4a4;
-    font: 400 14px/14px 'Ubuntu medium';
+    font: 400 14px/14px 'Questrial';
     display: block;
     margin: 15px 0 0;
     padding: 10px 0 0 3rem;
   }
   .age {
-    font: 14px 'Ubuntu medium';
+    font: 14px 'Questrial';
     color: grey;
   }
   .location {
     color: grey;
-    font: 400 14px/14px 'Ubuntu medium';
+    font: 400 14px/14px 'Questrial';
     margin-top: 7px;
     //overflow: hidden;
     //white-space: nowrap;
     margin-bottom: 10px;
   }
   .biography {
-    font: 12px/21px Arial, sans-serif;
+    font: 12px/21px 'Pontano';
     margin-top: 20px;
     .small, .full-text {
       word-wrap: break-word;
@@ -90,7 +90,7 @@
     background: url(/assets/img/icons/moderate.png) 0 7px no-repeat;
   }
   .info-links {
-    font: 14px/14px Arial, sans-serif;
+    font: 14px/14px 'Pontano';
     margin: 5px 0;
     width: 100%;
     padding: 0;

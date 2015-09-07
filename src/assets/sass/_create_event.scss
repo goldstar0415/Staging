@@ -11,7 +11,7 @@
     border: 1px solid $green;
     background: $white;
     padding: 7px 15px;
-    font: 600 14px/14px 'Ubuntu light';
+    font: 600 14px/14px 'Questrial';
     color: $dark-green;
     width: 30%;
     &:hover, &:focus, &:active {
@@ -39,7 +39,7 @@
   li {
     position: relative;
     margin: 0;
-    font: 14px Arial, sans-serif;
+    font: 14px 'Pontano';
     padding: 5px 10px;
     color: $black;
     border-bottom: 1px solid $light_grey;
@@ -86,7 +86,7 @@
 }
 
 .event-title {
-  font: 500 22px 'Ubuntu medium';
+  font: 500 22px 'Questrial';
   padding-left: 15px;
 }
 
@@ -103,7 +103,7 @@
 
 .add, .add-event-btn {
   float: right;
-  font: 500 16px 'Ubuntu medium';
+  font: 500 16px 'Questrial';
   margin-right: 18px;
   background: $green;
   color: $white;
@@ -198,7 +198,7 @@
 .counter {
   display: inline-block;
   height: 11px;
-  font: 10px/11px Arial, sans-serif;
+  font: 10px/11px 'Pontano';
   color: $white;
   background: $blue;
   padding: 0 4px;

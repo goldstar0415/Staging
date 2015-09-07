@@ -41,7 +41,7 @@
         p {
             margin: 0;
             span {
-                font: 500 16px/18px 'Ubuntu medium';
+                font: 500 16px/18px 'Questrial';
             }
             a {
                 color: #00b7f3;
@@ -53,7 +53,7 @@
             }
         }
         .button-my {
-            font: 500 16px/18px 'Ubuntu medium';
+            font: 500 16px/18px 'Questrial';
             padding: 3px 15px;
             line-height: 110%;
         }
@@ -65,13 +65,13 @@
             height: 40px;
         }
         thead {
-            font: 500 16px/16px 'Ubuntu medium';
+            font: 500 16px/16px 'Questrial';
             th {
                 border: 1px solid #e9edf0;
             }
         }
         tbody {
-            font: 14px/14px Arial, sans-serif;
+            font: 14px/14px 'Pontano';
             tr:nth-child(even) {
                 background: #e9edf0;
                 td {
@@ -79,7 +79,7 @@
                 }
                 &:last-child {
                     border-right-color: #e9edf0;
-                   
+
                 }
             }
             td {

@@ -55,13 +55,13 @@ ul {
 
   .info {
     .age {
-      font: 400 15px/14px 'Ubuntu medium';
+      font: 400 15px/14px 'Questrial';
       color: grey;
       margin-bottom: 10px;
     }
     .counters {
       margin: 10px 0;
-      font: 13px/13px 'Ubuntu medium';
+      font: 13px/13px 'Questrial';
       display: flex;
       .e-count {
         float: left;
@@ -126,7 +126,7 @@ ul {
     margin-top: 0;
     margin-bottom: 5px;
     a {
-      font: 600 22px/22px 'Ubuntu medium';
+      font: 600 22px/22px 'Questrial';
       color: $blue;
       word-break: break-all;
       &:hover {

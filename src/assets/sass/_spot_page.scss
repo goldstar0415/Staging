@@ -21,7 +21,7 @@
   a {
     display: block;
     float: left;
-    font: 700 13px/13px Arial, sans-serif;
+    font: 700 13px/13px 'Pontano';
     color: $blue;
     &:hover, &:visited, &:focus, &:active {
       color: $navy_blue;
@@ -105,7 +105,7 @@
 }
 
 .place {
-  font: 400 14px 'Ubuntu medium';
+  font: 400 14px 'Questrial';
   color: grey;
 }
 
@@ -114,26 +114,26 @@
   top: 0;
   right: 0;
   color: grey;
-  font: 12px Arial, sans-serif;
+  font: 12px 'Pontano';
   text-align: right;
   float: right;
 }
 
 .description {
-  font: 13px/19px Arial, sans-serif;
+  font: 13px/19px 'Pontano';
   margin: 10px 0 12px;
 }
 
 .tools {
   padding-top: 15px;
-  font: 600 13px/13px 'Ubuntu light';
+  font: 600 13px/13px 'Questrial';
   padding-left: 0px;
   li {
     float: left;
     margin-right: 15px;
     a {
       padding-left: 18px;
-      font: 14px 'Ubuntu medium';
+      font: 14px 'Questrial';
       color: $blue;
     }
   }
@@ -256,7 +256,7 @@
       display: block;
       float: left;
       padding-left: 13px;
-      font: 700 13px/15px Arial, sans-serif;
+      font: 700 13px/15px 'Pontano';
     }
     .event-img {
 
@@ -283,7 +283,7 @@
       display: block;
       float: left;
       padding-left: 13px;
-      font: 700 13px/13px Arial, sans-serif;
+      font: 700 13px/13px 'Pontano';
     }
     .img-selection {
       width: 100%;
