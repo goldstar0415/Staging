@@ -565,6 +565,12 @@ sign-in, sign-up {
     height: 100%;
   }
 }
+
+.new-post {
+  textarea {
+    box-shadow: none !important;
+  }
+}
 /*responsive*/
 
 @media (max-width: 992px) {
