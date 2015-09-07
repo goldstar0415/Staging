@@ -9,7 +9,7 @@
   function SpotsController($rootScope, $scope, Spot, SpotService, MapService, ScrollService, allSpots) {
     var vm = this;
     vm.spots = {};
-
+    $rootScope.syncSpots = vm.spots;
     vm.markersSpots = formatSpots(allSpots);
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
