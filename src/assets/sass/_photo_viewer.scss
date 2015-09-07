@@ -29,7 +29,7 @@
     img {
       display: table;
       margin: 0 auto;
-      width: 100%;
+      //width: 100%;
       @include vertical_align;
     }
     .previous {
@@ -82,9 +82,6 @@
       }
     }
     .reviews {
-      overflow-x: hidden;
-      overflow-y: auto;
-      position: relative;
       height: 500px;
       padding: 0;
       .post {
@@ -92,6 +89,7 @@
         margin-top: 10px;
         border-bottom: 1px solid #e9edf0;
         padding: 10px 0 10px;
+        width: 100%;
         &:after {
           content: ".";
           display: block;
@@ -123,7 +121,9 @@
           float: left;
         }
         .info {
-          padding: 0 10px 0;
+          padding: 0 15px 0 10px;
+          width: auto;
+          display: table;
           h3 {
             margin: 0;
             font: 500 18px "Ubuntu medium";
@@ -140,7 +140,7 @@
           height: 8px;
           background: url(/assets/img/cross.png) no-repeat;
           position: absolute;
-          padding-top: 8px;
+          top: 8px;
           right: 0;
           &:hover {
             background: url(/assets/img/cross.png) 0 -8px no-repeat;
@@ -179,7 +179,9 @@
         }
         .avatar-wrap {
           padding: 0;
-          width: auto;
+          width: 40px;
+          height: 40px;
+          float: left;
         }
       }
     }
