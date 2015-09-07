@@ -549,6 +549,22 @@ sign-in, sign-up {
   position: relative;
 }
 
+.video-size {
+  width: 100%;
+  position: relative;
+  padding-top: 70.25%;
+  margin-bottom: 3rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
 /*responsive*/
 
 @media (max-width: 992px) {
