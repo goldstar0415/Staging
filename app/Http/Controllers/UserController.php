@@ -104,7 +104,7 @@ class UserController extends Controller
 
     public function getMe()
     {
-        return $this->appendUserRelations($this->auth->user())->append(['new_messages', 'roles']);
+        return $this->appendUserRelations($this->auth->user())->append(['new_messages'])->load('roles');
     }
 
     /**
