@@ -28,26 +28,28 @@
       {value: 1, label: 'Don\'t receive'}
     ];
 
-    vm.savePersonalSettings = function () {
-      $http.put(API_URL + '/settings', {
-        type: 'personal',
-        params: {
-          first_name: vm.data.first_name,
-          last_name: vm.data.last_name,
-          birth_date: vm.data.birth_date ? moment(vm.data.birth_date, 'MM.DD.YYYY').format('YYYY-MM-DD') : null,
-          sex: vm.data.sex || '',
-          time_zone: vm.data.time_zone,
-          description: vm.data.description,
-          address: vm.data.address,
-          location: vm.data.location
-        }
-      })
-        .success(function (data, status, headers, config) {
-          toastr.success('Settings saved')
+    vm.savePersonalSettings = function (form) {
+      if (form.$valid) {
+        $http.put(API_URL + '/settings', {
+          type: 'personal',
+          params: {
+            first_name: vm.data.first_name,
+            last_name: vm.data.last_name,
+            birth_date: vm.data.birth_date ? moment(vm.data.birth_date, 'MM.DD.YYYY').format('YYYY-MM-DD') : null,
+            sex: vm.data.sex || '',
+            time_zone: vm.data.time_zone,
+            description: vm.data.description,
+            address: vm.data.address,
+            location: vm.data.location
+          }
         })
-        .error(function (data, status, headers, config) {
-          toastr.error('Incorrect input ')
-        });
+          .success(function (data, status, headers, config) {
+            toastr.success('Settings saved')
+          })
+          .error(function (data, status, headers, config) {
+            toastr.error('Incorrect input ')
+          });
+      }
     };
     vm.saveSecuritySettings = function (form) {
       if (form.$valid) {

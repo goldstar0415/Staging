@@ -103,7 +103,11 @@
                 <label>Description</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <textarea ng-model="Settings.data.description"></textarea>
+                <textarea ng-model="Settings.data.description" name="description" ng-maxlength="250"></textarea>
+
+                <div ng-if="form.description.$error.maxlength && (form.$submitted || form.description.$touched)" class="error-message-inline">
+                  <div>Title can't be longer then 250 symbols</div>
+                </div>
               </div>
             </div>
             <div class="col-xs-12 no-pad">
