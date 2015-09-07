@@ -98,156 +98,158 @@
   <!-- end section  event-main-info -->
 
   <!-- section  event-additionl-infoo-->
-  <section class="event-additionl-info" ng-repeat="activity in Plan.activities">
-    <div class="form-group">
-      <h3 class="sub-title">Activity
-        <button type="button" ng-click="Plan.deleteActivity($index)" class="close">x</button>
-      </h3>
-    </div>
+  <div ng-repeat="attachment in Plan.attachments ">
+    <section class="event-additionl-info" ng-if="attachment.type == 'activity'">
+      <div class="form-group">
+        <h3 class="sub-title">Activity
+          <button type="button" ng-click="Plan.deleteAttachment($parent.$index)" class="close">x</button>
+        </h3>
+      </div>
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Title</label>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Title</label>
 
-      <div class="col-sm-10">
-        <input type="text" class="form-control" name="title_activity_{{$index}}" ng-model="activity.title"
-               placeholder="Start typing..." ng-minlength="3" ng-maxlength="255" required>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="title_activity_{{$index}}" ng-model="attachment.data.title"
+                 placeholder="Start typing..." ng-minlength="3" ng-maxlength="255" required>
 
-        <div ng-messages="form['title_activity_' + $index].$error"
-             ng-if="form.$submitted || form['title_activity_' +$index].$touched" class="error-message">
-          <div ng-message="required">is required</div>
-          <div ng-message="minlength">too short</div>
-          <div ng-message="maxlength">can't be longer then 255 symbols</div>
+          <div ng-messages="form['title_activity_' + $index].$error"
+               ng-if="form.$submitted || form['title_activity_' +$index].$touched" class="error-message">
+            <div ng-message="required">is required</div>
+            <div ng-message="minlength">too short</div>
+            <div ng-message="maxlength">can't be longer then 255 symbols</div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Category</label>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Category</label>
 
-      <div class="col-sm-10">
-        <ui-select ng-model="activity.category.id" theme="bootstrap">
-          <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
-          <ui-select-choices repeat="item.id as item in Plan.categories | filter : $select.search track by $index">
-            <div ng-bind-html="item.display_name |  highlight: $select.search"></div>
-          </ui-select-choices>
-        </ui-select>
+        <div class="col-sm-10">
+          <ui-select ng-model="attachment.data.category.id" theme="bootstrap">
+            <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
+            <ui-select-choices repeat="item.id as item in Plan.categories | filter : $select.search track by $index">
+              <div ng-bind-html="item.display_name |  highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Description</label>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Description</label>
 
-      <div class="col-sm-10">
-        <textarea class="form-control" rows="5" name="description_activity_{{$index}}" ng-model="activity.description"
+        <div class="col-sm-10">
+        <textarea class="form-control" rows="5" name="description_activity_{{$index}}" ng-model="attachment.data.description"
                   ng-maxlength="250"></textarea>
 
-        <div ng-messages="form['description_activity_' + $index].$error"
-             ng-if="form.$submitted || form['description_activity_' + $index].$touched" class="error-message">
-          <div ng-message="maxlength">Description can't be longer then 250 symbols</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Location</label>
-
-      <div class="col-sm-10">
-        <location address="activity.address" location="activity.location" limit="15"></location>
-      </div>
-    </div>
-
-    <div class="form-group ">
-      <label class="col-sm-2 control-label">Date</label>
-
-      <div class="col-md-10 col-sm-12 col-xs-12">
-        <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-datepicker name="start_date_{{$index}}" ng-model="activity.start_date"
-                 start-date="Plan.start_date" end-date="Plan.end_date" type="text" required>
-
-          <div ng-messages="form['start_date_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">Start date field can't be empty</div>
-          </div>
-        </div>
-
-        <span class="hidden-xs col-sm-1">—</span>
-
-        <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-datepicker name="end_date_{{$index}}" ng-model="activity.end_date"
-                 start-date="Plan.start_date" end-date="Plan.end_date" type="text" required>
-
-          <div ng-messages="form['end_date_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">End date field can't be empty</div>
+          <div ng-messages="form['description_activity_' + $index].$error"
+               ng-if="form.$submitted || form['description_activity_' + $index].$touched" class="error-message">
+            <div ng-message="maxlength">Description can't be longer then 250 symbols</div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-group ">
-      <label class="col-sm-2 control-label">Time</label>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Location</label>
 
-      <div class="col-md-10 col-sm-12 col-xs-12">
-        <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-timepicker step="30" placeholder="12:00..." name="start_time_{{$index}}"
-                 ng-model="activity.start_time" type="text" required>
-
-          <div ng-messages="form['start_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">Start time field can't be empty</div>
-          </div>
+        <div class="col-sm-10">
+          <location address="attachment.data.address" location="attachment.data.location" limit="15"></location>
         </div>
+      </div>
 
-        <span class="hidden-xs col-sm-1">—</span>
+      <div class="form-group ">
+        <label class="col-sm-2 control-label">Date</label>
 
-        <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-timepicker step="30" placeholder="12:00..." name="end_time_{{$index}}" ng-model="activity.end_time"
-                 type="text" required>
+        <div class="col-md-10 col-sm-12 col-xs-12">
+          <div class="col-sm-4 col-xs-12 no-pad">
+            <input ng-datepicker name="start_date_{{$index}}" ng-model="attachment.data.start_date"
+                   start-date="Plan.start_date" end-date="Plan.end_date" type="text" required>
 
-          <div ng-messages="form['end_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">End time field can't be empty</div>
+            <div ng-messages="form['start_date_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
+              <div ng-message="required">Start date field can't be empty</div>
+            </div>
+          </div>
+
+          <span class="hidden-xs col-sm-1">—</span>
+
+          <div class="col-sm-4 col-xs-12 no-pad">
+            <input ng-datepicker name="end_date_{{$index}}" ng-model="attachment.data.end_date"
+                   start-date="Plan.start_date" end-date="Plan.end_date" type="text" required>
+
+            <div ng-messages="form['end_date_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
+              <div ng-message="required">End date field can't be empty</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
+      <div class="form-group ">
+        <label class="col-sm-2 control-label">Time</label>
 
-  </section>
-  <!-- end section  event-additionl-info -->
+        <div class="col-md-10 col-sm-12 col-xs-12">
+          <div class="col-sm-4 col-xs-12 no-pad">
+            <input ng-timepicker step="30" placeholder="12:00..." name="start_time_{{$index}}"
+                   ng-model="attachment.data.start_time" type="text" required>
 
-  <!-- section  event-add-location-->
-  <section class="event-add-location">
-    <div class="event" ng-repeat="spot in Plan.spots">
-      <div class="media media-visible">
-        <a class="pull-left">
-          <img class="media-object fav-avatar-icon feeds-img"
-               ng-src="{{spot.cover_url.thumb}}">
-        </a>
+            <div ng-messages="form['start_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
+              <div ng-message="required">Start time field can't be empty</div>
+            </div>
+          </div>
 
-        <div class="media-body">
-          <h2 class="media-heading feeds-title">
-            <button type="button" ng-click="Plan.deleteSpot($index)" class="close">x</button>
-            <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" ng-bind-html="spot.title"></a>
-          </h2>
+          <span class="hidden-xs col-sm-1">—</span>
 
-          <p class="time">
-            {{spot.start_date | toTimezone:'MM.DD.YYYY'}}
-            -
-            {{spot.end_date | toTimezone:'MM.DD.YYYY'}}
-          </p>
+          <div class="col-sm-4 col-xs-12 no-pad">
+            <input ng-timepicker step="30" placeholder="12:00..." name="end_time_{{$index}}"
+                   ng-model="attachment.data.end_time"
+                   type="text" required>
 
-          <p class="feeds-text" ng-bind-html="spot.description"></p>
+            <div ng-messages="form['end_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
+              <div ng-message="required">End time field can't be empty</div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-  <!-- end section  event-add-location -->
+
+    </section>
+    <!-- end section  event-additionl-info -->
+
+    <!-- section  event-add-location-->
+    <section class="event-add-location" ng-if="attachment.type == 'spot'">
+      <div class="event" >
+        <div class="media media-visible">
+          <a class="pull-left">
+            <img class="media-object fav-avatar-icon feeds-img"
+                 ng-src="{{attachment.data.cover_url.thumb}}">
+          </a>
+
+          <div class="media-body">
+            <h2 class="media-heading feeds-title">
+              <button type="button" ng-click="Plan.deleteAttachment($parent.$index)" class="close">x</button>
+              <a ui-sref="spot({user_id: attachment.data.user_id, spot_id: attachment.data.id})" ng-bind-html="attachment.data.title"></a>
+            </h2>
+
+            <p class="time">
+              {{attachment.data.start_date | toTimezone:'MM.DD.YYYY'}}
+              -
+              {{attachment.data.end_date | toTimezone:'MM.DD.YYYY'}}
+            </p>
+
+            <p class="feeds-text" ng-bind-html="attachment.data.description"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- end section  event-add-location -->
+  </div>
 
   <!-- buttons block -->
   <div class="form-group">
     <div class="col-xs-12 buttons-block">
-      <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12" ng-click="Plan.addActivity()">Add
-        activity
+      <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12" ng-click="Plan.addActivity()">
+        Add activity
       </button>
-      <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12" spots-modal items="Plan.spots">Add
-        spot
+      <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12" spots-modal items="Plan.newSpots">
+        Add spot
       </button>
       <button type="submit" class="btn btn-default green-btn col-sm-2 col-xs-12 pull-right no-margin-left-right">Save
       </button>

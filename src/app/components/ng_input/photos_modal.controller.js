@@ -25,5 +25,9 @@
       vm.attachments.photos.push(photo[0]);
       console.log(photo, vm.attachments.photos);
     };
+
+    vm.close = function () {
+      $modalInstance.close();
+    };
   }
 })();
