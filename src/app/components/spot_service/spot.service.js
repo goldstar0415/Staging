@@ -20,6 +20,7 @@
       if (checkUser()) {
         Spot.saveToCalendar({id: spot.id}, function () {
           spot.is_saved = true;
+          syncSpots(spot.id, {is_saved: true});
         });
       }
     }
@@ -27,6 +28,7 @@
     function removeFromCalendar(spot) {
       Spot.removeFromCalendar({id: spot.id}, function () {
         spot.is_saved = false;
+        syncSpots(spot.id, {is_saved: false});
       });
     }
 
@@ -34,6 +36,7 @@
       if (checkUser()) {
         Spot.favorite({id: spot.id}, function () {
           spot.is_favorite = true;
+          syncSpots(spot.id, {is_favorite: true});
         });
       }
     }
@@ -41,6 +44,8 @@
     function removeFromFavorite(spot, callback) {
       Spot.unfavorite({id: spot.id}, function () {
         spot.is_favorite = false;
+        syncSpots(spot.id, {is_favorite: false});
+
         if (callback) {
           callback();
         }
@@ -76,6 +81,26 @@
         return false;
       }
       return true;
+    }
+
+    function syncSpots(id, data) {
+      //sync spots under the map
+      _sync($rootScope.syncSpots, id, data);
+
+      //sync spots on map
+      var spots = _.pluck($rootScope.syncMapSpots, 'spot');
+      _sync({data: spots}, id, data);
+    }
+
+    function _sync(source, id, data) {
+      if (source && source.data.length > 0) {
+        var key = _.keys(data)[0];
+        var spot = _.findWhere(source.data, {id: id});
+        console.log(source, spot);
+        if (spot) {
+          spot[key] = data[key];
+        }
+      }
     }
   }
 })();
