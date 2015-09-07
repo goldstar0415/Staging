@@ -47,22 +47,29 @@
     /** @ngInject */
     function SpotsModalController(selectedSpots, spots, $modalInstance, Spot) {
       var vm = this;
-      vm.spots = _markAsSelected(spots);
+      vm.spots = spots;
       vm.close = close;
       vm.addSpot = addSpot;
 
-      function close() {
+      function close(isSave) {
+        if (isSave) {
+          _.each(vm.spots, function (spot) {
+            if (spot.selected) {
+              selectedSpots.push(spot);
+            }
+          });
+        }
+
         $modalInstance.close();
       }
 
       function addSpot(spot) {
-        if (_.findWhere(selectedSpots, {id: spot.id})) {
-          var idx = _getIndexById(selectedSpots, spot.id);
-          selectedSpots.splice(idx, 1);
-        } else {
-          selectedSpots.push(spot);
-        }
-
+        //if (_.findWhere(selectedSpots, {id: spot.id})) {
+        //  var idx = _getIndexById(selectedSpots, spot.id);
+        //  selectedSpots.splice(idx, 1);
+        //} else {
+        //  selectedSpots.push(spot);
+        //}
         spot.selected = !spot.selected;
       }
 

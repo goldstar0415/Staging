@@ -23,7 +23,7 @@
 
     function recoveryPassword(form, vm, $modalInstance) {
       if (form.$valid) {
-        User.recoveryPassword({user: vm},
+        User.recoveryPassword(vm,
           function success(user) {
             UserService.setCurrentUser(user);
             $modalInstance.dismiss('close');

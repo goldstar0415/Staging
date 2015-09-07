@@ -6,18 +6,18 @@
     .controller('PlanCreateController', PlanCreateController);
 
   /** @ngInject */
-  function PlanCreateController(Plan, plan, categories, $state, DATE_FORMAT) {
+  function PlanCreateController($scope, Plan, plan, categories, $state, DATE_FORMAT) {
     var vm = this;
     vm = _.extend(vm, plan);
-    console.log(vm);
-    vm.spots = vm.spots || [];
-    vm.activities = vm.activities || [];
+    vm.newSpots = [];
+    vm.attachments = getAttachments();
     vm.categories = categories;
 
     vm.save = save;
-    vm.deleteSpot = deleteSpot;
-    vm.deleteActivity = deleteActivity;
     vm.addActivity = addActivity;
+    vm.deleteAttachment = deleteAttachment;
+
+    $scope.$watch('Plan.newSpots.length', addSpots)
 
     function save(form) {
       if (form.$valid) {
@@ -36,14 +36,24 @@
     function _convertData() {
       var data = angular.copy(vm);
       data = _convertDates(data);
-      data.spots = _.pluck(data.spots, 'id');
-      console.log(data);
+      //data.spots = _.pluck(data.spots, 'id');
+      //console.log(data);
 
-
-      _.each(data.activities, function (activity) {
-        activity = _convertDates(activity);
-        activity.activity_category_id = activity.category.id;
-        delete activity.category;
+      data.activities = [];
+      data.spots = [];
+      _.each(data.attachments, function (attachment, idx) {
+        if (attachment.type == 'activity') {
+          var activity = _convertDates(attachment.data);
+          activity.activity_category_id = activity.category.id;
+          activity.position = idx;
+          delete activity.category;
+          data.activities.push(activity);
+        } else {
+          data.spots.push({
+            id: attachment.data.id,
+            position: idx
+          })
+        }
       });
 
       console.log(data);
@@ -59,15 +69,52 @@
     }
 
     function addActivity() {
-      vm.activities.push({});
+      vm.attachments.push({
+        type: 'activity',
+        data: {}
+      });
     }
 
-    function deleteSpot(idx) {
-      vm.spots.splice(idx, 1)
+    function addSpots() {
+      if (vm.newSpots && vm.newSpots.length > 0) {
+        _.each(vm.newSpots, function (spot) {
+          vm.attachments.push({
+            type: 'spot',
+            data: spot
+          });
+        });
+
+        vm.newSpots = [];
+      }
     }
 
-    function deleteActivity(idx) {
-      vm.activities.splice(idx, 1)
+    function deleteAttachment(idx) {
+      vm.attachments.splice(idx, 1);
     }
+
+    function getAttachments() {
+      var attachments = [];
+      if (vm.id) {
+        _.each(vm.spots, function (spot) {
+            attachments[spot.position].push({
+              type: 'spot',
+              data: spot
+            });
+          }
+        );
+        _.each(vm.activities, function (activity) {
+            attachments[activity.position].push({
+              type: 'activity',
+              data: activity
+            });
+          }
+        );
+      }
+
+      console.log(attachments);
+      return [];
+    }
+
   }
-})();
+})
+();
