@@ -25,8 +25,8 @@
         <a target="_blank" href="{{item}}">{{item}}</a>
       </div>
 
-      <ul ng-if="Spot.spot.videos.length > 0">
-        <li ng-repeat="link in Spot.spot.videos">
+      <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
+        <li ng-repeat="link in Spot.spot.videos" class="video-size">
           <youtube-player src="link"></youtube-player>
         </li>
       </ul>
