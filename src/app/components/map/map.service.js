@@ -1289,7 +1289,6 @@
           GetCurrentLayer().clearLayers();
         }
         var markers = [];
-
         _.each(spots, function (item) {
           var icon = CreateCustomIcon(item.spot.category.icon_url, 'custom-map-icons', [50, 50]);
           if(item.location) {
@@ -1328,6 +1327,8 @@
             otherLayer.addLayers(markers);
             break;
         }
+
+        $rootScope.syncMapSpots = spots;
       }
 
       return {
