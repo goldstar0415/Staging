@@ -20,4 +20,9 @@ class Validations extends Validator
     {
         return count($value) >= $parameters[0];
     }
+
+    public function validateRemoteImage($attribute, $value, $parameters)
+    {
+        return (bool)@getimagesize($value);
+    }
 }

@@ -21,14 +21,14 @@ return [
 	 *
 	 * @type string
 	 */
-	'model_config_path' => config_path('administrator'),
+	'model_config_path' => app_path('admin/administrator'),
 
 	/**
 	 * The path to your settings config directory
 	 *
 	 * @type string
 	 */
-	'settings_config_path' => config_path('administrator/settings'),
+	'settings_config_path' => app_path('admin/settings'),
 
 	/**
 	 * The menu structure of the site. For models, you should either supply the name of a model config file or an array of names of model config
@@ -36,7 +36,7 @@ return [
 	 * custom pages by prepending a view path with 'page.'. By providing an array of names, you can group certain models or settings pages
 	 * together. Each name needs to either have a config file in your model config path, settings config path with the same name, or a path to a
 	 * fully-qualified Laravel view. So 'users' would require a 'users.php' file in your model config path, 'settings.site' would require a
-	 * 'site.php' file in your settings config path, and 'page.foo.test' would require a 'test.php' or 'test.blade.php' file in a 'foo' directory
+	 * 'event_import.php' file in your settings config path, and 'page.foo.test' would require a 'test.php' or 'test.blade.php' file in a 'foo' directory
 	 * inside your view directory.
 	 *
 	 * @type array
@@ -56,7 +56,12 @@ return [
 		'activity_level',
 		'spot_requests',
 		'activity_categories',
-		'spot_categories'
+		'spot_categories',
+		'Import CSV' => [
+			'settings.event_import',
+			'settings.pitstop_import',
+			'settings.recreation_import'
+		]
 	],
 
 	/**

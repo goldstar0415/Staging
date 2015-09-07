@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'title' => 'Spot Categories',
-    'single' => 'spot_type_categories',
-    'model' => \App\SpotTypeCategory::class,
+    'title' => 'Activity Categories',
+    'single' => 'activity_categories',
+    'model' => \App\ActivityCategory::class,
 
     'columns' => [
         'id' => [
@@ -23,12 +23,7 @@ return [
             'title' => 'Display name',
             'type' => 'text'
         ],
-        'type' => [
-            'title' => "Spot Type",
-            'type' => 'relationship', //this is the name of the Eloquent relationship method!
-            'name_field' => 'display_name',
-        ],
-        'icon' => [
+        'icon_put' => [
             'title' => 'Image',
             'type' => 'image',
             'location' => public_path('tmp/'),

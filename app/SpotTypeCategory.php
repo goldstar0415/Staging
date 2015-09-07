@@ -57,4 +57,15 @@ class SpotTypeCategory extends BaseModel implements StaplerableInterface
     {
         return $this->hasMany(Spot::class);
     }
+
+    public function setIconPutAttribute($value)
+    {
+        $path = public_path('tmp/' . $value);
+        $this->icon = $path;
+    }
+
+    public function getIconPutAttribute()
+    {
+        //TODO: get icon for admin panel
+    }
 }
