@@ -579,15 +579,21 @@ sign-in, sign-up {
   position: relative;
   padding-top: 70.25%;
   margin-bottom: 3rem;
-  &:last-child {
-    margin-bottom: 0;
-  }
+    &:last-child {
+      margin-bottom: 0;
+    }
   iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+  }
+}
+
+.new-post {
+  textarea {
+    box-shadow: none !important;
   }
 }
 
