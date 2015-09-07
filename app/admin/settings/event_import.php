@@ -91,5 +91,5 @@ return [
             }
         ],
     ],
-    'storage_path' => storage_path() . '/app/csvs',
+    'storage_path' => storage_path() . '/csvs',
 ];

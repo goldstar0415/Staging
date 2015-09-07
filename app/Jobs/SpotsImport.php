@@ -128,7 +128,7 @@ class SpotsImport extends Job implements SelfHandling
         }
 
         File::delete([
-            storage_path('app/csvs/' . $json_name . '_import.json'),
+            storage_path('csvs/' . $json_name . '_import.json'),
             storage_path('app/' . $this->data['document'])
         ]);
 
