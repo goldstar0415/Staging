@@ -97,6 +97,31 @@
   font-weight: normal;
 }
 
+@font-face {
+  font-family: 'Questrial';
+  src: url('/assets/css/fonts/questrial-regular.eot');
+  src: url('/assets/css/fonts/questrial-regular.eot?#iefix') format('embedded-opentype'),
+  url('/assets/css/fonts/questrial-regular.woff2') format('woff2'),
+  url('/assets/css/fonts/questrial-regular.woff') format('woff'),
+  url('/assets/css/fonts/questrial-regular.ttf') format('truetype'),
+  url('/assets/css/fonts/questrial-regular.svg#questrialregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pontano';
+  src: url('/assets/css/fonts/pontanosans-regular.eot');
+  src: url('/assets/css/fonts/pontanosans-regular.eot?#iefix') format('embedded-opentype'),
+  url('/assets/css/fonts/pontanosans-regular.woff2') format('woff2'),
+  url('/assets/css/fonts/pontanosans-regular.woff') format('woff'),
+  url('/assets/css/fonts/pontanosans-regular.ttf') format('truetype'),
+  url('/assets/css/fonts/pontanosans-regular.svg#pontano_sansregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
 body, .snap-content {
   background: #f5f8fa;
 }
@@ -571,6 +596,7 @@ sign-in, sign-up {
     box-shadow: none !important;
   }
 }
+
 /*responsive*/
 
 @media (max-width: 992px) {
