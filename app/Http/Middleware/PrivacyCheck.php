@@ -73,7 +73,7 @@ class PrivacyCheck
                 $allow = true;
             }
         } elseif ($request->is('wall/*', 'wall/*/like', 'wall/*/dislike') and $request->isMethod('get')) {
-            $target = $request->route('wall')->user;
+            $target = $request->route('wall')->receiver;
 
             if ($this->privacy->hasPermission($target, $target->privacy_wall)) {
                 $allow = true;
