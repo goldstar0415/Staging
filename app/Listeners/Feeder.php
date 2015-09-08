@@ -27,9 +27,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Feeder implements ShouldQueue
+class Feeder /*implements ShouldQueue*/
 {
-    use InteractsWithQueue;
+//    use InteractsWithQueue;
     /**
      * @var Guard
      */
@@ -113,18 +113,18 @@ class Feeder implements ShouldQueue
      */
     protected function addFeed(Feedable $event, $users)
     {
-        if ($event->getFeedSender()->id !== $this->auth->id()) {
-            $feed = new Feed(['event_type' => class_basename($event)]);
-            $feed->feedable()->associate($event->getFeedable());
-            $feed->sender()->associate($event->getFeedSender());
+        $feed = new Feed(['event_type' => class_basename($event)]);
+        $feed->feedable()->associate($event->getFeedable());
+        $feed->sender()->associate($event->getFeedSender());
 
-            if ($users instanceof Collection) {
-                foreach ($users as $user) {
+        if ($users instanceof Collection) {
+            foreach ($users as $user) {
+                if ($user->id !== $this->auth->id()) {
                     $user->feeds()->save($feed);
                 }
-            } elseif ($users instanceof User) {
-                $users->feeds()->save($feed);
             }
+        } elseif ($users instanceof User and $users->id !== $this->auth->id()) {
+            $users->feeds()->save($feed);
         }
     }
 }
