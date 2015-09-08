@@ -85,6 +85,10 @@
         }
       };
 
+      vm.close = function () {
+        $modalInstance.close();
+      };
+
       function setPhoto(idx) {
         if (idx > items.length - 1) {
           idx = 0;

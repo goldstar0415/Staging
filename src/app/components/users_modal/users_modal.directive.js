@@ -53,6 +53,10 @@
       vm.usersType = usersType;
       vm.user = user;
       vm.users = users;
+
+      vm.close = function () {
+        $modalInstance.close();
+      };
     }
   }
 })
