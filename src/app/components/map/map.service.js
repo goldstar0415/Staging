@@ -1003,14 +1003,21 @@
         var scope = $rootScope.$new();
         scope.item = spot;
         scope.marker = marker;
-
-        var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
-        var popup = L.popup({
+        var options = {
           keepInView: false,
           autoPan: true,
           closeButton: false,
           className: 'popup'
-        }).setContent(popupContent[0]);
+        };
+
+
+        if(!$rootScope.isMobile) {
+          var offset = 75;
+          options.autoPanPaddingTopLeft = L.point(offset, offset);
+          options.autoPanPaddingBottomRight = L.point(offset, offset)
+        }
+        var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
+        var popup = L.popup(options).setContent(popupContent[0]);
         marker.bindPopup(popup);
       }
 

@@ -417,11 +417,14 @@
         templateUrl: '/app/modules/photomap/edit_photo/edit_photo.html',
         controller: 'PhotoEditController',
         controllerAs: 'Photo',
-        //resolve: {
-        //  photo: function (Album, $stateParams) {
-        //    return Album.photos({album_id: $stateParams.album_id}).$promise;
-        //  }
-        //},
+        resolve: {
+          photo: function (Photo, $stateParams) {
+            return Photo.get({id: $stateParams.photo_id}).$promise;
+          },
+          user_id: function ($stateParams) {
+            return $stateParams.user_id;
+          }
+        },
         mapState: 'small',
         parent: 'profile',
         require_auth: true,
