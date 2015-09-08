@@ -33,30 +33,25 @@
       .avatar-first-name {
         max-width: 100%;
         position: relative;
-        padding-right: 10px;
       }
     }
     .online {
       width: 6px;
       height: 6px;
-      -webkit-border-radius: 8px;
-      -moz-border-radius: 8px;
-      border-radius: 8px;
-      background: $green;
-      position: absolute;
-      top: 4px;
-      right: 0;
+      border-radius: 50%;
+      background: #149e38;
+      position: relative;
+      display: inline-block;
+      top: -8px;
     }
     .offline {
       width: 6px;
       height: 6px;
-      -webkit-border-radius: 8px;
-      -moz-border-radius: 8px;
-      border-radius: 8px;
+      border-radius: 50%;
       background: $red;
-      position: absolute;
-      top: -2px;
-      right: -5px;
+      position: relative;
+      display: inline-block;
+      top: -8px;
     }
   }
   .status {
