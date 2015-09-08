@@ -44,10 +44,10 @@
           }
         })
           .success(function (data, status, headers, config) {
-            toastr.success('Settings saved')
+            toastr.success('Settings saved');
           })
           .error(function (data, status, headers, config) {
-            toastr.error('Incorrect input ')
+            toastr.error('Incorrect input ');
           });
       }
     };
@@ -64,7 +64,7 @@
             toastr.success('Settings saved')
           })
           .error(function (data, status, headers, config) {
-            toastr.error('Incorrect input ')
+            toastr.error('This email has already been taken')
           });
       } else {
         toastr.error('Email is not valid');
