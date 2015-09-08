@@ -9,10 +9,7 @@
   function Plan($resource, API_URL) {
     return $resource(API_URL + '/plans/:id', {id: '@id'}, {
       query: {
-        params: {
-          page: 1,
-          limit: 10
-        }
+        isArray: false
       },
       events: {
         url: API_URL + '/calendar/plans',

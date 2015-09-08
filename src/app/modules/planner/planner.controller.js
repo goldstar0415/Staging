@@ -6,21 +6,22 @@
     .controller('PlannerController', PlannerController);
 
   /** @ngInject */
-  function PlannerController(Plan, $state, $compile, $scope, dialogs, ScrollService, DATE_FORMAT) {
+  function PlannerController($rootScope, Plan, $state, $compile, $scope, all_plans, dialogs, ScrollService, DATE_FORMAT, MapService) {
     var vm = this;
+    var displayPlans = all_plans.data;
+    var markers = [];
+    console.log(all_plans.data);
     vm.plans = {};
     vm.deletePlan = deletePlan;
     vm.sourceEvents = [
       [],
       getEvents
     ];
-
     var params = {
       page: 0,
       limit: 10
     };
     vm.pagination = new ScrollService(Plan.query, vm.plans, params);
-
     vm.calendarConfig = {
       height: 450,
       //editable: true,
@@ -35,6 +36,7 @@
       //eventResize: vm.alertOnResize,
       eventRender: eventRender
     };
+
 
     function getEvents(start, end, timezone, callback) {
       Plan.events({
@@ -58,8 +60,6 @@
           });
         });
 
-
-        console.log(events);
         events = _.union(events.plans, events.spots);
         callback(events);
       });
@@ -80,5 +80,30 @@
         vm.plans.data.splice(idx, 1);
       });
     }
+
+    function InitMap () {
+      for(var k in displayPlans) {
+        var m = CreateMarker($rootScope.plannerIcon, displayPlans[k].title, displayPlans[k].id, displayPlans[k].location);
+        markers.push({id: displayPlans[k].id, marker: m});
+      }
+    }
+
+    function CreateMarker(iconUrl, title, plan_id, location) {
+
+      var icon = MapService.CreateCustomIcon(iconUrl, 'planner-icon');
+      var options = {};
+
+      if (icon) options.icon = icon;
+      if (title) options.title = title;
+
+      var marker = MapService.CreateMarker(location, options);
+      marker.on('click', function () {
+        $state.go('planner.view', {plan_id: plan_id});
+      });
+
+      return marker;
+    }
+
+    InitMap();
   }
 })();

@@ -184,7 +184,12 @@
         parent: 'planner',
         locate: 'none',
         require_auth: true,
-        mapState: 'small'
+        mapState: 'small',
+        resolve: {
+          all_plans: function (Plan) {
+            return Plan.query().$promise;
+          }
+        }
       })
       .state('planner.create', {
         url: '/plan/create',

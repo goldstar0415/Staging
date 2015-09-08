@@ -21,7 +21,6 @@
       if (title) options.title = title;
 
       var marker = MapService.CreateMarker(location, options);
-      console.log(data);
       marker.on('click', function () {
         $state.go('photos.album', {album_id: data.id, user_id: data.user_id});
       });

@@ -10,6 +10,7 @@
 
     $rootScope.isMobile = L.Browser.touch;
     L.Icon.Default.imagePath = '/assets/libs/Leaflet/images';
+    $rootScope.plannerIcon = '/assets/img/icons/planner_icon.png';
 
     MapService.Init('map');
     $rootScope.timezonesList = moment.tz.names();
