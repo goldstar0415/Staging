@@ -3,7 +3,7 @@
     <div class="col-xs-10 col-xs-offset-2 no-pad">
       <ul ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
         <li><a ui-sref="spots({user_id: $root.currentUser.id})" ui-sref-active="active">My spots</a></li>
-        <!--<li><a ui-sref-active="active">My blog</a></li>-->
+        <li><a ui-sref="profile_blog({user_id: $root.currentUser.id})" ui-sref-active="active">My blog</a></li>
         <li><a ui-sref="favorites({user_id: $root.currentUser.id})" ui-sref-active="active">Favorites</a></li>
         <li><a ui-sref="areas" ui-sref-active="active">Saved searches</a></li>
         <li><a ui-sref="friendsmap" ui-sref-active="active">Friends map</a></li>
