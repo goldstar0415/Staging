@@ -2,6 +2,7 @@
 
 use App\Blog;
 use App\BlogComment;
+use App\Comment;
 use App\User;
 use Illuminate\Database\Seeder;
 
@@ -15,17 +16,17 @@ class BlogCommentsTableSeeder extends Seeder
     public function run()
     {
         Blog::all()->each(function (Blog $blog) {
-            $comments = factory(BlogComment::class, mt_rand(1, 10))->make();
-            if ($comments instanceof BlogComment) {
+            $comments = factory(Comment::class, mt_rand(1, 10))->make();
+            if ($comments instanceof Comment) {
                 $user = User::random()->first();
-                $comments->blog()->associate($blog);
-                $comments->user()->associate($user);
+                $comments->commentable()->associate($blog);
+                $comments->sender()->associate($user);
                 $blog->comments()->save($comments);
             } else {
-                $comments->each(function (BlogComment $comment) use ($blog) {
+                $comments->each(function (Comment $comment) use ($blog) {
                     $user = User::random()->first();
-                    $comment->blog()->associate($blog);
-                    $comment->user()->associate($user);
+                    $comment->commentable()->associate($blog);
+                    $comment->sender()->associate($user);
                 });
                 $blog->comments()->saveMany($comments);
             }

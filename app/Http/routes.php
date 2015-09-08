@@ -108,5 +108,12 @@ Route::get('wall/{wall}/dislike', 'WallController@dislike');
  * Feed Controls
  */
 Route::get('feeds', 'FeedController@index');
+/**
+ * Blog Controls
+ */
+Route::resource('posts', 'BlogController', ['except' => ['create', 'edit']]);
+Route::get('posts/{posts}/preview', 'BlogController@preview');
+Route::get('posts/categories', 'BlogController@categories');
+Route::get('posts/popular', 'BlogController@popular');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
