@@ -132,6 +132,12 @@
               <div ng-bind-html="item.display_name |  highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
+
+          <input type="hidden" ng-model="attachment.data.category.id" name="category_activity_{{$index}}" required/>
+          <div ng-messages="form['category_activity_' + $index].$error"
+               ng-if="form.$submitted || form['category_activity_' +$index].$touched" class="error-message">
+            <div ng-message="required">is required</div>
+          </div>
         </div>
       </div>
 
