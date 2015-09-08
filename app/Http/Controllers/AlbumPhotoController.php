@@ -45,11 +45,13 @@ class AlbumPhotoController extends Controller
      */
     public function update(AlbumPhotoUpdateRequest $request, $photos)
     {
-        $photos->address = $request->input('address');
-        $lat = $request->input('location.lat');
-        $lng = $request->input('location.lng');
-        $photos->location = new Point($lat, $lng);
-        $photos->save();
+        if ($request->has('location')) {
+            $photos->address = $request->input('address');
+            $lat = $request->input('location.lat');
+            $lng = $request->input('location.lng');
+            $photos->location = new Point($lat, $lng);
+            $photos->save();
+        }
 
         return response()->json(['message' => 'Photo was successfuly updated']);
     }
