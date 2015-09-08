@@ -115,5 +115,6 @@ Route::resource('posts', 'BlogController', ['except' => ['create', 'edit']]);
 Route::get('posts/{posts}/preview', 'BlogController@preview');
 Route::get('posts/categories', 'BlogController@categories');
 Route::get('posts/popular', 'BlogController@popular');
+Route::resource('posts.comments', 'BlogCommentController', ['only' => ['index', 'store', 'destroy']]);
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
