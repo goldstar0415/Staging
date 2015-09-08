@@ -48,7 +48,7 @@ class PlanRequest extends Request
                 'location.lng' => 'numeric'
             ]
         ));
-        $rules = array_merge($rules, $this->arrayFieldRules('spots', 'integer'));
+        $rules = array_merge($rules, $this->arrayFieldRules('spots', ['id' => 'integer', 'position' => 'integer']));
 
         return $rules;
     }
