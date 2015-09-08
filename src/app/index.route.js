@@ -16,7 +16,7 @@
             if ($rootScope.currentUser) {
               return $rootScope.currentUser;
             } else if (!$rootScope.currentUserFailed) {
-             return UserService.getCurrentUserPromise();
+              return UserService.getCurrentUserPromise();
             }
           }
         }
@@ -34,7 +34,7 @@
         template: '<ui-view  />',
         abstract: true,
         resolve: {
-          user: function ($rootScope, User, currentUser, $stateParams,  UserService) {
+          user: function ($rootScope, User, currentUser, $stateParams, UserService) {
             if (currentUser && currentUser.id == $stateParams.user_id) {
               return User.currentUser({}, function (user) {
                 $rootScope.currentUser = user;
@@ -61,29 +61,61 @@
 
       //Blog page
       .state('blog', {
-        url: '/bloggers_profile',
+        url: '/blog',
         templateUrl: '/app/modules/blog/blog.html',
         controller: 'BlogController',
         controllerAs: 'Blog',
+        resolve: {
+          popularPosts: function (Post) {
+            return Post.popular()//.$promise;
+          },
+          categories: function () {
+            return null;
+          }
+        },
         parent: 'main',
-        mapState: 'none'
+        mapState: 'hidden'
       })
       //Bloggers profile page
-      .state('blogger_profile', {
-        url: '/bloggers_profile',
-        templateUrl: '/app/modules/blog/bloggers_profile/bloggers_profile.html',
-        controller: 'BloggerProfileController',
-        controllerAs: 'Blogger',
-        parent: 'main',
-        mapState: 'none'
+      .state('profile_blog', {
+        url: '/blog/:user_id',
+        templateUrl: '/app/modules/blog/blog.html',
+        controller: 'BlogController',
+        controllerAs: 'Blog',
+        resolve: {
+          popularPosts: function () {
+            return null;
+          },
+          categories: function (Post) {
+            return Post.categories()//.$promise;
+          }
+        },
+        parent: 'profile_menu',
+        mapState: 'small'
+      })
+      //Blog article creation page
+      .state('profile_blog.create', {
+        url: '/article/create',
+        templateUrl: '/app/modules/blog/article_create/article_create.html',
+        controller: 'ArticleCreateController',
+        controllerAs: 'Article',
+        mapState: 'small',
+        parent: 'profile_menu',
+        resolve: {
+          categories: function (Post) {
+            return Post.categories()//.$promise;
+          }
+        },
+        require_auth: true,
+        locate: 'none'
       })
       //Show blog location on map and show pop-up
-      .state('blog_article', {
+      .state('blog.article', {
         url: '/article/:id',
         controller: 'ArticleController',
         controllerAs: 'Article',
-        mapState: 'big',
-        parent: 'main',
+        mapState: 'small',
+        parent: 'profile_menu',
         resolve: {
           article: function () {
             //TODO: Pass article data to controller (to show this data on pop-up)
@@ -91,17 +123,7 @@
           }
         }
       })
-      //Blog article creation page
-      .state('blog_article_create', {
-        url: '/article/create',
-        templateUrl: '/app/modules/blog/article_create/article_create.html',
-        controller: 'ArticleCreateController',
-        controllerAs: 'ArticleCreate',
-        mapState: 'small',
-        parent: 'main',
-        require_auth: true,
-        locate: 'none'
-      })
+
 
       .state('spots', {
         url: '/spots',
@@ -112,7 +134,7 @@
         locate: 'none',
         mapState: 'small',
         resolve: {
-          allSpots: function(Spot, $stateParams) {
+          allSpots: function (Spot, $stateParams) {
             return Spot.query({user_id: $stateParams.user_id}).$promise;
           }
         }
@@ -128,7 +150,7 @@
           spot: function (Spot) {
             return new Spot();
           },
-          categories: function($http, API_URL) {
+          categories: function ($http, API_URL) {
             return $http.get(API_URL + '/spots/categories')
           }
         },
@@ -147,7 +169,7 @@
           spot: function (Spot, $stateParams) {
             return Spot.get({id: $stateParams.spot_id}).$promise;
           },
-          categories: function($http, API_URL) {
+          categories: function ($http, API_URL) {
             return $http.get(API_URL + '/spots/categories')
           }
         },
@@ -328,7 +350,7 @@
         locate: 'none',
         mapState: 'small',
         resolve: {
-          allSpots: function(Spot, $stateParams) {
+          allSpots: function (Spot, $stateParams) {
             return Spot.favorites({user_id: $stateParams.user_id}).$promise;
           }
         }

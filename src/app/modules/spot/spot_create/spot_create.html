@@ -1,5 +1,6 @@
 <form name="form" class="form-horizontal" role="form" novalidate>
   <h2 ng-if="!SpotCreate.edit" class="event-title">Create new spot</h2>
+
   <h2 ng-if="SpotCreate.edit" class="event-title">Update Spot</h2>
   <section class="event-main-info">
     <div ng-if="!SpotCreate.edit" class="form-group">
@@ -64,10 +65,11 @@
           <div class="input-group ">
             <input validate-link ng-model="SpotCreate.newLink" name="newLink" type="text" class="form-control"
                    placeholder="http://zoomtivity.com">
-          <span class="input-group-btn">
-                 <button ng-click="SpotCreate.addLink(!form.newLink.$error.link)" class="btn btn-default" type="button">
-                   <i class="glyphicon glyphicon-plus"></i></button>
-          </span>
+            <span class="input-group-btn">
+               <button ng-click="SpotCreate.addLink(!form.newLink.$error.link)" class="btn btn-default" type="button">
+                 <i class="glyphicon glyphicon-plus"></i>
+               </button>
+            </span>
           </div>
 
           <div ng-messages="form.newLink.$error" class="error-message-inline">
@@ -165,7 +167,8 @@
 
       <div class="col-md-10 col-sm-12 col-xs-12">
         <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
-          <input ng-datepicker name="start_date" ng-model="SpotCreate.start_date" start-date="SpotCreate.startDate" type="text" required>
+          <input ng-datepicker name="start_date" ng-model="SpotCreate.start_date" start-date="SpotCreate.startDate"
+                 type="text" required>
 
           <div ng-messages="form.start_date.$error" ng-if="form.$submitted" class="error-message-inline">
             <div ng-message="required">Start date field can't be empty</div>
@@ -195,7 +198,7 @@
                  type="text">
 
           <!--<div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
-            <!--<div ng-message="required">Start time field can't be empty</div>-->
+          <!--<div ng-message="required">Start time field can't be empty</div>-->
           <!--</div>-->
         </div>
         <span class="hidden-xs col-sm-1">—</span>
@@ -205,7 +208,7 @@
                  type="text">
 
           <!--<div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
-            <!--<div ng-message="required">End time field can't be empty</div>-->
+          <!--<div ng-message="required">End time field can't be empty</div>-->
           <!--</div>-->
         </div>
       </div>
@@ -238,7 +241,8 @@
         </ul>
       </div>
       <div ng-if="SpotCreate.images.files.length > 0">
-        <button type="button" ng-click="SpotCreate.selectCover = true" class="btn btn-default green-btn pull-left margin-bottom"
+        <button type="button" ng-click="SpotCreate.selectCover = true"
+                class="btn btn-default green-btn pull-left margin-bottom"
                 ng-if="!SpotCreate.selectCover">Select cover
         </button>
         <button type="button" ng-click="SpotCreate.selectCover = false" class="btn btn-primary blue-btn pull-left"
@@ -280,7 +284,6 @@
           </span>
 
 
-
         </div>
         <div ng-messages="form.youtubeLink.$error" class="error-message-inline">
           <div ng-message="link">Wrong link</div>
@@ -306,8 +309,12 @@
   </section>
   <div class="form-group">
     <div class="col-xs-12">
-      <button ng-if="!SpotCreate.edit && !SpotCreate.loading" type="button" ng-click="SpotCreate.create(form)" class="btn btn-default green-btn pull-left">Create</button>
-      <button ng-if="SpotCreate.edit && !SpotCreate.loading" type="button" ng-click="SpotCreate.create(form)" class="btn btn-default green-btn pull-left">Update</button>
+      <button ng-if="!SpotCreate.edit && !SpotCreate.loading" type="button" ng-click="SpotCreate.create(form)"
+              class="btn btn-default green-btn pull-left">Create
+      </button>
+      <button ng-if="SpotCreate.edit && !SpotCreate.loading" type="button" ng-click="SpotCreate.create(form)"
+              class="btn btn-default green-btn pull-left">Update
+      </button>
       <h4 ng-if="SpotCreate.loading">Wait please...</h4>
     </div>
   </div>
