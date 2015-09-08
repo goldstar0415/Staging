@@ -19,13 +19,13 @@ class AlbumPhotoCommentsTableSeeder extends Seeder
             if ($comments instanceof Comment) {
                 $user = User::random()->first();
                 $comments->commentable()->associate($photo);
-                $comments->user()->associate($user);
+                $comments->sender()->associate($user);
                 $photo->comments()->save($comments);
             } else {
                 $comments->each(function (Comment $comment) use ($photo) {
                     $user = User::random()->first();
                     $comment->commentable()->associate($photo);
-                    $comment->user()->associate($user);
+                    $comment->sender()->associate($user);
                 });
                 $photo->comments()->saveMany($comments);
             }

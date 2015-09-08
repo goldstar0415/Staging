@@ -14,6 +14,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property integer $id
  * @property integer $plan_id
  * @property integer $activity_category_id
+ * @property integer $position
  * @property string $title
  * @property string $description
  * @property string $address

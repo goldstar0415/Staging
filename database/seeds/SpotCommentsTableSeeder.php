@@ -25,7 +25,7 @@ class SpotCommentsTableSeeder extends Seeder
                 ->each(
                     function (Comment $spot_comment) use ($spot, $users) {
                         $spot_comment->commentable()->associate($spot);
-                        $spot_comment->user()->associate($users->shift());
+                        $spot_comment->sender()->associate($users->shift());
                     }
                 );
             $spot->comments()->saveMany($comments);

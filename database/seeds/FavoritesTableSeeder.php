@@ -1,6 +1,5 @@
 <?php
 
-use App\Favorite;
 use App\Spot;
 use App\User;
 use Illuminate\Database\Seeder;

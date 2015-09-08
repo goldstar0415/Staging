@@ -39,6 +39,7 @@ class PlanRequest extends Request
             [
                 'title' => 'required|string|max:255',
                 'activity_category_id' => 'required|exists:activity_categories,id',
+                'position' => 'required|integer',
                 'description' => 'string|max:255',
                 'start_date' => 'date_format:Y-m-d H:i:s',
                 'end_date' => 'date_format:Y-m-d H:i:s',
@@ -47,7 +48,7 @@ class PlanRequest extends Request
                 'location.lng' => 'numeric'
             ]
         ));
-        $rules = array_merge($rules, $this->arrayFieldRules('spots', 'integer'));
+        $rules = array_merge($rules, $this->arrayFieldRules('spots', ['id' => 'integer', 'position' => 'integer']));
 
         return $rules;
     }
