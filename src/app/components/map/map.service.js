@@ -1018,7 +1018,11 @@
         }
         var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
         var popup = L.popup(options).setContent(popupContent[0]);
-        marker.bindPopup(popup);
+        if($rootScope.isMobile) {
+          //TODO: Make $modal instead of popup. Смотри директивку спот-попап
+        } else {
+          marker.bindPopup(popup);
+        }
       }
 
       function RemoveMarkerPopup(remove, cancel, addmarker, location) {
