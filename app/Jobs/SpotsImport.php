@@ -95,6 +95,10 @@ class SpotsImport extends Job implements SelfHandling
                     $spot->end_date = $row->end_date;
                 }
 
+                if ($this->type === self::RECREATION or $this->type === self::PITSTOP) {
+                    $spot->is_approved = true;
+                }
+
                 $admin->spots()->save($spot);
                 foreach ($row->image_links as $photo) {
                     $spot->photos()->create([
