@@ -20,7 +20,8 @@
     border-bottom: none;
     h3 {
       width: 100%;
-      white-space: pre-line;
+      //white-space: pre-line;
+      word-break: break-all;
       word-wrap: break-word;
     }
   }

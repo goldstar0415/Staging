@@ -197,7 +197,8 @@
     margin-bottom: 10px;
     a {
       word-wrap: break-word;
-      white-space: pre-line;
+      //white-space: pre-line;
+      word-break: break-all;
     }
   }
   .comments-content {
