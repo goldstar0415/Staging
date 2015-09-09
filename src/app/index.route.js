@@ -70,11 +70,11 @@
       })
       //Bloggers profile page
       .state('profile_blog', {
-        url: '/blog/:user_id',
+        url: '/blog',
         templateUrl: '/app/modules/blog/blogger_profile/blogger_profile.html',
         controller: 'BlogController',
         controllerAs: 'Blog',
-        parent: 'profile_menu',
+        parent: 'profile',
         mapState: 'small'
       })
       //Blog article creation page
@@ -88,13 +88,16 @@
         resolve: {
           categories: function (Post) {
             return Post.categories().$promise;
+          },
+          article: function (Post) {
+            return new Post();
           }
         },
         require_auth: true,
         locate: 'none'
       })
       .state('profile_blog.edit', {
-        url: '/article/edit/:post_id',
+        url: '/article/edit/:slug',
         templateUrl: '/app/modules/blog/article_create/article_create.html',
         controller: 'ArticleCreateController',
         controllerAs: 'Article',
@@ -103,6 +106,9 @@
         resolve: {
           categories: function (Post) {
             return Post.categories().$promise;
+          },
+          article: function (Post, $stateParams) {
+            return Post.get({id: $stateParams.slug}).$promise;
           }
         },
         require_auth: true,

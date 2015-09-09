@@ -1,12 +1,15 @@
 <div class="blog-content-first-block col-xs-12">
-  <h2 class="my-bloggers-profile-title">My blog</h2>
-  <a ui-sref="profile_blog.create" class="add-friend" title="Create new post"></a>
+  <h2 class="my-bloggers-profile-title">
+    {{currentUser.id == profileUser.id ? 'My blog' : profileUser.first_name + "'s blog"}}
+  </h2>
+  <a ui-sref="profile_blog.create" class="add-friend" title="Create new post"
+     ng-if="currentUser.id == profileUser.id"></a>
 </div>
 
 <div infinite-scroll="Blog.pagination.nextPage()" infinite-scroll-disabled="Blog.pagination.busy"
      class="clearfix" infinite-scroll-distance="1">
-  <div class="blog-content-first-block col-xs-12" ng-repeat="post in Blog.posts.data">
-    <div class="article" >
+  <div class="blog-content col-xs-12" ng-repeat="post in Blog.posts.data">
+    <div class="article">
       <img ng-if="post.cover_url" ng-src="{{post.cover_url.original}}" class="article-img">
 
       <h2 class="title-blog">
@@ -30,7 +33,7 @@
       <p class="article-description" ng-bind-html="post.body | limitTo: 500"></p>
 
       <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id">
-        <a ui-sref="profile_blog.edit({post_id: post.id})" class="edit-blog-article">Edit</a>
+        <a ui-sref="profile_blog.edit({slug: post.slug})" class="edit-blog-article">Edit</a>
       </div>
       <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id">
         <a ng-click="Blog.removePost(post, $index)" class="delete-blog-article">Delete</a>

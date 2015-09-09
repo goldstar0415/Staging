@@ -6,8 +6,9 @@
     .controller('ArticleCreateController', ArticleCreateController);
 
   /** @ngInject */
-  function ArticleCreateController($state, categories, toastr, API_URL, UploaderService) {
+  function ArticleCreateController($state, article, categories, toastr, API_URL, UploaderService) {
     var vm = this;
+    vm = _.extend(vm, article);
     vm.categories = categories;
     vm.images = UploaderService.images;
 
