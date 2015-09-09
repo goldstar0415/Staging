@@ -35,6 +35,8 @@ class Blog extends BaseModel implements StaplerableInterface
 
     protected $guarded = ['id', 'user_id', 'count_views'];
 
+    protected $appends = ['cover_url'];
+
     protected $postgisFields = [
         'location' => Point::class
     ];
@@ -48,6 +50,11 @@ class Blog extends BaseModel implements StaplerableInterface
         parent::__construct($attributes);
     }
 
+    public function getCovetUrlAttribute()
+    {
+        return $this->getPictureUrls('cover');
+    }
+    
     public function user()
     {
         return $this->belongsTo(User::class);
