@@ -1,5 +1,5 @@
 <aside class="col-xs-12 col-lg-3  col-sm-12 col-md-12 col-lg-pull-1 position-right">
-  <div  ng-if="Post.posts.length > 0">
+  <div>
     <ui-select ng-model="Post.popular_category" theme="bootstrap">
       <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
       <ui-select-choices repeat="item.id as item in Post.categories | filter : $select.search track by $index">
@@ -9,7 +9,7 @@
   </div>
 
   <!-- module popular -->
-  <div class="module-popular col-xs-12 hidden-md hidden-sm hidden-xs" ng-if="Post.posts.length > 0">
+  <div class="module-popular col-xs-12 hidden-md hidden-sm hidden-xs">
     <div class="module-post">
       <h3 class="title-popular-new">Popular news</h3>
 
@@ -29,6 +29,7 @@
         </figcaption>
       </figure>
 
+      <h4 class="text-center description" ng-if="Post.posts && Post.posts.length === 0">No posts in this category</h4>
     </div>
   </div>
   <!--end module popular -->

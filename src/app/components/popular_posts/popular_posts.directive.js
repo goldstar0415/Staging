@@ -19,11 +19,19 @@
     };
 
     /** @ngInject */
-    function PopularPostsController(Post) {
+    function PopularPostsController(Post, $scope) {
       var vm = this;
-      vm.posts = Post.popular();
-      vm.categories = Post.categories();
+      vm.popular_category = '';
 
+      Post.categories().$promise.then(function (catergories) {
+        catergories.unshift({id: '', name: "all", display_name: "All"});
+        vm.categories = catergories;
+      });
+
+      $scope.$watch('Post.popular_category', function (val) {
+        console.log(val);
+        vm.posts = Post.popular({category: val});
+      });
 
     }
 
