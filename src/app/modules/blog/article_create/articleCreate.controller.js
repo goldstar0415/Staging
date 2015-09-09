@@ -30,11 +30,13 @@
         UploaderService
           .upload(url, req, 'cover')
           .then(function (resp) {
-            $state.go('blog.article', {id: resp.data.id});
+            $state.go('blog.article', {slug: resp.data.slug});
           })
           .catch(function (resp) {
-            var message = vm.images.files.length > 0 ? 'Upload failed' : 'Wrong input';
-            toastr.error(message);
+            //var message = vm.images.files.length > 0 ? 'Upload failed' : 'Wrong input';
+            _.each(resp.data, function (message) {
+              toastr.error(message[0]);
+            });
           });
       }
     }
