@@ -33,6 +33,7 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'base64upload' => \App\Http\Middleware\Base64Upload::class,
-        'privacy' => \App\Http\Middleware\PrivacyCheck::class
+        'privacy' => \App\Http\Middleware\PrivacyCheck::class,
+        'blogger' => \App\Http\Middleware\BloggerCheck::class
     ];
 }
