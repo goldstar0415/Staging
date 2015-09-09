@@ -1,0 +1,92 @@
+<div class="col-xs-12">
+  <div class="container wrap">
+    <div class="main-blog-article-content">
+
+      <popular-posts></popular-posts>
+
+      <!-- block with article -->
+      <div class="blog-content col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12">
+
+        <div class="article">
+          <img ng-if="Article.cover_url" ng-src="{{Article.cover_url.original}}" class="article-img">
+
+          <h2 class="title-blog">
+            {{Article.title}}
+          </h2>
+
+          <div class="location-link col-xs-12">
+            <a>{{Article.address}}</a>
+          </div>
+          <div class="article-info col-xs-12">
+            <p class="date col-xs-12 col-sm-2">{{Article.created_at | toTimezone:'MM.DD.YYYY'}}</p>
+
+            <p class="col-xs-12 col-sm-3 author">Author:
+              <a ui-sref="profile.main({user_id: Article.user.id})">
+                {{Article.user.first_name}} {{Article.user.last_name}}
+              </a>
+            </p>
+
+            <p class="col-xs-12 col-sm-4 category">Category:
+              <a>{{Article.category.display_name}}</a>
+            </p>
+
+            <p class="col-xs-12 col-sm-3 views">Views: {{Article.count_views}}</p>
+          </div>
+
+
+          <p class="article-description" ng-bind-html="Article.body"></p>
+
+          <share links="Article.share_links"></share>
+
+        </div>
+
+
+      </div>
+      <!-- end block with article -->
+
+      <!--block with comets  -->
+      <section class="col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12 comments-section">
+        <div class="comments-content ng-scope">
+          <form name="form" ng-submit="Article.sendComment(form)" class="new-post-spot">
+            <textarea class="form-control" rows="4" placeholder="Start typing..." ng-model="Article.message" name="body"
+                      required></textarea>
+
+            <div class="attachments-preview">
+              <div class="buttons clearfix">
+                <input type="submit" value="Send" class="btn-send-comment col-sm-2 col-xs-12"/>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div infinite-scroll="Article.pagination.nextPage()" infinite-scroll-disabled="Article.pagination.busy"
+             class="clearfix" infinite-scroll-distance="1">
+          <div class="col-xs-12 post" ng-repeat="post in Article.comments.data">
+            <div class="col-sm-2 col-xs-12">
+              <a ui-sref="profile.main({user_id: post.sender.id})">
+                <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
+              </a>
+            </div>
+            <div class="col-sm-10 col-xs-12 info">
+              <h3 class="name">
+                <a ui-sref="profile.main({user_id: post.seder.id})">{{post.sender.first_name}}
+                  {{post.sender.last_name}}</a>
+              </h3>
+
+              <p ng-bind-html="post.body | htmlLinky:'_blank'"></p>
+
+              <p class="time">{{post.created_at | fromNow}}
+                <a ng-click="Article.deleteComment(post, $index)" ng-if="post.sender.id == currentUser.id" class="delete-link">Delete</a>
+              </p>
+
+
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!--end block with comets  -->
+    </div>
+  </div>
+</div>

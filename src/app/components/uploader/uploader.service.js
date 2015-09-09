@@ -15,12 +15,13 @@
     };
 
     //@return $promise
-    function upload(url, data) {
+    function upload(url, data, fileFormDataName) {
+      fileFormDataName = fileFormDataName || 'files[]';
       return Upload.upload({
         url: url,
         file: images.files,
         fields: data,
-        fileFormDataName: 'files[]',
+        fileFormDataName: fileFormDataName,
         method: 'POST'
       });
     }

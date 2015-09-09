@@ -10,6 +10,7 @@
       'ngResource',
       'ngMessages',
       'ngFileUpload',
+      'ngWig',
       'ui.router',
       'ui.bootstrap',
       'dialogs.main',

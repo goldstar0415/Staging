@@ -19,16 +19,16 @@
       <label class="col-sm-2 control-label">Category</label>
 
       <div class="col-sm-10">
-        <ui-select ng-model="Article.category_id" theme="bootstrap">
+        <ui-select ng-model="Article.blog_category_id" theme="bootstrap">
           <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
           <ui-select-choices repeat="item.id as item in Article.categories | filter : $select.search track by $index">
             <div ng-bind-html="item.display_name |  highlight: $select.search"></div>
           </ui-select-choices>
         </ui-select>
 
-        <input type="hidden" ng-model="Article.category_id" name="category_id" required/>
+        <input type="hidden" ng-model="Article.blog_category_id" name="blog_category_id" required/>
 
-        <div ng-messages="form.category_id.$error" ng-if="form.$submitted || form.category_id.$touched"
+        <div ng-messages="form.blog_category_id.$error" ng-if="form.$submitted || form.blog_category_id.$touched"
              class="error-message">
           <div ng-message="required">is required</div>
         </div>
@@ -46,18 +46,10 @@
     </div>
 
     <div class="form-group">
-      <label class="col-sm-2 control-label">Url</label>
+      <label class="col-sm-2 control-label">Alias</label>
 
       <div class="col-sm-10">
-        <input validate-link ng-model="SpotCreate.url" name="url" type="text" class="form-control"
-               placeholder="http://zoomtivity.com" required>
-
-        <div ng-messages="form.url.$error" ng-if="form.$submitted || form.category_id.$touched"
-             class="error-message">
-          <div ng-message="link">wrong link</div>
-          <div ng-message="required">is required</div>
-        </div>
-
+        <input ng-model="Article.slug" name="slug" type="text" class="form-control">
       </div>
     </div>
     <div class="form-group">
@@ -65,11 +57,12 @@
 
       <div class="col-sm-10">
         <location address="Article.address" location="Article.location" limit="15"></location>
+
       </div>
     </div>
 
     <div class="form-group">
-
+      <div ng-wig="Article.body"></div>
     </div>
 
     <div class="form-group">

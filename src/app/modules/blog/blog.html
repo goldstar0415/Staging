@@ -46,56 +46,11 @@
     <div class="main-blog-content">
 
 
-      <aside ng-if="!Blog.isPersonalBlog" class="col-xs-12 col-lg-3  col-sm-12 col-md-12 col-lg-pull-1 position-right">
-        <div  ng-if="Blog.popularPosts.length > 0">
-          <ui-select ng-model="Blog.popular_category" theme="bootstrap">
-            <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
-            <ui-select-choices repeat="item.id as item in Blog.categories | filter : $select.search track by $index">
-              <div ng-bind-html="item.display_name |  highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
-        </div>
-
-        <!-- module popular -->
-        <div class="module-popular col-xs-12 hidden-md hidden-sm hidden-xs" ng-if="Blog.popularPosts.length > 0">
-          <div class="module-post">
-            <h3 class="title-popular-new">Popular news</h3>
-
-            <figure class="post col-xs-12" ng-repeat="post in Blog.popularPosts">
-              <img class="avatar col-xs-12 col-sm-4">
-
-
-              <figcaption class="info-post col-xs-12 col-sm-8">
-                <h4>
-                  <a ui-sref="blog.article({id: post.id})">{{post.title}}</a>
-                </h4>
-
-                <p class="description">{{post.body | limitTo: 100}}...</p>
-
-                <div class="views">Views: {{post.count_views}}</div>
-                <div class="date">{{post.created_at | toTimezone}}</div>
-              </figcaption>
-            </figure>
-
-          </div>
-        </div>
-        <!--end module popular -->
-
-        <!-- module banner  -->
-        <div class=" module-banner hidden-md hidden-sm hidden-xs">
-          <div class="banner-for-bloggers col-xs-12">
-            <div class="banner-logo"></div>
-            <p class="text-banner">Want to add a post to our blog?</p>
-            <button type="button" class="banner-btn">Send request!</button>
-          </div>
-        </div>
-        <!--end module banner -->
-      </aside>
+      <popular-posts show-banner="true"></popular-posts>
 
 
       <!-- blog content -->
-      <div class="central col-lg-7 col-sm-12 col-md-12 col-xs-12">
-        <a ui-sref="profile_blog.create">Add post</a>
+      <div class="central col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12">
 
         <div infinite-scroll="Blog.pagination.nextPage()" infinite-scroll-disabled="Blog.pagination.busy"
              class="clearfix" infinite-scroll-distance="1">
@@ -103,32 +58,32 @@
             <img ng-src="{{post.cover_url.original}}" class="article-img">
 
             <h2 class="title-blog">
-              <a ui-sref="blog.article({id: post.id})">{{post.title}}</a>
+              <a ui-sref="blog.article({slug: post.slug})">{{post.title}}</a>
             </h2>
 
             <div class="location-link col-xs-12">
               <a>{{post.address}}</a>
             </div>
             <div class="article-info col-xs-12">
-              <p class="date col-xs-12 col-sm-2">{{post.created_at | toTimezone}}</p>
+              <p class="date col-xs-12 col-sm-2">{{post.created_at | toTimezone:'MM.DD.YYYY'}}</p>
 
               <p class="col-xs-12 col-sm-3 author">Author:
-                <a ui-sref="profile.main({user_id: post.sender.id})">
-                  {{post.sender.first_name}} {{post.sender.last_name}}
+                <a ui-sref="profile.main({user_id: post.user.id})">
+                  {{post.user.first_name}} {{post.user.last_name}}
                 </a>
               </p>
 
               <p class="col-xs-12 col-sm-4 category">Category:
-                <a>{{post.category.name}}</a>
+                <a>{{post.category.display_name}}</a>
               </p>
 
-              <p class="col-xs-12 col-sm-3 views">Views: {{post.co}}</p>
+              <p class="col-xs-12 col-sm-3 views">Views: {{post.count_views}}</p>
             </div>
 
-            <p class="article-description">{{post.body | limitTo: 500}}...</p>
+            <p class="article-description" ng-bind-html="post.body | limitTo: 500"></p>
 
             <div class="col-xs-12">
-              <a class="share">Share</a>
+              <share links="post.share_links" ></share>
             </div>
 
           </div>

@@ -65,31 +65,15 @@
         templateUrl: '/app/modules/blog/blog.html',
         controller: 'BlogController',
         controllerAs: 'Blog',
-        resolve: {
-          popularPosts: function (Post) {
-            return Post.popular()//.$promise;
-          },
-          categories: function () {
-            return null;
-          }
-        },
         parent: 'main',
         mapState: 'hidden'
       })
       //Bloggers profile page
       .state('profile_blog', {
         url: '/blog/:user_id',
-        templateUrl: '/app/modules/blog/blog.html',
+        templateUrl: '/app/modules/blog/blogger_profile/blogger_profile.html',
         controller: 'BlogController',
         controllerAs: 'Blog',
-        resolve: {
-          popularPosts: function () {
-            return null;
-          },
-          categories: function (Post) {
-            return Post.categories()//.$promise;
-          }
-        },
         parent: 'profile_menu',
         mapState: 'small'
       })
@@ -103,7 +87,22 @@
         parent: 'profile_menu',
         resolve: {
           categories: function (Post) {
-            return Post.categories()//.$promise;
+            return Post.categories().$promise;
+          }
+        },
+        require_auth: true,
+        locate: 'none'
+      })
+      .state('profile_blog.edit', {
+        url: '/article/edit/:post_id',
+        templateUrl: '/app/modules/blog/article_create/article_create.html',
+        controller: 'ArticleCreateController',
+        controllerAs: 'Article',
+        mapState: 'small',
+        parent: 'profile_menu',
+        resolve: {
+          categories: function (Post) {
+            return Post.categories().$promise;
           }
         },
         require_auth: true,
@@ -111,17 +110,18 @@
       })
       //Show blog location on map and show pop-up
       .state('blog.article', {
-        url: '/article/:id',
+        url: '/article/:slug',
+        templateUrl: '/app/modules/blog/article/article.html',
         controller: 'ArticleController',
         controllerAs: 'Article',
-        mapState: 'small',
-        parent: 'profile_menu',
+        mapState: 'hidden',
+        parent: 'main',
         resolve: {
-          article: function () {
-            //TODO: Pass article data to controller (to show this data on pop-up)
-            return 'article'
+          article: function (Post, $stateParams) {
+            return Post.get({id: $stateParams.slug}).$promise;
           }
-        }
+        },
+        locate: 'none'
       })
 
 

@@ -3,7 +3,9 @@
     <div class="col-xs-10 col-xs-offset-2 no-pad">
       <ul ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
         <li><a ui-sref="spots({user_id: $root.currentUser.id})" ui-sref-active="active">My spots</a></li>
-        <li><a ui-sref="profile_blog({user_id: $root.currentUser.id})" ui-sref-active="active">My blog</a></li>
+        <li ng-if="Profile.isRole($root.currentUser, 'blogger')">
+          <a ui-sref="profile_blog({user_id: $root.currentUser.id})" ui-sref-active="active">My blog</a>
+        </li>
         <li><a ui-sref="favorites({user_id: $root.currentUser.id})" ui-sref-active="active">Favorites</a></li>
         <li><a ui-sref="areas" ui-sref-active="active">Saved searches</a></li>
         <li><a ui-sref="friendsmap" ui-sref-active="active">Friends map</a></li>
@@ -22,6 +24,9 @@
         <li ng-if="Profile.checkPermision(profileUser.privacy_photo_map)">
           <a ui-sref="photos({user_id: $root.profileUser.id})" ng-class="Profile.isActive('photos')" class="photomap">Photo
             map</a>
+        </li>
+        <li ng-if="Profile.isRole($root.profileUser, 'blogger')">
+          <a ui-sref="profile_blog({user_id: $root.profileUser.id})" ui-sref-active="active">My blog</a>
         </li>
       </ul>
 
