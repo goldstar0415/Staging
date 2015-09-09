@@ -29,6 +29,13 @@
         //active: $state.includes()
         active: state == $state.current.name || $state.current.name.indexOf(state + '.') >= 0
       };
+    };
+
+    vm.isRole = function (user, name) {
+      if (user) {
+        var roles = _.pluck(user.roles, 'name');
+        return roles.length > 0 && roles.indexOf(name) >= 0;
+      }
     }
   }
 })();

@@ -6,7 +6,7 @@
     .controller('ArticleCreateController', ArticleCreateController);
 
   /** @ngInject */
-  function ArticleCreateController(categories, API_URL, UploaderService) {
+  function ArticleCreateController($state, categories, toastr, API_URL, UploaderService) {
     var vm = this;
     vm.categories = categories;
     vm.images = UploaderService.images;
@@ -17,22 +17,23 @@
     function save(form) {
       if (form.$valid) {
         var req = {},
+          data = angular.copy(vm),
           url = API_URL + '/posts';
 
-        req.payload = JSON.stringify(vm);
+        req.payload = JSON.stringify(data);
         if (vm.id) {
           req._method = 'PUT';
           url = API_URL + '/posts/' + vm.id;
         }
 
         UploaderService
-          .upload(url, req)
+          .upload(url, req, 'cover')
           .then(function (resp) {
-
-            //$state.go('spot', {spot_id: resp.data.id, user_id: resp.data.user_id});
+            $state.go('blog.article', {id: resp.data.id});
           })
           .catch(function (resp) {
-            toastr.error('Upload failed');
+            var message = vm.images.files.length > 0 ? 'Upload failed' : 'Wrong input';
+            toastr.error(message);
           });
       }
     }
