@@ -108,5 +108,20 @@ Route::get('wall/{wall}/dislike', 'WallController@dislike');
  * Feed Controls
  */
 Route::get('feeds', 'FeedController@index');
+/**
+ * Blog Controls
+ */
+Route::get('posts/categories', 'BlogController@categories');
+Route::get('posts/popular', 'BlogController@popular');
+Route::resource('posts', 'BlogController', ['except' => ['create', 'edit']]);
+Route::get('posts/{posts}/preview', 'BlogController@preview');
+Route::resource('posts.comments', 'BlogCommentController', ['only' => ['index', 'store', 'destroy']]);
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
+get('/', function () {
+    $user = App\User::find(2);
+    $user->roles()->attach(App\Role::take('blogger'));
+    Auth::login($user);
+
+    return $user;
+});

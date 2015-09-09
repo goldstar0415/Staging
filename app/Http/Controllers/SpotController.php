@@ -240,7 +240,7 @@ class SpotController extends Controller
             ->image($spot->cover->url())//TODO: change image
             ->description($spot->description)
             ->url(config('app.frontend_url') . '/user/' . $spot->user_id . '/spots/' . $spot->id)
-        );//TODO: change frontend url
+        );
     }
 
     /**

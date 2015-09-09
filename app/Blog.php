@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Extensions\GeoTrait;
+use App\Scopes\NewestScopeTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
@@ -30,9 +31,9 @@ use Phaza\LaravelPostgis\Geometries\Point;
  */
 class Blog extends BaseModel implements StaplerableInterface
 {
-    use PostgisTrait, StaplerTrait, GeoTrait;
+    use PostgisTrait, StaplerTrait, GeoTrait, NewestScopeTrait;
 
-    protected $guarded = ['id', 'user_id', 'blog_category_id', 'count_views'];
+    protected $guarded = ['id', 'user_id', 'count_views'];
 
     protected $postgisFields = [
         'location' => Point::class
@@ -54,7 +55,7 @@ class Blog extends BaseModel implements StaplerableInterface
 
     public function comments()
     {
-        return $this->hasMany(BlogComment::class);
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
     public function category()

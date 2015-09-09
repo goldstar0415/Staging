@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\ActivityLevel;
 use App\Album;
 use App\AlbumPhoto;
+use App\Blog;
 use App\Comment;
 use App\Area;
 use App\ChatMessage;
@@ -54,6 +55,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('comments', Comment::class);
         $router->model('wall', Wall::class);
         $router->model('plans', Plan::class);
+        $router->model('posts', Blog::class);
 
         // Admin
 
