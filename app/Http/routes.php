@@ -113,15 +113,9 @@ Route::get('feeds', 'FeedController@index');
  */
 Route::get('posts/categories', 'BlogController@categories');
 Route::get('posts/popular', 'BlogController@popular');
-Route::resource('posts', 'BlogController', ['except' => ['create', 'edit']]);
+Route::get('posts/{post_slug}', 'BlogController@show');
+Route::resource('posts', 'BlogController', ['except' => ['create', 'edit', 'show']]);
 Route::get('posts/{posts}/preview', 'BlogController@preview');
 Route::resource('posts.comments', 'BlogCommentController', ['only' => ['index', 'store', 'destroy']]);
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
-get('/', function () {
-    $user = App\User::find(2);
-    $user->roles()->attach(App\Role::take('blogger'));
-    Auth::login($user);
-
-    return $user;
-});

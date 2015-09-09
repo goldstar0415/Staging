@@ -44,7 +44,7 @@ class BlogController extends Controller
      */
     public function store(BlogStoreRequest $request)
     {
-        $blog = new Blog($request->only(['blog_category_id', 'title', 'body']));
+        $blog = new Blog($request->only(['blog_category_id', 'title', 'body', 'slug']));
 
         if ($request->hasFile('cover')) {
             $blog->cover = $request->file('cover');
@@ -52,9 +52,6 @@ class BlogController extends Controller
         if ($request->has('location')) {
             $blog->location = $request->input('location');
             $blog->address = $request->input('address');
-        }
-        if ($request->has('url')) {
-            $blog->url = $request->input('url');
         }
 
         $request->user()->blogs()->save($blog);
@@ -85,7 +82,7 @@ class BlogController extends Controller
      */
     public function update(BlogRequest $request, $blog)
     {
-        $blog->fill($request->only(['blog_category_id', 'title', 'body']));
+        $blog->fill($request->only(['blog_category_id', 'title', 'body', 'slug']));
 
         if ($request->hasFile('cover')) {
             $blog->cover = $request->file('cover');
@@ -93,9 +90,6 @@ class BlogController extends Controller
         if ($request->has('location')) {
             $blog->location = $request->input('location');
             $blog->address = $request->input('address');
-        }
-        if ($request->has('url')) {
-            $blog->url = $request->input('url');
         }
 
         return $blog;
