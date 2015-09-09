@@ -92,6 +92,8 @@ class BlogController extends Controller
             $blog->address = $request->input('address');
         }
 
+        $blog->save();
+
         return $blog;
     }
 
