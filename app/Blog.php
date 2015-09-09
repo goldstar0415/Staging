@@ -50,7 +50,7 @@ class Blog extends BaseModel implements StaplerableInterface
         parent::__construct($attributes);
     }
 
-    public function getCovetUrlAttribute()
+    public function getCoverUrlAttribute()
     {
         return $this->getPictureUrls('cover');
     }

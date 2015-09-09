@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\BloggerRequest;
 use App\Comment;
 use App\Events\OnComment;
 use App\Extensions\Validations;
+use App\Role;
 use App\Services\Attachments;
 use App\Services\Privacy;
 use Illuminate\Support\ServiceProvider;
@@ -21,6 +23,17 @@ class AppServiceProvider extends ServiceProvider
     {
         Comment::created(function ($comment) {
             event(new OnComment($comment));
+        });
+
+        BloggerRequest::updated(function (BloggerRequest $request) {
+            switch ($request->status) {
+                case 'accepted':
+                    $user = $request->user;
+                    if (!$user->hasRole('blogger')) {
+                        $user->roles()->attach(Role::take('blogger'));
+                    }
+                    break;
+            }
         });
 
         Validator::resolver(function ($translator, $data, $rules, $messages) {
