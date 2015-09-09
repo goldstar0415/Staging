@@ -230,7 +230,7 @@ $factory->define(App\Blog::class, function (Generator $faker) use ($timestamps) 
         'cover' => $faker->image(storage_path('app'), mt_rand(300, 1920), mt_rand(200, 1250)),
         'title' => $faker->sentence,
         'body' => $faker->text(300),
-        'url' => $faker->url,
+        'slug' => $faker->slug,
         'address' => $faker->address,
         'location' => new Point($faker->latitude, $faker->longitude),
     ], $timestamps());

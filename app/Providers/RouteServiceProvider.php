@@ -18,6 +18,7 @@ use App\Wall;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -56,6 +57,15 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('wall', Wall::class);
         $router->model('plans', Plan::class);
         $router->model('posts', Blog::class);
+        $router->bind('post_slug', function ($value) {
+            $blog_post = Blog::where('slug', $value)->first();
+
+            if ($blog_post === null) {
+                throw new NotFoundHttpException;
+            }
+
+            return $blog_post;
+        });
 
         // Admin
 
