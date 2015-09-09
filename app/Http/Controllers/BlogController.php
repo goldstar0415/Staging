@@ -23,7 +23,7 @@ class BlogController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show', 'preview']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'preview', 'popular', 'categories']]);
         $this->middleware('blogger', ['only' => ['store', 'update', 'destroy']]);
     }
 
@@ -72,7 +72,7 @@ class BlogController extends Controller
         ++$blog->count_views;
         $blog->save();
 
-        return $blog;
+        return $blog->load(['category', 'user']);
     }
 
     /**

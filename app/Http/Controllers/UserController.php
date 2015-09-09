@@ -244,7 +244,7 @@ class UserController extends Controller
 
     protected function authenticated(Request $request, Authenticatable $user)
     {
-        return $user;
+        return $this->appendUserRelations($user)->append(['new_messages'])->load('roles');
     }
 
     protected function sendLockoutResponse(Request $request)
