@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Blog;
 use App\BlogCategory;
+use App\BloggerRequest as BloggerRequestModel;
 use App\Http\Requests\Blog\BlogCategoryRequest;
 use App\Http\Requests\Blog\BlogDestroyRequest;
+use App\Http\Requests\Blog\BloggerRequest;
 use App\Http\Requests\Blog\BlogRequest;
 use App\Http\Requests\Blog\BlogStoreRequest;
 use App\Http\Requests\PaginateRequest;
@@ -136,5 +138,17 @@ class BlogController extends Controller
         }
 
         return $top_blogs->orderBy('count_views')->take(3)->get();
+    }
+
+    public function bloggerRequest(BloggerRequest $request)
+    {
+        $blogger_request = new BloggerRequestModel([
+            'text' => $request->input('body'),
+            'status' => 'requested'
+        ]);
+
+        $request->user()->bloggerRequest()->save($blogger_request);
+
+        return $blogger_request;
     }
 }

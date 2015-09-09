@@ -113,6 +113,7 @@ Route::get('feeds', 'FeedController@index');
  */
 Route::get('posts/categories', 'BlogController@categories');
 Route::get('posts/popular', 'BlogController@popular');
+Route::post('posts/request', 'BlogController@bloggerRequest');
 Route::get('posts/{post_slug}', 'BlogController@show');
 Route::resource('posts', 'BlogController', ['except' => ['create', 'edit', 'show']]);
 Route::get('posts/{posts}/preview', 'BlogController@preview');

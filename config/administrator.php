@@ -61,7 +61,8 @@ return [
 			'settings.event_import',
 			'settings.pitstop_import',
 			'settings.recreation_import'
-		]
+		],
+		'blogger_requests'
 	],
 
 	/**
