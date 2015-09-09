@@ -476,13 +476,14 @@ h3 {
     word-break: break-all;
   }
 }
+
 .media-body {
   h3 {
     word-break: break-all;
   }
 }
 
-.description, h2, .title-name {
+.description, h2, .title-name, .author-name {
   word-wrap: break-word;
 }
 
@@ -584,9 +585,9 @@ sign-in, sign-up {
   position: relative;
   padding-top: 70.25%;
   margin-bottom: 3rem;
-    &:last-child {
-      margin-bottom: 0;
-    }
+  &:last-child {
+    margin-bottom: 0;
+  }
   iframe {
     position: absolute;
     top: 0;
@@ -753,6 +754,30 @@ sign-in, sign-up {
   }
 }
 
+@media (max-width: 400px) {
+  header nav ul li .user-name span:first-of-type {
+    max-width: 80%;
+  }
+  header nav ul li .user-name {
+    max-width: 20rem;
+  }
+}
+@media (max-width: 347px) {
+  header nav ul li .user-name span:first-of-type {
+    max-width: 72%;
+  }
+  header nav ul li .user-name {
+    max-width: 17rem;
+  }
+}
+@media (max-width: 315px) {
+  header nav ul li .user-name span:first-of-type {
+    max-width: 68%;
+  }
+  header nav ul li .user-name {
+    max-width: 14rem;
+  }
+}
 @media (min-width: 302px) and (max-width: 415px) {
 
   /*wall tabs*/
