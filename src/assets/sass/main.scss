@@ -608,6 +608,22 @@ sign-in, sign-up {
     margin-left: 0;
   }
 }
+
+/*modal dialog*/
+.dialog-header-confirm {
+  background: $white;
+  .modal-title {
+    color: $navy_blue;
+  }
+  .dialog-header-confirm span {
+    color: $navy_blue !important;
+  }
+  .glyphicon-check {
+    color: $navy_blue !important;
+  }
+}
+
+/*end modal dialog*/
 /*responsive*/
 
 @media (max-width: 992px) {
@@ -768,6 +784,7 @@ sign-in, sign-up {
     max-width: 20rem;
   }
 }
+
 @media (max-width: 347px) {
   header nav ul li .user-name span:first-of-type {
     max-width: 72%;
@@ -776,6 +793,7 @@ sign-in, sign-up {
     max-width: 17rem;
   }
 }
+
 @media (max-width: 315px) {
   header nav ul li .user-name span:first-of-type {
     max-width: 68%;
@@ -784,6 +802,7 @@ sign-in, sign-up {
     max-width: 14rem;
   }
 }
+
 @media (min-width: 302px) and (max-width: 415px) {
 
   /*wall tabs*/
