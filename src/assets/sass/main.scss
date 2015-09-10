@@ -667,7 +667,10 @@ sign-in, sign-up {
     }
   }
 }
-
+.crop-modal {
+  height: 36rem !important;
+  overflow: hidden !important;
+}
 /*end modal dialog*/
 
 /*responsive*/

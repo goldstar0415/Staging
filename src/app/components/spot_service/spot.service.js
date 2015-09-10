@@ -18,7 +18,7 @@
       mapPrevPhoto: mapPrevPhoto,
       mapNextReview: mapNextReview,
       mapPrevReview: mapPrevReview,
-      onMarkerClick: onMarkerClick,
+      initMarker: initMarker,
       saveToCalendar: saveToCalendar,
       removeFromCalendar: removeFromCalendar,
       addToFavorite: addToFavorite,
@@ -112,7 +112,7 @@
       }
     }
 
-    function onMarkerClick() {
+    function initMarker() {
       if ($scope.data.spot.photos.length > 0) {
         getPhotosIndex(0);
       }
@@ -123,12 +123,12 @@
 
       $scope.showPhotos = $scope.data.spot.photos.length > 0;
       $scope.showPhotosControls = $scope.data.spot.photos.length > 2;
-
+      console.log($scope);
       if ($scope.data.spot.comments.length > 0) {
         $scope.currentReview = $scope.data.spot.comments[0];
       }
       $scope.view = 'about';
-      $scope.$apply();
+      //$scope.$apply();
     }
 
     function mapNextPhoto() {
