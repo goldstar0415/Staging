@@ -1025,7 +1025,6 @@
           });
         } else {
           var scope = $rootScope.$new();
-          var popupContent = '';
           var offset = 75;
           var options = {
             keepInView: false,
@@ -1039,7 +1038,7 @@
 
           scope.item = spot;
           scope.marker = marker;
-          popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
+          var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
           var popup = L.popup(options).setContent(popupContent[0]);
           marker.bindPopup(popup);
         }
