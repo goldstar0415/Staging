@@ -44,6 +44,7 @@ use Request;
  * Mutators properties
  * @property float $rating
  * @property array $locations
+ * @property string $type
  */
 class Spot extends BaseModel implements StaplerableInterface
 {
@@ -127,6 +128,11 @@ class Spot extends BaseModel implements StaplerableInterface
     public function getLocationsAttribute()
     {
         return $this->points;
+    }
+
+    public function getTypeAttribute()
+    {
+        return $this->category->type['name'];
     }
 
     public function setTagsAttribute($value)

@@ -65,6 +65,10 @@ class SpotController extends Controller
             $cover = $request->file('cover');
             $spot->cover = $cover->getRealPath();
         }
+        if ($spot->type === 'recreation' or $spot->type === 'pitstop') {
+            $spot->is_approved = false;
+        }
+
         $request->user()->spots()->save($spot);
 
         $spot->tags = $request->input('tags');
