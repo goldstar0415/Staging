@@ -1,20 +1,7 @@
 <script type="text/ng-template" id="SpotMapModal.html">
-  <div class="modal-body clearfix">
-    <div class="popup-width">
-      <div class="col-xs-4 nav-popup">
-        <div class="img-event">
+  <div class="modal-body  popup">
 
-          <stars item="data.spot" class="star-event"></stars>
-
-
-          <img ng-src="{{data.spot.cover_url.medium}}">
-
-          <div class="star-event">
-            <!--<img src="/assets/img/icons/star.png"><img src="/assets/img/icons/star.png">-->
-            <!--<img src="/assets/img/icons/star.png"><img src="/assets/img/icons/star.png">-->
-            <!--<img src="/assets/img/icons/star.png">-->
-          </div>
-        </div>
+      <div class="col-xs-12 nav-popup">
         <div class="popup-links">
           <ul>
             <li><a ng-click="view = 'about'">About</a>
@@ -26,7 +13,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-xs-8 popup-main">
+      <div class="col-xs-12 popup-main">
         <a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})"
            ng-bind-html="::data.spot.title"></a>
 
@@ -121,6 +108,6 @@
           <a ng-click="marker.closePopup()" class="close"></a>
         </div>
       </div>
-    </div>
+
   </div>
 </script>

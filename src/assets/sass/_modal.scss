@@ -106,3 +106,14 @@
 .send-message {
   word-wrap: break-word;
 }
+.spot-mobile-modal {
+  .modal-content {
+    width: 100%;
+    display: inline-table;
+    .popup {
+      width: 100%;
+      max-width: 100%;
+      display: table;
+    }
+  }
+}

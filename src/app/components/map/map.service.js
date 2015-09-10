@@ -1013,6 +1013,7 @@
               templateUrl: 'SpotMapModal.html',
               controller: 'SpotMapModalController',
               controllerAs: 'SpotPopup',
+              modalClass: 'spot-mobile-modal',
               resolve: {
                 spot: function () {
                   return spot;
