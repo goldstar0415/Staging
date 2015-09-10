@@ -47,21 +47,19 @@ return [
      * This is run prior to saving the JSON form data
      *
      * @type function
-     * @param array		$data
+     * @param array $data
      *
      * @return string (on error) / void (otherwise)
      */
-    'before_save' => function(&$data)
-    {
+    'before_save' => function (&$data) {
     },
     /**
-     * The permission option is an authentication check that lets you define a closure that should return true if the current user
-     * is allowed to view this settings page. Any "falsey" response will result in a 404.
+     * The permission option is an authentication check that lets you define a closure that should return true
+     * if the current user is allowed to view this settings page. Any "falsey" response will result in a 404.
      *
      * @type closure
      */
-    'permission'=> function()
-    {
+    'permission' => function () {
         return true;
     },
     /**
@@ -77,8 +75,7 @@ return [
                 'error' => 'There was an error while importing csv',
             ],
             //the settings data is passed to the closure and saved if a truthy response is returned
-            'action' => function(&$data)
-            {
+            'action' => function (&$data) {
                 /**
                  * @var SpotsImportFile $import
                  */

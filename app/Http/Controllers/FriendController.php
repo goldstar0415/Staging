@@ -95,5 +95,5 @@ class FriendController extends Controller
         $friend->save();
 
         return $friend;
-    }   
+    }
 }

@@ -29,7 +29,6 @@ class Privacy
         $is_permitted = false;
 
         if ($this->viewer !== null) {
-
             if ($this->auth->id() === $target->id) {
                 return true;
             }

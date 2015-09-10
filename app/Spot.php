@@ -237,5 +237,4 @@ class Spot extends BaseModel implements StaplerableInterface
     {
         return $this->belongsToMany(User::class, 'calendar_spots')->withTimestamps();
     }
-
 }
