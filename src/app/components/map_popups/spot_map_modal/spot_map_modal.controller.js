@@ -21,9 +21,8 @@
     $scope.showPrevReview = false;
 
     SpotService.setScope($scope);
-    console.log($scope);
 
-    $scope.marker.on('click', SpotService.onMarkerClick);
+    SpotService.initMarker();
 
     $scope.nextPhoto = SpotService.mapNextPhoto;
     $scope.prevPhoto = SpotService.mapPrevPhoto;
