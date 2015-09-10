@@ -124,19 +124,19 @@ Route::get('file', 'DownloadController@index');
 get('cluster-test', function () {
     switch (mt_rand(1, 5)) {
         case 1:
-            return App\User::all();
+            return App\User::all()->isEmpty() ? 0 : 1;
         break;
         case 2:
-            return App\Spot::all();
+            return App\Spot::all()->isEmpty() ? 0 : 1;
         break;
         case 3:
-            return App\Comment::all();
+            return App\Comment::all()->isEmpty() ? 0 : 1;
         break;
         case 4:
-            return App\Wall::all();
+            return App\Wall::all()->isEmpty() ? 0 : 1;
         break;
         case 5:
-            return App\Feed::all();
+            return App\Feed::all()->isEmpty() ? 0 : 1;
         break;
     }
 });
@@ -144,16 +144,16 @@ get('cluster-test', function () {
 get('cluster-test-like', function () {
     switch (mt_rand(1, 4)) {
         case 1:
-            return App\User::where('first_name', 'LIKE', '%' . str_random(1) . '%')->get();
+            return App\User::where('first_name', 'LIKE', '%' . str_random(1) . '%')->get()->isEmpty() ? 0 : 1;
             break;
         case 2:
-            return App\Spot::where('title', 'LIKE', '%' . str_random(1) . '%')->get();
+            return App\Spot::where('title', 'LIKE', '%' . str_random(1) . '%')->get()->isEmpty() ? 0 : 1;
             break;
         case 3:
-            return App\Comment::where('body', 'LIKE', '%' . str_random(1) . '%')->get();
+            return App\Comment::where('body', 'LIKE', '%' . str_random(1) . '%')->get()->isEmpty() ? 0 : 1;
             break;
         case 4:
-            return App\Wall::where('body', 'LIKE', '%' . str_random(1) . '%')->get();
+            return App\Wall::where('body', 'LIKE', '%' . str_random(1) . '%')->get()->isEmpty() ? 0 : 1;
             break;
     }
 });
