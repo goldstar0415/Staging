@@ -6,6 +6,7 @@ use App\Jobs\Job;
 use App\Services\SpotsImportFile;
 use App\Spot;
 use App\SpotTypeCategory;
+use App\SpotVote;
 use App\User;
 use File;
 use Illuminate\Contracts\Bus\SelfHandling;
@@ -100,6 +101,9 @@ class SpotsImport extends Job implements SelfHandling
                 }
 
                 $admin->spots()->save($spot);
+                $vote = new SpotVote(['vote' => $row->rating]);
+                $vote->user()->associate($admin);
+                $spot->votes()->save($vote);
                 foreach ($row->image_links as $photo) {
                     $spot->photos()->create([
                         'photo' => $photo
