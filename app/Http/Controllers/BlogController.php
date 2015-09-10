@@ -137,7 +137,7 @@ class BlogController extends Controller
             $top_blogs = Blog::query();
         }
 
-        return $top_blogs->orderBy('count_views')->take(3)->get();
+        return $top_blogs->withoutNewest()->orderBy('count_views', 'DESC')->take(3)->get();
     }
 
     public function bloggerRequest(BloggerRequest $request)
