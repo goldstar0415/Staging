@@ -120,3 +120,40 @@ Route::get('posts/{posts}/preview', 'BlogController@preview');
 Route::resource('posts.comments', 'BlogCommentController', ['only' => ['index', 'store', 'destroy']]);
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
+
+get('cluster-test', function () {
+    switch (mt_rand(1, 5)) {
+        case 1:
+            return App\User::all();
+        break;
+        case 2:
+            return App\Spot::all();
+        break;
+        case 3:
+            return App\Comment::all();
+        break;
+        case 4:
+            return App\Wall::all();
+        break;
+        case 5:
+            return App\Feed::all();
+        break;
+    }
+});
+
+get('cluster-test-like', function () {
+    switch (mt_rand(1, 4)) {
+        case 1:
+            return App\User::where('first_name', 'LIKE', '%' . str_random(1) . '%')->get();
+            break;
+        case 2:
+            return App\Spot::where('title', 'LIKE', '%' . str_random(1) . '%')->get();
+            break;
+        case 3:
+            return App\Comment::where('body', 'LIKE', '%' . str_random(1) . '%')->get();
+            break;
+        case 4:
+            return App\Wall::where('body', 'LIKE', '%' . str_random(1) . '%')->get();
+            break;
+    }
+});
