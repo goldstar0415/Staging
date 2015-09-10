@@ -5,11 +5,14 @@ namespace App\Providers;
 use App\BloggerRequest;
 use App\Comment;
 use App\Events\OnComment;
+use App\Events\OnSpotCreate;
 use App\Extensions\Validations;
 use App\Role;
 use App\Services\Attachments;
 use App\Services\Privacy;
+use App\Spot;
 use Illuminate\Support\ServiceProvider;
+use Request;
 use Validator;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +26,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Comment::created(function ($comment) {
             event(new OnComment($comment));
+        });
+        Spot::updated(function ($spot) {
+            if (Request::is('admin/spot_requests/*/save')) {
+                if ($spot->is_approved) {
+                    event(new OnSpotCreate($spot));
+                }
+            }
         });
 
         BloggerRequest::updated(function (BloggerRequest $request) {

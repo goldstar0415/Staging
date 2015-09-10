@@ -85,7 +85,12 @@ class Feeder /*implements ShouldQueue*/
                 $this->addFeed($event, $event->wall->sender);
                 break;
             case $event instanceof OnSpotCreate:
-                $this->addFeed($event, $event->spot->user->followers);
+                $spot = $event->spot;
+                if ($spot->type === 'recreation' || $spot->type === 'pitstop' and $spot->is_approved !== false
+                    or $spot->type === 'event'
+                ) {
+                    $this->addFeed($event, $event->spot->user->followers);
+                }
                 break;
             case $event instanceof OnSpotUpdate:
                 $this->addFeed($event, $event->spot->user->followers);
