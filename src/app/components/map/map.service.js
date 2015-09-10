@@ -1007,8 +1007,7 @@
 
       function BindSpotPopup(marker, spot) {
         var scope = $rootScope.$new();
-        scope.item = spot;
-        scope.marker = marker;
+        var popupContent = '';
         var options = {
           keepInView: false,
           autoPan: true,
@@ -1016,19 +1015,22 @@
           className: 'popup'
         };
 
+        scope.item = spot;
+        scope.marker = marker;
 
         if (!$rootScope.isMobile) {
           var offset = 75;
           options.autoPanPaddingTopLeft = L.point(offset, offset);
           options.autoPanPaddingBottomRight = L.point(offset, offset)
         }
-        var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
-        var popup = L.popup(options).setContent(popupContent[0]);
+
         if ($rootScope.isMobile) {
-          //TODO: Make $modal instead of popup. Смотри директивку спот-попап
+           popupContent = $compile('<spot-map-modal spot="item" marker="marker"></spot-map-modal>')(scope);
         } else {
-          marker.bindPopup(popup);
+           popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
         }
+        var popup = L.popup(options).setContent(popupContent[0]);
+        marker.bindPopup(popup);
       }
 
       function BindBlogPopup(marker, post) {
@@ -1050,11 +1052,7 @@
         }
         var popupContent = $compile('<post-popup post="item" marker="marker"></post-popup>')(scope);
         var popup = L.popup(options).setContent(popupContent[0]);
-        if ($rootScope.isMobile) {
-          //TODO: Make $modal instead of popup. Смотри директивку спот-попап
-        } else {
-          marker.bindPopup(popup);
-        }
+        marker.bindPopup(popup);
       }
 
       function RemoveMarkerPopup(remove, cancel, addmarker, location) {
@@ -1381,7 +1379,7 @@
 
         var markers = [];
         _.each(posts, function (item) {
-          var icon = CreateCustomIcon(item.cover_url.thumb , 'custom-map-icons', [50, 50]);
+          var icon = CreateCustomIcon(item.cover_url.thumb, 'custom-map-icons', [50, 50]);
           if (item.location) {
             var marker = L.marker(item.location);
             item.marker = marker;
