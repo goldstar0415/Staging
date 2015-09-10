@@ -13,7 +13,7 @@
     $rootScope.plannerIcon = '/assets/img/icons/planner_icon.png';
 
     MapService.Init('map');
-    $rootScope.timezonesList = moment.tz.names();
+    //$rootScope.timezonesList = moment.tz.names();
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     $rootScope.$on("$stateChangeError", onStateChangeError);
