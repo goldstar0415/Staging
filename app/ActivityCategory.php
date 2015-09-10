@@ -57,8 +57,10 @@ class ActivityCategory extends BaseModel implements StaplerableInterface
 
     public function setIconPutAttribute($value)
     {
-        $path = public_path('tmp/' . $value);
-        $this->icon = $path;
+        if ($value) {
+            $path = public_path('tmp/' . $value);
+            $this->icon = $path;
+        }
     }
 
     public function getIconPutAttribute()

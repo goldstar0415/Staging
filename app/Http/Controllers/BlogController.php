@@ -35,7 +35,7 @@ class BlogController extends Controller
     public function index(PaginateRequest $request)
     {
         $blog_posts = $request->has('user_id') ? Blog::where('user_id', $request->input('user_id')) : Blog::query();
-        return $this->paginatealbe($request, $blog_posts)->load(['category', 'user']);
+        return $this->paginatealbe($request, $blog_posts->with(['category', 'user']));
     }
 
     /**
