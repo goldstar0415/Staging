@@ -18,7 +18,7 @@ return [
         'spot_category' => [
             'title' => 'Recreation category',
             'type' => 'enum',
-            'options' => App\SpotType::where('name', 'recreation')->first()->categories->pluck('display_name', 'id')
+            'options' => App\SpotType::where('name', 'recreation')->first()->categories->pluck('display_name', 'name')
                 ->toArray()
         ],
         'admin' => [
