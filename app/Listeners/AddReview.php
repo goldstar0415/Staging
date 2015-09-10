@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\AlbumPhoto;
 use App\Events\OnComment;
+use App\SpotPhoto;
 use App\User;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -24,6 +25,8 @@ class AddReview /*implements ShouldQueue*/
         $commentable = $event->comment->commentable;
         if ($commentable instanceof AlbumPhoto) {
             $user_id = $commentable->album->user_id;
+        } elseif ($commentable instanceof SpotPhoto) {
+            $user_id = $commentable->spot->user_id;
         } else {
             $user_id = $commentable->user_id;
         }

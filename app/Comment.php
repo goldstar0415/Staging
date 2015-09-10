@@ -28,7 +28,6 @@ class Comment extends BaseModel
 
     protected $with = ['sender', 'commentable'];
 
-
     /**
      * @inheritdoc
      */

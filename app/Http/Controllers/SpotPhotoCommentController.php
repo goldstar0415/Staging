@@ -19,18 +19,7 @@ class SpotPhotoCommentController extends Controller
      */
     public function index($spot, $photo)
     {
-        $comments = $photo->comments;
-        $comments->map(function ($comment) {
-            /**
-             * @var \App\Comment $comment
-             */
-            $comment->addHidden('user_id');
-            return $comment->load(['user' => function ($query) {
-                $query->select(['id', 'first_name', 'last_name']);
-            }]);
-        });
-
-        return $comments;
+        return $photo->comments->load('sender');
     }
 
     /**
