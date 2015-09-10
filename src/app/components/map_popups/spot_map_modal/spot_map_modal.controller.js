@@ -3,10 +3,12 @@
 
   angular
     .module('zoomtivity')
-    .controller('SpotPopupController', SpotPopupController);
+    .controller('SpotMapModalController', SpotMapModalController);
 
   /** @ngInject */
-  function SpotPopupController($scope, SpotService) {
+  function SpotMapModalController($scope, spot, marker, SpotService) {
+    $scope.data = spot;
+    $scope.marker = marker;
     $scope.saveToCalendar = SpotService.saveToCalendar;
     $scope.removeFromCalendar = SpotService.removeFromCalendar;
     $scope.addToFavorite = SpotService.addToFavorite;
@@ -19,6 +21,7 @@
     $scope.showPrevReview = false;
 
     SpotService.setScope($scope);
+    console.log($scope);
 
     $scope.marker.on('click', SpotService.onMarkerClick);
 
@@ -27,6 +30,5 @@
 
     $scope.nextReview = SpotService.mapNextReview;
     $scope.prevReview = SpotService.mapPrevReview;
-
   }
 })();
