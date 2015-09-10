@@ -50,7 +50,7 @@
         },
         _click: function (e) {
           $rootScope.hideHints = true;
-          $timeout(function() {
+          $timeout(function () {
             $rootScope.$apply();
           });
           snapRemote.disable();
@@ -108,7 +108,7 @@
         },
         _click: function (e) {
           $rootScope.hideHints = true;
-          $timeout(function() {
+          $timeout(function () {
             $rootScope.$apply();
           });
           snapRemote.disable();
@@ -170,7 +170,7 @@
         },
         _click: function (e) {
           $rootScope.hideHints = true;
-          $timeout(function() {
+          $timeout(function () {
             $rootScope.$apply();
           });
           L.DomEvent.stopPropagation(e);
@@ -205,7 +205,7 @@
           return container;
         },
         _click: function (e) {
-          if($rootScope.currentUser) {
+          if ($rootScope.currentUser) {
             L.DomEvent.stopPropagation(e);
             L.DomEvent.preventDefault(e);
             OpenSaveSelectionsPopup();
@@ -429,7 +429,9 @@
       //show events layer on map.
       function showEventsLayer(clearLayers) {
         ClearSelectionListeners();
-        if (clearLayers) { eventsLayer.clearLayers(); }
+        if (clearLayers) {
+          eventsLayer.clearLayers();
+        }
         map.addLayer(eventsLayer);
         map.removeLayer(recreationsLayer);
         map.removeLayer(pitstopsLayer);
@@ -440,7 +442,9 @@
       //show pitstops layer on map
       function showPitstopsLayer(clearLayers) {
         ClearSelectionListeners();
-        if (clearLayers) { pitstopsLayer.clearLayers(); }
+        if (clearLayers) {
+          pitstopsLayer.clearLayers();
+        }
         map.addLayer(pitstopsLayer);
         map.removeLayer(recreationsLayer);
         map.removeLayer(eventsLayer);
@@ -451,7 +455,9 @@
       //show recreations layer
       function showRecreationsLayer(clearLayers) {
         ClearSelectionListeners();
-        if (clearLayers) { recreationsLayer.clearLayers(); }
+        if (clearLayers) {
+          recreationsLayer.clearLayers();
+        }
         map.addLayer(recreationsLayer);
         map.removeLayer(eventsLayer);
         map.removeLayer(pitstopsLayer);
@@ -645,7 +651,7 @@
             RecalculateRoute();
           });
 
-          if(!dontBuildPath) {
+          if (!dontBuildPath) {
             if (markers.length > 1 && showCancelPopup) {
               if (!cancelPopup) {
                 cancelPopup = L.popup({
@@ -817,21 +823,21 @@
           data: geoJson
         };
 
-        if(share) {
+        if (share) {
           //TODO: отдельный route под selection шаринг. В начале сейв селекшена, а потом его шаринг.
 
         } else {
-          if($rootScope.currentParams.area_id) {
+          if ($rootScope.currentParams.area_id) {
             req.area_id = $rootScope.currentParams.area_id;
-            Area.update(req, function(data) {
+            Area.update(req, function (data) {
               toastr.success('Selection saved!');
-            }, function(data) {
+            }, function (data) {
               toastr.error('Error!')
             })
           } else {
-            Area.save(req, function(data) {
+            Area.save(req, function (data) {
               toastr.success('Selection saved!');
-            }, function(data) {
+            }, function (data) {
               toastr.error('Error!')
             });
           }
@@ -849,10 +855,10 @@
           });
         }
 
-        if(selection.data) {
+        if (selection.data) {
           L.geoJson(selection.data, {
-            onEachFeature: function(feature) {
-              if(feature.geometry.type = 'Point' && feature.properties.radius) {
+            onEachFeature: function (feature) {
+              if (feature.geometry.type = 'Point' && feature.properties.radius) {
                 var startPoint = L.GeoJSON.coordsToLatLng(feature.geometry.coordinates);
                 var radius = feature.properties.radius;
 
@@ -879,8 +885,8 @@
                 circle.addTo(drawLayer);
 
               } else {
-                _.each(feature.geometry.coordinates, function(coords) {
-                  var points  = L.GeoJSON.coordsToLatLngs(coords);
+                _.each(feature.geometry.coordinates, function (coords) {
+                  var points = L.GeoJSON.coordsToLatLngs(coords);
 
                   var poly = L.polygon(points, {
                     weight: 2,
@@ -1001,7 +1007,35 @@
 
       function BindSpotPopup(marker, spot) {
         var scope = $rootScope.$new();
+        var popupContent = '';
+        var options = {
+          keepInView: false,
+          autoPan: true,
+          closeButton: false,
+          className: 'popup'
+        };
+
         scope.item = spot;
+        scope.marker = marker;
+
+        if (!$rootScope.isMobile) {
+          var offset = 75;
+          options.autoPanPaddingTopLeft = L.point(offset, offset);
+          options.autoPanPaddingBottomRight = L.point(offset, offset)
+        }
+
+        if ($rootScope.isMobile) {
+           popupContent = $compile('<spot-map-modal spot="item" marker="marker"></spot-map-modal>')(scope);
+        } else {
+           popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
+        }
+        var popup = L.popup(options).setContent(popupContent[0]);
+        marker.bindPopup(popup);
+      }
+
+      function BindBlogPopup(marker, post) {
+        var scope = $rootScope.$new();
+        scope.item = post;
         scope.marker = marker;
         var options = {
           keepInView: false,
@@ -1011,18 +1045,14 @@
         };
 
 
-        if(!$rootScope.isMobile) {
+        if (!$rootScope.isMobile) {
           var offset = 75;
           options.autoPanPaddingTopLeft = L.point(offset, offset);
           options.autoPanPaddingBottomRight = L.point(offset, offset)
         }
-        var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
+        var popupContent = $compile('<post-popup post="item" marker="marker"></post-popup>')(scope);
         var popup = L.popup(options).setContent(popupContent[0]);
-        if($rootScope.isMobile) {
-          //TODO: Make $modal instead of popup. Смотри директивку спот-попап
-        } else {
-          marker.bindPopup(popup);
-        }
+        marker.bindPopup(popup);
       }
 
       function RemoveMarkerPopup(remove, cancel, addmarker, location) {
@@ -1158,7 +1188,7 @@
         var wp = GetDrawLayerPathWaypoints();
         drawLayerGeoJSON = GetDrawLayerGeoJSON();
 
-        if((wp.length > 0 || drawLayerGeoJSON.features.length > 0)) {
+        if ((wp.length > 0 || drawLayerGeoJSON.features.length > 0)) {
           angular.element('.map-tools-top').removeClass('hide-tools');
         } else {
           angular.element('.map-tools-top').addClass('hide-tools');
@@ -1231,25 +1261,25 @@
       }
 
       function ClampByDate(array, startDate, endDate) {
-        if(startDate && endDate) {
+        if (startDate && endDate) {
           var start = moment(startDate, 'MM.DD.YYYY');
           var end = moment(endDate, 'MM.DD.YYYY');
 
-          var newArray = _.reject(array, function(item) {
+          var newArray = _.reject(array, function (item) {
             var itemStart = moment(item.spot.start_date, 'YYYY-MM-DD HH:mm:ss');
             var itemEnd = moment(item.spot.end_date, 'YYYY-MM-DD HH:mm:ss');
             var byStart = itemStart.isAfter(start, 'seconds') && itemStart.isBefore(end, 'seconds');
-            var byEnd =  itemEnd.isAfter(start, 'seconds') && itemEnd.isBefore(end, 'seconds');
+            var byEnd = itemEnd.isAfter(start, 'seconds') && itemEnd.isBefore(end, 'seconds');
 
             return !(byStart || byEnd);
           });
           return SortByDate(newArray);
         }
 
-        if(startDate && !endDate) {
+        if (startDate && !endDate) {
           var start = moment(startDate, 'MM.DD.YYYY');
 
-          var newArray = _.reject(array, function(item) {
+          var newArray = _.reject(array, function (item) {
             var itemStart = moment(item.spot.start_date, 'YYYY-MM-DD HH:mm:ss');
             var itemEnd = moment(item.spot.end_date, 'YYYY-MM-DD HH:mm:ss');
 
@@ -1259,11 +1289,11 @@
           return SortByDate(newArray);
         }
 
-        if(!startDate && endDate) {
+        if (!startDate && endDate) {
           var end = moment(endDate, 'MM.DD.YYYY');
 
 
-          var newArray = _.reject(array, function(item) {
+          var newArray = _.reject(array, function (item) {
             var itemStart = moment(item.spot.start_date, 'YYYY-MM-DD HH:mm:ss');
             var itemEnd = moment(item.spot.end_date, 'YYYY-MM-DD HH:mm:ss');
 
@@ -1302,15 +1332,15 @@
         var markers = [];
         _.each(spots, function (item) {
           var icon = CreateCustomIcon(item.spot.category.icon_url, 'custom-map-icons', [50, 50]);
-          if(item.location) {
+          if (item.location) {
             var marker = L.marker(item.location, {icon: icon});
             item.marker = marker;
             BindSpotPopup(marker, item);
 
             markers.push(marker);
-          } else if( item.locations ){
+          } else if (item.locations) {
             var spotMarkers = [];
-            _.each(item.locations, function(point) {
+            _.each(item.locations, function (point) {
               item.address = point.address;
               item.location = point.location;
 
@@ -1340,6 +1370,26 @@
         }
 
         $rootScope.syncMapSpots = spots;
+      }
+
+      function drawBlogMarkers(posts, clear) {
+        if (clear) {
+          GetCurrentLayer().clearLayers();
+        }
+
+        var markers = [];
+        _.each(posts, function (item) {
+          var icon = CreateCustomIcon(item.cover_url.thumb, 'custom-map-icons', [50, 50]);
+          if (item.location) {
+            var marker = L.marker(item.location);
+            item.marker = marker;
+            BindBlogPopup(marker, item);
+
+            markers.push(marker);
+          }
+        });
+
+        otherLayer.addLayers(markers);
       }
 
       return {
@@ -1393,6 +1443,7 @@
         GetGeoJSON: GetDrawLayerGeoJSON,
         GetDataByBBox: GetDataByBBox,
         drawSpotMarkers: drawSpotMarkers,
+        drawBlogMarkers: drawBlogMarkers,
         WeatherSelection: WeatherSelection
       };
     });
