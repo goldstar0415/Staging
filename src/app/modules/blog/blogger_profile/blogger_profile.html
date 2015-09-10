@@ -6,44 +6,40 @@
      ng-if="currentUser.id == profileUser.id"></a>
 </div>
 
-<div infinite-scroll="Blog.pagination.nextPage()" infinite-scroll-disabled="Blog.pagination.busy"
-     class="clearfix" infinite-scroll-distance="1">
-  <div class="blog-content col-xs-12" ng-repeat="post in Blog.posts.data">
-    <div class="article">
-      <img ng-if="post.cover_url" ng-src="{{post.cover_url.original}}" class="article-img">
+<div class="blog-content col-xs-12" ng-repeat="post in Blog.posts">
+  <div class="article">
+    <img ng-if="post.cover_url" ng-src="{{post.cover_url.original}}" class="article-img">
 
-      <h2 class="title-blog">
-        <a ui-sref="blog.article({slug: post.slug})">{{post.title}}</a>
-      </h2>
+    <h2 class="title-blog">
+      <a ui-sref="blog.article({slug: post.slug})">{{post.title}}</a>
+    </h2>
 
-      <div class="location-link col-xs-12">
-        <a>{{post.address}}</a>
-      </div>
-      <div class="article-info col-xs-12">
-        <p class="date col-xs-12 col-sm-3">{{post.created_at | toTimezone:'MM.DD.YYYY'}}</p>
-
-        <p class="col-xs-12 col-sm-6 category">Category:
-          <a>{{post.category.display_name}}</a>
-        </p>
-
-        <p class="col-xs-12 col-sm-3 views">Views: {{post.count_views}}</p>
-      </div>
-
-
-      <p class="article-description" ng-bind-html="post.body | limitTo: 500"></p>
-
-      <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id">
-        <a ui-sref="profile_blog.edit({slug: post.slug})" class="edit-blog-article">Edit</a>
-      </div>
-      <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id">
-        <a ng-click="Blog.removePost(post, $index)" class="delete-blog-article">Delete</a>
-      </div>
-
-      <share links="post.share_links"></share>
+    <div class="location-link col-xs-12">
+      <a>{{post.address}}</a>
     </div>
+    <div class="article-info col-xs-12">
+      <p class="date col-xs-12 col-sm-3">{{post.created_at | toTimezone:'MM.DD.YYYY'}}</p>
+
+      <p class="col-xs-12 col-sm-6 category">Category:
+        <a>{{post.category.display_name}}</a>
+      </p>
+
+      <p class="col-xs-12 col-sm-3 views">Views: {{post.count_views}}</p>
+    </div>
+
+
+    <p class="article-description" ng-bind-html="post.body | limitTo: 500"></p>
+
+    <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id">
+      <a ui-sref="profile_blog.edit({slug: post.slug})" class="edit-blog-article">Edit</a>
+    </div>
+    <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id">
+      <a ng-click="Blog.removePost(post, $index)" class="delete-blog-article">Delete</a>
+    </div>
+
+    <share links="post.share_links"></share>
   </div>
 </div>
-</div>
-<div class="col-xs-12" ng-if="Blog.posts.data.length == 0 && !Blog.pagination.busy">
+<div class="col-xs-12" ng-if="Blog.posts.length == 0">
   <h4 class="text-center description">No posts yet.</h4>
 </div>

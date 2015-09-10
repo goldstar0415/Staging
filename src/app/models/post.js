@@ -8,7 +8,7 @@
   /** @ngInject */
   function Post($resource, API_URL) {
     return $resource(API_URL + '/posts/:id', {id: '@id'}, {
-      query: {
+      paginate: {
         isArray: false
       },
       categories: {
