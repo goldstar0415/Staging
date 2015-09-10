@@ -1007,7 +1007,7 @@
 
       function BindSpotPopup(marker, spot) {
 
-        if ($rootScope.isMobile) {
+        if (!$rootScope.isMobile) {
           marker.on('click', function () {
             $modal.open({
               templateUrl: 'SpotMapModal.html',
