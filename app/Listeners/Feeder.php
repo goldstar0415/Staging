@@ -113,17 +113,21 @@ class Feeder /*implements ShouldQueue*/
      */
     protected function addFeed(Feedable $event, $users)
     {
-        $feed = new Feed(['event_type' => class_basename($event)]);
-        $feed->feedable()->associate($event->getFeedable());
-        $feed->sender()->associate($event->getFeedSender());
-
         if ($users instanceof Collection) {
             foreach ($users as $user) {
+                $feed = new Feed(['event_type' => class_basename($event)]);
+                $feed->feedable()->associate($event->getFeedable());
+                $feed->sender()->associate($event->getFeedSender());
+
                 if ($user->id !== $this->auth->id()) {
                     $user->feeds()->save($feed);
                 }
             }
         } elseif ($users instanceof User and $users->id !== $this->auth->id()) {
+            $feed = new Feed(['event_type' => class_basename($event)]);
+            $feed->feedable()->associate($event->getFeedable());
+            $feed->sender()->associate($event->getFeedSender());
+
             $users->feeds()->save($feed);
         }
     }
