@@ -18,7 +18,7 @@ use App\Scopes\NewestScopeTrait;
  *
  * Relation properties
  * @property AlbumPhoto $photo
- * @property User $user
+ * @property User $sender
  */
 class Comment extends BaseModel
 {

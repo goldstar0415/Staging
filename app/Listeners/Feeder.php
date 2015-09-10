@@ -96,13 +96,13 @@ class Feeder /*implements ShouldQueue*/
                 $this->addFeed($event, $event->spot->user->followers);
                 break;
             case $event instanceof OnSpotComment:
-                $this->addFeed($event, $event->comment->spot->user);
+                $this->addFeed($event, $event->comment->commentable->user);
                 break;
             case $event instanceof OnSpotCommentDelete:
-                $this->addFeed($event, $event->comment->user);
+                $this->addFeed($event, $event->comment->sender);
                 break;
             case $event instanceof OnAlbumPhotoComment:
-                $this->addFeed($event, $event->comment->photo->album->user);
+                $this->addFeed($event, $event->comment->commentable->album->user);
                 break;
             case $event instanceof OnUserBirthday:
                 $this->addFeed($event, $event->user->followers);
