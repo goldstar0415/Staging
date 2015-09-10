@@ -37,7 +37,7 @@
             last_name: vm.data.last_name,
             birth_date: vm.data.birth_date ? moment(vm.data.birth_date, 'MM.DD.YYYY').format('YYYY-MM-DD') : null,
             sex: vm.data.sex || '',
-            time_zone: vm.data.time_zone,
+            //time_zone: vm.data.time_zone,
             description: vm.data.description,
             address: vm.data.address,
             location: vm.data.location

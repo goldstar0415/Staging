@@ -79,24 +79,24 @@
               </div>
             </div>
 
-            <div class="col-xs-12 form-group no-pad">
-              <div class="col-xs-3 no-pad">
-                <label>Timezone</label>
-              </div>
-              <div class="col-xs-9 no-pad">
-                <!--<select class="selectpicker" ng-model="Settings.data.time_zone" ng-selected="Settings.data.time_zone"-->
-                <!--ng-options="item for item in timezonesList"></select>-->
-                <ui-select
-                  ng-model="Settings.data.time_zone"
-                  theme="bootstrap">
-                  <ui-select-match placeholder="Enter timezone...">{{$select.selected}}</ui-select-match>
-                  <ui-select-choices
-                    repeat="item in timezonesList | filter : $select.search track by $index">
-                    <div ng-bind-html="item |  highlight: $select.search"></div>
-                  </ui-select-choices>
-                </ui-select>
-              </div>
-            </div>
+            <!--<div class="col-xs-12 form-group no-pad">-->
+              <!--<div class="col-xs-3 no-pad">-->
+                <!--<label>Timezone</label>-->
+              <!--</div>-->
+              <!--<div class="col-xs-9 no-pad">-->
+                <!--&lt;!&ndash;<select class="selectpicker" ng-model="Settings.data.time_zone" ng-selected="Settings.data.time_zone"&ndash;&gt;-->
+                <!--&lt;!&ndash;ng-options="item for item in timezonesList"></select>&ndash;&gt;-->
+                <!--<ui-select-->
+                  <!--ng-model="Settings.data.time_zone"-->
+                  <!--theme="bootstrap">-->
+                  <!--<ui-select-match placeholder="Enter timezone...">{{$select.selected}}</ui-select-match>-->
+                  <!--<ui-select-choices-->
+                    <!--repeat="item in timezonesList | filter : $select.search track by $index">-->
+                    <!--<div ng-bind-html="item |  highlight: $select.search"></div>-->
+                  <!--</ui-select-choices>-->
+                <!--</ui-select>-->
+              <!--</div>-->
+            <!--</div>-->
 
             <div class="col-xs-12 form-group no-pad">
               <div class="col-xs-3 no-pad">

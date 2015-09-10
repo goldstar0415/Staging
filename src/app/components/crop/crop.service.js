@@ -13,7 +13,7 @@
         templateUrl: '/app/components/crop/crop.html',
         controller: CropModalController,
         controllerAs: 'Crop',
-        modalClass: 'modalFix',
+        modalClass: 'modalFix crop-modal',
         modalContentClass: 'clearfix',
         backdrop: 'static',
         resolve: {

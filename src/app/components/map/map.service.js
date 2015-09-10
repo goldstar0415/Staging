@@ -1006,31 +1006,43 @@
       }
 
       function BindSpotPopup(marker, spot) {
-        var scope = $rootScope.$new();
-        var popupContent = '';
-        var options = {
-          keepInView: false,
-          autoPan: true,
-          closeButton: false,
-          className: 'popup'
-        };
-
-        scope.item = spot;
-        scope.marker = marker;
 
         if (!$rootScope.isMobile) {
+          marker.on('click', function () {
+            $modal.open({
+              templateUrl: 'SpotMapModal.html',
+              controller: 'SpotMapModalController',
+              controllerAs: 'SpotPopup',
+              resolve: {
+                spot: function () {
+                  return spot;
+                },
+                marker: function () {
+                  return marker;
+                }
+              }
+            });
+          });
+        } else {
+          var scope = $rootScope.$new();
           var offset = 75;
-          options.autoPanPaddingTopLeft = L.point(offset, offset);
-          options.autoPanPaddingBottomRight = L.point(offset, offset)
+          var options = {
+            keepInView: false,
+            autoPan: true,
+            closeButton: false,
+            className: 'popup',
+            autoPanPaddingTopLeft: L.point(offset, offset),
+            autoPanPaddingBottomRight: L.point(offset, offset)
+          };
+
+
+          scope.item = spot;
+          scope.marker = marker;
+          var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
+          var popup = L.popup(options).setContent(popupContent[0]);
+          marker.bindPopup(popup);
         }
 
-        if ($rootScope.isMobile) {
-           popupContent = $compile('<spot-map-modal spot="item" marker="marker"></spot-map-modal>')(scope);
-        } else {
-           popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
-        }
-        var popup = L.popup(options).setContent(popupContent[0]);
-        marker.bindPopup(popup);
       }
 
       function BindBlogPopup(marker, post) {
