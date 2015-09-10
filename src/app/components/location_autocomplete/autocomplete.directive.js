@@ -27,21 +27,20 @@
         var classname = s.inputClass || 'location-changed';
         s.placeHolder = s.inputPlaceholder || "Start typing...";
         var limit = s.limit || 10;
-        var searchUrl = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&addressdetails=1&limit='+ limit +'&q=';
+        var searchUrl = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&addressdetails=1&limit=' + limit + '&q=';
         var bindMarker = s.bindMarker;
         var provider = s.provider || 'google';
         s.provider = provider;
         s.className = '';
 
 
-
-        if(s.address && s.location) {
+        if (s.address && s.location) {
           s.viewAddress = s.address;
           moveOrCreateMarker(s.location);
           MapService.GetMap().setView(s.location, 12);
         }
-        s.$watch('location', function() {
-          if(s.location) {
+        s.$watch('location', function () {
+          if (s.location) {
             moveOrCreateMarker(s.location);
           }
           s.viewAddress = s.address;
@@ -49,12 +48,12 @@
 
 
         function moveOrCreateMarker(latlng) {
-          if(bindMarker) {
-            if(s.marker) {
+          if (bindMarker) {
+            if (s.marker) {
               s.marker.setLatLng(latlng);
             } else {
               s.marker = MapService.CreateMarker(latlng, {draggable: true});
-              MapService.BindMarkerToInput(s.marker, function(data) {
+              MapService.BindMarkerToInput(s.marker, function (data) {
                 console.log(data, s);
                 s.location = data.latlng;
                 s.address = data.address;
@@ -64,30 +63,32 @@
             MapService.GetMap().setView(s.marker.getLatLng(), 12);
           }
         }
+
         function removeMarker() {
-          if(s.marker) {
+          if (s.marker) {
             MapService.RemoveMarker(s.marker);
             s.marker = null;
           }
         }
-        s.onChange = function() {
-          if(!s.viewAddress){
+
+        s.onChange = function () {
+          if (!s.viewAddress) {
             removeMarker();
             s.location = null;
             s.address = '';
             s.onEmpty();
           } else {
-            if(s.addClassOnchange) {
+            if (s.addClassOnchange) {
               s.className = classname;
             }
           }
         };
-        s.SetCurrentLocation = function() {
-          MapService.GetCurrentLocation(function(e) {
-            if(e.type == 'locationerror') {
+        s.SetCurrentLocation = function () {
+          MapService.GetCurrentLocation(function (e) {
+            if (e.type == 'locationerror') {
               toastr.error('Geolocation error!');
             } else {
-              MapService.GetAddressByLatlng(e.latlng, function(data) {
+              MapService.GetAddressByLatlng(e.latlng, function (data) {
                 s.location = e.latlng;
                 s.address = data.display_name;
                 s.viewAddress = data.display_name;
@@ -96,8 +97,8 @@
             }
           });
         };
-        s.onAutocompleteSelect = function($item, $model, $label) {
-          if(provider == 'google') {
+        s.onAutocompleteSelect = function ($item, $model, $label) {
+          if (provider == 'google') {
             s.location = {lat: $model.geometry.location.lat, lng: $model.geometry.location.lng};
             s.address = $model.formatted_address;
             s.viewAddress = $model.formatted_address;
@@ -108,22 +109,22 @@
           }
           //moveOrCreateMarker(s.location);
         };
-        s.getData = function(val) {
-          if(provider == 'google') {
+        s.getData = function (val) {
+          if (provider == 'google') {
             return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
               withCredentials: false,
               params: {
                 address: val,
                 sensor: false
               }
-            }).then(function(response){
-              return response.data.results.map(function(item){
+            }).then(function (response) {
+              return response.data.results.map(function (item) {
                 return item;
               });
             });
           } else {
             var url = searchUrl + val;
-            return $http.get(url, {withCredentials: false}).then(function(response){
+            return $http.get(url, {withCredentials: false}).then(function (response) {
               return response.data
             });
           }

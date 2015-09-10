@@ -34,7 +34,7 @@
           createMarker(albums[k].cover.medium, albums[k].title, albums[k].location, albums[k]);
         }
       }
-      if(count > 0) {
+      if (count > 0) {
         MapService.FitBoundsOfCurrentLayer();
       }
     }

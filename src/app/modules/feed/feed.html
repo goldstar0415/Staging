@@ -45,26 +45,26 @@
               <div ng-switch-when="OnSpotUpdate">
                 update event
                 <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})"
-                   ng-bind-html="item.feedable.title">
+                  >{{item.feedable.title}}
                 </a>
               </div>
 
               <div ng-switch-when="OnSpotCreate">
                 create event
                 <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})"
-                   ng-bind-html="item.feedable.title">
+                  >{{item.feedable.title}}
                 </a>
               </div>
 
               <div ng-switch-when="OnAddToCalendar">
                 add event
                 <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})"
-                   ng-bind-html="item.feedable.title">
+                  >{{item.feedable.title}}
                 </a> to calendar
               </div>
 
               <div ng-switch-when="OnWallMessage">
-                <p ng-bind-html="item.feedable.body | htmlLinky:'_blank'"></p>
+                <p ng-bind-html="item.feedable.body | linky:'_blank'"></p>
                 <attachments items="item.feedable.attachments"></attachments>
               </div>
 

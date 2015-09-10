@@ -45,7 +45,7 @@
       }
     }
 
-    vm.setAsAvatar = function(image) {
+    vm.setAsAvatar = function (image) {
       CropService.crop(image, 512, 512, function (result) {
         if (result) {
           User.setAvatar({}, {avatar: result},
@@ -57,11 +57,11 @@
       });
     };
 
-    vm.deletePhoto = function(id, idx) {
-      Photo.delete({id: id}, function() {
+    vm.deletePhoto = function (id, idx) {
+      Photo.delete({id: id}, function () {
         vm.photos.splice(idx, 1);
-        for(var k in markers) {
-          if(markers[k].photo_id == id) {
+        for (var k in markers) {
+          if (markers[k].photo_id == id) {
             MapService.RemoveMarker(markers[k].marker);
           }
         }

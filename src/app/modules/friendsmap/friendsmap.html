@@ -7,7 +7,8 @@
 </div>
 <div ng-repeat="item in Friendsmap.friends" class="col-xs-12 friends-block">
   <div class="avatar-wrap">
-    <a class="review-img" tooltip="Edit avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)" ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="10000000">
+    <a class="review-img" tooltip="Edit avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
+       ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="10000000">
       <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar" class="fav-avatar-icon feeds-img">
     </a>
   </div>
@@ -16,8 +17,10 @@
       <span class="col-xs-8 wrap-name"><a>{{item.first_name + " " + item.last_name}}</a></span>
 
       <div class="col-xs-4 location-btn" ng-if="item.showSwitch">
-      <a class="custom-location" ng-class="{'active': item.showCustom}" ng-click="Friendsmap.switchLocation(item, true)"></a>
-      <a class="default-location" ng-class="{'active': !item.showCustom}" ng-click="Friendsmap.switchLocation(item, false)"></a>
+        <a class="custom-location" ng-class="{'active': item.showCustom}"
+           ng-click="Friendsmap.switchLocation(item, true)"></a>
+        <a class="default-location" ng-class="{'active': !item.showCustom}"
+           ng-click="Friendsmap.switchLocation(item, false)"></a>
       </div>
     </h3>
     <!--<a ui-sref="friendsmap_edit({id: item.id})" class="edit"></a>-->

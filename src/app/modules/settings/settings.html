@@ -1,18 +1,18 @@
 <div class="col-xs-12">
   <div class="container wrap">
     <!--<div class="col-xs-12 col-md-3 zoomers settings">-->
-      <!--<div class="zoomers-sidebar">-->
-        <!--<ul class="settings-list">-->
-          <!--<li><a  class="my-spots">My spots</a></li>-->
-          <!--<li><a  class="favorites">Favorites</a></li>-->
-          <!--<li><a  class="searches">Saved searches</a></li>-->
-          <!--<li><a  class="friendsmap">Friends map</a></li>-->
-          <!--<li><a  class="photomap">Photo map</a></li>-->
-          <!--<li><a  class="planner">Planner</a></li>-->
-          <!--<li><a  class="reviews">Reviews</a></li>-->
-          <!--<li><a  class="messages">Messages</a></li>-->
-        <!--</ul>-->
-      <!--</div>-->
+    <!--<div class="zoomers-sidebar">-->
+    <!--<ul class="settings-list">-->
+    <!--<li><a  class="my-spots">My spots</a></li>-->
+    <!--<li><a  class="favorites">Favorites</a></li>-->
+    <!--<li><a  class="searches">Saved searches</a></li>-->
+    <!--<li><a  class="friendsmap">Friends map</a></li>-->
+    <!--<li><a  class="photomap">Photo map</a></li>-->
+    <!--<li><a  class="planner">Planner</a></li>-->
+    <!--<li><a  class="reviews">Reviews</a></li>-->
+    <!--<li><a  class="messages">Messages</a></li>-->
+    <!--</ul>-->
+    <!--</div>-->
     <!--</div>-->
     <div class="col-xs-12 col-md-9 central">
 
@@ -47,7 +47,8 @@
                 <label>Birthday</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <input ng-datepicker name="date" ng-model="Settings.data.birth_date" start-date="Settings.minDate"  type="text">
+                <input ng-datepicker name="date" ng-model="Settings.data.birth_date" start-date="Settings.minDate"
+                       type="text">
               </div>
             </div>
 
@@ -80,22 +81,22 @@
             </div>
 
             <!--<div class="col-xs-12 form-group no-pad">-->
-              <!--<div class="col-xs-3 no-pad">-->
-                <!--<label>Timezone</label>-->
-              <!--</div>-->
-              <!--<div class="col-xs-9 no-pad">-->
-                <!--&lt;!&ndash;<select class="selectpicker" ng-model="Settings.data.time_zone" ng-selected="Settings.data.time_zone"&ndash;&gt;-->
-                <!--&lt;!&ndash;ng-options="item for item in timezonesList"></select>&ndash;&gt;-->
-                <!--<ui-select-->
-                  <!--ng-model="Settings.data.time_zone"-->
-                  <!--theme="bootstrap">-->
-                  <!--<ui-select-match placeholder="Enter timezone...">{{$select.selected}}</ui-select-match>-->
-                  <!--<ui-select-choices-->
-                    <!--repeat="item in timezonesList | filter : $select.search track by $index">-->
-                    <!--<div ng-bind-html="item |  highlight: $select.search"></div>-->
-                  <!--</ui-select-choices>-->
-                <!--</ui-select>-->
-              <!--</div>-->
+            <!--<div class="col-xs-3 no-pad">-->
+            <!--<label>Timezone</label>-->
+            <!--</div>-->
+            <!--<div class="col-xs-9 no-pad">-->
+            <!--&lt;!&ndash;<select class="selectpicker" ng-model="Settings.data.time_zone" ng-selected="Settings.data.time_zone"&ndash;&gt;-->
+            <!--&lt;!&ndash;ng-options="item for item in timezonesList"></select>&ndash;&gt;-->
+            <!--<ui-select-->
+            <!--ng-model="Settings.data.time_zone"-->
+            <!--theme="bootstrap">-->
+            <!--<ui-select-match placeholder="Enter timezone...">{{$select.selected}}</ui-select-match>-->
+            <!--<ui-select-choices-->
+            <!--repeat="item in timezonesList | filter : $select.search track by $index">-->
+            <!--<div ng-bind-html="item |  highlight: $select.search"></div>-->
+            <!--</ui-select-choices>-->
+            <!--</ui-select>-->
+            <!--</div>-->
             <!--</div>-->
 
             <div class="col-xs-12 form-group no-pad">
@@ -105,7 +106,8 @@
               <div class="col-xs-9 no-pad">
                 <textarea ng-model="Settings.data.description" name="description" ng-maxlength="250"></textarea>
 
-                <div ng-if="form.description.$error.maxlength && (form.$submitted || form.description.$touched)" class="error-message-inline">
+                <div ng-if="form.description.$error.maxlength && (form.$submitted || form.description.$touched)"
+                     class="error-message-inline">
                   <div>Title can't be longer then 250 symbols</div>
                 </div>
               </div>
@@ -120,58 +122,58 @@
 
       <!----Social networks block---->
       <!--<div class="col-xs-12 settings-block">-->
-        <!--<h3>Social Networks</h3>-->
+      <!--<h3>Social Networks</h3>-->
 
-        <!--<div class="col-xs-4 social-section">-->
-          <!--<div class="col-xs-5 col-sm-3 no-pad">-->
-            <!--<img src="assets/img/facebook.png" alt="">-->
-          <!--</div>-->
+      <!--<div class="col-xs-4 social-section">-->
+      <!--<div class="col-xs-5 col-sm-3 no-pad">-->
+      <!--<img src="assets/img/facebook.png" alt="">-->
+      <!--</div>-->
 
-          <!--<div class="col-xs-7 col-sm-9 no-pad">-->
-            <!--<div class="radio-group">-->
-              <!--<input type="radio" class="radio" name="social_facebook" ng-model="Settings.data.social_facebook" value="1" ng-click="Settings.addSocial('facebook')" >-->
-              <!--<label>Yes</label>-->
-            <!--</div>-->
-            <!--<div class="radio-group">-->
-              <!--<input type="radio" class="radio" name="social_facebook" ng-model="Settings.data.social_facebook" value="0">-->
-              <!--<label>No</label>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+      <!--<div class="col-xs-7 col-sm-9 no-pad">-->
+      <!--<div class="radio-group">-->
+      <!--<input type="radio" class="radio" name="social_facebook" ng-model="Settings.data.social_facebook" value="1" ng-click="Settings.addSocial('facebook')" >-->
+      <!--<label>Yes</label>-->
+      <!--</div>-->
+      <!--<div class="radio-group">-->
+      <!--<input type="radio" class="radio" name="social_facebook" ng-model="Settings.data.social_facebook" value="0">-->
+      <!--<label>No</label>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
 
-        <!--<div class="col-xs-4 social-section">-->
-          <!--<div class="col-xs-5 col-sm-3 no-pad">-->
-            <!--<img src="assets/img/google-plus.png" alt="">-->
-          <!--</div>-->
+      <!--<div class="col-xs-4 social-section">-->
+      <!--<div class="col-xs-5 col-sm-3 no-pad">-->
+      <!--<img src="assets/img/google-plus.png" alt="">-->
+      <!--</div>-->
 
-          <!--<div class="col-xs-7 col-sm-9 no-pad">-->
-            <!--<div class="radio-group">-->
-              <!--<input type="radio" class="radio" name="social_google" value="1" ng-model="Settings.data.social_google" ng-click="Settings.addSocial('google')">-->
-              <!--<label>Yes</label>-->
-            <!--</div>-->
-            <!--<div class="radio-group">-->
-              <!--<input type="radio" class="radio" name="social_google" value="0" ng-model="Settings.data.social_google">-->
-              <!--<label>No</label>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+      <!--<div class="col-xs-7 col-sm-9 no-pad">-->
+      <!--<div class="radio-group">-->
+      <!--<input type="radio" class="radio" name="social_google" value="1" ng-model="Settings.data.social_google" ng-click="Settings.addSocial('google')">-->
+      <!--<label>Yes</label>-->
+      <!--</div>-->
+      <!--<div class="radio-group">-->
+      <!--<input type="radio" class="radio" name="social_google" value="0" ng-model="Settings.data.social_google">-->
+      <!--<label>No</label>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
 
-        <!--&lt;!&ndash;<div class="col-xs-4 social-section">&ndash;&gt;-->
-          <!--&lt;!&ndash;<div class="col-xs-5 col-sm-3 no-pad">&ndash;&gt;-->
-            <!--&lt;!&ndash;<img src="assets/img/twitter.png" alt="">&ndash;&gt;-->
-          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;<div class="col-xs-4 social-section">&ndash;&gt;-->
+      <!--&lt;!&ndash;<div class="col-xs-5 col-sm-3 no-pad">&ndash;&gt;-->
+      <!--&lt;!&ndash;<img src="assets/img/twitter.png" alt="">&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-          <!--&lt;!&ndash;<div class="col-xs-7 col-sm-9 no-pad">&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="radio-group">&ndash;&gt;-->
-              <!--&lt;!&ndash;<input type="radio" class="radio">&ndash;&gt;-->
-              <!--&lt;!&ndash;<label>Yes</label>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--&lt;!&ndash;<div class="radio-group">&ndash;&gt;-->
-              <!--&lt;!&ndash;<input type="radio" class="radio">&ndash;&gt;-->
-              <!--&lt;!&ndash;<label>No</label>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-          <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;<div class="col-xs-7 col-sm-9 no-pad">&ndash;&gt;-->
+      <!--&lt;!&ndash;<div class="radio-group">&ndash;&gt;-->
+      <!--&lt;!&ndash;<input type="radio" class="radio">&ndash;&gt;-->
+      <!--&lt;!&ndash;<label>Yes</label>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;<div class="radio-group">&ndash;&gt;-->
+      <!--&lt;!&ndash;<input type="radio" class="radio">&ndash;&gt;-->
+      <!--&lt;!&ndash;<label>No</label>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
       <!--</div>-->
       <!----/Social networks block---->
 
@@ -208,7 +210,8 @@
       <div class="col-xs-12 settings-block">
         <h3>Change password</h3>
 
-        <form role="form" name="passForm" ng-submit="Settings.savePasswordSettings(passForm)" autocomplete="off" novalidate>
+        <form role="form" name="passForm" ng-submit="Settings.savePasswordSettings(passForm)" autocomplete="off"
+              novalidate>
           <div class="col-xs-12 form-group no-pad" ng-if="Settings.data.is_registered">
             <label class="label-width">Current password</label>
             <input type="password"
@@ -235,7 +238,7 @@
                    minlength="6"
                    autocomplete="off"
                    required class="input-width"/>
-            <a  class="eye" eye-password></a>
+            <a class="eye" eye-password></a>
 
             <div ng-messages="passForm.newpassword.$error" ng-if="passForm.$submitted"
                  class="error-message-inline">
@@ -251,7 +254,7 @@
                    placeholder="Confirm new password..."
                    autocomplete="off"
                    ng-match="Settings.data.newPassword" class="input-width">
-            <a  class="eye" eye-password></a>
+            <a class="eye" eye-password></a>
 
             <div ng-messages="passForm.newpasswordconf.$error" ng-if="passForm.$submitted"
                  class="error-message-inline">
@@ -280,7 +283,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                  <div>{{item.label | highlight: $select.search}}</div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_events">-->
@@ -302,7 +305,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                  <div>{{item.label | highlight: $select.search}}</div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_favorites">-->
@@ -324,7 +327,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                  <div>{{item.label | highlight: $select.search}}</div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_followers">-->
@@ -346,7 +349,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                  <div>{{item.label | highlight: $select.search}}</div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_followings">-->
@@ -368,7 +371,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                  <div>{{item.label | highlight: $select.search}}</div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_wall">-->
@@ -390,7 +393,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                  <div>{{item.label | highlight: $select.search}}</div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_info">-->
@@ -412,7 +415,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                  <div>{{item.label | highlight: $select.search}}</div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_photo_map">-->
@@ -446,7 +449,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
-                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                  <div>{{item.label | highlight: $select.search}}</div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_letter">-->
@@ -466,7 +469,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
-                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                  <div>{{item.label | highlight: $select.search}}</div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_wall_post">-->
@@ -486,7 +489,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
-                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                  <div>{{item.label | highlight: $select.search}}</div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_follow">-->
@@ -506,7 +509,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
-                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                  <div>{{item.label | highlight: $select.search}}</div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_new_spot">-->
@@ -526,7 +529,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
-                  <div ng-bind-html="item.label |  highlight: $select.search"></div>
+                  <div>{{item.label | highlight: $select.search}}</div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_coming_spot">-->

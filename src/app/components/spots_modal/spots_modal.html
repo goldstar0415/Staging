@@ -20,7 +20,7 @@
            ng-click="modal.addSpot(spot)"
            ng-repeat="spot in modal.spots | filter:search">
         <img class="friend-avatar" ng-src="{{spot.cover_url.thumb}}">
-        <h4 class="name-friend" ng-bind-html="spot.title"></h4>
+        <h4 class="name-friend">{{spot.title}}</h4>
 
         <p class="time">{{spot.start_date | toTimezone:'MM.DD.YYYY'}} - {{spot.end_date | toTimezone:'MM.DD.YYYY'}}</p>
       </div>

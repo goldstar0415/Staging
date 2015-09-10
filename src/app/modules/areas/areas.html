@@ -8,10 +8,10 @@
   </div>
   <div class="col-xs-9 no-pad-right">
     <h2 class="feeds-title">
-      <a ui-sref="areas.preview({area_id: item.id})" ng-bind-html="item.title"></a>
+      <a ui-sref="areas.preview({area_id: item.id})">{{item.title}}</a>
     </h2>
 
-    <p class="description" ng-bind-html="item.description"></p>
+    <p class="description">{{item.description}}</p>
 
     <p class="time">{{item.created_at | toTimezone}}
 

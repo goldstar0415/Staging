@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -26,7 +26,7 @@
       vm.$state = $state;
       vm.API_URL = API_URL;
 
-      if(vm.options.snap.disable == "left") {
+      if (vm.options.snap.disable == "left") {
         vm.toggle = "right";
       } else {
         vm.toggle = "left";

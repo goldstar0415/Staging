@@ -40,7 +40,7 @@
     }
 
     function setProfileUser(user) {
-        $rootScope.profileUser = user;
+      $rootScope.profileUser = user;
     }
 
     function logOut() {

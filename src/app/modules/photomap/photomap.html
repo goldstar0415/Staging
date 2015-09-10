@@ -4,14 +4,15 @@
   </h2>
 
   <div class="album-tools">
-    <a ng-if="Photomap.currentId == currentUser.id" title="Create new album" ui-sref="photos.createAlbum" class="add-page"></a>
+    <a ng-if="Photomap.currentId == currentUser.id" title="Create new album" ui-sref="photos.createAlbum"
+       class="add-page"></a>
   </div>
 </div>
 <div class="col-xs-12">
   <div ng-repeat="item in Photomap.albums" class="col-xs-4 album-container">
     <div class="img-wrap" ui-sref="photos.album({user_id: item.user_id, album_id: item.id})">
       <img ng-src="{{item.cover.medium}}" alt="">
-      <a ng-bind-html="item.title"></a>
+      <a>{{item.title}}</a>
     </div>
   </div>
   <div class="col-xs-12" ng-if="Photomap.albums.length == 0">
