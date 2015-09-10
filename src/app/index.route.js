@@ -72,10 +72,15 @@
       .state('profile_blog', {
         url: '/blog',
         templateUrl: '/app/modules/blog/blogger_profile/blogger_profile.html',
-        controller: 'BlogController',
+        controller: 'BlogggerProfileController',
         controllerAs: 'Blog',
         parent: 'profile',
-        mapState: 'small'
+        mapState: 'small',
+        resolve: {
+          posts: function (Post, $stateParams) {
+            return Post.query({user_id: $stateParams.user_id}).$promise;
+          }
+        }
       })
       //Blog article creation page
       .state('profile_blog.create', {
