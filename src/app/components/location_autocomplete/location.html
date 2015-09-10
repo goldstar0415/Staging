@@ -1,4 +1,5 @@
-<input ng-show="provider === 'google'" typeahead="address as address.formatted_address for address in getData($viewValue)"
+<input ng-show="provider === 'google'"
+       typeahead="address as address.formatted_address for address in getData($viewValue)"
        typeahead-wait-ms="100"
        typeahead-on-select="onAutocompleteSelect($item, $model, $label)"
        ng-model="viewAddress"
@@ -7,7 +8,8 @@
        type="text"
        class="{{customClasses}}"
        ng-class="className">
-<input ng-show="provider != 'google'" typeahead="address as address.formatted_address for address in getData($viewValue)"
+<input ng-show="provider != 'google'"
+       typeahead="address as address.formatted_address for address in getData($viewValue)"
        typeahead-wait-ms="100"
        typeahead-on-select="onAutocompleteSelect($item, $model, $label)"
        ng-model="viewAddress"

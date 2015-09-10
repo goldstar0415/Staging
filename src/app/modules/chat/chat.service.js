@@ -92,7 +92,7 @@
       //if (date.diff(moment(), 'hour') == 0) {
       //  date = date.fromNow();
       //} else {
-        date = date.format('MMM DD, YYYY H:mm A');
+      date = date.format('MMM DD, YYYY H:mm A');
       //}
       return date;
     }

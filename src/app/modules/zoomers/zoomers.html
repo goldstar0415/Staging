@@ -56,7 +56,7 @@
                     <span ng-if="user.birth_date"><span ng-if="user.sex">,</span> {{user.birth_date | age}} years</span>
                   </p>
 
-                  <p class="description" ng-bind-html="user.description"></p>
+                  <p class="description">{{user.description}}</p>
                 </div>
 
                 <p class="counters">
@@ -90,7 +90,7 @@
                   <img class="frame" ng-src="{{spot.cover_url.medium}}" alt="{{spot.title}}">
                 </a>
                 <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-link"
-                   ng-bind-html="spot.title">
+                  >{{spot.title}}
                 </a>
               </li>
             </ul>

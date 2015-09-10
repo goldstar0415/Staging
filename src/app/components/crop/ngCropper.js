@@ -22,7 +22,7 @@
           var autoCrop = scope.autoCrop || false;
 
 
-          $image.bind('load', function() {
+          $image.bind('load', function () {
             $image.cropper({
               aspectRatio: ratioWidth / ratioHeight,
               cropmove: onCropChange,
@@ -30,13 +30,13 @@
               strict: true
             });
 
-            $image.on('built.cropper', function() {
+            $image.on('built.cropper', function () {
               onCropEnd();
             });
           });
 
           function onCropChange() {
-            if(autoCrop) {
+            if (autoCrop) {
               scope.resultImage = getDataURL();
               scope.$apply();
             }

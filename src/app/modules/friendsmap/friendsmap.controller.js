@@ -16,8 +16,8 @@
       return _.each(friends, function (friend) {
         friend.showCustom = true;
         friend.showSwitch = false;
-        if(friend.location && friend.default_location) {
-          if(friend.location.lat != friend.default_location.lat && friend.location.lng != friend.default_location.lng) {
+        if (friend.location && friend.default_location) {
+          if (friend.location.lat != friend.default_location.lat && friend.location.lng != friend.default_location.lng) {
             friend.showSwitch = true;
           }
         }
@@ -25,38 +25,40 @@
         friend.birth_date = moment(friend.birth_date).format('MM.DD.YYYY')
       })
     }
+
     function createMarker(iconUrl, title, location) {
       var icon = MapService.CreateCustomIcon(iconUrl, 'custom-map-icons');
       var options = {};
 
-      if(icon) options.icon = icon;
-      if(title) options.title = title;
+      if (icon) options.icon = icon;
+      if (title) options.title = title;
 
       return MapService.CreateMarker(location, options);
     }
+
     function initMap() {
-      for(var k in friends) {
+      for (var k in friends) {
         var obj = friends[k];
         var title = obj.first_name + " " + obj.last_name;
-        if(obj.location) {
+        if (obj.location) {
           var m = createMarker(obj.avatar_url.thumb, title, obj.location);
           markers.push({marker: m, id: obj.id});
         }
       }
 
-      if(friends.length > 1) {
+      if (friends.length > 1) {
         MapService.FitBoundsOfCurrentLayer();
-      } else if(friends.length == 1) {
-        if(friends[0].location) {
+      } else if (friends.length == 1) {
+        if (friends[0].location) {
           MapService.GetMap().setView(friends[0].location, 10);
         }
       }
     }
 
-    vm.switchLocation = function(item, custom) {
-      if(item.showCustom != custom){
+    vm.switchLocation = function (item, custom) {
+      if (item.showCustom != custom) {
         item.showCustom = custom;
-        if(custom) {
+        if (custom) {
           item.displayAddress = item.address;
           moveMarkerToLocation(item.id, item.location);
         } else {
@@ -66,32 +68,32 @@
       }
 
     };
-    vm.setAvatar = function(id, files) {
-      if(files.length > 0) {
-        CropService.crop(files[0], 512, 512, function(result) {
+    vm.setAvatar = function (id, files) {
+      if (files.length > 0) {
+        CropService.crop(files[0], 512, 512, function (result) {
           if (result) {
-            Friends.setAvatar({id: id}, {avatar:result}, function(res) {
+            Friends.setAvatar({id: id}, {avatar: result}, function (res) {
               var marker = null;
               var friend = null;
 
-              for(var k in markers) {
-                if(markers[k].id == id) {
+              for (var k in markers) {
+                if (markers[k].id == id) {
                   marker = markers[k].marker;
                 }
               }
 
-              for(var k in vm.friends) {
-                if(vm.friends[k].id == id) {
+              for (var k in vm.friends) {
+                if (vm.friends[k].id == id) {
                   friend = vm.friends[k]
                 }
               }
 
-              if(friend) {
+              if (friend) {
                 friend.avatar_url.medium = result;
               }
 
-              if(marker) {
-                var icon = MapService.CreateCustomIcon(result,'custom-map-icons');
+              if (marker) {
+                var icon = MapService.CreateCustomIcon(result, 'custom-map-icons');
                 marker.setIcon(icon);
               }
             });
@@ -99,10 +101,10 @@
         });
       }
     };
-    vm.removeFriend = function(id, idx) {
-      Friends.deleteFriend({id: id}, function() {
-        for(var k in markers) {
-          if(markers[k].id == id) {
+    vm.removeFriend = function (id, idx) {
+      Friends.deleteFriend({id: id}, function () {
+        for (var k in markers) {
+          if (markers[k].id == id) {
             MapService.RemoveMarker(markers[k].marker);
             vm.friends.splice(idx, 1);
           }
@@ -112,8 +114,8 @@
 
 
     function moveMarkerToLocation(id, latlng) {
-      for(var k in markers) {
-        if(markers[k].id == id) {
+      for (var k in markers) {
+        if (markers[k].id == id) {
           markers[k].marker.setLatLng(latlng);
         }
       }

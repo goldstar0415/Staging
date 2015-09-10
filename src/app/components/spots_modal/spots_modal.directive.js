@@ -18,10 +18,9 @@
     };
 
 
-
     /** @ngInject */
     function SpotsModalLink(scope, element, attrs, ctrl, transclude) {
-      transclude(scope, function(clone) {
+      transclude(scope, function (clone) {
         element.append(clone);
       });
 

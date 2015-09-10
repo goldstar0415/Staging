@@ -45,14 +45,14 @@
         })
     }
 
-    function InitMap () {
-      for(var k in displayPlans) {
-        if(displayPlans[k].location) {
+    function InitMap() {
+      for (var k in displayPlans) {
+        if (displayPlans[k].location) {
           CreateMarker(displayPlans[k].category.icon_url, displayPlans[k].title, displayPlans[k].id, displayPlans[k].location);
-        } else if(displayPlans[k].points) {
+        } else if (displayPlans[k].points) {
           var points = displayPlans[k].points;
 
-          for(var i in points) {
+          for (var i in points) {
             CreateMarker(displayPlans[k].category.icon_url, displayPlans[k].title, displayPlans[k].id, points[i].location);
           }
         }

@@ -28,8 +28,9 @@
         SpotService.formatSpot(spot);
       });
     }
+
     function ShowMarkers(spots) {
-      var spotsArray = _.map(spots, function(item) {
+      var spotsArray = _.map(spots, function (item) {
         return {
           id: item.id,
           spot_id: item.spot_id,

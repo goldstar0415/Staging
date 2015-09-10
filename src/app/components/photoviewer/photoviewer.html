@@ -13,14 +13,18 @@
         <a ng-click="PV.nextPhoto($event)" ng-if="PV.countPhotos > 1" class="next"></a>
       </div>
       <div class="photo-comments col-xs-4" ng-if="!PV.hideComments && $root.currentUser">
-        <button type="button" class="close hidden-sm hidden-xs" data-dismiss="alert" aria-label="Close" ng-click="PV.close()">
+        <button type="button" class="close hidden-sm hidden-xs" data-dismiss="alert" aria-label="Close"
+                ng-click="PV.close()">
           <span aria-hidden="true">&times;</span>
         </button>
         <p class="location">{{PV.currentPhoto.address}}</p>
 
         <form name="form" ng-submit="PV.sendComment(form)" class="col-xs-12 new-post">
-          <textarea ng-model="PV.comment" name="comment" ng-maxlength="250" placeholder="Start typing..." required></textarea>
-          <div ng-if="form.comment.$error.maxlength && (form.$submitted || form.comment.$touched)" class="error-message-inline">
+          <textarea ng-model="PV.comment" name="comment" ng-maxlength="250" placeholder="Start typing..."
+                    required></textarea>
+
+          <div ng-if="form.comment.$error.maxlength && (form.$submitted || form.comment.$touched)"
+               class="error-message-inline">
             <div>can't be longer then 250 symbols</div>
           </div>
 
@@ -34,11 +38,12 @@
             <div class="info">
               <h3 class="name">{{comment.sender.first_name}} {{comment.sender.last_name}}</h3>
 
-              <p ng-bind-html="comment.body | htmlLinky:'_blank'"></p>
+              <p ng-bind-html="comment.body | linky:'_blank'"></p>
 
               <p class="time">{{comment.created_at | toTimezone}}</p>
             </div>
-            <a class="delete-reviews" ng-if="$root.profileUser.id == $root.currentUser.id ||  $root.currentUser.id == comment.sender.id"
+            <a class="delete-reviews"
+               ng-if="$root.profileUser.id == $root.currentUser.id ||  $root.currentUser.id == comment.sender.id"
                ng-click="PV.deleteComment(comment.id, $index)"></a>
           </div>
         </div>

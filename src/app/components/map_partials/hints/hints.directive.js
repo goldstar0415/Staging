@@ -24,17 +24,17 @@
 
     $scope.currentLayer = 'path';
 
-    $scope.LassoSelectionTool = function() {
-        angular.element('.lasso-selection').trigger('click');
-        $scope.showHintPopup = false;
+    $scope.LassoSelectionTool = function () {
+      angular.element('.lasso-selection').trigger('click');
+      $scope.showHintPopup = false;
     };
-    $scope.PathSelectionTool = function() {
-        angular.element('.path-selection').trigger('click');
-        $scope.showHintPopup = false;
+    $scope.PathSelectionTool = function () {
+      angular.element('.path-selection').trigger('click');
+      $scope.showHintPopup = false;
     };
-    $scope.RadiusSelectionTool = function() {
-        angular.element('.radius-selection').trigger('click');
-        $scope.showHintPopup = false;
+    $scope.RadiusSelectionTool = function () {
+      angular.element('.radius-selection').trigger('click');
+      $scope.showHintPopup = false;
     };
 
     $scope.close = function () {

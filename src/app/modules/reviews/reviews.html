@@ -14,7 +14,7 @@
         <div class="text-block">
           <h2 class="media-heading feeds-title">
             <a ui-sref="planner.view({user_id: item.commentable.user_id, plan_id: item.commentable.id})"
-               ng-bind-html="item.commentable.title">
+              >{{item.commentable.title}}
             </a>
           </h2>
           <a class="author-name" ui-sref="profile.main({user_id: item.sender.id})">
@@ -23,7 +23,7 @@
           </a>
           <!--at-->
 
-          <p class="description" ng-bind-html="item.body | htmlLinky:'_blank'"></p>
+          <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
 
           <p class="time">{{item.created_at | toTimezone}}</p>
 
@@ -40,7 +40,7 @@
         <div class="text-block">
           <h2 class="media-heading feeds-title">
             <a ui-sref="spot({user_id: item.commentable.user_id, spot_id: item.commentable.id})"
-               ng-bind-html="item.commentable.title"></a>
+              >{{item.commentable.title}}</a>
           </h2>
           <a class="author-name" ui-sref="profile.main({user_id: item.sender.id})">
             {{item.sender.first_name}} {{item.sender.last_name}}

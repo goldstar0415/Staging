@@ -98,12 +98,12 @@
                 <date-range item="item.spot"></date-range>
               </div>
               <div class="col-xs-12 padding-0">
-                <h2 class="name" ng-bind-html="item.spot.title"></h2>
+                <h2 class="name">{{item.spot.title}}</h2>
 
                 <p class="location">{{item.address}}</p>
 
-                <p class="description" ng-bind-html="item.spot.description"></p>
-              1  <!--<div class="event-result-nav col-xs-12 padding-0">-->
+                <p class="description">{{item.spot.description}}</p>
+                1  <!--<div class="event-result-nav col-xs-12 padding-0">-->
 
                 <!--<a class="save padding-0" >Save</a>-->
 
@@ -113,8 +113,8 @@
 
                 <!--<a class="big-plus padding-0" ></a>-->
                 <!--</div>-->
-                <div class="links-nav"  >
-                  <ul class="tools clearfix" >
+                <div class="links-nav">
+                  <ul class="tools clearfix">
 
                     <li ng-if="!item.spot.is_saved">
                       <a class="save-event" ng-click="saveToCalendar(item.spot)">Save</a>
@@ -133,7 +133,7 @@
                     </li>
                   </ul>
 
-                  <share links="item.spot.share_links" ></share>
+                  <share links="item.spot.share_links"></share>
                 </div>
 
               </div>
@@ -192,16 +192,16 @@
                 <date-range item="item.spot"></date-range>
               </div>
               <div class="col-xs-12 padding-0">
-                <h2 class="name" ng-bind-html="item.spot.title"></h2>
+                <h2 class="name">{{item.spot.title}}</h2>
 
                 <p class="location">{{item.address}}</p>
 
-                <p class="description" ng-bind-html="item.spot.description"></p>
+                <p class="description">{{item.spot.description}}</p>
 
                 <div class="event-result-nav col-xs-12 padding-0">
 
-                  <div class="links-nav"  >
-                    <ul class="tools clearfix" >
+                  <div class="links-nav">
+                    <ul class="tools clearfix">
 
                       <li ng-if="!item.spot.is_favorite">
                         <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
@@ -214,7 +214,7 @@
                       </li>
                     </ul>
 
-                    <share links="item.spot.share_links" ></share>
+                    <share links="item.spot.share_links"></share>
                   </div>
                 </div>
               </div>
@@ -273,11 +273,11 @@
                 <date-range item="item.spot"></date-range>
               </div>
               <div class="col-xs-12 padding-0">
-                <h2 class="name" ng-bind-html="item.spot.title"></h2>
+                <h2 class="name">{{item.spot.title}}</h2>
 
                 <p class="location">{{item.address}}</p>
 
-                <p class="description" ng-bind-html="item.spot.description"></p>
+                <p class="description">{{item.spot.description}}</p>
 
                 <div class="event-result-nav col-xs-12 padding-0">
 

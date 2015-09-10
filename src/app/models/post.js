@@ -15,6 +15,10 @@
         url: API_URL + '/posts/categories',
         isArray: true
       },
+      request: {
+        url: API_URL + '/posts/request',
+        method: 'POST'
+      },
       popular: {
         url: API_URL + '/posts/popular',
         isArray: true

@@ -12,11 +12,11 @@
       <div class="links">
         <div class="media media-visible padding-bottom add-location clearfix"
              ng-repeat="area in NgInput.attachments.areas">
-          <a class="img-selection" ng-bind-html="area.title"></a>
+          <a class="img-selection">{{area.title}}</a>
 
           <div class="media-body">
-            <div class="description-link" >
-              <span ng-bind-html="area.description"></span>
+            <div class="description-link">
+              <span>{{area.description}}</span>
               <a class="close-link" title="Delete" ng-click="NgInput.deleteArea($index)"></a>
             </div>
           </div>
@@ -31,10 +31,10 @@
             <a class="close-link" title="Delete" ng-click="NgInput.deleteSpot($index)"></a>
 
             <h3 class="media-heading ">
-              <a class="event-img clearfix" ng-bind-html="spot.title"></a>
+              <a class="event-img clearfix">{{spot.title}}</a>
             </h3>
 
-            <div class="description-link" ng-bind-html="spot.description"></div>
+            <div class="description-link">{{spot.description}}</div>
           </div>
         </div>
 

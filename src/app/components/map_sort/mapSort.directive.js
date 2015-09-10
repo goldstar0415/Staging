@@ -2,15 +2,13 @@
   'use strict';
 
   angular.module('zoomtivity')
-    .directive('mapSort', function() {
+    .directive('mapSort', function () {
       return {
         restrict: 'E',
         templateUrl: '/app/components/map_sort/map_sort.html',
         controller: mapSort,
         controllerAs: 'MapSort',
-        scope: {
-
-        }
+        scope: {}
       }
     });
 
@@ -23,17 +21,17 @@
     $scope.addToFavorite = SpotService.addToFavorite;
     $scope.removeFromFavorite = SpotService.removeFromFavorite;
 
-    $rootScope.$on('update-map-data', function(event, spots) {
+    $rootScope.$on('update-map-data', function (event, spots) {
       originalSpotsArray = spots;
       vm.eventsArray = [];
       vm.recreationsArray = [];
       vm.pitstopsArray = [];
 
 
-      _.each(spots, function(item) {
+      _.each(spots, function (item) {
         var type = item.spot.category.type.name;
 
-        switch(type) {
+        switch (type) {
           case 'pitstop':
             vm.pitstopsArray.push(item);
             break;
@@ -51,7 +49,7 @@
       vm.recreationsArray = MapService.SortByRating(vm.recreationsArray);
       vm.pitstopsArray = MapService.SortByRating(vm.pitstopsArray);
 
-      switch(vm.sortLayer) {
+      switch (vm.sortLayer) {
         case 'event':
           $scope.sortEventsByCategories();
           break;
@@ -67,71 +65,71 @@
 
     vm.vertical = true;
     vm.sortLayer = 'event';
-    vm.toggleMenu = function() {
+    vm.toggleMenu = function () {
       vm.vertical = !vm.vertical;
     };
-    vm.toggleLayer = function(layer) {
+    vm.toggleLayer = function (layer) {
       var wp = MapService.GetPathWaypoints();
       var geoJson = MapService.GetGeoJSON();
 
 
-      switch(layer) {
+      switch (layer) {
         case 'events':
-              MapService.showEvents();
-              vm.sortLayer = 'event';
-              $scope.sortEventsByCategories();
-              if (wp.length < 1 && geoJson && geoJson.features.length < 1) {
-                toastr.info('Draw the search area');
-              }
-              break;
+          MapService.showEvents();
+          vm.sortLayer = 'event';
+          $scope.sortEventsByCategories();
+          if (wp.length < 1 && geoJson && geoJson.features.length < 1) {
+            toastr.info('Draw the search area');
+          }
+          break;
         case 'pitstops':
-              MapService.showPitstops();
-              vm.sortLayer = 'pitstop';
-              $scope.sortPitstopsByCategories();
-              if (wp.length < 1 && geoJson && geoJson.features.length < 1) {
-                toastr.info('Draw the search area');
-              }
-              break;
+          MapService.showPitstops();
+          vm.sortLayer = 'pitstop';
+          $scope.sortPitstopsByCategories();
+          if (wp.length < 1 && geoJson && geoJson.features.length < 1) {
+            toastr.info('Draw the search area');
+          }
+          break;
         case 'recreations':
-              MapService.showRecreations();
-              vm.sortLayer = 'recreation';
-              $scope.sortRecreationsByCategories();
-              if (wp.length < 1 && geoJson && geoJson.features.length < 1) {
-                toastr.info('Draw the search area');
-              }
-              break;
+          MapService.showRecreations();
+          vm.sortLayer = 'recreation';
+          $scope.sortRecreationsByCategories();
+          if (wp.length < 1 && geoJson && geoJson.features.length < 1) {
+            toastr.info('Draw the search area');
+          }
+          break;
         case 'other':
-              MapService.showOtherLayers();
-              MapService.WeatherSelection(weather);
-              vm.sortLayer = 'weather';
-              toastr.info('Click on map to check weather in this area');
-              break;
+          MapService.showOtherLayers();
+          MapService.WeatherSelection(weather);
+          vm.sortLayer = 'weather';
+          toastr.info('Click on map to check weather in this area');
+          break;
       }
     };
-    vm.toggleWeather = function() {
-        vm.toggleLayer('other');
+    vm.toggleWeather = function () {
+      vm.toggleLayer('other');
     };
 
-    $http.get(API_URL+ '/spots/categories')
-      .success(function(data) {
-        for(var k in data) {
-          if(data[k].name == 'event'){
+    $http.get(API_URL + '/spots/categories')
+      .success(function (data) {
+        for (var k in data) {
+          if (data[k].name == 'event') {
             $scope.eventCategories = data[k].categories;
-            for(var i in $scope.eventCategories) {
+            for (var i in $scope.eventCategories) {
               $scope.eventCategories[i].selected = false;
             }
           }
 
-          if(data[k].name == 'recreation'){
+          if (data[k].name == 'recreation') {
             $scope.recreationCategories = data[k].categories;
-            for(var i in $scope.recreationCategories) {
+            for (var i in $scope.recreationCategories) {
               $scope.recreationCategories[i].selected = false;
             }
           }
 
-          if(data[k].name == 'pitstop'){
+          if (data[k].name == 'pitstop') {
             $scope.pitstopCategories = data[k].categories;
-            for(var i in $scope.pitstopCategories) {
+            for (var i in $scope.pitstopCategories) {
               $scope.pitstopCategories[i].selected = false;
             }
           }
@@ -143,10 +141,10 @@
     $scope.eventsCategoryToggle = false;
     vm.eventsSelectAll = false;
 
-    $scope.checkItem = function(item, items, type) {
+    $scope.checkItem = function (item, items, type) {
       item.selected = !item.selected;
-      if(!item.selected) {
-        switch(type) {
+      if (!item.selected) {
+        switch (type) {
           case 'event':
             vm.eventsSelectAll = false;
             break;
@@ -158,7 +156,7 @@
             break;
         }
       } else {
-        switch(type) {
+        switch (type) {
           case 'event':
             vm.eventsSelectAll = checkAll(items);
             break;
@@ -173,8 +171,8 @@
 
       function checkAll(items) {
         var selected = true;
-        for(var k in items) {
-          if(!items[k].selected) {
+        for (var k in items) {
+          if (!items[k].selected) {
             console.log(items[k].selected);
             selected = false;
             break;
@@ -186,29 +184,29 @@
       }
     };
 
-    $scope.eventsSortByDate = function() {
-      if(vm.startDate || vm.endDate) {
+    $scope.eventsSortByDate = function () {
+      if (vm.startDate || vm.endDate) {
         vm.displayEventsArray = MapService.ClampByDate(vm.eventsArray, vm.startDate, vm.endDate);
         MapService.drawSpotMarkers(vm.displayEventsArray, 'event', true);
         console.log(vm.displayEventsArray);
       }
     };
 
-    $scope.toggleEventCategories = function() {
-      if(!vm.eventsSelectAll) {
-        _.map($scope.eventCategories, function(item) {
+    $scope.toggleEventCategories = function () {
+      if (!vm.eventsSelectAll) {
+        _.map($scope.eventCategories, function (item) {
           item.selected = true;
         });
       } else {
-       _.map($scope.eventCategories, function(item) {
+        _.map($scope.eventCategories, function (item) {
           item.selected = false;
         });
       }
       vm.eventsSelectAll = !vm.eventsSelectAll;
       $scope.sortEventsByCategories();
     };
-    $scope.sortEventsByCategories = function() {
-      var categories = _.reject($scope.eventCategories, function(item) {
+    $scope.sortEventsByCategories = function () {
+      var categories = _.reject($scope.eventCategories, function (item) {
         return !item.selected;
       });
       vm.displayEventsArray = MapService.SortBySubcategory(vm.eventsArray, categories);
@@ -218,21 +216,21 @@
     $scope.recreationsCategoryToggle = false;
     vm.recreationSelectAll = false;
 
-    $scope.toggleRecreationCategories = function() {
-      if(!vm.recreationSelectAll) {
-        _.map($scope.recreationCategories, function(item) {
+    $scope.toggleRecreationCategories = function () {
+      if (!vm.recreationSelectAll) {
+        _.map($scope.recreationCategories, function (item) {
           item.selected = true;
         });
       } else {
-        _.map($scope.recreationCategories , function(item) {
+        _.map($scope.recreationCategories, function (item) {
           item.selected = false;
         });
       }
       vm.recreationSelectAll = !vm.recreationSelectAll;
       $scope.sortRecreationsByCategories();
     };
-    $scope.sortRecreationsByCategories = function() {
-      var categories = _.reject($scope.recreationCategories, function(item) {
+    $scope.sortRecreationsByCategories = function () {
+      var categories = _.reject($scope.recreationCategories, function (item) {
         return !item.selected;
       });
       vm.displayRrecreationsArray = MapService.SortBySubcategory(vm.recreationsArray, categories);
@@ -242,21 +240,21 @@
     $scope.pitstopsCategoryToggle = false;
     vm.pitstopSelectAll = false;
 
-    $scope.togglePitstopCategories = function() {
-      if(!vm.pitstopSelectAll) {
-        _.map($scope.pitstopCategories, function(item) {
+    $scope.togglePitstopCategories = function () {
+      if (!vm.pitstopSelectAll) {
+        _.map($scope.pitstopCategories, function (item) {
           item.selected = true;
         });
       } else {
-        _.map($scope.pitstopCategories, function(item) {
+        _.map($scope.pitstopCategories, function (item) {
           item.selected = false;
         });
       }
       vm.pitstopSelectAll = !vm.pitstopSelectAll;
       $scope.sortPitstopsByCategories();
     };
-    $scope.sortPitstopsByCategories = function() {
-      var categories = _.reject($scope.pitstopCategories, function(item) {
+    $scope.sortPitstopsByCategories = function () {
+      var categories = _.reject($scope.pitstopCategories, function (item) {
         return !item.selected;
       });
       vm.displayPitstopsArray = MapService.SortBySubcategory(vm.pitstopsArray, categories);
@@ -270,9 +268,9 @@
       $scope.weatherForecast = [];
       var daily = resp.daily.data;
       console.log(daily);
-      for(var k in daily) {
+      for (var k in daily) {
         daily[k].formattedDate = moment(daily[k].time * 1000).format('DD MMMM');
-        if(k != 0) {
+        if (k != 0) {
           $scope.weatherForecast.push(daily[k]);
         }
       }

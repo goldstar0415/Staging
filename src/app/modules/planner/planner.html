@@ -28,14 +28,14 @@
           </div>
 
           <h3 class="title-planner">
-            <a ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})" ng-bind-html="plan.title"></a>
-          </span>
+            <a ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})">{{plan.title}}</a>
+            </span>
           </h3>
 
           <p class="place">{{plan.address}}</p>
 
           <p class="description">
-            <span ng-bind-html="plan.description"></span>
+            <span>{{plan.description}}</span>
           </p>
 
           <ul class="tools clearfix">
@@ -56,7 +56,8 @@
       </div>
       <preloader ng-show="Planner.pagination.busy"></preloader>
 
-      <h3 ng-if="Planner.plans.data.length == 0 && !Planner.pagination.busy" class="text-center description">No plans yet.</h3>
+      <h3 ng-if="Planner.plans.data.length == 0 && !Planner.pagination.busy" class="text-center description">No plans
+        yet.</h3>
     </section>
   </div>
 </div>

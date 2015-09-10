@@ -73,10 +73,11 @@
                   {{post.sender.last_name}}</a>
               </h3>
 
-              <p ng-bind-html="post.body | htmlLinky:'_blank'"></p>
+              <p>{{post.body}}</p>
 
               <p class="time">{{post.created_at | fromNow}}
-                <a ng-click="Article.deleteComment(post, $index)" ng-if="post.sender.id == currentUser.id" class="delete-link">Delete</a>
+                <a ng-click="Article.deleteComment(post, $index)" ng-if="post.sender.id == currentUser.id"
+                   class="delete-link">Delete</a>
               </p>
 
 

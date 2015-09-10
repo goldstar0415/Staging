@@ -129,11 +129,12 @@
           <ui-select ng-model="attachment.data.category.id" theme="bootstrap">
             <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
             <ui-select-choices repeat="item.id as item in Plan.categories | filter : $select.search track by $index">
-              <div ng-bind-html="item.display_name |  highlight: $select.search"></div>
+              <div>{{item.display_name | highlight: $select.search}}</div>
             </ui-select-choices>
           </ui-select>
 
           <input type="hidden" ng-model="attachment.data.category.id" name="category_activity_{{$index}}" required/>
+
           <div ng-messages="form['category_activity_' + $index].$error"
                ng-if="form.$submitted || form['category_activity_' +$index].$touched" class="error-message">
             <div ng-message="required">is required</div>
@@ -145,7 +146,8 @@
         <label class="col-sm-2 control-label">Description</label>
 
         <div class="col-sm-10">
-        <textarea class="form-control" rows="5" name="description_activity_{{$index}}" ng-model="attachment.data.description"
+        <textarea class="form-control" rows="5" name="description_activity_{{$index}}"
+                  ng-model="attachment.data.description"
                   ng-maxlength="250"></textarea>
 
           <div ng-messages="form['description_activity_' + $index].$error"
@@ -221,7 +223,7 @@
 
     <!-- section  event-add-location-->
     <section class="event-add-location" ng-if="attachment.type == 'spot'">
-      <div class="event" >
+      <div class="event">
         <div class="media media-visible">
           <a class="pull-left">
             <img class="media-object fav-avatar-icon feeds-img"
@@ -231,7 +233,7 @@
           <div class="media-body">
             <h2 class="media-heading feeds-title">
               <button type="button" ng-click="Plan.deleteAttachment($parent.$index)" class="close">x</button>
-              <a ui-sref="spot({user_id: attachment.data.user_id, spot_id: attachment.data.id})" ng-bind-html="attachment.data.title"></a>
+              <a ui-sref="spot({user_id: attachment.data.user_id, spot_id: attachment.data.id})">{{attachment.data.title}}</a>
             </h2>
 
             <p class="time">
@@ -240,7 +242,7 @@
               {{attachment.data.end_date | toTimezone:'MM.DD.YYYY'}}
             </p>
 
-            <p class="feeds-text" ng-bind-html="attachment.data.description"></p>
+            <p class="feeds-text">{{attachment.data.description}}</p>
           </div>
         </div>
       </div>
