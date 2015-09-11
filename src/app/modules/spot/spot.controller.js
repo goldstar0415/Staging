@@ -67,7 +67,7 @@
         };
       });
       MapService.drawSpotMarkers(spotsArray, 'other', true);
-      MapService.FocusMapToGivenLocation(spots[0].points[0].location, 16);
+      MapService.FocusMapToGivenLocation(spots[0].points[0].location);
     }
 
     function deleteComment(comment, idx) {

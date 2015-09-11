@@ -22,7 +22,6 @@
     /** @ngInject */
     function InviteFriendsController($modal, $rootScope, SignUpService) {
       var vm = this;
-      vm.type = vm.type || 'spot';
 
       vm.openModal = function () {
         if (!$rootScope.currentUser) {
@@ -55,6 +54,8 @@
     function InviteFriendsModalController(type, item, friends, $modalInstance, Spot, Plan) {
       var vm = this;
       vm.friends = friends;
+      type = type || 'spot';
+      console.log(type);
 
       vm.close = function () {
         $modalInstance.close();
