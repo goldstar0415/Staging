@@ -675,6 +675,14 @@ sign-in, sign-up {
 
 /*end modal dialog*/
 
+.color-link {
+  a {
+    color: $blue;
+    &:active, &:focus, &:hover {
+      color: $navy_blue;
+    }
+  }
+}
 /*responsive*/
 
 @media (max-width: 992px) {
