@@ -77,8 +77,8 @@
     function deletePlan(plan, idx) {
       dialogs.confirm('Confirmation', 'Are you sure you want to delete plan?').result.then(function () {
         Plan.delete({id: plan.id});
-        for(var k in markers) {
-          if(markers[k].id == plan.id) {
+        for (var k in markers) {
+          if (markers[k].id == plan.id) {
             MapService.RemoveMarker(markers[k].marker);
             break;
           }
@@ -88,8 +88,8 @@
       });
     }
 
-    function InitMap () {
-      for(var k in displayPlans) {
+    function InitMap() {
+      for (var k in displayPlans) {
         var m = CreateMarker($rootScope.plannerIcon, displayPlans[k].title, displayPlans[k].id, displayPlans[k].location);
         markers.push({id: displayPlans[k].id, marker: m});
       }

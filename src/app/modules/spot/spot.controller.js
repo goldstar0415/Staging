@@ -14,8 +14,8 @@
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
     vm.removeFromFavorite = SpotService.removeFromFavorite;
-    vm.removeSpot = function(spot, idx) {
-      SpotService.removeSpot(spot, idx, function() {
+    vm.removeSpot = function (spot, idx) {
+      SpotService.removeSpot(spot, idx, function () {
         $state.go('spots', {user_id: $rootScope.currentUser.id});
       });
     };
@@ -55,7 +55,7 @@
     }
 
     function ShowMarkers(spots) {
-      var spotsArray = _.map(spots, function(item) {
+      var spotsArray = _.map(spots, function (item) {
         return {
           id: item.id,
           spot_id: item.spot_id,

@@ -7,7 +7,7 @@
     <div class="message">
       <h5 class="user-name">{{Message.message.data.user.first_name}} {{Message.message.data.user.last_name}}</h5>
 
-      <p ng-bind-html="Message.message.data.message.body "></p>
+      <p>{{Message.message.data.message.body}}</p>
 
       <p ng-if="!Message.message.data.message.body"><b>Click to read</b></p>
     </div>

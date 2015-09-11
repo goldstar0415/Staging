@@ -22,7 +22,7 @@
         <ui-select ng-model="Article.blog_category_id" theme="bootstrap">
           <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
           <ui-select-choices repeat="item.id as item in Article.categories | filter : $select.search track by $index">
-            <div ng-bind-html="item.display_name |  highlight: $select.search"></div>
+            <div>{{item.display_name | highlight: $select.search}}</div>
           </ui-select-choices>
         </ui-select>
 

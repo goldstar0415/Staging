@@ -80,10 +80,10 @@
               <p class="col-xs-12 col-sm-3 views">Views: {{post.count_views}}</p>
             </div>
 
-            <p class="article-description" ng-bind-html="post.body | limitTo: 500"></p>
+            <p class="article-description" >{{post.body | limitTo: 500}}</p>
 
             <div class="col-xs-12">
-              <share links="post.share_links" ></share>
+              <share links="post.share_links"></share>
             </div>
 
           </div>

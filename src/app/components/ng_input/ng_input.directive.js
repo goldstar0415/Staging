@@ -74,7 +74,7 @@
           resolve: {
             spots: function (Spot) {
               return Spot.query({
-                  user_id: $rootScope.currentUser.id
+                user_id: $rootScope.currentUser.id
               }).$promise;
             },
             favorites: function (Spot) {
@@ -92,7 +92,6 @@
         });
       };
     }
-
 
 
   }

@@ -25,14 +25,14 @@
 
         <div class="media-body text-content">
           <h2 class="media-heading favorites-article-title">
-            <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})" ng-bind-html="item.title"></a>
+            <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a>
           </h2>
 
-          <p class="place" ng-bind-html="item.description"></p>
+          <p class="place">{{item.description}}</p>
         </div>
       </div>
 
-      <ul class="tools clearfix" >
+      <ul class="tools clearfix">
         <li ng-if="!item.is_saved && item.type == 'Event'">
           <a class="save-event" ng-click="Favorite.saveToCalendar(item)">Save</a>
         </li>
@@ -50,7 +50,7 @@
         </li>
 
       </ul>
-      <share links="item.share_links" ></share>
+      <share links="item.share_links"></share>
 
     </div>
   </section>

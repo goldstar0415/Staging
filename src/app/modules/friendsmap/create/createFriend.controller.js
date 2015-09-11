@@ -23,25 +23,25 @@
       note: vm.friend.first_name
     };
 
-    vm.SaveFriend = function(form) {
+    vm.SaveFriend = function (form) {
       var friend = angular.copy(vm.friend);
       friend.birth_date = friend.birth_date ? moment(friend.birth_date).format('YYYY-MM-DD') : null;
 
-      if(form.$valid) {
-        if(vm.edit) {
+      if (form.$valid) {
+        if (vm.edit) {
           friend.$update()
-            .then(function() {
+            .then(function () {
               $state.go('friendsmap');
             })
-            .catch(function() {
+            .catch(function () {
               toastr.error('Invalid input');
             });
         } else {
           friend.$save()
-            .then(function() {
+            .then(function () {
               $state.go('friendsmap');
             })
-            .catch(function() {
+            .catch(function () {
               toastr.error('Invalid input');
             })
         }
@@ -51,11 +51,11 @@
     };
 
     var map = MapService.GetMap();
-    map.on('click', function(e) {
+    map.on('click', function (e) {
       onMapClick(e);
     });
     function onMapClick(event) {
-      MapService.GetAddressByLatlng(event.latlng, function(data) {
+      MapService.GetAddressByLatlng(event.latlng, function (data) {
         vm.friend.location = event.latlng;
         vm.friend.address = data.display_name;
       });

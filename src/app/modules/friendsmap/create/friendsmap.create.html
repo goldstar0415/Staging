@@ -10,9 +10,11 @@
         <label>First name</label>
       </div>
       <div class="col-xs-9 no-pad">
-        <input placeholder="Start typing..." name="first_name" type="text" ng-model="CreateFriend.friend.first_name" ng-minlength="2" required>
+        <input placeholder="Start typing..." name="first_name" type="text" ng-model="CreateFriend.friend.first_name"
+               ng-minlength="2" required>
 
-        <div ng-messages="form.first_name.$error" ng-if="form.$submitted || form.first_name.$touched" class="error-message-inline">
+        <div ng-messages="form.first_name.$error" ng-if="form.$submitted || form.first_name.$touched"
+             class="error-message-inline">
           <div ng-message="required">is required</div>
           <div ng-message="minlength">too short</div>
         </div>
@@ -24,9 +26,11 @@
         <label>Last name</label>
       </div>
       <div class="col-xs-9 no-pad">
-        <input placeholder="Start typing..." name="last_name" type="text" ng-model="CreateFriend.friend.last_name" ng-minlength="2" required>
+        <input placeholder="Start typing..." name="last_name" type="text" ng-model="CreateFriend.friend.last_name"
+               ng-minlength="2" required>
 
-        <div ng-messages="form.last_name.$error" ng-if="form.$submitted || form.last_name.$touched" class="error-message-inline">
+        <div ng-messages="form.last_name.$error" ng-if="form.$submitted || form.last_name.$touched"
+             class="error-message-inline">
           <div ng-message="required">is required</div>
           <div ng-message="minlength">too short</div>
         </div>
@@ -38,7 +42,8 @@
         <label>Birthday </label>
       </div>
       <div class="col-xs-9 no-pad">
-        <input ng-datepicker  name="birthday" ng-model="CreateFriend.friend.birth_date" end-date="CreateFriend.endDate" type="text">
+        <input ng-datepicker name="birthday" ng-model="CreateFriend.friend.birth_date" end-date="CreateFriend.endDate"
+               type="text">
       </div>
     </div>
 
@@ -65,7 +70,9 @@
         <label>Location</label>
       </div>
       <div class="col-xs-9 no-pad">
-        <location address="CreateFriend.friend.address" custom-classes="location-friend " add-class-onchange="true" input-placeholder="Enter addres or click & drag icon on map..." location="CreateFriend.friend.location" limit="15" bind-marker="true"></location>
+        <location address="CreateFriend.friend.address" custom-classes="location-friend " add-class-onchange="true"
+                  input-placeholder="Enter addres or click & drag icon on map..."
+                  location="CreateFriend.friend.location" limit="15" bind-marker="true"></location>
       </div>
     </div>
 

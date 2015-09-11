@@ -25,7 +25,7 @@
       vm.images = UploaderService.images.files;
 
       $scope.$watch('Uploader.images', function (val) {
-        if(val) {
+        if (val) {
           UploaderService.images.files = val;
         }
       });

@@ -9,8 +9,8 @@
         restrict: 'A',
         link: function (scope, elem, attrs, ctrl) {
           var LINK_REGEXP = /^(http[s]?\:\/\/)?([\w\_\-]+\.)?([\w\_\-]+)\.([a-zA-Z]{2,7})(\/.+)?$/i;
-          if(ctrl) {
-            ctrl.$validators.link = function(modelValue) {
+          if (ctrl) {
+            ctrl.$validators.link = function (modelValue) {
               return ctrl.$isEmpty(modelValue) || LINK_REGEXP.test(modelValue);
             };
           }
@@ -23,8 +23,8 @@
         restrict: 'A',
         link: function (scope, elem, attrs, ctrl) {
           var LINK_REGEXP = /^((http(s)?:\/\/)?)(www\.)?((youtube\.com\/((watch\?v=)[\S]+))|(youtu.be\/([\S]+)))$/i;
-          if(ctrl) {
-            ctrl.$validators.link = function(modelValue) {
+          if (ctrl) {
+            ctrl.$validators.link = function (modelValue) {
               return ctrl.$isEmpty(modelValue) || LINK_REGEXP.test(modelValue);
             };
           }

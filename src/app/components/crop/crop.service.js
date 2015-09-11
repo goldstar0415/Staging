@@ -17,9 +17,15 @@
         modalContentClass: 'clearfix',
         backdrop: 'static',
         resolve: {
-          image: function() { return image },
-          width: function() { return outputWidth },
-          height: function() { return outputHeight }
+          image: function () {
+            return image
+          },
+          width: function () {
+            return outputWidth
+          },
+          height: function () {
+            return outputHeight
+          }
         }
       });
 
@@ -42,7 +48,7 @@
     vm.image = '';
     vm.resultImage = '';
 
-    if(typeof image == 'string') {
+    if (typeof image == 'string') {
       vm.image = image;
     } else {
       var reader = new FileReader();
@@ -53,11 +59,11 @@
     }
 
 
-    vm.save = function() {
+    vm.save = function () {
       $modalInstance.close(vm.resultImage);
     };
 
-    vm.cancel = function() {
+    vm.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
   }

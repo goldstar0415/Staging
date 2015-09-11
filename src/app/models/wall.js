@@ -9,7 +9,7 @@
   function Wall($resource, API_URL) {
     return $resource(API_URL + '/wall/:id', {id: '@id'}, {
       query: {
-        isArray:false,
+        isArray: false,
         ignoreLoadingBar: true,
         params: {
           page: 1,

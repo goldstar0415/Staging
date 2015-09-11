@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -27,7 +27,7 @@
 
       vm.signOut = function () {
         User.logOut(function () {
-          snapRemote.getSnapper().then(function(snapper) {
+          snapRemote.getSnapper().then(function (snapper) {
             snapper.close();
           });
           UserService.logOut();

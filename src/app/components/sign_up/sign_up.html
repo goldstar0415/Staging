@@ -3,7 +3,7 @@
 <script type="text/ng-template" id="SignUpModal.html">
   <div class="modal-header">
     <button type="button" class="close" ng-click="modal.close()">&times;</button>
-    <h4 class="modal-title" >Registration</h4>
+    <h4 class="modal-title">Registration</h4>
   </div>
   <div class="modal-body">
     <form ng-submit="modal.signUpUser(form)" name="form" novalidate>
@@ -11,7 +11,8 @@
       <input type="text" name="first_name" placeholder="First name..." ng-model="modal.first_name" class="white"
              required/>
 
-      <div ng-messages="form.first_name.$error" ng-if="form.$submitted || form.first_name.$touched" class="error-message">
+      <div ng-messages="form.first_name.$error" ng-if="form.$submitted || form.first_name.$touched"
+           class="error-message">
         <div ng-message="required">is required</div>
       </div>
 
@@ -37,7 +38,7 @@
                ng-model="modal.password"
                minlength="6"
                required/>
-        <a  class="eye" eye-password></a>
+        <a class="eye" eye-password></a>
 
         <div ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched" class="error-message">
           <div ng-messages-include="error-password-messages"></div>
@@ -53,7 +54,7 @@
                ng-match="modal.password"
                minlength="6"
                required/>
-        <a  class="eye" eye-password></a>
+        <a class="eye" eye-password></a>
 
         <div ng-messages="form.password_confirmation.$error"
              ng-if="form.$submitted || form.password_confirmation.$touched" class="error-message">

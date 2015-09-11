@@ -10,7 +10,7 @@
     return $resource(API_URL + '/friends', {id: '@id'}, {
       update: {
         url: API_URL + '/friends/:id',
-        transformRequest: function(data, headers) {
+        transformRequest: function (data, headers) {
           var params = {
             first_name: data.first_name,
             last_name: data.last_name,
