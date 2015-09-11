@@ -68,8 +68,8 @@ class SpotsImport extends Job implements SelfHandling
             ];
 
             if ($this->type === self::EVENT) {
-                $rules['start_date'] = 'required|date_format:Y-m-d H:i:s';
-                $rules['end_date'] = 'required|date_format:Y-m-d H:i:s';
+                $rules['start_date'] = 'required|date_format:Y-m-d';
+                $rules['end_date'] = 'required|date_format:Y-m-d';
             }
 
             if ($row->image_links) {
