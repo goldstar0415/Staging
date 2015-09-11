@@ -14,7 +14,10 @@
   </div>
   <div class="text-block">
     <h3 class="feeds-title">
-      <span class="col-xs-8 wrap-name"><a>{{item.first_name + " " + item.last_name}}</a></span>
+      <span class="col-xs-8 wrap-name">
+        <a ng-if="item.friend_id" ui-sref="profile.main({user_id: item.friend_id})">{{item.first_name + " " + item.last_name}}</a>
+        <span ng-if="!item.friend_id">{{item.first_name + " " + item.last_name}}</span>
+      </span>
 
       <div class="col-xs-4 location-btn" ng-if="item.showSwitch">
         <a class="custom-location" ng-class="{'active': item.showCustom}"

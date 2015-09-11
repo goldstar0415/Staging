@@ -55,8 +55,9 @@
         <div infinite-scroll="Blog.pagination.nextPage()" infinite-scroll-disabled="Blog.pagination.busy"
              class="clearfix" infinite-scroll-distance="1">
           <div class="article" ng-repeat="post in Blog.posts.data">
-            <img ng-src="{{post.cover_url.original}}" class="article-img">
-
+            <div class="image-wrapper">
+              <img ng-src="{{post.cover_url.original}}" class="article-img">
+            </div>
             <h2 class="title-blog">
               <a ui-sref="blog.article({slug: post.slug})">{{post.title}}</a>
             </h2>
@@ -80,7 +81,7 @@
               <p class="col-xs-12 col-sm-3 views">Views: {{post.count_views}}</p>
             </div>
 
-            <p class="article-description" >{{post.body | limitTo: 500}}</p>
+            <p class="article-description" ng-bind-html="post.body"></p>
 
             <div class="col-xs-12">
               <share links="post.share_links"></share>

@@ -59,6 +59,18 @@
         mapState: 'big'
       })
 
+      .state('index.post', {
+        url: '/map/post/:slug',
+        controller: 'MapPostController',
+        resolve: {
+          post: function (Post, $stateParams) {
+            return Post.get({id: $stateParams.slug}).$promise;
+          }
+        },
+        parent: 'main',
+        mapState: 'big'
+      })
+
       //Blog page
       .state('blog', {
         url: '/blog',

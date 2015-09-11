@@ -58,6 +58,10 @@
         };
       });
       MapService.drawSpotMarkers(spotsArray, 'other', true);
+      if (spots.length > 0) {
+        MapService.FocusMapToGivenLocation(spots[0].points[0].location, 16);
+      }
+
 
       return spotsArray;
     }

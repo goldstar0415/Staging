@@ -12,11 +12,14 @@
       var draggableMarkerLayer = L.featureGroup();
       var drawLayerGeoJSON;
       var controlGroup = L.featureGroup();
+      var clusterOptions = {
+        disableClusteringAtZoom: 8
+      };
       //============================================
-      var eventsLayer = new L.MarkerClusterGroup();
-      var pitstopsLayer = new L.MarkerClusterGroup();
-      var recreationsLayer = new L.MarkerClusterGroup();
-      var otherLayer = new L.MarkerClusterGroup();
+      var eventsLayer = new L.MarkerClusterGroup(clusterOptions);
+      var pitstopsLayer = new L.MarkerClusterGroup(clusterOptions);
+      var recreationsLayer = new L.MarkerClusterGroup(clusterOptions);
+      var otherLayer = new L.MarkerClusterGroup(clusterOptions);
       //===============================================
       var currentLayer = "";
 
@@ -58,11 +61,11 @@
           L.DomEvent.preventDefault(e);
           LassoSelection(function LassoCallback(points, b_box) {
             var poly = L.polygon(points, {
-              weight: 2,
-              color: 'green',
-              opacity: 0.2,
-              fillColor: 'green',
-              fillOpacity: 0.1
+              weight: 3,
+              color: '#00CFFF',
+              opacity: 0.9,
+              fillColor: '#0C2638',
+              fillOpacity: 0.4
             }).addTo(drawLayer);
 
             var popup = RemoveMarkerPopup(
@@ -118,11 +121,11 @@
             snapRemote.enable();
 
             var circle = L.circle(startPoing, radius, {
-              weight: 2,
-              color: 'green',
-              opacity: 0.2,
-              fillColor: 'green',
-              fillOpacity: 0.1
+              weight: 3,
+              color: '#00CFFF',
+              opacity: 0.9,
+              fillColor: '#0C2638',
+              fillOpacity: 0.4
             });
 
             var popup = RemoveMarkerPopup(
@@ -863,11 +866,11 @@
                 var radius = feature.properties.radius;
 
                 var circle = L.circle(startPoint, radius, {
-                  weight: 2,
-                  color: 'green',
-                  opacity: 0.2,
-                  fillColor: 'green',
-                  fillOpacity: 0.1
+                  weight: 3,
+                  color: '#00CFFF',
+                  opacity: 0.9,
+                  fillColor: '#0C2638',
+                  fillOpacity: 0.4
                 });
 
                 var popup = RemoveMarkerPopup(
@@ -889,11 +892,11 @@
                   var points = L.GeoJSON.coordsToLatLngs(coords);
 
                   var poly = L.polygon(points, {
-                    weight: 2,
-                    color: 'green',
-                    opacity: 0.2,
-                    fillColor: 'green',
-                    fillOpacity: 0.1
+                    weight: 3,
+                    color: '#00CFFF',
+                    opacity: 0.9,
+                    fillColor: '#0C2638',
+                    fillOpacity: 0.4
                   }).addTo(drawLayer);
 
                   var popup = RemoveMarkerPopup(
@@ -1165,11 +1168,13 @@
 
       function FocusMapToCurrentLocation(zoom) {
         var zoomLevel = zoom || 8;
-        map.locate({setView: true, maxZoom: zoomLevel});
+        map.locate({setView: false, maxZoom: zoomLevel});
       }
 
       function FocusMapToGivenLocation(location, zoom) {
-        map.setView(location, zoom);
+        if (location.lat && location.lng) {
+          map.panTo(new L.LatLng(location.lat, location.lng));
+        }
       }
 
       function FitBoundsOfCurrentLayer() {
@@ -1386,13 +1391,14 @@
       }
 
       function drawBlogMarkers(posts, clear) {
+        console.log(posts);
         if (clear) {
           GetCurrentLayer().clearLayers();
         }
 
         var markers = [];
         _.each(posts, function (item) {
-          var icon = CreateCustomIcon(item.cover_url.thumb, 'custom-map-icons', [50, 50]);
+          //var icon = CreateCustomIcon(item.cover_url.thumb, 'custom-map-icons', [50, 50]);
           if (item.location) {
             var marker = L.marker(item.location);
             item.marker = marker;

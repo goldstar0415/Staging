@@ -667,12 +667,22 @@ sign-in, sign-up {
     }
   }
 }
-.crop-modal {
-  height: 36rem !important;
-  overflow: hidden !important;
+
+.crop-modal.modalFix .modal-dialog {
+    height: 40rem !important;
+    overflow: auto !important;
 }
+
 /*end modal dialog*/
 
+.color-link {
+  a {
+    color: $blue;
+    &:active, &:focus, &:hover {
+      color: $navy_blue;
+    }
+  }
+}
 /*responsive*/
 
 @media (max-width: 992px) {

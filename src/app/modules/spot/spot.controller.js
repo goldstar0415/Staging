@@ -6,7 +6,7 @@
     .controller('SpotController', SpotController);
 
   /** @ngInject */
-  function SpotController(spot, SpotService, ScrollService, SpotComment, $state, MapService, $rootScope) {
+  function SpotController(spot, SpotService, ScrollService, SpotComment, $state, MapService, $rootScope, dialogs) {
     var vm = this;
     vm.spot = SpotService.formatSpot(spot);
     $rootScope.currentSpot = vm.spot;
@@ -14,15 +14,10 @@
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
     vm.removeFromFavorite = SpotService.removeFromFavorite;
-    vm.removeSpot = function (spot, idx) {
-      SpotService.removeSpot(spot, idx, function () {
-        $state.go('spots', {user_id: $rootScope.currentUser.id});
-      });
-    };
-
-    ShowMarkers([vm.spot]);
+    vm.removeSpot = removeSpot;
 
     vm.postComment = postComment;
+    vm.deleteComment = deleteComment;
 
     vm.comments = {};
     var params = {
@@ -32,6 +27,13 @@
     };
     vm.pagination = new ScrollService(SpotComment.query, vm.comments, params);
 
+    ShowMarkers([vm.spot]);
+
+    function removeSpot(spot, idx) {
+      SpotService.removeSpot(spot, idx, function () {
+        $state.go('spots', {user_id: $rootScope.currentUser.id});
+      });
+    }
 
     function postComment() {
       SpotComment.save({spot_id: spot.id},
@@ -65,6 +67,16 @@
         };
       });
       MapService.drawSpotMarkers(spotsArray, 'other', true);
+      MapService.FocusMapToGivenLocation(spots[0].points[0].location, 16);
+    }
+
+    function deleteComment(comment, idx) {
+      dialogs.confirm('Confirmation', 'Are you sure you want to delete comment?').result.then(function () {
+        SpotComment.delete({spot_id: spot.id, id: comment.id}, function () {
+          toastr.info('Comment successfully deleted');
+          vm.comments.data.splice(idx, 1);
+        });
+      });
     }
   }
 })();

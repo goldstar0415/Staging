@@ -18,4 +18,4 @@
        type="text"
        class="{{customClasses}}"
        ng-class="className">
-<a ng-click="SetCurrentLocation();" class="compass compass-location" title="Find out the location"></a>
+<a ng-if="showUserLocation" ng-click="SetCurrentLocation();" class="compass compass-location" title="Find out the location"></a>
