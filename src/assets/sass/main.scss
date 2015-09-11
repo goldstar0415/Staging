@@ -667,10 +667,12 @@ sign-in, sign-up {
     }
   }
 }
-.crop-modal .modal-dialog{
-  height: 36rem;
-  overflow: auto;
+
+.crop-modal.modalFix .modal-dialog {
+    height: 40rem !important;
+    overflow: auto !important;
 }
+
 /*end modal dialog*/
 
 /*responsive*/
