@@ -103,17 +103,29 @@
     }
   }
 }
+
 .send-message {
   word-wrap: break-word;
 }
+
 .spot-mobile-modal {
   .modal-content {
     width: 100%;
     display: inline-table;
-    .popup {
+    .modal-body {
+      display: inline-block;
       width: 100%;
-      max-width: 100%;
-      display: table;
+      padding: 0;
+      .tabs {
+        padding: 0;
+        margin: 0;
+        background-color: $dark_blue;
+        li {
+          display: inline-block;
+          width: 33%;
+          text-align: center;
+        }
+      }
     }
   }
 }
