@@ -51,7 +51,9 @@ class SpotsImport extends Job implements SelfHandling
     public function handle()
     {
         $this->importFile->each(function ($row) {
-            $row->put('image_links', explode(',', $row->image_links));
+            if ($row->image_links) {
+                $row->put('image_links', explode(',', $row->image_links));
+            }
             /**
              * @var \Illuminate\Validation\Validator $validator
              */
@@ -59,19 +61,21 @@ class SpotsImport extends Job implements SelfHandling
                 'title' => 'required|string|max:255',
                 'description' => 'string|max:5000',
                 'website' => 'url',
-                'latitude' => 'numeric',
-                'longtitude' => 'numeric',
-                'address' => 'string|max:255',
+                'latitude' => 'required|numeric',
+                'longtitude' => 'required|numeric',
+                'address' => 'required|string|max:255',
                 'rating' => 'numeric'
             ];
 
             if ($this->type === self::EVENT) {
-                $rules['start_date'] = 'date_format:Y-m-d H:i:s';
-                $rules['end_date'] = 'date_format:Y-m-d H:i:s';
+                $rules['start_date'] = 'required|date_format:Y-m-d H:i:s';
+                $rules['end_date'] = 'required|date_format:Y-m-d H:i:s';
             }
 
-            for ($i = 0; $i < count($row->image_links); ++$i) {
-                $rules['image_links.' . $i] = 'url';
+            if ($row->image_links) {
+                for ($i = 0; $i < count($row->image_links); ++$i) {
+                    $rules['image_links.' . $i] = 'url';
+                }
             }
 
             $validator = Validator::make($row->all(), $rules);
@@ -80,34 +84,44 @@ class SpotsImport extends Job implements SelfHandling
                 /**
                  * @var User $admin
                  */
-                $row->put('image_links', array_values(array_filter($row->image_links, function ($value) {
-                    return !Validator::make(['photo' => $value], ['photo' => 'remote_image'])->fails();
-                })));
+                if ($row->image_links) {
+                    $row->put('image_links', array_values(array_filter($row->image_links, function ($value) {
+                        return !Validator::make(['photo' => $value], ['photo' => 'remote_image'])->fails();
+                    })));
+                }
                 $admin = User::where('email', $this->data['admin'])->first();
                 $spot = new Spot;
                 $spot->category()->associate(SpotTypeCategory::where('name', $this->data['spot_category'])->first());
-                $spot->cover = $row->image_links[0];
+                if ($row->image_links[0]) {
+                    $spot->cover = $row->image_links[0];
+                }
                 $spot->title = $row->title;
-                $spot->description = $row->description;
-                $spot->web_sites = [$row->website];
-
+                if (!empty($row->description)) {
+                    $spot->description = $row->description;
+                }
+                if (!empty($row->website)) {
+                    $spot->web_sites = [$row->website];
+                }
                 if ($this->type === self::EVENT) {
                     $spot->start_date = $row->start_date;
                     $spot->end_date = $row->end_date;
                 }
-
                 if ($this->type === self::RECREATION or $this->type === self::PITSTOP) {
                     $spot->is_approved = true;
                 }
 
                 $admin->spots()->save($spot);
-                $vote = new SpotVote(['vote' => $row->rating]);
-                $vote->user()->associate($admin);
-                $spot->votes()->save($vote);
-                foreach ($row->image_links as $photo) {
-                    $spot->photos()->create([
-                        'photo' => $photo
-                    ]);
+                if ($row->rating) {
+                    $vote = new SpotVote(['vote' => $row->rating]);
+                    $vote->user()->associate($admin);
+                    $spot->votes()->save($vote);
+                }
+                if ($row->image_links) {
+                    foreach ($row->image_links as $photo) {
+                        $spot->photos()->create([
+                            'photo' => $photo
+                        ]);
+                    }
                 }
                 $spot->locations = [
                     [
