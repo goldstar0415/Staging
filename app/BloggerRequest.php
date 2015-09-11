@@ -22,4 +22,9 @@ class BloggerRequest extends BaseModel
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getUserAvatarAttribute()
+    {
+        return $this->user->avatar->url('medium');
+    }
 }

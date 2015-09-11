@@ -6,8 +6,14 @@ return [
     'model' => \App\BloggerRequest::class,
 
     'columns' => [
-        'id' => [
-            'title' => 'ID'
+        'user_name' => [
+            'title' => "User Name",
+            'relationship' => 'user', //this is the name of the Eloquent relationship method!
+            'select' => "CONCAT((:table).first_name, ' ', (:table).last_name)",
+        ],
+        'user_avatar' => [
+            'title' => 'Avatar',
+            'output' => '<img src="(:value)" height="100" width="100" />'
         ],
         'status' => [
             'title' => 'Status'
