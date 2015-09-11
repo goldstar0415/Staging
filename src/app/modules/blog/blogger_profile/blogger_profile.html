@@ -15,7 +15,7 @@
     </h2>
 
     <div class="location-link col-xs-12">
-      <a>{{post.address}}</a>
+      <a ui-sref="index.post({slug: post.slug})">{{post.address}}</a>
     </div>
     <div class="article-info col-xs-12">
       <p class="date col-xs-12 col-sm-3">{{post.created_at | toTimezone:'MM.DD.YYYY'}}</p>
