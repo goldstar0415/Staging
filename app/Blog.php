@@ -21,7 +21,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property string $body
  * @property string $address
  * @property Point $location
- * @property string $url
+ * @property string $slug
  * @property integer $count_views
  *
  * Relation properties

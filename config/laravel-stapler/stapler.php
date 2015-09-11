@@ -60,7 +60,7 @@ return [
     |
     */
 
-    'default_url' => '/uploads/missings/:attachment/:style/missing.png',
+    'default_url' => env('APP_URL') . '/uploads/missings/:attachment/:style/missing.png',
 
     /*
     |--------------------------------------------------------------------------
