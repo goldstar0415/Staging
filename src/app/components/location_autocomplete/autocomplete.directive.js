@@ -47,6 +47,20 @@
           s.viewAddress = s.address;
         });
 
+        MapService.GetMap().on('click', onMapClick);
+
+
+        function onMapClick(event) {
+          console.log('map click');
+          s.location = event.latlng;
+
+          //MapService.GetAddressByLatlng(event.latlng, function (data) {
+          //  s.location = data.latlng;
+          //  s.address = data.address;
+          //  s.viewAddress = data.address;
+          //});
+        }
+
 
         function moveOrCreateMarker(latlng) {
           if (bindMarker) {
