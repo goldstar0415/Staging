@@ -88,7 +88,7 @@ return [
 
     'styles' => [
         'medium' => '160x160',
-        'thumb' => '60x60'
+        'thumb' => '70x70'
     ],
 
     /*
