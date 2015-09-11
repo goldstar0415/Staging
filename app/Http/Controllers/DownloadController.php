@@ -17,9 +17,9 @@ class DownloadController extends Controller
     public function index(Request $request)
     {
         $link = $request->get('link');
-        if (!ctype_alnum($link)) {
-            abort(403, 'Forbidden');
-        }
+//        if (!ctype_alnum($link)) {
+//            abort(403, 'Forbidden');
+//        }
         $path = storage_path('app/upload/') . $link;
         return response()->download($path);
     }
