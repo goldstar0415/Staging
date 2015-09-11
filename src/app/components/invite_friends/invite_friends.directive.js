@@ -23,6 +23,7 @@
     function InviteFriendsController($modal, $rootScope, SignUpService) {
       var vm = this;
       vm.type = vm.type || 'spot';
+      console.log(vm.type);
 
       vm.openModal = function () {
         if (!$rootScope.currentUser) {
