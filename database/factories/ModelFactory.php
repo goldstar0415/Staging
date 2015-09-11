@@ -163,7 +163,7 @@ $factory->defineAs(App\SpotType::class, 'pitstop', function (Generator $faker) {
 $factory->define(App\SpotTypeCategory::class, function (Generator $faker) {
     $name = $faker->unique()->word;
     return [
-        'icon' => $faker->image(storage_path('app'), 60, 60),
+        'icon' => $faker->image(storage_path('app'), 70, 70),
         'name' => $name,
         'display_name' => ucfirst($name)
     ];
@@ -187,7 +187,7 @@ $factory->define(App\Activity::class, function (Generator $faker) use ($timestam
 $factory->define(App\ActivityCategory::class, function (Generator $faker) {
     $name = $faker->unique()->word;
     return [
-        'icon' => $faker->image(storage_path('app'), 60, 60),
+        'icon' => $faker->image(storage_path('app'), 70, 70),
         'name' => $name,
         'display_name' => ucfirst($name)
     ];
