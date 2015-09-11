@@ -1165,11 +1165,11 @@
 
       function FocusMapToCurrentLocation(zoom) {
         var zoomLevel = zoom || 8;
-        map.locate({setView: true, maxZoom: zoomLevel});
+        map.locate({setView: false, maxZoom: zoomLevel});
       }
 
       function FocusMapToGivenLocation(location, zoom) {
-        map.setView(location, zoom);
+        map.panTo(new L.LatLng(location.lat, location.lng));
       }
 
       function FitBoundsOfCurrentLayer() {
@@ -1386,13 +1386,14 @@
       }
 
       function drawBlogMarkers(posts, clear) {
+        console.log(posts);
         if (clear) {
           GetCurrentLayer().clearLayers();
         }
 
         var markers = [];
         _.each(posts, function (item) {
-          var icon = CreateCustomIcon(item.cover_url.thumb, 'custom-map-icons', [50, 50]);
+          //var icon = CreateCustomIcon(item.cover_url.thumb, 'custom-map-icons', [50, 50]);
           if (item.location) {
             var marker = L.marker(item.location);
             item.marker = marker;

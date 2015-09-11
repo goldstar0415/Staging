@@ -13,9 +13,9 @@
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.send = send;
-    var displayPlans = _.union(plan.activities, plan.spots);
+    formatAttachments();
 
-    console.log(displayPlans);
+    var displayPlans = _.union(plan.activities, plan.spots);
 
     var params = {
       page: 0,
@@ -23,6 +23,7 @@
       plan_id: plan.id
     };
     vm.pagination = new ScrollService(PlanComment.query, vm.comments, params);
+
 
     function send() {
       PlanComment.save({plan_id: plan.id},
@@ -72,7 +73,19 @@
       MapService.CreateMarker(location, options);
     }
 
-    InitMap();
+    function formatAttachments() {
+      _.each(vm.spots, function (spot) {
+        spot.position = spot.pivot.position;
+        spot.attachment_type = 'spot';
+      });
+      _.each(vm.activities, function (activity) {
+        activity.attachment_type = 'activity';
+      });
+      vm.plan_attachments = _.union(vm.activities, vm.spots);
+      console.log(vm.attachments);
 
+    }
+
+    InitMap();
   }
 })();

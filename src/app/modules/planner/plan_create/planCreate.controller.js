@@ -10,14 +10,15 @@
     var vm = this;
     vm = _.extend(vm, plan);
     vm.newSpots = [];
-    vm.attachments = getAttachments();
     vm.categories = categories;
 
     vm.save = save;
     vm.addActivity = addActivity;
     vm.deleteAttachment = deleteAttachment;
 
-    $scope.$watch('Plan.newSpots.length', addSpots)
+    formatPlan();
+
+    $scope.$watch('Plan.newSpots.length', addSpots);
 
     function save(form) {
       if (form.$valid) {
@@ -68,6 +69,11 @@
       return data;
     }
 
+    function _convertTime(data) {
+      data.start_time = data.start_date;
+      data.end_time = data.end_date;
+    }
+
     function addActivity() {
       vm.attachments.push({
         type: 'activity',
@@ -92,27 +98,28 @@
       vm.attachments.splice(idx, 1);
     }
 
-    function getAttachments() {
+    function formatPlan() {
       var attachments = [];
       if (vm.id) {
+        _convertTime(vm);
         _.each(vm.spots, function (spot) {
-            attachments[spot.position].push({
+            attachments[spot.pivot.position] = {
               type: 'spot',
               data: spot
-            });
+            };
           }
         );
         _.each(vm.activities, function (activity) {
-            attachments[activity.position].push({
+            _convertTime(activity);
+            attachments[activity.position] = {
               type: 'activity',
               data: activity
-            });
+            };
           }
         );
       }
 
-      console.log(attachments);
-      return [];
+      vm.attachments = attachments;
     }
 
   }
