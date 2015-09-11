@@ -171,6 +171,7 @@
             margin: 0 0 5px;
             font: 26px/30px 'Questrial';
             overflow: hidden;
+            text-overflow: ellipsis;
             a {
               white-space: nowrap;
               text-overflow: ellipsis;
