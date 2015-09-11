@@ -1174,6 +1174,10 @@
       function FocusMapToGivenLocation(location, zoom) {
         if (location.lat && location.lng) {
           map.panTo(new L.LatLng(location.lat, location.lng));
+
+          if (zoom) {
+            map.setZoom(zoom);
+          }
         }
       }
 

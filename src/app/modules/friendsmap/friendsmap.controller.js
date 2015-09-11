@@ -6,7 +6,7 @@
     .controller('FriendsmapController', FriendsmapController);
 
   /** @ngInject */
-  function FriendsmapController(friends, MapService, Friends, CropService) {
+  function FriendsmapController(friends, MapService, Friends, CropService, $state) {
     var vm = this;
     var markers = [];
     vm.friends = format(friends);
@@ -26,14 +26,21 @@
       })
     }
 
-    function createMarker(iconUrl, title, location) {
+    function createMarker(iconUrl, title, location, user_id) {
       var icon = MapService.CreateCustomIcon(iconUrl, 'custom-map-icons');
       var options = {};
 
       if (icon) options.icon = icon;
       if (title) options.title = title;
 
-      return MapService.CreateMarker(location, options);
+      var marker = MapService.CreateMarker(location, options);
+      if (user_id) {
+        marker.on('click', function () {
+          $state.go('profile.main', {user_id: user_id});
+        });
+      }
+
+      return marker;
     }
 
     function initMap() {
@@ -41,7 +48,7 @@
         var obj = friends[k];
         var title = obj.first_name + " " + obj.last_name;
         if (obj.location) {
-          var m = createMarker(obj.avatar_url.thumb, title, obj.location);
+          var m = createMarker(obj.avatar_url.thumb, title, obj.location, obj.friend_id);
           markers.push({marker: m, id: obj.id});
         }
       }

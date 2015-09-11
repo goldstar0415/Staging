@@ -12,6 +12,6 @@
 
     MapService.showOtherLayers();
     MapService.drawBlogMarkers(posts, true);
-    MapService.FocusMapToGivenLocation(posts[0].location, 16);
+    MapService.FocusMapToGivenLocation(posts[0].location);
   }
 })();
