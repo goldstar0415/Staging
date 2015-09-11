@@ -59,14 +59,12 @@
 }
 
 .article {
-  .image-wrapper {
-    width: 100%;
-  }
+
   .article-img {
     display: block;
     max-width: 100%;
     height: 400px;
-   // float: left;
+    background-size: auto;
     margin: 0 auto 20px;
     -webkit-border-radius: 5px 5px 0 0;
     -moz-border-radius: 5px 5px 0 0;
