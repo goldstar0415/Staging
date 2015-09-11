@@ -1168,7 +1168,7 @@
 
       function FocusMapToCurrentLocation(zoom) {
         var zoomLevel = zoom || 8;
-        map.locate({setView: false, maxZoom: zoomLevel});
+        map.locate({setView: true, maxZoom: zoomLevel});
       }
 
       function FocusMapToGivenLocation(location, zoom) {
