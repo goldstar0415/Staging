@@ -15,6 +15,7 @@
         address: '=',
         bindMarker: '=',
         limit: '=',
+        showUserLocation: '=',
         provider: '=',
         onEmpty: '&',
         marker: '=',
