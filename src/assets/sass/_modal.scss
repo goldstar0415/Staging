@@ -109,21 +109,208 @@
 }
 
 .spot-mobile-modal {
-  .modal-content {
+  .modal-dialog {
     width: 100%;
-    display: inline-table;
-    .modal-body {
-      display: inline-block;
-      width: 100%;
-      padding: 0;
-      .tabs {
+    margin: 0;
+    .modal-content {
+      width: 80%;
+      display: block;
+      margin: 0 auto;
+      border: none;
+      border-radius: 8px;
+      cursor: default;
+      .modal-body {
+        display: inline-block;
+        width: 100%;
         padding: 0;
-        margin: 0;
-        background-color: $dark_blue;
-        li {
-          display: inline-block;
-          width: 33%;
-          text-align: center;
+        .close {
+          position: absolute;
+          top: -30px;
+          right: 0;
+          width: 40px;
+          height: 30px;
+          opacity: 1;
+          background-color: rgba(12, 38, 56, .9);
+          border-radius: 5px 5px 0 0;
+          span {
+            padding: 0;
+          }
+        }
+        .tabs {
+          padding: 0;
+          margin: 0;
+          background-color: $dark_blue;
+          border-radius: 8px 0 0 0;
+          width: 100%;
+          display: inherit;
+          li {
+            display: block;
+            float: left;
+            width: 33.3333333%;
+            text-align: center;
+            a {
+              padding: 15px;
+              display: block;
+              font: 22px/22px 'Questrial';
+            }
+            &:nth-child(2) {
+              border: solid rgba(233, 237, 240, .4);
+              border-width: 0 1px 0;
+            }
+          }
+        }
+        .popup-main {
+          .rating-mobile {
+            display: block;
+            padding: 5px 0;
+            .glyphicon {
+              font-size: 26px;
+            }
+          }
+          h3 {
+            margin: 0 0 5px;
+            font: 26px/30px 'Questrial';
+            overflow: hidden;
+            a {
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+          .location, .date-popup {
+            margin: 0;
+            font: 500 14px/18px Arial;
+          }
+          .author-popup {
+            display: block;
+            font: 20px/20px 'Questrial';
+            padding: 10px 0;
+            color: $blue;
+            @include transition_color;
+            &:hover {
+              color: $navy_blue;
+              @include transition_color;
+            }
+          }
+          .links-nav {
+            padding: 0;
+            .tools {
+              padding: 0;
+              margin: 0;
+              width: 90%;
+            }
+            .share {
+              position: relative;
+              float: right;
+              bottom: 20px;
+            }
+          }
+        }
+        .content-popup {
+          padding: 0 0 30px;
+          .wrapper {
+            max-height: 16rem;
+            overflow: overlay;
+            padding: 0;
+            p {
+              white-space: pre-line;
+              word-break: break-all;
+            }
+            .previous-next {
+              padding: 0 0 10px;
+              a {
+                color: $blue;
+                @include transition_color;
+                &:hover {
+                  color: $navy_blue;
+                  @include transition_color;
+                }
+              }
+              .next {
+                float: right;
+              }
+            }
+            .avatar {
+              width: 70px;
+              height: 70px;
+              float: left;
+              padding: 0;
+            }
+            .content {
+              padding-left: 85px;
+              .reviews-user {
+                font: 500 18px/20px 'Questrial';
+                color: $blue;
+                @include transition_color;
+                &:hover {
+                  color: $navy_blue;
+                  @include transition_color;
+                }
+              }
+              .description {
+                margin: 0 0 5px;
+              }
+              .date-reviews {
+                font-family: Arial;
+              }
+            }
+            .photos-popup {
+              padding: 0;
+              a {
+                width: 33%;
+                height: 80px;
+                display: block;
+                float: left;
+                overflow: hidden;
+                margin-right: 10px;
+                border: 1px solid $light_grey;
+                img {
+                  min-width: 100%;
+                  min-height: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .spot-mobile-modal {
+    .modal-dialog {
+      .modal-content {
+        width: 95%;
+        .modal-body {
+          .tabs {
+            li {
+              a {
+                padding: 10px 8px;
+                font: 16px/22px 'Questrial';
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .spot-mobile-modal {
+    .modal-dialog {
+      .modal-content {
+        .modal-body {
+          .content-popup {
+            .wrapper {
+              .content {
+                padding-left: 0;
+                width: 100%;
+                display: inline-block;
+                margin-top: 10px;
+              }
+            }
+          }
         }
       }
     }
