@@ -28,6 +28,7 @@
       vm.categories[item.name] = item.categories;
     });
 
+    console.log(vm.categories);
 
     //vars
     vm.tags = [];
@@ -135,8 +136,8 @@
           request.deleted_files = vm.deletedImages;
         }
         if (vm.type === 'event') {
-          request.start_date = moment(vm.start_date + ' ' + vm.start_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.time).format(DATE_FORMAT.backend);
-          request.end_date = moment(vm.end_date + ' ' + vm.end_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.time).format(DATE_FORMAT.backend);
+          request.start_date = moment(vm.start_date + ' ' + vm.start_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.datepicker.time).format(DATE_FORMAT.backend);
+          request.end_date = moment(vm.end_date + ' ' + vm.end_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.datepicker.time).format(DATE_FORMAT.backend);
         }
         var url = API_URL + '/spots';
         var req = {};
