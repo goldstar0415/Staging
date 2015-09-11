@@ -457,6 +457,13 @@
     margin: 20px 0 30px;
     width: 100%;
   }
+  .results {
+    .event-result {
+      .tools {
+        padding: 0;
+      }
+    }
+  }
 }
 
 //.weatherImg {

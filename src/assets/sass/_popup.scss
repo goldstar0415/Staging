@@ -153,6 +153,21 @@
           background: url(/assets/img/icons/share.png) -12px 0 no-repeat;
         }
       }
+      .share-wrap {
+        bottom: -30px;
+        right: -15px;
+        border: 1px solid $light_grey;
+        .share-buttons {
+          padding: 4px 4px 2px;
+          li {
+            margin: 2px 5px;
+            a {
+              margin-right: 0;
+              height: 16px;
+            }
+          }
+        }
+      }
     }
     .title {
       margin: 0;
@@ -207,7 +222,7 @@
       height: 85px;
       .description {
         padding: 6px 5px 10px;
-        height: 80px;
+        height: 9rem;
         font-size: 12px;
         font-weight: 500;
         line-height: 14px;
