@@ -53,7 +53,7 @@ class BlogController extends Controller
             $blog->slug = $request->input('slug');
         } else {
             $slug = str_slug($blog->title);
-            $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|unique:blogs']);
+            $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|max:255|unique:blogs']);
             if ($validator->fails()) {
                 abort(422, $validator->messages()->get('slug')[0]);
             }
