@@ -43,14 +43,12 @@ class SocialAuthController extends Controller
             if (!$user) {
                 abort(400);
             }
-
-            $exist_user = User::where('email', $user->getEmail())->first();
+            $exist_user = $social->users()->wherePivot('token', $user->token)->first();
 
             if ($exist_user) {
                 $this->auth->login($exist_user);
 
                 if ($this->auth->user()->socials()->where('name', $social)->first() === null) {
-                    $social = Social::where('name', $social)->first();
                     $this->auth->user()->socials()->attach($social, ['token' => $user->token]);
                 }
 
@@ -66,7 +64,6 @@ class SocialAuthController extends Controller
                         'random_hash' => str_random()
                     ]
                 );
-                $social = Social::where('name', $social)->first();
                 $new_user->socials()->attach($social, ['token' => $user->token]);
                 $this->auth->login($new_user);
 
@@ -75,6 +72,18 @@ class SocialAuthController extends Controller
         } else {
             return $provider->redirect();
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param \App\Social $social
+     * @return array
+     */
+    public function deleteAccount(Request $request, $social)
+    {
+        $request->user()->socials()->detach($social->id);
+
+        return ['message' => true];
     }
 
     /**
