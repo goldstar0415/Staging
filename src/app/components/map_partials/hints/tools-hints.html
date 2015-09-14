@@ -5,7 +5,9 @@
 
 <div class="tools-wrap" ng-if="showHintPopup && mapState == 'full-size' && !hideHints">
   <div class="tools-hint-block">
-    <a ng-click="close()" class="hide" title="Close"></a>
+    <button ng-click="close()" type="button" class="close ">
+      <span aria-hidden="true" class="no-pad-right">&times;</span>
+    </button>
 
     <h2><span>Hi Zoomer!</span>Looking for awesome place to go?</h2>
 
