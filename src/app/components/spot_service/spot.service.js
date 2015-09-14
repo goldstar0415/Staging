@@ -76,10 +76,12 @@
       var offset = moment().utcOffset();
 
       spot.type = spot.category.type.display_name;
-      spot.start_time = moment(spot.start_date).format('hh:mm a');
-      spot.end_time = moment(spot.end_date).format('hh:mm a');
-      spot.start_date = moment(spot.start_date).format('YYYY-MM-DD');
-      spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
+      if (spot.start_date && spot.end_date) {
+        spot.start_time = moment(spot.start_date).format('hh:mm a');
+        spot.end_time = moment(spot.end_date).format('hh:mm a');
+        spot.start_date = moment(spot.start_date).format('YYYY-MM-DD');
+        spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
+      }
 
       return spot;
     }

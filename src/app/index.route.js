@@ -303,7 +303,6 @@
           }
         },
         parent: 'profile',
-        locate: 'none',
         mapState: 'small'
       })
 

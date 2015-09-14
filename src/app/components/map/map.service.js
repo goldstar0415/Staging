@@ -5,6 +5,7 @@
     .module('zoomtivity')
     .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $modal, toastr, Area, SignUpService) {
       var map = null;
+      var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
       var radiusSelectionLimit = 500000; //in meters
       var markersLayer = L.featureGroup();
@@ -356,8 +357,11 @@
         map.addLayer(markersLayer);
         ChangeState('big');
 
+
+        map.setView(DEFAULT_MAP_LOCATION, 3);
+        FocusMapToCurrentLocation(8);
+
         window.map = map;
-        map.locate({setView: true, maxZoom: 8});
         return map;
       }
 
@@ -1176,12 +1180,15 @@
           callback(e);
         });
 
-        map.locate({setView: false});
+        //map.locate({setView: false});
       }
 
       function FocusMapToCurrentLocation(zoom) {
-        var zoomLevel = zoom || 8;
-        map.locate({setView: true, maxZoom: zoomLevel});
+        zoom = zoom || 8;
+        map.locate({setView: true, watch: true})/* This will return map so you can do chaining */
+          .on('locationfound', function (e) {
+            FocusMapToGivenLocation({lat: e.latitude, lng: e.longitude}, 8)
+          })
       }
 
       function FocusMapToGivenLocation(location, zoom) {
