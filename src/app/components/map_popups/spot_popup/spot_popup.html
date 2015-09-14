@@ -50,17 +50,12 @@
           <img ng-src="{{currentReview.sender.avatar_url.thumb}}">
         </div>
         <div class="col-xs-10 content">
-          <a class="reviews-user">{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}</a>
+         <h4 class=""><a class="reviews-user">{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}</a></h4>
 
           <p class="description" ng-bind-html="currentReview.body | linky:'_blank'"></p>
 
           <p class="date-reviews ">{{currentReview.created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>
 
-          <div class="plus-minus">
-            <a class="plus"></a>
-            <norb>0</norb>
-            <a class="minus"></a>
-          </div>
         </div>
 
       </div>
