@@ -55,7 +55,7 @@
         <div infinite-scroll="Blog.pagination.nextPage()" infinite-scroll-disabled="Blog.pagination.busy"
              class="clearfix" infinite-scroll-distance="1">
           <div class="article" ng-repeat="post in Blog.posts.data">
-            <div class="image-wrapper">
+            <div class="image-wrapper clearfix">
               <img ng-src="{{post.cover_url.original}}" class="article-img">
             </div>
             <h2 class="title-blog">
