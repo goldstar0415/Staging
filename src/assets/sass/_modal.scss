@@ -317,3 +317,13 @@
     }
   }
 }
+
+@media (min-device-width: 240px) and (max-device-width: 767px) and (orientation: landscape) {
+  .spot-mobile-modal {
+    .modal-dialog {
+      .modal-content {
+        margin: 15% auto;
+      }
+    }
+  }
+}
