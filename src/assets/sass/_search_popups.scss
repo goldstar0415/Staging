@@ -226,20 +226,23 @@
   z-index: 101;
   background: #fff;
   width: 450px;
-  .close-popup {
-    height: 50px;
-    width: 100%;
-    color: #fff;
-    background-color: $navy_blue;
-    font: 500 20px/20px 'Questrial';
-    padding: 12px 15px;
+  .hide-wrap {
+    position: fixed;
     bottom: 0;
-    top: 0;
-    text-align: center;
-    position: absolute;
-    @include transition_bg_color;
-    &:hover {
-      background-color: $blue;
+    padding: 0;
+    .close-popup {
+      height: 50px;
+      width: 450px;
+      color: #fff;
+      background-color: $navy_blue;
+      font: 500 20px/20px 'Questrial';
+      padding: 12px 15px;
+      text-align: center;
+      display: block;
+      @include transition_bg_color;
+      &:hover {
+        background-color: $blue;
+      }
     }
   }
 }
@@ -669,7 +672,7 @@
         float: left;
         width: 30%;
         div {
-          background-size: contain!important;
+          background-size: contain !important;
           padding-top: 28%;
         }
         .clear-day {
@@ -760,11 +763,16 @@
 @media (max-width: 767px) {
   .sort-menu {
     width: 100%;
+    .hide-wrap {
+      .close-popup {
+        width: 100%;
+      }
+    }
   }
-  .tools-hint-block{
-    a.hide{
+  .tools-hint-block {
+    a.hide {
       padding: 8px;
-      background-size: 95%!important;
+      background-size: 95% !important;
     }
   }
   .tools-wrap {
