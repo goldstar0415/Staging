@@ -247,7 +247,7 @@
 
     vm.cropImage = function (image) {
       if (vm.selectCover) {
-        CropService.crop(image, 512, 256, function (result) {
+        CropService.crop(image, 512, 512, function (result) {
           if (result) {
             vm.cover = result;
             vm.selectCover = false;
@@ -262,7 +262,7 @@
 
     vm.editCover = function () {
       if (vm.cover) {
-        CropService.crop(vm.cover, 512, 256, function (result) {
+        CropService.crop(vm.cover, 512, 512, function (result) {
           if (result) {
             vm.cover = result;
             vm.selectCover = false;
