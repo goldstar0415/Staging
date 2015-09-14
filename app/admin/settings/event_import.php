@@ -82,11 +82,37 @@ return [
                 $import = app(SpotsImportFile::class, [app(), app(Maatwebsite\Excel\Excel::class), $data['document']]);
 
                 app(\Illuminate\Contracts\Bus\Dispatcher::class)
-                    ->dispatch(new \App\Jobs\SpotsImport($import, $data, \App\Jobs\SpotsImport::PITSTOP));
+                    ->dispatch(new \App\Jobs\SpotsImport($import, $data, \App\Jobs\SpotsImport::EVENT));
 
                 return true;
             }
         ],
+        'get_log' => [
+            'title' => 'Show import log',
+            'messages' => [
+                'active' => 'Getting log file...',
+                'success' => 'Log page redirecting',
+                'error' => 'There was an error while opening log file',
+            ],
+            //the settings data is passed to the closure and saved if a truthy response is returned
+            'action' => function(&$data)
+            {
+                return \App\Jobs\SpotsImport::getLog(\App\Jobs\SpotsImport::EVENT);
+            }
+        ],
+        'crear_log' => [
+            'title' => 'Clear import log',
+            'messages' => [
+                'active' => 'Clearing log file...',
+                'success' => 'Log successfuly deleted',
+                'error' => 'There was an error while deleting log file',
+            ],
+            //the settings data is passed to the closure and saved if a truthy response is returned
+            'action' => function(&$data)
+            {
+                return \App\Jobs\SpotsImport::removeLog(\App\Jobs\SpotsImport::EVENT);
+            }
+        ]
     ],
     'storage_path' => storage_path() . '/csvs',
 ];

@@ -10,13 +10,15 @@ use App\SpotVote;
 use App\User;
 use File;
 use Illuminate\Contracts\Bus\SelfHandling;
+use Log;
+use Storage;
 use Validator;
 
 class SpotsImport extends Job implements SelfHandling
 {
-    const EVENT = 1;
-    const RECREATION = 2;
-    const PITSTOP = 3;
+    const EVENT = 'event';
+    const RECREATION = 'recreation';
+    const PITSTOP = 'pitstop';
 
     /**
      * @var SpotsImportFile
@@ -35,8 +37,8 @@ class SpotsImport extends Job implements SelfHandling
      * Create a new job instance.
      *
      * @param SpotsImportFile $importFile
-     * @param $data
-     * @param int $type
+     * @param array $data
+     * @param string $type
      */
     public function __construct(SpotsImportFile $importFile, array $data, $type = self::EVENT)
     {
@@ -50,6 +52,7 @@ class SpotsImport extends Job implements SelfHandling
      */
     public function handle()
     {
+
         $this->importFile->each(function ($row) {
             if ($row->image_links) {
                 $row->put('image_links', explode(',', $row->image_links));
@@ -132,27 +135,57 @@ class SpotsImport extends Job implements SelfHandling
                         'address' => $row->address
                     ]
                 ];
+            } else {
+                $this->log($row, $validator);
             }
         });
 
-        $json_name = '';
-
-        switch ($this->type) {
-            case self::PITSTOP:
-                $json_name = 'pitstop';
-                break;
-            case self::EVENT:
-                $json_name = 'event';
-                break;
-            case self::RECREATION:
-                $json_name = 'recreation';
-                break;
-        }
-
         File::delete([
-            storage_path('csvs/' . $json_name . '_import.json'),
+            storage_path('csvs/' . $this->type . '_import.json'),
             storage_path('app/' . $this->data['document'])
         ]);
 
+    }
+
+    /**
+     * @param $row
+     * @param $validator
+     */
+    protected function log($row, $validator)
+    {
+        $log_file = $this->type . '-import.log';
+
+        $errors = implode("\n", array_map(function ($value) {
+            return '- ' . $value;
+        }, $validator->messages()->all()));
+
+        $date = date('Y/m/d H:i:s');
+        $text = <<<TEXT
+\n\n-----------------------$date------------------------
+$row->title\n
+Spot '$row->title' hasn't been imported
+Errors:
+$errors
+TEXT;
+        if (!File::exists(storage_path('logs/' . $log_file))) {
+            File::put(storage_path('logs/' . $log_file), $text);
+        } else {
+            File::append(storage_path('logs/' . $log_file), $text);
+        }
+    }
+
+    public static function getLog($type = self::EVENT)
+    {
+        return redirect('import/logs/' . $type);
+    }
+
+    public static function removeLog($type = self::EVENT)
+    {
+        $path = storage_path('logs/' . $type . '-import.log');
+        if (File::exists($path)) {
+            return File::delete($path);
+        } else {
+            return false;
+        }
     }
 }
