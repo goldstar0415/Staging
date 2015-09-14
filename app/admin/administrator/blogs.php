@@ -2,7 +2,7 @@
 
 return [
     'title' => 'Blogs',
-    'single' => 'blogs',
+    'single' => 'blog',
     'model' => App\Blog::class,
     /**
      * The display columns
@@ -10,7 +10,7 @@ return [
     'columns' => [
         'id',
         'title' => [
-            'title' => 'Title'
+            'title' => 'Title',
         ],
         'user' => [
             'title' => 'User',
@@ -52,7 +52,7 @@ return [
             'type' => 'text',
         ],
         'body' => [
-            'title' => 'body',
+            'title' => 'Body',
             'type' => 'wysiwyg',
         ],
         'slug' => [
@@ -70,5 +70,9 @@ return [
             'naming' => 'random'
         ]
     ],
-    'form_width' => 600
+    'form_width' => 600,
+    'link' => function($model)
+    {
+        return frontend_url('article', $model->slug);
+    },
 ];
