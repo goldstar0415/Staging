@@ -32,14 +32,6 @@
         vm.toggle = "left";
       }
 
-      vm.isRole = function (name) {
-        if ($rootScope.currentUser) {
-          var roles = _.pluck($rootScope.currentUser.roles, 'name');
-          return roles.length > 0 && roles.indexOf(name) >= 0;
-        } else {
-          return false;
-        }
-      }
     }
   }
 

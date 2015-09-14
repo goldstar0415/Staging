@@ -53,7 +53,7 @@
         case 'none':
           break;
         default:
-          MapService.FocusMapToCurrentLocation();
+          MapService.FocusMapToCurrentLocation(4);
           break;
       }
 

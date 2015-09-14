@@ -5,6 +5,7 @@
     .module('zoomtivity')
     .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $modal, toastr, Area, SignUpService) {
       var map = null;
+      var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
       var radiusSelectionLimit = 500000; //in meters
       var markersLayer = L.featureGroup();
@@ -83,7 +84,10 @@
 
             var bboxes = GetDrawLayerBBoxes();
             GetDataByBBox(bboxes);
+            _activateControl(false);
           });
+
+          _activateControl('.lasso-selection');
         }
 
       });
@@ -145,7 +149,10 @@
 
             var bboxes = GetDrawLayerBBoxes();
             GetDataByBBox(bboxes);
+            _activateControl(false);
           });
+
+          _activateControl('.radius-selection');
         }
 
       });
@@ -182,6 +189,8 @@
             var bboxes = GetDrawLayerBBoxes();
             GetDataByBBox(bboxes);
           });
+
+          _activateControl('.path-selection');
         }
 
       });
@@ -348,8 +357,11 @@
         map.addLayer(markersLayer);
         ChangeState('big');
 
+
+        map.setView(DEFAULT_MAP_LOCATION, 3);
+        FocusMapToCurrentLocation(8);
+
         window.map = map;
-        map.locate({setView: true, maxZoom: 8});
         return map;
       }
 
@@ -516,6 +528,7 @@
         }
 
         function start(e) {
+          console.log(e);
           points = [];
           started = true;
           polyline = L.polyline([], {color: 'red'}).addTo(drawLayer);
@@ -665,8 +678,6 @@
                   .setLatLng(marker.getLatLng())
                   .setContent('<button class="btn btn-block btn-success cancel-selection">Finish selection</button>')
                   .openOn(map);
-
-
               } else {
                 cancelPopup
                   .setLatLng(marker.getLatLng())
@@ -676,6 +687,7 @@
               angular.element('.cancel-selection').on('click', function () {
                 ClearSelectionListeners();
                 map.closePopup();
+                _activateControl(false);
               });
             }
             RecalculateRoute();
@@ -823,6 +835,7 @@
           title: title,
           description: description,
           waypoints: wp,
+          zoom: map.getZoom(),
           data: geoJson
         };
 
@@ -849,6 +862,10 @@
 
       //load selection from server
       function LoadSelections(selection) {
+        if (selection.zoom) {
+          map.setZoom(selection.zoom);
+        }
+
         if (selection.waypoints && selection.waypoints.length > 0) {
           _.each(selection.waypoints, function (array) {
             PathSelection(array, function () {
@@ -1163,12 +1180,15 @@
           callback(e);
         });
 
-        map.locate({setView: false});
+        //map.locate({setView: false});
       }
 
       function FocusMapToCurrentLocation(zoom) {
-        var zoomLevel = zoom || 8;
-        map.locate({setView: true, maxZoom: zoomLevel});
+        zoom = zoom || 8;
+        map.locate({setView: true, watch: true})/* This will return map so you can do chaining */
+          .on('locationfound', function (e) {
+            FocusMapToGivenLocation({lat: e.latitude, lng: e.longitude}, 8)
+          })
       }
 
       function FocusMapToGivenLocation(location, zoom) {
@@ -1413,6 +1433,13 @@
         });
 
         otherLayer.addLayers(markers);
+      }
+
+      function _activateControl(activeSelector) {
+        angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
+        if (activeSelector) {
+          angular.element(activeSelector).addClass('active');
+        }
       }
 
       return {
