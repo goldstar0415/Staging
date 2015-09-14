@@ -202,6 +202,11 @@ h3 {
   color: $dark_blue;
 }
 
+//angular hide code when page loading
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
 //common styles
 .j-hide {
   display: none;
