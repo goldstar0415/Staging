@@ -69,4 +69,22 @@ class Blog extends BaseModel implements StaplerableInterface
     {
         return $this->belongsTo(BlogCategory::class);
     }
+    
+    public function getCoverLinkAttribute()
+    {
+        return $this->cover->url('medium');
+    }
+
+    public function setCoverPutAttribute($value)
+    {
+        if ($value) {
+            $path = public_path('tmp/' . $value);
+            $this->cover = $path;
+        }
+    }
+
+    public function getCoverPutAttribute()
+    {
+        return $this->cover->url('medium');
+    }
 }

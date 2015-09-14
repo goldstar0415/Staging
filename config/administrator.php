@@ -62,7 +62,8 @@ return [
 			'settings.pitstop_import',
 			'settings.recreation_import'
 		],
-		'blogger_requests'
+		'blogger_requests',
+		'blogs'
 	],
 
 	/**
