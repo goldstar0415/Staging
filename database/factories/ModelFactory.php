@@ -221,7 +221,8 @@ $factory->define(App\Area::class, function (Generator $faker) use ($timestamps) 
         'title' => $faker->sentence,
         'description' => $faker->sentence(12),
         'data' => json_encode($faker->latitude),
-        'waypoints' => json_encode($faker->latitude)
+        'waypoints' => json_encode($faker->latitude),
+        'zoom' => mt_rand(1, 32)
     ], $timestamps());
 });
 
