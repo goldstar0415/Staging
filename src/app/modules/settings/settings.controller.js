@@ -18,8 +18,8 @@
 
     vm.privacyOptions = [
       {value: 1, label: 'All users have access'},
-      {value: 2, label: 'Only followers&followings have access'},
-      {value: 3, label: 'Only followings have access'},
+      {value: 2, label: 'Only followers&following have access'},
+      {value: 3, label: 'Only following has access'},
       {value: 4, label: 'Only authorized users have access'},
       {value: 5, label: 'Nobody has access'}
     ];
