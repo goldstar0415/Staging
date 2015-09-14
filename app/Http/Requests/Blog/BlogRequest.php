@@ -28,7 +28,7 @@ class BlogRequest extends Request
             'blog_category_id' => 'required|exists:blog_categories,id',
             'title' => 'required|max:255',
             'body' => 'required|max:5000',
-            'slug' => 'required|alpha_dash|unique:blogs',
+            'slug' => 'alpha_dash|max:255|unique:blogs',
             'location.lat' => 'numeric',
             'location.lng' => 'numeric',
             'address' => 'required_with:location|string|max:255',

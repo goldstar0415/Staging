@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'public_path' => storage_path('app/upload'),
+    'public_path' => public_path('uploads'),
 
     /*
     |--------------------------------------------------------------------------
@@ -60,7 +60,7 @@ return [
     |
     */
 
-    'default_url' => env('APP_URL') . '/file?link=missings/:attachment/:style/missing.png',
+    'default_url' => env('APP_URL') . '/uploads/missings/:attachment/:style/missing.png',
 
     /*
     |--------------------------------------------------------------------------
@@ -88,7 +88,7 @@ return [
 
     'styles' => [
         'medium' => '160x160',
-        'thumb' => '60x60'
+        'thumb' => '70x70'
     ],
 
     /*

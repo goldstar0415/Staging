@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL') . '/file?link=:class/:attachment/:id_partition/:style/:filename',
+    'url' => env('APP_URL') . '/uploads/:class/:attachment/:id_partition/:style/:filename',
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'path' => ':app_root/storage/app/upload/:class/:attachment/:id_partition/:style/:filename',
+    'path' => ':app_root/public/uploads/:class/:attachment/:id_partition/:style/:filename',
 
     /*
     |--------------------------------------------------------------------------

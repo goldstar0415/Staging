@@ -121,6 +121,10 @@ Route::resource('posts.comments', 'BlogCommentController', ['only' => ['index', 
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
 
+Route::group(['prefix' => 'import/logs', 'middleware' => 'admin'], function () {
+    get('{type}', 'ShowLogController@show');
+});
+
 get('cluster-test', function () {
     switch (mt_rand(1, 5)) {
         case 1:

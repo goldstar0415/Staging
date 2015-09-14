@@ -21,7 +21,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property string $body
  * @property string $address
  * @property Point $location
- * @property string $url
+ * @property string $slug
  * @property integer $count_views
  *
  * Relation properties
@@ -68,5 +68,23 @@ class Blog extends BaseModel implements StaplerableInterface
     public function category()
     {
         return $this->belongsTo(BlogCategory::class);
+    }
+    
+    public function getCoverLinkAttribute()
+    {
+        return $this->cover->url('medium');
+    }
+
+    public function setCoverPutAttribute($value)
+    {
+        if ($value) {
+            $path = public_path('tmp/' . $value);
+            $this->cover = $path;
+        }
+    }
+
+    public function getCoverPutAttribute()
+    {
+        return $this->cover->url('medium');
     }
 }

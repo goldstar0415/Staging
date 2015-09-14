@@ -49,7 +49,7 @@ class UserController extends Controller
      */
     public function getIndex($user)
     {
-        return $this->appendUserRelations($user);
+        return $this->appendUserRelations($user)->load('roles');
     }
 
     /**

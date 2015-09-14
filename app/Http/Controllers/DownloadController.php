@@ -17,6 +17,9 @@ class DownloadController extends Controller
     public function index(Request $request)
     {
         $link = $request->get('link');
+        if (!ctype_alnum($link) and !preg_match('/^(?:[a-z0-9_-]|\.(?!\.)|\/)+$/iD', $link)) {
+            abort(403, 'Invalid file path');
+        }
         $path = storage_path('app/upload/') . $link;
         return response()->download($path);
     }

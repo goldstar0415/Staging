@@ -10,6 +10,7 @@ use App\Http\Requests\Blog\BlogDestroyRequest;
 use App\Http\Requests\Blog\BloggerRequest;
 use App\Http\Requests\Blog\BlogRequest;
 use App\Http\Requests\Blog\BlogStoreRequest;
+use App\Http\Requests\Blog\BlogUpdateRequest;
 use App\Http\Requests\PaginateRequest;
 use ChrisKonnertz\OpenGraph\OpenGraph;
 use Illuminate\Http\Request;
@@ -46,7 +47,19 @@ class BlogController extends Controller
      */
     public function store(BlogStoreRequest $request)
     {
-        $blog = new Blog($request->only(['blog_category_id', 'title', 'body', 'slug']));
+        $blog = new Blog($request->only(['blog_category_id', 'title', 'body']));
+
+        if ($request->has('slug')) {
+            $blog->slug = $request->input('slug');
+        } else {
+            $slug = str_slug($blog->title);
+            $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|max:255|unique:blogs']);
+            if ($validator->fails()) {
+                abort(422, $validator->messages()->get('slug')[0]);
+            }
+
+            $blog->slug = $slug;
+        }
 
         if ($request->hasFile('cover')) {
             $blog->cover = $request->file('cover');
@@ -78,13 +91,30 @@ class BlogController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param BlogRequest $request
+     * @param BlogUpdateRequest $request
      * @param  Blog $blog
-     * @return Response
+     * @return Blog
      */
-    public function update(BlogRequest $request, $blog)
+    public function update(BlogUpdateRequest $request, $blog)
     {
-        $blog->fill($request->only(['blog_category_id', 'title', 'body', 'slug']));
+        $slug = '';
+
+        $blog->fill($request->only(['blog_category_id', 'title', 'body']));
+
+        if ($request->has('slug')) {
+            $slug = $request->input('slug');
+        } else {
+            $slug = str_slug($blog->title);
+        }
+
+        if ($blog->slug !== $slug) {
+            $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|unique:blogs']);
+            if ($validator->fails()) {
+                abort(422, $validator->messages()->get('slug')[0]);
+            }
+
+            $blog->slug = $slug;
+        }
 
         if ($request->hasFile('cover')) {
             $blog->cover = $request->file('cover');
@@ -137,7 +167,7 @@ class BlogController extends Controller
             $top_blogs = Blog::query();
         }
 
-        return $top_blogs->orderBy('count_views')->take(3)->get();
+        return $top_blogs->withoutNewest()->orderBy('count_views', 'DESC')->take(3)->get();
     }
 
     public function bloggerRequest(BloggerRequest $request)

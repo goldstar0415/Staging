@@ -31,6 +31,6 @@ class OnSpotCommentDelete extends Event implements Feedable
 
     public function getFeedSender()
     {
-        return $this->comment->user;
+        return $this->comment->sender;
     }
 }
