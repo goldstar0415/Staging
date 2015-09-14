@@ -83,7 +83,10 @@
 
             var bboxes = GetDrawLayerBBoxes();
             GetDataByBBox(bboxes);
+            _activateControl(false);
           });
+
+          _activateControl('.lasso-selection');
         }
 
       });
@@ -145,7 +148,10 @@
 
             var bboxes = GetDrawLayerBBoxes();
             GetDataByBBox(bboxes);
+            _activateControl(false);
           });
+
+          _activateControl('.radius-selection');
         }
 
       });
@@ -182,6 +188,8 @@
             var bboxes = GetDrawLayerBBoxes();
             GetDataByBBox(bboxes);
           });
+
+          _activateControl('.path-selection');
         }
 
       });
@@ -516,6 +524,7 @@
         }
 
         function start(e) {
+          console.log(e);
           points = [];
           started = true;
           polyline = L.polyline([], {color: 'red'}).addTo(drawLayer);
@@ -665,8 +674,6 @@
                   .setLatLng(marker.getLatLng())
                   .setContent('<button class="btn btn-block btn-success cancel-selection">Finish selection</button>')
                   .openOn(map);
-
-
               } else {
                 cancelPopup
                   .setLatLng(marker.getLatLng())
@@ -676,6 +683,7 @@
               angular.element('.cancel-selection').on('click', function () {
                 ClearSelectionListeners();
                 map.closePopup();
+                _activateControl(false);
               });
             }
             RecalculateRoute();
@@ -823,6 +831,7 @@
           title: title,
           description: description,
           waypoints: wp,
+          zoom: map.getZoom(),
           data: geoJson
         };
 
@@ -849,6 +858,10 @@
 
       //load selection from server
       function LoadSelections(selection) {
+        if (selection.zoom) {
+          map.setZoom(selection.zoom);
+        }
+
         if (selection.waypoints && selection.waypoints.length > 0) {
           _.each(selection.waypoints, function (array) {
             PathSelection(array, function () {
@@ -1413,6 +1426,13 @@
         });
 
         otherLayer.addLayers(markers);
+      }
+
+      function _activateControl(activeSelector) {
+        angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
+        if (activeSelector) {
+          angular.element(activeSelector).addClass('active');
+        }
       }
 
       return {
