@@ -346,6 +346,7 @@
             font-size: 12px;
             line-height: 12px;
             font-weight: 600;
+            white-space: nowrap;
           }
           .description {
             height: 42px;
@@ -358,6 +359,11 @@
             line-height: 11px;
             padding-top: 2px;
             color: #cdd0d2;
+          }
+          span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
           }
         }
       }

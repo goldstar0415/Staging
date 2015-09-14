@@ -50,7 +50,7 @@
           <img ng-src="{{currentReview.sender.avatar_url.thumb}}">
         </div>
         <div class="col-xs-10 content">
-         <h4 class=""><a class="reviews-user">{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}</a></h4>
+         <span><a class="reviews-user">{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}</a></span>
 
           <p class="description" ng-bind-html="currentReview.body | linky:'_blank'"></p>
 
