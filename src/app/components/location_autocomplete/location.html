@@ -5,7 +5,8 @@
        ng-model="viewAddress"
        ng-change="onChange();"
        placeholder="{{placeHolder}}"
-       popover="{{bindMarker && !location ? 'You can click on map to set marker'  : ''}}"  popover-trigger="focus"
+       popover="{{bindMarker && !location ? 'Type address or click on the map to set the location(s)'  : ''}}"
+       popover-trigger="focus"
        type="text"
        class="{{customClasses}}"
        ng-class="className">
@@ -16,8 +17,10 @@
        ng-model="viewAddress"
        ng-change="onChange();"
        placeholder={{placeHolder}}
-       popover="{{bindMarker && !location ? 'You can click on map to set marker'  : ''}}"  popover-trigger="focus"
+       popover="{{bindMarker && !location ? 'Type address or click on the map to set the location(s)'  : ''}}"
+       popover-trigger="focus"
        type="text"
        class="{{customClasses}}"
        ng-class="className">
-<a ng-if="showUserLocation" ng-click="SetCurrentLocation();" class="compass compass-location" title="Find out the location"></a>
+<a ng-if="showUserLocation" ng-click="SetCurrentLocation();" class="compass compass-location"
+   title="Find out the location"></a>
