@@ -71,7 +71,7 @@
                 </p>
 
                 <div class="clearfix">
-                  <button type="button" ng-if="currentUser" class="btn btn-default no-margin-left-right"
+                  <button type="button" ng-if="currentUser && currentUser.id != user.id" class="btn btn-default no-margin-left-right"
                           ng-click="Zoomers.follow(user)"
                           ng-class="{'red-btn': !user.can_follow, 'green-btn': user.can_follow}">
                     {{user.can_follow ? 'Follow' : 'Unfollow'}}

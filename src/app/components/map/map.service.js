@@ -1169,25 +1169,28 @@
       }
 
       function GetCurrentLocation(callback) {
-        map.on('locationfound', function onLocationFound(e) {
-          map.off('locationfound');
-          map.off('locationerror');
-          callback(e);
-        });
-        map.on('locationerror', function onLocationError(e) {
-          map.off('locationfound');
-          map.off('locationerror');
-          callback(e);
-        });
+        map.locate({setView: true, watch: true})
+          .on('locationfound', function onLocationFound(e) {
+            map.off('locationfound');
+            map.off('locationerror');
+            callback(e);
+          })
+          .on('locationerror', function onLocationError(e) {
+            map.off('locationfound');
+            map.off('locationerror');
+            callback(e);
+          });
 
         //map.locate({setView: false});
       }
 
       function FocusMapToCurrentLocation(zoom) {
         zoom = zoom || 8;
-        map.locate({setView: true, watch: true})/* This will return map so you can do chaining */
+        map.locate({setView: true, watch: true})
           .on('locationfound', function (e) {
-            FocusMapToGivenLocation({lat: e.latitude, lng: e.longitude}, 8)
+            var location = {lat: e.latitude, lng: e.longitude};
+            $rootScope.currentLocation = location;
+            FocusMapToGivenLocation(location, 8)
           })
       }
 

@@ -969,9 +969,17 @@ sign-in, sign-up {
 /*end responsive*/
 
 .snapjs-right, .snapjs-left {
+  .snap-drawers {
+    display: block;
+  }
+
   .snap-content {
     overflow: hidden;
   }
+}
+
+.snap-drawers {
+  display: none;
 }
 
 .snap-content {

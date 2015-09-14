@@ -48,7 +48,7 @@
         });
 
         e.on('focusin', function () {
-          if (!s.marker) {
+          if (!s.location) {
             MapService.GetMap().on('click', onMapClick);
           }
         });
@@ -56,13 +56,12 @@
 
         function onMapClick(event) {
           console.log('map click', event.latlng);
-          if (!s.marker) {
+          if (!s.location) {
             s.location = event.latlng;
 
             moveOrCreateMarker(event.latlng);
 
             MapService.GetAddressByLatlng(event.latlng, function (data) {
-              s.location = data.latlng;
               s.address = data.display_name;
               s.viewAddress = data.display_name;
             });
@@ -113,18 +112,19 @@
           }
         };
         s.SetCurrentLocation = function () {
-          MapService.GetCurrentLocation(function (e) {
-            if (e.type == 'locationerror') {
+          //MapService.GetCurrentLocation(function (e) {
+          //  console.log(e);
+            if (!$rootScope.currentLocation) {
               toastr.error('Geolocation error!');
             } else {
-              MapService.GetAddressByLatlng(e.latlng, function (data) {
+              MapService.GetAddressByLatlng($rootScope.currentLocation, function (data) {
                 s.location = e.latlng;
                 s.address = data.display_name;
                 s.viewAddress = data.display_name;
                 moveOrCreateMarker(e.latlng);
               })
             }
-          });
+          //});
         };
         s.onAutocompleteSelect = function ($item, $model, $label) {
           if (provider == 'google') {

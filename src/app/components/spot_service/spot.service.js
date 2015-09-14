@@ -73,8 +73,6 @@
     }
 
     function formatSpot(spot) {
-      var offset = moment().utcOffset();
-
       spot.type = spot.category.type.display_name;
       if (spot.start_date && spot.end_date) {
         spot.start_time = moment(spot.start_date).format('hh:mm a');
@@ -107,7 +105,6 @@
       if (source && source.data.length > 0) {
         var key = _.keys(data)[0];
         var spot = _.findWhere(source.data, {id: id});
-        console.log(source, spot);
         if (spot) {
           spot[key] = data[key];
         }
@@ -125,7 +122,6 @@
 
       $scope.showPhotos = $scope.data.spot.photos.length > 0;
       $scope.showPhotosControls = $scope.data.spot.photos.length > 2;
-      console.log($scope);
       if ($scope.data.spot.comments.length > 0) {
         $scope.currentReview = $scope.data.spot.comments[0];
       }
@@ -193,7 +189,6 @@
         idx = reviews.length - 1;
       }
       reviewIndex = idx;
-      console.log(idx);
       $scope.currentReview = reviews[idx];
     }
 

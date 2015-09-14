@@ -54,14 +54,18 @@
     vm.saveSecuritySettings = function (form) {
       if (form.$valid) {
         //send email
-        $http.put(API_URL + '/settings', {
-          type: 'security',
-          params: {
-            email: vm.data.newEmail
-          }
-        })
+        $http
+          .put(API_URL + '/settings', {
+            type: 'security',
+            params: {
+              email: vm.data.newEmail
+            }
+          })
           .success(function (data, status, headers, config) {
-            toastr.success('Settings saved')
+            toastr.success('Settings saved');
+            vm.data.email = vm.data.newEmail;
+            vm.data.newEmail = '';
+            form.$submitted = form.$touched = false;
           })
           .error(function (data, status, headers, config) {
             toastr.error('This email has already been taken')
