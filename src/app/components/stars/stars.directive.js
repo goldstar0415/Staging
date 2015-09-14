@@ -23,11 +23,8 @@
       var vm = this;
 
       $scope.$watch('Stars.item.rating', function (value, old) {
-        if (value != old && $rootScope.currentUser) {
-          console.log(value, old, vm.item.rating);
-          Spot.rate({id: vm.item.id}, {vote: parseInt(value)}, function (data) {
-            vm.item.rating = data.vote;
-          });
+        if (value != old && $rootScope.currentUser && !vm.item.is_rated) {
+          Spot.rate({id: vm.item.id}, {vote: parseInt(value)});
           vm.item.is_rated = true;
         }
       });
