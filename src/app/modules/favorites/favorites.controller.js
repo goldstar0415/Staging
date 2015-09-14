@@ -28,7 +28,7 @@
           MapService.GetCurrentLayer().removeLayers(vm.markersSpots[idx].markers)
         }
       })
-    };
+    }
 
     function ShowMarkers(spots) {
       var spotsArray = _.map(spots, function (item) {
