@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\UserFollowEvent;
 use App\Events\UserUnfollowEvent;
+use App\Http\Requests\Following\FollowRequest;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,7 +17,7 @@ class FollowController extends Controller
         $this->middleware('privacy', ['only' => ['getFollowers', 'getFollowings']]);
     }
 
-    public function getFollow(Request $request, $follow_user)
+    public function getFollow(FollowRequest $request, $follow_user)
     {
         /**
          * @var \App\User $user
@@ -33,7 +34,7 @@ class FollowController extends Controller
         return response()->json(['message' => 'You are successfuly follow user ' . $follow_user->first_name]);
     }
 
-    public function getUnfollow(Request $request, $follow_user)
+    public function getUnfollow(FollowRequest $request, $follow_user)
     {
         /**
          * @var \App\User $user

@@ -126,7 +126,8 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         'count_followers',
         'count_followings',
         'count_spots',
-        'is_following'
+        'is_following',
+        'activity_level'
     ];
 
     /**
@@ -177,6 +178,12 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         }
     }
 
+    public function getActivityLevelAttribute()
+    {
+        return ActivityLevel::where('favorites_count', '<', $this->favorites()->withoutNewest()->count())
+            ->first(['name'])['name'];
+    }
+    
     public function setBannedAtAttribute($value)
     {
         $value = (bool)$value;
