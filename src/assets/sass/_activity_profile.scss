@@ -11,13 +11,14 @@
     width: 70px;
     height: 70px;
     margin: 0 auto 3px;
-
+    img {
+      max-width: 100%;
+      min-width: 100%;
+      min-height: 70px;
+    }
   }
   .sidebar-user-name {
-    //white-space: pre-wrap;
-    //overflow: hidden;
-    //word-wrap: normal;
-    //word-break: break-word;
+    max-height: 3.3rem;
     padding-left: 7px;
     padding-right: 7px;
     color: $blue;
@@ -32,7 +33,7 @@
   .counter {
     margin: -4px 0 0 -3px;
   }
-  a{
+  a {
     text-overflow: ellipsis;
     -e-text-overflow: ellipsis;
     &:hover, &:focus, &:active {

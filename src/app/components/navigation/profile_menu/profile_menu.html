@@ -141,7 +141,7 @@
             <a ui-sref="profile.main({user_id: item.id})">
               <img ng-src="{{item.avatar_url.thumb}}" class="avatar"/>
 
-              <p class="sidebar-user-name">{{item.first_name}}<br> {{item.last_name}}</p>
+              <a class="sidebar-user-name" ui-sref="profile.main({user_id: item.id})">{{item.first_name}}<br> {{item.last_name}}</a>
             </a>
           </div>
         </div>
@@ -160,9 +160,10 @@
         <div class="sidebar-row ">
           <div class="col-sm-4 no-pad" ng-repeat="item in $root.profileUser.followings">
             <a ui-sref="profile.main({user_id: item.id})">
-              <img ng-src="{{item.avatar_url.thumb}}" class="avatar"/>
-
-              <p class="sidebar-user-name">{{item.first_name}}<br> {{item.last_name}}</p>
+              <span class="avatar">
+              <img ng-src="{{item.avatar_url.thumb}}"/>
+              </span>
+              <a class="sidebar-user-name" ui-sref="profile.main({user_id: item.id})">{{item.first_name}}<br> {{item.last_name}}</a>
             </a>
           </div>
         </div>
@@ -181,9 +182,10 @@
         <div class="sidebar-row ">
           <div class="col-sm-4 no-pad" ng-repeat="item in $root.profileUser.spots">
             <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
-              <img ng-src="{{item.cover_url.thumb}}" class="avatar"/>
-
-              <p class="sidebar-user-name">{{item.title}}</p>
+              <span class="avatar">
+              <img ng-src="{{item.cover_url.thumb}}"/>
+</span>
+              <a class="sidebar-user-name">{{item.title}}</a>
             </a>
           </div>
         </div>

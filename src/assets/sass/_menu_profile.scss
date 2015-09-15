@@ -30,13 +30,16 @@
 
 .sidebar-row {
   display: block;
-  a {
-    height: 12rem;
-    display: block;
-    word-wrap: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -e-text-overflow: ellipsis;
+  .col-sm-4 {
+    min-height: 120px;
+    a {
+      //height: 12rem;
+      display: block;
+      word-wrap: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -e-text-overflow: ellipsis;
+    }
   }
 }
 
