@@ -55,13 +55,16 @@
   position: relative;
   .tools-hint-block {
     padding:20px 10px;
-    margin-top: -15px;
     background: #0c2638;
     border-radius: 8px 8px 0 0;
     color: #fff;
     text-align: center;
     position: relative;
     top: 20px;
+    .close {
+      margin-top: -15px;
+      margin-right: -8px;
+    }
     a.hide {
       display: block !important;
       width: 8px;
