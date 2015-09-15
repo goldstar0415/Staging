@@ -27,7 +27,8 @@ class AreaStoreRequest extends Request
             'title' => 'required|string|max:255',
             'description' => 'string|max:255',
             'waypoints' => 'array|required_without:data',
-            'data' => 'required_without:waypoints'
+            'data' => 'required_without:waypoints',
+            'zoom' => 'integer|between:1,32'
         ];
     }
 }

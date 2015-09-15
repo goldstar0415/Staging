@@ -11,6 +11,7 @@ use App\Area;
 use App\ChatMessage;
 use App\Friend;
 use App\Plan;
+use App\Social;
 use App\Spot;
 use App\SpotPhoto;
 use App\User;
@@ -70,6 +71,9 @@ class RouteServiceProvider extends ServiceProvider
         // Admin
 
         $router->model('activitylevel', ActivityLevel::class);
+        $router->bind('social', function ($value) {
+            return Social::where('name', $value)->first();
+        });
 
         parent::boot($router);
     }

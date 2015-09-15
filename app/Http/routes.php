@@ -26,6 +26,7 @@ Route::get('users/{users}', 'UserController@getIndex');
 Route::controller('settings', 'SettingsController');
 
 Route::get('account/{social}', 'SocialAuthController@getAccount');
+Route::delete('account/{social}', 'SocialAuthController@deleteAccount');
 
 /**
  * User albums
@@ -123,41 +124,4 @@ Route::get('file', 'DownloadController@index');
 
 Route::group(['prefix' => 'import/logs', 'middleware' => 'admin'], function () {
     get('{type}', 'ShowLogController@show');
-});
-
-get('cluster-test', function () {
-    switch (mt_rand(1, 5)) {
-        case 1:
-            return App\User::all()->isEmpty() ? 0 : 1;
-        break;
-        case 2:
-            return App\Spot::all()->isEmpty() ? 0 : 1;
-        break;
-        case 3:
-            return App\Comment::all()->isEmpty() ? 0 : 1;
-        break;
-        case 4:
-            return App\Wall::all()->isEmpty() ? 0 : 1;
-        break;
-        case 5:
-            return App\Feed::all()->isEmpty() ? 0 : 1;
-        break;
-    }
-});
-
-get('cluster-test-like', function () {
-    switch (mt_rand(1, 4)) {
-        case 1:
-            return App\User::where('first_name', 'LIKE', '%' . str_random(1) . '%')->get()->isEmpty() ? 0 : 1;
-            break;
-        case 2:
-            return App\Spot::where('title', 'LIKE', '%' . str_random(1) . '%')->get()->isEmpty() ? 0 : 1;
-            break;
-        case 3:
-            return App\Comment::where('body', 'LIKE', '%' . str_random(1) . '%')->get()->isEmpty() ? 0 : 1;
-            break;
-        case 4:
-            return App\Wall::where('body', 'LIKE', '%' . str_random(1) . '%')->get()->isEmpty() ? 0 : 1;
-            break;
-    }
 });

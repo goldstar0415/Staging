@@ -15,6 +15,7 @@ use App\Services\SocialSharing;
  * @property string $data
  * @property string $b_box
  * @property string $waypoints
+ * @property integer $zoom
  *
  * Relation properties
  * @property User $user
@@ -22,7 +23,7 @@ use App\Services\SocialSharing;
  */
 class Area extends BaseModel
 {
-    protected $fillable = ['title', 'description', 'data', 'waypoints'];
+    protected $fillable = ['title', 'description', 'data', 'waypoints', 'zoom'];
 
     protected $appends = ['share_links'];
 
