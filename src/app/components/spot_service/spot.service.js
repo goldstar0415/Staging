@@ -6,7 +6,7 @@
     .factory('SpotService', SpotService);
 
   /** @ngInject */
-  function SpotService(Spot, moment, toastr, dialogs, $rootScope, SignUpService) {
+  function SpotService(Spot, moment, toastr, dialogs, $rootScope, SignUpService, DATE_FORMAT) {
     var firstPhotoIndex, secondPhotoIndex, reviewIndex;
     var $scope;
 
@@ -73,10 +73,11 @@
     }
 
     function formatSpot(spot) {
+      console.log(spot);
       spot.type = spot.category.type.display_name;
       if (spot.start_date && spot.end_date) {
-        spot.start_time = moment(spot.start_date).format('hh:mm a');
-        spot.end_time = moment(spot.end_date).format('hh:mm a');
+        spot.start_time = moment(spot.start_date).format(DATE_FORMAT.time);
+        spot.end_time = moment(spot.end_date).format(DATE_FORMAT.time);
         spot.start_date = moment(spot.start_date).format('YYYY-MM-DD');
         spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
       }

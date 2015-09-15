@@ -39,6 +39,7 @@
             vm.recreationsArray.push(item);
             break;
           case 'event':
+            SpotService.formatSpot(item.spot);
             vm.eventsArray.push(item);
             break;
         }

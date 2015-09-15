@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $modal, toastr, Area, SignUpService) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $modal, toastr, GEOCODING_KEY, Area, SignUpService) {
       var map = null;
       var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
@@ -29,8 +29,8 @@
       var pathSelectionStarted = false;
 
       //GEOCODING
-      var GeocodingSearchUrl = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&addressdetails=1&limit=3&q=';
-      var GeocodingReverseUrl = 'http://open.mapquestapi.com/nominatim/v1/reverse.php?format=json';
+      var GeocodingSearchUrl = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&key=' + GEOCODING_KEY + '&addressdetails=1&limit=3&q=';
+      var GeocodingReverseUrl = 'http://open.mapquestapi.com/nominatim/v1/reverse.php?format=json&key=' + GEOCODING_KEY;
 
       //MAP CONTROLS
       // Lasso controls
@@ -274,6 +274,9 @@
         //Leaflet touch hook
         L.Map.mergeOptions({
           touchExtend: true
+        });
+        L.Map.addInitHook(function() {
+          return L.DomEvent.off(this._container, "mousedown", this.keyboard._onMouseDown);
         });
         L.Map.TouchExtend = L.Handler.extend({
           initialize: function (map) {
@@ -1169,7 +1172,7 @@
       }
 
       function GetCurrentLocation(callback) {
-        map.locate({setView: true, watch: true})
+        map.locate({setView: true})
           .on('locationfound', function onLocationFound(e) {
             map.off('locationfound');
             map.off('locationerror');
@@ -1186,7 +1189,7 @@
 
       function FocusMapToCurrentLocation(zoom) {
         zoom = zoom || 8;
-        map.locate({setView: true, watch: true})
+        map.locate({setView: true})
           .on('locationfound', function (e) {
             var location = {lat: e.latitude, lng: e.longitude};
             $rootScope.currentLocation = location;
