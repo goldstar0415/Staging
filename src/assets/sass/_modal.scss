@@ -200,7 +200,7 @@
               width: 90%;
               li {
                 a {
-                  margin-right: 0!important;
+                  margin-right: 0 !important;
                 }
               }
             }
@@ -243,13 +243,19 @@
             }
             .content {
               padding-left: 85px;
-              .reviews-user {
-                font: 500 18px/20px 'Questrial';
-                color: $blue;
-                @include transition_color;
-                &:hover {
-                  color: $navy_blue;
+              span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: block;
+                .reviews-user {
+                  white-space: nowrap;
+                  font: 500 18px/20px 'Questrial';
+                  color: $blue;
                   @include transition_color;
+                  &:hover {
+                    color: $navy_blue;
+                    @include transition_color;
+                  }
                 }
               }
               .description {
@@ -326,8 +332,8 @@
 @media (min-device-width: 240px) and (max-device-width: 767px) and (orientation: landscape) {
   .spot-mobile-modal {
     .modal-dialog {
-      top: 0!important;
-      transform: translateY(0)!important;
+      top: 0 !important;
+      transform: translateY(0) !important;
       .modal-content {
         margin: 6rem auto;
       }
