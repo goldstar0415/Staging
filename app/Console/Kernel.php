@@ -2,7 +2,9 @@
 
 namespace App\Console;
 
+use App\Events\OnSpotRemind;
 use App\Events\OnUserBirthday;
+use App\Spot;
 use App\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -28,12 +30,17 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            $users = User::whereRaw("date_part('day', birth_date) = date_part('day', CURRENT_DATE) + 1
-             and date_part('month', birth_date) = date_part('month', CURRENT_DATE)");
+            
+            $users = User::comingBirthday()->get();
 
             foreach ($users as $user) {
                 event(new OnUserBirthday($user));
             }
+
+            $spots = Spot::coming()->get();
+            $spots->each(function (Spot $spot) {
+                event(new OnSpotRemind($spot));
+            });
         })->daily();
     }
 }

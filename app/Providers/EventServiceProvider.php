@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\OnComment;
+use App\Events\OnMessage;
 use App\Events\OnWallMessage;
 use App\Events\UserFollowEvent;
 use App\Events\UserUnfollowEvent;
@@ -22,6 +23,7 @@ use App\Events\OnAlbumPhotoComment;
 use App\Listeners\AddFriend;
 use App\Listeners\AddReview;
 use App\Listeners\Feeder;
+use App\Listeners\MailNotifier;
 use App\Listeners\RemoveFriend;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -36,14 +38,17 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         UserFollowEvent::class => [
             AddFriend::class,
-            Feeder::class
+            Feeder::class,
+            MailNotifier::class
         ],
         UserUnfollowEvent::class => [
             RemoveFriend::class,
-            Feeder::class
+            Feeder::class,
+            MailNotifier::class
         ],
         OnWallMessage::class => [
-            Feeder::class
+            Feeder::class,
+            MailNotifier::class
         ],
         OnWallPostDelete::class => [
             Feeder::class
@@ -52,7 +57,8 @@ class EventServiceProvider extends ServiceProvider
             Feeder::class
         ],
         OnSpotCreate::class => [
-            Feeder::class
+            Feeder::class,
+            MailNotifier::class
         ],
         OnSpotUpdate::class => [
             Feeder::class
@@ -76,13 +82,17 @@ class EventServiceProvider extends ServiceProvider
             Feeder::class
         ],
         OnSpotRemind::class => [
-            Feeder::class
+            Feeder::class,
+            MailNotifier::class
         ],
         OnPlanRemind::class => [
             Feeder::class
         ],
         OnComment::class => [
             AddReview::class
+        ],
+        OnMessage::class => [
+            MailNotifier::class
         ]
     ];
 

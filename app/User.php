@@ -375,4 +375,10 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     {
         return $this->belongsToMany(Social::class);
     }
+    
+    public function scopeComingBirthday($query)
+    {
+        return $query->whereRaw("date_part('day', \"birth_date\") = date_part('day', CURRENT_DATE) + 1
+             and date_part('month', \"birth_date\") = date_part('month', CURRENT_DATE)");
+    }
 }
