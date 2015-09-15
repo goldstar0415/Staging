@@ -42,6 +42,10 @@ return [
      * The editable fields
      */
     'edit_fields' => [
+        'description' => [
+            'title' => 'Description',
+            'type' => 'textarea'
+        ],
         'first_name' => [
             'title' => 'First Name',
             'type' => 'text',
@@ -49,6 +53,19 @@ return [
         'last_name' => [
             'title' => 'Last Name',
             'type' => 'text',
+        ],
+        'email' => [
+            'title' => 'Email',
+            'type' => 'text'
+        ],
+        'password' => [
+            'title' => 'Password',
+            'type' => 'password'
+        ],
+        'sex' => [
+            'title' => 'Sex',
+            'type' => 'enum',
+            'options' => ['m', '', 'f']
         ],
         'birth_date' => [
             'title' => 'Birth Date',
