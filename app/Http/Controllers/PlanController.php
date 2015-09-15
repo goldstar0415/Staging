@@ -128,10 +128,11 @@ class PlanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param PlanDestroyRequest $plan
+     * @param PlanDestroyRequest $request
+     * @param \App\Plan $plan
      * @return array
      */
-    public function destroy(PlanDestroyRequest $plan)
+    public function destroy(PlanDestroyRequest $request, $plan)
     {
         return ['result' => $plan->delete()];
     }
