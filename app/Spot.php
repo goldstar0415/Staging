@@ -237,4 +237,11 @@ class Spot extends BaseModel implements StaplerableInterface
     {
         return $this->belongsToMany(User::class, 'calendar_spots')->withTimestamps();
     }
+
+    public function scopeComing($query)
+    {
+        return $query->whereRaw("date_part('day', \"start_date\") = date_part('day', CURRENT_DATE) + 1
+             and date_part('month', \"start_date\") = date_part('month', CURRENT_DATE)
+             and date_part('year', \"start_date\") = date_part('year', CURRENT_DATE)");
+    }
 }
