@@ -52,7 +52,7 @@ class SpotCommentController extends Controller
      */
     public function store(SpotCommentStoreRequest $request, $spot)
     {
-        $comment = new Comment($request->except('attachments'));
+        $comment = new Comment(['body' => $request->input('message')]);
         $comment->sender()->associate($request->user());
 
         $spot->comments()->save($comment);

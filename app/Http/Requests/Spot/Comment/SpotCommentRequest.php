@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Spot\Comment;
 
 use App\Http\Requests\Request;
+use App\Services\Attachments;
 
 class SpotCommentRequest extends Request
 {
@@ -23,8 +24,18 @@ class SpotCommentRequest extends Request
      */
     public function rules()
     {
-        return [
-            'body' => 'required|max:5000'
-        ];
+        $rules = array_merge(
+            ['message' => [
+                'required_without_all:attachments.album_photos,attachments.spots,attachments.areas',
+                'string',
+                'max:5000'
+            ]],
+            Attachments::$rules,
+            $this->arrayFieldRules('attachments.album_photos', 'integer'),
+            $this->arrayFieldRules('attachments.spots', 'integer'),
+            $this->arrayFieldRules('attachments.areas', 'integer')
+        );
+
+        return $rules;
     }
 }

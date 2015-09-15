@@ -32,10 +32,13 @@ class SendMessageRequest extends Request
                 'max:5000'
             ]
         ];
-        $rules = array_merge($rules, Attachments::$rules);
-        $rules = array_merge($rules, $this->arrayFieldRules('attachments.album_photos', 'integer'));
-        $rules = array_merge($rules, $this->arrayFieldRules('attachments.spots', 'integer'));
-        $rules = array_merge($rules, $this->arrayFieldRules('attachments.areas', 'integer'));
+        $rules = array_merge(
+            $rules,
+            Attachments::$rules,
+            $this->arrayFieldRules('attachments.album_photos', 'integer'),
+            $this->arrayFieldRules('attachments.spots', 'integer'),
+            $this->arrayFieldRules('attachments.areas', 'integer')
+        );
 
         return $rules;
     }
