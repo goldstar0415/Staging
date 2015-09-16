@@ -116,27 +116,3 @@
     </div>
   </div>
 </div>
-
-
-<!--popup for blog article-->
-<div class="popup-width blog-popup" style="display: none">
-  <div class="col-xs-4 nav-popup">
-    <div class="img-event">
-      <span class="wrap-img">
-        <img ng-src="{{data.spot.cover_url.medium}}">
-      </span>
-    </div>
-  </div>
-  <div class="col-xs-8 popup-main">
-    <span>
-    <a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})">{{::data.spot.title}}</a>
-      </span>
-    <a class="author-event" ui-sref="profile.main({user_id: data.spot.user_id})"><span>Author: </span>{{'' + data.spot.user.first_name + '
-      ' + data.spot.user.last_name}}</a>
-
-    <div class="close-event">
-      <a ng-click="marker.closePopup()" class="close"></a>
-    </div>
-  </div>
-</div>
-
