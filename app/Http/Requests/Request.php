@@ -11,9 +11,9 @@ abstract class Request extends FormRequest
         $result = [];
         $nbr = -1;
         if ($files and $this->hasFile($field)) {
-            $nbr = count($this->file($field)) -1;
+            $nbr = count($this->file($field)) - 1;
         } elseif (!$files and $this->has($field)) {
-            $nbr = count($this->input($field)) -1;
+            $nbr = count($this->input($field)) - 1;
         }
 
         if ($nbr != -1) {
@@ -36,8 +36,20 @@ abstract class Request extends FormRequest
      */
     final protected function getValidatorInstance()
     {
+        foreach (class_uses_recursive(get_called_class()) as $trait) {
+            if (
+                ends_with($trait, 'Sanitizer')
+                && method_exists(
+                    get_called_class(),
+                    $method = 'sanitize' . strstr(class_basename($trait), 'Sanitizer', true)
+                )
+            ) {
+                $this->replace(call_user_func([$this, $method], $this->all()));
+            }
+        }
+
         if (method_exists($this, 'sanitize')) {
-            $this->replace($this->container->call([$this, 'sanitize'], ['data' => $this->all()]));
+            $this->replace($this->container->call([$this, 'sanitize'], ['input' => $this->all()]));
         }
 
         return parent::getValidatorInstance();

@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Spot;
 
+use App\Http\Requests\Sanitizers\UrlSanitizer;
 use App\Http\Requests\Request;
 
 class SpotRequest extends Request
 {
+    use UrlSanitizer;
     /**
      * Determine if the user is authorized to make this request.
      *
