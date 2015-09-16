@@ -406,6 +406,38 @@
   }
 }
 
+.blog-popup {
+  width: 455px;
+  height: 12rem;
+  display: flex;
+  .nav-popup {
+    .wrap-img {
+      border-radius: 10px 0 0 10px!important;
+      max-height: 12rem!important;
+      overflow: hidden!important;
+      display: block!important;
+    }
+  }
+  .popup-main {
+    span {
+      display: block;
+      width: 100%;
+      max-height: 10rem;
+      overflow: scroll;
+      a {
+        white-space: pre-line !important;
+      }
+    }
+    .author-event {
+      width: 100%;
+      span {
+        width: initial;
+        float: left;
+      }
+    }
+  }
+}
+
 @media (max-width: 767px) {
   .popup {
     .close-event {
