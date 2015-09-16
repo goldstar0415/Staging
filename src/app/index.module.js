@@ -15,7 +15,6 @@
       'ui.bootstrap',
       'dialogs.main',
       'snap',
-      '720kb.socialshare',
       'angular-loading-bar',
       'luegg.directives',
       'ui.calendar',
