@@ -95,8 +95,7 @@ return [
                 'error' => 'There was an error while opening log file',
             ],
             //the settings data is passed to the closure and saved if a truthy response is returned
-            'action' => function(&$data)
-            {
+            'action' => function (&$data) {
                 return \App\Jobs\SpotsImport::getLog(\App\Jobs\SpotsImport::EVENT);
             }
         ],
@@ -108,8 +107,7 @@ return [
                 'error' => 'There was an error while deleting log file',
             ],
             //the settings data is passed to the closure and saved if a truthy response is returned
-            'action' => function(&$data)
-            {
+            'action' => function (&$data) {
                 return \App\Jobs\SpotsImport::removeLog(\App\Jobs\SpotsImport::EVENT);
             }
         ]

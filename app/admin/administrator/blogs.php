@@ -71,8 +71,7 @@ return [
         ]
     ],
     'form_width' => 600,
-    'link' => function($model)
-    {
+    'link' => function ($model) {
         return frontend_url('article', $model->slug);
     },
 ];

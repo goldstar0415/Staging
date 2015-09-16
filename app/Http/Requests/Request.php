@@ -34,7 +34,7 @@ abstract class Request extends FormRequest
     /**
      * {@inheritdoc}
      */
-    protected final function getValidatorInstance()
+    final protected function getValidatorInstance()
     {
         if (method_exists($this, 'sanitize')) {
             $this->replace($this->container->call([$this, 'sanitize'], ['data' => $this->all()]));
