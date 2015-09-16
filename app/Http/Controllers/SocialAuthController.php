@@ -25,7 +25,7 @@ class SocialAuthController extends Controller
 
     public function getAccount(Request $request, $social)
     {
-        $provider = Socialite::with($social);
+        $provider = Socialite::with($social->name);
 
         if ($request->has('code') or $request->has('state')) {
             /**
