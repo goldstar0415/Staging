@@ -47,7 +47,7 @@
             {{item.sender.first_name}} {{item.sender.last_name}}
           </a>
           <!--at-->
-          <p class="description">{{item.body}}</p>
+          <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
           <attachments items="item.commentable.attachments"></attachments>
 
           <p class="time">{{item.created_at | toTimezone}}</p>
@@ -65,7 +65,24 @@
           <a class="author-name" ui-sref="profile.main({user_id: item.sender.id})">{{item.sender.first_name}}
             {{item.sender.last_name}}</a>
 
-          <p class="description">{{item.body}}</p>
+          <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
+
+          <p class="time">{{item.created_at | toTimezone}}</p>
+
+        </div>
+      </div>
+
+      <div ng-switch-when="App\SpotPhoto">
+        <a class="review-img" photo-viewer items="[item.commentable]" index="0">
+          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.photo_url.medium}}">
+        </a>
+
+        <div class="text-block">
+
+          <a class="author-name" ui-sref="profile.main({user_id: item.sender.id})">{{item.sender.first_name}}
+            {{item.sender.last_name}}</a>
+
+          <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
 
           <p class="time">{{item.created_at | toTimezone}}</p>
 

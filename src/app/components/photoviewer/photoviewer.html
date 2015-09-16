@@ -20,12 +20,12 @@
         <p class="location">{{PV.currentPhoto.address}}</p>
 
         <form name="form" ng-submit="PV.sendComment(form)" class="col-xs-12 new-post">
-          <textarea ng-model="PV.comment" name="comment" ng-maxlength="250" placeholder="Start typing..."
+          <textarea ng-model="PV.comment" name="comment" ng-maxlength="255" placeholder="Start typing..."
                     required></textarea>
 
           <div ng-if="form.comment.$error.maxlength && (form.$submitted || form.comment.$touched)"
                class="error-message-inline">
-            <div>can't be longer then 250 symbols</div>
+            <div>can't be longer then 255 symbols</div>
           </div>
 
           <input type="submit" value="Send">

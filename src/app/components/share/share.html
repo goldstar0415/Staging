@@ -2,32 +2,15 @@
   <a ng-click="isOpen = !isOpen" class="share" title="Share"></a>
 
   <div class="share-wrap" ng-show="isOpen">
-    <ul class="share-buttons clearfix" ng-if="share.text && share.url">
+    <ul class="share-buttons clearfix" >
       <li>
-        <a
-          socialshare
-          socialshare-provider="facebook"
-          socialshare-url="{{share.url}}"
-          socialshare-text="{{share.text}}"
-
-          class="facebook">facebook</a>
+        <a class="facebook">facebook</a>
       </li>
       <li>
-        <a
-          socialshare
-          socialshare-provider="google+"
-          socialshare-text="{{share.text}}"
-          socialshare-description="Yes it's super awesome, seriously!"
-          socialshare-url="{{share.url}}"
-          class="google">google</a>
+        <a class="google">google</a>
       </li>
       <li>
-        <a
-          socialshare
-          socialshare-provider="twitter"
-          socialshare-text="{{share.text}}"
-          socialshare-url="{{share.url}}"
-          class="twitter">twitter</a>
+        <a ng-click="share.twitter()" class="twitter">twitter</a>
       </li>
     </ul>
   </div>

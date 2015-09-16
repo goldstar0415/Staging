@@ -48,7 +48,8 @@
 
       <div class="col-md-10 col-sm-12 col-xs-12">
         <div class="col-sm-4 col-xs-12 no-pad">
-          <input ng-datepicker name="start_date" ng-model="Plan.start_date" today="true" type="text" required>
+          <input ng-datepicker name="start_date" ng-model="Plan.start_date" end-date="Plan.end_date" today="true"
+                 type="text" required>
 
           <div ng-messages="form.start_date.$error" ng-if="form.$submitted" class="error-message-inline">
             <div ng-message="required">Start date field can't be empty</div>
@@ -161,7 +162,8 @@
         <label class="col-sm-2 control-label">Location</label>
 
         <div class="col-sm-10">
-          <location address="attachment.data.address" location="attachment.data.location" limit="15" bind-marker="true"></location>
+          <location address="attachment.data.address" location="attachment.data.location" limit="15"
+                    bind-marker="true"></location>
         </div>
       </div>
 

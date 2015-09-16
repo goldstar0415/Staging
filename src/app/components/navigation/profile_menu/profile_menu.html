@@ -61,6 +61,9 @@
         </h2>
 
         <div ng-if="Profile.checkPermision(profileUser.privacy_info)">
+          <div class="activity-level">
+            {{$root.profileUser.activity_level}}
+          </div>
           <div class="age">
             <span ng-if="$root.profileUser.sex != null">{{$root.profileUser.sex == 'm' ? 'male' : 'female'}}</span>
             <span ng-if="$root.profileUser.birth_date">, {{$root.profileUser.birth_date | age}} years</span>
@@ -103,7 +106,7 @@
              ng-if="Profile.checkPermision(profileUser.privacy_followers)">
             {{$root.profileUser.count_followers}}
           </a>
-          <a users-modal="followings" user="$root.profileUser" class="followings"
+          <a users-modal="followings" user="$root.profileUser" class="following"
              ng-if="Profile.checkPermision(profileUser.privacy_followings)">
             {{ $root.profileUser.count_followings
             }}
@@ -151,7 +154,7 @@
       <aside class="module-sidebar clearfix"
              ng-if="!Profile.$state.is('spot') && $root.profileUser.followings.length > 0 && Profile.checkPermision(profileUser.privacy_followings)">
         <h2 class="sidebar-title">
-          <a users-modal="followings" user="$root.profileUser">
+          <a users-modal="following" user="$root.profileUser">
             Following
             <span class="counter">{{$root.profileUser.count_followings}}</span>
           </a>
