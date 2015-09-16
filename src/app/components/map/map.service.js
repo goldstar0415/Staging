@@ -273,62 +273,67 @@
       function InitMap(mapDOMElement) {
         //Leaflet touch hook
         L.Map.mergeOptions({
-          touchExtend: true
+          tap: true,
+          tapTolerance: 15
         });
-        L.Map.addInitHook(function() {
-          return L.DomEvent.off(this._container, "mousedown", this.keyboard._onMouseDown);
-        });
-        L.Map.TouchExtend = L.Handler.extend({
-          initialize: function (map) {
-            this._map = map;
-            this._container = map._container;
-            this._pane = map._panes.overlayPane;
+        L.Map.Tap = L.Handler.extend({
+          addHooks: function() {
+            L.DomEvent.on(this._map._container, 'touchstart', this._onDown, this);
+            L.DomEvent.on(this._map._container, 'touchend', this._onUp, this);
+            L.DomEvent.on(this._map._container, 'touchmove', this._onMove, this);
           },
-          addHooks: function () {
-            L.DomEvent.on(this._container, 'touchstart', this._onTouchStart, this);
-            L.DomEvent.on(this._container, 'touchend', this._onTouchEnd, this);
-            L.DomEvent.on(this._container, 'touchmove', this._onTouchMove, this);
+          removeHooks: function() {
+            L.DomEvent.off(this._map._container, 'touchstart', this._onDown, this);
+            L.DomEvent.off(this._map._container, 'touchend', this._onUp, this);
+            L.DomEvent.off(this._map._container, 'touchmove', this._onMove, this);
           },
-          removeHooks: function () {
-            L.DomEvent.off(this._container, 'touchstart', this._onTouchStart);
-            L.DomEvent.off(this._container, 'touchend', this._onTouchEnd);
-            L.DomEvent.off(this._container, 'touchmove', this._onTouchMove);
-          },
-          _onTouchEvent: function (e, type) {
-            var touch, containerPoint, layerPoint, latlng;
-            if (!this._map._loaded) {
+          _onDown: function(e) {
+            if (!e.touches) {
               return;
             }
+            L.DomEvent.preventDefault(e);
 
-            touch = e.touches[0];
-            containerPoint = L.point(touch.clientX, touch.clientY);
-            layerPoint = this._map.containerPointToLayerPoint(containerPoint);
-            latlng = this._map.layerPointToLatLng(layerPoint);
 
-            this._map.fire(type, {
-              latlng: latlng,
-              layerPoint: layerPoint,
-              containerPoint: containerPoint,
-              originalEvent: e
-            });
-          },
-          _onTouchStart: function (e) {
-            this._onTouchEvent(e, 'touchstart');
-          },
-          _onTouchMove: function (e) {
-            this._onTouchEvent(e, 'touchmove');
-          },
-          _onTouchEnd: function (e) {
-            if (!this._map._loaded) {
+            if (e.touches.length > 1) {
               return;
             }
+            var first = e.touches[0],
+              el = first.target;
+            this._simulateEvent('mousedown', first);
+          },
+          _onUp: function(e) {
+            if (e && e.changedTouches) {
 
-            this._map.fire('touchend', {
-              originalEvent: e
-            });
+              var first = e.changedTouches[0],
+                el = first.target;
+
+              this._simulateEvent('mouseup', first);
+            }
+          },
+          _onMove: function(e) {
+            var first = e.changedTouches[0];
+            this._newPos = new L.Point(first.clientX, first.clientY);
+            this._simulateEvent('mousemove', first);
+          },
+          _simulateEvent: function(type, e) {
+
+            var simulatedEvent = document.createEvent('MouseEvents');
+
+            simulatedEvent._simulated = true;
+            e.target._simulatedClick = true;
+
+            simulatedEvent.initMouseEvent(
+              type, true, true, window, 1,
+              e.screenX, e.screenY,
+              e.clientX, e.clientY,
+              false, false, false, false, 0, null);
+
+            e.target.dispatchEvent(simulatedEvent);
           }
         });
-        L.Map.addInitHook('addHandler', 'touchExtend', L.Map.TouchExtend);
+        if (L.Browser.touch) {
+          L.Map.addInitHook('addHandler', 'tap', L.Map.Tap);
+        }
 
         //Circle geoJson hook
         var circleToGeoJSON = L.Circle.prototype.toGeoJSON;
@@ -520,15 +525,9 @@
         var points = [];
         var polyline = null;
 
-        if (L.Browser.touch) {
-          map.on('touchstart', start);
-          map.on('touchmove', move);
-          map.on('touchend', end);
-        } else {
           map.on('mousedown', start);
           map.on('mousemove', move);
           map.on('mouseup', end);
-        }
 
         function start(e) {
           console.log(e);
@@ -568,15 +567,9 @@
         var radius = 1000;
         var circle = null;
 
-        if (L.Browser.touch) {
-          map.on('touchstart', start);
-          map.on('touchmove', move);
-          map.on('touchend', end);
-        } else {
           map.on('mousedown', start);
           map.on('mousemove', move);
           map.on('mouseup', end);
-        }
 
 
         function start(e) {

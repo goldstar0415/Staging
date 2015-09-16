@@ -26,7 +26,7 @@
           modalClass: 'authentication',
           resolve: {
             usersType: function () {
-              return _.include(s.type) ? s.type : 'followings';
+              return s.type;
             },
             user: function () {
               return s.user;
@@ -50,7 +50,7 @@
     /** @ngInject */
     function FollowersModalController(usersType, user, users, $modalInstance) {
       var vm = this;
-      vm.usersType = usersType == 'followings' ? 'following' : usersType;
+      vm.usersType = usersType;
       vm.user = user;
       vm.users = users;
 

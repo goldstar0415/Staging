@@ -35,7 +35,6 @@
         abstract: true,
         resolve: {
           user: function ($rootScope, User, currentUser, $stateParams, UserService, $state) {
-            console.log($state);
 
             if (currentUser && currentUser.id == $stateParams.user_id) {
               return User.currentUser({}, function (user) {

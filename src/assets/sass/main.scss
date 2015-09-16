@@ -986,12 +986,12 @@ sign-in, sign-up {
 }
 
 .snap-content {
-  overflow: initial;
+  overflow: visible;
 }
 
 .modal-open {
   .snap-content {
-    overflow: initial;
+    overflow: visible;
   }
   .modal {
     height: 100%;

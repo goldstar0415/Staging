@@ -98,7 +98,9 @@
     vm.create = function (form) {
       form.$submitted = true;
 
-      vm.addLocation(vm.newLocation);
+      if (vm.newLocation && vm.newLocation.address) {
+        vm.addLocation(vm.newLocation);
+      }
       if (form.$valid && vm.category_id !== '') {
         var tags = filterTags();
         var locations = filterLocations();
