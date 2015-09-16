@@ -185,7 +185,7 @@
               <span class="avatar">
               <img ng-src="{{item.cover_url.thumb}}"/>
 </span>
-              <a class="sidebar-user-name">{{item.title}}</a>
+              <a class="sidebar-user-name" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a>
             </a>
           </div>
         </div>

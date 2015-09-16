@@ -42,10 +42,11 @@
       width: 100%;
       height: 77px;
       position: relative;
-      img {
-        width: 100%;
-        height: 77px;
+      .wrap-img {
         border-radius: 10px 0 0 0;
+        max-height: 77px;
+        overflow: hidden;
+        display: block;
       }
       .star-event {
         //opacity: 0.6;
