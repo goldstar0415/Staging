@@ -20,18 +20,11 @@ class SocialAuthController extends Controller
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;
-        foreach (Social::all('name')->toArray() as $row) {
-            $this->accepts_socials[] = $row['name'];
-        }
         $this->middleware('guest');
     }
 
     public function getAccount(Request $request, $social)
     {
-        if (!in_array($social, $this->getAcceptsSocials())) {
-            abort(400);
-        }
-
         $provider = Socialite::with($social);
 
         if ($request->has('code') or $request->has('state')) {
@@ -84,13 +77,5 @@ class SocialAuthController extends Controller
         $request->user()->socials()->detach($social->id);
 
         return ['message' => true];
-    }
-
-    /**
-     * @return array
-     */
-    public function getAcceptsSocials()
-    {
-        return $this->accepts_socials;
     }
 }
