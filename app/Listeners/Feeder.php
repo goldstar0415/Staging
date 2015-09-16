@@ -27,9 +27,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Feeder implements ShouldQueue
+class Feeder /*implements ShouldQueue*/
 {
-    use InteractsWithQueue;
+//    use InteractsWithQueue;
     /**
      * @var Guard
      */
@@ -55,7 +55,7 @@ class Feeder implements ShouldQueue
             case $event instanceof UserFollowEvent:
                 $following = $event->getFollowing();
                 $this->addFeed($event, $event->getFollower()->followers->reject(function ($item) use ($following) {
-                    return $item == $following;
+                    return $item->id === $following->id;
                 }));
                 $this->addFeed($event, $following);
                 break;
