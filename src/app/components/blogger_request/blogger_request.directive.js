@@ -6,7 +6,7 @@
     .directive('bloggerRequest', bloggerRequest);
 
   /** @ngInject */
-  function bloggerRequest($modal) {
+  function bloggerRequest($modal, $rootScope, SignUpService) {
     return {
       restrict: 'A',
       templateUrl: '/app/components/blogger_request/blogger_request.html',
@@ -17,11 +17,15 @@
     /** @ngInject */
     function BloggerRequestLink(scope, element, attrs, ctrl, transclude) {
       element.click(function () {
-        $modal.open({
-          templateUrl: 'BloggerRequestModal.html',
-          controller: BloggerRequestController,
-          controllerAs: 'modal'
-        });
+        if ($rootScope.currentUser) {
+          $modal.open({
+            templateUrl: 'BloggerRequestModal.html',
+            controller: BloggerRequestController,
+            controllerAs: 'modal'
+          });
+        } else {
+          SignUpService.openModal('SignUpModal.html');
+        }
       });
     }
 
@@ -37,7 +41,7 @@
         Post.request({}, {body: vm.message}, function () {
           toastr.success('Request successfully send');
           vm.close();
-        })
+        });
       };
 
     }

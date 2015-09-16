@@ -6,7 +6,7 @@
     .directive('location', location);
 
   /** @ngInject */
-  function location(MapService, $http, toastr) {
+  function location(MapService, $http, toastr, $rootScope) {
     return {
       restrict: 'E',
       templateUrl: '/app/components/location_autocomplete/location.html',
@@ -47,18 +47,27 @@
           s.viewAddress = s.address;
         });
 
-        MapService.GetMap().on('click', onMapClick);
+        e.on('focusin', function () {
+          if (!s.location) {
+            MapService.GetMap().on('click', onMapClick);
+          }
+        });
 
 
         function onMapClick(event) {
-          console.log('map click');
-          s.location = event.latlng;
+          console.log('map click', event.latlng);
+          if (!s.location) {
+            s.location = event.latlng;
 
-          //MapService.GetAddressByLatlng(event.latlng, function (data) {
-          //  s.location = data.latlng;
-          //  s.address = data.address;
-          //  s.viewAddress = data.address;
-          //});
+            moveOrCreateMarker(event.latlng);
+
+            MapService.GetAddressByLatlng(event.latlng, function (data) {
+              s.address = data.display_name;
+              s.viewAddress = data.display_name;
+            });
+          }
+
+          MapService.GetMap().off('click');
         }
 
 
@@ -67,16 +76,20 @@
             if (s.marker) {
               s.marker.setLatLng(latlng);
             } else {
-              s.marker = MapService.CreateMarker(latlng, {draggable: true});
-              MapService.BindMarkerToInput(s.marker, function (data) {
-                console.log(data, s);
-                s.location = data.latlng;
-                s.address = data.address;
-                s.viewAddress = data.address;
-              })
+              createMarker(latlng);
             }
             MapService.GetMap().setView(s.marker.getLatLng(), 12);
           }
+        }
+
+        function createMarker(latlng) {
+          s.marker = MapService.CreateMarker(latlng, {draggable: true});
+          MapService.BindMarkerToInput(s.marker, function (data) {
+            console.log(data, s);
+            s.location = data.latlng;
+            s.address = data.address;
+            s.viewAddress = data.address;
+          });
         }
 
         function removeMarker() {
@@ -99,18 +112,19 @@
           }
         };
         s.SetCurrentLocation = function () {
-          MapService.GetCurrentLocation(function (e) {
-            if (e.type == 'locationerror') {
+          //MapService.GetCurrentLocation(function (e) {
+          //  console.log(e);
+            if (!$rootScope.currentLocation) {
               toastr.error('Geolocation error!');
             } else {
-              MapService.GetAddressByLatlng(e.latlng, function (data) {
+              MapService.GetAddressByLatlng($rootScope.currentLocation, function (data) {
                 s.location = e.latlng;
                 s.address = data.display_name;
                 s.viewAddress = data.display_name;
                 moveOrCreateMarker(e.latlng);
               })
             }
-          });
+          //});
         };
         s.onAutocompleteSelect = function ($item, $model, $label) {
           if (provider == 'google') {

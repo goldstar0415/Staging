@@ -16,10 +16,12 @@
 
 
     function save(form) {
+      var data = angular.copy(vm),
+        req = {},
+        url = API_URL + '/posts';
+
       if (form.$valid) {
-        var req = {},
-          data = angular.copy(vm),
-          url = API_URL + '/posts';
+        delete data.categories;
 
         req.payload = JSON.stringify(data);
         if (vm.id) {

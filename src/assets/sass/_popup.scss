@@ -42,18 +42,24 @@
       width: 100%;
       height: 77px;
       position: relative;
-      img {
-        width: 100%;
-        height: 77px;
+      .wrap-img {
         border-radius: 10px 0 0 0;
+        max-height: 77px;
+        overflow: hidden;
+        display: block;
       }
       .star-event {
-        opacity: 0.6;
+        //opacity: 0.6;
         width: 100%;
         position: absolute;
         top: 5px;
         left: 10px;
         font-size: 14px;
+        .outline-none {
+          .star-default, .star-active {
+            text-shadow: 0px 1px 3px black, 0px 0px;
+          }
+        }
       }
     }
     .popup-links {
@@ -95,10 +101,12 @@
     position: relative;
     height: 197px;
     .links-nav {
-
-      position: absolute;
-      bottom: 10px;
+      position: relative;
+      bottom: 5px;
       width: 95%;
+      .tools {
+        margin: 0;
+      }
       .big-plus {
         display: inline-block;
         float: right;
@@ -138,6 +146,32 @@
         background: url(/assets/img/icons/tools.png) no-repeat -4px -111px;
         &:hover {
           background: url(/assets/img/icons/tools.png) no-repeat -4px -128px;
+        }
+      }
+      .share {
+        background: url(/assets/img/icons/share.png) 0 0 no-repeat;
+        position: absolute;
+        right: 0;
+        margin: 0;
+        bottom: 4px;
+        padding: 0 12px 0 0;
+        &:hover {
+          background: url(/assets/img/icons/share.png) -12px 0 no-repeat;
+        }
+      }
+      .share-wrap {
+        bottom: -30px;
+        right: -15px;
+        border: 1px solid $light_grey;
+        .share-buttons {
+          padding: 4px 4px 2px;
+          li {
+            margin: 2px 5px;
+            a {
+              margin-right: 0;
+              height: 16px;
+            }
+          }
         }
       }
     }
@@ -194,7 +228,7 @@
       height: 85px;
       .description {
         padding: 6px 5px 10px;
-        height: 80px;
+        height: 9rem;
         font-size: 12px;
         font-weight: 500;
         line-height: 14px;
@@ -318,6 +352,7 @@
             font-size: 12px;
             line-height: 12px;
             font-weight: 600;
+            white-space: nowrap;
           }
           .description {
             height: 42px;
@@ -330,6 +365,11 @@
             line-height: 11px;
             padding-top: 2px;
             color: #cdd0d2;
+          }
+          span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
           }
         }
       }

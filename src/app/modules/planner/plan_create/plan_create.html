@@ -36,7 +36,7 @@
       <label class="col-sm-2 control-label">Location</label>
 
       <div class="col-sm-10">
-        <location address="Plan.address" location="Plan.location" limit="15"></location>
+        <location address="Plan.address" location="Plan.location" limit="15" bind-marker="true"></location>
 
         <div ng-if="form.$submitted && !Plan.address" class="error-message-inline">
           <div>is required</div>
@@ -161,7 +161,7 @@
         <label class="col-sm-2 control-label">Location</label>
 
         <div class="col-sm-10">
-          <location address="attachment.data.address" location="attachment.data.location" limit="15"></location>
+          <location address="attachment.data.address" location="attachment.data.location" limit="15" bind-marker="true"></location>
         </div>
       </div>
 

@@ -4,8 +4,9 @@
 
       <stars item="data.spot" class="star-event"></stars>
 
-
+<span class="wrap-img">
       <img ng-src="{{data.spot.cover_url.medium}}">
+  </span>
 
       <div class="star-event">
         <!--<img src="/assets/img/icons/star.png"><img src="/assets/img/icons/star.png">-->
@@ -50,17 +51,13 @@
           <img ng-src="{{currentReview.sender.avatar_url.thumb}}">
         </div>
         <div class="col-xs-10 content">
-          <a class="reviews-user">{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}</a>
+          <span><a class="reviews-user">{{currentReview.sender.first_name + ' ' +
+            currentReview.sender.last_name}}</a></span>
 
           <p class="description" ng-bind-html="currentReview.body | linky:'_blank'"></p>
 
           <p class="date-reviews ">{{currentReview.created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>
 
-          <div class="plus-minus">
-            <a class="plus"></a>
-            <norb>0</norb>
-            <a class="minus"></a>
-          </div>
         </div>
 
       </div>

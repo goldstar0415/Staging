@@ -50,7 +50,7 @@
     /** @ngInject */
     function FollowersModalController(usersType, user, users, $modalInstance) {
       var vm = this;
-      vm.usersType = usersType;
+      vm.usersType = usersType == 'followings' ? 'following' : usersType;
       vm.user = user;
       vm.users = users;
 

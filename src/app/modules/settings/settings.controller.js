@@ -18,8 +18,8 @@
 
     vm.privacyOptions = [
       {value: 1, label: 'All users have access'},
-      {value: 2, label: 'Only followers&followings have access'},
-      {value: 3, label: 'Only followings have access'},
+      {value: 2, label: 'Only followers&following have access'},
+      {value: 3, label: 'Only following has access'},
       {value: 4, label: 'Only authorized users have access'},
       {value: 5, label: 'Nobody has access'}
     ];
@@ -54,14 +54,18 @@
     vm.saveSecuritySettings = function (form) {
       if (form.$valid) {
         //send email
-        $http.put(API_URL + '/settings', {
-          type: 'security',
-          params: {
-            email: vm.data.newEmail
-          }
-        })
+        $http
+          .put(API_URL + '/settings', {
+            type: 'security',
+            params: {
+              email: vm.data.newEmail
+            }
+          })
           .success(function (data, status, headers, config) {
-            toastr.success('Settings saved')
+            toastr.success('Settings saved');
+            vm.data.email = vm.data.newEmail;
+            vm.data.newEmail = '';
+            form.$submitted = form.$touched = false;
           })
           .error(function (data, status, headers, config) {
             toastr.error('This email has already been taken')

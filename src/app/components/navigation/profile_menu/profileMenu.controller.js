@@ -6,7 +6,7 @@
     .controller('ProfileMenuController', ProfileMenuController);
 
   /** @ngInject */
-  function ProfileMenuController(User, $state, PermissionService) {
+  function ProfileMenuController(User, $state, PermissionService, $rootScope) {
     var vm = this;
     vm.$state = $state;
     vm.checkPermision = PermissionService.checkPermission;
@@ -31,7 +31,7 @@
       };
     };
 
-    vm.isRole = function (user, name) {
+    $rootScope.isRole = function (user, name) {
       if (user) {
         var roles = _.pluck(user.roles, 'name');
         return roles.length > 0 && roles.indexOf(name) >= 0;

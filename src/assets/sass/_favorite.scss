@@ -1,10 +1,19 @@
 /*     favorite page */
 .event.block {
   .spot-icon {
-    width: 15%;
+    width: 64px;
+    height: 64px;
+    display: block;
+    overflow: hidden;
+    float: left;
+    img {
+      min-width: 100%;
+      min-height: 64px;
+    }
   }
   .text-content {
     width: 85%;
+    padding-left: 15px;
   }
 }
 
@@ -80,6 +89,7 @@
     .text-content {
       width: 100%;
       display: block;
+      padding-left: 0;
     }
     .fav-avatar-icon {
       margin-bottom: 10px;

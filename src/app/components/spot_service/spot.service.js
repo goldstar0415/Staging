@@ -6,7 +6,7 @@
     .factory('SpotService', SpotService);
 
   /** @ngInject */
-  function SpotService(Spot, moment, toastr, dialogs, $rootScope, SignUpService) {
+  function SpotService(Spot, moment, toastr, dialogs, $rootScope, SignUpService, DATE_FORMAT) {
     var firstPhotoIndex, secondPhotoIndex, reviewIndex;
     var $scope;
 
@@ -73,13 +73,14 @@
     }
 
     function formatSpot(spot) {
-      var offset = moment().utcOffset();
-
+      console.log(spot);
       spot.type = spot.category.type.display_name;
-      spot.start_time = moment(spot.start_date).format('hh:mm a');
-      spot.end_time = moment(spot.end_date).format('hh:mm a');
-      spot.start_date = moment(spot.start_date).format('YYYY-MM-DD');
-      spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
+      if (spot.start_date && spot.end_date) {
+        spot.start_time = moment(spot.start_date).format(DATE_FORMAT.time);
+        spot.end_time = moment(spot.end_date).format(DATE_FORMAT.time);
+        spot.start_date = moment(spot.start_date).format('YYYY-MM-DD');
+        spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
+      }
 
       return spot;
     }
@@ -105,7 +106,6 @@
       if (source && source.data.length > 0) {
         var key = _.keys(data)[0];
         var spot = _.findWhere(source.data, {id: id});
-        console.log(source, spot);
         if (spot) {
           spot[key] = data[key];
         }
@@ -123,7 +123,6 @@
 
       $scope.showPhotos = $scope.data.spot.photos.length > 0;
       $scope.showPhotosControls = $scope.data.spot.photos.length > 2;
-      console.log($scope);
       if ($scope.data.spot.comments.length > 0) {
         $scope.currentReview = $scope.data.spot.comments[0];
       }
@@ -191,7 +190,6 @@
         idx = reviews.length - 1;
       }
       reviewIndex = idx;
-      console.log(idx);
       $scope.currentReview = reviews[idx];
     }
 

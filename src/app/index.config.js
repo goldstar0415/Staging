@@ -18,6 +18,7 @@
 
     // toastr
     toastr.options.timeOut = 1500;
+    toastr.options.extendedTimeOut = 0;
     toastr.options.positionClass = 'toast-top-right';
     toastr.options.preventDuplicates = true;
     toastr.options.progressBar = true;
