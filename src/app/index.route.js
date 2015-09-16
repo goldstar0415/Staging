@@ -12,7 +12,7 @@
         abstract: true,
         template: '<ui-view  />',
         resolve: {
-          currentUser: function ($q, User, $rootScope, UserService) {
+          currentUser: function ($q, User, $rootScope, UserService, $state) {
             if ($rootScope.currentUser) {
               return $rootScope.currentUser;
             } else if (!$rootScope.currentUserFailed) {
@@ -34,7 +34,9 @@
         template: '<ui-view  />',
         abstract: true,
         resolve: {
-          user: function ($rootScope, User, currentUser, $stateParams, UserService) {
+          user: function ($rootScope, User, currentUser, $stateParams, UserService, $state) {
+            console.log($state);
+
             if (currentUser && currentUser.id == $stateParams.user_id) {
               return User.currentUser({}, function (user) {
                 $rootScope.currentUser = user;

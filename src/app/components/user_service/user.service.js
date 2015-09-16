@@ -16,9 +16,12 @@
 
     function getCurrentUserPromise() {
       var deferred = $q.defer();
-
+      console.log($state);
       User.currentUser({}, function success(user) {
         setCurrentUser(user);
+        if ($state.current.parent != 'profile') {
+          setProfileUser(user);
+        }
         deferred.resolve(user);
       }, function fail() {
         $rootScope.currentUserFailed = true;
