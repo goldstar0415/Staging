@@ -6,7 +6,7 @@
     .controller('SpotMapModalController', SpotMapModalController);
 
   /** @ngInject */
-  function SpotMapModalController($scope, spot, marker, SpotService) {
+  function SpotMapModalController($scope, spot, marker, SpotService, $modalInstance) {
     $scope.data = spot;
     $scope.marker = marker;
     $scope.saveToCalendar = SpotService.saveToCalendar;
@@ -29,5 +29,9 @@
 
     $scope.nextReview = SpotService.mapNextReview;
     $scope.prevReview = SpotService.mapPrevReview;
+
+    $scope.close = function () {
+      $modalInstance.close();
+    }
   }
 })();
