@@ -8,24 +8,24 @@ class Attachments
 {
     protected $request;
 
-    public static $rules = [
+    protected static $rules = [
         'attachments.album_photos' => [
-            'required_without_all:message,attachments.spots,attachments.areas,attachments.plans',
+            'required_without_all:{message},attachments.spots,attachments.areas,attachments.plans',
             'array',
             'count_max:10'
         ],
         'attachments.spots' => [
-            'required_without_all:message,attachments.album_photos,attachments.areas,attachments.plans',
+            'required_without_all:{message},attachments.album_photos,attachments.areas,attachments.plans',
             'array',
             'count_max:10'
         ],
         'attachments.areas' => [
-            'required_without_all:message,attachments.album_photos,attachments.spots,attachments.plans',
+            'required_without_all:{message},attachments.album_photos,attachments.spots,attachments.plans',
             'array',
             'count_max:10'
         ],
         'attachments.plans' => [
-            'required_without_all:message,attachments.album_photos,attachments.spots,attachments.areas',
+            'required_without_all:{message},attachments.album_photos,attachments.spots,attachments.areas',
             'array',
             'count_max:10'
         ]
@@ -54,5 +54,15 @@ class Attachments
         if ($this->request->has('attachments.plans')) {
             $model->plans()->sync($this->request->input('attachments.plans'));
         }
+    }
+
+    public static function rules($message_field = 'message')
+    {
+        $rules = self::$rules;
+        foreach ($rules as &$rule) {
+            $rule[0] = str_replace('{message}', $message_field, $rule[0]);
+        }
+
+        return $rules;
     }
 }

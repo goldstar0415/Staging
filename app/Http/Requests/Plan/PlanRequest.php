@@ -43,9 +43,9 @@ class PlanRequest extends Request
                 'description' => 'string|max:255',
                 'start_date' => 'date_format:Y-m-d H:i:s',
                 'end_date' => 'date_format:Y-m-d H:i:s',
-                'address' => 'string|max:255',
-                'location.lat' => 'numeric',
-                'location.lng' => 'numeric'
+                'address' => 'required_with:location|string|max:255',
+                'location.lat' => 'required|numeric',
+                'location.lng' => 'required|numeric'
             ]
         ));
         $rules = array_merge($rules, $this->arrayFieldRules('spots', ['id' => 'integer', 'position' => 'integer']));
