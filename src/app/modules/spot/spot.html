@@ -2,7 +2,16 @@
   <!-- section with spot -->
   <section class="one-spot-section">
     <div>
-      <stars item="Spot.spot" class="clearfix"></stars>
+      <div class="col-xs-12 no-pad">
+        <stars item="Spot.spot" class="clearfix"></stars>
+
+                            <span ng-class="{'event-spot-page':item.type == 'Event',
+                                     'recreation-spot':item.type == 'Recreation',
+                                     'pitstop-spot':item.type == 'PitStop'}">
+                        {{item.type}}
+                    </span>
+
+      </div>
 
       <div ng-if="Spot.spot.is_approved == false">
         This submittal is under review and will be posted shortly.
@@ -81,7 +90,8 @@
        class="clearfix" infinite-scroll-distance="1">
     <div class="col-xs-12 post" ng-repeat="post in Spot.comments.data">
       <div class="col-xs-12 no-pad">
-        <button type="button" class="close" ng-click="Spot.deleteComment(post, $index)" ng-if="currentUser.id == Spot.spot.user_id">
+        <button type="button" class="close" ng-click="Spot.deleteComment(post, $index)"
+                ng-if="currentUser.id == Spot.spot.user_id">
           <span aria-hidden="true">×</span>
         </button>
       </div>
