@@ -846,20 +846,20 @@
           //TODO: отдельный route под selection шаринг. В начале сейв селекшена, а потом его шаринг.
 
         } else {
-          if ($rootScope.currentParams.area_id) {
-            req.area_id = $rootScope.currentParams.area_id;
-            Area.update(req, function (data) {
-              toastr.success('Selection saved!');
-            }, function (data) {
-              toastr.error('Error!')
-            })
-          } else {
+          //if ($rootScope.currentParams.area_id) {
+          //  req.area_id = $rootScope.currentParams.area_id;
+          //  Area.update(req, function (data) {
+          //    toastr.success('Selection saved!');
+          //  }, function (data) {
+          //    toastr.error('Error!')
+          //  })
+          //} else {
             Area.save(req, function (data) {
               toastr.success('Selection saved!');
             }, function (data) {
               toastr.error('Error!')
             });
-          }
+          //}
         }
       }
 
@@ -1030,7 +1030,7 @@
 
       function BindSpotPopup(marker, spot) {
 
-        if ($rootScope.isMobile) {
+        if (!$rootScope.isMobile) {
           marker.on('click', function () {
             $modal.open({
               templateUrl: 'SpotMapModal.html',

@@ -72,7 +72,7 @@
   <div id="map" class="mapResize map {{mapState}}"
        ng-class="{'hidden-sm': mapState != 'full-size' && options.snap.disable == 'right', 'hidden-xs': mapState != 'full-size' && options.snap.disable == 'right'}"></div>
   <!-- content container-->
-  <div ng-show="mapState != 'full-size'" ui-view ></div>
+  <div ng-show="mapState != 'full-size'" ui-view></div>
 </div>
 
 <ng-include src="'/app/components/map_partials/unregistered_banner.html'" ng-if="mapState=='full-size'"></ng-include>
@@ -101,5 +101,18 @@
 <!-- endinject -->
 <!-- endbuild -->
 
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({appId: 'YOUR APP ID', status: true, cookie: true,
+      xfbml: true});
+  };
+  (function() {
+    var e = document.createElement('script'); e.async = true;
+    e.src = document.location.protocol +
+    '//connect.facebook.net/en_US/all.js';
+    document.getElementById('fb-root').appendChild(e);
+  }());
+</script>
 </body>
 </html>
