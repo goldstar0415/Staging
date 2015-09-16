@@ -25,12 +25,12 @@ class SpotCommentRequest extends Request
     public function rules()
     {
         $rules = array_merge(
-            ['message' => [
+            ['body' => [
                 'required_without_all:attachments.album_photos,attachments.spots,attachments.areas',
                 'string',
                 'max:5000'
             ]],
-            Attachments::$rules,
+            Attachments::rules('body'),
             $this->arrayFieldRules('attachments.album_photos', 'integer'),
             $this->arrayFieldRules('attachments.spots', 'integer'),
             $this->arrayFieldRules('attachments.areas', 'integer')

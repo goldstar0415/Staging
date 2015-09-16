@@ -34,7 +34,7 @@ class SendMessageRequest extends Request
         ];
         $rules = array_merge(
             $rules,
-            Attachments::$rules,
+            Attachments::rules(),
             $this->arrayFieldRules('attachments.album_photos', 'integer'),
             $this->arrayFieldRules('attachments.spots', 'integer'),
             $this->arrayFieldRules('attachments.areas', 'integer')
