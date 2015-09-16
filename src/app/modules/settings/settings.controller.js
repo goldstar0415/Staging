@@ -24,8 +24,8 @@
       {value: 5, label: 'Nobody has access'}
     ];
     vm.notificationOptions = [
-      {value: 0, label: 'Receive'},
-      {value: 1, label: 'Don\'t receive'}
+      {value: true, label: 'Receive'},
+      {value: false, label: 'Don\'t receive'}
     ];
 
     vm.savePersonalSettings = function (form) {
