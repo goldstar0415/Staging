@@ -17,9 +17,6 @@
         display: block;
         float: left;
         @include transition_bg_color;
-        &:last-child {
-          float: right;
-        }
         &:hover {
           background-color: $dark_blue;
           @include transition_bg_color;
@@ -33,6 +30,7 @@
       }
       .delete {
         background: url(/assets/img/icons/photo-tools.png) 6px -23px no-repeat rgba(12, 38, 56, .5);
+        float: right;
         &:hover {
           float: right;
         }
