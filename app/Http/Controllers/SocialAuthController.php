@@ -31,7 +31,7 @@ class SocialAuthController extends Controller
     {
         $provider = Socialite::with($social->name);
 
-        if ($request->has('code') or $request->has('state')) {
+        if ($this->isConfirmed($request)) {
             /**
              * @var \Laravel\Socialite\Contracts\User $user
              */
@@ -42,7 +42,8 @@ class SocialAuthController extends Controller
                 if (!$user) {
                     abort(400);
                 }
-                $exist_user = $social->users()->wherePivot('social_key', $user->id)->first();
+                //Check if user exists by social identifier
+                $exist_user = $this->getUserByKey($social, $user->id);
 
                 if ($exist_user) {
                     $this->auth->login($exist_user);
@@ -53,11 +54,16 @@ class SocialAuthController extends Controller
 
                     return redirect(frontend_url());
                 }
+                //Check if account exists with social email
+                $exist_user = User::where('email', $user->getEmail())->first();
 
-                if (User::where('email', $user->getEmail())->exists()) {
-                    return response()->json(['message' => 'User already exists with this email'], 400);
+                if ($exist_user) {
+                    $this->auth->login($exist_user);
+                    $this->auth->user()->socials()->attach($social, ['social_key' => $user->id]);
+
+                    return redirect(frontend_url());
                 }
-
+                //If account for current social data doesn't exists
                 list($first_name, $last_name) = explode(' ', $user->getName());
                 $new_user = User::create(
                     [
@@ -72,7 +78,7 @@ class SocialAuthController extends Controller
 
                 return redirect(frontend_url());
             }
-
+            //If attach social for existing account
             $user_socials = $request->user()->socials();
 
             if ($user_socials->where('name', $social->name)->exists()) {
@@ -82,9 +88,13 @@ class SocialAuthController extends Controller
                 );
             }
 
+            if ($this->getUserByKey($social, $user->getId())) {
+                return response()->json(['message' => 'Somebody already attached this social'], 403);
+            }
+
             $user_socials->attach($social, ['social_key' => $user->id]);
 
-            return redirect(frontend_url());
+            return redirect(frontend_url('settings'));
         }
 
         return $provider->redirect();
@@ -100,5 +110,24 @@ class SocialAuthController extends Controller
         $request->user()->socials()->detach($social->id);
 
         return ['message' => true];
+    }
+
+    /**
+     * @param Social $social
+     * @param integer $key
+     * @return mixed
+     */
+    protected function getUserByKey($social, $key)
+    {
+        return $social->users()->wherePivot('social_key', $key)->first();
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    protected function isConfirmed(Request $request)
+    {
+        return $request->has('code') or $request->has('state');
     }
 }
