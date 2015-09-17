@@ -43,7 +43,7 @@ class SocialAuthController extends Controller
                     abort(400);
                 }
 
-                if (User::where('email', $user->getEmail()->exists())) {
+                if (User::where('email', $user->getEmail())->exists()) {
                     return response()->json(['message' => 'User already exists with this email'], 400);
                 }
 
