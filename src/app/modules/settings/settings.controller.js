@@ -13,6 +13,7 @@
     vm.data.social_facebook = isSocial('facebook');
     vm.data.social_google = isSocial('google');
     vm.addSocial = addSocial;
+    vm.removeSocial = removeSocial;
     vm.images = UploaderService.images;
     vm.minDate = '01.01.1940';
 
@@ -116,16 +117,17 @@
         });
     };
     vm.saveNotificationSettings = function () {
-      $http.put(API_URL + '/settings', {
-        type: 'notifications',
-        params: {
-          notification_letter: vm.data.notification_letter,
-          notification_wall_post: vm.data.notification_wall_post,
-          notification_follow: vm.data.notification_follow,
-          notification_new_spot: vm.data.notification_new_spot,
-          notification_coming_spot: vm.data.notification_coming_spot
-        }
-      })
+      $http
+        .put(API_URL + '/settings', {
+          type: 'notifications',
+          params: {
+            notification_letter: vm.data.notification_letter,
+            notification_wall_post: vm.data.notification_wall_post,
+            notification_follow: vm.data.notification_follow,
+            notification_new_spot: vm.data.notification_new_spot,
+            notification_coming_spot: vm.data.notification_coming_spot
+          }
+        })
         .success(function (data, status, headers, config) {
           toastr.success('Settings saved')
         })
@@ -137,6 +139,20 @@
     function addSocial(type) {
       if (!isSocial(type)) {
         window.location.href = API_URL + '/account/' + type;
+      }
+    }
+
+    function removeSocial(type) {
+      if (isSocial(type)) {
+        var url = API_URL + '/account/' + type;
+        $http
+          .delete(url)
+          .success(function (data, status, headers, config) {
+            toastr.success('Settings saved')
+          })
+          .error(function (data, status, headers, config) {
+            toastr.error('Something went wrong')
+          });
       }
     }
 
