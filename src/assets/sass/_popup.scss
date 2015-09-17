@@ -438,6 +438,12 @@
   }
 }
 
+.post-popup {
+  .leaflet-popup-content-wrapper {
+    height: 12rem;
+  }
+}
+
 @media (max-width: 767px) {
   .popup {
     .close-event {
