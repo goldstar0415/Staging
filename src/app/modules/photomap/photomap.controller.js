@@ -6,7 +6,7 @@
     .controller('PhotomapController', PhotomapController);
 
   /** @ngInject */
-  function PhotomapController(albums, $stateParams, $state, MapService) {
+  function PhotomapController(albums, $stateParams, $state, dialogs, toastr, MapService) {
     var vm = this;
     vm.currentId = $stateParams.user_id;
     vm.albums = albums;
@@ -37,6 +37,15 @@
       if (count > 0) {
         MapService.FitBoundsOfCurrentLayer();
       }
+    }
+
+    vm.delete = function (item, idx) {
+      dialogs.confirm('Confirmation', 'Are you sure you want to delete album?').result.then(function () {
+        item.$delete(function () {
+          toastr.info('Album successfully deleted');
+          vm.albums.splice(idx, 1);
+        });
+      });
     }
   }
 })();
