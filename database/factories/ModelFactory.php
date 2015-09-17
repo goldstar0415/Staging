@@ -63,8 +63,7 @@ $factory->define(App\User::class, function (Generator $faker) use ($timestamps) 
         'notification_follow' => $faker->boolean(),
         'notification_new_spot' => $faker->boolean(),
         'notification_coming_spot' => $faker->boolean(),
-        'remember_token' => str_random(10),
-        'random_hash' => str_random()
+        'remember_token' => str_random(10)
     ], $timestamps());
 });
 

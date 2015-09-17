@@ -84,8 +84,7 @@ trait Registrar
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'random_hash' => str_random()
+            'password' => bcrypt($data['password'])
         ]);
     }
 

@@ -64,8 +64,7 @@ class SocialAuthController extends Controller
                         'email' => $user->getEmail(),
                         'first_name' => $first_name,
                         'last_name' => $last_name,
-                        'avatar' => $user->getAvatar(),
-                        'random_hash' => str_random()
+                        'avatar' => $user->getAvatar()
                     ]
                 );
                 $new_user->socials()->attach($social, ['social_key' => $user->id]);

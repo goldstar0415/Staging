@@ -11,6 +11,7 @@ use App\Role;
 use App\Services\Attachments;
 use App\Services\Privacy;
 use App\Spot;
+use App\User;
 use Illuminate\Support\ServiceProvider;
 use Request;
 use Validator;
@@ -24,15 +25,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Comment::created(function ($comment) {
+        Comment::created(function (Comment $comment) {
             event(new OnComment($comment));
         });
-        Spot::updated(function ($spot) {
+        
+        Spot::updated(function (Spot $spot) {
             if (Request::is('admin/spot_requests/*/save')) {
                 if ($spot->is_approved) {
                     event(new OnSpotCreate($spot));
                 }
             }
+        });
+        
+        User::creating(function (User $user) {
+            $user->random_hash = str_random();
+        });
+
+        User::created(function (User $user) {
+            $user->attachRole(Role::take('zoomer'));
         });
 
         BloggerRequest::updated(function (BloggerRequest $request) {
