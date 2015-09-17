@@ -28,8 +28,6 @@
       vm.categories[item.name] = item.categories;
     });
 
-    console.log(vm.categories);
-
     //vars
     vm.tags = [];
     vm.links = [];
@@ -46,7 +44,6 @@
     $scope.$watch('SpotCreate.start_date', function () {
       if (!vm.firstload) {
         if (vm.start_date) {
-          console.log('inside');
           var start = moment(vm.start_date, DATE_FORMAT.date);
           var end = moment(vm.end_date, DATE_FORMAT.date);
 

@@ -10,7 +10,7 @@
     var vm = this;
     var displayPlans = all_plans.data;
     var markers = [];
-    console.log(all_plans.data);
+
     vm.plans = {};
     vm.deletePlan = deletePlan;
     vm.sourceEvents = [

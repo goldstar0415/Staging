@@ -8,7 +8,6 @@
   /** @ngInject */
   function ChatRoomController(currentUser, user, messages, Message, toastr, ChatService) {
     var vm = this;
-    console.log(currentUser);
     vm.user = user;
     vm.message = '';
     vm.glued = true;
@@ -38,7 +37,6 @@
           vm.attachments.areas = [];
         },
         function error(resp) {
-          console.log(resp);
           toastr.error('Send message failed');
         });
     }

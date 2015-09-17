@@ -29,7 +29,6 @@
             vm.comments.data.unshift(message);
             vm.message = '';
           }, function error(resp) {
-            console.log(resp);
             toastr.error('Send message failed');
           });
       }

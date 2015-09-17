@@ -21,11 +21,22 @@
 
     function ShareController($state, $location, $window) {
       var vm = this;
+      var logo = $location.origin + '/assets/img/icons/logo.svg';
 
       switch (vm.type) {
         case 'spot':
           vm.text = vm.item.title;
           vm.url = $state.href('spot', {spot_id: vm.item.id, user_id: vm.item.user_id}, {absolute: true});
+          vm.picture = vm.item.cover_url.medium;
+          break;
+        case 'area':
+          vm.text = vm.item.title;
+          vm.url = $state.href('areas.preview', {area_id: vm.item.id}, {absolute: true});
+          vm.picture = logo;
+          break;
+        case 'post':
+          vm.text = vm.item.title;
+          vm.url = $state.href('blog.article', {slug: vm.item.slug}, {absolute: true});
           vm.picture = vm.item.cover_url.medium;
           break;
       }

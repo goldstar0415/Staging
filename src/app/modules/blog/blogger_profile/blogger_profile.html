@@ -28,7 +28,7 @@
     </div>
 
 
-    <p class="article-description" ng-bind-html="post.body" ></p>
+    <p class="article-description" ng-bind-html="post.body"></p>
 
     <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id">
       <a ui-sref="profile_blog.edit({slug: post.slug})" class="edit-blog-article">Edit</a>
@@ -37,7 +37,7 @@
       <a ng-click="Blog.removePost(post, $index)" class="delete-blog-article">Delete</a>
     </div>
 
-    <share links="post.share_links"></share>
+    <share item="post" type="post"></share>
   </div>
 </div>
 <div class="col-xs-12" ng-if="Blog.posts.length == 0">

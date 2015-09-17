@@ -47,7 +47,6 @@
 
             $modalInstance.close();
           }, function error(resp) {
-            console.log(resp);
             toastr.error('Send message failed');
           });
       };

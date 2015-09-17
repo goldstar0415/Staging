@@ -73,7 +73,6 @@
     }
 
     function formatSpot(spot) {
-      console.log(spot);
       spot.type = spot.category.type.display_name;
       if (spot.start_date && spot.end_date) {
         spot.start_time = moment(spot.start_date).format(DATE_FORMAT.time);

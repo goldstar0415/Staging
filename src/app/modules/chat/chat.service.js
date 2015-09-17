@@ -72,7 +72,6 @@
         });
       }
 
-      console.log(messages);
       return messages;
     }
 

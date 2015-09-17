@@ -55,7 +55,6 @@
 
 
         function onMapClick(event) {
-          console.log('map click', event.latlng);
           if (!s.location) {
             s.location = event.latlng;
 
@@ -85,7 +84,6 @@
         function createMarker(latlng) {
           s.marker = MapService.CreateMarker(latlng, {draggable: true});
           MapService.BindMarkerToInput(s.marker, function (data) {
-            console.log(data, s);
             s.location = data.latlng;
             s.address = data.address;
             s.viewAddress = data.address;
@@ -114,16 +112,16 @@
         s.SetCurrentLocation = function () {
           //MapService.GetCurrentLocation(function (e) {
           //  console.log(e);
-            if (!$rootScope.currentLocation) {
-              toastr.error('Geolocation error!');
-            } else {
-              MapService.GetAddressByLatlng($rootScope.currentLocation, function (data) {
-                s.location = e.latlng;
-                s.address = data.display_name;
-                s.viewAddress = data.display_name;
-                moveOrCreateMarker(e.latlng);
-              })
-            }
+          if (!$rootScope.currentLocation) {
+            toastr.error('Geolocation error!');
+          } else {
+            MapService.GetAddressByLatlng($rootScope.currentLocation, function (data) {
+              s.location = e.latlng;
+              s.address = data.display_name;
+              s.viewAddress = data.display_name;
+              moveOrCreateMarker(e.latlng);
+            })
+          }
           //});
         };
         s.onAutocompleteSelect = function ($item, $model, $label) {
@@ -160,7 +158,6 @@
         };
 
         s.validateField = function () {
-          console.log('blur', s.location);
           if (!s.location) {
             s.address = '';
             s.viewAddress = '';

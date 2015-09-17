@@ -38,10 +38,8 @@
       SpotService.removeSpot(spot, idx, function () {
         vm.spots.data.splice(idx, 1);
         if (vm.markersSpots[idx].marker) {
-          console.log('single marker', vm.markersSpots[idx].marker);
           MapService.GetCurrentLayer().removeLayer(vm.markersSpots[idx].marker);
         } else {
-          console.log('Multiple markers');
           MapService.GetCurrentLayer().removeLayers(vm.markersSpots[idx].markers)
         }
       });

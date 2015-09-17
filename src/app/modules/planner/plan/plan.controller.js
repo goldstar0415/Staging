@@ -41,7 +41,6 @@
           vm.attachments.spots = [];
           vm.attachments.areas = [];
         }, function error(resp) {
-          console.log(resp);
           toastr.error('Send message failed');
         })
     }
@@ -82,8 +81,6 @@
         activity.attachment_type = 'activity';
       });
       vm.plan_attachments = _.union(vm.activities, vm.spots);
-      console.log(vm.attachments);
-
     }
 
     InitMap();

@@ -9,22 +9,19 @@
         connect: function (socket_id) {
           socket = io.connect(SOCKET_URL);
 
-          socket.on('connect', function () {
-            console.log('Socket connected');
-          });
+          //socket.on('connect', function () {
+          //  console.log('Socket connected');
+          //});
 
           socket.on('user.' + socket_id + ':App\\Events\\OnMessage', function (data) {
-            console.log('new message ', data);
             ChatService.onNewMessage(data);
           });
           socket.on('user.' + socket_id + ':App\\Events\\OnMessageRead', function (data) {
-            console.log('read message ', data);
             ChatService.onReadMessage(data);
           });
         },
         disconnect: function () {
           socket.disconnect();
-          console.log('Socket disconnected');
         },
         on: function (eventName, callback) {
           socket.on(eventName, function () {

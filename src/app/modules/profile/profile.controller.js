@@ -39,7 +39,7 @@
           spot: item
         };
       });
-      console.log(spotsArray);
+
       MapService.drawSpotMarkers(spotsArray, 'other', true);
       if (spots.length > 0 && spots[0].points.length > 0) {
         MapService.FocusMapToGivenLocation(spots[0].points[0].location, 12);
@@ -64,7 +64,6 @@
           vm.attachments.areas = [];
         },
         function error(resp) {
-          console.log(resp);
           toastr.error('Send message failed');
         })
     };

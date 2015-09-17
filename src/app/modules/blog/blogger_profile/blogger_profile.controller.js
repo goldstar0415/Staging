@@ -30,7 +30,10 @@
     }
 
     function showMarkers() {
-      MapService.drawBlogMarkers(posts, true);
+      if (posts.length > 0) {
+        MapService.drawBlogMarkers(posts, true);
+        MapService.FocusMapToGivenLocation(posts[0].location, 4);
+      }
     }
 
   }
