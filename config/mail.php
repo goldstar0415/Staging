@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'admin@zoomtivity.com', 'name' => 'Administrator'],
+    'from' => ['address' => 'info@zoomtivity.com', 'name' => 'Administrator'],
 
     /*
     |--------------------------------------------------------------------------
