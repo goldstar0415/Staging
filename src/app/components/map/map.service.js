@@ -277,17 +277,17 @@
           tapTolerance: 15
         });
         L.Map.Tap = L.Handler.extend({
-          addHooks: function() {
+          addHooks: function () {
             L.DomEvent.on(this._map._container, 'touchstart', this._onDown, this);
             L.DomEvent.on(this._map._container, 'touchend', this._onUp, this);
             L.DomEvent.on(this._map._container, 'touchmove', this._onMove, this);
           },
-          removeHooks: function() {
+          removeHooks: function () {
             L.DomEvent.off(this._map._container, 'touchstart', this._onDown, this);
             L.DomEvent.off(this._map._container, 'touchend', this._onUp, this);
             L.DomEvent.off(this._map._container, 'touchmove', this._onMove, this);
           },
-          _onDown: function(e) {
+          _onDown: function (e) {
             if (!e.touches) {
               return;
             }
@@ -301,7 +301,7 @@
               el = first.target;
             this._simulateEvent('mousedown', first);
           },
-          _onUp: function(e) {
+          _onUp: function (e) {
             if (e && e.changedTouches) {
 
               var first = e.changedTouches[0],
@@ -310,12 +310,12 @@
               this._simulateEvent('mouseup', first);
             }
           },
-          _onMove: function(e) {
+          _onMove: function (e) {
             var first = e.changedTouches[0];
             this._newPos = new L.Point(first.clientX, first.clientY);
             this._simulateEvent('mousemove', first);
           },
-          _simulateEvent: function(type, e) {
+          _simulateEvent: function (type, e) {
 
             var simulatedEvent = document.createEvent('MouseEvents');
 
@@ -525,12 +525,11 @@
         var points = [];
         var polyline = null;
 
-          map.on('mousedown', start);
-          map.on('mousemove', move);
-          map.on('mouseup', end);
+        map.on('mousedown', start);
+        map.on('mousemove', move);
+        map.on('mouseup', end);
 
         function start(e) {
-          console.log(e);
           points = [];
           started = true;
           polyline = L.polyline([], {color: 'red'}).addTo(drawLayer);
@@ -567,9 +566,9 @@
         var radius = 1000;
         var circle = null;
 
-          map.on('mousedown', start);
-          map.on('mousemove', move);
-          map.on('mouseup', end);
+        map.on('mousedown', start);
+        map.on('mousemove', move);
+        map.on('mouseup', end);
 
 
         function start(e) {
@@ -702,7 +701,7 @@
                 line.off('linetouched');
               }
               if (err) {
-                console.log(err);
+                console.warn(err);
               } else {
                 line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
                 line.on('linetouched', function (e) {
@@ -847,11 +846,11 @@
           //    toastr.error('Error!')
           //  })
           //} else {
-            Area.save(req, function (data) {
-              toastr.success('Selection saved!');
-            }, function (data) {
-              toastr.error('Error!')
-            });
+          Area.save(req, function (data) {
+            toastr.success('Selection saved!');
+          }, function (data) {
+            toastr.error('Error!')
+          });
           //}
         }
       }
@@ -1414,7 +1413,6 @@
       }
 
       function drawBlogMarkers(posts, clear) {
-        console.log(posts);
         if (clear) {
           GetCurrentLayer().clearLayers();
         }

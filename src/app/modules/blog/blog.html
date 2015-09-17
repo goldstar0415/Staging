@@ -63,7 +63,7 @@
             </h2>
 
             <div class="location-link col-xs-12">
-              <a>{{post.address}}</a>
+              <a ui-sref="index.post({slug: post.slug})">{{post.address}}</a>
             </div>
             <div class="article-info col-xs-12">
               <p class="date col-xs-12 col-sm-2">{{post.created_at | toTimezone:'MM.DD.YYYY'}}</p>
@@ -84,7 +84,7 @@
             <p class="article-description" ng-bind-html="post.body"></p>
 
             <div class="col-xs-12">
-              <share links="post.share_links"></share>
+              <share item="post" type="post"></share>
             </div>
 
           </div>

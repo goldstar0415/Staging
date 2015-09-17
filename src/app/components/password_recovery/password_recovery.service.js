@@ -28,9 +28,6 @@
             UserService.setCurrentUser(user);
             $modalInstance.dismiss('close');
           }, function error(resp) {
-            console.log(resp);
-            //form.email.$setValidity('wrong', true);
-            //form.inputName.$setValidity('required', false);
             toastr.error('Wrong email');
           });
       }

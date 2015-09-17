@@ -27,7 +27,7 @@
           end_date = moment(vm.item.end_date);
         vm.start_date = start_date.format(DATE_FORMAT.date);
         vm.end_date = end_date.format(DATE_FORMAT.date);
-        console.log(vm.item.start_time);
+
         if (vm.item.start_time && vm.item.start_time != "12:00 am" || vm.item.end_time != "12:00 am") {
           vm.start_time = vm.item.start_time;
           vm.end_time = vm.item.end_time;

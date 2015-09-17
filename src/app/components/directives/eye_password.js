@@ -9,7 +9,6 @@
           var $input = $(this).prev('input'),
             type = $input.attr('type') == 'password' ? 'text' : 'password';
           $input.attr('type', type);
-          console.log($input);
         });
       }
     }

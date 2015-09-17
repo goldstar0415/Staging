@@ -10,7 +10,6 @@
     var vm = this;
     vm.spots = {};
 
-    console.log(allSpots.data);
     vm.markersSpots = formatSpots(allSpots.data);
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;

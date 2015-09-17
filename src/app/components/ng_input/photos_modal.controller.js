@@ -23,7 +23,6 @@
     vm.addPhoto = function (idx) {
       var photo = vm.selectedAlbum.photos.splice(idx, 1);
       vm.attachments.photos.push(photo[0]);
-      console.log(photo, vm.attachments.photos);
     };
 
     vm.close = function () {

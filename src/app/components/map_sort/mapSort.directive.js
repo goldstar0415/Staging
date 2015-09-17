@@ -174,13 +174,11 @@
         var selected = true;
         for (var k in items) {
           if (!items[k].selected) {
-            console.log(items[k].selected);
             selected = false;
             break;
           }
         }
 
-        console.log(selected);
         return selected;
       }
     };
@@ -189,7 +187,6 @@
       if (vm.startDate || vm.endDate) {
         vm.displayEventsArray = MapService.ClampByDate(vm.eventsArray, vm.startDate, vm.endDate);
         MapService.drawSpotMarkers(vm.displayEventsArray, 'event', true);
-        console.log(vm.displayEventsArray);
       }
     };
 
@@ -268,7 +265,7 @@
       vm.vertical = false;
       $scope.weatherForecast = [];
       var daily = resp.daily.data;
-      console.log(daily);
+
       for (var k in daily) {
         daily[k].formattedDate = moment(daily[k].time * 1000).format('DD MMMM');
         if (k != 0) {

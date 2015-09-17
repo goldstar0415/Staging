@@ -29,7 +29,6 @@
       });
 
       $scope.$watch('Post.popular_category', function (val) {
-        console.log(val);
         vm.posts = Post.popular({category: val});
       });
 

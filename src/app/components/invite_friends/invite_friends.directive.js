@@ -55,7 +55,6 @@
       var vm = this;
       vm.friends = friends;
       type = type || 'spot';
-      console.log(type);
 
       vm.close = function () {
         $modalInstance.close();
