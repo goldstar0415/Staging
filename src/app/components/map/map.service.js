@@ -1070,7 +1070,7 @@
           keepInView: false,
           autoPan: true,
           closeButton: false,
-          className: 'popup'
+          className: 'popup post-popup'
         };
 
 
