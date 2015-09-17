@@ -416,6 +416,10 @@
       max-height: 12rem !important;
       overflow: hidden !important;
       display: block !important;
+      img {
+        min-height: 12rem;
+        width: 100%;
+      }
     }
   }
   .popup-main {
@@ -423,9 +427,10 @@
       display: block;
       width: 100%;
       max-height: 10rem;
-      overflow: scroll;
+      overflow: auto;
       a {
         white-space: pre-line !important;
+        word-break: break-all;
       }
     }
     .author-event {
