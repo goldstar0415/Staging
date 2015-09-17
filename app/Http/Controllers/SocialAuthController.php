@@ -42,21 +42,20 @@ class SocialAuthController extends Controller
                 if (!$user) {
                     abort(400);
                 }
-
-                if (User::where('email', $user->getEmail())->exists()) {
-                    return response()->json(['message' => 'User already exists with this email'], 400);
-                }
-
-                $exist_user = $social->users()->wherePivot('token', $user->token)->first();
+                $exist_user = $social->users()->wherePivot('token', $user->id)->first();
 
                 if ($exist_user) {
                     $this->auth->login($exist_user);
 
-                    if (!$this->auth->user()->socials()->where('name', $social)->exists()) {
-                        $this->auth->user()->socials()->attach($social, ['token' => $user->token]);
+                    if (!$this->auth->user()->socials()->where('name', $social->name)->exists()) {
+                        $this->auth->user()->socials()->attach($social, ['token' => $user->id]);
                     }
 
                     return redirect(frontend_url());
+                }
+
+                if (User::where('email', $user->getEmail())->exists()) {
+                    return response()->json(['message' => 'User already exists with this email'], 400);
                 }
 
                 list($first_name, $last_name) = explode(' ', $user->getName());
@@ -69,7 +68,7 @@ class SocialAuthController extends Controller
                         'random_hash' => str_random()
                     ]
                 );
-                $new_user->socials()->attach($social, ['token' => $user->token]);
+                $new_user->socials()->attach($social, ['token' => $user->id]);
                 $this->auth->login($new_user);
 
                 return redirect(frontend_url());
@@ -84,7 +83,7 @@ class SocialAuthController extends Controller
                 );
             }
 
-            $user_socials->attach($social, ['token' => $user->token]);
+            $user_socials->attach($social, ['token' => $user->id]);
 
             return redirect(frontend_url());
         }

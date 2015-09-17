@@ -13,6 +13,14 @@ use App\Http\Requests;
 class AreaController extends Controller
 {
     /**
+     * AreaController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => ['store', 'update', 'destroy']]);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param PaginateRequest $request
