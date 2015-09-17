@@ -24,11 +24,23 @@
 
       switch (vm.type) {
         case 'spot':
-              vm.text = vm.item.title;
-              vm.facebook_url = 'http://api.zoomtivity.com/spots/208/preview';
-              vm.url = $state.href('spot', {spot_id: vm.item.id, user_id: vm.item.user_id}, {absolute: true});
-              break;
+          vm.text = vm.item.title;
+          vm.facebook_url = 'http://api.zoomtivity.com/spots/208/preview';
+          vm.url = $state.href('spot', {spot_id: vm.item.id, user_id: vm.item.user_id}, {absolute: true});
+          break;
       }
+
+      vm.facebook = function () {
+        FB.ui({
+          method: 'feed',
+          //name: 'Name you want to show',
+          link: vm.url,
+          //picture: 'http://picture-you-want-to-show',
+          caption: vm.text,
+          //description: 'Description you want to show',
+          //message: 'Message you want to show'
+        });
+      };
 
       vm.twitter = function () {
         var urlString = 'https://www.twitter.com/intent/tweet?';
