@@ -10,13 +10,13 @@
 </div>
 <div class="col-xs-12">
   <div ng-repeat="item in Photomap.albums" class="col-xs-4 album-container">
-    <div class="img-wrap" ui-sref="photos.album({user_id: item.user_id, album_id: item.id})">
-      <div class="album-tools-wrap col-xs-12">
-        <a class="edit" tooltip="Edit Album"></a>
-        <a class="delete" tooltip="Delete album"></a>
+    <div class="img-wrap">
+      <div class="album-tools-wrap col-xs-12" ng-if="currentUser.id == item.user_id">
+        <a class="edit" tooltip="Edit Album" ui-sref="photos.editAlbum({album_id: item.id})"></a>
+        <a class="delete" tooltip="Delete album" ng-click="Photomap.delete(item, $index)"></a>
       </div>
-      <img ng-src="{{item.cover.medium}}" alt="">
-      <a>{{item.title}}</a>
+      <img ng-src="{{item.cover.medium}}" ui-sref="photos.album({user_id: item.user_id, album_id: item.id})" alt="">
+      <a ui-sref="photos.album({user_id: item.user_id, album_id: item.id})">{{item.title}}</a>
     </div>
   </div>
   <div class="col-xs-12" ng-if="Photomap.albums.length == 0">
