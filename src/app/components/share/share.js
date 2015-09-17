@@ -25,21 +25,26 @@
       switch (vm.type) {
         case 'spot':
           vm.text = vm.item.title;
-          vm.facebook_url = 'http://api.zoomtivity.com/spots/208/preview';
           vm.url = $state.href('spot', {spot_id: vm.item.id, user_id: vm.item.user_id}, {absolute: true});
+          vm.picture = vm.item.cover_url.medium;
           break;
       }
 
       vm.facebook = function () {
         FB.ui({
           method: 'feed',
-          //name: 'Name you want to show',
           link: vm.url,
-          //picture: 'http://picture-you-want-to-show',
-          caption: vm.text,
-          //description: 'Description you want to show',
-          //message: 'Message you want to show'
+          picture: vm.picture,
+          //name: attr.name,
+          //caption: attr.caption,
+          description: vm.text,
+          //properties: attr.properties,
+          //actions: attr.actions
         });
+      };
+
+      vm.google = function () {
+        $window.open(vm.item.share_links.google, 'sharer', 'toolbar=0,status=0,width=650,height=650');
       };
 
       vm.twitter = function () {
@@ -60,10 +65,7 @@
         //default to the current page if a URL isn't specified
         urlString += '&url=' + encodeURIComponent(vm.url || $location.absUrl());
 
-        $window.open(
-          urlString,
-          'sharer', 'toolbar=0,status=0,width=900,height=650'
-        );
+        $window.open(urlString, 'sharer', 'toolbar=0,status=0,width=900,height=650');
       }
     }
 
