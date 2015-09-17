@@ -20,9 +20,13 @@ class SocialAuthController extends Controller
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;
-        $this->middleware('guest');
     }
 
+    /**
+     * @param Request $request
+     * @param Social $social
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function getAccount(Request $request, $social)
     {
         $provider = Socialite::with($social->name);
@@ -33,20 +37,28 @@ class SocialAuthController extends Controller
              */
             $user = $provider->user();
 
-            if (!$user) {
-                abort(400);
-            }
-            $exist_user = $social->users()->wherePivot('token', $user->token)->first();
+            if (!$this->auth->check()) {
 
-            if ($exist_user) {
-                $this->auth->login($exist_user);
-
-                if ($this->auth->user()->socials()->where('name', $social)->first() === null) {
-                    $this->auth->user()->socials()->attach($social, ['token' => $user->token]);
+                if (!$user) {
+                    abort(400);
                 }
 
-                return redirect(config('app.frontend_url'));
-            } else {
+                if (User::where('email', $user->getEmail()->exists())) {
+                    return response()->json(['message' => 'User already exists with this email'], 400);
+                }
+
+                $exist_user = $social->users()->wherePivot('token', $user->token)->first();
+
+                if ($exist_user) {
+                    $this->auth->login($exist_user);
+
+                    if (!$this->auth->user()->socials()->where('name', $social)->exists()) {
+                        $this->auth->user()->socials()->attach($social, ['token' => $user->token]);
+                    }
+
+                    return redirect(frontend_url());
+                }
+
                 list($first_name, $last_name) = explode(' ', $user->getName());
                 $new_user = User::create(
                     [
@@ -60,11 +72,24 @@ class SocialAuthController extends Controller
                 $new_user->socials()->attach($social, ['token' => $user->token]);
                 $this->auth->login($new_user);
 
-                return redirect(config('app.frontend_url'));
+                return redirect(frontend_url());
             }
-        } else {
-            return $provider->redirect();
+
+            $user_socials = $request->user()->socials();
+
+            if ($user_socials->where('name', $social->name)->exists()) {
+                return response()->json(
+                    ['message' => 'User already attached ' . $social->display_name . ' social'],
+                    403
+                );
+            }
+
+            $user_socials->attach($social, ['token' => $user->token]);
+
+            return redirect(frontend_url());
         }
+
+        return $provider->redirect();
     }
 
     /**

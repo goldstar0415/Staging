@@ -7,12 +7,14 @@ if (! function_exists('frontend_url')) {
      * @param $params
      * @return string
      */
-    function frontend_url($uri, ...$params)
+    function frontend_url($uri = '', ...$params)
     {
         foreach ($params as $key => $value) {
-            $params[$key] = rawurlencode($value);
+            $params[$key] = rawurlencode((string)$value);
         }
-
-        return env('FRONTEND_URL') . '/' . $uri . '/' . implode('/', $params);
+        return implode('/', array_merge([
+            env('FRONTEND_URL'),
+            $uri
+        ], $params));
     }
 }
