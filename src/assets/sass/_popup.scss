@@ -25,7 +25,7 @@
     height: 100%;
   }
   .leaflet-popup-content-wrapper {
-    max-height: 197px;
+    width: 455px;
     padding: 0;
     margin: 0;
   }
@@ -412,10 +412,10 @@
   display: flex;
   .nav-popup {
     .wrap-img {
-      border-radius: 10px 0 0 10px!important;
-      max-height: 12rem!important;
-      overflow: hidden!important;
-      display: block!important;
+      border-radius: 10px 0 0 10px !important;
+      max-height: 12rem !important;
+      overflow: hidden !important;
+      display: block !important;
     }
   }
   .popup-main {
