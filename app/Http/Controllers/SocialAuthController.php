@@ -42,13 +42,13 @@ class SocialAuthController extends Controller
                 if (!$user) {
                     abort(400);
                 }
-                $exist_user = $social->users()->wherePivot('token', $user->id)->first();
+                $exist_user = $social->users()->wherePivot('social_key', $user->id)->first();
 
                 if ($exist_user) {
                     $this->auth->login($exist_user);
 
                     if (!$this->auth->user()->socials()->where('name', $social->name)->exists()) {
-                        $this->auth->user()->socials()->attach($social, ['token' => $user->id]);
+                        $this->auth->user()->socials()->attach($social, ['social_key' => $user->id]);
                     }
 
                     return redirect(frontend_url());
@@ -68,7 +68,7 @@ class SocialAuthController extends Controller
                         'random_hash' => str_random()
                     ]
                 );
-                $new_user->socials()->attach($social, ['token' => $user->id]);
+                $new_user->socials()->attach($social, ['social_key' => $user->id]);
                 $this->auth->login($new_user);
 
                 return redirect(frontend_url());
@@ -83,7 +83,7 @@ class SocialAuthController extends Controller
                 );
             }
 
-            $user_socials->attach($social, ['token' => $user->id]);
+            $user_socials->attach($social, ['social_key' => $user->id]);
 
             return redirect(frontend_url());
         }

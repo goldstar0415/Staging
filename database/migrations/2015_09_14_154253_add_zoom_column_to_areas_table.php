@@ -25,7 +25,7 @@ class AddZoomColumnToAreasTable extends Migration
     public function down()
     {
         Schema::table('areas', function (Blueprint $table) {
-            $table->removeColumn('zoom');
+            $table->dropColumn('zoom');
         });
     }
 }
