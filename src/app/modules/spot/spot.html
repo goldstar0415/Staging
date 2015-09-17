@@ -83,7 +83,7 @@
 <!-- section with comment -->
 <section class="comments-section" ng-if="Spot.spot.is_approved != false">
   <div class="comments-content clearfix">
-    <ng-input message="Spot.message" attachments="Spot.attachments" on-submit="Spot.postComment()"></ng-input>
+    <ng-input message="Spot.message" attachments="Spot.attachments" on-submit="Spot.postComment()" maxlength="255"></ng-input>
   </div>
 
   <div infinite-scroll="Spot.pagination.nextPage()" infinite-scroll-disabled="Spot.pagination.busy"
@@ -91,7 +91,7 @@
     <div class="col-xs-12 post" ng-repeat="post in Spot.comments.data">
       <div class="col-xs-12 no-pad">
         <button type="button" class="close" ng-click="Spot.deleteComment(post, $index)"
-                ng-if="currentUser.id == Spot.spot.user_id">
+                ng-if="currentUser.id == Spot.spot.user_id || currentUser.id == post.sender.id">
           <span aria-hidden="true">×</span>
         </button>
       </div>

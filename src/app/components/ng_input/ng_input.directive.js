@@ -13,7 +13,8 @@
         message: '=',
         attachments: '=',
         onSubmit: '&',
-        onFocus: '&'
+        onFocus: '&',
+        maxlength: '='
       },
       templateUrl: '/app/components/ng_input/ng_input.html',
       controller: NgInputController,
@@ -24,14 +25,16 @@
     /** @ngInject */
     function NgInputController($modal, $rootScope) {
       var vm = this;
+      vm.maxlength = vm.maxlength || 5000;
       vm.attachments = {
         photos: [],
         spots: [],
         areas: []
       };
 
-      vm.submit = function () {
-        if (vm.message || vm.attachments.photos.length || vm.attachments.spots.length || vm.attachments.areas.length) {
+      vm.submit = function (form) {
+        if (form.$valid) {
+          form.$submitted = false;
           vm.onSubmit();
         }
       };
