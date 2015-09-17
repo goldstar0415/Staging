@@ -339,12 +339,12 @@
         <div class="wrapperHr">
           <hr/>
         </div>
-        <div class="weekForecast">
-          <div ng-repeat="item in weatherForecast track by $index">
+        <div class="weekForecast col-xs-12">
+          <div ng-repeat="item in weatherForecast track by $index" class="col-xs-12 no-pad">
             <div class="weekForecast-wrapper">
               <span class="data">{{item.formattedDate}}</span>
 
-              <div class="weatherIcon" title="{{item.summary}}">
+              <div class="weatherIcon" tooltip="{{item.summary}}">
                 <div ng-class="item.icon"></div>
               </div>
               <span class="temperatureWeek">{{item.temperatureMax}}°F /{{item.temperatureMin}}°F </span>
