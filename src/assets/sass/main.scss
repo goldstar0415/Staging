@@ -202,6 +202,11 @@ h3 {
   color: $dark_blue;
 }
 
+//angular hide code when page loading
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
 //common styles
 .j-hide {
   display: none;
@@ -346,7 +351,7 @@ h3 {
 .drop-box {
   height: 100px;
   width: 100%;
-  border: 2px dashed #b5e0ef;
+  border: 2px dashed #0874be;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -364,7 +369,7 @@ h3 {
     margin-top: 40px;
     font: 500 18px/18px 'Questrial';
     text-align: center;
-    color: #b5e0ef;
+    color: #0874be;
   }
 
 }
@@ -474,17 +479,20 @@ h3 {
 .media-body, .info {
   p, div, h2 {
     word-break: break-all;
+    -ms-word-break: break-all;
   }
 }
 
 .media-body {
   h3 {
     word-break: break-all;
+    -ms-word-break: break-all;
   }
 }
 
-.description, h2, .title-name, .author-name {
+.description, h2, .title-name, .author-name, .info-post a, .article-description, .info-post h4 {
   word-wrap: break-word;
+  -ms-word-break: break-all;
 }
 
 .outline-none {
@@ -496,10 +504,12 @@ h3 {
     }
   }
   .star-active {
-    color: #ffd700;
+    color: $navy_blue;
+    text-shadow: 0px 1px 3px gray, 0px 0px;
   }
   .star-default {
-    color: #ffef99;
+    color: $blue;
+    text-shadow: 0px 1px 1px #00b7f3, 0px 0px;
   }
 }
 
@@ -669,8 +679,8 @@ sign-in, sign-up {
 }
 
 .crop-modal.modalFix .modal-dialog {
-    height: 40rem !important;
-    overflow: auto !important;
+  overflow: auto !important;
+  height: auto !important;
 }
 .article-description {
   word-break: break-all;
@@ -685,6 +695,7 @@ sign-in, sign-up {
     }
   }
 }
+
 /*responsive*/
 
 @media (max-width: 992px) {
@@ -963,18 +974,26 @@ sign-in, sign-up {
 /*end responsive*/
 
 .snapjs-right, .snapjs-left {
+  .snap-drawers {
+    display: block;
+  }
+
   .snap-content {
     overflow: hidden;
   }
 }
 
+.snap-drawers {
+  display: none;
+}
+
 .snap-content {
-  overflow: initial;
+  overflow: visible;
 }
 
 .modal-open {
   .snap-content {
-    overflow: initial;
+    overflow: visible;
   }
   .modal {
     height: 100%;

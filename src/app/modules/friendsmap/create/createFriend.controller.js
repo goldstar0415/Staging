@@ -24,10 +24,10 @@
     };
 
     vm.SaveFriend = function (form) {
-      var friend = angular.copy(vm.friend);
-      friend.birth_date = friend.birth_date ? moment(friend.birth_date).format('YYYY-MM-DD') : null;
-
       if (form.$valid) {
+        var friend = angular.copy(vm.friend);
+        friend.birth_date = friend.birth_date ? moment(friend.birth_date, DATE_FORMAT.datepicker.date).format('YYYY-MM-DD') : null;
+
         if (vm.edit) {
           friend.$update()
             .then(function () {

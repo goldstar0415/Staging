@@ -33,7 +33,7 @@
       <div class="numbers-events">
         <a href="" class="hide" title="Close"></a>
 
-        <p>{{MapSort.displayEventsArray.length || 0}} Events found</p>
+        <p>{{MapSort.displayEventsArray.length || 0}} Event Spots found</p>
       </div>
 
       <div class="sort-date">
@@ -93,7 +93,7 @@
               </div>
             </div>
             <div class="col-xs-10 padding-0">
-              <stars item="item"></stars>
+              <stars item="item.spot"></stars>
               <div class=" col-xs-8 date">
                 <date-range item="item.spot"></date-range>
               </div>
@@ -103,16 +103,7 @@
                 <p class="location">{{item.address}}</p>
 
                 <p class="description">{{item.spot.description}}</p>
-                1  <!--<div class="event-result-nav col-xs-12 padding-0">-->
 
-                <!--<a class="save padding-0" >Save</a>-->
-
-                <!--<a class="favorites padding-0" >Favorite</a>-->
-
-                <!--<a class="invite padding-0" >Invite friends</a>-->
-
-                <!--<a class="big-plus padding-0" ></a>-->
-                <!--</div>-->
                 <div class="links-nav">
                   <ul class="tools clearfix">
 
@@ -147,13 +138,13 @@
       <div class="numbers-events">
         <a href="" class="hide" title="Close"></a>
 
-        <p>{{MapSort.displayRrecreationsArray.length || 0}} Recreations found</p>
+        <p>{{MapSort.displayRrecreationsArray.length || 0}} Recreation Spots found</p>
       </div>
 
 
       <div class="categories">
-        <p ng-click="recreationsCategoryToggle = !recreationsCategoryToggle">{{recreationsCategoryToggle ? 'Hide': 'Show
-          all'}} sub-categories
+        <p ng-click="recreationsCategoryToggle = !recreationsCategoryToggle">
+          {{recreationsCategoryToggle ? 'Hide': 'Show all'}} sub-categories
             <span class="filters-arrow"
                   ng-class="{'open-arrow': recreationsCategoryToggle}">
             </span>
@@ -187,7 +178,7 @@
               </div>
             </div>
             <div class="col-xs-10 padding-0">
-              <stars item="item"></stars>
+              <stars item="item.spot"></stars>
               <div class=" col-xs-8 date">
                 <date-range item="item.spot"></date-range>
               </div>
@@ -228,7 +219,7 @@
       <div class="numbers-events">
         <a href="" class="hide" title="Close"></a>
 
-        <p>{{MapSort.displayPitstopsArray.length || 0}} Pit Stops found</p>
+        <p>{{MapSort.displayPitstopsArray.length || 0}} Pit Stop Spots found</p>
       </div>
 
 
@@ -268,7 +259,7 @@
               </div>
             </div>
             <div class="col-xs-10 padding-0">
-              <stars item="item"></stars>
+              <stars item="item.spot"></stars>
               <div class=" col-xs-8 date">
                 <date-range item="item.spot"></date-range>
               </div>
@@ -370,8 +361,8 @@
     </div>
   </div>
 
-  <div class="col-xs-12 no-pad">
-    <a class="close-popup" ng-click="MapSort.toggleMenu() ">Hide results</a>
+  <div class="col-xs-12 hide-wrap">
+    <a class="close-popup" ng-click="MapSort.toggleMenu() ">Minimize</a>
   </div>
 
 </div>

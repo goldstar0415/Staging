@@ -42,7 +42,12 @@
         <div class="btn-group back-off">
           <uploader button-text="{{Article.cover_url ? 'Change cover' : 'Choose file'}}"></uploader>
         </div>
-        <img ng-if="Article.cover_url && Article.images.files.length == 0" ng-src="{{Article.cover_url.thumb}}"/>
+        <img ng-if="Article.cover_url && Article.images.files.length == 0"
+             class="img-thumbnail col-sm-3"
+             ng-src="{{Article.cover_url.original}}"/>
+        <img ng-if="Article.images.files.length > 0"
+             class="img-thumbnail col-sm-3"
+             ngf-src="Article.images.files[Article.images.files.length - 1]"/>
 
       </div>
     </div>
@@ -58,7 +63,7 @@
       <label class="col-sm-2 control-label">Location </label>
 
       <div class="col-sm-10">
-        <location address="Article.address" location="Article.location" limit="15"></location>
+        <location address="Article.address" location="Article.location" limit="15" bind-marker="true"></location>
 
       </div>
     </div>

@@ -22,17 +22,15 @@
     function DateRangeCtrl(DATE_FORMAT) {
       var vm = this;
 
-      if (vm.item.type == 'Event' && vm.item.start_date && vm.item.end_date) {
+      if (vm.item.start_date && vm.item.end_date) {
         var start_date = moment(vm.item.start_date),
           end_date = moment(vm.item.end_date);
         vm.start_date = start_date.format(DATE_FORMAT.date);
         vm.end_date = end_date.format(DATE_FORMAT.date);
-        if (vm.item.start_time) {
+        console.log(vm.item.start_time);
+        if (vm.item.start_time && vm.item.start_time != "12:00 am" || vm.item.end_time != "12:00 am") {
           vm.start_time = vm.item.start_time;
           vm.end_time = vm.item.end_time;
-        } else if (start_date.format('H') != 0 || end_date.format('H') != 0) {
-          vm.start_time = start_date.format(DATE_FORMAT.time);
-          vm.end_time = end_date.format(DATE_FORMAT.time);
         }
       }
     }

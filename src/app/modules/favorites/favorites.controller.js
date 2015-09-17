@@ -28,7 +28,7 @@
           MapService.GetCurrentLayer().removeLayers(vm.markersSpots[idx].markers)
         }
       })
-    };
+    }
 
     function ShowMarkers(spots) {
       var spotsArray = _.map(spots, function (item) {
@@ -40,7 +40,11 @@
           spot: item
         };
       });
+
       MapService.drawSpotMarkers(spotsArray, 'other', true);
+      if (spots.length > 0 && spots[0].points.length > 0) {
+        MapService.FocusMapToGivenLocation(spots[0].points[0].location);
+      }
 
       return spotsArray;
     }

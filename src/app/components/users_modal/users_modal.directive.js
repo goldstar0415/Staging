@@ -26,7 +26,7 @@
           modalClass: 'authentication',
           resolve: {
             usersType: function () {
-              return _.include(s.type) ? s.type : 'followings';
+              return s.type;
             },
             user: function () {
               return s.user;

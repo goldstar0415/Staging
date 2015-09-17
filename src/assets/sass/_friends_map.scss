@@ -3,12 +3,20 @@
   border-bottom: 1px solid $light_grey;
   .review-img {
     padding: 0;
-    //float: left;
+    width: 64px;
+    height: 64px;
+    float: left;
+    img {
+      max-width: 100%;
+      min-width: 100%;
+      min-height: 64px;
+    }
   }
   .text-block {
     padding: 0;
     width: 87%;
     float: left;
+    padding-left: 15px;
     h3 {
       margin: 0 0 5px;
       .wrap-name {
@@ -30,7 +38,7 @@
       margin: 0 0 5px;
     }
     .description {
-      font: 13px/19px 'Pontano'!important;
+      font: 13px/19px 'Pontano' !important;
       margin: 10px 0 !important;
     }
     .location-btn {
@@ -110,9 +118,9 @@
         margin: 0 0 25px 0;
       }
     }
-    .text-block {
-      padding-left: 15px;
-    }
+    //.text-block {
+    //  padding-left: 15px;
+    //}
   }
 }
 

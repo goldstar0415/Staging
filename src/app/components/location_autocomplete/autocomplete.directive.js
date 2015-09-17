@@ -6,7 +6,7 @@
     .directive('location', location);
 
   /** @ngInject */
-  function location(MapService, $http, toastr) {
+  function location(MapService, $http, toastr, $rootScope) {
     return {
       restrict: 'E',
       templateUrl: '/app/components/location_autocomplete/location.html',
@@ -15,6 +15,7 @@
         address: '=',
         bindMarker: '=',
         limit: '=',
+        showUserLocation: '=',
         provider: '=',
         onEmpty: '&',
         marker: '=',
@@ -24,7 +25,7 @@
         customClasses: '@'
       },
       link: function autocompleteLink(s, e, a) {
-        var classname = s.inputClass || 'location-changed';
+        var className = s.inputClass || 'location-changed';
         s.placeHolder = s.inputPlaceholder || "Start typing...";
         var limit = s.limit || 10;
         var searchUrl = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&addressdetails=1&limit=' + limit + '&q=';
@@ -32,7 +33,7 @@
         var provider = s.provider || 'google';
         s.provider = provider;
         s.className = '';
-
+        s.viewAddress = '';
 
         if (s.address && s.location) {
           s.viewAddress = s.address;
@@ -46,22 +47,49 @@
           s.viewAddress = s.address;
         });
 
+        e.on('focusin', function () {
+          if (!s.location) {
+            MapService.GetMap().on('click', onMapClick);
+          }
+        });
+
+
+        function onMapClick(event) {
+          console.log('map click', event.latlng);
+          if (!s.location) {
+            s.location = event.latlng;
+
+            moveOrCreateMarker(event.latlng);
+
+            MapService.GetAddressByLatlng(event.latlng, function (data) {
+              s.address = data.display_name;
+              s.viewAddress = data.display_name;
+            });
+          }
+
+          MapService.GetMap().off('click');
+        }
+
 
         function moveOrCreateMarker(latlng) {
           if (bindMarker) {
             if (s.marker) {
               s.marker.setLatLng(latlng);
             } else {
-              s.marker = MapService.CreateMarker(latlng, {draggable: true});
-              MapService.BindMarkerToInput(s.marker, function (data) {
-                console.log(data, s);
-                s.location = data.latlng;
-                s.address = data.address;
-                s.viewAddress = data.address;
-              })
+              createMarker(latlng);
             }
             MapService.GetMap().setView(s.marker.getLatLng(), 12);
           }
+        }
+
+        function createMarker(latlng) {
+          s.marker = MapService.CreateMarker(latlng, {draggable: true});
+          MapService.BindMarkerToInput(s.marker, function (data) {
+            console.log(data, s);
+            s.location = data.latlng;
+            s.address = data.address;
+            s.viewAddress = data.address;
+          });
         }
 
         function removeMarker() {
@@ -79,23 +107,24 @@
             s.onEmpty();
           } else {
             if (s.addClassOnchange) {
-              s.className = classname;
+              s.className = className;
             }
           }
         };
         s.SetCurrentLocation = function () {
-          MapService.GetCurrentLocation(function (e) {
-            if (e.type == 'locationerror') {
+          //MapService.GetCurrentLocation(function (e) {
+          //  console.log(e);
+            if (!$rootScope.currentLocation) {
               toastr.error('Geolocation error!');
             } else {
-              MapService.GetAddressByLatlng(e.latlng, function (data) {
+              MapService.GetAddressByLatlng($rootScope.currentLocation, function (data) {
                 s.location = e.latlng;
                 s.address = data.display_name;
                 s.viewAddress = data.display_name;
                 moveOrCreateMarker(e.latlng);
               })
             }
-          });
+          //});
         };
         s.onAutocompleteSelect = function ($item, $model, $label) {
           if (provider == 'google') {
@@ -129,6 +158,14 @@
             });
           }
         };
+
+        s.validateField = function () {
+          console.log('blur', s.location);
+          if (!s.location) {
+            s.address = '';
+            s.viewAddress = '';
+          }
+        }
       }
     };
 

@@ -6,7 +6,7 @@
     .controller('SpotCreateController', SpotCreateController);
 
   /** @ngInject */
-  function SpotCreateController(spot, $stateParams, $state, toastr, $scope, MapService, UploaderService, CropService, moment, API_URL, $http, DATE_FORMAT, categories) {
+  function SpotCreateController(spot, $stateParams, $state, toastr, $scope, MapService, UploaderService, CropService, $timeout, moment, API_URL, $http, DATE_FORMAT, categories) {
     var vm = this;
     vm.deletedImages = [];
     vm.edit = $state.current.edit || false;
@@ -28,6 +28,7 @@
       vm.categories[item.name] = item.categories;
     });
 
+    console.log(vm.categories);
 
     //vars
     vm.tags = [];
@@ -96,6 +97,10 @@
 
     vm.create = function (form) {
       form.$submitted = true;
+
+      if (vm.newLocation && vm.newLocation.address) {
+        vm.addLocation(vm.newLocation);
+      }
       if (form.$valid && vm.category_id !== '') {
         var tags = filterTags();
         var locations = filterLocations();
@@ -103,6 +108,7 @@
         request.title = vm.title;
         request.description = vm.description;
         request.spot_type_category_id = vm.category_id;
+
 
         if (vm.cover) {
           if (vm.edit && vm.coverChanged) {
@@ -135,8 +141,8 @@
           request.deleted_files = vm.deletedImages;
         }
         if (vm.type === 'event') {
-          request.start_date = moment(vm.start_date + ' ' + vm.start_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.time).format(DATE_FORMAT.backend);
-          request.end_date = moment(vm.end_date + ' ' + vm.end_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.time).format(DATE_FORMAT.backend);
+          request.start_date = moment(vm.start_date + ' ' + vm.start_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.datepicker.time).format(DATE_FORMAT.backend);
+          request.end_date = moment(vm.end_date + ' ' + vm.end_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.datepicker.time).format(DATE_FORMAT.backend);
         }
         var url = API_URL + '/spots';
         var req = {};
@@ -155,15 +161,18 @@
             .then(function (resp) {
               if (vm.type != 'event') {
                 toastr.info('Your submittal is under review and will be posted shortly.');
+
+                $timeout(function () {
+                  $state.go('spots', {user_id: resp.data.user_id});
+                }, 3000);
+              } else {
+                $state.go('spot', {spot_id: resp.data.id, user_id: resp.data.user_id});
               }
-              $state.go('spot', {spot_id: resp.data.id, user_id: resp.data.user_id});
             })
             .catch(function (resp) {
               vm.loading = false;
               toastr.error('Upload failed');
             });
-        } else {
-          toastr.error('Please add at least one location');
         }
       } else {
         if (!vm.title) {
@@ -211,8 +220,9 @@
     };
     //location
     vm.addLocation = function (item) {
-      var item = angular.copy(item);
       if (item && item.address && item.location) {
+        var item = angular.copy(item);
+
         vm.locations.unshift(item);
         vm.newLocation = {};
       } else {
@@ -246,7 +256,7 @@
 
     vm.cropImage = function (image) {
       if (vm.selectCover) {
-        CropService.crop(image, 512, 256, function (result) {
+        CropService.crop(image, 512, 512, function (result) {
           if (result) {
             vm.cover = result;
             vm.selectCover = false;
@@ -261,7 +271,7 @@
 
     vm.editCover = function () {
       if (vm.cover) {
-        CropService.crop(vm.cover, 512, 256, function (result) {
+        CropService.crop(vm.cover, 512, 512, function (result) {
           if (result) {
             vm.cover = result;
             vm.selectCover = false;

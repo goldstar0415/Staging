@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, MapService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, $modalStack) {
+  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, $modalStack) {
 
     $rootScope.isMobile = L.Browser.touch;
     L.Icon.Default.imagePath = '/assets/libs/Leaflet/images';
@@ -37,11 +37,15 @@
         $state.go('index');
       }
 
+      if ($rootScope.currentUser && current.parent != 'profile') {
+        UserService.setProfileUser($rootScope.currentUser);
+      }
+
       MapService.clearLayers();
       MapService.ChangeState(current.mapState);
 
       if (current.mapState == 'big') {
-        $('.map-tools').show();
+        angular.element('.map-tools').show();
       } else {
         $('.map-tools').hide();
       }
@@ -53,7 +57,7 @@
         case 'none':
           break;
         default:
-          MapService.FocusMapToCurrentLocation();
+          //MapService.FocusMapToCurrentLocation(4);
           break;
       }
 

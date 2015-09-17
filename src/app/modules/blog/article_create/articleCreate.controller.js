@@ -16,10 +16,13 @@
 
 
     function save(form) {
+      var data = angular.copy(vm),
+        req = {},
+        url = API_URL + '/posts';
+
       if (form.$valid) {
-        var req = {},
-          data = angular.copy(vm),
-          url = API_URL + '/posts';
+        delete data.categories;
+        delete data.images;
 
         req.payload = JSON.stringify(data);
         if (vm.id) {
@@ -27,6 +30,7 @@
           url = API_URL + '/posts/' + vm.id;
         }
 
+        vm.images.files.splice(0, vm.images.files.length - 1);  //save last image
         UploaderService
           .upload(url, req, 'cover')
           .then(function (resp) {

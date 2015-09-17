@@ -15,7 +15,7 @@
     </h2>
 
     <div class="location-link col-xs-12">
-      <a>{{post.address}}</a>
+      <a ui-sref="index.post({slug: post.slug})">{{post.address}}</a>
     </div>
     <div class="article-info col-xs-12">
       <p class="date col-xs-12 col-sm-3">{{post.created_at | toTimezone:'MM.DD.YYYY'}}</p>
@@ -28,7 +28,7 @@
     </div>
 
 
-    <p class="article-description" >{{post.body | limitTo: 500}}</p>
+    <p class="article-description" ng-bind-html="post.body" ></p>
 
     <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id">
       <a ui-sref="profile_blog.edit({slug: post.slug})" class="edit-blog-article">Edit</a>

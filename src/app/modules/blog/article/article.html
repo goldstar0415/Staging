@@ -49,7 +49,12 @@
         <div class="comments-content ng-scope">
           <form name="form" ng-submit="Article.sendComment(form)" class="new-post-spot">
             <textarea class="form-control" rows="4" placeholder="Start typing..." ng-model="Article.message" name="body"
-                      required></textarea>
+                      ng-maxlength="255" required></textarea>
+
+            <div ng-if="form.body.$error.maxlength && (form.$submitted || form.comment.$touched)"
+                 class="error-message-inline">
+              <div>can't be longer then 255 symbols</div>
+            </div>
 
             <div class="attachments-preview">
               <div class="buttons clearfix">

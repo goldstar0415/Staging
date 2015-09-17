@@ -7,14 +7,17 @@
 </div>
 <div ng-repeat="item in Friendsmap.friends" class="col-xs-12 friends-block">
   <div class="avatar-wrap">
-    <a class="review-img" tooltip="Edit avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
+    <a class="review-img avatar" tooltip="Edit avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
        ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="10000000">
-      <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar" class="fav-avatar-icon feeds-img">
+      <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar">
     </a>
   </div>
   <div class="text-block">
     <h3 class="feeds-title">
-      <span class="col-xs-8 wrap-name"><a>{{item.first_name + " " + item.last_name}}</a></span>
+      <span class="col-xs-8 wrap-name">
+        <a ng-if="item.friend_id" ui-sref="profile.main({user_id: item.friend_id})">{{item.first_name + " " + item.last_name}}</a>
+        <span ng-if="!item.friend_id">{{item.first_name + " " + item.last_name}}</span>
+      </span>
 
       <div class="col-xs-4 location-btn" ng-if="item.showSwitch">
         <a class="custom-location" ng-class="{'active': item.showCustom}"

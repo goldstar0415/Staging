@@ -125,6 +125,17 @@
           height: 64px;
           padding: 0;
         }
+        .media-body{
+          .media-heading{
+            display: inline-block;
+            float: left;
+          }
+          .description-link{
+            display: inline-block;
+            width: 100%;
+            text-align: left;
+          }
+        }
       }
     }
   }

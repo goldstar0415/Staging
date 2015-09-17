@@ -11,6 +11,10 @@
 <div class="col-xs-12">
   <div ng-repeat="item in Photomap.albums" class="col-xs-4 album-container">
     <div class="img-wrap" ui-sref="photos.album({user_id: item.user_id, album_id: item.id})">
+      <div class="album-tools-wrap col-xs-12">
+        <a class="edit" tooltip="Edit Album"></a>
+        <a class="delete" tooltip="Delete album"></a>
+      </div>
       <img ng-src="{{item.cover.medium}}" alt="">
       <a>{{item.title}}</a>
     </div>
