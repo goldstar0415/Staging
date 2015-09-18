@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Contracts\CalendarExportable;
 use App\Extensions\StartEndDatesTrait;
 use App\Scopes\ApprovedScopeTrait;
 use App\Scopes\NewestScopeTrait;
@@ -9,6 +10,7 @@ use App\Services\SocialSharing;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use DB;
+use Eluceo\iCal\Component\Event;
 use Request;
 
 /**
@@ -46,7 +48,7 @@ use Request;
  * @property array $locations
  * @property string $type
  */
-class Spot extends BaseModel implements StaplerableInterface
+class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
 {
     use StaplerTrait, StartEndDatesTrait, NewestScopeTrait, ApprovedScopeTrait;
 
@@ -243,5 +245,57 @@ class Spot extends BaseModel implements StaplerableInterface
         return $query->whereRaw("date_part('day', \"start_date\") = date_part('day', CURRENT_DATE) + 1
              and date_part('month', \"start_date\") = date_part('month', CURRENT_DATE)
              and date_part('year', \"start_date\") = date_part('year', CURRENT_DATE)");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function exportableEvents(User $user)
+    {
+        return $user->calendarSpots()->where(...self::exportableConditions())->get();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function exportableConditions()
+    {
+        return [
+            'start_date',
+            '>=',
+            \DB::raw('NOW()')
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function exportable(User $user)
+    {
+        $spots = self::exportableEvents($user);
+
+        /**
+         * @var \App\Spot $spot
+         */
+        foreach ($spots as $spot) {
+            $ics_event = new Event($spot->id);
+            if ($spot->description) {
+                $ics_event->setDescription($spot->description);
+            }
+            $ics_event->setDtStart($spot->start_date);
+            $ics_event->setDtEnd($spot->end_date);
+            if ($point = $spot->points()->first()) {
+                $ics_event->setLocation($point->address);
+            }
+            if (!empty($spot->web_sites)) {
+                $ics_event->setUrl($spot->web_sites[0]);
+            }
+            $ics_event->setUseUtc();
+            $ics_event->setOrganizer($user->first_name . ' ' . $user->last_name, $user->email);
+            $ics_event->setCategories($spot->category->display_name);
+            $ics_event->setSummary($spot->title);
+
+            yield $ics_event;
+        }
     }
 }

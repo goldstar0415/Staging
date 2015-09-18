@@ -13,7 +13,10 @@ class AddToCalendarRequest extends Request
      */
     public function authorize()
     {
-        return $this->user()->calendarSpots()->find($this->route('spots')->id) === null;
+        $spot = $this->route('spots');
+
+        return $this->user()->calendarSpots()->find($spot->id) === null
+            and $spot->type === 'event';
     }
 
     /**

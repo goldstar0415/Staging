@@ -6,12 +6,21 @@ use App\Events\OnAddToCalendar;
 use App\Http\Requests\Calendar\AddToCalendarRequest;
 use App\Http\Requests\Calendar\GetCalendarPlansRequest;
 use App\Http\Requests\Calendar\RemoveFromCalendarRequest;
+use App\Services\ICalendar;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
 class CalendarController extends Controller
 {
+    /**
+     * CalendarController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      * @param AddToCalendarRequest|Request $request
@@ -30,7 +39,7 @@ class CalendarController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @param Request $request
+     * @param RemoveFromCalendarRequest $request
      * @param \App\Spot $spot
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
@@ -48,13 +57,27 @@ class CalendarController extends Controller
     public function getPlans(GetCalendarPlansRequest $request)
     {
         $user = $request->user();
-        $result['spots'] = $user->calendarSpots()
-            ->where('start_date', '>=', $request->get('start_date'))
-            ->where('end_date', '<=', $request->get('end_date'))->get();
-        $result['plans'] = $user->plans()
-            ->where('start_date', '>=', $request->get('start_date'))
-            ->where('end_date', '<=', $request->get('end_date'))->get();
+
+        $result['spots'] = $this->plansScope($request, $user->calendarSpots())->get();
+        $result['plans'] = $this->plansScope($request, $user->plans())->get()->merge(
+            $this->plansScope($request, $user->invitedPlans())->get()
+        );
 
         return $result;
+    }
+
+    /**
+     * @param Request $request
+     * @param $query
+     */
+    private function plansScope(Request $request, $query)
+    {
+        return $query->where('start_date', '>=', $request->get('start_date'))
+            ->where('end_date', '<=', $request->get('end_date'));
+    }
+
+    public function export(Request $request)
+    {
+        return response()->ical($request->user());
     }
 }
