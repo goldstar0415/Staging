@@ -260,7 +260,6 @@
       font: 700 13px/15px 'Pontano';
     }
     .event-img {
-
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -302,6 +301,9 @@
     a {
       float: none;
       font-size: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis
     }
   }
   .photos {

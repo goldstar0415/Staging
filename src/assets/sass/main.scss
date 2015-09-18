@@ -843,8 +843,8 @@ sign-in, sign-up {
     }
   }
   /*end blog page*/
-  .tools {
-   // padding-bottom: 1rem;
+  .tools li:last-child {
+    margin-right: 3.7rem;
   }
 }
 

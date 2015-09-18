@@ -121,9 +121,12 @@
     color: $blue;
     margin: 0 0 5px 0;
     padding-left: 15px;
-    background: url(/assets/img/icons/tools.png) -5px -2px no-repeat;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: url(/assets/img/icons/tools.png) -5px -4px no-repeat;
     &:hover, &:focus, &:active {
-      background: url(/assets/img/icons/tools.png) -5px -19px no-repeat;
+      background: url(/assets/img/icons/tools.png) -5px -21px no-repeat;
       color: $navy_blue;
     }
   }
