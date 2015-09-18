@@ -240,6 +240,13 @@
         var l = vm.images.files.length - vm.restrictions.images;
         vm.images.files.splice(vm.restrictions.images, l);
       }
+      if (vm.images.files.length > 0 && !vm.cover) {
+        var reader = new FileReader();
+        reader.onloadend = function () {
+          vm.cover = reader.result;
+        };
+        reader.readAsDataURL(vm.images.files[0]);
+      }
     };
 
     vm.deleteImage = function (idx, id) {
@@ -253,7 +260,7 @@
 
     vm.cropImage = function (image) {
       if (vm.selectCover) {
-        CropService.crop(image, 512, 512, function (result) {
+        CropService.crop(image, 512, 256, function (result) {
           if (result) {
             vm.cover = result;
             vm.selectCover = false;
