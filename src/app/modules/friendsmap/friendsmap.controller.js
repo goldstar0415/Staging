@@ -77,7 +77,7 @@
     };
     vm.setAvatar = function (id, files) {
       if (files.length > 0) {
-        CropService.crop(files[0], 512, 512, function (result) {
+        CropService.crop(files[0], 512, 512, true, function (result) {
           if (result) {
             Friends.setAvatar({id: id}, {avatar: result}, function (res) {
               var marker = null;

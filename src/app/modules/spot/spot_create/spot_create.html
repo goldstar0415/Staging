@@ -239,6 +239,7 @@
 
           </li>
         </ul>
+        <div ng-if="SpotCreate.selectCover">Choose the photo</div>
       </div>
       <div ng-if="SpotCreate.images.files.length > 0">
         <button type="button" ng-click="SpotCreate.selectCover = true"
@@ -258,7 +259,7 @@
         <br/>
         <label class="col-sm-4 col-xs-12 control-label no-pad">Cover preview:</label>
         <ul class="photos row">
-          <li>
+          <li class=" cover-preview">
             <img alt="" ng-src="{{SpotCreate.cover}}">
             <a class="delete" ng-click="SpotCreate.cover = null;" title="Delete"></a>
           </li>

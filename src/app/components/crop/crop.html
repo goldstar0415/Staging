@@ -3,14 +3,16 @@
 </div>
 <div class="modal-body clearfix">
   <div class="miniatures">
-    <div class="col-sm-8 col-xs-12 crop-area">
+    <div class="col-xs-12 crop-area" ng-class="{'col-sm-8': Crop.showPreview}">
       <image-cropper source-image="Crop.image" result-image="Crop.resultImage" auto-crop="false"
                      crop-height="Crop.height" crop-width="Crop.width"></image-cropper>
     </div>
 
-    <div class="col-sm-3 col-xs-12"><img ng-src="{{Crop.resultImage}}" class="avatar-big">
+    <div class="col-sm-3 col-xs-12" ng-if="Crop.showPreview">
+      <img ng-src="{{Crop.resultImage}}" class="avatar-big">
     </div>
-    <div class="col-sm-4 col-xs-12"><img ng-src="{{Crop.resultImage}}" class="avatar-small">
+    <div class="col-sm-4 col-xs-12" ng-if="Crop.showPreview">
+      <img ng-src="{{Crop.resultImage}}" class="avatar-small">
     </div>
   </div>
 </div>

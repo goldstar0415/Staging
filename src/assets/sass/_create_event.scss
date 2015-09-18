@@ -97,7 +97,21 @@
       float: left;
       margin-top: 0;
     }
+  }
 
+  .cover-preview {
+//    width: 70px;
+//    height: 70px;
+    img {
+//      min-width: 100%;
+//      width: auto;
+//      min-height: 70px;
+      width: 66px;
+      height: 66px;
+      border: 3px solid $white;
+      border-radius: 70px;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.35);
+    }
   }
 }
 

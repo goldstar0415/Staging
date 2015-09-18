@@ -163,7 +163,7 @@
     //change avatar
     $scope.$watch('Settings.images.files', function (val, test) {
       if (vm.images.files.length > 0) {
-        CropService.crop(vm.images.files[0], 512, 512, function (result) {
+        CropService.crop(vm.images.files[0], 512, 512, true, function (result) {
           vm.images.files.splice(0, vm.images.files.length);
           if (result) {
             User.setAvatar({}, {avatar: result},

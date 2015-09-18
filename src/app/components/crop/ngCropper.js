@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .directive('imageCropper', function () {
+    .directive('imageCropper', function ($timeout, $rootScope) {
       return {
         restrict: 'E',
         template: '<img id="imageCrop" ng-src="{{sourceImage}}" style="width: 100%"/>',
@@ -21,30 +21,29 @@
           var ratioHeight = scope.cropHeight || 9;
           var autoCrop = scope.autoCrop || false;
 
-          //scope.$watch('sourceImage', function (v, n) {
-          //  if (v) {
-          //    $image.bind('load', function () {
-          //      $image.on('build.cropper', function () {
-          //        onCropEnd();
-          //      });
-          //    });
-          //  }
-          //});
+          scope.$watch('resultImage', function (v, o) {
+            //console.log(v, o);
+          });
 
-          $image.on('load', function () {
-            console.log(1);
+          $image.one('load', function () {
+            console.log(111);
             $image.cropper({
               aspectRatio: ratioWidth / ratioHeight,
               cropmove: onCropChange,
               cropend: onCropEnd,
+              autoCrop: true,
               strict: true
             });
 
-            $image.on('build.cropper', function () {
+            $image.on('built.cropper', function () {
               onCropEnd();
             });
-            onCropEnd();
+            $timeout(function () {
+              scope.resultImage = getDataURL();
+            });
 
+          }).each(function () {
+            if (this.complete) $(this).load();
           });
 
           function onCropChange() {
@@ -54,8 +53,8 @@
           }
 
           function onCropEnd() {
-            console.log('onCropEnd');
             scope.resultImage = getDataURL();
+            console.log('onCropEnd', scope.resultImage);
             scope.$apply();
           }
 

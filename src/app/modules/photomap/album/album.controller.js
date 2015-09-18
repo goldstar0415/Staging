@@ -46,7 +46,7 @@
     }
 
     vm.setAsAvatar = function (image) {
-      CropService.crop(image, 512, 512, function (result) {
+      CropService.crop(image, 512, 512, true, function (result) {
         if (result) {
           User.setAvatar({}, {avatar: result},
             function (user) {

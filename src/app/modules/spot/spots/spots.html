@@ -23,7 +23,7 @@
         <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{::item.title}}</a>
       </h2>
 
-      <p class="place"></p>
+      <p class="place" ng-if="item.points.length > 0">{{::item.points[0].address}}</p>
 
       <p class="description"><span>{{::item.description}}</span></p>
       <figure>

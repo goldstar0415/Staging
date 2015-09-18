@@ -11,6 +11,6 @@
 
     $rootScope.hideHints = true;
     MapService.LoadSelections(selection);
-    MapService.FitBoundsOfDrawLayer();
+    //MapService.FitBoundsOfDrawLayer();
   }
 })();

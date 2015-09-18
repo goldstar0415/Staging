@@ -8,6 +8,8 @@
   /** @ngInject */
   function SpotCreateController(spot, $stateParams, $state, toastr, $scope, MapService, UploaderService, CropService, $timeout, moment, API_URL, $http, DATE_FORMAT, categories) {
     var vm = this;
+    var originalCover = null;
+
     vm.deletedImages = [];
     vm.edit = $state.current.edit || false;
     vm.restrictions = {
@@ -260,7 +262,8 @@
 
     vm.cropImage = function (image) {
       if (vm.selectCover) {
-        CropService.crop(image, 512, 256, function (result) {
+        originalCover = image;
+        CropService.crop(image, 512, 256, false, function (result) {
           if (result) {
             vm.cover = result;
             vm.selectCover = false;
@@ -275,7 +278,8 @@
 
     vm.editCover = function () {
       if (vm.cover) {
-        CropService.crop(vm.cover, 512, 512, function (result) {
+        originalCover = originalCover || vm.cover;
+        CropService.crop(originalCover, 512, 256, false, function (result) {
           if (result) {
             vm.cover = result;
             vm.selectCover = false;

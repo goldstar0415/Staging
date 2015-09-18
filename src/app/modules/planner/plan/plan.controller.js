@@ -58,7 +58,7 @@
         }
       }
 
-      MapService.FitBoundsOfCurrentLayer();
+      //MapService.FitBoundsOfCurrentLayer();
     }
 
     function CreateMarker(iconUrl, title, plan_id, location) {

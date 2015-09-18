@@ -7,7 +7,7 @@
 
   /** @ngInject */
   function CropService($modal) {
-    function CropImage(image, outputWidth, outputHeight, callback) {
+    function CropImage(image, outputWidth, outputHeight, showPreview, callback) {
       var modalInstance = $modal.open({
         animation: true,
         templateUrl: '/app/components/crop/crop.html',
@@ -19,6 +19,9 @@
         resolve: {
           image: function () {
             return image
+          },
+          showPreview: function () {
+            return showPreview
           },
           width: function () {
             return outputWidth
@@ -41,8 +44,9 @@
     }
   }
 
-  function CropModalController($modalInstance, $scope, image, width, height) {
+  function CropModalController($modalInstance, $scope, image, width, height, showPreview) {
     var vm = this;
+    vm.showPreview = showPreview;
     vm.width = width || 512;
     vm.height = height || 512;
     vm.image = '';

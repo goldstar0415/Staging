@@ -25,7 +25,7 @@
         <a>{{Spot.spot.title}}</a>
       </h2>
 
-      <p class="place"></p>
+      <p class="place" ng-if="Spot.spot.points.length > 0">{{::Spot.spot.points[0].address}}</p>
 
       <p class="description"><span>{{Spot.spot.description}}</span>
       </p>
