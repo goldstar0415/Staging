@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Sanitizers;
 
-
 trait UrlSanitizer
 {
     public function sanitizeUrl($input)

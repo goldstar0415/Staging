@@ -38,7 +38,6 @@ class SocialAuthController extends Controller
             $user = $provider->user();
 
             if (!$this->auth->check()) {
-
                 if (!$user) {
                     abort(400);
                 }

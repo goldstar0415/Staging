@@ -30,7 +30,7 @@ class SpotRequest extends Request
             'title' => 'required|string|max:255',
             'description' => 'string|max:5000',
             'start_date' => 'date_format:Y-m-d H:i:s',
-            'end_date' => 'date_format:Y-m-d H:i:s',
+            'end_date' => 'required_with:start_date|date_format:Y-m-d H:i:s',
             'locations' => 'array|count_max:20',
             'videos' => 'array|count_max:5',
             'web_sites' => 'array|count_max:5',

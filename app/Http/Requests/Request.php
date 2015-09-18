@@ -37,8 +37,7 @@ abstract class Request extends FormRequest
     final protected function getValidatorInstance()
     {
         foreach (class_uses_recursive(get_called_class()) as $trait) {
-            if (
-                ends_with($trait, 'Sanitizer')
+            if (ends_with($trait, 'Sanitizer')
                 && method_exists(
                     get_called_class(),
                     $method = 'sanitize' . strstr(class_basename($trait), 'Sanitizer', true)

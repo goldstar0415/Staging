@@ -27,7 +27,7 @@ class PlanRequest extends Request
             'title' => 'required|string|max:255',
             'description' => 'string|max:255',
             'start_date' => 'date_format:Y-m-d H:i:s',
-            'end_date' => 'date_format:Y-m-d H:i:s',
+            'end_date' => 'required_with:start_date|date_format:Y-m-d H:i:s',
             'address' => 'required|string|max:255',
             'location.lat' => 'required|numeric',
             'location.lng' => 'required|numeric',

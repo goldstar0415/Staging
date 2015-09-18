@@ -18,7 +18,8 @@
         "chriskonnertz/open-graph": "dev-master",
         "illuminate/html": "^5.0@dev",
         "frozennode/administrator": "dev-master",
-        "maatwebsite/excel": "~2.0"
+        "maatwebsite/excel": "~2.0",
+        "eluceo/ical": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

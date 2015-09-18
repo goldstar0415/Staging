@@ -74,6 +74,7 @@ Route::resource(
 /**
  * Calendar controls
  */
+Route::get('calendar/export', 'CalendarController@export');
 Route::post('calendar/{spots}', 'CalendarController@add');
 Route::delete('calendar/{spots}', 'CalendarController@remove');
 Route::get('calendar/plans', 'CalendarController@getPlans');

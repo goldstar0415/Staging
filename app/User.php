@@ -2,9 +2,11 @@
 
 namespace App;
 
+use App\Contracts\CalendarExportable;
 use App\Extensions\GeoTrait;
 use Carbon\Carbon;
 use DB;
+use Eluceo\iCal\Component\Event;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -75,7 +77,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property array $attached_socials
  * @property string $avatar_url
  */
-class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract, StaplerableInterface
+class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract, StaplerableInterface, CalendarExportable
 {
     use Authenticatable, CanResetPassword, EntrustUserTrait,
         PostgisTrait, StaplerTrait, SoftDeletes, GeoTrait {
@@ -387,5 +389,54 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     {
         return $query->whereRaw("date_part('day', \"birth_date\") = date_part('day', CURRENT_DATE) + 1
              and date_part('month', \"birth_date\") = date_part('month', CURRENT_DATE)");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function exportableEvents(User $user)
+    {
+        return self::whereRaw(self::exportableConditions())->get();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function exportableConditions()
+    {
+
+        return "(date_part('month', \"birth_date\") > date_part('month', CURRENT_DATE)
+                or date_part('day', \"birth_date\") >= date_part('day', CURRENT_DATE)
+                and date_part('month', \"birth_date\") = date_part('month', CURRENT_DATE))";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function exportable(User $user)
+    {
+        $users = self::exportableEvents($user);
+
+        /**
+         * @var \App\User $birth_user
+         */
+        foreach ($users as $birth_user) {
+            $ics_event = new Event($birth_user->id);
+            $full_name = $user->first_name . ' ' . $user->last_name;
+
+            if ($birth_user->description) {
+                $ics_event->setDescription($birth_user->description);
+            }
+            $ics_event->setDtStart($birth_user->birth_date);
+            $ics_event->setDtEnd($birth_user->birth_date);
+            if ($birth_user->address) {
+                $ics_event->setLocation($birth_user->address);
+            }
+            $ics_event->setUseUtc();
+            $ics_event->setOrganizer($full_name, $user->email);
+            $ics_event->setSummary($full_name . ' birthday!!!');
+
+            yield $ics_event;
+        }
     }
 }
