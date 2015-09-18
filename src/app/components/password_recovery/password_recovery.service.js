@@ -9,7 +9,8 @@
   function PasswordRecoveryService($modal, UserService, User, toastr) {
     return {
       openModal: openModal,
-      recoveryPassword: recoveryPassword
+      recoveryPassword: recoveryPassword,
+      resetPassword: resetPassword
     };
 
     function openModal(template, controller) {
@@ -26,6 +27,18 @@
         User.recoveryPassword(vm,
           function success(user) {
             UserService.setCurrentUser(user);
+            $modalInstance.dismiss('close');
+          }, function error(resp) {
+            toastr.error('Wrong email');
+          });
+      }
+    }
+
+    function resetPassword(form, vm, $modalInstance) {
+      if (form.$valid) {
+        User.resetPassword(vm,
+          function success(user) {
+            toastr.success('Password successfully changed');
             $modalInstance.dismiss('close');
           }, function error(resp) {
             toastr.error('Wrong email');

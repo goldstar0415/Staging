@@ -21,8 +21,18 @@
           var ratioHeight = scope.cropHeight || 9;
           var autoCrop = scope.autoCrop || false;
 
+          //scope.$watch('sourceImage', function (v, n) {
+          //  if (v) {
+          //    $image.bind('load', function () {
+          //      $image.on('build.cropper', function () {
+          //        onCropEnd();
+          //      });
+          //    });
+          //  }
+          //});
 
-          $image.bind('load', function () {
+          $image.on('load', function () {
+            console.log(1);
             $image.cropper({
               aspectRatio: ratioWidth / ratioHeight,
               cropmove: onCropChange,
@@ -30,19 +40,21 @@
               strict: true
             });
 
-            $image.on('built.cropper', function () {
+            $image.on('build.cropper', function () {
               onCropEnd();
             });
+            onCropEnd();
+
           });
 
           function onCropChange() {
             if (autoCrop) {
-              scope.resultImage = getDataURL();
-              scope.$apply();
+              onCropEnd();
             }
           }
 
           function onCropEnd() {
+            console.log('onCropEnd');
             scope.resultImage = getDataURL();
             scope.$apply();
           }

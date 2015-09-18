@@ -54,6 +54,7 @@
       var reader = new FileReader();
       reader.onload = function (evt) {
         vm.image = evt.target.result;
+        $scope.$apply();
       };
       reader.readAsDataURL(image);
     }
