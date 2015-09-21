@@ -397,7 +397,7 @@
         parent: 'profile_menu',
         locate: 'none',
         require_auth: true,
-        mapState: 'hidden'
+        mapState: 'small'
       })
       .state('areas.preview', {
         url: '/areas/:area_id',

@@ -34,8 +34,8 @@
           <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
         </div>
 
-        <div class="col-xs-12 edit-delete">
-          <a class="delete">Delete</a>
+        <div class="col-xs-12 edit-delete" ng-if="currentUser.id == profileUser.id || currentUser.id == post.sender.id">
+          <a ng-click="Profile.deletePost(post, $index)" class="delete">Delete</a>
         </div>
 
       </div>
