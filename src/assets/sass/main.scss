@@ -589,6 +589,8 @@ sign-in, sign-up {
 
 .wrap-from-share {
   position: relative;
+  display: block;
+  top: 1.2rem;
 }
 
 .video-size {
@@ -683,9 +685,11 @@ sign-in, sign-up {
   overflow: auto !important;
   height: auto !important;
 }
+
 .article-description {
   word-break: break-all;
 }
+
 /*end modal dialog*/
 
 .color-link {
