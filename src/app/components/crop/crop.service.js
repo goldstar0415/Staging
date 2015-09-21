@@ -46,7 +46,7 @@
 
   function CropModalController($modalInstance, $scope, image, width, height, showPreview) {
     var vm = this;
-    vm.showPreview = showPreview;
+    vm.showPreview = showPreview || true;
     vm.width = width || 512;
     vm.height = height || 512;
     vm.image = '';

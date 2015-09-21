@@ -6,7 +6,7 @@
     .directive('imageCropper', function ($timeout, $rootScope) {
       return {
         restrict: 'E',
-        template: '<img id="imageCrop" ng-src="{{sourceImage}}" style="width: 100%"/>',
+        template: '<img id="imageCrop" style="width: 100%"/>',
         replace: true,
         scope: {
           sourceImage: '=',
@@ -16,34 +16,31 @@
           autoCrop: '='
         },
         link: function (scope, elem, attrs) {
-          var $image = $('#imageCrop');
           var ratioWidth = scope.cropWidth || 16;
           var ratioHeight = scope.cropHeight || 9;
           var autoCrop = scope.autoCrop || false;
+          var $image = $('#imageCrop');
 
-          scope.$watch('resultImage', function (v, o) {
-            //console.log(v, o);
+          $image.cropper({
+            aspectRatio: ratioWidth / ratioHeight,
+            cropmove: onCropChange,
+            cropend: onCropEnd,
+            autoCrop: true,
+            strict: true
           });
 
-          $image.one('load', function () {
-            console.log(111);
-            $image.cropper({
-              aspectRatio: ratioWidth / ratioHeight,
-              cropmove: onCropChange,
-              cropend: onCropEnd,
-              autoCrop: true,
-              strict: true
-            });
+          $image.on('built.cropper', function () {
+            onCropEnd();
+          });
+          //$timeout(function () {
+          //  scope.resultImage = getDataURL();
+          //});
 
-            $image.on('built.cropper', function () {
-              onCropEnd();
-            });
-            $timeout(function () {
-              scope.resultImage = getDataURL();
-            });
-
-          }).each(function () {
-            if (this.complete) $(this).load();
+          scope.$watch('sourceImage', function (newValue, oldValue) {
+            console.log(newValue);
+            if (newValue) {
+              $image.cropper('replace', newValue);
+            }
           });
 
           function onCropChange() {
@@ -54,7 +51,6 @@
 
           function onCropEnd() {
             scope.resultImage = getDataURL();
-            console.log('onCropEnd', scope.resultImage);
             scope.$apply();
           }
 

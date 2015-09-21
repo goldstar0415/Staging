@@ -227,14 +227,14 @@
         <ul class="photos row">
           <li ng-repeat="item in SpotCreate.images.files track by $index">
             <div ng-if="!item.id">
-              <img ng-click="SpotCreate.cropImage(item)" alt="" ngf-src="item"
+              <img ng-click="SpotCreate.changeCover(item)"  ngf-src="item"
                    ng-class="SpotCreate.selectCover ? 'cover-hover' : ''">
             </div>
             <div ng-if="item.id">
-              <img ng-click="SpotCreate.cropImage(item.photo_url.original)" alt="" ng-src="{{item.photo_url.medium}}"
+              <img ng-click="SpotCreate.changeCover(item)"  ng-src="{{item.photo_url.medium}}"
                    ng-class="SpotCreate.selectCover ? 'cover-hover' : ''">
             </div>
-            <a ng-if="!SpotCreate.selectCover" class="delete" ng-click="SpotCreate.deleteImage($index, item.id)"
+            <a ng-hide="SpotCreate.selectCover" class="delete" ng-click="SpotCreate.deleteImage($index, item.id)"
                title="Delete"></a>
 
           </li>
@@ -250,18 +250,22 @@
                 ng-if="SpotCreate.selectCover">Cancel
         </button>
       </div>
-      <button type="button" ng-click="SpotCreate.editCover()" class="btn btn-default green-btn pull-left margin-bottom"
-              ng-if="SpotCreate.cover">Edit current cover
-      </button>
+      <!--<button type="button" ng-click="SpotCreate.editCover()" class="btn btn-default green-btn pull-left margin-bottom"-->
+              <!--ng-if="SpotCreate.cover">Edit current cover-->
+      <!--</button>-->
 
 
-      <div class="col-sm-12" ng-if="SpotCreate.cover">
+      <div class="col-sm-12" ng-if="SpotCreate.cropCover">
         <br/>
         <label class="col-sm-4 col-xs-12 control-label no-pad">Cover preview:</label>
 
         <div class="cover-preview">
           <img class="img-size" ng-src="{{SpotCreate.cover}}">
-          <a class="delete" ng-click="SpotCreate.cover = null" title="Delete"></a>
+
+          <image-cropper source-image="SpotCreate.cropCover" result-image="SpotCreate.cover" auto-crop="false"
+                         crop-height="SpotCreate.crop.height" crop-width="SpotCreate.crop.width"></image-cropper>
+
+          <!--<a class="delete" ng-click="SpotCreate.cover = null" title="Delete"></a>-->
         </div>
       </div>
     </div>
@@ -274,8 +278,6 @@
         <div class="input-group ">
           <input type="text" class="form-control" name="youtubeLink" youtube-link ng-model="SpotCreate.newYoutubeLink"
                  placeholder="Youtube link here...">
-
-
 
           <span class="input-group-btn">
             <button class="btn btn-default" ng-click="SpotCreate.addYoutubeLink(!form.youtubeLink.$error.link)"

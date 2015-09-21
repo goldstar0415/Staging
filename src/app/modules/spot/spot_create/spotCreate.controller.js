@@ -8,7 +8,7 @@
   /** @ngInject */
   function SpotCreateController(spot, $stateParams, $state, toastr, $scope, MapService, UploaderService, CropService, $timeout, moment, API_URL, $http, DATE_FORMAT, categories) {
     var vm = this;
-    var originalCover = null;
+    var coverName = null;
 
     vm.deletedImages = [];
     vm.edit = $state.current.edit || false;
@@ -21,6 +21,10 @@
     };
     vm.type = 'event';
     vm.selectCover = false;
+    vm.crop = {
+      width: 512,
+      height: 256
+    };
     vm.firstload = true;
     vm.category_id = '';
     vm.startDate = moment().toDate();
@@ -110,9 +114,7 @@
 
 
         if (vm.cover) {
-          if (vm.edit && vm.coverChanged) {
             request.cover = vm.cover;
-          }
 
           if (!vm.edit) {
             request.cover = vm.cover;
@@ -243,54 +245,91 @@
         vm.images.files.splice(vm.restrictions.images, l);
       }
       if (vm.images.files.length > 0 && !vm.cover) {
-        var reader = new FileReader();
-        reader.onloadend = function () {
-          vm.cover = reader.result;
-        };
-        reader.readAsDataURL(vm.images.files[0]);
+        _setCover(vm.images.files[0]);
       }
     };
+
+    function _setCover(image, id) {
+      if (typeof image === 'string') {
+        vm.cropCover = image;
+        coverName = id;
+      } else if (image.photo_url) {
+        vm.cropCover = image.photo_url.original;
+        coverName = image.id;
+      } else {
+        var reader = new FileReader();
+        reader.onloadend = function () {
+          vm.cropCover = reader.result;
+          $scope.$apply();
+        };
+        coverName = image.name;
+        reader.readAsDataURL(image);
+      }
+    }
 
     vm.deleteImage = function (idx, id) {
       if (id) {
+        if (vm.images.files[idx].id == coverName) {
+          vm.cropCover = '';
+          vm.cover = null;
+        }
+
         vm.deletedImages.push(id);
         vm.images.files.splice(idx, 1);
       } else {
+        if (vm.images.files[idx].name == coverName) {
+          vm.cropCover = '';
+          vm.cover = null;
+        }
+        console.log(vm.images.files[idx]);
         vm.images.files.splice(idx, 1);
       }
     };
 
-    vm.cropImage = function (image) {
+    //vm.cropImage = function (image) {
+    //  if (vm.selectCover) {
+    //    originalCover = image;
+    //    CropService.crop(image, 512, 256, false, function (result) {
+    //      if (result) {
+    //        vm.cover = result;
+    //        vm.selectCover = false;
+    //
+    //        if (vm.edit) {
+    //          vm.coverChanged = true;
+    //        }
+    //      }
+    //    });
+    //  }
+    //};
+    //
+    //vm.editCover = function () {
+    //  if (vm.cover) {
+    //    originalCover = originalCover || vm.cover;
+    //    CropService.crop(originalCover, 512, 256, false, function (result) {
+    //      if (result) {
+    //        vm.cover = result;
+    //        vm.selectCover = false;
+    //
+    //        if (vm.edit) {
+    //          vm.coverChanged = true;
+    //        }
+    //      }
+    //    });
+    //  }
+    //};
+
+    vm.changeCover = function (image) {
       if (vm.selectCover) {
-        originalCover = image;
-        CropService.crop(image, 512, 256, false, function (result) {
-          if (result) {
-            vm.cover = result;
-            vm.selectCover = false;
+        if (image.photo_url) {
+          _setCover(image.photo_url.original, image.id);
+        } else {
+          _setCover(image);
+        }
 
-            if (vm.edit) {
-              vm.coverChanged = true;
-            }
-          }
-        });
+        vm.selectCover = false;
       }
     };
 
-    vm.editCover = function () {
-      if (vm.cover) {
-        originalCover = originalCover || vm.cover;
-        CropService.crop(originalCover, 512, 256, false, function (result) {
-          if (result) {
-            vm.cover = result;
-            vm.selectCover = false;
-
-            if (vm.edit) {
-              vm.coverChanged = true;
-            }
-          }
-        });
-      }
-    };
     vm.InvalidTag = function (tag) {
       if (tag.name.length > 64) {
         toastr.error('Your tag is too long. Max 64 symbols.');
@@ -324,7 +363,6 @@
       vm.category_id = data.spot_type_category_id;
       vm.tags = data.tags || [];
       vm.cover = data.cover_url.original;
-      vm.coverChanged = false;
       vm.locations = data.points;
       if (data.photos) {
         for (var k in data.photos) {
@@ -337,10 +375,13 @@
         vm.start_time = data.start_date;
         vm.end_time = data.end_date;
       }
+
+      _setCover(data.cover_url.original, data.id);
     };
 
     if (vm.edit) {
       vm.convertSpot();
     }
   }
-})();
+})
+();

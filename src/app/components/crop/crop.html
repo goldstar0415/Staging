@@ -3,7 +3,7 @@
 </div>
 <div class="modal-body clearfix">
   <div class="miniatures">
-    <div class="col-xs-12 crop-area" ng-class="{'col-sm-8': Crop.showPreview}">
+    <div class="crop-area" ng-class="{'col-sm-8': Crop.showPreview, 'col-xs-12': !Crop.showPreview}">
       <image-cropper source-image="Crop.image" result-image="Crop.resultImage" auto-crop="false"
                      crop-height="Crop.height" crop-width="Crop.width"></image-cropper>
     </div>
