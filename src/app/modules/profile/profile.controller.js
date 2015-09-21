@@ -6,7 +6,7 @@
     .controller('ProfileController', ProfileController);
 
   /** @ngInject */
-  function ProfileController(user, Wall, spots, SpotService, MapService, ScrollService, PermissionService) {
+  function ProfileController(user, Wall, spots, SpotService, dialogs, MapService, ScrollService, PermissionService) {
     var vm = this;
     vm.checkPermision = PermissionService.checkPermission;
 
@@ -83,5 +83,14 @@
         post.rating--;
       }
     };
+
+    vm.deletePost = function (item, idx) {
+      dialogs.confirm('Confirmation', 'Are you sure you want to delete post?').result.then(function () {
+        Wall.delete({id: item.id}, function () {
+          toastr.info('Post successfully deleted');
+          vm.wall.data.splice(idx, 1);
+        });
+      });
+    }
   }
 })();
