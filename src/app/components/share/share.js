@@ -21,7 +21,7 @@
 
     function ShareController($state, $location, $window) {
       var vm = this;
-      var logo = $location.origin + '/assets/img/missing_thumb.png';
+      var logo = $location.origin + '/assets/img/missing_social.png';
 
       switch (vm.type) {
         case 'spot':
