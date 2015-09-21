@@ -12,7 +12,7 @@
       }
     });
 
-  function mapSort($rootScope, $scope, MapService, $http, SpotService, API_URL) {
+  function mapSort($rootScope, $scope, MapService, $http, SpotService, API_URL, DATE_FORMAT) {
     var vm = this;
     var originalSpotsArray = [];
     $scope.weatherForecast = [];
@@ -273,10 +273,10 @@
         }
       }
       $scope.currentWeather = daily[0];
-      $scope.currentWeather.sunrise = moment(daily[0].sunriseTime * 1000).format('HH:mm a');
-      $scope.currentWeather.sunset = moment(daily[0].sunsetTime * 1000).format('HH:mm a');
-      $scope.currentWeather.temperature = ((daily[0].temperatureMax + daily[0].temperatureMin) / 2).toFixed(2);
-
+      $scope.currentWeather.sunrise = moment(daily[0].sunriseTime * 1000).format(DATE_FORMAT.time);
+      $scope.currentWeather.sunset = moment(daily[0].sunsetTime * 1000).format(DATE_FORMAT.time);
+      $scope.currentWeather.temperature = Math.round((daily[0].temperatureMax + daily[0].temperatureMin) / 2);
+      console.log($scope.currentWeather);
     }
   }
 })();

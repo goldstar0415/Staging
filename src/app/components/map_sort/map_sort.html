@@ -308,9 +308,9 @@
               <span class="temperature">{{currentWeather.temperature}}</span>
               <span class="unit">°F</span>
 
-              <p class="unit2"><span>H</span>{{currentWeather.temperatureMax}}° </p>
+              <p class="unit2"><span>H</span>{{currentWeather.temperatureMax | number:0}}° </p>
 
-              <p class="unit2"><span>L</span>{{currentWeather.temperatureMin}}°</p>
+              <p class="unit2"><span>L</span>{{currentWeather.temperatureMin | number:0}}°</p>
             </div>
           </div>
           <div class="parameters">
@@ -325,7 +325,7 @@
               <p class="description">sunset</p>
             </div>
             <div>
-              <p class="mainParameters">{{currentWeather.windSpeed}} <span>km/h</span></p>
+              <p class="mainParameters">{{currentWeather.windSpeed | number:0}} <span>km/h</span></p>
 
               <p class="description">wind</p>
             </div>
@@ -344,11 +344,13 @@
             <div class="weekForecast-wrapper">
               <span class="data">{{item.formattedDate}}</span>
 
-              <div class="weatherIcon" tooltip="{{item.summary}}">
+              <div class="weatherIcon">
                 <div ng-class="item.icon"></div>
               </div>
-              <span class="temperatureWeek">{{item.temperatureMax}}°F /{{item.temperatureMin}}°F </span>
+              <span class="temperatureWeek">{{item.temperatureMax | number:0}}°F /{{item.temperatureMin | number:0}}°F </span>
             </div>
+
+            <div class="weather-summary">{{item.summary}}</div>
             <div class="wrapperHr">
               <hr/>
             </div>
