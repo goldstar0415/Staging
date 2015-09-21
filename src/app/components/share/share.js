@@ -21,11 +21,12 @@
 
     function ShareController($state, $location, $window) {
       var vm = this;
-      var logo = $location.origin + '/assets/img/icons/logo.svg';
+      var logo = $location.origin + '/assets/img/missing_thumb.png';
 
       switch (vm.type) {
         case 'spot':
           vm.text = vm.item.title;
+          vm.description = vm.item.description;
           vm.url = $state.href('spot', {spot_id: vm.item.id, user_id: vm.item.user_id}, {absolute: true});
           vm.picture = vm.item.cover_url.medium;
           break;
@@ -47,8 +48,8 @@
           link: vm.url,
           picture: vm.picture,
           //name: attr.name,
-          //caption: attr.caption,
-          description: vm.text,
+          caption: vm.text,
+          description: vm.description
           //properties: attr.properties,
           //actions: attr.actions
         });
