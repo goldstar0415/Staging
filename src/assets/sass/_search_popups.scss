@@ -669,7 +669,7 @@
     .weekForecast-wrapper {
       float: left;
       width: 100%;
-      padding: 10px 15px;
+      padding: 10px 15px 0;
       box-sizing: border-box;
       .weatherIcon {
         float: left;
@@ -726,6 +726,10 @@
         font: 400 18px 'Questrial';
       }
     }
+  }
+  .weather-summary {
+    color: gray;
+    font-family: 'Pontano';
   }
 }
 
