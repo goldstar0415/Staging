@@ -32,7 +32,6 @@
     function showMarkers() {
       if (posts.length > 0) {
         MapService.drawBlogMarkers(posts, true);
-        MapService.FocusMapToGivenLocation(posts[0].location, 4);
       }
     }
 

@@ -367,7 +367,7 @@
 
 
         map.setView(DEFAULT_MAP_LOCATION, 3);
-        FocusMapToCurrentLocation(8);
+        FocusMapToCurrentLocation(12);
 
         window.map = map;
         return map;
@@ -1185,7 +1185,7 @@
           .on('locationfound', function (e) {
             var location = {lat: e.latitude, lng: e.longitude};
             $rootScope.currentLocation = location;
-            FocusMapToGivenLocation(location, 8)
+            FocusMapToGivenLocation(location, zoom)
           })
       }
 
@@ -1199,14 +1199,27 @@
         }
       }
 
-      function FitBoundsOfCurrentLayer() {
+      function FitBoundsByLayer(layer) {
+        //currentLayer = layer;
         var bounds = GetCurrentLayer().getBounds();
         map.fitBounds(bounds);
       }
 
+      function FitBoundsOfCurrentLayer() {
+        var layer = GetCurrentLayer();
+        if (layer) {
+          var bounds = layer.getBounds();
+          if (!_.isEmpty(bounds)) {
+            map.fitBounds(bounds);
+          }
+        }
+      }
+
       function FitBoundsOfDrawLayer() {
         var bounds = drawLayer.getBounds();
-        map.fitBounds(bounds);
+        if (!_.isEmpty(bounds)) {
+          map.fitBounds(bounds);
+        }
       }
 
       function GetDrawLayerBBoxes() {
@@ -1409,10 +1422,14 @@
             break;
         }
 
+        //currentLayer = type;
+        FitBoundsOfCurrentLayer();
+
         $rootScope.syncMapSpots = spots;
       }
 
       function drawBlogMarkers(posts, clear) {
+        //currentLayer = 'other';
         if (clear) {
           GetCurrentLayer().clearLayers();
         }
@@ -1430,6 +1447,7 @@
         });
 
         otherLayer.addLayers(markers);
+        FitBoundsOfCurrentLayer();
       }
 
       function _activateControl(activeSelector) {
@@ -1477,6 +1495,7 @@
         GetCurrentLocation: GetCurrentLocation,
         FocusMapToCurrentLocation: FocusMapToCurrentLocation,
         FocusMapToGivenLocation: FocusMapToGivenLocation,
+        FitBoundsByLayer: FitBoundsByLayer,
         FitBoundsOfCurrentLayer: FitBoundsOfCurrentLayer,
         FitBoundsOfDrawLayer: FitBoundsOfDrawLayer,
         //sorting

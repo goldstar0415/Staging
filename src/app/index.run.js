@@ -46,8 +46,9 @@
 
       if (current.mapState == 'big') {
         angular.element('.map-tools').show();
+        MapService.FocusMapToCurrentLocation(12);
       } else {
-        $('.map-tools').hide();
+        angular.element('.map-tools').hide();
       }
 
       switch (current.locate) {
