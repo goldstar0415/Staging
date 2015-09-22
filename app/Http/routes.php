@@ -21,7 +21,7 @@ Route::post('users', 'UserController@postIndex');
 Route::post('users/login', 'UserController@postLogin');
 Route::get('users/logout', 'UserController@getLogout');
 Route::post('users/recovery', 'UserController@postRecovery');
-Route::get('users/reset', 'UserController@postReset');
+Route::post('users/reset', 'UserController@postReset');
 Route::get('users/{users}', 'UserController@getIndex');
 Route::controller('settings', 'SettingsController');
 

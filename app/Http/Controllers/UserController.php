@@ -172,26 +172,11 @@ class UserController extends Controller
 
         switch ($response) {
             case Password::RESET_LINK_SENT:
-                return redirect()->back()->with('status', trans($response));
+                return response()->json(['status' => trans($response)]);
 
             case Password::INVALID_USER:
-                return redirect()->back()->withErrors(['email' => trans($response)]);
+                return response()->json(['email' => trans($response)], 403);
         }
-    }
-
-    /**
-     * Display the password reset view for the given token.
-     *
-     * @param  string  $token
-     * @return \Illuminate\Http\Response
-     */
-    public function getReset($token = null)
-    {
-        if (is_null($token)) {
-            throw new NotFoundHttpException;
-        }
-
-        return view('auth.reset')->with('token', $token);//TODO: change url
     }
 
     /**
@@ -221,12 +206,10 @@ class UserController extends Controller
 
         switch ($response) {
             case Password::PASSWORD_RESET:
-                return redirect($this->redirectPath());
+                return $this->auth->user();
 
             default:
-                return redirect()->back()
-                    ->withInput($request->only('email'))
-                    ->withErrors(['email' => trans($response)]);
+                return response()->json(['email' => trans($response)], 403);
         }
     }
 
