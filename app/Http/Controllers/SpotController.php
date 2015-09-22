@@ -15,6 +15,7 @@ use App\Http\Requests\Spot\SpotRateRequest;
 use App\Http\Requests\Spot\SpotStoreRequest;
 use App\Http\Requests\Spot\SpotUnFavoriteRequest;
 use App\Http\Requests\Spot\SpotUpdateRequest;
+use App\Http\Requests\SpotExportRequest;
 use App\Spot;
 use App\SpotPhoto;
 use App\SpotType;
@@ -259,5 +260,16 @@ class SpotController extends Controller
     public function members(Request $request, $spot)
     {
         return $spot->calendarUsers;
+    }
+
+    /**
+     * Export chosen spot
+     * @param Request $request
+     * @param \App\Spot $spot
+     * @return
+     */
+    public function export(Request $request, $spot)
+    {
+        return response()->ical($spot);
     }
 }

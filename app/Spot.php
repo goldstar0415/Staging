@@ -278,24 +278,42 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
          * @var \App\Spot $spot
          */
         foreach ($spots as $spot) {
-            $ics_event = new Event($spot->id);
-            if ($spot->description) {
-                $ics_event->setDescription($spot->description);
-            }
-            $ics_event->setDtStart($spot->start_date);
-            $ics_event->setDtEnd($spot->end_date);
-            if ($point = $spot->points()->first()) {
-                $ics_event->setLocation($point->address);
-            }
-            if (!empty($spot->web_sites)) {
-                $ics_event->setUrl($spot->web_sites[0]);
-            }
-            $ics_event->setUseUtc();
-            $ics_event->setOrganizer($user->first_name . ' ' . $user->last_name, $user->email);
-            $ics_event->setCategories($spot->category->display_name);
-            $ics_event->setSummary($spot->title);
-
-            yield $ics_event;
+            yield self::makeVEvent($spot, $user);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function export()
+    {
+        return self::makeVEvent($this, $this->user);
+    }
+
+    /**
+     * @param self $spot
+     * @param User $user
+     * @return Event
+     */
+    protected static function makeVEvent(self $spot, User $user)
+    {
+        $ics_event = new Event($spot->id);
+        if ($spot->description) {
+            $ics_event->setDescription($spot->description);
+        }
+        $ics_event->setDtStart($spot->start_date);
+        $ics_event->setDtEnd($spot->end_date);
+        if ($point = $spot->points()->first()) {
+            $ics_event->setLocation($point->address);
+        }
+        if (!empty($spot->web_sites)) {
+            $ics_event->setUrl($spot->web_sites[0]);
+        }
+        $ics_event->setUseUtc();
+        $ics_event->setOrganizer($user->first_name . ' ' . $user->last_name, $user->email);
+        $ics_event->setCategories($spot->category->display_name);
+        $ics_event->setSummary($spot->title);
+
+        return $ics_event;
     }
 }

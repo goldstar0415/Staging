@@ -63,6 +63,7 @@ Route::get('spots/{spots}/favorite', 'SpotController@favorite');
 Route::get('spots/{spots}/unfavorite', 'SpotController@unfavorite');
 Route::get('spots/{spots}/members', 'SpotController@members');
 Route::get('spots/{spots}/preview', 'SpotController@preview');
+Route::get('spots/{spots}/export', 'SpotController@export');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 Route::resource('spots.comments', 'SpotCommentController', ['except' => ['create', 'edit']]);
 Route::resource(
@@ -82,6 +83,7 @@ Route::get('calendar/plans', 'CalendarController@getPlans');
  * Plan controls
  */
 Route::resource('plans', 'PlanController', ['except' => ['create', 'edit']]);
+Route::get('plans/{plans}/export', 'PlanController@export');
 Route::post('plans/invite', 'PlanController@invite');
 Route::get('activity-categories', 'PlanController@getActivityCategories');
 Route::resource('plans.comments', 'PlanCommentController', ['only' => ['index', 'store', 'destroy']]);

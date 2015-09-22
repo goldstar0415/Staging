@@ -99,20 +99,33 @@ class Plan extends BaseModel implements CalendarExportable
          * @var \App\Plan $plan
          */
         foreach ($plans as $plan) {
-            $ics_event = new Event($plan->id);
-            if ($plan->description) {
-                $ics_event->setDescription($plan->description);
-            }
-            if ($plan->start_date) {
-                $ics_event->setDtStart($plan->start_date);
-                $ics_event->setDtEnd($plan->end_date);
-            }
-            $ics_event->setLocation($plan->address);
-            $ics_event->setUseUtc();
-            $ics_event->setOrganizer($user->first_name . ' ' . $user->last_name, $user->email);
-            $ics_event->setSummary($plan->title);
-
-            yield $ics_event;
+            yield self::makeVEvent($plan, $plan->user);
         }
+    }
+
+    protected static function makeVEvent(self $plan, User $user)
+    {
+        $ics_event = new Event($plan->id);
+        if ($plan->description) {
+            $ics_event->setDescription($plan->description);
+        }
+        if ($plan->start_date) {
+            $ics_event->setDtStart($plan->start_date);
+            $ics_event->setDtEnd($plan->end_date);
+        }
+        $ics_event->setLocation($plan->address);
+        $ics_event->setUseUtc();
+        $ics_event->setOrganizer($user->first_name . ' ' . $user->last_name, $user->email);
+        $ics_event->setSummary($plan->title);
+
+        return $ics_event;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function export()
+    {
+        return self::makeVEvent($this, $this->user);
     }
 }

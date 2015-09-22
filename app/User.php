@@ -421,22 +421,35 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
          * @var \App\User $birth_user
          */
         foreach ($users as $birth_user) {
-            $ics_event = new Event($birth_user->id);
-            $full_name = $user->first_name . ' ' . $user->last_name;
-
-            if ($birth_user->description) {
-                $ics_event->setDescription($birth_user->description);
-            }
-            $ics_event->setDtStart($birth_user->birth_date);
-            $ics_event->setDtEnd($birth_user->birth_date);
-            if ($birth_user->address) {
-                $ics_event->setLocation($birth_user->address);
-            }
-            $ics_event->setUseUtc();
-            $ics_event->setOrganizer($full_name, $user->email);
-            $ics_event->setSummary($full_name . ' birthday!!!');
-
-            yield $ics_event;
+            yield self::makeVEvent($birth_user);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function export()
+    {
+        return self::makeVEvent($this);
+    }
+
+    protected static function makeVEvent(self $user)
+    {
+        $ics_event = new Event($user->id);
+        $full_name = $user->first_name . ' ' . $user->last_name;
+
+        if ($user->description) {
+            $ics_event->setDescription($user->description);
+        }
+        $ics_event->setDtStart($user->birth_date);
+        $ics_event->setDtEnd($user->birth_date);
+        if ($user->address) {
+            $ics_event->setLocation($user->address);
+        }
+        $ics_event->setUseUtc();
+        $ics_event->setOrganizer($full_name, $user->email);
+        $ics_event->setSummary($full_name . ' birthday!!!');
+
+        return $ics_event;
     }
 }

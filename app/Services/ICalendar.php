@@ -18,8 +18,6 @@ class ICalendar
 
     protected $events = [];
 
-    const EXPORTABLE = ['plans', 'calendarSpots', 'invitedPlans'];
-
     /**
      * ICalendar constructor.
      */
