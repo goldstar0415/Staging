@@ -21,7 +21,7 @@ trait StartEndDatesTrait
         if (!$value instanceof Carbon) {
             $this->attributes['end_date'] = Carbon::createFromFormat($this->getDateFormat(), $value);
         } else {
-            $this->attributes['start_date'] = $value;
+            $this->attributes['end_date'] = $value;
         }
     }
 }

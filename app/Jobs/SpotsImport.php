@@ -107,8 +107,8 @@ class SpotsImport extends Job implements SelfHandling
                     $spot->web_sites = [$row->website];
                 }
                 if ($this->type === self::EVENT) {
-                    $spot->start_date = Carbon::createFromFormat('Y-m-d', $row->start_date);
-                    $spot->end_date = Carbon::createFromFormat('Y-m-d', $row->end_date);
+                    $spot->start_date = Carbon::createFromDate(...explode('-', $row->start_date));
+                    $spot->end_date = Carbon::createFromDate(...explode('-', $row->end_date));
                 }
                 if ($this->type === self::RECREATION or $this->type === self::PITSTOP) {
                     $spot->is_approved = true;
