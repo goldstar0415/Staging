@@ -8,6 +8,7 @@ use App\Spot;
 use App\SpotTypeCategory;
 use App\SpotVote;
 use App\User;
+use Carbon\Carbon;
 use File;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Log;
@@ -106,8 +107,8 @@ class SpotsImport extends Job implements SelfHandling
                     $spot->web_sites = [$row->website];
                 }
                 if ($this->type === self::EVENT) {
-                    $spot->start_date = $row->start_date;
-                    $spot->end_date = $row->end_date;
+                    $spot->start_date = Carbon::createFromFormat('Y-m-d', $row->start_date);
+                    $spot->end_date = Carbon::createFromFormat('Y-m-d', $row->end_date);
                 }
                 if ($this->type === self::RECREATION or $this->type === self::PITSTOP) {
                     $spot->is_approved = true;
