@@ -93,6 +93,7 @@
         var m = CreateMarker($rootScope.plannerIcon, displayPlans[k].title, displayPlans[k].id, displayPlans[k].location);
         markers.push({id: displayPlans[k].id, marker: m});
       }
+      MapService.FitBoundsOfCurrentLayer();
     }
 
     function CreateMarker(iconUrl, title, plan_id, location) {
