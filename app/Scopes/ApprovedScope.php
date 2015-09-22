@@ -42,9 +42,20 @@ class ApprovedScope implements ScopeInterface
         $query = $builder->getQuery();
         $column = $this->column;
 
-        $query->wheres = collect($query->wheres)->reject(function ($where) use ($column) {
-            return $this->isWithRequestedConstraint($where, $column);
-        })->values()->all();
+        $wheres = [];
+        $binding_key = 0;
+
+        foreach ($query->wheres as $key => $where) {
+            if ($this->isWithRequestedConstraint($where, $column)) {
+                $binding_key = $key;
+            } else {
+                $wheres[] = $where;
+            }
+        }
+        $bindings = $query->getBindings();
+        unset($bindings[$binding_key]);
+        $query->setBindings($bindings);
+        $query->wheres = $wheres;
     }
 
     /**
