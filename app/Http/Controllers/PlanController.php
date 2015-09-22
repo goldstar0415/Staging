@@ -16,6 +16,7 @@ use App\Plan;
 
 use App\Http\Requests;
 use App\User;
+use Illuminate\Http\Request;
 
 class PlanController extends Controller
 {
@@ -157,5 +158,15 @@ class PlanController extends Controller
         }
 
         return response('OK');
+    }
+
+    /**
+     * @param Request $request
+     * @param \App\Plan $plan
+     * @return mixed
+     */
+    public function export(Request $request, $plan)
+    {
+        return response()->ical($plan);
     }
 }

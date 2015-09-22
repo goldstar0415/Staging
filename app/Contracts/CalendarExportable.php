@@ -24,4 +24,10 @@ interface CalendarExportable
      * @return \Generator
      */
     public static function exportable(User $user);
+
+    /**
+     * Exports current model
+     * @return mixed
+     */
+    public function export();
 }
