@@ -19,7 +19,8 @@
         "illuminate/html": "^5.0@dev",
         "frozennode/administrator": "dev-master",
         "maatwebsite/excel": "~2.0",
-        "eluceo/ical": "dev-master"
+        "eluceo/ical": "dev-master",
+        "yangqi/htmldom": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
