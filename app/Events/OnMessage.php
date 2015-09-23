@@ -4,6 +4,7 @@ namespace App\Events;
 
 use App\ChatMessage;
 use App\User;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
