@@ -322,7 +322,7 @@
         parent: 'profile_menu',
         locate: 'none',
         resolve: {
-          dialogs: function (Message) {
+          messages: function (Message) {
             return Message.dialogs().$promise;
           }
         },

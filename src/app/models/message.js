@@ -23,6 +23,10 @@
         method: 'POST',
         ignoreLoadingBar: true
       },
+      deleteDialog: {
+        url: API_URL + '/message/dialogs/:user_id',
+        method: 'DELETE'
+      },
       markAsRead: {
         url: API_URL + '/message/:user_id/read',
         ignoreLoadingBar: true
