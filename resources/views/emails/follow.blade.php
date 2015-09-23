@@ -1,2 +1,1 @@
-User {{ $sender->first_name }} {{ $sender->last_name }}
-follows {{ $following->first_name }} {{  $following->last_name }}
+<a href="{{ frontend_url('user', $sender->id) }}">{{ $sender->first_name }} {{ $sender->last_name }}</a> follows you

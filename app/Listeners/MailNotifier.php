@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\Event;
+use App\Events\OnMessage;
 use App\Events\OnSpotCreate;
 use App\Events\OnSpotRemind;
 use App\Events\OnWallMessage;
@@ -14,10 +15,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class MailNotifier implements ShouldQueue
+class MailNotifier
 {
-    use InteractsWithQueue;
-
     /**
      * @var Mailer
      */
@@ -36,12 +35,18 @@ class MailNotifier implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  Event  $event
+     * @param  Event $event
      * @return void
      */
     public function handle(Event $event)
     {
         switch (true) {
+            case $event instanceof OnMessage:
+                $this->send($event->message->receiver, 'message', [
+                    'sender' => $event->message->sender()->first(),
+                    'receiver' => $event->message->receiver()->first()
+                ]);
+                break;
             case $event instanceof UserFollowEvent:
                 $sender = $event->getFeedSender();
                 $following = $event->getFollowing();
@@ -77,19 +82,33 @@ class MailNotifier implements ShouldQueue
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Collection $users
+     * @param \Illuminate\Database\Eloquent\Collection|User $user_data
      * @param string $view
      * @param array $data
      */
-    private function send(Collection $users, $view, array $data)
+    private function send($user_data, $view, array $data)
     {
-        $users->each(function ($user) use ($view, $data) {
-            $this->mailer->send(['text' => 'emails.' . $view], $data, function ($message) use ($user) {
-                /**
-                 * @var \Illuminate\Mail\Message $message
-                 */
-                $message->to($user->email, $user->first_name);
+        if ($user_data instanceof Collection) {
+            $user_data->each(function ($user) use ($view, $data) {
+                $this->sendMail($user, $view, $data);
             });
+        } elseif ($user_data instanceof User) {
+            $this->sendMail($user_data, $view, $data);
+        }
+    }
+
+    /**
+     * @param $user_data
+     * @param $view
+     * @param array $data
+     */
+    private function sendMail($user_data, $view, array $data)
+    {
+        $this->mailer->send('emails.' . $view, $data, function ($message) use ($user_data) {
+            /**
+             * @var \Illuminate\Mail\Message $message
+             */
+            $message->to($user_data->email, $user_data->first_name);
         });
     }
 }
