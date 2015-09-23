@@ -66,7 +66,7 @@ class SpotsImport extends Job implements SelfHandling
                 'description' => 'string|max:5000',
                 'website' => 'url',
                 'latitude' => 'required|numeric',
-                'longtitude' => 'required|numeric',
+                'longitude' => 'required|numeric',
                 'address' => 'required|string|max:255',
                 'rating' => 'numeric'
             ];
