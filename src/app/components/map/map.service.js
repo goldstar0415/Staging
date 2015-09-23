@@ -1181,12 +1181,25 @@
 
       function FocusMapToCurrentLocation(zoom) {
         zoom = zoom || 8;
-        map.locate({setView: true})
-          .on('locationfound', function (e) {
-            var location = {lat: e.latitude, lng: e.longitude};
-            $rootScope.currentLocation = location;
-            FocusMapToGivenLocation(location, zoom)
-          })
+
+        var userBlockLocation = localStorage && localStorage.getItem('blockLocation');
+        if (userBlockLocation) {
+          console.log(moment.unix(userBlockLocation).format('MMM DD, YYYY H:mm:s A'));
+        }
+
+        if (!userBlockLocation) {
+          map.locate({setView: true})
+            .on('locationfound', function (e) {
+              var location = {lat: e.latitude, lng: e.longitude};
+              $rootScope.currentLocation = location;
+              FocusMapToGivenLocation(location, zoom)
+            })
+            .on('locationerror', function () {
+              if (!userBlockLocation) {
+                localStorage.setItem('blockLocation', moment().unix());
+              }
+            });
+        }
       }
 
       function FocusMapToGivenLocation(location, zoom) {
