@@ -332,7 +332,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     public function blogComments()
     {
-        return $this->hasMany(BlogComment::class);
+        return $this->morphMany(Comment::class, 'commentable', Blog::class);
     }
 
     public function bloggerRequest()

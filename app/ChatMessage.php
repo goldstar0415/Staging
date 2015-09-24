@@ -4,6 +4,7 @@ namespace App;
 
 use App\Extensions\Attachments;
 use App\Scopes\NewestScopeTrait;
+use Carbon\Carbon;
 
 /**
  * Class ChatMessage
@@ -44,11 +45,23 @@ class ChatMessage extends BaseModel
     
     public function sender()
     {
-        return $this->belongsToMany(User::class, null, null, 'sender_id')->withPivot('receiver_id');
+        return $this->belongsToMany(User::class, null, null, 'sender_id')
+            ->withPivot('receiver_id', 'sender_deleted_at', 'receiver_deleted_at');
     }
 
     public function receiver()
     {
-        return $this->belongsToMany(User::class, null, null, 'receiver_id')->withPivot('sender_id');
+        return $this->belongsToMany(User::class, null, null, 'receiver_id')
+            ->withPivot('sender_id', 'sender_deleted_at', 'receiver_deleted_at');
+    }
+
+    public function deleteForReceiver()
+    {
+        return $this->pivot->update(['receiver_deleted_at' => Carbon::now()]);
+    }
+
+    public function deleteForSender()
+    {
+        return $this->pivot->update(['sender_deleted_at' => Carbon::now()]);
     }
 }

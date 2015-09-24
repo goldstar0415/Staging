@@ -10,6 +10,8 @@ use App\Http\Requests\Chat\MessageListRequest;
 use App\Http\Requests\Chat\SendMessageRequest;
 use App\Services\Attachments;
 use App\User;
+use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -43,7 +45,8 @@ class ChatController extends Controller
 SELECT DISTINCT ON(cm.sender_id+cm.receiver_id) cm.*, m.*
 FROM "chat_messages" m
 inner join "chat_message_user" cm on m."id" = cm."chat_message_id"
-WHERE  cm.receiver_id = $user_id OR cm.sender_id = $user_id
+WHERE cm.receiver_id = $user_id AND cm."receiver_deleted_at" is null
+OR cm.sender_id = $user_id AND cm."sender_deleted_at" is null
 order by cm.sender_id+cm.receiver_id, m.created_at desc
 QUERY
         ));//TODO: optimize
@@ -74,10 +77,10 @@ QUERY
         $user_id = (int)$request->get('user_id');
         $my_id = $request->user()->id;
         return $request->user()->chatMessagesSend()
-            ->wherePivot('receiver_id', '=', $user_id)
-            ->orWherePivot('sender_id', '=', $user_id)
+            ->wherePivot('receiver_id', '=', $user_id)->wherePivot('sender_deleted_at')
+            ->orWherePivot('sender_id', '=', $user_id)->wherePivot('receiver_deleted_at')
             ->wherePivot('receiver_id', '=', $my_id)
-                ->paginate($request->get('limit'));
+            ->paginate($request->get('limit'));
     }
 
     /**
@@ -87,7 +90,30 @@ QUERY
      */
     public function destroy(MessageDestroyRequest $request, $message)
     {
-        return ['result' => $message->delete()];
+        $result = false;
+
+        if ($request->isReceiver()) {
+            $result = $message->deleteForReceiver();
+        } else {
+            $result = $message->deleteForSender();
+        }
+
+        return compact('result');
+    }
+
+    public function destroyDialog(Request $request, $target_id)
+    {
+        $user = $request->user();
+
+        DB::table('chat_message_user')->where('sender_id', $user->id)->where('receiver_id', $target_id)
+            ->where('sender_deleted_at')
+            ->update(['sender_deleted_at' => Carbon::now()]);
+
+        DB::table('chat_message_user')->where('receiver_id', $user->id)->where('sender_id', $target_id)
+            ->where('receiver_deleted_at')
+            ->update(['receiver_deleted_at' => Carbon::now()]);
+
+        return ['result' => true];
     }
 
     public function read(Request $request, $user_id)
