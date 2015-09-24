@@ -49,7 +49,10 @@
             <li>
               <invite-friends item="plan" type="plan"></invite-friends>
             </li>
-
+            <li>
+              <a class="download"
+                 ng-href="{{Planner.API_URL + '/plans/' + plan.id + '/export'}}" target="_blank">Export ICS</a>
+            </li>
           </ul>
 
         </div>

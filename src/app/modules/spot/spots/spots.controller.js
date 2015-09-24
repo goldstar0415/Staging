@@ -6,8 +6,9 @@
     .controller('SpotsController', SpotsController);
 
   /** @ngInject */
-  function SpotsController($rootScope, $scope, Spot, SpotService, MapService, ScrollService, allSpots) {
+  function SpotsController($rootScope, $scope, Spot, SpotService, MapService, ScrollService, API_URL, allSpots) {
     var vm = this;
+    vm.API_URL = API_URL;
     vm.spots = {};
     $rootScope.syncSpots = vm.spots;
     vm.markersSpots = formatSpots(allSpots);

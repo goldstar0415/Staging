@@ -6,8 +6,9 @@
     .controller('PlannerController', PlannerController);
 
   /** @ngInject */
-  function PlannerController($rootScope, Plan, $state, $compile, $scope, all_plans, dialogs, ScrollService, DATE_FORMAT, MapService) {
+  function PlannerController($rootScope, Plan, $state, $compile, $scope, all_plans, dialogs, ScrollService, API_URL, DATE_FORMAT, MapService) {
     var vm = this;
+    vm.API_URL = API_URL;
     var displayPlans = all_plans.data;
     var markers = [];
 

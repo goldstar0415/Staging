@@ -1408,9 +1408,12 @@
             var spotMarkers = [];
             _.each(item.locations, function (point) {
               item.address = point.address;
+
               item.location = point.location;
 
               var marker = L.marker(item.location, {icon: icon});
+              console.log(item);
+
               BindSpotPopup(marker, item);
 
               spotMarkers.push(marker);
