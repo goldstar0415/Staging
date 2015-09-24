@@ -6,6 +6,16 @@ use App\Http\Requests\Request;
 
 class MessageDestroyRequest extends Request
 {
+    private $is_receiver = true;
+
+    /**
+     * @return boolean
+     */
+    public function isReceiver()
+    {
+        return $this->is_receiver;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +23,19 @@ class MessageDestroyRequest extends Request
      */
     public function authorize()
     {
-        return $this->route('message')->sender()->first()->id === $this->user()->id;//TODO: fix sender
+        $sender_id = $this->route('message')->sender()->first()->id;
+        $receiver_id = $this->route('message')->receiver()->first()->id;
+        $user_id = $this->user()->id;
+
+        if ($sender_id === $user_id) {
+            $this->is_receiver = false;
+
+            return true;
+        } elseif ($receiver_id === $user_id) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -23,8 +45,6 @@ class MessageDestroyRequest extends Request
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return [];
     }
 }
