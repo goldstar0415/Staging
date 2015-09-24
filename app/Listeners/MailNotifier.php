@@ -42,6 +42,7 @@ class MailNotifier
     {
         switch (true) {
             case $event instanceof OnMessage:
+                $event = unserialize(serialize($event));//TODO: remove when fix
                 $this->send($event->message->receiver, 'message', [
                     'sender' => $event->message->sender()->first(),
                     'receiver' => $event->message->receiver()->first()
