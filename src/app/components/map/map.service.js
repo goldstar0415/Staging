@@ -1182,24 +1182,30 @@
       function FocusMapToCurrentLocation(zoom) {
         zoom = zoom || 8;
 
-        var userBlockLocation = localStorage && localStorage.getItem('blockLocation');
-        if (userBlockLocation) {
-          console.log(moment.unix(userBlockLocation).format('MMM DD, YYYY H:mm:s A'));
-        }
+        map
+          .locate({setView: true})
+          .on('locationfound', function (e) {
+            var location = {lat: e.latitude, lng: e.longitude};
+            $rootScope.currentLocation = location;
+            FocusMapToGivenLocation(location, zoom)
+          })
+          .on('locationerror', function () {
+            //detect country by ip
+            var latLng = localStorage.getItem('country_location');
+            if (latLng) {
+              focusonLocation(latLng);
+            } else {
+              $.get("http://ipinfo.io", function (response) {
+                localStorage.setItem('country_location', response.loc);
+                focusonLocation(response.loc);
+              }, "jsonp");
+            }
 
-        if (!userBlockLocation) {
-          map.locate({setView: true})
-            .on('locationfound', function (e) {
-              var location = {lat: e.latitude, lng: e.longitude};
-              $rootScope.currentLocation = location;
-              FocusMapToGivenLocation(location, zoom)
-            })
-            .on('locationerror', function () {
-              if (!userBlockLocation) {
-                localStorage.setItem('blockLocation', moment().unix());
-              }
-            });
-        }
+            function focusonLocation(latlng) {
+              var location = latlng.split(',');
+              FocusMapToGivenLocation({lat: location[0], lng: location[1]}, 6);
+            }
+          });
       }
 
       function FocusMapToGivenLocation(location, zoom) {
@@ -1407,14 +1413,15 @@
           } else if (item.locations) {
             var spotMarkers = [];
             _.each(item.locations, function (point) {
-              item.address = point.address;
+              var spot = angular.copy(item);
+              spot.address = point.address;
 
-              item.location = point.location;
+              spot.location = point.location;
 
-              var marker = L.marker(item.location, {icon: icon});
-              console.log(item);
+              var marker = L.marker(spot.location, {icon: icon});
+              console.log(spot);
 
-              BindSpotPopup(marker, item);
+              BindSpotPopup(marker, spot);
 
               spotMarkers.push(marker);
               markers.push(marker);
