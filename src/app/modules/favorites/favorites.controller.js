@@ -6,8 +6,10 @@
     .controller('FavoritesController', FavoritesController);
 
   /** @ngInject */
-  function FavoritesController($scope, $rootScope, Spot, ScrollService, SpotService, allSpots, MapService) {
+  function FavoritesController($scope, $rootScope, Spot, ScrollService, SpotService, allSpots, MapService, API_URL) {
     var vm = this;
+    vm.API_URL = API_URL;
+
     vm.spots = {};
 
     vm.markersSpots = formatSpots(allSpots.data);

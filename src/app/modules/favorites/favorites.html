@@ -48,7 +48,10 @@
         <li>
           <invite-friends item="item"></invite-friends>
         </li>
-
+        <li ng-if="item.type == 'Event'">
+          <a class="download"
+             ng-href="{{Favorite.API_URL + '/spots/' + item.id + '/export'}}" target="_blank">Export ICS</a>
+        </li>
       </ul>
       <share item="item" type="spot"></share>
 

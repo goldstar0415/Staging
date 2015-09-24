@@ -6,8 +6,9 @@
     .controller('SpotController', SpotController);
 
   /** @ngInject */
-  function SpotController(spot, SpotService, ScrollService, SpotComment, $state, MapService, $rootScope, dialogs) {
+  function SpotController(spot, SpotService, ScrollService, SpotComment, $state, MapService, $rootScope, dialogs, API_URL) {
     var vm = this;
+    vm.API_URL = API_URL;
     vm.spot = SpotService.formatSpot(spot);
     $rootScope.currentSpot = vm.spot;
     vm.saveToCalendar = SpotService.saveToCalendar;
