@@ -419,17 +419,22 @@
 
       //Photomap view state
       .state('photos', {
+        abstract: true,
+        template: '<ui-view />',
+        parent: 'profile'
+      })
+      .state('photos.list', {
         url: '/albums',
         templateUrl: '/app/modules/photomap/photomap.html',
         controller: 'PhotomapController',
         controllerAs: 'Photomap',
+        parent: 'profile',
         resolve: {
           albums: function (Album, $stateParams) {
             return Album.query({user_id: $stateParams.user_id}).$promise;
           }
         },
         mapState: 'small',
-        parent: 'profile',
         locate: 'none'
       })
       //Create album state

@@ -72,7 +72,7 @@
       dialogs.confirm('Confirmation', 'Are you sure you want to delete album?').result.then(function () {
         album.$delete(function () {
           toastr.info('Album successfully deleted');
-          $state.go('photos', {user_id: $rootScope.currentUser.id});
+          $state.go('photos.list', {user_id: $rootScope.currentUser.id});
         });
       });
     }
