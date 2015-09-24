@@ -669,7 +669,7 @@
     .weekForecast-wrapper {
       float: left;
       width: 100%;
-      padding: 10px 15px 0;
+      padding: 10px 15px;
       box-sizing: border-box;
       .weatherIcon {
         float: left;
@@ -727,10 +727,6 @@
       }
     }
   }
-  .weather-summary {
-    color: gray;
-    font-family: 'Pontano';
-  }
 }
 
 .results-btn {
@@ -784,26 +780,9 @@
   }
   .tools-wrap {
     width: 80%;
+    //height: 100%;
     .tools-hint-block {
       border-radius: 10px;
-      h2, p {
-        font: 500 16px/22px 'Questrial';
-      }
-      h2 {
-        margin: 6px 0 5px;
-      }
-      ul {
-        margin: 0;
-        li {
-          width: 40px;
-          height: 40px;
-          margin: 10px 15px 15px;
-          font-size: 12px;
-          img {
-            max-width: 100%;
-          }
-        }
-      }
     }
   }
   .weather-wrap {
@@ -829,6 +808,7 @@
         .form-group {
           width: 100%;
           input {
+            float: right;
           }
         }
       }
@@ -844,9 +824,9 @@
     }
   }
   .sidebar-menu-wrap {
-    position: absolute;
+    position: relative;
     right: 0;
-    top: 70px;
+    top: 0;
     bottom: 0;
     width: 100%;
     transform: rotate(0deg);
@@ -896,9 +876,9 @@
 
 @media (min-device-width: 240px) and (max-device-width: 767px) and (orientation: landscape) {
   .sidebar-menu-wrap {
-    position: absolute;
+    position: relative;
     right: 0;
-    top: 70px;
+    top: 0;
     bottom: 0;
     width: 100%;
     -webkit-transform: rotate(0deg);
