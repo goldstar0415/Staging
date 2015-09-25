@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UrlParseRequest;
 use Exception;
 use Htmldom;
 use Illuminate\Http\Request;
@@ -18,28 +19,13 @@ class UrlMetaParserController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function getContentFromSite(Request $request)
+    public function getContentFromSite(UrlParseRequest $request)
     {
         $links = $request->get('links');
 
         $result = [];
-        foreach ($links as $link) {
+        foreach ($links as $url) {
             $error = null;
-            if (!$url = self::getUrl($link)) {
-                $error = ['result' => false, 'messages' => 'Bad URL'];
-            } else {
-//                $linkModel = LinkModel::where('url', $url)->first();
-//                if (!$linkModel) {
-//                    $result[] = [
-//                        'title' => $linkModel->title,
-//                        'description' => $linkModel->body,
-//                        'images' => [$linkModel->image],
-//                        'url' => $linkModel->url,
-//                        'default_url' => $link
-//                    ];
-//                    continue;
-//                }
-            }
 
             if (!empty($error) || !$content = self::getPageFromUrl($url)) {
                 $error = ['result' => false, 'messages' => 'bad url!'];
@@ -58,15 +44,12 @@ class UrlMetaParserController extends Controller
                     'title' => str_limit(strip_tags($title), 255),
                     'description' => strip_tags($description),
                     'images' => $images,
-                    'url' => $url,
-                    'default_url' => $link
+                    'url' => $url
                 ];
             } else {
                 $result[] = [
                     'error' => $error,
-                    'url' => $link,
-                    'default_url' => $link,
-                    '_token' => Session::token()
+                    'url' => $url
                 ];
             }
 
@@ -214,36 +197,5 @@ class UrlMetaParserController extends Controller
             }
         }
         return $description;
-    }
-
-    /**
-     * Get URL
-     * @param $url
-     * @return bool|string
-     */
-    public static function getUrl($url)
-    {
-        $url = trim($url);
-        if (strlen($url) == 0) {
-            return false;
-        }
-        if (!preg_match(
-            "~^(?:(?:https?)://(?:[a-z0-9_-]{1,32}" .
-            "(?::[a-z0-9_-]{1,32})?@)?)?(?:(?:[a-z0-9-]{1,128}\.)+(?:com|net|" .
-            "org|mil|edu|arpa|gov|biz|info|aero|inc|travel|name|mobi|[a-z]{2})|(?!0)(?:(?" .
-            "!0[^.]|255)[0-9]{1,3}\.){3}(?!0|255)[0-9]{1,3})(?:/[a-z0-9.,_@%&" .
-            "?+=\~/-]*)?(?:#[^ '\"&<>]*)?$~i",
-            $url,
-            $ok
-        )) {
-            return false;
-        }
-
-        if (!strstr($url, "://")) {
-            $url = "http://" . $url;
-        }
-        //$url = preg_replace("~^[a-z]+~iA", "strtolower('\\0')", $url);
-
-        return $url;
     }
 }

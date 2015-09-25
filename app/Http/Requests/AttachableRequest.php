@@ -6,11 +6,11 @@ use App\Services\Attachments;
 
 trait AttachableRequest
 {
-    protected $message_rule = 'required_without_all:
-    attachments.album_photos,
-    attachments.spots,
-    attachments.areas,
-    attachments.links';
+    protected $message_rule = 'required_without_all:' .
+    'attachments.album_photos,' .
+    'attachments.spots,' .
+    'attachments.areas,' .
+    'attachments.links';
 
     protected function attachmentsRules($rules, $message_field = 'message')
     {
@@ -27,5 +27,16 @@ trait AttachableRequest
                 'image' => 'required|url'
             ])
         );
+    }
+
+    public function sanitize($input)
+    {
+        foreach ($input['attachments']['links'] as &$link) {
+            if (starts_with($link['image'], '//')) {
+                $link['image'] = substr_replace($link['image'], 'http://', 0, 2);
+            }
+        }
+
+        return $input;
     }
 }

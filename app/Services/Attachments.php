@@ -91,8 +91,6 @@ class Attachments
                 $link_model = new Link($link);
                 $model->links()->save($link_model);
             }
-
-            $model->links()->sync($links);
         }
     }
 
