@@ -89,16 +89,20 @@ class UrlMetaParserController extends Controller
         }
 
         if (!$headers) {
-            $headers = ['User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.2) Gecko/20100115 Firefox/3.6'];
+            $headers = [
+                'User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.2) Gecko/20100115 Firefox/3.6'
+            ];
         }
         $c = curl_init($url);
-        if ($proxy) { // Если задана переменная с прокси-сервером, то приказываем использовать его.
+        // Если задана переменная с прокси-сервером, то приказываем использовать его.
+        if ($proxy) {
             curl_setopt($c, CURLOPT_PROXY, $proxy);
         }
 
         curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($c, CURLOPT_HTTPHEADER, $headers); // Передаем массив с HTTP-заголовками.
-        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1); // Это для того, что бы cURL возвращал текст сраницы, а не выводил его на экран.
+        // Это для того, что бы cURL возвращал текст сраницы, а не выводил его на экран.
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_TIMEOUT, 5);
         $page = curl_exec($c); // Запускаем сам процесс и записываем скачанную страницу в $page;
         $code = curl_getinfo($c, CURLINFO_HTTP_CODE);
@@ -110,7 +114,9 @@ class UrlMetaParserController extends Controller
         $htmlDom = null;
         try {
             $htmlDom = new Htmldom($page);
-        } catch (Exception $ex) { Log::error('PARSE URL: ' . $ex->getMessage()); }
+        } catch (Exception $ex) {
+            Log::error('PARSE URL: ' . $ex->getMessage());
+        }
 
         return $htmlDom;
     }
@@ -221,7 +227,15 @@ class UrlMetaParserController extends Controller
         if (strlen($url) == 0) {
             return false;
         }
-        if (!preg_match("~^(?:(?:https?)://(?:[a-z0-9_-]{1,32}" . "(?::[a-z0-9_-]{1,32})?@)?)?(?:(?:[a-z0-9-]{1,128}\.)+(?:com|net|" . "org|mil|edu|arpa|gov|biz|info|aero|inc|travel|name|mobi|[a-z]{2})|(?!0)(?:(?" . "!0[^.]|255)[0-9]{1,3}\.){3}(?!0|255)[0-9]{1,3})(?:/[a-z0-9.,_@%&" . "?+=\~/-]*)?(?:#[^ '\"&<>]*)?$~i", $url, $ok)) {
+        if (!preg_match(
+            "~^(?:(?:https?)://(?:[a-z0-9_-]{1,32}" .
+            "(?::[a-z0-9_-]{1,32})?@)?)?(?:(?:[a-z0-9-]{1,128}\.)+(?:com|net|" .
+            "org|mil|edu|arpa|gov|biz|info|aero|inc|travel|name|mobi|[a-z]{2})|(?!0)(?:(?" .
+            "!0[^.]|255)[0-9]{1,3}\.){3}(?!0|255)[0-9]{1,3})(?:/[a-z0-9.,_@%&" .
+            "?+=\~/-]*)?(?:#[^ '\"&<>]*)?$~i",
+            $url,
+            $ok
+        )) {
             return false;
         }
 

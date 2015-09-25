@@ -77,7 +77,11 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property array $attached_socials
  * @property string $avatar_url
  */
-class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract, StaplerableInterface, CalendarExportable
+class User extends BaseModel implements
+    AuthenticatableContract,
+    CanResetPasswordContract,
+    StaplerableInterface,
+    CalendarExportable
 {
     use Authenticatable, CanResetPassword, EntrustUserTrait,
         PostgisTrait, StaplerTrait, SoftDeletes, GeoTrait {
