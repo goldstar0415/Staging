@@ -11,51 +11,51 @@ class Attachments
 
     protected static $rules = [
         'attachments.album_photos' => [
-            'required_without_all:
-            {message},
-            attachments.spots,
-            attachments.areas,
-            attachments.plans,
-            attachments.links',
+            'required_without_all:' .
+            '{message},' .
+            'attachments.spots,' .
+            'attachments.areas,' .
+            'attachments.plans,' .
+            'attachments.links',
             'array',
             'count_max:10'
         ],
         'attachments.spots' => [
-            'required_without_all:
-            {message},
-            attachments.album_photos,
-            attachments.areas,attachments.plans,
-            attachments.links',
+            'required_without_all:' .
+            '{message},' .
+            'attachments.album_photos,' .
+            'attachments.areas,attachments.plans,' .
+            'attachments.links',
             'array',
             'count_max:10'
         ],
         'attachments.areas' => [
-            'required_without_all:
-            {message},
-            attachments.album_photos,
-            attachments.spots,
-            attachments.plans,
-            attachments.links',
+            'required_without_all:' .
+            '{message},' .
+            'attachments.album_photos,' .
+            'attachments.spots,' .
+            'attachments.plans,' .
+            'attachments.links',
             'array',
             'count_max:10'
         ],
         'attachments.plans' => [
-            'required_without_all:
-            {message},
-            attachments.album_photos,
-            attachments.spots,
-            attachments.areas,
-            attachments.links',
+            'required_without_all:' .
+            '{message},' .
+            'attachments.album_photos,' .
+            'attachments.spots,' .
+            'attachments.areas,' .
+            'attachments.links',
             'array',
             'count_max:10'
         ],
         'attachments.links' => [
-            'required_without_all:
-            {message},
-            attachments.album_photos,
-            attachments.spots,
-            attachments.areas,
-            attachments.plans',
+            'required_without_all:' .
+            '{message},' .
+            'attachments.album_photos,' .
+            'attachments.spots,' .
+            'attachments.areas,' .
+            'attachments.plans',
             'array',
             'count_max:10'
         ]
