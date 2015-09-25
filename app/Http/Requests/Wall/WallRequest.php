@@ -35,7 +35,7 @@ class WallRequest extends Request
             ]
         ];
 
-        $rules = $this->attachmentsRules($rules, 'body');
+        $rules = $this->attachmentsRules($rules);
 
         return $rules;
     }

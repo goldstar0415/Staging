@@ -63,10 +63,11 @@ class MailNotifier
                 }), 'unfollow', compact('sender', 'following'));
                 break;
             case $event instanceof OnWallMessage:
-                if ($event->isSelf()) {
-                    $this->send($event->getFeedSender()->followers->filter(function ($follower) {
-                        return $follower->notification_wall_post;
-                    }), 'wall-post', ['sender' => $event->getFeedSender(), 'wall' => $event->wall]);
+                if (!$event->isSelf()) {
+                    $receiver = $event->wall->receiver;
+                    if ($receiver->notification_wall_post) {
+                        $this->send($receiver, 'wall-post', ['sender' => $event->getFeedSender(), 'wall' => $event->wall]);
+                    }
                 }
                 break;
             case $event instanceof OnSpotCreate:
