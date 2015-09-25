@@ -48,7 +48,7 @@ class SocialAuthController extends Controller
                     $this->auth->login($exist_user);
 
                     if (!$auth_user->socials()->where('name', $social->name)->exists()) {
-                        $auth_user->socials()->attach($social, ['social_key' => $user->id]);
+                        $this->attachSocial($auth_user, $social, $user->getId());
                     }
 
                     return redirect(frontend_url());
@@ -58,7 +58,7 @@ class SocialAuthController extends Controller
 
                 if ($exist_user) {
                     $this->auth->login($exist_user);
-                    $auth_user->socials()->attach($social, ['social_key' => $user->id]);
+                    $this->attachSocial($social, $auth_user, $user->getId());
 
                     return redirect(frontend_url());
                 }
@@ -70,15 +70,13 @@ class SocialAuthController extends Controller
                     'last_name' => $last_name,
                     'avatar' => $user->getAvatar()
                 ]);
-                $new_user->socials()->attach($social, ['social_key' => $user->id]);
+                $this->attachSocial($new_user, $social, $user->getId());
                 $this->auth->login($new_user);
 
                 return redirect(frontend_url());
             }
             //If attach social for existing account
-            $user_socials = $request->user()->socials();
-
-            if ($user_socials->where('name', $social->name)->exists()) {
+            if ($request->user()->socials()->where('name', $social->name)->exists()) {
                 return response()->json(
                     ['message' => 'User already attached ' . $social->display_name . ' social'],
                     403
@@ -89,7 +87,7 @@ class SocialAuthController extends Controller
                 return response()->json(['message' => 'Somebody already attached this social'], 403);
             }
 
-            $user_socials->attach($social, ['social_key' => $user->id]);
+            $this->attachSocial($request->user(), $social, $user->getId());
 
             return redirect(frontend_url('settings'));
         }
@@ -126,5 +124,15 @@ class SocialAuthController extends Controller
     protected function isConfirmed(Request $request)
     {
         return $request->has('code') or $request->has('state');
+    }
+
+    /**
+     * @param Social $social
+     * @param User $user
+     * @param string $key
+     */
+    private function attachSocial($user, $social, $key)
+    {
+        $user->socials()->attach($social, ['social_key' => $key]);
     }
 }

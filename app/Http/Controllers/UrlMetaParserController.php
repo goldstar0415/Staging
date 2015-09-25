@@ -55,7 +55,7 @@ class UrlMetaParserController extends Controller
                 $images = self::getAllImages($content, $url);
 
                 $result[] = [
-                    'title' => str_limit(strip_tags($title), config('restrictions.link.title.length')),
+                    'title' => str_limit(strip_tags($title), 255),
                     'description' => strip_tags($description),
                     'images' => $images,
                     'url' => $url,
