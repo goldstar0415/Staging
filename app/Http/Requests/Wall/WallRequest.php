@@ -2,11 +2,13 @@
 
 namespace App\Http\Requests\Wall;
 
+use App\Http\Requests\AttachableRequest;
 use App\Http\Requests\Request;
 use App\Services\Attachments;
 
 class WallRequest extends Request
 {
+    use AttachableRequest;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -27,18 +29,13 @@ class WallRequest extends Request
         $rules = [
             'user_id' => 'required|integer',
             'message' => [
-                'required_without_all:attachments.album_photos,attachments.spots,attachments.areas',
+                $this->message_rule,
                 'string',
                 'max:5000'
             ]
         ];
-        $rules = array_merge(
-            $rules,
-            Attachments::rules(),
-            $this->arrayFieldRules('attachments.album_photos', 'integer'),
-            $this->arrayFieldRules('attachments.spots', 'integer'),
-            $this->arrayFieldRules('attachments.areas', 'integer')
-        );
+
+        $rules = $this->attachmentsRules($rules);
 
         return $rules;
     }

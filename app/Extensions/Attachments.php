@@ -4,6 +4,7 @@ namespace App\Extensions;
 
 use App\AlbumPhoto;
 use App\Area;
+use App\Link;
 use App\Plan;
 use App\Spot;
 
@@ -15,7 +16,8 @@ trait Attachments
             'spots',
             'plans',
             'albumPhotos',
-            'areas'
+            'areas',
+            'links'
         ];
         $this->addHidden($attachments_relations);
         $this->append('attachments');
@@ -27,7 +29,8 @@ trait Attachments
             'spots' => $this->spots,
             'plans' => $this->plans,
             'album_photos' => $this->albumPhotos,
-            'areas' => $this->areas
+            'areas' => $this->areas,
+            'links' => $this->links
         ];
     }
 
@@ -61,5 +64,10 @@ trait Attachments
     public function areas()
     {
         return $this->morphToMany(Area::class, 'areable', 'area_attachable')->withTimestamps();
+    }
+
+    public function links()
+    {
+        return $this->morphMany(Link::class, 'linkable');
     }
 }
