@@ -42,7 +42,6 @@
             var uniqLinks = _.reject(links, function (link) {
               return _.findWhere(blackListLinks, {url: link});
             });
-            console.log(uniqLinks, blackListLinks);
             if (uniqLinks.length > 0) {
               $http({
                 url: API_URL + '/url-parse',
@@ -51,7 +50,6 @@
               }).success(function (resp) {
                 var parsedLinks = resp.data;
                 if (resp.result && parsedLinks.length) {
-                  console.log(resp.data);
                   _.each(parsedLinks, function (parsedLink) {
                     if (parsedLink.title && !parsedLink.error) {
                       parsedLink.image = parsedLink.images.length ? parsedLink.images[0] : null;
