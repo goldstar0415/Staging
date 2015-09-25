@@ -56,7 +56,6 @@ class SocialAuthController extends Controller
             if (!$this->auth->check()) {
                 //Checks if user exists by social identifier
                 $exist_user = $this->getUserByKey($social, $user->id);
-                $auth_user = $this->auth->user();
                 //Checks if exists user with current social data then auth them
                 if ($exist_user) {
                     $this->auth->login($exist_user);
@@ -68,7 +67,7 @@ class SocialAuthController extends Controller
 
                 if ($exist_user) {
                     $this->auth->login($exist_user);
-                    $this->attachSocial($social, $auth_user, $user->getId());
+                    $this->attachSocial($this->auth->user(), $social, $user->getId());
 
                     return redirect(frontend_url());
                 }
@@ -143,8 +142,8 @@ class SocialAuthController extends Controller
     /**
      * Attach social account for current user account
      *
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user
      * @param Social $social
-     * @param User $user
      * @param string $key
      */
     private function attachSocial($user, $social, $key)
