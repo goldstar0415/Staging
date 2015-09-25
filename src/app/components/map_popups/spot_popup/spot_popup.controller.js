@@ -7,7 +7,6 @@
 
   /** @ngInject */
   function SpotPopupController($scope, SpotService) {
-    console.log($scope.data);
     $scope.saveToCalendar = SpotService.saveToCalendar;
     $scope.removeFromCalendar = SpotService.removeFromCalendar;
     $scope.addToFavorite = SpotService.addToFavorite;

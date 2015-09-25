@@ -57,6 +57,7 @@
         };
       });
       MapService.drawSpotMarkers(spotsArray, 'other', true);
+      MapService.FitBoundsOfCurrentLayer();
 
       return spotsArray;
     }

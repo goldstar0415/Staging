@@ -43,7 +43,8 @@
           attachments: {
             album_photos: _.pluck(vm.attachments.photos, 'id'),
             spots: _.pluck(vm.attachments.spots, 'id'),
-            areas: _.pluck(vm.attachments.areas, 'id')
+            areas: _.pluck(vm.attachments.areas, 'id'),
+            links: vm.attachments.links
           }
         }, function success(message) {
           vm.comments.data.unshift(message);
@@ -51,6 +52,7 @@
           vm.attachments.photos = [];
           vm.attachments.spots = [];
           vm.attachments.areas = [];
+          vm.attachments.links = [];
         }, function error(resp) {
           console.log(resp);
           toastr.error('Send message failed');
@@ -68,6 +70,7 @@
         };
       });
       MapService.drawSpotMarkers(spotsArray, 'other', true);
+      MapService.FitBoundsOfCurrentLayer();
     }
 
     function deleteComment(comment, idx) {

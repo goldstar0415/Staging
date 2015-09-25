@@ -23,19 +23,59 @@
     };
 
     /** @ngInject */
-    function NgInputController($modal, $rootScope) {
+    function NgInputController($modal, $scope, $rootScope, $http, API_URL) {
       var vm = this;
+      var LINKS_PATERN = /([-a-z0-9@:%_\+.~#?&\/\/=]{2,256}\.[a-z]{2,6}\b(\/?[-a-z0-9@:%_\+.~#?&\/\/=]*)?)/gi;
+      var blackListLinks = [];
       vm.maxlength = vm.maxlength || 5000;
       vm.attachments = {
         photos: [],
         spots: [],
-        areas: []
+        areas: [],
+        links: []
       };
+
+      $scope.$watch('NgInput.message', function (value) {
+        if (value) {
+          var links = value.match(LINKS_PATERN);
+          if (links && links.length > 0) {
+            var uniqLinks = _.reject(links, function (link) {
+              return _.findWhere(blackListLinks, {url: link});
+            });
+            console.log(uniqLinks, blackListLinks);
+            if (uniqLinks.length > 0) {
+              $http({
+                url: API_URL + '/url-parse',
+                method: 'GET',
+                params: {'links[]': uniqLinks}
+              }).success(function (resp) {
+                var parsedLinks = resp.data;
+                if (resp.result && parsedLinks.length) {
+                  console.log(resp.data);
+                  _.each(parsedLinks, function (parsedLink) {
+                    if (parsedLink.title && !parsedLink.error) {
+                      parsedLink.image = parsedLink.images.length ? parsedLink.images[0] : null;
+                      delete parsedLink.images;
+                      vm.attachments.links.push(parsedLink);
+                    }
+                  });
+                  blackListLinks = _.union(blackListLinks, parsedLinks);
+                }
+              });
+            }
+          }
+        }
+      });
 
       vm.submit = function (form) {
         if (form.$valid) {
-          form.$submitted = false;
+          if (blackListLinks.length > 0 && blackListLinks[0].url == vm.message) {
+            vm.message = '';
+          }
+
           vm.onSubmit();
+          blackListLinks = [];
+          form.$submitted = false;
         }
       };
 
@@ -49,6 +89,11 @@
 
       vm.deleteArea = function (idx) {
         vm.attachments.areas.splice(idx, 1);
+      };
+
+      vm.deleteLink = function (idx) {
+        var deletedLink = vm.attachments.links.splice(idx, 1);
+        blackListLinks.push(deletedLink);
       };
 
       vm.openPhotosModal = function () {
@@ -95,8 +140,6 @@
         });
       };
     }
-
-
   }
 
 })();

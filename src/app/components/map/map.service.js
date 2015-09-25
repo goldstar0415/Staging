@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $modal, toastr, GEOCODING_KEY, Area, SignUpService) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $modal, toastr, MOBILE_APP, GEOCODING_KEY, Area, SignUpService) {
       var map = null;
       var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
@@ -780,13 +780,11 @@
         var wp = GetDrawLayerPathWaypoints();
         var geoJson = GetDrawLayerGeoJSON();
 
-        var modalInstance;
         if (wp.length > 0 || geoJson && geoJson.features.length > 0) {
-          modalInstance = $modal.open({
+          var modalInstance = $modal.open({
             animation: true,
             templateUrl: '/app/components/map_partials/saveSelection/saveSelection.html',
-            controller: SaveSelectionController,
-            controllerAs: 'Crop',
+            controller: 'SaveSelectionController',
             modalClass: 'save-selection-modal',
             modalContentClass: 'clearfix'
           });
@@ -797,22 +795,6 @@
           });
         } else {
           toastr.error('You can\'t save empty selection.');
-        }
-
-
-        function SaveSelectionController($modalInstance, $scope) {
-          $scope.save = function () {
-            if ($scope.data.title) {
-              $modalInstance.close($scope.data);
-            } else {
-              //can't save without server;
-              toastr.error('Title is required!');
-            }
-          };
-
-          $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-          };
         }
       }
 
@@ -1419,7 +1401,6 @@
               spot.location = point.location;
 
               var marker = L.marker(spot.location, {icon: icon});
-              console.log(spot);
 
               BindSpotPopup(marker, spot);
 
@@ -1446,7 +1427,6 @@
         }
 
         //currentLayer = type;
-        FitBoundsOfCurrentLayer();
 
         $rootScope.syncMapSpots = spots;
       }

@@ -39,7 +39,8 @@
             attachments: {
               album_photos: _.pluck(vm.attachments.photos, 'id'),
               spots: _.pluck(vm.attachments.spots, 'id'),
-              areas: _.pluck(vm.attachments.areas, 'id')
+              areas: _.pluck(vm.attachments.areas, 'id'),
+              links: vm.attachments.links
             }
           },
           function success(message) {

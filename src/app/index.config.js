@@ -54,6 +54,7 @@
     cfpLoadingBarProvider.includeSpinner = true;
     cfpLoadingBarProvider.latencyThreshold = 100;
 
+    $translateProvider.useSanitizeValueStrategy('sanitize');
     $translateProvider.preferredLanguage('en');
     $translateProvider.translations('en', {
       DIALOGS_YES: 'Yes',
