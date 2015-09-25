@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Link;
 use Illuminate\Http\Request;
 
 class Attachments
@@ -10,22 +11,51 @@ class Attachments
 
     protected static $rules = [
         'attachments.album_photos' => [
-            'required_without_all:{message},attachments.spots,attachments.areas,attachments.plans',
+            'required_without_all:
+            {message},
+            attachments.spots,
+            attachments.areas,
+            attachments.plans,
+            attachments.links',
             'array',
             'count_max:10'
         ],
         'attachments.spots' => [
-            'required_without_all:{message},attachments.album_photos,attachments.areas,attachments.plans',
+            'required_without_all:
+            {message},
+            attachments.album_photos,
+            attachments.areas,attachments.plans,
+            attachments.links',
             'array',
             'count_max:10'
         ],
         'attachments.areas' => [
-            'required_without_all:{message},attachments.album_photos,attachments.spots,attachments.plans',
+            'required_without_all:
+            {message},
+            attachments.album_photos,
+            attachments.spots,
+            attachments.plans,
+            attachments.links',
             'array',
             'count_max:10'
         ],
         'attachments.plans' => [
-            'required_without_all:{message},attachments.album_photos,attachments.spots,attachments.areas',
+            'required_without_all:
+            {message},
+            attachments.album_photos,
+            attachments.spots,
+            attachments.areas,
+            attachments.links',
+            'array',
+            'count_max:10'
+        ],
+        'attachments.links' => [
+            'required_without_all:
+            {message},
+            attachments.album_photos,
+            attachments.spots,
+            attachments.areas,
+            attachments.plans',
             'array',
             'count_max:10'
         ]
@@ -53,6 +83,16 @@ class Attachments
         }
         if ($this->request->has('attachments.plans')) {
             $model->plans()->sync($this->request->input('attachments.plans'));
+        }
+        if ($this->request->has('attachments.links')) {
+            $model->links()->delete();
+            $links = $this->request->input('attachments.links');
+            foreach ($links as $link) {
+                $link_model = new Link($link);
+                $model->links()->save($link_model);
+            }
+
+            $model->links()->sync($links);
         }
     }
 

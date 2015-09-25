@@ -2,11 +2,13 @@
 
 namespace App\Http\Requests\Spot\Comment;
 
+use App\Http\Requests\AttachableRequest;
 use App\Http\Requests\Request;
 use App\Services\Attachments;
 
 class SpotCommentRequest extends Request
 {
+    use AttachableRequest;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,17 +26,11 @@ class SpotCommentRequest extends Request
      */
     public function rules()
     {
-        $rules = array_merge(
-            ['body' => [
-                'required_without_all:attachments.album_photos,attachments.spots,attachments.areas',
-                'string',
-                'max:5000'
-            ]],
-            Attachments::rules('body'),
-            $this->arrayFieldRules('attachments.album_photos', 'integer'),
-            $this->arrayFieldRules('attachments.spots', 'integer'),
-            $this->arrayFieldRules('attachments.areas', 'integer')
-        );
+        $rules = $this->attachmentsRules(['body' => [
+            $this->message_rule,
+            'string',
+            'max:5000'
+        ]], 'body');
 
         return $rules;
     }
