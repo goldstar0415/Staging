@@ -41,7 +41,9 @@ class AlbumController extends Controller
         $this->auth->user()->albums()->save($album);
         foreach ($request->file('files') as $file) {
             $album->photos()->create([
-                'photo' => $file
+                'photo' => $file,
+                'location' => $request->input('location'),
+                'address' => $request->input('address')
             ]);
         }
 

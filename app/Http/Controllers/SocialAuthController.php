@@ -24,7 +24,7 @@ class SocialAuthController extends Controller
     private $auth;
 
     /**
-     * SocialAuthController constructor. Has dependency on Guard contract
+     * SocialAuthController constructor. Register Guard contract dependency
      * @param Guard $auth
      */
     public function __construct(Guard $auth)
@@ -33,8 +33,8 @@ class SocialAuthController extends Controller
     }
 
     /**
-     * If hasn't social network response, redirects user to social auth page
-     * else make account with information from social network
+     * If there is no response from the social network, redirect the user to the social auth page
+     * else make create with information from social network
      * @param Request $request
      * @param Social $social
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -54,15 +54,18 @@ class SocialAuthController extends Controller
             }
 
             if (!$this->auth->check()) {
-                //Checks if user exists by social identifier
-                $exist_user = $this->getUserByKey($social, $user->id);
-                //Checks if exists user with current social data then auth them
+
+                //Checks by social identifier if user exists
+                $exist_user = $this->getUserByKey($social, $user->getId());
+
+                //Checks if user exists with current social identifier, auth if does
                 if ($exist_user) {
                     $this->auth->login($exist_user);
 
                     return redirect(frontend_url());
                 }
-                //Checks if account exists with social email then auth them and attach current social
+
+                //Checks if account exists with social email, auth and attach current social if does
                 $exist_user = User::where('email', $user->getEmail())->first();
 
                 if ($exist_user) {
@@ -71,7 +74,8 @@ class SocialAuthController extends Controller
 
                     return redirect(frontend_url());
                 }
-                //If account for current social data doesn't exists - create new account
+
+                //If account for current social data doesn't exist - create new one
                 list($first_name, $last_name) = explode(' ', $user->getName());
                 $new_user = User::create([
                     'email' => $user->getEmail(),
@@ -84,14 +88,16 @@ class SocialAuthController extends Controller
 
                 return redirect(frontend_url());
             }
-            //If attach social for existing account
+
+            //Check if user is trying to attach his/her social account to the existing one
             if ($request->user()->socials()->where('name', $social->name)->exists()) {
                 return response()->json(
                     ['message' => 'User already attached ' . $social->display_name . ' social'],
                     403
                 );
             }
-            //Checks if someone already attached current social account
+
+            //If someone already attached current social account
             if ($this->getUserByKey($social, $user->getId())) {
                 return response()->json(['message' => 'Somebody already attached this social'], 403);
             }
@@ -105,7 +111,7 @@ class SocialAuthController extends Controller
     }
 
     /**
-     * Detach social account for user
+     * Detaches social account for user
      *
      * @param Request $request
      * @param \App\Social $social
@@ -117,7 +123,7 @@ class SocialAuthController extends Controller
     }
 
     /**
-     * Get user by unique social identifier
+     * Gets user by unique social identifier
      *
      * @param Social $social
      * @param integer $key
@@ -129,7 +135,7 @@ class SocialAuthController extends Controller
     }
 
     /**
-     * Checks has response data from social network
+     * Checks if the user was redirected from social network
      *
      * @param Request $request
      * @return bool
@@ -140,7 +146,7 @@ class SocialAuthController extends Controller
     }
 
     /**
-     * Attach social account for current user account
+     * Attaches social account to current user account
      *
      * @param \Illuminate\Contracts\Auth\Authenticatable $user
      * @param Social $social

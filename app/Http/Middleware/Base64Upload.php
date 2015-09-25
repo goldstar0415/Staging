@@ -6,6 +6,12 @@ use App\Services\Base64File;
 use Closure;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Class Base64Upload
+ * @package App\Http\Middleware
+ *
+ * Middleware provide to upload files in base64 format like simple files from multipart/form-data
+ */
 class Base64Upload
 {
     /**
@@ -19,6 +25,8 @@ class Base64Upload
      */
     public function handle($request, Closure $next, ...$fields)
     {
+        //Walk through fields with base64 data
+        //Fields got from middleware parameters
         foreach ($fields as $field) {
             if ($request->has($field)) {
                 $base64_data = $request->input($field);
@@ -31,6 +39,12 @@ class Base64Upload
         return $next($request);
     }
 
+    /**
+     * Make UploadedFile from base64 data
+     *
+     * @param string $data Base64 data
+     * @return UploadedFile
+     */
     protected function formatFile($data)
     {
         $file = null;
