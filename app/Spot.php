@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Contracts\CalendarExportable;
+use App\Contracts\Commentable;
 use App\Extensions\StartEndDatesTrait;
 use App\Scopes\ApprovedScopeTrait;
 use App\Scopes\NewestScopeTrait;
@@ -48,7 +49,7 @@ use Request;
  * @property array $locations
  * @property string $type
  */
-class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
+class Spot extends BaseModel implements StaplerableInterface, CalendarExportable, Commentable
 {
     use StaplerTrait, StartEndDatesTrait, NewestScopeTrait, ApprovedScopeTrait;
 
@@ -315,5 +316,13 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $ics_event->setSummary($spot->title);
 
         return $ics_event;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function commentResourceOwnerId()
+    {
+        return $this->user_id;
     }
 }

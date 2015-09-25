@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Contracts\Commentable;
 use App\Extensions\GeoTrait;
 use App\Scopes\NewestScopeTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
@@ -29,7 +30,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property \Illuminate\Database\Eloquent\Collection $comments
  * @property \Illuminate\Database\Eloquent\Collection $category
  */
-class Blog extends BaseModel implements StaplerableInterface
+class Blog extends BaseModel implements StaplerableInterface, Commentable
 {
     use PostgisTrait, StaplerTrait, GeoTrait, NewestScopeTrait;
 
@@ -86,5 +87,13 @@ class Blog extends BaseModel implements StaplerableInterface
     public function getCoverPutAttribute()
     {
         return $this->cover->url('medium');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function commentResourceOwnerId()
+    {
+        return $this->user_id;
     }
 }

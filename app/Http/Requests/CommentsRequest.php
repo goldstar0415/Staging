@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\AlbumPhoto;
 use Illuminate\Contracts\Auth\Guard;
 
 class CommentsRequest extends Request
@@ -14,7 +15,11 @@ class CommentsRequest extends Request
      */
     public function authorize(Guard $auth)
     {
-        return $this->route('comments')->user_id === $auth->id();
+        $comment = $this->route('comments');
+
+        $commentable = $comment->commentable;
+
+        return $comment->user_id === $auth->id() or $comment->commentable->commentResourceOwnerId() === $auth->id();
     }
 
     /**
@@ -24,8 +29,6 @@ class CommentsRequest extends Request
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return [];
     }
 }

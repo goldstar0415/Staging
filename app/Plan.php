@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Contracts\CalendarExportable;
+use App\Contracts\Commentable;
 use App\Extensions\GeoTrait;
 use App\Extensions\StartEndDatesTrait;
 use Eluceo\iCal\Component\Event;
@@ -28,7 +29,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  * @property \Illuminate\Database\Eloquent\Collection $spots
  * @property \Illuminate\Database\Eloquent\Collection $comments
  */
-class Plan extends BaseModel implements CalendarExportable
+class Plan extends BaseModel implements CalendarExportable, Commentable
 {
     use PostgisTrait, GeoTrait, StartEndDatesTrait;
 
@@ -127,5 +128,13 @@ class Plan extends BaseModel implements CalendarExportable
     public function export()
     {
         return self::makeVEvent($this, $this->user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function commentResourceOwnerId()
+    {
+        return $this->user_id;
     }
 }

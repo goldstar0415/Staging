@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Contracts\Commentable;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 
@@ -20,7 +21,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * Mutators properties
  * @property string $photo_url
  */
-class SpotPhoto extends BaseModel implements StaplerableInterface
+class SpotPhoto extends BaseModel implements StaplerableInterface, Commentable
 {
     use StaplerTrait;
     
@@ -50,5 +51,13 @@ class SpotPhoto extends BaseModel implements StaplerableInterface
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function commentResourceOwnerId()
+    {
+        return $this->spot->user_id;
     }
 }

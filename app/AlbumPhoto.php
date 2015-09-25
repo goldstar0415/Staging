@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Contracts\Commentable;
 use App\Extensions\GeoTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
@@ -27,7 +28,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * Mutators properties
  * @property string $photo_url
  */
-class AlbumPhoto extends BaseModel implements StaplerableInterface
+class AlbumPhoto extends BaseModel implements StaplerableInterface, Commentable
 {
     use PostgisTrait, StaplerTrait, GeoTrait;
 
@@ -73,5 +74,13 @@ class AlbumPhoto extends BaseModel implements StaplerableInterface
     public function chatMessages()
     {
         return $this->belongsToMany(ChatMessage::class);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function commentResourceOwnerId()
+    {
+        return $this->album->user_id;
     }
 }
