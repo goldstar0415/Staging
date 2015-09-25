@@ -13,8 +13,6 @@ use Socialite;
 class SocialAuthController extends Controller
 {
 
-    protected $accepts_socials;
-
     private $auth;
 
     public function __construct(Guard $auth)
@@ -37,41 +35,41 @@ class SocialAuthController extends Controller
              */
             $user = $provider->user();
 
+            if (!$user) {
+                abort(400);
+            }
+
             if (!$this->auth->check()) {
-                if (!$user) {
-                    abort(400);
-                }
-                //Check if user exists by social identifier
+                //Checks if user exists by social identifier
                 $exist_user = $this->getUserByKey($social, $user->id);
+                $auth_user = $this->auth->user();
 
                 if ($exist_user) {
                     $this->auth->login($exist_user);
 
-                    if (!$this->auth->user()->socials()->where('name', $social->name)->exists()) {
-                        $this->auth->user()->socials()->attach($social, ['social_key' => $user->id]);
+                    if (!$auth_user->socials()->where('name', $social->name)->exists()) {
+                        $auth_user->socials()->attach($social, ['social_key' => $user->id]);
                     }
 
                     return redirect(frontend_url());
                 }
-                //Check if account exists with social email
+                //Checks if account exists with social email
                 $exist_user = User::where('email', $user->getEmail())->first();
 
                 if ($exist_user) {
                     $this->auth->login($exist_user);
-                    $this->auth->user()->socials()->attach($social, ['social_key' => $user->id]);
+                    $auth_user->socials()->attach($social, ['social_key' => $user->id]);
 
                     return redirect(frontend_url());
                 }
                 //If account for current social data doesn't exists
                 list($first_name, $last_name) = explode(' ', $user->getName());
-                $new_user = User::create(
-                    [
-                        'email' => $user->getEmail(),
-                        'first_name' => $first_name,
-                        'last_name' => $last_name,
-                        'avatar' => $user->getAvatar()
-                    ]
-                );
+                $new_user = User::create([
+                    'email' => $user->getEmail(),
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
+                    'avatar' => $user->getAvatar()
+                ]);
                 $new_user->socials()->attach($social, ['social_key' => $user->id]);
                 $this->auth->login($new_user);
 
