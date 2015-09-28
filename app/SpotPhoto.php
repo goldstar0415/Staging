@@ -24,7 +24,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 class SpotPhoto extends BaseModel implements StaplerableInterface, Commentable
 {
     use StaplerTrait;
-    
+
     protected $fillable = ['photo'];
 
     protected $appends = ['photo_url'];
@@ -34,7 +34,15 @@ class SpotPhoto extends BaseModel implements StaplerableInterface, Commentable
      */
     public function __construct(array $attributes = [])
     {
-        $this->hasAttachedFile('photo');
+        $this->hasAttachedFile('photo', [
+            'styles' => [
+                'thumb' => [
+                    'dimensions' => '70x70#',
+                    'convert_options' => ['quality' => 100]
+                ],
+                'medium' => '160x160'
+            ]
+        ]);
         parent::__construct($attributes);
     }
 

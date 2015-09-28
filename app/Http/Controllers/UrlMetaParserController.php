@@ -16,7 +16,7 @@ class UrlMetaParserController extends Controller
 {
     /**
      * Get content from site
-     * @param Request $request
+     * @param UrlParseRequest $request
      * @return mixed
      */
     public function getContentFromSite(UrlParseRequest $request)
