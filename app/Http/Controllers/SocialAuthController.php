@@ -54,7 +54,6 @@ class SocialAuthController extends Controller
             }
 
             if (!$this->auth->check()) {
-
                 //Checks by social identifier if user exists
                 $exist_user = $this->getUserByKey($social, $user->getId());
 

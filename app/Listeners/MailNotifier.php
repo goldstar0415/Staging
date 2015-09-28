@@ -66,7 +66,9 @@ class MailNotifier
                 if (!$event->isSelf()) {
                     $receiver = $event->wall->receiver;
                     if ($receiver->notification_wall_post) {
-                        $this->send($receiver, 'wall-post', ['sender' => $event->getFeedSender(), 'wall' => $event->wall]);
+                        $this->send($receiver, 'wall-post', [
+                            'sender' => $event->getFeedSender(), 'wall' => $event->wall
+                        ]);
                     }
                 }
                 break;
