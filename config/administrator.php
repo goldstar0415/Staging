@@ -63,7 +63,8 @@ return [
 			'settings.recreation_import'
 		],
 		'blogger_requests',
-		'blogs'
+		'blogs',
+		'contact_us'
 	],
 
 	/**

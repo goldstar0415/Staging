@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\ContactUs;
+use App\Http\Requests\ContactUsRequest;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\UserListRequest;
 use App\Role;
@@ -38,7 +40,7 @@ class UserController extends Controller
      */
     public function __construct(Guard $auth)
     {
-        $this->middleware('guest', ['except' => ['getLogout', 'getMe', 'getIndex', 'getList', 'reviews']]);
+        $this->middleware('guest', ['except' => ['getLogout', 'getMe', 'getIndex', 'getList', 'reviews', 'contactUs']]);
         $this->middleware('auth', ['only' => 'getMe']);
         $this->auth = $auth;
     }
@@ -223,6 +225,11 @@ class UserController extends Controller
     public function reviews(PaginateRequest $request)
     {
         return $this->paginatealbe($request, $request->user()->reviews());
+    }
+
+    public function contactUs(ContactUsRequest $request)
+    {
+        return ContactUs::create($request->all());
     }
 
     protected function authenticated(Request $request, Authenticatable $user)

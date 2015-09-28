@@ -130,3 +130,5 @@ Route::get('url-parse', 'UrlMetaParserController@getContentFromSite');
 Route::group(['prefix' => 'import/logs', 'middleware' => 'admin'], function () {
     get('{type}', 'ShowLogController@show');
 });
+
+Route::post('contact-us', 'UserController@contactUs');
