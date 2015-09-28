@@ -16,6 +16,7 @@ use App\Spot;
 use App\SpotPhoto;
 use App\User;
 use App\Wall;
+use Auth;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Request;
@@ -68,7 +69,14 @@ class RouteServiceProvider extends ServiceProvider
         });
         $router->model('users', User::class);
         $router->model('friends', Friend::class);
-        $router->model('spots', Spot::class);
+        $router->bind('spots', function ($value) {
+            $spot = Spot::withRequested()->findOrFail($value);
+            if ($spot->is_approved === false and $spot->user_id !== Auth::id()) {
+                throw new NotFoundHttpException;
+            }
+
+            return $spot;
+        });
         $router->model('message', ChatMessage::class);
         $router->model('areas', Area::class);
         $router->model('comments', Comment::class);

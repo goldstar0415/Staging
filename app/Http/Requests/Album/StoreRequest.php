@@ -33,6 +33,7 @@ class StoreRequest extends AlbumRequest
             'location.lng' => 'numeric'
         ];
         $rules = array_merge($rules, $this->arrayFieldRules('files', 'image|max:5000', true));
+
         return $rules;
     }
 }

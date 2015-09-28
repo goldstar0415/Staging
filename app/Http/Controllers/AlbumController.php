@@ -38,7 +38,7 @@ class AlbumController extends Controller
     {
         $params = $request->input();
         $album = new Album($params);
-        $this->auth->user()->albums()->save($album);
+        $request->user()->albums()->save($album);
         foreach ($request->file('files') as $file) {
             $album->photos()->create([
                 'photo' => $file,

@@ -30,7 +30,19 @@ class Album extends BaseModel
 
     protected $appends = ['cover'];
 
-    protected $guarded = ['id', 'user_id'];
+    protected $fillable = [
+        'title',
+        'description',
+        'web_sites',
+        'videos',
+        'start_date',
+        'end_date',
+        'is_approved',
+        'cover_file_name',
+        'cover_file_size',
+        'cover_content_type',
+        'cover_updated_at'
+    ];
 
     protected $postgisFields = [
         'location' => Point::class,
