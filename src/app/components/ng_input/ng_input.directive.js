@@ -25,7 +25,7 @@
     /** @ngInject */
     function NgInputController($modal, $scope, $rootScope, $http, API_URL) {
       var vm = this;
-      var LINKS_PATERN = /([-a-z0-9@:%_\+.~#?&\/\/=]{2,256}\.[a-z]{2,6}\b(\/?[-a-z0-9@:%_\+.~#?&\/\/=]*)?)/gi;
+      var LINKS_PATERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)/gi;
       var blackListLinks = [];
       vm.maxlength = vm.maxlength || 5000;
       vm.attachments = {
