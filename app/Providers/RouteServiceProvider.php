@@ -39,6 +39,23 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
+        $router->patterns([
+            'users' => '\d+',
+            'albums' => '\d+',
+            'photos' => '\d+',
+            'spots' => '\d+',
+            'friends' => '\d+',
+            'message' => '\d+',
+            'areas' => '\d+',
+            'comments' => '\d+',
+            'wall' => '\d+',
+            'plans' => '\d+',
+            'posts' => '\d+',
+            'activitylevel' => '\d+',
+            'social' => '\w+',
+            'post_slug' => '\w+'
+        ]);
+
         $router->model('albums', Album::class);
         $router->bind('photos', function ($value) {
             if (Request::is('photos/*')) {

@@ -66,10 +66,9 @@ class AreaController extends Controller
         return view('opengraph')->with(
             'og',
             $og->title($area->title)
-            ->image('')//TODO: change image
             ->description($area->description)
-            ->url(config('app.frontend_url') . '/areas/' . $area->id)
-        );//TODO: change frontend url
+            ->url(frontend_url('areas', $area->id))
+        );
     }
 
     /**
