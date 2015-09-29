@@ -24,7 +24,7 @@ use Request;
  * @property string $title
  * @property string $description
  * @property array $web_sites
- * @property string $cover
+ * @property \Codesleeve\Stapler\Attachment $cover
  * @property array $videos
  * @property bool $is_approved
  * @property \Carbon\Carbon $start_date

@@ -9,6 +9,8 @@ use App\SpotTypeCategory;
 use App\SpotVote;
 use App\User;
 use Carbon\Carbon;
+use Codesleeve\Stapler\AttachmentConfig;
+use Codesleeve\Stapler\Stapler;
 use File;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Log;
@@ -97,6 +99,23 @@ class SpotsImport extends Job implements SelfHandling
                 $spot = new Spot;
                 $spot->category()->associate(SpotTypeCategory::where('name', $this->data['spot_category'])->first());
                 if ($row->image_links[0]) {
+                    $options = [
+                        'styles' => [
+                            'thumb' => [
+                                'dimensions' => '70x70#',
+                                'convert_options' => ['quality' => 100]
+                            ],
+                            'medium' => '160x160',
+                            'original' => '633x242#'
+                        ]
+                    ];
+                    $config = Stapler::getConfigInstance();
+                    $defaultOptions = $config->get('stapler');
+                    $options = array_merge($defaultOptions, (array) $options);
+                    $storage = $options['storage'];
+                    $options = array_replace_recursive($config->get($storage), $options);
+                    $options['styles'] = array_merge((array) $options['styles']);
+                    $spot->cover->setConfig(new AttachmentConfig('cover', $options));
                     $spot->cover = $row->image_links[0];
                 }
                 $spot->title = $row->title;
