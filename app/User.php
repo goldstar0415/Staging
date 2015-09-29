@@ -52,6 +52,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property string $ban_reason
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon $last_action_at
  *
  * Relation properties
  * @property \Illuminate\Database\Eloquent\Collection $followers
@@ -152,7 +153,7 @@ class User extends BaseModel implements
         'avatar_content_type'
     ];
 
-    protected $dates = ['deleted_at', 'banned_at', 'birth_date'];
+    protected $dates = ['deleted_at', 'banned_at', 'birth_date', 'last_action_at'];
 
     protected $postgisFields = [
         'location' => Point::class,
