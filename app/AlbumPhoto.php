@@ -10,7 +10,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 
 /**
- * Class AlbumPhoto
+ * Model AlbumPhoto
  * @package App
  *
  * @property integer $id

@@ -5,7 +5,7 @@ namespace App;
 use App\Scopes\NewestScopeTrait;
 
 /**
- * Class Feed
+ * Model Feed
  * @package App
  *
  */

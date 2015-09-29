@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class ActivityLevel
+ * Model ActivityLevel
  * @package App
  *
  * @property integer $id

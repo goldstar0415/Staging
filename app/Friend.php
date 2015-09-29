@@ -10,7 +10,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 
 /**
- * Class Friend
+ * Model Friend
  * @package App
  *
  * @property int $id
@@ -55,11 +55,21 @@ class Friend extends BaseModel implements StaplerableInterface
         parent::__construct($attributes);
     }
 
+    /**
+     * Get array of avatar urls
+     *
+     * @return array
+     */
     public function getAvatarUrlAttribute()
     {
         return $this->getPictureUrls('avatar');
     }
 
+    /**
+     * Get the friend's default location
+     *
+     * @return null|array
+     */
     public function getDefaultLocationAttribute()
     {
         if ($this->friend_id !== null) {
@@ -74,6 +84,7 @@ class Friend extends BaseModel implements StaplerableInterface
                 if ($address) {
                     $location['address'] = $address;
                 }
+
                 return $location;
             }
         }
@@ -81,6 +92,11 @@ class Friend extends BaseModel implements StaplerableInterface
         return null;
     }
 
+    /**
+     * Set the friend's birth date
+     *
+     * @param \Carbon\Carbon|string $value
+     */
     public function setBirthDateAttribute($value)
     {
         if (!$value instanceof Carbon) {
@@ -93,11 +109,17 @@ class Friend extends BaseModel implements StaplerableInterface
         }
     }
 
+    /**
+     * Get the user that owns the friend
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the user that belongs to the friend
+     */
     public function friend()
     {
         return $this->belongsTo(User::class, 'friend_id');

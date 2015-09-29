@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Link
+ * Model Link
  * @package App
  *
  * @property string $title
@@ -16,8 +16,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Link extends Model
 {
+    /**
+     * {@inheritDoc}
+     */
     protected $guarded = ['id'];
 
+    /**
+     * Get all of the owning linkable models
+     */
     public function linkable()
     {
         return $this->morphTo();

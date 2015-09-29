@@ -7,7 +7,7 @@ use App\Scopes\NewestScopeTrait;
 use Carbon\Carbon;
 
 /**
- * Class ChatMessage
+ * Model ChatMessage
  * @package App
  *
  * @property integer $id

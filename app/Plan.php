@@ -11,7 +11,7 @@ use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 /**
- * Class Plan
+ * Model Plan
  * @package App
  *
  * @property integer $id
@@ -43,26 +43,41 @@ class Plan extends BaseModel implements CalendarExportable, Commentable
         'location' => Point::class,
     ];
 
+    /**
+     * Get the user that owns the plan
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get activities attached for the plan.
+     */
     public function activities()
     {
         return $this->hasMany(Activity::class);
     }
 
+    /**
+     * Get spots attached for the plan.
+     */
     public function spots()
     {
         return $this->belongsToMany(Spot::class)->withPivot('position');
     }
 
+    /**
+     * Get users invited to the plan.
+     */
     public function invitedUsers()
     {
         return $this->belongsToMany(User::class);
     }
 
+    /**
+     * Get the comments for the plan.
+     */
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
@@ -104,6 +119,13 @@ class Plan extends BaseModel implements CalendarExportable, Commentable
         }
     }
 
+    /**
+     * Make VEVENT according to iCalendar format
+     *
+     * @param Plan $plan
+     * @param User $user
+     * @return Event
+     */
     protected static function makeVEvent(self $plan, User $user)
     {
         $ics_event = new Event($plan->id);

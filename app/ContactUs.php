@@ -6,7 +6,7 @@ use App\Scopes\NewestScopeTrait;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class ContactUs
+ * Model ContactUs
  * @package App
  *
  * @property string $name

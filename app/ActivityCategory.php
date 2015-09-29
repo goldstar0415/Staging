@@ -6,7 +6,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 
 /**
- * Class ActivityCategory
+ * Model ActivityCategory
  * @package App
  *
  * @property integer $id

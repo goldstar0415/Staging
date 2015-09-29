@@ -6,7 +6,7 @@ use App\Extensions\Attachments;
 use App\Scopes\NewestScopeTrait;
 
 /**
- * Class Comment
+ * Model Comment
  * @package App
  *
  * @property integer $id

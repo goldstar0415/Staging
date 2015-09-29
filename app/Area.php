@@ -5,7 +5,7 @@ namespace App;
 use App\Services\SocialSharing;
 
 /**
- * Class Area
+ * Model Area
  * @package App
  *
  * @property integer $id

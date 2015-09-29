@@ -8,7 +8,7 @@ use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 /**
- * Class Activity
+ * Model Activity
  * @package App
  *
  * @property integer $id
@@ -41,11 +41,17 @@ class Activity extends BaseModel
         'location' => Point::class,
     ];
 
+    /**
+     * Get the plan that belongs to the activity
+     */
     public function plan()
     {
         return $this->belongsTo(Plan::class);
     }
 
+    /**
+     * Get the category that belongs to the activity
+     */
     public function category()
     {
         return $this->belongsTo(ActivityCategory::class);

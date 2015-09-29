@@ -11,7 +11,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 /**
- * Class Blog
+ * Model Blog
  * @package App
  *
  * @property integer $id
@@ -38,12 +38,17 @@ class Blog extends BaseModel implements StaplerableInterface, Commentable
 
     protected $appends = ['cover_url'];
 
+    /**
+     * Field for postgis extension
+     *
+     * @var array
+     */
     protected $postgisFields = [
         'location' => Point::class
     ];
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function __construct(array $attributes = [])
     {
@@ -51,31 +56,55 @@ class Blog extends BaseModel implements StaplerableInterface, Commentable
         parent::__construct($attributes);
     }
 
+    /**
+     * Get cover url of the Blog
+     *
+     * @return string
+     */
     public function getCoverUrlAttribute()
     {
         return $this->getPictureUrls('cover');
     }
-    
+
+    /**
+     * Get the user that owns the blog
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * The comments that belong to the blog.
+     */
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    /**
+     * Get the category of the blog
+     */
     public function category()
     {
         return $this->belongsTo(BlogCategory::class);
     }
-    
+
+    /**
+     * Get url of the cover medium size
+     *
+     * @return string
+     */
     public function getCoverLinkAttribute()
     {
         return $this->cover->url('medium');
     }
 
+    /**
+     * Set the blog's cover
+     *
+     * @param string $value
+     */
     public function setCoverPutAttribute($value)
     {
         if ($value) {
@@ -84,13 +113,8 @@ class Blog extends BaseModel implements StaplerableInterface, Commentable
         }
     }
 
-    public function getCoverPutAttribute()
-    {
-        return $this->cover->url('medium');
-    }
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function commentResourceOwnerId()
     {

@@ -3,7 +3,7 @@
 namespace App;
 
 /**
- * Class BlogCategory
+ * Model BlogCategory
  * @package App
  *
  * @property integer $id

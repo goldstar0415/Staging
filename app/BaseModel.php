@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 
 /**
- * Class BaseModel
+ * Model BaseModel
  * @package App
  *
  * @method static \Illuminate\Database\Eloquent\Builder random(int $count = 1)

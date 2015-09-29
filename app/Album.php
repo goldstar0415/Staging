@@ -7,7 +7,7 @@ use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 /**
- * Class Album
+ * Model Album
  * @package App
  *
  * @property integer $id
