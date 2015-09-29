@@ -159,6 +159,13 @@ class User extends BaseModel implements
         'location' => Point::class,
     ];
 
+    /**
+     * Scope a query to search by user full name.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $filter
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeSearch($query, $filter)
     {
         return $query->whereRaw("LOWER(CONCAT(\"first_name\", ' ', \"last_name\")) like LOWER('%$filter%')");
@@ -173,6 +180,11 @@ class User extends BaseModel implements
         parent::__construct($attributes);
     }
 
+    /**
+     *
+     *
+     * @param \Carbon\Carbon|string $value
+     */
     public function setBirthDateAttribute($value)
     {
         if (!$value instanceof Carbon) {

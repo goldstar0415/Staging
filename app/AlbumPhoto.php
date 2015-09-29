@@ -51,6 +51,11 @@ class AlbumPhoto extends BaseModel implements StaplerableInterface, Commentable
         parent::__construct($attributes);
     }
 
+    /**
+     *
+     *
+     * @return array
+     */
     public function getPhotoUrlAttribute()
     {
         return $this->getPictureUrls('photo');

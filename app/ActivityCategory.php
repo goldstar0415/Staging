@@ -41,30 +41,39 @@ class ActivityCategory extends BaseModel implements StaplerableInterface
         );
         parent::__construct($attributes);
     }
-    
+
+    /**
+     * Get the activities for the activity category.
+     */
     public function activities()
     {
         return $this->hasMany(Activity::class);
     }
 
+    /**
+     * Get activity category icon url
+     *
+     * @return null|string
+     */
     public function getIconUrlAttribute()
     {
         if ($this->icon) {
             return $this->icon->url();
         }
+
         return null;
     }
 
+    /**
+     * Set activity category icon
+     *
+     * @param $value
+     */
     public function setIconPutAttribute($value)
     {
         if ($value) {
             $path = public_path('tmp/' . $value);
             $this->icon = $path;
         }
-    }
-
-    public function getIconPutAttribute()
-    {
-        //TODO: get icon for admin panel
     }
 }

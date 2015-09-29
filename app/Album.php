@@ -48,16 +48,27 @@ class Album extends BaseModel
         'location' => Point::class,
     ];
 
+    /**
+     * Get cover url of the Album
+     *
+     * @return string
+     */
     public function getCoverAttribute()
     {
         return $this->photos()->first()->photo_url;
     }
 
+    /**
+     * Get the user that owns the album.
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the photos for the album.
+     */
     public function photos()
     {
         return $this->hasMany(AlbumPhoto::class);
