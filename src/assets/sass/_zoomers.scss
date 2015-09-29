@@ -69,7 +69,7 @@ ul {
         display: block;
         height: 12px;
         padding: 0 0 2px 14px;
-        background: url(/assets/img/icons/count.png) 0 -1px no-repeat;
+        background: url(../img/icons/count.png) 0 -1px no-repeat;
       }
       .f-count {
         display: block;
@@ -77,7 +77,7 @@ ul {
         float: left;
         padding: 0 0 2px 18px;
         margin-left: 10px;
-        background: url(/assets/img/icons/count.png) 0 -34px no-repeat;
+        background: url(../img/icons/count.png) 0 -34px no-repeat;
         color: $blue;
       }
     }
@@ -169,61 +169,61 @@ ul {
         border-bottom: 1px solid $light_grey;
         &.current {
           @include zoomers_sidebar();
-          background: url(/assets/img/icons/zoomers.png) 0 -1px no-repeat;
+          background: url(../img/icons/zoomers.png) 0 -1px no-repeat;
           color: $dark_blue;
           padding-right: 0 !important;
 
           &:hover {
             color: $blue;
             text-decoration: none;
-            background: url(/assets/img/icons/zoomers.png) 0 -42px no-repeat;
+            background: url(../img/icons/zoomers.png) 0 -42px no-repeat;
 
           }
           &.active {
             color: $navy_blue;
             font: $navigation_font;
             @include zoomers_sidebar();
-            background: url(/assets/img/icons/zoomers.png) 0 -42px no-repeat;
+            background: url(../img/icons/zoomers.png) 0 -42px no-repeat;
           }
         }
 
         &.followers {
           @include zoomers_sidebar();
-          background: url(/assets/img/icons/followers.png) 0 -1px no-repeat;
+          background: url(../img/icons/followers.png) 0 -1px no-repeat;
           color: $dark_blue;
           padding-right: 0 !important;
 
           &:hover {
             color: $blue;
             text-decoration: none;
-            background: url(/assets/img/icons/followers.png) 0 -42px no-repeat;
+            background: url(../img/icons/followers.png) 0 -42px no-repeat;
 
           }
           &.active {
             color: $navy_blue;
             font: $navigation_font;
             @include zoomers_sidebar();
-            background: url(/assets/img/icons/followers.png) 0 -42px no-repeat;
+            background: url(../img/icons/followers.png) 0 -42px no-repeat;
           }
         }
 
         &.followings {
           @include zoomers_sidebar();
-          background: url(/assets/img/icons/followings.png) 0 -1px no-repeat;
+          background: url(../img/icons/followings.png) 0 -1px no-repeat;
           color: $dark_blue;
           padding-right: 0 !important;
 
           &:hover {
             color: $blue;
             text-decoration: none;
-            background: url(/assets/img/icons/followings.png) 0 -42px no-repeat;
+            background: url(../img/icons/followings.png) 0 -42px no-repeat;
 
           }
           &.active {
             color: $navy_blue;
             font: $navigation_font;
             @include zoomers_sidebar();
-            background: url(/assets/img/icons/followings.png) 0 -42px no-repeat;
+            background: url(../img/icons/followings.png) 0 -42px no-repeat;
             padding-right: 0 !important;
 
           }

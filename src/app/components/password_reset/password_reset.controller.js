@@ -8,7 +8,6 @@
   /** @ngInject */
   function ResetPasswordController(PasswordRecoveryService) {
     PasswordRecoveryService.openModal('ResetPasswordModal.html', ResetPasswordModalController);
-
   }
 
   function ResetPasswordModalController(PasswordRecoveryService, $stateParams, $modalInstance) {

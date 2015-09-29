@@ -28,7 +28,7 @@
   //  margin-right: 30px;
   //  color: $blue;
   //  font: 13px/13px Arial;
-  //  background: url(/assets/img/icons/delete.png) 1px 1px no-repeat;
+  //  background: url(../img/icons/delete.png) 1px 1px no-repeat;
   //  &:hover {
   //    color: $navy_blue;
   //    @include transition_color;
@@ -46,8 +46,8 @@
   width: 12px!important;
   height: 15px!important;
   padding: 0!important;
-  background: url(/assets/img/icons/share.png) 0 3px no-repeat;
+  background: url(../img/icons/share.png) 0 3px no-repeat;
   &:hover {
-    background: url(/assets/img/icons/share.png) -12px 3px no-repeat;
+    background: url(../img/icons/share.png) -12px 3px no-repeat;
   }
 }

@@ -34,7 +34,7 @@
       @include vertical_align;
     }
     .previous {
-      background: url(/assets/img/icons/arrows.png) 0 0 no-repeat;
+      background: url(../img/icons/arrows.png) 0 0 no-repeat;
       width: 15px;
       height: 26px;
       position: absolute;
@@ -45,11 +45,11 @@
       overflow: hidden;
       cursor: pointer;
       &:hover {
-        background: url(/assets/img/icons/arrows.png) 0 -28px no-repeat;
+        background: url(../img/icons/arrows.png) 0 -28px no-repeat;
       }
     }
     .next {
-      background: url(/assets/img/icons/arrows.png) -20px 0 no-repeat;
+      background: url(../img/icons/arrows.png) -20px 0 no-repeat;
       width: 15px;
       height: 26px;
       position: absolute;
@@ -60,7 +60,7 @@
       overflow: hidden;
       cursor: pointer;
       &:hover {
-        background: url(/assets/img/icons/arrows.png) -20px -28px no-repeat;
+        background: url(../img/icons/arrows.png) -20px -28px no-repeat;
       }
     }
   }
@@ -139,12 +139,12 @@
           display: none;
           width: 8px;
           height: 8px;
-          background: url(/assets/img/cross.png) no-repeat;
+          background: url(../img/cross.png) no-repeat;
           position: absolute;
           top: 8px;
           right: 0;
           &:hover {
-            background: url(/assets/img/cross.png) 0 -8px no-repeat;
+            background: url(../img/cross.png) 0 -8px no-repeat;
           }
         }
         .small-share {
@@ -153,12 +153,12 @@
           height: 9px;
           text-indent: 10000px;
           overflow: hidden;
-          background: url(/assets/img/icons/small-share.png) 0 0 no-repeat;
+          background: url(../img/icons/small-share.png) 0 0 no-repeat;
           position: absolute;
           bottom: 15px;
           right: 10px;
           &:hover {
-            background: url(/assets/img/icons/small-share.png) -9px 0 no-repeat;
+            background: url(../img/icons/small-share.png) -9px 0 no-repeat;
           }
         }
         .time {
@@ -193,7 +193,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      background: url(/assets/img/icons/count.png) 0 5px no-repeat;
+      background: url(../img/icons/count.png) 0 5px no-repeat;
     }
   }
 }

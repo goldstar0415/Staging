@@ -1,16 +1,16 @@
 /*     spot page  */
 
 .invite-friend {
-  background: url(/assets/img/icons/tools.png) -3px -109px no-repeat;
+  background: url(../img/icons/tools.png) -3px -109px no-repeat;
   &:hover {
-    background: url(/assets/img/icons/tools.png) -3px -126px no-repeat;
+    background: url(../img/icons/tools.png) -3px -126px no-repeat;
     color: $blue;
   }
 }
 
 .external-link {
   padding-left: 23px;
-  background: url(/assets/img/icons/arrow.png) 0 4px no-repeat;
+  background: url(../img/icons/arrow.png) 0 4px no-repeat;
   margin-bottom: 5px;
   margin-top: 10px;
   padding-top: 1px;
@@ -39,7 +39,7 @@
 
 .tags {
   padding-left: 23px;
-  background: url(/assets/img/icons/tag.png) 0 2px no-repeat;
+  background: url(../img/icons/tag.png) 0 2px no-repeat;
   margin-bottom: 17px;
 }
 
@@ -52,9 +52,9 @@
   position: absolute;
   bottom: 15px;
   right: 15px;
-  background: url(/assets/img/icons/share.png) no-repeat;
+  background: url(../img/icons/share.png) no-repeat;
   &:hover {
-    background: url(/assets/img/icons/share.png) -12px 0 no-repeat;
+    background: url(../img/icons/share.png) -12px 0 no-repeat;
   }
 }
 
@@ -64,7 +64,7 @@
   bottom: -17px;
   right: -8px;
   padding-top: 0;
-  background: url(/assets/img/icons/min-corner.png) top 0 right 17px no-repeat;
+  background: url(../img/icons/min-corner.png) top 0 right 17px no-repeat;
   z-index: 1000;
   .share-buttons {
     background: $white;
@@ -79,13 +79,13 @@
       float: left;
       margin: 2px;
       .facebook {
-        background: url(/assets/img/icons/min-social.png) -32px 0 no-repeat;
+        background: url(../img/icons/min-social.png) -32px 0 no-repeat;
       }
       .google {
-        background: url(/assets/img/icons/min-social.png) -16px 0 no-repeat;
+        background: url(../img/icons/min-social.png) -16px 0 no-repeat;
       }
       .twitter {
-        background: url(/assets/img/icons/min-social.png) no-repeat;
+        background: url(../img/icons/min-social.png) no-repeat;
       }
       a {
         display: block;
@@ -141,34 +141,34 @@
 }
 
 .delete {
-  background: url(/assets/img/icons/delete.png) 1px 2px no-repeat;
+  background: url(../img/icons/delete.png) 1px 2px no-repeat;
   &:hover, &:active, &:focus {
-    background: url(/assets/img/icons/delete.png) 1px -13px no-repeat;
+    background: url(../img/icons/delete.png) 1px -13px no-repeat;
     color: $blue;
   }
 }
 
 .save-event {
-  background: url(/assets/img/icons/tools.png) -5px -6px no-repeat;
+  background: url(../img/icons/tools.png) -5px -6px no-repeat;
   &:hover, &:active, &:focus {
-    background: url(/assets/img/icons/tools.png) -5px -23px no-repeat;
+    background: url(../img/icons/tools.png) -5px -23px no-repeat;
     color: $blue;
   }
 
 }
 
 .saved {
-  background: url(/assets/img/icons/tools.png) -5px -40px no-repeat;
+  background: url(../img/icons/tools.png) -5px -40px no-repeat;
 }
 
 .favorited {
-  background: url(/assets/img/icons/tools.png) -4px -91px no-repeat;
+  background: url(../img/icons/tools.png) -4px -91px no-repeat;
 }
 
 .favorite-spot {
-  background: url(/assets/img/icons/tools.png) -4px -58px no-repeat;
+  background: url(../img/icons/tools.png) -4px -58px no-repeat;
   &:hover, &:active, &:focus {
-    background: url(/assets/img/icons/tools.png) -4px -75px no-repeat;
+    background: url(../img/icons/tools.png) -4px -75px no-repeat;
     color: $blue;
   }
 }
@@ -180,7 +180,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  background: url(/assets/img/icons/cross.png) no-repeat;
+  background: url(../img/icons/cross.png) no-repeat;
 }
 
 .comments-section {
@@ -217,7 +217,7 @@
         width: 16px;
         height: 14px;
         margin: 6px 20px 0 10px;
-        background: url(/assets/img/icons/clip-photo.png) -20px 0 no-repeat;
+        background: url(../img/icons/clip-photo.png) -20px 0 no-repeat;
       }
       .attach {
         display: block;
@@ -225,7 +225,7 @@
         width: 15px;
         height: 14px;
         margin-top: 6px;
-        background: url(/assets/img/icons/clip-photo.png) no-repeat;
+        background: url(../img/icons/clip-photo.png) no-repeat;
         margin-right: 10px;
       }
       .btn-send-comment {
@@ -264,7 +264,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
       padding-bottom: 1px;
-      background: url(/assets/img/icons/count.png) 0 -1px no-repeat;
+      background: url(../img/icons/count.png) 0 -1px no-repeat;
       margin-bottom: 10px;
       //margin-right: 15px;
       padding-left: 15px;
@@ -290,7 +290,7 @@
     .img-selection {
       width: 100%;
       margin: 0 0 5px;
-      background: url(/assets/img/icons/poly.png) 0 1px no-repeat;
+      background: url(../img/icons/poly.png) 0 1px no-repeat;
       color: $blue;
     }
   }
@@ -355,7 +355,7 @@
       width: 38px;
       height: 38px;
       position: absolute;
-      background: url(/assets/img/icons/min-cross.png) center center no-repeat, rgba(0, 0, 0, .3);
+      background: url(../img/icons/min-cross.png) center center no-repeat, rgba(0, 0, 0, .3);
       @include border-radius;
     }
   }

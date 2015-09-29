@@ -57,66 +57,66 @@
 
 @font-face {
   font-family: "Ubuntu light";
-  src: url("/assets/css/fonts/UbuntuLight.eot");
-  src: url("/assets/css/fonts/UbuntuLight.eot?#iefix") format("embedded-opentype"),
-  url("/assets/css/fonts/UbuntuLight.woff") format("woff"),
-  url("/assets/css/fonts/UbuntuLight.ttf") format("truetype");
+  src: url("../css/fonts/UbuntuLight.eot");
+  src: url("../css/fonts/UbuntuLight.eot?#iefix") format("embedded-opentype"),
+  url("../css/fonts/UbuntuLight.woff") format("woff"),
+  url("../css/fonts/UbuntuLight.ttf") format("truetype");
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
   font-family: 'Ubuntu titling bold';
-  src: url(/assets/css/fonts/ubuntu-titling-bold.eot);
-  src: url(/assets/css/fonts/ubuntu-titling-bold.eot?#iefix) format('embedded-opentype'),
-  url(/assets/css/fonts/ubuntu-titling-bold.woff2) format('woff2'),
-  url(/assets/css/fonts/ubuntu-titling-bold.woff) format('woff'),
-  url(/assets/css/fonts/ubuntu-titling-bold.ttf) format('truetype'),
-  url(/assets/css/fonts/ubuntu-titling-bold.svg#ubuntutitlingbold) format('svg');
+  src: url(../css/fonts/ubuntu-titling-bold.eot);
+  src: url(../css/fonts/ubuntu-titling-bold.eot?#iefix) format('embedded-opentype'),
+  url(../css/fonts/ubuntu-titling-bold.woff2) format('woff2'),
+  url(../css/fonts/ubuntu-titling-bold.woff) format('woff'),
+  url(../css/fonts/ubuntu-titling-bold.ttf) format('truetype'),
+  url(../css/fonts/ubuntu-titling-bold.svg#ubuntutitlingbold) format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Ubuntu medium";
-  src: url("/assets/css/fonts/UbuntuMedium.eot");
-  src: url("/assets/css/fonts/UbuntuMedium.eot?#iefix") format("embedded-opentype"),
-  url("/assets/css/fonts/UbuntuMedium.woff") format("woff"),
-  url("/assets/css/fonts/UbuntuMedium.ttf") format("truetype");
+  src: url("../css/fonts/UbuntuMedium.eot");
+  src: url("../css/fonts/UbuntuMedium.eot?#iefix") format("embedded-opentype"),
+  url("../css/fonts/UbuntuMedium.woff") format("woff"),
+  url("../css/fonts/UbuntuMedium.ttf") format("truetype");
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
   font-family: "Ubuntu bold";
-  src: url("/assets/css/fonts/UbuntuBold.eot");
-  src: url("/assets/css/fonts/UbuntuBold.eot?#iefix") format("embedded-opentype"),
-  url("/assets/css/fonts/UbuntuBold.woff") format("woff"),
-  url("/assets/css/fonts/UbuntuBold.ttf") format("truetype");
+  src: url("../css/fonts/UbuntuBold.eot");
+  src: url("../css/fonts/UbuntuBold.eot?#iefix") format("embedded-opentype"),
+  url("../css/fonts/UbuntuBold.woff") format("woff"),
+  url("../css/fonts/UbuntuBold.ttf") format("truetype");
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
   font-family: 'Questrial';
-  src: url('/assets/css/fonts/questrial-regular.eot');
-  src: url('/assets/css/fonts/questrial-regular.eot?#iefix') format('embedded-opentype'),
-  url('/assets/css/fonts/questrial-regular.woff2') format('woff2'),
-  url('/assets/css/fonts/questrial-regular.woff') format('woff'),
-  url('/assets/css/fonts/questrial-regular.ttf') format('truetype'),
-  url('/assets/css/fonts/questrial-regular.svg#questrialregular') format('svg');
+  src: url('../css/fonts/questrial-regular.eot');
+  src: url('../css/fonts/questrial-regular.eot?#iefix') format('embedded-opentype'),
+  url('../css/fonts/questrial-regular.woff2') format('woff2'),
+  url('../css/fonts/questrial-regular.woff') format('woff'),
+  url('../css/fonts/questrial-regular.ttf') format('truetype'),
+  url('../css/fonts/questrial-regular.svg#questrialregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Pontano';
-  src: url('/assets/css/fonts/pontanosans-regular.eot');
-  src: url('/assets/css/fonts/pontanosans-regular.eot?#iefix') format('embedded-opentype'),
-  url('/assets/css/fonts/pontanosans-regular.woff2') format('woff2'),
-  url('/assets/css/fonts/pontanosans-regular.woff') format('woff'),
-  url('/assets/css/fonts/pontanosans-regular.ttf') format('truetype'),
-  url('/assets/css/fonts/pontanosans-regular.svg#pontano_sansregular') format('svg');
+  src: url('../css/fonts/pontanosans-regular.eot');
+  src: url('../css/fonts/pontanosans-regular.eot?#iefix') format('embedded-opentype'),
+  url('../css/fonts/pontanosans-regular.woff2') format('woff2'),
+  url('../css/fonts/pontanosans-regular.woff') format('woff'),
+  url('../css/fonts/pontanosans-regular.ttf') format('truetype'),
+  url('../css/fonts/pontanosans-regular.svg#pontano_sansregular') format('svg');
   font-weight: normal;
   font-style: normal;
 
@@ -282,12 +282,12 @@ h3 {
   .back {
     display: block;
     height: 12px;
-    background: url(/assets/img/icons/back.png) 0 6px no-repeat;
+    background: url(../img/icons/back.png) 0 6px no-repeat;
     float: left;
     padding: 0px 0 20px 8px;
     margin-right: 8px;
     &:hover {
-      background: url(/assets/img/icons/back.png) -8px 6px no-repeat;
+      background: url(../img/icons/back.png) -8px 6px no-repeat;
     }
   }
 }
@@ -306,10 +306,10 @@ h3 {
     position: absolute;
     top: 17px;
     right: 17px;
-    background: url(/assets/img/icons/add-page.png) 9px 9px no-repeat, #0d91ec;
+    background: url(../img/icons/add-page.png) 9px 9px no-repeat, #0d91ec;
     @include transition_bg;
     &:hover {
-      background: url(/assets/img/icons/add-page.png) 9px 9px no-repeat, #0160a2;
+      background: url(../img/icons/add-page.png) 9px 9px no-repeat, #0160a2;
       @include transition_bg;
     }
   }
@@ -319,9 +319,9 @@ h3 {
     width: 15px;
     height: 15px;
     margin-right: 10px;
-    background: url(/assets/img/icons/dark-edit-tools.png) no-repeat;
+    background: url(../img/icons/dark-edit-tools.png) no-repeat;
     &:hover {
-      background: url(/assets/img/icons/dark-edit-tools.png) -18px 0 no-repeat;
+      background: url(../img/icons/dark-edit-tools.png) -18px 0 no-repeat;
     }
   }
   .delete {
@@ -329,9 +329,9 @@ h3 {
     float: right;
     width: 15px;
     height: 15px;
-    background: url(/assets/img/icons/dark-edit-tools.png) 0 -20px no-repeat;
+    background: url(../img/icons/dark-edit-tools.png) 0 -20px no-repeat;
     &:hover {
-      background: url(/assets/img/icons/dark-edit-tools.png) -18px -20px no-repeat;
+      background: url(../img/icons/dark-edit-tools.png) -18px -20px no-repeat;
     }
   }
 }
@@ -339,20 +339,20 @@ h3 {
 .download {
   width: 15px;
   height: 15px;
-  background: url(/assets/img/icons/tools.png) 0 -146px no-repeat;
+  background: url(../img/icons/tools.png) 0 -146px no-repeat;
   &:hover {
-    background: url(/assets/img/icons/tools.png) 0px -161px no-repeat;
+    background: url(../img/icons/tools.png) 0px -161px no-repeat;
   }
 }
   .eye {
     display: block;
     width: 20px;
     height: 12px;
-    background: url(/assets/img/icons/eye.png) no-repeat;
+    background: url(../img/icons/eye.png) no-repeat;
     float: right;
     margin: -21px 10px 0 0;
     &:hover {
-      background: url(/assets/img/icons/eye.png) 0 -16px no-repeat;
+      background: url(../img/icons/eye.png) 0 -16px no-repeat;
     }
   }
 

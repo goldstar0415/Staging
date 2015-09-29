@@ -45,9 +45,9 @@
              float: right;
             padding: 0;
             width:  12px;
-            background: url(/assets/img/icons/share.png) no-repeat left;
+            background: url(../img/icons/share.png) no-repeat left;
             &:hover {
-                background: url(/assets/img/icons/share.png) no-repeat right;
+                background: url(../img/icons/share.png) no-repeat right;
             }
 //
         }
@@ -64,21 +64,21 @@
             }
         }
         .save {
-            background: url(/assets/img/icons/tools.png) no-repeat -4px -6px;
+            background: url(../img/icons/tools.png) no-repeat -4px -6px;
             &:hover {
-                background: url(/assets/img/icons/tools.png) no-repeat -4px -23px;
+                background: url(../img/icons/tools.png) no-repeat -4px -23px;
             }
         }
         .favorites {
-            background: url(/assets/img/icons/tools.png) no-repeat -4px -57px;
+            background: url(../img/icons/tools.png) no-repeat -4px -57px;
             &:hover {
-                background: url(/assets/img/icons/tools.png) no-repeat -4px -74px;
+                background: url(../img/icons/tools.png) no-repeat -4px -74px;
             }
         }
         .invite {
-            background: url(/assets/img/icons/tools.png) no-repeat -4px -111px;
+            background: url(../img/icons/tools.png) no-repeat -4px -111px;
             &:hover {
-                background: url(/assets/img/icons/tools.png) no-repeat -4px -128px;
+                background: url(../img/icons/tools.png) no-repeat -4px -128px;
             }
         }
     }

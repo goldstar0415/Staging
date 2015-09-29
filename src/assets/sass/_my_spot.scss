@@ -18,7 +18,7 @@
   .rateit {
 
     .rateit-reset {
-      background: url(/assets/img/icons/delete.gif) 0 0;
+      background: url(../img/icons/delete.gif) 0 0;
       width: 16px;
       height: 16px;
       display: -moz-inline-box;
@@ -32,17 +32,17 @@
       position: relative;
       display: -moz-inline-box;
       display: inline-block;
-      background: url(/assets/img/icons/star.gif);
+      background: url(../img/icons/star.gif);
       height: 16px;
       outline: none;
     }
     .rateit-selected {
-      background: url(/assets/img/icons/star.gif) left -16px;
+      background: url(../img/icons/star.gif) left -16px;
       position: absolute;
       left: 0;
     }
     .rateit-hover {
-      background: url(/assets/img/icons/star.gif) left -32px;
+      background: url(../img/icons/star.gif) left -32px;
       position: absolute;
       left: 0;
     }
@@ -105,41 +105,41 @@
 }
 
 .edit-tools {
-  background: url(/assets/img/icons/ed.png) 1px 3px no-repeat;
+  background: url(../img/icons/ed.png) 1px 3px no-repeat;
   &:hover, &:active, &:focus {
     color: $blue;
-    background: url(/assets/img/icons/ed.png) 1px -12px no-repeat;
+    background: url(../img/icons/ed.png) 1px -12px no-repeat;
   }
 }
 
 .delete {
-  background: url(/assets/img/icons/delete.png) 1px 2px no-repeat;
+  background: url(../img/icons/delete.png) 1px 2px no-repeat;
   &:hover, &:active, &:focus {
-    background: url(/assets/img/icons/delete.png) 1px -13px no-repeat;
+    background: url(../img/icons/delete.png) 1px -13px no-repeat;
     color: $blue;
   }
 }
 
 .save-event {
-  background: url(/assets/img/icons/tools.png) -5px -6px no-repeat;
+  background: url(../img/icons/tools.png) -5px -6px no-repeat;
   &:hover, &:active, &:focus {
-    background: url(/assets/img/icons/tools.png) -5px -23px no-repeat;
+    background: url(../img/icons/tools.png) -5px -23px no-repeat;
     color: $blue;
   }
 }
 
 .favorite-spot {
-  background: url(/assets/img/icons/tools.png) -4px -56px no-repeat;
+  background: url(../img/icons/tools.png) -4px -56px no-repeat;
   &:hover, &:active, &:focus {
-    background: url(/assets/img/icons/tools.png) -4px -73px no-repeat;
+    background: url(../img/icons/tools.png) -4px -73px no-repeat;
     color: $blue;
   }
 }
 
 .invite-friend {
-  background: url(/assets/img/icons/tools.png) -3px -109px no-repeat;
+  background: url(../img/icons/tools.png) -3px -109px no-repeat;
   &:hover, &:active, &:focus {
-    background: url(/assets/img/icons/tools.png) -3px -126px no-repeat;
+    background: url(../img/icons/tools.png) -3px -126px no-repeat;
     color: $blue;
 
   }
@@ -154,9 +154,9 @@
   position: absolute;
   bottom: 15px;
   right: 15px;
-  background: url(/assets/img/icons/share.png) no-repeat;
+  background: url(../img/icons/share.png) no-repeat;
   &:hover {
-    background: url(/assets/img/icons/share.png) -12px 0 no-repeat;
+    background: url(../img/icons/share.png) -12px 0 no-repeat;
   }
 }
 
@@ -166,7 +166,7 @@
   bottom: -17px;
   right: -8px;
   padding-top: 0;
-  background: url(/assets/img/icons/min-corner.png) top 0 right 17px no-repeat;
+  background: url(../img/icons/min-corner.png) top 0 right 17px no-repeat;
   z-index: 1000;
 }
 
@@ -183,13 +183,13 @@
     float: left;
     margin: 2px;
     .facebook {
-      background: url(/assets/img/icons/min-social.png) -32px 0 no-repeat;
+      background: url(../img/icons/min-social.png) -32px 0 no-repeat;
     }
     .google {
-      background: url(/assets/img/icons/min-social.png) -16px 0 no-repeat;
+      background: url(../img/icons/min-social.png) -16px 0 no-repeat;
     }
     .twitter {
-      background: url(/assets/img/icons/min-social.png) no-repeat;
+      background: url(../img/icons/min-social.png) no-repeat;
     }
     a {
       display: block;
@@ -212,7 +212,7 @@
   display: block;
   width: 28px;
   height: 28px;
-  background: url(/assets/img/icons/min-plus.png) 9px 9px no-repeat, #0d91ec;
+  background: url(../img/icons/min-plus.png) 9px 9px no-repeat, #0d91ec;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -221,16 +221,16 @@
   right: 17px;
   @include transition_bg;
   &:hover, &:active, &:focus {
-    background: url(/assets/img/icons/min-plus.png) 9px 9px no-repeat, #0160a2;
+    background: url(../img/icons/min-plus.png) 9px 9px no-repeat, #0160a2;
   }
 }
 
 .tags {
-  background: url(/assets/img/icons/tag.png) 0 2px no-repeat;
+  background: url(../img/icons/tag.png) 0 2px no-repeat;
 }
 
 .attachments {
-  background: url(/assets/img/icons/clip.png) 0 2px no-repeat;
+  background: url(../img/icons/clip.png) 0 2px no-repeat;
   margin-top: 0;
 }
 

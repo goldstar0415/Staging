@@ -36,13 +36,13 @@
         }
       }
       .set-avatar {
-        background: url(/assets/img/icons/photo-tools.png) 6px -53px no-repeat rgba(12, 38, 56, .5);
+        background: url(../img/icons/photo-tools.png) 6px -53px no-repeat rgba(12, 38, 56, .5);
       }
       .set-location {
-        background: url(/assets/img/icons/photo-tools.png) 6px -83px no-repeat rgba(12, 38, 56, .5);
+        background: url(../img/icons/photo-tools.png) 6px -83px no-repeat rgba(12, 38, 56, .5);
       }
       .delete {
-        background: url(/assets/img/icons/photo-tools.png) 6px -23px no-repeat rgba(12, 38, 56, .5);
+        background: url(../img/icons/photo-tools.png) 6px -23px no-repeat rgba(12, 38, 56, .5);
       }
     }
     &:hover {
@@ -63,7 +63,7 @@
 .edit-delete.album {
   padding: 0 15px 15px 20px;
   .delete {
-    background: url(/assets/img/icons/delete.png) 1px 2px no-repeat;
+    background: url(../img/icons/delete.png) 1px 2px no-repeat;
   }
 }
 

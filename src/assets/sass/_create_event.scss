@@ -153,7 +153,7 @@
     right: 3px;
     z-index: 10;
     margin: 5px;
-    background: url(/assets/img/icons/min-cross.png) 5px 5px no-repeat, rgba(12, 38, 56, .6);
+    background: url(../img/icons/min-cross.png) 5px 5px no-repeat, rgba(12, 38, 56, .6);
     @include border-radius;
     @include transition_shadow;
     &:hover {
@@ -183,7 +183,7 @@
       display: block;
       width: 45px;
       height: 45px;
-      background: url(/assets/img/icons/big-plus.png) center center no-repeat #dde3e6;
+      background: url(../img/icons/big-plus.png) center center no-repeat #dde3e6;
       @include transition_bg;
       -webkit-border-radius: 30px;
       -moz-border-radius: 30px;
@@ -192,7 +192,7 @@
       -moz-box-shadow: inset 1px 1px 0 0 #c8d0d4;
       box-shadow: inset 1px 1px 0 0 #c8d0d4;
       &:hover {
-        background: url(/assets/img/icons/big-plus.png) center center no-repeat #d2d9dd;
+        background: url(../img/icons/big-plus.png) center center no-repeat #d2d9dd;
       }
     }
   }

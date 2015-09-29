@@ -138,9 +138,9 @@
             width: 16px;
             height: 14px;
             margin: 4px 0 0 10px;
-            background: url(/assets/img/icons/clip-photo.png) no-repeat right top;
+            background: url(../img/icons/clip-photo.png) no-repeat right top;
             &:hover {
-              background: url(/assets/img/icons/clip-photo.png) no-repeat right bottom;
+              background: url(../img/icons/clip-photo.png) no-repeat right bottom;
             }
           }
           .add-attach {
@@ -149,9 +149,9 @@
             width: 16px;
             height: 14px;
             margin: 4px 0 0 10px;
-            background: url(/assets/img/icons/clip-photo.png) no-repeat;
+            background: url(../img/icons/clip-photo.png) no-repeat;
             &:hover {
-              background: url(/assets/img/icons/clip-photo.png) no-repeat left bottom;
+              background: url(../img/icons/clip-photo.png) no-repeat left bottom;
             }
           }
           &::after {
@@ -179,10 +179,10 @@
             .back {
               height: 15px;
               width: 6px;
-              background: url(/assets/img/icons/back.png) no-repeat -7px 0px;
+              background: url(../img/icons/back.png) no-repeat -7px 0px;
               padding-left: 9px;
               &:hover {
-                background: url(/assets/img/icons/back.png) no-repeat 1px 0px;
+                background: url(../img/icons/back.png) no-repeat 1px 0px;
               }
             }
             .choose-photo-album {
@@ -244,14 +244,14 @@
     border: none;
     width: 16px;
     height: 16px;
-    background: url(/assets/img/icons/search-friends.png) no-repeat top center;
+    background: url(../img/icons/search-friends.png) no-repeat top center;
     text-indent: -1000px;
     overflow: hidden;
     position: absolute;
     top: 5px;
     right: 15px;
     &:hover {
-      background: url(/assets/img/icons/search-friends.png) no-repeat bottom center;
+      background: url(../img/icons/search-friends.png) no-repeat bottom center;
     }
   }
   .search-friends {
@@ -279,7 +279,7 @@
 }
 
 .choose {
-  background: url(/assets/img/icons/ok.png) no-repeat #e9edf0;
+  background: url(../img/icons/ok.png) no-repeat #e9edf0;
   background-position: center right 15px;
 }
 

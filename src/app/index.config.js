@@ -10,7 +10,7 @@
   function config($logProvider, dialogsProvider, toastr, $httpProvider, cfpLoadingBarProvider, snapRemoteProvider, $locationProvider, DEBUG, JS_CONSOLE_KEY, $translateProvider) {
     // Enable log
     $logProvider.debugEnabled(DEBUG);
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode({enabled: true, requireBase: false});
 
     $httpProvider.defaults.withCredentials = true;
 

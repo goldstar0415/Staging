@@ -76,21 +76,21 @@
           }
         }
         .map-icon {
-          background: url(/assets/img/icons/map-icon.png) 0 0 no-repeat;
+          background: url(../img/icons/map-icon.png) 0 0 no-repeat;
           width: 38px;
           height: 38px;
         }
       }
       .active {
         color: $blue;
-        background: url(/assets/img/icons/navigation-sep.png) repeat-x;
+        background: url(../img/icons/navigation-sep.png) repeat-x;
         .map-icon {
-          background: url(/assets/img/icons/map-icon.png) 0 -67px no-repeat;
+          background: url(../img/icons/map-icon.png) 0 -67px no-repeat;
         }
       }
       &:hover {
         .map-icon {
-          background: url(/assets/img/icons/map-icon.png) 0 -67px no-repeat;
+          background: url(../img/icons/map-icon.png) 0 -67px no-repeat;
         }
       }
     }
@@ -111,19 +111,19 @@
       }
     }
     .intro-link {
-      background: url(/assets/img/icons/intro-link.png) no-repeat;
+      background: url(../img/icons/intro-link.png) no-repeat;
     }
     .zoomers-link {
-      background: url(/assets/img/icons/zoomers.png) no-repeat;
+      background: url(../img/icons/zoomers.png) no-repeat;
     }
     .blog-link {
-      background: url(/assets/img/icons/blog.png) no-repeat;
+      background: url(../img/icons/blog.png) no-repeat;
     }
     .about-link {
-      background: url(/assets/img/icons/about.png) no-repeat;
+      background: url(../img/icons/about.png) no-repeat;
     }
     .contacts-link {
-      background: url(/assets/img/icons/contacts.png) no-repeat;
+      background: url(../img/icons/contacts.png) no-repeat;
     }
     .sign-btn {
       @include button;
@@ -145,25 +145,25 @@
     li {
       height: 50px;
       .favorites-link {
-        background: url(/assets/img/icons/fav.png) no-repeat;
+        background: url(../img/icons/fav.png) no-repeat;
       }
       .planner-link {
-        background: url(/assets/img/icons/planner.png) no-repeat;
+        background: url(../img/icons/planner.png) no-repeat;
       }
       .spots-link {
-        background: url(/assets/img/icons/event.png) no-repeat;
+        background: url(../img/icons/event.png) no-repeat;
       }
       .friends-link {
-        background: url(/assets/img/icons/friends-map.png) no-repeat;
+        background: url(../img/icons/friends-map.png) no-repeat;
       }
       .photo-link {
-        background: url(/assets/img/icons/photo-map.png) no-repeat;
+        background: url(../img/icons/photo-map.png) no-repeat;
       }
       .searches-link {
-        background: url(/assets/img/icons/searches.png) no-repeat;
+        background: url(../img/icons/searches.png) no-repeat;
       }
       .settings-link {
-        background: url(/assets/img/icons/settings.png) no-repeat;
+        background: url(../img/icons/settings.png) no-repeat;
       }
 
     }

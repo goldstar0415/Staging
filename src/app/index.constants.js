@@ -12,6 +12,7 @@
     .constant('GEOCODING_KEY', 'peVrdYeAJADUMTIMKXuK4j9G52cnsY8p')
     .constant('toastr', toastr)
     .constant('moment', moment)
+    .constant('USER_ONLINE_MINUTE', -5)
     .constant('DATE_FORMAT', {
       datepicker: {
         date: 'MM.DD.YYYY',

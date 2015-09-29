@@ -59,7 +59,7 @@
         }
       }
       .custom-location {
-        background: url(/assets/img/icons/button-compass.png) center -20px no-repeat;
+        background: url(../img/icons/button-compass.png) center -20px no-repeat;
         padding: 15px 26px;
         border-right: 1px solid $green;
         &.active {
@@ -68,7 +68,7 @@
         }
       }
       .default-location {
-        background: url(/assets/img/icons/button-location.png) center -20px no-repeat;
+        background: url(../img/icons/button-location.png) center -20px no-repeat;
         padding: 15px 26px;
         &.active {
           background-color: $light_green;
@@ -95,10 +95,10 @@
     padding: 1px 0 0 12px;
   }
   .edit {
-    background: url(/assets/img/icons/ed.png) 1px 2px no-repeat;
+    background: url(../img/icons/ed.png) 1px 2px no-repeat;
     padding: 1px 0 0 14px;
     &:hover {
-      background: url(/assets/img/icons/ed.png) 1px -13px no-repeat;
+      background: url(../img/icons/ed.png) 1px -13px no-repeat;
     }
   }
 }

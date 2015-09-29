@@ -1,5 +1,5 @@
 <div class="attachments-preview"
-     ng-if="!_.isEmpty(Attachments.items.areas) || !_.isEmpty(Attachments.items.spots) || !_.isEmpty(Attachments.items.album_photos)">
+     ng-if="!_.isEmpty(Attachments.items.areas) || !_.isEmpty(Attachments.items.spots) || !_.isEmpty(Attachments.items.album_photos) || !_.isEmpty(Attachments.items.links)">
 
   <div class="links">
     <div class="media media-visible padding-bottom add-location clearfix" ng-repeat="area in Attachments.items.areas">
@@ -25,6 +25,22 @@
         <div class="description-link">{{spot.description}}</div>
       </div>
     </div>
+
+    <!--<div ng-repeat="link in Attachments.items.links" class="media media-visible padding-bottom add-event">-->
+      <!--<a class="pull-left wrap-img-event" ng-href="{{link.url}}" target="_blank">-->
+        <!--<img class="media-object attachment-link" ng-src="{{link.image}}">-->
+      <!--</a>-->
+
+      <!--<div class="media-body">-->
+        <!--<a class="close-link" title="Delete" ng-click="NgInput.deleteLink($index)"></a>-->
+
+        <!--<h3 class="media-heading ">-->
+          <!--<a class="event-img clearfix" ng-href="{{link.url}}" target="_blank">{{link.title}}</a>-->
+        <!--</h3>-->
+
+        <!--<div class="description-link">{{link.description}}</div>-->
+      <!--</div>-->
+    <!--</div>-->
 
     <div ng-if="Attachments.items.plans.length > 0" ng-repeat="plan in Attachments.items.plans"
          class="media media-visible padding-bottom add-event">

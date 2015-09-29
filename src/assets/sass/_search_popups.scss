@@ -14,10 +14,10 @@
       z-index: 1;
       height: 100%;
       .bg-image {
-        background: url(/assets/img/banner-bg.png) top center repeat-y;
+        background: url(../img/banner-bg.png) top center repeat-y;
         height: 100%;
         .banner-logo {
-          background: url(/assets/img/banner-logo.png) no-repeat center;
+          background: url(../img/banner-logo.png) no-repeat center;
           background-size: 25%;
           padding-top: 50%;
         }
@@ -69,7 +69,7 @@
       display: block !important;
       width: 8px;
       height: 8px;
-      background: url(/assets/img/cross.png) no-repeat;
+      background: url(../img/cross.png) no-repeat;
       position: absolute;
       top: 15px;
       right: 15px;
@@ -105,17 +105,17 @@
           height: 0;
         }
         .path-map {
-          background: url(/assets/img/path-map.png) no-repeat center top;
+          background: url(../img/path-map.png) no-repeat center top;
           transition: display 5s ease;
           border: none;
         }
         .radius-map {
-          background: url(/assets//img/radius-map.png) no-repeat center top;
+          background: url(..//img/radius-map.png) no-repeat center top;
           transition: display 5s ease;
           border: none;
         }
         .lasso-map {
-          background: url(/assets/img/lasso-map.png) no-repeat center top;
+          background: url(../img/lasso-map.png) no-repeat center top;
           transition: display 5s ease;
           border: none;
         }
@@ -197,20 +197,20 @@
         text-align: center;
       }
       .full-small {
-        background: url(/assets/img/icons/vertical_menu.png) 20px 16px no-repeat;
+        background: url(../img/icons/vertical_menu.png) 20px 16px no-repeat;
         padding: 27px 30px;
       }
       .events {
-        background: url(/assets/img/icons/events-icon.png) 20px 17px no-repeat;
+        background: url(../img/icons/events-icon.png) 20px 17px no-repeat;
       }
       .recreation {
-        background: url(/assets/img/icons/recreation-icon.png) 20px 17px no-repeat;
+        background: url(../img/icons/recreation-icon.png) 20px 17px no-repeat;
       }
       .pit-stops {
-        background: url(/assets/img/icons/pit-stops-icon.png) 20px 17px no-repeat;
+        background: url(../img/icons/pit-stops-icon.png) 20px 17px no-repeat;
       }
       .weather-link {
-        background: url(/assets/img/icons/weather-icon.png) 20px 17px no-repeat;
+        background: url(../img/icons/weather-icon.png) 20px 17px no-repeat;
 
       }
     }
@@ -278,16 +278,16 @@
         text-align: left;
       }
       .events {
-        background: url(/assets/img/icons/events-icon.png) 10px 17px no-repeat;
+        background: url(../img/icons/events-icon.png) 10px 17px no-repeat;
       }
       .recreation {
-        background: url(/assets/img/icons/recreation-icon.png) 10px 17px no-repeat;
+        background: url(../img/icons/recreation-icon.png) 10px 17px no-repeat;
       }
       .pit-stops {
-        background: url(/assets/img/icons/pit-stops-icon.png) 10px 17px no-repeat;
+        background: url(../img/icons/pit-stops-icon.png) 10px 17px no-repeat;
       }
       .weather-link {
-        background: url(/assets/img/icons/weather-icon.png) 7px 17px no-repeat;
+        background: url(../img/icons/weather-icon.png) 7px 17px no-repeat;
 
       }
     }
@@ -328,7 +328,7 @@
       display: block;
       width: 8px;
       height: 8px;
-      background: url(/assets/img/cross.png) no-repeat;
+      background: url(../img/cross.png) no-repeat;
       position: absolute;
       top: 10px;
       right: 10px;
@@ -401,22 +401,22 @@
         @include transition_color;
         &:hover {
           color: rgba(0, 183, 243, .8);
-          //background: url(/assets/img/selected-category.png) no-repeat left center;
+          //background: url(../img/selected-category.png) no-repeat left center;
         }
         &:active {
           color: rgba(0, 183, 243, 1);
-          background: url(/assets/img/selected-category.png) no-repeat left center;
+          background: url(../img/selected-category.png) no-repeat left center;
         }
       }
       .active {
-        background: url(/assets/img/selected-category.png) no-repeat left center;
+        background: url(../img/selected-category.png) no-repeat left center;
         padding: 13px 0 13px 30px;
       }
     }
   }
 
   .filters-arrow {
-    background: url(/assets/img/icons/filters-arrow.png) no-repeat left center;
+    background: url(../img/icons/filters-arrow.png) no-repeat left center;
     width: 11px;
     height: 18px;
     margin: 5px;
@@ -436,7 +436,7 @@
     }
     .search-input {
       float: left;
-      background: url(/assets/img/icons/search-icon.png) no-repeat left center;
+      background: url(../img/icons/search-icon.png) no-repeat left center;
       background-position: 8px 6px;
       padding-left: 30px;
       width: 84%;
@@ -473,7 +473,7 @@
 }
 
 //.weatherImg {
-//  background: url(/assets/img/cloud.png) no-repeat center center;
+//  background: url(../img/cloud.png) no-repeat center center;
 //  width: 100%;
 //  height: 100%;
 //  margin: 0 auto;
@@ -498,13 +498,13 @@
 .banner-for-blogers {
   width: 100%;
   height: 100%;
-  background: url(/assets/img/banner_for_blogers.png) 0 0 no-repeat;
+  background: url(../img/banner_for_blogers.png) 0 0 no-repeat;
   /*    background-color: linear-gradient(to top, rgba(0,0,0,.75) 1%, rgba(12,38,56,0.75) 21%, rgba(12,38,56,0.75) 46%,
           rgba(3,181,213,0.75) 73%, rgba(12,38,56,0.75) 100%);*/
   right: 0;
   top: 66px;
   .banner-logo {
-    background: url(/assets/img/blog-icon.png) no-repeat center bottom;
+    background: url(../img/blog-icon.png) no-repeat center bottom;
     background-size: 25%;
     padding-top: 46%;
   }
@@ -563,34 +563,34 @@
           height: 100%;
         }
         .clear-day {
-          background: url(/assets/img/weather/clear-day.png) no-repeat center center;
+          background: url(../img/weather/clear-day.png) no-repeat center center;
         }
         .clear-night {
-          background: url(/assets/img/weather/clear-night.png) no-repeat center center;
+          background: url(../img/weather/clear-night.png) no-repeat center center;
         }
         .rain {
-          background: url(/assets/img/weather/rain.png) no-repeat center center;
+          background: url(../img/weather/rain.png) no-repeat center center;
         }
         .snow {
-          background: url(/assets/img/weather/snow.png) no-repeat center center;
+          background: url(../img/weather/snow.png) no-repeat center center;
         }
         .sleet {
-          background: url(/assets/img/weather/sleet.png) no-repeat center center;
+          background: url(../img/weather/sleet.png) no-repeat center center;
         }
         .wind {
-          background: url(/assets/img/weather/wind.png) no-repeat center center;
+          background: url(../img/weather/wind.png) no-repeat center center;
         }
         .fog {
-          background: url(/assets/img/weather/fog.png) no-repeat center center;
+          background: url(../img/weather/fog.png) no-repeat center center;
         }
         .cloudy {
-          background: url(/assets/img/weather/cloudy.png) no-repeat center center;
+          background: url(../img/weather/cloudy.png) no-repeat center center;
         }
         .partly-cloudy-day {
-          background: url(/assets/img/weather/partly-cloudy-day.png) no-repeat center center;
+          background: url(../img/weather/partly-cloudy-day.png) no-repeat center center;
         }
         .partly-cloudy-night {
-          background: url(/assets/img/weather/partly-cloudy-night.png) no-repeat center center;
+          background: url(../img/weather/partly-cloudy-night.png) no-repeat center center;
         }
       }
     }
@@ -679,34 +679,34 @@
           padding-top: 28%;
         }
         .clear-day {
-          background: url(/assets/img/weather/clear-day-dark.png) no-repeat center center;
+          background: url(../img/weather/clear-day-dark.png) no-repeat center center;
         }
         .clear-night {
-          background: url(/assets/img/weather/clear-night-dark.png) no-repeat center center;
+          background: url(../img/weather/clear-night-dark.png) no-repeat center center;
         }
         .rain {
-          background: url(/assets/img/weather/rain-dark.png) no-repeat center center;
+          background: url(../img/weather/rain-dark.png) no-repeat center center;
         }
         .snow {
-          background: url(/assets/img/weather/snow-dark.png) no-repeat center center;
+          background: url(../img/weather/snow-dark.png) no-repeat center center;
         }
         .sleet {
-          background: url(/assets/img/weather/sleet-dark.png) no-repeat center center;
+          background: url(../img/weather/sleet-dark.png) no-repeat center center;
         }
         .wind {
-          background: url(/assets/img/weather/wind-dark.png) no-repeat center center;
+          background: url(../img/weather/wind-dark.png) no-repeat center center;
         }
         .fog {
-          background: url(/assets/img/weather/fog-dark.png) no-repeat center center;
+          background: url(../img/weather/fog-dark.png) no-repeat center center;
         }
         .cloudy {
-          background: url(/assets/img/weather/cloudy-dark.png) no-repeat center center;
+          background: url(../img/weather/cloudy-dark.png) no-repeat center center;
         }
         .partly-cloudy-day {
-          background: url(/assets/img/weather/partly-cloudy-day-dark.png) no-repeat center center;
+          background: url(../img/weather/partly-cloudy-day-dark.png) no-repeat center center;
         }
         .partly-cloudy-night {
-          background: url(/assets/img/weather/partly-cloudy-night-dark.png) no-repeat center center;
+          background: url(../img/weather/partly-cloudy-night-dark.png) no-repeat center center;
         }
       }
       .data, .temperatureWeek {

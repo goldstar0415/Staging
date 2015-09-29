@@ -15,12 +15,12 @@
     //float: left;
     padding: 0;
     .star {
-      background: url(/assets/img/star.png) no-repeat;
+      background: url(../img/star.png) no-repeat;
       padding: 8px 0;
       width: 15px;
       float: left;
       &:hover {
-        background: url(/assets/img/star.png) 0 -19px no-repeat;
+        background: url(../img/star.png) 0 -19px no-repeat;
       }
     }
   }

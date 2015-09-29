@@ -10,7 +10,7 @@
   position: relative;
   overflow: hidden;
   .prev {
-    background: url(/assets/img/icons/arrows_carousel.png) 0 0 no-repeat;
+    background: url(../img/icons/arrows_carousel.png) 0 0 no-repeat;
     width: 15px;
     height: 26px;
     position: absolute;
@@ -20,11 +20,11 @@
     display: inline-block;
     overflow: hidden;
     &:hover {
-      background: url(/assets/img/icons/arrows_carousel.png) 0 -28px no-repeat;
+      background: url(../img/icons/arrows_carousel.png) 0 -28px no-repeat;
     }
   }
   .next {
-    background: url(/assets/img/icons/arrows_carousel.png) -20px 0 no-repeat;
+    background: url(../img/icons/arrows_carousel.png) -20px 0 no-repeat;
     width: 15px;
     height: 26px;
     position: absolute;
@@ -34,7 +34,7 @@
     display: inline-block;
     overflow: hidden;
     &:hover {
-      background: url(/assets/img/icons/arrows_carousel.png) -20px -28px no-repeat;
+      background: url(../img/icons/arrows_carousel.png) -20px -28px no-repeat;
     }
   }
   .carousel-stage {

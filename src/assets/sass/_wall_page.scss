@@ -58,9 +58,9 @@
             width: 16px;
             height: 14px;
             margin: 4px 0 0 10px;
-            background: url(/assets/img/icons/clip-photo.png) no-repeat right top;
+            background: url(../img/icons/clip-photo.png) no-repeat right top;
             &:hover {
-                background: url(/assets/img/icons/clip-photo.png) no-repeat right bottom;
+                background: url(../img/icons/clip-photo.png) no-repeat right bottom;
             }
         }
         .add-attach {
@@ -69,9 +69,9 @@
             width: 16px;
             height: 14px;
             margin: 4px 0 0 10px;
-            background: url(/assets/img/icons/clip-photo.png) no-repeat;
+            background: url(../img/icons/clip-photo.png) no-repeat;
             &:hover {
-                background: url(/assets/img/icons/clip-photo.png) no-repeat left bottom;
+                background: url(../img/icons/clip-photo.png) no-repeat left bottom;
             }
         }
     }
@@ -164,14 +164,14 @@
                         line-height: 120%;
                         padding-left: 13px;
                         margin-top: 15px;
-                        background: url(/assets/img/icons/arrow.png) no-repeat left 4px;
+                        background: url(../img/icons/arrow.png) no-repeat left 4px;
                         @include transition_color;
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         &:hover {
                             color: #0874be;
-                            background: url(/assets/img/icons/arrow.png) no-repeat left -10px;
+                            background: url(../img/icons/arrow.png) no-repeat left -10px;
                             @include transition_color;
                         }
                     }
@@ -200,9 +200,9 @@
         height: 12px;
         float: right;
         margin: 2px 0 0 4px;
-        background: url(/assets/img/icons/plus-minus.png) no-repeat top right;
+        background: url(../img/icons/plus-minus.png) no-repeat top right;
         &:hover {
-            background: url(/assets/img/icons/plus-minus.png) no-repeat center right;
+            background: url(../img/icons/plus-minus.png) no-repeat center right;
         }
     }
     .minus {
@@ -211,9 +211,9 @@
         height: 12px;
         float: left;
         margin: 2px 4px 0 0;
-        background: url(/assets/img/icons/plus-minus.png) no-repeat top left;
+        background: url(../img/icons/plus-minus.png) no-repeat top left;
         &:hover {
-            background: url(/assets/img/icons/plus-minus.png) no-repeat center left;
+            background: url(../img/icons/plus-minus.png) no-repeat center left;
         }
     }
 }
@@ -257,18 +257,18 @@
             .plus{
               height: 30px;
               width: 30px;
-              background: url(/assets/img/icons/plus-minus-mobile.jpg) no-repeat top right;
+              background: url(../img/icons/plus-minus-mobile.jpg) no-repeat top right;
               &:hover {
-                background: url(/assets/img/icons/plus-minus-mobile.jpg) no-repeat center right;
+                background: url(../img/icons/plus-minus-mobile.jpg) no-repeat center right;
               }
             }
 
             .minus{
               height: 30px;
               width: 30px;
-              background: url(/assets/img/icons/plus-minus-mobile.jpg) no-repeat top left;
+              background: url(../img/icons/plus-minus-mobile.jpg) no-repeat top left;
               &:hover {
-                background: url(/assets/img/icons/plus-minus-mobile.jpg) no-repeat center left;
+                background: url(../img/icons/plus-minus-mobile.jpg) no-repeat center left;
               }
             }
           }
