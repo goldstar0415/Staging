@@ -45,7 +45,7 @@ $factory->define(App\User::class, function (Generator $faker) use ($timestamps) 
         'email' => $faker->unique()->email,
         'password' => bcrypt('password'),
         'sex' => $faker->randomElement(['m', '', 'f']),
-        'avatar' => $faker->image(storage_path('app'), mt_rand(300, 1920), mt_rand(200, 1250)),
+        'avatar' => $faker->image(storage_path('app'), 1000, 1000),
         'birth_date' => $faker->date(),
         'address' => $faker->address,
         'location' => new Point($faker->latitude, $faker->longitude),
@@ -117,7 +117,7 @@ $factory->define(App\Spot::class, function (Generator $faker) use ($timestamps, 
         return $faker->url;
     }, $videos);
     return array_merge([
-        'cover' => $faker->image(storage_path('app'), mt_rand(300, 1920), mt_rand(200, 1250)),
+        'cover' => $faker->image(storage_path('app')),
         'title' => $faker->sentence,
         'description' => $faker->sentence,
         'web_sites' => $web_sites,
@@ -242,12 +242,6 @@ $factory->define(App\BlogCategory::class, function (Generator $faker) {
         'name' => $name,
         'display_name' => ucfirst($name)
     ];
-});
-
-$factory->define(App\BlogComment::class, function (Generator $faker) use ($timestamps) {
-    return array_merge([
-        'body' => $faker->sentence(16)
-    ], $timestamps());
 });
 
 $factory->define(App\BloggerRequest::class, function (Generator $faker) use ($timestamps) {

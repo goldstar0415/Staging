@@ -22,6 +22,6 @@ class ChangeLinkImageFieldTypeToString extends Migration
      */
     public function down()
     {
-        DB::statement('ALTER TABLE links ALTER COLUMN "image" TYPE jsonb');
+        DB::statement('ALTER TABLE links ALTER COLUMN "image" TYPE jsonb USING \'{}\'');
     }
 }

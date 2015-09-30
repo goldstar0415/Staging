@@ -68,7 +68,7 @@ class MailNotifier
                         return $follower->notification_follow;
                     }),
                     'unfollow', compact('sender', 'following'),
-                    "Zoomer $sender->first_name $sender->last_name follows you"
+                    "Zoomer $sender->first_name $sender->last_name unfollows you"
                 );
                 break;
             case $event instanceof OnWallMessage:
