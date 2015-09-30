@@ -463,7 +463,7 @@ class User extends BaseModel implements
         if ($user->address) {
             $ics_event->setLocation($user->address);
         }
-        $ics_event->setUseUtc();
+        $ics_event->setUseUtc(false);
         $ics_event->setOrganizer($full_name, $user->email);
         $ics_event->setSummary($full_name . ' birthday!!!');
 

@@ -318,7 +318,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         if (!empty($spot->web_sites)) {
             $ics_event->setUrl($spot->web_sites[0]);
         }
-        $ics_event->setUseUtc();
+        $ics_event->setUseUtc(false);
         $ics_event->setOrganizer($user->first_name . ' ' . $user->last_name, $user->email);
         $ics_event->setCategories($spot->category->display_name);
         $ics_event->setSummary($spot->title);
