@@ -41,10 +41,6 @@ class AppServiceProvider extends ServiceProvider
             $user->random_hash = str_random();
         });
 
-        User::created(function (User $user) {
-            $user->attachRole(Role::take('zoomer'));
-        });
-
         BloggerRequest::updated(function (BloggerRequest $request) {
             switch ($request->status) {
                 case 'accepted':
