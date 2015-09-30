@@ -174,7 +174,7 @@
           secondPhotoIndex = firstPhotoIndex + 1;
         }
         $scope.secondPhotoIndex = secondPhotoIndex;
-        $scope.secondPhoto = $scope.data.spot.photos[secondPhotoIndex].photo_url.thumb;
+        $scope.secondPhoto = $scope.data.spot.photos[secondPhotoIndex].photo_url.thumb ;
         $scope.secondItem = $scope.data.spot.photos[secondPhotoIndex];
       }
     }
