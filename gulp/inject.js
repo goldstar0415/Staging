@@ -11,7 +11,7 @@ var _ = require('lodash');
 
 gulp.task('inject', ['scripts', 'styles'], function () {
   var injectStyles = gulp.src([
-    path.join(conf.paths.tmp, '/serve/app/**/*.css'),
+    path.join(conf.paths.tmp, '/serve/assets/**/*.css'),
     path.join(conf.paths.src, '/assets/**/*.css'),
     path.join('!' + conf.paths.tmp, '/serve/app/vendor.css')
   ], { read: false });

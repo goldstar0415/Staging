@@ -26,21 +26,21 @@
       </div>
     </div>
 
-    <!--<div ng-repeat="link in Attachments.items.links" class="media media-visible padding-bottom add-event">-->
-      <!--<a class="pull-left wrap-img-event" ng-href="{{link.url}}" target="_blank">-->
-        <!--<img class="media-object attachment-link" ng-src="{{link.image}}">-->
-      <!--</a>-->
+    <div ng-repeat="link in Attachments.items.links" class="media media-visible padding-bottom add-event">
+      <a class="pull-left wrap-img-event" ng-href="{{link.url}}" target="_blank">
+        <img class="media-object attachment-link" ng-src="{{link.image}}">
+      </a>
 
-      <!--<div class="media-body">-->
-        <!--<a class="close-link" title="Delete" ng-click="NgInput.deleteLink($index)"></a>-->
+      <div class="media-body">
+        <a class="close-link" title="Delete" ng-click="NgInput.deleteLink($index)"></a>
 
-        <!--<h3 class="media-heading ">-->
-          <!--<a class="event-img clearfix" ng-href="{{link.url}}" target="_blank">{{link.title}}</a>-->
-        <!--</h3>-->
+        <h3 class="media-heading ">
+          <a class="event-img clearfix" ng-href="{{link.url}}" target="_blank">{{link.title}}</a>
+        </h3>
 
-        <!--<div class="description-link">{{link.description}}</div>-->
-      <!--</div>-->
-    <!--</div>-->
+        <div class="description-link">{{link.description}}</div>
+      </div>
+    </div>
 
     <div ng-if="Attachments.items.plans.length > 0" ng-repeat="plan in Attachments.items.plans"
          class="media media-visible padding-bottom add-event">
@@ -48,7 +48,7 @@
 
       <div class="media media-visible">
         <a class="pull-left" ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})">
-          <img class="media-object fav-avatar-icon activity" src="/assets/img/icons/planner-invite.png"/>
+          <img class="media-object fav-avatar-icon activity" src="assets/img/icons/planner-invite.png"/>
         </a>
 
         <div class="media-body attach-event">

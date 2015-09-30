@@ -164,7 +164,7 @@
 
       firstPhotoIndex = idx;
       $scope.firstPhotoIndex = firstPhotoIndex;
-      $scope.firstPhoto = $scope.data.spot.photos[firstPhotoIndex].photo_url.medium;
+      $scope.firstPhoto = $scope.data.spot.photos[firstPhotoIndex].photo_url.thumb;
       $scope.firstItem = $scope.data.spot.photos[firstPhotoIndex];
 
       if ($scope.data.spot.photos.length > 1) {
@@ -174,7 +174,7 @@
           secondPhotoIndex = firstPhotoIndex + 1;
         }
         $scope.secondPhotoIndex = secondPhotoIndex;
-        $scope.secondPhoto = $scope.data.spot.photos[secondPhotoIndex].photo_url.medium;
+        $scope.secondPhoto = $scope.data.spot.photos[secondPhotoIndex].photo_url.thumb;
         $scope.secondItem = $scope.data.spot.photos[secondPhotoIndex];
       }
     }
