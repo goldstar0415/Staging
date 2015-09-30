@@ -32,7 +32,7 @@ class CheckOnline
     public function handle($request, Closure $next)
     {
         if ($this->auth->check()) {
-            $this->auth->user()->last_action_at = Carbon::now();
+            $this->auth->user()->update(['last_action_at' => Carbon::now()]);
         }
 
         return $next($request);
