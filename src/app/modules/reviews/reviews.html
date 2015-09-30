@@ -24,7 +24,7 @@
           <!--at-->
 
           <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
-          <attachments items="item.commentable.attachments"></attachments>
+          <attachments items="item.attachments"></attachments>
 
           <p class="time">{{item.created_at | toTimezone}}</p>
 
@@ -48,7 +48,7 @@
           </a>
           <!--at-->
           <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
-          <attachments items="item.commentable.attachments"></attachments>
+          <attachments items="item.attachments"></attachments>
 
           <p class="time">{{item.created_at | toTimezone}}</p>
 

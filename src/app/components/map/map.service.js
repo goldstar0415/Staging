@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $modal, toastr, MOBILE_APP, GEOCODING_KEY, Area, SignUpService) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, Area, SignUpService) {
       var map = null;
       var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
@@ -365,9 +365,11 @@
         map.addLayer(markersLayer);
         ChangeState('big');
 
-
-        map.setView(DEFAULT_MAP_LOCATION, 3);
-        FocusMapToCurrentLocation(12);
+        //focus only on index page
+        //if (location.pathname != '/areas/55') {
+          map.setView(DEFAULT_MAP_LOCATION, 3);
+          FocusMapToCurrentLocation(12);
+        //}
 
         window.map = map;
         return map;
@@ -881,6 +883,7 @@
 
                 circle.addTo(drawLayer);
 
+                FitBoundsOfDrawLayer();
               } else {
                 _.each(feature.geometry.coordinates, function (coords) {
                   var points = L.GeoJSON.coordsToLatLngs(coords);
@@ -909,7 +912,6 @@
             }
           });
         }
-
         var bboxes = GetDrawLayerBBoxes();
         GetDataByBBox(bboxes);
       }
@@ -1146,6 +1148,7 @@
       }
 
       function GetCurrentLocation(callback) {
+        console.log('GetCurrentLocation');
         map.locate({setView: true})
           .on('locationfound', function onLocationFound(e) {
             map.off('locationfound');
@@ -1162,8 +1165,10 @@
       }
 
       function FocusMapToCurrentLocation(zoom) {
-        zoom = zoom || 8;
+        if ($state.current.name != 'index') return;
 
+        zoom = zoom || 8;
+        console.log('FocusMapToCurrentLocation');
         map
           .locate({setView: true})
           .on('locationfound', function (e) {

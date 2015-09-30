@@ -32,10 +32,13 @@
     };
 
     $rootScope.isOnline = function (user) {
+      var online = false;
       if (user.last_action_at) {
         var lastAction = moment(user.last_action_at);
-        return (lastAction.diff(moment(), 'minutes') + moment().utcOffset()) >= USER_ONLINE_MINUTE;
+        online = (lastAction.diff(moment(), 'minutes') + moment().utcOffset()) >= USER_ONLINE_MINUTE;
       }
+
+      return {online: online, offline: !online};
     };
 
     $rootScope.isRole = function (user, name) {

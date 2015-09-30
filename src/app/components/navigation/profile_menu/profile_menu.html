@@ -61,7 +61,7 @@
         <div class="status moderator" ng-if="$root.profileUser.status">{{$root.profileUser.status}}</div>
         <h2 class="profile-name ">
           <a ui-sref="profile.main({user_id: $root.profileUser.id})">
-            <span class="online" title="Online" ng-show="$root.isOnline($root.profileUser)"></span>
+            <span title="Online" ng-class="$root.isOnline($root.profileUser)"></span>
             <span class="avatar-first-name">{{$root.profileUser.first_name}}</span>
             <br/>
             {{$root.profileUser.last_name}}
