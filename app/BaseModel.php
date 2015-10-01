@@ -13,9 +13,20 @@ use DB;
  */
 abstract class BaseModel extends Model
 {
-
+    /**
+     * The format of date
+     *
+     * @var string
+     */
     protected $date_format = 'Y-m-d';
 
+    /**
+     * Scope a query to take random row(s).
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int $count Count of random rows
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeRandom($query, $count = 1)
     {
         return $query->orderBy(DB::raw(config('database.connections.' . config('database.default') . '.rand_func')))
@@ -23,11 +34,11 @@ abstract class BaseModel extends Model
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function belongsTo($related, $foreignKey = null, $otherKey = null, $relation = null)
     {
-        $relation_name = '';//TODO:change this
+        $relation_name = '';
 
         if (is_null($relation)) {
             list(, $caller) = debug_backtrace(false, 2);

@@ -181,7 +181,7 @@ class User extends BaseModel implements
     }
 
     /**
-     *
+     * Set the user's birth date
      *
      * @param \Carbon\Carbon|string $value
      */
@@ -197,12 +197,20 @@ class User extends BaseModel implements
         }
     }
 
+    /**
+     * Get the user's activity level
+     */
     public function getActivityLevelAttribute()
     {
         return ActivityLevel::where('favorites_count', '<', $this->favorites()->withoutNewest()->count())
             ->first(['name'])['name'];
     }
-    
+
+    /**
+     * Set user's banned at attribute
+     *
+     * @param bool $value
+     */
     public function setBannedAtAttribute($value)
     {
         $value = (bool)$value;
@@ -214,21 +222,41 @@ class User extends BaseModel implements
         }
     }
 
+    /**
+     * Get count of the user's favorites spots
+     *
+     * @return int
+     */
     public function getCountFavoritesAttribute()
     {
         return $this->favorites()->withoutNewest()->count();
     }
 
+    /**
+     * Get count of the user's new messages
+     *
+     * @return int
+     */
     public function getNewMessagesAttribute()
     {
         return $this->chatMessagesReceived()->withoutNewest()->where('is_read', false)->count();
     }
 
+    /**
+     * Get count of the user's photos
+     *
+     * @return int
+     */
     public function getCountPhotosAttribute()
     {
         return $this->albums()->join('album_photos', 'album_photos.album_id', '=', 'albums.id')->count();
     }
 
+    /**
+     * Get ability of follow the user for the authenticated user
+     *
+     * @return bool
+     */
     public function getCanFollowAttribute()
     {
         $user = Request::user();
@@ -239,6 +267,11 @@ class User extends BaseModel implements
         return false;
     }
 
+    /**
+     * Check the user is following for the authenticated user
+     *
+     * @return bool
+     */
     public function getIsFollowingAttribute()
     {
         $user = Request::user();
@@ -249,11 +282,21 @@ class User extends BaseModel implements
         return false;
     }
 
+    /**
+     * Check user is registered via application
+     *
+     * @return bool
+     */
     public function getIsRegisteredAttribute()
     {
         return isset($this->password);
     }
 
+    /**
+     * Get the user's attached socials
+     *
+     * @return array
+     */
     public function getAttachedSocialsAttribute()
     {
         $socials = [];
@@ -263,145 +306,240 @@ class User extends BaseModel implements
         return $socials;
     }
 
+    /**
+     * Get urls of 3 avatar sizes
+     *
+     * @return array
+     */
     public function getAvatarUrlAttribute()
     {
         return $this->getPictureUrls('avatar');
     }
 
+    /**
+     * Get the user's followers count
+     *
+     * @return int
+     */
     public function getCountFollowersAttribute()
     {
         return $this->followers()->count();
     }
 
+    /**
+     * Get the user's spots count
+     *
+     * @return int
+     */
     public function getCountSpotsAttribute()
     {
         return $this->spots()->withoutNewest()->count();
     }
 
+    /**
+     * Get the user's followings count
+     *
+     * @return int
+     */
     public function getCountFollowingsAttribute()
     {
         return $this->followings()->count();
     }
 
+    /**
+     * Get the user's followers
+     */
     public function followers()
     {
         return $this->belongsToMany(self::class, 'followings', 'following_id', 'follower_id')->withTimestamps();
     }
 
+    /**
+     * Get the user's followings
+     */
     public function followings()
     {
         return $this->belongsToMany(self::class, 'followings', 'follower_id', 'following_id')->withTimestamps();
     }
 
+    /**
+     * Get the user's albums
+     */
     public function albums()
     {
         return $this->hasMany(Album::class);
     }
 
+    /**
+     * Get all the user's chat messages
+     */
     public function chatMessages()
     {
         return DB::table('chat_messages')
             ->join('chat_message_user', 'chat_messages.id', '=', 'chat_message_user.chat_message_id')
             ->where(function ($query) {
                 $query->where('sender_id', $this->id)->orWhere('receiver_id', $this->id);
-            })->orderBy('created_at', 'DESC');
+            })->orderBy('created_at', 'DESC')->get();
     }
 
+    /**
+     * Get the user's received chat messages
+     */
     public function chatMessagesReceived()
     {
         return $this->belongsToMany(ChatMessage::class, null, 'receiver_id')->withPivot('sender_id');
     }
 
+    /**
+     * Get the user's sent chat messages
+     */
     public function chatMessagesSend()
     {
         return $this->belongsToMany(ChatMessage::class, null, 'sender_id')->withPivot('receiver_id');
     }
 
+    /**
+     * Get all of the album photos for the user.
+     */
     public function albumPhotoComments()
     {
         return $this->morphMany(Comment::class, 'commentable', AlbumPhoto::class);
     }
 
+    /**
+     * Get the wall posts for the user
+     */
     public function walls()
     {
         return $this->hasMany(Wall::class, 'receiver_id');
     }
 
+    /**
+     * The reviews that belongs to the user
+     */
     public function reviews()
     {
         return $this->belongsToMany(Comment::class, 'reviews');
     }
 
+    /**
+     * Get friends of the user
+     */
     public function friends()
     {
         return $this->hasMany(Friend::class);
     }
 
+    /*
+     * Get feeds for the user
+     */
     public function feeds()
     {
         return $this->hasMany(Feed::class);
     }
 
+    /**
+     * Get saved areas of the user
+     */
     public function areas()
     {
         return $this->hasMany(Area::class);
     }
 
+    /**
+     * Get all of the blog comment's for the user.
+     */
     public function blogComments()
     {
         return $this->morphMany(Comment::class, 'commentable', Blog::class);
     }
 
+    /**
+     * Get user's blogger request
+     */
     public function bloggerRequest()
     {
         return $this->hasOne(BloggerRequest::class);
     }
 
+    /**
+     * Get user's blog posts
+     */
     public function blogs()
     {
         return $this->hasMany(Blog::class);
     }
 
+    /**
+     * Get user's votes on the spots
+     */
     public function spotVotes()
     {
         return $this->hasMany(SpotVote::class);
     }
 
+    /**
+     * Get user's plans
+     */
     public function plans()
     {
         return $this->hasMany(Plan::class);
     }
 
+    /**
+     * Get plans which invited the user
+     */
     public function invitedPlans()
     {
         return $this->belongsToMany(Plan::class);
     }
 
+    /**
+     * Get user's favorite spots
+     */
     public function favorites()
     {
         return $this->belongsToMany(Spot::class)->withTimestamps();
     }
 
+    /**
+     * Get the user's calendar spots
+     */
     public function calendarSpots()
     {
         return $this->belongsToMany(Spot::class, 'calendar_spots')->withTimestamps();
     }
 
+    /**
+     * Get all of the user's spot comment's.
+     */
     public function spotComments()
     {
         return $this->morphMany(Comment::class, 'commentable', Spot::class);
     }
 
+    /**
+     * Get the user's spots
+     */
     public function spots()
     {
         return $this->hasMany(Spot::class);
     }
 
+    /**
+     * Get the socials that belongs to the user
+     */
     public function socials()
     {
         return $this->belongsToMany(Social::class);
     }
-    
+
+    /**
+     * Scope a query to only include users whose birthday tomorrow.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeComingBirthday($query)
     {
         return $query->whereRaw("date_part('day', \"birth_date\") = date_part('day', CURRENT_DATE) + 1
@@ -409,7 +547,7 @@ class User extends BaseModel implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function exportableEvents(User $user)
     {
@@ -417,7 +555,7 @@ class User extends BaseModel implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function exportableConditions()
     {
@@ -428,7 +566,7 @@ class User extends BaseModel implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function exportable(User $user)
     {
@@ -443,13 +581,19 @@ class User extends BaseModel implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function export()
     {
         return self::makeVEvent($this);
     }
 
+    /**
+     * Make VEVENT according to iCalendar format
+     *
+     * @param self $user
+     * @return Event
+     */
     protected static function makeVEvent(self $user)
     {
         $ics_event = new Event($user->id);

@@ -32,16 +32,27 @@ class Area extends BaseModel
         'waypoints' => 'array'
     ];
 
+    /**
+     * Get the user that owns the area
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * The walls that belongs to the area
+     */
     public function walls()
     {
         return $this->belongsToMany(Wall::class);
     }
 
+    /**
+     * Get social share links of the area
+     *
+     * @return array
+     */
     public function getShareLinksAttribute()
     {
         $url = url('areas', [$this->id, 'preview']);

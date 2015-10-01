@@ -18,6 +18,9 @@ class BlogCategory extends BaseModel
 
     public $timestamps = false;
 
+    /**
+     * Get blogs for the category
+     */
     public function blogs()
     {
         return $this->hasMany(Blog::class);

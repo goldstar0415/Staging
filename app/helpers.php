@@ -3,8 +3,8 @@
 if (! function_exists('frontend_url')) {
     /**
      * Generates link to frontend.
-     * @param $uri
-     * @param $params
+     * @param string $uri
+     * @param array $params
      * @return string
      */
     function frontend_url($uri = '', ...$params)

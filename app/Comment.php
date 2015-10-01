@@ -29,7 +29,7 @@ class Comment extends BaseModel
     protected $with = ['sender', 'commentable'];
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function __construct(array $attributes = [])
     {
@@ -37,11 +37,17 @@ class Comment extends BaseModel
         $this->addAttachments();
     }
 
+    /**
+     * Get the user that sent the comment
+     */
     public function sender()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get all of the owning commentable models.
+     */
     public function commentable()
     {
         return $this->morphTo();
