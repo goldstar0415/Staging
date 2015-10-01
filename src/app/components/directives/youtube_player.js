@@ -15,7 +15,6 @@
           scope.$watch('src', function (val) {
             if (val) {
               var code = youtube_parser(val);
-              console.log(code);
               if (code) {
                 scope.url = $sce.trustAsResourceUrl("http://www.youtube.com/embed/" + code);
               } else {

@@ -32,12 +32,8 @@
           $image.on('built.cropper', function () {
             onCropEnd();
           });
-          //$timeout(function () {
-          //  scope.resultImage = getDataURL();
-          //});
 
           scope.$watch('sourceImage', function (newValue, oldValue) {
-            console.log(newValue);
             if (newValue) {
               $image.cropper('replace', newValue);
             }

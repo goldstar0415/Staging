@@ -365,11 +365,8 @@
         map.addLayer(markersLayer);
         ChangeState('big');
 
-        //focus only on index page
-        //if (location.pathname != '/areas/55') {
           map.setView(DEFAULT_MAP_LOCATION, 3);
           FocusMapToCurrentLocation(12);
-        //}
 
         window.map = map;
         return map;
@@ -882,8 +879,6 @@
                 circle.bindPopup(popup);
 
                 circle.addTo(drawLayer);
-
-                FitBoundsOfDrawLayer();
               } else {
                 _.each(feature.geometry.coordinates, function (coords) {
                   var points = L.GeoJSON.coordsToLatLngs(coords);
@@ -913,7 +908,7 @@
           });
         }
         var bboxes = GetDrawLayerBBoxes();
-        GetDataByBBox(bboxes);
+        GetDataByBBox(bboxes, true);
       }
 
       function ClearSelections() {
@@ -1148,7 +1143,6 @@
       }
 
       function GetCurrentLocation(callback) {
-        console.log('GetCurrentLocation');
         map.locate({setView: true})
           .on('locationfound', function onLocationFound(e) {
             map.off('locationfound');
@@ -1166,9 +1160,8 @@
 
       function FocusMapToCurrentLocation(zoom) {
         if ($state.current.name != 'index') return;
-
         zoom = zoom || 8;
-        console.log('FocusMapToCurrentLocation');
+
         map
           .locate({setView: true})
           .on('locationfound', function (e) {
@@ -1279,7 +1272,9 @@
         return waypoints;
       }
 
-      function GetDataByBBox(bbox_array) {
+      function GetDataByBBox(bbox_array, isFocus) {
+        isFocus = isFocus || false;
+
         var spots = [];
         if (bbox_array.length > 0) {
           $http.post(API_URL + '/map/search', {b_boxes: bbox_array})
@@ -1290,8 +1285,11 @@
                 }
               });
               spots = FilterUniqueObjects(spots);
-
               $rootScope.$emit('update-map-data', spots);
+
+              if (isFocus) {
+                FitBoundsOfDrawLayer();
+              }
             })
         } else {
           clearLayers();

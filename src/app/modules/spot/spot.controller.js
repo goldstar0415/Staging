@@ -54,7 +54,7 @@
           vm.attachments.areas = [];
           vm.attachments.links = [];
         }, function error(resp) {
-          console.log(resp);
+          console.warn(resp);
           toastr.error('Send message failed');
         })
     }

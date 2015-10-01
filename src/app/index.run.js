@@ -32,7 +32,6 @@
       $rootScope.currentParams = toParams;
 
       if (current.require_auth && !$rootScope.currentUser) {
-        console.log($rootScope.currentUser, arguments);
         toastr.error('Unauthorized!');
         $state.go('index');
       }
@@ -72,7 +71,7 @@
     }
 
     function onStateChangeError(event, toState, toParams) {
-      console.log('$stateChangeError', event);
+      console.warn('$stateChangeError', event);
       if (toState.require_auth && !$rootScope.currentUser) {
         toastr.error('Unauthorized!');
         $state.go('index');

@@ -281,42 +281,9 @@
           vm.cropCover = '';
           vm.cover = null;
         }
-        console.log(vm.images.files[idx]);
         vm.images.files.splice(idx, 1);
       }
     };
-
-    //vm.cropImage = function (image) {
-    //  if (vm.selectCover) {
-    //    originalCover = image;
-    //    CropService.crop(image, 512, 256, false, function (result) {
-    //      if (result) {
-    //        vm.cover = result;
-    //        vm.selectCover = false;
-    //
-    //        if (vm.edit) {
-    //          vm.coverChanged = true;
-    //        }
-    //      }
-    //    });
-    //  }
-    //};
-    //
-    //vm.editCover = function () {
-    //  if (vm.cover) {
-    //    originalCover = originalCover || vm.cover;
-    //    CropService.crop(originalCover, 512, 256, false, function (result) {
-    //      if (result) {
-    //        vm.cover = result;
-    //        vm.selectCover = false;
-    //
-    //        if (vm.edit) {
-    //          vm.coverChanged = true;
-    //        }
-    //      }
-    //    });
-    //  }
-    //};
 
     vm.changeCover = function (image) {
       if (vm.selectCover) {
