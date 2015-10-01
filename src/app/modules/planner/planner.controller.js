@@ -107,7 +107,7 @@
 
       var marker = MapService.CreateMarker(location, options);
       marker.on('click', function () {
-        $state.go('planner.view', {plan_id: plan_id});
+        $state.go('planner.view', {user_id: $rootScope.currentUser.id, plan_id: plan_id});
       });
 
       return marker;

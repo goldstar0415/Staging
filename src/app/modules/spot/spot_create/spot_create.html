@@ -1,5 +1,5 @@
 <form name="form" class="form-horizontal" role="form" novalidate>
-  <div ng-show="!SpotCreate.loading">
+  <div ng-hide="SpotCreate.loading">
     <h2 ng-if="!SpotCreate.edit" class="event-title">Create new spot</h2>
 
     <h2 ng-if="SpotCreate.edit" class="event-title">Update Spot</h2>
@@ -102,181 +102,180 @@
         <!-- /input-group -->
       </div>
 
-  </div>
-  <div class="form-group">
-    <label class="col-md-2 col-sm-12 col-xs-12 control-label">Category</label>
+      <div class="form-group">
+        <label class="col-md-2 col-sm-12 col-xs-12 control-label">Category</label>
 
-    <div class="col-md-10 col-sm-12 col-xs-12">
-      <!-- CATEGORY SELECT here-->
-      <ui-select
-        ng-model="SpotCreate.category_id"
-        theme="bootstrap">
-        <ui-select-match placeholder="Select category id...">{{$select.selected.display_name}}</ui-select-match>
-        <ui-select-choices
-          repeat="item.id as item in SpotCreate.categories[SpotCreate.type] | filter : $select.search track by $index">
-          <div>{{item.display_name | highlight: $select.search}}</div>
-        </ui-select-choices>
-      </ui-select>
-    </div>
-  </div>
+        <div class="col-md-10 col-sm-12 col-xs-12">
+          <!-- CATEGORY SELECT here-->
+          <ui-select
+            ng-model="SpotCreate.category_id"
+            theme="bootstrap">
+            <ui-select-match placeholder="Select category id...">{{$select.selected.display_name}}</ui-select-match>
+            <ui-select-choices
+              repeat="item.id as item in SpotCreate.categories[SpotCreate.type] | filter : $select.search track by $index">
+              <div>{{item.display_name | highlight: $select.search}}</div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
 
-  <div class="form-group">
-    <label class="col-md-2 col-sm-12 col-xs-12 control-label">Tags </label>
+      <div class="form-group">
+        <label class="col-md-2 col-sm-12 col-xs-12 control-label">Tags </label>
 
-    <div class="col-md-10 col-sm-12 col-xs-12">
-      <tags-input class="tags-input-custom"
-                  ng-model="SpotCreate.tags"
-                  on-tag-adding="SpotCreate.onTagsAdd()"
-                  max-length="64"
-                  on-invalid-tag="SpotCreate.InvalidTag($tag)"
-                  display-property="name"
-                  key-property="name">
-      </tags-input>
-    </div>
-  </div>
-  </section>
-  <section class="event-additionl-info">
+        <div class="col-md-10 col-sm-12 col-xs-12">
+          <tags-input class="tags-input-custom"
+                      ng-model="SpotCreate.tags"
+                      on-tag-adding="SpotCreate.onTagsAdd()"
+                      max-length="64"
+                      on-invalid-tag="SpotCreate.InvalidTag($tag)"
+                      display-property="name"
+                      key-property="name">
+          </tags-input>
+        </div>
+      </div>
+    </section>
+    <section class="event-additionl-info">
 
-    <div class="form-group">
-      <div>
-        <label class="col-md-2 col-sm-12 col-xs-12 control-label">Location</label>
+      <div class="form-group">
+        <div>
+          <label class="col-md-2 col-sm-12 col-xs-12 control-label">Location</label>
 
-        <div class="col-md-10 col-sm-12 col-xs-12 ">
-          <div class="input-group " ng-if="SpotCreate.locations.length < SpotCreate.restrictions.locations">
-            <location address="SpotCreate.newLocation.address" location="SpotCreate.newLocation.location"
-                      bind-marker="true" limit="15"></location>
+          <div class="col-md-10 col-sm-12 col-xs-12 ">
+            <div class="input-group " ng-if="SpotCreate.locations.length < SpotCreate.restrictions.locations">
+              <location address="SpotCreate.newLocation.address" location="SpotCreate.newLocation.location"
+                        bind-marker="true" limit="15"></location>
           <span class="input-group-btn">
             <button ng-click="SpotCreate.addLocation(SpotCreate.newLocation)" class="btn btn-default" type="button"><i
               class="glyphicon glyphicon-plus"></i></button>
           </span>
-          </div>
-          <!-- /input-group -->
-          <div ng-if="!item.isDelete" class="input-group" ng-repeat="item in SpotCreate.locations track by $index">
-            <location address="item.address" location="item.location" limit="15" marker="item.marker"
-                      on-empty="SpotCreate.removeLocation($index)" bind-marker="true"></location>
+            </div>
+            <!-- /input-group -->
+            <div ng-if="!item.isDelete" class="input-group" ng-repeat="item in SpotCreate.locations track by $index">
+              <location address="item.address" location="item.location" limit="15" marker="item.marker"
+                        on-empty="SpotCreate.removeLocation($index)" bind-marker="true"></location>
             <span class="input-group-btn">
               <button ng-click="SpotCreate.removeLocation($index)" class="btn btn-default" type="button"><i
                 class="glyphicon glyphicon-minus"></i></button>
             </span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group" ng-if="SpotCreate.type === 'event'">
-      <label class="col-md-2 col-sm-12 col-xs-12 control-label">Date</label>
-
-      <div class="col-md-10 col-sm-12 col-xs-12">
-        <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
-          <input ng-datepicker name="start_date" ng-model="SpotCreate.start_date" start-date="SpotCreate.startDate"
-                 type="text" required>
-
-          <div ng-messages="form.start_date.$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">Start date field can't be empty</div>
-          </div>
-        </div>
-
-        <span class="hidden-xs col-sm-1">—</span>
-
-        <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
-          <input ng-datepicker name="end_date" ng-model="SpotCreate.end_date" start-date="SpotCreate.start_date"
-                 type="text" required>
-
-          <div ng-messages="form.end_date.$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">End date field can't be empty</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="form-group" ng-if="SpotCreate.type === 'event'">
-      <label class="col-md-2 col-sm-12 col-xs-12 control-label">Time</label>
-
-      <div class="col-md-10 col-sm-12 col-xs-12">
-        <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
-          <input ng-timepicker step="30" placeholder="12:00..." ng-model="SpotCreate.start_time" name="start_time"
-                 type="text">
-
-          <!--<div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
-          <!--<div ng-message="required">Start time field can't be empty</div>-->
-          <!--</div>-->
-        </div>
-        <span class="hidden-xs col-sm-1">—</span>
-
-        <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
-          <input ng-timepicker step="30" placeholder="12:00..." ng-model="SpotCreate.end_time" name="end_time"
-                 type="text">
-
-          <!--<div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
-          <!--<div ng-message="required">End time field can't be empty</div>-->
-          <!--</div>-->
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="event-upload-photos">
-    <div class="form-group">
-      <h3 class="add-photo-title">Add photos </h3>
-
-      <!--<label class="col-sm-12" style="font-size: 30px; text-align: center;">Добавить D & D</label>-->
-      <div class="col-sm-12">
-        <uploader drop-zone="true"></uploader>
-      </div>
-
-      <div class="col-xs-12">
-        <ul class="photos row">
-          <li ng-repeat="item in SpotCreate.images.files track by $index">
-            <div ng-if="!item.id">
-              <img ng-click="SpotCreate.changeCover(item)" ngf-src="item"
-                   ng-class="SpotCreate.selectCover ? 'cover-hover' : ''">
             </div>
-            <div ng-if="item.id">
-              <img ng-click="SpotCreate.changeCover(item)" ng-src="{{item.photo_url.medium}}"
-                   ng-class="SpotCreate.selectCover ? 'cover-hover' : ''">
-            </div>
-            <a ng-hide="SpotCreate.selectCover" class="delete" ng-click="SpotCreate.deleteImage($index, item.id)"
-               title="Delete"></a>
-
-          </li>
-        </ul>
-        <div ng-if="SpotCreate.selectCover">Choose the photo</div>
-      </div>
-      <div ng-if="SpotCreate.images.files.length > 0">
-        <button type="button" ng-click="SpotCreate.selectCover = true"
-                class="btn btn-default green-btn pull-left margin-bottom"
-                ng-if="!SpotCreate.selectCover">Select cover
-        </button>
-        <button type="button" ng-click="SpotCreate.selectCover = false" class="btn btn-primary blue-btn pull-left"
-                ng-if="SpotCreate.selectCover">Cancel
-        </button>
-      </div>
-      <!--<button type="button" ng-click="SpotCreate.editCover()" class="btn btn-default green-btn pull-left margin-bottom"-->
-      <!--ng-if="SpotCreate.cover">Edit current cover-->
-      <!--</button>-->
-
-
-      <div class="col-sm-12" ng-if="SpotCreate.cropCover">
-        <br/>
-        <label class="col-sm-4 col-xs-12 control-label no-pad">Cover preview:</label>
-
-        <div class="cover-preview">
-          <image-cropper source-image="SpotCreate.cropCover" result-image="SpotCreate.cover" auto-crop="false"
-                         crop-height="SpotCreate.crop.height" crop-width="SpotCreate.crop.width"></image-cropper>
-
-          <!--<a class="delete" ng-click="SpotCreate.cover = null" title="Delete"></a>-->
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-  <section class="event-add-video">
-    <div class="form-group">
-      <label class="col-md-2 col-sm-12 col-xs-12 control-label">Video</label>
 
-      <div class="col-md-10 col-sm-12 col-xs-12">
-        <div class="input-group ">
-          <input type="text" class="form-control" name="youtubeLink" youtube-link ng-model="SpotCreate.newYoutubeLink"
-                 placeholder="Youtube link here...">
+      <div class="form-group" ng-if="SpotCreate.type === 'event'">
+        <label class="col-md-2 col-sm-12 col-xs-12 control-label">Date</label>
+
+        <div class="col-md-10 col-sm-12 col-xs-12">
+          <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
+            <input ng-datepicker name="start_date" ng-model="SpotCreate.start_date" start-date="SpotCreate.startDate"
+                   type="text" required>
+
+            <div ng-messages="form.start_date.$error" ng-if="form.$submitted" class="error-message-inline">
+              <div ng-message="required">Start date field can't be empty</div>
+            </div>
+          </div>
+
+          <span class="hidden-xs col-sm-1">—</span>
+
+          <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
+            <input ng-datepicker name="end_date" ng-model="SpotCreate.end_date" start-date="SpotCreate.start_date"
+                   type="text" required>
+
+            <div ng-messages="form.end_date.$error" ng-if="form.$submitted" class="error-message-inline">
+              <div ng-message="required">End date field can't be empty</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group" ng-if="SpotCreate.type === 'event'">
+        <label class="col-md-2 col-sm-12 col-xs-12 control-label">Time</label>
+
+        <div class="col-md-10 col-sm-12 col-xs-12">
+          <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
+            <input ng-timepicker step="30" placeholder="12:00..." ng-model="SpotCreate.start_time" name="start_time"
+                   type="text">
+
+            <!--<div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
+            <!--<div ng-message="required">Start time field can't be empty</div>-->
+            <!--</div>-->
+          </div>
+          <span class="hidden-xs col-sm-1">—</span>
+
+          <div class="col-sm-4 col-xs-12 no-pad margin-bottom">
+            <input ng-timepicker step="30" placeholder="12:00..." ng-model="SpotCreate.end_time" name="end_time"
+                   type="text">
+
+            <!--<div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
+            <!--<div ng-message="required">End time field can't be empty</div>-->
+            <!--</div>-->
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="event-upload-photos">
+      <div class="form-group">
+        <h3 class="add-photo-title">Add photos </h3>
+
+        <!--<label class="col-sm-12" style="font-size: 30px; text-align: center;">Добавить D & D</label>-->
+        <div class="col-sm-12">
+          <uploader drop-zone="true"></uploader>
+        </div>
+
+        <div class="col-xs-12">
+          <ul class="photos row">
+            <li ng-repeat="item in SpotCreate.images.files track by $index">
+              <div ng-if="!item.id">
+                <img ng-click="SpotCreate.changeCover(item)" ngf-src="item"
+                     ng-class="SpotCreate.selectCover ? 'cover-hover' : ''">
+              </div>
+              <div ng-if="item.id">
+                <img ng-click="SpotCreate.changeCover(item)" ng-src="{{item.photo_url.medium}}"
+                     ng-class="SpotCreate.selectCover ? 'cover-hover' : ''">
+              </div>
+              <a ng-hide="SpotCreate.selectCover" class="delete" ng-click="SpotCreate.deleteImage($index, item.id)"
+                 title="Delete"></a>
+
+            </li>
+          </ul>
+          <div ng-if="SpotCreate.selectCover">Choose the photo</div>
+        </div>
+        <div ng-if="SpotCreate.images.files.length > 0">
+          <button type="button" ng-click="SpotCreate.selectCover = true"
+                  class="btn btn-default green-btn pull-left margin-bottom"
+                  ng-if="!SpotCreate.selectCover">Select cover
+          </button>
+          <button type="button" ng-click="SpotCreate.selectCover = false" class="btn btn-primary blue-btn pull-left"
+                  ng-if="SpotCreate.selectCover">Cancel
+          </button>
+        </div>
+        <!--<button type="button" ng-click="SpotCreate.editCover()" class="btn btn-default green-btn pull-left margin-bottom"-->
+        <!--ng-if="SpotCreate.cover">Edit current cover-->
+        <!--</button>-->
+
+
+        <div class="col-sm-12" ng-if="SpotCreate.cropCover">
+          <br/>
+          <label class="col-sm-4 col-xs-12 control-label no-pad">Cover preview:</label>
+
+          <div class="cover-preview">
+            <image-cropper source-image="SpotCreate.cropCover" result-image="SpotCreate.cover" auto-crop="false"
+                           crop-height="SpotCreate.crop.height" crop-width="SpotCreate.crop.width"></image-cropper>
+
+            <!--<a class="delete" ng-click="SpotCreate.cover = null" title="Delete"></a>-->
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="event-add-video">
+      <div class="form-group">
+        <label class="col-md-2 col-sm-12 col-xs-12 control-label">Video</label>
+
+        <div class="col-md-10 col-sm-12 col-xs-12">
+          <div class="input-group ">
+            <input type="text" class="form-control" name="youtubeLink" youtube-link ng-model="SpotCreate.newYoutubeLink"
+                   placeholder="Youtube link here...">
 
           <span class="input-group-btn">
             <button class="btn btn-default" ng-click="SpotCreate.addYoutubeLink(!form.youtubeLink.$error.link)"
@@ -285,39 +284,39 @@
           </span>
 
 
-        </div>
-        <div ng-messages="form.youtubeLink.$error" class="error-message-inline">
-          <div ng-message="link">Wrong link</div>
-        </div>
-        <!-- /input-group -->
+          </div>
+          <div ng-messages="form.youtubeLink.$error" class="error-message-inline">
+            <div ng-message="link">Wrong link</div>
+          </div>
+          <!-- /input-group -->
 
-        <div ng-repeat="item in SpotCreate.youtube_links track by $index">
-          <div class="input-group ">
-            <input type="text" class="form-control" name="youtubeLink_{{$index}}" youtube-link ng-model="item"
-                   placeholder="Youtube link here...">
+          <div ng-repeat="item in SpotCreate.youtube_links track by $index">
+            <div class="input-group ">
+              <input type="text" class="form-control" name="youtubeLink_{{$index}}" youtube-link ng-model="item"
+                     placeholder="Youtube link here...">
           <span class="input-group-btn">
             <button class="btn btn-default" ng-click="SpotCreate.removeYoutubeLink($index)"
                     type="button"><i class="glyphicon glyphicon-minus"> </i>
             </button>
           </span>
-          </div>
-          <div ng-messages="form['youtubeLink_' + $index].$error" class="error-message-inline">
-            <div ng-message="link">Wrong link</div>
+            </div>
+            <div ng-messages="form['youtubeLink_' + $index].$error" class="error-message-inline">
+              <div ng-message="link">Wrong link</div>
+            </div>
           </div>
         </div>
       </div>
+    </section>
+    <div class="form-group">
+      <div class="col-xs-12">
+        <button ng-if="!SpotCreate.edit" type="button" ng-click="SpotCreate.create(form)"
+                class="btn btn-default green-btn pull-left">Create
+        </button>
+        <button ng-if="SpotCreate.edit" type="button" ng-click="SpotCreate.create(form)"
+                class="btn btn-default green-btn pull-left">Update
+        </button>
+      </div>
     </div>
-  </section>
-  <div class="form-group">
-    <div class="col-xs-12">
-      <button ng-if="!SpotCreate.edit" type="button" ng-click="SpotCreate.create(form)"
-              class="btn btn-default green-btn pull-left">Create
-      </button>
-      <button ng-if="SpotCreate.edit" type="button" ng-click="SpotCreate.create(form)"
-              class="btn btn-default green-btn pull-left">Update
-      </button>
-    </div>
-  </div>
   </div>
   <preloader ng-show="SpotCreate.loading"></preloader>
 </form>
