@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive to execute function when user press CTRL+ENTER
+   */
   angular
     .module('zoomtivity')
     .directive('ctrlEnter', function () {

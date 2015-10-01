@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+  Directive to make visible password when user click on eye
+   */
   angular
     .module('zoomtivity')
     .directive('eyePassword', function () {

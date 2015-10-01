@@ -1,6 +1,10 @@
 (function () {
   'use strict';
 
+
+  /*
+   * Directive for show formated spot dates
+   */
   angular
     .module('zoomtivity')
     .directive('dateRange', DateRange);
@@ -28,6 +32,7 @@
         vm.start_date = start_date.format(DATE_FORMAT.date);
         vm.end_date = end_date.format(DATE_FORMAT.date);
 
+        //convert times if they exists
         if (vm.item.start_time && vm.item.start_time != "12:00 am" || vm.item.end_time != "12:00 am") {
           vm.start_time = vm.item.start_time;
           vm.end_time = vm.item.end_time;

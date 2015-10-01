@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Notify parent directive when ngRepeat done
+   */
   angular
     .module('zoomtivity')
     .directive('repeatDone', function () {

@@ -1,6 +1,10 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive to formatted attached images.
+   * Use "justifiedGallery" plugin
+   */
   angular
     .module('zoomtivity')
     .directive('justifiedGallery', function ($timeout) {

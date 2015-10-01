@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Add link validator to inputs
+   */
   angular
     .module('zoomtivity')
     .directive('validateLink', function ($parse) {

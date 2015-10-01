@@ -29,9 +29,8 @@
             strict: true
           });
 
-          $image.on('built.cropper', function () {
-            onCropEnd();
-          });
+          //crop image after it to be loaded
+          $image.on('built.cropper', onCropEnd);
 
           scope.$watch('sourceImage', function (newValue, oldValue) {
             if (newValue) {
@@ -45,11 +44,13 @@
             }
           }
 
+          //apply crop
           function onCropEnd() {
             scope.resultImage = getDataURL();
             scope.$apply();
           }
 
+          //get cropped image as BASE64
           function getDataURL() {
             return $image.cropper('getCroppedCanvas').toDataURL()
           }

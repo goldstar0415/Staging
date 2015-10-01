@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive for youTube player
+   */
   angular
     .module('zoomtivity')
     .directive('youtubePlayer', function ($sce) {

@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive for message attachments (spots, areas, links)
+   */
   angular
     .module('zoomtivity')
     .directive('attachments', Attachments);
@@ -21,8 +24,6 @@
     /** @ngInject */
     function AttachmentsController() {
       var vm = this;
-
-
     }
 
   }

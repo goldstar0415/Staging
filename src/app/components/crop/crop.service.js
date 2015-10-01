@@ -55,6 +55,7 @@
     if (typeof image == 'string') {
       vm.image = image;
     } else {
+      //convert File API object to BASE64
       var reader = new FileReader();
       reader.onload = function (evt) {
         vm.image = evt.target.result;

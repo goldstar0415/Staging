@@ -1,6 +1,10 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive to datepicker.
+   * Use datetimepicker plugin
+   */
   angular
     .module('zoomtivity')
     .directive('ngDatepicker', function (moment, DATE_FORMAT) {
@@ -66,6 +70,10 @@
       }
     })
 
+    /*
+     * Directive to timepicker
+     * Use datetimepicker plugin
+     */
     .directive('ngTimepicker', function (moment, DATE_FORMAT) {
       return {
         restrict: 'A',

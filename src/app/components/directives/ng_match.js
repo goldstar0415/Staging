@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Custom validator for compare two inputs
+   */
   angular
     .module('zoomtivity')
     .directive('ngMatch', function ($parse) {
