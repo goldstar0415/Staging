@@ -52,7 +52,7 @@ class AlbumPhoto extends BaseModel implements StaplerableInterface, Commentable
     }
 
     /**
-     *
+     * Get urls of 3 photo sizes
      *
      * @return array
      */
@@ -61,21 +61,33 @@ class AlbumPhoto extends BaseModel implements StaplerableInterface, Commentable
         return $this->getPictureUrls('photo');
     }
 
+    /**
+     * Get photo album
+     */
     public function album()
     {
         return $this->belongsTo(Album::class);
     }
 
+    /**
+     * The comments that belong to the photo
+     */
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    /**
+     * The walls that belongs to the photo
+     */
     public function walls()
     {
         return $this->belongsToMany(Wall::class);
     }
 
+    /**
+     * The chat messages that belongs to photo
+     */
     public function chatMessages()
     {
         return $this->belongsToMany(ChatMessage::class);
