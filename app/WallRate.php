@@ -24,11 +24,17 @@ class WallRate extends Model
 
     protected $casts = ['rate' => 'integer'];
 
+    /**
+     * Get the wall post that belongs to the wall rate
+     */
     public function wall()
     {
         return $this->belongsTo(Wall::class);
     }
 
+    /**
+     * Get the user that owns the wall rate
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

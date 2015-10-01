@@ -85,16 +85,29 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         parent::__construct($attributes);
     }
 
+    /**
+     * Get urls of 3 cover sizes
+     */
     public function getCoverUrlAttribute()
     {
         return $this->getPictureUrls('cover');
     }
 
+    /**
+     * Get spot rating
+     *
+     * @return float
+     */
     public function getRatingAttribute()
     {
         return (float)$this->votes()->avg('vote');
     }
 
+    /**
+     * Check is spot favorite for authenticated user
+     *
+     * @return bool
+     */
     public function getIsFavoriteAttribute()
     {
         if ($user = Request::user()) {
@@ -104,6 +117,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         return false;
     }
 
+    /**
+     * Check is spot saved to calendar for authenticated user
+     *
+     * @return bool
+     */
     public function getIsSavedAttribute()
     {
         if ($user = Request::user()) {
@@ -113,6 +131,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         return false;
     }
 
+    /**
+     * Check is the authenticated user appreciated the spot
+     *
+     * @return bool
+     */
     public function getIsRatedAttribute()
     {
         if ($user = Request::user()) {
@@ -122,60 +145,90 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         return false;
     }
 
-    public function setWebSitesAttribute($value)
+    /**
+     * Set the spot web sites
+     *
+     * @param array $value
+     */
+    public function setWebSitesAttribute(array $value)
     {
-        if (is_array($value)) {
-            $this->attributes['web_sites'] = json_encode($value);
-        }
+        $this->attributes['web_sites'] = json_encode($value);
     }
 
-    public function setVideosAttribute($value)
+    /**
+     * Set the spot videos
+     *
+     * @param array $value
+     */
+    public function setVideosAttribute(array $value)
     {
-        if (is_array($value)) {
-            $this->attributes['videos'] = json_encode($value);
-        }
+        $this->attributes['videos'] = json_encode($value);
     }
 
+    /**
+     * Get the spot locations
+     */
     public function getLocationsAttribute()
     {
         return $this->points;
     }
 
+    /**
+     * Get the spot type
+     *
+     * @return mixed
+     */
     public function getTypeAttribute()
     {
         return $this->category->type['name'];
     }
 
-    public function setTagsAttribute($value)
+    /**
+     * Set the spot tags
+     *
+     * @param array $value
+     */
+    public function setTagsAttribute(array $value)
     {
-        if (is_array($value)) {
-            $tags_ids = [];
+        $tags_ids = [];
 
-            foreach ($value as $tag) {
-                $tags_ids[] = Tag::firstOrCreate(['name' => $tag])->id;
-            }
-            $this->tags()->sync($tags_ids);
+        foreach ($value as $tag) {
+            $tags_ids[] = Tag::firstOrCreate(['name' => $tag])->id;
+        }
+        $this->tags()->sync($tags_ids);
+    }
+
+    /**
+     * Set the spot locations
+     *
+     * @param array $value
+     */
+    public function setLocationsAttribute(array $value)
+    {
+        $this->points()->delete();
+        foreach ($value as $location) {
+            $point = new SpotPoint();
+            $point->location = $location['location'];
+            $point->address = $location['address'];
+            $this->points()->save($point);
         }
     }
 
-    public function setLocationsAttribute($value)
-    {
-        if (is_array($value)) {
-            $this->points()->delete();
-            foreach ($value as $location) {
-                $point = new SpotPoint();
-                $point->location = $location['location'];
-                $point->address = $location['address'];
-                $this->points()->save($point);
-            }
-        }
-    }
-
+    /**
+     * Get count members of the spot
+     *
+     * @return int
+     */
     public function getCountMembersAttribute()
     {
         return $this->calendarUsers()->count();
     }
 
+    /**
+     * Get the spot members
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getMembersAttribute()
     {
         return $this->calendarUsers()
@@ -183,6 +236,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             ->take(6)->get();
     }
 
+    /**
+     * Get the spot share links
+     *
+     * @return array
+     */
     public function getShareLinksAttribute()
     {
         $url = url('spots', [$this->id, 'preview']);
@@ -194,61 +252,99 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         ];
     }
 
+    /**
+     * Get the user that owns the spot
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * The walls that belongs to the spot
+     */
     public function walls()
     {
         return $this->belongsToMany(Wall::class);
     }
 
+    /**
+     * Get the votes for the spot
+     */
     public function votes()
     {
         return $this->hasMany(SpotVote::class);
     }
 
+    /**
+     * Get all of the comments for the spot
+     */
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    /**
+     * Get all users which mark as favorite the spot
+     */
     public function favorites()
     {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
 
+    /**
+     * Get the spot tags
+     */
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
     }
 
+    /**
+     * Get the spot category
+     */
     public function category()
     {
         return $this->belongsTo(SpotTypeCategory::class);
     }
 
+    /**
+     * Get the points for the spot
+     */
     public function points()
     {
         return $this->hasMany(SpotPoint::class);
     }
 
+    /**
+     * Get the photos for the spot
+     */
     public function photos()
     {
         return $this->hasMany(SpotPhoto::class);
     }
 
+    /**
+     * The plans that belongs to the spot
+     */
     public function plans()
     {
         return $this->belongsToMany(Plan::class);
     }
 
+    /**
+     * The users which added to calendar the spot
+     */
     public function calendarUsers()
     {
         return $this->belongsToMany(User::class, 'calendar_spots')->withTimestamps();
     }
 
+    /**
+     * Scope a query to get only upcoming spots.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeComing($query)
     {
         return $query->whereRaw("date_part('day', \"start_date\") = date_part('day', CURRENT_DATE) + 1
@@ -257,7 +353,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function exportableEvents(User $user)
     {
@@ -265,7 +361,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function exportableConditions()
     {
@@ -277,7 +373,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function exportable(User $user)
     {
@@ -327,7 +423,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function commentResourceOwnerId()
     {

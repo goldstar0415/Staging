@@ -37,7 +37,7 @@ class Wall extends BaseModel
     protected $with = ['sender'];
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function __construct(array $attributes = [])
     {
@@ -45,26 +45,45 @@ class Wall extends BaseModel
         $this->addAttachments();
     }
 
+    /**
+     * Get the user that receive the wall post
+     */
     public function receiver()
     {
         return $this->belongsTo(User::class, 'receiver_id');
     }
 
+    /**
+     * Get the user that send the wall post
+     */
     public function sender()
     {
         return $this->belongsTo(User::class, 'sender_id');
     }
 
+    /**
+     * Get the ratings for the wall post
+     */
     public function ratings()
     {
         return $this->hasMany(WallRate::class);
     }
 
+    /**
+     * Get the rating for the wall post
+     *
+     * @return int
+     */
     public function getRatingAttribute()
     {
         return (int) $this->ratings()->sum('rate');
     }
 
+    /**
+     * Get rate of the authenticated user for the wall post
+     *
+     * @return int|null
+     */
     public function getUserRatingAttribute()
     {
         if ($user = Request::user()) {
