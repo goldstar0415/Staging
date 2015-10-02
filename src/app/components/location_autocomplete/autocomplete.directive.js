@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Autocomplete locations
+   */
   angular
     .module('zoomtivity')
     .directive('location', location);
@@ -26,33 +29,44 @@
       },
       link: function autocompleteLink(s, e, a) {
         var className = s.inputClass || 'location-changed';
-        s.placeHolder = s.inputPlaceholder || "Start typing...";
         var limit = s.limit || 10;
         var searchUrl = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&addressdetails=1&limit=' + limit + '&q=';
         var bindMarker = s.bindMarker;
         var provider = s.provider || 'google';
+
+        s.placeHolder = s.inputPlaceholder || "Start typing...";
         s.provider = provider;
         s.className = '';
         s.viewAddress = '';
+        s.validateField = validateField;
+        s.onChange = onChange;
+        s.SetCurrentLocation = SetCurrentLocation;
+        s.onAutocompleteSelect = onAutocompleteSelect;
+        s.getData = getData;
+
+        //if change location move or create marker
+        s.$watch('location', watchLocation);
+        e.on('focusin', onFocusin);
 
         if (s.address && s.location) {
           s.viewAddress = s.address;
           moveOrCreateMarker(s.location);
           MapService.GetMap().setView(s.location, 12);
         }
-        s.$watch('location', function () {
+
+
+        function watchLocation() {
           if (s.location) {
             moveOrCreateMarker(s.location);
           }
           s.viewAddress = s.address;
-        });
+        }
 
-        e.on('focusin', function () {
+        function onFocusin() {
           if (!s.location) {
             MapService.GetMap().on('click', onMapClick);
           }
-        });
-
+        }
 
         function onMapClick(event) {
           if (!s.location) {
@@ -70,6 +84,10 @@
         }
 
 
+        /*
+         * Move or marker on map by latitude and longitude
+         * @param {object} latitude and longitude
+         */
         function moveOrCreateMarker(latlng) {
           if (bindMarker) {
             if (s.marker) {
@@ -81,6 +99,10 @@
           }
         }
 
+        /*
+         * Create marker on map by latitude and longitude
+         * @param {object} latitude and longitude
+         */
         function createMarker(latlng) {
           s.marker = MapService.CreateMarker(latlng, {draggable: true});
           MapService.BindMarkerToInput(s.marker, function (data) {
@@ -90,6 +112,9 @@
           });
         }
 
+        /*
+         * Remove marker
+         */
         function removeMarker() {
           if (s.marker) {
             MapService.RemoveMarker(s.marker);
@@ -97,7 +122,10 @@
           }
         }
 
-        s.onChange = function () {
+        /*
+         * On change address in input
+         */
+        function onChange() {
           if (!s.viewAddress) {
             removeMarker();
             s.location = null;
@@ -108,10 +136,12 @@
               s.className = className;
             }
           }
-        };
-        s.SetCurrentLocation = function () {
-          //MapService.GetCurrentLocation(function (e) {
-          //  console.log(e);
+        }
+
+        /*
+         * Set user default location
+         */
+        function SetCurrentLocation() {
           if (!$rootScope.currentLocation) {
             toastr.error('Geolocation error!');
           } else {
@@ -122,9 +152,9 @@
               moveOrCreateMarker(e.latlng);
             })
           }
-          //});
-        };
-        s.onAutocompleteSelect = function ($item, $model, $label) {
+        }
+
+        function onAutocompleteSelect($item, $model, $label) {
           if (provider == 'google') {
             s.location = {lat: $model.geometry.location.lat, lng: $model.geometry.location.lng};
             s.address = $model.formatted_address;
@@ -134,9 +164,12 @@
             s.address = $model.display_name;
             s.viewAddress = $model.display_name;
           }
-          //moveOrCreateMarker(s.location);
-        };
-        s.getData = function (val) {
+        }
+
+        /*
+         * Get addresses from google api
+         */
+        function getData(val) {
           if (provider == 'google') {
             return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
               withCredentials: false,
@@ -155,9 +188,9 @@
               return response.data
             });
           }
-        };
+        }
 
-        s.validateField = function () {
+        function validateField() {
           if (!s.location) {
             s.address = '';
             s.viewAddress = '';

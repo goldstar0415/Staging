@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Modals for invite friend to an event or plan
+   */
   angular
     .module('zoomtivity')
     .directive('inviteFriends', inviteFriends);
@@ -59,6 +62,8 @@
       vm.close = function () {
         $modalInstance.close();
       };
+
+      //send invite to selected users
       vm.inviteFriends = function () {
         var selectedUsers = _.where(vm.friends, {selected: true});
         if (selectedUsers.length > 0) {

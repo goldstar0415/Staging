@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Filter for return number of years
+   */
   angular
     .module('zoomtivity')
     .filter('age', function () {

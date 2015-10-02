@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Convert date to user timezone
+   */
   angular
     .module('zoomtivity')
     .filter('toTimezone', function (DATE_FORMAT) {
