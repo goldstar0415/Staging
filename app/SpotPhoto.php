@@ -30,7 +30,7 @@ class SpotPhoto extends BaseModel implements StaplerableInterface, Commentable
     protected $appends = ['photo_url'];
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function __construct(array $attributes = [])
     {
@@ -46,23 +46,34 @@ class SpotPhoto extends BaseModel implements StaplerableInterface, Commentable
         parent::__construct($attributes);
     }
 
+    /**
+     * Get 3 sizes urls of the photo
+     *
+     * @return array
+     */
     public function getPhotoUrlAttribute()
     {
         return $this->getPictureUrls('photo');
     }
 
+    /**
+     * Get the spot that belongs to the photo
+     */
     public function spot()
     {
         return $this->belongsTo(Spot::class);
     }
 
+    /**
+     * Get all of the comments for the photo
+     */
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function commentResourceOwnerId()
     {

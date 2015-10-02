@@ -19,11 +19,17 @@ class SpotVote extends BaseModel
 {
     protected $fillable = ['vote'];
 
+    /**
+     * Get the spot that belongs to the vote
+     */
     public function spot()
     {
         return $this->belongsTo(Spot::class);
     }
 
+    /**
+     * Get the user that made the vote
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

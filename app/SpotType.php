@@ -19,11 +19,17 @@ class SpotType extends BaseModel
 
     public $timestamps = false;
 
+    /**
+     * Get the category for the spot type
+     */
     public function categories()
     {
         return $this->hasMany(SpotTypeCategory::class);
     }
 
+    /**
+     * Get the spots for the spot type
+     */
     public function spots()
     {
         return $this->hasManyThrough(Spot::class, SpotTypeCategory::class);

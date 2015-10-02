@@ -18,6 +18,9 @@ class Tag extends BaseModel
 
     public $timestamps = false;
 
+    /**
+     * The spots that belongs to the tag
+     */
     public function spots()
     {
         return $this->belongsToMany(Spot::class);

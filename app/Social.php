@@ -18,6 +18,9 @@ class Social extends Model
 
     public $timestamps = false;
 
+    /**
+     * The users that belong to the social network
+     */
     public function users()
     {
         return $this->belongsToMany(User::class);

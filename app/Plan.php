@@ -84,7 +84,7 @@ class Plan extends BaseModel implements CalendarExportable, Commentable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function exportableEvents(User $user)
     {
@@ -93,7 +93,7 @@ class Plan extends BaseModel implements CalendarExportable, Commentable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function exportableConditions()
     {
@@ -105,7 +105,7 @@ class Plan extends BaseModel implements CalendarExportable, Commentable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public static function exportable(User $user)
     {
@@ -145,7 +145,7 @@ class Plan extends BaseModel implements CalendarExportable, Commentable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function export()
     {
@@ -153,7 +153,7 @@ class Plan extends BaseModel implements CalendarExportable, Commentable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function commentResourceOwnerId()
     {

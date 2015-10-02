@@ -30,6 +30,9 @@ class SpotPoint extends BaseModel
 
     public $timestamps = false;
 
+    /**
+     * Get the spot that belongs to the photo
+     */
     public function spot()
     {
         return $this->belongsTo(Spot::class);

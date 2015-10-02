@@ -43,31 +43,42 @@ class SpotTypeCategory extends BaseModel implements StaplerableInterface
         parent::__construct($attributes);
     }
 
+    /**
+     * Get the category's icon url
+     *
+     * @return string
+     */
     public function getIconUrlAttribute()
     {
         return $this->icon->url();
     }
 
+    /**
+     * Get category's type
+     */
     public function type()
     {
         return $this->belongsTo(SpotType::class);
     }
 
+    /**
+     * Get the spots for the category
+     */
     public function spots()
     {
         return $this->hasMany(Spot::class);
     }
 
+    /**
+     * Set the category's icon
+     *
+     * @param string $value
+     */
     public function setIconPutAttribute($value)
     {
         if ($value) {
             $path = public_path('tmp/' . $value);
             $this->icon = $path;
         }
-    }
-
-    public function getIconPutAttribute()
-    {
-        //TODO: get icon for admin panel
     }
 }

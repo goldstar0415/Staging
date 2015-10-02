@@ -36,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
                 }
             }
         });
+
+        Spot::deleting(function (Spot $spot) {
+            $spot->comments()->delete();
+        });
         
         User::creating(function (User $user) {
             $user->random_hash = str_random();
