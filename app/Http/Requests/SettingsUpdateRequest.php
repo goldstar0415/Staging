@@ -54,9 +54,11 @@ class SettingsUpdateRequest extends Request
                 break;
             case 'password':
                 $rules = [
-                    'current_password' => 'required',
                     'password' => 'required|min:6|confirmed'
                 ];
+                if ($this->user()->is_registered) {
+                    $rules['current_password'] = 'required';
+                }
                 break;
             case 'privacy':
                 $rules = array_fill_keys(array_keys($this->input()), 'integer|between:1,5');

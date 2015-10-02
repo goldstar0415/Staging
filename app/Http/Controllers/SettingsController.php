@@ -42,12 +42,13 @@ class SettingsController extends Controller
                 $user->update(['email' => $params['email']]);
                 break;
             case 'password':
-                if ($hash->check($params['current_password'], $user->password)) {
-                    $user->password = $hash->make($params['password']);
-                    $user->save();
-                } else {
-                    return response()->json(['message' => 'Incorrect password'], 422);
+                if ($user->is_registered) {
+                    if (!$hash->check($params['current_password'], $user->password)) {
+                        return response()->json(['message' => 'Incorrect password'], 422);
+                    }
                 }
+                $user->password = $hash->make($params['password']);
+                $user->save();
                 break;
             case 'privacy':
             case 'notifications':
