@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive for spot control panel
+   */
   angular.module('zoomtivity')
     .directive('mapSort', function () {
       return {
@@ -21,12 +24,49 @@
     $scope.addToFavorite = SpotService.addToFavorite;
     $scope.removeFromFavorite = SpotService.removeFromFavorite;
 
-    $rootScope.$on('update-map-data', function (event, spots) {
+    vm.vertical = true;
+    vm.sortLayer = 'event';
+    vm.toggleLayer = toggleLayer;
+    vm.toggleMenu = function () {
+      vm.vertical = !vm.vertical;
+    };
+    vm.toggleWeather = function () {
+      vm.toggleLayer('other');
+    };
+
+    $rootScope.$on('update-map-data', onUpdateMapData);
+
+    //============================ events section ==========================
+    $scope.eventsDateToggle = false;
+    $scope.eventsCategoryToggle = false;
+    vm.eventsSelectAll = false;
+
+    $scope.checkItem = checkItem;
+    $scope.eventsSortByDate = eventsSortByDate;
+    $scope.toggleEventCategories = toggleEventCategories;
+    $scope.sortEventsByCategories = sortEventsByCategories;
+
+    //============================ recreation section ======================
+    $scope.recreationsCategoryToggle = false;
+    vm.recreationSelectAll = false;
+
+    $scope.toggleRecreationCategories = toggleRecreationCategories;
+    $scope.sortRecreationsByCategories = sortRecreationsByCategories;
+    //============================ pitstop section =========================
+    $scope.pitstopsCategoryToggle = false;
+    vm.pitstopSelectAll = false;
+
+    $scope.togglePitstopCategories = togglePitstopCategories;
+    $scope.sortPitstopsByCategories = sortPitstopsByCategories;
+
+
+    loadCategories();
+
+    function onUpdateMapData(event, spots) {
       originalSpotsArray = spots;
       vm.eventsArray = [];
       vm.recreationsArray = [];
       vm.pitstopsArray = [];
-
 
       _.each(spots, function (item) {
         var type = item.spot.category.type.name;
@@ -43,7 +83,6 @@
             vm.eventsArray.push(item);
             break;
         }
-
       });
 
       vm.eventsArray = MapService.SortByRating(vm.eventsArray);
@@ -61,15 +100,9 @@
           $scope.sortPitstopsByCategories();
           break;
       }
-    });
+    }
 
-
-    vm.vertical = true;
-    vm.sortLayer = 'event';
-    vm.toggleMenu = function () {
-      vm.vertical = !vm.vertical;
-    };
-    vm.toggleLayer = function (layer) {
+    function toggleLayer(layer) {
       var wp = MapService.GetPathWaypoints();
       var geoJson = MapService.GetGeoJSON();
 
@@ -106,43 +139,37 @@
           toastr.info('Click on map to check weather in this area');
           break;
       }
-    };
-    vm.toggleWeather = function () {
-      vm.toggleLayer('other');
-    };
+    }
 
-    $http.get(API_URL + '/spots/categories')
-      .success(function (data) {
-        for (var k in data) {
-          if (data[k].name == 'event') {
-            $scope.eventCategories = data[k].categories;
-            for (var i in $scope.eventCategories) {
-              $scope.eventCategories[i].selected = false;
+    function loadCategories() {
+      $http.get(API_URL + '/spots/categories')
+        .success(function (data) {
+          for (var k in data) {
+            if (data[k].name == 'event') {
+              $scope.eventCategories = data[k].categories;
+              for (var i in $scope.eventCategories) {
+                $scope.eventCategories[i].selected = false;
+              }
+            }
+
+            if (data[k].name == 'recreation') {
+              $scope.recreationCategories = data[k].categories;
+              for (var i in $scope.recreationCategories) {
+                $scope.recreationCategories[i].selected = false;
+              }
+            }
+
+            if (data[k].name == 'pitstop') {
+              $scope.pitstopCategories = data[k].categories;
+              for (var i in $scope.pitstopCategories) {
+                $scope.pitstopCategories[i].selected = false;
+              }
             }
           }
+        });
+    }
 
-          if (data[k].name == 'recreation') {
-            $scope.recreationCategories = data[k].categories;
-            for (var i in $scope.recreationCategories) {
-              $scope.recreationCategories[i].selected = false;
-            }
-          }
-
-          if (data[k].name == 'pitstop') {
-            $scope.pitstopCategories = data[k].categories;
-            for (var i in $scope.pitstopCategories) {
-              $scope.pitstopCategories[i].selected = false;
-            }
-          }
-        }
-      });
-
-    //============================ events section ==========================
-    $scope.eventsDateToggle = false;
-    $scope.eventsCategoryToggle = false;
-    vm.eventsSelectAll = false;
-
-    $scope.checkItem = function (item, items, type) {
+    function checkItem(item, items, type) {
       item.selected = !item.selected;
       if (!item.selected) {
         switch (type) {
@@ -181,16 +208,16 @@
 
         return selected;
       }
-    };
+    }
 
-    $scope.eventsSortByDate = function () {
+    function eventsSortByDate() {
       if (vm.startDate || vm.endDate) {
         vm.displayEventsArray = MapService.ClampByDate(vm.eventsArray, vm.startDate, vm.endDate);
         MapService.drawSpotMarkers(vm.displayEventsArray, 'event', true);
       }
-    };
+    }
 
-    $scope.toggleEventCategories = function () {
+    function toggleEventCategories() {
       if (!vm.eventsSelectAll) {
         _.map($scope.eventCategories, function (item) {
           item.selected = true;
@@ -202,19 +229,17 @@
       }
       vm.eventsSelectAll = !vm.eventsSelectAll;
       $scope.sortEventsByCategories();
-    };
-    $scope.sortEventsByCategories = function () {
+    }
+
+    function sortEventsByCategories() {
       var categories = _.reject($scope.eventCategories, function (item) {
         return !item.selected;
       });
       vm.displayEventsArray = MapService.SortBySubcategory(vm.eventsArray, categories);
       MapService.drawSpotMarkers(vm.displayEventsArray, 'event', true);
-    };
-    //============================ recreation section ======================
-    $scope.recreationsCategoryToggle = false;
-    vm.recreationSelectAll = false;
+    }
 
-    $scope.toggleRecreationCategories = function () {
+    function toggleRecreationCategories() {
       if (!vm.recreationSelectAll) {
         _.map($scope.recreationCategories, function (item) {
           item.selected = true;
@@ -226,19 +251,17 @@
       }
       vm.recreationSelectAll = !vm.recreationSelectAll;
       $scope.sortRecreationsByCategories();
-    };
-    $scope.sortRecreationsByCategories = function () {
+    }
+
+    function sortRecreationsByCategories() {
       var categories = _.reject($scope.recreationCategories, function (item) {
         return !item.selected;
       });
       vm.displayRrecreationsArray = MapService.SortBySubcategory(vm.recreationsArray, categories);
       MapService.drawSpotMarkers(vm.displayRrecreationsArray, 'recreation', true);
-    };
-    //============================ pitstop section =========================
-    $scope.pitstopsCategoryToggle = false;
-    vm.pitstopSelectAll = false;
+    }
 
-    $scope.togglePitstopCategories = function () {
+    function togglePitstopCategories() {
       if (!vm.pitstopSelectAll) {
         _.map($scope.pitstopCategories, function (item) {
           item.selected = true;
@@ -250,17 +273,17 @@
       }
       vm.pitstopSelectAll = !vm.pitstopSelectAll;
       $scope.sortPitstopsByCategories();
-    };
-    $scope.sortPitstopsByCategories = function () {
+    }
+
+    function sortPitstopsByCategories() {
       var categories = _.reject($scope.pitstopCategories, function (item) {
         return !item.selected;
       });
       vm.displayPitstopsArray = MapService.SortBySubcategory(vm.pitstopsArray, categories);
       MapService.drawSpotMarkers(vm.displayPitstopsArray, 'pitstop', true);
-    };
+    }
+
     //============================ weather section =========================
-
-
     function weather(resp) {
       vm.vertical = false;
       $scope.weatherForecast = [];

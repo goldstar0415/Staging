@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive for spot popup on map
+   */
   angular
     .module('zoomtivity')
     .directive('spotPopup', spotPopup);
@@ -18,6 +21,5 @@
       }
     };
   }
-
 
 })();

@@ -72,11 +72,11 @@
         mapState: 'big'
       })
       .state('index.recovery_password', {
-      url: '/password/recovery/:token',
-      controller: 'ResetPasswordController',
-      parent: 'main',
-      mapState: 'big'
-    })
+        url: '/password/recovery/:token',
+        controller: 'ResetPasswordController',
+        parent: 'main',
+        mapState: 'big'
+      })
 
       //Blog page
       .state('blog', {

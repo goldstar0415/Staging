@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive for side menu
+   */
   angular
     .module('zoomtivity')
     .directive('zmSideMenu', ZoomtivitySideMenu);
@@ -19,20 +22,21 @@
     };
 
     return directive;
+  }
 
-    /** @ngInject */
-    function SideMenuController($state, User, snapRemote, UserService) {
-      var vm = this;
-      vm.$state = $state;
+  /** @ngInject */
+  function SideMenuController($state, User, snapRemote, UserService) {
+    var vm = this;
+    vm.$state = $state;
 
-      vm.signOut = function () {
-        User.logOut(function () {
-          snapRemote.getSnapper().then(function (snapper) {
-            snapper.close();
-          });
-          UserService.logOut();
-        })
-      }
+    //sign out user
+    vm.signOut = function () {
+      User.logOut(function () {
+        snapRemote.getSnapper().then(function (snapper) {
+          snapper.close();
+        });
+        UserService.logOut();
+      })
     }
   }
 

@@ -114,7 +114,7 @@
 
 
         if (vm.cover) {
-            request.cover = vm.cover;
+          request.cover = vm.cover;
 
           if (!vm.edit) {
             request.cover = vm.cover;

@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Preloader directive
+   */
   angular
     .module('zoomtivity')
     .directive('preloader', Preloader);

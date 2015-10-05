@@ -11,6 +11,12 @@
       userLogin: userLogin
     };
 
+    /*
+     * Send login form
+     * @param form {ngForm}
+     * @param user {User}
+     * @param $modalInstance {Object}
+     */
     function userLogin(form, user, $modalInstance) {
       if (form.$valid) {
         User.signIn(user,

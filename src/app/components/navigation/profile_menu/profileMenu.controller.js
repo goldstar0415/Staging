@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Controller for profile menu
+   */
   angular
     .module('zoomtivity')
     .controller('ProfileMenuController', ProfileMenuController);
@@ -11,6 +14,7 @@
     vm.$state = $state;
     vm.checkPermision = PermissionService.checkPermission;
 
+    //follow user and reload page
     vm.follow = function (user) {
       if (user.can_follow) {
         User.follow({user_id: user.id}, reloadPage);
@@ -24,6 +28,7 @@
       $state.go($state.current, {}, {reload: true});
     }
 
+    //check is page active
     vm.isActive = function (state) {
       return {
         //active: $state.includes()
@@ -31,6 +36,7 @@
       };
     };
 
+    //check user online
     $rootScope.isOnline = function (user) {
       var online = false;
       if (user.last_action_at) {

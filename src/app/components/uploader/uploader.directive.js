@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Photo uploader
+   */
   angular
     .module('zoomtivity')
     .directive('uploader', uploader);

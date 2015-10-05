@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive for social sharing
+   */
   angular
     .module('zoomtivity')
     .directive('share', share);
@@ -42,6 +45,7 @@
           break;
       }
 
+      //share facebook
       vm.facebook = function () {
         FB.ui({
           method: 'feed',
@@ -55,10 +59,12 @@
         });
       };
 
+      //share google
       vm.google = function () {
         $window.open(vm.item.share_links.google, 'sharer', 'toolbar=0,status=0,width=650,height=650');
       };
 
+      //share twitter
       vm.twitter = function () {
         var urlString = 'https://www.twitter.com/intent/tweet?';
 

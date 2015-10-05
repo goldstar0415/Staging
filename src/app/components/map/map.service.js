@@ -365,8 +365,8 @@
         map.addLayer(markersLayer);
         ChangeState('big');
 
-          map.setView(DEFAULT_MAP_LOCATION, 3);
-          FocusMapToCurrentLocation(12);
+        map.setView(DEFAULT_MAP_LOCATION, 3);
+        FocusMapToCurrentLocation(12);
 
         window.map = map;
         return map;
@@ -789,7 +789,6 @@
           });
 
           modalInstance.result.then(function (data) {
-            //success
             SaveSelections(data.title, data.description, share);
           });
         } else {
@@ -803,37 +802,30 @@
         if (pathSelectionStarted) {
           CancelPathSelection();
         }
+
         var wp = GetDrawLayerPathWaypoints();
-        var geoJson = drawLayerGeoJSON;
-
-
         var req = {
           title: title,
           description: description,
           waypoints: wp,
           zoom: map.getZoom(),
-          data: geoJson
+          data: drawLayerGeoJSON
         };
 
-        if (share) {
-          //TODO: отдельный route под selection шаринг. В начале сейв селекшена, а потом его шаринг.
-
-        } else {
-          //if ($rootScope.currentParams.area_id) {
-          //  req.area_id = $rootScope.currentParams.area_id;
-          //  Area.update(req, function (data) {
-          //    toastr.success('Selection saved!');
-          //  }, function (data) {
-          //    toastr.error('Error!')
-          //  })
-          //} else {
-          Area.save(req, function (data) {
-            toastr.success('Selection saved!');
-          }, function (data) {
-            toastr.error('Error!')
-          });
-          //}
-        }
+        //if ($rootScope.currentParams.area_id) {
+        //  req.area_id = $rootScope.currentParams.area_id;
+        //  Area.update(req, function (data) {
+        //    toastr.success('Selection saved!');
+        //  }, function (data) {
+        //    toastr.error('Error!')
+        //  })
+        //} else {
+        Area.save(req, function (data) {
+          toastr.success('Selection saved!');
+        }, function (data) {
+          toastr.error('Error!')
+        });
+        //}
       }
 
       //load selection from server

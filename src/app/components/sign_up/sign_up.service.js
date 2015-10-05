@@ -21,6 +21,12 @@
       });
     }
 
+    /*
+     * Send sign up form
+     * @param form {ngForm}
+     * @param user {User}
+     * @param $modalInstance {Object}
+     */
     function signUpUser(form, user, $modalInstance) {
       if (form.$valid) {
         User.signUp(user,
@@ -44,9 +50,12 @@
       var vm = this;
       vm.API_URL = API_URL;
 
+      //close modal
       vm.close = function () {
         $modalInstance.close();
       };
+
+      //send form
       vm.signUpUser = function (form) {
         SignUpService.signUpUser(form, vm, $modalInstance);
       };

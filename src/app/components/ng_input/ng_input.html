@@ -7,6 +7,7 @@
                 ctrl-enter="NgInput.submit(form)"
                 ng-maxlength="NgInput.maxlength"
                 ng-required="!NgInput.attachments.photos.length && !NgInput.attachments.spots.length && !NgInput.attachments.areas.length && !NgInput.attachments.links.length"></textarea>
+
     <div ng-messages="form.message.$error" ng-if="form.$submitted" class="error-message">
       <div ng-message="required">is required</div>
       <div ng-message="maxlength">is too long</div>

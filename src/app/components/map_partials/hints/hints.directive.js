@@ -19,10 +19,9 @@
     $scope.showHintPopup = true;
     $scope.currentLayer = 'path';
 
-    var latlngPoint = new L.LatLng(1,1);
+    var latlngPoint = new L.LatLng(1, 1);
 
     $scope.LassoSelectionTool = function () {
-      //angular.element('.lasso-selection').trigger('click');
       var control = L.Control.Lasso();
       control._click({
         latlng: latlngPoint,
@@ -32,7 +31,6 @@
       $scope.showHintPopup = false;
     };
     $scope.PathSelectionTool = function () {
-      //angular.element('.path-selection').trigger('click');
       var control = L.Control.Path();
       control._click({
         latlng: latlngPoint,
@@ -42,7 +40,6 @@
       $scope.showHintPopup = false;
     };
     $scope.RadiusSelectionTool = function () {
-      //angular.element('.radius-selection').trigger('click');
       var control = L.Control.Radius();
       control._click({
         latlng: latlngPoint,

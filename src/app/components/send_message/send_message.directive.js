@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Modal for send message to user
+   */
   angular
     .module('zoomtivity')
     .directive('sendMessage', SendMessage);
@@ -19,6 +22,7 @@
     function SendMessageController($modal) {
       var vm = this;
 
+      //open modal
       vm.openSendMessageModal = function () {
         $modal.open({
           templateUrl: 'SendMessageModal.html',
@@ -32,6 +36,7 @@
     function SendMessageModalController(toastr, $rootScope, Message, $modalInstance) {
       var vm = this;
 
+      //submit form
       vm.send = function () {
         Message.save({
             user_id: $rootScope.profileUser.id,
@@ -52,6 +57,7 @@
           });
       };
 
+      //close modal
       vm.close = function () {
         $modalInstance.close();
       };

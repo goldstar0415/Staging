@@ -11,7 +11,6 @@
       if ($scope.data.title) {
         $modalInstance.close($scope.data);
       } else {
-        //can't save without server;
         toastr.error('Title is required!');
       }
     };

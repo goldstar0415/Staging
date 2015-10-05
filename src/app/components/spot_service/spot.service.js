@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Service for spot management
+   */
   angular
     .module('zoomtivity')
     .factory('SpotService', SpotService);
@@ -25,6 +28,10 @@
       removeFromFavorite: removeFromFavorite
     };
 
+    /*
+     * Add spot to calendar
+     * @param spot {Spot}
+     */
     function saveToCalendar(spot) {
       if (checkUser()) {
         Spot.saveToCalendar({id: spot.id}, function () {
@@ -34,6 +41,10 @@
       }
     }
 
+    /*
+     * Delete spot from calendar
+     * @param spot {Spot}
+     */
     function removeFromCalendar(spot) {
       Spot.removeFromCalendar({id: spot.id}, function () {
         spot.is_saved = false;
@@ -41,6 +52,10 @@
       });
     }
 
+    /*
+     * Add spot to favorites
+     * @param spot {Spot}
+     */
     function addToFavorite(spot) {
       if (checkUser()) {
         Spot.favorite({id: spot.id}, function () {
@@ -50,6 +65,11 @@
       }
     }
 
+    /*
+     * Remove spot from favorites
+     * @param spot {Spot}
+     * @param callback {Function}
+     */
     function removeFromFavorite(spot, callback) {
       Spot.unfavorite({id: spot.id}, function () {
         spot.is_favorite = false;
@@ -61,6 +81,12 @@
       });
     }
 
+    /*
+     * Remove spot
+     * @param spot {Spot}
+     * @param idx {number} spot index
+     * @param callback {Function}
+     */
     function removeSpot(spot, idx, callback) {
       dialogs.confirm('Confirmation', 'Are you sure you want to delete spot?').result.then(function () {
         Spot.delete({id: spot.id}, function () {
@@ -72,6 +98,10 @@
       });
     }
 
+    /*
+     * Convert spot dates to normal format
+     * @param spot {Spot}
+     */
     function formatSpot(spot) {
       spot.type = spot.category.type.display_name;
       if (spot.start_date && spot.end_date) {
@@ -84,6 +114,7 @@
       return spot;
     }
 
+    //open sign up modal if user not authorized
     function checkUser() {
       if (!$rootScope.currentUser) {
         SignUpService.openModal('SignUpModal.html');
@@ -174,7 +205,7 @@
           secondPhotoIndex = firstPhotoIndex + 1;
         }
         $scope.secondPhotoIndex = secondPhotoIndex;
-        $scope.secondPhoto = $scope.data.spot.photos[secondPhotoIndex].photo_url.thumb ;
+        $scope.secondPhoto = $scope.data.spot.photos[secondPhotoIndex].photo_url.thumb;
         $scope.secondItem = $scope.data.spot.photos[secondPhotoIndex];
       }
     }

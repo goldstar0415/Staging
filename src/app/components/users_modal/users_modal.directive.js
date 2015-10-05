@@ -54,6 +54,7 @@
       vm.user = user;
       vm.users = users;
 
+      //close modal
       vm.close = function () {
         $modalInstance.close();
       };

@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive for sign in modal
+   */
   angular
     .module('zoomtivity')
     .directive('signIn', signIn);
@@ -38,9 +41,12 @@
       var vm = this;
       vm.API_URL = API_URL;
 
+      //close modal
       vm.close = function () {
         $modalInstance.close();
       };
+
+      //send login form
       vm.userLogin = function (form) {
         SignInService.userLogin(form, vm, $modalInstance);
       };

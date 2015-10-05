@@ -14,9 +14,12 @@
     var vm = this;
     vm.token = $stateParams.token;
 
+    //close modal
     vm.close = function () {
       $modalInstance.close();
     };
+
+    //send reset password form
     vm.resetPassword = function (form) {
       PasswordRecoveryService.resetPassword(form, vm, $modalInstance);
     };

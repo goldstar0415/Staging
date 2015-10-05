@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Photo viewer modal
+   */
   angular
     .module('zoomtivity')
     .directive('photoViewer', photoViewer);
@@ -48,12 +51,20 @@
       vm.hideComments = hideComments;
       setPhoto(index);
 
+      //show next photo
       vm.nextPhoto = function nextPhoto() {
         setPhoto(vm.currentIndex + 1);
       };
+
+      //show previous photo
       vm.previousPhoto = function () {
         setPhoto(vm.currentIndex - 1);
       };
+
+      /*
+       * Send comment to photo
+       * @param form {ngForm}
+       */
       vm.sendComment = function (form) {
         if (form.$valid) {
           if (isAlbumComments) {
@@ -66,6 +77,12 @@
           }
         }
       };
+
+      /*
+       * Delete photo comment
+       * @param commentId {number} comment id
+       * @param idx {number} comment index
+       */
       vm.deleteComment = function (commentId, idx) {
         if (isAlbumComments) {
           PhotoComment.delete({
@@ -85,10 +102,15 @@
         }
       };
 
+      //close modal
       vm.close = function () {
         $modalInstance.close();
       };
 
+      /*
+       * Set current photo by index
+       * @param idx {number} comment index
+       */
       function setPhoto(idx) {
         if (idx > items.length - 1) {
           idx = 0;
@@ -106,6 +128,10 @@
         vm.comment = '';
       }
 
+      /*
+       * Load comments of photo
+       * @param item {Photo}
+       */
       function getComments(item) {
         if (_.isUndefined(hideComments) || !hideComments) {
           return isAlbumComments ?

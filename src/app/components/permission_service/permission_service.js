@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Service for check user access
+   */
   angular
     .module('zoomtivity')
     .factory('PermissionService', PermissionService);

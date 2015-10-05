@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive for post popup on map
+   */
   angular
     .module('zoomtivity')
     .directive('postPopup', postPopup);

@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive for spot rating
+   */
   angular
     .module('zoomtivity')
     .directive('stars', Stars);

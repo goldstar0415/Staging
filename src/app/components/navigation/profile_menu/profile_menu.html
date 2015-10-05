@@ -14,7 +14,8 @@
         <li><a ui-sref="favorites({user_id: $root.currentUser.id})" ui-sref-active="active">Favorites</a></li>
         <li><a ui-sref="areas" ui-sref-active="active">Saved searches</a></li>
         <li><a ui-sref="friendsmap" ui-sref-active="active">Friends map</a></li>
-        <li><a ui-sref="photos.list({user_id: $root.currentUser.id})" ng-class="Profile.isActive('photos')">Photo map</a>
+        <li><a ui-sref="photos.list({user_id: $root.currentUser.id})" ng-class="Profile.isActive('photos')">Photo
+          map</a>
         </li>
         <li><a ui-sref="planner.list" ng-class="Profile.isActive('planner')">Planner </a></li>
         <li><a ui-sref="settings" ui-sref-active="active">Settings</a></li>
@@ -30,7 +31,8 @@
              class="favorites">Favorites</a>
         </li>
         <li ng-if="Profile.checkPermision(profileUser.privacy_photo_map)">
-          <a ui-sref="photos.list({user_id: $root.profileUser.id})" ng-class="Profile.isActive('photos')" class="photomap">Photo
+          <a ui-sref="photos.list({user_id: $root.profileUser.id})" ng-class="Profile.isActive('photos')"
+             class="photomap">Photo
             map</a>
         </li>
         <li ng-if="$root.isRole($root.profileUser, 'blogger')">

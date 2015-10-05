@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive to send message with attachments
+   */
   angular
     .module('zoomtivity')
     .directive('ngInput', ngInput);
@@ -35,6 +38,7 @@
         links: []
       };
 
+      //parse link from message and attach the preview
       $scope.$watch('NgInput.message', function (value) {
         if (value) {
           var links = value.match(LINKS_PATERN);
@@ -65,6 +69,10 @@
         }
       });
 
+      /*
+       * Submit form
+       * @param form {ngForm} angular form object
+       */
       vm.submit = function (form) {
         if (form.$valid) {
           if (blackListLinks.length > 0 && blackListLinks[0].url == vm.message) {
@@ -77,23 +85,40 @@
         }
       };
 
+      /*
+       * Delete photo from attachments
+       * @param idx {number}  photo index
+       */
       vm.deletePhoto = function (idx) {
         vm.attachments.photos.splice(idx, 1);
       };
 
+      /*
+       * Delete spot from attachments
+       * @param idx {number}  spot index
+       */
       vm.deleteSpot = function (idx) {
         vm.attachments.spots.splice(idx, 1);
       };
 
+      /*
+       * Delete area from attachments
+       * @param idx {number}  area index
+       */
       vm.deleteArea = function (idx) {
         vm.attachments.areas.splice(idx, 1);
       };
 
+      /*
+       * Delete link from attachments
+       * @param idx {number}  link index
+       */
       vm.deleteLink = function (idx) {
         var deletedLink = vm.attachments.links.splice(idx, 1);
         blackListLinks.push(deletedLink);
       };
 
+      //Open modal with user photos
       vm.openPhotosModal = function () {
         $modal.open({
           templateUrl: 'PhotosModal.html',
@@ -111,6 +136,7 @@
         });
       };
 
+      //Open modal with user spots and areas
       vm.openActivityModal = function () {
         $modal.open({
           templateUrl: 'ActivityModal.html',

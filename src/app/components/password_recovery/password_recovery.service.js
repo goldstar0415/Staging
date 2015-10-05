@@ -22,6 +22,12 @@
       });
     }
 
+    /*
+     * Send password recovery form
+     * @param form {ngForm}
+     * @param vm {Object} input data
+     * @param $modalInstance {Object}
+     */
     function recoveryPassword(form, vm, $modalInstance) {
       if (form.$valid) {
         User.recoveryPassword(vm,
@@ -34,6 +40,12 @@
       }
     }
 
+    /*
+     * Send reset password form
+     * @param form {ngForm}
+     * @param vm {Object} input data
+     * @param $modalInstance {Object}
+     */
     function resetPassword(form, vm, $modalInstance) {
       if (form.$valid) {
         User.resetPassword(vm,

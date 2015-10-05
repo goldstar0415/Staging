@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   User service
+   */
   angular
     .module('zoomtivity')
     .factory('UserService', UserService);
@@ -28,6 +31,10 @@
       return deferred.promise;
     }
 
+    /*
+     * Set current user
+     * @param user {User}
+     */
     function setCurrentUser(user) {
       $rootScope.currentUser = user;
 
@@ -39,10 +46,17 @@
       socket.connect(user.random_hash);
     }
 
+    /*
+     * Set profile user
+     * @param user {User}
+     */
     function setProfileUser(user) {
       $rootScope.profileUser = user;
     }
 
+    /*
+     * Logout user
+     */
     function logOut() {
       $rootScope.currentUser = null;
       socket.disconnect();

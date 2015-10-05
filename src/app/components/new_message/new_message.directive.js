@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * New message popup from sockets
+   */
   angular
     .module('zoomtivity')
     .directive('newMessage', newMessage);
@@ -22,6 +25,7 @@
       vm.message = NewMessageService.message;
       vm.redirectToMessage = redirectToMessage;
 
+      //redirect user to chat room
       function redirectToMessage() {
         vm.message.visible = false;
         $state.go('chatRoom', {user_id: vm.message.data.user.id});

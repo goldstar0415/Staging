@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Controller for spot modal on mobile instead of spot popup
+   */
   angular
     .module('zoomtivity')
     .controller('SpotMapModalController', SpotMapModalController);

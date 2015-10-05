@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Controller for spot popup
+   */
   angular
     .module('zoomtivity')
     .controller('SpotPopupController', SpotPopupController);

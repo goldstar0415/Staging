@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Spots modal
+   */
   angular
     .module('zoomtivity')
     .directive('spotsModal', spotsModal);
@@ -24,6 +27,7 @@
         element.append(clone);
       });
 
+      //open modal
       element.click(function () {
         $modal.open({
           templateUrl: 'SpotModal.html',
@@ -50,6 +54,7 @@
       vm.close = close;
       vm.addSpot = addSpot;
 
+      //close modal
       function close(isSave) {
         if (isSave) {
           _.each(vm.spots, function (spot) {
@@ -62,37 +67,11 @@
         $modalInstance.close();
       }
 
+      //mark as selected spot
       function addSpot(spot) {
-        //if (_.findWhere(selectedSpots, {id: spot.id})) {
-        //  var idx = _getIndexById(selectedSpots, spot.id);
-        //  selectedSpots.splice(idx, 1);
-        //} else {
-        //  selectedSpots.push(spot);
-        //}
         spot.selected = !spot.selected;
       }
-
-      function _markAsSelected(spots) {
-        _.each(selectedSpots, function (spot) {
-          var item = _.findWhere(spots, {id: spot.id});
-          if (item) {
-            item.selected = true;
-          }
-        });
-
-        return spots;
-      }
-
-      function _getIndexById(items, id) {
-        for (var i = 0; i < items.length; i++) {
-          if (items[i].id == id) {
-            return i;
-          }
-        }
-        return null;
-      }
     }
-
   }
 
 })

@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Service to show newMessage directive
+   */
   angular
     .module('zoomtivity')
     .factory('NewMessageService', NewMessageService);

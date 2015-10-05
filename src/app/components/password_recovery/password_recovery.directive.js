@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Password Recovery Modal
+   */
   angular
     .module('zoomtivity')
     .directive('passwordRecovery', passwordRecovery);
@@ -19,6 +22,7 @@
     function PasswordRecoveryController(PasswordRecoveryService) {
       var vm = this;
 
+      //Open password recovery modal
       vm.openPasswordRecoveryModal = function () {
         PasswordRecoveryService.openModal('PasswordRecoveryModal.html', PasswordRecoveryModalController);
       };
@@ -28,9 +32,12 @@
     function PasswordRecoveryModalController(PasswordRecoveryService, $modalInstance) {
       var vm = this;
 
+      //close modal
       vm.close = function () {
         $modalInstance.close();
       };
+
+      //send recovery password form
       vm.recoveryPassword = function (form) {
         PasswordRecoveryService.recoveryPassword(form, vm, $modalInstance);
       };

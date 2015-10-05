@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Directive for sign up modal
+   */
   angular
     .module('zoomtivity')
     .directive('signUp', signUp);
@@ -19,6 +22,7 @@
     function SignUpController(SignUpService) {
       var vm = this;
 
+      //open sign up modal
       vm.openSignUpModal = function () {
         SignUpService.openModal('SignUpModal.html');
       };

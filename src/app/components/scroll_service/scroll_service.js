@@ -7,14 +7,14 @@
 
   /** @ngInject */
   function ScrollService($http, API_URL) {
-    var Reddit = function (action, items, params) {
+    var Scroll = function (action, items, params) {
       this.action = action;
       this.items = items;
       this.params = params;
       this.busy = false;
     };
 
-    Reddit.prototype.nextPage = function () {
+    Scroll.prototype.nextPage = function () {
       if (this.busy) return;
       if (_.isUndefined(this.totalItems) || this.totalItems > 0 && (this.params.page * this.params.limit) < this.totalItems) {
         this.busy = true;
@@ -31,7 +31,7 @@
       }
     };
 
-    return Reddit;
+    return Scroll;
   }
 
 })();
