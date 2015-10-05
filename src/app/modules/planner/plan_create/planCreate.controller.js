@@ -9,6 +9,7 @@
   function PlanCreateController($scope, Plan, plan, categories, $state, DATE_FORMAT) {
     var vm = this;
     vm = _.extend(vm, plan);
+    vm.attachments = [];
     vm.newSpots = [];
     vm.categories = categories;
 
@@ -16,10 +17,13 @@
     vm.addActivity = addActivity;
     vm.deleteAttachment = deleteAttachment;
 
-    formatPlan();
+    if (vm.id) {
+      formatPlan();
+    }
 
     $scope.$watch('Plan.newSpots.length', addSpots);
 
+    //submit form
     function save(form) {
       if (form.$valid) {
         if (vm.id) {
@@ -34,12 +38,10 @@
       }
     }
 
+    //convert data before save
     function _convertData() {
       var data = angular.copy(vm);
       data = _convertDates(data);
-      //data.spots = _.pluck(data.spots, 'id');
-      //console.log(data);
-
       data.activities = [];
       data.spots = [];
       _.each(data.attachments, function (attachment, idx) {
@@ -73,6 +75,7 @@
       data.end_time = data.end_date;
     }
 
+    //add activity to plan attachments
     function addActivity() {
       vm.attachments.push({
         type: 'activity',
@@ -80,6 +83,7 @@
       });
     }
 
+    //add spot to plan attachments
     function addSpots() {
       if (vm.newSpots && vm.newSpots.length > 0) {
         _.each(vm.newSpots, function (spot) {
@@ -93,31 +97,30 @@
       }
     }
 
+    //delete attachment
     function deleteAttachment(idx) {
       vm.attachments.splice(idx, 1);
     }
 
+    //format data on edit plan
     function formatPlan() {
       var attachments = [];
-      if (vm.id) {
-        _convertTime(vm);
-        _.each(vm.spots, function (spot) {
-            attachments[spot.pivot.position] = {
-              type: 'spot',
-              data: spot
-            };
-          }
-        );
-        _.each(vm.activities, function (activity) {
-            _convertTime(activity);
-            attachments[activity.position] = {
-              type: 'activity',
-              data: activity
-            };
-          }
-        );
-      }
-
+      _convertTime(vm);
+      _.each(vm.spots, function (spot) {
+          attachments[spot.pivot.position] = {
+            type: 'spot',
+            data: spot
+          };
+        }
+      );
+      _.each(vm.activities, function (activity) {
+          _convertTime(activity);
+          attachments[activity.position] = {
+            type: 'activity',
+            data: activity
+          };
+        }
+      );
       vm.attachments = attachments;
     }
 

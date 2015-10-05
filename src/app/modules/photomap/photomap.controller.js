@@ -13,6 +13,7 @@
 
     initMap();
 
+    //create marker on map
     function createMarker(iconUrl, title, location, data) {
       var icon = MapService.CreateCustomIcon(iconUrl, 'custom-map-icons');
       var options = {};
@@ -26,6 +27,7 @@
       });
     }
 
+    //show all markers on map
     function initMap() {
       var count = 0;
       for (var k in albums) {
@@ -39,7 +41,12 @@
       }
     }
 
-    vm.delete = function (item, idx) {
+    /*
+     * Delete album
+     * @param item {Album} album id
+     * @param idx {number} album index
+     */
+    vm.deleteAlbum = function (item, idx) {
       dialogs.confirm('Confirmation', 'Are you sure you want to delete album?').result.then(function () {
         item.$delete(function () {
           toastr.info('Album successfully deleted');

@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * StaticPage model
+   */
   angular
     .module('zoomtivity')
     .factory('StaticPage', StaticPage);

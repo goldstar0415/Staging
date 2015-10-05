@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Plan model
+   */
   angular
     .module('zoomtivity')
     .factory('Plan', Plan);

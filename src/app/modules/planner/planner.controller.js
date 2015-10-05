@@ -39,6 +39,7 @@
     };
 
 
+    //show events on calendar
     function getEvents(start, end, timezone, callback) {
       Plan.events({
         start_date: start.format('YYYY-MM-DD'),
@@ -75,6 +76,11 @@
       $compile(element)($scope);
     }
 
+    /*
+     * Delete plan
+     * @param plan {Plan}
+     * @param idx {number} plan index
+     */
     function deletePlan(plan, idx) {
       dialogs.confirm('Confirmation', 'Are you sure you want to delete plan?').result.then(function () {
         Plan.delete({id: plan.id});
@@ -89,6 +95,7 @@
       });
     }
 
+    //show plan markers
     function InitMap() {
       for (var k in displayPlans) {
         var m = CreateMarker($rootScope.plannerIcon, displayPlans[k].title, displayPlans[k].id, displayPlans[k].location);
@@ -97,6 +104,7 @@
       MapService.FitBoundsOfCurrentLayer();
     }
 
+    //create marker on map
     function CreateMarker(iconUrl, title, plan_id, location) {
 
       var icon = MapService.CreateCustomIcon(iconUrl, 'planner-icon');

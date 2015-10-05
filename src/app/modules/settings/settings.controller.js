@@ -29,6 +29,10 @@
       {value: false, label: 'Don\'t receive'}
     ];
 
+    /*
+     * Save personal settings only
+     * @param form {ngForm}
+     */
     vm.savePersonalSettings = function (form) {
       if (form.$valid) {
         $http.put(API_URL + '/settings', {
@@ -52,6 +56,11 @@
           });
       }
     };
+
+    /*
+     * Change email
+     * @param form {ngForm}
+     */
     vm.saveSecuritySettings = function (form) {
       if (form.$valid) {
         //send email
@@ -75,6 +84,11 @@
         toastr.error('Email is not valid');
       }
     };
+
+    /*
+     * Change password
+     * @param form {ngForm}
+     */
     vm.savePasswordSettings = function (form) {
       if (form.$valid) {
         //send pass settings
@@ -96,6 +110,11 @@
         toastr.error('Incorrect input');
       }
     };
+
+    /*
+     * Save privacy settings only
+     * @param form {ngForm}
+     */
     vm.savePrivacySettings = function () {
       $http.put(API_URL + '/settings', {
         type: 'privacy',
@@ -116,6 +135,11 @@
           toastr.error('Incorrect input ')
         });
     };
+
+    /*
+     * Save notification settings only
+     * @param form {ngForm}
+     */
     vm.saveNotificationSettings = function () {
       $http
         .put(API_URL + '/settings', {
@@ -136,15 +160,23 @@
         });
     };
 
-    function addSocial(type) {
-      if (!isSocial(type)) {
-        window.location.href = API_URL + '/account/' + type;
+    /*
+     * Attach social to account
+     * @param name {name}  name of social
+     */
+    function addSocial(name) {
+      if (!isSocial(name)) {
+        window.location.href = API_URL + '/account/' + name;
       }
     }
 
-    function removeSocial(type) {
-      if (isSocial(type)) {
-        var url = API_URL + '/account/' + type;
+    /*
+     * Remove attached social
+     * @param name {name}  name of social
+     */
+    function removeSocial(name) {
+      if (isSocial(name)) {
+        var url = API_URL + '/account/' + name;
         $http
           .delete(url)
           .success(function (data, status, headers, config) {
@@ -156,8 +188,8 @@
       }
     }
 
-    function isSocial(type) {
-      return currentUser.attached_socials.indexOf(type) >= 0 ? 1 : 0;
+    function isSocial(name) {
+      return currentUser.attached_socials.indexOf(name) >= 0 ? 1 : 0;
     }
 
     //change avatar

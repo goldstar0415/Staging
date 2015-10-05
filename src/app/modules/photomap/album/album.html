@@ -11,7 +11,7 @@
 
 <div class="col-xs-12 edit-delete album" ng-if="currentUser.id == Album.album.user_id">
   <a class="edit" title="Edit album" ui-sref="photos.editAlbum({album_id: Album.album.id})">Edit</a>
-  <a class="delete" title="Delete album" ng-click="Album.delete()">Delete</a>
+  <a class="delete" title="Delete album" ng-click="Album.deleteAlbum()">Delete</a>
 </div>
 
 <div class="col-xs-12">

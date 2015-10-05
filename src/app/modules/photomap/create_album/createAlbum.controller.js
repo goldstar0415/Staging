@@ -15,9 +15,15 @@
       {value: 1, label: 'Private'}
     ];
 
+    /*
+     * Delete image
+     * @param idx {number} image index
+     */
     vm.deleteImage = function (idx) {
       vm.images.files.splice(idx, 1);
     };
+
+    //submit form
     vm.createAlbum = function (form) {
       if (form.$valid && (vm.images.files.length > 0 || album.id)) {
         var request = {

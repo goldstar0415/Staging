@@ -21,6 +21,10 @@
       vm.getUsers();
     };
 
+    /*
+     * Follow and unfollow user
+     * @param user {User}
+     */
     vm.follow = function (user) {
       if (user.can_follow) {
         User.follow({user_id: user.id});
@@ -30,6 +34,9 @@
       user.can_follow = !user.can_follow;
     };
 
+    /*
+     *  Load users
+     */
     vm.getUsers = function () {
       User.query({
         type: vm.type,

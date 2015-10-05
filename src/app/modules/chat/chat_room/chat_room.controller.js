@@ -18,6 +18,7 @@
     vm.deleteMessage = deleteMessage;
     markAsRead();
 
+    //send new message to user
     function sendMessage() {
       Message.save({
           user_id: user.id,
@@ -42,6 +43,7 @@
         });
     }
 
+    //mark incoming messages as read
     function markAsRead() {
       var countNewMessages = 0;
       angular.forEach(vm.messages.data, function (groupMessages) {
@@ -63,6 +65,10 @@
       }
     }
 
+    /*
+     * Delete message
+     * @param id {number} message id
+     */
     function deleteMessage(id) {
       Message.delete({id: id}, function () {
         angular.forEach(vm.messages.data, function (groupMessages) {

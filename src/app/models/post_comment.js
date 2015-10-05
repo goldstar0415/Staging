@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * PostComment model
+   */
   angular
     .module('zoomtivity')
     .factory('PostComment', PostComment);

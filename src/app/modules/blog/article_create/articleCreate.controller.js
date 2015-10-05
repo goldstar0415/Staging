@@ -14,7 +14,10 @@
 
     vm.save = save;
 
-
+    /*
+     * Create post
+     * @param form {ngForm}
+     */
     function save(form) {
       var data = angular.copy(vm),
         req = {},

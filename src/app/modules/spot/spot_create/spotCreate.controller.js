@@ -41,8 +41,6 @@
     vm.locations = [];
     vm.images = UploaderService.images;
 
-    //load data for editing
-
 
     $scope.$watch('SpotCreate.images.files.length', function () {
       vm.checkFilesRestrictions();
@@ -98,6 +96,7 @@
       })
     }
 
+    //submit form
     vm.create = function (form) {
       form.$submitted = true;
 

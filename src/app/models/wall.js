@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Wall model
+   */
   angular
     .module('zoomtivity')
     .factory('Wall', Wall);

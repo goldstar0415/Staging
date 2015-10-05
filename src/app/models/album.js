@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Album model
+   */
   angular
     .module('zoomtivity')
     .factory('Album', Album);

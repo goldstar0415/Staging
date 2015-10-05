@@ -35,6 +35,11 @@
       });
     }
 
+    /*
+     * Delete spot
+     * @param spot {Spot}
+     * @param idx {number} spot index
+     */
     function removeSpot(spot, idx) {
       SpotService.removeSpot(spot, idx, function () {
         vm.spots.data.splice(idx, 1);
@@ -46,6 +51,7 @@
       });
     }
 
+    //show spots on map
     function ShowMarkers(spots) {
       var spotsArray = _.map(spots, function (item) {
         return {

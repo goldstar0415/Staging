@@ -30,12 +30,18 @@
 
     ShowMarkers([vm.spot]);
 
+    /*
+     * Delete spot
+     * @param spot {Spot}
+     * @param idx {number} spot index
+     */
     function removeSpot(spot, idx) {
       SpotService.removeSpot(spot, idx, function () {
         $state.go('spots', {user_id: $rootScope.currentUser.id});
       });
     }
 
+    //send new comment for spot
     function postComment() {
       SpotComment.save({spot_id: spot.id},
         {
@@ -59,6 +65,7 @@
         })
     }
 
+    //show markers on map
     function ShowMarkers(spots) {
       var spotsArray = _.map(spots, function (item) {
         return {
@@ -73,6 +80,11 @@
       MapService.FitBoundsOfCurrentLayer();
     }
 
+    /*
+     * Delete comment
+     * @param comment {SpotComment}
+     * @param idx {number} comment index
+     */
     function deleteComment(comment, idx) {
       dialogs.confirm('Confirmation', 'Are you sure you want to delete comment?').result.then(function () {
         SpotComment.delete({spot_id: spot.id, id: comment.id}, function () {

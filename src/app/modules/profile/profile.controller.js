@@ -29,6 +29,10 @@
       });
     }
 
+    /*
+     * Show markers on map
+     * @param spots {Array<Spot>}
+     */
     function ShowMarkers(spots) {
       var spotsArray = _.map(spots, function (item) {
         return {
@@ -45,6 +49,7 @@
 
     }
 
+    //send new post on the wall
     vm.send = function () {
       Wall.save({
           user_id: user.id,
@@ -68,6 +73,10 @@
         })
     };
 
+    /*
+     * Like post
+     * @param post {Post}
+     */
     vm.like = function (post) {
       if (post.user_rating < 1) {
         Wall.like({id: post.id});
@@ -76,6 +85,10 @@
       }
     };
 
+    /*
+     * Dislike post
+     * @param post {Post}
+     */
     vm.dislike = function (post) {
       if (post.user_rating > -1) {
         Wall.dislike({id: post.id});

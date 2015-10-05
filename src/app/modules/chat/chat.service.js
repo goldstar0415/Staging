@@ -22,21 +22,23 @@
     };
 
 
-    function onReadMessage(data) {
-      markAsRead(data.sender_id);
+    /*
+     * Mark as read message
+     * message {Message}
+     */
+    function onReadMessage(message) {
+      markAsRead(message.sender_id);
       $rootScope.$apply();
     }
 
+    /*
+     * On new message event
+     */
     function onNewMessage(data) {
       //TODO: update dialogs
 
       if ($state.current.name == 'chatRoom' && $state.params.user_id == data.user.id) {  //if user in chat
-        //data.message.pivot = {sender_id: data.user.id, receiver_id: $rootScope.currentUser.id}
         pushToToday(data.message);
-        //} else if ($state.current.name == 'chat') {
-        //  _.each(dialogs, function (dialog) {
-        //
-        //  });
       } else {
         NewMessageService.show(data);
       }
@@ -52,6 +54,10 @@
     }
 
 
+    /*
+     * Group messages by creation date
+     * @param chatMessages {Array<Message>}
+     */
     function groupByDate(chatMessages) {
       chatMessages = chatMessages.reverse();
       messages = [];
@@ -75,6 +81,7 @@
       return messages;
     }
 
+
     function _addToMessages(day, message) {
       var groupDay = _.find(messages, {day: day});
       if (!groupDay) {
@@ -88,13 +95,14 @@
     }
 
     function _convertDate(date) {
-      //if (date.diff(moment(), 'hour') == 0) {
-      //  date = date.fromNow();
-      //} else {
       date = date.format('MMM DD, YYYY H:mm A');
-      //}
       return date;
     }
+
+    /*
+     * Mark incoming messages as read
+     * @param user_id {number}
+     */
 
     function markAsRead(user_id) {
       angular.forEach(messages, function (groupMessages) {

@@ -75,6 +75,12 @@
       }
 
     };
+
+    /*
+     * Set avatar for friends
+     * @param id {number} friend id
+     * @param files {Array<File>}
+     */
     vm.setAvatar = function (id, files) {
       if (files.length > 0) {
         CropService.crop(files[0], 512, 512, true, function (result) {
@@ -108,6 +114,12 @@
         });
       }
     };
+
+    /*
+     * Delete friend
+     * @param id {number} friend id
+     * @param idx {number} friend index
+     */
     vm.removeFriend = function (id, idx) {
       Friends.deleteFriend({id: id}, function () {
         for (var k in markers) {

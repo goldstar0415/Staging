@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Friend model
+   */
   angular
     .module('zoomtivity')
     .factory('Message', Message);

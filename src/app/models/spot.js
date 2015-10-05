@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Spot model
+   */
   angular
     .module('zoomtivity')
     .factory('Spot', Spot);

@@ -13,7 +13,7 @@
     <div class="img-wrap">
       <div class="album-tools-wrap col-xs-12" ng-if="currentUser.id == item.user_id">
         <a class="edit" tooltip="Edit Album" ui-sref="photos.editAlbum({album_id: item.id})"></a>
-        <a class="delete" tooltip="Delete album" ng-click="Photomap.delete(item, $index)"></a>
+        <a class="delete" tooltip="Delete album" ng-click="Photomap.deleteAlbum(item, $index)"></a>
       </div>
       <img ng-src="{{item.cover.medium}}" ui-sref="photos.album({user_id: item.user_id, album_id: item.id})" alt="">
       <a ui-sref="photos.album({user_id: item.user_id, album_id: item.id})">{{item.title}}</a>

@@ -91,7 +91,7 @@
       .state('profile_blog', {
         url: '/blog',
         templateUrl: '/app/modules/blog/blogger_profile/blogger_profile.html',
-        controller: 'BlogggerProfileController',
+        controller: 'BloggerProfileController',
         controllerAs: 'Blog',
         parent: 'profile',
         mapState: 'small',

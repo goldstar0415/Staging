@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Feed model
+   */
   angular
     .module('zoomtivity')
     .factory('Feed', Feed);

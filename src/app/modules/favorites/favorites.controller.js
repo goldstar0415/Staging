@@ -20,6 +20,11 @@
 
     vm.removeFromFavorite = UnFavorite;
 
+    /*
+     * Delete spot from favorites
+     * @param spot {Spot}
+     * @param idx {number} spot index
+     */
     function UnFavorite(spot, idx) {
       SpotService.removeFromFavorite(spot, function () {
         vm.spots.data.splice(idx, 1);
@@ -31,6 +36,10 @@
       })
     }
 
+    /*
+     * Show markers on map
+     * @param spots {Spot}
+     */
     function ShowMarkers(spots) {
       var spotsArray = _.map(spots, function (item) {
         return {

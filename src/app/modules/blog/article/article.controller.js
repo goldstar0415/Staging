@@ -20,6 +20,10 @@
     };
     vm.pagination = new ScrollService(PostComment.query, vm.comments, params);
 
+    /*
+     * Send comment to form
+     * @param form {ngForm}
+     */
     function sendComment(form) {
       if (form.$valid) {
         PostComment.save({post_id: article.id},
@@ -34,6 +38,11 @@
       }
     }
 
+    /*
+     * Delete comment
+     * @param comment {PostComment}
+     * @param idx {number} comment index
+     */
     function deleteComment(comment, idx) {
       dialogs.confirm('Confirmation', 'Are you sure you want to delete comment?').result.then(function () {
         PostComment.delete({post_id: article.id, id: comment.id}, function () {

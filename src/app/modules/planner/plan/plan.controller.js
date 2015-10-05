@@ -25,6 +25,7 @@
     vm.pagination = new ScrollService(PlanComment.query, vm.comments, params);
 
 
+    //submit form
     function send() {
       PlanComment.save({plan_id: plan.id},
         {
@@ -47,6 +48,7 @@
         })
     }
 
+    //show plans on map
     function InitMap() {
       for (var k in displayPlans) {
         if (displayPlans[k].location) {
@@ -59,12 +61,10 @@
           }
         }
       }
-
-      //MapService.FitBoundsOfCurrentLayer();
     }
 
+    //create marker on map
     function CreateMarker(iconUrl, title, plan_id, location) {
-
       var icon = MapService.CreateCustomIcon(iconUrl, 'planner-icon');
       var options = {};
 

@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+   * Area model
+   */
   angular
     .module('zoomtivity')
     .factory('Area', Area);
