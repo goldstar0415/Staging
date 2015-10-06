@@ -5,10 +5,20 @@ namespace App\Services;
 use App\Link;
 use Illuminate\Http\Request;
 
+/**
+ * Class Attachments
+ * @package App\Services
+ */
 class Attachments
 {
+    /**
+     * @var Request Request with attachments
+     */
     protected $request;
 
+    /**
+     * @var array Validation rules for attachments
+     */
     protected static $rules = [
         'attachments.album_photos' => [
             'required_without_all:' .
@@ -70,6 +80,11 @@ class Attachments
         $this->request = $request;
     }
 
+    /**
+     * Save attachments for the model
+     *
+     * @param $model
+     */
     public function make($model)
     {
         if ($this->request->has('attachments.album_photos')) {
@@ -94,6 +109,12 @@ class Attachments
         }
     }
 
+    /**
+     * Generate validation rules for attachments
+     *
+     * @param string $message_field
+     * @return array
+     */
     public static function rules($message_field = 'message')
     {
         $rules = self::$rules;

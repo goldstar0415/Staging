@@ -10,12 +10,25 @@ use DB;
 use Eluceo\iCal\Component\Calendar;
 use Eluceo\iCal\Component\Event;
 
+/**
+ * Class ICalendar
+ * @package App\Services
+ */
 class ICalendar
 {
+    /**
+     * Exportable file name
+     */
     const FILE_NAME = 'calendar_export.ics';
 
+    /**
+     * @var Calendar
+     */
     protected $calendar;
 
+    /**
+     * @var array
+     */
     protected $events = [];
 
     /**
@@ -37,6 +50,12 @@ class ICalendar
         return $this->calendar;
     }
 
+    /**
+     * Make icalendar for the user
+     *
+     * @param User $user
+     * @return string
+     */
     public function makeForUser(User $user)
     {
         /**

@@ -6,6 +6,10 @@ use Carbon\Carbon;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
+/**
+ * Class CheckOnline
+ * @package App\Http\Middleware
+ */
 class CheckOnline
 {
     /**

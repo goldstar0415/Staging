@@ -6,6 +6,10 @@ use App\Services\Privacy;
 use App\User;
 use Closure;
 
+/**
+ * Class PrivacyCheck
+ * @package App\Http\Middleware
+ */
 class PrivacyCheck
 {
     /**

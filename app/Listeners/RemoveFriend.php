@@ -4,18 +4,13 @@ namespace App\Listeners;
 
 use App\Events\UserUnfollowEvent;
 
+/**
+ * Class RemoveFriend
+ * Listener removes the user from friends when unfollow
+ * @package App\Listeners
+ */
 class RemoveFriend
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Handle the event.
      *

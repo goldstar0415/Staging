@@ -17,6 +17,11 @@ use Log;
 use Storage;
 use Validator;
 
+/**
+ * Class SpotsImport
+ * Job for import spot from csv file
+ * @package App\Jobs
+ */
 class SpotsImport extends Job implements SelfHandling
 {
     const EVENT = 'event';
@@ -168,6 +173,7 @@ class SpotsImport extends Job implements SelfHandling
     }
 
     /**
+     * Log non imported spot
      * @param $row
      * @param $validator
      */
@@ -194,11 +200,23 @@ TEXT;
         }
     }
 
+    /**
+     * Get log file
+     *
+     * @param string $type
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public static function getLog($type = self::EVENT)
     {
         return redirect('import/logs/' . $type);
     }
 
+    /**
+     * Remove log file
+     *
+     * @param string $type
+     * @return bool
+     */
     public static function removeLog($type = self::EVENT)
     {
         $path = storage_path('logs/' . $type . '-import.log');

@@ -5,6 +5,10 @@ namespace App\Http\Middleware;
 use App\Exceptions\PermissionDeniedException;
 use Closure;
 
+/**
+ * Class BloggerCheck
+ * @package App\Http\Middleware
+ */
 class BloggerCheck
 {
     /**

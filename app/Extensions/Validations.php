@@ -4,8 +4,19 @@ namespace App\Extensions;
 
 use Illuminate\Validation\Validator;
 
+/**
+ * Class Validations
+ * Custom validation rules
+ * @package App\Extensions
+ */
 class Validations extends Validator
 {
+    /**
+     * @param string $attribute
+     * @param mixed $value
+     * @param array $parameters
+     * @return bool
+     */
     public function validateCountMax($attribute, $value, $parameters)
     {
         return count($value) <= $parameters[0];

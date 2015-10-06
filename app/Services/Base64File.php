@@ -4,22 +4,51 @@ namespace App\Services;
 
 use File;
 
+/**
+ * Class Base64File
+ * Provides to parse string like base64 file
+ * @package App\Services
+ */
 class Base64File
 {
+    /**
+     * @var null|string
+     */
     protected $name;
 
+    /**
+     * @var string base64 file string
+     */
     protected $base64_code;
 
+    /**
+     * @var string Mime type
+     */
     protected $mime;
 
+    /**
+     * @var string File charset
+     */
     protected $charset = 'utf-8';
 
+    /**
+     * @var string Base64 file data
+     */
     protected $file_data;
 
+    /**
+     * @var string Base64 decoded data
+     */
     protected $decoded_data;
 
+    /**
+     * @var float file size
+     */
     protected $size = null;
 
+    /**
+     * @var null|string file path
+     */
     protected $path = null;
 
     /**
@@ -35,7 +64,9 @@ class Base64File
     }
 
     /**
-     * @return null
+     * Get file name
+     *
+     * @return null|string
      */
     public function getName()
     {
@@ -47,6 +78,8 @@ class Base64File
     }
 
     /**
+     * Get decoded data
+     *
      * @return mixed
      */
     public function getDecodedData()
@@ -59,6 +92,8 @@ class Base64File
     }
 
     /**
+     * Get file data
+     *
      * @return mixed
      */
     public function getFileData()
@@ -67,6 +102,8 @@ class Base64File
     }
 
     /**
+     * Get mime type
+     *
      * @return string
      */
     public function getMime()
@@ -75,7 +112,9 @@ class Base64File
     }
 
     /**
-     * @return null
+     * Get file size
+     *
+     * @return null|float
      */
     public function getSize()
     {
@@ -83,7 +122,9 @@ class Base64File
     }
 
     /**
-     * @return null
+     * Get file path
+     *
+     * @return null|string
      */
     public function getPath()
     {
@@ -118,6 +159,12 @@ class Base64File
         $this->mime = $mime;
     }
 
+    /**
+     * Save file
+     *
+     * @param null|string $path
+     * @return bool
+     */
     public function save($path = null)
     {
         if ($path === null) {

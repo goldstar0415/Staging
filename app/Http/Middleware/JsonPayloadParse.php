@@ -4,6 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 
+/**
+ * Class JsonPayloadParse
+ * @package App\Http\Middleware
+ */
 class JsonPayloadParse
 {
     /**

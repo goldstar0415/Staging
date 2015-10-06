@@ -6,6 +6,10 @@ use Illuminate\Foundation\Application;
 use Maatwebsite\Excel\Excel;
 use Maatwebsite\Excel\Files\ExcelFile;
 
+/**
+ * Class SpotsImportFile
+ * @package App\Services
+ */
 class SpotsImportFile extends ExcelFile
 {
 
@@ -13,11 +17,15 @@ class SpotsImportFile extends ExcelFile
     protected $enclosure = '"';
     protected $lineEnding = '\n';
 
+    /**
+     * @var string importing csv file
+     */
     protected $importing_file;
 
     /**
      * @param Application $app
      * @param Excel $excel
+     * @param string $file
      */
     public function __construct(Application $app, Excel $excel, $file)
     {
@@ -25,12 +33,21 @@ class SpotsImportFile extends ExcelFile
         parent::__construct($app, $excel);
     }
 
-
+    /**
+     * Get importing file
+     * @return string
+     */
     public function getFile()
     {
         return $this->importing_file;
     }
 
+    /**
+     * Get partitioned dir by id
+     *
+     * @param $id
+     * @return null|string
+     */
     public function getPartitionedDir($id)
     {
         if (is_numeric($id)) {

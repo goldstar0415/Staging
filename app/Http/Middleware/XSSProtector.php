@@ -5,6 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Response;
 
+/**
+ * Class XSSProtector
+ * @package App\Http\Middleware
+ */
 class XSSProtector
 {
     /**
@@ -30,11 +34,19 @@ class XSSProtector
         return $this->response;
     }
 
+    /**
+     * Check is json response
+     *
+     * @return bool
+     */
     protected function isJson()
     {
          return $this->response->headers->get('Content-Type') === 'application/json';
     }
 
+    /**
+     * Escape strings in response
+     */
     protected function escapeResponse()
     {
         $data = json_decode($this->response->content(), true);

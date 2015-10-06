@@ -6,8 +6,17 @@ namespace App\Extensions;
 use Illuminate\Database\Query\Expression;
 use Phaza\LaravelPostgis\Geometries\Point;
 
+/**
+ * Class GeoTrait
+ * Use it for models which contains location property
+ *
+ * @package App\Extensions
+ */
 trait GeoTrait
 {
+    /**
+     * {@inheritDoc}
+     */
     public function attributesToArray()
     {
         $attributes = parent::attributesToArray();
@@ -30,6 +39,13 @@ trait GeoTrait
         return $attributes;
     }
 
+    /**
+     * Location property mutator
+     *
+     * Save model's location
+     *
+     * @param Point|array $value
+     */
     public function setLocationAttribute($value)
     {
         if ($value instanceof Point) {
@@ -41,6 +57,12 @@ trait GeoTrait
         }
     }
 
+    /**
+     * Get location points in bounding boxes
+     *
+     * @param array $b_boxes
+     * @return mixed
+     */
     public static function getInBBoxes(array $b_boxes)
     {
         $search_areas = [];

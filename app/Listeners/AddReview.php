@@ -9,6 +9,11 @@ use App\User;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
+/**
+ * Class AddReview
+ * Listener create review from comment
+ * @package App\Listeners
+ */
 class AddReview implements ShouldQueue
 {
     use InteractsWithQueue;

@@ -8,8 +8,18 @@ use App\Link;
 use App\Plan;
 use App\Spot;
 
+/**
+ * Trait Attachments
+ *
+ * Use it for models which contains attachments
+ *
+ * @package App\Extensions
+ */
 trait Attachments
 {
+    /**
+     * Add attachments field to model
+     */
     public function addAttachments()
     {
         $attachments_relations = [
@@ -23,6 +33,11 @@ trait Attachments
         $this->append('attachments');
     }
 
+    /**
+     * Attachments accessor
+     *
+     * @return array
+     */
     public function getAttachmentsAttribute()
     {
         return [
@@ -66,6 +81,9 @@ trait Attachments
         return $this->morphToMany(Area::class, 'areable', 'area_attachable')->withTimestamps();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
     public function links()
     {
         return $this->morphMany(Link::class, 'linkable');

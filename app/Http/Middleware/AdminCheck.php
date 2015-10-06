@@ -5,6 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
+/**
+ * Class AdminCheck
+ * @package App\Http\Middleware
+ */
 class AdminCheck
 {
     /**

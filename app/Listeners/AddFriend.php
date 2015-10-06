@@ -6,18 +6,13 @@ use App\Events\UserFollowEvent;
 use App\Friend;
 use File;
 
+/**
+ * Class AddFriend
+ * Listener adds new friend to the user, when follow somebody
+ * @package App\Listeners
+ */
 class AddFriend
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Handle the event.
      *
