@@ -17,6 +17,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 
+/**
+ * Class BlogController
+ * @package App\Http\Controllers
+ *
+ * Blog resource controller
+ */
 class BlogController extends Controller
 {
     /**
@@ -29,7 +35,7 @@ class BlogController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the blogs.
      *
      * @param PaginateRequest $request
      */
@@ -40,7 +46,7 @@ class BlogController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created blog post in storage.
      *
      * @param BlogStoreRequest $request
      * @return Blog
@@ -75,7 +81,7 @@ class BlogController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified blog post.
      *
      * @param  Blog  $blog
      * @return Blog
@@ -89,7 +95,7 @@ class BlogController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified blog post in storage.
      *
      * @param BlogUpdateRequest $request
      * @param  Blog $blog
@@ -130,7 +136,7 @@ class BlogController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified blog post from storage.
      *
      * @param BlogDestroyRequest $request
      * @param Blog $blog
@@ -141,6 +147,13 @@ class BlogController extends Controller
         return ['result' => $blog->delete()];
     }
 
+    /**
+     * The specify blog post preview
+     *
+     * @param $blog
+     * @return $this
+     * @throws \Exception
+     */
     public function preview($blog)
     {
         $og = new OpenGraph();
@@ -154,11 +167,22 @@ class BlogController extends Controller
         );
     }
 
+    /**
+     * Show all blog categories
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function categories()
     {
         return BlogCategory::all();
     }
 
+    /**
+     * Show popular blog posts
+     *
+     * @param BlogCategoryRequest $request
+     * @return mixed
+     */
     public function popular(BlogCategoryRequest $request)
     {
         if ($request->has('category')) {
@@ -170,6 +194,12 @@ class BlogController extends Controller
         return $top_blogs->withoutNewest()->orderBy('count_views', 'DESC')->take(3)->get();
     }
 
+    /**
+     * Sends new blogger request
+     *
+     * @param BloggerRequest $request
+     * @return BloggerRequestModel
+     */
     public function bloggerRequest(BloggerRequest $request)
     {
         $blogger_request = new BloggerRequestModel([

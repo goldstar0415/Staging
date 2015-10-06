@@ -5,11 +5,23 @@ namespace App\Events;
 use App\User;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Class UserFollowEvent
+ * @package App\Events
+ *
+ * Fires on user follow somebody
+ */
 class UserFollowEvent extends Event implements Feedable
 {
     use SerializesModels;
 
+    /**
+     * @var User
+     */
     protected $follower;
+    /**
+     * @var User
+     */
     protected $following;
 
     /**
@@ -25,6 +37,8 @@ class UserFollowEvent extends Event implements Feedable
     }
 
     /**
+     * Get follower user
+     *
      * @return User
      */
     public function getFollower()
@@ -33,6 +47,8 @@ class UserFollowEvent extends Event implements Feedable
     }
 
     /**
+     * Get following user
+     *
      * @return User
      */
     public function getFollowing()
@@ -40,11 +56,21 @@ class UserFollowEvent extends Event implements Feedable
         return $this->following;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return User
+     */
     public function getFeedable()
     {
         return $this->getFollowing();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return User
+     */
     public function getFeedSender()
     {
         return $this->getFollower();

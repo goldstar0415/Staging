@@ -11,9 +11,17 @@ use App\Http\Requests\Friend\UpdateFriendRequest;
 use App\Http\Requests;
 use App\Http\Requests\PaginateRequest;
 
+/**
+ * Class FriendController
+ * @package App\Http\Controllers
+ *
+ * Friend resource controller
+ */
 class FriendController extends Controller
 {
-
+    /**
+     * FriendController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -21,9 +29,9 @@ class FriendController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the friends.
      * @param PaginateRequest $request
-     * @return
+     * @return mixed
      */
     public function index(PaginateRequest $request)
     {
@@ -31,7 +39,7 @@ class FriendController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created friend in storage.
      * @param StoreFriendRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -45,7 +53,7 @@ class FriendController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified friend.
      *
      * @param \App\Friend $friend
      * @return Friend
@@ -56,7 +64,7 @@ class FriendController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified friend in storage.
      * @param UpdateFriendRequest $request
      * @param \App\Friend $friend
      * @return \Illuminate\Http\JsonResponse
@@ -71,7 +79,7 @@ class FriendController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified friend from storage.
      * @param FriendRequest $request
      * @param \App\Friend $friend
      * @return \Illuminate\Http\JsonResponse
@@ -85,6 +93,8 @@ class FriendController extends Controller
     }
 
     /**
+     * Set friend avatar
+     *
      * @param SetFriendAvatar $request
      * @param \App\Friend $friend
      * @return Friend

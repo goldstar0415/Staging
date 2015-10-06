@@ -11,11 +11,24 @@ use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests;
 
+/**
+ * Class AlbumController
+ * @package App\Http\Controllers
+ *
+ * Album resource controller
+ */
 class AlbumController extends Controller
 {
 
+    /**
+     * @var Guard
+     */
     private $auth;
 
+    /**
+     * AlbumController constructor.
+     * @param Guard $auth
+     */
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;
@@ -23,13 +36,18 @@ class AlbumController extends Controller
         $this->middleware('privacy', ['only' => 'showForUser']);
     }
 
+    /**
+     * Show authenticated user albums
+     *
+     * @return mixed
+     */
     public function index()
     {
         return $this->auth->user()->albums;
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created album in storage.
      *
      * @param StoreRequest $request
      * @return \Illuminate\Http\JsonResponse
@@ -51,7 +69,7 @@ class AlbumController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified album for specific user.
      * @param PaginateRequest $request
      * @param \App\User $user
      * @return \Illuminate\Database\Eloquent\Collection
@@ -62,9 +80,9 @@ class AlbumController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified album.
      *
-     * @param  Album $album
+     * @param  Album $album Specific album
      * @return Album
      */
     public function show($album)
@@ -73,11 +91,10 @@ class AlbumController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified album in storage.
      *
      * @param  PhotoUpdateRequest $request
-     * @param Album $albums
-     * @internal param int $id
+     * @param Album $albums Specific album
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(PhotoUpdateRequest $request, $albums)
@@ -95,10 +112,10 @@ class AlbumController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified album from storage.
      *
      * @param AlbumRequest $request
-     * @param Album $albums
+     * @param Album $albums Specific album
      * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(AlbumRequest $request, $albums)

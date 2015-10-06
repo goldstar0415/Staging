@@ -8,9 +8,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class Base64Upload
- * @package App\Http\Middleware
  *
  * Middleware provide to upload files in base64 format like simple files from multipart/form-data
+ *
+ * @package App\Http\Middleware
  */
 class Base64Upload
 {
@@ -21,7 +22,6 @@ class Base64Upload
      * @param  \Closure $next
      * @param $fields
      * @return mixed
-     * @internal param string $field
      */
     public function handle($request, Closure $next, ...$fields)
     {

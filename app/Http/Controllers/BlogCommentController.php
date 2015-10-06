@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+/**
+ * Class BlogCommentController
+ * @package App\Http\Controllers
+ *
+ * Blog comment resource controller
+ */
 class BlogCommentController extends Controller
 {
     /**
@@ -22,7 +28,7 @@ class BlogCommentController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the blog comments.
      * @param PaginateRequest $request
      * @param \App\Blog $blog
      */
@@ -32,7 +38,7 @@ class BlogCommentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created blog comment in storage.
      *
      * @param CommentStoreRequest $request
      * @param \App\Blog $blog
@@ -49,7 +55,7 @@ class BlogCommentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified blog comment from storage.
      *
      * @param CommentsRequest $request
      * @param \App\Blog $blog

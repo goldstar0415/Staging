@@ -16,13 +16,29 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+/**
+ * Class ChatController
+ * @package App\Http\Controllers
+ *
+ * Chat controller
+ */
 class ChatController extends Controller
 {
+    /**
+     * ChatController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * Send new message
+     *
+     * @param SendMessageRequest $request
+     * @param Attachments $attachments
+     * @return ChatMessage
+     */
     public function sendMessage(SendMessageRequest $request, Attachments $attachments)
     {
         $user = $request->user();
@@ -37,6 +53,12 @@ class ChatController extends Controller
         return $message;
     }
 
+    /**
+     * Get authenticated user dialogs
+     *
+     * @param Request $request
+     * @return static
+     */
     public function getDialogs(Request $request)
     {
         $user = $request->user();
@@ -72,6 +94,12 @@ QUERY
         return $dialogs;
     }
 
+    /**
+     * Show list of messages with specific user
+     *
+     * @param MessageListRequest $request
+     * @return mixed
+     */
     public function getList(MessageListRequest $request)
     {
         $user_id = (int)$request->get('user_id');
@@ -84,6 +112,8 @@ QUERY
     }
 
     /**
+     * Remove the specified chat message from storage.
+     *
      * @param MessageDestroyRequest $request
      * @param ChatMessage $message
      * @return bool|null
@@ -101,6 +131,13 @@ QUERY
         return compact('result');
     }
 
+    /**
+     * Remove dialog with specified user
+     *
+     * @param Request $request
+     * @param int $target_id
+     * @return array
+     */
     public function destroyDialog(Request $request, $target_id)
     {
         $user = $request->user();
@@ -116,6 +153,13 @@ QUERY
         return ['result' => true];
     }
 
+    /**
+     * Send read message event
+     *
+     * @param Request $request
+     * @param $user_id
+     * @return array
+     */
     public function read(Request $request, $user_id)
     {
         $user = $request->user();

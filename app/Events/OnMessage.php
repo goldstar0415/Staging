@@ -8,6 +8,12 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
+/**
+ * Class OnMessage
+ * @package App\Events
+ *
+ * Fires on sending chat message
+ */
 class OnMessage extends Event implements ShouldBroadcast
 {
     use SerializesModels;

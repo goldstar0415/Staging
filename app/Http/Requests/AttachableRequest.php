@@ -4,14 +4,28 @@ namespace App\Http\Requests;
 
 use App\Services\Attachments;
 
+/**
+ * Class AttachableRequest
+ * @package App\Http\Requests
+ */
 trait AttachableRequest
 {
+    /**
+     * @var string Attachments rule
+     */
     protected $message_rule = 'required_without_all:' .
     'attachments.album_photos,' .
     'attachments.spots,' .
     'attachments.areas,' .
     'attachments.links';
 
+    /**
+     * Generate rules for request with attachments
+     *
+     * @param array $rules
+     * @param string $message_field
+     * @return array
+     */
     protected function attachmentsRules($rules, $message_field = 'message')
     {
         return array_merge(
@@ -29,6 +43,12 @@ trait AttachableRequest
         );
     }
 
+    /**
+     * Sanitize input data before validation
+     *
+     * @param array $input
+     * @return array
+     */
     public function sanitize($input)
     {
         foreach ($input['attachments']['links'] as &$link) {

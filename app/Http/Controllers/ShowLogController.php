@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+/**
+ * Class ShowLogController
+ * @package App\Http\Controllers
+ *
+ * Spot import log controller
+ */
 class ShowLogController extends Controller
 {
     /**
@@ -25,6 +31,12 @@ class ShowLogController extends Controller
         $this->validator = $validator;
     }
 
+    /**
+     * Show log by the type
+     *
+     * @param $type
+     * @return string
+     */
     public function show($type)
     {
         $validator = $this->validator->make(compact('type'), ['type' => 'required|in:event,recreation,pitstop']);

@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+/**
+ * Class CalendarController
+ * @package App\Http\Controllers
+ *
+ * Calendar controller
+ */
 class CalendarController extends Controller
 {
     /**
@@ -22,7 +28,7 @@ class CalendarController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the saved to calendar spots.
      * @param AddToCalendarRequest|Request $request
      * @param \App\Spot $spot
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
@@ -38,7 +44,7 @@ class CalendarController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Remove the specified spot from the calendar.
      * @param RemoveFromCalendarRequest $request
      * @param \App\Spot $spot
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
@@ -51,7 +57,8 @@ class CalendarController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Show authenticated user plans
+     *
      * @param GetCalendarPlansRequest $request
      */
     public function getPlans(GetCalendarPlansRequest $request)
@@ -67,6 +74,8 @@ class CalendarController extends Controller
     }
 
     /**
+     * Show plans in the specific interval
+     *
      * @param Request $request
      * @param $query
      */
@@ -76,6 +85,12 @@ class CalendarController extends Controller
             ->where('end_date', '<=', $request->get('end_date'));
     }
 
+    /**
+     * Export the calendar into the ics format
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function export(Request $request)
     {
         return response()->ical($request->user());

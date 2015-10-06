@@ -2,6 +2,12 @@
 
 namespace App\Events;
 
+/**
+ * Class Event
+ * @package App\Events
+ *
+ * Base event class
+ */
 abstract class Event
 {
     /**

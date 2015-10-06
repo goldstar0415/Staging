@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+/**
+ * Class WallIndexRequest
+ * @package App\Http\Requests
+ */
 class WallIndexRequest extends Request
 {
     /**

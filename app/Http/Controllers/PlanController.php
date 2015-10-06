@@ -18,6 +18,10 @@ use App\Http\Requests;
 use App\User;
 use Illuminate\Http\Request;
 
+/**
+ * Class PlanController
+ * @package App\Http\Controllers
+ */
 class PlanController extends Controller
 {
     /**
@@ -29,7 +33,7 @@ class PlanController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the plans.
      *
      * @param PlanIndexRequest $request
      */
@@ -42,7 +46,7 @@ class PlanController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created plan in storage.
      * @param PlanStoreRequest $request
      * @return Plan
      */
@@ -76,7 +80,7 @@ class PlanController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified plan.
      * @param PlanShowRequest $request
      * @param \App\Plan $plan
      * @return Plan
@@ -87,7 +91,7 @@ class PlanController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified plan in storage.
      *
      * @param PlanUpdateRequest $request
      * @param  Plan $plan
@@ -127,7 +131,7 @@ class PlanController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified plan from storage.
      *
      * @param PlanDestroyRequest $request
      * @param \App\Plan $plan
@@ -138,11 +142,22 @@ class PlanController extends Controller
         return ['result' => $plan->delete()];
     }
 
+    /**
+     * Get all activity categories
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public function getActivityCategories()
     {
         return ActivityCategory::all();
     }
 
+    /**
+     * Invite user(s) into the plan
+     *
+     * @param PlanInviteRequest $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function invite(PlanInviteRequest $request)
     {
         $user = $request->user();
@@ -161,6 +176,8 @@ class PlanController extends Controller
     }
 
     /**
+     * Export the plan with iCalendar format
+     *
      * @param Request $request
      * @param \App\Plan $plan
      * @return mixed

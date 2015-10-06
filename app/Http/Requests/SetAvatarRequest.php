@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+/**
+ * Class SetAvatarRequest
+ * @package App\Http\Requests
+ */
 class SetAvatarRequest extends Request
 {
     /**

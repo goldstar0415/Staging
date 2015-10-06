@@ -11,6 +11,13 @@ abstract class Controller extends BaseController
 {
     use DispatchesJobs, ValidatesRequests;
 
+    /**
+     * Get paginateable data
+     *
+     * @param Request $request
+     * @param \Illuminate\Database\Query\Builder $query
+     * @return mixed
+     */
     public function paginatealbe(Request $request, $query)
     {
         if ($request->has('page') or $request->has('limit')) {

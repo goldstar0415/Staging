@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
+/**
+ * Class UrlParseRequest
+ * @package App\Http\Requests
+ */
 class UrlParseRequest extends Request
 {
     /**
@@ -30,6 +34,12 @@ class UrlParseRequest extends Request
         return $rules;
     }
 
+    /**
+     * Sanitize input data before validation
+     *
+     * @param array $input
+     * @return array
+     */
     public function sanitize($input)
     {
         foreach ($input['links'] as &$link) {

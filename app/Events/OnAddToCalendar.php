@@ -6,6 +6,12 @@ use App\Spot;
 use App\User;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Class OnAddToCalendar
+ * @package App\Events
+ *
+ * Fires when adds spot to calendar
+ */
 class OnAddToCalendar extends Event implements Feedable
 {
     use SerializesModels;
@@ -30,13 +36,20 @@ class OnAddToCalendar extends Event implements Feedable
         $this->user = $user;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return Spot
+     */
     public function getFeedable()
     {
         return $this->spot;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
+     *
+     * @return User
      */
     public function getFeedSender()
     {

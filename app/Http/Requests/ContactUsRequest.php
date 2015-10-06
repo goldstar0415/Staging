@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
+/**
+ * Class ContactUsRequest
+ * @package App\Http\Requests
+ */
 class ContactUsRequest extends Request
 {
     /**

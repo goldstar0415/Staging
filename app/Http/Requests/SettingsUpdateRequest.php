@@ -2,8 +2,15 @@
 
 namespace App\Http\Requests;
 
+/**
+ * Class SettingsUpdateRequest
+ * @package App\Http\Requests
+ */
 class SettingsUpdateRequest extends Request
 {
+    /**
+     * @var array Available request types
+     */
     protected $types = [
         'personal',
         'security',
@@ -12,6 +19,9 @@ class SettingsUpdateRequest extends Request
         'notifications'
     ];
 
+    /**
+     * @var string Stores type of request
+     */
     protected $request_type;
     /**
      * Determine if the user is authorized to make this request.
@@ -77,7 +87,7 @@ class SettingsUpdateRequest extends Request
     }
 
     /**
-     * @return string
+     * @return string Get request type
      */
     public function getType()
     {

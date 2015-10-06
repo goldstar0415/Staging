@@ -10,6 +10,12 @@ use ChrisKonnertz\OpenGraph\OpenGraph;
 
 use App\Http\Requests;
 
+/**
+ * Class AreaController
+ * @package App\Http\Controllers
+ *
+ * Saved areas resource controller
+ */
 class AreaController extends Controller
 {
     /**
@@ -21,7 +27,7 @@ class AreaController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the saved areas.
      *
      * @param PaginateRequest $request
      */
@@ -31,7 +37,7 @@ class AreaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created area in storage.
      *
      * @param  AreaStoreRequest $request
      * @return Area
@@ -45,7 +51,7 @@ class AreaController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified area.
      * @param Area $area
      * @return Area
      */
@@ -55,7 +61,7 @@ class AreaController extends Controller
     }
 
     /**
-     * Display the specified resource preview.
+     * The specified area preview.
      * @param Area $area
      * @return Area
      */
@@ -72,7 +78,7 @@ class AreaController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified area in storage.
      *
      * @param AreaRequest $request
      * @param Area $area
@@ -86,7 +92,7 @@ class AreaController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified area from storage.
      *
      * @param AreaRequest $request
      * @param Area $area

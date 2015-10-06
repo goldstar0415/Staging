@@ -18,8 +18,17 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+/**
+ * Class WallController
+ * @package App\Http\Controllers
+ *
+ * Wall resource controller
+ */
 class WallController extends Controller
 {
+    /**
+     * @var Attachments
+     */
     private $attachments;
 
     /**
@@ -34,8 +43,8 @@ class WallController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     * @param Request $request
+     * Display a listing of the wall posts.
+     * @param WallIndexRequest $request
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function index(WallIndexRequest $request)
@@ -49,7 +58,7 @@ class WallController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created wall post in storage.
      * @param WallStoreRequest $request
      * @return Wall
      */
@@ -69,7 +78,7 @@ class WallController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified wall post.
      * @param Wall $wall
      * @return Wall
      */
@@ -79,7 +88,7 @@ class WallController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified wall post in storage.
      * @param WallUpdateRequest $request
      * @param Wall $wall
      * @return Wall
@@ -96,7 +105,7 @@ class WallController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified wall post from storage.
      *
      * @param WallDestroyRequest $request
      * @param $wall
@@ -110,6 +119,8 @@ class WallController extends Controller
     }
 
     /**
+     * Like specified wall post
+     *
      * @param Request $request
      * @param Wall $wall
      * @return WallRate
@@ -145,6 +156,8 @@ class WallController extends Controller
     }
 
     /**
+     * Dislike specified wall post
+     *
      * @param Request $request
      * @param Wall $wall
      * @return WallRate

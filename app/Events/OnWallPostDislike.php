@@ -6,6 +6,12 @@ use App\Wall;
 use App\WallRate;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Class OnWallPostDislike
+ * @package App\Events
+ *
+ * Fires on wall post dislike
+ */
 class OnWallPostDislike extends Event implements Feedable
 {
     use SerializesModels;
@@ -31,11 +37,21 @@ class OnWallPostDislike extends Event implements Feedable
         $this->rate = $rate;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return Wall
+     */
     public function getFeedable()
     {
         return $this->rate->wall;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return \App\User
+     */
     public function getFeedSender()
     {
         return $this->rate->user;

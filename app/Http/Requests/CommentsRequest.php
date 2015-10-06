@@ -5,6 +5,10 @@ namespace App\Http\Requests;
 use App\AlbumPhoto;
 use Illuminate\Contracts\Auth\Guard;
 
+/**
+ * Class CommentsRequest
+ * @package App\Http\Requests
+ */
 class CommentsRequest extends Request
 {
     /**

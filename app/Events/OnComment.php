@@ -7,6 +7,12 @@ use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
+/**
+ * Class OnComment
+ * @package App\Events
+ *
+ * Fires on comment something
+ */
 class OnComment extends Event
 {
     use SerializesModels;

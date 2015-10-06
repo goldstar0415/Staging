@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
+/**
+ * Class UrlMetaParseRequest
+ * @package App\Http\Requests
+ */
 class UrlMetaParseRequest extends Request
 {
     /**

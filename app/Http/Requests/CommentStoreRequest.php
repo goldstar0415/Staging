@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Auth\Guard;
 
+/**
+ * Class CommentStoreRequest
+ * @package App\Http\Requests
+ */
 class CommentStoreRequest extends CommentsRequest
 {
     /**

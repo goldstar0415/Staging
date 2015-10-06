@@ -29,6 +29,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // Check coming birthdays and spots
         $schedule->call(function () {
             
             $users = User::comingBirthday()->get();

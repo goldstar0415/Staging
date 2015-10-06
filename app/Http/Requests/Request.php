@@ -6,6 +6,14 @@ use Illuminate\Foundation\Http\FormRequest;
 
 abstract class Request extends FormRequest
 {
+    /**
+     * Generate rules for array fields
+     *
+     * @param string $field
+     * @param array|string $rules
+     * @param bool|false $files
+     * @return array
+     */
     protected function arrayFieldRules($field, $rules, $files = false)
     {
         $result = [];
@@ -32,10 +40,11 @@ abstract class Request extends FormRequest
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     final protected function getValidatorInstance()
     {
+        //Check sanitize traits
         foreach (class_uses_recursive(get_called_class()) as $trait) {
             if (ends_with($trait, 'Sanitizer')
                 && method_exists(
@@ -47,6 +56,7 @@ abstract class Request extends FormRequest
             }
         }
 
+        // Sanitize input data before validate
         if (method_exists($this, 'sanitize')) {
             $this->replace($this->container->call([$this, 'sanitize'], ['input' => $this->all()]));
         }

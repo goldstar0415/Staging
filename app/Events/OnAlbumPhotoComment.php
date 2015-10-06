@@ -5,6 +5,12 @@ namespace App\Events;
 use App\Comment;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Class OnAlbumPhotoComment
+ * @package App\Events
+ *
+ * Fires when somebody comment album photo
+ */
 class OnAlbumPhotoComment extends Event implements Feedable
 {
     use SerializesModels;
@@ -24,6 +30,8 @@ class OnAlbumPhotoComment extends Event implements Feedable
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @return \App\User
      */
     public function getFeedSender()
@@ -32,7 +40,9 @@ class OnAlbumPhotoComment extends Event implements Feedable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Model
+     * {@inheritDoc}
+     *
+     * @return Comment
      */
     public function getFeedable()
     {

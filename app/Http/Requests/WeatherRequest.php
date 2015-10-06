@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+/**
+ * Class WeatherRequest
+ * @package App\Http\Requests
+ */
 class WeatherRequest extends Request
 {
     /**

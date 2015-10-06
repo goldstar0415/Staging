@@ -14,8 +14,14 @@ class AppInstallCommand extends Command
      */
     protected $signature = 'app:init';
 
+    /**
+     * @var string Queue config name for "supervisor"
+     */
     private $queue_conf;
 
+    /**
+     * @var string Socket config name for "supervisor"
+     */
     private $socket_conf;
 
     /**

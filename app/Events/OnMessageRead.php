@@ -6,6 +6,12 @@ use App\User;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
+/**
+ * Class OnMessageRead
+ * @package App\Events
+ *
+ * Fires on read chat message
+ */
 class OnMessageRead extends Event implements ShouldBroadcast
 {
     use SerializesModels;

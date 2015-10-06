@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+/**
+ * Class UserListRequest
+ * @package App\Http\Requests
+ */
 class UserListRequest extends Request
 {
     /**

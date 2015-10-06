@@ -24,13 +24,24 @@ use App\Services\Registrar;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Class UserController
+ * @package App\Http\Controllers
+ *
+ * User resource controller
+ */
 class UserController extends Controller
 {
-
     use Registrar, ThrottlesLogins;
 
+    /**
+     * @var Guard
+     */
     private $auth;
 
+    /**
+     * @var string
+     */
     private $loginPath = '/users/login';
 
     /**
@@ -75,6 +86,12 @@ class UserController extends Controller
         return $user;
     }
 
+    /**
+     * Get user list by specific condition
+     *
+     * @param UserListRequest $request
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public function getList(UserListRequest $request)
     {
         $users = null;
@@ -105,13 +122,18 @@ class UserController extends Controller
         }])->paginate($limit);
     }
 
+    /**
+     * Get authenticated user model
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
     public function getMe()
     {
         return $this->appendUserRelations($this->auth->user())->append(['new_messages'])->load('roles');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Handle a login request to the application.
      *
      * @param Request $request
      * @return \Illuminate\Http\Response
@@ -227,16 +249,32 @@ class UserController extends Controller
         return $this->paginatealbe($request, $request->user()->reviews());
     }
 
+    /**
+     * Send user feedback
+     *
+     * @param ContactUsRequest $request
+     * @return \App\ContactUs
+     */
     public function contactUs(ContactUsRequest $request)
     {
         return ContactUs::create($request->all());
     }
 
+    /**
+     * Get authenticated user info
+     *
+     * @param Request $request
+     * @param Authenticatable $user
+     * @return $this
+     */
     protected function authenticated(Request $request, Authenticatable $user)
     {
         return $this->appendUserRelations($user)->append(['new_messages'])->load('roles');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function sendLockoutResponse(Request $request)
     {
         $seconds = (int)\Cache::get($this->getLoginLockExpirationKey($request)) - time();
@@ -271,6 +309,8 @@ class UserController extends Controller
     }
 
     /**
+     * Append some user info to the user model
+     *
      * @param \App\User $user
      * @return \App\User
      */

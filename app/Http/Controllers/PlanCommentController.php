@@ -10,6 +10,12 @@ use App\Services\Attachments;
 
 use App\Http\Requests;
 
+/**
+ * Class PlanCommentController
+ * @package App\Http\Controllers
+ *
+ * Plan comment resource controller
+ */
 class PlanCommentController extends Controller
 {
     /**
@@ -28,7 +34,7 @@ class PlanCommentController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the plan comments.
      * @param PaginateRequest $request
      * @param \App\Plan $plan
      * @return mixed
@@ -41,7 +47,7 @@ class PlanCommentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created plan comment in storage.
      *
      * @param CommentStoreRequest $request
      * @param \App\Plan $plan
@@ -59,7 +65,7 @@ class PlanCommentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified plan comment from storage.
      *
      * @param CommentsRequest $request
      * @param \App\Plan $plan

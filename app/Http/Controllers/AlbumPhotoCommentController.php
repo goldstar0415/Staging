@@ -9,11 +9,24 @@ use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests;
 
+/**
+ * Class AlbumPhotoCommentController
+ * @package App\Http\Controllers
+ *
+ * Album photo comment resource controller
+ */
 class AlbumPhotoCommentController extends Controller
 {
 
+    /**
+     * @var Guard
+     */
     private $auth;
 
+    /**
+     * AlbumPhotoCommentController constructor.
+     * @param Guard $auth
+     */
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;
@@ -22,12 +35,12 @@ class AlbumPhotoCommentController extends Controller
     /**
      * Show photo comments
      *
-     * @param \App\AlbumPhoto $photos
+     * @param \App\AlbumPhoto $photo
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index($photos)
+    public function index($photo)
     {
-        $comments = $photos->comments;
+        $comments = $photo->comments;
         $comments->map(function ($comment) {
             /**
              * @var \App\Comment $comment
@@ -40,32 +53,31 @@ class AlbumPhotoCommentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created album photo comment in storage.
      *
      * @param CommentStoreRequest $request
-     * @param \App\AlbumPhoto $photos
+     * @param \App\AlbumPhoto $photo
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(CommentStoreRequest $request, $photos)
+    public function store(CommentStoreRequest $request, $photo)
     {
         $comment = new Comment($request->all());
-        $comment->commentable()->associate($photos);
+        $comment->commentable()->associate($photo);
         $comment->sender()->associate($this->auth->user());
-        $photos->comments()->save($comment);
+        $photo->comments()->save($comment);
 
         return $comment;
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified album photo comment from storage.
      *
      * @param CommentsRequest $request
-     * @param \App\AlbumPhoto $photos
+     * @param \App\AlbumPhoto $photo
      * @param Comment $comment
      * @return \Illuminate\Http\JsonResponse
-     * @internal param int $id
      */
-    public function destroy(CommentsRequest $request, $photos, $comment)
+    public function destroy(CommentsRequest $request, $photo, $comment)
     {
         return response()->json(['result' => $comment->delete()]);
     }

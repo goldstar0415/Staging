@@ -11,10 +11,16 @@ use Illuminate\Contracts\Auth\Guard;
 use App\Http\Requests;
 use Phaza\LaravelPostgis\Geometries\Point;
 
+/**
+ * Class AlbumPhotoController
+ * @package App\Http\Controllers
+ *
+ * Album photo resource controller
+ */
 class AlbumPhotoController extends Controller
 {
     /**
-     * Display the specified resource.
+     * Display the specified album photo.
      *
      * @param AlbumPhoto $photos
      * @return \Illuminate\Database\Eloquent\Collection|static[]
@@ -25,6 +31,8 @@ class AlbumPhotoController extends Controller
     }
 
     /**
+     * Set the user avatar with the album photo
+     *
      * @param Guard $auth
      * @param AlbumPhoto $photos
      * @return \Illuminate\Http\JsonResponse
@@ -37,7 +45,7 @@ class AlbumPhotoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified album photo in storage.
      *
      * @param  AlbumPhotoUpdateRequest $request
      * @param  AlbumPhoto $photos
@@ -57,7 +65,7 @@ class AlbumPhotoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified album photo from storage.
      *
      * @param AlbumPhotoRequest $request
      * @param AlbumPhoto $photos
@@ -71,6 +79,8 @@ class AlbumPhotoController extends Controller
     }
 
     /**
+     * Get all album photos with pagination
+     *
      * @param PaginateRequest $request
      * @param \App\Album $album
      */

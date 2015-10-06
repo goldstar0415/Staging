@@ -9,10 +9,23 @@ use Illuminate\Contracts\Auth\Guard;
 use App\Http\Requests;
 use Illuminate\Contracts\Hashing\Hasher;
 
+/**
+ * Class SettingsController
+ * @package App\Http\Controllers
+ *
+ * User settings controller
+ */
 class SettingsController extends Controller
 {
+    /**
+     * @var Guard
+     */
     private $auth;
 
+    /**
+     * SettingsController constructor.
+     * @param Guard $auth
+     */
     public function __construct(Guard $auth)
     {
         $this->middleware('auth');
@@ -21,7 +34,7 @@ class SettingsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the user settings.
      * @param SettingsUpdateRequest $request
      * @param Hasher $hash
      * @return \Illuminate\Http\JsonResponse
@@ -62,6 +75,12 @@ class SettingsController extends Controller
         return response()->json(['message' => 'Settings successfuly changed']);
     }
 
+    /**
+     * Set the user avatar
+     *
+     * @param SetAvatarRequest $request
+     * @return mixed
+     */
     public function postSetavatar(SetAvatarRequest $request)
     {
         $user = $request->user();

@@ -13,6 +13,12 @@ use App\Comment;
 
 use App\Http\Requests;
 
+/**
+ * Class SpotCommentController
+ * @package App\Http\Controllers
+ *
+ * Spot comment resource controller
+ */
 class SpotCommentController extends Controller
 {
     /**
@@ -31,7 +37,7 @@ class SpotCommentController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the spot comments.
      *
      * @param PaginateCommentRequest $request
      * @param Spot $spot
@@ -45,7 +51,7 @@ class SpotCommentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created spot comment in storage.
      * @param SpotCommentStoreRequest $request
      * @param Spot $spot
      * @return Comment
@@ -64,7 +70,7 @@ class SpotCommentController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified spot comment.
      *
      * @param Spot $spot
      * @param Comment $comment
@@ -76,7 +82,7 @@ class SpotCommentController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified spot comment in storage.
      *
      * @param SpotCommentRequest $request
      * @param Spot $spot
@@ -91,7 +97,7 @@ class SpotCommentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified spot comment from storage.
      *
      * @param Spot $spot
      * @param Comment $comment

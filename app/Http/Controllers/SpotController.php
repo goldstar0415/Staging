@@ -26,8 +26,17 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+/**
+ * Class SpotController
+ * @package App\Http\Controllers
+ *
+ * Spot resource controller
+ */
 class SpotController extends Controller
 {
+    /**
+     * SpotController constructor.
+     */
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show', 'categories', 'favorites', 'preview']]);
@@ -36,7 +45,7 @@ class SpotController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the spots.
      * @param SpotIndexRequest $request
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -59,7 +68,7 @@ class SpotController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created spot in storage.
      * @param SpotStoreRequest $request
      * @return Spot
      */
@@ -93,7 +102,7 @@ class SpotController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified spot.
      *
      * @param  Spot $spot
      * @return $this
@@ -104,7 +113,7 @@ class SpotController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified spot in storage.
      *
      * @param  SpotUpdateRequest $request
      * @param  \App\Spot $spot
@@ -151,7 +160,7 @@ class SpotController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified spot from storage.
      *
      * @param SpotDestroyRequest $request
      * @param Spot $spot
@@ -162,6 +171,12 @@ class SpotController extends Controller
         return ['result' => $spot->delete()];
     }
 
+    /**
+     * Get spots categories
+     *
+     * @param SpotCategoriesRequest $request
+     * @return \Illuminate\Database\Eloquent\Collection|null|static[]
+     */
     public function categories(SpotCategoriesRequest $request)
     {
         $type_categories = null;
@@ -175,6 +190,8 @@ class SpotController extends Controller
     }
 
     /**
+     * Rate the spot
+     *
      * @param SpotRateRequest $request
      * @param \App\Spot $spot
      * @return SpotVote
@@ -188,6 +205,12 @@ class SpotController extends Controller
         return $vote;
     }
 
+    /**
+     * Show favorites user spot
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function favorites(Request $request)
     {
         return User::find($request->get(
@@ -197,6 +220,8 @@ class SpotController extends Controller
     }
 
     /**
+     * Add the spot to favorites
+     *
      * @param SpotFavoriteRequest $request
      * @param \App\Spot $spot
      * @return array
@@ -209,6 +234,8 @@ class SpotController extends Controller
     }
 
     /**
+     * Remove the spot from favorites
+     *
      * @param SpotUnFavoriteRequest $request
      * @param \App\Spot $spot
      * @return array
@@ -220,6 +247,12 @@ class SpotController extends Controller
         return ['result' => true];
     }
 
+    /**
+     * Invite the user to the spot
+     *
+     * @param SpotInviteRequest $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function invite(SpotInviteRequest $request)
     {
         $user = $request->user();
@@ -235,7 +268,7 @@ class SpotController extends Controller
     }
 
     /**
-     * Display the specified resource preview.
+     * The specified spot preview.
      * @param Spot $spot
      * @return Spot
      */
@@ -253,6 +286,8 @@ class SpotController extends Controller
     }
 
     /**
+     * Get the spot members
+     *
      * @param Request $request
      * @param \App\Spot $spot
      * @return \Illuminate\Database\Eloquent\Collection
@@ -263,7 +298,7 @@ class SpotController extends Controller
     }
 
     /**
-     * Export chosen spot
+     * Export the spot
      * @param Request $request
      * @param \App\Spot $spot
      * @return

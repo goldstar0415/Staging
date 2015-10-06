@@ -7,10 +7,16 @@ use App\Http\Requests\PaginateRequest;
 
 use App\Http\Requests;
 
+/**
+ * Class FeedController
+ * @package App\Http\Controllers
+ *
+ * Feed controller
+ */
 class FeedController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the feeds.
      *
      * @param PaginateRequest $request
      */

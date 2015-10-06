@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+/**
+ * Class PaginateCommentRequest
+ * @package App\Http\Requests
+ */
 class PaginateCommentRequest extends Request
 {
     /**

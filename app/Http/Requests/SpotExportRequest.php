@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
+/**
+ * Class SpotExportRequest
+ * @package App\Http\Requests
+ */
 class SpotExportRequest extends Request
 {
     /**
