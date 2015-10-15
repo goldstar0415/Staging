@@ -6,7 +6,7 @@
     .factory('PasswordRecoveryService', PasswordRecoveryService);
 
   /** @ngInject */
-  function PasswordRecoveryService($modal, UserService, User, toastr) {
+  function PasswordRecoveryService($modal, UserService, User, toastr, $state) {
     return {
       openModal: openModal,
       recoveryPassword: recoveryPassword,
@@ -32,7 +32,7 @@
       if (form.$valid) {
         User.recoveryPassword(vm,
           function success(user) {
-            UserService.setCurrentUser(user);
+            toastr.success('Further instructions was sent to your email');
             $modalInstance.dismiss('close');
           }, function error(resp) {
             toastr.error('Wrong email');
@@ -51,7 +51,9 @@
         User.resetPassword(vm,
           function success(user) {
             toastr.success('Password successfully changed');
+            UserService.setCurrentUser(user);
             $modalInstance.dismiss('close');
+            //$state.go('index');
           }, function error(resp) {
             toastr.error('Wrong email');
           });

@@ -6,8 +6,10 @@
     .controller('ResetPasswordController', ResetPasswordController);
 
   /** @ngInject */
-  function ResetPasswordController(PasswordRecoveryService) {
-    PasswordRecoveryService.openModal('ResetPasswordModal.html', ResetPasswordModalController);
+  function ResetPasswordController(PasswordRecoveryService, $rootScope) {
+    if (!$rootScope.currentUser) {
+      PasswordRecoveryService.openModal('ResetPasswordModal.html', ResetPasswordModalController);
+    }
   }
 
   function ResetPasswordModalController(PasswordRecoveryService, $stateParams, $modalInstance) {
