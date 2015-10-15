@@ -98,7 +98,8 @@
                 <date-range item="item.spot"></date-range>
               </div>
               <div class="col-xs-12 padding-0">
-                <h2 class="name">{{item.spot.title}}</h2>
+                <h2 class="name"><a ui-sref="spot({user_id: item.spot.user_id, spot_id: item.spot.id})">{{item.spot.title}}</a>
+                </h2>
 
                 <p class="location">{{item.address}}</p>
 
@@ -183,7 +184,9 @@
                 <date-range item="item.spot"></date-range>
               </div>
               <div class="col-xs-12 padding-0">
-                <h2 class="name">{{item.spot.title}}</h2>
+                <h2 class="name">
+                  <a ui-sref="spot({user_id: item.spot.user_id, spot_id: item.spot.id})">{{item.spot.title}}</a>
+                </h2>
 
                 <p class="location">{{item.address}}</p>
 
@@ -264,7 +267,9 @@
                 <date-range item="item.spot"></date-range>
               </div>
               <div class="col-xs-12 padding-0">
-                <h2 class="name">{{item.spot.title}}</h2>
+                <h2 class="name">
+                  <a ui-sref="spot({user_id: item.spot.user_id, spot_id: item.spot.id})">{{item.spot.title}}</a>
+                </h2>
 
                 <p class="location">{{item.address}}</p>
 
