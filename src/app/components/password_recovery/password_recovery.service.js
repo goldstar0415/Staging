@@ -55,7 +55,7 @@
             $modalInstance.dismiss('close');
             //$state.go('index');
           }, function error(resp) {
-            toastr.error('Wrong email');
+            toastr.error('That Email does not exist in our system');
           });
       }
     }

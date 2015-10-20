@@ -75,7 +75,7 @@
             {{$root.profileUser.activity_level}}
           </div>
           <div class="age">
-            <span ng-if="$root.profileUser.sex != null">{{$root.profileUser.sex == 'm' ? 'male' : 'female'}}</span>
+            <span ng-if="$root.profileUser.sex">{{$root.profileUser.sex == 'm' ? 'male' : 'female'}}</span>
             <span ng-if="$root.profileUser.birth_date">, {{$root.profileUser.birth_date | age}} years</span>
           </div>
           <div class="location" ng-if="$root.profileUser.address">{{$root.profileUser.address}}</div>
