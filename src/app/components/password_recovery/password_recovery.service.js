@@ -35,7 +35,7 @@
             toastr.success('Further instructions was sent to your email');
             $modalInstance.dismiss('close');
           }, function error(resp) {
-            toastr.error('Wrong email');
+            toastr.error('That Email does not exist in our system');
           });
       }
     }
