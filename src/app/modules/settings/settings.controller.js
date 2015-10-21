@@ -40,6 +40,7 @@
           params: {
             first_name: vm.data.first_name,
             last_name: vm.data.last_name,
+            alias: vm.data.alias,
             birth_date: vm.data.birth_date ? moment(vm.data.birth_date, 'MM.DD.YYYY').format('YYYY-MM-DD') : null,
             sex: vm.data.sex || '',
             //time_zone: vm.data.time_zone,
@@ -55,6 +56,12 @@
             toastr.error('Incorrect input ');
           });
       }
+    };
+
+    vm.checkAlias = function () {
+      User.checkAlias({ alias: vm.data.alias }).$promise.error(function () {
+        toastr.error('Url are busy');
+      })
     };
 
     /*

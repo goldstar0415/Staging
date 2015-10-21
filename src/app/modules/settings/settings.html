@@ -54,6 +54,15 @@
 
             <div class="col-xs-12 form-group no-pad">
               <div class="col-xs-3 no-pad">
+                <label>Page URL</label>
+              </div>
+              <div class="col-xs-9 no-pad">
+                <input name="alias" ng-model="Settings.data.alias" ng-blur="Settings.checkAlias()" type="text" />
+              </div>
+            </div>
+
+            <div class="col-xs-12 form-group no-pad">
+              <div class="col-xs-3 no-pad">
                 <label>Gender</label>
               </div>
               <div class="col-xs-9 no-pad">

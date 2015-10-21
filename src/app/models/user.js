@@ -65,6 +65,10 @@
       setAvatar: {
         url: API_URL + '/settings/setavatar',
         method: 'POST'
+      },
+      checkAlias: {
+        url: API_URL + '/settings/checkAlias',
+        method: 'POST'
       }
     });
   }

@@ -260,9 +260,15 @@
           <label class="col-sm-4 col-xs-12 control-label no-pad">Cover preview:</label>
 
           <div class="cover-preview">
-            <image-cropper source-image="SpotCreate.cropCover" result-image="SpotCreate.cover" auto-crop="false"
+            <image-cropper ng-if="!SpotCreate.saveCrop" source-image="SpotCreate.cropCover" result-image="SpotCreate.cover" auto-crop="false"
                            crop-height="SpotCreate.crop.height" crop-width="SpotCreate.crop.width"></image-cropper>
 
+            <img ng-src="{{SpotCreate.cover}}" ng-if="SpotCreate.saveCrop" />
+
+            <button type="button" ng-click="SpotCreate.saveCrop = true"
+                    class="btn btn-default green-btn pull-left margin-bottom save-cover-btn"
+                    ng-if="!SpotCreate.selectCover">Save cover
+            </button>
             <!--<a class="delete" ng-click="SpotCreate.cover = null" title="Delete"></a>-->
           </div>
         </div>

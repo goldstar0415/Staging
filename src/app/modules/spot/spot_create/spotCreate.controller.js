@@ -293,6 +293,7 @@
         }
 
         vm.selectCover = false;
+        vm.saveCrop = false;
       }
     };
 
@@ -344,6 +345,11 @@
 
       _setCover(data.cover_url.original, data.id);
     };
+
+    vm.saveCover = function saveCover() {
+
+    };
+
 
     if (vm.edit) {
       vm.convertSpot();

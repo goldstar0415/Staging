@@ -100,7 +100,16 @@
   }
 
   .cover-preview {
-      max-height: 400px;
+    max-height: 400px;
+
+    .save-cover-btn {
+      margin-top: 1.5rem;
+      margin-left: 0;
+    }
+
+    img {
+      max-width: 100%;
+    }
   }
 }
 
