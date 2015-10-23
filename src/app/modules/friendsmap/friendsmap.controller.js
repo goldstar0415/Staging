@@ -139,7 +139,7 @@
     };
 
     function checkAuth() {
-      gapi.auth.authorize({client_id: GOOGLE_API_KEY, scope: 'https://www.googleapis.com/auth/plus.me', immediate: true}, handleAuthResult);
+      gapi.auth.authorize({client_id: GOOGLE_APP_ID, scope: 'https://www.googleapis.com/auth/plus.login', immediate: true}, handleAuthResult);
     }
 
     function handleAuthResult(authResult) {
@@ -147,7 +147,7 @@
         authorizeButton.style.visibility = 'hidden';
         makeApiCall();
       } else {
-        gapi.auth.authorize({client_id: GOOGLE_API_KEY, scope: 'https://www.googleapis.com/auth/plus.me', immediate: false}, handleAuthResult);
+        gapi.auth.authorize({client_id: GOOGLE_APP_ID, scope: 'https://www.googleapis.com/auth/plus.login', immediate: false}, handleAuthResult);
       }
     }
 
