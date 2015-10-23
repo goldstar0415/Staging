@@ -6,7 +6,7 @@
     .controller('FriendsmapController', FriendsmapController);
 
   /** @ngInject */
-  function FriendsmapController(friends, MapService, Friends, CropService, $state) {
+  function FriendsmapController(friends, MapService, Friends, CropService, $state, GOOGLE_API_KEY, GOOGLE_APP_ID) {
     var vm = this;
     var markers = [];
     vm.friends = format(friends);
@@ -130,6 +130,43 @@
         }
       })
     };
+
+
+    vm.googleImport = function () {
+      gapi.client.setApiKey(GOOGLE_API_KEY);
+
+      checkAuth();
+    };
+
+    function checkAuth() {
+      gapi.auth.authorize({client_id: GOOGLE_API_KEY, scope: 'https://www.googleapis.com/auth/plus.me', immediate: true}, handleAuthResult);
+    }
+
+    function handleAuthResult(authResult) {
+      if (authResult && !authResult.error) {
+        authorizeButton.style.visibility = 'hidden';
+        makeApiCall();
+      } else {
+        gapi.auth.authorize({client_id: GOOGLE_API_KEY, scope: 'https://www.googleapis.com/auth/plus.me', immediate: false}, handleAuthResult);
+      }
+    }
+
+    // Load the API and make an API call.  Display the results on the screen.
+    function makeApiCall() {
+      // Step 4: Load the Google+ API
+      gapi.client.load('plus', 'v1').then(function() {
+        // Step 5: Assemble the API request
+        var request = gapi.client.plus.people.get({
+          'userId': 'me'
+        });
+        // Step 6: Execute the API request
+        request.then(function(resp) {
+          console.log(resp);
+        }, function(reason) {
+          console.log('Error: ' + reason.result.error.message);
+        });
+      });
+    }
 
 
     function moveMarkerToLocation(id, latlng) {
