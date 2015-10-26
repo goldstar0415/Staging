@@ -6,7 +6,7 @@
     .controller('FriendsmapController', FriendsmapController);
 
   /** @ngInject */
-  function FriendsmapController(friends, MapService, Friends, CropService, $state, GOOGLE_API_KEY, GOOGLE_APP_ID) {
+  function FriendsmapController(friends, MapService, Friends, CropService, $state, GOOGLE_API_KEY, GOOGLE_CLIENT_ID) {
     var vm = this;
     var markers = [];
     vm.friends = format(friends);
@@ -134,20 +134,18 @@
 
     vm.googleImport = function () {
       gapi.client.setApiKey(GOOGLE_API_KEY);
-
-      checkAuth();
+      window.setTimeout(checkAuth,1);
     };
 
     function checkAuth() {
-      gapi.auth.authorize({client_id: GOOGLE_APP_ID, scope: 'https://www.googleapis.com/auth/plus.login', immediate: true}, handleAuthResult);
+      gapi.auth.authorize({client_id: GOOGLE_CLIENT_ID, scope: 'https://www.googleapis.com/auth/plus.login', immediate: true}, handleAuthResult);
     }
 
     function handleAuthResult(authResult) {
       if (authResult && !authResult.error) {
-        authorizeButton.style.visibility = 'hidden';
         makeApiCall();
       } else {
-        gapi.auth.authorize({client_id: GOOGLE_APP_ID, scope: 'https://www.googleapis.com/auth/plus.login', immediate: false}, handleAuthResult);
+        gapi.auth.authorize({client_id: GOOGLE_CLIENT_ID, scope: 'https://www.googleapis.com/auth/plus.login', immediate: false}, handleAuthResult);
       }
     }
 
@@ -155,15 +153,22 @@
     function makeApiCall() {
       // Step 4: Load the Google+ API
       gapi.client.load('plus', 'v1').then(function() {
-        // Step 5: Assemble the API request
-        var request = gapi.client.plus.people.get({
-          'userId': 'me'
+        //var request = gapi.client.plus.people.get({
+        //  'userId': 'me'
+        //});
+        //request.then(function(resp) {
+        //  console.log(resp);
+        //}, function(reason) {
+        //  console.log('Error: ' + reason.result.error.message);
+        //});
+
+        var request = gapi.client.plus.people.list({
+          'userId' : 'me',
+          'collection' : 'visible'
         });
-        // Step 6: Execute the API request
-        request.then(function(resp) {
+
+        request.execute(function(resp) {
           console.log(resp);
-        }, function(reason) {
-          console.log('Error: ' + reason.result.error.message);
         });
       });
     }
