@@ -152,7 +152,7 @@
     // Load the API and make an API call.  Display the results on the screen.
     function makeApiCall() {
       // Step 4: Load the Google+ API
-      gapi.client.load('plus', 'v1').then(function() {
+      gapi.client.load('contacts', 'v1').then(function() {
         //var request = gapi.client.plus.people.get({
         //  'userId': 'me'
         //});
