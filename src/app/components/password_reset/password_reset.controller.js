@@ -12,6 +12,7 @@
     }
   }
 
+  /** @ngInject */
   function ResetPasswordModalController(PasswordRecoveryService, $stateParams, $modalInstance) {
     var vm = this;
     vm.token = $stateParams.token;
