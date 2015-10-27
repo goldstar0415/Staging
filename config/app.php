@@ -162,7 +162,6 @@ return [
         Barryvdh\Cors\ServiceProvider::class,
         Nwidart\LaravelForecast\LaravelForecastServiceProvider::class,
         ChrisKonnertz\OpenGraph\OpenGraphServiceProvider::class,
-        Frozennode\Administrator\AdministratorServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Yangqi\Htmldom\HtmldomServiceProvider::class
     ],

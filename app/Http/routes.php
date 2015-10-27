@@ -132,3 +132,9 @@ Route::group(['prefix' => 'import/logs', 'middleware' => 'admin'], function () {
 });
 
 Route::post('contact-us', 'UserController@contactUs');
+
+//------------Admin Panel
+
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+    Route::resource('activitylevel', 'ActivityLevelController', ['except' => 'show']);
+});
