@@ -84,8 +84,9 @@ class SpotController extends Controller
         }
 
         $request->user()->spots()->save($spot);
-
-        $spot->tags = $request->input('tags');
+        if ($request->has('tags')) {
+            $spot->tags = $request->input('tags');
+        }
         $spot->locations = $request->input('locations');
 
         if ($request->hasFile('files')) {
@@ -135,7 +136,9 @@ class SpotController extends Controller
             $spot->cover = $cover->getRealPath();
         }
 
-        $spot->tags = $request->input('tags');
+        if ($request->has('tags')) {
+            $spot->tags = $request->input('tags');
+        }
         $spot->locations = $request->input('locations');
 
         $spot->save();
