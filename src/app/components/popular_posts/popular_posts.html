@@ -3,7 +3,7 @@
     <ui-select ng-model="Post.popular_category" theme="bootstrap">
       <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
       <ui-select-choices repeat="item.id as item in Post.categories | filter : $select.search track by $index">
-        <div>{{item.display_name | highlight: $select.search}}</div>
+        <div ng-bind-html="item.display_name | highlight: $select.search"></div>
       </ui-select-choices>
     </ui-select>
   </div>

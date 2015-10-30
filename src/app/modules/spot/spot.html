@@ -74,6 +74,9 @@
           <a class="download"
              ng-href="{{Spot.API_URL + '/spots/' + Spot.spot.id + '/export'}}" target="_blank">Export ICS</a>
         </li>
+        <li ng-if="currentUser && !Spot.spot.isReported">
+          <a class="" report-spot="Spot.spot">Report</a>
+        </li>
       </ul>
 
       <share item="Spot.spot" type="spot"></share>

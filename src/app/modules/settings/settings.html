@@ -57,7 +57,7 @@
                 <label>Page URL</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <input name="alias" ng-model="Settings.data.alias" ng-blur="Settings.checkAlias()" type="text" />
+                <input name="alias" ng-model="Settings.data.alias" ng-blur="Settings.checkAlias()" type="text"/>
               </div>
             </div>
 
@@ -296,7 +296,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div>{{item.label | highlight: $select.search}}</div>
+                  <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_events">-->
@@ -318,7 +318,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div>{{item.label | highlight: $select.search}}</div>
+                  <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_favorites">-->
@@ -340,7 +340,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div>{{item.label | highlight: $select.search}}</div>
+                  <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_followers">-->
@@ -362,7 +362,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div>{{item.label | highlight: $select.search}}</div>
+                  <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_followings">-->
@@ -384,7 +384,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div>{{item.label | highlight: $select.search}}</div>
+                  <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_wall">-->
@@ -406,7 +406,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div>{{item.label | highlight: $select.search}}</div>
+                  <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_info">-->
@@ -428,7 +428,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
-                  <div>{{item.label | highlight: $select.search}}</div>
+                  <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.privacy_photo_map">-->
@@ -462,7 +462,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
-                  <div>{{item.label | highlight: $select.search}}</div>
+                  <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_letter">-->
@@ -482,7 +482,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
-                  <div>{{item.label | highlight: $select.search}}</div>
+                  <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_wall_post">-->
@@ -502,7 +502,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
-                  <div>{{item.label | highlight: $select.search}}</div>
+                  <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_follow">-->
@@ -522,7 +522,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
-                  <div>{{item.label | highlight: $select.search}}</div>
+                  <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_new_spot">-->
@@ -542,7 +542,7 @@
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
                   repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
-                  <div>{{item.label | highlight: $select.search}}</div>
+                  <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
               <!--<select selectpicker class="selectpicker" ng-model="Settings.data.notification_coming_spot">-->

@@ -47,6 +47,10 @@
         url: API_URL + '/spots/:id/rate',
         method: 'POST',
         ignoreLoadingBar: true
+      },
+      report: {
+        url: API_URL + '/spots/:id/report',
+        method: 'POST'
       }
     });
   }
