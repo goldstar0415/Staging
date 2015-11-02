@@ -6,12 +6,17 @@ use App\BloggerRequest;
 use App\Comment;
 use App\Events\OnComment;
 use App\Events\OnSpotCreate;
+use App\Exceptions\TokenException;
 use App\Extensions\Validations;
+use App\Http\Controllers\SocialContactsController;
 use App\Role;
 use App\Services\Attachments;
 use App\Services\Privacy;
+use App\Services\Social\GoogleClient;
+use App\Services\Social\GoogleToken;
 use App\Spot;
 use App\User;
+use Config;
 use Illuminate\Support\ServiceProvider;
 use Request;
 use Validator;
@@ -76,6 +81,23 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind(Attachments::class, function ($app) {
             return new Attachments($app['request']);
+        });
+        $this->app->bind(GoogleClient::class, function ($app) {
+            if (!$app['session']->has('google_token') and !$app['request']->has('code')) {
+                throw new TokenException('No saved token.');
+            } elseif ($app['request']->has('code')) {
+                $contacts_engine = GoogleClient::getContactsEngine();
+                $app['session']->put(
+                    'google_token',
+                    serialize(new GoogleToken(
+                        $contacts_engine->provider->getAccessToken($app['request']->get('code')),
+                        $contacts_engine->scopes
+                    ))
+                );
+            }
+            $token = unserialize($app['session']->get('google_token'));
+
+            return new GoogleClient($token);
         });
     }
 }

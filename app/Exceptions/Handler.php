@@ -2,6 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\SocialContactsController;
+use App\Services\Social\GoogleClient;
+use Config;
 use Exception;
 use Illuminate\Contracts\Validation\UnauthorizedException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -49,6 +52,10 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => $e->getMessage()], $e->getStatusCode());
         } elseif ($e instanceof HttpException) {
             return response()->json(['message' => $e->getMessage()], $e->getStatusCode());
+        } elseif ($e instanceof TokenException) {
+            if ($request->is('google-contacts')) {
+                return GoogleClient::getContactsEngine()->provider->redirect();
+            }
         }
 
         return parent::render($request, $e);

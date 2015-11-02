@@ -133,6 +133,8 @@ Route::group(['prefix' => 'import/logs', 'middleware' => 'admin'], function () {
 
 Route::post('contact-us', 'UserController@contactUs');
 
+get('google-contacts', 'SocialContactsController@google');
+
 //------------Admin Panel
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
