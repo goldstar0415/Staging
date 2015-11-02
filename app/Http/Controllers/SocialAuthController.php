@@ -6,7 +6,6 @@ use App\Social;
 use App\User;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use Socialite;
 
@@ -48,7 +47,6 @@ class SocialAuthController extends Controller
              * @var \Laravel\Socialite\Contracts\User $user
              */
             $user = $provider->user();
-
             if (!$user) {
                 abort(400);
             }
