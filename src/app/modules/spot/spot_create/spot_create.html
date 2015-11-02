@@ -2,6 +2,8 @@
   <div ng-hide="SpotCreate.loading">
     <h2 ng-if="!SpotCreate.edit" class="event-title">Create new spot</h2>
 
+    <facebook-events ng-if="!SpotCreate.edit"></facebook-events>
+
     <h2 ng-if="SpotCreate.edit" class="event-title">Update Spot</h2>
     <section class="event-main-info">
       <div ng-if="!SpotCreate.edit" class="form-group">

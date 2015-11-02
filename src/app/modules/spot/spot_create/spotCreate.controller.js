@@ -6,7 +6,7 @@
     .controller('SpotCreateController', SpotCreateController);
 
   /** @ngInject */
-  function SpotCreateController(spot, $stateParams, $state, toastr, $scope, MapService, UploaderService, CropService, $timeout, moment, API_URL, $http, DATE_FORMAT, categories) {
+  function SpotCreateController(spot, $stateParams, $state, $modal, toastr, $scope, MapService, UploaderService, CropService, $timeout, moment, API_URL, $http, DATE_FORMAT, categories) {
     var vm = this;
     var coverName = null;
 
@@ -178,7 +178,7 @@
             })
             .catch(function (resp) {
               vm.loading = false;
-              toastr.error('Upload failed');
+              toastr.error('Save error');
             });
         }
       } else {
@@ -351,10 +351,6 @@
       }
 
       _setCover(data.cover_url.original, data.id);
-    };
-
-    vm.saveCover = function saveCover() {
-
     };
 
 
