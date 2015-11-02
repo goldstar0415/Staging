@@ -28,6 +28,23 @@
           </div>
         </div>
       </div>
+
+      <div class="form-group" ng-if="SpotCreate.type === 'event'">
+        <label class="col-md-2 col-sm-12 col-xs-12 control-label">Privacy</label>
+
+        <div class="col-md-10 col-sm-12 col-xs-12">
+          <!-- CATEGORY SELECT here-->
+          <ui-select
+            ng-model="SpotCreate.is_private"
+            theme="bootstrap">
+            <ui-select-match >{{$select.selected.label}}</ui-select-match>
+            <ui-select-choices repeat="item.value as item in SpotCreate.privacies | filter : $select.search track by $index">
+              <div ng-bind-html="item.label | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+
       <div class="form-group">
         <label class="col-md-2 col-sm-12 col-xs-12 control-label">Title</label>
 

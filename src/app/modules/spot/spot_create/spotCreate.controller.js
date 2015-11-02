@@ -34,6 +34,12 @@
       vm.categories[item.name] = item.categories;
     });
 
+    vm.is_private = 1;
+    vm.privacies = [
+      {label: 'Private', value: 1},
+      {label: 'Public', value: 0}
+    ];
+
     //vars
     vm.tags = [];
     vm.links = [];
@@ -110,6 +116,7 @@
         request.title = vm.title;
         request.description = vm.description;
         request.spot_type_category_id = vm.category_id;
+        //request.is_private = vm.is_private;
 
 
         if (vm.cover) {
