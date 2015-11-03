@@ -20,9 +20,6 @@
     <div class="col-md-9 col-xs-8">
         <div class="editing blog col-xs-12">
             @yield('content')
-
-            <div class="col-xs-12 pagination">
-            </div>
         </div>
     </div>
     @include('admin.sidebar')

@@ -137,6 +137,7 @@ get('google-contacts', 'SocialContactsController@google');
 
 //------------Admin Panel
 
-Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'namespace' => 'Admin'], function () {
     Route::resource('activitylevel', 'ActivityLevelController', ['except' => 'show']);
+    resource('users', 'UsersController');
 });
