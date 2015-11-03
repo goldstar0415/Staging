@@ -1,28 +1,30 @@
+@extends('admin.main')
+
+@section('content')
 <div class="user-data clearfix">
     <div class="col-sm-12">
-        <a href="admin_edit_user_page.html" class="btn btn-success button-my">Edit</a>
-        <a href="#" class="btn btn-danger button-my">Delete</a>
-
-        <div class="col-sm-2  ">
-            <img src="/assets/img/icons/avatar.jpg">
+        {!! link_to_route('admin.users.edit', 'Edit', $user->id, ['class' => 'btn btn-success button-my']) !!}
+        {!! link_to_route('admin.users.destroy', 'Delete', $user->id, ['class' => 'btn btn-danger button-my']) !!}
+        <div class="col-sm-2">
+            <img src="{{ $user->avatar_url['medium'] }}">
         </div>
         <div class="col-sm-10">
             <h3>{{ $user->first_name . ' ' . $user->last_name }}</h3>
 
-            <p><span class="">e-mail:</span><a href="#">{{ $user->email }}</a></p>
+            <p><span>E-mail: </span><a href="#">{{ $user->email }}</a></p>
 
             <p>
-                <span>Roles:</span>
+                <span>Roles: </span>
                 @foreach($user->roles as $role)
                     {{ $role->display_name }}
                 @endforeach
             </p>
 
-            <p><span>Registration:</span>{{ $user->created_at }}</p>
+            <p><span>Registration: </span>{{ $user->created_at }}</p>
         </div>
     </div>
 </div>
-<div class=" ">
+<div>
     <hr>
     <form method="post" action="#" class="search-form">
         <input type="text" placeholder="Start typing...">
@@ -39,58 +41,19 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td><a href="#">Festival </a></td>
-            <td><p>Event</p></td>
-            <td><p><img src="/assets/img/img10.jpg"> casino</p></td>
-            <td><a href="#" class="delete"></a></td>
-            <td><a href="#" class="edit-spot"></a></td>
-        </tr>
-        <tr>
-            <td><a href="#">Festival </a></td>
-            <td><p>Recreation</p></td>
-            <td><p><img src="/assets/img/img10.jpg"> casino</p></td>
-            <td><a href="#" class="delete"></a></td>
-            <td><a href="#" class="edit-spot"></a></td>
-        </tr>
-        <tr>
-            <td><a href="#">Festival </a></td>
-            <td><p>Pit stop</p></td>
-            <td><p><img src="/assets/img/img10.jpg"> casino</p></td>
-            <td><a href="#" class="delete"></a></td>
-            <td><a href="#" class="edit-spot"></a></td>
-        </tr>
-        <tr>
-            <td><a href="#">Festival </a></td>
-            <td><p>Recreation</p></td>
-            <td><p><img src="/assets/img/img10.jpg"> casino</p></td>
-            <td><a href="#" class="delete"></a></td>
-            <td><a href="#" class="edit-spot"></a></td>
-        </tr>
-        <tr>
-            <td><a href="#">Festival Festival Festi Festi</a></td>
-            <td><p>Event</p></td>
-            <td><p><img src="/assets/img/img10.jpg"> casino</p></td>
-            <td><a href="#" class="delete"></a></td>
-            <td><a href="#" class="edit-spot"></a></td>
-        </tr>
-        <tr>
-            <td><a href="#">Festival </a></td>
-            <td><p>Event</p></td>
-            <td><p><img src="/assets/img/img10.jpg"> casino</p></td>
-            <td><a href="#" class="delete"></a></td>
-            <td><a href="#" class="edit-spot"></a></td>
-        </tr>
-        <tr>
-            <td><a href="#">Festival </a></td>
-            <td><p>Event</p></td>
-            <td><p><img src="/assets/img/img10.jpg"> casino</p></td>
-            <td><a href="#" class="delete"></a></td>
-            <td><a href="#" class="edit-spot"></a></td>
-        </tr>
-
+        @foreach($spots as $spot)
+            <tr>
+                <td><a href="#">{{ $spot->title }}</a></td>
+                <td><p>{{ $spot->category->type['display_name'] }}</p></td>
+                <td><p><img src="{{ $spot->category->icon_url }}"> {{ $spot->category['name'] }}</p></td>
+                <td><a href="#" class="delete"></a></td>
+                <td><a href="#" class="edit-spot"></a></td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
     <div class="col-xs-12 pagination">
+        {!! $spots->render() !!}
     </div>
 </div>
+@endsection

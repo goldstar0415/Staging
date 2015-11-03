@@ -21,8 +21,8 @@
         <tbody>
             @foreach($users as $user)
             <tr>
-                <td><a href="admin_user_info_page.html">{{ $user->first_name . ' ' . $user->last_name }}</a></td>
-                <td><a href="admin_user_info_page.html">{{ $user->email }}</a></td>
+                <td>{!! link_to_route('admin.users.show', $user->first_name . ' ' . $user->last_name, $user->id) !!}</td>
+                <td>{!! link_to_route('admin.users.show', $user->email, $user->id) !!}</td>
                 <td><i>
                     @foreach($user->roles as $role)
                        {{ $role->display_name }}

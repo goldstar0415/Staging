@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Spot;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -44,35 +45,45 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $user
+     * @param Request $request
+     * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function show($user)
+    public function show(Request $request, $user)
     {
-        return view('admin.users.show')->with('user', $user);
+        return view('admin.users.show', [
+            'user' => $user,
+            'spots' => $user->spots()->paginate()
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param $user
      * @return \Illuminate\Http\Response
+     * @internal param int $user
      */
-    public function edit($id)
+    public function edit($user)
     {
-        //
+        return view('admin.users.edit', ['user' => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user)
     {
-        //
+        $user->fill($request->only(['first_name', 'last_name', 'email', 'ban_reason']));
+        $user->banned_at = $request->input('ban');
+        $user->roles()->sync($request->input('roles'));
+        $user->save();
+
+        return back()->with('status', 1);
     }
 
     /**
