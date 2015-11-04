@@ -34,7 +34,8 @@
             _getFacebookEvents();
           } else {
             FB.login(_getFacebookEvents, {
-              scope: 'user_events'
+              scope: 'user_events',
+              return_scopes: true
             });
           }
         });
@@ -106,6 +107,8 @@
 
       //close modal
       function close(isSave) {
+        if(vm.spots.length === 0) return;
+
         if (isSave) {
           _.each(vm.spots, function (spot) {
             if (spot.selected) {
