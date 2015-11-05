@@ -21,14 +21,16 @@
       <img class="friend-avatar"
            ng-src="{{user.photo || modal.API_URL + '/uploads/missings/covers/thumb/missing.png'}}">
       <h4 class="name-friend">
-        {{user.first_name+ ' ' +user.last_name}}
+        <span>{{user.first_name + ' ' + user.last_name}}</span>
+        <span ng-if="(user.first_name || user.last_name) && user.email">, </span>
+        <span>{{ user.email }}</span>
       </h4>
     </div>
   </div>
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-success pull-left col-sm-4  col-xs-5 button-my" type="button" ng-click="modal.save()">
+  <button class="btn btn-success pull-left col-sm-4 col-xs-5 button-my" type="button" ng-click="modal.save()">
     Import
   </button>
 </div>

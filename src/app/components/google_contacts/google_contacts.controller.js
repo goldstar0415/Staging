@@ -15,7 +15,13 @@
       $modalInstance.close();
       _.each(vm.users, function (user) {
         if (user.selected) {
-          Friends.save(user, function () {
+          var photo = user.photo;
+          delete user.photo;
+          Friends.save(user, function (friend) {
+            if (photo) {
+              Friends.setAvatar({id: friend.id}, {avatar: photo});
+            }
+
             toastr.success(user.first_name + ' successfully imported')
           }, function () {
             toastr.error(user.first_name + ' import failed')
