@@ -142,6 +142,9 @@
         resolve: {
           contacts: function () {
             return contacts;
+          },
+          friends: function () {
+            return vm.friends;
           }
         }
       });

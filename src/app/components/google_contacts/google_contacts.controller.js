@@ -6,7 +6,7 @@
     .controller('GoogleContactsController', GoogleContactsController);
 
   /** @ngInject */
-  function GoogleContactsController(contacts, $modalInstance, API_URL, Friends) {
+  function GoogleContactsController(contacts, friends, $modalInstance, API_URL, Friends) {
     var vm = this;
     vm.API_URL = API_URL;
     vm.users = contacts;
@@ -23,7 +23,11 @@
             phone: user.phone
           }, function (friend) {
             if (photo) {
-              Friends.setAvatar({id: friend.id}, {avatar: photo});
+              Friends.setAvatar({id: friend.id}, {avatar: photo}, function (friendPhoto) {
+                friends.push(friendPhoto);
+              });
+            } else {
+              friends.push(friend);
             }
 
             toastr.success(user.first_name + ' successfully imported')
