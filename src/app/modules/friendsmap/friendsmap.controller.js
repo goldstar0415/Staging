@@ -150,7 +150,7 @@
     vm.googleImport = function () {
       var width = angular.element(window).width() / 2,
         height = angular.element(window).height() / 1.5;
-      openPopup(API_URL + '/google-contacts', "Google Contacts", width, height);
+      openPopup(location.origin + '/api/google-contacts', "Google Contacts", width, height);
 
       //gapi.client.setApiKey(GOOGLE_API_KEY);
       //window.setTimeout(checkAuth,1);
