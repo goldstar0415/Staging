@@ -16,8 +16,12 @@
       _.each(vm.users, function (user) {
         if (user.selected) {
           var photo = user.photo;
-          delete user.photo;
-          Friends.save(user, function (friend) {
+          Friends.save({
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            phone: user.phone
+          }, function (friend) {
             if (photo) {
               Friends.setAvatar({id: friend.id}, {avatar: photo});
             }
