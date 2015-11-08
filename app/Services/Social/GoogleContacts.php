@@ -34,7 +34,7 @@ class GoogleContacts extends Collection
                 'last_name' => $last_name,
                 'email' => isset($contact['gd$email'][0]['address']) ? $contact['gd$email'][0]['address'] : null,
                 'phone' => isset($contact['gd$phoneNumber'][0]['$t']) ? $contact['gd$phoneNumber'][0]['$t'] : null,
-                'photo' => $this->parsePhoto($contact['link'][0]['href'])
+                'photo' => $this->parsePhoto($contact['link'])
             ];
 
         }
@@ -42,18 +42,13 @@ class GoogleContacts extends Collection
         return $result;
     }
 
-    protected function parsePhoto($link)
+    protected function parsePhoto(array $link)
     {
-        $v = app(Validator::class)->make(['photo' => $link . '?access_token=' . $this->token->toString()], ['photo' => 'remote_image']);
-        if ($v->fails()) {
-            return null;
+        if (count($link) > 3) {
+            return $link[0]['href'] . '?access_token=' . $this->token->toString();
         }
-        $response = $this->getHttpClient()->get(
-            $link,
-            ['query' => ['access_token' => $this->token->toString()]]
-        );
 
-        return 'data:image/jpeg;base64,' . base64_encode((string)$response->getBody());
+        return null;
     }
 
     public function getHttpClient()
