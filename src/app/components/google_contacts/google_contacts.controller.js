@@ -15,7 +15,8 @@
       $modalInstance.close();
       _.each(vm.users, function (user) {
         if (user.selected) {
-          var photo = user.photo;
+          var photo = user.photo,
+            user_name = (user.first_name || user.last_name || user.email || user.phone);
           Friends.save({
             first_name: user.first_name,
             last_name: user.last_name,
@@ -30,9 +31,9 @@
               friends.push(friend);
             }
 
-            toastr.success(user.first_name + ' successfully imported')
+            toastr.success(user_name + ' successfully imported')
           }, function () {
-            toastr.error(user.first_name + ' import failed')
+            toastr.error(user_name + ' import failed')
           });
         }
       });
