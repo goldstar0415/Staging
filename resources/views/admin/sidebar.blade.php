@@ -5,7 +5,7 @@
             </li>
             <li><a href="admin_about_us.html">About us</a>
             </li>
-            <li><a href="admin_users.html">Users</a>
+            <li>{!! link_to_route('admin.users.index', 'Users') !!}
             </li>
             <li><a href="admin_spot_categories.html">Spot category</a>
             </li>
