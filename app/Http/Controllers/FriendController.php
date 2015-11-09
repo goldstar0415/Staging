@@ -47,9 +47,11 @@ class FriendController extends Controller
     {
         $inputs = $request->all();
 
-        $request->user()->friends()->save(new Friend($inputs));
+        $friend = new Friend($inputs);
 
-        return response()->json(['message' => 'Friend successfuly added']);
+        $request->user()->friends()->save($friend);
+
+        return $friend;
     }
 
     /**
@@ -75,7 +77,7 @@ class FriendController extends Controller
 
         $friend->update($inputs);
 
-        return response()->json(['message' => 'Friend successfuly updated']);
+        return $friend;
     }
 
     /**

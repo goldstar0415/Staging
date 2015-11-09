@@ -38,7 +38,7 @@ class GoogleClient
 
     public static function getContactsEngine()
     {
-        Config::set('services.google.redirect', action(class_basename(SocialContactsController::class) . '@google'));
+        Config::set('services.google.redirect', frontend_url('api/google-contacts'));
         $scopes = ['https://www.googleapis.com/auth/contacts.readonly'];
         $provider = \Socialite::with('google')->scopes($scopes);
 

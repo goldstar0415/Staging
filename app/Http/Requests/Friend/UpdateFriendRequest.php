@@ -13,8 +13,8 @@ class UpdateFriendRequest extends FriendRequest
     {
         return [
             'avatar' => 'image|max:5000',
-            'first_name' => 'required|max:64',
-            'last_name' => 'required|max:64',
+            'first_name' => 'max:64',
+            'last_name' => 'max:64',
             'email' => 'email|max:128',
             'phone' => 'string|max:24',
             'birth_date' => 'date_format:Y-m-d',
