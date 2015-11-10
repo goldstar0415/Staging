@@ -14,6 +14,7 @@ use App\Plan;
 use App\Social;
 use App\Spot;
 use App\SpotPhoto;
+use App\SpotTypeCategory;
 use App\User;
 use App\Wall;
 use Auth;
@@ -99,6 +100,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->bind('social', function ($value) {
             return Social::where('name', $value)->first();
         });
+        $router->model('spot_categories', SpotTypeCategory::class);
 
         parent::boot($router);
     }

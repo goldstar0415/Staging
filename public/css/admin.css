@@ -7538,6 +7538,8 @@ button.close {
   transition: color .3s;
 }
 .admin .editing table tbody td .delete {
+  min-height: 16px;
+  border: none;
   padding-right: 40px;
   background: url(/img/icons/trash.png) no-repeat 1px -12px;
 }
@@ -7552,7 +7554,6 @@ button.close {
   background: url(/img/icons/edit.png) no-repeat 8px -24px;
 }
 .admin .editing select {
-  height: 100px;
   border: 1px solid #dee5ea;
   border-radius: 3px;
   outline: none;
@@ -7560,6 +7561,9 @@ button.close {
   -moz-transition: box-shadow .3s, border-color .3s;
   -o-transition: box-shadow .3s, border-color .3s;
   transition: box-shadow .3s, border-colors .3s;
+}
+.admin .editing select[multiple] {
+  height: 100px;
 }
 .admin .editing select:hover {
   border: 1px solid #76c7dc;

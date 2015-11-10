@@ -7,9 +7,9 @@
             </li>
             <li>{!! link_to_route('admin.users.index', 'Users') !!}
             </li>
-            <li><a href="admin_spot_categories.html">Spot category</a>
+            <li>{!! link_to_route('admin.spot-categories.index', 'Spot Categories') !!}
             </li>
-            <li><a href="admin_activity_category.html">Activity category</a>
+            <li>{!! link_to_route('admin.activitylevel.index', 'Activity Categories') !!}
             </li>
             <li><a href="admin_activity_level.html">User type</a>
             </li>
