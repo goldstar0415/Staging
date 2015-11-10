@@ -1,7 +1,7 @@
 <div class="container wrap">
     <div class="col-md-3 col-xs-4 admin-menu">
         <ul>
-            <li><a href="admin_blog.html">Blog</a>
+            <li>{!! link_to_route('admin.posts.index', 'Blog') !!}
             </li>
             <li><a href="admin_about_us.html">About us</a>
             </li>
