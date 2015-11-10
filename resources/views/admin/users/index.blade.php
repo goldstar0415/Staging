@@ -30,7 +30,7 @@
                 </i></td>
                 <td>{{ $user->created_at }}</td>
                 <td>
-                    <a htef="#" class="delete"></a>
+                    {!! link_delete(route('admin.users.destroy', [$user->id]), '', ['class' => 'delete']) !!}
                 </td>
             </tr>
             @endforeach
