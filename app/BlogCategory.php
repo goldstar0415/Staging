@@ -14,7 +14,7 @@ namespace App;
  */
 class BlogCategory extends BaseModel
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'display_name'];
 
     public $timestamps = false;
 

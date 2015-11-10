@@ -3,7 +3,7 @@
 @section('content')
 <h2>
     Blog {!! link_to_route('admin.posts.create', 'New', [], ['class' => 'btn btn-success button-my right']) !!}
-    <a href="admin_blog_categories.html" class="btn btn-primary button-my right">Categories</a>
+    {!! link_to_route('admin.blog-categories.index', 'Categories', [], ['class' => 'btn btn-primary button-my right']) !!}
 </h2>
 <hr>
 {!! Form::open(['method' => 'POST', 'class' => 'search-form']) !!}

@@ -6,6 +6,7 @@ use App\ActivityLevel;
 use App\Album;
 use App\AlbumPhoto;
 use App\Blog;
+use App\BlogCategory;
 use App\Comment;
 use App\Area;
 use App\ChatMessage;
@@ -100,7 +101,8 @@ class RouteServiceProvider extends ServiceProvider
         $router->bind('social', function ($value) {
             return Social::where('name', $value)->first();
         });
-        $router->model('spot_categories', SpotTypeCategory::class);
+        $router->model('spot-categories', SpotTypeCategory::class);
+        $router->model('blog-categories', BlogCategory::class);
 
         parent::boot($router);
     }
