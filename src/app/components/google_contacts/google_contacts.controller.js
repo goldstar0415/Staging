@@ -24,9 +24,13 @@
             phone: user.phone
           }, function (friend) {
             if (photo) {
-              Friends.setAvatar({id: friend.id}, {avatar: photo}, function (friendPhoto) {
-                friends.push(friendPhoto);
-              });
+              var reader = new FileReader();
+              reader.onload = function (evt) {
+                Friends.setAvatar({id: friend.id}, {avatar: evt.target.result}, function (friendPhoto) {
+                  friends.push(friendPhoto);
+                });
+              };
+              reader.readAsDataURL(photo);
             } else {
               friends.push(friend);
             }
@@ -38,6 +42,7 @@
         }
       });
     };
+
 
     //close modal
     vm.close = function () {
