@@ -24,13 +24,11 @@
             phone: user.phone
           }, function (friend) {
             if (photo) {
-              var reader = new FileReader();
-              reader.onload = function (evt) {
-                Friends.setAvatar({id: friend.id}, {avatar: evt.target.result}, function (friendPhoto) {
+              convertToBase64(photo, function (data) {
+                Friends.setAvatar({id: friend.id}, {avatar: data}, function (friendPhoto) {
                   friends.push(friendPhoto);
                 });
-              };
-              reader.readAsDataURL(photo);
+              });
             } else {
               friends.push(friend);
             }
@@ -42,6 +40,20 @@
         }
       });
     };
+
+    function convertToBase64(url, callback) {
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = function() {
+        var reader  = new FileReader();
+        reader.onloadend = function () {
+          callback(reader.result);
+        };
+        reader.readAsDataURL(xhr.response);
+      };
+      xhr.open('GET', url);
+      xhr.send();
+    }
 
 
     //close modal
