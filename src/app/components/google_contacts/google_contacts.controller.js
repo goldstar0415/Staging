@@ -15,16 +15,16 @@
       $modalInstance.close();
       _.each(vm.users, function (user) {
         if (user.selected) {
-          var photo = user.photo,
-            user_name = (user.first_name || user.last_name || user.email || user.phone);
+          var user_name = (user.first_name || user.last_name || user.email || user.phone);
           Friends.save({
             first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,
             phone: user.phone
           }, function (friend) {
-            if (photo) {
-              convertToBase64(photo, function (data) {
+            if (user.photo) {
+              convertToBase64(user.photo, function (data) {
+                console.log(data);
                 Friends.setAvatar({id: friend.id}, {avatar: data}, function (friendPhoto) {
                   friends.push(friendPhoto);
                 });
@@ -42,6 +42,7 @@
     };
 
     function convertToBase64(url, callback, outputFormat) {
+      outputFormat = outputFormat || 'image/jpeg';
       var img = new Image();
       img.crossOrigin = 'Anonymous';
       img.onload = function(){
