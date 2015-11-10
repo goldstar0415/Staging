@@ -15,19 +15,17 @@
       $modalInstance.close();
       _.each(vm.users, function (user) {
         if (user.selected) {
-          var user_name = (user.first_name || user.last_name || user.email || user.phone);
+          var photo = user.photo,
+            user_name = (user.first_name || user.last_name || user.email || user.phone);
           Friends.save({
             first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,
             phone: user.phone
           }, function (friend) {
-            if (user.photo) {
-              convertToBase64(user.photo, function (data) {
-                console.log(data);
-                Friends.setAvatar({id: friend.id}, {avatar: data}, function (friendPhoto) {
-                  friends.push(friendPhoto);
-                });
+            if (photo) {
+              Friends.setAvatar({id: friend.id}, {avatar: photo}, function (friendPhoto) {
+                friends.push(friendPhoto);
               });
             } else {
               friends.push(friend);
@@ -40,26 +38,6 @@
         }
       });
     };
-
-    function convertToBase64(url, callback, outputFormat) {
-      outputFormat = outputFormat || 'image/jpeg';
-      var img = new Image();
-      img.crossOrigin = 'Anonymous';
-      img.onload = function () {
-        var canvas = document.createElement('CANVAS');
-        var ctx = canvas.getContext('2d');
-        var dataURL;
-        canvas.height = this.height;
-        canvas.width = this.width;
-        ctx.drawImage(this, 0, 0);
-        dataURL = canvas.toDataURL(outputFormat);
-        console.log(dataURL);
-        callback(dataURL);
-        canvas = null;
-      };
-      img.src = url;
-    }
-
 
     //close modal
     vm.close = function () {
