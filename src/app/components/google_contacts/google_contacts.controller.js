@@ -22,7 +22,6 @@
             email: user.email,
             phone: user.phone
           }, function (friend) {
-            console.log(user.photo);
             if (user.photo) {
               convertToBase64(user.photo, function (data) {
                 console.log(data);
@@ -46,7 +45,7 @@
       outputFormat = outputFormat || 'image/jpeg';
       var img = new Image();
       img.crossOrigin = 'Anonymous';
-      img.onload = function(){
+      img.onload = function () {
         var canvas = document.createElement('CANVAS');
         var ctx = canvas.getContext('2d');
         var dataURL;
@@ -54,6 +53,7 @@
         canvas.width = this.width;
         ctx.drawImage(this, 0, 0);
         dataURL = canvas.toDataURL(outputFormat);
+        console.log(dataURL);
         callback(dataURL);
         canvas = null;
       };
