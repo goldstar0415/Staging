@@ -20,7 +20,7 @@
             <tr>
                 <td>{!! link_to_route('admin.activitylevel.edit', $level->name, ['activitylevel' => $level->id]) !!}</td>
                 <td><p>{{ $level->favorites_count }}</p></td>
-                <td>{!! link_to_route('admin.activitylevel.destroy', '', [], ['class' => 'delete']) !!}</td>
+                <td>{!! link_delete(route('admin.activitylevel.destroy', [$level->id]), '', ['class' => 'delete']) !!}</td>
             </tr>
         @endforeach
         </tbody>

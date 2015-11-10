@@ -58,14 +58,15 @@ class ActivityLevelController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  ActivityLevel  $level
+     * @param ActivityLevelRequest $request
+     * @param  ActivityLevel $level
      * @return \Illuminate\View\View
-
      */
     public function update(ActivityLevelRequest $request, $level)
     {
-        return view('admin.activity_level.edit')->with('level', $level);
+        $level->update($request->all());
+
+        return back();
     }
 
     /**
