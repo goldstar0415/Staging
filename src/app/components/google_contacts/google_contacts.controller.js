@@ -22,6 +22,7 @@
             email: user.email,
             phone: user.phone
           }, function (friend) {
+            console.log(user.photo);
             if (user.photo) {
               convertToBase64(user.photo, function (data) {
                 console.log(data);

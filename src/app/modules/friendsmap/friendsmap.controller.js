@@ -122,10 +122,11 @@
      */
     vm.removeFriend = function (id, idx) {
       Friends.deleteFriend({id: id}, function () {
+        vm.friends.splice(idx, 1);
+
         for (var k in markers) {
           if (markers[k].id == id) {
             MapService.RemoveMarker(markers[k].marker);
-            vm.friends.splice(idx, 1);
           }
         }
       })
