@@ -16,11 +16,9 @@
             <li><a href="admin_contact_us_requests.html">Contact us requests</a>
             </li>
 
-            <li><a href="admin_reaction_requests.html">Recreation requests</a>
+            <li>
+                {!! link_to_route('admin.spot-requests.index', 'Spot requests') !!}
             </li>
-            <li><a href="admin_pit_stop_requests.html">Pit stop requests</a>
-            </li>
-
             <li>
                 {!! link_to_route('admin.blogger-requests.index', 'Blogger requests') !!}
             </li>

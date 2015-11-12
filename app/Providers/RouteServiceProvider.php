@@ -75,7 +75,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('friends', Friend::class);
         $router->bind('spots', function ($value) {
             $spot = Spot::withRequested()->findOrFail($value);
-            if ($spot->is_approved === false and $spot->user_id !== Auth::id()) {
+            if ($spot->is_approved === false and $spot->user_id !== Auth::id() and !Auth::user()->hasRole('admin')) {
                 throw new NotFoundHttpException;
             }
 

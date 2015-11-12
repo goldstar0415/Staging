@@ -16,3 +16,7 @@ delete('spot-import/log', 'SpotImportController@deleteLog')->name('admin.spot-im
 get('blogger-requests', 'BloggerRequestController@index')->name('admin.blogger-requests.index');
 get('blogger-requests/accept/{blogger_request}', 'BloggerRequestController@accept')->name('admin.blogger-requests.accept');
 get('blogger-requests/reject/{blogger_request}', 'BloggerRequestController@reject')->name('admin.blogger-requests.reject');
+
+get('spot-requests', 'SpotRequestController@index')->name('admin.spot-requests.index');
+get('spot-requests/approve/{spots}', 'SpotRequestController@approve')->name('admin.spot-requests.approve');
+get('spot-requests/reject/{spots}', 'SpotRequestController@reject')->name('admin.spot-requests.reject');
