@@ -45,7 +45,12 @@ class GoogleContacts extends Collection
     protected function parsePhoto(array $link)
     {
         if (count($link) > 3) {
-            return $link[0]['href'] . '?access_token=' . $this->token->toString();
+            $response = $this->getHttpClient()->get(
+                $link[0]['href'],
+                ['query' => ['access_token' => $this->token->toString()]]
+            );
+
+            return 'data:image/jpeg;base64,' . base64_encode((string)$response->getBody());
         }
 
         return null;
