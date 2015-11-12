@@ -9,9 +9,9 @@
             </li>
             <li>{!! link_to_route('admin.spot-categories.index', 'Spot Categories') !!}
             </li>
-            <li>{!! link_to_route('admin.activitylevel.index', 'Activity Categories') !!}
+            <li><a href="admin_activity_level.html">Activity level</a>
             </li>
-            <li><a href="admin_activity_level.html">User type</a>
+            <li>{!! link_to_route('admin.activitylevel.index', 'User type') !!}
             </li>
             <li><a href="admin_contact_us_requests.html">Contact us requests</a>
             </li>
@@ -23,7 +23,7 @@
 
             <li><a href="admin_blogger_reguests.html">Bloggers requests</a>
             </li>
-            <li><a href="admin_parse_csv.html">Parse CSV</a>
+            <li>{!! link_to_route('admin.spot-import', 'Parse CSV') !!}
             </li>
         </ul>
     </div>

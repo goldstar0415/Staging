@@ -29,7 +29,7 @@ class SpotsImportFile extends ExcelFile
      */
     public function __construct(Application $app, Excel $excel, $file)
     {
-        $this->importing_file = storage_path('app/' . $file);
+        $this->importing_file = $file;
         parent::__construct($app, $excel);
     }
 
