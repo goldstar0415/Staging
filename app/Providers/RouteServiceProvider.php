@@ -8,6 +8,7 @@ use App\Album;
 use App\AlbumPhoto;
 use App\Blog;
 use App\BlogCategory;
+use App\BloggerRequest;
 use App\Comment;
 use App\Area;
 use App\ChatMessage;
@@ -105,6 +106,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('spot-categories', SpotTypeCategory::class);
         $router->model('blog-categories', BlogCategory::class);
         $router->model('activity-categories', ActivityCategory::class);
+        $router->model('blogger-request', BloggerRequest::class);
 
         parent::boot($router);
     }

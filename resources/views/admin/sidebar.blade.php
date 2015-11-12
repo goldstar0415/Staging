@@ -21,7 +21,8 @@
             <li><a href="admin_pit_stop_requests.html">Pit stop requests</a>
             </li>
 
-            <li><a href="admin_blogger_reguests.html">Bloggers requests</a>
+            <li>
+                {!! link_to_route('admin.blogger-requests.index', 'Blogger requests') !!}
             </li>
             <li>{!! link_to_route('admin.spot-import', 'Parse CSV') !!}
             </li>
