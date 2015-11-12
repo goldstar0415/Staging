@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\ActivityCategory;
 use App\ActivityLevel;
 use App\Album;
 use App\AlbumPhoto;
@@ -103,6 +104,7 @@ class RouteServiceProvider extends ServiceProvider
         });
         $router->model('spot-categories', SpotTypeCategory::class);
         $router->model('blog-categories', BlogCategory::class);
+        $router->model('activity-categories', ActivityCategory::class);
 
         parent::boot($router);
     }
