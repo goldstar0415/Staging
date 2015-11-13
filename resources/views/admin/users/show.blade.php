@@ -11,7 +11,7 @@
         <div class="col-sm-10">
             <h3>{{ $user->first_name . ' ' . $user->last_name }}</h3>
 
-            <p><span>E-mail: </span><a href="#">{{ $user->email }}</a></p>
+            <p><span>E-mail: </span>{!! link_to('mailto:' . $user->email, $user->email) !!}</p>
 
             <p>
                 <span>Roles: </span>

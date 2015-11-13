@@ -10,6 +10,7 @@
     <table class="col-xs-12 requests">
         <thead>
         <tr>
+            <th class="col-sm-2">Username</th>
             <th class="col-sm-3">Title</th>
             <th class="col-sm-5">Description</th>
             <th class="col-sm-2"></th>
@@ -20,7 +21,12 @@
         @foreach($spots as $spot)
             <tr>
                 <td>
-                    <a href="#">{{ $spot->title }}</a>
+                    <a href="{!! frontend_url('user', $spot->user->id) !!}">
+                        {{ $spot->user->first_name . ' ' . $spot->user->last_name }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{!! frontend_url('user', $spot->user->id, 'spot', $spot->id) !!}">{{ $spot->title }}</a>
                 </td>
                 <td>
                     {{ $spot->description }}

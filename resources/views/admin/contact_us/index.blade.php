@@ -21,7 +21,7 @@
         @foreach($contacts as $contact)
             <tr>
                 <td>{{ $contact->username }}</td>
-                <td>{{ $contact->email }}</td>
+                <td>{!! link_to('mailto:' . $contact->email, $contact->email) !!}</td>
 
                 <td>{{ $contact->created_at }}</td>
                 <td>

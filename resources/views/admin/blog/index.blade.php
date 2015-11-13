@@ -13,14 +13,16 @@
 <table class="col-xs-12">
     <thead>
     <tr>
+        <th class="col-sm-3">Author</th>
         <th class="col-sm-5">Post</th>
-        <th class="col-sm-5">Date</th>
-        <th class="col-sm-2"></th>
+        <th class="col-sm-3">Date</th>
+        <th class="col-sm-1"></th>
     </tr>
     </thead>
     <tbody>
     @foreach($blogs as $blog)
         <tr>
+            <td>{!! link_to(frontend_url('user', $blog->user_id), $blog->user->first_name . ' ' . $blog->user->last_name) !!}</td>
             <td>{!! link_to_route('admin.posts.edit', $blog->title, [$blog->id]) !!}</td>
             <td>{{ $blog->created_at }}</td>
             <td>
