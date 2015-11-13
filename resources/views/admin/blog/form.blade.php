@@ -10,7 +10,10 @@
     {!! Form::label('is_main', 'Main') !!}
     {!! Form::checkbox('is_main', 1, null, ['class' => 'ban-check']) !!}
 </p>
-<p><a href="#" class="btn btn-primary "> Upload new image</a></p>
+<p>
+    {!! Form::label('cover', 'Cover') !!}
+    {!! Form::file('cover') !!}
+</p>
 <p>
     {!! Form::label('url', 'URL: ') !!}
     {!! Form::text('url', null, ['class' => 'edit-data']) !!}

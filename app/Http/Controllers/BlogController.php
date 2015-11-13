@@ -38,6 +38,7 @@ class BlogController extends Controller
      * Display a listing of the blogs.
      *
      * @param PaginateRequest $request
+     * @return mixed
      */
     public function index(PaginateRequest $request)
     {
