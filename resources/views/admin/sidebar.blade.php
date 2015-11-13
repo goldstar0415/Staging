@@ -13,9 +13,8 @@
             </li>
             <li>{!! link_to_route('admin.activitylevel.index', 'User type') !!}
             </li>
-            <li><a href="admin_contact_us_requests.html">Contact us requests</a>
+            <li>{!! link_to_route('admin.contact-us.index', 'Contact Us requests') !!}
             </li>
-
             <li>
                 {!! link_to_route('admin.spot-requests.index', 'Spot requests') !!}
             </li>

@@ -20,3 +20,6 @@ get('blogger-requests/reject/{blogger_request}', 'BloggerRequestController@rejec
 get('spot-requests', 'SpotRequestController@index')->name('admin.spot-requests.index');
 get('spot-requests/approve/{spots}', 'SpotRequestController@approve')->name('admin.spot-requests.approve');
 get('spot-requests/reject/{spots}', 'SpotRequestController@reject')->name('admin.spot-requests.reject');
+
+get('contact-us', 'ContactUsController@index')->name('admin.contact-us.index');
+delete('contact-us/{contact_us}', 'ContactUsController@destroy')->name('admin.contact-us.destroy');

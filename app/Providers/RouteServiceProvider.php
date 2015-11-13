@@ -12,6 +12,7 @@ use App\BloggerRequest;
 use App\Comment;
 use App\Area;
 use App\ChatMessage;
+use App\ContactUs;
 use App\Friend;
 use App\Plan;
 use App\Social;
@@ -107,6 +108,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('blog-categories', BlogCategory::class);
         $router->model('activity-categories', ActivityCategory::class);
         $router->model('blogger-request', BloggerRequest::class);
+        $router->model('contact-us', ContactUs::class);
 
         parent::boot($router);
     }
