@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Blog;
+use App\Http\Requests\Admin\SearchRequest;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -84,5 +85,10 @@ class BlogController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(SearchRequest $request)
+    {
+        return view('admin.blog.index')->with('blogs', Blog::search($request->search_text)->paginate());
     }
 }

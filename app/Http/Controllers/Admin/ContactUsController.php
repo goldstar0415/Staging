@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\ContactUs;
+use App\Http\Requests\Admin\SearchRequest;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -31,5 +32,10 @@ class ContactUsController extends Controller
         $contact->delete();
 
         return back();
+    }
+
+    public function search(SearchRequest $request)
+    {
+        return view('admin.contact_us.index')->with('contacts', ContactUs::search($request->search_text)->paginate());
     }
 }

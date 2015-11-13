@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Events\OnSpotCreate;
+use App\Http\Requests\Admin\SearchRequest;
 use App\Spot;
 use Illuminate\Http\Request;
 
@@ -47,5 +48,14 @@ class SpotRequestController extends Controller
         $spot->delete();
 
         return back();
+    }
+
+    public function search(SearchRequest $request)
+    {
+        return view('admin.spot_request.index')
+            ->with('spots', Spot::withRequested()
+                ->where('is_approved', false)
+                ->search($request->search_text)
+                ->paginate());
     }
 }

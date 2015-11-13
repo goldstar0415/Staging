@@ -429,4 +429,18 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     {
         return $this->user_id;
     }
+
+    /**
+     * Scope a query to search by blog text.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $filter
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearch($query, $filter)
+    {
+        return $query
+            ->whereRaw("(LOWER(\"title\") like LOWER('%$filter%') OR LOWER(\"description\") like LOWER('%$filter%'))");
+    }
+
 }

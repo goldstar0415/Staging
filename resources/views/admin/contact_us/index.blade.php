@@ -3,8 +3,8 @@
 @section('content')
     <h2>Contact Us Requests</h2>
     <hr>
-    {!! Form::open(['method' => 'POST', 'class' => 'search-form']) !!}
-    {!! Form::text('text', null, ['placeholder' => 'Search by name']) !!}
+    {!! Form::open(['method' => 'GET', 'route' => 'admin.contact-us.search', 'class' => 'search-form']) !!}
+    {!! Form::text('search_text', null, ['placeholder' => 'Search by name']) !!}
     {!! Form::submit('Search') !!}
     {!! Form::close() !!}
     <table class="col-xs-12">
@@ -35,6 +35,10 @@
         </tbody>
     </table>
     <div class="col-xs-12 pagination">
-        {!! $contacts->render() !!}
+        @if(Request::has('search_text'))
+            {!! $contacts->appends(['search_text' => Request::get('search_text')])->render() !!}
+        @else
+            {!! $contacts->render() !!}
+        @endif
     </div>
 @endsection

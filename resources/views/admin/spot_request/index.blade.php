@@ -3,8 +3,8 @@
 @section('content')
     <h2>Spot requests</h2>
     <hr>
-    {!! Form::open(['method' => 'POST', 'class' => 'search-form']) !!}
-    {!! Form::text('text', null, ['placeholder' => 'Search by name']) !!}
+    {!! Form::open(['method' => 'GET', 'route' => 'admin.spot-requests.search','class' => 'search-form']) !!}
+    {!! Form::text('search_text', null, ['placeholder' => 'Search by name']) !!}
     {!! Form::submit('Search') !!}
     {!! Form::close() !!}
     <table class="col-xs-12 requests">
@@ -36,6 +36,10 @@
         </tbody>
     </table>
     <div class="col-xs-12 pagination">
-        {!! $spots->render() !!}
+        @if(Request::has('search_text'))
+            {!! $spots->appends(['search_text' => Request::get('search_text')])->render() !!}
+        @else
+            {!! $spots->render() !!}
+        @endif
     </div>
 @endsection

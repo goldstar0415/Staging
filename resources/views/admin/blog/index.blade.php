@@ -6,8 +6,8 @@
     {!! link_to_route('admin.blog-categories.index', 'Categories', [], ['class' => 'btn btn-primary button-my right']) !!}
 </h2>
 <hr>
-{!! Form::open(['method' => 'POST', 'class' => 'search-form']) !!}
-{!! Form::text('text', null, ['placeholder' => 'Search by name']) !!}
+{!! Form::open(['method' => 'GET', 'route' => 'admin.posts.search', 'class' => 'search-form']) !!}
+{!! Form::text('search_text', null, ['placeholder' => 'Search by name']) !!}
 {!! Form::submit('Search') !!}
 {!! Form::close() !!}
 <table class="col-xs-12">
@@ -31,6 +31,10 @@
     </tbody>
 </table>
 <div class="col-xs-12 pagination">
-    {!! $blogs->render() !!}
+    @if(Request::has('search_text'))
+        {!! $blogs->appends(['search_text' => Request::get('search_text')])->render() !!}
+    @else
+        {!! $blogs->render() !!}
+    @endif
 </div>
 @endsection

@@ -4,10 +4,10 @@
 <div class="editing col-xs-12">
     <h2>Users</h2>
     <hr>
-    <form method="post" action="#" class="search-form">
-        <input type="text" placeholder="Start typing...">
-        <input type="submit" value="Search">
-    </form>
+    {!! Form::open(['method' => 'GET', 'route' => 'admin.users.search', 'class' => 'search-form']) !!}
+    {!! Form::text('search_text', null, ['placeholder' => 'Search by name']) !!}
+    {!! Form::submit('Search') !!}
+    {!! Form::close() !!}
     <table class="col-xs-12">
         <thead>
         <tr>
