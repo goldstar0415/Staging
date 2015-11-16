@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class ActivityLevelRequest extends Request
+class BlogCategoryRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,15 @@ class ActivityLevelRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|max:64',
-            'favorites_count' => 'required|integer'
+            'name' => 'required|max:64|unique:blog_categories',
+            'display_name' => 'required|max:128',
         ];
+    }
+
+    public function sanitize($input)
+    {
+        $input['name'] = str_slug($input['display_name']);
+
+        return $input;
     }
 }

@@ -100,10 +100,10 @@ class SpotsImport extends Job implements SelfHandling
                         return !Validator::make(['photo' => $value], ['photo' => 'remote_image'])->fails();
                     })));
                 }
-                $admin = User::where('email', $this->data['admin'])->first();
+                $admin = User::find($this->data['admin'])->first();
                 $spot = new Spot;
                 $spot->category()->associate(SpotTypeCategory::where('name', $this->data['spot_category'])->first());
-                if ($row->image_links[0]) {
+                if (isset($row->image_links[0])) {
                     $options = [
                         'styles' => [
                             'thumb' => [
@@ -166,10 +166,10 @@ class SpotsImport extends Job implements SelfHandling
         });
 
         File::delete([
-            storage_path('csvs/' . $this->type . '_import.json'),
-            storage_path('app/' . $this->data['document'])
+            $this->data['document']
         ]);
 
+        return true;
     }
 
     /**

@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
+use App\SpotType;
 
-class ActivityLevelRequest extends Request
+class ImportLogRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +25,7 @@ class ActivityLevelRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|max:64',
-            'favorites_count' => 'required|integer'
+            'type' => 'required|in:' . SpotType::all('name')->implode('name', ',')
         ];
     }
 }

@@ -34,14 +34,6 @@ class AppServiceProvider extends ServiceProvider
             event(new OnComment($comment));
         });
         
-        Spot::updated(function (Spot $spot) {
-            if (Request::is('admin/spot_requests/*/save')) {
-                if ($spot->is_approved) {
-                    event(new OnSpotCreate($spot));
-                }
-            }
-        });
-
         Spot::deleting(function (Spot $spot) {
             $spot->comments()->delete();
         });

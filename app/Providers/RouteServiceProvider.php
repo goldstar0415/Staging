@@ -2,18 +2,23 @@
 
 namespace App\Providers;
 
+use App\ActivityCategory;
 use App\ActivityLevel;
 use App\Album;
 use App\AlbumPhoto;
 use App\Blog;
+use App\BlogCategory;
+use App\BloggerRequest;
 use App\Comment;
 use App\Area;
 use App\ChatMessage;
+use App\ContactUs;
 use App\Friend;
 use App\Plan;
 use App\Social;
 use App\Spot;
 use App\SpotPhoto;
+use App\SpotTypeCategory;
 use App\User;
 use App\Wall;
 use Auth;
@@ -71,7 +76,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('friends', Friend::class);
         $router->bind('spots', function ($value) {
             $spot = Spot::withRequested()->findOrFail($value);
-            if ($spot->is_approved === false and $spot->user_id !== Auth::id()) {
+            if ($spot->is_approved === false and $spot->user_id !== Auth::id() and !Auth::user()->hasRole('admin')) {
                 throw new NotFoundHttpException;
             }
 
@@ -99,6 +104,11 @@ class RouteServiceProvider extends ServiceProvider
         $router->bind('social', function ($value) {
             return Social::where('name', $value)->first();
         });
+        $router->model('spot-categories', SpotTypeCategory::class);
+        $router->model('blog-categories', BlogCategory::class);
+        $router->model('activity-categories', ActivityCategory::class);
+        $router->model('blogger-request', BloggerRequest::class);
+        $router->model('contact-us', ContactUs::class);
 
         parent::boot($router);
     }
@@ -113,6 +123,13 @@ class RouteServiceProvider extends ServiceProvider
     {
         $router->group(['namespace' => $this->namespace], function ($router) {
             require app_path('Http/routes.php');
+        });
+        $router->group(['prefix' => 'admin',
+            'middleware' => 'admin',
+            'namespace' => $this->namespace . '\Admin'
+        ],
+        function ($router) {
+            require app_path('Http/admin_routes.php');
         });
     }
 }

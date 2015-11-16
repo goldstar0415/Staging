@@ -22,12 +22,10 @@ class ApprovedScope implements ScopeInterface
      */
     public function apply(Builder $builder, Model $model)
     {
-        if (!Request::is('admin/*')) {
-            $builder->where(function ($query) {
-                $query->whereNull($this->column)->orWhere($this->column, true);
-            });
-            $this->addWithRequested($builder);
-        }
+        $builder->where(function ($query) {
+            $query->whereNull($this->column)->orWhere($this->column, true);
+        });
+        $this->addWithRequested($builder);
     }
 
     /**

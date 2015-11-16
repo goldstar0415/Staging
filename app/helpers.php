@@ -18,3 +18,18 @@ if (! function_exists('frontend_url')) {
         ], $params));
     }
 }
+
+if (! function_exists('link_delete')) {
+    function link_delete($url, $title, $options = [], $params = []) {
+        $options['type'] = 'submit';
+
+        $output = Form::open(['method' => 'DELETE', 'url' => $url]);
+        $output .= Form::button($title, $options);
+        foreach ($params as $param => $value) {
+            $output .= Form::hidden($param, $value);
+        }
+        $output .= Form::close();
+
+        return $output;
+    }
+}
