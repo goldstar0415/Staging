@@ -85,8 +85,11 @@
           }
         }
       };
-    }
 
+      vm.isAnySelected = function () {
+        return _.findWhere(vm.friends, {selected: true});
+      };
+    }
   }
 
 })

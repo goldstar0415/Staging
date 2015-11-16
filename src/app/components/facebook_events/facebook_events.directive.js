@@ -125,6 +125,10 @@
         $modalInstance.close();
       }
 
+      vm.isAnySelected = function () {
+        return _.findWhere(vm.spots, {selected: true});
+      };
+
       //mark as selected spot
       function addSpot(spot) {
         spot.selected = !spot.selected;

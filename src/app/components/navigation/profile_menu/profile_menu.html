@@ -165,7 +165,7 @@
       <aside class="module-sidebar clearfix"
              ng-if="!Profile.$state.is('spot') && $root.profileUser.followings.length > 0 && Profile.checkPermision(profileUser.privacy_followings)">
         <h2 class="sidebar-title">
-          <a users-modal="following" user="$root.profileUser">
+          <a users-modal="followings" user="$root.profileUser">
             Following
             <span class="counter">{{$root.profileUser.count_followings}}</span>
           </a>

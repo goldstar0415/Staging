@@ -11,7 +11,7 @@
   /** @ngInject */
   function spotsModal($modal) {
     return {
-      restrict: 'E',
+      restrict: 'AE',
       transclude: true,
       templateUrl: '/app/components/spots_modal/spots_modal.html',
       scope: {
