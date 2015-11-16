@@ -21,10 +21,9 @@ if (! function_exists('frontend_url')) {
 
 if (! function_exists('link_delete')) {
     function link_delete($url, $title, $options = [], $params = []) {
-        $options['type'] = 'submit';
 
-        $output = Form::open(['method' => 'DELETE', 'url' => $url]);
-        $output .= Form::button($title, $options);
+        $output = Form::open(array_merge($options, ['method' => 'DELETE', 'url' => $url]));
+        $output .= Form::button($title, ['type' => 'submit']);
         foreach ($params as $param => $value) {
             $output .= Form::hidden($param, $value);
         }

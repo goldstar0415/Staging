@@ -16,8 +16,8 @@
 
 <script src="js/bootstrap.min.js"></script>
 
-<div class="container wrap admin">
-    <div class="col-md-9 col-xs-8">
+<div class="container-fluid wrap admin">
+    <div class="col-md-10 col-xs-8">
         <div class="editing blog col-xs-12">
             @yield('content')
         </div>

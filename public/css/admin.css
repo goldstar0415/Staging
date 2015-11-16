@@ -7538,13 +7538,28 @@ button.close {
   transition: color .3s;
 }
 .admin .editing table tbody td .delete {
-  min-height: 16px;
+  display: inline-block;
+  width: 10px;
+  height: 12px;
   border: none;
-  padding-right: 40px;
-  background: url(/img/icons/trash.png) no-repeat 1px -12px;
+  /*padding-right: 40px;*/
+  background: url(/img/icons/trash.png) no-repeat -15px -14px;
+}
+.admin .editing table tbody td:last-child {
+  text-align: center;
 }
 .admin .editing table tbody td .delete:hover {
-  background: url(/img/icons/trash.png) no-repeat 1px -53px;
+  background: url(/img/icons/trash.png) no-repeat -15px -55px;
+}
+.admin .editing table tbody td .delete button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 .admin .editing table tbody td .edit-spot {
   padding-right: 40px;
