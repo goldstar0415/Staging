@@ -25,7 +25,7 @@
 
                 <td>{{ $contact->created_at }}</td>
                 <td>
-                    {!! nl2br($contact->message) !!}
+                    {!! strip_tags(nl2br($contact->message), '<br>') !!}
                 </td>
                 <td>
                     {!! link_delete(route('admin.contact-us.destroy', [$contact->id]), '', ['class' => 'delete']) !!}
