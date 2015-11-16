@@ -16,7 +16,7 @@ class SpotCommentRequest extends Request
      */
     public function authorize()
     {
-        return $this->route('comments')->user_id === $this->user()->id;
+        return $this->route('comments')->user_id === $this->user()->id or $this->user()->hasRole('admin');
     }
 
     /**
