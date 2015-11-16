@@ -203,7 +203,7 @@ class User extends BaseModel implements
     public function getActivityLevelAttribute()
     {
         return ActivityLevel::where('favorites_count', '<', $this->favorites()->withoutNewest()->count())
-            ->first(['name'])['name'];
+            ->latest('favorites_count')->pluck('name');
     }
 
     /**
