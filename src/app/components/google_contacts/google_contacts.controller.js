@@ -47,6 +47,10 @@
       }
     };
 
+    vm.isAnySelected = function () {
+      return _.findWhere(vm.users, {selected: true});
+    };
+
     //close modal
     vm.close = function () {
       $modalInstance.close();

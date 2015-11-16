@@ -31,7 +31,5 @@
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-success pull-left col-sm-4 col-xs-5 button-my" type="button" ng-click="modal.save()">
-    Import
-  </button>
+  <input class="btn btn-success pull-left col-sm-4 col-xs-5 button-my" type="button" ng-click="modal.save()" value="Import" ng-disabled="!modal.isAnySelected()" />
 </div>
