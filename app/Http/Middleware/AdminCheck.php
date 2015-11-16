@@ -34,12 +34,8 @@ class AdminCheck
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->check()) {
-            $user = $this->auth->user();
-
-            if (!isset($user) and !$user->hasRole('admin')) {
-                throw new \App\Exceptions\PermissionDeniedException;
-            }
+        if (!$this->auth->check() or !$this->auth->user()->hasRole('admin')) {
+            throw new \App\Exceptions\PermissionDeniedException;
         }
 
         return $next($request);
