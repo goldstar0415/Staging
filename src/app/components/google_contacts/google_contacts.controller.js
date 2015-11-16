@@ -12,11 +12,15 @@
     vm.users = contacts;
 
     vm.save = function () {
-      $modalInstance.close();
+      var isClose = false;
+
       _.each(vm.users, function (user) {
         if (user.selected) {
+          isClose = true;
+
           var photo = user.photo,
             user_name = (user.first_name || user.last_name || user.email || user.phone);
+
           Friends.save({
             first_name: user.first_name,
             last_name: user.last_name,
@@ -37,6 +41,10 @@
           });
         }
       });
+
+      if (isClose) {
+        $modalInstance.close();
+      }
     };
 
     //close modal

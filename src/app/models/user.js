@@ -67,7 +67,11 @@
         method: 'POST'
       },
       checkAlias: {
-        url: API_URL + '/settings/checkAlias',
+        url: API_URL + '/settings/alias',
+        method: 'POST'
+      },
+      setLocation: {
+        url: API_URL + '/settings/location',
         method: 'POST'
       }
     });

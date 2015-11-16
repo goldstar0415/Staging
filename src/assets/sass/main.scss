@@ -345,6 +345,17 @@ h3 {
     background: url(../img/icons/tools.png) 0px -161px no-repeat;
   }
 }
+
+.report-icon {
+  width: 15px;
+  height: 15px;
+  background: url(../img/icons/mark.png) 1px 1px no-repeat;
+  background-size: 11px;
+  &:hover {
+    background: url(../img/icons/mark.png) 1px -13px no-repeat;
+    background-size: 11px;
+  }
+}
   .eye {
     display: block;
     width: 20px;

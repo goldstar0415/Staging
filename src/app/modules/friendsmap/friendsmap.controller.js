@@ -6,7 +6,7 @@
     .controller('FriendsmapController', FriendsmapController);
 
   /** @ngInject */
-  function FriendsmapController(friends, MapService, Friends, CropService, $state, API_URL, $modal, GOOGLE_API_KEY, GOOGLE_CLIENT_ID) {
+  function FriendsmapController(friends, MapService, Friends, CropService, $state, $modal) {
     var vm = this;
     var markers = [];
     vm.friends = format(friends);
@@ -156,8 +156,6 @@
         height = angular.element(window).height() / 1.5;
       openPopup(location.origin + '/api/google-contacts', "Google Contacts", width, height);
 
-      //gapi.client.setApiKey(GOOGLE_API_KEY);
-      //window.setTimeout(checkAuth,1);
     };
 
     function openPopup(url, title, w, h) {
@@ -176,50 +174,6 @@
       if (window.focus) {
         newWindow.focus();
       }
-    }
-
-    function checkAuth() {
-      gapi.auth.authorize({
-        client_id: GOOGLE_CLIENT_ID,
-        scope: 'https://www.googleapis.com/auth/plus.login',
-        immediate: true
-      }, handleAuthResult);
-    }
-
-    function handleAuthResult(authResult) {
-      if (authResult && !authResult.error) {
-        makeApiCall();
-      } else {
-        gapi.auth.authorize({
-          client_id: GOOGLE_CLIENT_ID,
-          scope: 'https://www.googleapis.com/auth/plus.login',
-          immediate: false
-        }, handleAuthResult);
-      }
-    }
-
-    // Load the API and make an API call.  Display the results on the screen.
-    function makeApiCall() {
-      // Step 4: Load the Google+ API
-      gapi.client.load('contacts', 'v1').then(function () {
-        //var request = gapi.client.plus.people.get({
-        //  'userId': 'me'
-        //});
-        //request.then(function(resp) {
-        //  console.log(resp);
-        //}, function(reason) {
-        //  console.log('Error: ' + reason.result.error.message);
-        //});
-
-        var request = gapi.client.plus.people.list({
-          'userId': 'me',
-          'collection': 'visible'
-        });
-
-        request.execute(function (resp) {
-          console.log(resp);
-        });
-      });
     }
 
 

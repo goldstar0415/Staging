@@ -9,7 +9,7 @@
     .factory('UserService', UserService);
 
   /** @ngInject */
-  function UserService($rootScope, $q, User, socket, $state) {
+  function UserService($rootScope, $q, User, socket, $state, $http) {
     return {
       getCurrentUserPromise: getCurrentUserPromise,
       setCurrentUser: setCurrentUser,
@@ -42,6 +42,10 @@
         setProfileUser(user);
       }
 
+      if (!user.ip_location) {
+        sendIpLocation();
+      }
+
       $rootScope.currentUserFailed = false;
       socket.connect(user.random_hash);
     }
@@ -52,6 +56,15 @@
      */
     function setProfileUser(user) {
       $rootScope.profileUser = user;
+    }
+
+    function sendIpLocation() {
+      $http.jsonp("http://ipinfo.io?callback=JSON_CALLBACK").success(function (response) {
+        User.setLocation({
+          city: response.city,
+          country: response.country
+        });
+      });
     }
 
     /*
