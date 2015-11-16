@@ -6,6 +6,8 @@ resource('activitylevel', 'ActivityLevelController', ['except' => 'show']);
 resource('users', 'UsersController', ['except' => ['store', 'create']]);
 get('users/search', 'UsersController@search')->name('admin.users.search');
 
+resource('spots', 'SpotController', ['except' => 'show']);
+get('spots/search', 'SpotController@search')->name('admin.spots.search');
 resource('spot-categories', 'SpotCategoriesController', ['except' => 'show']);
 
 resource('posts', 'BlogController');
