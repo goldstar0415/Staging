@@ -33,3 +33,6 @@ get('spot-requests/reject/{spots}', 'SpotRequestController@reject')->name('admin
 get('contact-us', 'ContactUsController@index')->name('admin.contact-us.index');
 delete('contact-us/{contact_us}', 'ContactUsController@destroy')->name('admin.contact-us.destroy');
 get('contact-us/search', 'ContactUsController@search')->name('admin.contact-us.search');
+
+get('email', 'EmailController@index')->name('admin.email');
+post('email', 'EmailController@send')->name('admin.email.send');

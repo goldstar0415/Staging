@@ -7740,3 +7740,6 @@ button.close {
 .admin .editing .parse-csv select {
   width: 65%;
 }
+.admin .editing .mail-form {
+  padding: 20px 0;
+}

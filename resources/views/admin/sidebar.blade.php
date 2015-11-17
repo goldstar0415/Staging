@@ -11,5 +11,6 @@
         <li>{!! link_to_route('admin.spot-requests.index', 'Spot requests') !!}</li>
         <li>{!! link_to_route('admin.blogger-requests.index', 'Blogger requests') !!}</li>
         <li>{!! link_to_route('admin.spot-import', 'Parse CSV') !!}</li>
+        <li>{!! link_to_route('admin.email', 'Send Email') !!}</li>
     </ul>
 </div>
