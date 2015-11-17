@@ -24,10 +24,10 @@
   }
 
   /** @ngInject */
-  function HeaderController($state, API_URL) {
+  function HeaderController($state, BACKEND_URL) {
     var vm = this;
     vm.$state = $state;
-    vm.API_URL = API_URL;
+    vm.BACKEND_URL = BACKEND_URL;
 
     if (vm.options.snap.disable == "left") {
       vm.toggle = "right";

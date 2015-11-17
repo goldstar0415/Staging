@@ -6,6 +6,7 @@
     .module('zoomtivity')
     .constant('DEBUG', true)
     .constant('MOBILE_APP', false)
+    .constant('BACKEND_URL', 'http://api.zoomtivity.com')
     .constant('API_URL', 'http://api.zoomtivity.com')
     .constant('SOCKET_URL', 'http://api.zoomtivity.com:8080')
     .constant('GOOGLE_API_KEY', 'AIzaSyBbBdjAuH8wCJsLBThDXYRBYX9e45Dyf_8')
