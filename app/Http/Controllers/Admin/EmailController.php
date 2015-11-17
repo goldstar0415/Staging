@@ -33,6 +33,9 @@ class EmailController extends Controller
 
     public function users(SearchRequest $request)
     {
-        return User::search($request->search_text)->get(['id', 'first_name', 'last_name']);
+        return User::search($request->search_text)->get(['id', 'first_name', 'last_name'])
+            ->each(function (User $user) {
+                $user->setAppends([]);
+            });
     }
 }
