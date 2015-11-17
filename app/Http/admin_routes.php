@@ -36,3 +36,4 @@ get('contact-us/search', 'ContactUsController@search')->name('admin.contact-us.s
 
 get('email', 'EmailController@index')->name('admin.email');
 post('email', 'EmailController@send')->name('admin.email.send');
+get('email/users', 'EmailController@users')->name('admin.email.users');

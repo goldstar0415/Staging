@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\SearchRequest;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -27,5 +29,10 @@ class EmailController extends Controller
     public function send()
     {
         //
+    }
+
+    public function users(SearchRequest $request)
+    {
+        return User::search($request->search_text)->get(['id', 'first_name', 'last_name']);
     }
 }
