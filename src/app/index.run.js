@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, $modalStack) {
+  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, $modalStack, USER_ONLINE_MINUTE) {
 
     $rootScope.isMobile = L.Browser.touch;
     L.Icon.Default.imagePath = '/assets/libs/Leaflet/images';
@@ -104,6 +104,28 @@
         $state.go($rootScope.previous.state.name, $rootScope.previous.params);
       }
     };
+
+    ////// COMMON FUNCTIONS
+
+    //check user online
+    $rootScope.isOnline = function (user) {
+      var online = false;
+      if (user.last_action_at) {
+        var lastAction = moment(user.last_action_at);
+        online = (lastAction.diff(moment(), 'minutes') + moment().utcOffset()) >= USER_ONLINE_MINUTE;
+      }
+
+      return {online: online, offline: !online};
+    };
+
+    //check user role
+    $rootScope.isRole = function (user, name) {
+      if (user) {
+        var roles = _.pluck(user.roles, 'name');
+        return roles.length > 0 && roles.indexOf(name) >= 0;
+      }
+    };
+
     $rootScope.$apply();
   }
 

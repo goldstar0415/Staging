@@ -23,7 +23,7 @@
   <nav class="hidden-sm hidden-xs">
     <ul>
       <li class="separator-bg map-profile" ng-if="$root.isRole($root.currentUser, 'admin')">
-        <a href="{{Header.BACKEND_URL}}/admin" target="_blank">
+        <a ng-href="{{Header.BACKEND_URL}}/admin" target="_blank">
           <span>Admin</span>
           <span class="admin-icon"></span>
         </a>

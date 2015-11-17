@@ -9,7 +9,7 @@
     .controller('ProfileMenuController', ProfileMenuController);
 
   /** @ngInject */
-  function ProfileMenuController(User, $state, PermissionService, $rootScope, USER_ONLINE_MINUTE) {
+  function ProfileMenuController(User, $state, PermissionService) {
     var vm = this;
     vm.$state = $state;
     vm.checkPermision = PermissionService.checkPermission;
@@ -36,22 +36,6 @@
       };
     };
 
-    //check user online
-    $rootScope.isOnline = function (user) {
-      var online = false;
-      if (user.last_action_at) {
-        var lastAction = moment(user.last_action_at);
-        online = (lastAction.diff(moment(), 'minutes') + moment().utcOffset()) >= USER_ONLINE_MINUTE;
-      }
 
-      return {online: online, offline: !online};
-    };
-
-    $rootScope.isRole = function (user, name) {
-      if (user) {
-        var roles = _.pluck(user.roles, 'name');
-        return roles.length > 0 && roles.indexOf(name) >= 0;
-      }
-    }
   }
 })();
