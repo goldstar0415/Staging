@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\SearchRequest;
+use App\Http\Requests\Admin\SendMailRequest;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -24,11 +25,12 @@ class EmailController extends Controller
     /**
      * Send mail to chosen users
      *
+     * @param SendMailRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function send()
+    public function send(SendMailRequest $request)
     {
-        //
+
     }
 
     public function users(SearchRequest $request)
