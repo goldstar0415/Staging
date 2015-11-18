@@ -4,7 +4,7 @@
 </p>
 <p>
     {!! Form::label('category_id', 'Category: ') !!}
-    {!! Form::select('category_id', \App\BlogCategory::all()->pluck('display_name', 'id'), null, ['size' => 4]) !!}
+    {!! Form::select('category_id', \App\BlogCategory::all()->pluck('display_name', 'id'), null) !!}
 </p>
 <p>
     {!! Form::label('is_main', 'Main') !!}
