@@ -326,6 +326,11 @@ class User extends BaseModel implements
         return $this->followers()->count();
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
     /**
      * Get the user's spots count
      *

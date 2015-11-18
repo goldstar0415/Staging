@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class SendMailRequest extends Request
+class MailUsersRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,9 @@ class SendMailRequest extends Request
     public function rules()
     {
         $rules = [
-            'users' => 'required|array',
-            'subject' => 'required|string|max:512',
-            'body' => 'required|string'
+            'users' => 'array'
         ];
-        $rules = array_merge($this->arrayFieldRules('users', 'integer'), $rules);;
+        $rules = array_merge($this->arrayFieldRules('users', 'integer'), $rules);
 
         return $rules;
     }

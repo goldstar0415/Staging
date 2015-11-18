@@ -5,19 +5,23 @@
     Send email letter
 </h2>
 <hr>
-<form action="#" method="POST" class="mail-form">
+{!! Form::open(['method' => 'POST', 'route' => 'admin.email.send', 'class' => 'mail-form']) !!}
     <div class="form-group">
-        <label for="users">Receivers</label>
-        <select name="users[]" id="users" class="form-control" multiple></select>
+        {!! Form::label('users', 'Receivers') !!}
+        {!! Form::select('users[]', $users, array_keys($users), [
+            'multiple',
+            'id' => 'users',
+            'class' => 'form-control'
+        ]) !!}
     </div>
     <div class="form-group">
-        <label for="subject">Subject</label>
-        <input name="subject" id="subject" type="text" class="form-control">
+        {!! Form::label('subject', 'Subject') !!}
+        {!! Form::text('subject', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group">
-        <label for="body">Subject</label>
-        <textarea name="body" id="body" cols="30" rows="10" class="form-control"></textarea>
+        {!! Form::label('body', 'Body') !!}
+        {!! Form::textarea('body', null, ['class' => 'form-control ckeditor']) !!}
     </div>
-    <input type="submit" value="Send" class="btn btn-default form-control">
-</form>
+    {!! Form::submit('Send', ['class' => 'btn btn-default form-control']) !!}
+{!! Form::close() !!}
 @endsection
