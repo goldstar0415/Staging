@@ -7743,3 +7743,16 @@ button.close {
 .admin .editing .mail-form {
   padding: 20px 0;
 }
+.editing .row.actions {
+  padding: 10px 30px;
+  border-bottom: solid 1px #E9EDF0;
+}
+.editing .actions label {
+  width: auto;
+}
+.editing .actions .form-group {
+  margin: 10px;
+}
+.editing tr th:first-child {
+  text-align: center;
+}

@@ -26,9 +26,11 @@ class SpotController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function emailSavers()
     {
-        //
+//        Spot::
+
+        return 'Ok';
     }
 
     /**
