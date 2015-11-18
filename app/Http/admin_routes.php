@@ -10,7 +10,7 @@ resource('spots', 'SpotController', ['except' => 'show']);
 get('spots/search', 'SpotController@search')->name('admin.spots.search');
 resource('spot-categories', 'SpotCategoriesController', ['except' => 'show']);
 
-resource('posts', 'BlogController');
+resource('posts', 'BlogController', ['except' => 'show']);
 get('posts/search', 'BlogController@search')->name('admin.posts.search');
 
 resource('blog-categories', 'BlogCategoryController', ['except' => 'show']);

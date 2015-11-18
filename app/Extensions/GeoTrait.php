@@ -39,6 +39,21 @@ trait GeoTrait
         return $attributes;
     }
 
+    public function getPointAttribute()
+    {
+        if (!is_null($this->location)) {
+            return [
+                'lat' => $this->location->getLat(),
+                'lng' => $this->location->getLng()
+            ];
+        }
+
+        return [
+            'lat' => null,
+            'lng' => null
+        ];
+    }
+
     /**
      * Location property mutator
      *

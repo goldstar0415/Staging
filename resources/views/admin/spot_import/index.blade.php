@@ -30,7 +30,11 @@
         {!! Form::close() !!}
     </p>
     <p>
-        {!! link_to_route('admin.spot-import.log.show', 'Show log', ['type' => 'event'], ['class' => 'btn btn-primary button-my', 'id' => 'log_link']) !!}
+        {!! link_to_route('admin.spot-import.log.show', 'Show log', ['type' => 'event'], [
+            'class' => 'btn btn-primary button-my',
+            'id' => 'log_link',
+            'target' => '_blank'
+        ]) !!}
         {!! link_delete(
                 route('admin.spot-import.log.delete'),
                 'Delete log',
