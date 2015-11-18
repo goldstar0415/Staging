@@ -5,16 +5,10 @@
     Send email letter
 </h2>
 <hr>
-<form action="#" class="mail-form">
+<form action="#" method="POST" class="mail-form">
     <div class="form-group">
         <label for="users">Receivers</label>
-        <select name="users" id="users" class="form-control" multiple>
-            <option value="1">John</option>
-            <option value="2">Jaack</option>
-            <option value="3">miss</option>
-            <option value="4">Lorea</option>
-            <option value="5">Some</option>
-        </select>
+        <select name="users[]" id="users" class="form-control" multiple></select>
     </div>
     <div class="form-group">
         <label for="subject">Subject</label>

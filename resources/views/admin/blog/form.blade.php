@@ -20,9 +20,11 @@
 </p>
 <p>
     {!! Form::label('location', 'Location:') !!}
-    {!! Form::text('location', null, ['class' => 'edit-data']) !!}
+    <select name="address" id="location" class="edit-data"></select>
+    {!! Form::hidden('location[lat]', null, ['id' => 'location_lat']) !!}
+    {!! Form::hidden('location[lng]', null, ['id' => 'location_lng']) !!}
 </p>
 <p>
-    {!! Form::textarea('body') !!}
+    {!! Form::textarea('body', null, ['class' => 'ckeditor']) !!}
 </p>
 {!! Form::submit('Save', ['class' => 'btn btn-success']) !!}
