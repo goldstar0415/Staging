@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\SearchRequest;
+use App\Http\Requests\Admin\SpotFilterRequest;
 use App\Http\Requests\PaginateRequest;
 use App\Spot;
+use DB;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -36,17 +38,6 @@ class SpotController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param Requests\Admin\SearchRequest $request
@@ -60,24 +51,44 @@ class SpotController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param SpotFilterRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function filter(SpotFilterRequest $request)
     {
-        //
-    }
+        $query = Spot::query();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        if ($request->has('title')) {
+            $query->where('title', 'like', '%' . $request->title . '%');
+        }
+        if ($request->has('description')) {
+            $query->where('description', '%' . $request->description . '%');
+        }
+        if ($request->has('created_at')) {
+            $query->where('created_at', $request->created_at);
+        }
+        if ($request->has('username') or $request->has('user_email')) {
+            $query->whereHas('user', function ($query) use ($request) {
+                if ($request->has('username')) {
+                    $query->search($request->username);
+                }
+                if ($request->has('user_email')) {
+                    $query->where('email', 'like', '%' . $request->user_email . '%');
+                }
+            });
+        }
+        if ($request->has('date')) {
+            $query->where(function ($query) use ($request) {
+                $query->where(DB::raw('start_date::date'), '<=', $request->date)
+                    ->where(DB::raw('end_date::date'), '>=', $request->date)
+                    ->whereNotNull('start_date');
+            });
+        }
+        if ($request->has('created_at')) {
+            $query->where('created_at', $request->created_at);
+        }
+
+        return view('admin.spots.index')->with('spots', $this->paginatealbe($request, $query, 15));
     }
 
     /**
