@@ -19,7 +19,7 @@
             'roles[]',
              \App\Role::all()->pluck('display_name', 'id')->toArray(),
              $user->roles->pluck('id')->toArray(),
-             ['multiple']
+             ['multiple', 'class' => 'new_multiple']
              ) !!}
         </p>
         <p>

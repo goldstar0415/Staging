@@ -18,12 +18,7 @@
     </p>
     <p>
         {!! Form::label('admin', 'Attached admin: ') !!}
-        {!! Form::select(
-                'admin',
-                App\Role::where('name', 'admin')->first()->users->pluck('first_name', 'id'),
-                null,
-                ['size' => 3]
-            )
+        {!! Form::select('admin', App\Role::where('name', 'admin')->first()->users->pluck('full_name', 'id'))
         !!}
     </p>
     <p>
@@ -35,11 +30,15 @@
         {!! Form::close() !!}
     </p>
     <p>
-        {!! link_to_route('admin.spot-import.log.show', 'Show log', ['type' => 'event'], ['class' => 'btn btn-primary button-my']) !!}
+        {!! link_to_route('admin.spot-import.log.show', 'Show log', ['type' => 'event'], [
+            'class' => 'btn btn-primary button-my',
+            'id' => 'log_link',
+            'target' => '_blank'
+        ]) !!}
         {!! link_delete(
                 route('admin.spot-import.log.delete'),
                 'Delete log',
-                ['class' => 'btn btn-danger button-my'],
+                ['class' => 'btn btn-danger button-my delete', 'id' => 'deleteLog'],
                 ['type' => 'event']
             )
         !!}

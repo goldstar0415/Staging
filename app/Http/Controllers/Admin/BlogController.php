@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Blog;
+use App\Http\Requests\Admin\BlogRequest;
 use App\Http\Requests\Admin\SearchRequest;
+use App\Http\Requests\Blog\BlogStoreRequest;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -34,23 +36,39 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  BlogRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BlogRequest $request)
     {
-        //
-    }
+        $blog = new Blog($request->only(['blog_category_id', 'title', 'body']));
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        if ($request->has('slug')) {
+            $blog->slug = $request->input('slug');
+        } else {
+            $slug = str_slug($blog->title);
+            $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|max:255|unique:blogs']);
+            if ($validator->fails()) {
+                abort(422, $validator->messages()->get('slug')[0]);
+            }
+
+            $blog->slug = $slug;
+        }
+
+        if ($request->hasFile('cover')) {
+            $blog->cover = $request->file('cover');
+        }
+        if ($request->has('location')) {
+            $blog->location = $request->input('location');
+            $blog->address = $request->input('address');
+        }
+        if ($request->has('main')) {
+            $blog->main = (bool)$request->main;
+        }
+
+        $request->user()->blogs()->save($blog);
+
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -68,23 +86,57 @@ class BlogController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $blog)
     {
-        //
+        $slug = '';
+
+        $blog->fill($request->only(['blog_category_id', 'title', 'body']));
+
+        if ($request->has('slug')) {
+            $slug = $request->input('slug');
+        } else {
+            $slug = str_slug($blog->title);
+        }
+
+        if ($blog->slug !== $slug) {
+            $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|unique:blogs']);
+            if ($validator->fails()) {
+                abort(422, $validator->messages()->get('slug')[0]);
+            }
+
+            $blog->slug = $slug;
+        }
+
+        if ($request->hasFile('cover')) {
+            $blog->cover = $request->file('cover');
+        }
+        if ($request->has('location')) {
+            $blog->location = $request->input('location');
+            $blog->address = $request->input('address');
+        }
+        if ($request->has('main')) {
+            $blog->main = (bool)$request->main;
+        }
+
+        $blog->save();
+
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($blog)
     {
-        //
+        $blog->delete();
+
+        return back();
     }
 
     public function search(SearchRequest $request)

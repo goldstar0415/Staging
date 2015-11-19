@@ -72,4 +72,63 @@
             })
         ;
     });
+    $(".new_multiple").select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+    });
+
+
+//--------------------------------------------------
+    $(document).ready(function () {
+        $('#spot_type').change(function () {
+            var $spotsType;
+
+            spotType();
+
+            newTypeShowLog();
+
+            deleteLogValue();
+
+            function deleteLogValue() {
+                var $deleteLog = $('#deleteLog input[name="type"]');
+                var per =  $deleteLog.attr('value', $spotsType);
+            }
+
+            function newTypeShowLog() {
+                function getLocation(href) {
+                    var l = document.createElement("a");
+                    l.href = href;
+                    return l;
+                }
+
+                var $logLink = $('#log_link'),
+                    link = $logLink.attr('href');
+                var parsedLink = getLocation(link);
+                var nLink = parsedLink.origin + parsedLink.pathname + '?type=' + $spotsType;
+                $logLink.attr('href', nLink);
+            }
+
+            function addSpotsCategory(spType) {
+                $.getJSON("/spots/categories?type=" + spType, function (data) {
+                    $('option', $("#category")).remove();
+
+                    for (var obj in data) {
+                        var displayName = data[obj].display_name;
+                        var category = document.getElementById("category");
+                        var option = document.createElement("option");
+                        option.text = displayName;
+                        category.add(option);
+                    }
+                });
+            }
+
+            function spotType() {
+                $spotsType = $("#spot_type option:selected").text().replace(/\s+/g, '').toLowerCase();
+                addSpotsCategory($spotsType);
+            }
+        });
+        $('#limit').change(function () {
+            location.href = location.origin + location.pathname + '?limit=' + $(this).val();
+        });
+    });
 })(jQuery);

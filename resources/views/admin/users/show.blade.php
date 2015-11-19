@@ -4,7 +4,7 @@
 <div class="user-data clearfix">
     <div class="col-sm-12">
         {!! link_to_route('admin.users.edit', 'Edit', $user->id, ['class' => 'btn btn-success button-my']) !!}
-        {!! link_delete(route('admin.users.destroy', [$user->id]), 'Delete', ['class' => 'btn btn-danger button-my']) !!}
+        {!! link_delete(route('admin.users.destroy', [$user->id]), 'Delete', ['class' => 'btn btn-danger button-my delete']) !!}
         <div class="col-sm-2">
             <img src="{{ $user->avatar_url['medium'] }}">
         </div>

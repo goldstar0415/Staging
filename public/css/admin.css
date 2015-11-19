@@ -7551,7 +7551,7 @@ button.close {
 .admin .editing table tbody td .delete:hover {
   background: url(/img/icons/trash.png) no-repeat -15px -55px;
 }
-.admin .editing table tbody td .delete button {
+.admin .delete button {
   display: block;
   width: 100%;
   height: 100%;
@@ -7742,4 +7742,17 @@ button.close {
 }
 .admin .editing .mail-form {
   padding: 20px 0;
+}
+.editing .row.actions {
+  padding: 10px 30px;
+  border-bottom: solid 1px #E9EDF0;
+}
+.editing .actions label {
+  width: auto;
+}
+.editing .actions .form-group {
+  margin: 10px;
+}
+.editing tr th:first-child {
+  text-align: center;
 }

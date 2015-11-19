@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\SearchRequest;
+use App\Http\Requests\PaginateRequest;
 use App\Spot;
 use Illuminate\Http\Request;
 
@@ -14,11 +15,12 @@ class SpotController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param PaginateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PaginateRequest $request)
     {
-        return view('admin.spots.index')->with('spots', Spot::paginate());
+        return view('admin.spots.index')->with('spots', $this->paginatealbe($request, Spot::query(), 15));
     }
 
     /**
@@ -26,9 +28,11 @@ class SpotController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function emailSavers()
     {
-        //
+//        Spot::
+
+        return 'Ok';
     }
 
     /**
