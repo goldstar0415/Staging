@@ -127,5 +127,8 @@
                 addSpotsCategory($spotsType);
             }
         });
+        $('#limit').change(function () {
+            location.href = location.origin + location.pathname + '?limit=' + $(this).val();
+        });
     });
 })(jQuery);

@@ -15,12 +15,17 @@ abstract class Controller extends BaseController
      * Get paginateable data
      *
      * @param Request $request
-     * @param \Illuminate\Database\Query\Builder $query
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $query
+     * @param int $limit
      * @return mixed
      */
-    public function paginatealbe(Request $request, $query)
+    public function paginatealbe(Request $request, $query, $limit = null)
     {
-        if ($request->has('page') or $request->has('limit')) {
+        if ($request->has('page') or $request->has('limit') or $limit) {
+            if ($limit and !$request->has('limit')) {
+                return $query->paginate($limit);
+            }
+
             return $query->paginate((int)$request->get('limit', 10));
         }
 

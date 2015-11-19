@@ -76,6 +76,12 @@
         @endforeach
         </tbody>
     </table>
+    <div class="row actions col-lg-12">
+        <div class="form-group pull-right">
+            {!! Form::label('limit', 'Items per page') !!}
+            {!! Form::select('limit', [15 => '15', 50 => '50', 100 => '100'], Request::get('limit')) !!}
+        </div>
+    </div>
     <div class="col-xs-12 pagination">
         @if(Request::has('search_text'))
             {!! $spots->appends(['search_text' => Request::get('search_text')])->render() !!}
