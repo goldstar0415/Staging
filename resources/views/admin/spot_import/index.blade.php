@@ -7,9 +7,9 @@
         {!! Form::select('spot_type', App\SpotType::all()->pluck('display_name', 'id')) !!}
     </p>
     <p>
-        {!! Form::label('category', 'Choose Spot Category: ') !!}
+        {!! Form::label('spot_category', 'Choose Spot Category: ') !!}
         {!! Form::select(
-                'category',
+                'spot_category',
                 App\SpotType::where('name', 'event')->first()->categories->pluck('display_name', 'id'),
                 null,
                 ['size' => 3]
@@ -43,7 +43,7 @@
             )
         !!}
     </p>
-    @if(Session::has('import'))
+    @if (Session::has('import'))
         <p>
             @if(Session::get('import'))
                 Import successful
@@ -52,7 +52,7 @@
             @endif
         </p>
     @endif
-    @if(Session::has('log_delete'))
+    @if (Session::has('log_delete'))
         <p>
             @if(Session::get('log_delete'))
                 Log deleted

@@ -102,7 +102,7 @@ class SpotsImport extends Job implements SelfHandling
                 }
                 $admin = User::find($this->data['admin'])->first();
                 $spot = new Spot;
-                $spot->category()->associate(SpotTypeCategory::where('name', $this->data['spot_category'])->first());
+                $spot->category()->associate($this->data['spot_category']);
                 if (isset($row->image_links[0])) {
                     $options = [
                         'styles' => [
