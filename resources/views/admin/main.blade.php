@@ -18,6 +18,7 @@
     <div class="col-md-10 col-xs-8">
         <div class="editing blog col-xs-12">
             @yield('content')
+            @include('admin.errors')
         </div>
     </div>
     @include('admin.sidebar')

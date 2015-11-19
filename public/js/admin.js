@@ -110,11 +110,11 @@
 
             function addSpotsCategory(spType) {
                 $.getJSON("/spots/categories?type=" + spType, function (data) {
-                    $('option', $("#category")).remove();
+                    $('option', $("#spot_category")).remove();
 
                     for (var obj in data) {
                         var displayName = data[obj].display_name;
-                        var category = document.getElementById("category");
+                        var category = document.getElementById("spot_category");
                         var option = document.createElement("option");
                         option.text = displayName;
                         category.add(option);

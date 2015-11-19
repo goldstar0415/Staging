@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\ImportLogRequest;
+use App\Http\Requests\Admin\SpotImportRequest;
 use App\Jobs\SpotsImport;
 use App\Services\SpotsImportFile;
 use Illuminate\Http\Request;
@@ -26,10 +27,10 @@ class SpotImportController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  SpotImportRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SpotImportRequest $request)
     {
         /**
          * @var SpotsImportFile $import

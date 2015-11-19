@@ -16,7 +16,7 @@
         {!! Form::text('search_text', null, ['placeholder' => 'Search by name']) !!}
         {!! Form::submit('Search') !!}
         {!! Form::close() !!}
-        {!! Form::open(['method' => 'GET', 'route' => 'admin.spots.search', 'class' => 'form-inline']) !!}
+        {!! Form::open(['method' => 'GET', 'route' => 'admin.spots.filter', 'class' => 'form-inline']) !!}
         <div class="form-group">
             {!! Form::label('title', 'Title:') !!}
             {!! Form::text('title', null, ['class' => 'form-control']) !!}
@@ -45,7 +45,7 @@
             {!! Form::label('created_at', 'Created at:') !!}
             {!! Form::text('created_at', null, ['class' => 'form-control']) !!}
         </div>
-        {!! Form::button('Filter', ['class' => 'btn btn-default']) !!}
+        {!! Form::button('Filter', ['class' => 'btn btn-default', 'type' => 'submit']) !!}
         {!! Form::close() !!}
     </div>
     <table class="col-xs-12">

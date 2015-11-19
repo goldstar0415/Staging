@@ -6,8 +6,9 @@ resource('activitylevel', 'ActivityLevelController', ['except' => 'show']);
 resource('users', 'UsersController', ['except' => ['store', 'create']]);
 get('users/search', 'UsersController@search')->name('admin.users.search');
 
-resource('spots', 'SpotController', ['except' => ['show', 'create']]);
+resource('spots', 'SpotController', ['only' => ['index', 'destroy']]);
 get('spots/search', 'SpotController@search')->name('admin.spots.search');
+get('spots/filter', 'SpotController@filter')->name('admin.spots.filter');
 get('spots/email-savers', 'SpotController@emailSavers')->name('admin.spots.email-savers');
 resource('spot-categories', 'SpotCategoriesController', ['except' => 'show']);
 
