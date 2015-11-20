@@ -6,10 +6,6 @@
         {!! link_to_route('admin.blog-categories.create', 'New', [], ['class' => 'btn btn-success button-my right']) !!}
     </h2>
     <hr>
-    {!! Form::open(['method' => 'POST', 'class' => 'search-form']) !!}
-    {!! Form::text('text', null, ['placeholder' => 'Search by name']) !!}
-    {!! Form::submit('Search') !!}
-    {!! Form::close() !!}
     <table class="col-xs-12">
         <thead>
         <tr>
@@ -28,7 +24,5 @@
         @endforeach
         </tbody>
     </table>
-    <div class="col-xs-12 pagination">
-        {!! $categories->render() !!}
-    </div>
+    @include('admin.pagination', ['paginatable' => $categories])
 @endsection

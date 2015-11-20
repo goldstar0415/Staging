@@ -89,6 +89,7 @@ class SpotController extends Controller
         if ($request->has('filter.created_at')) {
             $query->where(DB::raw('created_at::date'), $request->filter['created_at']);
         }
+        $request->flash();
 
         return view('admin.spots.index')->with('spots', $this->paginatealbe($request, $query, 15));
     }

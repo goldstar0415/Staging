@@ -32,11 +32,5 @@
     @endforeach
     </tbody>
 </table>
-<div class="col-xs-12 pagination">
-    @if(Request::has('search_text'))
-        {!! $blogs->appends(['search_text' => Request::get('search_text')])->render() !!}
-    @else
-        {!! $blogs->render() !!}
-    @endif
-</div>
+@include('admin.pagination', ['paginatable' => $blogs])
 @endsection
