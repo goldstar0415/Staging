@@ -20,7 +20,12 @@
 </p>
 <p>
     {!! Form::label('location', 'Location:') !!}
-    {!! Form::select('address', [1 => $blog->address], 1, ['class' => 'edit-data', 'id' => 'location']) !!}
+    {!! Form::select(
+        'address',
+        [$blog->address => $blog->address],
+        $blog->address,
+        ['class' => 'edit-data', 'id' => 'location']
+    ) !!}
     {!! Form::hidden('location[lat]', $blog->point['lat'], ['id' => 'location_lat']) !!}
     {!! Form::hidden('location[lng]', $blog->point['lng'], ['id' => 'location_lng']) !!}
 </p>
