@@ -130,7 +130,19 @@
             }
         });
         $('#limit').change(function () {
-            location.href = location.origin + location.pathname + '?limit=' + $(this).val();
+            var search = '';
+            var val = $(this).val();
+            if (location.search == "") {
+                search = '?limit=' + val;
+            } else {
+                search = location.search.replace(/(&|\?)?limit=\d+/, '') + '&limit=' + val;
+            }
+            location.href = location.origin + location.pathname + search;
+        });
+        $('form').submit(function(e){
+            var emptyinputs = $(this).find('input').filter(function(){
+                return !$.trim(this.value).length;  // get all empty fields
+            }).prop('disabled',true);
         });
     });
 })(jQuery);
