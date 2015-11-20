@@ -64,9 +64,6 @@ class SpotController extends Controller
         if ($request->has('filter.description')) {
             $query->where('description', 'ilike', '%' . $request->filter['description'] . '%');
         }
-        if ($request->has('filter.created_at')) {
-            $query->where('created_at', $request->filter['created_at']);
-        }
         if ($request->has('filter.address')) {
             $query->whereHas('points', function ($query) use ($request) {
                 $query->where('address', 'ilike', '%' . $request->filter['address'] . '%');

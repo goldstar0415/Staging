@@ -33,4 +33,13 @@ class SpotFilterRequest extends Request
             'filter.created_at' => 'date_format:Y-m-d'
         ];
     }
+
+    public function sanitize(array $input)
+    {
+        foreach ($input['filter'] as &$item) {
+            $item = trim($item);
+        }
+
+        return $input;
+    }
 }
