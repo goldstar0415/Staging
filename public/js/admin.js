@@ -114,9 +114,11 @@
 
                     for (var obj in data) {
                         var displayName = data[obj].display_name;
+                        var value = data[obj].id;
                         var category = document.getElementById("spot_category");
                         var option = document.createElement("option");
                         option.text = displayName;
+                        option.value = value;
                         category.add(option);
                     }
                 });
