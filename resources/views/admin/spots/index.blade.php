@@ -19,31 +19,31 @@
         {!! Form::open(['method' => 'GET', 'route' => 'admin.spots.filter', 'class' => 'form-inline']) !!}
         <div class="form-group">
             {!! Form::label('filter[title]', 'Title:') !!}
-            {!! Form::text('filter[title]', null, ['class' => 'form-control']) !!}
+            {!! Form::text('filter[title]', old('filter.title'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('filter[description]', 'Description:') !!}
-            {!! Form::text('filter[description]', null, ['class' => 'form-control']) !!}
+            {!! Form::text('filter[description]', old('filter.description'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('filter[address]', 'Address:') !!}
-            {!! Form::text('filter[address]', null, ['class' => 'form-control']) !!}
+            {!! Form::text('filter[address]', old('filter.address'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('filter[username]', 'Username:') !!}
-            {!! Form::text('filter[username]', null, ['class' => 'form-control']) !!}
+            {!! Form::text('filter[username]', old('filter.username'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('filter[user_email]', 'User email:') !!}
-            {!! Form::text('filter[user_email]', null, ['class' => 'form-control']) !!}
+            {!! Form::text('filter[user_email]', old('filter.user_email'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('filter[date]', 'Event date:') !!}
-            {!! Form::input('filter[date]', 'date', null, ['class' => 'form-control']) !!}
+            {!! Form::input('filter[date]', 'date', old('filter.date'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('filter[created_at]', 'Created at:') !!}
-            {!! Form::text('filter[created_at]', null, ['class' => 'form-control']) !!}
+            {!! Form::text('filter[created_at]', old('filter.created_at'), ['class' => 'form-control']) !!}
         </div>
         {!! Form::button('Filter', ['class' => 'btn btn-default', 'type' => 'submit']) !!}
         {!! Form::close() !!}
@@ -82,14 +82,6 @@
             {!! Form::select('limit', [15 => '15', 50 => '50', 100 => '100'], Request::get('limit')) !!}
         </div>
     </div>
-    <div class="col-xs-12 pagination">
-        @if(Request::has('search_text'))
-            {!! $spots->appends(['search_text' => Request::get('search_text')])->render() !!}
-        @elseif (Request::has('filter'))
-            {!! $spots->appends(Request::get('filter'))->render() !!}
-        @else
-            {!! $spots->render() !!}
-        @endif
-    </div>
+    @include('admin.pagination', ['paginatable' => $spots])
 </div>
 @endsection

@@ -135,7 +135,7 @@
             if (location.search == "") {
                 search = '?limit=' + val;
             } else {
-                search = location.search.replace(/(&|\?)?limit=\d+/, '') + '&limit=' + val;
+                search = location.search.replace(/(&|\?)?limit=\d+/, '').replace(/(&|\?)?page=\d+/) + '&limit=' + val;
             }
             location.href = location.origin + location.pathname + search;
         });

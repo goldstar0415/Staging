@@ -36,8 +36,6 @@
             @endforeach
         </tbody>
     </table>
-    <div class="col-xs-12 pagination">
-        {!! $users->render() !!}
-    </div>
+    @include('admin.pagination', ['paginatable' => $users])
 </div>
 @endsection
