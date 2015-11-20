@@ -58,34 +58,39 @@ class SpotController extends Controller
     {
         $query = Spot::query();
 
-        if ($request->has('title')) {
-            $query->where('title', 'like', '%' . $request->title . '%');
+        if ($request->has('filter.title')) {
+            $query->where('title', 'ilike', '%' . $request->filter['title'] . '%');
         }
-        if ($request->has('description')) {
-            $query->where('description', '%' . $request->description . '%');
+        if ($request->has('filter.description')) {
+            $query->where('description', 'ilike', '%' . $request->filter['description'] . '%');
         }
-        if ($request->has('created_at')) {
-            $query->where('created_at', $request->created_at);
+        if ($request->has('filter.created_at')) {
+            $query->where('created_at', $request->filter['created_at']);
         }
-        if ($request->has('username') or $request->has('user_email')) {
+        if ($request->has('filter.address')) {
+            $query->whereHas('points', function ($query) use ($request) {
+                $query->where('address', 'ilike', '%' . $request->filter['address'] . '%');
+            });
+        }
+        if ($request->has('filter.username') or $request->has('filter.user_email')) {
             $query->whereHas('user', function ($query) use ($request) {
-                if ($request->has('username')) {
-                    $query->search($request->username);
+                if ($request->has('filter.username')) {
+                    $query->search($request->filter['username']);
                 }
-                if ($request->has('user_email')) {
-                    $query->where('email', 'like', '%' . $request->user_email . '%');
+                if ($request->has('filter.user_email')) {
+                    $query->where('email', 'ilike', '%' . $request->filter['user_email'] . '%');
                 }
             });
         }
-        if ($request->has('date')) {
+        if ($request->has('filter.date')) {
             $query->where(function ($query) use ($request) {
-                $query->where(DB::raw('start_date::date'), '<=', $request->date)
-                    ->where(DB::raw('end_date::date'), '>=', $request->date)
+                $query->where(DB::raw('start_date::date'), '<=', $request->filter['date'])
+                    ->where(DB::raw('end_date::date'), '>=', $request->filter['date'])
                     ->whereNotNull('start_date');
             });
         }
-        if ($request->has('created_at')) {
-            $query->where('created_at', $request->created_at);
+        if ($request->has('filter.created_at')) {
+            $query->where(DB::raw('created_at::date'), $request->filter['created_at']);
         }
 
         return view('admin.spots.index')->with('spots', $this->paginatealbe($request, $query, 15));
