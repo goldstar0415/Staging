@@ -66,7 +66,7 @@ class BlogCategoryController extends Controller
     {
         $category->update($request->all());
 
-        return back();
+        return redirect()->route('admin.blog-categories.index');
     }
 
     /**
