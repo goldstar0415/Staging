@@ -9,7 +9,9 @@
             <li role="presentation">
                 {!! link_to_route('admin.spots.email-savers', 'Email Savers', Request::query()) !!}
             </li>
-            <li role="presentation"><a href="#">Email list</a></li>
+            <li role="presentation">
+                {!! link_to_route('admin.spots.email-list', 'Email List', Request::query()) !!}
+            </li>
             <li role="presentation"><a href="#">Export filter</a></li>
         </ul>
     </div>

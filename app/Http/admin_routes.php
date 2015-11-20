@@ -10,6 +10,7 @@ resource('spots', 'SpotController', ['only' => ['index', 'destroy']]);
 get('spots/search', 'SpotController@search')->name('admin.spots.search');
 get('spots/filter', 'SpotController@filter')->name('admin.spots.filter');
 get('spots/email-savers', 'SpotController@emailSavers')->name('admin.spots.email-savers');
+get('spots/email-list', 'SpotController@emailList')->name('admin.spots.email-list');
 resource('spot-categories', 'SpotCategoriesController', ['except' => 'show']);
 
 resource('posts', 'BlogController', ['except' => 'show']);

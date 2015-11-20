@@ -44,6 +44,23 @@ class SpotController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @param SpotFilterRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function emailList(SpotFilterRequest $request)
+    {
+        $users = User::whereHas('spots', function ($query) use ($request) {
+            $this->getFilterQuery($request, $query);
+        })->get(['id'])->each(function (User $user) {
+            $user->setAppends([]);
+        })->pluck('id')->toArray();
+
+        return redirect()->route('admin.email', $users ? compact('users') : []);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param Requests\Admin\SearchRequest $request
