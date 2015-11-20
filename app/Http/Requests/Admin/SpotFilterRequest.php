@@ -36,8 +36,10 @@ class SpotFilterRequest extends Request
 
     public function sanitize(array $input)
     {
-        foreach ($input['filter'] as &$item) {
-            $item = trim($item);
+        if (isset($input['filter'])) {
+            foreach ($input['filter'] as &$item) {
+                $item = trim($item);
+            }
         }
 
         return $input;

@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\SearchRequest;
 use App\Http\Requests\Admin\SpotFilterRequest;
 use App\Http\Requests\PaginateRequest;
 use App\Spot;
+use App\User;
 use DB;
 use Illuminate\Http\Request;
 
@@ -28,13 +29,18 @@ class SpotController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param SpotFilterRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function emailSavers()
+    public function emailSavers(SpotFilterRequest $request)
     {
-//        Spot::
+        $users = User::whereHas('calendarSpots', function ($query) use ($request) {
+            $this->getFilterQuery($request, $query);
+        })->get(['id'])->each(function (User $user) {
+            $user->setAppends([]);
+        })->pluck('id')->toArray();
 
-        return 'Ok';
+        return redirect()->route('admin.email', $users ? compact('users') : []);
     }
 
     /**
@@ -56,8 +62,31 @@ class SpotController extends Controller
      */
     public function filter(SpotFilterRequest $request)
     {
-        $query = Spot::query();
+        $query = $this->getFilterQuery($request, Spot::query());
 
+        return view('admin.spots.index')->with('spots', $this->paginatealbe($request, $query, 15));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Spot  $spot
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($spot)
+    {
+        $spot->delete();
+
+        return back();
+    }
+
+    /**
+     * @param SpotFilterRequest $request
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function getFilterQuery(SpotFilterRequest $request, $query)
+    {
         if ($request->has('filter.title')) {
             $query->where('title', 'ilike', '%' . $request->filter['title'] . '%');
         }
@@ -91,19 +120,6 @@ class SpotController extends Controller
         }
         $request->flash();
 
-        return view('admin.spots.index')->with('spots', $this->paginatealbe($request, $query, 15));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Spot  $spot
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($spot)
-    {
-        $spot->delete();
-
-        return back();
+        return $query;
     }
 }
