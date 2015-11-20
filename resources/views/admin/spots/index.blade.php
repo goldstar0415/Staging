@@ -56,7 +56,7 @@
             <th class="col-sm-3">Description</th>
             <th class="col-sm-2">Category</th>
             <th class="col-sm-2">Date added</th>
-            <th class="col-sm-2">Event date</th>
+            <th class="col-sm-2">Start date</th>
             <th></th>
         </tr>
         </thead>
