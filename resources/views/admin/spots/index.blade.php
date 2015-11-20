@@ -6,7 +6,9 @@
     <hr>
     <div class="row actions">
         <ul class="nav nav-pills">
-            <li role="presentation">{!! link_to_route('admin.spots.email-savers', 'Email Savers') !!}</li>
+            <li role="presentation">
+                {!! link_to_route('admin.spots.email-savers', 'Email Savers', Request::query()) !!}
+            </li>
             <li role="presentation"><a href="#">Email list</a></li>
             <li role="presentation"><a href="#">Export filter</a></li>
         </ul>
@@ -18,32 +20,32 @@
         {!! Form::close() !!}
         {!! Form::open(['method' => 'GET', 'route' => 'admin.spots.filter', 'class' => 'form-inline']) !!}
         <div class="form-group">
-            {!! Form::label('title', 'Title:') !!}
-            {!! Form::text('title', null, ['class' => 'form-control']) !!}
+            {!! Form::label('filter[title]', 'Title:') !!}
+            {!! Form::text('filter[title]', old('filter.title'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('description', 'Description:') !!}
-            {!! Form::text('description', null, ['class' => 'form-control']) !!}
+            {!! Form::label('filter[description]', 'Description:') !!}
+            {!! Form::text('filter[description]', old('filter.description'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('address', 'Address:') !!}
-            {!! Form::text('address', null, ['class' => 'form-control']) !!}
+            {!! Form::label('filter[address]', 'Address:') !!}
+            {!! Form::text('filter[address]', old('filter.address'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('username', 'Username:') !!}
-            {!! Form::text('username', null, ['class' => 'form-control']) !!}
+            {!! Form::label('filter[username]', 'Username:') !!}
+            {!! Form::text('filter[username]', old('filter.username'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('user_email', 'User email:') !!}
-            {!! Form::text('user_email', null, ['class' => 'form-control']) !!}
+            {!! Form::label('filter[user_email]', 'User email:') !!}
+            {!! Form::text('filter[user_email]', old('filter.user_email'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('date', 'Event date:') !!}
-            {!! Form::input('date', 'date', null, ['class' => 'form-control']) !!}
+            {!! Form::label('filter[date]', 'Event date:') !!}
+            {!! Form::input('filter[date]', 'date', old('filter.date'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('created_at', 'Created at:') !!}
-            {!! Form::text('created_at', null, ['class' => 'form-control']) !!}
+            {!! Form::label('filter[created_at]', 'Created at:') !!}
+            {!! Form::text('filter[created_at]', old('filter.created_at'), ['class' => 'form-control']) !!}
         </div>
         {!! Form::button('Filter', ['class' => 'btn btn-default', 'type' => 'submit']) !!}
         {!! Form::close() !!}
@@ -56,7 +58,7 @@
             <th class="col-sm-3">Description</th>
             <th class="col-sm-2">Category</th>
             <th class="col-sm-2">Date added</th>
-            <th class="col-sm-2">Event date</th>
+            <th class="col-sm-2">Start date</th>
             <th></th>
         </tr>
         </thead>
@@ -82,12 +84,6 @@
             {!! Form::select('limit', [15 => '15', 50 => '50', 100 => '100'], Request::get('limit')) !!}
         </div>
     </div>
-    <div class="col-xs-12 pagination">
-        @if(Request::has('search_text'))
-            {!! $spots->appends(['search_text' => Request::get('search_text')])->render() !!}
-        @else
-            {!! $spots->render() !!}
-        @endif
-    </div>
+    @include('admin.pagination', ['paginatable' => $spots])
 </div>
 @endsection

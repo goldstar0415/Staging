@@ -24,13 +24,24 @@ class SpotFilterRequest extends Request
     public function rules()
     {
         return [
-            'title' => 'string|max:255',
-            'description' => 'string|max:5000',
-            'address' => 'string|max:255',
-            'username' => 'string|max:255',
-            'user_email' => 'string|max:255',
-            'date' => 'date_format:Y-m-d',
-            'created_at' => 'date_format:Y-m-d'
+            'filter.title' => 'string|max:255',
+            'filter.description' => 'string|max:5000',
+            'filter.address' => 'string|max:255',
+            'filter.username' => 'string|max:255',
+            'filter.user_email' => 'string|max:255',
+            'filter.date' => 'date_format:Y-m-d',
+            'filter.created_at' => 'date_format:Y-m-d'
         ];
+    }
+
+    public function sanitize(array $input)
+    {
+        if (isset($input['filter'])) {
+            foreach ($input['filter'] as &$item) {
+                $item = trim($item);
+            }
+        }
+
+        return $input;
     }
 }

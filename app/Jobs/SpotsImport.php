@@ -100,7 +100,7 @@ class SpotsImport extends Job implements SelfHandling
                         return !Validator::make(['photo' => $value], ['photo' => 'remote_image'])->fails();
                     })));
                 }
-                $admin = User::find($this->data['admin'])->first();
+                $admin = User::find($this->data['admin']);
                 $spot = new Spot;
                 $spot->category()->associate($this->data['spot_category']);
                 if (isset($row->image_links[0])) {
