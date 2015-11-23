@@ -59,11 +59,15 @@
         <tr>
             <th id="bulk"><input type="checkbox"></th>
             <th class="col-sm-2">User</th>
+            <th class="col-sm-2">Email</th>
             <th class="col-sm-3">Title</th>
             <th class="col-sm-3">Description</th>
             <th class="col-sm-2">Category</th>
             <th class="col-sm-1">Date added</th>
             <th class="col-sm-1">Event date</th>
+            <th class="col-sm-1">Saves</th>
+            <th class="col-sm-1">Favorites</th>
+            <th class="col-sm-1">Web sites</th>
             <th></th>
         </tr>
         </thead>
@@ -72,11 +76,15 @@
             <tr>
                 <td>{!! Form::checkbox('spots[]', $spot->id, null, ['class' => 'row-select']) !!}</td>
                 <td>{!! link_to_route('admin.users.show', $spot->user->full_name, [$spot->user->id]) !!}</td>
+                <td>{!! link_to_route('admin.users.show', $spot->user->email, [$spot->user->id]) !!}</td>
                 <td>{!! link_to(frontend_url('user', $spot->user_id, 'spot', $spot->id), $spot->title) !!}</td>
                 <td>{{ $spot->description }}</td>
                 <td>{{ $spot->category->display_name }}</td>
                 <td>{{ $spot->created_at }}</td>
                 <td>{{ $spot->start_date . ' - ' . $spot->end_date }}</td>
+                <td>{{ $spot->calendarUsers()->count() }}</td>
+                <td>{{ $spot->favorites()->count() }}</td>
+                <td>{{ implode(', ', $spot->web_sites) }}</td>
                 <td>
                     {!! link_delete(route('admin.spots.destroy', [$spot->id]), '', ['class' => 'delete']) !!}
                 </td>
