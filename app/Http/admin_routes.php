@@ -11,6 +11,8 @@ get('spots/search', 'SpotController@search')->name('admin.spots.search');
 get('spots/filter', 'SpotController@filter')->name('admin.spots.filter');
 get('spots/email-savers', 'SpotController@emailSavers')->name('admin.spots.email-savers');
 get('spots/email-list', 'SpotController@emailList')->name('admin.spots.email-list');
+get('spots/export-filter', 'SpotController@exportFilter')->name('admin.spots.export-filter');
+patch('spots/bulk-update', 'SpotController@bulkUpdate')->name('admin.spots.bulk-update');
 resource('spot-categories', 'SpotCategoriesController', ['except' => 'show']);
 
 resource('posts', 'BlogController', ['except' => 'show']);

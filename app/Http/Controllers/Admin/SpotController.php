@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\SearchRequest;
 use App\Http\Requests\Admin\SpotFilterRequest;
+use App\Http\Requests\Admin\SpotsBulkUpdateRequest;
 use App\Http\Requests\PaginateRequest;
 use App\Spot;
 use App\User;
@@ -15,6 +16,14 @@ use App\Http\Controllers\Controller;
 
 class SpotController extends Controller
 {
+    /**
+     * SpotController constructor.
+     */
+    public function __construct()
+    {
+        $one =1;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -41,6 +50,16 @@ class SpotController extends Controller
         })->pluck('id')->toArray();
 
         return redirect()->route('admin.email', $users ? compact('users') : []);
+    }
+
+    public function exportFilter(SpotFilterRequest $request)
+    {
+        //TODO: make
+    }
+
+    public function bulkUpdate(/*SpotsBulkUpdateRequest $request*/)
+    {
+        return \Request::all();
     }
 
     /**

@@ -52,6 +52,7 @@
         {!! Form::button('Filter', ['class' => 'btn btn-default', 'type' => 'submit']) !!}
         {!! Form::close() !!}
     </div>
+    {!! Form::open(['method' => 'PATCH', 'route' => 'admin.spots.bulk-update', 'class' => 'form-horizontal']) !!}
     <table class="col-xs-12">
         <thead>
         <tr>
@@ -67,7 +68,7 @@
         <tbody>
         @foreach($spots as $spot)
             <tr>
-                <td><input type="checkbox"></td>
+                <td>{!! Form::checkbox('spots[]', $spot->id, null, ['class' => 'row-select']) !!}</td>
                 <td>{!! link_to(frontend_url('user', $spot->user_id, 'spot', $spot->id), $spot->title) !!}</td>
                 <td>{{ $spot->description }}</td>
                 <td>{{ $spot->category->display_name }}</td>
@@ -80,6 +81,28 @@
         @endforeach
         </tbody>
     </table>
+    <div class="row actions col-lg-12">
+        <div class="form-group">
+            {!! Form::label('users', 'User:') !!}
+            {!! Form::select('users', [], null, ['id' => 'users', 'class' => 'col-lg-2']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::label('address', 'Address:') !!}
+            {!! Form::select('address', [], null, ['class' => 'col-lg-2', 'id' => 'location']) !!}
+            {!! Form::hidden('location[lat]', null, ['id' => 'location_lat']) !!}
+            {!! Form::hidden('location[lng]', null, ['id' => 'location_lng']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::label('start_date', 'Start date:') !!}
+            {!! Form::input('datetime', 'start_date', null, ['class' => 'col-lg-2']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::label('end_date', 'End date:') !!}
+            {!! Form::input('datetime', 'end_date', null, ['class' => 'col-lg-2']) !!}
+        </div>
+        {!! Form::submit('Save', ['class' => 'btn btn-default']) !!}
+    </div>
+    {!! Form::close() !!}
     <div class="row actions col-lg-12">
         <div class="form-group pull-right">
             {!! Form::label('limit', 'Items per page') !!}

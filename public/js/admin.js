@@ -144,5 +144,13 @@
                 return !$.trim(this.value).length;  // get all empty fields
             }).prop('disabled',true);
         });
+        $('#bulk input[type=checkbox]').change(function(e) {
+            var $row = $('.row-select');
+            if ($(this).prop('checked')) {
+                 $row.prop('checked', true);
+             } else {
+                $row.prop('checked', false);
+             }
+        });
     });
 })(jQuery);
