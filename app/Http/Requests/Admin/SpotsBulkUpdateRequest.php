@@ -28,8 +28,8 @@ class SpotsBulkUpdateRequest extends Request
             'location.lat' => 'required_with:location.lng|number',
             'location.lng' => 'required_with:location.lat|number',
             'address' => 'required_with:location.lat,location.lng|string',
-            'start_date' => 'date_format:Y-m-d H:i:s',
-            'end_date' => 'date_format:Y-m-d H:i:s',
+            'start_date' => 'date_format:Y-m-d',
+            'end_date' => 'date_format:Y-m-d',
             'users' => 'integer|exists:users,id'
         ];
         $rules = array_merge($rules, $this->arrayFieldRules('spots', 'integer'));
