@@ -52,7 +52,6 @@
         {!! Form::button('Filter', ['class' => 'btn btn-default', 'type' => 'submit']) !!}
         {!! Form::close() !!}
     </div>
-    {!! Form::open(['method' => 'PATCH', 'route' => 'admin.spots.bulk-update', 'class' => 'form-horizontal']) !!}
     <table class="col-xs-12">
         <thead>
         <tr>
@@ -81,6 +80,7 @@
         @endforeach
         </tbody>
     </table>
+    {!! Form::open(['method' => 'PATCH', 'route' => 'admin.spots.bulk-update', 'class' => 'form-horizontal', 'id' => 'bulk-edit']) !!}
     <div class="row actions col-lg-12">
         <div class="form-group">
             {!! Form::label('users', 'User:') !!}

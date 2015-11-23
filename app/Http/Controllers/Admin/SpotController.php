@@ -17,14 +17,6 @@ use App\Http\Controllers\Controller;
 class SpotController extends Controller
 {
     /**
-     * SpotController constructor.
-     */
-    public function __construct()
-    {
-        $one =1;
-    }
-
-    /**
      * Display a listing of the resource.
      *
      * @param PaginateRequest $request
@@ -57,9 +49,26 @@ class SpotController extends Controller
         //TODO: make
     }
 
-    public function bulkUpdate(/*SpotsBulkUpdateRequest $request*/)
+    public function bulkUpdate(SpotsBulkUpdateRequest $request)
     {
-        return \Request::all();
+        Spot::whereIn('id', $request->spots)->get()->each(function (Spot $spot) use ($request) {
+            if ($request->has('address')) {
+                $spot->address = $request->address;
+                $spot->location = $request->location;
+            }
+            if ($request->has('start_date')) {
+                $spot->start_date = $request->start_date;
+            }
+            if ($request->has('end_date')) {
+                $spot->end_date = $request->end_date;
+            }
+            if ($request->has('users')) {
+                $spot->user()->associate($request->users);
+            }
+            $spot->save();
+        });
+
+        return back();
     }
 
     /**

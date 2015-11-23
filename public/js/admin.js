@@ -152,5 +152,8 @@
                 $row.prop('checked', false);
              }
         });
+        $('#bulk-edit').submit(function (e) {
+            $(this).append($('.row-select'));
+        });
     });
 })(jQuery);
