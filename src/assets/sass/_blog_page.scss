@@ -42,6 +42,10 @@
     .article-description {
       font: 14px/20px 'Pontano';
       padding: 5px 15px 15px;
+
+      img {
+        max-width: 100%;
+      }
     }
     .share {
       display: block;
