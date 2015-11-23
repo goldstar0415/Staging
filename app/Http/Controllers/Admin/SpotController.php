@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Extensions\SpotsExport;
 use App\Http\Requests\Admin\SearchRequest;
 use App\Http\Requests\Admin\SpotFilterRequest;
 use App\Http\Requests\Admin\SpotsBulkUpdateRequest;
@@ -44,9 +45,22 @@ class SpotController extends Controller
         return redirect()->route('admin.email', $users ? compact('users') : []);
     }
 
-    public function exportFilter(SpotFilterRequest $request)
+    public function exportFilter(SpotFilterRequest $request, SpotsExport $export)
     {
-        //TODO: make
+        $data = $this->getFilterQuery($request, Spot::query())->get()->map(function (Spot $spot) {
+            $row[] = $spot->user->full_name;
+            $row[] = $spot->title;
+            $row[] = $spot->description;
+            $row[] = $spot->start_date;
+            $row[] = $spot->end_date;
+            $row[] = $spot->category->display_name;
+            $row[] = (string)$spot->created_at;
+
+            return $row;
+        })->toArray();
+        $export->setData($data);
+
+        return $export->handleExport();
     }
 
     public function bulkUpdate(SpotsBulkUpdateRequest $request)

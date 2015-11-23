@@ -12,7 +12,9 @@
             <li role="presentation">
                 {!! link_to_route('admin.spots.email-list', 'Email List', Request::query()) !!}
             </li>
-            <li role="presentation"><a href="#">Export filter</a></li>
+            <li role="presentation">
+                {!! link_to_route('admin.spots.export-filter', 'Export Filter', Request::query()) !!}
+            </li>
         </ul>
     </div>
     <div class="row actions">
