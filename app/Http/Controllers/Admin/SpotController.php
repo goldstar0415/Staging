@@ -53,6 +53,7 @@ class SpotController extends Controller
             $row[] = $spot->description;
             $row[] = $spot->start_date;
             $row[] = $spot->end_date;
+            $row[] = implode(', ', $spot->web_sites);
             $row[] = $spot->category->display_name;
             $row[] = (string)$spot->created_at;
 
