@@ -153,7 +153,13 @@
              }
         });
         $('#bulk-edit').submit(function (e) {
-            $(this).append($('.row-select'));
+            var $form = $(this);
+            $('.row-select:checked').each(function() {
+                $("<input>").attr({
+                    'type':'hidden',
+                    'name':'spots[]'
+                }).val($(this).val()).appendTo($form);
+            });
         });
     });
 })(jQuery);

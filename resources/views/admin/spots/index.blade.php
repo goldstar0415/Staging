@@ -56,11 +56,12 @@
         <thead>
         <tr>
             <th id="bulk"><input type="checkbox"></th>
+            <th class="col-sm-2">User</th>
             <th class="col-sm-3">Title</th>
             <th class="col-sm-3">Description</th>
             <th class="col-sm-2">Category</th>
-            <th class="col-sm-2">Date added</th>
-            <th class="col-sm-2">Start date</th>
+            <th class="col-sm-1">Date added</th>
+            <th class="col-sm-1">Event date</th>
             <th></th>
         </tr>
         </thead>
@@ -68,11 +69,12 @@
         @foreach($spots as $spot)
             <tr>
                 <td>{!! Form::checkbox('spots[]', $spot->id, null, ['class' => 'row-select']) !!}</td>
+                <td>{!! link_to_route('admin.users.show', $spot->user->full_name, [$spot->user->id]) !!}</td>
                 <td>{!! link_to(frontend_url('user', $spot->user_id, 'spot', $spot->id), $spot->title) !!}</td>
                 <td>{{ $spot->description }}</td>
                 <td>{{ $spot->category->display_name }}</td>
                 <td>{{ $spot->created_at }}</td>
-                <td>{{ $spot->start_date }}</td>
+                <td>{{ $spot->start_date . ' - ' . $spot->end_date }}</td>
                 <td>
                     {!! link_delete(route('admin.spots.destroy', [$spot->id]), '', ['class' => 'delete']) !!}
                 </td>
@@ -86,12 +88,12 @@
             {!! Form::label('users', 'User:') !!}
             {!! Form::select('users', [], null, ['id' => 'users', 'class' => 'col-lg-2']) !!}
         </div>
-        <div class="form-group">
+        {{--<div class="form-group">
             {!! Form::label('address', 'Address:') !!}
             {!! Form::select('address', [], null, ['class' => 'col-lg-2', 'id' => 'location']) !!}
             {!! Form::hidden('location[lat]', null, ['id' => 'location_lat']) !!}
             {!! Form::hidden('location[lng]', null, ['id' => 'location_lng']) !!}
-        </div>
+        </div>--}}
         <div class="form-group">
             {!! Form::label('start_date', 'Start date:') !!}
             {!! Form::input('datetime', 'start_date', null, ['class' => 'col-lg-2']) !!}

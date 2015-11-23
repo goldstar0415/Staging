@@ -168,7 +168,11 @@ class User extends BaseModel implements
      */
     public function scopeSearch($query, $filter)
     {
-        return $query->whereRaw("LOWER(CONCAT(\"first_name\", ' ', \"last_name\")) like LOWER('%$filter%')");
+        return $query
+            ->whereRaw(
+                "LOWER(CONCAT(\"first_name\", ' ', \"last_name\")) like LOWER('%$filter%') " .
+                "OR LOWER(\"email\") like LOWER('%$filter%')"
+            );
     }
 
     /**
