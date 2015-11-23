@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\SearchRequest;
 use App\Http\Requests\Admin\SpotFilterRequest;
+use App\Http\Requests\Admin\SpotsBulkUpdateRequest;
 use App\Http\Requests\PaginateRequest;
 use App\Spot;
+use App\User;
 use DB;
 use Illuminate\Http\Request;
 
@@ -28,13 +30,62 @@ class SpotController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param SpotFilterRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function emailSavers()
+    public function emailSavers(SpotFilterRequest $request)
     {
-//        Spot::
+        $users = User::whereHas('calendarSpots', function ($query) use ($request) {
+            $this->getFilterQuery($request, $query);
+        })->get(['id'])->each(function (User $user) {
+            $user->setAppends([]);
+        })->pluck('id')->toArray();
 
-        return 'Ok';
+        return redirect()->route('admin.email', $users ? compact('users') : []);
+    }
+
+    public function exportFilter(SpotFilterRequest $request)
+    {
+        //TODO: make
+    }
+
+    public function bulkUpdate(SpotsBulkUpdateRequest $request)
+    {
+        Spot::whereIn('id', $request->spots)->get()->each(function (Spot $spot) use ($request) {
+            if ($request->has('address')) {
+                $spot->address = $request->address;
+                $spot->location = $request->location;
+            }
+            if ($request->has('start_date')) {
+                $spot->start_date = $request->start_date;
+            }
+            if ($request->has('end_date')) {
+                $spot->end_date = $request->end_date;
+            }
+            if ($request->has('users')) {
+                $spot->user()->associate($request->users);
+            }
+            $spot->save();
+        });
+
+        return back();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @param SpotFilterRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function emailList(SpotFilterRequest $request)
+    {
+        $users = User::whereHas('spots', function ($query) use ($request) {
+            $this->getFilterQuery($request, $query);
+        })->get(['id'])->each(function (User $user) {
+            $user->setAppends([]);
+        })->pluck('id')->toArray();
+
+        return redirect()->route('admin.email', $users ? compact('users') : []);
     }
 
     /**
@@ -56,8 +107,31 @@ class SpotController extends Controller
      */
     public function filter(SpotFilterRequest $request)
     {
-        $query = Spot::query();
+        $query = $this->getFilterQuery($request, Spot::query());
 
+        return view('admin.spots.index')->with('spots', $this->paginatealbe($request, $query, 15));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Spot  $spot
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($spot)
+    {
+        $spot->delete();
+
+        return back();
+    }
+
+    /**
+     * @param SpotFilterRequest $request
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function getFilterQuery(SpotFilterRequest $request, $query)
+    {
         if ($request->has('filter.title')) {
             $query->where('title', 'ilike', '%' . $request->filter['title'] . '%');
         }
@@ -91,19 +165,6 @@ class SpotController extends Controller
         }
         $request->flash();
 
-        return view('admin.spots.index')->with('spots', $this->paginatealbe($request, $query, 15));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Spot  $spot
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($spot)
-    {
-        $spot->delete();
-
-        return back();
+        return $query;
     }
 }
