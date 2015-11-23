@@ -72,10 +72,10 @@ class SpotController extends Controller
 //                $spot->location = $request->location;
 //            } TODO: change location
             if ($request->has('start_date')) {
-                $spot->start_date = $request->start_date;
+                $spot->start_date = $request->start_date . ' ' . $spot->start_date->format('H:i:s');
             }
             if ($request->has('end_date')) {
-                $spot->end_date = $request->end_date;
+                $spot->end_date = $request->end_date . ' ' . $spot->end_date->format('H:i:s');
             }
             if ($request->has('users')) {
                 $spot->user()->associate($request->users);

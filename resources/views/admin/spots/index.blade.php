@@ -106,11 +106,11 @@
         </div>--}}
         <div class="form-group">
             {!! Form::label('start_date', 'Start date:') !!}
-            {!! Form::input('datetime', 'start_date', null) !!}
+            {!! Form::input('date', 'start_date', null) !!}
         </div>
         <div class="form-group">
             {!! Form::label('end_date', 'End date:') !!}
-            {!! Form::input('datetime', 'end_date', null) !!}
+            {!! Form::input('date', 'end_date', null) !!}
         </div>
         {!! Form::submit('Save', ['class' => 'btn btn-default']) !!}
     {!! Form::close() !!}
