@@ -84,7 +84,7 @@
                 <td>{{ $spot->start_date . ' - ' . $spot->end_date }}</td>
                 <td>{{ $spot->calendarUsers()->count() }}</td>
                 <td>{{ $spot->favorites()->count() }}</td>
-                <td>{{ implode(', ', $spot->web_sites) }}</td>
+                <td>{{ $spot->web_sites ? implode(', ', $spot->web_sites) : null }}</td>
                 <td>
                     {!! link_delete(route('admin.spots.destroy', [$spot->id]), '', ['class' => 'delete']) !!}
                 </td>
@@ -92,11 +92,11 @@
         @endforeach
         </tbody>
     </table>
-    {!! Form::open(['method' => 'PATCH', 'route' => 'admin.spots.bulk-update', 'class' => 'form-horizontal', 'id' => 'bulk-edit']) !!}
-    <div class="row actions col-lg-12">
-        <div class="form-group">
+    <div class="row actions">
+    {!! Form::open(['method' => 'PATCH', 'route' => 'admin.spots.bulk-update', 'class' => 'form-inline', 'id' => 'bulk-edit']) !!}
+        <div class="form-group col-lg-2">
             {!! Form::label('users', 'User:') !!}
-            {!! Form::select('users', [], null, ['id' => 'users', 'class' => 'col-lg-2']) !!}
+            {!! Form::select('users', [], null, ['id' => 'users', 'style' => 'width: 80%']) !!}
         </div>
         {{--<div class="form-group">
             {!! Form::label('address', 'Address:') !!}
@@ -106,15 +106,15 @@
         </div>--}}
         <div class="form-group">
             {!! Form::label('start_date', 'Start date:') !!}
-            {!! Form::input('datetime', 'start_date', null, ['class' => 'col-lg-2']) !!}
+            {!! Form::input('datetime', 'start_date', null) !!}
         </div>
         <div class="form-group">
             {!! Form::label('end_date', 'End date:') !!}
-            {!! Form::input('datetime', 'end_date', null, ['class' => 'col-lg-2']) !!}
+            {!! Form::input('datetime', 'end_date', null) !!}
         </div>
         {!! Form::submit('Save', ['class' => 'btn btn-default']) !!}
-    </div>
     {!! Form::close() !!}
+    </div>
     <div class="row actions col-lg-12">
         <div class="form-group pull-right">
             {!! Form::label('limit', 'Items per page') !!}
