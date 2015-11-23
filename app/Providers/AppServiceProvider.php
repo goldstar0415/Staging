@@ -30,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        \Carbon\Carbon::setToStringFormat('Y-m-d h:i:s a');
         Comment::created(function (Comment $comment) {
             event(new OnComment($comment));
         });
