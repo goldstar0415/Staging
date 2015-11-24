@@ -159,6 +159,8 @@ class User extends BaseModel implements
         'location' => Point::class,
     ];
 
+    public static $aliasRule = '/(?=[a-zA-Z]+)\S*/';
+
     /**
      * Scope a query to search by user full name.
      *

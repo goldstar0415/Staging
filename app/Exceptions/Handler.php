@@ -7,6 +7,7 @@ use App\Services\Social\GoogleClient;
 use Config;
 use Exception;
 use Illuminate\Contracts\Validation\UnauthorizedException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -50,6 +51,8 @@ class Handler extends ExceptionHandler
             return response()->json(['message' => 'not found'], $e->getStatusCode());
         } elseif ($e instanceof PermissionDeniedException) {
             return response()->json(['message' => $e->getMessage()], $e->getStatusCode());
+        } elseif ($e instanceof ModelNotFoundException) {
+            return response()->json(['message' => 'not found'], 404);
         } elseif ($e instanceof HttpException) {
             return response()->json(['message' => $e->getMessage()], $e->getStatusCode());
         } elseif ($e instanceof TokenException) {

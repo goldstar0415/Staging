@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CheckAliasRequest;
 use App\Http\Requests\SetAvatarRequest;
 use App\Http\Requests\SettingsUpdateRequest;
 use Illuminate\Contracts\Auth\Guard;
@@ -88,5 +89,16 @@ class SettingsController extends Controller
         $user->save();
         
         return $user;
+    }
+
+    /**
+     * Check for available user alias
+     *
+     * @param CheckAliasRequest $request
+     * @return array
+     */
+    public function checkAlias(CheckAliasRequest $request)
+    {
+        return ['result' => true];
     }
 }

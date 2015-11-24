@@ -46,7 +46,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         $router->patterns([
-            'users' => '\d+',
+            'users' => '^[\w\-_]*$',
             'albums' => '\d+',
             'photos' => '\d+',
             'spots' => '\d+',
@@ -72,7 +72,13 @@ class RouteServiceProvider extends ServiceProvider
 
             return $value;
         });
-        $router->model('users', User::class);
+        $router->bind('users', function ($value) {
+            if (preg_match(User::$aliasRule, $value)) {
+                return User::where('alias', $value)->firstOrFail();
+            }
+
+            return User::findOrFail($value);
+        });
         $router->model('friends', Friend::class);
         $router->bind('spots', function ($value) {
             $spot = Spot::withRequested()->findOrFail($value);
@@ -125,7 +131,7 @@ class RouteServiceProvider extends ServiceProvider
             require app_path('Http/routes.php');
         });
         $router->group(['prefix' => 'admin',
-//            'middleware' => 'admin',
+            'middleware' => 'admin',
             'namespace' => $this->namespace . '\Admin'
         ],
         function ($router) {
