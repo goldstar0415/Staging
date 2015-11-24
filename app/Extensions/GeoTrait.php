@@ -4,6 +4,7 @@
 namespace App\Extensions;
 
 use Illuminate\Database\Query\Expression;
+use Illuminate\Database\Query\JoinClause;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 /**
@@ -92,7 +93,12 @@ trait GeoTrait
             );
         }
         $points = self::with(['spot', 'spot.user', 'spot.photos', 'spot.comments'])->select('spot_points.*')
-            ->join('spots', 'spot_points.spot_id', '=', 'spots.id')->whereRaw(implode(' OR ', $search_areas))->get();
+            ->join('spots', function ($join) {
+                /**
+                 * @var JoinClause $join
+                 */
+                $join->on('spot_points.spot_id', '=', 'spots.id')->whereNull('spots.is_approved')->orWhere('is_approved', '=' , true);
+            })->whereRaw(implode(' OR ', $search_areas))->get();
 
         return $points;
     }
