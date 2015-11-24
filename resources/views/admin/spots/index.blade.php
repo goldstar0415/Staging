@@ -96,21 +96,15 @@
     {!! Form::open(['method' => 'PATCH', 'route' => 'admin.spots.bulk-update', 'class' => 'form-inline', 'id' => 'bulk-edit']) !!}
         <div class="form-group col-lg-2">
             {!! Form::label('users', 'User:') !!}
-            {!! Form::select('users', [], null, ['id' => 'users', 'style' => 'width: 80%']) !!}
+            {!! Form::select('users', [], null, ['id' => 'users', 'style' => 'width: 80%', 'placeholder' => 'Username']) !!}
         </div>
-        {{--<div class="form-group">
-            {!! Form::label('address', 'Address:') !!}
-            {!! Form::select('address', [], null, ['class' => 'col-lg-2', 'id' => 'location']) !!}
-            {!! Form::hidden('location[lat]', null, ['id' => 'location_lat']) !!}
-            {!! Form::hidden('location[lng]', null, ['id' => 'location_lng']) !!}
-        </div>--}}
         <div class="form-group">
             {!! Form::label('start_date', 'Start date:') !!}
-            {!! Form::input('date', 'start_date', null) !!}
+            {!! Form::input('date', 'start_date', null, ['placeholder' => 'Y-m-d']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('end_date', 'End date:') !!}
-            {!! Form::input('date', 'end_date', null) !!}
+            {!! Form::input('date', 'end_date', null, ['placeholder' => 'Y-m-d']) !!}
         </div>
         {!! Form::submit('Save', ['class' => 'btn btn-default']) !!}
     {!! Form::close() !!}
