@@ -23,7 +23,7 @@ Route::get('users/logout', 'UserController@getLogout');
 Route::post('users/recovery', 'UserController@postRecovery');
 Route::post('users/reset', 'UserController@postReset');
 Route::get('users/{users}', 'UserController@getIndex');
-post('settings/alias', 'SettingsController@checkAlias');
+get('settings/alias', 'SettingsController@checkAlias');
 Route::controller('settings', 'SettingsController');
 
 Route::get('account/{social}', 'SocialAuthController@getAccount');
