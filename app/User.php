@@ -7,6 +7,7 @@ use App\Extensions\GeoTrait;
 use Carbon\Carbon;
 use DB;
 use Eluceo\iCal\Component\Event;
+use Eluceo\iCal\Property\Event\Organizer;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -619,7 +620,7 @@ class User extends BaseModel implements
             $ics_event->setLocation($user->address);
         }
         $ics_event->setUseUtc(false);
-        $ics_event->setOrganizer($full_name, $user->email);
+        $ics_event->setOrganizer(new Organizer($full_name, ['email' => $user->email]));
         $ics_event->setSummary($full_name . ' birthday!!!');
 
         return $ics_event;

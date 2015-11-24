@@ -7,6 +7,7 @@ use App\Contracts\Commentable;
 use App\Extensions\GeoTrait;
 use App\Extensions\StartEndDatesTrait;
 use Eluceo\iCal\Component\Event;
+use Eluceo\iCal\Property\Event\Organizer;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
@@ -138,7 +139,7 @@ class Plan extends BaseModel implements CalendarExportable, Commentable
         }
         $ics_event->setLocation($plan->address);
         $ics_event->setUseUtc(false);
-        $ics_event->setOrganizer($user->first_name . ' ' . $user->last_name, $user->email);
+        $ics_event->setOrganizer(new Organizer($user->first_name . ' ' . $user->last_name, ['email' => $user->email]));
         $ics_event->setSummary($plan->title);
 
         return $ics_event;

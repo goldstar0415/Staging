@@ -51,6 +51,15 @@
             {!! Form::label('filter[created_at]', 'Created at:') !!}
             {!! Form::text('filter[created_at]', old('filter.created_at'), ['class' => 'form-control']) !!}
         </div>
+        <div class="form-group">
+            {!! Form::label('filter[statistic]', 'Show statistic fields:') !!}
+            {!! Form::checkbox(
+                'filter[statistic]',
+                old('filter.statistic', 1),
+                Request::has('filter.statistic'),
+                ['class' => 'form-control']
+            ) !!}
+        </div>
         {!! Form::button('Filter', ['class' => 'btn btn-default', 'type' => 'submit']) !!}
         {!! Form::close() !!}
     </div>
@@ -58,16 +67,27 @@
         <thead>
         <tr>
             <th id="bulk"><input type="checkbox"></th>
-            <th class="col-sm-2">User</th>
+            <th>User</th>
+            @if (Request::has('filter.user_email'))
             <th class="col-sm-2">Email</th>
-            <th class="col-sm-3">Title</th>
+            @endif
+            <th>Title</th>
+            @if (Request::has('filter.description'))
             <th class="col-sm-3">Description</th>
-            <th class="col-sm-2">Category</th>
-            <th class="col-sm-1">Date added</th>
+            @endif
+            <th>Addresses</th>
+            <th>Category</th>
+            <th>Date added</th>
+            @if (Request::has('filter.date'))
             <th class="col-sm-1">Event date</th>
+            @endif
+            @if (Request::has('filter.statistic'))
             <th class="col-sm-1">Saves</th>
             <th class="col-sm-1">Favorites</th>
+            @endif
+            @if (Request::has('filter.user_email'))
             <th class="col-sm-1">Web sites</th>
+            @endif
             <th></th>
         </tr>
         </thead>
@@ -76,15 +96,26 @@
             <tr>
                 <td>{!! Form::checkbox('spots[]', $spot->id, null, ['class' => 'row-select']) !!}</td>
                 <td>{!! link_to_route('admin.users.show', $spot->user->full_name, [$spot->user->id]) !!}</td>
+                @if (Request::has('filter.user_email'))
                 <td>{!! link_to_route('admin.users.show', $spot->user->email, [$spot->user->id]) !!}</td>
+                @endif
                 <td>{!! link_to(frontend_url('user', $spot->user_id, 'spot', $spot->id), $spot->title) !!}</td>
+                @if (Request::has('filter.description'))
                 <td>{{ $spot->description }}</td>
+                @endif
+                <td>{{ $spot->points->implode('address', '; ') }}</td>
                 <td>{{ $spot->category->display_name }}</td>
                 <td>{{ $spot->created_at }}</td>
+                @if (Request::has('filter.date'))
                 <td>{{ $spot->start_date . ' - ' . $spot->end_date }}</td>
+                @endif
+                @if (Request::has('filter.statistic'))
                 <td>{{ $spot->calendarUsers()->count() }}</td>
                 <td>{{ $spot->favorites()->count() }}</td>
+                @endif
+                @if (Request::has('filter.user_email'))
                 <td>{{ $spot->web_sites ? implode(', ', $spot->web_sites) : null }}</td>
+                @endif
                 <td>
                     {!! link_delete(route('admin.spots.destroy', [$spot->id]), '', ['class' => 'delete']) !!}
                 </td>
