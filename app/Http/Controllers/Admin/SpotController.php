@@ -67,10 +67,6 @@ class SpotController extends Controller
     public function bulkUpdate(SpotsBulkUpdateRequest $request)
     {
         Spot::whereIn('id', $request->spots)->get()->each(function (Spot $spot) use ($request) {
-//            if ($request->has('address')) {
-//                $spot->address = $request->address;
-//                $spot->location = $request->location;
-//            } TODO: change location
             if ($request->has('start_date')) {
                 $spot->start_date = $request->start_date . ' ' . $spot->start_date->format('H:i:s');
             }
