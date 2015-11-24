@@ -15,6 +15,9 @@
             <li role="presentation">
                 {!! link_to_route('admin.spots.export-filter', 'Export Filter', Request::query()) !!}
             </li>
+            <li role="presentation">
+                {!! link_to_route('admin.spots.duplicates', 'Search duplicated') !!}
+            </li>
         </ul>
     </div>
     <div class="row actions">

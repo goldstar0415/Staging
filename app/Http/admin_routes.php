@@ -13,6 +13,7 @@ get('spots/email-savers', 'SpotController@emailSavers')->name('admin.spots.email
 get('spots/email-list', 'SpotController@emailList')->name('admin.spots.email-list');
 get('spots/export-filter', 'SpotController@exportFilter')->name('admin.spots.export-filter');
 patch('spots/bulk-update', 'SpotController@bulkUpdate')->name('admin.spots.bulk-update');
+get('spots/duplicates', 'SpotController@duplicates')->name('admin.spots.duplicates');
 resource('spot-categories', 'SpotCategoriesController', ['except' => 'show']);
 
 resource('posts', 'BlogController', ['except' => 'show']);
