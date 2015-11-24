@@ -30,7 +30,8 @@ class SpotFilterRequest extends Request
             'filter.username' => 'string|max:255',
             'filter.user_email' => 'string|max:255',
             'filter.date' => 'date_format:Y-m-d',
-            'filter.created_at' => 'date_format:Y-m-d'
+            'filter.created_at' => 'date_format:Y-m-d',
+            'filter.statistic' => 'boolean'
         ];
     }
 

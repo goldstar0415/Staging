@@ -12,6 +12,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use DB;
 use Eluceo\iCal\Component\Event;
+use Eluceo\iCal\Property\Event\Organizer;
 use Request;
 
 /**
@@ -415,7 +416,8 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             $ics_event->setUrl($spot->web_sites[0]);
         }
         $ics_event->setUseUtc(false);
-        $ics_event->setOrganizer($user->first_name . ' ' . $user->last_name, $user->email);
+
+        $ics_event->setOrganizer(new Organizer($user->first_name . ' ' . $user->last_name, ['email' => $user->email]));
         $ics_event->setCategories($spot->category->display_name);
         $ics_event->setSummary($spot->title);
 
