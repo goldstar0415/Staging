@@ -45,7 +45,7 @@
         </div>
         <div class="form-group">
             {!! Form::label('filter[date]', 'Event date:') !!}
-            {!! Form::input('filter[date]', 'date', old('filter.date'), ['class' => 'form-control']) !!}
+            {!! Form::input('date', 'filter[date]', old('filter.date'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('filter[created_at]', 'Created at:') !!}
