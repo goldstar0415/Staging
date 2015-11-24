@@ -97,7 +97,7 @@ trait GeoTrait
                 /**
                  * @var JoinClause $join
                  */
-                $join->on('spot_points.spot_id', '=', 'spots.id')->whereNull('spots.is_approved')->orWhere('is_approved', '=' , true);
+                $join->on('spot_points.spot_id', '=', 'spots.id')->whereNull('spots.is_approved')->where('is_approved', '=' , true);
             })->whereRaw(implode(' OR ', $search_areas))->get();
 
         return $points;
