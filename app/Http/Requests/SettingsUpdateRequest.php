@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+use App\User;
 
 /**
  * Class SettingsUpdateRequest
@@ -48,6 +49,14 @@ class SettingsUpdateRequest extends Request
                 $rules = [
                     'first_name' => 'required|max:64',
                     'last_name' => 'required|max:64',
+                    'alias' => [
+                        'required',
+                        'string',
+                        'max:64',
+                        'alpha_dash',
+                        'regex:' . User::$aliasRule,
+                        'unique:users,alias,' . $this->user()->id
+                    ],
                     'birth_date' => 'date_format:Y-m-d',
                     'sex' => 'string|in:m,,f',
                     'time_zone' => 'timezone',
