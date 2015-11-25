@@ -179,12 +179,16 @@ class SpotController extends Controller
         return $query;
     }
 
-    public function duplicates()
+    public function duplicates(Request $request)
     {
-//        return Spot::whereHas('points', function ($query) {
-//            $query/*->groupBy('address')*/
-//                ->havingRaw('COUNT(address) > 1');
-//        })->get();
-        return \App\SpotPoint::query()->groupBy('address')->havingRaw('COUNT(address) > 1')->get(['address']);
+        return view('admin.spots.index')->with('spots', $this->paginatealbe(
+            $request,
+            Spot::whereHas('points', function ($query) {
+                $query->whereIn('address', function ($query) {
+                    $query->select('address')->from('spot_points')->groupBy(['address'])->havingRaw('COUNT(address) > 1')->get(['address']);
+                });
+            }),
+            15
+        ));
     }
 }
