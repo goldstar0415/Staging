@@ -70,6 +70,7 @@
         <thead>
         <tr>
             <th id="bulk"><input type="checkbox"></th>
+            <th>Type</th>
             <th>User</th>
             @if (Request::has('filter.user_email'))
             <th class="col-sm-2">Email</th>
@@ -98,6 +99,7 @@
         @foreach($spots as $spot)
             <tr>
                 <td>{!! Form::checkbox('spots[]', $spot->id, null, ['class' => 'row-select']) !!}</td>
+                <td>{{ $spot->category->type->display_name }}</td>
                 <td>{!! link_to_route('admin.users.show', $spot->user->full_name, [$spot->user->id]) !!}</td>
                 @if (Request::has('filter.user_email'))
                 <td>{!! link_to_route('admin.users.show', $spot->user->email, [$spot->user->id]) !!}</td>
