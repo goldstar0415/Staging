@@ -1,0 +1,35 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * Class SpotAuthorRequest
+ * @package App
+ *
+ * @property integer $id
+ * @property integer $user_id
+ * @property string $name
+ * @property string $email
+ * @property string $phone
+ * @property string $address
+ * @property string $url
+ *
+ * @property \App\User $user
+ */
+class SpotAuthorRequest extends Model
+{
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'address',
+        'url',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
