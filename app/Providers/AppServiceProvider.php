@@ -42,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         
         User::creating(function (User $user) {
             $user->random_hash = str_random();
+            $user->token = str_random(30);
         });
 
         BloggerRequest::updated(function (BloggerRequest $request) {

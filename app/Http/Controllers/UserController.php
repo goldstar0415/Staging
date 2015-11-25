@@ -261,6 +261,19 @@ class UserController extends Controller
     }
 
     /**
+     * Confirm user email
+     *
+     * @param $token
+     * @return \App\User
+     */
+    public function confirmEmail($token)
+    {
+        $user = User::whereToken($token)->firstOrFail()->confirmEmail();
+
+        return $user;
+    }
+
+    /**
      * Get authenticated user info
      *
      * @param Request $request
