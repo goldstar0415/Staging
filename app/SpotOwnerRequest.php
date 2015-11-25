@@ -5,11 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class SpotAuthorRequest
+ * Class SpotOwnerRequest
  * @package App
  *
  * @property integer $id
  * @property integer $user_id
+ * @property integer $spot_id
  * @property string $name
  * @property string $email
  * @property string $phone
@@ -17,8 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $url
  *
  * @property \App\User $user
+ * @property \App\Spot $spot
  */
-class SpotAuthorRequest extends Model
+class SpotOwnerRequest extends Model
 {
     protected $fillable = [
         'name',
@@ -31,5 +33,10 @@ class SpotAuthorRequest extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function spot()
+    {
+        return $this->belongsTo(Spot::class);
     }
 }
