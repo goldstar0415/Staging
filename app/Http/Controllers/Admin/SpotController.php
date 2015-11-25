@@ -48,6 +48,7 @@ class SpotController extends Controller
     public function exportFilter(SpotFilterRequest $request, SpotsExport $export)
     {
         $data = $this->getFilterQuery($request, Spot::query())->get()->map(function (Spot $spot) {
+            $row[] = $spot->category->type->display_name;
             $row[] = $spot->user->full_name;
             $row[] = $spot->user->email;
             $row[] = $spot->title;
@@ -62,6 +63,7 @@ class SpotController extends Controller
             return $row;
         })->toArray();
         $export->setHeaders([
+            'Type',
             'Username',
             'User email',
             'Title',
