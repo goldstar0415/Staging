@@ -146,6 +146,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         return false;
     }
 
+    public function hasOwner()
+    {
+        return !is_null($this->user_id);
+    }
+
     /**
      * Set the spot web sites
      *

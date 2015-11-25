@@ -17,6 +17,7 @@ use App\Friend;
 use App\Plan;
 use App\Social;
 use App\Spot;
+use App\SpotOwnerRequest;
 use App\SpotPhoto;
 use App\SpotTypeCategory;
 use App\User;
@@ -115,6 +116,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('activity-categories', ActivityCategory::class);
         $router->model('blogger-request', BloggerRequest::class);
         $router->model('contact-us', ContactUs::class);
+        $router->model('owner_request', SpotOwnerRequest::class);
 
         parent::boot($router);
     }
