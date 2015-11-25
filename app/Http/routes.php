@@ -60,6 +60,7 @@ Route::get('reviews', 'UserController@reviews');
 Route::get('spots/favorites', 'SpotController@favorites');
 Route::post('spots/invite', 'SpotController@invite');
 Route::post('spots/{spots}/rate', 'SpotController@rate');
+Route::post('spots/{spots}/owner', 'SpotController@ownerRequest');
 Route::get('spots/{spots}/favorite', 'SpotController@favorite');
 Route::get('spots/{spots}/unfavorite', 'SpotController@unfavorite');
 Route::get('spots/{spots}/members', 'SpotController@members');

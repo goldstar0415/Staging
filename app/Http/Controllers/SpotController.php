@@ -11,6 +11,7 @@ use App\Http\Requests\Spot\SpotDestroyRequest;
 use App\Http\Requests\Spot\SpotFavoriteRequest;
 use App\Http\Requests\Spot\SpotIndexRequest;
 use App\Http\Requests\Spot\SpotInviteRequest;
+use App\Http\Requests\Spot\SpotOwnerRequest;
 use App\Http\Requests\Spot\SpotRateRequest;
 use App\Http\Requests\Spot\SpotStoreRequest;
 use App\Http\Requests\Spot\SpotUnFavoriteRequest;
@@ -21,6 +22,7 @@ use App\SpotPhoto;
 use App\SpotType;
 use App\SpotVote;
 use App\User;
+use App\SpotOwnerRequest as SpotOwnerRequestModel;
 use ChrisKonnertz\OpenGraph\OpenGraph;
 use Illuminate\Http\Request;
 
@@ -309,5 +311,21 @@ class SpotController extends Controller
     public function export(Request $request, $spot)
     {
         return response()->ical($spot);
+    }
+
+    /**
+     * Create owner spot request
+     * @param SpotOwnerRequest $request
+     * @param \App\Spot $spot
+     * @return SpotOwnerRequestModel
+     */
+    public function ownerRequest(SpotOwnerRequest $request, $spot)
+    {
+        $owner_request = new SpotOwnerRequestModel($request->except('spot_id'));
+        $owner_request->spot()->associate($spot);
+        $owner_request->user()->associate($request->user());
+        $owner_request->save();
+
+        return $owner_request;
     }
 }
