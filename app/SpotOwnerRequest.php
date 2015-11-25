@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $phone
  * @property string $address
  * @property string $url
+ * @property string $text
  *
  * @property \App\User $user
  * @property \App\Spot $spot
@@ -28,6 +29,7 @@ class SpotOwnerRequest extends Model
         'phone',
         'address',
         'url',
+        'text'
     ];
 
     public function user()

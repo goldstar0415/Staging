@@ -15,6 +15,7 @@
             <th>Phone</th>
             <th>Address</th>
             <th>Url</th>
+            <th>Text</th>
             <th></th>
             <th></th>
         </tr>
@@ -29,6 +30,7 @@
                 <td>{{ $request->phone }}</td>
                 <td>{{ $request->address }}</td>
                 <td>{{ $request->url }}</td>
+                <td>{!! nl2br(strip_tags($request->text, '<br>')) !!}</td>
                 <td>
                     {!! link_to_route('admin.spot-owner.accept', 'Accept', [$request->id], ['class' => 'btn btn-success button-my']) !!}
                 </td>
