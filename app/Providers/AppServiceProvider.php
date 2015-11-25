@@ -15,6 +15,7 @@ use App\Services\Privacy;
 use App\Services\Social\GoogleClient;
 use App\Services\Social\GoogleToken;
 use App\Spot;
+use App\SpotType;
 use App\User;
 use Config;
 use Illuminate\Support\ServiceProvider;
@@ -56,6 +57,14 @@ class AppServiceProvider extends ServiceProvider
 
         Validator::resolver(function ($translator, $data, $rules, $messages) {
             return new Validations($translator, $data, $rules, $messages);
+        });
+
+        view()->composer('admin.spots.index', function ($view) {
+            $categories = [];
+            SpotType::with('categories')->get()->each(function (\App\SpotType $type) use (&$categories) {
+                $categories[$type->display_name] = $type->categories->pluck('display_name', 'id')->toArray();
+            });
+            $view->with('spot_categories', $categories);
         });
     }
 

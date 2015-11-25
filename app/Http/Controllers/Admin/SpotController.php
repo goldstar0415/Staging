@@ -76,6 +76,9 @@ class SpotController extends Controller
             if ($request->has('users')) {
                 $spot->user()->associate($request->users);
             }
+            if ($request->has('category')) {
+                $spot->category()->associate($request->category);
+            }
             $spot->save();
         });
 

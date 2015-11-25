@@ -132,6 +132,10 @@
             {!! Form::label('users', 'User:') !!}
             {!! Form::select('users', [], null, ['id' => 'users', 'style' => 'width: 80%', 'placeholder' => 'Username']) !!}
         </div>
+        <div class="form-group col-lg-2">
+            {!! Form::label('category', 'Category:') !!}
+            {!! Form::select('category', $spot_categories, null) !!}
+        </div>
         <div class="form-group">
             {!! Form::label('start_date', 'Start date:') !!}
             {!! Form::input('date', 'start_date', null, ['placeholder' => 'Y-m-d']) !!}
