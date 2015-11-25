@@ -28,7 +28,8 @@ class SpotOwnerRequest extends Request
             'email' => 'required|email|max:128',
             'phone' => 'required|string|max:128',
             'address' => 'required|string|max:255',
-            'url' => 'required|url|max:255'
+            'url' => 'required|url|max:255',
+            'text' => 'required|string|max:5000'
         ];
     }
 }

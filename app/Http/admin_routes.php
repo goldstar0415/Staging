@@ -15,6 +15,9 @@ get('spots/export-filter', 'SpotController@exportFilter')->name('admin.spots.exp
 patch('spots/bulk-update', 'SpotController@bulkUpdate')->name('admin.spots.bulk-update');
 get('spots/duplicates', 'SpotController@duplicates')->name('admin.spots.duplicates');
 resource('spot-categories', 'SpotCategoriesController', ['except' => 'show']);
+get('spot-owner', 'SpotOwnerController@index')->name('admin.spot-owner.index');
+get('spot-owner/{owner_request}/accept', 'SpotOwnerController@accept')->name('admin.spot-owner.accept');
+get('spot-owner/{owner_request}/reject', 'SpotOwnerController@reject')->name('admin.spot-owner.reject');
 
 resource('posts', 'BlogController', ['except' => 'show']);
 get('posts/search', 'BlogController@search')->name('admin.posts.search');
