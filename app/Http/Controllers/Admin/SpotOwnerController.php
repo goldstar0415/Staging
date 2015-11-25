@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ChatMessage;
+use App\Events\OnMessage;
 use App\Http\Requests\PaginateRequest;
 use App\SpotOwnerRequest;
 use Illuminate\Http\Request;
@@ -26,16 +28,25 @@ class SpotOwnerController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param Request $request
      * @param \App\SpotOwnerRequest $owner_request
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function accept($owner_request)
+    public function accept(Request $request, $owner_request)
     {
         if ($owner_request->spot->hasOwner()) {
             abort(403, 'Spot already has an owner');
         }
 
         $owner_request->spot->user()->associate($owner_request->user)->save();
+
+        $message = new ChatMessage(['body' => 'You successfuly owned the spot']);
+        $owner_request->user->chatMessagesSend()->save($message, ['receiver_id' => $request->user()->id]);
+        $message->spots()->attach($owner_request->spot->id);
+
+        event(new OnMessage($owner_request->user, $message, $request->user()->random_hash));
+
         $owner_request->delete();
 
         return back();
