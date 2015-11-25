@@ -16,7 +16,7 @@ class SpotsExportHandler implements ExportHandler
              * @var \Maatwebsite\Excel\Classes\LaravelExcelWorksheet $sheet
              * @var \App\Extensions\SpotsExport $file
              */
-            $sheet->row(1, ['Username', 'Title', 'Description', 'Start date', 'End date', 'Web sites', 'Category', 'Created at']);
+            $sheet->row(1, $file->getHeaders());
             $sheet->rows($file->getData());
         })->download('csv');
     }

@@ -6,7 +6,15 @@ use Maatwebsite\Excel\Files\NewExcelFile;
 
 class SpotsExport  extends NewExcelFile
 {
-    protected $data;
+    /**
+     * @var array File data
+     */
+    protected $data = [];
+
+    /**
+     * @var array File headers (1st row)
+     */
+    protected $headers = [];
     /**
      * @inheritDoc
      */
@@ -29,5 +37,21 @@ class SpotsExport  extends NewExcelFile
     public function setData(array $data)
     {
         $this->data = $data;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
+    }
+
+    /**
+     * @param mixed $headers
+     */
+    public function setHeaders($headers)
+    {
+        $this->headers = $headers;
     }
 }
