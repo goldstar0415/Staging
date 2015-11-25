@@ -76,6 +76,9 @@ class SpotController extends Controller
             if ($request->has('users')) {
                 $spot->user()->associate($request->users);
             }
+            if ($request->has('category')) {
+                $spot->category()->associate($request->category);
+            }
             $spot->save();
         });
 
@@ -177,5 +180,18 @@ class SpotController extends Controller
         $request->flash();
 
         return $query;
+    }
+
+    public function duplicates(Request $request)
+    {
+        return view('admin.spots.index')->with('spots', $this->paginatealbe(
+            $request,
+            Spot::whereHas('points', function ($query) {
+                $query->whereIn('address', function ($query) {
+                    $query->select('address')->from('spot_points')->groupBy(['address'])->havingRaw('COUNT(address) > 1')->get(['address']);
+                });
+            }),
+            15
+        ));
     }
 }

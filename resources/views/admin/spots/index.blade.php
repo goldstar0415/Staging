@@ -15,6 +15,9 @@
             <li role="presentation">
                 {!! link_to_route('admin.spots.export-filter', 'Export Filter', Request::query()) !!}
             </li>
+            <li role="presentation">
+                {!! link_to_route('admin.spots.duplicates', 'Search duplicated') !!}
+            </li>
         </ul>
     </div>
     <div class="row actions">
@@ -45,7 +48,7 @@
         </div>
         <div class="form-group">
             {!! Form::label('filter[date]', 'Event date:') !!}
-            {!! Form::input('filter[date]', 'date', old('filter.date'), ['class' => 'form-control']) !!}
+            {!! Form::input('date', 'filter[date]', old('filter.date'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('filter[created_at]', 'Created at:') !!}
@@ -128,6 +131,10 @@
         <div class="form-group col-lg-2">
             {!! Form::label('users', 'User:') !!}
             {!! Form::select('users', [], null, ['id' => 'users', 'style' => 'width: 80%', 'placeholder' => 'Username']) !!}
+        </div>
+        <div class="form-group col-lg-2">
+            {!! Form::label('category', 'Category:') !!}
+            {!! Form::select('category', $spot_categories, null) !!}
         </div>
         <div class="form-group">
             {!! Form::label('start_date', 'Start date:') !!}
