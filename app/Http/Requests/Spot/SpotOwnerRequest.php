@@ -24,12 +24,11 @@ class SpotOwnerRequest extends Request
     public function rules()
     {
         return [
-            'spot_id' => 'integer|exists:spots,id',
-            'name' => 'string|max:128',
-            'email' => 'string|max:128',
-            'phone' => 'string|max:128',
-            'address' => 'string|max:255',
-            'url' => 'string|max:255'
+            'name' => 'required|string|max:128',
+            'email' => 'required|email|max:128',
+            'phone' => 'required|string|max:128',
+            'address' => 'required|string|max:255',
+            'url' => 'required|url|max:255'
         ];
     }
 }

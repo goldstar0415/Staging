@@ -316,12 +316,13 @@ class SpotController extends Controller
     /**
      * Create owner spot request
      * @param SpotOwnerRequest $request
+     * @param \App\Spot $spot
      * @return SpotOwnerRequestModel
      */
-    public function ownerRequest(SpotOwnerRequest $request)
+    public function ownerRequest(SpotOwnerRequest $request, $spot)
     {
         $owner_request = new SpotOwnerRequestModel($request->except('spot_id'));
-        $owner_request->spot()->associate($request->spot_id);
+        $owner_request->spot()->associate($spot);
         $owner_request->user()->associate($request->user());
         $owner_request->save();
 
