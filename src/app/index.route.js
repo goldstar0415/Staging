@@ -42,11 +42,13 @@
                 UserService.setProfileUser(user);
                 return user;
               }).$promise;
-            } else {
+            } else if ($stateParams.user_id) {
               return User.get({id: $stateParams.user_id}, function (user) {
                 UserService.setProfileUser(user);
                 return user;
               }).$promise;
+            } else {
+              UserService.setProfileUser(currentUser || {});
             }
           }
         },

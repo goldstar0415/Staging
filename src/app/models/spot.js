@@ -51,6 +51,10 @@
       report: {
         url: API_URL + '/spots/:id/report',
         method: 'POST'
+      },
+      claim: {
+        url: API_URL + '/spots/:id/owner',
+        method: 'POST'
       }
     });
   }
