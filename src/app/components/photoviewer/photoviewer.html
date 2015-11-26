@@ -43,7 +43,7 @@
               <p class="time">{{comment.created_at | toTimezone}}</p>
             </div>
             <a class="delete-reviews"
-               ng-if="$root.profileUser.id == $root.currentUser.id || $root.currentUser.id == comment.sender.id"
+               ng-if="$root.profileUser.id == $root.currentUser.id || $root.currentUser.id == comment.sender.id || $root.isRole($root.currentUser, 'admin')"
                ng-click="PV.deleteComment(comment.id, $index)"></a>
           </div>
         </div>

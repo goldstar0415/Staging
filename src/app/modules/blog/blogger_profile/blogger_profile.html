@@ -30,10 +30,10 @@
 
     <p class="article-description" ng-bind-html="post.body"></p>
 
-    <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id">
+    <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id || isRole(currentUser, 'admin')">
       <a ui-sref="profile_blog.edit({slug: post.slug})" class="edit-blog-article">Edit</a>
     </div>
-    <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id">
+    <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id || isRole(currentUser, 'admin')">
       <a ng-click="Blog.removePost(post, $index)" class="delete-blog-article">Delete</a>
     </div>
 

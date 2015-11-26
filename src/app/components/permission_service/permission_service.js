@@ -16,7 +16,9 @@
 
     function checkPermission(accessLevel, user) {
       user = user || $rootScope.profileUser;
-      if ($rootScope.currentUser && $rootScope.currentUser.id == user.id) return true;
+      if ($rootScope.currentUser && ($rootScope.currentUser.id == user.id || $rootScope.isRole($rootScope.currentUser, 'admin'))) {
+        return true;
+      }
 
       var access = false;
       switch (accessLevel) {

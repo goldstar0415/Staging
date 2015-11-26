@@ -37,10 +37,10 @@
       <!--  tags -->
 
       <ul class="tools">
-        <li ng-if="currentUser.id == item.user_id">
+        <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')">
           <a ui-sref="spot_edit({spot_id: item.id})" class="edit-tools">Edit</a>
         </li>
-        <li ng-if="currentUser.id == item.user_id">
+        <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')">
           <a ng-click="Spots.removeSpot(item, $index);" class="delete">Delete</a>
         </li>
 

@@ -107,6 +107,9 @@
         <li>
           <invite-friends item="data.spot"></invite-friends>
         </li>
+        <li ng-if="!data.spot.user_id && !data.spot.isClaimed">
+          <a class="report-icon" claim-spot="data.spot">Claim listing</a>
+        </li>
       </ul>
 
       <share item="data.spot" type="spot"></share>
