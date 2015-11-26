@@ -149,6 +149,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\MacroServiceProvider::class,
+        App\Services\EmailChange\EmailChangeServiceProvider::class,
 
         /*
          * Packages Services

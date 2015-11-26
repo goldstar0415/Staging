@@ -24,6 +24,7 @@ Route::post('users/recovery', 'UserController@postRecovery');
 Route::post('users/reset', 'UserController@postReset');
 Route::get('users/{users}', 'UserController@getIndex');
 Route::get('users/confirm/{token}', 'UserController@confirmEmail');
+Route::get('users/email-change/{token}', 'UserController@changeEmail');
 get('settings/alias', 'SettingsController@checkAlias');
 Route::controller('settings', 'SettingsController');
 

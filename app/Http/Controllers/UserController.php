@@ -9,6 +9,7 @@ use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\UserListRequest;
 use App\Mailers\AppMailer;
 use App\Role;
+use App\Services\EmailChange\EmailChangeBroker;
 use App\Services\Privacy;
 use App\User;
 use DB;
@@ -274,6 +275,14 @@ class UserController extends Controller
         $user = User::whereToken($token)->firstOrFail()->confirmEmail();
 
         return redirect(frontend_url('email-verified'));
+    }
+
+    public function changeEmail(Request $request, $token, EmailChangeBroker $emailChangeBroker)
+    {
+        $emailChangeBroker->change($request->user(), $token, function ($user, $email) {
+            $user->email = $email;
+            $user->save();
+        });
     }
 
     /**

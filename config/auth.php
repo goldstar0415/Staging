@@ -64,4 +64,9 @@ return [
         'expire' => 60,
     ],
 
+    'email' => [
+        'view' => 'emails.email-change',
+        'expire' => 60
+    ]
+
 ];

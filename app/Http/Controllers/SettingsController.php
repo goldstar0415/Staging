@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CheckAliasRequest;
 use App\Http\Requests\SetAvatarRequest;
 use App\Http\Requests\SettingsUpdateRequest;
+use App\Services\EmailChange\EmailChangeBroker;
 use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests;
@@ -53,7 +54,13 @@ class SettingsController extends Controller
                 $user->update($params);
                 break;
             case 'security':
-                $user->update(['email' => $params['email']]);
+                /**
+                 * @var EmailChangeBroker $emailBroker
+                 */
+                $emailBroker = app(EmailChangeBroker::class);
+                $emailBroker->sendChangeLink($user, $params['email'], function ($message) {
+                    $message->subject('Email change');
+                });
                 break;
             case 'password':
                 if ($user->is_registered) {
