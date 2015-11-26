@@ -7,6 +7,7 @@ use App\ContactUs;
 use App\Http\Requests\ContactUsRequest;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\UserListRequest;
+use App\Mailers\AppMailer;
 use App\Role;
 use App\Services\Privacy;
 use App\User;
@@ -69,9 +70,10 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Request $request
+     * @param AppMailer $mailer
      * @return User
      */
-    public function postIndex(Request $request)
+    public function postIndex(Request $request, AppMailer $mailer)
     {
         $validator = $this->validator($request->all());
 
@@ -79,10 +81,11 @@ class UserController extends Controller
             $this->throwValidationException($request, $validator);
         }
 
-        $this->auth->login($this->create($request->all()));
 
-        $user = $this->auth->user();
+        $user = $this->create($request->all());
         $user->roles()->attach(Role::take(config('entrust.default')));
+        $mailer->sendEmailVerification($user);
+
         return $user;
     }
 
@@ -270,7 +273,7 @@ class UserController extends Controller
     {
         $user = User::whereToken($token)->firstOrFail()->confirmEmail();
 
-        return $user;
+        return redirect(frontend_url('email-verified'));
     }
 
     /**
@@ -282,6 +285,11 @@ class UserController extends Controller
      */
     protected function authenticated(Request $request, Authenticatable $user)
     {
+        if (!$user->verified) {
+            $this->auth->logout();
+            abort(406);
+        }
+
         return $this->appendUserRelations($user)->append(['new_messages'])->load('roles');
     }
 
