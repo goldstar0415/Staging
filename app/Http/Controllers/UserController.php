@@ -292,7 +292,7 @@ class UserController extends Controller
             $user->save();
         });
 
-        return redirect(frontend_url('user/email-changed'));
+        return redirect(frontend_url('email-changed'));
     }
 
     /**
