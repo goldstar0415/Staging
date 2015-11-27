@@ -51,6 +51,7 @@
         })
           .success(function (data, status, headers, config) {
             toastr.success('Settings saved');
+            $rootScope.currentUser.alias = vm.data.alias;
           })
           .error(function (data, status, headers, config) {
             toastr.error('Incorrect input ');
@@ -59,9 +60,9 @@
     };
 
     vm.checkAlias = function () {
-      vm.isAliasBusy = false;
-      User.checkAlias({alias: vm.data.alias}).$promise.catch(function () {
-          vm.isAliasBusy = true;
+      vm.aliasErrorMessage = null;
+      User.checkAlias({alias: vm.data.alias}).$promise.catch(function (resp) {
+          vm.aliasErrorMessage = resp.data.alias[0];
         });
     };
 

@@ -57,10 +57,10 @@
                 <label>Page URL</label>
               </div>
               <div class="col-xs-9 no-pad">
-                <input name="alias" ng-model="Settings.data.alias" ng-blur="Settings.checkAlias()" type="text"/>
+                <input name="alias" ng-model="Settings.data.alias" ng-blur="Settings.checkAlias(form)" type="text"/>
 
-                <div ng-if="Settings.isAliasBusy" class="error-message-inline">
-                  <div>Url are busy</div>
+                <div ng-if="Settings.aliasErrorMessage" class="error-message-inline">
+                  <div>{{ Settings.aliasErrorMessage }}</div>
                 </div>
               </div>
             </div>

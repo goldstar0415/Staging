@@ -6,7 +6,7 @@
     .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, DEBUG) {
+  function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, DEBUG, toastr) {
     $stateProvider
       .state('main', {
         abstract: true,
@@ -76,6 +76,14 @@
       .state('index.recovery_password', {
         url: '/password/recovery/:token',
         controller: 'ResetPasswordController',
+        parent: 'main',
+        mapState: 'big'
+      })
+      .state('index.email_changed', {
+        url: '/settings/email-changed',
+        controller: function () {
+          toastr.success('Your email successfully changed');
+        },
         parent: 'main',
         mapState: 'big'
       })
