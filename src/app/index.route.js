@@ -79,6 +79,15 @@
         parent: 'main',
         mapState: 'big'
       })
+      .state('index.email_verified', {
+        url: '/email-verified',
+        controller: function (SignInService) {
+          SignInService.openModal();
+          toastr.success('Your email successfully verified');
+        },
+        parent: 'main',
+        mapState: 'big'
+      })
       .state('index.email_changed', {
         url: '/settings/email-changed',
         controller: function () {

@@ -6,10 +6,20 @@
     .factory('SignInService', SignInService);
 
   /** @ngInject */
-  function SignInService(UserService, User, toastr, $state) {
+  function SignInService(UserService, User, toastr, $state, $modal) {
     return {
-      userLogin: userLogin
+      userLogin: userLogin,
+      openModal: openModal
     };
+
+    function openModal() {
+      $modal.open({
+        templateUrl: '/app/components/sign_in/sign_in.html',
+        controller: SignInModalController,
+        controllerAs: 'modal',
+        modalClass: 'authentication'
+      });
+    }
 
     /*
      * Send login form
@@ -32,8 +42,23 @@
           });
       }
     }
+  }
 
+  /** @ngInject */
+  function SignInModalController(SignInService, API_URL, BACKEND_URL, $modalInstance) {
+    var vm = this;
+    vm.API_URL = API_URL;
+    vm.BACKEND_URL = BACKEND_URL;
 
+    //close modal
+    vm.close = function () {
+      $modalInstance.close();
+    };
+
+    //send login form
+    vm.userLogin = function (form) {
+      SignInService.userLogin(form, vm, $modalInstance);
+    };
   }
 
 })();

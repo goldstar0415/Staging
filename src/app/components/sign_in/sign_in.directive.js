@@ -12,7 +12,7 @@
   function signIn() {
     return {
       restrict: 'E',
-      templateUrl: '/app/components/sign_in/sign_in.html',
+      template: '<a ng-click="signIn.openSignInModal()">{{signIn.title}}</a>',
       scope: {
         title: '@'
       },
@@ -22,37 +22,11 @@
     };
 
     /** @ngInject */
-    function SignInController($modal) {
+    function SignInController(SignInService) {
       var vm = this;
 
-      vm.openSignInModal = function () {
-        $modal.open({
-          templateUrl: 'SignInModal.html',
-          controller: SignInModalController,
-          controllerAs: 'modal',
-          modalClass: 'authentication'
-        });
-      };
-
+      vm.openSignInModal = SignInService.openModal;
     }
-
-    /** @ngInject */
-    function SignInModalController(SignInService, API_URL, BACKEND_URL, $modalInstance) {
-      var vm = this;
-      vm.API_URL = API_URL;
-      vm.BACKEND_URL = BACKEND_URL;
-
-      //close modal
-      vm.close = function () {
-        $modalInstance.close();
-      };
-
-      //send login form
-      vm.userLogin = function (form) {
-        SignInService.userLogin(form, vm, $modalInstance);
-      };
-    }
-
   }
 
 })();
