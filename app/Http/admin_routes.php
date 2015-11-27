@@ -3,8 +3,8 @@
 get('/', 'UsersController@index');
 resource('activitylevel', 'ActivityLevelController', ['except' => 'show']);
 
-resource('users', 'UsersController', ['except' => ['store', 'create']]);
 get('users/search', 'UsersController@search')->name('admin.users.search');
+resource('users', 'UsersController', ['except' => ['store', 'create']]);
 
 resource('spots', 'SpotController', ['only' => ['index', 'destroy']]);
 get('spots/search', 'SpotController@search')->name('admin.spots.search');
