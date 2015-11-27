@@ -107,7 +107,7 @@
         </button>
       </div>
       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 padding-0">
-        <a ui-sref="profile.main({user_id: post.sender.id})">
+        <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">
           <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
         </a>
       </div>
@@ -118,7 +118,7 @@
           <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
         </div>
         <h3 class="name">
-          <a ui-sref="profile.main({user_id: post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
+          <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
         </h3>
 
         <p ng-bind-html="post.body | linky:'_blank'"></p>

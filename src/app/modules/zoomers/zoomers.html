@@ -45,8 +45,8 @@
 
             <!-- media-body-content -->
             <div class="media-body media-body-content">
-              <h3 class=" media-heading name">
-                <a ui-sref="profile.main({user_id: user.id})">{{user.first_name}} {{user.last_name}}</a>
+              <h3 class="media-heading name">
+                <a ui-sref="profile.main({user_id: user.alias || user.id})">{{user.first_name}} {{user.last_name}}</a>
               </h3>
 
               <div class="info">

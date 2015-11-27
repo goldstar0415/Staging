@@ -9,13 +9,13 @@
       <div class="event">
 
         <div class="media media-visible">
-          <a class="pull-left" ui-sref="profile.main({user_id: item.sender.id})">
+          <a class="pull-left" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">
             <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.sender.avatar_url.thumb}}">
           </a>
 
           <div class="media-body">
             <h2 class="media-heading feeds-title">
-              <a ui-sref="profile.main({user_id: item.sender.id})">{{item.sender.first_name}}
+              <a ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">{{item.sender.first_name}}
                 {{item.sender.last_name}}</a>
             </h2>
 
@@ -25,7 +25,7 @@
                 follows you
               </span>
               <span ng-if="currentUser.id != item.feedable.id">
-                add <a ui-sref="profile.main({user_id: item.feedable.id})">
+                add <a ui-sref="profile.main({user_id: item.feedable.alias || item.feedable.id})">
                 {{item.feedable.first_name}} {{item.feedable.last_name}}
               </a> to following
               </span>
@@ -36,7 +36,7 @@
                 unfollows you
               </span>
               <span ng-if="currentUser.id != item.feedable.id">
-                unfollow <a ui-sref="profile.main({user_id: item.feedable.id})">
+                unfollow <a ui-sref="profile.main({user_id: item.feedable.alias || item.feedable.id})">
                 {{item.feedable.first_name}} {{item.feedable.last_name}}
               </a>
               </span>

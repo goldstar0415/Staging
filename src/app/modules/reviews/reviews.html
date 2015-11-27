@@ -17,7 +17,7 @@
               >{{item.commentable.title}}
             </a>
           </h2>
-          <a class="author-name" ui-sref="profile.main({user_id: item.sender.id})">
+          <a class="author-name" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">
             {{item.sender.first_name}}
             {{item.sender.last_name}}
           </a>
@@ -43,7 +43,7 @@
             <a ui-sref="spot({user_id: item.commentable.user_id, spot_id: item.commentable.id})"
               >{{item.commentable.title}}</a>
           </h2>
-          <a class="author-name" ui-sref="profile.main({user_id: item.sender.id})">
+          <a class="author-name" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">
             {{item.sender.first_name}} {{item.sender.last_name}}
           </a>
           <!--at-->
@@ -62,7 +62,7 @@
 
         <div class="text-block">
 
-          <a class="author-name" ui-sref="profile.main({user_id: item.sender.id})">{{item.sender.first_name}}
+          <a class="author-name" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">{{item.sender.first_name}}
             {{item.sender.last_name}}</a>
 
           <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
@@ -79,7 +79,7 @@
 
         <div class="text-block">
 
-          <a class="author-name" ui-sref="profile.main({user_id: item.sender.id})">{{item.sender.first_name}}
+          <a class="author-name" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">{{item.sender.first_name}}
             {{item.sender.last_name}}</a>
 
           <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>

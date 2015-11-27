@@ -17,7 +17,7 @@
 
     <div class="col-sm-12 no-pad choose-friend-block">
       <div class="choose-friend" ng-repeat="user in modal.users | filter:search">
-        <a ui-sref="profile.main({user_id: user.id})">
+        <a ui-sref="profile.main({user_id: user.alias || user.id})">
           <img class="friend-avatar" ng-src="{{user.avatar_url.thumb}}">
           <h4 class="name-friend">
             {{user.first_name+ ' ' +user.last_name}}

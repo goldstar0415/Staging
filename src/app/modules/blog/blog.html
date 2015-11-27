@@ -69,7 +69,7 @@
               <p class="date col-xs-12 col-sm-2">{{post.created_at | toTimezone:'MM.DD.YYYY'}}</p>
 
               <p class="col-xs-12 col-sm-3 author">Author:
-                <a ui-sref="profile.main({user_id: post.user.id})">
+                <a ui-sref="profile.main({user_id: post.user.alias || post.user.id})">
                   {{post.user.first_name}} {{post.user.last_name}}
                 </a>
               </p>

@@ -59,9 +59,10 @@
     };
 
     vm.checkAlias = function () {
-      User.checkAlias({ alias: vm.data.alias }).$promise.catch(function () {
-        toastr.error('Url are busy');
-      })
+      vm.isAliasBusy = false;
+      User.checkAlias({alias: vm.data.alias}).$promise.catch(function () {
+          vm.isAliasBusy = true;
+        });
     };
 
     /*

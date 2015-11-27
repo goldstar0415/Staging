@@ -11,7 +11,7 @@
         <a class="title" ui-sref="blog.article({slug: data.slug})">{{data.title}}</a>
     </span>
 
-    <a class="author-event" ui-sref="profile.main({user_id: data.user.id})">
+    <a class="author-event" ui-sref="profile.main({user_id: data.user.alias || data.user.id})">
       <span>Author: </span>
       {{data.user.first_name}} {{data.user.last_name}}
     </a>

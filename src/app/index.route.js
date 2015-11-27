@@ -306,7 +306,7 @@
           spots: function (user, Spot, $stateParams, PermissionService) {
             if (PermissionService.checkPermission(user.privacy_events, user)) {
               return Spot.query({
-                user_id: $stateParams.user_id
+                user_id: user.id
               }).$promise;
             }
           }

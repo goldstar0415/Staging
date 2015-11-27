@@ -68,7 +68,7 @@
       },
       checkAlias: {
         url: API_URL + '/settings/alias',
-        method: 'POST'
+        method: 'GET'
       },
       setLocation: {
         url: API_URL + '/settings/location',

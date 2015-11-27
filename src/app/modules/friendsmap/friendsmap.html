@@ -16,7 +16,7 @@
   <div class="text-block">
     <h3 class="feeds-title">
       <span class="col-xs-8 wrap-name">
-        <a ng-if="item.friend_id" ui-sref="profile.main({user_id: item.friend_id})">{{item.first_name + " " +
+        <a ng-if="item.friend_id" ui-sref="profile.main({user_id: item.friend.alias || item.friend_id})">{{item.first_name + " " +
           item.last_name}}</a>
         <span ng-if="!item.friend_id">{{item.first_name + " " + item.last_name}}</span>
       </span>

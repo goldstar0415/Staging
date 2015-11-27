@@ -1,6 +1,6 @@
 <ul class="wall-tabs">
   <li ui-sref-active="active">
-    <a ui-sref="profile.main({user_id: profileUser.id})">Wall</a>
+    <a ui-sref="profile.main({user_id: profileUser.alias || profileUser.id})">Wall</a>
   </li>
   <li ui-sref-active="active">
     <a ui-sref="chat">Messages

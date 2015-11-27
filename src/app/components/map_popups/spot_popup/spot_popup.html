@@ -36,7 +36,7 @@
     <p class="date-event" ng-if="data.spot.category.type.name == 'event'">
       <span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>
     </p>
-    <a class="author-event" ui-sref="profile.main({user_id: data.spot.user_id})">{{'by ' + data.spot.user.first_name + '
+    <a class="author-event" ui-sref="profile.main({user_id: data.spot.user.alias || data.spot.user_id})">{{'by ' + data.spot.user.first_name + '
       ' + data.spot.user.last_name}}</a>
 
     <div class="content-popup clearfix">

@@ -58,6 +58,10 @@
               </div>
               <div class="col-xs-9 no-pad">
                 <input name="alias" ng-model="Settings.data.alias" ng-blur="Settings.checkAlias()" type="text"/>
+
+                <div ng-if="Settings.isAliasBusy" class="error-message-inline">
+                  <div>Url are busy</div>
+                </div>
               </div>
             </div>
 

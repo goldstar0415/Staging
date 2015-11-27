@@ -48,7 +48,7 @@
         var obj = friends[k];
         var title = obj.first_name + " " + obj.last_name;
         if (obj.location) {
-          var m = createMarker(obj.avatar_url.thumb, title, obj.location, obj.friend_id);
+          var m = createMarker(obj.avatar_url.thumb, title, obj.location, (obj.alias || obj.friend_id));
           markers.push({marker: m, id: obj.id});
         }
       }
