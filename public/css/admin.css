@@ -7320,14 +7320,14 @@ button.close {
   }
 }
 @font-face {
-  font-family: 'Ubuntu medium';
-  src: url(/css/fonts/ubuntu-m-webfont.eot);
-  src: url(/css/fonts/ubuntu-m-webfont.eot?#iefix) format("embedded-opentype"), url(/css/fonts/ubuntu-m-webfont.woff2) format("woff2"), url(/css/fonts/ubuntu-m-webfont.woff) format("woff"), url(/css/fonts/ubuntu-m-webfont.ttf) format("truetype"), url(/css/fonts/ubuntu-m-webfont.svg#ubuntumedium) format("svg");
+  font-family: 'Questrial';
+  src: url(/css/fonts/questrial-regular.eot);
+  src: url(/css/fonts/questrial-regular.eot?#iefix) format("embedded-opentype"), url(/css/fonts/questrial-regular.woff2) format("woff2"), url(/css/fonts/questrial-regular.woff) format("woff"), url(/css/fonts/questrial-regular.ttf) format("truetype"), url(/css/fonts/questrial-regular.svg#questrial) format("svg");
   font-weight: normal;
   font-style: normal;
 }
 .admin {
-  font-family: 'Ubuntu medium';
+  font-family: 'Questrial';
 }
 .admin .admin-menu {
   margin-top: 20px;
@@ -7366,7 +7366,7 @@ button.close {
   margin-top: 7rem;
 }
 .admin .about-page .about-title {
-  font: 500 36px/26px 'Ubuntu medium';
+  font: 500 36px/26px 'Questrial';
   margin-bottom: 30px;
 }
 .admin .about-page .about-text {
@@ -7465,7 +7465,7 @@ button.close {
   margin: 0;
 }
 .admin .editing .user-data p span {
-  font: 500 16px/18px 'Ubuntu medium';
+  font: 500 16px/18px 'Questrial';
 }
 .admin .editing .user-data p a {
   color: #00b7f3;
@@ -7489,7 +7489,7 @@ button.close {
   height: 40px;
 }
 .admin .editing table thead {
-  font: 500 16px/16px 'Ubuntu medium';
+  font: 500 16px/16px 'Questrial';
 }
 .admin .editing table thead th {
   border: 1px solid #e9edf0;
@@ -7594,7 +7594,7 @@ button.close {
 }
 .admin .editing label {
   width: 20%;
-  font: 500 16px/18px 'Ubuntu medium';
+  font: 500 16px/18px 'Questrial';
 }
 .admin .editing legend {
   border: none;
@@ -7628,7 +7628,7 @@ button.close {
 }
 .admin .editing .edit-user label {
   width: 20%;
-  font: 500 16px/18px 'Ubuntu medium';
+  font: 500 16px/18px 'Questrial';
 }
 .admin .editing .edit-user .edit-data {
   width: 70%;
@@ -7646,7 +7646,7 @@ button.close {
 }
 .admin .editing .creat-activity-level label {
   width: 20%;
-  font: 500 16px/18px 'Ubuntu medium';
+  font: 500 16px/18px 'Questrial';
 }
 .admin .editing .creat-activity-level .title-level {
   width: 70%;
