@@ -57,7 +57,7 @@
 
     //send login form
     vm.userLogin = function (form) {
-      SignInService.userLogin(form, vm, $modalInstance);
+      SignInService.userLogin(form, {email: vm.email, password: vm.password}, $modalInstance);
     };
   }
 

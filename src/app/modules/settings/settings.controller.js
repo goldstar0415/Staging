@@ -62,8 +62,8 @@
     vm.checkAlias = function () {
       vm.aliasErrorMessage = null;
       User.checkAlias({alias: vm.data.alias}).$promise.catch(function (resp) {
-          vm.aliasErrorMessage = resp.data.alias[0];
-        });
+        vm.aliasErrorMessage = resp.data.alias[0];
+      });
     };
 
     /*
@@ -82,9 +82,9 @@
           })
           .success(function (data, status, headers, config) {
             toastr.success('Settings saved');
-            vm.data.email = vm.data.newEmail;
-            vm.data.newEmail = '';
-            form.$submitted = form.$touched = false;
+            vm.email_verification = true;
+            form.$submitted = false;
+            form.$touched = false;
           })
           .error(function (data, status, headers, config) {
             toastr.error('This email has already been taken')

@@ -203,6 +203,9 @@
             <label class="label-width">Current e-mail</label>
             <span class="e-mail input-width">{{Settings.data.email}}</span>
           </div>
+          <div class="col-xs-12 form-group no-pad" ng-if="Settings.email_verification">
+            <div class="alert alert-info">To your new email is sent a letter with confirmation request</div>
+          </div>
           <div class="col-xs-12 form-group no-pad">
             <label class="label-width">New e-mail</label>
 
