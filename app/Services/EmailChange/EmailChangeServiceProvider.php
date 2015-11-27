@@ -56,13 +56,13 @@ class EmailChangeServiceProvider extends ServiceProvider
      */
     protected function registerTokenRepository()
     {
-        $this->app->singleton('auth.email.tokens', function ($app) {
+        $this->app->singleton([TokenRepositoryInterface::class => 'auth.email.tokens'], function ($app) {
             $connection = $app['db']->connection();
 
             // The database token repository is an implementation of the token repository
             // interface, and is responsible for the actual storing of auth tokens and
             // their e-mail addresses. We will inject this table and hash key to it.
-            $table = $app['config']['auth.password.table'];
+            $table = $app['config']['auth.email.table'];
 
             $key = $app['config']['app.key'];
 
@@ -79,6 +79,6 @@ class EmailChangeServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['auth.email', 'auth.email.tokens'];
+        return ['auth.email', 'auth.email.tokens', TokenRepositoryInterface::class, EmailChangeBroker::class];
     }
 }

@@ -19,7 +19,7 @@ interface EmailChangeContract
      *
      * @var string
      */
-    const PASSWORD_CHANGE = 'emails.change';
+    const EMAIL_CHANGE = 'emails.change';
 
     /**
      * Constant representing the user not found response.

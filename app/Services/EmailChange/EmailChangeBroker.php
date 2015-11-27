@@ -35,7 +35,7 @@ class EmailChangeBroker implements EmailChangeContract
     /**
      * Create a new password broker instance.
      *
-     * @param  \Illuminate\Auth\Passwords\TokenRepositoryInterface  $tokens
+     * @param  TokenRepositoryInterface  $tokens
      * @param  \Illuminate\Contracts\Auth\UserProvider  $users
      * @param  \Illuminate\Contracts\Mail\Mailer  $mailer
      * @param  string  $emailView
@@ -121,7 +121,7 @@ class EmailChangeBroker implements EmailChangeContract
 
         $this->tokens->delete($token);
 
-        return EmailChangeContract::PASSWORD_CHANGE;
+        return EmailChangeContract::EMAIL_CHANGE;
     }
 
     /**

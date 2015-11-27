@@ -16,7 +16,7 @@ class CreateEmailChangesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('email')->index();
             $table->string('token')->index();
-            $table->timestamps();
+            $table->timestamp('created_at');
 
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade')->onUpdate('cascade');

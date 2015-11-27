@@ -53,8 +53,16 @@ class UserController extends Controller
      */
     public function __construct(Guard $auth)
     {
-        $this->middleware('guest', ['except' => ['getLogout', 'getMe', 'getIndex', 'getList', 'reviews', 'contactUs']]);
-        $this->middleware('auth', ['only' => 'getMe']);
+        $this->middleware('guest', ['except' => [
+            'getLogout',
+            'getMe',
+            'getIndex',
+            'getList',
+            'reviews',
+            'contactUs',
+            'changeEmail'
+        ]]);
+        $this->middleware('auth', ['only' => ['getMe', 'changeEmail']]);
         $this->auth = $auth;
     }
 
@@ -283,6 +291,8 @@ class UserController extends Controller
             $user->email = $email;
             $user->save();
         });
+
+        return redirect(frontend_url('user/email-changed'));
     }
 
     /**

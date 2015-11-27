@@ -57,7 +57,7 @@ class SettingsController extends Controller
                 /**
                  * @var EmailChangeBroker $emailBroker
                  */
-                $emailBroker = app(EmailChangeBroker::class);
+                $emailBroker = app('auth.email');
                 $emailBroker->sendChangeLink($user, $params['email'], function ($message) {
                     $message->subject('Email change');
                 });
