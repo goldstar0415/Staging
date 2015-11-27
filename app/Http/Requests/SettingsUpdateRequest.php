@@ -50,7 +50,6 @@ class SettingsUpdateRequest extends Request
                     'first_name' => 'required|max:64',
                     'last_name' => 'required|max:64',
                     'alias' => [
-                        'required',
                         'string',
                         'max:64',
                         'alpha_dash',
