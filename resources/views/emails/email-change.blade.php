@@ -1,2 +1,2 @@
 Hi, {{ $user->full_name }}
-Change email link {{ url('/email-change/' . $token) }}
+Change email link {{ url('/users/email-change/' . $token) }}
