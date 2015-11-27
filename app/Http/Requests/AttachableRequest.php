@@ -51,9 +51,11 @@ trait AttachableRequest
      */
     public function sanitize($input)
     {
-        foreach ($input['attachments']['links'] as &$link) {
-            if (starts_with($link['image'], '//')) {
-                $link['image'] = substr_replace($link['image'], 'http://', 0, 2);
+        if (isset($input['attachments']['links'])) {
+            foreach ($input['attachments']['links'] as &$link) {
+                if (starts_with($link['image'], '//')) {
+                    $link['image'] = substr_replace($link['image'], 'http://', 0, 2);
+                }
             }
         }
 

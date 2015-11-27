@@ -42,9 +42,11 @@ class UrlParseRequest extends Request
      */
     public function sanitize($input)
     {
-        foreach ($input['links'] as &$link) {
-            if (starts_with('//', $link)) {
-                $link = substr_replace($link, 'http://', 0, 2);
+        if (isset($input['links'])) {
+            foreach ($input['links'] as &$link) {
+                if (starts_with('//', $link)) {
+                    $link = substr_replace($link, 'http://', 0, 2);
+                }
             }
         }
 

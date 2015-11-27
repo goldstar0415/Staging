@@ -32,7 +32,9 @@ class ActivityCategoryRequest extends Request
 
     public function sanitize($input)
     {
-        $input['name'] = str_slug($input['display_name']);
+        if (isset($input['display_name'])) {
+            $input['name'] = str_slug($input['display_name']);
+        }
 
         return $input;
     }
