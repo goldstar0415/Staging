@@ -78,6 +78,10 @@ class SpotsImport extends Job implements SelfHandling
                 'rating' => 'numeric'
             ];
 
+            if (isset($row->email)) {
+                $rules['email'] = 'required|email';
+            }
+
             if ($this->type === self::EVENT) {
                 $rules['start_date'] = 'required|date_format:Y-m-d';
                 $rules['end_date'] = 'required|date_format:Y-m-d';
@@ -137,11 +141,16 @@ class SpotsImport extends Job implements SelfHandling
                 if ($this->type === self::RECREATION or $this->type === self::PITSTOP) {
                     $spot->is_approved = true;
                 }
-
-                $admin->spots()->save($spot);
+                $owner = null;
+                if (isset($row->email)) {
+                    $owner = $this->generateUser($row->title, $row->email);
+                } else {
+                    $owner = $admin;
+                }
+                $owner->spots()->save($spot);
                 if ($row->rating) {
                     $vote = new SpotVote(['vote' => $row->rating]);
-                    $vote->user()->associate($admin);
+                    $vote->user()->associate($owner);
                     $spot->votes()->save($vote);
                 }
                 if ($row->image_links) {
@@ -170,6 +179,19 @@ class SpotsImport extends Job implements SelfHandling
         ]);
 
         return true;
+    }
+
+    protected function generateUser($title, $email)
+    {
+        $password = str_random(12);
+
+        $user = User::create([
+            'first_name' => strlen($title) > 64 ? substr($title, 0, 64) : $title,
+            'email' => $email,
+            'password' => bcrypt($password)
+        ]);
+
+        return $user;
     }
 
     /**

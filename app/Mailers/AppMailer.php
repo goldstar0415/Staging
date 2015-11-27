@@ -22,6 +22,11 @@ class AppMailer
     protected $to;
 
     /**
+     * @var string Subject
+     */
+    protected $subject;
+
+    /**
      * @var string View template
      */
     protected $view;
@@ -43,9 +48,15 @@ class AppMailer
     {
         $this->to = $user->email;
         $this->view = 'emails.account-verifying';
+        $this->subject = 'Verify your account';
         $this->data = compact('user');
 
         $this->deliver();
+    }
+
+    public function notifyGeneratedUser()
+    {
+        
     }
 
     /**
@@ -57,6 +68,9 @@ class AppMailer
             /**
              * @var \Illuminate\Mail\Message $message
              */
+            if ($this->subject) {
+                $message->subject($this->subject);
+            }
             $message->to($this->to);
         });
     }
