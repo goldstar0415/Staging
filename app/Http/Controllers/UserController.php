@@ -7,7 +7,9 @@ use App\ContactUs;
 use App\Http\Requests\ContactUsRequest;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\UserListRequest;
+use App\Mailers\AppMailer;
 use App\Role;
+use App\Services\EmailChange\EmailChangeBroker;
 use App\Services\Privacy;
 use App\User;
 use DB;
@@ -51,8 +53,16 @@ class UserController extends Controller
      */
     public function __construct(Guard $auth)
     {
-        $this->middleware('guest', ['except' => ['getLogout', 'getMe', 'getIndex', 'getList', 'reviews', 'contactUs']]);
-        $this->middleware('auth', ['only' => 'getMe']);
+        $this->middleware('guest', ['except' => [
+            'getLogout',
+            'getMe',
+            'getIndex',
+            'getList',
+            'reviews',
+            'contactUs',
+            'changeEmail'
+        ]]);
+        $this->middleware('auth', ['only' => ['getMe', 'changeEmail']]);
         $this->auth = $auth;
     }
 
@@ -69,9 +79,10 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  Request $request
+     * @param AppMailer $mailer
      * @return User
      */
-    public function postIndex(Request $request)
+    public function postIndex(Request $request, AppMailer $mailer)
     {
         $validator = $this->validator($request->all());
 
@@ -79,10 +90,11 @@ class UserController extends Controller
             $this->throwValidationException($request, $validator);
         }
 
-        $this->auth->login($this->create($request->all()));
 
-        $user = $this->auth->user();
+        $user = $this->create($request->all());
         $user->roles()->attach(Role::take(config('entrust.default')));
+        $mailer->sendEmailVerification($user);
+
         return $user;
     }
 
@@ -261,6 +273,29 @@ class UserController extends Controller
     }
 
     /**
+     * Confirm user email
+     *
+     * @param $token
+     * @return \App\User
+     */
+    public function confirmEmail($token)
+    {
+        $user = User::whereToken($token)->firstOrFail()->confirmEmail();
+
+        return redirect(frontend_url('email-verified'));
+    }
+
+    public function changeEmail(Request $request, $token, EmailChangeBroker $emailChangeBroker)
+    {
+        $emailChangeBroker->change($request->user(), $token, function ($user, $email) {
+            $user->email = $email;
+            $user->save();
+        });
+
+        return redirect(frontend_url('user/email-changed'));
+    }
+
+    /**
      * Get authenticated user info
      *
      * @param Request $request
@@ -269,6 +304,11 @@ class UserController extends Controller
      */
     protected function authenticated(Request $request, Authenticatable $user)
     {
+        if (!$user->verified) {
+            $this->auth->logout();
+            abort(406);
+        }
+
         return $this->appendUserRelations($user)->append(['new_messages'])->load('roles');
     }
 

@@ -49,6 +49,8 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property boolean $notification_new_spot
  * @property boolean $notification_coming_spot
  * @property string $random_hash
+ * @property string $token
+ * @property boolean $verified
  * @property \Carbon\Carbon $banned_at
  * @property string $ban_reason
  * @property \Carbon\Carbon $created_at
@@ -624,5 +626,13 @@ class User extends BaseModel implements
         $ics_event->setSummary($full_name . ' birthday!!!');
 
         return $ics_event;
+    }
+
+    public function confirmEmail()
+    {
+        $this->verified = true;
+        $this->token = null;
+
+        $this->save();
     }
 }

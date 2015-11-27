@@ -64,4 +64,10 @@ return [
         'expire' => 60,
     ],
 
+    'email' => [
+        'view' => 'emails.email-change',
+        'table' => 'email_changes',
+        'expire' => 60
+    ]
+
 ];
