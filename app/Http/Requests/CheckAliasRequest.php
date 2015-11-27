@@ -31,7 +31,7 @@ class CheckAliasRequest extends Request
                 'max:64',
                 'alpha_dash',
                 'regex:' . User::$aliasRule,
-                'unique:users'
+                'unique:users,alias,' . $this->user()->id
             ]
         ];
     }
