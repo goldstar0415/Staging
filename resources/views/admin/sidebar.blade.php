@@ -1,7 +1,6 @@
 <div class="col-md-2 col-xs-4 admin-menu">
     <ul>
         <li>{!! link_to_route('admin.posts.index', 'Blog') !!}</li>
-        <li><a href="admin_about_us.html">About us</a></li>
         <li>{!! link_to_route('admin.users.index', 'Users') !!}</li>
         <li>{!! link_to_route('admin.spots.index', 'Spots') !!}</li>
         <li>{!! link_to_route('admin.spot-owner.index', 'Spot owner requests') !!}</li>
