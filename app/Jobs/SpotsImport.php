@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use App\Mailers\AppMailer;
 use App\Services\SpotsImportFile;
 use App\Spot;
 use App\SpotTypeCategory;
@@ -32,14 +33,21 @@ class SpotsImport extends Job implements SelfHandling
      * @var SpotsImportFile
      */
     private $importFile;
+
     /**
      * @var int
      */
     private $type;
+
     /**
      * @var array
      */
     private $data;
+
+    /**
+     * @var \App\Mailers\AppMailer
+     */
+    private $mailer;
 
     /**
      * Create a new job instance.
@@ -53,6 +61,7 @@ class SpotsImport extends Job implements SelfHandling
         $this->importFile = $importFile;
         $this->type = $type;
         $this->data = $data;
+        $this->mailer = app(AppMailer::class);
     }
 
     /**
@@ -190,6 +199,8 @@ class SpotsImport extends Job implements SelfHandling
             'email' => $email,
             'password' => bcrypt($password)
         ]);
+
+        $this->mailer->notifyGeneratedUser($user, $password);
 
         return $user;
     }
