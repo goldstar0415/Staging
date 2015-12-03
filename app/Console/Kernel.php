@@ -27,10 +27,10 @@ class Kernel extends ConsoleKernel
      * Define the application's command schedule.
      *
      * @param  \Illuminate\Console\Scheduling\Schedule $schedule
-     * @param AppMailer $mailer
      */
-    protected function schedule(Schedule $schedule, AppMailer $mailer)
+    protected function schedule(Schedule $schedule)
     {
+        $mailer = app(AppMailer::class);
         // Check coming birthdays and spots
         $schedule->call(function () {
             
