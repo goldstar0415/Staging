@@ -17,11 +17,6 @@
         !!}
     </p>
     <p>
-        {!! Form::label('admin', 'Attached admin: ') !!}
-        {!! Form::select('admin', App\Role::where('name', 'admin')->first()->users->pluck('full_name', 'id'))
-        !!}
-    </p>
-    <p>
         {!! Form::label('document') !!}
         {!! Form::file('document') !!}
     </p>

@@ -22,6 +22,11 @@ class AppMailer
     protected $to;
 
     /**
+     * @var string Subject
+     */
+    protected $subject;
+
+    /**
      * @var string View template
      */
     protected $view;
@@ -43,7 +48,28 @@ class AppMailer
     {
         $this->to = $user->email;
         $this->view = 'emails.account-verifying';
+        $this->subject = 'Verify your account';
         $this->data = compact('user');
+
+        $this->deliver();
+    }
+
+    public function notifyGeneratedUser(User $user, $password)
+    {
+        $this->to = $user->email;
+        $this->view = 'emails.generated-user';
+        $this->subject = 'Zoomtivity account';
+        $this->data = compact('user', 'password');
+
+        $this->deliver();
+    }
+
+    public function remindGeneratedUser(User $user, $password)
+    {
+        $this->to = $user->email;
+        $this->view = 'generated-reminder';
+        $this->subject = 'Zoomtivity account';
+        $this->data = compact('user', 'password');
 
         $this->deliver();
     }
@@ -57,6 +83,9 @@ class AppMailer
             /**
              * @var \Illuminate\Mail\Message $message
              */
+            if ($this->subject) {
+                $message->subject($this->subject);
+            }
             $message->to($this->to);
         });
     }

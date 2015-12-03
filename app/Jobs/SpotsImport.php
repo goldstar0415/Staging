@@ -2,7 +2,9 @@
 
 namespace App\Jobs;
 
+use App\GeneratedUser;
 use App\Jobs\Job;
+use App\Mailers\AppMailer;
 use App\Services\SpotsImportFile;
 use App\Spot;
 use App\SpotTypeCategory;
@@ -32,14 +34,21 @@ class SpotsImport extends Job implements SelfHandling
      * @var SpotsImportFile
      */
     private $importFile;
+
     /**
      * @var int
      */
     private $type;
+
     /**
      * @var array
      */
     private $data;
+
+    /**
+     * @var \App\Mailers\AppMailer
+     */
+    private $mailer;
 
     /**
      * Create a new job instance.
@@ -53,6 +62,7 @@ class SpotsImport extends Job implements SelfHandling
         $this->importFile = $importFile;
         $this->type = $type;
         $this->data = $data;
+        $this->mailer = app(AppMailer::class);
     }
 
     /**
@@ -78,6 +88,10 @@ class SpotsImport extends Job implements SelfHandling
                 'rating' => 'numeric'
             ];
 
+            if (isset($row->email)) {
+                $rules['email'] = 'required|email';
+            }
+
             if ($this->type === self::EVENT) {
                 $rules['start_date'] = 'required|date_format:Y-m-d';
                 $rules['end_date'] = 'required|date_format:Y-m-d';
@@ -92,15 +106,11 @@ class SpotsImport extends Job implements SelfHandling
             $validator = Validator::make($row->all(), $rules);
 
             if (!$validator->fails()) {
-                /**
-                 * @var User $admin
-                 */
                 if ($row->image_links) {
                     $row->put('image_links', array_values(array_filter($row->image_links, function ($value) {
                         return !Validator::make(['photo' => $value], ['photo' => 'remote_image'])->fails();
                     })));
                 }
-                $admin = User::find($this->data['admin']);
                 $spot = new Spot;
                 $spot->category()->associate($this->data['spot_category']);
                 if (isset($row->image_links[0])) {
@@ -137,11 +147,18 @@ class SpotsImport extends Job implements SelfHandling
                 if ($this->type === self::RECREATION or $this->type === self::PITSTOP) {
                     $spot->is_approved = true;
                 }
-
-                $admin->spots()->save($spot);
+                $owner = null;
+                if (isset($row->email)) {
+                    $owner = $this->generateUser($row->title, $row->email);
+                }
+                if (!is_null($owner)) {
+                    $owner->spots()->save($spot);
+                } else {
+                    $spot->save();
+                }
                 if ($row->rating) {
                     $vote = new SpotVote(['vote' => $row->rating]);
-                    $vote->user()->associate($admin);
+                    $vote->user()->associate($this->data['admin']);
                     $spot->votes()->save($vote);
                 }
                 if ($row->image_links) {
@@ -170,6 +187,27 @@ class SpotsImport extends Job implements SelfHandling
         ]);
 
         return true;
+    }
+
+    protected function generateUser($title, $email)
+    {
+        if ($exist_user = User::whereEmail($email)->first()) {
+            return $exist_user;
+        }
+        $password = str_random(12);
+        $user = User::create([
+            'first_name' => strlen($title) > 64 ? substr($title, 0, 64) : $title,
+            'email' => $email,
+            'password' => bcrypt($password)
+        ]);
+
+        $generated_user = new GeneratedUser(['password' => $password]);
+        $generated_user->user()->associate($user);
+        $generated_user->save();
+
+        $this->mailer->notifyGeneratedUser($user, $password);
+
+        return $user;
     }
 
     /**
