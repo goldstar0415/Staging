@@ -45,6 +45,7 @@ class Kernel extends ConsoleKernel
                 event(new OnSpotRemind($spot));
             });
         })->daily();
+
         $schedule->call(function () use ($mailer) {
             $users = GeneratedUser::with(['user' => function ($query) {
                 $query->where('verified', true);
@@ -53,6 +54,6 @@ class Kernel extends ConsoleKernel
             foreach ($users as $user) {
                 $mailer->remindGeneratedUser($user->user, $user->password);
             }
-        });
+        })->cron('* 0 * *  0/2');
     }
 }
