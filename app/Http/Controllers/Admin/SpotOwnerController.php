@@ -35,7 +35,7 @@ class SpotOwnerController extends Controller
      */
     public function accept(Request $request, $owner_request)
     {
-        if ($owner_request->spot->hasOwner()) {
+        if ($owner_request->spot->hasOwner() and $owner_request->spot->user->verified) {
             abort(403, 'Spot already has an owner');
         }
 

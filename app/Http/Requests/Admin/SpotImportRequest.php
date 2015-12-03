@@ -26,7 +26,6 @@ class SpotImportRequest extends Request
         return [
             'spot_type' => 'required|integer|exists:spot_types,id',
             'spot_category' => 'required|integer|exists:spot_type_categories,id',
-            'admin' => 'required|integer|exists:users,id',
             'document' => 'required|mimes:txt',
         ];
     }

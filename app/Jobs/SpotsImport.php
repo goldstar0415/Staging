@@ -106,15 +106,11 @@ class SpotsImport extends Job implements SelfHandling
             $validator = Validator::make($row->all(), $rules);
 
             if (!$validator->fails()) {
-                /**
-                 * @var User $admin
-                 */
                 if ($row->image_links) {
                     $row->put('image_links', array_values(array_filter($row->image_links, function ($value) {
                         return !Validator::make(['photo' => $value], ['photo' => 'remote_image'])->fails();
                     })));
                 }
-                $admin = User::find($this->data['admin']);
                 $spot = new Spot;
                 $spot->category()->associate($this->data['spot_category']);
                 if (isset($row->image_links[0])) {
@@ -154,13 +150,15 @@ class SpotsImport extends Job implements SelfHandling
                 $owner = null;
                 if (isset($row->email)) {
                     $owner = $this->generateUser($row->title, $row->email);
-                } else {
-                    $owner = $admin;
                 }
-                $owner->spots()->save($spot);
+                if (!is_null($owner)) {
+                    $owner->spots()->save($spot);
+                } else {
+                    $spot->save();
+                }
                 if ($row->rating) {
                     $vote = new SpotVote(['vote' => $row->rating]);
-                    $vote->user()->associate($owner);
+                    $vote->user()->associate($this->data['admin']);
                     $spot->votes()->save($vote);
                 }
                 if ($row->image_links) {
@@ -193,8 +191,10 @@ class SpotsImport extends Job implements SelfHandling
 
     protected function generateUser($title, $email)
     {
+        if ($exist_user = User::whereEmail($email)->first()) {
+            return $exist_user;
+        }
         $password = str_random(12);
-
         $user = User::create([
             'first_name' => strlen($title) > 64 ? substr($title, 0, 64) : $title,
             'email' => $email,

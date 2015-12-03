@@ -100,11 +100,11 @@
             <tr>
                 <td>{!! Form::checkbox('spots[]', $spot->id, null, ['class' => 'row-select']) !!}</td>
                 <td>{{ $spot->category->type->display_name }}</td>
-                <td>{!! link_to_route('admin.users.show', $spot->user->full_name, [$spot->user->id]) !!}</td>
+                <td>{!! $spot->user_id ? link_to_route('admin.users.show', $spot->user->full_name, [$spot->user->id]) : 'No name' !!}</td>
                 @if (Request::has('filter.user_email'))
-                <td>{!! link_to_route('admin.users.show', $spot->user->email, [$spot->user->id]) !!}</td>
+                <td>{!! $spot->user_id ? link_to_route('admin.users.show', $spot->user->email, [$spot->user->id]) : 'No owner' !!}</td>
                 @endif
-                <td>{!! link_to(frontend_url('user', $spot->user_id, 'spot', $spot->id), $spot->title) !!}</td>
+                <td>{!! link_to(frontend_url('user', $spot->user_id ?: Request::user()->id, 'spot', $spot->id), $spot->title) !!}</td>
                 @if (Request::has('filter.description'))
                 <td>{{ $spot->description }}</td>
                 @endif

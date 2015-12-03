@@ -57,7 +57,7 @@ class AppMailer
     public function notifyGeneratedUser(User $user, $password)
     {
         $this->to = $user->email;
-        $this->view = 'emails.generated-user.blade';
+        $this->view = 'emails.generated-user';
         $this->subject = 'Zoomtivity account';
         $this->data = compact('user', 'password');
 
