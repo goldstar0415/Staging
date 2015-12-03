@@ -4,6 +4,8 @@ namespace App\Console;
 
 use App\Events\OnSpotRemind;
 use App\Events\OnUserBirthday;
+use App\GeneratedUser;
+use App\Mailers\AppMailer;
 use App\Spot;
 use App\User;
 use Illuminate\Console\Scheduling\Schedule;
@@ -24,10 +26,10 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
+     * @param AppMailer $mailer
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule, AppMailer $mailer)
     {
         // Check coming birthdays and spots
         $schedule->call(function () {
@@ -43,5 +45,14 @@ class Kernel extends ConsoleKernel
                 event(new OnSpotRemind($spot));
             });
         })->daily();
+        $schedule->call(function () use ($mailer) {
+            $users = GeneratedUser::with(['user' => function ($query) {
+                $query->where('verified', true);
+            }])->get();
+
+            foreach ($users as $user) {
+                $mailer->remindGeneratedUser($user->user, $user->password);
+            }
+        });
     }
 }

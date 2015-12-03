@@ -201,7 +201,7 @@ class SpotsImport extends Job implements SelfHandling
             'password' => bcrypt($password)
         ]);
 
-        $generated_user = new GeneratedUser();
+        $generated_user = new GeneratedUser(['password' => $password]);
         $generated_user->user()->associate($user);
         $generated_user->save();
 
