@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\GeneratedUser;
 use App\Jobs\Job;
 use App\Mailers\AppMailer;
 use App\Services\SpotsImportFile;
@@ -199,6 +200,10 @@ class SpotsImport extends Job implements SelfHandling
             'email' => $email,
             'password' => bcrypt($password)
         ]);
+
+        $generated_user = new GeneratedUser();
+        $generated_user->user()->associate($user);
+        $generated_user->save();
 
         $this->mailer->notifyGeneratedUser($user, $password);
 
