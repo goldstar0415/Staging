@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\SearchRequest;
+use App\Http\Requests\Admin\UsersDeleteRequest;
 use App\Spot;
 use App\User;
 use Illuminate\Http\Request;
@@ -82,5 +83,12 @@ class UsersController extends Controller
     public function search(SearchRequest $request)
     {
         return view('admin.users.index')->with('users', User::search($request->search_text)->paginate());
+    }
+
+    public function bulkDelete(UsersDeleteRequest $request)
+    {
+        User::destroy($request->users);
+
+        return back();
     }
 }
