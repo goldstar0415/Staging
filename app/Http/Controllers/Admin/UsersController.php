@@ -59,8 +59,11 @@ class UsersController extends Controller
      */
     public function update(Request $request, $user)
     {
-        $user->fill($request->only(['first_name', 'last_name', 'email', 'ban_reason']));
-        $user->banned_at = $request->input('ban');
+        $user->fill($request->only(['first_name', 'last_name', 'email']));
+        if (!$user->hasRole('admin')) {
+            $user->ban_reason = $request->ban_reason;
+            $user->banned_at = $request->input('ban');
+        }
         $user->roles()->sync($request->input('roles'));
         $user->save();
 
