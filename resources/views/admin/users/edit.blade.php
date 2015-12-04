@@ -22,6 +22,7 @@
              ['multiple', 'class' => 'new_multiple']
              ) !!}
         </p>
+        @if (!$user->hasRole('admin'))
         <p>
             {!! Form::label('ban') !!}
             {!! Form::checkbox('ban', 1, (bool)$user->banned_at, ['class' => 'ban-check']) !!}
@@ -30,6 +31,7 @@
             {!! Form::label('ban_reason') !!}
             {!! Form::text('ban_reason', (bool)$user->ban_reason, ['class' => 'edit-data']) !!}
         </p>
+        @endif
         {!! Form::submit('Save', ['class' => 'btn btn-success button-my']) !!}
     {!! Form::close() !!}
     @if(session('status'))
