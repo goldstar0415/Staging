@@ -4,6 +4,16 @@
 <div class="editing col-xs-12">
     <h2>Users</h2>
     <hr>
+    <div class="row actions">
+        <ul class="nav nav-pills">
+            <li role="presentation">
+                {!! link_to_route('admin.email', 'Email', [], ['id' => 'email-users']) !!}
+            </li>
+            <li role="presentation">
+                {!! link_to_route('admin.users.bulk-delete', 'Delete', [], ['id' => 'bulk-delete']) !!}
+            </li>
+        </ul>
+    </div>
     {!! Form::open(['method' => 'GET', 'route' => 'admin.users.search', 'class' => 'search-form']) !!}
     {!! Form::text('search_text', null, ['placeholder' => 'Search by name']) !!}
     {!! Form::submit('Search') !!}
@@ -11,6 +21,7 @@
     <table class="col-xs-12">
         <thead>
         <tr>
+            <th id="bulk"><input type="checkbox"></th>
             <th class="col-sm-3">User name</th>
             <th class="col-sm-3">Email</th>
             <th class="col-sm-2">Roles</th>
@@ -21,6 +32,7 @@
         <tbody>
             @foreach($users as $user)
             <tr>
+                <td>{!! Form::checkbox('users[]', $user->id, null, ['class' => 'row-select']) !!}</td>
                 <td>{!! link_to_route('admin.users.show', $user->first_name . ' ' . $user->last_name, $user->id) !!}</td>
                 <td>{!! link_to_route('admin.users.show', $user->email, $user->id) !!}</td>
                 <td><i>

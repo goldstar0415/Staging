@@ -129,6 +129,7 @@
                 addSpotsCategory($spotsType);
             }
         });
+
         $('#limit').change(function () {
             var search = '';
             var val = $(this).val();
@@ -139,11 +140,13 @@
             }
             location.href = location.origin + location.pathname + search;
         });
+
         $('form').submit(function(e){
             var emptyinputs = $(this).find('input').filter(function(){
                 return !$.trim(this.value).length;  // get all empty fields
             }).prop('disabled',true);
         });
+
         $('#bulk input[type=checkbox]').change(function(e) {
             var $row = $('.row-select');
             if ($(this).prop('checked')) {
@@ -152,6 +155,7 @@
                 $row.prop('checked', false);
              }
         });
+
         $('#bulk-edit').submit(function (e) {
             var $form = $(this);
             $('.row-select:checked').each(function() {
@@ -161,5 +165,28 @@
                 }).val($(this).val()).appendTo($form);
             });
         });
+
+        $('#bulk-delete, #email-users').click(function(e) {
+            $(this).attr('href', $(this).attr('href') + '?' + getBulkRows(true));
+        });
+
+        function getBulkRows(queryFormat) {
+            queryFormat = typeof queryFormat === 'undefined' ? false : queryFormat;
+
+            var result = {};
+            $('.row-select:checked').each(function(e) {
+                var key = $(this).attr('name').replace('[]', '');
+                if (!result.hasOwnProperty(key)) {
+                    result[key] = [];
+                }
+                result[key].push($(this).val());
+            });
+
+            if (queryFormat) {
+                return $.param(result);
+            }
+
+            return result;
+        }
     });
 })(jQuery);

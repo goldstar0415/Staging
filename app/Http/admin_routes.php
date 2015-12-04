@@ -4,6 +4,7 @@ get('/', 'UsersController@index');
 resource('activitylevel', 'ActivityLevelController', ['except' => 'show']);
 
 get('users/search', 'UsersController@search')->name('admin.users.search');
+get('users/bulk-delete', 'UsersController@bulkDelete')->name('admin.users.bulk-delete');
 resource('users', 'UsersController', ['except' => ['store', 'create']]);
 
 resource('spots', 'SpotController', ['only' => ['index', 'destroy']]);
