@@ -77,7 +77,7 @@
         <li ng-if="currentUser && !Spot.spot.isReported">
           <a class="report-icon" report-spot="Spot.spot">Report</a>
         </li>
-        <li ng-if="!Spot.spot.user_id && !Spot.spot.isClaimed">
+        <li ng-if="(!Spot.spot.user_id || !Spot.spot.user.verified) && !Spot.spot.isClaimed">
           <a class="report-icon" claim-spot="Spot.spot">Claim listing</a>
         </li>
       </ul>
