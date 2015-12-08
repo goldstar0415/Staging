@@ -40,22 +40,17 @@ class PrivacyCheck
         /**
          * @var User $target
          */
-        if ($request->is('spots', 'spots/index') and $request->isMethod('get')) {
-            $target = User::find($request->get('user_id'));
-
-            if ($this->privacy->hasPermission($target, $target->privacy_events)) {
-                $allow = true;
-            }
-        } elseif ($request->is('spots/*/') and $request->isMethod('get')
+        if ($request->is('spots/*/') and $request->isMethod('get')
             or $request->is('spots/*/comments') and $request->isMethod('get') || $request->isMethod('post')
             or $request->is('spots/*/photos/*') and $request->isMethod('get') || $request->isMethod('post')
             or $request->is('spots/*/rate') and $request->isMethod('post')
             or $request->is('spots/*/favorite') and $request->isMethod('get')
             or $request->is('spots/*/unfavorite') and $request->isMethod('get')
         ) {
-            $target = $request->route('spots')->user;
+            $spot = $request->route('spots');
+            $target = $spot->user;
 
-            if ($this->privacy->hasPermission($target, $target->privacy_events)) {
+            if (!$spot->is_private and $this->privacy->hasPermission($target, $target->privacy_events)) {
                 $allow = true;
             }
         } elseif ($request->is('followers/*')) {
