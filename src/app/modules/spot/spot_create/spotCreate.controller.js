@@ -116,8 +116,7 @@
         request.title = vm.title;
         request.description = vm.description;
         request.spot_type_category_id = vm.category_id;
-        //request.is_private = vm.is_private;
-
+        request.is_private = vm.is_private;
 
         if (vm.cover) {
           request.cover = vm.cover;
