@@ -28,6 +28,7 @@ use Request;
  * @property \Codesleeve\Stapler\Attachment $cover
  * @property array $videos
  * @property bool $is_approved
+ * @property bool $is_private
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $end_date
  * @property \Carbon\Carbon $created_at

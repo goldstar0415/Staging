@@ -17,6 +17,7 @@ use App\Http\Requests\Spot\SpotStoreRequest;
 use App\Http\Requests\Spot\SpotUnFavoriteRequest;
 use App\Http\Requests\Spot\SpotUpdateRequest;
 use App\Http\Requests\SpotExportRequest;
+use App\Services\Privacy;
 use App\Spot;
 use App\SpotPhoto;
 use App\SpotType;
@@ -49,9 +50,10 @@ class SpotController extends Controller
     /**
      * Display a listing of the spots.
      * @param SpotIndexRequest $request
+     * @param Privacy $privacy
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function index(SpotIndexRequest $request)
+    public function index(SpotIndexRequest $request, Privacy $privacy)
     {
         $user = $request->user();
         $user_id = (int)$request->get(
@@ -64,7 +66,13 @@ class SpotController extends Controller
         } else {
             $spots = Spot::query();
         }
-        $spots = $spots->where('user_id', $user_id)->with('comments');
+        $target = User::find($user_id);
+
+        $spots = $spots->where('user_id', $user_id);
+        if ($user->id !== $user_id and !$privacy->hasPermission($target, $target->privacy_events)) {
+            $spots = $spots->where('is_private', false);
+        }
+        $spots = $spots->with('comments');
 
         return $this->paginatealbe($request, $spots);
     }
@@ -81,8 +89,8 @@ class SpotController extends Controller
             $cover = $request->file('cover');
             $spot->cover = $cover->getRealPath();
         }
-        if ($spot->type === 'recreation' or $spot->type === 'pitstop') {
-            $spot->is_approved = false;
+        if ($spot->is_private) {
+            $spot->is_approved = true;
         }
 
         $request->user()->spots()->save($spot);
