@@ -12,7 +12,6 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 use Request;
@@ -88,7 +87,7 @@ class User extends BaseModel implements
     CalendarExportable
 {
     use Authenticatable, CanResetPassword, EntrustUserTrait,
-        PostgisTrait, StaplerTrait, SoftDeletes, GeoTrait {
+        PostgisTrait, StaplerTrait, GeoTrait {
         StaplerTrait::boot insteadof EntrustUserTrait;
         EntrustUserTrait::boot insteadof StaplerTrait;
         StaplerTrait::boot as bootStaplerT;
@@ -120,7 +119,6 @@ class User extends BaseModel implements
         'id',
         'created_at',
         'updated_at',
-        'deleted_at',
         'remember_token',
         'avatar_file_name',
         'avatar_file_size',
