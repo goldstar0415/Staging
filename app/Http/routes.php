@@ -103,7 +103,7 @@ Route::get('message/{user_id}/read', 'ChatController@read');
 /**
  * Map Controls
  */
-Route::post('map/search', 'MapController@getSearch');
+Route::get('map/search', 'MapController@getSearch');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
 Route::get('areas/{areas}/preview', 'AreaController@preview');
 Route::get('weather', 'MapController@getWeather');
