@@ -51,7 +51,7 @@
           vm.close();
           Spot.report({id: spot.id}, {
             reason: vm.reason,
-            description: vm.description
+            text: vm.description
           }, function (resp) {
             toastr.success('Report successfully sent')
           });
