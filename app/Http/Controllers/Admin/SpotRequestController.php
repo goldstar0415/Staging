@@ -19,7 +19,11 @@ class SpotRequestController extends Controller
      */
     public function index()
     {
-        return view('admin.spot_request.index')->with('spots', Spot::withRequested()->where('is_approved', false)->paginate());
+        return view('admin.spot_request.index')->with(
+            'spots',
+            Spot::withRequested()->where('is_approved', false)->where('is_private', false)
+                ->paginate()
+        );
     }
 
     /**
