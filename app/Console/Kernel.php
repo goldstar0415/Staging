@@ -48,12 +48,13 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () use ($mailer) {
             $users = GeneratedUser::with(['user' => function ($query) {
-                $query->where('verified', true);
+                $query->where('verified', false);
             }])->get();
 
             foreach ($users as $user) {
                 $mailer->remindGeneratedUser($user->user, $user->password);
             }
-        })->cron('* 0 * *  0/2');
+        })->everyTenMinutes();
+//        })->cron('* 0 * *  0/2'); TODO: uncomment
     }
 }
