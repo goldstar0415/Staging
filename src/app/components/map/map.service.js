@@ -1266,7 +1266,7 @@
 
       function GetDataByBBox(bbox_array, isFocus) {
         isFocus = isFocus || false;
-
+        window.bbox_array = {b_boxes: bbox_array};
         var spots = [];
         if (bbox_array.length > 0) {
           $http.get(API_URL + '/map/search', {params: {b_boxes: bbox_array}})

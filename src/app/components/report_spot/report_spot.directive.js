@@ -49,7 +49,7 @@
         if (form.$valid && vm.reason) {
           spot.isReported = true;
           vm.close();
-          Spot.report({
+          Spot.report({id: spot.id}, {
             reason: vm.reason,
             description: vm.description
           }, function (resp) {
