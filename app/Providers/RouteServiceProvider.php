@@ -19,6 +19,7 @@ use App\Social;
 use App\Spot;
 use App\SpotOwnerRequest;
 use App\SpotPhoto;
+use App\SpotReport;
 use App\SpotTypeCategory;
 use App\User;
 use App\Wall;
@@ -112,6 +113,7 @@ class RouteServiceProvider extends ServiceProvider
             return Social::where('name', $value)->first();
         });
         $router->model('spot-categories', SpotTypeCategory::class);
+        $router->model('spot-reports', SpotReport::class);
         $router->model('blog-categories', BlogCategory::class);
         $router->model('activity-categories', ActivityCategory::class);
         $router->model('blogger-request', BloggerRequest::class);

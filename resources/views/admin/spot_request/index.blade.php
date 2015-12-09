@@ -41,11 +41,5 @@
         @endforeach
         </tbody>
     </table>
-    <div class="col-xs-12 pagination">
-        @if(Request::has('search_text'))
-            {!! $spots->appends(['search_text' => Request::get('search_text')])->render() !!}
-        @else
-            {!! $spots->render() !!}
-        @endif
-    </div>
+    @include('admin.pagination', ['paginatable' => $spots])
 @endsection

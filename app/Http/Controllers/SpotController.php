@@ -13,6 +13,7 @@ use App\Http\Requests\Spot\SpotIndexRequest;
 use App\Http\Requests\Spot\SpotInviteRequest;
 use App\Http\Requests\Spot\SpotOwnerRequest;
 use App\Http\Requests\Spot\SpotRateRequest;
+use App\Http\Requests\Spot\SpotReportRequest;
 use App\Http\Requests\Spot\SpotStoreRequest;
 use App\Http\Requests\Spot\SpotUnFavoriteRequest;
 use App\Http\Requests\Spot\SpotUpdateRequest;
@@ -20,6 +21,7 @@ use App\Http\Requests\SpotExportRequest;
 use App\Services\Privacy;
 use App\Spot;
 use App\SpotPhoto;
+use App\SpotReport;
 use App\SpotType;
 use App\SpotVote;
 use App\User;
@@ -335,5 +337,45 @@ class SpotController extends Controller
         $owner_request->save();
 
         return $owner_request;
+    }
+
+    /**
+     * Report the spot
+     *
+     * @param SpotReportRequest $request
+     * @param \App\Spot $spot
+     * @return SpotReport
+     */
+    public function report(SpotReportRequest $request, $spot)
+    {
+        $report = new SpotReport();
+
+        switch((int)$request->reason) {
+            case 0:
+                $report->reason = SpotReport::WRONG;
+                break;
+            case 1:
+                $report->reason = SpotReport::INAPPROPRIATE;
+                break;
+            case 2:
+                $report->reason = SpotReport::DUPLICATE;
+                break;
+            case 3:
+                $report->reason = SpotReport::SPAM;
+                break;
+            case 4:
+                $report->reason = SpotReport::OTHER;
+                break;
+            default:
+                abort(403, 'Forbidden');
+                break;
+        }
+
+        $report->text = $request->text;
+        $report->spot()->associate($spot);
+
+        $report->save();
+
+        return $report;
     }
 }
