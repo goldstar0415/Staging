@@ -1269,7 +1269,7 @@
 
         var spots = [];
         if (bbox_array.length > 0) {
-          $http.post(API_URL + '/map/search', {b_boxes: bbox_array})
+          $http.get(API_URL + '/map/search', {params: {b_boxes: bbox_array}})
             .success(function (data) {
               _.each(data, function (item) {
                 if (PointInPolygon(item.location)) {
