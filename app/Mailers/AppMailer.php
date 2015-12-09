@@ -67,7 +67,7 @@ class AppMailer
     public function remindGeneratedUser(User $user, $password)
     {
         $this->to = $user->email;
-        $this->view = 'generated-reminder';
+        $this->view = 'emails.generated-reminder';
         $this->subject = 'Zoomtivity account';
         $this->data = compact('user', 'password');
 
