@@ -1266,10 +1266,12 @@
 
       function GetDataByBBox(bbox_array, isFocus) {
         isFocus = isFocus || false;
-        window.bbox_array = {b_boxes: bbox_array};
         var spots = [];
         if (bbox_array.length > 0) {
-          $http.get(API_URL + '/map/search', {params: {b_boxes: bbox_array}})
+          var params = makeArray(bbox_array);
+          params = $.param({b_boxes: params});
+
+          $http.get(API_URL + '/map/search?' + params)
             .success(function (data) {
               _.each(data, function (item) {
                 if (PointInPolygon(item.location)) {
@@ -1286,6 +1288,25 @@
         } else {
           clearLayers();
           $rootScope.$emit('update-map-data', []);
+        }
+
+        //fix $.param bug with object keys
+        function toSimpleObject(obj) {
+          return _.object(_.map(obj, function (item, key) {
+            return [key, item]
+          }));
+        }
+
+        function makeArray(array) {
+          return _.map(array, function (item, key) {
+            var obj = toSimpleObject(item);
+
+            for (var i in obj) {
+              obj[i] = toSimpleObject(obj[i]);
+            }
+
+            return obj;
+          });
         }
       }
 
