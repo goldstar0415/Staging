@@ -97,7 +97,7 @@ trait GeoTrait
                 /**
                  * @var JoinClause $join
                  */
-                $join->on('spot_points.spot_id', '=', 'spots.id')->where('spots.is_private', false)->where('is_approved', '=' , true);
+                $join->on('spot_points.spot_id', '=', 'spots.id')->where('spots.is_private', '=', false)->where('is_approved', '=' , true);
             })->whereRaw(implode(' OR ', $search_areas))->get();
 
         return $points;
