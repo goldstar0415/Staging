@@ -144,9 +144,7 @@ class SpotsImport extends Job implements SelfHandling
                     $spot->start_date = Carbon::createFromDate(...explode('-', $row->start_date));
                     $spot->end_date = Carbon::createFromDate(...explode('-', $row->end_date));
                 }
-                if ($this->type === self::RECREATION or $this->type === self::PITSTOP) {
-                    $spot->is_approved = true;
-                }
+                $spot->is_approved = true;
                 $owner = null;
                 if (isset($row->email)) {
                     $owner = $this->generateUser($row->title, $row->email);
