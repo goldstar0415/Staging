@@ -9,6 +9,7 @@
         <li>{!! link_to_route('admin.activitylevel.index', 'User type') !!}</li>
         <li>{!! link_to_route('admin.contact-us.index', 'Contact Us requests') !!}</li>
         <li>{!! link_to_route('admin.spot-requests.index', 'Spot requests') !!}</li>
+        <li>{!! link_to_route('admin.spot-reports.index', 'Spot reports') !!}</li>
         <li>{!! link_to_route('admin.blogger-requests.index', 'Blogger requests') !!}</li>
         <li>{!! link_to_route('admin.spot-import', 'Parse CSV') !!}</li>
         <li>{!! link_to_route('admin.email', 'Send Email') !!}</li>
