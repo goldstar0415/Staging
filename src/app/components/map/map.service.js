@@ -780,6 +780,8 @@
         var geoJson = GetDrawLayerGeoJSON();
 
         if (wp.length > 0 || geoJson && geoJson.features.length > 0) {
+          FitBoundsOfDrawLayer();
+
           var modalInstance = $modal.open({
             animation: true,
             templateUrl: '/app/components/map_partials/saveSelection/saveSelection.html',
@@ -803,29 +805,37 @@
           CancelPathSelection();
         }
 
-        var wp = GetDrawLayerPathWaypoints();
-        var req = {
-          title: title,
-          description: description,
-          waypoints: wp,
-          zoom: map.getZoom(),
-          data: drawLayerGeoJSON
-        };
+        getScreenshot(function (image) {
+          var wp = GetDrawLayerPathWaypoints();
+          var req = {
+            title: title,
+            description: description,
+            waypoints: wp,
+            zoom: map.getZoom(),
+            data: drawLayerGeoJSON,
+            cover: image
+          };
 
-        //if ($rootScope.currentParams.area_id) {
-        //  req.area_id = $rootScope.currentParams.area_id;
-        //  Area.update(req, function (data) {
-        //    toastr.success('Selection saved!');
-        //  }, function (data) {
-        //    toastr.error('Error!')
-        //  })
-        //} else {
-        Area.save(req, function (data) {
-          toastr.success('Selection saved!');
-        }, function (data) {
-          toastr.error('Error!')
+          Area.save(req, function (data) {
+            toastr.success('Selection saved!');
+          }, function (data) {
+            toastr.error('Error!')
+          });
         });
-        //}
+      }
+
+      function getScreenshot(callback) {
+        $('#map').html2canvas({
+          flashcanvas: "assets/libs/html2canvas/flashcanvas.min.js",
+          logging: false,
+          profile: false,
+          useCORS: true
+        });
+
+        window.manipulateCanvasFunction = function (savedMap) {
+          var image = savedMap.toDataURL("image/png");
+          callback(image);
+        };
       }
 
       //load selection from server
