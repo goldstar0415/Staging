@@ -23,6 +23,7 @@ class AreaController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('base64upload:cover', ['only' => ['store', 'update']]);
         $this->middleware('auth', ['only' => ['store', 'update', 'destroy']]);
     }
 
