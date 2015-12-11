@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Services\SocialSharing;
+use Codesleeve\Stapler\ORM\StaplerableInterface;
+use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
 
 /**
  * Model Area
@@ -21,16 +23,24 @@ use App\Services\SocialSharing;
  * @property User $user
  * @property \Illuminate\Database\Eloquent\Collection $walls
  */
-class Area extends BaseModel
+class Area extends BaseModel implements StaplerableInterface
 {
-    protected $fillable = ['title', 'description', 'data', 'waypoints', 'zoom'];
+    use StaplerTrait;
 
-    protected $appends = ['share_links'];
+    protected $fillable = ['cover', 'title', 'description', 'data', 'waypoints', 'zoom'];
+
+    protected $appends = ['share_links', 'cover_url'];
 
     protected $casts = [
         'data' => 'array',
         'waypoints' => 'array'
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        $this->hasAttachedFile('cover');
+        parent::__construct($attributes);
+    }
 
     /**
      * Get the user that owns the area
@@ -62,5 +72,10 @@ class Area extends BaseModel
             'twitter' => SocialSharing::twitter($url),
             'google' => SocialSharing::google($url)
         ];
+    }
+
+    public function getCoverUrlAttribute()
+    {
+        return $this->getPictureUrls('cover');
     }
 }

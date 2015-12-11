@@ -24,6 +24,7 @@ class AreaStoreRequest extends Request
     public function rules()
     {
         return [
+            'cover' => 'required|image',
             'title' => 'required|string|max:255',
             'description' => 'string|max:255',
             'waypoints' => 'array|required_without:data',
