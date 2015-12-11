@@ -825,17 +825,66 @@
       }
 
       function getScreenshot(callback) {
-        $('#map').html2canvas({
-          flashcanvas: "assets/libs/html2canvas/flashcanvas.min.js",
-          logging: false,
-          profile: false,
-          useCORS: true
+        var mapPane = $(".leaflet-map-pane")[0];
+        var mapTransform = mapPane.style.transform.replace("translate3d(", "").split(",");
+        var mapX = parseFloat(mapTransform[0].replace("px", ""));
+        var mapY = parseFloat(mapTransform[1].replace("px", ""));
+        mapPane.style.transform = "translate3d(0px,0px,0px)";
+
+        var myTiles = $("img.leaflet-tile");
+        var tilesLeft = [];
+        var tilesTop = [];
+        for (var i = 0; i < myTiles.length; i++) {
+          tilesLeft.push(parseFloat(myTiles[i].style.left.replace("px", "")));
+          tilesTop.push(parseFloat(myTiles[i].style.top.replace("px", "")));
+          myTiles[i].style.left = (tilesLeft[i] + mapX) + "px";
+          myTiles[i].style.top = (tilesTop[i] + mapY) + "px";
+        }
+
+        var myDivicons = $(".myDivicon");
+        var dx = [];
+        var dy = [];
+        var mLeft = [];
+        var mTop = [];
+        for (var i = 0; i < myDivicons.length; i++) {
+          mLeft.push(parseFloat(myDivicons[i].style.marginLeft.replace("px", "")));
+          mTop.push(parseFloat(myDivicons[i].style.marginTop.replace("px", "")));
+          var curTransform = myDivicons[i].style.transform;
+          var splitTransform = curTransform.replace("translate3d(", "").split(",");
+          dx.push(parseFloat(splitTransform[0].replace("px", "")));
+          dy.push(parseFloat(splitTransform[1].replace("px", "")));
+          myDivicons[i].style.transform = "translate3d(" + (dx[i] + mLeft[i] + mapX) + "px, " + (dy[i] + mTop[i] + mapY) + "px, 0px)";
+          myDivicons[i].style.marginLeft = "0px";
+          myDivicons[i].style.marginTop = "0px";
+        }
+
+        var linesLayer = $("svg.leaflet-zoom-animated")[0];
+        var linesTransform = linesLayer.style.transform.replace("translate3d(", "").split(",");
+        var linesX = parseFloat(linesTransform[0].replace("px", ""));
+        var linesY = parseFloat(linesTransform[1].replace("px", ""));
+        linesLayer.style.transform = "translate3d(" + ((linesX + mapX) / 2) + "px," + ((linesY + mapY) / 2) + "px, 0px)";
+
+        html2canvas(document.getElementById("map"), {
+          useCORS: true,
+          onrendered: function (canvas) {
+            var image = canvas.toDataURL("image/png");
+            callback(image);
+            //window.open(image);
+          }
         });
 
-        window.manipulateCanvasFunction = function (savedMap) {
-          var image = savedMap.toDataURL("image/png");
-          callback(image);
-        };
+        for (var i = 0; i < myTiles.length; i++) {
+          myTiles[i].style.left = (tilesLeft[i]) + "px";
+          myTiles[i].style.top = (tilesTop[i]) + "px";
+        }
+        for (var i = 0; i < myDivicons.length; i++) {
+          myDivicons[i].style.transform = "translate3d(" + dx[i] + "px, " + dy[i] + "px, 0)";
+          myDivicons[i].style.marginLeft = mLeft[i] + "px";
+          myDivicons[i].style.marginTop = mTop[i] + "px";
+        }
+        linesLayer.style.transform = "translate3d(" + (linesX) + "px," + (linesY) + "px, 0px)";
+        mapPane.style.transform = "translate3d(" + (mapX) + "px," + (mapY) + "px, 0px)";
+
       }
 
       //load selection from server
