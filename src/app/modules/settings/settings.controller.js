@@ -15,6 +15,7 @@
     vm.addSocial = addSocial;
     vm.removeSocial = removeSocial;
     vm.images = UploaderService.images;
+    vm.saveSocialNetworks = saveSocialNetworks;
     vm.minDate = '01.01.1940';
 
     vm.privacyOptions = [
@@ -199,6 +200,26 @@
 
     function isSocial(name) {
       return currentUser.attached_socials.indexOf(name) >= 0 ? 1 : 0;
+    }
+
+    function saveSocialNetworks(form) {
+      console.log(form);
+      if (!form.$valid) return;
+
+      //delete empty
+      vm.socials =  _.pick(vm.socials, _.identity);
+
+      $http
+        .put(API_URL + '/settings', {
+          type: 'socials',
+          params: vm.socials
+        })
+        .success(function (data, status, headers, config) {
+          toastr.success('Settings saved')
+        })
+        .error(function (data, status, headers, config) {
+          toastr.error('Incorrect input ')
+        });
     }
 
     //change avatar
