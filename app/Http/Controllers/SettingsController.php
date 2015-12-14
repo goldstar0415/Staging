@@ -75,6 +75,12 @@ class SettingsController extends Controller
             case 'notifications':
                 $user->update($params);
                 break;
+            case 'socials':
+                foreach ($params as $key => $link) {
+                    $user->{$key . '_link'} = $link;
+                    $user->save();
+                }
+                break;
             default:
                 abort(400);
                 break;

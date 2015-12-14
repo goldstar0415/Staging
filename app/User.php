@@ -47,6 +47,13 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property boolean $notification_follow
  * @property boolean $notification_new_spot
  * @property boolean $notification_coming_spot
+ * @property string $vk_link
+ * @property string $facebook_link
+ * @property string $twitter_link
+ * @property string $instagram_link
+ * @property string $tumblr_link
+ * @property string $google_link
+ * @property string $custom_link
  * @property string $random_hash
  * @property string $token
  * @property boolean $verified
@@ -135,7 +142,8 @@ class User extends BaseModel implements
         'count_followings',
         'count_spots',
         'is_following',
-        'activity_level'
+        'activity_level',
+        'social_links'
     ];
 
     /**
@@ -151,7 +159,14 @@ class User extends BaseModel implements
         'socials',
         'avatar_file_name',
         'avatar_file_size',
-        'avatar_content_type'
+        'avatar_content_type',
+        'vk_link',
+        'facebook_link',
+        'twitter_link',
+        'instagram_link',
+        'tumblr_link',
+        'google_link',
+        'custom_link'
     ];
 
     protected $dates = ['deleted_at', 'banned_at', 'birth_date', 'last_action_at'];
@@ -211,6 +226,25 @@ class User extends BaseModel implements
     {
         return ActivityLevel::where('favorites_count', '<', $this->favorites()->withoutNewest()->count())
             ->latest('favorites_count')->pluck('name');
+    }
+
+    public function getSocialLinksAttribute()
+    {
+        $links = [
+            'vk_link',
+            'facebook_link',
+            'twitter_link',
+            'instagram_link',
+            'tumblr_link',
+            'google_link',
+            'custom_link'
+        ];
+        $result = [];
+        foreach ($links as $link) {
+            $result[substr($link, 0, strpos($link, '_link'))] = $this->$link;
+        }
+
+        return $result;
     }
 
     /**

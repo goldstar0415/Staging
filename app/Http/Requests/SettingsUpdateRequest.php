@@ -17,7 +17,8 @@ class SettingsUpdateRequest extends Request
         'security',
         'password',
         'privacy',
-        'notifications'
+        'notifications',
+        'socials'
     ];
 
     /**
@@ -83,6 +84,9 @@ class SettingsUpdateRequest extends Request
                 break;
             case 'notifications':
                 $rules = array_fill_keys(array_keys($this->input()), 'boolean');
+                break;
+            case 'socials':
+                $rules = array_fill_keys(array_keys($this->input()), 'url');
                 break;
         }
 
