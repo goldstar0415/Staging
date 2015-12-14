@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CheckAliasRequest;
 use App\Http\Requests\SetAvatarRequest;
 use App\Http\Requests\SettingsUpdateRequest;
+use App\Http\Requests\UpdateUserLocationRequest;
 use App\Services\EmailChange\EmailChangeBroker;
 use Illuminate\Contracts\Auth\Guard;
 
@@ -113,5 +114,17 @@ class SettingsController extends Controller
     public function checkAlias(CheckAliasRequest $request)
     {
         return ['result' => true];
+    }
+
+    /**
+     * Update user location
+     * @param UpdateUserLocationRequest $request
+     * @return array
+     */
+    public function postLocation(UpdateUserLocationRequest $request)
+    {
+        $request->user()->update($request->all());
+
+        return $request->all();
     }
 }
