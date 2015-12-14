@@ -107,13 +107,13 @@
           </div>
         </div>
 
-        <div ng-if="$root.currentUser.socials.facebook">Facebook: {{ $root.currentUser.socials.facebook }}</div>
-        <div ng-if="$root.currentUser.socials.twitter">Twitter: {{ $root.currentUser.socials.twitter }}</div>
-        <div ng-if="$root.currentUser.socials.insagram">Insagram: {{ $root.currentUser.socials.insagram }}</div>
-        <div ng-if="$root.currentUser.socials.tumblr">Tumblr: {{ $root.currentUser.socials.tumblr }}</div>
-        <div ng-if="$root.currentUser.socials.vk">VK: {{ $root.currentUser.socials.vk }}</div>
-        <div ng-if="$root.currentUser.socials.custom">Personal site: {{ $root.currentUser.socials.custom }}</div>
-        <div ng-if="$root.currentUser.socials.gplus">Google+: {{ $root.currentUser.socials.gplus }}</div>
+        <div ng-if="$root.currentUser.social_links.facebook">Facebook: {{ $root.currentUser.social_links.facebook }}</div>
+        <div ng-if="$root.currentUser.social_links.twitter">Twitter: {{ $root.currentUser.social_links.twitter }}</div>
+        <div ng-if="$root.currentUser.social_links.insagram">Insagram: {{ $root.currentUser.social_links.insagram }}</div>
+        <div ng-if="$root.currentUser.social_links.tumblr">Tumblr: {{ $root.currentUser.social_links.tumblr }}</div>
+        <div ng-if="$root.currentUser.social_links.vk">VK: {{ $root.currentUser.social_links.vk }}</div>
+        <div ng-if="$root.currentUser.social_links.custom">Personal site: {{ $root.currentUser.social_links.custom }}</div>
+        <div ng-if="$root.currentUser.social_links.gplus">Google+: {{ $root.currentUser.social_links.gplus }}</div>
 
         <div class="info-links hidden-lg hidden-md visible-sm visible-xs  ng-show col-xs-12">
           <a ui-sref="spots({user_id: $root.profileUser.id})" class="events"
