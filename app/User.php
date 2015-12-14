@@ -124,6 +124,7 @@ class User extends BaseModel implements
      */
     protected $guarded = [
         'id',
+        'ip',
         'created_at',
         'updated_at',
         'remember_token',
@@ -370,6 +371,16 @@ class User extends BaseModel implements
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getIpAttribute($value)
+    {
+        return long2ip($value);
+    }
+
+    public function setIpAttribute($value)
+    {
+        $this->attributes['ip'] = ip2long($value);
     }
 
     /**
