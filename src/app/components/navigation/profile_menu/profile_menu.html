@@ -107,6 +107,14 @@
           </div>
         </div>
 
+        <div ng-if="$root.currentUser.socials.facebook">Facebook: {{ $root.currentUser.socials.facebook }}</div>
+        <div ng-if="$root.currentUser.socials.twitter">Twitter: {{ $root.currentUser.socials.twitter }}</div>
+        <div ng-if="$root.currentUser.socials.insagram">Insagram: {{ $root.currentUser.socials.insagram }}</div>
+        <div ng-if="$root.currentUser.socials.tumblr">Tumblr: {{ $root.currentUser.socials.tumblr }}</div>
+        <div ng-if="$root.currentUser.socials.vk">VK: {{ $root.currentUser.socials.vk }}</div>
+        <div ng-if="$root.currentUser.socials.custom">Personal site: {{ $root.currentUser.socials.custom }}</div>
+        <div ng-if="$root.currentUser.socials.gplus">Google+: {{ $root.currentUser.socials.gplus }}</div>
+
         <div class="info-links hidden-lg hidden-md visible-sm visible-xs  ng-show col-xs-12">
           <a ui-sref="spots({user_id: $root.profileUser.id})" class="events"
              ng-if="Profile.checkPermision(profileUser.privacy_events)">
@@ -154,7 +162,8 @@
             <a ui-sref="profile.main({user_id: item.alias || item.id})">
               <img ng-src="{{item.avatar_url.thumb}}" class="avatar"/>
 
-              <a class="sidebar-user-name" ui-sref="profile.main({user_id: item.alias || item.id})">{{item.first_name}}<br>
+              <a class="sidebar-user-name"
+                 ui-sref="profile.main({user_id: item.alias || item.id})">{{item.first_name}}<br>
                 {{item.last_name}}</a>
             </a>
           </div>
@@ -177,7 +186,8 @@
               <span class="avatar">
               <img ng-src="{{item.avatar_url.thumb}}"/>
               </span>
-              <a class="sidebar-user-name" ui-sref="profile.main({user_id: item.alias || item.id})">{{item.first_name}}<br>
+              <a class="sidebar-user-name"
+                 ui-sref="profile.main({user_id: item.alias || item.id})">{{item.first_name}}<br>
                 {{item.last_name}}</a>
             </a>
           </div>
