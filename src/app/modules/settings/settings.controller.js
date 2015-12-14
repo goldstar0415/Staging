@@ -212,7 +212,7 @@
       $http
         .put(API_URL + '/settings', {
           type: 'socials',
-          params: vm.socials
+          params: vm.data.social_links
         })
         .success(function (data, status, headers, config) {
           toastr.success('Settings saved')
