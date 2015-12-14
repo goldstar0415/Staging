@@ -19,7 +19,7 @@ class AddSocialLinksToUsersTable extends Migration
             $table->string('instagram_link', 128)->nullable();
             $table->string('tumblr_link', 128)->nullable();
             $table->string('google_link', 128)->nullable();
-            $table->string('your_link', 128)->nullable();
+            $table->string('custom_link', 128)->nullable();
         });
     }
 
@@ -37,7 +37,7 @@ class AddSocialLinksToUsersTable extends Migration
             $table->dropColumn('instagram_link');
             $table->dropColumn('tumblr_link');
             $table->dropColumn('google_link');
-            $table->dropColumn('your_link');
+            $table->dropColumn('custom_link');
         });
     }
 }

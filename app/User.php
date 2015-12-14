@@ -53,7 +53,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property string $instagram_link
  * @property string $tumblr_link
  * @property string $google_link
- * @property string $your_link
+ * @property string $custom_link
  * @property string $random_hash
  * @property string $token
  * @property boolean $verified
@@ -166,7 +166,7 @@ class User extends BaseModel implements
         'instagram_link',
         'tumblr_link',
         'google_link',
-        'your_link'
+        'custom_link'
     ];
 
     protected $dates = ['deleted_at', 'banned_at', 'birth_date', 'last_action_at'];
@@ -237,7 +237,7 @@ class User extends BaseModel implements
             'instagram_link',
             'tumblr_link',
             'google_link',
-            'your_link'
+            'custom_link'
         ];
         $result = [];
         foreach ($links as $link) {
