@@ -72,6 +72,7 @@ class SettingsController extends Controller
                 $user->save();
                 break;
             case 'privacy':
+            case 'socials':
             case 'notifications':
                 $user->update($params);
                 break;
