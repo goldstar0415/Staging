@@ -13,7 +13,7 @@ class SpotReportRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return $this->route('spots')->is_approved;
     }
 
     /**
