@@ -26,7 +26,7 @@ class Comment extends BaseModel
 
     protected $fillable = ['body'];
 
-    protected $with = ['sender'/*, 'commentable'*/];
+    protected $with = ['sender', 'commentable'];
 
     /**
      * {@inheritDoc}
