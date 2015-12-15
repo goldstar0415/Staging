@@ -53,6 +53,7 @@ class SettingsUpdateRequest extends Request
                     'alias' => [
                         'string',
                         'max:64',
+                        'not_in:' . implode(',', User::NOT_ALLOWED_ALIASES),
                         'alpha_dash',
                         'regex:' . User::$aliasRule,
                         'unique:users,alias,' . $this->user()->id

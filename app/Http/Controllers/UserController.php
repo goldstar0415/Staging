@@ -258,7 +258,7 @@ class UserController extends Controller
      */
     public function reviews(PaginateRequest $request)
     {
-        return $this->paginatealbe($request, $request->user()->reviews());
+        return $this->paginatealbe($request, $request->user()->reviews()->with('commentable', 'sender'));
     }
 
     /**

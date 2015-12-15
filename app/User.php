@@ -103,6 +103,12 @@ class User extends BaseModel implements
         EntrustUserTrait::boot as bootEntrustUserT;
     }
 
+    const NOT_ALLOWED_ALIASES = [
+        'logout',
+        'list',
+        'me'
+    ];
+
     /**
      * The "booting" method of the model.
      */
@@ -334,6 +340,13 @@ class User extends BaseModel implements
     public function getIsRegisteredAttribute()
     {
         return isset($this->password);
+    }
+
+    public function setAliasAttribute($value)
+    {
+        if (!in_array($value, self::NOT_ALLOWED_ALIASES)) {
+            $this->attributes['alias'] = $value;
+        }
     }
 
     /**
