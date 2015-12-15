@@ -230,6 +230,9 @@
       }
       //          /body
       .modal-footer {
+        &.upload-block {
+          text-align: center;
+        }
       }
     }
   }

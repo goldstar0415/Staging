@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h3 class="margin-none">Add photos to spot album
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="modal.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </h3>
+</div>
+<div class="modal-body clearfix no-pad-left-right no-pad-bottom">
+  <div class="col-sm-12">
+    <uploader drop-zone="true"></uploader>
+  </div>
+  <div class="col-xs-12">
+    <ul class="photos">
+      <li ng-repeat="item in modal.images.files track by $index">
+        <div>
+          <img  ngf-src="item">
+        </div>
+        <a class="delete" ng-click="modal.deletePhoto($index)" title="Delete"></a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="modal-footer upload-block">
+  <button class="btn btn-success green-btn" type="button" ng-click="modal.upload()">
+    Upload
+  </button>
+</div>

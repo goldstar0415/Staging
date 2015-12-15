@@ -217,17 +217,19 @@
 
       </aside>
 
-      <aside class="module-sidebar clearfix" ng-if="Profile.$state.is('spot') && $root.currentSpot.photos.length > 0">
-        <h2 class="sidebar-title">
+      <aside class="module-sidebar text-center clearfix" ng-if="Profile.$state.is('spot')">
+        <h2 class="sidebar-title" ng-if="$root.currentSpot.photos.length > 0">
           <a>
             Photos
             <span class="counter">{{$root.currentSpot.photos.length}}</span>
           </a>
         </h2>
 
-        <div class="sidebar-row ">
+        <div class="sidebar-row" ng-if="$root.currentSpot.photos.length > 0">
           <div jcarousel images="$root.currentSpot.photos"></div>
         </div>
+
+        <a upload-modal="$root.currentSpot" class="btn btn-default green-btn add-photos-btn">Add photos</a>
 
       </aside>
 
