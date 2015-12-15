@@ -50,6 +50,7 @@ use Request;
  * @property float $rating
  * @property array $locations
  * @property string $type
+ * @property \Illuminate\Database\Eloquent\Collection $comments_photos
  */
 class Spot extends BaseModel implements StaplerableInterface, CalendarExportable, Commentable
 {
@@ -57,7 +58,15 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
 
     protected $guarded = ['id', 'user_id'];
 
-    protected $appends = ['rating', 'cover_url', 'is_favorite', 'is_saved', 'is_rated', 'share_links'];
+    protected $appends = [
+        'rating',
+        'cover_url',
+        'is_favorite',
+        'is_saved',
+        'is_rated',
+        'share_links',
+        'comments_photos'
+    ];
 
     protected $with = ['category.type', 'points', 'photos', 'user'];
 
@@ -229,6 +238,21 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getCountMembersAttribute()
     {
         return $this->calendarUsers()->count();
+    }
+
+    /**
+     * Get all photos from comments
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getCommentsPhotosAttribute()
+    {
+        $comments_photos = collect();
+        $this->comments->each(function ($comment) use (&$comments_photos) {
+            $comments_photos = $comments_photos->merge($comment->albumPhotos);
+        });
+
+        return $comments_photos;
     }
 
     /**

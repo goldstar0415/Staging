@@ -71,7 +71,7 @@ Route::get('spots/{spots}/preview', 'SpotController@preview');
 Route::get('spots/{spots}/export', 'SpotController@export');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 Route::resource('spots.comments', 'SpotCommentController', ['except' => ['create', 'edit']]);
-Route::resource('spots.photos', 'SpotPhotoController', ['only' => 'update']);
+Route::resource('spots.photos', 'SpotPhotoController', ['only' => 'store']);
 Route::resource(
     'spots.photos.comments',
     'SpotPhotoCommentController',
