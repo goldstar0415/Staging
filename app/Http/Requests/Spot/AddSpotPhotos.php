@@ -4,7 +4,7 @@ namespace App\Http\Requests\Spot;
 
 use App\Http\Requests\Request;
 
-class SpotReportRequest extends Request
+class AddSpotPhotos extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class SpotReportRequest extends Request
      */
     public function authorize()
     {
-        return $this->route('spots')->is_approved;
+        return true;
     }
 
     /**
@@ -23,9 +23,11 @@ class SpotReportRequest extends Request
      */
     public function rules()
     {
-        return [
-            'reason' => 'required|integer|max:5',
-            'text' => 'string|max:512'
+        $rules = [
+            'files' => 'required|array|count_min:1'
         ];
+        $rules = array_merge($rules, $this->arrayFieldRules('files', 'image', true));
+
+        return $rules;
     }
 }
