@@ -29,31 +29,6 @@
         controller: 'ProfileMenuController',
         controllerAs: 'Profile'
       })
-      .state('profile', {
-        url: '/user/:user_id',
-        template: '<ui-view  />',
-        abstract: true,
-        resolve: {
-          user: function ($rootScope, User, currentUser, $stateParams, UserService, $state) {
-
-            if (currentUser && currentUser.id == $stateParams.user_id) {
-              return User.currentUser({}, function (user) {
-                $rootScope.currentUser = user;
-                UserService.setProfileUser(user);
-                return user;
-              }).$promise;
-            } else if ($stateParams.user_id) {
-              return User.get({id: $stateParams.user_id}, function (user) {
-                UserService.setProfileUser(user);
-                return user;
-              }).$promise;
-            } else {
-              UserService.setProfileUser(currentUser || {});
-            }
-          }
-        },
-        parent: 'profile_menu'
-      })
 
       //Main map page
       .state('index', {
@@ -106,20 +81,7 @@
         parent: 'main',
         mapState: 'hidden'
       })
-      //Bloggers profile page
-      .state('profile_blog', {
-        url: '/blog',
-        templateUrl: '/app/modules/blog/blogger_profile/blogger_profile.html',
-        controller: 'BloggerProfileController',
-        controllerAs: 'Blog',
-        parent: 'profile',
-        mapState: 'small',
-        resolve: {
-          posts: function (Post, $stateParams) {
-            return Post.query({user_id: $stateParams.user_id}).$promise;
-          }
-        }
-      })
+
       //Blog article creation page
       .state('profile_blog.create', {
         url: '/article/create',
@@ -172,22 +134,6 @@
         },
         locate: 'none'
       })
-
-
-      .state('spots', {
-        url: '/spots',
-        templateUrl: '/app/modules/spot/spots/spots.html',
-        controller: 'SpotsController',
-        controllerAs: 'Spots',
-        parent: 'profile',
-        locate: 'none',
-        mapState: 'small',
-        resolve: {
-          allSpots: function (Spot, $stateParams) {
-            return Spot.query({user_id: $stateParams.user_id}).$promise;
-          }
-        }
-      })
       .state('spot_create', {
         url: '/spot/create',
         templateUrl: '/app/modules/spot/spot_create/spot_create.html',
@@ -226,21 +172,6 @@
         mapState: 'small',
         edit: true
       })
-      .state('spot', {
-        url: '/spot/:spot_id',
-        templateUrl: '/app/modules/spot/spot.html',
-        controller: 'SpotController',
-        controllerAs: 'Spot',
-        parent: 'profile',
-        resolve: {
-          spot: function (Spot, $stateParams) {
-            return Spot.get({id: $stateParams.spot_id}).$promise;
-          }
-        },
-        locate: 'none',
-        mapState: 'small'
-      })
-
       //Planner (calendar + list of all plans)
       .state('planner', {
         abstract: true,
@@ -298,39 +229,7 @@
         require_auth: true,
         mapState: 'small'
       })
-      .state('planner.view', {
-        url: '/plan/:plan_id',
-        templateUrl: '/app/modules/planner/plan/plan.html',
-        controller: 'PlanController',
-        controllerAs: 'Plan',
-        parent: 'profile',
-        resolve: {
-          plan: function (Plan, $stateParams) {
-            return Plan.get({id: $stateParams.plan_id}).$promise;
-          }
-        },
-        require_auth: true,
-        locate: 'none',
-        mapState: 'small'
-      })
 
-      .state('profile.main', {
-        url: '',
-        templateUrl: '/app/modules/profile/profile.html',
-        controller: 'ProfileController',
-        controllerAs: 'Profile',
-        resolve: {
-          spots: function (user, Spot, $stateParams, PermissionService) {
-            if (PermissionService.checkPermission(user.privacy_events, user)) {
-              return Spot.query({
-                user_id: user.id
-              }).$promise;
-            }
-          }
-        },
-        parent: 'profile',
-        mapState: 'small'
-      })
 
       //chat
       .state('chat', {
@@ -389,20 +288,7 @@
         mapState: 'small'
       })
 
-      .state('favorites', {
-        url: '/favorites',
-        templateUrl: '/app/modules/favorites/favorites.html',
-        controller: 'FavoritesController',
-        controllerAs: 'Favorite',
-        parent: 'profile',
-        locate: 'none',
-        mapState: 'small',
-        resolve: {
-          allSpots: function (Spot, $stateParams) {
-            return Spot.favorites({user_id: $stateParams.user_id}).$promise;
-          }
-        }
-      })
+
       .state('areas', {
         url: '/areas',
         templateUrl: '/app/modules/areas/areas.html',
@@ -436,26 +322,7 @@
       })
 
 
-      //Photomap view state
-      .state('photos', {
-        abstract: true,
-        template: '<ui-view />',
-        parent: 'profile'
-      })
-      .state('photos.list', {
-        url: '/albums',
-        templateUrl: '/app/modules/photomap/photomap.html',
-        controller: 'PhotomapController',
-        controllerAs: 'Photomap',
-        parent: 'profile',
-        resolve: {
-          albums: function (Album, $stateParams) {
-            return Album.query({user_id: $stateParams.user_id}).$promise;
-          }
-        },
-        mapState: 'small',
-        locate: 'none'
-      })
+
       //Create album state
       .state('photos.createAlbum', {
         url: '/albums/create',
@@ -491,42 +358,7 @@
         require_auth: true,
         locate: 'none'
       })
-      //Albums page state
-      .state('photos.edit_photo', {
-        url: '/photos/:photo_id',
-        templateUrl: '/app/modules/photomap/edit_photo/edit_photo.html',
-        controller: 'PhotoEditController',
-        controllerAs: 'Photo',
-        resolve: {
-          photo: function (Photo, $stateParams) {
-            return Photo.get({id: $stateParams.photo_id}).$promise;
-          },
-          user_id: function ($stateParams) {
-            return $stateParams.user_id;
-          }
-        },
-        mapState: 'small',
-        parent: 'profile',
-        require_auth: true,
-        locate: 'none'
-      })
-      .state('photos.album', {
-        url: '/albums/:album_id',
-        templateUrl: '/app/modules/photomap/album/album.html',
-        controller: 'AlbumController',
-        controllerAs: 'Album',
-        resolve: {
-          album: function (Album, $stateParams) {
-            return Album.get({id: $stateParams.album_id}).$promise;
-          },
-          photos: function (Album, $stateParams) {
-            return Album.photos({album_id: $stateParams.album_id}).$promise;
-          }
-        },
-        mapState: 'small',
-        parent: 'profile',
-        locate: 'none'
-      })
+
 
 
       //Friends map state
@@ -626,7 +458,179 @@
         require_auth: true,
         parent: 'main',
         locate: 'none'
-      });
+      })
+
+      .state('profile', {
+        url: '/:user_id',
+        template: '<ui-view  />',
+        abstract: true,
+        resolve: {
+          user: function ($rootScope, User, currentUser, $stateParams, UserService, $state) {
+
+            if (currentUser && currentUser.id == $stateParams.user_id) {
+              return User.currentUser({}, function (user) {
+                $rootScope.currentUser = user;
+                UserService.setProfileUser(user);
+                return user;
+              }).$promise;
+            } else if ($stateParams.user_id) {
+              return User.get({id: $stateParams.user_id}, function (user) {
+                UserService.setProfileUser(user);
+                return user;
+              }).$promise;
+            } else {
+              UserService.setProfileUser(currentUser || {});
+            }
+          }
+        },
+        parent: 'profile_menu'
+      })
+      //Bloggers profile page
+      .state('profile_blog', {
+        url: '/blog',
+        templateUrl: '/app/modules/blog/blogger_profile/blogger_profile.html',
+        controller: 'BloggerProfileController',
+        controllerAs: 'Blog',
+        parent: 'profile',
+        mapState: 'small',
+        resolve: {
+          posts: function (Post, $stateParams) {
+            return Post.query({user_id: $stateParams.user_id}).$promise;
+          }
+        }
+      })
+      .state('spots', {
+        url: '/spots',
+        templateUrl: '/app/modules/spot/spots/spots.html',
+        controller: 'SpotsController',
+        controllerAs: 'Spots',
+        parent: 'profile',
+        locate: 'none',
+        mapState: 'small',
+        resolve: {
+          allSpots: function (Spot, $stateParams) {
+            return Spot.query({user_id: $stateParams.user_id}).$promise;
+          }
+        }
+      })
+      .state('spot', {
+        url: '/spot/:spot_id',
+        templateUrl: '/app/modules/spot/spot.html',
+        controller: 'SpotController',
+        controllerAs: 'Spot',
+        parent: 'profile',
+        resolve: {
+          spot: function (Spot, $stateParams) {
+            return Spot.get({id: $stateParams.spot_id}).$promise;
+          }
+        },
+        locate: 'none',
+        mapState: 'small'
+      })
+      .state('planner.view', {
+        url: '/plan/:plan_id',
+        templateUrl: '/app/modules/planner/plan/plan.html',
+        controller: 'PlanController',
+        controllerAs: 'Plan',
+        parent: 'profile',
+        resolve: {
+          plan: function (Plan, $stateParams) {
+            return Plan.get({id: $stateParams.plan_id}).$promise;
+          }
+        },
+        require_auth: true,
+        locate: 'none',
+        mapState: 'small'
+      })
+
+      .state('profile.main', {
+        url: '',
+        templateUrl: '/app/modules/profile/profile.html',
+        controller: 'ProfileController',
+        controllerAs: 'Profile',
+        resolve: {
+          spots: function (user, Spot, $stateParams, PermissionService) {
+            if (PermissionService.checkPermission(user.privacy_events, user)) {
+              return Spot.query({
+                user_id: user.id
+              }).$promise;
+            }
+          }
+        },
+        parent: 'profile',
+        mapState: 'small'
+      })
+      .state('favorites', {
+        url: '/favorites',
+        templateUrl: '/app/modules/favorites/favorites.html',
+        controller: 'FavoritesController',
+        controllerAs: 'Favorite',
+        parent: 'profile',
+        locate: 'none',
+        mapState: 'small',
+        resolve: {
+          allSpots: function (Spot, $stateParams) {
+            return Spot.favorites({user_id: $stateParams.user_id}).$promise;
+          }
+        }
+      })
+      //Photomap view state
+      .state('photos', {
+        abstract: true,
+        template: '<ui-view />',
+        parent: 'profile'
+      })
+      .state('photos.list', {
+        url: '/albums',
+        templateUrl: '/app/modules/photomap/photomap.html',
+        controller: 'PhotomapController',
+        controllerAs: 'Photomap',
+        parent: 'profile',
+        resolve: {
+          albums: function (Album, $stateParams) {
+            return Album.query({user_id: $stateParams.user_id}).$promise;
+          }
+        },
+        mapState: 'small',
+        locate: 'none'
+      })
+      //Albums page state
+      .state('photos.edit_photo', {
+        url: '/photos/:photo_id',
+        templateUrl: '/app/modules/photomap/edit_photo/edit_photo.html',
+        controller: 'PhotoEditController',
+        controllerAs: 'Photo',
+        resolve: {
+          photo: function (Photo, $stateParams) {
+            return Photo.get({id: $stateParams.photo_id}).$promise;
+          },
+          user_id: function ($stateParams) {
+            return $stateParams.user_id;
+          }
+        },
+        mapState: 'small',
+        parent: 'profile',
+        require_auth: true,
+        locate: 'none'
+      })
+      .state('photos.album', {
+        url: '/albums/:album_id',
+        templateUrl: '/app/modules/photomap/album/album.html',
+        controller: 'AlbumController',
+        controllerAs: 'Album',
+        resolve: {
+          album: function (Album, $stateParams) {
+            return Album.get({id: $stateParams.album_id}).$promise;
+          },
+          photos: function (Album, $stateParams) {
+            return Album.photos({album_id: $stateParams.album_id}).$promise;
+          }
+        },
+        mapState: 'small',
+        parent: 'profile',
+        locate: 'none'
+      })
+    ;
 
     $urlRouterProvider.otherwise('/');
   }
