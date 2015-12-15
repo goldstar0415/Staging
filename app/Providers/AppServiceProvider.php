@@ -41,6 +41,16 @@ class AppServiceProvider extends ServiceProvider
         });
         
         User::creating(function (User $user) {
+            $user->alias = str_slug($user->full_name);
+            $pattern = "^{$user->alias}([0-9]*)?$";
+            $latest_slug = User::where('alias', '~', $pattern)->latest('id')->pluck('alias');
+            if ($latest_slug) {
+                preg_match('/' . $pattern . '/', $latest_slug, $pieces);
+
+                $number = intval(end($pieces));
+
+                $user->alias .= ($number + 1);
+            }
             $user->random_hash = str_random();
             $user->token = str_random(30);
         });

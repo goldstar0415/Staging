@@ -56,6 +56,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property string $custom_link
  * @property string $random_hash
  * @property string $token
+ * @property string $alias
  * @property boolean $verified
  * @property \Carbon\Carbon $banned_at
  * @property string $ban_reason
@@ -86,6 +87,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  * @property boolean $is_registered
  * @property array $attached_socials
  * @property string $avatar_url
+ * @property string $full_name
  */
 class User extends BaseModel implements
     AuthenticatableContract,
@@ -370,7 +372,7 @@ class User extends BaseModel implements
 
     public function getFullNameAttribute()
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name . ($this->last_name ? ' ' . $this->last_name : '');
     }
 
     public function getIpAttribute($value)
