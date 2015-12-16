@@ -349,6 +349,19 @@ class User extends BaseModel implements
         }
     }
 
+    public function getGeoLocationAttribute()
+    {
+        $loc = '';
+        if ($this->city) {
+            $loc = $this->city;
+        }
+        if ($this->country) {
+            $loc .= $loc ? ', ' . $this->country : $this->country;
+        }
+
+        return $loc ?: null;
+    }
+
     /**
      * Get the user's attached socials
      *
