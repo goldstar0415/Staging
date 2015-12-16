@@ -31,19 +31,21 @@
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group privacy-block">
         <label class="col-md-2 col-sm-12 col-xs-12 control-label">Privacy</label>
 
         <div class="col-md-10 col-sm-12 col-xs-12">
-          <!-- CATEGORY SELECT here-->
-          <ui-select
-            ng-model="SpotCreate.is_private"
-            theme="bootstrap">
-            <ui-select-match >{{$select.selected.label}}</ui-select-match>
-            <ui-select-choices repeat="item.value as item in SpotCreate.privacies | filter : $select.search track by $index">
-              <div ng-bind-html="item.label | highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
+          <div class="radio-group">
+            <input type="radio" name="radio" value="1" id="privacy_private" class="radio"
+                   ng-model="SpotCreate.is_private">
+            <label for="privacy_private" class="radio-label">Private</label>
+          </div>
+          <div class="radio-group">
+            <input type="radio" name="radio" value="0" id="privacy_public" class="radio"
+                   popover="Requires Admin approval of up to 24 hours" popover-trigger="mouseenter"
+                   ng-model="SpotCreate.is_private">
+            <label for="privacy_public" class="radio-label">Public</label>
+          </div>
         </div>
       </div>
 
@@ -107,7 +109,7 @@
                      placeholder="http://zoomtivity.com">
           <span class="input-group-btn">
                  <button ng-click="SpotCreate.removeLink($index)" class="btn btn-default" type="button"><i
-                   class="glyphicon glyphicon-minus"></i></button>
+                     class="glyphicon glyphicon-minus"></i></button>
           </span>
             </div>
 
@@ -127,11 +129,11 @@
         <div class="col-md-10 col-sm-12 col-xs-12">
           <!-- CATEGORY SELECT here-->
           <ui-select
-            ng-model="SpotCreate.category_id"
-            theme="bootstrap">
+              ng-model="SpotCreate.category_id"
+              theme="bootstrap">
             <ui-select-match placeholder="Select category id...">{{$select.selected.display_name}}</ui-select-match>
             <ui-select-choices
-              repeat="item.id as item in SpotCreate.categories[SpotCreate.type] | filter : $select.search track by $index">
+                repeat="item.id as item in SpotCreate.categories[SpotCreate.type] | filter : $select.search track by $index">
               <div ng-bind-html="item.display_name | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
@@ -165,7 +167,7 @@
                         bind-marker="true" limit="15"></location>
           <span class="input-group-btn">
             <button ng-click="SpotCreate.addLocation(SpotCreate.newLocation)" class="btn btn-default" type="button"><i
-              class="glyphicon glyphicon-plus"></i></button>
+                class="glyphicon glyphicon-plus"></i></button>
           </span>
             </div>
             <!-- /input-group -->
@@ -174,7 +176,7 @@
                         on-empty="SpotCreate.removeLocation($index)" bind-marker="true"></location>
             <span class="input-group-btn">
               <button ng-click="SpotCreate.removeLocation($index)" class="btn btn-default" type="button"><i
-                class="glyphicon glyphicon-minus"></i></button>
+                  class="glyphicon glyphicon-minus"></i></button>
             </span>
             </div>
           </div>
@@ -279,10 +281,11 @@
           <label class="col-sm-4 col-xs-12 control-label no-pad">Cover preview:</label>
 
           <div class="cover-preview">
-            <image-cropper ng-if="!SpotCreate.saveCrop" source-image="SpotCreate.cropCover" result-image="SpotCreate.cover" auto-crop="false"
+            <image-cropper ng-if="!SpotCreate.saveCrop" source-image="SpotCreate.cropCover"
+                           result-image="SpotCreate.cover" auto-crop="false"
                            crop-height="SpotCreate.crop.height" crop-width="SpotCreate.crop.width"></image-cropper>
 
-            <img ng-src="{{SpotCreate.cover}}" ng-if="SpotCreate.saveCrop" />
+            <img ng-src="{{SpotCreate.cover}}" ng-if="SpotCreate.saveCrop"/>
 
             <button type="button" ng-click="SpotCreate.saveCrop = true"
                     class="btn btn-default green-btn pull-left margin-bottom save-cover-btn"

@@ -35,10 +35,6 @@
     });
 
     vm.is_private = 1;
-    vm.privacies = [
-      {label: 'Private', value: 1},
-      {label: 'Public', value: 0}
-    ];
 
     //vars
     vm.tags = [];
