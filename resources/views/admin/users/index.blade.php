@@ -22,11 +22,17 @@
         <thead>
         <tr>
             <th id="bulk"><input type="checkbox"></th>
-            <th class="col-sm-3">User name</th>
-            <th class="col-sm-3">Email</th>
-            <th class="col-sm-2">Roles</th>
-            <th class="col-sm-3">Registration</th>
-            <th class="col-sm-1"></th>
+            <th>User name</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Registration</th>
+            <th>IP address</th>
+            <th>Location</th>
+            <th>Geo location</th>
+            <th>Last login</th>
+            <th>Count of spots</th>
+            <th>Count of followers</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -41,6 +47,14 @@
                     @endforeach
                 </i></td>
                 <td>{{ $user->created_at }}</td>
+                <td>{{ $user->ip }}</td>
+                <td>{{ $user->address }}</td>
+                <td>
+                    {{ $user->geo_location }}
+                </td>
+                <td>{{ $user->last_action_at }}</td>
+                <td>{{ $user->count_spots }}</td>
+                <td>{{ $user->count_followers }}</td>
                 <td>
                     {!! link_delete(route('admin.users.destroy', [$user->id]), '', ['class' => 'delete']) !!}
                 </td>
