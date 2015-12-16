@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests;
 use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Contracts\Mail\Mailer;
 
 /**
  * Class SettingsController
@@ -24,16 +25,22 @@ class SettingsController extends Controller
      * @var Guard
      */
     private $auth;
+    /**
+     * @var Mailer
+     */
+    private $mailer;
 
     /**
      * SettingsController constructor.
      * @param Guard $auth
+     * @param Mailer $mailer
      */
-    public function __construct(Guard $auth)
+    public function __construct(Guard $auth, Mailer $mailer)
     {
         $this->middleware('auth');
         $this->middleware('base64upload:avatar', ['only' => 'postSetavatar']);
         $this->auth = $auth;
+        $this->mailer = $mailer;
     }
 
     /**
@@ -71,6 +78,10 @@ class SettingsController extends Controller
                 }
                 $user->password = $hash->make($params['password']);
                 $user->save();
+                $this->mailer->send('password-change', [], function ($message) use ($user) {
+                    $message->subject('Password change');
+                    $message->to($user->email);
+                });
                 break;
             case 'privacy':
             case 'notifications':
