@@ -54,13 +54,15 @@
         var url = API_URL + '/spots/' + spot.id + '/photos';
         UploaderService
           .upload(url)
-          .then(function (resp) {
-            console.log(photos);
-            spot.photos = _.union(spot.photos, resp.photos);
+          .success(function (resp) {
+            console.log(resp);
+            spot.photos = resp.photos;
 
             toastr.info('Photos successfully uploaded');
+            close();
           })
           .catch(function (resp) {
+            console.warn(resp);
             toastr.error('Upload error');
           });
       }

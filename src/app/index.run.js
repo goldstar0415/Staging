@@ -75,6 +75,8 @@
       if (toState.require_auth && !$rootScope.currentUser) {
         toastr.error('Unauthorized!');
         $state.go('index');
+      } else {
+        toastr.error('Not found');
       }
 
       $rootScope.pageLoaded = true;

@@ -841,7 +841,7 @@
           myTiles[i].style.top = (tilesTop[i] + mapY) + "px";
         }
 
-        var myDivicons = $(".myDivicon");
+        var myDivicons = $(".custom-map-icons");
         var dx = [];
         var dy = [];
         var mLeft = [];
@@ -867,7 +867,7 @@
         html2canvas(document.getElementById("map"), {
           useCORS: true,
           onrendered: function (canvas) {
-            var image = canvas.toDataURL("image/png");
+            var image = canvas.toDataURL("image/jpeg");
             callback(image);
             //window.open(image);
           }
