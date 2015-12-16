@@ -23,7 +23,9 @@ class CommentsRequest extends Request
 
         $commentable = $comment->commentable;
 
-        return $comment->user_id === $auth->id() or $comment->commentable->commentResourceOwnerId() === $auth->id();
+        return $this->user()->hasRole('admin') or
+                $comment->user_id === $auth->id() or
+                $comment->commentable->commentResourceOwnerId() === $auth->id();
     }
 
     /**

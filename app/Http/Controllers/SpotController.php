@@ -109,7 +109,9 @@ class SpotController extends Controller
             }
         }
 
-        event(new OnSpotCreate($spot));
+        if ($spot->is_approved) {
+            event(new OnSpotCreate($spot));
+        }
 
         return $spot;
     }

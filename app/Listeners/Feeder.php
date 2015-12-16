@@ -21,6 +21,7 @@ use App\Events\UserFollowEvent;
 use App\Events\UserUnfollowEvent;
 
 use App\Feed;
+use App\Services\Privacy;
 use App\User;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Eloquent\Collection;
@@ -90,15 +91,14 @@ class Feeder implements ShouldQueue
                 $this->addFeed($event, $event->wall->sender);
                 break;
             case $event instanceof OnSpotCreate:
-                $spot = $event->spot;
-                if ($spot->type === 'recreation' || $spot->type === 'pitstop' and $spot->is_approved !== false
-                    or $spot->type === 'event'
-                ) {
+                if ($event->spot->user->privacy_events !== Privacy::NOBODY) {
                     $this->addFeed($event, $event->spot->user->followers);
                 }
                 break;
             case $event instanceof OnSpotUpdate:
-                $this->addFeed($event, $event->spot->user->followers);
+                if ($event->spot->user->privacy_events !== Privacy::NOBODY) {
+                    $this->addFeed($event, $event->spot->user->followers);
+                }
                 break;
             case $event instanceof OnSpotComment:
                 $this->addFeed($event, $event->comment->commentable->user);
