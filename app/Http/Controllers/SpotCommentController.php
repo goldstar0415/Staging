@@ -45,7 +45,8 @@ class SpotCommentController extends Controller
      */
     public function index(PaginateCommentRequest $request, $spot)
     {
-        $comments = Comment::where('commentable_id', $spot->id)->where('commentable_type', Spot::class);
+        $comments = Comment::with('sender')
+            ->where('commentable_id', $spot->id)->where('commentable_type', Spot::class);
 
         return $this->paginatealbe($request, $comments);
     }
