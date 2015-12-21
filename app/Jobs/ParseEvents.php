@@ -21,7 +21,7 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
     /**
      * @var Client
      */
-    protected $http;
+    private $http;
 
     /**
      * @var string
@@ -34,23 +34,16 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
     private $settings;
 
     /**
-     * Create a new job instance.
+     * Execute the job.
+     *
      * @param Client $http
      * @param AppSettings $settings
      */
-    public function __construct(Client $http, AppSettings $settings)
+    public function handle(Client $http, AppSettings $settings)
     {
         $this->http = $http;
         $this->settings = $settings;
-    }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
-    {
         $query_string = ['sort' => 'id.desc', 'page' => 1, 'per_page' => 1000];
         $parser_settings = $this->settings->parser;
         $data = [];

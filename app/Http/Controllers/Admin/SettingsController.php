@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Jobs\ParseEvents;
 use App\Services\AppSettings;
 use Illuminate\Http\Request;
 
@@ -45,5 +46,12 @@ class SettingsController extends Controller
         $this->settings->parser->aid = $request->aid;
 
         return back();
+    }
+
+    public function parserRun()
+    {
+        $this->dispatch(new ParseEvents);
+
+        return back()->with('run', true);
     }
 }

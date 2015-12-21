@@ -19,4 +19,8 @@
         Last imported id: {{ isset($settings->parser->last_imported_id) ? $settings->parser->last_imported_id : null }}
     </p>
     {!! Form::close() !!}
+    <a href="{{ route('admin.parser.run') }}" type="button" class="btn btn-success">Run</a>
+    @if (session('run'))
+        <p class="text-info">Event parser goes to the queue</p>
+    @endif
 @endsection
