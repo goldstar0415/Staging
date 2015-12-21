@@ -109,7 +109,8 @@ class EventServiceProvider extends ServiceProvider
         $events->listen('auth.login', function ($user, $remember) {
             $ip = $this->app['request']->ip();
             if ($user->ip !== $ip) {
-                $user->update(compact('ip'));
+                $user->ip = $ip;
+                $user->save();
             }
         });
     }
