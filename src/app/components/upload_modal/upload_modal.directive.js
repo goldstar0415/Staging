@@ -55,11 +55,9 @@
         UploaderService
           .upload(url)
           .success(function (resp) {
-            _.each(resp.photos, function (photo) {
-              spot.photos.push(photo);
-            });
-
+            spot.photos = _.union(spot.photos, resp.photos);
             $rootScope.$emit('jcarousel:change');
+
             vm.images.files = [];
             toastr.info('Photos successfully uploaded');
             close();
