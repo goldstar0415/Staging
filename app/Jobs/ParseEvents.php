@@ -55,17 +55,17 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
         $parser_settings = $this->settings->parser;
         $data = [];
 
-        if (isset($parser_settings['aid'])) {
-            $query_string['aid'] = $this->settings->parser['aid'];
+        if (isset($parser_settings->aid)) {
+            $query_string['aid'] = $this->settings->parser->aid;
         }
 
         $pages_count = 0;
         $data = $this->fetchData($query_string);
         $events = collect($data['events']);
-        $parser_settings['last_imported_id'] = $events->sortBy('id')->last()['id'];
+        $last_id = $events->sortBy('id')->last()['id'];
 
         $pages_count = ceil($data['meta']['total'] / $data['meta']['per_page']);
-        for ($page = 2; $page < $pages_count; ++$page) {
+        for ($page = 2; $page < 5; ++$page) {
             if (!$this->importEvents($events)) {
                 break;
             }
@@ -73,6 +73,8 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
             $data = $this->fetchData($query_string);
             $events = collect($data['events']);
         }
+
+        $parser_settings->last_imported_id = $last_id;
 
         $this->settings->parser = $parser_settings;
     }
@@ -83,8 +85,8 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
 
         foreach ($events->sortByDesc('id') as $event) {
             if (
-                isset($this->settings->parser['last_imported_id']) and
-                $this->settings->parser['last_imported_id']=== $event['id']
+                isset($this->settings->parser->last_imported_id) and
+                $this->settings->parser->last_imported_id === $event['id']
             ) {
                 return false;
             }

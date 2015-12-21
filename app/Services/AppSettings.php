@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
+use stdClass;
 use Storage;
 
-class AppSettings
+class AppSettings implements \ArrayAccess
 {
     /**
      * Settings data
@@ -24,7 +25,7 @@ class AppSettings
     public function __construct()
     {
         if (Storage::exists($this->file_name)) {
-            $this->data = json_decode(Storage::get($this->file_name), true);
+            $this->data = (array)json_decode(Storage::get($this->file_name));
         }
     }
 
@@ -40,8 +41,37 @@ class AppSettings
 
     public function __get($name)
     {
+        if (!isset($this->data[$name])) {
+            $this->data[$name] = new stdClass;
+        }
+
         return $this->data[$name];
     }
+
+    public function offsetExists($offset)
+    {
+        return isset($this->data[$offset]);
+    }
+
+    public function offsetGet($offset)
+    {
+        return isset($this->data[$offset]) ? $this->data[$offset] : null;
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        if (is_null($offset)) {
+            $this->data[] = $value;
+        } else {
+            $this->data[$offset] = $value;
+        }
+    }
+
+    public function offsetUnset($offset)
+    {
+        unset($this->data[$offset]);
+    }
+
 
     public function __destruct()
     {
