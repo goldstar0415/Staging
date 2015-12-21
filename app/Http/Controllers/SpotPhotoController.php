@@ -27,12 +27,13 @@ class SpotPhotoController extends Controller
      */
     public function store(AddSpotPhotos $request, $spot)
     {
+        $photos = [];
         foreach ($request->file('files') as $file) {
-            $spot->photos()->create([
+            $photos[] = $spot->photos()->create([
                 'photo' => $file
             ]);
         }
 
-        return ['photos' => $spot->photos];
+        return ['photos' => $photos];
     }
 }
