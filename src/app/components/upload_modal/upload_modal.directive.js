@@ -37,7 +37,7 @@
     }
 
     /** @ngInject */
-    function UploadModalController(spot, $modalInstance, UploaderService, toastr, API_URL) {
+    function UploadModalController($rootScope, spot, $modalInstance, UploaderService, toastr, API_URL) {
       var vm = this;
       vm.close = close;
       vm.upload = upload;
@@ -55,9 +55,12 @@
         UploaderService
           .upload(url)
           .success(function (resp) {
-            console.log(resp);
-            spot.photos = resp.photos;
+            _.each(resp.photos, function (photo) {
+              spot.photos.push(photo);
+            });
 
+            $rootScope.$emit('jcarousel:change');
+            vm.images.files = [];
             toastr.info('Photos successfully uploaded');
             close();
           })
