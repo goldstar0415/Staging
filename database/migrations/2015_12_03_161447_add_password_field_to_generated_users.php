@@ -25,7 +25,7 @@ class AddPasswordFieldToGeneratedUsers extends Migration
     public function down()
     {
         Schema::table('generated_users', function (Blueprint $table) {
-            $table->dropColumn('password', 64);
+            $table->dropColumn('password');
         });
     }
 }
