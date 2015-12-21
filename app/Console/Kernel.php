@@ -9,10 +9,12 @@ use App\Mailers\AppMailer;
 use App\Spot;
 use App\User;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    use DispatchesJobs;
     /**
      * The Artisan commands provided by your application.
      *
@@ -54,7 +56,10 @@ class Kernel extends ConsoleKernel
             foreach ($users as $user) {
                 $mailer->remindGeneratedUser($user->user, $user->password);
             }
-        })->everyTenMinutes();
-//        })->cron('* 0 * *  0/2'); TODO: uncomment
+        })->cron('* 0 * *  0/2');
+
+        $schedule->call(function () {
+            $this->dispatch(app(\App\Jobs\ParseEvents::class));
+        })->weekly();
     }
 }

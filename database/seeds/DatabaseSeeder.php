@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(RolesSeeder::class);
         $this->call(SpotTypesTableSeeder::class);
+        $this->call(SpotDefaultCategoriesTableSeeder::class);
         $this->call(SocialsTableSeeder::class);
         $this->call(ActivityLevelSeeder::class);
         if (App::environment('local')) {
