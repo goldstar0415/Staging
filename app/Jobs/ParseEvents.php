@@ -58,7 +58,7 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
         $last_id = $events->sortBy('id')->last()['id'];
 
         $pages_count = ceil($data['meta']['total'] / $data['meta']['per_page']);
-        for ($page = 2; $page < 5; ++$page) {
+        for ($page = 2; $page < $pages_count; ++$page) {
             if (!$this->importEvents($events)) {
                 break;
             }
