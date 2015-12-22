@@ -64,11 +64,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         'is_favorite',
         'is_saved',
         'is_rated',
-        'share_links',
-        'comments_photos'
+        'share_links'
     ];
 
-    protected $with = ['category.type', 'points', 'photos', 'user'];
+    protected $with = ['category.type', 'points'];
 
     protected $hidden = ['cover_file_name', 'cover_file_size', 'cover_content_type'];
 

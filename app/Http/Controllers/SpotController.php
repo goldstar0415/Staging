@@ -124,7 +124,9 @@ class SpotController extends Controller
      */
     public function show($spot)
     {
-        return $spot->load(['photos', 'points', 'tags', 'comments'])->append(['count_members', 'members']);
+        return $spot
+            ->load(['photos', 'tags', 'comments'])
+            ->append(['count_members', 'members', 'comments_photos']);
     }
 
     /**

@@ -92,7 +92,12 @@ trait GeoTrait
                 $b_box['_northEast']['lat']
             );
         }
-        $points = self::with(['spot', 'spot.user', 'spot.photos', 'spot.comments'])->select('spot_points.*')
+        $points = self::with(['spot', 'spot.user' => function ($query) {
+            /**
+             * @var \Illuminate\Database\Eloquent\Relations\BelongsTo $query
+             */
+            $query->getRelated()->setAppends(['avatar_url']);
+        }])->select('spot_points.*')
             ->join('spots', function ($join) {
                 /**
                  * @var JoinClause $join

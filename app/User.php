@@ -155,13 +155,6 @@ class User extends BaseModel implements
         'social_links'
     ];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $with = ['socials'];
-
     protected $hidden = [
         'password',
         'remember_token',
