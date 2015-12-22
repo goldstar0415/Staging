@@ -43,26 +43,27 @@
           <p class="description">{{data.spot.description}}</p>
         </div>
 
-        <div ng-show="view == 'reviews'" class=" col-xs-12 wrapper" ng-if="data.spot.comments.length > 0">
-          <div class="col-xs-12 previous-next" ng-if="data.spot.comments.length > 1">
-            <a ng-click="prevReview()" class="previous">Previous</a> <a ng-click="nextReview()" class="next ">Next</a>
-          </div>
-
-          <div class="col-xs-12 no-pad">
-            <div class="avatar">
+        <div ng-show="view == 'reviews'" class=" col-xs-12 reviews-popup">
+          <div ng-if="data.spot.comments.length > 0">
+            <div class="col-xs-12 previous-next" ng-if="data.spot.comments.length > 1">
+              <a ng-click="prevReview()" class="previous">Previous</a> <a ng-click="nextReview()" class="next ">Next</a>
+            </div>
+            <div class="col-xs-2 avatar">
               <img ng-src="{{currentReview.sender.avatar_url.thumb}}">
             </div>
-            <div class="content">
-              <span class="">
-              <a class="reviews-user">{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}</a>
-              </span>
+            <div class="col-xs-10 content">
+          <span><a class="reviews-user">{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}</a></span>
 
               <p class="description" ng-bind-html="currentReview.body | linky:'_blank'"></p>
 
               <p class="date-reviews ">{{currentReview.created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>
+
             </div>
           </div>
 
+          <div ng-if="!data.spot.comments.length" class="photos-event clearfix">
+            <span>here is no reviews yet</span>
+          </div>
         </div>
 
         <div ng-show="view == 'photos'" class=" col-xs-12 wrapper">

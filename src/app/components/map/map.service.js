@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, Area, SignUpService) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, Area, SignUpService, Spot, SpotComment, SpotService) {
       var map = null;
       var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
@@ -1087,6 +1087,23 @@
           var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
           var popup = L.popup(options).setContent(popupContent[0]);
           marker.bindPopup(popup);
+
+          marker.on('click', function () {
+            Spot.get({id: scope.item.spot.id}, function (fullSpot) {
+              scope.item.spot = fullSpot;
+
+              var params = {
+                page: 1,
+                limit: 10,
+                spot_id: fullSpot.id
+              };
+              SpotComment.query(params, function (comments) {
+                scope.item.spot.comments = comments.data;
+
+                SpotService.initMarker();
+              });
+            });
+          });
         }
 
       }

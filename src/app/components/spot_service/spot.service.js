@@ -157,7 +157,6 @@
         $scope.currentReview = $scope.data.spot.comments[0];
       }
       $scope.view = 'about';
-      //$scope.$apply();
     }
 
     function mapNextPhoto() {

@@ -9,7 +9,7 @@
     .controller('SpotMapModalController', SpotMapModalController);
 
   /** @ngInject */
-  function SpotMapModalController($scope, spot, marker, SpotService, $modalInstance) {
+  function SpotMapModalController($scope, spot, marker, SpotService, $modalInstance, Spot, SpotComment) {
     $scope.data = spot;
     $scope.marker = marker;
     $scope.saveToCalendar = SpotService.saveToCalendar;
@@ -23,17 +23,38 @@
     $scope.showNextReview = false;
     $scope.showPrevReview = false;
 
-    SpotService.setScope($scope);
-
-    SpotService.initMarker();
-
     $scope.nextPhoto = SpotService.mapNextPhoto;
     $scope.prevPhoto = SpotService.mapPrevPhoto;
 
     $scope.nextReview = SpotService.mapNextReview;
     $scope.prevReview = SpotService.mapPrevReview;
 
-    $scope.close = function () {
+    $scope.close = close;
+
+    run();
+
+    /////////
+
+    function run() {
+      SpotService.setScope($scope);
+
+      Spot.get({id:$scope.data.spot.id}, function (fullSpot) {
+        $scope.data.spot = fullSpot;
+
+        var params = {
+          page: 1,
+          limit: 10,
+          spot_id: fullSpot.id
+        };
+        SpotComment.query(params, function (comments) {
+          $scope.data.spot.comments = comments.data;
+
+          SpotService.initMarker();
+        });
+      });
+    }
+
+    function close() {
       $modalInstance.close();
     }
   }

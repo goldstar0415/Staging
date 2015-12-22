@@ -21,15 +21,19 @@
     $scope.showNextReview = false;
     $scope.showPrevReview = false;
 
-    SpotService.setScope($scope);
-
-    SpotService.initMarker();
-
     $scope.nextPhoto = SpotService.mapNextPhoto;
     $scope.prevPhoto = SpotService.mapPrevPhoto;
 
     $scope.nextReview = SpotService.mapNextReview;
     $scope.prevReview = SpotService.mapPrevReview;
+
+    run();
+
+    ///////
+
+    function run() {
+      SpotService.setScope($scope);
+    }
 
   }
 })();
