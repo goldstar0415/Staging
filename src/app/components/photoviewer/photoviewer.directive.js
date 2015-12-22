@@ -46,7 +46,6 @@
     /** @ngInject */
     function PhotoViewerController($modalInstance, items, index, hideComments, PhotoComment, SpotPhotoComments) {
       var vm = this;
-      var isAlbumComments = angular.isDefined(items[0].album_id);
       vm.countPhotos = items.length;
       vm.hideComments = hideComments;
       setPhoto(index);
@@ -67,7 +66,7 @@
        */
       vm.sendComment = function (form) {
         if (form.$valid) {
-          if (isAlbumComments) {
+          if (vm.currentPhoto.album_id) {
             PhotoComment.save({photo_id: vm.currentPhoto.id}, {body: vm.comment}, afterSave);
           } else {
             SpotPhotoComments.save({
@@ -84,7 +83,7 @@
        * @param idx {number} comment index
        */
       vm.deleteComment = function (commentId, idx) {
-        if (isAlbumComments) {
+        if (vm.currentPhoto.album_id) {
           PhotoComment.delete({
             photo_id: vm.currentPhoto.id,
             id: commentId
@@ -134,7 +133,7 @@
        */
       function getComments(item) {
         if (_.isUndefined(hideComments) || !hideComments) {
-          return isAlbumComments ?
+          return item.album_id ?
             PhotoComment.query({photo_id: item.id}) :
             SpotPhotoComments.query({photo_id: item.id, spot_id: item.spot_id})
         }

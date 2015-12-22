@@ -33,8 +33,8 @@
     _.each(categories.data, function (item) {
       vm.categories[item.name] = item.categories;
     });
-
-    vm.is_private = 1;
+    console.log(spot);
+    vm.is_private = vm.edit ? +spot.is_private : 1;
 
     //vars
     vm.tags = [];

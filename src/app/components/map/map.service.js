@@ -298,14 +298,14 @@
               return;
             }
             var first = e.touches[0],
-              el = first.target;
+            el = first.target;
             this._simulateEvent('mousedown', first);
           },
           _onUp: function (e) {
             if (e && e.changedTouches) {
 
               var first = e.changedTouches[0],
-                el = first.target;
+              el = first.target;
 
               this._simulateEvent('mouseup', first);
             }
@@ -602,8 +602,8 @@
       //Path selection
       function PathSelection(wpArray, callback) {
         var markers = [],
-          line,
-          cancelPopup;
+        line,
+        cancelPopup;
         var showCancelPopup = true;
         var lineOptions = {};
         lineOptions.styles = [{type: 'polygon', color: 'blue', opacity: 0.6, weight: 3, fillOpacity: 0.2}, {
@@ -1051,7 +1051,6 @@
       }
 
       function BindSpotPopup(marker, spot) {
-
         if ($rootScope.isMobile) {
           marker.on('click', function () {
             $modal.open({
@@ -1090,6 +1089,8 @@
 
           marker.on('click', function () {
             Spot.get({id: scope.item.spot.id}, function (fullSpot) {
+              //merge photos
+              fullSpot.photos = _.union(fullSpot.comments_photos, fullSpot.photos);
               scope.item.spot = fullSpot;
 
               var params = {

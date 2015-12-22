@@ -10,6 +10,7 @@
     var vm = this;
     vm.API_URL = API_URL;
     vm.spot = SpotService.formatSpot(spot);
+    vm.spot.photos = _.union(vm.spot.comments_photos, vm.spot.photos);
     $rootScope.currentSpot = vm.spot;
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;

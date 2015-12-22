@@ -39,6 +39,8 @@
       SpotService.setScope($scope);
 
       Spot.get({id:$scope.data.spot.id}, function (fullSpot) {
+        //merge photos
+        fullSpot.photos = _.union(fullSpot.comments_photos, fullSpot.photos);
         $scope.data.spot = fullSpot;
 
         var params = {

@@ -32,16 +32,10 @@
     </div>
 
 
-    <input type="url" name="url" placeholder="Web URL" ng-model="modal.url" class="white" />
+    <input type="text" name="url" placeholder="Web URL" ng-model="modal.url" class="white"  />
 
-    <div ng-messages="form.url.$error" ng-if="form.$submitted || form.url.$touched"
-         class="error-message">
-      <div ng-message="url">wrong url</div>
-    </div>
 
-    <input type="text" name="name" placeholder="Contact name" ng-model="modal.name" class="white"
-           required/>
-
+    <input type="text" name="name" placeholder="Contact name" ng-model="modal.name" class="white" required/>
 
     <div ng-messages="form.name.$error" ng-if="form.$submitted || form.name.$touched"
          class="error-message">
