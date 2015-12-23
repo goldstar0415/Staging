@@ -107,13 +107,13 @@
           </div>
         </div>
 
-        <div ng-if="$root.currentUser.social_links.facebook">Facebook: <a ng-href="{{ $root.currentUser.social_links.facebook }}" target="_blank">LINK</a></div>
-        <div ng-if="$root.currentUser.social_links.twitter">Twitter: <a ng-href="{{ $root.currentUser.social_links.twitter }}" target="_blank">LINK</a></div>
-        <div ng-if="$root.currentUser.social_links.instagram">Instagram: <a ng-href="{{ $root.currentUser.social_links.instagram }}" target="_blank">LINK</a></div>
-        <div ng-if="$root.currentUser.social_links.tumblr">Tumblr: <a ng-href="{{ $root.currentUser.social_links.tumblr }}" target="_blank">LINK</a></div>
-        <div ng-if="$root.currentUser.social_links.vk">VK: <a ng-href="{{ $root.currentUser.social_links.vk }}" target="_blank">LINK</a></div>
-        <div ng-if="$root.currentUser.social_links.custom">Personal site: <a ng-href="{{ $root.currentUser.social_links.custom }}" target="_blank">LINK</a></div>
-        <div ng-if="$root.currentUser.social_links.google">Google+: <a ng-href="{{ $root.currentUser.social_links.google }}" target="_blank">LINK</a></div>
+        <div ng-if="$root.currentUser.social_links.facebook">Facebook: <a ng-href="{{ $root.currentUser.social_links.facebook }}" rel="nofollow" target="_blank">LINK</a></div>
+        <div ng-if="$root.currentUser.social_links.twitter">Twitter: <a ng-href="{{ $root.currentUser.social_links.twitter }}" rel="nofollow" target="_blank">LINK</a></div>
+        <div ng-if="$root.currentUser.social_links.instagram">Instagram: <a ng-href="{{ $root.currentUser.social_links.instagram }}" rel="nofollow" target="_blank">LINK</a></div>
+        <div ng-if="$root.currentUser.social_links.tumblr">Tumblr: <a ng-href="{{ $root.currentUser.social_links.tumblr }}" rel="nofollow" target="_blank">LINK</a></div>
+        <div ng-if="$root.currentUser.social_links.vk">VK: <a ng-href="{{ $root.currentUser.social_links.vk }}" rel="nofollow" target="_blank">LINK</a></div>
+        <div ng-if="$root.currentUser.social_links.custom">Personal site: <a ng-href="{{ $root.currentUser.social_links.custom }}" rel="nofollow" target="_blank">LINK</a></div>
+        <div ng-if="$root.currentUser.social_links.google">Google+: <a ng-href="{{ $root.currentUser.social_links.google }}" rel="nofollow" target="_blank">LINK</a></div>
 
         <div class="info-links hidden-lg hidden-md visible-sm visible-xs  ng-show col-xs-12">
           <a ui-sref="spots({user_id: $root.profileUser.id})" class="events"

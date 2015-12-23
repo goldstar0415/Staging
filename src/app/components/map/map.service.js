@@ -695,6 +695,7 @@
             });
 
             pathRouter.route(waypoints, function (err, routes) {
+              console.log(arguments);
               if (line) {
                 drawLayer.removeLayer(line);
                 line.off('linetouched');
@@ -1364,7 +1365,7 @@
               }
             })
             .catch(function (resp) {
-              toastr.error(resp.data ? resp.data.message :   'Something went wrong')
+              toastr.error(resp.data ? resp.data.message : 'Something went wrong')
             });
         } else {
           clearLayers();

@@ -327,7 +327,7 @@
       vm.type = data.category.type.display_name.toLowerCase();
       vm.title = data.title;
       vm.description = data.description;
-      vm.links = data.web_sites;
+      vm.links = data.web_sites || [];
       vm.youtube_links = data.videos;
       vm.category_id = data.spot_type_category_id;
       vm.tags = data.tags || [];
