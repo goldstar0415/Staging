@@ -49,13 +49,13 @@ class SpotController extends Controller
     {
         $data = $this->getFilterQuery($request, Spot::query())->get()->map(function (Spot $spot) {
             $row[] = $spot->category->type->display_name;
-            $row[] = $spot->user->full_name;
-            $row[] = $spot->user->email;
+            $row[] = $spot->user ? $spot->user->full_name : '';
+            $row[] = $spot->user ? $spot->user->email : '';
             $row[] = $spot->title;
             $row[] = $spot->description;
             $row[] = $spot->start_date;
             $row[] = $spot->end_date;
-            $row[] = implode(', ', $spot->web_sites);
+            $row[] = $spot->web_sites ? implode(', ', $spot->web_sites) : '';
             $row[] = $spot->points->implode('address', ', ');
             $row[] = $spot->category->display_name;
             $row[] = (string)$spot->created_at;
