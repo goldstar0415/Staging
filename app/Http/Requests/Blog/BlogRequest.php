@@ -13,7 +13,7 @@ class BlogRequest extends Request
      */
     public function authorize()
     {
-        return $this->route('posts')->user_id === $this->user()->id;
+        return $this->route('posts')->user_id === $this->user()->id or $this->user()->hasRole('admin');
     }
 
     /**
