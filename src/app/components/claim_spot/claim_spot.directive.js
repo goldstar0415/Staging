@@ -47,10 +47,15 @@
         console.log(form);
         if (form.$valid) {
           spot.isClaimed = true;
-          vm.close();
 
           Spot.claim({id: spot.id}, vm, function (resp) {
             toastr.success('Claim successfully sent');
+            vm.close();
+          }, function (resp) {
+            var message = _.map(resp.data, function (arr) {
+              return arr[0];
+            });
+            toastr.error(message.join('<br/>'));
           });
         }
       };
