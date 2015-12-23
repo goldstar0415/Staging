@@ -255,6 +255,8 @@
           L.DomEvent.preventDefault(e);
           ClearSelections();
           map.closePopup();
+
+          angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
         }
 
       });
@@ -695,7 +697,7 @@
             });
 
             pathRouter.route(waypoints, function (err, routes) {
-              console.log(arguments);
+
               if (line) {
                 drawLayer.removeLayer(line);
                 line.off('linetouched');
