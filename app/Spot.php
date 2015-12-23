@@ -427,10 +427,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
 
     /**
      * @param self $spot
-     * @param User $user
+     * @param User|null $user
      * @return Event
      */
-    protected static function makeVEvent(self $spot, User $user)
+    protected static function makeVEvent(self $spot, $user = null)
     {
         $ics_event = new Event($spot->id);
         if ($spot->description) {
@@ -445,8 +445,9 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             $ics_event->setUrl($spot->web_sites[0]);
         }
         $ics_event->setUseUtc(false);
-
-        $ics_event->setOrganizer(new Organizer($user->first_name . ' ' . $user->last_name, ['email' => $user->email]));
+        if ($user) {
+            $ics_event->setOrganizer(new Organizer($user->first_name . ' ' . $user->last_name, ['email' => $user->email]));
+        }
         $ics_event->setCategories($spot->category->display_name);
         $ics_event->setSummary($spot->title);
 
