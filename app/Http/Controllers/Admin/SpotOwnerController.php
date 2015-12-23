@@ -41,7 +41,7 @@ class SpotOwnerController extends Controller
 
         $owner_request->spot->user()->associate($owner_request->user)->save();
 
-        $message = new ChatMessage(['body' => 'You successfuly owned the spot']);
+        $message = new ChatMessage(['body' => 'You successfuly became the owner of the spot']);
         $owner_request->user->chatMessagesReceived()->save($message, ['sender_id' => $request->user()->id]);
         $message->spots()->attach($owner_request->spot->id);
 
