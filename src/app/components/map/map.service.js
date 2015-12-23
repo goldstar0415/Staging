@@ -1362,6 +1362,9 @@
                 FitBoundsOfDrawLayer();
               }
             })
+            .catch(function (resp) {
+              toastr.error(resp.data.message || 'Something went wrong')
+            });
         } else {
           clearLayers();
           $rootScope.$emit('update-map-data', []);
