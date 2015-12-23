@@ -16,7 +16,7 @@ class WallRequest extends Request
      */
     public function authorize()
     {
-        return $this->route('wall')->sender_id === $this->user()->id;
+        return $this->route('wall')->sender_id === $this->user()->id or $this->user()->hasRole('admin');
     }
 
     /**
