@@ -382,6 +382,10 @@
 
 .spot-block {
   margin-bottom: 15px;
+
+  .description span {
+    white-space: pre-wrap;
+  }
 }
 
 @media (max-width: 475px) {
