@@ -78,6 +78,7 @@
             <th>Title</th>
             @if (Request::has('filter.description'))
             <th class="col-sm-3">Description</th>
+            <th class="col-sm-2">Tags</th>
             @endif
             <th>Addresses</th>
             <th>Category</th>
@@ -107,6 +108,7 @@
                 <td>{!! link_to(frontend_url($spot->user_id ?: Request::user()->id, 'spot', $spot->id), $spot->title) !!}</td>
                 @if (Request::has('filter.description'))
                 <td>{{ $spot->description }}</td>
+                <td>{{ $spot->tags->implode('name', ', ') }}</td>
                 @endif
                 <td>{{ $spot->points->implode('address', '; ') }}</td>
                 <td>{{ $spot->category->display_name }}</td>
