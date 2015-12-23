@@ -1088,25 +1088,26 @@
           marker.bindPopup(popup);
 
           marker.on('click', function () {
-            Spot.get({id: scope.item.spot.id}, function (fullSpot) {
-              //merge photos
-              fullSpot.photos = _.union(fullSpot.comments_photos, fullSpot.photos);
-              scope.item.spot = fullSpot;
+            if (!scope.item.spot.photos) {
+              Spot.get({id: scope.item.spot.id}, function (fullSpot) {
+                //merge photos
+                fullSpot.photos = _.union(fullSpot.comments_photos, fullSpot.photos);
+                scope.item.spot = fullSpot;
 
-              var params = {
-                page: 1,
-                limit: 10,
-                spot_id: fullSpot.id
-              };
-              SpotComment.query(params, function (comments) {
-                scope.item.spot.comments = comments.data;
+                var params = {
+                  page: 1,
+                  limit: 10,
+                  spot_id: fullSpot.id
+                };
+                SpotComment.query(params, function (comments) {
+                  scope.item.spot.comments = comments.data;
 
-                SpotService.initMarker();
+                  SpotService.initMarker(scope.item.spot);
+                });
               });
-            });
+            }
           });
         }
-
       }
 
       function BindBlogPopup(marker, post) {
@@ -1363,7 +1364,7 @@
               }
             })
             .catch(function (resp) {
-              toastr.error(resp.data.message || 'Something went wrong')
+              toastr.error(resp.data ? resp.data.message :   'Something went wrong')
             });
         } else {
           clearLayers();

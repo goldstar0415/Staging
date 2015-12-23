@@ -142,7 +142,8 @@
       }
     }
 
-    function initMarker() {
+    function initMarker(spot) {
+      $scope.data.spot = spot;
       if ($scope.data.spot.photos.length > 0) {
         getPhotosIndex(0);
       }

@@ -51,7 +51,7 @@
         SpotComment.query(params, function (comments) {
           $scope.data.spot.comments = comments.data;
 
-          SpotService.initMarker();
+          SpotService.initMarker($scope.data.spot);
         });
       });
     }
