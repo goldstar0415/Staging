@@ -1,1 +1,1 @@
-<a href="{{ frontend_url('user', $sender->id) }}">{{ $sender->first_name }} {{ $sender->last_name }}</a> unfollow you
+<a href="{{ frontend_url($sender->id) }}">{{ $sender->first_name }} {{ $sender->last_name }}</a> unfollow you

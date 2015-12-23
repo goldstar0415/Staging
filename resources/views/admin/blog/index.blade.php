@@ -22,7 +22,7 @@
     <tbody>
     @foreach($blogs as $blog)
         <tr>
-            <td>{!! link_to(frontend_url('user', $blog->user_id), $blog->user->first_name . ' ' . $blog->user->last_name) !!}</td>
+            <td>{!! link_to(frontend_url($blog->user_id), $blog->user->first_name . ' ' . $blog->user->last_name) !!}</td>
             <td>{!! link_to_route('admin.posts.edit', $blog->title, [$blog->id]) !!}</td>
             <td>{{ $blog->created_at }}</td>
             <td>

@@ -23,8 +23,8 @@
         <tbody>
         @foreach($requests as $request)
             <tr>
-                <td>{!! link_to(frontend_url('user', $request->user_id), $request->user->full_name) !!}</td>
-                <td>{!! link_to(frontend_url('user', $request->user->id, 'spot', $request->spot->id), $request->spot->title) !!}</td>
+                <td>{!! link_to(frontend_url($request->user_id), $request->user->full_name) !!}</td>
+                <td>{!! link_to(frontend_url($request->user->id, 'spot', $request->spot->id), $request->spot->title) !!}</td>
                 <td>{{ $request->name }}</td>
                 <td>{{ $request->email }}</td>
                 <td>{{ $request->phone }}</td>

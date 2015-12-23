@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Jobs\Job;
 use App\Services\AppSettings;
 use App\Spot;
+use App\SpotPhoto;
 use App\SpotTypeCategory;
 use DateTime;
 use GuzzleHttp\Client;
@@ -99,9 +100,28 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
                     'lng' => $event['venue']['location']['lon']
                 ]
             ]);
+            $import_event->photos()->saveMany($this->getPhotos($event));
         }
 
         return true;
+    }
+
+    /**
+     * Get photos from imported event
+     *
+     * @param $event
+     * @return array
+     */
+    protected function getPhotos($event)
+    {
+        $photos = [];
+        foreach ($event['performers'] as $performer) {
+            if ($performer['image']) {
+                $photos[] = new SpotPhoto(['photo' => $performer['image']]);
+            }
+        }
+
+        return $photos;
     }
 
     protected function getEventAddress(array $event)

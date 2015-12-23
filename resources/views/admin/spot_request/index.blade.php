@@ -21,12 +21,12 @@
         @foreach($spots as $spot)
             <tr>
                 <td>
-                    <a href="{!! frontend_url('user', $spot->user->id) !!}">
+                    <a href="{!! frontend_url($spot->user->id) !!}">
                         {{ $spot->user->first_name . ' ' . $spot->user->last_name }}
                     </a>
                 </td>
                 <td>
-                    <a href="{!! frontend_url('user', $spot->user->id, 'spot', $spot->id) !!}">{{ $spot->title }}</a>
+                    <a href="{!! frontend_url($spot->user->id, 'spot', $spot->id) !!}">{{ $spot->title }}</a>
                 </td>
                 <td>
                     {{ $spot->description }}

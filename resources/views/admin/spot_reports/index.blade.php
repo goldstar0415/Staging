@@ -20,7 +20,7 @@
         @foreach($reports as $report)
             <tr>
                 <td>
-                    <a href="{!! frontend_url('user', $report->spot->user->id, 'spot', $report->spot_id) !!}">{{ $report->spot->title }}</a>
+                    <a href="{!! frontend_url($report->spot->user->id, 'spot', $report->spot_id) !!}">{{ $report->spot->title }}</a>
                 </td>
                 <td>
                     @if ($report->reason === App\SpotReport::WRONG)
