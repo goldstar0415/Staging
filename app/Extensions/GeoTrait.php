@@ -105,8 +105,8 @@ trait GeoTrait
                 $join->on('spot_points.spot_id', '=', 'spots.id')->where('spots.is_private', '=', false)->where('is_approved', '=' , true);
         })->whereRaw(implode(' OR ', $search_areas));
 
-        if ($points->withoutNewest()->count() > 500) {
-            return response('Toolong');
+        if ($points->count() > 1000) {
+            return response()->json(['message' => 'Too many points found'], 403);
         }
 
         return $points->get();
