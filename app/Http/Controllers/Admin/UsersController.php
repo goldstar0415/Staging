@@ -16,11 +16,18 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.users.index')->with('users', User::query()->paginate());
+        $query = User::query();
+
+        if ($request->has('sort')) {
+            $query->orderBy($request->query('sort'));
+        }
+
+        return view('admin.users.index')->with('users', $query->paginate());
     }
 
     /**

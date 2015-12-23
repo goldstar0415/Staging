@@ -26,7 +26,7 @@
             <th>Email</th>
             <th>Roles</th>
             <th>Registration</th>
-            <th>IP address</th>
+            <th><a href="?sort=ip">IP address</a></th>
             <th>Location</th>
             <th>Geo location</th>
             <th>Last login</th>
