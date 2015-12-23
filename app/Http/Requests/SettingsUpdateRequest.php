@@ -49,7 +49,7 @@ class SettingsUpdateRequest extends Request
             case 'personal':
                 $rules = [
                     'first_name' => 'required|max:64',
-                    'last_name' => 'required|max:64',
+                    'last_name' => 'max:64',
                     'alias' => [
                         'string',
                         'max:64',
