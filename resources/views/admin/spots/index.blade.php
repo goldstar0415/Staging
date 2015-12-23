@@ -130,33 +130,33 @@
         @endforeach
         </tbody>
     </table>
-    <div class="row actions">
-    {!! Form::open(['method' => 'PATCH', 'route' => 'admin.spots.bulk-update', 'class' => 'form-inline', 'id' => 'bulk-edit']) !!}
-        <div class="form-group col-lg-2">
-            {!! Form::label('users', 'User:') !!}
-            {!! Form::select('users', [], null, ['id' => 'users', 'style' => 'width: 80%', 'placeholder' => 'Username']) !!}
-        </div>
-        <div class="form-group col-lg-2">
-            {!! Form::label('category', 'Category:') !!}
-            {!! Form::select('category', $spot_categories, null) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::label('start_date', 'Start date:') !!}
-            {!! Form::input('date', 'start_date', null, ['placeholder' => 'Y-m-d']) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::label('end_date', 'End date:') !!}
-            {!! Form::input('date', 'end_date', null, ['placeholder' => 'Y-m-d']) !!}
-        </div>
-        {!! Form::submit('Save', ['class' => 'btn btn-default']) !!}
-    {!! Form::close() !!}
-    </div>
-    <div class="row actions col-lg-12">
-        <div class="form-group pull-right">
-            {!! Form::label('limit', 'Items per page') !!}
-            {!! Form::select('limit', [15 => '15', 50 => '50', 100 => '100'], Request::get('limit')) !!}
-        </div>
-    </div>
-    @include('admin.pagination', ['paginatable' => $spots])
 </div>
+<div class="row actions">
+    {!! Form::open(['method' => 'PATCH', 'route' => 'admin.spots.bulk-update', 'class' => 'form-inline', 'id' => 'bulk-edit']) !!}
+    <div class="form-group col-lg-2">
+        {!! Form::label('users', 'User:') !!}
+        {!! Form::select('users', [], null, ['id' => 'users', 'style' => 'width: 80%', 'placeholder' => 'Username']) !!}
+    </div>
+    <div class="form-group col-lg-2">
+        {!! Form::label('category', 'Category:') !!}
+        {!! Form::select('category', $spot_categories, null) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('start_date', 'Start date:') !!}
+        {!! Form::input('date', 'start_date', null, ['placeholder' => 'Y-m-d']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('end_date', 'End date:') !!}
+        {!! Form::input('date', 'end_date', null, ['placeholder' => 'Y-m-d']) !!}
+    </div>
+    {!! Form::submit('Save', ['class' => 'btn btn-default']) !!}
+    {!! Form::close() !!}
+</div>
+<div class="row actions col-lg-12">
+    <div class="form-group pull-right">
+        {!! Form::label('limit', 'Items per page') !!}
+        {!! Form::select('limit', [15 => '15', 50 => '50', 100 => '100'], Request::get('limit')) !!}
+    </div>
+</div>
+@include('admin.pagination', ['paginatable' => $spots])
 @endsection
