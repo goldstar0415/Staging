@@ -42,10 +42,10 @@ class SpotOwnerController extends Controller
         $owner_request->spot->user()->associate($owner_request->user)->save();
 
         $message = new ChatMessage(['body' => 'You successfuly owned the spot']);
-        $owner_request->user->chatMessagesSend()->save($message, ['receiver_id' => $request->user()->id]);
+        $owner_request->user->chatMessagesReceived()->save($message, ['sender_id' => $request->user()->id]);
         $message->spots()->attach($owner_request->spot->id);
 
-        event(new OnMessage($owner_request->user, $message, $request->user()->random_hash));
+        event(new OnMessage($owner_request->user, $message, $owner_request->user->random_hash));
 
         $owner_request->delete();
 
@@ -55,11 +55,18 @@ class SpotOwnerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param Request $request
      * @param \App\SpotOwnerRequest $owner_request
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function reject($owner_request)
+    public function reject(Request $request, $owner_request)
     {
+        $message = new ChatMessage(['body' => 'Your request on own the spot rejected']);
+        $owner_request->user->chatMessagesReceived()->save($message, ['sender_id' => $request->user()->id]);
+        $message->spots()->attach($owner_request->spot->id);
+        event(new OnMessage($owner_request->user, $message, $owner_request->user->random_hash));
+
         $owner_request->delete();
 
         return back();
