@@ -7405,6 +7405,7 @@ button.close {
   border: 1px solid #e9edf0;
   border-radius: 10px;
   background: #fff;
+  overflow-x: scroll;
 }
 .admin .editing .right {
   float: right;
