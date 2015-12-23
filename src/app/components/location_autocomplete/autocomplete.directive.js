@@ -132,6 +132,7 @@
             s.address = '';
             s.onEmpty();
           } else {
+            s.address = s.viewAddress;
             if (s.addClassOnchange) {
               s.className = className;
             }
