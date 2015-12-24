@@ -15,10 +15,10 @@
 <body>
 
 <div class="container-fluid wrap admin">
-    <div class="col-md-10 col-xs-8">
-        <div class="editing blog col-xs-12">
+    <div class="admin-main col-md-10 col-xs-8">
+        @include('admin.errors')
+        <div class="editing blog row">
             @yield('content')
-            @include('admin.errors')
         </div>
     </div>
     @include('admin.sidebar')

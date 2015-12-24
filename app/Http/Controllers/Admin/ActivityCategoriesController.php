@@ -71,11 +71,15 @@ class ActivityCategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\SpotTypeCategory  $category
+     * @param  \App\ActivityCategory  $category
      * @return \Illuminate\Http\Response
      */
     public function destroy($category)
     {
+        if ($category->activities()->count() > 0) {
+            return back()->withErrors(['Some activities attached to this category!']);
+        }
+
         $category->delete();
 
         return back();

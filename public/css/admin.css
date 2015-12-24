@@ -7329,6 +7329,9 @@ button.close {
 .admin {
   font-family: 'Questrial';
 }
+.admin .admin-main > .alert-danger {
+  margin-top: 30px;
+}
 .admin .admin-menu {
   margin-top: 20px;
 }

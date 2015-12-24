@@ -77,6 +77,10 @@ class BlogCategoryController extends Controller
      */
     public function destroy($category)
     {
+        if ($category->blogs()->withoutNewest()->count() > 0) {
+            return back()->withErrors(['Some blog posts attached to this category!']);
+        }
+
         $category->delete();
 
         return back();

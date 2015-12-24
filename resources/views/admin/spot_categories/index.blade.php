@@ -5,9 +5,7 @@
 'class' => 'btn btn-success button-category creat-spot button-my'
 ]) !!}
 <h2>Spot categories</h2>
-
 <div class="col-xs-12 padding-0">
-
     <table class="col-xs-12 padding-0">
         <thead>
         <tr>
@@ -15,7 +13,6 @@
             <th class="col-xs-3">Type</th>
             <th class="col-xs-3">Image</th>
             <th class="col-xs-1"></th>
-
         </tr>
         </thead>
         <tbody>
