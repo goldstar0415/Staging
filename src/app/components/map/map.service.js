@@ -867,6 +867,8 @@
         var linesY = parseFloat(linesTransform[1].replace("px", ""));
         linesLayer.style.transform = "translate3d(" + ((linesX + mapX) / 2) + "px," + ((linesY + mapY) / 2) + "px, 0px)";
 
+        $('.leaflet-control-container, .sidebar-menu-wrap').hide();
+
         html2canvas(document.getElementById("map"), {
           useCORS: true,
           onrendered: function (canvas) {
@@ -875,6 +877,8 @@
             //window.open(image);
           }
         });
+
+        $('.leaflet-control-container, .sidebar-menu-wrap').show();
 
         for (var i = 0; i < myTiles.length; i++) {
           myTiles[i].style.left = (tilesLeft[i]) + "px";

@@ -17,7 +17,7 @@
     dialogsProvider.setSize('sm');
 
     // toastr
-    toastr.options.timeOut = 1500;
+    toastr.options.timeOut = 2000;
     toastr.options.extendedTimeOut = 0;
     toastr.options.positionClass = 'toast-top-right';
     toastr.options.preventDuplicates = true;
