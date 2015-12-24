@@ -84,7 +84,7 @@
 
       //Blog article creation page
       .state('profile_blog.create', {
-        url: '/article/create',
+        url: '/article/create/',
         templateUrl: '/app/modules/blog/article_create/article_create.html',
         controller: 'ArticleCreateController',
         controllerAs: 'Article',
