@@ -112,9 +112,9 @@
                 @endif
                 <td>{{ $spot->points->implode('address', '; ') }}</td>
                 <td>{{ $spot->category->display_name }}</td>
-                <td>{{ $spot->created_at }}</td>
+                <td>{{ $spot->created_at->format('Y-m-d') }}</td>
                 @if (Request::has('filter.date'))
-                <td>{{ $spot->start_date . ' - ' . $spot->end_date }}</td>
+                <td>{{ $spot->start_date->format('Y-m-d') . ' - ' . $spot->end_date->format('Y-m-d') }}</td>
                 @endif
                 @if (Request::has('filter.statistic'))
                 <td>{{ $spot->calendarUsers()->count() }}</td>
