@@ -80,6 +80,10 @@ class SpotCategoriesController extends Controller
      */
     public function destroy($category)
     {
+        if ($category->spots()->withoutNewest()->withRequested()->count() > 0) {
+            return back()->withErrors(['Some spots attached to this category!']);
+        }
+
         $category->delete();
 
         return back();
