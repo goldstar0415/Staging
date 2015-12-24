@@ -29,7 +29,22 @@ class SpotOwnerRequest extends Request
             'phone' => 'required|string|max:128',
             'address' => 'required|string|max:255',
             'url' => 'required|url|max:255',
-            'text' => 'required|string|max:5000'
+            'text' => 'string|max:5000'
         ];
+    }
+
+    public function sanitize(array $data)
+    {
+        if (isset($data['url'])) {
+            $url = parse_url($data['url']);
+            if (!isset($url['scheme'])) {
+                $url = 'http://' . $url['path'];
+            }
+
+            $url = $url['scheme'] . '://' . $url['host'];
+            $data['url'] = $url;
+        }
+
+        return $data;
     }
 }
