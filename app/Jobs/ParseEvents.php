@@ -89,6 +89,11 @@ class ParseEvents extends Job implements SelfHandling/*, ShouldQueue*/
             $import_event = new Spot();
             $import_event->category()->associate($default_category);
             $import_event->title = $event['title'];
+            $import_event->description = implode("\n", [
+                $event['short_title'],
+                $event['venue']['name'],
+                $event['datetime_utc']
+            ]);
             $import_event->start_date = $date->format('Y-m-d H:i:s');
             $import_event->end_date = $date->format('Y-m-d 23:59:59');
             $import_event->web_sites = $this->getWebSites($event);
