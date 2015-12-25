@@ -31,7 +31,7 @@
       </p>
 
       <div class="external-link" ng-repeat="item in Spot.spot.web_sites track by $index">
-        <a target="_blank" rel="nofollow" href="{{item}}">{{item}}</a>
+        <a target="_blank" rel="nofollow" href="{{item}}">{{item | shortLink}}</a>
       </div>
 
       <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
