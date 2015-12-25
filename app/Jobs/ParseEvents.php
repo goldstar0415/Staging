@@ -15,9 +15,9 @@ use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
 
-class ParseEvents extends Job implements SelfHandling, ShouldQueue
+class ParseEvents extends Job implements SelfHandling/*, ShouldQueue*/
 {
-    use InteractsWithQueue, SerializesModels;
+    use /*InteractsWithQueue,*/ SerializesModels;
 
     /**
      * @var Client
@@ -91,6 +91,7 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
             $import_event->title = $event['title'];
             $import_event->start_date = $date->format('Y-m-d H:i:s');
             $import_event->end_date = $date->format('Y-m-d 23:59:59');
+            $import_event->web_sites = $this->getWebSites($event);
             $import_event->is_approved = true;
             $import_event->save();
             $import_event->points()->create([
@@ -100,10 +101,29 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
                     'lng' => $event['venue']['location']['lon']
                 ]
             ]);
-            $import_event->photos()->saveMany($this->getPhotos($event));
+            $photos = $import_event->photos()->saveMany($this->getPhotos($event));
+            if (!empty($photos[0])) {
+                $import_event->cover = $photos[0]->photo->path();
+                $import_event->save();
+            }
         }
 
         return true;
+    }
+
+    protected function getWebSites($event)
+    {
+        $sites = [];
+
+        if (!empty($event['url'])) {
+            $sites[] = $event['url'];
+        }
+
+        if (!empty($event['venue']['url'])) {
+            $sites[] = $event['venue']['url'];
+        }
+
+        return $sites ?: null;
     }
 
     /**
@@ -139,7 +159,19 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
             return $data['results'][0]['formatted_address'];
         }
 
-        return $event['venue']['address'];
+        $venue = $event['venue'];
+
+        return implode(', ', array_filter(
+            [
+                $venue['address'],
+                $venue['city'],
+                $venue['extended_address'],
+                $venue['state']
+            ],
+            function ($value) {
+                return !empty($value);
+            }
+        ));
     }
 
     /**

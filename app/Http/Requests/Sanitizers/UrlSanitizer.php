@@ -8,12 +8,12 @@ trait UrlSanitizer
     {
         if (isset($input['web_sites'])) {
             $input['web_sites'] = array_map(function ($url) {
-                $url = parse_url($url);
-                if (!isset($url['scheme'])) {
-                    return 'http://' . $url['path'];
+                $parts = parse_url($url);
+                if (!isset($parts['scheme'])) {
+                    return 'http://' . $url;
                 }
 
-                return $url['scheme'] . '://' . $url['host'];
+                return $url;
             }, $input['web_sites']);
         }
 
