@@ -15,9 +15,9 @@ use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
 
-class ParseEvents extends Job implements SelfHandling/*, ShouldQueue*/
+class ParseEvents extends Job implements SelfHandling, ShouldQueue
 {
-    use /*InteractsWithQueue,*/ SerializesModels;
+    use InteractsWithQueue, SerializesModels;
 
     /**
      * @var Client
