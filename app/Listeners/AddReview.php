@@ -36,8 +36,8 @@ class AddReview implements ShouldQueue
             $user_id = $commentable->user_id;
         }
 
-        if (!is_null($user_id)) {
-            User::find($user_id)->reviews()->save($event->comment);
+        if ($user = User::find($user_id)) {
+            $user->reviews()->save($event->comment);
         }
     }
 }
