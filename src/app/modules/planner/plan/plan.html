@@ -95,7 +95,7 @@
             <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
           </h3>
 
-          <p ng-bind-html="post.body | linky:'_blank'"></p>
+          <p class="line-break" ng-bind-html="post.body | linky:'_blank'"></p>
           <attachments items="post.attachments"></attachments>
 
           <p class="time">{{post.created_at | fromNow}}</p>

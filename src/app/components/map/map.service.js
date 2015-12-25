@@ -828,6 +828,7 @@
       }
 
       function getScreenshot(callback) {
+        var controls = $('.leaflet-control-container, .sidebar-menu-wrap');
         var mapPane = $(".leaflet-map-pane")[0];
         var mapTransform = mapPane.style.transform.replace("translate3d(", "").split(",");
         var mapX = parseFloat(mapTransform[0].replace("px", ""));
@@ -867,7 +868,7 @@
         var linesY = parseFloat(linesTransform[1].replace("px", ""));
         linesLayer.style.transform = "translate3d(" + ((linesX + mapX) / 2) + "px," + ((linesY + mapY) / 2) + "px, 0px)";
 
-        $('.leaflet-control-container, .sidebar-menu-wrap').hide();
+        controls.hide();
 
         html2canvas(document.getElementById("map"), {
           useCORS: true,
@@ -878,8 +879,7 @@
           }
         });
 
-        $('.leaflet-control-container, .sidebar-menu-wrap').show();
-
+        controls.show();
         for (var i = 0; i < myTiles.length; i++) {
           myTiles[i].style.left = (tilesLeft[i]) + "px";
           myTiles[i].style.top = (tilesTop[i]) + "px";

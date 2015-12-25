@@ -126,6 +126,7 @@
             vm.links.push(vm.newLink);
           }
           request.web_sites = vm.links;
+          console.log(request.web_sites);
         }
         if (vm.youtube_links && vm.youtube_links.length > 0) {
           if (vm.newYoutubeLink) {
@@ -202,6 +203,7 @@
     vm.addLink = function (validLink) {
       if (validLink && vm.newLink) {
         vm.links.unshift(vm.newLink);
+        console.log(vm.links);
         vm.newLink = null;
       } else {
         toastr.error('Link is not valid');

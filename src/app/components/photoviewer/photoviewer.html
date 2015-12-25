@@ -38,7 +38,7 @@
             <div class="info">
               <h3 class="name">{{comment.sender.first_name}} {{comment.sender.last_name}}</h3>
 
-              <p ng-bind-html="comment.body | linky:'_blank'"></p>
+              <p class="line-break" ng-bind-html="comment.body | linky:'_blank'"></p>
 
               <p class="time">{{comment.created_at | toTimezone}}</p>
             </div>

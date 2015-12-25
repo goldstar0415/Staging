@@ -56,7 +56,7 @@
           <span><a class="reviews-user">{{currentReview.sender.first_name + ' ' +
             currentReview.sender.last_name}}</a></span>
 
-            <p class="description" ng-bind-html="currentReview.body | linky:'_blank'"></p>
+            <p class="description line-break" ng-bind-html="currentReview.body | linky:'_blank'"></p>
 
             <p class="date-reviews ">{{currentReview.created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>
 

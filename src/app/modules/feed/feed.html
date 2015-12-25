@@ -64,7 +64,7 @@
               </div>
 
               <div ng-switch-when="OnWallMessage">
-                <p ng-bind-html="item.feedable.body | linky:'_blank'"></p>
+                <p class="line-break" ng-bind-html="item.feedable.body | linky:'_blank'"></p>
                 <attachments items="item.feedable.attachments"></attachments>
               </div>
 
