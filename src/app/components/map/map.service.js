@@ -197,6 +197,42 @@
       L.Control.Path = function (options) {
         return new L.Control.path(options);
       };
+
+      // Share selection
+      L.Control.shareSelection = L.Control.extend({
+        options: {
+          position: 'topright',
+          title: {
+            'false': 'Share selection',
+            'true': 'Share selection'
+          }
+        },
+        onAdd: function (map) {
+          var container = L.DomUtil.create('div', 'map-tools map-tools-top hide-tools');
+
+          this.link = L.DomUtil.create('div', 'share-selection', container);
+          this.link.href = '#';
+          this._map = map;
+
+          L.DomEvent.on(this.link, 'click', this._click, this);
+          return container;
+        },
+        _click: function (e) {
+          //if ($rootScope.currentUser) {
+          //  L.DomEvent.stopPropagation(e);
+          //  L.DomEvent.preventDefault(e);
+          //  OpenSaveSelectionsPopup();
+          //} else {
+          //  SignUpService.openModal('SignUpModal.html');
+          //}
+
+        }
+
+      });
+      L.Control.ShareSelection = function (options) {
+        return new L.Control.shareSelection(options);
+      };
+
       // Save selection
       L.Control.saveSelection = L.Control.extend({
         options: {
@@ -270,6 +306,7 @@
       var pathControl = L.Control.Path();
       var clearSelectionControl = L.Control.ClearSelection();
       var saveSelectionControl = L.Control.SaveSelection();
+      var shareSelectionControl = L.Control.ShareSelection();
 
       //initialization
       function InitMap(mapDOMElement) {
@@ -992,6 +1029,7 @@
         map.removeLayer(radiusControl);
         map.removeLayer(lassoControl);
         map.removeLayer(pathControl);
+        map.removeLayer(shareSelectionControl);
         map.removeLayer(saveSelectionControl);
         map.removeLayer(clearSelectionControl);
       }
@@ -999,6 +1037,7 @@
       function AddControls() {
         clearSelectionControl.addTo(map);
         saveSelectionControl.addTo(map);
+        shareSelectionControl.addTo(map);
         pathControl.addTo(map);
         lassoControl.addTo(map);
         radiusControl.addTo(map);
