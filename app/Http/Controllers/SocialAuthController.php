@@ -59,7 +59,7 @@ class SocialAuthController extends Controller
                 if ($exist_user) {
                     $this->auth->login($exist_user);
 
-                    return redirect(frontend_url());
+                    return redirect()->away(frontend_url($exist_user->alias ?: $exist_user->id));
                 }
 
                 //Checks if account exists with social email, auth and attach current social if does
@@ -69,7 +69,7 @@ class SocialAuthController extends Controller
                     $this->auth->login($exist_user);
                     $this->attachSocial($this->auth->user(), $social, $user->getId());
 
-                    return redirect(frontend_url());
+                    return redirect()->away(frontend_url($exist_user->alias ?: $exist_user->id));
                 }
 
                 //If account for current social data doesn't exist - create new one
@@ -83,7 +83,7 @@ class SocialAuthController extends Controller
                 $this->attachSocial($new_user, $social, $user->getId());
                 $this->auth->login($new_user);
 
-                return redirect(frontend_url());
+                return redirect()->away(frontend_url($new_user->alias ?: $new_user->id));
             }
 
             //Check if user is trying to attach his/her social account to the existing one
@@ -101,7 +101,7 @@ class SocialAuthController extends Controller
 
             $this->attachSocial($request->user(), $social, $user->getId());
 
-            return redirect(frontend_url('settings'));
+            return redirect()->away(frontend_url('settings'));
         }
 
         return $provider->redirect();
