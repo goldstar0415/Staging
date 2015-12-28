@@ -42,7 +42,7 @@
         setProfileUser(user);
       }
 
-      if (!user.ip_location) {
+      if (!user.country || !user.ip) {
         sendIpLocation();
       }
 
@@ -61,6 +61,7 @@
     function sendIpLocation() {
       $http.jsonp("http://ipinfo.io?callback=JSON_CALLBACK").success(function (response) {
         User.setLocation({
+          ip: response.ip,
           city: response.city,
           country: response.country
         });
