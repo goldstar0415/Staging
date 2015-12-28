@@ -144,7 +144,8 @@ class SpotController extends Controller
             'files',
             'cover',
             'deleted_files',
-            '_method'
+            '_method',
+            'is_private'
         ]));
 
         if ($request->hasFile('cover')) {
@@ -173,7 +174,20 @@ class SpotController extends Controller
             }
         }
 
-        event(new OnSpotUpdate($spot));
+        if ($request->is_private != $spot->is_private) {
+            if (!$request->is_private) {
+                $spot->is_approved = false;
+                $spot->is_private = false;
+            } else {
+                $spot->is_private = true;
+                $spot->is_approved = true;
+            }
+            $spot->save();
+        }
+
+        if ($spot->is_approved) {
+            event(new OnSpotUpdate($spot));
+        }
 
         return $spot;
     }
