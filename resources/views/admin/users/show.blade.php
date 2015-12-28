@@ -43,11 +43,11 @@
         <tbody>
         @foreach($spots as $spot)
             <tr>
-                <td><a href="#">{{ $spot->title }}</a></td>
+                <td>{!! link_to(frontend_url($spot->user_id ?: Request::user()->id, 'spot', $spot->id), $spot->title) !!}</td>
                 <td><p>{{ $spot->category->type['display_name'] }}</p></td>
                 <td><p><img src="{{ $spot->category->icon_url }}"> {{ $spot->category['name'] }}</p></td>
-                <td><a href="#" class="delete"></a></td>
-                <td><a href="#" class="edit-spot"></a></td>
+                <td>{!! link_delete(route('admin.spots.destroy', [$spot->id]), '', ['class' => 'delete']) !!}</td>
+                <td>{!! link_to(frontend_url('spot', $spot->id, 'edit'), '', ['class' => 'edit-spot']) !!}</td>
             </tr>
         @endforeach
         </tbody>
