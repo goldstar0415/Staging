@@ -105,13 +105,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot(DispatcherContract $events)
     {
         parent::boot($events);
-
-        $events->listen('auth.login', function ($user, $remember) {
-            $ip = $this->app['request']->ip();
-            if ($user->ip !== $ip) {
-                $user->ip = $ip;
-                $user->save();
-            }
-        });
     }
 }

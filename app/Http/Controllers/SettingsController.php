@@ -134,7 +134,16 @@ class SettingsController extends Controller
      */
     public function postLocation(UpdateUserLocationRequest $request)
     {
-        $request->user()->update($request->all());
+        $user = $request->user();
+        $user->update($request->all());
+
+        if ($request->has('ip')) {
+            $ip = $request->ip;
+            if ($user->ip !== $ip) {
+                $user->ip = $ip;
+                $user->save();
+            }
+        }
 
         return $request->all();
     }
