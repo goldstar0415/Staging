@@ -9,7 +9,7 @@
     .factory('UserService', UserService);
 
   /** @ngInject */
-  function UserService($rootScope, $q, User, socket, $state, $http) {
+  function UserService($rootScope, $q, User, socket, $state, $http, $timeout, DATE_FORMAT) {
     return {
       getCurrentUserPromise: getCurrentUserPromise,
       setCurrentUser: setCurrentUser,
@@ -48,6 +48,8 @@
 
       $rootScope.currentUserFailed = false;
       socket.connect(user.random_hash);
+
+      $timeout(fixFacebookHashUrl);
     }
 
     /*
@@ -55,6 +57,8 @@
      * @param user {User}
      */
     function setProfileUser(user) {
+      var now = moment().format(DATE_FORMAT.backend);
+      user.last_action_at = now;
       $rootScope.profileUser = user;
     }
 
@@ -66,6 +70,22 @@
           country: response.country
         });
       });
+    }
+
+    function fixFacebookHashUrl() {
+      if (window.location.hash && window.location.hash === "#_=_") {
+        if (window.history && history.pushState) {
+          window.history.pushState("", document.title, window.location.pathname);
+        } else {
+          var scroll = {
+            top: document.body.scrollTop,
+            left: document.body.scrollLeft
+          };
+          window.location.hash = "";
+          document.body.scrollTop = scroll.top;
+          document.body.scrollLeft = scroll.left;
+        }
+      }
     }
 
     /*
