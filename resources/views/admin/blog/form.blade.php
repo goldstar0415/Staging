@@ -22,8 +22,8 @@
     {!! Form::label('location', 'Location:') !!}
     {!! Form::select(
         'address',
-        [$blog->address => $blog->address],
-        $blog->address,
+        [$blog->address ?: old('address') => $blog->address ?: old('address')],
+        $blog->address ?: old('address'),
         ['class' => 'edit-data', 'id' => 'location']
     ) !!}
     {!! Form::hidden('location[lat]', $blog->point['lat'], ['id' => 'location_lat']) !!}
