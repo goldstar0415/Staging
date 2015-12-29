@@ -38,11 +38,8 @@ class SpotOwnerRequest extends Request
         if (isset($data['url'])) {
             $url = parse_url($data['url']);
             if (!isset($url['scheme'])) {
-                $url = 'http://' . $url['path'];
+                $data['url'] = 'http://' . $data['url'];
             }
-
-            $url = $url['scheme'] . '://' . $url['host'];
-            $data['url'] = $url;
         }
 
         return $data;
