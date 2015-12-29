@@ -37,6 +37,8 @@ class Album extends BaseModel
         'videos',
         'start_date',
         'end_date',
+        'address',
+        'location',
         'is_approved',
         'cover_file_name',
         'cover_file_size',
