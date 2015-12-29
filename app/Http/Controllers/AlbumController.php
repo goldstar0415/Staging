@@ -54,9 +54,7 @@ class AlbumController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $params = $request->input();
-        $album = new Album($params);
-        $request->user()->albums()->save($album);
+        $album = $request->user()->albums()->save(new Album($request->input()));
         foreach ($request->file('files') as $file) {
             $album->photos()->create([
                 'photo' => $file,
@@ -64,6 +62,8 @@ class AlbumController extends Controller
                 'address' => $request->input('address')
             ]);
         }
+
+        $album->user_id = $request->user()->id;
 
         return $album;
     }
