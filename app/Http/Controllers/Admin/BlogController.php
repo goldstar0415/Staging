@@ -85,11 +85,11 @@ class BlogController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  BlogRequest  $request
      * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $blog)
+    public function update(BlogRequest $request, $blog)
     {
         $slug = '';
 
