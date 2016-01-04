@@ -12,7 +12,7 @@
     vm.limit = 10;
     vm.page = 1;
     vm.users = users;
-    vm.checkPermision = PermissionService.checkPermission;
+    vm.checkPermission = PermissionService.checkPermission;
 
     vm.setType = function (type) {
       vm.type = type;

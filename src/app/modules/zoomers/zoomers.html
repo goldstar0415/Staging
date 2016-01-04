@@ -50,7 +50,7 @@
               </h3>
 
               <div class="info">
-                <div ng-if="Zoomers.checkPermision(user.privacy_info, user)">
+                <div ng-if="Zoomers.checkPermission(user.privacy_info, user)">
                   <p class="age">
                     <span ng-if="user.sex">{{user.sex == 'm' ? 'male' : 'female'}}</span>
                     <span ng-if="user.birth_date"><span ng-if="user.sex">,</span> {{user.birth_date | age}} years</span>
@@ -60,12 +60,11 @@
                 </div>
 
                 <p class="counters">
-                  <a ui-sref="spots({user_id: user.id})" class="e-count" title="Spots"
-                     ng-if="Zoomers.checkPermision(user.privacy_events, user)">
+                  <a ui-sref="spots({user_id: user.id})" class="e-count" title="Spots">
                     {{ user.count_spots }}
                   </a>
                   <a class="f-count" title="Followings" users-modal="followings" user="user"
-                     ng-if="Zoomers.checkPermision(user.privacy_followings, user)">
+                     ng-if="Zoomers.checkPermission(user.privacy_followings, user)">
                     {{ user.count_followings }}
                   </a>
                 </p>
@@ -85,7 +84,7 @@
           </div>
 
           <div class="col-md-6 col-sm-12 col-xs-12 no-pad">
-            <ul class="events" ng-if="Zoomers.checkPermision(user.privacy_events, user) && user.spots.length > 0">
+            <ul class="events" ng-if="user.spots.length > 0">
               <li class="col-xs-4 events-width" ng-repeat="spot in user.spots">
                 <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
                   <img class="frame" ng-src="{{spot.cover_url.medium}}" alt="{{spot.title}}">

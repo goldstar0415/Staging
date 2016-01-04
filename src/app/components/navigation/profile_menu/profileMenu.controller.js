@@ -12,7 +12,7 @@
   function ProfileMenuController(User, $state, PermissionService) {
     var vm = this;
     vm.$state = $state;
-    vm.checkPermision = PermissionService.checkPermission;
+    vm.checkPermission = PermissionService.checkPermission;
 
     //follow user and reload page
     vm.follow = function (user) {

@@ -8,7 +8,7 @@
   /** @ngInject */
   function ProfileController(user, Wall, spots, SpotService, dialogs, MapService, ScrollService, PermissionService) {
     var vm = this;
-    vm.checkPermision = PermissionService.checkPermission;
+    vm.checkPermission = PermissionService.checkPermission;
 
     vm.wall = {};
     var params = {

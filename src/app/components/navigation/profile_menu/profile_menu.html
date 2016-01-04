@@ -21,16 +21,16 @@
         <li><a ui-sref="settings" ui-sref-active="active">Settings</a></li>
       </ul>
       <ul ng-if="$root.currentUser && $root.currentUser.id != $root.profileUser.id">
-        <li ng-if="Profile.checkPermision(profileUser.privacy_events)">
+        <li >
           <a ui-sref="spots({user_id: $root.profileUser.id})"
              ng-class="{active: Profile.$state.current.name == 'spots' || Profile.$state.current.name == 'spot'}"
              class="my-spots">Spots</a>
         </li>
-        <li ng-if="Profile.checkPermision(profileUser.privacy_favorites)">
+        <li ng-if="Profile.checkPermission(profileUser.privacy_favorites)">
           <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active"
              class="favorites">Favorites</a>
         </li>
-        <li ng-if="Profile.checkPermision(profileUser.privacy_photo_map)">
+        <li ng-if="Profile.checkPermission(profileUser.privacy_photo_map)">
           <a ui-sref="photos.list({user_id: $root.profileUser.id})" ng-class="Profile.isActive('photos')"
              class="photomap">Photo
             map</a>
@@ -70,7 +70,7 @@
           </a>
         </h2>
 
-        <div ng-if="Profile.checkPermision(profileUser.privacy_info)">
+        <div ng-if="Profile.checkPermission(profileUser.privacy_info)">
           <div class="activity-level">
             {{$root.profileUser.activity_level}}
           </div>
@@ -116,25 +116,24 @@
         <div ng-if="$root.currentUser.social_links.google">Google+: <a ng-href="{{ $root.currentUser.social_links.google }}" rel="nofollow" target="_blank">LINK</a></div>
 
         <div class="info-links hidden-lg hidden-md visible-sm visible-xs  ng-show col-xs-12">
-          <a ui-sref="spots({user_id: $root.profileUser.id})" class="events"
-             ng-if="Profile.checkPermision(profileUser.privacy_events)">
+          <a ui-sref="spots({user_id: $root.profileUser.id})" class="events">
             {{$root.profileUser.count_spots}}
           </a>
           <a users-modal="followers" user="$root.profileUser" class="followers"
-             ng-if="Profile.checkPermision(profileUser.privacy_followers)">
+             ng-if="Profile.checkPermission(profileUser.privacy_followers)">
             {{$root.profileUser.count_followers}}
           </a>
           <a users-modal="followings" user="$root.profileUser" class="followings"
-             ng-if="Profile.checkPermision(profileUser.privacy_followings)">
+             ng-if="Profile.checkPermission(profileUser.privacy_followings)">
             {{ $root.profileUser.count_followings
             }}
           </a>
           <a ui-sref="photos.list({user_id: $root.profileUser.id})" class="albums"
-             ng-if="Profile.checkPermision(profileUser.privacy_photo_map)">
+             ng-if="Profile.checkPermission(profileUser.privacy_photo_map)">
             {{$root.profileUser.count_photos}}
           </a>
           <a ui-sref="favorites({user_id: $root.profileUser.id})" class="fav"
-             ng-if="Profile.checkPermision(profileUser.privacy_favorites)">
+             ng-if="Profile.checkPermission(profileUser.privacy_favorites)">
             {{$root.profileUser.count_favorites}}
           </a>
         </div>
@@ -149,7 +148,7 @@
     <div class="col-md-3 hidden-sm hidden-xs activity-profile">
 
       <aside class="module-sidebar clearfix"
-             ng-if="!Profile.$state.is('spot') && $root.profileUser.followers.length > 0 && Profile.checkPermision(profileUser.privacy_followers)">
+             ng-if="!Profile.$state.is('spot') && $root.profileUser.followers.length > 0 && Profile.checkPermission(profileUser.privacy_followers)">
         <h2 class="sidebar-title">
           <a users-modal="followers" user="$root.profileUser">
             Followers
@@ -172,7 +171,7 @@
       </aside>
 
       <aside class="module-sidebar clearfix"
-             ng-if="!Profile.$state.is('spot') && $root.profileUser.followings.length > 0 && Profile.checkPermision(profileUser.privacy_followings)">
+             ng-if="!Profile.$state.is('spot') && $root.profileUser.followings.length > 0 && Profile.checkPermission(profileUser.privacy_followings)">
         <h2 class="sidebar-title">
           <a users-modal="followings" user="$root.profileUser">
             Following
@@ -196,7 +195,7 @@
       </aside>
 
       <aside class="module-sidebar clearfix"
-             ng-if="!Profile.$state.is('spot') && $root.profileUser.spots.length > 0 && Profile.checkPermision(profileUser.privacy_events)">
+             ng-if="!Profile.$state.is('spot') && $root.profileUser.spots.length > 0">
         <h2 class="sidebar-title">
           <a ui-sref="spots({user_id: $root.profileUser.id})">
             Spots

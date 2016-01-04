@@ -322,7 +322,6 @@
       })
 
 
-
       //Create album state
       .state('photos.createAlbum', {
         url: '/albums/create',
@@ -358,7 +357,6 @@
         require_auth: true,
         locate: 'none'
       })
-
 
 
       //Friends map state
@@ -549,12 +547,10 @@
         controller: 'ProfileController',
         controllerAs: 'Profile',
         resolve: {
-          spots: function (user, Spot, $stateParams, PermissionService) {
-            if (PermissionService.checkPermission(user.privacy_events, user)) {
-              return Spot.query({
-                user_id: user.id
-              }).$promise;
-            }
+          spots: function (user, Spot, $stateParams) {
+            return Spot.query({
+              user_id: user.id
+            }).$promise;
           }
         },
         parent: 'profile',
