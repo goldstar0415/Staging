@@ -57,9 +57,12 @@
      * @param user {User}
      */
     function setProfileUser(user) {
-      var now = moment().format(DATE_FORMAT.backend);
-      user.last_action_at = now;
       $rootScope.profileUser = user;
+
+      if ($rootScope.currentUser && $rootScope.currentUser.id == user.id) {
+        var now = moment().format(DATE_FORMAT.backend);
+        user.last_action_at = now;
+      }
     }
 
     function sendIpLocation() {
