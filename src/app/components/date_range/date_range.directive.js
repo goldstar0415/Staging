@@ -35,7 +35,6 @@
         vm.start_date = start_date.format(DATE_FORMAT.date);
         vm.end_date = end_date.format(DATE_FORMAT.date);
 
-        console.log(start_time, end_time);
         //convert times if they exists
         if (start_time != "12:00 am" || end_time != "12:00 am") {
           vm.start_time = start_time;
