@@ -17,11 +17,11 @@
 
     <p class="time">{{item.created_at | toTimezone}}
     <ul class="tools hidden-xs">
-      <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')">
-        <a ng-click="Spots.removeSpot(item, $index);" class="delete">Delete</a>
+      <li>
+        <a ng-click="Area.RemoveArea(item.id, $index)" class="delete">Delete</a>
       </li>
       <li>
-        <a class="share-btn" target="_blank">Share</a>
+        <share item="item" type="area"></share>
       </li>
     </ul>
     <div class="col-xs-12 edit-delete visible-xs">

@@ -1,6 +1,7 @@
 <form name="form" class="form-horizontal spot-bg" role="form" novalidate>
   <div ng-hide="SpotCreate.loading">
-    <a ui-sref="photos.list({user_id: profileUser.id})" class="btn-back" title="back" class="back"></a>
+    <a ui-sref="spots({user_id: profileUser.id})" class="btn-back" title="back" class="back"></a>
+
     <div class="text-center"><h2 ng-if="!SpotCreate.edit" class="title-name">Create new spot</h2></div>
 
     <facebook-events ng-if="!SpotCreate.edit"></facebook-events>
@@ -39,8 +40,9 @@
             <ui-select
               ng-model="SpotCreate.is_private"
               theme="bootstrap">
-              <ui-select-match >{{$select.selected.label}}</ui-select-match>
-              <ui-select-choices repeat="item.value as item in SpotCreate.privacies | filter : $select.search track by $index">
+              <ui-select-match>{{$select.selected.label}}</ui-select-match>
+              <ui-select-choices
+                repeat="item.value as item in SpotCreate.privacies | filter : $select.search track by $index">
                 <div ng-bind-html="item.label | highlight: $select.search"></div>
               </ui-select-choices>
             </ui-select>
@@ -48,20 +50,33 @@
         </div>
 
         <div class="form-group privacy-block">
-          <label class="col-md-2 col-sm-12 col-xs-12 control-label">Privacy</label>
+          <label class="col-md-3 col-sm-12 col-xs-12 control-label">Privacy</label>
 
-          <div class="col-md-10 col-sm-12 col-xs-7">
-            <div class="radio-group" popover="Only Followers/Followings can see"
-                 popover-trigger="mouseenter">
-              <input type="radio" name="radio" value="1" id="privacy_private" class="radio"
+          <div class="col-md-9 col-sm-12 col-xs-7">
+            <div class="radio-group" >
+              <input type="radio" name="radio" value="1" id="radio1" class="radio"
                      ng-model="SpotCreate.is_private">
-              <label for="privacy_private" class="radio-label">Private</label>
+              <label for="radio1" popover="Only Followers/Followings can see"
+                     popover-trigger="mouseenter"><span></span>Private</label>
             </div>
-            <div class="radio-group" popover="Requires Admin approval of up to 24 hours" popover-trigger="mouseenter">
-              <input type="radio" name="radio" value="0" id="privacy_public" class="radio"
+            <div class="radio-group" >
+              <input type="radio" name="radio" value="0" id="radio2" class="radio"
                      ng-model="SpotCreate.is_private">
-              <label for="privacy_public" class="radio-label">Public</label>
+              <label for="radio2" popover="Requires Admin approval of up to 24 hours"
+                     popover-trigger="mouseenter"><span></span>Public</label>
             </div>
+
+            <!--<div class="radio-group" popover="Only Followers/Followings can see"-->
+                 <!--popover-trigger="mouseenter">-->
+              <!--<input type="radio" name="radio" value="1" id="privacy_private" class="radio"-->
+                     <!--ng-model="SpotCreate.is_private">-->
+              <!--<label for="privacy_private" class="radio-label">Private</label>-->
+            <!--</div>-->
+            <!--<div class="radio-group" popover="Requires Admin approval of up to 24 hours" popover-trigger="mouseenter">-->
+              <!--<input type="radio" name="radio" value="0" id="privacy_public" class="radio"-->
+                     <!--ng-model="SpotCreate.is_private">-->
+              <!--<label for="privacy_public" class="radio-label">Public</label>-->
+            <!--</div>-->
           </div>
         </div>
 
@@ -183,7 +198,8 @@
 
             </div>
             <!-- /input-group -->
-            <div ng-if="!item.isDelete" class="input-group remove-compass" ng-repeat="item in SpotCreate.locations track by $index">
+            <div ng-if="!item.isDelete" class="input-group remove-compass"
+                 ng-repeat="item in SpotCreate.locations track by $index">
               <location address="item.address" location="item.location" limit="15" marker="item.marker"
                         on-empty="SpotCreate.removeLocation($index)" bind-marker="true"></location>
               <a ng-click="SpotCreate.removeLocation($index)" class="btn-add compass" type="button"></a>
@@ -196,7 +212,8 @@
 
           <div class="col-md-9 col-sm-12 col-xs-12">
             <div class="col-sm-4 col-xs-5 no-pad margin-bottom">
-              <input ng-datepicker class="datepicker" name="start_date" ng-model="SpotCreate.start_date" start-date="SpotCreate.startDate"
+              <input ng-datepicker class="datepicker" name="start_date" ng-model="SpotCreate.start_date"
+                     start-date="SpotCreate.startDate"
                      type="text" required>
 
               <div ng-messages="form.start_date.$error" ng-if="form.$submitted" class="error-message-inline">
@@ -207,7 +224,8 @@
             <span class="col-sm-1 text-center col-xs-2 mgt15">—</span>
 
             <div class="col-sm-4 col-xs-5 no-pad margin-bottom">
-              <input ng-datepicker  class="datepicker" name="end_date" ng-model="SpotCreate.end_date" start-date="SpotCreate.start_date"
+              <input ng-datepicker class="datepicker" name="end_date" ng-model="SpotCreate.end_date"
+                     start-date="SpotCreate.start_date"
                      type="text" required>
 
               <div ng-messages="form.end_date.$error" ng-if="form.$submitted" class="error-message-inline">
@@ -223,8 +241,9 @@
 
           <div class="col-md-9 col-sm-12 col-xs-12">
             <div class="col-sm-4 col-xs-5 no-pad margin-bottom">
-              <input  class="datepicker" ng-timepicker step="30" placeholder="12:00..." ng-model="SpotCreate.start_time" name="start_time"
-                      type="text">
+              <input class="datepicker" ng-timepicker step="30" placeholder="12:00..." ng-model="SpotCreate.start_time"
+                     name="start_time"
+                     type="text">
 
               <!--<div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
               <!--<div ng-message="required">Start time field can't be empty</div>-->
@@ -233,8 +252,9 @@
             <span class="col-xs-2 text-center col-sm-1 mgt15">—</span>
 
             <div class="col-sm-4 col-xs-5 no-pad margin-bottom">
-              <input  class="datepicker" ng-timepicker step="30" placeholder="12:00..." ng-model="SpotCreate.end_time" name="end_time"
-                      type="text">
+              <input class="datepicker" ng-timepicker step="30" placeholder="12:00..." ng-model="SpotCreate.end_time"
+                     name="end_time"
+                     type="text">
 
               <!--<div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
               <!--<div ng-message="required">End time field can't be empty</div>-->
@@ -294,10 +314,11 @@
             <label class="col-sm-4 col-xs-12 control-label no-pad">Cover preview:</label>
 
             <div class="cover-preview">
-              <image-cropper ng-if="!SpotCreate.saveCrop" source-image="SpotCreate.cropCover" result-image="SpotCreate.cover" auto-crop="false"
+              <image-cropper ng-if="!SpotCreate.saveCrop" source-image="SpotCreate.cropCover"
+                             result-image="SpotCreate.cover" auto-crop="false"
                              crop-height="SpotCreate.crop.height" crop-width="SpotCreate.crop.width"></image-cropper>
 
-              <img ng-src="{{SpotCreate.cover}}" ng-if="SpotCreate.saveCrop" />
+              <img ng-src="{{SpotCreate.cover}}" ng-if="SpotCreate.saveCrop"/>
 
               <button type="button" ng-click="SpotCreate.saveCrop = true"
                       class="btn btn-default green green-btn pull-left margin-bottom save-cover-btn"

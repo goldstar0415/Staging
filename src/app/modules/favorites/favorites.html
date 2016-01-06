@@ -23,8 +23,9 @@
           <a ng-click="item.visible_submenu = !item.visible_submenu" class="more-info">. . .</a>
           <div ng-show="item.visible_submenu" class="more-info-popup">
             <ul class="list-unstyled">
-              <li><a href="">Claim Spot</a></li>
-              <li><a href="">Report</a></li>
+              <li ng-if="currentUser && !item.isReported">
+                <a report-spot="item">Report</a>
+              </li>
             </ul>
           </div>
           <h2>
@@ -74,15 +75,14 @@
               <invite-friends item="item"></invite-friends>
             </li>
             <li>
-              <a class="share-btn" target="_blank">Share</a>
+              <share item="item" type="spot"></share>
             </li>
             <li ng-if="item.type == 'Event'">
               <a class="download"
                  ng-href="{{Favorite.API_URL + '/spots/' + item.id + '/export'}}" target="_blank">Export to ICS</a>
             </li>
           </ul>
-          <share item="item" type="spot"></share>
-          <!-- share-wrap -->
+          <share item="item" class="visible-xs" type="spot" only-icon="true"></share>
 
         </div>
       </div>

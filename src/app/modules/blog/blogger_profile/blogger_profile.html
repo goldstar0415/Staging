@@ -22,29 +22,32 @@
         <a ui-sref="index.post({slug: post.slug})">{{post.address}}</a>
       </div>
 
-
-
       <p class="article-description" ng-bind-html="post.body"></p>
+
       <div class="article-info col-xs-12">
         <p class="col-xs-12 col-sm-3 author">Author:
           <a ui-sref="profile.main({user_id: post.user.alias || post.user.id})">
             {{post.user.first_name}} {{post.user.last_name}}
           </a>
         </p>
-        <div class="row"> <p class="col-xs-12 col-sm-3 category">Category:
+
+        <div class="row"><p class="col-xs-12 col-sm-3 category">Category:
           <a>{{post.category.display_name}}</a>
         </p>
 
           <p class="col-xs-12 col-sm-3 views">Views: {{post.count_views}}</p></div>
       </div>
+
       <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id || isRole(currentUser, 'admin')">
         <a ui-sref="profile_blog.edit({slug: post.slug})" class="edit-blog-article">Edit</a>
       </div>
       <div class="col-xs-12 col-sm-2" ng-if="currentUser.id == post.user_id || isRole(currentUser, 'admin')">
         <a ng-click="Blog.removePost(post, $index)" class="delete-blog-article">Delete</a>
       </div>
+      <div class="pull-right">
+        <share item="post" type="post" only-icon="true"></share>
+      </div>
 
-      <share item="post" type="post"></share>
       <div class="clearfix"></div>
     </div>
   </div>

@@ -1,5 +1,7 @@
 <div class="wrap-from-share">
-  <a ng-click="isOpen = !isOpen" class="share" title="Share"></a>
+  <a ng-click="isOpen = !isOpen" ng-class="{share: share.onlyIcon, 'share-btn': !share.onlyIcon}" title="Share">
+    <span ng-if="!share.onlyIcon">Share</span>
+  </a>
 
   <div class="share-wrap" ng-show="isOpen">
     <ul class="share-buttons clearfix">

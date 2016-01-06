@@ -15,6 +15,7 @@
       templateUrl: '/app/components/share/share.html',
       scope: {
         item: '=',
+        onlyIcon: '=',
         type: '@'
       },
       controller: ShareController,

@@ -51,14 +51,14 @@
             <invite-friends item="plan" type="plan"></invite-friends>
           </li>
           <li>
-            <a class="share-btn" ng-click="">Share</a>
+            <share item="plan" type="plan"></share>
           </li>
           <li>
             <a class="download"
                ng-href="{{Planner.API_URL + '/plans/' + plan.id + '/export'}}" target="_blank">Export ICS</a>
           </li>
         </ul>
-        <share item="item" class="visible-xs" type="spot"></share>
+        <share item="plan" class="visible-xs" type="plan"></share>
       </div>
     </div>
     <preloader ng-show="Planner.pagination.busy"></preloader>

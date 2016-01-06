@@ -70,6 +70,9 @@
         <li>
           <invite-friends item="Spot.spot"></invite-friends>
         </li>
+        <li>
+          <share item="Spot.spot" type="spot"></share>
+        </li>
         <li ng-if="Spot.spot.type == 'Event'">
           <a class="download"
              ng-href="{{Spot.API_URL + '/spots/' + Spot.spot.id + '/export'}}" target="_blank">Export ICS</a>
@@ -82,7 +85,7 @@
         </li>
       </ul>
 
-      <share item="Spot.spot" type="spot"></share>
+      <share item="Spot.spot" class="visible-xs" type="spot"></share>
 
     </div>
   </section>

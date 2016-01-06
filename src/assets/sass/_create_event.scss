@@ -169,7 +169,7 @@
   padding: 15px 10px 0;
   display: block;
   clear: both;
-  
+
   img {
     width: 12rem;
     height: 12rem;
@@ -202,7 +202,7 @@
     border-radius: 0;
   }
   }
-  
+
 }
 
 .sidebar-event {
@@ -260,6 +260,13 @@
     font: $navigation_font;
     font-size: 22px;
     color: $dark_blue;
+  }
+}
+
+.privacy-block .radio-group {
+  display: inline-block;
+  &:first-child {
+    margin-left: -5px;
   }
 }
 

@@ -17,6 +17,7 @@
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
     vm.markersSpots = ShowMarkers(vm.markersSpots);
+    vm.removeSpot = removeSpot;
 
     vm.removeFromFavorite = UnFavorite;
 
@@ -55,6 +56,22 @@
       MapService.FitBoundsOfCurrentLayer();
 
       return spotsArray;
+    }
+
+    /*
+     * Delete spot
+     * @param spot {Spot}
+     * @param idx {number} spot index
+     */
+    function removeSpot(spot, idx) {
+      SpotService.removeSpot(spot, idx, function () {
+        vm.spots.data.splice(idx, 1);
+        if (vm.markersSpots[idx].marker) {
+          MapService.GetCurrentLayer().removeLayer(vm.markersSpots[idx].marker);
+        } else {
+          MapService.GetCurrentLayer().removeLayers(vm.markersSpots[idx].markers)
+        }
+      });
     }
 
     var params = {

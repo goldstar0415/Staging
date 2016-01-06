@@ -43,8 +43,8 @@
     <!-- sub event -->
     <section ng-if="item.attachment_type == 'spot'" class="central no-margin-bottom sub-event">
       <div class="media media-visible">
-        <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="pull-left">
-          <img ng-src="{{item.cover_url.icon_url}}" alt="{{item.title}}" class="media-object fav-avatar-icon">
+        <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})" class="pull-left">
+          <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" class="media-object fav-avatar-icon">
         </a>
 
         <div class="media-body">
