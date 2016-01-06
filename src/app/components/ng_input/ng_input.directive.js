@@ -17,7 +17,8 @@
         attachments: '=',
         onSubmit: '&',
         onFocus: '&',
-        maxlength: '='
+        maxlength: '=',
+        fixedMobile: '='
       },
       templateUrl: '/app/components/ng_input/ng_input.html',
       controller: NgInputController,

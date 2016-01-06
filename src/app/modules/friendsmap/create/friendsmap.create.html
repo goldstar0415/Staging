@@ -1,4 +1,4 @@
-<div class="title">
+<div class="text-center">
   <h2 ng-hide="CreateFriend.edit" class="title-name">Create new friend</h2>
 
   <h2 ng-show="CreateFriend.edit" class="title-name">Update friend</h2>
@@ -6,11 +6,11 @@
 <div class="col-xs-12 no-pad">
   <form role="form" name="form" ng-submit="CreateFriend.SaveFriend(form)" class="create" novalidate>
     <div class="col-xs-12 form-group">
-      <div class="col-xs-3 no-pad">
+      <div class="col-xs-12 col-md-3 no-pad">
         <label>First name</label>
       </div>
-      <div class="col-xs-9 no-pad">
-        <input placeholder="Start typing..." name="first_name" type="text" ng-model="CreateFriend.friend.first_name"
+      <div class="col-md-9 col-xs-12 no-pad">
+        <input placeholder="Start typing..." class="form-control" name="first_name" type="text" ng-model="CreateFriend.friend.first_name"
                ng-minlength="2" required>
 
         <div ng-messages="form.first_name.$error" ng-if="form.$submitted || form.first_name.$touched"
@@ -22,11 +22,11 @@
     </div>
 
     <div class="col-xs-12 form-group">
-      <div class="col-xs-3 no-pad">
+      <div class="col-xs-12 col-md-3 no-pad">
         <label>Last name</label>
       </div>
-      <div class="col-xs-9 no-pad">
-        <input placeholder="Start typing..." name="last_name" type="text" ng-model="CreateFriend.friend.last_name"
+      <div class="col-md-9 col-xs-12 no-pad">
+        <input placeholder="Start typing..." class="form-control" name="last_name" type="text" ng-model="CreateFriend.friend.last_name"
                ng-minlength="2" required>
 
         <div ng-messages="form.last_name.$error" ng-if="form.$submitted || form.last_name.$touched"
@@ -38,38 +38,38 @@
     </div>
 
     <div class="col-xs-12 form-group">
-      <div class="col-xs-3 no-pad">
-        <label>Birthday </label>
+      <div class="col-xs-12 col-md-3 no-pad">
+        <label>Birthday</label>
       </div>
-      <div class="col-xs-9 no-pad">
-        <input ng-datepicker name="birthday" ng-model="CreateFriend.friend.birth_date" end-date="CreateFriend.endDate"
+      <div class="col-md-9 col-xs-12 no-pad">
+        <input ng-datepicker class="form-control" name="birthday" ng-model="CreateFriend.friend.birth_date" end-date="CreateFriend.endDate"
                type="text">
       </div>
     </div>
 
     <div class="col-xs-12 form-group">
-      <div class="col-xs-3 no-pad">
+      <div class="col-xs-12 col-md-3 no-pad">
         <label>Phone number</label>
       </div>
-      <div class="col-xs-9 no-pad">
-        <input placeholder="Start typing..." ng-model="CreateFriend.friend.phone" name="phone" type="text">
+      <div class="col-md-9 col-xs-12 no-pad">
+        <input placeholder="Start typing..." class="form-control" ng-model="CreateFriend.friend.phone" name="phone" type="text">
       </div>
     </div>
 
     <div class="col-xs-12 form-group">
-      <div class="col-xs-3 no-pad">
+      <div class="col-xs-12 col-md-3 no-pad">
         <label>Email</label>
       </div>
-      <div class="col-xs-9 no-pad">
-        <input placeholder="Start typing..." name="email" ng-model="CreateFriend.friend.email" type="email">
+      <div class="col-md-9 col-xs-12 no-pad">
+        <input placeholder="Start typing..." class="form-control" name="email" ng-model="CreateFriend.friend.email" type="email">
       </div>
     </div>
 
     <div class="col-xs-12 form-group">
-      <div class="col-xs-3 no-pad">
+      <div class="col-xs-12 col-md-3 no-pad">
         <label>Location</label>
       </div>
-      <div class="col-xs-9 no-pad">
+      <div class="col-md-9 col-xs-12 no-pad">
         <location address="CreateFriend.friend.address" custom-classes="location-friend " add-class-onchange="true"
                   input-placeholder="Enter addres or click & drag icon on map..."
                   location="CreateFriend.friend.location" limit="15" bind-marker="true"></location>
@@ -77,15 +77,15 @@
     </div>
 
     <div class="col-xs-12 form-group">
-      <div class="col-xs-3 no-pad">
+      <div class="col-xs-12 col-md-3 no-pad">
         <label>Notes</label>
       </div>
-      <div class="col-xs-9 no-pad">
+      <div class="col-md-9 col-xs-12 no-pad">
         <textarea placeholder="Start typing..." ng-model="CreateFriend.friend.note" name="notes"></textarea>
       </div>
     </div>
-    <div class="col-xs-12 save-cancel">
-      <input type="submit" value="Save" class="save">
+    <div class="col-xs-12 save-cancel text-right">
+      <input type="submit" value="SAVE" class="save mgr0">
     </div>
   </form>
 </div>

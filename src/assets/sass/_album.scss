@@ -2,53 +2,50 @@
   padding: 0 5px;
   .photo {
     width: 100%;
-    height: 100px;
     overflow: hidden;
     margin: 0 0 20px;
-    border-radius: 5px;
+    border-radius: 0;
     border: 1px solid $light_grey;
+    -webkit-box-shadow: 0px 3px 3px 0px rgba(191, 191, 191, 0.3);
+    -moz-box-shadow: 0px 3px 3px 0px rgba(191, 191, 191, 0.3);
+    box-shadow: 0px 3px 3px 0px rgba(191, 191, 191, 0.3);
     img {
       width: 100%;
       min-height: 100px;
       cursor: pointer;
+
     }
     .album-tools-wrap {
       padding: 0;
       display: none;
+      text-align: right;
       a {
-        width: 34px;
-        height: 34px;
+        width: 30px;
+        height: 30px;
         padding: 0;
-        border-radius: 3px;
+        border-radius: 0;
         display: block;
-        float: left;
+        float: none;
         @include transition_bg_color;
-        &:nth-child(2) {
-          display: table;
-          margin: 0 auto;
-        }
-        &:nth-child(3) {
-          float: right;
-        }
-        &:hover {
-          background-color: $dark_blue;
-          @include transition_bg_color;
-        }
       }
       .set-avatar {
-        background: url(../img/icons/photo-tools.png) 6px -53px no-repeat rgba(12, 38, 56, .5);
+        background: url(../img/icons/edit-album.png) no-repeat;
       }
       .set-location {
-        background: url(../img/icons/photo-tools.png) 6px -83px no-repeat rgba(12, 38, 56, .5);
+        background: url(../img/icons/location.png) no-repeat;
       }
       .delete {
-        background: url(../img/icons/photo-tools.png) 6px -23px no-repeat rgba(12, 38, 56, .5);
+        background: url(../img/icons/delete-album.png) no-repeat;
       }
     }
     &:hover {
       .album-tools-wrap {
         display: flex;
         margin-bottom: -34px;
+        -webkit-flex-direction: row;
+       flex-direction: row;
+       -webkit-justify-content: flex-end;
+       justify-content: flex-end;
       }
     }
   }
@@ -61,9 +58,26 @@
 }
 
 .edit-delete.album {
+  text-align: right;
   padding: 0 15px 15px 20px;
+  position: absolute;
+  top: 20px;
+  a {
+    margin: 0;
+    margin-right: 6px;
+  }
   .delete {
-    background: url(../img/icons/delete.png) 1px 2px no-repeat;
+    height: 40px;
+    width: 40px;
+    background: url(../img/icons/delete-photo.png) no-repeat;
+  }
+  .edit {
+    height: 40px;
+    width: 40px;
+    background: url(../img/icons/edit-photo.png) no-repeat;
+    &:hover {
+      background-image: url(../img/icons/edit-photo.png) no-repeat !important;
+    }
   }
 }
 
@@ -71,28 +85,3 @@
   margin: 1rem auto 2rem;
 }
 
-@media (max-width: 992px) {
-  .photo-wrap {
-    .photo {
-      min-height: 120px;
-    }
-  }
-}
-
-@media (max-width: 550px) {
-  .photo-wrap {
-    width: 50%;
-    .photo {
-      min-height: 160px;
-    }
-  }
-}
-
-@media (max-width: 350px) {
-  .photo-wrap {
-    width: 100%;
-    .photo {
-      min-height: 160px;
-    }
-  }
-}

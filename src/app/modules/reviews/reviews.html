@@ -1,5 +1,3 @@
-<h2 class="title-name">Reviews</h2>
-
 <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
 
 <div infinite-scroll="Review.pagination.nextPage()" infinite-scroll-disabled="Review.pagination.busy"
@@ -23,6 +21,28 @@
           </a>
           <!--at-->
 
+          <p class="description line-break" ng-bind-html="item.body | linky:'_blank'"></p>
+          <attachments items="item.attachments"></attachments>
+
+          <p class="time">{{item.created_at | toTimezone}}</p>
+
+        </div>
+      </div>
+
+      <div ng-switch-when="App\Blog">
+
+        <a class="review-img" ui-sref="blog.article({slug: item.commentable.slug})">
+          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.cover_url.medium}}">
+        </a>
+
+        <div class="text-block">
+          <h2 class="media-heading feeds-title">
+            <a ui-sref="blog.article({slug: item.commentable.slug})">{{item.commentable.title}}</a>
+          </h2>
+          <a class="author-name" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">
+            {{item.sender.first_name}} {{item.sender.last_name}}
+          </a>
+          <!--at-->
           <p class="description line-break" ng-bind-html="item.body | linky:'_blank'"></p>
           <attachments items="item.attachments"></attachments>
 

@@ -2,19 +2,35 @@
 
 .blog-content {
   float: left;
-  border: 1px solid $light_grey;
   background: $white;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
   position: relative;
   margin-bottom: 15px;
   padding-bottom: 15px;
   padding-left: 0;
   padding-right: 0;
-
+  border: 0;
 }
-
+.article-wrap {
+  padding: 0 10rem;
+  border-bottom: 1px solid $light_grey;
+  padding-bottom: 2rem;
+  .share {
+      display: block;
+      width: 33px;
+      height: 33px;
+      text-indent: 10000px;
+      overflow: hidden;
+      position: absolute;
+      float: right;
+      bottom: 5rem;
+      right: 8rem;
+      background: url(../img/icons/share-icon.png) no-repeat;
+    }
+}
+.location-link {
+  padding-left: 2rem;
+  background: url(../img/icons/map-loc.png) no-repeat 0 0;
+}
 .blog-content-first-block {
   float: left;
   margin-bottom: 15px;
@@ -29,7 +45,7 @@
 }
 
 .my-bloggers-profile-title {
-  font: 500 16px/18px "Questrial";
+  font: 500 16px/18px;
   font-size: 23px;
   padding: 0 0 20px 15px;
   border-bottom: 1px solid $light_grey;
@@ -62,28 +78,26 @@
 
   .article-img {
     display: block;
-    max-width: 100%;
-    height: 400px;
+    width: 100%;
+    max-height: 400px;
     background-size: contain;
     margin: 0 auto 20px;
-    -webkit-border-radius: 5px 5px 0 0;
-    -moz-border-radius: 5px 5px 0 0;
-    border-radius: 5px 5px 0 0;
   }
 }
 
 .article {
   .title-blog {
-    margin: 0 0 8px 15px;
-    font: 500 24px/24px 'Questrial';
+    margin: 0 0 5px 0;
     a {
       color: $dark_blue;
+      font-size: 2rem;
+      font-weight: bold;
     }
   }
   .article-description {
-    font: 14px/20px 'Pontano';
-    padding: 5px 15px 15px;
-
+    font: 14px/20px;
+    padding: 5px 0 15px;
+    color: grey;
     img {
       max-width: 100%;
     }
@@ -95,23 +109,12 @@
       color: $dark_blue;
     }
   }
-  .share {
-    display: block;
-    width: 12px;
-    height: 12px;
-    text-indent: 10000px;
-    overflow: hidden;
-    position: absolute;
-    right: 15px;
-    background: url(../img/icons/share.png) no-repeat;
-  }
 
   .article-info {
     float: left;
-    font: 400 12px 'Pontano';
+    font: 400 12px;
     margin-right: 15px;
     color: gray;
-    border-top: 1px solid $light_grey;
     padding: 10px 0;
   }
   .location-link {
@@ -131,7 +134,7 @@
   padding: 0;
   width: 100%;
   .title-popular-new {
-    font: 500 20px/20px 'Questrial';
+    font: 500 20px/20px;
     border-bottom: 1px solid $light_grey;
     padding: 12px 15px 15px;
     margin: 0;
@@ -195,7 +198,7 @@
       display: table;
       width: 160px;
       height: 38px;
-      font: 500 22px/26px 'Questrial';
+      font: 500 22px/26px;
       box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.45);
       padding: 3px 20px 5px;
       background: #149e38;
@@ -244,7 +247,7 @@
       }
     }
     .carousel-text {
-      font: 15px/20px 'Pontano';
+      font: 15px/20px;
       color: #000;
       text-align: left;
     }
@@ -263,26 +266,29 @@
   margin-bottom: 15px;
   border-bottom: 1px solid #ddd;
   list-style: none;
+  text-align: center;
   li {
-    font: 500 14px/14px "Questrial";
+    font: 500 16px/14px;
     display: inline-block;
     padding-left: 10px;
     &:first-child {
       padding-left: 0;
     }
     a {
-      color: $gray-dark;
+      color: $gray;
       margin-right: 0;
-      border-radius: 5px 5px 0 0;
+      border-radius: 0;
       display: block;
       padding: 10px 15px;
-      border: 1px solid $light_grey;
+      border-bottom: 2px solid #fff;
       border-bottom: 0;
       @include transition_bg_color;
       @include transition_color;
+      font-weight: bold;
       &:hover, &:focus {
-        background-color: $blue;
-        color: $white;
+        border-color: $blue;
+        color: $blue;
+        border-bottom: 2px solid $blue;
         @include transition_bg_color;
         @include transition_color;
       }
@@ -290,22 +296,44 @@
   }
   li.active {
     a {
-      background-color: $navy_blue;
-      color: $white;
-      border: 1px solid $white;
-      border-bottom: 0;
-      padding: 15px 15px 10px;
-      @include transition_bg_color;
-      @include transition_color;
-      &:hover, &:focus {
-        background-color: $blue;
-        //padding-bottom: 12px;
+        border-color: $blue;
+        color: $blue;
+        border-bottom: 2px solid $blue;
         @include transition_bg_color;
-      }
+        @include transition_color;
     }
   }
 }
 
+  .date-xs {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #00c9f8;
+    width: 4rem;
+    height: 4rem;
+    padding: 0;
+    line-height: 16px;
+    padding-top: 5px;
+    text-align: center;
+  }
+
+.image-wrapper {
+  position: relative;
+  .date-sm {
+    position: absolute;
+    display: block;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #00c9f8;
+    width: 4rem;
+    height: 4rem;
+    line-height: 16px;
+    padding-top: 5px;
+    text-align: center;
+    bottom: 2rem;
+    right: 2rem;
+  }
+}
 @media (max-width: 767px) {
   .wall-tabs {
     li {

@@ -4,32 +4,36 @@
     width: 100%;
     margin: 0 auto 20px;
     display: block;
+    position: relative;
     border: 1px solid $light_grey;
-    border-radius: 5px;
+    border-radius: 0;
+    -webkit-box-shadow: 0px 2px 2px 0px rgba(191, 191, 191, 0.3);
+    -moz-box-shadow: 0px 2px 2px 0px rgba(191, 191, 191, 0.3);
+    box-shadow: 0px 2px 2px 0px rgba(191, 191, 191, 0.3);
     .album-tools-wrap {
       padding: 0;
       display: none;
       a {
-        width: 34px;
-        height: 34px;
+        width: 40px;
+        height: 40px;
         padding: 0;
-        border-radius: 3px;
         display: block;
-        float: left;
-        @include transition_bg_color;
+        float: right;
         &:hover {
-          background-color: $dark_blue;
-          @include transition_bg_color;
+          background-color: none;
+        }
+        span {
+          color: #98a4ac;
         }
       }
       .edit {
-        background: url(../img/icons/photo-tools.png) 7px 6px no-repeat rgba(12, 38, 56, .5);
+        background: url(../img/icons/edit-photo.png) no-repeat;
         &:hover {
-          float: left;
+          float: right;
         }
       }
       .delete {
-        background: url(../img/icons/photo-tools.png) 6px -23px no-repeat rgba(12, 38, 56, .5);
+        background: url(../img/icons/delete-photo.png) no-repeat;
         float: right;
         &:hover {
           float: right;
@@ -39,28 +43,33 @@
     img {
       width: 100%;
       height: 160px;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
     }
     a {
       display: block;
-      padding: 10px;
+      padding: 1.5rem;
       color: $dark_blue;
-      font: 500 16px/22px 'Questrial';
+      font: 500 16px/22px;
       transition: color .3s;
       border-top: 1px solid $light_grey;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      border-radius: 0;
       &:hover {
         color: $blue;
         transition: color .3s;
       }
+      span {
+          color: #98a4ac;
+          font-size: 1.2rem;
+        }
     }
     &:hover {
       .album-tools-wrap {
         display: block;
-        margin-bottom: -34px;
+        margin-bottom: -40px;
       }
     }
   }
@@ -68,11 +77,13 @@
 
 .create {
   label {
-    font: 200 16px/22px 'Questrial';
+    font: 200 16px/22px;
+    padding-top: 1.3rem;
+    font-weight: bold;
   }
   .upload-photos {
     border-top: 1px solid $light_grey;
-    border-bottom: 1px solid $light_grey;
+    border-bottom: 0;
     padding: 20px 15px;
     h3 {
       float: left;
@@ -81,13 +92,15 @@
   }
   .save-cancel {
     padding: 15px;
+    margin-top: 2rem;
     input {
+      width: 13.5rem;
+      height: 5rem;
       border: none;
-      width: 150px;
       @include button;
       padding: 6px 15px;
       @include transition_bg_color;
-      margin-bottom: 20px;
+      margin-bottom: 0;
       &:hover {
         box-shadow: none;
         border: none;
@@ -98,9 +111,10 @@
       }
     }
     .save {
-      background-color: $green;
+      background-color: $blue_btn;
+      margin-bottom: 0;
       &:hover {
-        background-color: $light_green;
+        background-color: $light_blue_btn;
       }
     }
     .cancel {
@@ -113,8 +127,18 @@
 }
 
 @media (max-width: 550px) {
-  .album-container {
-    width: 50%;
+  
+  .album-tools-wrap {
+    display: block !important;
+    position: absolute;
+    bottom: 6px;
+    right: 5px;
+    float: right;
+    .edit {
+       margin-right: 4px;
+    }
+    .delete {
+    }
   }
 }
 

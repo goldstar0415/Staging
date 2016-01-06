@@ -8,12 +8,14 @@
 
 .title-planner {
   margin-top: 0;
-  font: 500 24px/24px 'Questrial';
+  font-size: 2rem;
+  font-weight: bold;
   word-wrap: break-word;
   display: inline-block;
   width: 100%;
+  margin-bottom: 1rem;
   a {
-    color: $dark_blue;
+    color: #000;
     &:hover {
       color: $blue;
     }
@@ -36,7 +38,7 @@
 }
 
 .time-sub {
-  font: 400 14px 'Questrial';
+  font: 400 14px;
   color: grey;
 }
 
@@ -73,7 +75,7 @@
       top: 15px;
       right: 15px;
       height: 12px;
-      font: 12px/12px "Questrial";
+      font: 12px/12px;
       color: $red;
       margin-top: 3px;
     }
@@ -108,10 +110,16 @@
   }
 }
 
-
+.share-btn {
+  padding-left: 2rem;
+  background: url(../img/icons/sprite-edits.png) -492px 0 no-repeat;
+  &:hover {
+    background: url(../img/icons/sprite-edits.png) -492px -35px no-repeat;
+  }
+}
 .attachment-link {
-  width: 64px;
-  height: 64px;
+  width: 10rem;
+  height: 10rem;
 }
 
 .plan-background {

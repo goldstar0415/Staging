@@ -34,11 +34,11 @@
             height: 40px;
         }
         thead {
-            font: 500 16px/16px 'Questrial';
+            font: 500 16px/16px;
             border-bottom: 1px solid #e9edf0;
         }
         tbody {
-            font: 14px/14px 'Pontano';
+            font: 14px/14px;
             tr:nth-child(even) {
                 background: #e9edf0;
                 td {
@@ -58,7 +58,7 @@
                     }
                 }
                 .button-my{
-                    font: 500 12px/12px 'Questrial';
+                    font: 500 12px/12px;
                     padding: 3px 15px;
                     color: #fff;
                     &:hover{

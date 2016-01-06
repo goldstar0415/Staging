@@ -73,8 +73,7 @@
   <hints-popup></hints-popup>
   <map-sort ng-if="mapState == 'full-size'"></map-sort>
   <!-- map container-->
-  <div id="map" class="mapResize map {{mapState}}"
-       ng-class="{'hidden-sm': mapState != 'full-size' && options.snap.disable == 'right', 'hidden-xs': mapState != 'full-size' && options.snap.disable == 'right'}"></div>
+  <div id="map" class="mapResize map {{mapState}}"></div>
   <!-- content container-->
   <div ng-show="mapState != 'full-size'" ui-view></div>
 </div>

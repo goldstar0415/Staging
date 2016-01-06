@@ -1,60 +1,91 @@
-<h2 class="title-name">
-  {{currentUser.id == profileUser.id ? 'Favorites' : profileUser.first_name + "'s favorites"}}
-</h2>
+<div class="text-center">
+  <h2 class="title-name nav-red">
+    {{currentUser.id == profileUser.id ? 'Favorites' : profileUser.first_name + "'s favorites"}}
+  </h2>
+</div>
 
 <div infinite-scroll="Favorite.pagination.nextPage()" infinite-scroll-disabled="Favorite.pagination.busy"
      class="clearfix" infinite-scroll-distance="1">
   <section ng-repeat="item in Favorite.spots.data" class="border-bottom">
-    <div class="event block">
-      <div class="date">
-        <date-range item="item"></date-range>
-      </div>
-
-      <div class="col-xs-12 no-pad-left-right">
-        <stars item="item"></stars>
-       <span ng-class="{'event-spot-page':item.type == 'Event',
-                        'recreation':item.type == 'Recreation',
-                        'pitstop':item.type == 'PitStop'}">
-            {{item.type}}
-        </span>
-      </div>
-      <div class="col-xs-12 no-pad">
-        <a class="spot-icon avatar" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
-          <img ng-src="{{item.cover_url.thumb}}">
-        </a>
-
-        <div class="text-content">
-          <h2 class="media-heading favorites-article-title">
+    <div class="event">
+      <div class="row">
+        <div class="col-md-2 col-xs-3 col-sm-4 spot-thumb">
+          <figure>
+            <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" ui-sref="spot({user_id: item.user_id, spot_id: item.id})" class="img-size">
+          <span class="spot-type" ng-class="{'event-spot-page':item.type == 'Event',
+                                       'recreation-spot':item.type == 'Recreation',
+                                       'pitstop-spot':item.type == 'PitStop'}">
+                          {{item.type}}
+                      </span>
+          </figure>
+        </div>
+        <div class="col-md-10 col-xs-9 col-sm-8">
+          <a ng-click="item.visible_submenu = !item.visible_submenu" class="more-info">. . .</a>
+          <div ng-show="item.visible_submenu" class="more-info-popup">
+            <ul class="list-unstyled">
+              <li><a href="">Claim Spot</a></li>
+              <li><a href="">Report</a></li>
+            </ul>
+          </div>
+          <h2>
             <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a>
           </h2>
 
-          <p class="place">{{item.description}}</p>
+          <div class="col-xs-12 no-pad">
+            <!-- <stars item="item"></stars> -->
+
+          </div>
+
+
+          <p class="place" ng-if="item.points.length > 0">{{item.points[0].address}}</p>
+          <div ng-if="item.type == 'Event'" class="date">
+            <date-range item="item"></date-range>
+          </div>
+          <p class="description"><span>{{item.description}}</span></p>
+
+
+          <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">
+            <li ng-repeat="tag in item.tags"><a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{tag.name}}</a>
+            </li>
+          </ul>
+          <!--  tags -->
+
+          <ul class="tools">
+            <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')">
+              <a ui-sref="spot_edit({spot_id: item.id})" class="edit-tools">Edit</a>
+            </li>
+            <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')">
+              <a ng-click="Favorite.removeSpot(item, $index);" class="delete">Delete</a>
+            </li>
+
+            <li ng-if="!item.is_saved && item.type == 'Event'">
+              <a class="save-event" ng-click="Favorite.saveToCalendar(item)">Save</a>
+            </li>
+            <li ng-if="item.is_saved && item.type == 'Event'">
+              <a class="save-event saved clicked" ng-click="Favorite.removeFromCalendar(item)">Remove</a>
+            </li>
+            <li ng-if="!item.is_favorite">
+              <a class="favorite-spot" ng-click="Favorite.addToFavorite(item)">Favorite</a>
+            </li>
+            <li ng-if="item.is_favorite">
+              <a class="fav favorited" ng-click="Favorite.removeFromFavorite(item)">Unfavorite</a>
+            </li>
+            <li>
+              <invite-friends item="item"></invite-friends>
+            </li>
+            <li>
+              <a class="share-btn" target="_blank">Share</a>
+            </li>
+            <li ng-if="item.type == 'Event'">
+              <a class="download"
+                 ng-href="{{Favorite.API_URL + '/spots/' + item.id + '/export'}}" target="_blank">Export to ICS</a>
+            </li>
+          </ul>
+          <share item="item" type="spot"></share>
+          <!-- share-wrap -->
+
         </div>
       </div>
-
-      <ul class="tools clearfix">
-        <li ng-if="!item.is_saved && item.type == 'Event'">
-          <a class="save-event" ng-click="Favorite.saveToCalendar(item)">Save</a>
-        </li>
-        <li ng-if="currentUser && item.is_saved && item.type == 'Event'">
-          <a class="save-event saved clicked" ng-click="Favorite.removeFromCalendar(item)">Remove</a>
-        </li>
-        <li ng-if="!item.is_favorite">
-          <a class="favorite-spot" ng-click="Favorite.addToFavorite(item)">Favorite</a>
-        </li>
-        <li ng-if="currentUser && item.is_favorite">
-          <a class="fav favorited" ng-click="Favorite.removeFromFavorite(item, $index)">Unfavorite</a>
-        </li>
-        <li>
-          <invite-friends item="item"></invite-friends>
-        </li>
-        <li ng-if="item.type == 'Event'">
-          <a class="download"
-             ng-href="{{Favorite.API_URL + '/spots/' + item.id + '/export'}}" target="_blank">Export ICS</a>
-        </li>
-      </ul>
-      <share item="item" type="spot"></share>
-
     </div>
   </section>
 </div>

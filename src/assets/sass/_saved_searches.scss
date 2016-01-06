@@ -1,12 +1,25 @@
 .saved-search {
   margin: 0 0 15px;
   border-bottom: 1px solid $light_grey;
+  .edit-delete {
+    .delete {
+      background: url(../img/icons/trash-search.png) no-repeat;
+      display: block;
+      height: 30px;
+      width: 30px;
+      position: absolute;
+      bottom: 14px;
+      right: -15px;
+    }
+  }
   .search-container {
     overflow: hidden;
     padding: 0;
     .search-img {
       width: 100%;
-      max-height: 90px;
+    }
+    .time {
+      margin-bottom: 0;
     }
   }
   h2 {
@@ -16,6 +29,8 @@
       text-overflow: ellipsis;
       overflow: hidden;
       margin: 0;
+      font-size: 2rem;
+      font-weight: bold;
       &:hover {
         color: #124d76;
         @include transition_color;

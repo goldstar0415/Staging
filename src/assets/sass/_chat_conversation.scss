@@ -1,7 +1,6 @@
 .chat-conversation {
   background: $white;
   padding: 0;
-  border: 1px solid #e9edf0;
   border-radius: 8px 8px 0 0;
   .left {
     float: left;
@@ -43,8 +42,8 @@
     //padding-bottom: 10px;
   }
   .date {
-    font-size: 11px;
-    color: #cdd0d2;
+    font-size: 12px;
+    color: #889197;
     margin: 3px 10% 4px 5%;
     margin-right: 5%;
     margin-bottom: 4px;
@@ -52,18 +51,21 @@
   }
   .dialog-user {
     position: relative;
+    margin-bottom: 1rem;
     &.new {
-      background: #e9edf0;
+      background: #fff;
     }
     &:hover {
       //background: #e9edf0;
     }
     .user-name {
       h3 {
-        font-size: 14px;
-        font-weight: 600;
+        font-size: 2rem;
+        font-weight: bold;
+        color: $blue_btn;
         padding: 5px;
         margin-bottom: 5px;
+        margin-top: 0;
         width: 100%;
         white-space: nowrap;
         overflow: hidden;
@@ -82,30 +84,46 @@
       display: block;
     }
     .avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 25px;
+      width: 10rem;
+      height: 10rem;
+      border: 1px solid #a6b1b7;
+      background: #fff;
+      padding: 3px;
+      border-radius: 50%;
+      img {
+        border-radius: 50%;
+      }
     }
     .dialog-content {
       .dial {
         display: block;
-        border: 1px solid #e9edf0;
-        border-radius: 7px;
-        background: #f5f8fa;
         position: relative;
         padding: 10px;
         max-width: 100%;
         word-wrap: break-word;
-        font-size: 11px;
+        font-size: 14px;
+        color: #9f9f9f;
         text-align: right;
-        //overflow: hidden;
-        &:after {
+        border: 1px solid #e6e8ea;
+        border-radius: 7px;
+        background: #f4f5f6;
+        margin-bottom: 5px;
+        min-height: 8rem;
+        h3 {
+          margin-top: 0;
+          margin-bottom: 5px;
+          font-size: 2rem;
+          color: #000;
+          font-weight: bold;
+        }
+         &:after {
           content: '';
           position: absolute;
-          right: -7px;
-          top: 10px;
-          width: 12px;
-          height: 12px;
+          right: -11px;
+          top: 50%;
+margin-top: -1rem;
+          width: 20px;
+          height: 17px;
           background: #f5f8fa;
           transform: rotate(134deg);
           border-top: 1px solid #e9edf0;
@@ -113,6 +131,8 @@
         }
         p {
           margin-bottom: 0;
+          font-size: 1.6rem;
+          color: #889197;
         }
         img {
           max-width: 100%;
@@ -160,38 +180,52 @@
       height: 12px;
     }
     .avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 25px;
+      width: 10rem;
+      height: 10rem;
+      border: 1px solid #a6b1b7;
+      background: #fff;
+      padding: 3px;
+      border-radius: 50%;
     }
     .dialog-content-friend {
       .dial {
         display: block;
-        border: 1px solid #e9edf0;
+        border: 1px solid #e6e8ea;
         border-radius: 7px;
         background: #f5f8fa;
         position: relative;
         padding: 10px;
         max-width: 100%;
         word-wrap: break-word;
-        font-size: 11px;
+        font-size: 1.2rem;
         text-align: left;
         text-overflow: ellipsis;
+        min-height: 8rem;
         //overflow: hidden;
+        h3 {
+          margin-top: 0;
+          margin-bottom: 5px;
+          font-size: 2rem;
+          color: #000;
+          font-weight: bold;
+        }
         &:after {
           content: '';
           position: absolute;
-          left: -7px;
-          top: 10px;
-          width: 12px;
-          height: 12px;
-          background: #f5f8fa;
+          left: -11px;
+          top: 50%;
+margin-top: -1rem;
+          width: 20px;
+          height: 17px;
+          background: #f5f5f6;
           transform: rotate(134deg);
-          border-bottom: 1px solid #e9edf0;
-          border-right: 1px solid #e9edf0;
+          border-bottom: 1px solid #e6e8ea;
+          border-right: 1px solid #e6e8ea;
         }
         p {
           margin-bottom: 0;
+          font-size: 1.6rem;
+          color: #889197;
         }
         img {
           max-width: 100%;
@@ -208,10 +242,11 @@
     }
     .user-name {
       h3 {
-        font-size: 14px;
-        font-weight: 600;
+        font-size: 2rem;
+        font-weight: bold;
         padding: 5px;
         margin-bottom: 5px;
+        margin-top: 1rem;
         width: 100%;
         white-space: nowrap;
         overflow: hidden;
@@ -225,7 +260,7 @@
 
   }
 }
-
+/*
 .new-post {
   padding: 10px;
   background: #e9edf0;
@@ -290,3 +325,4 @@
     }
   }
 }
+  */

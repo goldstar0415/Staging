@@ -1,6 +1,21 @@
 //---<create new event--->
 .event-main-info {
   border-bottom: none;
+  label {
+    padding-top: 1.3rem;
+    font-weight: bold;
+  }
+  .green-btn {
+    height: 4rem;
+    text-transform: uppercase;
+  }
+  location input {
+    background: url(../img/icons/compass.png) no-repeat 99% center;
+  }
+}
+.event-additionl-info {
+  location input {
+  }
 }
 .dropdown-toggle {
   @include transition_shadow;
@@ -26,10 +41,10 @@
   display: block;
 
   .active-point {
-    background: $green;
+    background: $blue_btn;
     color: $white;
     &:hover, &:focus, &:active {
-      background-color: $light_green !important;
+      background-color: $blue_btn !important;
       box-shadow: none;
       outline: none;
       color: $white;

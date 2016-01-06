@@ -30,7 +30,7 @@
   div {
     height: 100%;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 0;
     cursor: pointer;
     @include transition_bg_color;
     &:hover {
@@ -39,35 +39,44 @@
   }
 
   .radius-selection {
-    background: url(../img/icons/map-radius.png) 5px 5px no-repeat rgba(255, 255, 255, .6);
+    background: url(../img/icons/radius.png) 5px 5px no-repeat rgba(159, 173, 173, .8);
     &:hover, &.active {
-      background: url(../img/icons/map-radius.png) -64px 5px no-repeat $navy_blue;
+      background: url(../img/icons/radius.png) 5px 5px no-repeat rgba(0, 207, 255, .8);
     }
   }
   .lasso-selection {
-    background: url(../img/icons/map-lasso.png) 4px 7px no-repeat rgba(255, 255, 255, .6);
+    background: url(../img/icons/lasso.png) 4px 5px no-repeat rgba(159, 173, 173, .8);
     &:hover, &.active {
-      background: url(../img/icons/map-lasso.png) -62px 7px no-repeat $navy_blue;
+      background: url(../img/icons/lasso.png) 4px 5px no-repeat rgba(0, 207, 255, .8);
     }
   }
   .path-selection {
-    background: url(../img/icons/map-path.png) 3px 7px no-repeat rgba(255, 255, 255, .6);
+    background: url(../img/icons/path.png) 6px 3px no-repeat rgba(159, 173, 173, .8);
     &:hover, &.active {
-      background: url(../img/icons/map-path.png) -64px 7px no-repeat $navy_blue;
+      background: url(../img/icons/path.png) 6px 3px no-repeat rgba(0, 207, 255, .8);
     }
   }
   .save-selection {
-    background: url(../img/icons/map-save.png) 7px 7px no-repeat rgba(255, 255, 255, .6);
+    background: url(../img/icons/sprite-top-map.png) -39px -2px no-repeat rgba(159, 173, 173, .8);
     transform: rotate(-90deg);
+    border-right: 1px solid rgba(255,255,255,0.8);
     &:hover {
-      background: url(../img/icons/map-save.png) -67px 7px no-repeat $navy_blue;
+      background-color: rgba(0, 207, 255, .8);
     }
   }
   .clear-selection {
-    background: url(../img/icons/map-clear.png) 6px 7px no-repeat rgba(255, 255, 255, .6);
+    background: url(../img/icons/sprite-top-map.png) -80px -1px no-repeat rgba(159, 173, 173, .8);
     transform: rotate(-90deg);
     &:hover {
-      background: url(../img/icons/map-clear.png) -65px 7px no-repeat $navy_blue;
+      background-color: rgba(0, 207, 255, .8);
+    }
+  }
+  .share-selection {
+    background: url(../img/icons/sprite-top-map.png) 0 -1px no-repeat rgba(159, 173, 173, .8);
+    transform: rotate(-90deg);
+    border-right: 1px solid rgba(255,255,255,0.8);
+    &:hover {
+      background-color: rgba(0, 207, 255, .8);
     }
   }
 }
@@ -96,3 +105,11 @@
   z-index: 10 !important;
 }
 
+.leaflet
+  &-bottom &-control {
+    margin-bottom: 0 !important;
+  } 
+
+.leaflet-right .map-tools-top:last-child {
+  margin-top: 0;
+} 

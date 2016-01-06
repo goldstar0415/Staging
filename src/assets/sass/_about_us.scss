@@ -1,12 +1,10 @@
 /*      about us      */
 .about-page {
   margin-top: 7rem;
-  .about-title {
-    font: 500 36px/26px 'Questrial';
-    margin-bottom: 30px;
-  }
   .about-text {
-    font: 16px/24px 'Pontano', sans-serif;
+    font: 1.8rem/24px;
+    color: #929fa7;
+    text-align: center;
   }
 }
 
@@ -17,18 +15,28 @@
     margin-bottom: 50px;
   }
   .img-user-circle {
-    width: 160px;
     border-radius: 55%;
     margin-bottom: 15px;
+    width: 160px;
+    height: 160px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    margin: 0 auto;
+    border: 2px solid #a6b1b7;
+    background: #fff;
+    padding: .5rem;
+    box-shadow: none;
   }
   .name-user {
-    font: 22px 'Questrial';
+    font: 3.8rem !important;
     color: $dark_blue;
     margin-bottom: 5px;
+    font-weight: bold;
   }
   .job-user {
-    font: 14px 'Pontano', sans-serif;
-    color: grey;
+    font: 16px;
+    color: #929fa7;
     text-transform: uppercase;
   }
 }

@@ -12,6 +12,12 @@
   border-radius: 0;
   width: 100%;
   padding: 15px;
+  padding-top: 1.5rem;
+  h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    font-weight: bold;
+  }
   .spot-stars {
     margin-top: 15px;
   }
@@ -49,18 +55,14 @@
   }
 
   .place {
-    font: 400 14px 'Questrial';
-    color: grey;
-  }
-
-  .event-spot-page {
-    padding-right: 0;
-    padding-left: 5px;
-    line-height: 2;
-    float: right;
+    font: 400 14px;
+    color: #000;
+    background: url(../img/icons/map-loc.png) no-repeat 0 0;
+    padding-left: 2rem;
+    margin-top: 1rem;
   }
   .description {
-    font: 13px/19px 'Pontano';
+    font: 13px/19px;
     margin: 10px 0 12px;
   }
   .date {
@@ -70,32 +72,36 @@
     width: 100%;
   }
 }
-
-.event .date, .event-spot-page, .recreation-spot, .pitstop-spot {
-  position: relative;
-  top: 0;
-  right: 0;
-  color: grey;
-  font: 12px 'Pontano';
-  text-align: right;
-  float: right;
+.more-info {
+    position: absolute;
+    right: 2rem;
+    top: -1rem;
+    color: #929fa7;
+    font-size: 4rem;
+    line-height: 0.8rem;
+    width: 1rem;
 }
+
 
 .tools {
   padding-top: 15px;
-  font: 600 13px/13px 'Questrial';
+  font: 600 13px/13px;
   padding-left: 0px;
   width: 100%;
   display: inline-block;
+  position: relative;
+  .share {
+    bottom: 0;
+  }
   li {
     float: left;
     margin-right: 15px;
     a {
       padding-left: 18px;
-      font: 14px 'Questrial';
+      font: 14px;
       color: $blue;
       &:hover, &:active, &:focus {
-        color: #0874be;
+        color: $blue_btn;
       }
     }
   }
@@ -105,41 +111,42 @@
 }
 
 .edit-tools {
-  background: url(../img/icons/ed.png) 1px 3px no-repeat;
+  background: url(../img/icons/sprite-edits.png) 1px 3px no-repeat;
+  padding-top: 2px;
   &:hover, &:active, &:focus {
     color: $blue;
-    background: url(../img/icons/ed.png) 1px -12px no-repeat;
+    background: url(../img/icons/sprite-edits.png) 1px -32px no-repeat;
   }
 }
 
 .delete {
-  background: url(../img/icons/delete.png) 1px 2px no-repeat;
+  background: url(../img/icons/sprite-edits.png) 1px 2px no-repeat;
   &:hover, &:active, &:focus {
-    background: url(../img/icons/delete.png) 1px -13px no-repeat;
+    background: url(../img/icons/sprite-edits.png) 1px -34px no-repeat;
     color: $blue;
   }
 }
 
 .save-event {
-  background: url(../img/icons/tools.png) -5px -6px no-repeat;
+  background: url(../img/icons/sprite-edits.png) -5px -4px no-repeat;
   &:hover, &:active, &:focus {
-    background: url(../img/icons/tools.png) -5px -23px no-repeat;
+    background: url(../img/icons/sprite-edits.png) -5px -34px no-repeat;
     color: $blue;
   }
 }
 
 .favorite-spot {
-  background: url(../img/icons/tools.png) -4px -56px no-repeat;
+  background: url(../img/icons/sprite-edits.png) -369px 1px no-repeat;
   &:hover, &:active, &:focus {
-    background: url(../img/icons/tools.png) -4px -73px no-repeat;
+    background: url(../img/icons/sprite-edits.png) -369px -34px no-repeat;
     color: $blue;
   }
 }
 
 .invite-friend {
-  background: url(../img/icons/tools.png) -3px -109px no-repeat;
+  background: url(../img/icons/sprite-edits.png) -3px 3px no-repeat;
   &:hover, &:active, &:focus {
-    background: url(../img/icons/tools.png) -3px -126px no-repeat;
+    background: url(../img/icons/sprite-edits.png) -3px -32px no-repeat;
     color: $blue;
 
   }
@@ -152,12 +159,8 @@
   text-indent: 10000px;
   overflow: hidden;
   position: absolute;
-  bottom: 15px;
   right: 15px;
   background: url(../img/icons/share.png) no-repeat;
-  &:hover {
-    background: url(../img/icons/share.png) -12px 0 no-repeat;
-  }
 }
 
 .share-wrap {
@@ -209,20 +212,18 @@
 }
 
 .add-friend {
-  display: block;
-  width: 28px;
-  height: 28px;
-  background: url(../img/icons/min-plus.png) 9px 9px no-repeat, #0d91ec;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  position: absolute;
-  top: 17px;
-  right: 17px;
-  @include transition_bg;
-  &:hover, &:active, &:focus {
-    background: url(../img/icons/min-plus.png) 9px 9px no-repeat, #0160a2;
-  }
+    display: block;
+    width: 33px;
+    height: 33px;
+    position: absolute;
+    top: 5rem;
+    right: 2rem;
+    background: url(../img/icons/plus.png) 2px 2px no-repeat;
+    background-color: #00b7f3;
+    -webkit-transition: background 0.3s;
+    -moz-transition: background 0.3s;
+    -o-transition: background 0.3s;
+    transition: background 0.3s;
 }
 
 .tags {
@@ -243,7 +244,7 @@
     margin-right: 7px;
     float: left;
     a {
-      font: 400 13px/13px 'Questrial';
+      font: 400 13px/13px;
       color: #85929b;
       @include transition_color;
     }

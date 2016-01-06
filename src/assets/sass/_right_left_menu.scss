@@ -76,21 +76,20 @@
           }
         }
         .map-icon {
-          background: url(../img/icons/map-icon.png) 0 0 no-repeat;
+          background: url(../img/header/header_search.png) 0 0 no-repeat;
           width: 38px;
           height: 38px;
         }
       }
       .active {
         color: $blue;
-        background: url(../img/icons/navigation-sep.png) repeat-x;
         .map-icon {
-          background: url(../img/icons/map-icon.png) 0 -67px no-repeat;
+          background: url(../img/header/header_search.png) 0 -67px no-repeat;
         }
       }
       &:hover {
         .map-icon {
-          background: url(../img/icons/map-icon.png) 0 -67px no-repeat;
+          background: url(../img/icons/header_search.png) 0 -67px no-repeat;
         }
       }
     }

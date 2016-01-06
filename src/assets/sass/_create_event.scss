@@ -7,23 +7,27 @@
   width: 100%;
   display: block;
   .btn-event {
+    height: 4rem;
+    margin-top: 5px;
+    border-radius: 0 !important;
     display: block;
-    border: 1px solid $green;
+    border: 1px solid $blue_btn;
     background: $white;
     padding: 7px 15px;
-    font: 600 14px/14px 'Questrial';
-    color: $dark-green;
+    font: 600 14px/14px;
+    color: $blue_btn;
     width: 30%;
+    text-transform: uppercase;
     &:hover, &:focus, &:active {
-      background-color: $green !important;
+      background-color: $blue_btn !important;
       box-shadow: none;
       outline: none;
       color: $white;
-      border: 1px solid $green;
+      border: 1px solid $blue_btn;
     }
   }
   .active-point {
-    background: $green;
+    background: $blue_btn;
     color: $white;
   }
 }
@@ -39,7 +43,7 @@
   li {
     position: relative;
     margin: 0;
-    font: 14px 'Pontano';
+    font: 14px;
     padding: 5px 10px;
     color: $black;
     border-bottom: 1px solid $light_grey;
@@ -69,31 +73,54 @@
 
 .event-main-info, .event-upload-photos, .event-additionl-info, .event-add-video {
   border-bottom: 1px solid $light_grey;
+  border-top: 1px solid $light_grey;
+  margin-bottom: 1.5rem;
   padding: 15px;
-  margin-bottom: 15px;
   .drop-box {
     display: inline-table;
   }
 }
-
+.event-additionl-info {
+  border-bottom: 0 !important;
+  button.close {
+    width: 3rem;
+    height: 3rem;
+    background: url(../img/icons/close-activity.png) no-repeat;
+    opacity: 1;
+    margin-bottom: 1rem;
+    margin-right: 1.5rem;
+    margin-top: 5px;
+  }
+}
+.event-add-video {
+  border: 0 !important;
+}
+.event-additionl-info .compass, .event-main-info .compass, .event-add-video .compass {
+  right: 2rem !important;
+}
+.remove-compass {
+  width: 100%;
+  margin-top: 1rem;
+  .compass {
+    background-image: url(../img/icons/loc-delete.png);
+    right: 3px !important;
+  }
+}
+.event-main-info {
+  border-top: 0 !important;
+}
 .form-group {
   .control-label {
-    font-weight: 500;
+    font-weight: bold;
     text-align: left;
     font-size: 16px;
-    padding-top: 0;
-  }
-  .radio-label {
-    padding-top: 10px;
-  }
-  &.privacy-block .radio-group{
-    display: inline-block;
-    margin-right: 20px;
+    padding-top: 1.3rem;
+    color: #000;
   }
 }
 
 .event-title {
-  font: 500 22px 'Questrial';
+  font: 500 22px;
   padding-left: 15px;
 }
 
@@ -122,7 +149,7 @@
 
 .add, .add-event-btn {
   float: right;
-  font: 500 16px 'Questrial';
+  font: 500 16px;
   margin-right: 18px;
   background: $green;
   color: $white;
@@ -142,9 +169,10 @@
   padding: 15px 10px 0;
   display: block;
   clear: both;
+  
   img {
-    width: 64px;
-    height: 64px;
+    width: 12rem;
+    height: 12rem;
     margin: 5px;
     @include border-radius;
     @include transition_shadow;
@@ -153,30 +181,28 @@
       border: 3px $blue solid;
       cursor: pointer;
     }
-
   }
   li {
     display: block;
     position: relative;
     z-index: 5;
     float: left;
-  }
-  .delete {
-    width: 18px;
-    height: 18px;
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    z-index: 10;
-    margin: 5px;
-    background: url(../img/icons/min-cross.png) 5px 5px no-repeat, rgba(12, 38, 56, .6);
-    @include border-radius;
-    @include transition_shadow;
-    &:hover {
+    &:hover .delete {
       cursor: pointer;
       display: block;
     }
+    .delete {
+    display: none;
+    top: 5px;
+    right: 5px;
+    width: 42px;
+    height: 42px;
+    position: absolute;
+    background: url(../img/icons/close-photo.png) center center no-repeat;
+    border-radius: 0;
   }
+  }
+  
 }
 
 .sidebar-event {
@@ -216,17 +242,15 @@
 
 .counter {
   display: inline-block;
-  height: 11px;
-  font: 10px/11px 'Pontano';
+  height: 2rem;
+  font-size: 1.2rem;
   color: $white;
   background: $blue;
-  padding: 0 4px;
-  margin: 1px 0 0 -3px;
-  vertical-align: top;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  border-radius: 8px;
+  padding: 0.3rem 1rem;
+  margin: 0;
+  vertical-align: middle;
   @include transition_bg;
+  float: right;
 }
 
 .title-sidebar {
@@ -247,8 +271,20 @@
   .tags {
     background: none;
     box-shadow: none;
-    border-radius: 4px;
+    border-radius: 0;
     border-color: #ccc;
+    height: 5rem;
+    padding: 1rem;
+    .tag-item {
+      background: $blue_btn;
+      border-radius: 0;
+      border: 0;
+      color:#fff;
+      text-transform: uppercase;
+      .remove-button {
+        color: #fff;
+      }
+    }
   }
 }
 
@@ -265,3 +301,7 @@
 }
 
 //---</create new event--->
+/* create spot */
+.no-pad input {
+  min-height: 5rem;
+}

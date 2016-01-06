@@ -96,7 +96,7 @@
 	right: 0;
 	}
 .leaflet-bottom {
-	bottom: 0;
+	bottom: 4.5rem;
 	}
 .leaflet-left {
 	left: 0;
@@ -112,15 +112,19 @@
 	margin-top: 10px;
 	}
 .leaflet-bottom .leaflet-control {
-	margin-bottom: 10px;
+	margin-bottom: 0;
+	border-bottom: 1px solid rgba(255,255,255,0.8);
 	}
+
 .leaflet-left .leaflet-control {
 	margin-left: 10px;
 	}
 .leaflet-right .leaflet-control {
 	margin-right: 10px;
 	}
-
+.map-tools:last-child {
+	border: 0;
+}
 
 /* zoom and fade animations */
 
@@ -230,12 +234,9 @@
 	background-color: #f4f4f4;
 	}
 .leaflet-bar a:first-child {
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
+
 	}
 .leaflet-bar a:last-child {
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
 	border-bottom: none;
 	}
 .leaflet-bar a.leaflet-disabled {
@@ -476,3 +477,46 @@
 	background: #fff;
 	border: 1px solid #666;
 	}
+/* new styles */
+.leaflet-control-zoom a {
+	background-color: rgba(159, 173, 173, .8);
+	border-radius: 0;
+	color: #fff;
+	height: 40px;
+	width: 40px;
+	line-height: 40px;
+	border: 0;
+	font-weight: 100;
+}
+.leaflet-control-zoom a:hover {
+	background-color: rgba(0, 207, 255, .8);
+	height: 40px;
+	width: 40px;
+	line-height: 40px;
+	color: #fff;
+}
+.leaflet-bar {
+	box-shadow: none;
+	border-radius: 0;
+}
+.leaflet-bar a{
+	float: right;
+	font-size: 2.5rem;
+}
+.leaflet-bar a:first-child {
+	border-left: 1px solid rgba(255,255,255,0.8);
+}
+.leaflet-top .leaflet-control {
+	margin-left: 2.5rem;
+	margin-top: 2.5rem;
+}
+.leaflet-left {
+	bottom: 4.5rem;
+	left: 2.5rem;
+}
+@media (max-width: 767px) {
+	.leaflet-top .leaflet-control {
+	    margin-left: 1.1rem;
+	    margin-top: 1rem;
+	  }
+}

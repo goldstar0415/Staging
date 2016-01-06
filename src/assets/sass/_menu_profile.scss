@@ -1,23 +1,99 @@
 //---<menu profile styles--->
 .menu-profile {
-  background: $dark_blue;
+  background: #fff;
   padding: 0;
+  -webkit-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+  -moz-box-shadow:    0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+  box-shadow:         0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+  z-index: 1;
   ul {
     padding: 0;
     margin: 0;
-    height: 40px;
+    height: 6rem;
     li {
-      &:first-child {
-        padding-left: 0;
-      }
+        .nav-spots {
+            background-image: url('icons/icons.svg');
+            background-position: 1.6px -373.5px;
+            &:hover, &.active {
+            background-image: url('icons/icons.svg');
+            background-position: 9px -238px;
+            background-size: 22px;
+            color: $nav_green;
+          }
+        }
+        .nav-favorites {
+          background-image: url('icons/icons.svg');
+          background-position: 0 -74px;
+          &:hover, &.active {
+            color: $nav_red;
+            background-image: url('icons/icons.svg');
+            background-position: 0 -111px;
+          }
+        }
+        .nav-searches {
+          background-image: url('icons/icons.svg');
+          background-position: 0 -296px;
+           &:hover, &.active {
+            color: $nav_yellow;
+            background-image: url('icons/icons.svg');
+            background-position: 0 -333px;
+          }
+        }
+        .nav-friendmap {
+          background-image: url('icons/icons.svg');
+          background-position: 0 0;
+           &:hover, &.active {
+            color: $nav_blue;
+            background-position: 0 -37px;
+          }
+        }
+        .nav-photomap {
+          background-image: url('icons/icons.svg');
+          background-position: 0 -148px;
+           &:hover, &.active {
+            color: $nav_green2;
+            background-position: 0 -185px;
+          }
+        }
+        .nav-planner {
+          background-image: url('icons/icons.svg');
+          background-position: 0 -222px;
+          &:hover, &.active {
+            color: $nav_blue;
+            background-position: 0 -259px;
+          }
+        }
+        .nav-settings {
+          background-image: url('icons/icons.svg');
+          background-position: 0 -444px;
+          &:hover, &.active {
+             background-position: 0 -481px;
+          }
+        }
+        .nav-blog {
+          background: url(../img/topnav-sprite.png) -946px 4px no-repeat;
+          &:hover, &.active {
+             background: url(../img/topnav-sprite.png) -946px -40px no-repeat;
+          }
+        }
+
       a {
-        font: $navigation_font;
+        padding-left: 3.5rem;
+        padding-top: 1rem;
+        padding-bottom: 0;
+        font-size: 1.4rem;
+        color: #111;
+        font-weight: bold;
+        background-repeat: no-repeat;
+        &:hover, &.active {
+            color: #00b7f3;
+        }
       }
       a.active {
         color: $blue;
       }
       display: inline-block;
-      padding-left: 24px;
+      padding-left: 1rem;
       float: left;
       @include vertical_align;
     }
@@ -26,16 +102,12 @@
 
 .module-sidebar {
   margin-bottom: 3.5rem;
-
-  .add-photos-btn {
-    margin-top: 10px;
-  }
 }
 
 .sidebar-row {
   display: block;
   .col-sm-4 {
-    min-height: 120px;
+    min-height: 8rem;
     a {
       white-space: nowrap;
       display: block;
@@ -49,8 +121,24 @@
 
 @media (max-width: 992px) {
   .menu-profile {
-    display: none;
+    display: block;
+  }
+  .friends-block {
+    padding-top: 2rem;
+  }
+  .review-img {
+    float: none !important;
+    margin: 0 auto;
+  }
+  .import-friendmap {
+    top: 28px !important;
+    right: auto;
+    left: 17px;
+  }
+  .add-page {
+    top: 28px !important;
+  }
+  .edit-delete {
+    text-align: right;
   }
 }
-
-//---</menu profile styles--->

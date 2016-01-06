@@ -1,62 +1,57 @@
 <div class="col-xs-12">
-  <div class="container wrap">
-    <!--<div class="col-xs-12 col-md-3 zoomers settings">-->
-    <!--<div class="zoomers-sidebar">-->
-    <!--<ul class="settings-list">-->
-    <!--<li><a  class="my-spots">My spots</a></li>-->
-    <!--<li><a  class="favorites">Favorites</a></li>-->
-    <!--<li><a  class="searches">Saved searches</a></li>-->
-    <!--<li><a  class="friendsmap">Friends map</a></li>-->
-    <!--<li><a  class="photomap">Photo map</a></li>-->
-    <!--<li><a  class="planner">Planner</a></li>-->
-    <!--<li><a  class="reviews">Reviews</a></li>-->
-    <!--<li><a  class="messages">Messages</a></li>-->
-    <!--</ul>-->
-    <!--</div>-->
-    <!--</div>-->
+  <div class="container wrap mgt25">
+
+    <div class="col-md-9 col-md-offset-3 col-xs-12 col-xs-offset-0">
+      <div class="col-xs-12 text-center">
+        <h2 class="title-name">Profile settings</h2>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-3 avatar-block ">
+      <div class="bg-thumb">
+        <figure class="avatar">
+          <img ng-src="{{Settings.data.avatar_url.medium}}" class="img-responsive"/>
+        </figure>
+        <!--<a ng-click="Setting.setAvatar()" class="edit-photo">Edit avatar</a>-->
+        <uploader button-text="EDIT AVATAR"></uploader>
+      </div>
+    </div>
     <div class="col-xs-12 col-md-9 central">
 
-      <h2 class="title-name">Profile settings</h2>
       <!----Personal information block---->
       <div class="col-xs-12 settings-block">
-        <h3>Personal information</h3>
-
-        <div class="col-xs-4 avatar-block">
-          <figure class="avatar">
-            <img ng-src="{{Settings.data.avatar_url.medium}}" class="img-responsive"/>
-          </figure>
-          <!--<a ng-click="Setting.setAvatar()" class="edit-photo">Edit avatar</a>-->
-          <uploader button-text="Edit avatar"></uploader>
-        </div>
-        <div class="col-xs-8 main-information">
+        <div class="main-information">
           <form role="form" name="form" ng-submit="Settings.savePersonalSettings(form)" novalidate>
             <div class="col-xs-12 form-group no-pad">
-              <div class="col-xs-3 no-pad">
+              <div class="col-md-3 col-xs-12 no-pad">
                 <label>Name</label>
               </div>
-              <div class="col-xs-9 no-pad">
-                <input class="half-width" type="text" placeholder="First name..."
-                       ng-model="Settings.data.first_name" required>
-                <input class="half-width" type="text" placeholder="Last name..."
-                       ng-model="Settings.data.last_name" >
+              <div class="col-xs-12 col-md-9 no-pad">
+                <div class="row">
+                  <div class="col-xs-6 col-md-6">
+                    <input class="mgb15" type="text" placeholder="First name..."
+                           ng-model="Settings.data.first_name" required>
+                  </div>
+                  <div class="col-xs-6 col-md-6">
+                    <input class="" type="text" placeholder="Last name..."
+                           ng-model="Settings.data.last_name" required>
+                  </div>
+                </div>
               </div>
             </div>
-
             <div class="col-xs-12 form-group no-pad">
-              <div class="col-xs-3 no-pad">
+              <div class="col-xs-12 col-md-3 no-pad">
                 <label>Birthday</label>
               </div>
-              <div class="col-xs-9 no-pad">
+              <div class="col-md-9 col-xs-12 no-pad">
                 <input ng-datepicker name="date" ng-model="Settings.data.birth_date" start-date="Settings.minDate"
-                       type="text">
+                       type="text" class="grey-bg">
               </div>
             </div>
-
             <div class="col-xs-12 form-group no-pad">
-              <div class="col-xs-3 no-pad">
+              <div class="col-xs-12 col-md-3 no-pad">
                 <label>Page URL</label>
               </div>
-              <div class="col-xs-9 no-pad">
+              <div class="col-md-9 col-xs-12 no-pad">
                 <input name="alias" ng-model="Settings.data.alias" ng-blur="Settings.checkAlias(form)" type="text"/>
 
                 <div ng-if="Settings.aliasErrorMessage" class="error-message-inline">
@@ -64,35 +59,32 @@
                 </div>
               </div>
             </div>
-
             <div class="col-xs-12 form-group no-pad">
-              <div class="col-xs-3 no-pad">
+              <div class="col-xs-12 col-md-3 no-pad">
                 <label>Gender</label>
               </div>
-              <div class="col-xs-9 no-pad">
+              <div class="col-xs-12  col-md-4 no-pad">
                 <div class="form-group half-width">
                   <input type="radio" name="radio" value="m" id="radio1" class="radio"
                          ng-model="Settings.data.sex">
-                  <label for="radio1">Male</label>
+                  <label for="radio1"><span></span>Male</label>
                 </div>
                 <div class="form-group half-width">
                   <input type="radio" name="radio" value="f" id="radio2" class="radio"
                          ng-model="Settings.data.sex">
-                  <label for="radio2">Female</label>
+                  <label for="radio2"><span></span>Female</label>
                 </div>
               </div>
             </div>
-
             <div class="col-xs-12 form-group no-pad">
-              <div class="col-xs-3 no-pad">
+              <div class="col-xs-12 col-md-3 no-pad">
                 <label>Location</label>
               </div>
-              <div class="col-xs-9 no-pad">
+              <div class="col-md-9 col-xs-12 no-pad">
                 <location address="Settings.data.address" location="Settings.data.location" limit="15"
                           bind-marker="false" show-user-location="true"></location>
               </div>
             </div>
-
             <!--<div class="col-xs-12 form-group no-pad">-->
             <!--<div class="col-xs-3 no-pad">-->
             <!--<label>Timezone</label>-->
@@ -111,13 +103,13 @@
             <!--</ui-select>-->
             <!--</div>-->
             <!--</div>-->
-
             <div class="col-xs-12 form-group no-pad">
-              <div class="col-xs-3 no-pad">
+              <div class="col-xs-12 col-md-3 no-pad">
                 <label>Description</label>
               </div>
-              <div class="col-xs-9 no-pad">
-                <textarea ng-model="Settings.data.description" name="description" ng-maxlength="250"></textarea>
+              <div class="col-md-9 col-xs-12 no-pad">
+                <textarea ng-model="Settings.data.description" name="description" ng-maxlength="250"
+                          placeholder="Start typing..."></textarea>
 
                 <div ng-if="form.description.$error.maxlength && (form.$submitted || form.description.$touched)"
                      class="error-message-inline">
@@ -132,54 +124,45 @@
         </div>
       </div>
       <!----/Personal information block---->
-
       <!----Social networks block---->
       <div class="col-xs-12 settings-block">
-        <h3>Social Networks</h3>
-
+        <div class="col-md-3 col-xs-12 no-pad">
+          <label>Social Networks</label>
+        </div>
         <div class="col-xs-4 social-section">
           <div class="col-xs-5 col-sm-3 no-pad">
             <img src="assets/img/facebook.png" alt="">
           </div>
-
           <div class="col-xs-7 col-sm-9 no-pad">
             <div class="radio-group">
               <input type="radio" class="radio" name="social_facebook" ng-model="Settings.data.social_facebook"
                      value="1" ng-click="Settings.addSocial('facebook')">
-              <label>Yes</label>
-            </div>
-            <div class="radio-group">
+              <label><span></span>Yes</label>
               <input type="radio" class="radio" name="social_facebook" ng-model="Settings.data.social_facebook"
                      value="0" ng-click="Settings.removeSocial('facebook')">
-              <label>No</label>
+              <label><span></span>No</label>
             </div>
           </div>
         </div>
-
         <div class="col-xs-4 social-section">
           <div class="col-xs-5 col-sm-3 no-pad">
             <img src="assets/img/google-plus.png" alt="">
           </div>
-
           <div class="col-xs-7 col-sm-9 no-pad">
             <div class="radio-group">
               <input type="radio" class="radio" name="social_google" value="1" ng-model="Settings.data.social_google"
                      ng-click="Settings.addSocial('google')">
-              <label>Yes</label>
-            </div>
-            <div class="radio-group">
+              <label><span></span>Yes</label>
               <input type="radio" class="radio" name="social_google" value="0" ng-model="Settings.data.social_google"
                      ng-click="Settings.removeSocial('google')">
-              <label>No</label>
+              <label><span></span>No</label>
             </div>
           </div>
         </div>
-
         <!--<div class="col-xs-4 social-section">-->
         <!--<div class="col-xs-5 col-sm-3 no-pad">-->
         <!--<img src="assets/img/twitter.png" alt="">-->
         <!--</div>-->
-
         <!--<div class="col-xs-7 col-sm-9 no-pad">-->
         <!--<div class="radio-group">-->
         <!--<input type="radio" class="radio">-->
@@ -193,23 +176,24 @@
         <!--</div>-->
       </div>
       <!----/Social networks block---->
-
       <!----Security block---->
       <div class="col-xs-12 settings-block">
-        <h3>Security</h3>
-
         <form role="form" name="emailForm" ng-submit="Settings.saveSecuritySettings(emailForm)" novalidate>
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Current e-mail</label>
-            <span class="e-mail input-width">{{Settings.data.email}}</span>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label>Current e-mail</label>
           </div>
+          <div class="col-xs-9 form-group no-pad mgt13">
+            <span class="e-mail ">{{Settings.data.email}}</span>
+          </div>
+          <div class="clearfix"></div>
           <div class="col-xs-12 form-group no-pad" ng-if="Settings.email_verification">
             <div class="alert alert-info">To your new email is sent a letter with confirmation request</div>
           </div>
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">New e-mail</label>
-
-            <div class="no-pad input-width">
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">New e-mail</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class="no-pad">
               <input class="white" type="email" name="email" ng-model="Settings.data.newEmail"
                      placeholder="Enter new e-mail address..." required>
 
@@ -219,28 +203,28 @@
               </div>
             </div>
           </div>
+          <div class="clearfix"></div>
           <div class="col-xs-12 no-pad">
             <input type="submit" value="Save" class="save-btn">
           </div>
         </form>
       </div>
       <!----/Security block---->
-
       <!----Change password block---->
       <div class="col-xs-12 settings-block">
-        <h3>Change password</h3>
-
         <form role="form" name="passForm" ng-submit="Settings.savePasswordSettings(passForm)" autocomplete="off"
               novalidate>
-          <div class="col-xs-12 form-group no-pad" ng-if="Settings.data.is_registered">
-            <label class="label-width">Current password</label>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">Current password</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad" ng-if="Settings.data.is_registered">
             <input type="password"
                    name="password"
                    ng-model="Settings.data.currentPassword"
                    placeholder="Current password..."
                    minlength="6"
                    autocomplete="off"
-                   required class="input-width"/>
+                   required class=""/>
             <a class="eye" eye-password></a>
 
             <div ng-messages="passForm.password.$error" ng-if="passForm.$submitted"
@@ -248,32 +232,36 @@
               <div ng-messages-include="error-password-messages"></div>
             </div>
           </div>
-
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">New password</label>
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">New password</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
             <input type="password"
                    name="newpassword"
                    ng-model="Settings.data.newPassword"
                    placeholder="New password..."
                    minlength="6"
                    autocomplete="off"
-                   required class="input-width"/>
+                   required class=""/>
             <a class="eye" eye-password></a>
 
             <div ng-messages="passForm.newpassword.$error" ng-if="passForm.$submitted"
                  class="error-message-inline">
               <div ng-messages-include="error-password-messages"></div>
             </div>
-
           </div>
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Repassword</label>
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">Repassword</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
             <input type="password"
                    name="newpasswordconf"
                    ng-model="Settings.data.newPasswordConfirm"
                    placeholder="Confirm new password..."
                    autocomplete="off"
-                   ng-match="Settings.data.newPassword" class="input-width">
+                   ng-match="Settings.data.newPassword" class="">
             <a class="eye" eye-password></a>
 
             <div ng-messages="passForm.newpasswordconf.$error" ng-if="passForm.$submitted"
@@ -287,22 +275,24 @@
         </form>
       </div>
       <!----/Change password block---->
-
       <!----Privacy settings block---->
+    </div>
+    <div class="col-xs-12 col-md-9 col-md-offset-3 central">
+      <div class="text-center"><h2 class="title-name text-center">Privacy settings</h2></div>
       <div class="col-xs-12 settings-block">
-        <h3>Privacy settings</h3>
-
         <form role="form" ng-submit="Settings.savePrivacySettings()">
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Private spots</label>
-
-            <div class="input-width no-pad">
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">Spots</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class=" no-pad">
               <ui-select
-                  ng-model="Settings.data.privacy_events"
-                  theme="bootstrap">
+                ng-model="Settings.data.privacy_events"
+                theme="bootstrap">
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
-                    repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
                   <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -315,16 +305,18 @@
               <!--</select>-->
             </div>
           </div>
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Favorites</label>
-
-            <div class="input-width no-pad">
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">Favorites</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class=" no-pad">
               <ui-select
-                  ng-model="Settings.data.privacy_favorites"
-                  theme="bootstrap">
+                ng-model="Settings.data.privacy_favorites"
+                theme="bootstrap">
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
-                    repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
                   <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -337,16 +329,18 @@
               <!--</select>-->
             </div>
           </div>
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Followers</label>
-
-            <div class="input-width no-pad">
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">Followers</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class=" no-pad">
               <ui-select
-                  ng-model="Settings.data.privacy_followers"
-                  theme="bootstrap">
+                ng-model="Settings.data.privacy_followers"
+                theme="bootstrap">
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
-                    repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
                   <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -359,16 +353,18 @@
               <!--</select>-->
             </div>
           </div>
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Following</label>
-
-            <div class="input-width no-pad">
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">Following</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class=" no-pad">
               <ui-select
-                  ng-model="Settings.data.privacy_followings"
-                  theme="bootstrap">
+                ng-model="Settings.data.privacy_followings"
+                theme="bootstrap">
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
-                    repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
                   <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -381,16 +377,18 @@
               <!--</select>-->
             </div>
           </div>
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Wall</label>
-
-            <div class="input-width no-pad">
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">Wall</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class=" no-pad">
               <ui-select
-                  ng-model="Settings.data.privacy_wall"
-                  theme="bootstrap">
+                ng-model="Settings.data.privacy_wall"
+                theme="bootstrap">
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
-                    repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
                   <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -403,16 +401,18 @@
               <!--</select>-->
             </div>
           </div>
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">My info</label>
-
-            <div class="input-width no-pad">
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">My info</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class=" no-pad">
               <ui-select
-                  ng-model="Settings.data.privacy_info"
-                  theme="bootstrap">
+                ng-model="Settings.data.privacy_info"
+                theme="bootstrap">
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
-                    repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
                   <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -425,16 +425,18 @@
               <!--</select>-->
             </div>
           </div>
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Photo map</label>
-
-            <div class="input-width no-pad">
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">Photo map</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class=" no-pad">
               <ui-select
-                  ng-model="Settings.data.privacy_photo_map"
-                  theme="bootstrap">
+                ng-model="Settings.data.privacy_photo_map"
+                theme="bootstrap">
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
-                    repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
+                  repeat="item.value as item in Settings.privacyOptions | filter : $select.search track by $index">
                   <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -453,22 +455,21 @@
         </form>
       </div>
       <!----/Privacy settings block---->
-
       <!----Notifications block---->
       <div class="col-xs-12 settings-block">
-        <h3>Notifications</h3>
-
         <form role="form" ng-submit="Settings.saveNotificationSettings()">
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Received a letter</label>
-
-            <div class="input-width no-pad">
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">Received a letter</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class=" no-pad">
               <ui-select
-                  ng-model="Settings.data.notification_letter"
-                  theme="bootstrap">
+                ng-model="Settings.data.notification_letter"
+                theme="bootstrap">
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
-                    repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
+                  repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
                   <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -478,17 +479,18 @@
               <!--</select>-->
             </div>
           </div>
-
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Post on the wall</label>
-
-            <div class="input-width no-pad">
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">Post on the wall</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class=" no-pad">
               <ui-select
-                  ng-model="Settings.data.notification_wall_post"
-                  theme="bootstrap">
+                ng-model="Settings.data.notification_wall_post"
+                theme="bootstrap">
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
-                    repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
+                  repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
                   <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -498,17 +500,18 @@
               <!--</select>-->
             </div>
           </div>
-
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">User follow/unfollow</label>
-
-            <div class="input-width no-pad">
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">User follow/unfollow</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class=" no-pad">
               <ui-select
-                  ng-model="Settings.data.notification_follow"
-                  theme="bootstrap">
+                ng-model="Settings.data.notification_follow"
+                theme="bootstrap">
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
-                    repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
+                  repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
                   <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -518,17 +521,18 @@
               <!--</select>-->
             </div>
           </div>
-
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">New spots</label>
-
-            <div class="input-width no-pad">
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">New spots</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class=" no-pad">
               <ui-select
-                  ng-model="Settings.data.notification_new_spot"
-                  theme="bootstrap">
+                ng-model="Settings.data.notification_new_spot"
+                theme="bootstrap">
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
-                    repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
+                  repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
                   <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -538,17 +542,18 @@
               <!--</select>-->
             </div>
           </div>
-
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Upcoming spots</label>
-
-            <div class="input-width no-pad">
+          <div class="clearfix"></div>
+          <div class="col-md-3 col-xs-12 no-pad">
+            <label class="">Upcoming spots</label>
+          </div>
+          <div class="col-xs-12 col-md-9 form-group no-pad">
+            <div class=" no-pad">
               <ui-select
-                  ng-model="Settings.data.notification_coming_spot"
-                  theme="bootstrap">
+                ng-model="Settings.data.notification_coming_spot"
+                theme="bootstrap">
                 <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
                 <ui-select-choices
-                    repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
+                  repeat="item.value as item in Settings.notificationOptions | filter : $select.search track by $index">
                   <div ng-bind-html="item.label | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>
@@ -563,112 +568,104 @@
           </div>
         </form>
       </div>
-      <!----/Notifications block---->
-
+    </div>
+    <div class="col-xs-12 col-md-9 col-md-offset-3 central social-settings">
+      <div class="text-center"><h2 class="title-name text-center">Social networking</h2></div>
       <div class="col-xs-12 settings-block">
-        <h3>Social networks</h3>
-
         <form role="form" name="socialForm" ng-submit="Settings.saveSocialNetworks(socialForm)" novalidate>
-          <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Facebook</label>
 
-            <div class="no-pad input-width">
-              <input class="white" type="url" name="facebook_url" ng-model="Settings.data.social_links.facebook"
-                     placeholder="Url..." >
+          <div class="col-xs-12 form-group no-pad">
+            <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
+              <input name="facebook_url" ng-model="Settings.data.social_links.facebook" class="social-input"
+                     placeholder="URL..." id="fb_input"
+                     type="url"/>
 
               <div class="error-message-inline" ng-messages="socialForm.facebook_url.$error"
-                   ng-if="socialForm.$submitted || emailForm.email.$touched">
-               <div ng-message="url">wrong url</div>
+                   ng-if="socialForm.$submitted || socialForm.facebook_url.$touched">
+                <div ng-message="url">wrong url</div>
               </div>
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Twitter</label>
-
-            <div class="no-pad input-width">
-              <input class="white" type="url" name="twitter_url" ng-model="Settings.data.social_links.twitter"
-                     placeholder="Url..." >
+            <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
+              <input name="twitter_url" ng-model="Settings.data.social_links.twitter" class="social-input"
+                     placeholder="URL..." id="tw_input"
+                     type="url"/>
 
               <div class="error-message-inline" ng-messages="socialForm.twitter_url.$error"
-                   ng-if="socialForm.$submitted || emailForm.email.$touched">
+                   ng-if="socialForm.$submitted || socialForm.twitter_url.$touched">
                 <div ng-message="url">wrong url</div>
               </div>
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Instagram</label>
-
-            <div class="no-pad input-width">
-              <input class="white" type="url" name="instagram_url" ng-model="Settings.data.social_links.instagram"
-                     placeholder="Url..." >
+            <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
+              <input name="instagram_url" ng-model="Settings.data.social_links.instagram" class="social-input"
+                     placeholder="URL..." id="in_input"
+                     type="url"/>
 
               <div class="error-message-inline" ng-messages="socialForm.instagram_url.$error"
-                   ng-if="socialForm.$submitted || emailForm.email.$touched">
+                   ng-if="socialForm.$submitted || socialForm.instagram_url.$touched">
                 <div ng-message="url">wrong url</div>
               </div>
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Tumblr</label>
-
-            <div class="no-pad input-width">
-              <input class="white" type="url" name="tumblr_url" ng-model="Settings.data.social_links.tumblr"
-                     placeholder="Url..." >
+            <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
+              <input name="tumblr_url" ng-model="Settings.data.social_links.tumblr" class="social-input"
+                     placeholder="URL..." id="t_input"
+                     type="url"/>
 
               <div class="error-message-inline" ng-messages="socialForm.tumblr_url.$error"
-                   ng-if="socialForm.$submitted || emailForm.email.$touched">
+                   ng-if="socialForm.$submitted || socialForm.tumblr_url.$touched">
                 <div ng-message="url">wrong url</div>
               </div>
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">VK</label>
-
-            <div class="no-pad input-width">
-              <input class="white" type="url" name="vk_url" ng-model="Settings.data.social_links.vk"
-                     placeholder="Url..." >
+            <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
+              <input name="vk_url" ng-model="Settings.data.social_links.vk" class="social-input" placeholder="URL..."
+                     id="vk_input"
+                     type="url"/>
 
               <div class="error-message-inline" ng-messages="socialForm.vk_url.$error"
-                   ng-if="socialForm.$submitted || emailForm.email.$touched">
+                   ng-if="socialForm.$submitted || socialForm.vk_url.$touched">
                 <div ng-message="url">wrong url</div>
               </div>
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Your site</label>
-
-            <div class="no-pad input-width">
-              <input class="white" type="url" name="custom_url" ng-model="Settings.data.social_links.custom"
-                     placeholder="Url..." >
+            <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
+              <input name="custom_url" ng-model="Settings.data.social_links.custom" class="social-input"
+                     placeholder="URL..."
+                     id="custom_input" type="url"/>
 
               <div class="error-message-inline" ng-messages="socialForm.custom_url.$error"
-                   ng-if="socialForm.$submitted || emailForm.email.$touched">
+                   ng-if="socialForm.$submitted || socialForm.custom_url.$touched">
                 <div ng-message="url">wrong url</div>
               </div>
             </div>
           </div>
           <div class="col-xs-12 form-group no-pad">
-            <label class="label-width">Google+</label>
+            <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
+              <input name="google_url" ng-model="Settings.data.social_links.google" class="social-input"
+                     placeholder="URL..."
+                     id="google_input" type="url"/>
 
-            <div class="no-pad input-width">
-              <input class="white" type="url" name="google_plus_url" ng-model="Settings.data.social_links.google"
-                     placeholder="Url..." >
-
-              <div class="error-message-inline" ng-messages="socialForm.google_plus_url.$error"
-                   ng-if="socialForm.$submitted || emailForm.email.$touched">
+              <div class="error-message-inline" ng-messages="socialForm.google_url.$error"
+                   ng-if="socialForm.$submitted || socialForm.google_url.$touched">
                 <div ng-message="url">wrong url</div>
               </div>
             </div>
           </div>
-
           <div class="col-xs-12 no-pad">
             <input type="submit" value="Save" class="save-btn">
           </div>
+
         </form>
       </div>
-
-
     </div>
+    <!----/Notifications block---->
 
   </div>
 </div>

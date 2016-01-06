@@ -2,9 +2,10 @@
 
 .module-sidebar {
   .sidebar-title {
-    font: $navigation_font;
-    font-size: 20px;
+    font-size: 1.6rem;
+    color: #000;
     margin-top: 0;
+    font-weight: bold;
   }
   .avatar {
     display: block;
@@ -18,20 +19,18 @@
     }
   }
   .sidebar-user-name {
-    max-height: 3.3rem;
     padding-left: 7px;
     padding-right: 7px;
-    color: $blue;
+    color: #fff;
+    padding-top: 2rem;
     text-align: center;
-    text-overflow: ellipsis;
-    -e-text-overflow: ellipsis;
-    font: 500 13px/16px 'Questrial';
+    white-space: pre-wrap;
     &:hover, &:focus, &:active {
-      color: $navy_blue;
+      color: #fff;
     }
   }
   .counter {
-    margin: -4px 0 0 -3px;
+    margin: 0;
   }
   a {
     text-overflow: ellipsis;

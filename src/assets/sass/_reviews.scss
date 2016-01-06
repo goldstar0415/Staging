@@ -1,6 +1,17 @@
 .reviews {
   margin: 0 0 15px;
   border-bottom: 1px solid $light_grey;
+  .avatar {
+      width: 10rem;
+      height: 10rem;
+      border: 1px solid #a6b1b7;
+      background: #fff;
+      padding: 3px;
+      border-radius: 50%;
+      img {
+        border-radius: 50%;
+      }
+    }
 .rating-likes {
   margin-bottom: 7px;
   padding: 0;
@@ -25,8 +36,8 @@
     }
   }
   .text-block {
-    padding: 0 0 0 10px;
-    width: 85%;
+    padding: 0 0 0 20px;
+    width: 80%;
     float: left;
     h2 {
       a {
@@ -34,7 +45,10 @@
         text-overflow: ellipsis;
         overflow: hidden;
         margin: 0;
-        font: 500 19px/22px 'Questrial';
+        font-size: 2rem;
+        color: #00c9f8;
+        font-weight: bold;
+        line-height: 2.4rem;
         &:hover {
           color: #124d76;
           @include transition_color;
@@ -43,8 +57,10 @@
     }
   }
   .author-name {
-    font: 500 15px/15px 'Questrial';
-    color: #00b7f3;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 1rem;
     &:hover {
       color: #0874be;
       @include transition_color;
@@ -52,12 +68,20 @@
   }
   .description {
     margin: 0 0 10px;
+    font-size: 1.6rem;
+    color: #889197;
   }
   .rating-stars {
     float: right;
   }
   .fav-avatar-icon {
     margin: 0 0 25px;
+    width: 10rem;
+      height: 10rem;
+      border: 1px solid #a6b1b7;
+      background: #fff;
+      padding: 3px;
+      border-radius: 50%;
   }
 }
 
@@ -65,7 +89,7 @@
   .reviews {
     .text-block {
       padding: 0;
-      width: 100%;
+      width: calc(100% - 7.5rem);
     }
   }
 }

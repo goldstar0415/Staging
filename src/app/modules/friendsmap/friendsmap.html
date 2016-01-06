@@ -1,65 +1,74 @@
-<div class="title">
-  <h2 class="title-name">Friends map</h2>
+<div class="">
+  <div class="text-center"><h2 class="title-name nav-blue">Friends map</h2></div>
 
-  <a ng-click="Friendsmap.googleImport()">Import</a>
+
   <div class="album-tools">
-    <a title="Create new album" ui-sref="friendsmap_create" class="add-page"></a>
+    <a ng-click="Friendsmap.googleImport()" class="import-friendmap"></a>
+    <a title="Create new album" ui-sref="friendsmap_create" class="add-page nav-bg-blue"></a>
   </div>
 </div>
 <div ng-repeat="item in Friendsmap.friends" class="col-xs-12 friends-block">
-  <div class="avatar-wrap">
-    <a class="review-img avatar" tooltip="Edit avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
-       ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="10000000">
-      <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar">
-    </a>
-  </div>
-  <div class="text-block">
-    <h3 class="feeds-title">
-      <span class="col-xs-8 wrap-name">
+  <div class="friends-wrapper">
+    <div class="avatar-wrap">
+      <a class="review-img avatar" tooltip="Edit avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
+         ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="10000000">
+        <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar">
+      </a>
+    </div>
+    <div class="text-block">
+      <h3 class="feeds-title">
+      <span class="col-xs-12 wrap-name">
         <a ng-if="item.friend_id" ui-sref="profile.main({user_id: item.friend.alias || item.friend_id})">{{item.first_name + " " +
           item.last_name}}</a>
         <span ng-if="!item.friend_id">{{item.first_name + " " + item.last_name}}</span>
       </span>
 
-      <div class="col-xs-4 location-btn" ng-if="item.showSwitch">
-        <a class="custom-location" ng-class="{'active': item.showCustom}"
-           ng-click="Friendsmap.switchLocation(item, true)"></a>
-        <a class="default-location" ng-class="{'active': !item.showCustom}"
-           ng-click="Friendsmap.switchLocation(item, false)"></a>
-      </div>
-    </h3>
-    <!--<a ui-sref="friendsmap_edit({id: item.id})" class="edit"></a>-->
+        <div class="col-xs-4 location-btn" ng-if="item.showSwitch">
+          <a class="custom-location" ng-class="{'active': item.showCustom}"
+             ng-click="Friendsmap.switchLocation(item, true)"></a>
+          <a class="default-location" ng-class="{'active': !item.showCustom}"
+             ng-click="Friendsmap.switchLocation(item, false)"></a>
+        </div>
+      </h3>
+      <!--<a ui-sref="friendsmap_edit({id: item.id})" class="edit"></a>-->
 
-    <div class="col-xs-12 no-pad">
-      <p ng-show="item.birth_date">{{moment(item.birth_date).format('DD-MMM-YYYY')}}</p>
-
-      <p ng-show="item.email">{{item.email}}</p>
-    </div>
-    <div class="col-xs-12 no-pad">
-      <p ng-show="item.phone">{{item.phone}}</p>
-    </div>
-
-    <div class="col-xs-12 no-pad">
       <div class="col-xs-12 no-pad">
-        <p ng-show="item.displayAddress">{{item.displayAddress}}</p>
+        <p ng-show="item.birth_date">{{moment(item.birth_date).format('DD-MMM-YYYY')}}</p>
+
+        <p class="friendmap-sub" ng-show="item.email">{{item.email}}</p>
+      </div>
+      <div class="col-xs-12 no-pad">
+        <p class="friendmap-sub" ng-show="item.phone">{{item.phone}}</p>
       </div>
 
-      <!--<div class="col-xs-4 location-btn" >-->
-      <!--<a class="custom-location" ></a>-->
-      <!--<a class="default-location" ></a>-->
-      <!--</div>-->
-    </div>
+      <div class="col-xs-12 no-pad">
+        <div class="col-xs-12 no-pad">
+          <p ng-show="item.displayAddress" class="friendmap-loc">{{item.displayAddress}}</p>
+        </div>
+
+        <!--<div class="col-xs-4 location-btn" >-->
+        <!--<a class="custom-location" ></a>-->
+        <!--<a class="default-location" ></a>-->
+        <!--</div>-->
+      </div>
 
 
-    <div class="col-xs-12 no-pad">
-      <p ng-show="item.note" class="description">
-        {{item.note}}
-      </p>
+      <div class="col-xs-12 no-pad">
+        <p ng-show="item.note" class="description">
+          {{item.note}}
+        </p>
+        <div class="col-xs-12 edit-delete text-left hidden-xs">
+          <a class="edit edit-friendmap" ui-sref="friendsmap_edit({id: item.id})">Edit</a>
+          <a class="delete" ng-click="Friendsmap.removeFriend(item.id, $index)">Delete</a>
+        </div>
+      </div>
     </div>
-    <div class="col-xs-12 edit-delete">
-      <a class="edit" ui-sref="friendsmap_edit({id: item.id})">Edit</a>
-      <a class="delete" ng-click="Friendsmap.removeFriend(item.id, $index)">Delete</a>
-    </div>
+    <div class="clearfix"></div>
+
+  </div>
+  <div class="col-xs-12 edit-delete text-right visible-xs">
+    <a class="edit edit-friendmap" ui-sref="friendsmap_edit({id: item.id})">Edit</a>
+    <a class="delete" ng-click="Friendsmap.removeFriend(item.id, $index)">Delete</a>
   </div>
 </div>
 

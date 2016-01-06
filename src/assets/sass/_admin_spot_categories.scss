@@ -5,7 +5,7 @@
     border-radius: 10px;
     .padding-0{padding: 0;}
     .button-category{
-        font: 500 16px/18px 'Questrial';
+        font: 500 16px/18px;
             padding: 3px 15px;
             line-height: 110%;
         float: right;
@@ -20,13 +20,13 @@
             height: 40px;
         }
         thead {
-            font: 500 16px/16px 'Questrial';
+            font: 500 16px/16px;
             th {
                 border: 1px solid #e9edf0;
             }
         }
         tbody {
-            font: 14px/14px 'Pontano';
+            font: 14px/14px;
             tr:nth-child(even) {
                 background: #e9edf0;
                 td {

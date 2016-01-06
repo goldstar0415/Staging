@@ -11,99 +11,34 @@
         padding: 0;
     }
     .new-post {
-        padding: 10px;
-        background: #e9edf0;
-        border-radius: 7px 7px 0 0;
-        textarea {
-            resize: none;
-            width: 100%;
-            min-height: 85px;
-            margin-bottom: 8px;
-            padding: 5px 10px;
-            background: white;
-            border: 1px solid #dee5ea;
-            border-radius: 3px;
-            @include transition_shadow;
-            &:hover {
-                border: 1px solid #76c7dc;
-                ;
-                box-shadow: 0 0 3px #00b7f3;
-                transition: box-shadow 0.3s, border-color 0.3s;
-            }
+        
         }
-        hr {
-            margin: 0 -10px 8px -10px;
-            height: 1px;
-            background: #cecbcb;
-        }
-        .submit-send {
-            width: 54px;
-            height: 22px;
-            margin-left: 14px;
-            background: #0c2638;
-            border: none;
-            border-radius: 3px;
-            color: #fff;
-            font-size: 12px;
-            float: right;
-            @include transition_bg;
-            &:hover {
-                background: #1a415b;
-                @include transition_bg;
-            }
-        }
-        .add-photo {
-            float: right;
-            display: block;
-            width: 16px;
-            height: 14px;
-            margin: 4px 0 0 10px;
-            background: url(../img/icons/clip-photo.png) no-repeat right top;
-            &:hover {
-                background: url(../img/icons/clip-photo.png) no-repeat right bottom;
-            }
-        }
-        .add-attach {
-            float: right;
-            display: block;
-            width: 16px;
-            height: 14px;
-            margin: 4px 0 0 10px;
-            background: url(../img/icons/clip-photo.png) no-repeat;
-            &:hover {
-                background: url(../img/icons/clip-photo.png) no-repeat left bottom;
-            }
-        }
-    }
     .post {
         padding: 15px 10px;
         border-bottom: 1px solid #e9edf0;
         .avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 3px solid #fff;
-            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
-          img {
-            min-width: 100%;
-            max-width: 100%;
-          }
+            width: 10rem;
+            height: 10rem;
         }
         .info {
             position: relative;
+            .color-link {
+                color: #889197;
+            }
             .name {
                 text-align: none;
                 padding: 0;
                 margin-left: 0;
                 display: block;
-                font-size: 17px;
-                font-weight: 500;
+                font-size: 2rem;
+                font-weight: bold;
                 margin-bottom: 8px;
+                margin-top: 0;
               //  width: 380px;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                color: #0c2638;
+                color: #000;
                 transition: color 0.3s;
                 &:hover {
                     color: #124d76;
@@ -123,7 +58,7 @@
                 margin-bottom: 10px;
             }
             .time {
-                font: 11px 'Pontano';
+                font: 11px;
                 color: #b9bdc0;
                 margin-top: 10px;
             }
@@ -160,7 +95,7 @@
                     .second-link {
                         display: block;
                         color: #00b7f3;
-                        font: 700 13px/13px 'Pontano';
+                        font: 700 13px/13px;
                         line-height: 120%;
                         padding-left: 13px;
                         margin-top: 15px;
@@ -183,6 +118,21 @@
         }
       .edit-delete {
         padding: 0;
+        text-align: right;
+        .delete {
+            margin-right: 0;
+        }
+        .like {
+            color: #889197;
+            padding-left: 2rem;
+            background: url(../img/icons/like.png) 0 2px no-repeat;
+            min-height: 2rem;
+            margin-right: 1rem;
+            &:hover {
+                background-position: 0 -18px;
+                color: $blue_btn;
+            }
+        }
       }
     }
 }
@@ -221,6 +171,8 @@
   .content-wall {
     .post {
       .avatar {
+        float: none;
+        margin: 0 auto;
       }
       .info {
         padding-left: 20px;
@@ -231,10 +183,7 @@
 @media (max-width: 600px) {
   .content-wall {
     .post {
-      .avatar {
-        height: 50px;
-        width: 50px;
-      }
+      
       .info {
       }
     }
@@ -242,12 +191,6 @@
 }@media (max-width: 500px) {
   .content-wall {
     .post {
-      .avatar {
-        height: 160px;
-        width: 160px;
-      }
-      .info {
-        width: 100%;
           .plus-minus{
 
             position: relative;
@@ -272,7 +215,6 @@
               }
             }
           }
-      }
     }
   }
 }

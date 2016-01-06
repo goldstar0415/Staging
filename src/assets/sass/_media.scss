@@ -1,0 +1,837 @@
+@media (max-width: 991px) {
+  /* blog */
+  .main-blog-article-content .blog-content {
+      background-color: #F5F8FA !important;
+    }
+    .main-blog-article-content .article .title-blog {
+      background-color: #fff;
+      padding-top: 2rem !important;
+    }
+    .share {
+      bottom: 2rem;
+    }
+    .comments-section {
+      background-color: #F5F8FA !important;
+    }
+    activity-mobile {
+      text-align: center;
+    }
+    .article .article-img {
+      margin-bottom: 0;
+    }
+
+    .my-spots-section .share {
+      bottom: 1.5rem;
+    }
+    .article-wrapper, .article-wrap {
+    margin-bottom: 4rem;
+    padding: 0 !important;
+  }
+  .album-container .img-wrap .album-tools-wrap {
+    display: block;
+    position: absolute;
+  }
+  .photo-wrap .photo .album-tools-wrap {
+    display: flex;
+    margin-bottom: -34px;
+    flex-direction: row;
+    -webkit-justify-content: flex-end;
+   justify-content: flex-end;
+  }
+  .photo-wrap {
+    .photo {
+      min-height: 120px;
+    }
+  }
+  .search-img {
+    margin-bottom: 2rem;
+  }
+  header {
+    padding: 0;
+    nav {
+      float: left;
+      .menu-btn {
+        float: left;
+      }
+    }
+    .logo {
+      width: 160px;
+      float: right;
+      height: initial;
+    }
+    .logo-mini {
+      text-align: center;
+    }
+  }
+  .information-profile  {
+      text-align: center;
+      .info-links a {
+        display: inline-block;
+        float: none;
+      }
+    }
+
+  .tools-wrap {
+    .tools-hint-block {
+      ul {
+        li {
+          .path-map, .radius-map, .lasso-map {
+            display: none !important;
+          }
+        }
+      }
+    }
+  }
+  .add-friend {
+    top: 2.8rem;
+  }
+  .spot-thumb figure {
+    width: 10rem !important;
+    height: 10rem !important;
+  }
+    /*.tools li a {
+    width: 16px;
+    overflow: hidden;
+    display: block;
+    height: 16px;
+  } */
+   .tools li a {
+    overflow: hidden;
+    background-image: none;
+    padding-left: 0;
+    color: $blue_btn;
+  }
+  .my-spots-section .share {
+    bottom: 0.5rem !important;
+  }
+  .menu-profile ul li a span {
+    display: none;
+  }
+  .menu-profile ul {
+    text-align: center;
+  }
+  .menu-profile ul li {
+    float: none;
+  }
+
+  .album-container .img-wrap .album-tools-wrap, .album-container .img-wrap:hover .album-tools-wrap {
+    bottom: 5px !important;
+    margin-bottom: 0;
+  }
+  .photos li .delete {
+    display: block;
+  }
+  .avatar-block .bg-thumb {
+    margin-right: 0;
+  }
+}
+@media (max-width: 991px) and (min-width: 767px) {
+  .information-profile .avatar-wrap .avatar {
+    width: 10rem;
+    height: 10rem;
+  }
+  .sort-menu {
+    width: 100%;
+    .hide-wrap {
+      .close-popup {
+        width: 100%;
+      }
+    }
+  }
+  .tools-hint-block {
+    a.hide {
+      padding: 8px;
+      background-size: 95% !important;
+    }
+  }
+  .tools-wrap {
+    width: 80%;
+    //height: 100%;
+    .tools-hint-block {
+    }
+  }
+  .weather-wrap {
+    width: 100%;
+  }
+  .leaflet-left {
+    left: 0 !important;
+  }
+
+}
+@media (max-width: 767px) {
+  .friends-block {
+   .text-block {
+      width: 68%;
+    }
+    .review-img {
+      text-align: left;
+    }
+    .avatar-wrap {
+      width: 32%
+    }
+  }
+  .wall-tabs {
+    padding: 0;
+  }
+  .wall-tabs li {
+    width: 23%;
+    margin-right: 0;
+  }
+  .messages .message .content-messages .incoming-messages .incoming-avatar img, img.avatar {
+    width: 7rem;
+    height: 7rem;
+  }
+  .sidebar-menu-horizontal ul li a span {
+    display: none;
+    margin-top: 0 !important
+  }
+  .sidebar-menu-horizontal ul li {
+    width: 25%;
+  }
+  .sidebar-menu-horizontal ul li a {
+    height: 4rem;
+  }
+  .sort-menu {
+    margin-top: 20rem;
+  }
+  .tools-hint-block {
+    display: none;
+  }
+  .leaflet-top .leaflet-control {
+    margin-left: 1rem;
+    margin-top: 1rem;
+  }
+  .leaflet-bottom {
+    bottom: auto;
+    top: 6rem;
+  }
+  .spot-block {
+    padding-top: 2rem;
+  }
+  .friends-wrapper {
+    padding: 1rem;
+  }
+  .chat-conversation .dialog-user .avatar {
+    width: 7rem;
+    height: 7rem;
+  }
+  .chat-conversation .title-name {
+    margin-bottom: 2rem;
+  }
+  .messages .message .avatar {
+    width: 7rem;
+    height: 7rem;
+  }
+  .share-btn {
+    display: none !important;
+  }
+  .create-new-plan {
+    padding: 1.5rem 1rem;
+  }
+  .grey-bg {
+    margin-bottom: 1rem;
+  }
+  .leaflet-top.leaflet-right {
+    transform: rotate(90deg);
+    right: 1rem;
+    margin-right: 0;
+    top: -15px;
+    div {
+      background-color: rgba(0, 207, 255, 0.8);
+    }
+  }
+  .event {
+    padding-top: 15px;
+  }
+  .media-left, .media-right, .media-body {
+    width: 64%;
+    display: block;
+  }
+  .zoomer-user .media-body {
+    width: 100%;
+  }
+  .snap-content {
+    transform: none ;
+  }
+  .fixed {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    –webkit-overflow-scrolling: auto;
+    z-index: 999;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    ul {
+      margin-bottom: 0;
+      padding: 1rem 0;
+      li {
+          vertical-align: middle;
+          width: 4rem;
+        }
+        li.chat-input {
+          width: calc(100% - 9.5rem);
+          border-left: 1px solid #eee;
+        }
+        .add-attach {
+          display: block;
+          float: right;
+          width: 15px;
+          height: 16px;
+          margin-top: 0;
+          background: url(../img/icons/clip-photo.png) 0 2px no-repeat;
+          margin-left: 1rem;
+        }
+        textarea {
+          height: 4rem;
+          background-color: #fff;
+          border: 0;
+          margin-top: 0;
+          padding-top: 1rem;
+          font-size: 1.6rem;
+          &:hover, &:focus {
+            box-shadow: none;
+            border: 0;
+          }
+        }
+        .submit-send {
+          height: 3.5rem;
+          width: 3.5rem;
+          display: block;
+          background: url(../img/icons/send-btn.png) no-repeat;
+          background-size: contain;
+        }
+      }
+    }
+    .chat-conversation .dialog-user .dialog-content .dial:after {
+      top: 2rem;
+    }
+    .modal-content, .modal-dialog {
+        transform: none !important;
+    }
+    .sidebar-menu-horizontal {
+      background-color: #fff;
+      border: 0;
+      ul {
+        height: 5rem;
+        padding-top: 5px;
+        webkit-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+        -moz-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+        box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+        li {
+          border: 0;
+          background-color: #fff;
+          a {
+            background-image: url(../img/icons/mobile-vertical-menu.png) !important;
+          }
+        }
+      }
+    }
+    .search-filters {
+      .numbers-events {
+        border: 0;
+        border-bottom: 2px solid $blue_btn;
+        padding-bottom: 1rem;
+        display: inline-block;
+        margin-bottom: 2rem;
+        p {
+          text-align: center;
+          color: #333;
+          font-weight: bold;
+          text-transform: uppercase;
+          font-size: 2rem;
+        }
+      }
+    }
+    .weather-wrap {
+      .firstBlock-wrapper {
+        .right-now {
+          text-align: center;
+          color: #333;
+          font-weight: bold;
+          text-transform: uppercase;
+          font-size: 2rem;
+          border-bottom: 2px solid $blue_btn;
+          width: 12rem;
+          margin: 0 auto 1rem;
+        }
+      }
+    }
+
+    .weather-wrap .weekForecast .weekForecast-wrapper .weatherIcon div {
+      background-size: 7rem !important;
+    }
+  .menu-profile ul li {
+    width: 11.5%;
+  }
+  .hide-menu-profile {
+    display: block;
+    width: 5rem;
+    height: 5rem;
+    position: absolute;
+    right: 2rem;
+    top: -7rem;
+    background-color: rgba(159, 173, 173, .8);
+    background-image: url(../img/icons/arrows2.png);
+    background-position: 10px -23px;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+  }
+  .show-menu-profile {
+    display: block;
+    width: 5rem;
+    height: 5rem;
+    position: absolute;
+    right: 2rem;
+    top: 77vh;
+    background-color: rgba(159, 173, 173, .8);
+    background-image: url(../img/icons/arrows2.png);
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    background-position: 10px 15px;
+  }
+  .create .save-cancel {
+    text-align: center !important;
+  }
+  .friends-block {
+    border-bottom: 0;
+  }
+  .photo-viewer .location.visible-xs{
+    padding: 2rem;
+    padding-bottom: 1rem;
+      padding-left: 3rem;
+      font-size: 1.4rem;
+      color: #000;
+      margin-bottom: 10px;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: url(../img/icons/map-loc.png) no-repeat 1rem center;
+  }
+  .viewer-wrap .modal-dialog .modal-content {
+    border-radius: 0;
+  }
+  .viewer-wrap .modal-dialog .photo-viewer .close {
+    top: -9rem;
+    &.without-location {
+      top: -3rem;
+    }
+  }
+  .media-nopad:first-child {
+    padding-right: 1rem !important;
+  }
+  .media-nopad:nth-child(2) {
+    padding-left: 1rem !important;
+  }
+  .fc-month-view {
+    .fc th, .fc td {
+    border: 0;
+    }
+    .fc-row .fc-content-skeleton td, .fc-row .fc-helper-skeleton td {
+      background-color: #fff;
+    }
+    .fc-today {
+      border: 1px solid #e2e2e2 !important;
+      background-color: #fff !important;
+    }
+  }
+     .fc-ltr .fc-basic-view .fc-day-number {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+    .share-wrap .share-buttons {
+      display: none;
+    }
+    .event .place {
+      margin-top: 0;
+    }
+    .mobile-nopad {
+      padding: 0 !important;
+    }
+    .spot-bg {
+      background-color: #f4f5f6;
+      padding: 2rem 0;
+      .spot-section {
+        background-color: #fff;
+        padding: 2rem 1rem;
+      }
+    }
+    .event-main-info, .event-additionl-info, .event-upload-photos, .event-add-video {
+      border: 0;
+    }
+    .mobile-text-center {
+      text-align: center;
+      .green-btn {
+        float: none !important;
+      }
+    }
+}
+@media (max-width: 767px) {
+  .one-spot-section .share {
+    right: 0;
+  }
+  img.avatar {
+    width: 10rem;
+    height: 10rem;
+    margin: 0 auto;
+  }
+  .friends-block .avatar-wrap {
+    width: 16%;
+  }
+  .friends-block .text-block {
+    width: 84%;
+  }
+  .album-container .img-wrap img, .photo-wrap .photo {
+    height: auto;
+    min-height: auto;
+  }
+  .photo-wrap .photo img {
+    width: auto;
+    height: auto;
+    width: 100%;
+    min-height: auto;
+  }
+  .messages .message .content-messages .incoming-messages .incoming-avatar {
+    width: 11rem;
+  }
+  .menu-profile ul li {
+    padding-left: 0;
+  }
+  .main-blog-content .article {
+    border: 0;
+  }
+  .location-link {
+    background-position: 0 0 !important;
+    padding-left: 2rem !important;
+  }
+  .main-blog-content .article .share {
+    bottom: .5rem !important;
+  }
+  .main-blog-content .article .article-info {
+    margin-top: 2rem;
+  }
+  .sort-menu {
+    width: 100%;
+  }
+  .sidebar-menu-wrap .show-menu-profile {
+    top: 5px;
+    right: 0;
+    transform: rotate(-90deg);
+  }
+  .edit-delete.album {
+    top: 1rem;
+  }
+  .btn-back {
+    top: 2rem;
+  }
+  .bg-thumb {
+    .avatar, .avatar img {
+      width: 25rem;
+      height: 25rem;
+    }
+  }
+  .saved-search {
+    .share {
+      right: 3.5rem;
+      bottom: 1rem;
+    }
+    .delete {
+      bottom: 1.4rem;
+      right: 0 !important;
+    }
+
+  }
+}
+@media (max-width: 640px) {
+  /* blog */
+  .article-info .share {
+    bottom: 2.5rem;
+  }
+  .edit-delete.album {
+    top: 8px;
+  }
+  .edit-delete.album {
+    position: relative;
+    margin-top: 0 !important;
+    padding-bottom: 0;
+  }
+  .wall-tabs li a {
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 11px;
+  }
+  facebook-events a {
+    position: relative !important;
+    top: 5px !important;
+    right: 2rem !important;
+  }
+  .avatar img {
+    width: 7rem !important;
+    height: 7rem !important;
+  }
+  .review-img {
+    width: 7rem;
+    float: left !important;
+    margin-right: 5px;
+    .fav-avatar-icon {
+        float: none !important;
+        margin: 0 auto !important;
+        height: 7rem !important;
+        width: 7rem !important;
+    }
+  }
+  .chat-conversation .dialog-friend .avatar {
+    height: 7rem;
+    width: 7rem !important;
+  }
+  .fc-basic-view .fc-body .fc-row {
+    min-height: 2.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .sidebar-menu-horizontal {
+    ul {
+      li {
+        width: 25%;
+        &:nth-child(3), &:nth-child(4) {
+          margin-top: 0;
+          a {
+            padding: 20px 0px 20px 31px;
+          }
+        }
+      }
+    }
+  }
+  .avatar img {
+    width: 7rem !important;
+    height: 7rem !important;
+  }
+  .search-filters {
+    height: calc(100% - 14px);
+    > div {
+      margin-bottom: 1rem;
+    }
+    .sort-date {
+      .date-filters {
+        .form-group {
+          width: 50%;
+          input {
+            width: 90%;
+          }
+        }
+      }
+    }
+    .filters-button {
+      width: 100%;
+    }
+    .search-by-name {
+      .search-input {
+        margin-bottom: 15px;
+      }
+    }
+  }
+  .sidebar-menu-wrap {
+    position: relative;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    transform: rotate(0deg);
+    height: initial;
+    .sidebar-menu-vertical {
+      li {
+        display: none;
+        &:first-child {
+          display: block;
+          float: right;
+          border: none;
+          a {
+            transform: rotate(90deg);
+          }
+        }
+      }
+    }
+  }
+  header {
+    nav {
+      ul {
+        li {
+          .user-name {
+            max-width: 140px;
+            padding: 0 5px;
+            span {
+              &:first-of-type {
+                max-width: 60%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .create .save-cancel input {
+    width: 12.5rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .photo-wrap {
+    .photo {
+      min-height: 160px;
+    }
+  }
+  .edit-delete.album {
+    top: 12px;
+  }
+  .photo .album-tools-wrap {
+    right: 6px !important;
+    top: 1px;
+    bottom: auto;
+    left: auto !important;
+    display: flex !important;
+  }
+}
+@media (max-width: 450px) {
+  .sort-menu {
+    width: 100%;
+  }
+  .leaflet-left {
+    left: 0 !important;
+  }
+  .menu-profile ul li {
+    padding-left: 3px;
+  }
+  .friends-wrapper .avatar img {
+    width: 7rem !important;
+    height: 7rem !important;
+  }
+  .bg-thumb .avatar, .bg-thumb .avatar img {
+    width: 20rem !important;
+    height: 20rem !important;
+    margin: 1rem auto;
+  }
+  .event .avatar, .event .avatar img {
+    width: 7rem !important;
+    height: 7rem !important;
+    margin: 0;
+  }
+  .spot-thumb figure {
+    margin: 2rem auto;
+    width: 15rem !important;
+    height: 15rem !important;
+  }
+  .btn-back {
+    position: relative !important;
+    top: 2rem !important;
+  }
+  .spot-thumb figure {
+    margin-top: 0;
+    width: 7rem !important;
+    height: 7rem !important;
+  }
+  .friends-block {
+    .avatar-wrap {
+      width: 30%;
+    }
+    .text-block {
+      width: 70%;
+    }
+  }
+}
+@media (max-width: 400px) {
+  /* blog */
+  .buttons-block .add-btn {
+    width: 100%;
+    margin-left: 0;
+  }
+  .tools-wrap .tools-hint-block ul li {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  header {
+    padding: 0;
+    .logo {
+      width: 90px;
+    }
+    .menu-btn {
+      .menu-icon {
+        margin: 24px 10px;
+        background-size: 100%;
+      }
+    }
+    nav {
+      ul {
+        .map-profile {
+          a {
+            padding: 0 1.5rem;
+            span {
+              img {
+                width: 26px;
+                height: 26px;
+              }
+            }
+          }
+        }
+        li {
+          .user-name {
+            max-width: 120px;
+          }
+        }
+      }
+    }
+  }
+    .weather-wrap {
+    .firstBlock-wrapper {
+      height: auto;
+      .weatherImg-block, .parameters {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  .upload-photos .photos .add-img img {
+    width: 11rem;
+  }
+}
+}
+@media (max-width: 350px) {
+  .photo-wrap {
+    width: 100%;
+    .photo {
+      min-height: 160px;
+    }
+  }
+  .share {
+    bottom: 3rem;
+  }
+}
+@media (min-device-width: 240px) and (max-device-width: 767px) and (orientation: landscape) {
+  .sidebar-menu-wrap {
+    position: relative;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    -webkit-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    transform: rotate(0deg);
+    height: initial;
+    .sidebar-menu-vertical {
+      li {
+        display: none;
+        &:first-child {
+          display: block;
+          float: right;
+          border: none;
+          a {
+            transform: rotate(90deg);
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,12 +10,14 @@
       </div>
     </div>
 
-    <div ng-repeat="spot in Attachments.items.spots" class="media media-visible padding-bottom add-event">
-      <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="pull-left wrap-img-event">
-        <img class="media-object attachment-link" ng-src="{{spot.cover_url.medium}}">
-      </a>
-
-      <div class="media-body attach-event">
+    <div class="clearfix"></div>
+    <div ng-repeat="spot in Attachments.items.spots" class="media media-visible padding-bottom add-event row">
+      <div class="col-md-2 col-xs-2">
+        <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="pull-left wrap-img-event nopad">
+          <img class="media-object attachment-link" ng-src="{{spot.cover_url.medium}}">
+        </a>
+      </div>
+      <div class="attach-event col-md-9 col-xs-9">
 
         <h3 class="media-heading ">
           <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-img clearfix"

@@ -1,37 +1,43 @@
 <header>
-  <nav class="hidden-md hidden-lg">
-    <a class="menu-btn" snap-toggle="left">
-      <span class="menu-icon"></span>
-    </a>
+  <nav class="hidden-md hidden-lg nav-mobile">
     <ul>
-      <li ng-if="Header.$state.current.name == 'index'" class="separator-bg map-profile">
-        <a ui-sref="index" ui-sref-active="active"><span>Map</span><span class="map-icon"></span></a>
+      <li class="separator-bg map-profile"> <!-- ng-if="Header.$state.current.name == 'index'" -->
+        <a ui-sref="index" ui-sref-active="active"><span class="map-icon"></span></a>
       </li>
-      <li ng-if="$root.currentUser && Header.$state.current.name != 'index'" class="map-profile">
+      <!-- <li ng-if="$root.currentUser && Header.$state.current.name != 'index'" class="map-profile">
         <a ui-sref="profile.main({user_id: $root.currentUser.alias || $root.currentUser.id})" ui-sref-active="active" class="user-name">
           <span>{{$root.currentUser.first_name}}</span>
           <span class="user-ava"><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
+        </a>
+      </li> -->
+      <li class="logo-mini">
+        <a ui-sref="index"><img src="assets/img/header/logo_mini.png" alt="logo"></a>
+      </li>
+
+      <li>
+        <a class="menu-btn pull-right" snap-toggle="left">
+          <span class="menu-icon"></span>
         </a>
       </li>
     </ul>
   </nav>
 
-  <div class="logo">
+  <div class="logo hidden-sm hidden-xs">
     <a ui-sref="index"><img src="assets/img/icons/logo.svg" alt="logo"></a>
   </div>
 
   <nav class="hidden-sm hidden-xs">
     <ul>
+
+      <li class="map-profile separator-bg">
+        <a ui-sref="index" ui-sref-active="active">
+          <span class="map-icon"></span>
+        </a>
+      </li>
       <li class="separator-bg map-profile" ng-if="$root.isRole($root.currentUser, 'admin')">
         <a ng-href="{{Header.BACKEND_URL}}/admin" target="_blank">
           <span>Admin</span>
           <span class="admin-icon"></span>
-        </a>
-      </li>
-      <li class="map-profile separator-bg">
-        <a ui-sref="index" ui-sref-active="active">
-          <span>Map</span>
-          <span class="map-icon"></span>
         </a>
       </li>
       <li ng-if="!$root.currentUser" class="separator-bg authorisation">

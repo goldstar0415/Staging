@@ -1,7 +1,7 @@
-<div class="title">
-  <h2 ng-hide="CreateAlbum.album.id" class="title-name">Create new album</h2>
+<div class="text-center">
+  <h2 ng-hide="CreateAlbum.album.id" class="title-name nav-green2">Create new album</h2>
 
-  <h2 ng-show="CreateAlbum.album.id" class="title-name">Edit album</h2>
+  <h2 ng-show="CreateAlbum.album.id" class="title-name nav-green2">Edit album</h2>
 </div>
 <div class="col-xs-12 no-pad">
   <form ng-submit="CreateAlbum.createAlbum(form)" role="form" name="form" class="create" novalidate>
@@ -10,7 +10,7 @@
         <label>Title</label>
       </div>
       <div class="col-xs-9 no-pad input-width">
-        <input placeholder="Start typing..." ng-minlength="3" ng-maxlength="128" name="title"
+        <input placeholder="Start typing..." class="form-control  " ng-minlength="3" ng-maxlength="128" name="title"
                ng-model="CreateAlbum.album.title" type="text">
 
         <div class="error-message-inline" ng-messages="form.title.$error"
@@ -49,7 +49,6 @@
     </div>
 
     <div class="col-xs-12 upload-photos">
-      <h3>Add photos</h3>
 
       <div class="col-xs-12 no-pad">
         <uploader drop-zone="true"></uploader>
@@ -68,9 +67,9 @@
     </div>
 
 
-    <div class="col-xs-12 save-cancel">
-      <input type="submit" value="Save" class="save">
-      <input type="button" value="Cancel" ui-sref="photos.list({user_id: currentUser.id})" class="cancel">
+    <div class="col-xs-12 save-cancel text-right">
+      <input type="submit" value="SAVE" class="save">
+      <input type="button" value="CANCEL" ui-sref="photos.list({user_id: currentUser.id})" class="cancel">
     </div>
   </form>
 </div>

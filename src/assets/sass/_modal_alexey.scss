@@ -174,7 +174,7 @@
             .choose-album-name {
               margin: 0px;
               padding-left: 10px;
-              font: 500 20px/26px 'Questrial';
+              font: 500 20px/26px;
             }
             .back {
               height: 15px;
@@ -230,9 +230,6 @@
       }
       //          /body
       .modal-footer {
-        &.upload-block {
-          text-align: center;
-        }
       }
     }
   }
@@ -293,6 +290,10 @@
   width: 100%;
   padding: 3px 3%;
   min-height: 2.4rem;
+
+  &.choose-spot {
+    height: 7rem;
+  }
   .time{
     margin: 10px 10px 0 50px;
 
@@ -376,7 +377,7 @@
 
 .saved-search-description {
   display: block;
-  font: 12px 'Pontano';
+  font: 12px;
   color: grey;
   margin-top: 6px;
 }
@@ -389,7 +390,7 @@
 .activity-title {
   a {
     color: #46799b;
-    font: 400 14px/16px 'Questrial';
+    font: 400 14px/16px;
     &:hover {
       color: #124d76;
       @include transition_color;

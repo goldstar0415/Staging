@@ -3,18 +3,15 @@
   border-bottom: 1px solid $light_grey;
   .review-img {
     padding: 0;
-    width: 64px;
-    height: 64px;
+    text-align: center;
+  }
+  .avatar-wrap {
+    width: 10rem;
     float: left;
-    img {
-      max-width: 100%;
-      min-width: 100%;
-      min-height: 64px;
-    }
   }
   .text-block {
     padding: 0;
-    width: 87%;
+    width: calc(100% - 10rem);
     float: left;
     padding-left: 15px;
     h3 {
@@ -27,6 +24,9 @@
           overflow: hidden;
           margin: 0;
           line-height: 28px;
+          font-size: 2rem;
+          font-weight: bold;
+          color: #000;
           &:hover {
             color: #124d76;
             @include transition_color;
@@ -36,11 +36,14 @@
     }
     p {
       margin: 0 0 5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .description {
-      font: 13px/19px 'Pontano' !important;
+      font: 16px/19px;
       margin: 10px 0 !important;
-    }
+      color: #889197;
+    }    
     .location-btn {
       border: 1px solid $green;
       border-radius: 5px;
@@ -79,27 +82,31 @@
   }
 }
 
+.friendmap-loc {
+  background: url(../img/icons/map-loc.png) no-repeat 0 0;
+  padding-left: 2rem;
+  padding-top: 0;
+  color:#000;
+  font-size: 14px;
+}
 .edit-delete {
   padding: 15px 0;
   a {
     display: inline-block;
-    margin-right: 15px;
-    color: $blue;
-    font: 13px/13px 'Pontano';
+    color: #889197;
+    font: 13px/13px;
     &:hover {
       color: $navy_blue;
       @include transition_color;
     }
   }
   .delete {
-    padding: 1px 0 0 12px;
+    padding: 0 0 0 2rem;
   }
   .edit {
-    background: url(../img/icons/ed.png) 1px 2px no-repeat;
-    padding: 1px 0 0 14px;
-    &:hover {
-      background: url(../img/icons/ed.png) 1px -13px no-repeat;
-    }
+    background: url(../img/icons/edit-ico.png)no-repeat;
+    padding: 0 0 0 2rem;
+    margin-right: 15px;
   }
 }
 
@@ -110,7 +117,9 @@
     @include input_hover_effects;
   }
 }
-
+location input {
+  min-height: 5rem;
+}
 @media (max-width: 1200px) {
   .friends-block {
     .avatar-wrap {
@@ -124,13 +133,6 @@
   }
 }
 
-@media (max-width: 767px) {
-  .friends-block {
-    .text-block {
-      width: 85%;
-    }
-  }
-}
 
 @media (max-width: 500px) {
   .friends-block {

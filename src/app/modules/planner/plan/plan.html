@@ -1,15 +1,16 @@
 <div class="col-xs-12 no-pad">
   <!-- section with spot -->
-  <section class="central no-margin-bottom clearfix">
+  <section class="no-margin-bottom clearfix">
     <div class="one-spot-section">
-      <div class="date">
-        <date-range item="Plan"></date-range>
-      </div>
+
 
       <h2 class="title-planner">{{Plan.title}}</h2>
 
       <p class="place">{{Plan.address}}</p>
 
+      <div class="date">
+        <date-range item="Plan"></date-range>
+      </div>
       <p class="description">
         <span>{{Plan.description}}</span>
       </p>
@@ -22,10 +23,6 @@
   <div ng-repeat="item in Plan.plan_attachments | orderBy:'position'">
     <section ng-if="item.attachment_type == 'activity'" class="central no-margin-bottom sub-event">
       <div class="media media-visible">
-        <a class="pull-left">
-          <img ng-src="{{item.category.icon_url}}" class="media-object fav-avatar-icon">
-        </a>
-
         <div class="media-body">
           <h2 class="media-heading title-planner">{{item.title}}
           </h2>
@@ -47,7 +44,7 @@
     <section ng-if="item.attachment_type == 'spot'" class="central no-margin-bottom sub-event">
       <div class="media media-visible">
         <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="pull-left">
-          <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" class="media-object fav-avatar-icon">
+          <img ng-src="{{item.cover_url.icon_url}}" alt="{{item.title}}" class="media-object fav-avatar-icon">
         </a>
 
         <div class="media-body">
@@ -78,7 +75,7 @@
   </div>
 
   <section class="comments-section">
-    <div class="comments-content clearfix">
+    <div class="comments-content clearfix hidden-xs">
       <ng-input message="Plan.message" attachments="Plan.attachments" on-submit="Plan.send()"></ng-input>
     </div>
 
@@ -92,13 +89,15 @@
         </div>
         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 info">
           <h3 class="name">
-            <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
+            <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}}
+              {{post.sender.last_name}}</a>
           </h3>
+
+          <p class="time">{{post.created_at | fromNow}}</p>
 
           <p class="line-break" ng-bind-html="post.body | linky:'_blank'"></p>
           <attachments items="post.attachments"></attachments>
 
-          <p class="time">{{post.created_at | fromNow}}</p>
 
         </div>
       </div>
@@ -114,4 +113,17 @@
   </section>
 
 
+</div>
+<div class="fixed visible-xs">
+  <ul class="list-inline">
+    <li><a class="add-attach" ng-click="NgInput.openActivityModal()"></a></li>
+    <li class="chat-input">
+      <textarea name="message" ng-model="NgInput.message" placeholder="Start typing..." ng-focus="NgInput.onFocus()"
+                ctrl-enter="NgInput.submit(form)" ng-maxlength="5000"
+                ng-required="!NgInput.attachments.photos.length && !NgInput.attachments.spots.length && !NgInput.attachments.areas.length && !NgInput.attachments.links.length"
+                class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-valid-maxlength ng-touched"
+                required="required"></textarea>
+    </li>
+    <li><input type="submit" class="submit-send" value=""></li>
+  </ul>
 </div>

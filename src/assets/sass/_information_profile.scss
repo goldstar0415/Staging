@@ -6,20 +6,27 @@
     padding: 0;
     .avatar {
       margin: -95px auto 0;
+      background-color: #fff;
+      width: 12rem !important;
+      height: 12rem !important;
       img {
         min-width: 100%;
+        border-radius: 50%;
+        width: 12rem !important;
+    height: 12rem !important;
       }
     }
   }
   .profile-name {
     margin-top: 10px;
-    font: 500 24px/26px 'Questrial';
     text-align: center;
 
     a {
       color: $blue;
       @include transition_color;
-      font: 500 20px/24px 'Questrial';
+      font-size: 2rem;
+      color: #000;
+      font-weight: bold;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -56,26 +63,28 @@
   .status {
     float: left;
     color: #a4a4a4;
-    font: 400 14px/14px 'Questrial';
+    font: 400 14px/14px;
     display: block;
     margin: 15px 0 0;
     padding: 10px 0 0 3rem;
   }
   .age {
-    font: 14px 'Questrial';
+    font: 14px;
     color: grey;
   }
   .location {
     color: grey;
-    font: 400 14px/14px 'Questrial';
+    font: 400 14px/14px;
     margin-top: 7px;
     //overflow: hidden;
     //white-space: nowrap;
     margin-bottom: 10px;
   }
   .biography {
-    font: 12px/21px 'Pontano';
-    margin-top: 20px;
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: #889197;
     .small, .full-text {
       word-wrap: break-word;
     }
@@ -84,7 +93,7 @@
     background: url(../img/icons/moderate.png) 0 7px no-repeat;
   }
   .info-links {
-    font: 14px/14px 'Pontano';
+    font: 14px/14px;
     margin: 5px 0;
     width: 100%;
     padding: 0;
@@ -130,22 +139,20 @@
 @media (max-width: 992px) {
   .information-profile {
     .avatar-wrap {
+      margin-top: 2rem;
+      z-index: 2;
       .avatar {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        img {
-          width: 100%;
-          height: 100%;
-          max-width: 160px;
-        }
+          float: none;
+          margin: 0 auto;
       }
     }
     .activity-mobile {
       padding-left: 15px;
       .profile-name {
         a {
-          text-align: left;
+          text-align: center;
+          font-size: 3.2rem;
+          overflow: visible;
         }
       }
     }
@@ -157,17 +164,5 @@
   }
 }
 
-@media (max-width: 500px) {
-  .information-profile {
-    .avatar-wrap {
-      width: 160px;
-      height: 160px;
-    }
-    .activity-mobile {
-      width: 100%;
-      padding: 0;
-    }
-  }
-}
 
 /// end information profile

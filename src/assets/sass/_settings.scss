@@ -28,6 +28,9 @@
     float: right;
     outline: none !important;
   }
+  input[type="radio"] {
+    margin-top: 1.5rem !important;
+  }
 }
 
 .radio {
@@ -41,14 +44,18 @@
 
 .save-btn {
   @include button;
-  background-color: $green;
+  background-color: $blue_btn;
   width: auto;
   padding: 5px 36px;
   float: right;
   border: none;
+  border-radius: 0;
+  font-size: 1.4rem;
+  height: 4rem;
+  text-transform: uppercase;
   @include transition_bg_color;
   &:hover {
-    background-color: $light_green;
+    background-color: $light_blue_btn;
     box-shadow: none;
     border: none;
   }
@@ -56,17 +63,53 @@
 
 .radio-group {
   margin-bottom: 5px;
+  label {
+    padding-top: 0 !important;
+  }
 }
+.avatar-block {
+    padding: 0;
+    .bg-thumb {
+      background-color: #fff;
+      border: 1px solid #e9edf0;
+      padding: 5rem 2rem;
+      margin-right: 2rem;
+      text-align: center;
+      h2 {
+        margin-top: 0;
+      }
+      .green-btn {
+        height: 40px;
+        background-color: $blue_btn;
+        border-radius: 0;
+        &:hover {
+          background-color: $light_blue_btn;
+        }
+      }
+    }
 
+  }
+.avatar img {
+    width: 100%;
+}
 .settings-block {
   border-bottom: 1px solid $light_grey;
-  padding-bottom: 20px;
-  .avatar-block {
-    padding: 0;
+  padding: 2rem;
+
+  input[type="text"], input[type="email"], input[type="password"], select, .ui-select-toggle {
+    height: 5rem;
+    border-radius: 0;
   }
-  .avatar img {
-    width: 100%;
+  textarea {
+    border-radius: 0;
   }
+  .eye {
+    margin-top: -3.1rem;
+  }
+  .ui-select-toggle {
+    padding: 1.5rem;
+  }
+
   .main-information {
     padding: 0;
   }
@@ -74,7 +117,13 @@
     border-bottom: none;
   }
   label {
-    font: 200 16px/22px 'Questrial';
+    font: 200 16px/22px;
+  }
+  .no-pad {
+    label {
+      font-weight: bold;
+      padding-top: 1.3rem;
+    }
   }
   .label-width, .input-width {
     width: 50%;
@@ -144,21 +193,64 @@
 
 .compass {
   display: block;
-  width: 18px;
-  height: 12px;
+  width: 4rem;
+  height: 4rem;
   background: url(../img/icons/compass.png) no-repeat;
   position: absolute;
-  top: 30%;
-  right: 1.5rem;
-  &:hover, &:active, &:focus {
-    background-position: 0 -16px;
-  }
+  top: 0.5rem;
+  right: 0.5rem !important;
+  z-index: 2;
 }
+/* radiobox */
+input[type="radio"] {
+    display: none;
+}
+label {
+  cursor: pointer;
+  color: #555;
+}
+input[type="radio"] + label span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 30px;
+    height: 21px;
+    background: url(../img/checkbox.png) 0px center no-repeat;
+}
+input[type="radio"]:checked + label span {
+    background: url(../img/checkbox.png) -39px center no-repeat;
+}
+.social-input {
+  padding-left: 6rem;
+  background: url(../img/social-sprite.png) center 0 no-repeat;
+}
+#fb_input {
+  background-position: 4px 4px;
+}
+#tw_input {
+  background-position: 4px -46px;
+}
+#in_input {
+  background-position: 4px -102px;
+}
+#t_input {
+  background-position: 4px -157px;
+}
+#vk_input {
+  background-position: 4px -214px;
+}
+#custom_input {
+  background-position: 4px -269px;
+}
+#google_input {
+  background-position: 4px -322px;
+}
+
+
 
 .avatar-block {
   .avatar {
-    margin-left: 2rem;
-    margin-bottom: 2rem;
+    margin: 2rem auto;
+    margin-top: 0;
   }
 }
 
@@ -166,8 +258,25 @@
   @include input_hover_effects;
   font-family: 'Ubuntu bold';
 }
-
-
+.social-section {
+  padding-top: 1rem;
+  .radio-group {
+    margin-top: .5rem;
+  }
+}
+@media (max-width: 767px) {
+  .bg-thumb {
+    margin-right: 0 !important;
+    margin-bottom: 2rem;
+  }
+  .central {
+    padding-top: 0 !important;
+    .title-name {
+      margin-top: 3rem;
+      margin-bottom: 0;
+    }
+  }
+}
 @media (max-width: 650px) {
   .settings-block {
     .avatar-block, .main-information {

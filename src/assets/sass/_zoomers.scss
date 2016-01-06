@@ -12,56 +12,68 @@ ul {
   display: block;
   margin-bottom: 2rem;
   .search-block {
-    background: $light_grey;
-    border-radius: 8px 8px 0 0;
-    padding: 10px;
+    background: transparent;
+    border-radius: 0;
+    padding: 10px 0;
     margin: 0 !important;
+    input {
+      height: 5rem;
+    }
     .search-btn {
-      background: $green;
       border: 0;
       color: $white;
-      height: 34px;
+      background: url(../img/header/header_search.png) center center no-repeat $blue_btn;
+      width: 50px;
+      height: 50px;
+      border-radius: 0;
     }
   }
-
+.zoomer-user {
+  a {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+  }
+}
   .followers {
-    background: $white;
     position: relative;
-    border: 1px solid $light_grey;
-    border-radius: 0 0 8px 8px;
+    border: 0;
+    border-radius: 0;
+    background-color: #fff;
     .post {
+      border: 0;
       .media {
         padding-bottom: 15px;
       }
       .media-body-content {
-        padding-left: 15px;
+        padding-left: 0;
       }
     }
     .avatar {
-      float: left;
+      float: none;
       width: 120px;
       height: 120px;
-      -webkit-border-radius: 70px;
-      -moz-border-radius: 70px;
-      border-radius: 70px;
-      margin: 0;
-      border: 3px solid $white;
-      -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
-      -moz-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
-      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      margin: 0 auto;
+      border: 2px solid #a6b1b7;
       background: $white;
+      padding: .5rem;
+      box-shadow: none;
     }
   }
 
   .info {
+    text-align: center;
     .age {
-      font: 400 15px/14px 'Questrial';
+      font: 400 15px/14px;
       color: grey;
       margin-bottom: 10px;
     }
     .counters {
       margin: 10px 0;
-      font: 13px/13px 'Questrial';
+      font: 13px/13px;
       display: flex;
       .e-count {
         float: left;
@@ -73,32 +85,43 @@ ul {
       }
       .f-count {
         display: block;
-        height: 12px;
         float: left;
-        padding: 0 0 2px 18px;
-        margin-left: 10px;
-        background: url(../img/icons/count.png) 0 -34px no-repeat;
+        padding: 18px 10px;
+        margin-left: 0;
+        background: url(../img/icons/follower.png) no-repeat;
         color: $blue;
+        background-position: center top;
+        font-size: 2.4rem;
+        margin-bottom: 0;
+        line-height: 2rem;
+        color: #222;
+        span {
+          color: #929fa7;
+        }
       }
     }
   }
   .events {
     width: 100%;
     padding-left: 0;
+    .events-width {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
     li {
       float: left;
     }
     img {
       display: block;
-      width: 100px;
-      height: 100px;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
       border-radius: 5px;
       margin-bottom: 10px;
+      max-width: 100%;
     }
+
     .frame {
-      border: 3px solid $white;
+      border: 1px solid $white;
       -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
       -moz-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
       box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
@@ -123,12 +146,15 @@ ul {
     }
   }
   .name {
-    margin-top: 0;
+    margin-top: 1rem;
     margin-bottom: 5px;
+    text-align: center;
     a {
-      font: 600 22px/22px 'Questrial';
-      color: $blue;
+      color: #222;
       word-break: break-all;
+      font-size: 2rem;
+     font-weight: bold;
+     line-height: 4rem;
       &:hover {
         color: $navy_blue;
         text-decoration: none;

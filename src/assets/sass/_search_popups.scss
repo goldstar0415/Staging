@@ -35,7 +35,7 @@
           margin: 60px auto;
           display: block;
           width: 200px;
-          font: 500 26px/26px 'Questrial';
+          font: 500 26px/26px;
           box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .45);
           z-index: 10;
           background-color: $green;
@@ -56,14 +56,24 @@
   .tools-hint-block {
     padding: 20px 10px;
     background: #0c2638;
-    border-radius: 8px 8px 0 0;
+    border-radius: 0;
     color: #fff;
     text-align: center;
     position: relative;
     top: 20px;
+    height:284px;
     .close {
-      margin-top: -15px;
-      margin-right: -8px;
+      margin-top: -1rem;
+      margin-right: 0;
+      background-image: url(../img/icons/close.png);
+      opacity: 1;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 16px;
+      width: 16px;
+      span {
+        display: none;
+      }
     }
     a.hide {
       display: block !important;
@@ -75,34 +85,66 @@
       right: 15px;
     }
     h2 {
-      font: 500 24px/38px 'Questrial';
+      font: 500 24px/38px;
       color: #fff;
+      font-size: 2rem;
       span {
         display: block;
+        font-size: 2.4rem;
+        margin-bottom: 1rem;
       }
     }
     p {
-      font: 500 20px/26px 'Questrial';
+      font: 500;
+      font-size: 1.6rem;
+      color: $href_color;
     }
     ul {
       padding: 0;
       li {
-        width: 50px;
+        width: 60px;
         height: 50px;
-        border-radius: 5px;
-        border: 1px solid #fff;
+        border-radius: 0; 
+        border: 0;
         display: inline-block;
-        margin: 22px 22px 15px;
+        margin: 20px 10px;
         font: 600 14px/20px 'Ubuntu light';
+        background-color: $dark_blue_hover;
+        color: $href_color;
+        &.path a{
+          background: url(../img/icons/sprite-popup.png) no-repeat;
+          background-position: 4px 0;
+           &:hover {
+            color: #fff;
+            background-position: 4px -53px; 
+          }
+        }
+        &.radius a {
+          background: url(../img/icons/sprite-popup.png) no-repeat;
+          background-position: -70px 0;
+           &:hover {
+            color: #fff;
+            background-position: -70px -53px; 
+          }
+        }
+        &.lasso a {
+          background: url(../img/icons/sprite-popup.png) no-repeat;
+          background-position: -148px 0;
+           &:hover {
+            color: #fff;
+            background-position: -148px -53px; 
+          }
+        }
         a {
           display: block;
+          padding: 1rem;
+          height: 5.5rem;
+          width: 6rem;
         }
         .path-map, .radius-map, .lasso-map {
-          border-bottom-left-radius: 8px;
-          border-bottom-right-radius: 8px;
-          border: 2px solid #bdbdbd;
           box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .28);
           height: 0;
+          border-radius: 0;
         }
         .path-map {
           background: url(../img/path-map.png) no-repeat center top;
@@ -120,9 +162,8 @@
           border: none;
         }
         &:hover {
-          border: 1px solid #0874be;
-          background-color: #fff;
-          @include transition_bg_color;
+          border: 0;
+          background-color: transparent;
           .path-map, .radius-map, .lasso-map {
             position: absolute;
             width: 100%;
@@ -132,6 +173,7 @@
             height: 170px;
             //transition: height 5s;
             //transition: display 5s;
+            border: 2px solid #0b2639 !important;
             transition: height .5s ease;
           }
         }
@@ -147,7 +189,7 @@
   position: relative;
   border-radius: 6px;
   p {
-    font: 500 28px/34px 'Questrial';
+    font: 500 28px/34px;
     color: #0c2638;
     text-align: center;
     padding: 1em;
@@ -158,7 +200,7 @@
   //width: 500px;
   padding: 0;
   position: absolute;
-  right: -220px;
+  right: -225px;
   top: 54%;
   bottom: 25%;
   display: block;
@@ -172,23 +214,16 @@
     padding: 0;
     margin: 0;
     li {
-      font: 500 14px/24px 'Questrial';
+      font: 500 14px/24px;
       color: #fff;
-      background-color: #777;
+      background-color: #929fa7;
       display: inline-block;
-      border-left: 1px solid #fff;
+      border-left: 1px solid #aabac1;
       float: left;
       &:first-child {
         width: 60px;
+        border-left: 0;
       }
-      &:last-child {
-        border-right: 1px solid #fff;
-      }
-      &:hover {
-        background-color: #03b5d4;
-        @include transition_bg_color;
-      }
-
       a {
         color: #fff;
         display: block;
@@ -197,26 +232,55 @@
         text-align: center;
       }
       .full-small {
-        background: url(../img/icons/vertical_menu.png) 20px 16px no-repeat;
-        padding: 27px 30px;
+        background: url(../img/icons/right-arrow.png) 10px 8px no-repeat;
+        padding: 25px 30px;
       }
       .events {
-        background: url(../img/icons/events-icon.png) 20px 17px no-repeat;
+        background: url(../img/icons/vertical-menu.png) 15px -159px no-repeat;
+        &:hover, &:active {
+          background-position: 15px -6px;
+        }
       }
       .recreation {
-        background: url(../img/icons/recreation-icon.png) 20px 17px no-repeat;
+        background: url(../img/icons/vertical-menu.png) -90px -159px no-repeat;
+        &:hover, &:active {
+          background-position: -90px -6px;
+        }
       }
       .pit-stops {
-        background: url(../img/icons/pit-stops-icon.png) 20px 17px no-repeat;
+        background: url(../img/icons/vertical-menu.png) -226px -159px no-repeat;
+        &:hover, &:active {
+          background-position: -226px -6px;
+        }
       }
       .weather-link {
-        background: url(../img/icons/weather-icon.png) 20px 17px no-repeat;
-
+        background: url(../img/icons/vertical-menu.png) -347px -159px no-repeat;
+        &:hover {
+          background-position: -347px -6px;
+        }
       }
-    }
-    .active {
-      background-color: #03b5d4;
-      @include transition_bg_color;
+      &:hover, &.active {
+        background-color: #fff;
+        @include transition_bg_color;
+        .weather-link {
+          background-position: -347px -6px;
+        }
+        .pit-stops {
+          background-position: -226px -6px;
+        }
+        .recreation {
+          background-position: -90px -6px;
+        }
+        .events {
+          background-position: 15px -6px;
+        }
+        a {
+          color: #00cfff;
+        }
+        .full-small {
+          background-position: -65px 8px;
+        }
+      }
     }
   }
 }
@@ -230,46 +294,60 @@
   z-index: 101;
   background: #fff;
   width: 450px;
-  .hide-wrap {
-    position: fixed;
-    bottom: 0;
-    padding: 0;
     .close-popup {
-      height: 50px;
-      width: 450px;
-      color: #fff;
-      background-color: $navy_blue;
-      font: 500 20px/20px 'Questrial';
-      padding: 12px 15px;
-      text-align: center;
+      height: 51px;
+      width: 49px;
+      background: url(../img/icons/right-arrow.png) 6px 10px no-repeat;
+      padding: 27px 18px;
+      background-color: #929fa7;
       display: block;
       @include transition_bg_color;
+      position: absolute;
+      left: -51px;
+      top: -3px;
+      transform: rotate(-90deg);
       &:hover {
-        background-color: $blue;
-      }
+        background-color: #fff;
+        background-position: -68px 10px;
+      
     }
   }
 }
 
 .sidebar-menu-horizontal {
-  ul {
+	position: relative;
+  	ul {
     padding: 0;
     margin: 0;
     width: 100%;
     li {
-      font: 500 14px/24px 'Questrial';
+      font: 500 14px/24px;
       color: #fff;
-      background-color: #379948;
+      background-color: #929fa7;
       display: inline-block;
       width: 25%;
-      border-right: 1px solid #fff;
-      border-left: 1px solid #fff;
+      border-left: 1px solid #aabac1;
       float: left;
-      &:hover {
-        background-color: #03b5d4;
-        @include transition_bg_color;
+      .events {
+        background: url(../img/icons/vertical-menu.png) 6px -159px no-repeat;
       }
-
+      .recreation {
+        background: url(../img/icons/vertical-menu.png) -100px -159px no-repeat;
+      }
+      .pit-stops {
+        background: url(../img/icons/vertical-menu.png) -237px -159px no-repeat;
+      }
+      .weather-link {
+        background: url(../img/icons/vertical-menu.png) -360px -159px no-repeat;
+      }
+      &:hover, &.active {
+        background-color: #fff;
+        @include transition_bg_color;
+        a {
+        	background-position-y: -6px;
+        	color: $blue_btn;
+        }
+      }
       a {
         color: #fff;
         display: table;
@@ -277,23 +355,6 @@
         padding: 15px 8px 15px 30px;
         text-align: left;
       }
-      .events {
-        background: url(../img/icons/events-icon.png) 10px 17px no-repeat;
-      }
-      .recreation {
-        background: url(../img/icons/recreation-icon.png) 10px 17px no-repeat;
-      }
-      .pit-stops {
-        background: url(../img/icons/pit-stops-icon.png) 10px 17px no-repeat;
-      }
-      .weather-link {
-        background: url(../img/icons/weather-icon.png) 7px 17px no-repeat;
-
-      }
-    }
-    .active {
-      background-color: #03b5d4;
-      @include transition_bg_color;
     }
   }
 }
@@ -318,11 +379,13 @@
   height: calc(100% - 104px);
   overflow-y: auto;
   .numbers-events {
-    padding: 10px 15px;
-    border-bottom: 1px solid rgba(217, 217, 217, .6);
+    padding: 12px 15px;
+    border: 1px solid #c2c7ca;
+    margin: 1.5rem;
     p {
-      font: 500 20px/26px 'Questrial';
-      color: #000;
+      font-size: 1.6rem;
+      color: $blue_btn;
+      margin-bottom: 0;
     }
     .hide {
       display: block;
@@ -335,12 +398,16 @@
     }
   }
   .sort-date {
-    padding: 10px 15px;;
-    border-bottom: 1px solid rgba(217, 217, 217, .6);
+  	padding: 0 1.5rem;
+  	margin-bottom: 1.5rem;
     p {
-      font: 500 20px/26px 'Questrial';
-      color: #000;
+      font-size: 16px;
+      color: #929fa7;
       display: inline-block;
+      margin-bottom: 0;
+      width: 100%;
+      padding: 12px 15px;
+      background-color: #f4f5f6;
     }
     .date-filters {
       margin: 10px 0 0;
@@ -349,39 +416,45 @@
         width: 42%;
         float: left;
         label {
-          font: 14px 'Pontano';
+          font-size: 14px;
+          font-weight: bold;
           color: #3a3a3a;
           float: left;
-          margin: 5px 5px 5px 0;
-          width: auto;
+          margin: 0 5px 5px 0;
+          width: 100%;
+          padding-top: 0;
         }
         input {
           width: 70%;
           float: left;
           margin: 0 5px 0 0;
           border: 1px solid #cecece;
-          background: #fff;
+          background: #f4f5f6;
           color: #000;
           border-radius: 3px;
-          font: 14px 'Pontano';
+          font-size: 1.6rem !important;
           height: 32px;
           text-align: left;
+          padding-top: 1.7rem;
         }
       }
     }
   }
 
   .categories {
-    padding: 10px 15px;
-    border-bottom: 1px solid rgba(217, 217, 217, .6);
+  	padding: 0 1.5rem;
     p {
-      font: 500 20px/26px 'Questrial';
-      color: #000;
+      font-size: 16px;
+      color: #929fa7;
       display: inline-block;
+      margin-bottom: 0;
+      width: 100%;
+      padding: 12px 15px;
+      background-color: #f4f5f6;
     }
     .hide-block-subcategory {
       label {
-        font: 500 16px/24px 'Questrial';
+        font: 500 16px/24px;
         color: #656565;
         padding: 13px 0 13px 15px;
       }
@@ -392,10 +465,10 @@
       }
     }
     li {
-      font: 500 16px/24px 'Questrial';
+      font: 500 16px/24px;
       color: #656565;
       a {
-        color: #656565;
+        color: gray;
         display: block;
         padding: 13px 30px;
         @include transition_color;
@@ -405,20 +478,20 @@
         }
         &:active {
           color: rgba(0, 183, 243, 1);
-          background: url(../img/selected-category.png) no-repeat left center;
+          background: url(../img/selected-category.png) no-repeat 5px center;
         }
       }
       .active {
-        background: url(../img/selected-category.png) no-repeat left center;
+        background: url(../img/selected-category.png) no-repeat 5px center;
         padding: 13px 0 13px 30px;
       }
     }
   }
 
   .filters-arrow {
-    background: url(../img/icons/filters-arrow.png) no-repeat left center;
-    width: 11px;
-    height: 18px;
+    background: url(../img/icons/arrow-btm.png) no-repeat left center;
+    width: 7px;
+    height: 12px;
     margin: 5px;
     float: right;
   }
@@ -427,26 +500,32 @@
   }
 
   .search-by-name {
-    padding: 20px;
-    border-bottom: 1px solid rgba(217, 217, 217, .6);
+  	margin-top: 1.5rem;
+  	padding: 0 1.5rem;
     p {
-      font: 500 20px/26px 'Questrial';
+      font: 500 20px/26px;
       color: #000;
       display: inline-block;
     }
     .search-input {
       float: left;
-      background: url(../img/icons/search-icon.png) no-repeat left center;
-      background-position: 8px 6px;
-      padding-left: 30px;
-      width: 84%;
-      margin: 0 1% 0 0;
+      background-image: none;
+      width: calc(100% - 50px);
+      margin: 0;
     }
+    .filters-button {
+      	background-image: url(../img/header/header_search.png);
+      	background-repeat: no-repeat;
+      	background-position: center;
+      	background-color: $blue_btn;
+      	width: 50px;
+      }
   }
   .filters-button {
-    font: 500 12px/12px 'Questrial';
+    font-size: 1.4rem;
     padding: 5px 7px 5px;
-    background-color: $green;
+    height: 5rem;
+    background-color: $blue_btn;
     border: 0;
     color: #fff;
     border-radius: 3px;
@@ -455,7 +534,7 @@
     height: 32px;
     @include transition_bg_color;
     &:hover {
-      background-color: $light_green;
+      background-color: $light_blue_btn;
       box-shadow: none;
     }
   }
@@ -482,17 +561,17 @@
 .weather-info {
   padding: 10px 15px;
   p {
-    font: 500 20px/26px "Questrial";
+    font: 500 20px/26px;
     color: #000;
   }
 }
 
 .unit {
-  font: 500 50px 'Questrial';
+  font: 500 50px;
 }
 
 .temperature {
-  font: 500 88px 'Questrial';
+  font: 500 88px;
 }
 
 .banner-for-blogers {
@@ -520,7 +599,7 @@
     display: table;
     width: 200px;
     height: 47px;
-    font: 500 22px/26px 'Questrial';
+    font: 500 22px/26px;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .45);
   }
 }
@@ -536,61 +615,79 @@
   .firstBlock-wrapper {
     padding: 15px 20px;
     width: 100%;
-    height: 320px;
+    height: 30rem;
     overflow: auto;
     display: inline-block;
+    .right-now {
+      	color:#00cfff;
+      	font-weight: bold;
+      	text-transform: uppercase;
+    	text-align: center;
+    	font-size: 2.4rem;
+    	margin-bottom: 0;
+      }
     .weatherName {
       text-align: center;
-      font: 500 24px 'Questrial';
+      font-size: 2rem;
+      font-weight: bold;
       margin: 0 0 10px;
-      color: #00b7f3;
+      color: #889197;
     }
     .weatherImg-block {
-      width: 60%;
+      width: 100%;
       //height: 305px;
       float: left;
       .weatherData {
         text-align: center;
-        font: 200 14px 'Questrial';
+        font: 200 14px;
         color: darkgrey;
         margin: 0 0 10px;
       }
       .weatherImg-wrapper {
-        width: 100%;
+        width: 27.5rem;
+        margin: 0 auto;
         height: 130px;
+        .temperature-img {
+          font-size: 5.5rem;
+          padding-top: 3rem;
+          color: #000;
+          float: right;
+        }
         .weatherImg {
-          width: 100%;
+          width: 15rem;
           height: 100%;
+          background-size: 130% !important;
+          float: left;
         }
         .clear-day {
-          background: url(../img/weather/clear-day.png) no-repeat center center;
+          background: url(../img/weather-svg/Sun.svg) no-repeat center center;
         }
         .clear-night {
-          background: url(../img/weather/clear-night.png) no-repeat center center;
+          background: url(../img/weather-svg/Moon.svg) no-repeat center center;
         }
         .rain {
-          background: url(../img/weather/rain.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud-Drizzle-Sun-Alt.svg) no-repeat center center;
         }
         .snow {
-          background: url(../img/weather/snow.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud-Snow-Sun.svg) no-repeat center center;
         }
         .sleet {
-          background: url(../img/weather/sleet.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud-Hail-Sun.svg) no-repeat center center;
         }
         .wind {
-          background: url(../img/weather/wind.png) no-repeat center center;
+          background: url(../img/weather-svg/Wind.svg) no-repeat center center;
         }
         .fog {
-          background: url(../img/weather/fog.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud-Fog.svg) no-repeat center center;
         }
         .cloudy {
-          background: url(../img/weather/cloudy.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud.svg) no-repeat center center;
         }
         .partly-cloudy-day {
-          background: url(../img/weather/partly-cloudy-day.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud-Sun.svg) no-repeat center center;
         }
         .partly-cloudy-night {
-          background: url(../img/weather/partly-cloudy-night.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud-Moon.svg) no-repeat center center;
         }
       }
     }
@@ -605,7 +702,7 @@
           white-space: pre;
         }
         .mainParameters {
-          font: 500 22px 'Questrial';
+          font: 500 22px;
           color: #0c2638;
           margin: 0;
           span {
@@ -614,34 +711,38 @@
         }
       }
     }
+    .mainParameters {
+      color: #000;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0;
+    }
     .description {
       color: #ccc;
-      font: 400 14px 'Questrial';
       margin-top: 0;
+      margin-bottom: 0;
     }
   }
 
   .temperature-block {
-    width: 170px;
+    width: 100%;
     height: 100%;
     display: table;
     margin: 0 auto;
-    .temperature {
-      font: 500 54px 'Questrial';
-      float: left;
-      color: #00b7f3;
+    text-align: center;
+    .temperature, .temperature-text {
+      font-size: 2rem;
+      color: #889197;
     }
     .unit {
-      float: left;
       margin-top: 10px;
-      font: 500 28px 'Questrial';
-      color: #00b7f3;
+      font-size: 2rem;
+      color: #889197;
     }
     .unit2 {
       margin: 0px 2px;
       display: table;
-      float: left;
-      font: 500 17px 'Questrial';
+      font: 500 17px;
       color: gray;
       &:last-child {
         float: right;
@@ -665,48 +766,80 @@
 
   .weekForecast {
     padding: 0;
-    //height: 100%;
+    .weekForecast-inner {
+    	background-color: #f4f5f6;
+	    	&:first-child {
+	      	background-color: #fff;
+	      	-webkit-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+    			-moz-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+    			box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+    			z-index: 2;
+          .weather-summary {
+            color: #000;
+            font-weight: bold;
+          }
+	      }
+    }
     .weekForecast-wrapper {
       float: left;
       width: 100%;
       padding: 10px 15px;
-      box-sizing: border-box;
+      box-sizing: border-box;display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+
+  align-items: center;
       .weatherIcon {
         float: left;
-        width: 30%;
+        width: 15%;
         div {
-          background-size: contain !important;
+          background-size: 100% !important;
           padding-top: 28%;
+          height: 45px;
         }
         .clear-day {
-          background: url(../img/weather/clear-day-dark.png) no-repeat center center;
+          background: url(../img/weather-svg/Sun.svg) no-repeat center center;
+          background-size: 100%;
         }
         .clear-night {
-          background: url(../img/weather/clear-night-dark.png) no-repeat center center;
+          background: url(../img/weather-svg/Moon.svg) no-repeat center center;
+          background-size: 100%;
         }
         .rain {
-          background: url(../img/weather/rain-dark.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud-Drizzle-Sun-Alt.svg) no-repeat center center;
+          background-size: 100%;
         }
         .snow {
-          background: url(../img/weather/snow-dark.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud-Snow-Sun.svg) no-repeat center center;
+          background-size: 100%;
         }
         .sleet {
-          background: url(../img/weather/sleet-dark.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud-Hail-Sun.svg) no-repeat center center;
+          background-size: 100%;
         }
         .wind {
-          background: url(../img/weather/wind-dark.png) no-repeat center center;
+          background: url(../img/weather-svg/Wind.svg) no-repeat center center;
+          background-size: 100%;
         }
         .fog {
-          background: url(../img/weather/fog-dark.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud-Fog.svg) no-repeat center center;
+          background-size: 100%;
         }
         .cloudy {
-          background: url(../img/weather/cloudy-dark.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud.svg) no-repeat center center;
+          background-size: 100%;
         }
         .partly-cloudy-day {
-          background: url(../img/weather/partly-cloudy-day-dark.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud-Sun.svg) no-repeat center center;
+          background-size: 100%;
         }
         .partly-cloudy-night {
-          background: url(../img/weather/partly-cloudy-night-dark.png) no-repeat center center;
+          background: url(../img/weather-svg/Cloud-Moon.svg) no-repeat center center;
+          background-size: 100%;
         }
       }
       .data, .temperatureWeek {
@@ -716,14 +849,25 @@
       }
       .data {
         float: left;
-        width: 35%;
-        font: 400 20px 'Questrial';
+        width: 15%;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #000;
+        overflow: hidden;
+        padding-top: 5px;
+        height: 4rem;
       }
-
+      .weather-summary {
+      	font-size: 1.5rem;
+        color: #889197;
+        width: 55%;
+        font-weight: bold;
+      }
       .temperatureWeek {
         float: right;
-        width: 35%;
-        font: 400 18px 'Questrial';
+        width: 15%;
+        font-size: 1.4rem;
+        color: #889197;
       }
     }
   }
@@ -737,7 +881,7 @@
   z-index: 2;
   width: 100%;
   top: 0;
-  font: 500 20px/30px "Questrial";
+  font: 500 20px/30px;
   &:hover {
     background-color: $light_green;
     @include transition_bg_color;
@@ -745,164 +889,3 @@
   }
 }
 
-@media (max-width: 992px) {
-  .tools-wrap {
-    .tools-hint-block {
-      border-radius: 8px;
-      ul {
-        li {
-          .path-map, .radius-map, .lasso-map {
-            display: none !important;
-          }
-        }
-      }
-    }
-  }
-  //.sidebar-menu-vertical {
-  //  display: none !important;
-  //}
-}
-
-@media (max-width: 767px) {
-  .sort-menu {
-    width: 100%;
-    .hide-wrap {
-      .close-popup {
-        width: 100%;
-      }
-    }
-  }
-  .tools-hint-block {
-    a.hide {
-      padding: 8px;
-      background-size: 95% !important;
-    }
-  }
-  .tools-wrap {
-    width: 80%;
-    //height: 100%;
-    .tools-hint-block {
-      border-radius: 10px;
-    }
-  }
-  .weather-wrap {
-    width: 100%;
-  }
-}
-
-@media (max-width: 500px) {
-  .sidebar-menu-horizontal {
-    ul {
-      li {
-        width: 50%;
-        &:nth-child(3), &:nth-child(4) {
-          margin-top: 5px;
-        }
-      }
-    }
-  }
-  .search-filters {
-    height: calc(100% - 114px);
-    .sort-date {
-      .date-filters {
-        .form-group {
-          width: 100%;
-          input {
-            float: right;
-          }
-        }
-      }
-    }
-    .filters-button {
-      width: 100%;
-    }
-    .search-by-name {
-      .search-input {
-        width: 100%;
-        margin-bottom: 15px;
-      }
-    }
-  }
-  .sidebar-menu-wrap {
-    position: relative;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 100%;
-    transform: rotate(0deg);
-    height: initial;
-    .sidebar-menu-vertical {
-      li {
-        display: none;
-        &:first-child {
-          display: block;
-          float: right;
-          border: none;
-          a {
-            transform: rotate(90deg);
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 400px) {
-  .weather-wrap {
-    .firstBlock-wrapper {
-      height: auto;
-      .weatherImg-block, .parameters {
-        width: 100%;
-        text-align: center;
-      }
-    }
-    .weekForecast {
-      padding-bottom: 50px;
-      .weekForecast-wrapper {
-        .data {
-          width: 100%;
-          font: 400 18px 'Questrial';
-        }
-        .weatherIcon, .temperatureWeek {
-          width: 50%;
-        }
-        .temperatureWeek {
-          font: 400 16px/45px 'Questrial';
-        }
-      }
-    }
-  }
-}
-
-@media (min-device-width: 240px) and (max-device-width: 767px) and (orientation: landscape) {
-  .sidebar-menu-wrap {
-    position: relative;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 100%;
-    -webkit-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    transform: rotate(0deg);
-    height: initial;
-    .sidebar-menu-vertical {
-      li {
-        display: none;
-        &:first-child {
-          display: block;
-          float: right;
-          border: none;
-          a {
-            transform: rotate(90deg);
-          }
-        }
-      }
-    }
-  }
-  .leaflet-bottom {
-    .map-tools {
-      float: left;
-      clear: inherit !important;
-    }
-  }
-}

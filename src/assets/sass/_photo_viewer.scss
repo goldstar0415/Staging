@@ -5,8 +5,6 @@
     width: 950px !important;
     height: 100%;
     .modal-content {
-      border-top-left-radius: 10px;
-      border-bottom-left-radius: 10px;
       position: relative;
       top: 50%;
       transform: translateY(-50%);
@@ -15,8 +13,8 @@
 }
 
 .photo-viewer {
-  border-radius: 8px;
-  box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 0;
+  box-shadow: none;
   max-height: 600px;
   overflow: hidden;
   cursor: default;
@@ -34,9 +32,9 @@
       @include vertical_align;
     }
     .previous {
-      background: url(../img/icons/arrows.png) 0 0 no-repeat;
-      width: 15px;
-      height: 26px;
+      background: url(../img/icons/slider-arrow.png) 0 0 no-repeat;
+      width: 1.5rem;
+      height: 3rem;
       position: absolute;
       top: 50%;
       left: 25px;
@@ -45,13 +43,13 @@
       overflow: hidden;
       cursor: pointer;
       &:hover {
-        background: url(../img/icons/arrows.png) 0 -28px no-repeat;
+        background: url(../img/icons/slider-arrow.png) 0 -46px no-repeat;
       }
     }
     .next {
-      background: url(../img/icons/arrows.png) -20px 0 no-repeat;
-      width: 15px;
-      height: 26px;
+      background: url(../img/icons/slider-arrow.png) -30px 0 no-repeat;
+      width: 1.5rem;
+      height: 3rem;
       position: absolute;
       top: 50%;
       right: 25px;
@@ -60,7 +58,7 @@
       overflow: hidden;
       cursor: pointer;
       &:hover {
-        background: url(../img/icons/arrows.png) -20px -28px no-repeat;
+        background: url(../img/icons/slider-arrow.png) -30px -46px no-repeat;
       }
     }
   }
@@ -71,6 +69,10 @@
     .new-post {
       width: 100%;
       box-sizing: border-box;
+      textarea {
+        height: 16rem;
+        margin-bottom: 1rem;
+      }
       .min-round {
         padding: 5px;
         margin-bottom: 10px;
@@ -83,12 +85,14 @@
       }
     }
     .reviews {
-      height: 500px;
+      height: 30rem;
       padding: 0;
+      overflow-y: scroll;
+      margin-top: 1rem;
       .post {
         position: relative;
         margin-top: 10px;
-        border-bottom: 1px solid #e9edf0;
+        border-top: 1px solid #e9edf0;
         padding: 10px 0 10px;
         width: 100%;
         &:after {
@@ -98,21 +102,20 @@
           clear: both;
           visibility: hidden;
         }
-        &:last-of-type {
-          border: none;
-        }
         &:hover {
           .delete-reviews {
             display: block;
           }
         }
         .avatar {
-          width: 40px;
-          height: 40px;
-          @include white_border3;
+          width: 5rem;
+          height: 5rem;
           border-radius: 50%;
           float: left;
           margin-top: 0;
+          border: 1px solid #aaa;
+          padding: 2px;
+          background-color: #fff;
         }
         .frame {
           border: 2px solid #fff;
@@ -121,18 +124,45 @@
           border-radius: 30px;
           float: left;
         }
+        .like {
+          font-size: 1.2rem;
+          margin-right: 1rem;
+        	.glyphicon {
+        		font-size: 1.5rem;
+            margin-right: 4px;
+        	}
+          &:hover {
+            color: $blue_btn;
+          }
+        }
+        .delete {
+          font-size: 1.2rem;
+          padding-top: 1px;
+        }
         .info {
           padding: 0 15px 0 10px;
           width: auto;
           display: table;
+          width: calc(100% - 5rem);
+          .edit-delete {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+          }
           h3 {
             margin: 0;
-            font: 500 18px "Questrial";
+            font-size: 2rem;
+            font-weight: bold;
             color: $dark_blue;
             word-break: break-all;
           }
           p {
-            font: 400 12px/14px 'Pontano';
+            font-size:1.4rem;
+            color: #889197;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+          }
+          .time {
+            font-size: 1.2rem;
           }
         }
         .delete-reviews {
@@ -163,7 +193,7 @@
         }
         .time {
           color: #808080;
-          font: 11px/11px "Arial", "sans-serif";
+          font-size: 11px/11px;
           margin: 8px 0 0 0;
         }
         .rating {
@@ -180,20 +210,22 @@
         }
         .avatar-wrap {
           padding: 0;
-          width: 40px;
-          height: 40px;
+          width: 5rem;
+          height: 5rem;
           float: left;
         }
       }
     }
     .location {
-      padding-left: 15px;
+      padding-left: 2rem;
+      font-size: 1.4rem;
+      color: #000;
       margin-bottom: 10px;
       width: 100%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      background: url(../img/icons/count.png) 0 5px no-repeat;
+      background: url(../img/icons/map-loc.png) no-repeat 0 0;
     }
   }
 }
@@ -202,6 +234,21 @@
   background: transparent;
 }
 
+.btn-send-comment {
+    float: right;
+    height: 3rem;
+    width: 8rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    background: #00c9f8;
+    margin-right: 0;
+    color: #fff;
+    -webkit-transition: background 0.3s;
+    -moz-transition: background 0.3s;
+    -o-transition: background 0.3s;
+    transition: background 0.3s;
+    }
+/*
 .new-post {
   padding: 5px;
   border-radius: 3px;
@@ -226,7 +273,7 @@
     @include button;
     height: 22px;
     width: 54px;
-    font: 400 12px/12px "Questrial";
+    font: 400 12px/12px;
     background: $dark_blue;
     padding: 3px;
     border: none;
@@ -237,13 +284,32 @@
     }
   }
 }
-
+*/
+.image button.close, .photo-comments .close {
+    width: 3rem;
+    height: 3rem;
+    background-image: url(../img/icons/close.png);
+    opacity: 1;
+    background-position: center;
+    background-color: $blue_btn;
+    background-repeat: no-repeat;
+}
 @media (max-width: 992px) {
   .viewer-wrap {
     .modal-dialog {
       width: 90% !important;
       .photo-viewer {
         max-height: 100%;
+        overflow: visible;
+        position: relative;
+        .close {
+        	position: absolute;
+        	right: 0;
+        	top: -3rem;
+        }
+        .photo-comments button.close {
+        	display: none;
+        }
         .image {
           width: 100%;
           min-height: 600px;

@@ -1,11 +1,26 @@
 <script type="text/ng-template" id="photoViewer.html">
+  <div class="fixed visible-xs photo-preview">
+    <ul class="list-inline">
+      <li><a class="add-attach" ng-click="NgInput.openActivityModal()"></a></li>
+      <li class="chat-input">
+        <textarea name="message" ng-model="NgInput.message" placeholder="Start typing..." ng-focus="NgInput.onFocus()"
+                  ctrl-enter="NgInput.submit(form)" ng-maxlength="5000"
+                  ng-required="!NgInput.attachments.photos.length && !NgInput.attachments.spots.length && !NgInput.attachments.areas.length && !NgInput.attachments.links.length"
+                  class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-valid-maxlength ng-touched"
+                  required="required"></textarea>
+      </li>
+      <li><input type="submit" class="submit-send" value=""></li>
+    </ul>
+  </div>
   <div class="viewer-content">
     <div class="photo-viewer">
+      <p class="location visible-xs" ng-if="PV.currentPhoto.address">{{PV.currentPhoto.address}}</p>
+
       <div class="image"
            ng-class="{'col-xs-8': !PV.hideComments && $root.currentUser, 'col-xs-12': PV.hideComments || !$root.currentUser}">
         <button type="button" class="close hidden-lg visible-sm hidden-md visible-xs" ng-click="PV.close()"
-                aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+                ng-class="{'without-location': !PV.currentPhoto.address}" aria-label="Close">
+          <span aria-hidden="true"></span>
         </button>
         <img ng-src="{{PV.currentPhoto.photo_url.original}}">
 
@@ -13,22 +28,22 @@
         <a ng-click="PV.nextPhoto($event)" ng-if="PV.countPhotos > 1" class="next"></a>
       </div>
       <div class="photo-comments col-xs-4" ng-if="!PV.hideComments && $root.currentUser">
-        <button type="button" class="close hidden-sm hidden-xs" data-dismiss="alert" aria-label="Close"
+        <button type="button" class="close hidden-sm hidden-xs"
                 ng-click="PV.close()">
-          <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true"></span>
         </button>
-        <p class="location">{{PV.currentPhoto.address}}</p>
+        <p class="location hidden-xs">{{PV.currentPhoto.address}}</p>
 
-        <form name="form" ng-submit="PV.sendComment(form)" class="col-xs-12 new-post">
+        <form name="form" ng-submit="PV.sendComment(form)" class="new-post hidden-xs">
           <textarea ng-model="PV.comment" name="comment" ng-maxlength="255" placeholder="Start typing..."
-                    required></textarea>
+                    required class="grey-bg"></textarea>
 
           <div ng-if="form.comment.$error.maxlength && (form.$submitted || form.comment.$touched)"
                class="error-message-inline">
             <div>can't be longer then 255 symbols</div>
           </div>
 
-          <input type="submit" value="Send">
+          <input type="submit" value="Send" class="btn-send-comment">
         </form>
         <div class="col-xs-12 reviews">
           <div class="post" ng-repeat="comment in PV.comments">
@@ -41,13 +56,19 @@
               <p class="line-break" ng-bind-html="comment.body | linky:'_blank'"></p>
 
               <p class="time">{{comment.created_at | toTimezone}}</p>
+
+              <div class="edit-delete">
+                <a class="like">Like</a>
+                <a class="delete"
+                   ng-if="$root.profileUser.id == $root.currentUser.id || $root.currentUser.id == comment.sender.id || $root.isRole($root.currentUser, 'admin')"
+                   ng-click="PV.deleteComment(comment.id, $index)">Delete</a>
+              </div>
             </div>
-            <a class="delete-reviews"
-               ng-if="$root.profileUser.id == $root.currentUser.id || $root.currentUser.id == comment.sender.id || $root.isRole($root.currentUser, 'admin')"
-               ng-click="PV.deleteComment(comment.id, $index)"></a>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </script>
+

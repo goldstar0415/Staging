@@ -1,4 +1,3 @@
-<h2 class="title-name">Feeds</h2>
 
 <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
 
@@ -9,8 +8,8 @@
       <div class="event">
 
         <div class="media media-visible">
-          <a class="pull-left" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">
-            <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.sender.avatar_url.thumb}}">
+          <a class="pull-left avatar" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})" >
+            <img class="media-object feeds-img" ng-src="{{item.sender.avatar_url.thumb}}">
           </a>
 
           <div class="media-body">
@@ -21,10 +20,10 @@
 
             <div ng-switch="item.event_type">
               <div ng-switch-when="UserFollowEvent">
-              <span ng-if="currentUser.id == item.feedable.id">
+              <span ng-if="currentUser.id == item.feedable.id" class="mgb10">
                 follows you
               </span>
-              <span ng-if="currentUser.id != item.feedable.id">
+              <span ng-if="currentUser.id != item.feedable.id" class="mgb10">
                 add <a ui-sref="profile.main({user_id: item.feedable.alias || item.feedable.id})">
                 {{item.feedable.first_name}} {{item.feedable.last_name}}
               </a> to following
@@ -42,21 +41,21 @@
               </span>
               </div>
 
-              <div ng-switch-when="OnSpotUpdate">
+              <div ng-switch-when="OnSpotUpdate" class="mgb10">
                 update event
                 <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})"
                   >{{item.feedable.title}}
                 </a>
               </div>
 
-              <div ng-switch-when="OnSpotCreate">
+              <div ng-switch-when="OnSpotCreate" class="mgb10">
                 create event
                 <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})"
                   >{{item.feedable.title}}
                 </a>
               </div>
 
-              <div ng-switch-when="OnAddToCalendar">
+              <div ng-switch-when="OnAddToCalendar" class="mgb10">
                 add event
                 <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})"
                   >{{item.feedable.title}}
@@ -68,11 +67,11 @@
                 <attachments items="item.feedable.attachments"></attachments>
               </div>
 
-              <div ng-switch-when="OnWallPostLike">
+              <div ng-switch-when="OnWallPostLike" class="feed-text" class="mgb10">
                 likes your post "{{item.feedable.body | limitTo: 30}}{{item.feedable.body.lenght > 30 ? '...' : ''}}"
               </div>
 
-              <div ng-switch-when="OnWallPostDislike">
+              <div ng-switch-when="OnWallPostDislike" class="mgb10">
                 doesn't like your post "{{item.feedable.body | limitTo: 30}}{{item.feedable.body.lenght > 30 ? '...' :
                 ''}}"
               </div>
@@ -82,7 +81,9 @@
             <p class="time">{{item.created_at | toTimezone}}</p>
           </div>
         </div>
+        <div class="clearfix"></div>
       </div>
+      <div class="clearfix"></div>
     </section>
   </div>
   <preloader ng-show="Feed.pagination.busy"></preloader>

@@ -1,14 +1,17 @@
 /*     my spot   */
 .main-blog-article-content {
+  .caret {
+    transform: rotate(90deg);
+  }
   .blog-content {
     float: left;
     margin: 0;
     padding: 0;
-    border: 1px solid $light_grey;
+    border: 0;
     background: $white;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
     position: relative;
   }
   .position-right {
@@ -37,28 +40,46 @@
     .image-wrapper {
       width: 100%;
     }
+    .article-wrapper {
+      padding: 4rem 8rem;
+      position: relative;
+      .date-sm {
+        position: absolute;
+        display: block;
+        font-size: 1.2rem;
+        color: #fff;
+        background-color: #00c9f8;
+        width: 4rem;
+        height: 4rem;
+        line-height: 16px;
+        padding-top: 5px;
+        text-align: center;
+        bottom: 2rem;
+        right: 2rem;
+      }
+    }
     .article-img {
       display: block;
-      max-width: 100%;
-      height: 400px;
+      width: 100%;
+      max-height: 400px;
       background-size: auto;
-      margin: 0 auto 20px;
+      margin: 0 auto 0;
       -webkit-border-radius: 5px 5px 0 0;
       -moz-border-radius: 5px 5px 0 0;
-      border-radius: 5px 5px 0 0;
+      border-radius: 0;
     }
   }
   .article {
     .title-blog {
-      margin: 0 0 8px 15px;
-      font: 500 24px/24px 'Questrial';
+      margin: 0 0 8px 0;
+      font: 500 24px/24px;
       a {
         color: $dark_blue;
       }
     }
     .article-description {
-      font: 14px/20px 'Pontano';
-      padding: 5px 15px 15px;
+      font: 14px/20px;
+      padding: 5px 0 15px;
 
       img {
         max-width: 100%;
@@ -66,41 +87,46 @@
     }
     .share {
       display: block;
-      width: 12px;
-      height: 12px;
+      width: 33px;
+      height: 33px;
       text-indent: 10000px;
       overflow: hidden;
       position: absolute;
-      bottom: 15px;
-      right: 15px;
-      background: url(../img/icons/share.png) no-repeat;
+      bottom: 5rem;
+      right: 8rem;
+      background: url(../img/icons/share-icon.png) no-repeat;
     }
 
     .article-info {
       float: left;
-      font: 400 12px 'Pontano';
+      font: 400 12px;
       margin-right: 15px;
       color: gray;
-      border-top: 1px solid $light_grey;
       padding: 10px 0;
+      border: 0;
     }
     .location-link {
       display: block;
       float: right;
-      margin-bottom: 15px;
+      padding: 0 0 20px 2rem;
+      margin-bottom: 0;
+      background: url(../img/icons/map-loc.png) no-repeat 0 0;
+      a {
+        color: #000 !important;
+      }
     }
   }
   .module-popular {
     background: $white;
     border: 1px solid $light_grey;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    border-radius: 8px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
     margin: 0;
     padding: 0;
     width: 100%;
     .title-popular-new {
-      font: 500 20px/20px 'Questrial';
+      font: 500 20px/20px;
       border-bottom: 1px solid $light_grey;
       padding: 12px 15px 15px;
       margin: 0;
@@ -122,14 +148,14 @@
       }
       img {
         display: block;
-        float: left;
-        width: 50px;
-        height: 50px;
-        -webkit-border-radius: 30px;
-        -moz-border-radius: 30px;
-        border-radius: 30px;
-        margin-right: 10px;
-        margin-left: 10px;
+        float: none;
+        width: 12rem;
+        height: 12rem;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        margin-right: auto;
+        margin-left: auto;
         border: 0;
         box-shadow: none;
         padding: 0;
@@ -140,21 +166,46 @@
 }
 .post {
   padding: 15px 10px;
-  border-bottom: 1px solid #e9edf0;
-}
-.post .avatar,
-.content .post .avatar {
-  width: 60px;
-  height: 60px;
-  margin-top: 15px;
-  float: left;
+  border-top: 1px solid #e9edf0;
 }
 .time {
-  font: 11px 'Pontano';
+  font-size: 11px;
   color: #b9bdc0;
-  margin-top: 10px;
+  margin-top: 0;
 }
 .delete-link {
   margin-left: 15px;
 }
 
+.comments-section {
+  background-color: #fff;
+  border: 0;
+  .post-spot {
+    background-color: #fff;
+  }  
+}
+.post .info .delete-link {
+    background: url(../img/icons/trash-ico.png) no-repeat;
+    color: #889197;
+    padding: 0 0 0 1.7rem;
+    margin-left: 0;
+    font-size: 1.2rem;
+  }
+.date-xs {
+    font-size: 1.2rem;
+    color: #fff;
+    padding: 0;
+    background-color: #00c9f8;
+    width: 4rem;
+    height: 4rem;
+    line-height: 16px;
+    padding-top: 5px;
+    text-align: center;
+  }
+
+.info-post .date {
+  float: right;
+}
+.info p {
+  color: grey;
+}

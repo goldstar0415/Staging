@@ -1,66 +1,69 @@
-<div class="col-xs-12">
-  <div class=" wrap">
-    <!-- section with calendar -->
-    <section class="col-xs-12  no-pad create-new-plan">
-      <div ui-calendar="Planner.calendarConfig" class="span8 calendar" ng-model="Planner.sourceEvents"></div>
-    </section>
-    <!-- end section with calendar -->
 
-    <!-- section with export -->
-    <section class="col-xs-12  no-pad ">
-      <!--<div class="export-to-ics">-->
-      <!--<a>Export to ICS</a>-->
-      <!--</div>-->
-    </section>
-    <!--end section with export -->
+<div class=" wrap">
+  <!-- section with calendar -->
+  <section class="col-xs-12 create-new-plan">
+    <div ui-calendar="Planner.calendarConfig" class="span8 calendar" ng-model="Planner.sourceEvents"></div>
+  </section>
+  <!-- end section with calendar -->
+
+  <!-- section with export -->
+  <section class="col-xs-12  no-pad ">
+    <!--<div class="export-to-ics">-->
+    <!--<a>Export to ICS</a>-->
+    <!--</div>-->
+  </section>
+  <!--end section with export -->
 
 
-    <!-- sub event -->
-    <section class="central  col-xs-12">
-      <h2 class="title-name">Plans</h2>
-      <a ui-sref="planner.create" class="add-friend" title="Create new spot"></a>
+  <!-- sub event -->
+  <section class="central  col-xs-12">
+    <div class="text-center">
+      <h2 class="title-name nav-blue">Plans</h2>
+    </div>
+    <a ui-sref="planner.create" class="add-friend nav-bg-blue" title="Create new spot"></a>
 
-      <div infinite-scroll="Planner.pagination.nextPage()" infinite-scroll-disabled="Planner.pagination.busy"
-           class="clearfix" infinite-scroll-distance="1">
-        <div ng-repeat="plan in Planner.plans.data" class="event border-bottom">
-          <div class="date">
-            <date-range item="plan"></date-range>
-          </div>
+    <div infinite-scroll="Planner.pagination.nextPage()" infinite-scroll-disabled="Planner.pagination.busy"
+         class="clearfix" infinite-scroll-distance="1">
+      <div ng-repeat="plan in Planner.plans.data" class="event border-bottom">
 
-          <h3 class="title-planner">
-            <a ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})">{{plan.title}}</a>
-            </span>
-          </h3>
 
-          <p class="place">{{plan.address}}</p>
+        <h3 class="title-planner">
+          <a ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})">{{plan.title}}</a>
+        </h3>
 
-          <p class="description">
-            <span>{{plan.description}}</span>
-          </p>
-
-          <ul class="tools clearfix">
-            <li>
-              <a ui-sref="planner.edit({plan_id: plan.id})" class="edit-tools">Edit</a>
-            </li>
-            <li>
-              <a class="delete" ng-click="Planner.deletePlan(plan, $index)">Delete</a>
-            </li>
-
-            <li>
-              <invite-friends item="plan" type="plan"></invite-friends>
-            </li>
-            <li>
-              <a class="download"
-                 ng-href="{{Planner.API_URL + '/plans/' + plan.id + '/export'}}" target="_blank">Export ICS</a>
-            </li>
-          </ul>
-
+        <p class="place">{{plan.address}}</p>
+        <div class="date">
+          <date-range item="plan"></date-range>
         </div>
-      </div>
-      <preloader ng-show="Planner.pagination.busy"></preloader>
+        <p class="description">
+          <span>{{plan.description}}</span>
+        </p>
 
-      <h3 ng-if="Planner.plans.data.length == 0 && !Planner.pagination.busy" class="text-center description">No plans
-        yet.</h3>
-    </section>
-  </div>
+        <ul class="tools clearfix">
+          <li>
+            <a ui-sref="planner.edit({plan_id: plan.id})" class="edit-tools">Edit</a>
+          </li>
+          <li>
+            <a class="delete" ng-click="Planner.deletePlan(plan, $index)">Delete</a>
+          </li>
+
+          <li>
+            <invite-friends item="plan" type="plan"></invite-friends>
+          </li>
+          <li>
+            <a class="share-btn" ng-click="">Share</a>
+          </li>
+          <li>
+            <a class="download"
+               ng-href="{{Planner.API_URL + '/plans/' + plan.id + '/export'}}" target="_blank">Export ICS</a>
+          </li>
+        </ul>
+        <share item="item" class="visible-xs" type="spot"></share>
+      </div>
+    </div>
+    <preloader ng-show="Planner.pagination.busy"></preloader>
+
+    <h3 ng-if="Planner.plans.data.length == 0 && !Planner.pagination.busy" class="text-center description">No plans
+      yet.</h3>
+  </section>
 </div>

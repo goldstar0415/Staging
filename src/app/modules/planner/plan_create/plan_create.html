@@ -1,11 +1,12 @@
-<form class="form-horizontal col-xs-12  central no-pad " name="form" ng-submit="Plan.save(form)" novalidate>
-  <h2 class="title-name">{{Plan.id ? 'Edit plan' : 'Create new plan'}}</h2>
+<form class="form-horizontal col-xs-12  central nopad " name="form" ng-submit="Plan.save(form)" novalidate>
+  <div class="text-center">
+    <h2 class="title-name">{{Plan.id ? 'Edit plan' : 'Create new plan'}}</h2>
+  </div>
 
   <!-- section  event-main-info-->
   <section class="event-main-info">
     <div class="form-group">
       <label for="title" class="col-sm-2 control-label">Title</label>
-
       <div class="col-sm-10">
         <input type="text" class="form-control" name="title" ng-model="Plan.title" id="title"
                placeholder="Start typing..."
@@ -47,20 +48,20 @@
       <label class="col-md-2 col-sm-12 col-xs-12 control-label">Date</label>
 
       <div class="col-md-10 col-sm-12 col-xs-12">
-        <div class="col-sm-4 col-xs-12 no-pad">
+        <div class="col-sm-4 col-xs-5 no-pad media-nopad">
           <input ng-datepicker name="start_date" ng-model="Plan.start_date" end-date="Plan.end_date" today="true"
-                 type="text" required>
+                 type="text" required class="grey-bg">
 
           <div ng-messages="form.start_date.$error" ng-if="form.$submitted" class="error-message-inline">
             <div ng-message="required">Start date field can't be empty</div>
           </div>
         </div>
 
-        <span class="hidden-xs col-sm-1">—</span>
+        <span class="col-sm-1 col-xs-2 mgt15 text-center">—</span>
 
-        <div class="col-sm-4 col-xs-12 no-pad">
+        <div class="col-sm-4 col-xs-5 no-pad media-nopad">
           <input ng-datepicker name="end_date" ng-model="Plan.end_date" start-date="Plan.start_date"
-                 type="text" required>
+                 type="text" required class="grey-bg">
 
           <div ng-messages="form.end_date.$error" ng-if="form.$submitted" class="error-message-inline">
             <div ng-message="required">End date field can't be empty</div>
@@ -73,19 +74,19 @@
       <label class="col-md-2 col-sm-12 col-xs-12 control-label">Time</label>
 
       <div class="col-md-10 col-sm-12 col-xs-12">
-        <div class="col-sm-4 col-xs-12 no-pad">
+        <div class="col-sm-4 col-xs-5 no-pad media-nopad">
           <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.start_time" name="start_time"
-                 type="text" required>
+                 type="text" required class="grey-bg">
 
           <div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">
             <div ng-message="required">Start time field can't be empty</div>
           </div>
         </div>
-        <span class="hidden-xs col-sm-1">—</span>
+        <span class="col-sm-1 col-xs-2 mgt15 text-center">—</span>
 
-        <div class="col-sm-4 col-xs-12 no-pad">
+        <div class="col-sm-4 col-xs-5 no-pad media-nopad">
           <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.end_time" name="end_time"
-                 type="text" required>
+                 type="text" required class="grey-bg">
 
           <div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">
             <div ng-message="required">End time field can't be empty</div>
@@ -102,9 +103,12 @@
   <div ng-repeat="attachment in Plan.attachments ">
     <section class="event-additionl-info" ng-if="attachment.type == 'activity'">
       <div class="form-group">
-        <h3 class="sub-title">Activity
-          <button type="button" ng-click="Plan.deleteAttachment($parent.$index)" class="close">x</button>
-        </h3>
+        <div class="text-center">
+          <h3 class="title-name">Activity
+
+          </h3>
+          <button type="button" ng-click="Plan.deleteAttachment($parent.$index)" class="close pull right"></button>
+        </div>
       </div>
 
       <div class="form-group">
@@ -164,6 +168,7 @@
         <div class="col-sm-10">
           <location address="attachment.data.address" location="attachment.data.location" limit="15"
                     bind-marker="true"></location>
+          <a ng-click="PlanCreate.addLocation(PlanCreate.newLocation)" class="btn-add compass" type="button"></a>
         </div>
       </div>
 
@@ -173,18 +178,18 @@
         <div class="col-md-10 col-sm-12 col-xs-12">
           <div class="col-sm-4 col-xs-12 no-pad">
             <input ng-datepicker name="start_date_{{$index}}" ng-model="attachment.data.start_date"
-                   start-date="Plan.start_date" end-date="Plan.end_date" type="text" required>
+                   start-date="Plan.start_date" end-date="Plan.end_date" type="text" required class="grey-bg">
 
             <div ng-messages="form['start_date_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
               <div ng-message="required">Start date field can't be empty</div>
             </div>
           </div>
 
-          <span class="hidden-xs col-sm-1">—</span>
+          <span class="hidden-xs col-sm-1 mgt15">—</span>
 
           <div class="col-sm-4 col-xs-12 no-pad">
             <input ng-datepicker name="end_date_{{$index}}" ng-model="attachment.data.end_date"
-                   start-date="Plan.start_date" end-date="Plan.end_date" type="text" required>
+                   start-date="Plan.start_date" end-date="Plan.end_date" type="text" required class="grey-bg">
 
             <div ng-messages="form['end_date_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
               <div ng-message="required">End date field can't be empty</div>
@@ -199,19 +204,19 @@
         <div class="col-md-10 col-sm-12 col-xs-12">
           <div class="col-sm-4 col-xs-12 no-pad">
             <input ng-timepicker step="30" placeholder="12:00..." name="start_time_{{$index}}"
-                   ng-model="attachment.data.start_time" type="text" required>
+                   ng-model="attachment.data.start_time" type="text" required class="grey-bg">
 
             <div ng-messages="form['start_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
               <div ng-message="required">Start time field can't be empty</div>
             </div>
           </div>
 
-          <span class="hidden-xs col-sm-1">—</span>
+          <span class="hidden-xs col-sm-1 mgt15">—</span>
 
           <div class="col-sm-4 col-xs-12 no-pad">
             <input ng-timepicker step="30" placeholder="12:00..." name="end_time_{{$index}}"
                    ng-model="attachment.data.end_time"
-                   type="text" required>
+                   type="text" required class="grey-bg">
 
             <div ng-messages="form['end_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
               <div ng-message="required">End time field can't be empty</div>
@@ -255,13 +260,14 @@
   <!-- buttons block -->
   <div class="form-group">
     <div class="col-xs-12 buttons-block">
-      <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12" ng-click="Plan.addActivity()">
+
+      <button type="button" class="btn btn-default green-btn add-btn mgl0" ng-click="Plan.addActivity()">
         Add activity
       </button>
-      <button type="button" class="btn btn-primary col-sm-3 add-btn col-xs-12" spots-modal items="Plan.newSpots">
+      <button type="button" class="btn btn-default green-btn add-btn" spots-modal items="Plan.newSpots">
         Add spot
       </button>
-      <button type="submit" class="btn btn-default green-btn col-sm-2 col-xs-12 pull-right no-margin-left-right">Save
+      <button type="submit" class="btn btn-default green-btn pull-right no-margin-left-right">Save
       </button>
     </div>
   </div>

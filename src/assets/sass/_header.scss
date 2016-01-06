@@ -38,12 +38,12 @@ header {
             }
           }
           .map-icon {
-            background: url(../img/icons/map-icon.png) 0 0 no-repeat;
+            background: url(../img/header/header_search.png) center center no-repeat;
             width: 38px;
             height: 38px;
           }
           .admin-icon {
-            background: url(../img/icons/admin-icon.png) 0 0 no-repeat;
+            background: url(../img/header/admin-icon.png) center center no-repeat;
             width: 38px;
             height: 38px;
           }
@@ -88,26 +88,26 @@ header {
       }
       .active {
         color: $blue;
-        background: url(../img/icons/navigation-sep.png) repeat-x;
         .map-icon {
-          background: url(../img/icons/map-icon.png) 0 -67px no-repeat;
+          background: url(../img/header/header_search.png) center center no-repeat;
         }
         .admin-icon {
-          background: url(../img/icons/admin-icon.png) 0 -67px no-repeat;
+          background: url(../img/header/admin-icon.png) center center no-repeat;
         }
       }
       &:hover {
         .map-icon {
-          background: url(../img/icons/map-icon.png) 0 -67px no-repeat;
+          background: url(../img/header/header_search.png) center center no-repeat;
         }
         .admin-icon {
-          background: url(../img/icons/admin-icon.png) 0 -67px no-repeat;
+          background: url(../img/header/admin-icon.png) center center no-repeat;
         }
       }
     }
     .authorisation {
       height: 100%;
       a {
+        color: #8fa9bc;
         @include vertical_align;
         display: inline-block;
 
@@ -116,14 +116,23 @@ header {
     .sep {
       @include vertical_align;
     }
-    .separator-bg {
-      background: url(../img/icons/navigation-sep.png) no-repeat;
+  }
+  .nav-mobile {
+    width: 100%;
+    ul {
+      width: 100%;
+      li {
+        width: 33.3%;
+      }
+      .logo-mini img {
+        margin: 1rem;
+        height: 5rem;
+      }
     }
   }
   .menu-btn {
     display: block;
     float: right;
-    background: url(../img/icons/navigation-sep.png) no-repeat;
     .menu-icon {
       background: url(../img/icons/menu.png) no-repeat;
       width: 24px;
@@ -131,6 +140,7 @@ header {
       display: block;
       float: right;
       margin: 24px 20px;
+      background-position: 0 -76px;
     }
     &:hover {
       transition: color .3s;
@@ -142,113 +152,3 @@ header {
 
 }
 
-@media (max-width: 991px) {
-  header {
-    padding: 0 20px 0 0;
-    nav {
-      float: left;
-      .menu-btn {
-        float: left;
-      }
-    }
-    .logo {
-      width: 160px;
-      float: right;
-      height: initial;
-    }
-  }
-}
-
-@media (max-width: 500px) {
-  header {
-    nav {
-      ul {
-        li {
-          .user-name {
-            max-width: 140px;
-            padding: 0 5px;
-            span {
-              &:first-of-type {
-                max-width: 60%;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 400px) {
-  header {
-    padding: 0 10px 0 0;
-    .logo {
-      width: 90px;
-    }
-    .menu-btn {
-      .menu-icon {
-        margin: 24px 10px;
-        background-size: 100%;
-      }
-    }
-    nav {
-      ul {
-        .map-profile {
-          a {
-            padding: 0 10px;
-            span {
-              img {
-                width: 26px;
-                height: 26px;
-              }
-            }
-          }
-        }
-        li {
-          .user-name {
-            max-width: 120px;
-          }
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 300px) {
-  header {
-    .logo {
-      width: 100px;
-    }
-    .menu-btn {
-      .menu-icon {
-        width: 20px;
-      }
-    }
-    nav {
-      ul {
-        .map-profile {
-          a {
-            span {
-              img {
-                width: 26px;
-                height: 26px;
-              }
-            }
-          }
-        }
-        li {
-          .user-name {
-            span {
-              &:first-of-type {
-                display: none;
-              }
-              &:nth-child(2) {
-                margin: 0;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}

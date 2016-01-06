@@ -1,4 +1,4 @@
-<section class="col-xs-12 comments-section" ng-if="$root.currentUser">
+<section class="col-xs-12 comments-section" ng-if="$root.currentUser" ng-class="{'hidden-xs': NgInput.fixedMobile}">
   <form class="new-post clearfix" name="form" ng-submit="NgInput.submit(form)" novalidate>
       <textarea name="message"
                 ng-model="NgInput.message"
@@ -59,7 +59,6 @@
             <div class="description-link">{{link.description}}</div>
           </div>
         </div>
-
       </div>
 
 
@@ -88,3 +87,21 @@
   <div ng-include="'/app/components/ng_input/photos_modal.html'"></div>
   <div ng-include="'/app/components/ng_input/activity_modal.html'"></div>
 </section>
+
+<div class="fixed visible-xs" ng-if="NgInput.fixedMobile">
+  <form class="new-post clearfix" name="form" ng-submit="NgInput.submit(form)" novalidate>
+    <ul class="list-inline">
+      <li><a class="add-attach" ng-click="NgInput.openActivityModal()"></a></li>
+      <li class="chat-input">
+        <textarea name="message"
+                  ng-model="NgInput.message"
+                  placeholder="Start typing..."
+                  ng-focus="NgInput.onFocus()"
+                  ctrl-enter="NgInput.submit(form)"
+                  ng-maxlength="NgInput.maxlength"
+                  ng-required="!NgInput.attachments.photos.length && !NgInput.attachments.spots.length && !NgInput.attachments.areas.length && !NgInput.attachments.links.length"></textarea>
+      </li>
+      <li><input type="submit" class="submit-send" value=""></li>
+    </ul>
+  </form>
+</div>
