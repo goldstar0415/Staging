@@ -99,6 +99,22 @@ class SettingsUpdateRequest extends Request
         return $rules;
     }
 
+    public function sanitize(array $input)
+    {
+        if ($this->getType() === 'socials') {
+            $input = array_map(function ($url) {
+                $parts = parse_url($url);
+                if (!isset($parts['scheme'])) {
+                    return 'http://' . $url;
+                }
+
+                return $url;
+            }, $input);
+        }
+
+        return $input;
+    }
+
     /**
      * @return string Get request type
      */
