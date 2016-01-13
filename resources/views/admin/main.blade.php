@@ -38,7 +38,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/js/select2.min.js"></script>
 
 <!--CKeditor-->
-<script src="//cdn.ckeditor.com/4.5.5/standard/ckeditor.js"></script>
+<script src="//cdn.ckeditor.com/4.5.5/full/ckeditor.js"></script>
 
 <!--Others-->
 <script src="/js/admin.js"></script>
