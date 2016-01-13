@@ -9,6 +9,10 @@
 .map.full-size {
   position: absolute;
   height: calc(100% - 70px);
+  //top: 0;
+  &.menu-offset {
+    height: calc(100% - 70px - 60px);
+  }
 }
 
 .hide-tools {
@@ -108,8 +112,17 @@
 .leaflet
   &-bottom &-control {
     margin-bottom: 0 !important;
-  } 
+  }
 
 .leaflet-right .map-tools-top:last-child {
   margin-top: 0;
-} 
+}
+
+.map-block .menu-profile {
+  position: absolute;
+  bottom: 0;
+
+  .menu-offset {
+    margin-left: 8.33333%;
+  }
+}

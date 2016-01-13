@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <title>Zoomtivity</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta property="og:title" content="Zoomtivity" />
-  <meta property="og:image" content="/assets/img/icons/logo.svg" />
+  <meta property="og:title" content="Zoomtivity"/>
+  <meta property="og:image" content="/assets/img/icons/logo.svg"/>
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
   <base href="/">
@@ -70,15 +70,22 @@
 <div snap-content snap-options="options.snap">
   <!-- include header-->
   <zm-header options="options"></zm-header>
+
   <hints-popup></hints-popup>
+
   <map-sort ng-if="mapState == 'full-size'"></map-sort>
+
   <!-- map container-->
-  <div id="map" class="mapResize map {{mapState}}"></div>
+  <div id="map" class="mapResize map {{mapState}}" ng-class="{'menu-offset': currentUser}"></div>
+
   <!-- content container-->
   <div ng-show="mapState != 'full-size'" ui-view></div>
+
+  <div ng-include="'app/components/navigation/profile_menu/profile_links.html'" class="map-block" ng-if="mapState == 'full-size' && currentUser"></div>
+
 </div>
 
-<ng-include src="'/app/components/map_partials/unregistered_banner.html'" ng-if="mapState=='full-size'"></ng-include>
+<ng-include src="'/app/components/map_partials/unregistered_banner.html'"></ng-include>
 <ng-include src="'/app/components/ng_message_templates/error_templates.html'"></ng-include>
 <ng-include src="'/app/components/password_reset/password_reset.html'"></ng-include>
 <ng-include src="'/app/components/photoviewer/photoviewer.html'"></ng-include>
