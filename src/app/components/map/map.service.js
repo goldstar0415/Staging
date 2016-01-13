@@ -914,7 +914,7 @@
         //var mapWidth = parseFloat($("#map").css("width").replace("px", ""));
         //var mapHeight = parseFloat($("#map").css("height").replace("px", ""));
 
-        //var linesLayer = $("svg.leaflet-zoom-animated")[0];
+        var linesLayer = $("canvas.leaflet-zoom-animated")[0];
         //var oldLinesWidth = linesLayer.getAttribute("width");
         //var oldLinesHeight = linesLayer.getAttribute("height");
         //var oldViewbox = linesLayer.getAttribute("viewBox");
@@ -932,8 +932,9 @@
 
         html2canvas(document.getElementById("map"), {
           useCORS: true,
+          logging: true,
           allowTaint: false,
-          background: "#E8F0F6",
+          //background: "#E8F0F6",
           onrendered: function onrendered(canvas) {
             for (var i = 0; i < myTiles.length; i++) {
               if (tileMethod[i] == "left") {
@@ -964,7 +965,7 @@
 
             var image = canvas.toDataURL("image/jpeg");
             callback(image);
-            window.open(image);
+            //window.open(image);
           }
         });
 

@@ -6,7 +6,7 @@
     <h4 class="modal-title">Registration</h4>
   </div>
   <div class="modal-body">
-    <form ng-submit="modal.signUpUser(form)" name="form" novalidate>
+    <form ng-submit="modal.signUpUser(form)" name="form" novalidate ng-hide="modal.success_message">
 
       <input type="text" name="first_name" placeholder="First name..." ng-model="modal.first_name" class="white"
              required/>
@@ -66,8 +66,12 @@
       <p>All fields are required</p>
       <input type="submit" value="Zoom">
     </form>
+
+    <div ng-show="modal.success_message">
+      {{ modal.success_message }}
+    </div>
   </div>
-  <div class="modal-footer">
+  <div class="modal-footer" ng-hide="modal.success_message">
     <a ng-href="{{modal.BACKEND_URL}}/account/facebook">Sign Up with Facebook</a>
     <a ng-href="{{modal.BACKEND_URL}}/account/google">Sign Up with Google+</a>
   </div>

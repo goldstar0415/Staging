@@ -30,10 +30,10 @@
     function signUpUser(form, user, $modalInstance) {
       if (form.$valid) {
         User.signUp(user,
-          function success(user) {
-            UserService.setCurrentUser(user);
+          function success(resp) {
+            //UserService.setCurrentUser(user);
+            user.success_message = 'Thank you for joining Zoomtivity. Verification letter was sent to your email.';
 
-            $modalInstance.dismiss('close');
           }, function error(resp) {
             if (resp.status == 400) {
               $state.go($state.current, {}, {reload: true});

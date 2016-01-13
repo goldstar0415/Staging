@@ -34,10 +34,13 @@
             UserService.setCurrentUser(user);
             $modalInstance.dismiss('close');
           }, function error(resp) {
+            console.log(resp);
             if (resp.status == 400) {
               $state.go($state.current, {}, {reload: true});
-            } else {
+            } else if (resp.status == 422) {
               toastr.error('Wrong email or password');
+            } else {
+              toastr.error('Account not confirmed');
             }
           });
       }
