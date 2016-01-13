@@ -964,7 +964,7 @@
 
             var image = canvas.toDataURL("image/jpeg");
             callback(image);
-            //window.open(image);
+            window.open(image);
           }
         });
 
