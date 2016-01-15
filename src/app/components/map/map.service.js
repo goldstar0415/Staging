@@ -1176,7 +1176,7 @@
           marker.bindPopup(popup);
 
           marker.on('click', function () {
-            if (!scope.item.spot.photos) {
+            //if (!scope.item.spot.photos) {
               Spot.get({id: scope.item.spot.id}, function (fullSpot) {
                 //merge photos
                 fullSpot.photos = _.union(fullSpot.comments_photos, fullSpot.photos);
@@ -1193,7 +1193,7 @@
                   SpotService.initMarker(scope.item.spot);
                 });
               });
-            }
+            //}
           });
         }
       }
