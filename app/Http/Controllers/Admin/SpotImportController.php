@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\Admin\ImportLogRequest;
 use App\Http\Requests\Admin\SpotImportRequest;
 use App\Jobs\SpotsImport;
+use App\Jobs\SpotsImportColumns;
+use App\Jobs\SpotsImportCsv;
 use App\Services\SpotsImportFile;
 use Illuminate\Http\Request;
 
@@ -25,6 +27,31 @@ class SpotImportController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexColumns()
+    {
+        return view('admin.spot_import_columns.index');
+    }
+
+    public function storeColumns(Request $request)
+    {
+
+        $job = new SpotsImportColumns($request->all(), [
+            'admin' => $request->user(),
+            'spot_category' => $request->spot_category
+        ], SpotsImport::EVENT);
+        if ((bool)$request->preview) {
+            $request->session()->flashInput($request->all());
+            return view('admin.spot_import_columns.index')->with('spots', $job->getSpots());
+        }
+
+        return back()->with('import', $this->dispatch($job));
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  SpotImportRequest  $request
@@ -38,7 +65,7 @@ class SpotImportController extends Controller
         $csv_file = $request->document->move(storage_path('csvs'), str_random(8) . '.' . $request->document->getClientOriginalExtension());
         $import = app(SpotsImportFile::class, [app(), app(Excel::class), $csv_file->getRealPath()]);
 
-        if ($this->dispatch(new SpotsImport($import, ['admin' => $request->user(), 'spot_category' => $request->spot_category, 'document' => $csv_file->getRealPath()], SpotsImport::EVENT))) {
+        if ($this->dispatch(new SpotsImportCsv($import, ['admin' => $request->user(), 'spot_category' => $request->spot_category, 'document' => $csv_file->getRealPath()], SpotsImportCsv::EVENT))) {
             return back()->with('import', true);
         }
 
@@ -49,11 +76,11 @@ class SpotImportController extends Controller
     {
         switch ($request->type) {
             case 'event':
-                return SpotsImport::getLog(SpotsImport::EVENT);
+                return SpotsImportCsv::getLog(SpotsImportCsv::EVENT);
             case 'recreation':
-                return SpotsImport::getLog(SpotsImport::RECREATION);
+                return SpotsImportCsv::getLog(SpotsImportCsv::RECREATION);
             case 'pitstop':
-                return SpotsImport::getLog(SpotsImport::PITSTOP);
+                return SpotsImportCsv::getLog(SpotsImportCsv::PITSTOP);
         }
     }
 
@@ -62,13 +89,13 @@ class SpotImportController extends Controller
         $result = false;
         switch ($request->type) {
             case 'event':
-                $result = SpotsImport::removeLog(SpotsImport::EVENT);
+                $result = SpotsImportCsv::removeLog(SpotsImportCsv::EVENT);
                 break;
             case 'recreation':
-                $result = SpotsImport::removeLog(SpotsImport::RECREATION);
+                $result = SpotsImportCsv::removeLog(SpotsImportCsv::RECREATION);
                 break;
             case 'pitstop':
-                $result = SpotsImport::removeLog(SpotsImport::PITSTOP);
+                $result = SpotsImportCsv::removeLog(SpotsImportCsv::PITSTOP);
                 break;
         }
 

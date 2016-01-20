@@ -32,6 +32,9 @@ post('spot-import', 'SpotImportController@store')->name('admin.spot-import.store
 get('spot-import/log', 'SpotImportController@getLog')->name('admin.spot-import.log.show');
 delete('spot-import/log', 'SpotImportController@deleteLog')->name('admin.spot-import.log.delete');
 
+get('spot-import-columns', 'SpotImportController@indexColumns')->name('admin.spot-import-columns');
+post('spot-import-columns', 'SpotImportController@storeColumns');
+
 get('blogger-requests', 'BloggerRequestController@index')->name('admin.blogger-requests.index');
 get('blogger-requests/accept/{blogger_request}', 'BloggerRequestController@accept')->name('admin.blogger-requests.accept');
 get('blogger-requests/reject/{blogger_request}', 'BloggerRequestController@reject')->name('admin.blogger-requests.reject');

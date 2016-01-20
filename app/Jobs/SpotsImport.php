@@ -19,21 +19,11 @@ use Log;
 use Storage;
 use Validator;
 
-/**
- * Class SpotsImport
- * Job for import spot from csv file
- * @package App\Jobs
- */
-class SpotsImport extends Job implements SelfHandling
+abstract class SpotsImport extends Job implements SelfHandling
 {
     const EVENT = 'event';
     const RECREATION = 'recreation';
     const PITSTOP = 'pitstop';
-
-    /**
-     * @var SpotsImportFile
-     */
-    private $importFile;
 
     /**
      * @var int
@@ -53,136 +43,149 @@ class SpotsImport extends Job implements SelfHandling
     /**
      * Create a new job instance.
      *
-     * @param SpotsImportFile $importFile
      * @param array $data
      * @param string $type
      */
-    public function __construct(SpotsImportFile $importFile, array $data, $type = self::EVENT)
+    public function __construct(array $data, $type = self::EVENT)
     {
-        $this->importFile = $importFile;
         $this->type = $type;
         $this->data = $data;
-        $this->mailer = app(AppMailer::class);
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    abstract public function getSpots();
+
+    protected function import($imported_spot)
+    {
+        if ($imported_spot->image_links) {
+            $imported_spot->put('image_links', explode(',', $imported_spot->image_links));
+        }
+        /**
+         * @var \Illuminate\Validation\Validator $validator
+         */
+        $rules = [
+            'title' => 'required|string|max:255',
+            'description' => 'string|max:5000',
+            'website' => 'url',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'address' => 'required|string|max:255',
+            'rating' => 'numeric'
+        ];
+
+        if (isset($imported_spot->email)) {
+            $rules['email'] = 'required|email';
+        }
+
+        if ($this->type === self::EVENT) {
+            $rules['start_date'] = 'required|date_format:Y-m-d';
+            $rules['end_date'] = 'required|date_format:Y-m-d';
+        }
+
+        if ($imported_spot->image_links) {
+            for ($i = 0; $i < count($imported_spot->image_links); ++$i) {
+                $rules['image_links.' . $i] = 'url';
+            }
+        }
+
+        $validator = Validator::make($imported_spot->all(), $rules);
+
+        if (!$validator->fails()) {
+            if ($imported_spot->image_links) {
+                $imported_spot->put('image_links', array_values(array_filter($imported_spot->image_links, function ($value) {
+                    return !Validator::make(['photo' => $value], ['photo' => 'remote_image'])->fails();
+                })));
+            }
+            $spot = new Spot;
+            $spot->category()->associate($this->data['spot_category']);
+            if (isset($imported_spot->image_links[0])) {
+                $options = [
+                    'styles' => [
+                        'thumb' => [
+                            'dimensions' => '70x70#',
+                            'convert_options' => ['quality' => 100]
+                        ],
+                        'medium' => '160x160',
+                        'original' => '633x242#'
+                    ]
+                ];
+                $config = Stapler::getConfigInstance();
+                $defaultOptions = $config->get('stapler');
+                $options = array_merge($defaultOptions, (array) $options);
+                $storage = $options['storage'];
+                $options = array_replace_recursive($config->get($storage), $options);
+                $options['styles'] = array_merge((array) $options['styles']);
+                $spot->cover->setConfig(new AttachmentConfig('cover', $options));
+                $spot->cover = $imported_spot->image_links[0];
+            }
+            $spot->title = $imported_spot->title;
+            if (!empty($imported_spot->description)) {
+                $spot->description = $imported_spot->description;
+            }
+            if (!empty($imported_spot->website)) {
+                $spot->web_sites = [$imported_spot->website];
+            }
+            if ($this->type === self::EVENT) {
+                $spot->start_date = Carbon::createFromDate(...explode('-', $imported_spot->start_date));
+                $spot->end_date = Carbon::createFromDate(...explode('-', $imported_spot->end_date));
+            }
+            $spot->is_approved = true;
+            $owner = null;
+            if (isset($imported_spot->email)) {
+                $owner = $this->generateUser($imported_spot->title, $imported_spot->email);
+            }
+            if (!is_null($owner)) {
+                $owner->spots()->save($spot);
+            } else {
+                $spot->save();
+            }
+            if ($imported_spot->rating) {
+                $vote = new SpotVote(['vote' => $imported_spot->rating]);
+                $vote->user()->associate($this->data['admin']);
+                $spot->votes()->save($vote);
+            }
+            if ($imported_spot->image_links) {
+                foreach ($imported_spot->image_links as $photo) {
+                    $spot->photos()->create([
+                        'photo' => $photo
+                    ]);
+                }
+            }
+            $spot->locations = [
+                [
+                    'location' => [
+                        'lat' => $imported_spot->latitude,
+                        'lng' => $imported_spot->longtitude
+                    ],
+                    'address' => $imported_spot->address
+                ]
+            ];
+
+            return true;
+        }
+        $this->log($imported_spot, $validator);
+
+        return false;
     }
 
     /**
      * Execute the job.
+     * @param AppMailer $mailer
+     * @return bool
      */
-    public function handle()
+    public function handle(AppMailer $mailer)
     {
+        $this->mailer = $mailer;
 
-        $this->importFile->each(function ($row) {
-            if ($row->image_links) {
-                $row->put('image_links', explode(',', $row->image_links));
-            }
-            /**
-             * @var \Illuminate\Validation\Validator $validator
-             */
-            $rules = [
-                'title' => 'required|string|max:255',
-                'description' => 'string|max:5000',
-                'website' => 'url',
-                'latitude' => 'required|numeric',
-                'longitude' => 'required|numeric',
-                'address' => 'required|string|max:255',
-                'rating' => 'numeric'
-            ];
+        foreach ($this->getSpots() as $spot) {
+            $this->import($spot);
+        }
 
-            if (isset($row->email)) {
-                $rules['email'] = 'required|email';
-            }
-
-            if ($this->type === self::EVENT) {
-                $rules['start_date'] = 'required|date_format:Y-m-d';
-                $rules['end_date'] = 'required|date_format:Y-m-d';
-            }
-
-            if ($row->image_links) {
-                for ($i = 0; $i < count($row->image_links); ++$i) {
-                    $rules['image_links.' . $i] = 'url';
-                }
-            }
-
-            $validator = Validator::make($row->all(), $rules);
-
-            if (!$validator->fails()) {
-                if ($row->image_links) {
-                    $row->put('image_links', array_values(array_filter($row->image_links, function ($value) {
-                        return !Validator::make(['photo' => $value], ['photo' => 'remote_image'])->fails();
-                    })));
-                }
-                $spot = new Spot;
-                $spot->category()->associate($this->data['spot_category']);
-                if (isset($row->image_links[0])) {
-                    $options = [
-                        'styles' => [
-                            'thumb' => [
-                                'dimensions' => '70x70#',
-                                'convert_options' => ['quality' => 100]
-                            ],
-                            'medium' => '160x160',
-                            'original' => '633x242#'
-                        ]
-                    ];
-                    $config = Stapler::getConfigInstance();
-                    $defaultOptions = $config->get('stapler');
-                    $options = array_merge($defaultOptions, (array) $options);
-                    $storage = $options['storage'];
-                    $options = array_replace_recursive($config->get($storage), $options);
-                    $options['styles'] = array_merge((array) $options['styles']);
-                    $spot->cover->setConfig(new AttachmentConfig('cover', $options));
-                    $spot->cover = $row->image_links[0];
-                }
-                $spot->title = $row->title;
-                if (!empty($row->description)) {
-                    $spot->description = $row->description;
-                }
-                if (!empty($row->website)) {
-                    $spot->web_sites = [$row->website];
-                }
-                if ($this->type === self::EVENT) {
-                    $spot->start_date = Carbon::createFromDate(...explode('-', $row->start_date));
-                    $spot->end_date = Carbon::createFromDate(...explode('-', $row->end_date));
-                }
-                $spot->is_approved = true;
-                $owner = null;
-                if (isset($row->email)) {
-                    $owner = $this->generateUser($row->title, $row->email);
-                }
-                if (!is_null($owner)) {
-                    $owner->spots()->save($spot);
-                } else {
-                    $spot->save();
-                }
-                if ($row->rating) {
-                    $vote = new SpotVote(['vote' => $row->rating]);
-                    $vote->user()->associate($this->data['admin']);
-                    $spot->votes()->save($vote);
-                }
-                if ($row->image_links) {
-                    foreach ($row->image_links as $photo) {
-                        $spot->photos()->create([
-                            'photo' => $photo
-                        ]);
-                    }
-                }
-                $spot->locations = [
-                    [
-                        'location' => [
-                            'lat' => $row->latitude,
-                            'lng' => $row->longtitude
-                        ],
-                        'address' => $row->address
-                    ]
-                ];
-            } else {
-                $this->log($row, $validator);
-            }
-        });
-
-        File::delete([
-            $this->data['document']
-        ]);
+        if (isset($this->data['document'])) {
+            File::delete($this->data['document']);
+        }
 
         return true;
     }
