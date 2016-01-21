@@ -7785,7 +7785,6 @@ button.close {
   transition: width .3s ease-in;
 }
 
-.editing .columns-import .form-group textarea:hover,
 .editing .columns-import .form-group textarea:focus {
   width: 800px;
 }
