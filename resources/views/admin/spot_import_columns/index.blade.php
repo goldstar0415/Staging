@@ -2,6 +2,9 @@
 
 @section('content')
     {!! Form::open(['method' => 'POST', 'route' => 'admin.spot-import-columns', 'class' => 'columns-import form-inline', 'files' => true]) !!}
+    @if (Request::has('code'))
+        {!! Form::hidden('code', Request::get('code')) !!}
+    @endif
     <div>
         {!! Form::label('spot_type', 'Choose Spot Type:') !!}
         {!! Form::select('spot_type', App\SpotType::all()->pluck('display_name', 'id'), null, ['class' => 'form-control']) !!}
@@ -61,6 +64,10 @@
             {!! Form::label('end_date') !!}
             {!! Form::textarea('end_date', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
         </div>
+    </div>
+    <div class="ins-photos">
+        {!! Form::label('ins_photos', 'Take instagram photos') !!}
+        {!! Form::checkbox('ins_photos', 1, null, ['class' => 'form-control', 'disabled']) !!}
     </div>
     <p>
         {!! Form::submit('Save', ['class' => 'btn btn-success button-my']) !!}

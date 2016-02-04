@@ -18,6 +18,7 @@ use Illuminate\Contracts\Bus\SelfHandling;
 use Log;
 use Storage;
 use Validator;
+use Vinkla\Instagram\InstagramManager;
 
 abstract class SpotsImport extends Job implements SelfHandling
 {
@@ -100,6 +101,12 @@ abstract class SpotsImport extends Job implements SelfHandling
             }
             $spot = new Spot;
             $spot->category()->associate($this->data['spot_category']);
+            if (!$imported_spot->image_links and
+                isset($this->data['instagram_photos']) and
+                $this->data['instagram_photos']) {
+                $instagram = app(InstagramManager::class);
+                $imported_spot->put('image_links', $this->instagramPhotos($instagram->searchMedia(43.771094, -79.639893)->data));
+            }
             if (isset($imported_spot->image_links[0])) {
                 $options = [
                     'styles' => [
@@ -153,6 +160,7 @@ abstract class SpotsImport extends Job implements SelfHandling
                     ]);
                 }
             }
+
             $spot->locations = [
                 [
                     'location' => [
@@ -188,6 +196,19 @@ abstract class SpotsImport extends Job implements SelfHandling
         }
 
         return true;
+    }
+
+    protected function instagramPhotos($data)
+    {
+        $data = collect($data);
+
+        return $data->reject(function ($value) {
+            return $value['type'] === 'video';
+        })->sortBy(function ($media) {
+            return $media['likes']['count'];
+        })->reverse()->take(5)->map(function ($value) {
+            return $value['images']['standard_resolution']['url'];
+        });
     }
 
     protected function generateUser($title, $email)

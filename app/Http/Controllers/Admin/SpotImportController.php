@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Excel;
+use Vinkla\Instagram\InstagramManager;
 
 class SpotImportController extends Controller
 {
@@ -36,12 +37,31 @@ class SpotImportController extends Controller
         return view('admin.spot_import_columns.index');
     }
 
-    public function storeColumns(Request $request)
+    public function storeColumns(Request $request, InstagramManager $instagram)
     {
+        if ($request->has('code') and $request->old('ins_photos')) {
+            $request->replace($request->old());
+        }
+        if ($request->ins_photos) {
+            \Session::flashInput($request->all());
+
+            $code = $request->get('code');
+
+            if (!$code) {
+                return redirect()->away($instagram->getLoginUrl(['basic', 'public_content']));
+            }
+
+            // Request the access token.
+            $data = $instagram->getOAuthToken($code);
+
+            // Set the access token with $data object.
+            $instagram->setAccessToken($data);
+        }
 
         $job = new SpotsImportColumns($request->all(), [
             'admin' => $request->user(),
-            'spot_category' => $request->spot_category
+            'spot_category' => $request->spot_category,
+            'instagram_photos' => $request->ins_photos
         ], SpotsImport::EVENT);
         if ((bool)$request->preview) {
             $request->session()->flashInput($request->all());

@@ -164,7 +164,8 @@ return [
         Nwidart\LaravelForecast\LaravelForecastServiceProvider::class,
         ChrisKonnertz\OpenGraph\OpenGraphServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Yangqi\Htmldom\HtmldomServiceProvider::class
+        Yangqi\Htmldom\HtmldomServiceProvider::class,
+        Vinkla\Instagram\InstagramServiceProvider::class
     ],
 
     /*
@@ -224,7 +225,8 @@ return [
         'Forecast' => Nwidart\LaravelForecast\ForecastFacade::class,
         'OpenGraph' => ChrisKonnertz\OpenGraph\OpenGraph::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'Htmldom' => Yangqi\Htmldom\Htmldom::class
+        'Htmldom' => Yangqi\Htmldom\Htmldom::class,
+        'Instagram' => Vinkla\Instagram\Facades\Instagram::class
     ],
 
 ];

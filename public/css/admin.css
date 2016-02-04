@@ -7789,7 +7789,7 @@ button.close {
   width: 800px;
 }
 
-.editing .columns-import .form-group label {
+.editing .columns-import .columns .form-group label {
   display: block;
   margin-bottom: 0;
   height: 35px;
@@ -7802,4 +7802,9 @@ button.close {
   -webkit-border-radius: 5px 5px 0 0;
   -moz-border-radius: 5px 5px 0 0;
   border-radius: 5px 5px 0 0;
+}
+
+.editing .columns-import .ins-photos label {
+  margin-left: 20px;
+  width: auto;
 }

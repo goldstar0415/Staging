@@ -55,3 +55,17 @@ get('email/users', 'EmailController@users')->name('admin.email.users');
 get('settings', 'SettingsController@index')->name('admin.settings');
 put('settings', 'SettingsController@update');
 get('settings/parse-run', 'SettingsController@parserRun')->name('admin.parser.run');
+
+Route::get('/test', function () {
+    $data = collect(json_decode(file_get_contents('https://api.instagram.com/v1/media/search?lat=48.858844&lng=2.294351&access_token=2514104543.745c638.f57ee3a199c14b75be5178708c3d94e9&sort=type'), true)['data']);
+
+    $data = $data->reject(function ($value) {
+        return $value['type'] === 'video';
+    })->sortBy(function ($media) {
+        return $media['likes']['count'];
+    })->reverse()->take(5)->map(function ($value) {
+        return $value['images']['standard_resolution']['url'];
+    });
+
+    return $data;
+});
