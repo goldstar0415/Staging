@@ -15,6 +15,9 @@
         url: API_URL + '/contact-us',
         method: 'POST'
       },
+      terms: {
+        url: API_URL + '/terms'
+      },
       update: {
         method: 'PUT'
       }
