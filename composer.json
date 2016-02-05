@@ -10,7 +10,7 @@
         "zizaco/entrust": "dev-laravel-5",
         "predis/predis": "^1.1@dev",
         "laravel/socialite": "^3.0@dev",
-        "phaza/laravel-postgis": "dev-master",
+        "phaza/laravel-postgis": "2.*",
         "toin0u/geotools-laravel": "~1.0",
         "codesleeve/laravel-stapler": "dev-master",
         "barryvdh/laravel-cors": "^0.7.0@dev",
