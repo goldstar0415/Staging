@@ -34,7 +34,7 @@ class BlogCommentController extends Controller
      */
     public function index(PaginateRequest $request, $blog)
     {
-        return $this->paginatealbe($request, $blog->comments());
+        return $this->paginatealbe($request, $blog->comments()->with('sender'));
     }
 
     /**

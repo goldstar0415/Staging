@@ -41,7 +41,7 @@ class PlanCommentController extends Controller
      */
     public function index(PaginateRequest $request, $plan)
     {
-        $comments = $plan->comments();
+        $comments = $plan->comments()->with('sender');
 
         return $this->paginatealbe($request, $comments);
     }
