@@ -273,7 +273,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      */
     public function getShareLinksAttribute()
     {
-        $url = url('spots', [$this->id, 'preview']);
+        $url = frontend_url('api', 'spots', [$this->id, 'preview']);
 
         return [
             'facebook' => SocialSharing::facebook($url),
