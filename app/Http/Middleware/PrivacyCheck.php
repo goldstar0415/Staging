@@ -68,7 +68,7 @@ class PrivacyCheck
         } elseif ($request->is('wall')) {
             $target = User::find($request->get('user_id'));
 
-            if ($this->privacy->hasPermission($target, $target->privacy_wall)) {
+            if ($target and $this->privacy->hasPermission($target, $target->privacy_wall)) {
                 $allow = true;
             }
         } elseif ($request->is('wall/*', 'wall/*/like', 'wall/*/dislike') and $request->isMethod('get')) {
