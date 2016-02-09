@@ -92,7 +92,8 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
             $import_event->description = implode("\n", [
                 $event['short_title'],
                 $event['venue']['name'],
-                $event['datetime_local']
+                $event['datetime_local'],
+                $event['venue']['url']
             ]);
             $import_event->start_date = $date->format('Y-m-d H:i:s');
             $import_event->end_date = $date->format('Y-m-d 23:59:59');
