@@ -86,13 +86,16 @@ class SpotController extends Controller
      */
     public function store(SpotStoreRequest $request)
     {
-        $spot = new Spot($request->except(['locations', 'tags', 'files', 'cover']));
+        $spot = new Spot($request->except(['locations', 'tags', 'files', 'cover', 'description']));
         if ($request->hasFile('cover')) {
             $cover = $request->file('cover');
             $spot->cover = $cover->getRealPath();
         }
         if ($spot->is_private) {
             $spot->is_approved = true;
+        }
+        if ($request->has('description')) {
+            $spot->description = e($request->description);
         }
 
         $request->user()->spots()->save($spot);
@@ -139,6 +142,7 @@ class SpotController extends Controller
     public function update(SpotUpdateRequest $request, $spot)
     {
         $spot->update($request->except([
+            'description',
             'locations',
             'tags',
             'files',
@@ -152,7 +156,9 @@ class SpotController extends Controller
             $cover = $request->file('cover');
             $spot->cover = $cover->getRealPath();
         }
-
+        if ($request->has('description')) {
+            $spot->description = e($request->description);
+        }
         if ($request->has('tags')) {
             $spot->tags = $request->input('tags');
         }
