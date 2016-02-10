@@ -66,8 +66,15 @@
         </div>
     </div>
     <div class="ins-photos">
-        {!! Form::label('ins_photos', 'Take instagram photos') !!}
-        {!! Form::checkbox('ins_photos', 1, null, ['class' => 'form-control', 'disabled']) !!}
+        <div class="form-group">
+            {!! Form::label('ins_photos', 'Take instagram photos') !!}
+            {!! Form::checkbox('ins_photos', 1, null, ['class' => 'form-control']) !!}
+        </div>
+        <div>
+            {!! Form::label('ins_token', 'Set instagram token') !!}
+            {!! Form::text('ins_token', null, ['class' => 'form-control']) !!}
+            <span class="help-block">You can get access token from <a href="https://elfsight.com/service/get-instagram-access-token/">Elfsight</a></span>
+        </div>
     </div>
     <p>
         {!! Form::submit('Save', ['class' => 'btn btn-success button-my']) !!}

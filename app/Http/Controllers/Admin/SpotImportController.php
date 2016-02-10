@@ -43,16 +43,27 @@ class SpotImportController extends Controller
             $request->replace($request->old());
         }
         if ($request->ins_photos) {
-            \Session::flashInput($request->all());
+            $code = '';
+            $data = null;
 
-            $code = $request->get('code');
+            if (empty($request->ins_token)) {
+                \Session::flashInput($request->all());
 
-            if (!$code) {
-                return redirect()->away($instagram->getLoginUrl(['basic', 'public_content']));
+                $code = $request->get('code');
+
+                if (!$code) {
+                    return redirect()->away($instagram->getLoginUrl(['basic', 'public_content']));
+                }
+
+                // Request the access token.
+                $data = $instagram->getOAuthToken($code);
+            } else {
+                $data = $request->ins_token;
             }
 
-            // Request the access token.
-            $data = $instagram->getOAuthToken($code);
+            if (!$data) {
+                return back(403)->withErrors('No valid access token found');
+            }
 
             // Set the access token with $data object.
             $instagram->setAccessToken($data);
