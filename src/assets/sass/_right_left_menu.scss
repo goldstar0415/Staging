@@ -30,7 +30,6 @@
         &.active, &:hover, &:focus, &:active {
           text-decoration: none;
           color: $blue;
-          background-position-y: -41px;
         }
       }
       .user-name {
@@ -113,16 +112,24 @@
       background: url(../img/icons/intro-link.png) no-repeat;
     }
     .zoomers-link {
-      background: url(../img/icons/zoomers.png) no-repeat;
+      background: url(../img/svg/menu_desktop/icon_zoomers.svg) no-repeat;
+      background-size: 25px;
+      background-position: 10px 10px;
     }
     .blog-link {
-      background: url(../img/icons/blog.png) no-repeat;
+      background: url(../img/svg/menu_desktop/blog_icon.svg) no-repeat;
+      background-size: 25px;
+      background-position: 10px 10px;
     }
     .about-link {
-      background: url(../img/icons/about.png) no-repeat;
+      background: url(../img/svg/menu_desktop/about_us.svg) no-repeat;
+      background-size: 23px;
+      background-position: 13px 9px;
     }
     .contacts-link {
-      background: url(../img/icons/contacts.png) no-repeat;
+      background: url(../img/svg/menu_desktop/contact_icon.svg) no-repeat;
+      background-size: 23px;
+      background-position: 13px 13px;
     }
     .sign-btn {
       @include button;
@@ -144,25 +151,44 @@
     li {
       height: 50px;
       .favorites-link {
-        background: url(../img/icons/fav.png) no-repeat;
+        background: url(../img/svg/menu/favorite_icon.svg) no-repeat;
+        background-size: 20px;
+        background-position: 10px 10px;
       }
       .planner-link {
-        background: url(../img/icons/planner.png) no-repeat;
+        background: url(../img/svg/menu/calendar_icon.svg) no-repeat;
+        background-size: 20px;
+        background-position: 10px 10px;
       }
       .spots-link {
-        background: url(../img/icons/event.png) no-repeat;
+        background: url(../img/svg/menu/location.svg) no-repeat;
+        background-size: 20px;
+        background-position: 10px 10px;
       }
       .friends-link {
-        background: url(../img/icons/friends-map.png) no-repeat;
+        background: url(../img/svg/menu/friends_map.svg) no-repeat;
+        background-size: 20px;
+        background-position: 10px 10px;
       }
       .photo-link {
-        background: url(../img/icons/photo-map.png) no-repeat;
+        background: url(../img/svg/menu/photo_map.svg) no-repeat;
+        background-size: 20px;
+        background-position: 10px 10px;
       }
       .searches-link {
-        background: url(../img/icons/searches.png) no-repeat;
+        background: url(../img/svg/menu/search_icon.svg) no-repeat;
+        background-size: 20px;
+        background-position: 10px 10px;
       }
       .settings-link {
-        background: url(../img/icons/settings.png) no-repeat;
+        background: url(../img/svg/menu/settings_icon.svg) no-repeat;
+        background-size: 20px;
+        background-position: 10px 10px;
+      }
+      .blog-link {
+        background: url(../img/svg/menu_desktop/blog_icon.svg) no-repeat;
+        background-size: 20px;
+        background-position: 10px 10px;
       }
 
     }

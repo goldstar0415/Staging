@@ -83,9 +83,10 @@
 }
 
 .friendmap-loc {
-  background: url(../img/icons/map-loc.png) no-repeat 0 0;
+  background: url(../img/svg/location.svg) no-repeat 0 0;
   padding-left: 2rem;
-  padding-top: 0;
+  padding-top: 1px;
+  background-size: 15px;
   color:#000;
   font-size: 14px;
 }
@@ -104,9 +105,16 @@
     padding: 0 0 0 2rem;
   }
   .edit {
-    background: url(../img/icons/edit-ico.png)no-repeat;
-    padding: 0 0 0 2rem;
-    margin-right: 15px;
+    padding-left: 15px;
+    margin-right: 5px;
+    background-image: url('../img/svg/edit_icon.svg');
+    background-size: 15px;
+    color:#889197;
+    background-repeat: no-repeat;
+    &:hover, &:active, &:focus {
+      background-image: url('../img/svg/edit_icon_hover.svg');
+      color: $blue;
+    }
   }
 }
 

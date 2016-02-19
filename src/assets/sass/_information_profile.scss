@@ -13,7 +13,7 @@
         min-width: 100%;
         border-radius: 50%;
         width: 12rem !important;
-    height: 12rem !important;
+        height: 12rem !important;
       }
     }
   }
@@ -75,10 +75,10 @@
   .location {
     color: grey;
     font: 400 14px/14px;
-    margin-top: 7px;
+    margin-top: 5px;
     //overflow: hidden;
     //white-space: nowrap;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   .biography {
     font-size: 1.4rem;
@@ -100,33 +100,38 @@
     a {
       display: block;
       float: left;
-      margin-right: 10px;
-      border-right: 1px solid $light_grey;
+      margin-right: 0;
+      border-right: 1px solid #CFD7DE;
+      color: #888;
+      padding-right: 13px;
+      padding-left: 13px;
+      line-height: 15px;
       &:last-of-type {
         border: 0;
       }
+    
+    i {
+      display: block;
+      width: 53px;
+      height: 32px;
+      background-repeat: no-repeat;
+      background-position: center center;
+      margin-bottom: 10px;
+      &.events {
+        background-image: url(../img/svg/profile_menu/icon_spot.svg);
+      }
+      &.followers {
+        background-image: url(../img/followers.png);
+      }
+      &.followings {
+        background-image: url(../img/following.png);
+      }
     }
-    .events {
-      background: url(../img/icons/event.png) -13px -10px no-repeat;
+    span {
+      font-size: 20px;
+      color: #000;
     }
-    .followers {
-      background: url(../img/icons/friends-map.png) -11px -10px no-repeat;
-    }
-    .albums {
-      background: url(../img/icons/photo-map.png) -11px -10px no-repeat;
-    }
-    .fav {
-      background: url(../img/icons/fav-star.png) 0px 3px no-repeat;
-    }
-    .followings {
-      background: url(../img/icons/followings.png) -11px -10px no-repeat;
-    }
-    .events, .fav {
-      padding: 3px 16px 2px 20px;
-    }
-    .followers, .albums, .followings {
-      padding: 3px 16px 2px 22px;
-    }
+   }
   }
   .form-group {
     .blue-btn, .red-btn, .green-btn {
@@ -135,7 +140,43 @@
     }
   }
 }
-
+.social-links {
+  li {
+    padding-left: 2px;
+    padding-right: 2px;
+    a {
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    background-size: cover;
+    &.facebook {
+      background-image: url(../img/svg/social/facebook_icon.svg);
+    }
+    &.twitter {
+      background-image: url(../img/svg/social/twitter_icon.svg);
+    }
+    &.instagram {
+      background-image: url(../img/svg/social/instagram_icon.svg);
+    }
+    &.tumblr {
+      background-image: url(../img/svg/social/tumbler_icon.svg);
+    }
+    &.vk {
+      background-image: url(../img/svg/social/vk_icon.svg);
+    }
+    &.google-plus {
+      background-image: url(../img/svg/social/google_icon.svg);
+    }
+    &.custom {
+      background-image: url(../img/svg/social/logo_icon.svg);
+    }
+  }
+  }
+  
+}
+.mgt20 {
+  margin-bottom: 10px !important
+}
 @media (max-width: 992px) {
   .information-profile {
     .avatar-wrap {
@@ -147,7 +188,6 @@
       }
     }
     .activity-mobile {
-      padding-left: 15px;
       .profile-name {
         a {
           text-align: center;

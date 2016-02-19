@@ -626,6 +626,36 @@
         parent: 'profile',
         locate: 'none'
       })
+
+      .state('followers', {
+        url: '/followers',
+        templateUrl: '/app/modules/followers/followers.html',
+        controller: 'FollowersController',
+        controllerAs: 'Follower',
+        parent: 'profile',
+        locate: 'none',
+        mapState: 'small',
+        resolve: {
+          users: function (User, $stateParams, user) {
+            return User.followers({user_id: user.id}).$promise;
+          }
+        }
+      })
+      .state('followings', {
+        url: '/followings',
+        templateUrl: '/app/modules/followers/followers.html',
+        controller: 'FollowersController',
+        controllerAs: 'Follower',
+        parent: 'profile',
+        locate: 'none',
+        mapState: 'small',
+        resolve: {
+          users: function (User, user) {
+            return User.followings({user_id: user.id}).$promise;
+          }
+        }
+      })
+
     ;
 
     $urlRouterProvider.otherwise('/');

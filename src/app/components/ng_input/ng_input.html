@@ -1,4 +1,4 @@
-<section class="col-xs-12 comments-section" ng-if="$root.currentUser" ng-class="{'hidden-xs': NgInput.fixedMobile}">
+<section class="col-xs-12 comments-section" ng-if="$root.currentUser">
   <form class="new-post clearfix" name="form" ng-submit="NgInput.submit(form)" novalidate>
       <textarea name="message"
                 ng-model="NgInput.message"
@@ -29,17 +29,27 @@
         </div>
 
         <div ng-repeat="spot in NgInput.attachments.spots" class="media media-visible padding-bottom add-event">
-          <a class="pull-left wrap-img-event">
-            <img class="media-object attachment-link" ng-src="{{spot.cover_url.medium}}">
-          </a>
-
-          <div class="media-body">
+          <div class="col-md-2 col-xs-3 col-sm-4 spot-thumb">
+            <figure>
+              <a class="wrap-img-event">
+                <img class="media-object attachment-link" ng-src="{{spot.cover_url.medium}}">
+            <span class="spot-type" ng-class="{'event-spot-page':item.type == 'Event',
+                  'recreation-spot':item.type == 'Recreation',
+                  'pitstop-spot':item.type == 'PitStop'}">
+               Event
+               </span>
+              </a>
+            </figure>
+            <stars item="item"></stars>
+          </div>
+          <div class="col-md-9 col-xs-9">
             <a class="close-link" title="Delete" ng-click="NgInput.deleteSpot($index)"></a>
 
             <h3 class="media-heading ">
               <a class="event-img clearfix">{{spot.title}}</a>
             </h3>
-
+            <!--<p class="place">London</p>-->
+            <p class="date">{{spot.start_date | toTimezone : 'DD MMM YYYY'}}</p>
             <div class="description-link">{{spot.description}}</div>
           </div>
         </div>
@@ -59,6 +69,7 @@
             <div class="description-link">{{link.description}}</div>
           </div>
         </div>
+
       </div>
 
 
@@ -87,21 +98,3 @@
   <div ng-include="'/app/components/ng_input/photos_modal.html'"></div>
   <div ng-include="'/app/components/ng_input/activity_modal.html'"></div>
 </section>
-
-<div class="fixed visible-xs" ng-if="NgInput.fixedMobile">
-  <form class="new-post clearfix" name="form" ng-submit="NgInput.submit(form)" novalidate>
-    <ul class="list-inline">
-      <li><a class="add-attach" ng-click="NgInput.openActivityModal()"></a></li>
-      <li class="chat-input">
-        <textarea name="message"
-                  ng-model="NgInput.message"
-                  placeholder="Start typing..."
-                  ng-focus="NgInput.onFocus()"
-                  ctrl-enter="NgInput.submit(form)"
-                  ng-maxlength="NgInput.maxlength"
-                  ng-required="!NgInput.attachments.photos.length && !NgInput.attachments.spots.length && !NgInput.attachments.areas.length && !NgInput.attachments.links.length"></textarea>
-      </li>
-      <li><input type="submit" class="submit-send" value=""></li>
-    </ul>
-  </form>
-</div>

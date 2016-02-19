@@ -1,31 +1,30 @@
 @media (max-width: 991px) {
   /* blog */
   .main-blog-article-content .blog-content {
-    background-color: #F5F8FA !important;
-  }
-  .main-blog-article-content .article .title-blog {
-    background-color: #fff;
-    padding-top: 2rem !important;
-  }
-  .share {
-    bottom: 2rem;
-  }
-  .comments-section {
-    background-color: #F5F8FA !important;
-  }
-  activity-mobile {
-    text-align: center;
-  }
-  .article .article-img {
-    margin-bottom: 0;
-  }
-
-  .my-spots-section .share {
-    bottom: 1.5rem;
-  }
-  .article-wrapper, .article-wrap {
+      background-color: #f4f5f6 !important;
+    }
+    .main-blog-article-content .article .title-blog {
+      background-color: #fff;
+      padding-top: 2rem !important;
+    }
+    .share {
+      bottom: 2rem;
+    }
+    .comments-section {
+      background-color: #f4f5f6 !important;
+    }
+    activity-mobile {
+      text-align: center;
+    }
+    .article .article-img {
+      margin-bottom: 0;
+    }
+    
+    .my-spots-section .share {
+      bottom: 1.5rem;
+    }
+    .article-wrapper, .article-wrap {
     margin-bottom: 4rem;
-    padding: 0 !important;
   }
   .album-container .img-wrap .album-tools-wrap {
     display: block;
@@ -36,7 +35,8 @@
     margin-bottom: -34px;
     flex-direction: row;
     -webkit-justify-content: flex-end;
-    justify-content: flex-end;
+   justify-content: flex-end;
+   z-index: 2;
   }
   .photo-wrap {
     .photo {
@@ -61,16 +61,16 @@
     }
     .logo-mini {
       text-align: center;
-    }
+    }    
   }
-  .information-profile {
-    text-align: center;
-    .info-links a {
-      display: inline-block;
-      float: none;
+  .information-profile  {
+      text-align: center;
+      .info-links a {
+        display: inline-block;
+        float: none;
+      }
     }
-  }
-
+  
   .tools-wrap {
     .tools-hint-block {
       ul {
@@ -89,17 +89,18 @@
     width: 10rem !important;
     height: 10rem !important;
   }
-  /*.tools li a {
-  width: 16px;
-  overflow: hidden;
-  display: block;
-  height: 16px;
-} */
-  .tools li a {
+    /*.tools li a {
+    width: 16px;
     overflow: hidden;
-    background-image: none;
+    display: block;
+    height: 16px;
+  } */
+   .tools li a {
+    overflow: hidden;
+    background-image: none !important;
     padding-left: 0;
-    color: $blue_btn;
+    color: $blue_btn !important;
+    font-size: 12px;
   }
   .my-spots-section .share {
     bottom: 0.5rem !important;
@@ -109,14 +110,23 @@
   }
   .menu-profile ul {
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 0;
   }
   .menu-profile ul li {
     float: none;
+    height: 15px;
   }
 
   .album-container .img-wrap .album-tools-wrap, .album-container .img-wrap:hover .album-tools-wrap {
     bottom: 5px !important;
     margin-bottom: 0;
+    z-index: 2;
+  }
+  .album-title .title-width {
+    width: calc(100% - 100px);
+    text-align: left;
   }
   .photos li .delete {
     display: block;
@@ -124,8 +134,8 @@
   .avatar-block .bg-thumb {
     margin-right: 0;
   }
-}
 
+}
 @media (max-width: 991px) and (min-width: 767px) {
   .information-profile .avatar-wrap .avatar {
     width: 10rem;
@@ -157,12 +167,13 @@
   .leaflet-left {
     left: 0 !important;
   }
-
+  .module-sidebar .img-responsive, .module-sidebar .row-min .pad-min > a {
+    height: auto !important;
+  }
 }
-
 @media (max-width: 767px) {
   .friends-block {
-    .text-block {
+   .text-block {
       width: 68%;
     }
     .review-img {
@@ -201,7 +212,8 @@
   }
   .leaflet-top .leaflet-control {
     margin-left: 1rem;
-    margin-top: 1rem;
+    margin-top: 0;
+    top: 1rem;
   }
   .leaflet-bottom {
     bottom: auto;
@@ -221,8 +233,15 @@
     margin-bottom: 2rem;
   }
   .messages .message .avatar {
-    width: 7rem;
-    height: 7rem;
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  .incoming-avatar a img {
+    height: 4.5rem !important;
+    width: 4.5rem !important;
+  }
+  .nopad-media {
+    padding: 0 !important
   }
   .share-btn {
     display: none !important;
@@ -235,9 +254,9 @@
   }
   .leaflet-top.leaflet-right {
     transform: rotate(90deg);
-    right: 1rem;
+    right: 3rem;
     margin-right: 0;
-    top: -15px;
+    top: -3rem; 
     div {
       background-color: rgba(0, 207, 255, 0.8);
     }
@@ -253,7 +272,7 @@
     width: 100%;
   }
   .snap-content {
-    transform: none;
+    transform: none ;
   }
   .fixed {
     position: fixed;
@@ -262,7 +281,7 @@
     width: 100%;
     –webkit-overflow-scrolling: auto;
     z-index: 999;
-    -webkit-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; 
     -webkit-transform: translateZ(0);
     background-color: #fff;
     border-top: 1px solid #eee;
@@ -270,103 +289,130 @@
       margin-bottom: 0;
       padding: 1rem 0;
       li {
-        vertical-align: middle;
-        width: 4rem;
-      }
-      li.chat-input {
-        width: calc(100% - 9.5rem);
-        border-left: 1px solid #eee;
-      }
-      .add-attach {
-        display: block;
-        float: right;
-        width: 15px;
-        height: 16px;
-        margin-top: 0;
-        background: url(../img/icons/clip-photo.png) 0 2px no-repeat;
-        margin-left: 1rem;
-      }
-      textarea {
-        height: 4rem;
-        background-color: #fff;
-        border: 0;
-        margin-top: 0;
-        padding-top: 1rem;
-        font-size: 1.6rem;
-        &:hover, &:focus {
-          box-shadow: none;
+          vertical-align: middle;
+          width: 4rem;
+        }
+        li.chat-input {
+          width: calc(100% - 9.5rem);
+          border-left: 1px solid #eee;
+        }
+        .add-attach {
+          display: block;
+          float: right;
+          width: 15px;
+          height: 16px;
+          margin-top: 0;
+          background: url(../img/icons/clip-photo.png) 0 2px no-repeat;
+          margin-left: 1rem;
+        }
+        textarea {
+          height: 4rem;
+          background-color: #fff;
           border: 0;
+          margin-top: 0;
+          padding-top: 1rem;
+          font-size: 1.6rem;
+          &:hover, &:focus {
+            box-shadow: none;
+            border: 0;
+          }
         }
-      }
-      .submit-send {
-        height: 3.5rem;
-        width: 3.5rem;
-        display: block;
-        background: url(../img/icons/send-btn.png) no-repeat;
-        background-size: contain;
-      }
-    }
-  }
-  .chat-conversation .dialog-user .dialog-content .dial:after {
-    top: 2rem;
-  }
-  .modal-content, .modal-dialog {
-    transform: none !important;
-  }
-  .sidebar-menu-horizontal {
-    background-color: #fff;
-    border: 0;
-    ul {
-      height: 5rem;
-      padding-top: 5px;
-      webkit-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
-      -moz-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
-      box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
-      li {
-        border: 0;
-        background-color: #fff;
-        a {
-          background-image: url(../img/icons/mobile-vertical-menu.png) !important;
+        .submit-send {
+          height: 3.5rem;
+          width: 3.5rem;
+          display: block;
+          background: url(../img/icons/send-btn.png) no-repeat;
+          background-size: contain;
         }
       }
     }
-  }
-  .search-filters {
-    .numbers-events {
+    .chat-conversation .dialog-user .dialog-content .dial:after {
+      top: 2rem;
+    }
+    .modal-content, .modal-dialog {
+        transform: none !important;
+    }
+    .sidebar-menu-horizontal {
+      background-color: #fff;
       border: 0;
-      border-bottom: 2px solid $blue_btn;
-      padding-bottom: 1rem;
-      display: inline-block;
-      margin-bottom: 2rem;
-      p {
-        text-align: center;
-        color: #333;
-        font-weight: bold;
-        text-transform: uppercase;
-        font-size: 2rem;
+      ul {
+        height: 5rem;
+        padding-top: 5px;
+        webkit-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+        -moz-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+        box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+        li {
+          border: 0;
+          background-color: #fff;
+              a.events {
+                background-image: url(../img/svg/vertical_menu/calendar_unactive.svg) !important;
+              }
+              a.recreation {
+                background-image: url(../img/svg/vertical_menu/recrearion_icon_unactive.svg) !important;
+              }
+              a.pit-stops {
+                background-image: url(../img/svg/vertical_menu/pit_stops_unactive.svg) !important;
+                background-size: 31px;
+                background-position: 0 5px;
+              }
+              a.weather-link {
+                background-image: url(../img/svg/vertical_menu/weather_icons_unactive.svg) !important;
+              }
+              &.active {
+              a.events {
+                background-image: url(../img/svg/vertical_menu/calendar_active.svg) !important;
+              }
+              a.recreation {
+                background-image: url(../img/svg/vertical_menu/recrearion_icon_active.svg) !important;
+              }
+              a.pit-stops {
+                background-image: url(../img/svg/vertical_menu/pit_stops_active.svg) !important;
+                background-size: 31px;
+                background-position: 0 5px;
+              }
+              a.weather-link {
+                background-image: url(../img/svg/vertical_menu/weather_icons_active.svg) !important;
+              }
+          }
+        }
       }
     }
-  }
-  .weather-wrap {
-    .firstBlock-wrapper {
-      .right-now {
-        text-align: center;
-        color: #333;
-        font-weight: bold;
-        text-transform: uppercase;
-        font-size: 2rem;
+    .search-filters {
+      .numbers-events {
+        border: 0;
         border-bottom: 2px solid $blue_btn;
-        width: 12rem;
-        margin: 0 auto 1rem;
+        padding-bottom: 1rem;
+        display: inline-block;
+        margin-bottom: 2rem;
+        p {
+          text-align: center;
+          color: #333;
+          font-weight: bold;
+          text-transform: uppercase;
+          font-size: 2rem;
+        }
       }
     }
-  }
+    .weather-wrap {
+      .firstBlock-wrapper {
+        .right-now {
+          text-align: center;
+          color: #333;
+          font-weight: bold;
+          text-transform: uppercase;
+          font-size: 2rem;
+          border-bottom: 2px solid $blue_btn;
+          width: 12rem;
+          margin: 0 auto 1rem;
+        }
+      }
+    }
 
-  .weather-wrap .weekForecast .weekForecast-wrapper .weatherIcon div {
-    background-size: 7rem !important;
-  }
+    .weather-wrap .weekForecast .weekForecast-wrapper .weatherIcon div {
+      background-size: 7rem !important;
+    }
   .menu-profile ul li {
-    width: 11.5%;
+    width: 10.5%;
   }
   .hide-menu-profile {
     display: block;
@@ -375,9 +421,8 @@
     position: absolute;
     right: 2rem;
     top: -7rem;
-    background-color: rgba(159, 173, 173, .8);
-    background-image: url(../img/icons/arrows2.png);
-    background-position: 10px -23px;
+    transform: rotate(180deg);
+    background-image: url(../img/svg/arrow.svg);
     background-repeat: no-repeat;
     border-radius: 50%;
   }
@@ -388,11 +433,9 @@
     position: absolute;
     right: 2rem;
     top: 77vh;
-    background-color: rgba(159, 173, 173, .8);
-    background-image: url(../img/icons/arrows2.png);
+    background-image: url(../img/svg/arrow.svg);
     background-repeat: no-repeat;
     border-radius: 50%;
-    background-position: 10px 15px;
   }
   .create .save-cancel {
     text-align: center !important;
@@ -400,27 +443,24 @@
   .friends-block {
     border-bottom: 0;
   }
-  .photo-viewer .location.visible-xs {
+  .photo-viewer .location.visible-xs{
     padding: 2rem;
     padding-bottom: 1rem;
-    padding-left: 3rem;
-    font-size: 1.4rem;
-    color: #000;
-    margin-bottom: 10px;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    background: url(../img/icons/map-loc.png) no-repeat 1rem center;
+      padding-left: 3rem;
+      font-size: 1.4rem;
+      color: #000;
+      margin-bottom: 10px;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: url(../img/icons/map-loc.png) no-repeat 1rem center;
   }
   .viewer-wrap .modal-dialog .modal-content {
     border-radius: 0;
   }
   .viewer-wrap .modal-dialog .photo-viewer .close {
     top: -9rem;
-    &.without-location {
-      top: -3rem;
-    }
   }
   .media-nopad:first-child {
     padding-right: 1rem !important;
@@ -430,7 +470,7 @@
   }
   .fc-month-view {
     .fc th, .fc td {
-      border: 0;
+    border: 0;
     }
     .fc-row .fc-content-skeleton td, .fc-row .fc-helper-skeleton td {
       background-color: #fff;
@@ -440,45 +480,105 @@
       background-color: #fff !important;
     }
   }
-  .fc-ltr .fc-basic-view .fc-day-number {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-  }
-  .share-wrap .share-buttons {
-    top: -5px;
-  }
-  .event .place {
-    margin-top: 0;
-  }
-  .mobile-nopad {
-    padding: 0 !important;
-  }
-  .spot-bg {
-    background-color: #f4f5f6;
-    padding: 2rem 0;
-    .spot-section {
+     .fc-ltr .fc-basic-view .fc-day-number {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+    .share-wrap .share-buttons {
+      display: none;
+    }
+    .event .place {
+      margin-top: 0;
+    }
+    .mobile-nopad {
+      padding: 0 !important;
+    }
+    .spot-bg {
+      background-color: #f4f5f6;
+      padding: 2rem 0;
+      .spot-section {
+        background-color: #fff;
+        padding: 2rem 1rem;
+      }
+    }
+    .event-main-info, .event-additionl-info, .event-upload-photos, .event-add-video {
+      border: 0;
+    }
+    .mobile-text-center {
+      text-align: center;
+      .green-btn {
+        float: none !important; 
+      }
+    }
+    .comments-section {
+      padding-bottom: 4rem;
+      max-height: 40vh;
+      overflow: scroll;
       background-color: #fff;
-      padding: 2rem 1rem;
     }
-  }
-  .event-main-info, .event-additionl-info, .event-upload-photos, .event-add-video {
-    border: 0;
-  }
-  .mobile-text-center {
-    text-align: center;
-    .green-btn {
-      float: none !important;
+    .event-upload-photos {
+      margin-left: 1.5rem;
+      margin-right: 1.5rem;
     }
-  }
+    .drop-box p {
+      margin-top: 13rem !important;
+    }
+    .article-wrap, .article-wrapper {
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
+      background-color: #f4f5f6;
+      margin-bottom: 0;
+      border: 0 !important;
+    }
+    .article-wrap .share {
+      right: 1.5rem;
+      bottom: 10rem;
+    }
+    .article .location-link {
+      padding-top: 0;
+    }
+    .blog-content {
+      background-color: #f4f5f6;
+      margin-bottom: 0;
+    }
+    .title-blog {
+      background-color: #fff;
+    }
+    stars .outline-none {
+      min-width: 7rem;
+    }
+    .event .share {
+      bottom: 2rem !important;
+    }
+    .event h2 {
+      width: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tools {
+      padding-top: 1.4rem;
+    }
+    .attachments-preview .add-event .wrap-img-event, .media-object.attachment-link {
+      width: 7rem;
+      height: 7rem;
+    }
+    .article .title-blog {
+      padding-top: 0 !important;
+    }
+    .title-blog .date-xs {
+      margin-top: 1px;
+    }
+    .weekForecast-wrapper {
+      padding-right: 0;
+    }
 }
-
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .one-spot-section .share {
     right: 0;
   }
   img.avatar {
-    width: 10rem;
-    height: 10rem;
+    width: 7rem;
+    height: 7rem;
     margin: 0 auto;
   }
   .friends-block .avatar-wrap {
@@ -494,7 +594,6 @@
   .photo-wrap .photo img {
     width: auto;
     height: auto;
-    width: 100%;
     min-height: auto;
   }
   .messages .message .content-messages .incoming-messages .incoming-avatar {
@@ -520,20 +619,18 @@
     width: 100%;
   }
   .sidebar-menu-wrap .show-menu-profile {
-    top: 5px;
-    right: 0;
-    transform: rotate(-90deg);
+    right: 1.5rem;
   }
   .edit-delete.album {
     top: 1rem;
   }
   .btn-back {
-    top: 2rem;
+    top: 4.5rem;
   }
   .bg-thumb {
     .avatar, .avatar img {
-      width: 25rem;
-      height: 25rem;
+      width: 25rem !important;
+      height: 25rem !important;
     }
   }
   .saved-search {
@@ -545,10 +642,125 @@
       bottom: 1.4rem;
       right: 0 !important;
     }
-
+    
+  }
+  .grey-wrapper {
+    height: 2rem;
+    width: 100%;
+    background-color: #f4f5f6;
+    clear: both;
+  }
+  p.description {
+    margin-bottom: 0;
+  }
+  .photo-comments {
+    padding-bottom: 2rem;
+    max-height: 38vh;
+    overflow-y: scroll;
+  }
+  .photo-viewer .photo-comments .reviews {
+    overflow: visible;
+  }
+  .viewer-wrap .modal-dialog .modal-content {
+    top: 4rem;
+  }
+  .info .edit-delete {
+    text-align: left;
+  }
+  .spot-thumb figure .spot-type {
+    padding-top: 8px;
+    font-size: 9px;
+    bottom: -5.5rem;
+  }
+  .media-center{
+    text-align: center;
+    .save-btn, .green-btn {
+      float: none !important;
+    }
+  }
+  .main-blog-article-content .article .share {
+    right: 1.5rem !important;
+    bottom: 4rem;
+  }
+  .article {
+    padding-bottom: 0;
+  }
+  .article-wrapper {
+    padding-bottom: 1rem !important;
+  }
+  .create-article-btn {
+    top: 2.5rem !important
+  }
+  .weather-wrap .weekForecast .weekForecast-wrapper .data {
+    font-size: 1.5rem;
+  }
+  .event-upload-photos {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .photo-viewer .photo-comments {
+    margin-bottom: 8rem;
+  }
+  .media-banner-blog {
+    height: 348px;
+    margin-left: auto;
+    width: 256px;
+    margin-right: auto;
+  }
+  .media-wrap {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
+  .saved-search {
+    background-color: #fff;
+  }
+  .grey-container {
+    background-color: #f4f5f6;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .saved-search .search-container .search-img {
+    margin-top: 2rem;
+  }
+  .central {
+    padding-bottom: 0 !important;
+    border-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .chat-conversation .dialog-user .dialog-content .dial:after {
+    width: 10px;
+    height: 10px;
+    right: -6px;
+    top: 2rem;
+  }
+  .chat-conversation .dialog-friend .dialog-content-friend .dial:after {
+    width: 10px;
+    height: 10px;
+    left: -6px;
+    top: 4rem;
+  }
+  .attach-event {
+    text-align: justify;
+  }
+  .chat-conversation .posts-chat {
+    padding-bottom: 6rem;
+  }
+  .chat-conversation .dialog-user .dialog-content .dial p, .chat-conversation .dialog-friend .dialog-content-friend .dial p {
+    font-size: 1.4rem;
+    text-align: justify !important;
+  }
+  .chat-conversation .date {
+    margin-left: 1.5rem;
+    margin-right: 0;
+  }
+  .main-blog-article-content .article .location-link {
+    padding-bottom: 1rem;
+  }
+  .main-blog-article-content .article .article-description {
+    padding-bottom: 0;
+    margin-bottom: 0;
   }
 }
-
 @media (max-width: 640px) {
   /* blog */
   .article-info .share {
@@ -568,11 +780,10 @@
     padding-right: 0;
     font-size: 11px;
   }
-  facebook-events a {
-    position: relative !important;
-    top: 5px !important;
-    right: 2rem !important;
-  }
+ facebook-events a {
+    top: 4.5rem !important;
+    right: 1.5rem !important;
+  } 
   .avatar img {
     width: 7rem !important;
     height: 7rem !important;
@@ -582,10 +793,10 @@
     float: left !important;
     margin-right: 5px;
     .fav-avatar-icon {
-      float: none !important;
-      margin: 0 auto !important;
-      height: 7rem !important;
-      width: 7rem !important;
+        float: none !important;
+        margin: 0 auto !important;
+        height: 7rem !important;
+        width: 7rem !important;
     }
   }
   .chat-conversation .dialog-friend .avatar {
@@ -610,6 +821,9 @@
         }
       }
     }
+  }
+  .title-blog .date-xs {
+    margin-top: 1px;
   }
   .avatar img {
     width: 7rem !important;
@@ -686,7 +900,7 @@
 @media (max-width: 550px) {
   .photo-wrap {
     .photo {
-      min-height: 160px;
+      min-height: 13rem;
     }
   }
   .edit-delete.album {
@@ -700,7 +914,6 @@
     display: flex !important;
   }
 }
-
 @media (max-width: 450px) {
   .sort-menu {
     width: 100%;
@@ -730,10 +943,6 @@
     width: 15rem !important;
     height: 15rem !important;
   }
-  .btn-back {
-    position: relative !important;
-    top: 2rem !important;
-  }
   .spot-thumb figure {
     margin-top: 0;
     width: 7rem !important;
@@ -748,12 +957,23 @@
     }
   }
 }
-
 @media (max-width: 400px) {
   /* blog */
+  .weather-wrap .weekForecast .weekForecast-wrapper {
+    padding-right: 0 !important;
+    .data {
+      width: 25%;
+      font-size: 1.3rem;
+    }
+    .weather-summary {
+      font-size: 1.3rem;
+    }
+  }
   .buttons-block .add-btn {
-    width: 100%;
     margin-left: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-right: 5px;
   }
   .tools-wrap .tools-hint-block ul li {
     margin-right: 5px;
@@ -791,7 +1011,7 @@
       }
     }
   }
-  .weather-wrap {
+    .weather-wrap {
     .firstBlock-wrapper {
       height: auto;
       .weatherImg-block, .parameters {
@@ -799,24 +1019,34 @@
         text-align: center;
       }
     }
-    .upload-photos .photos .add-img img {
-      width: 11rem;
-    }
+  .upload-photos .photos .add-img img {
+    width: 11rem;
   }
 }
-
+}
 @media (max-width: 350px) {
   .photo-wrap {
     width: 100%;
     .photo {
-      min-height: 160px;
+      min-height: 13rem;
+      max-height: 30rem;
+      overflow: hidden;
     }
   }
   .share {
     bottom: 3rem;
   }
 }
-
+@media (max-height: 400px) {
+  .show-menu-profile {
+    top: 56vh;
+  }
+}
+@media (max-height: 400px) {
+  .search-filters {
+    min-height: 30rem;
+  }
+}
 @media (min-device-width: 240px) and (max-device-width: 767px) and (orientation: landscape) {
   .sidebar-menu-wrap {
     position: relative;

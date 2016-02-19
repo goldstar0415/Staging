@@ -48,7 +48,7 @@
       <label class="col-md-2 col-sm-12 col-xs-12 control-label">Date</label>
 
       <div class="col-md-10 col-sm-12 col-xs-12">
-        <div class="col-sm-4 col-xs-5 no-pad media-nopad">
+        <div class="col-sm-4 col-xs-5 no-pad">
           <input ng-datepicker name="start_date" ng-model="Plan.start_date" end-date="Plan.end_date" today="true"
                  type="text" required class="grey-bg">
 
@@ -59,7 +59,7 @@
 
         <span class="col-sm-1 col-xs-2 mgt15 text-center">—</span>
 
-        <div class="col-sm-4 col-xs-5 no-pad media-nopad">
+        <div class="col-sm-4 col-xs-5 no-pad">
           <input ng-datepicker name="end_date" ng-model="Plan.end_date" start-date="Plan.start_date"
                  type="text" required class="grey-bg">
 
@@ -101,6 +101,7 @@
 
   <!-- section  event-additionl-infoo-->
   <div ng-repeat="attachment in Plan.attachments ">
+    <div class="grey-wrapper"></div>
     <section class="event-additionl-info" ng-if="attachment.type == 'activity'">
       <div class="form-group">
         <div class="text-center">
@@ -175,7 +176,7 @@
       <div class="form-group ">
         <label class="col-sm-2 control-label">Date</label>
 
-        <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class="col-md-10 col-sm-5 col-xs-5">
           <div class="col-sm-4 col-xs-12 no-pad">
             <input ng-datepicker name="start_date_{{$index}}" ng-model="attachment.data.start_date"
                    start-date="Plan.start_date" end-date="Plan.end_date" type="text" required class="grey-bg">
@@ -185,9 +186,9 @@
             </div>
           </div>
 
-          <span class="hidden-xs col-sm-1 mgt15">—</span>
+          <span class="hidden-xs col-sm-1 col-xs-2 mgt15">—</span>
 
-          <div class="col-sm-4 col-xs-12 no-pad">
+          <div class="col-sm-4 col-xs-5 no-pad">
             <input ng-datepicker name="end_date_{{$index}}" ng-model="attachment.data.end_date"
                    start-date="Plan.start_date" end-date="Plan.end_date" type="text" required class="grey-bg">
 
@@ -274,6 +275,3 @@
   <!-- end buttons block -->
 
 </form>
-
-
-

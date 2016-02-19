@@ -131,10 +131,6 @@ textarea {
   }
 }
 
-.line-break {
-  white-space: pre-wrap;
-}
-
 h3 {
   margin: 25px auto;
   font: 500 20px/26px ;
@@ -259,7 +255,8 @@ img.avatar {
     position: absolute;
     margin-left: 5px;    top: 50px;
     right: 20px;
-    background: url(../img/icons/plus.png) 2px 2px no-repeat;
+    background: url(../img/svg/add_icon.svg) no-repeat;
+    background-position: center;
     background-color: #00b7f3;
     @include transition_bg;
     &:hover {
@@ -298,25 +295,24 @@ facebook-events a {
       position: absolute;
       top: 45px;
       right: 1.5rem;
-      background: url(../img/icons/import.png) no-repeat;
+      background: url(../img/svg/button_import.svg) no-repeat;
       @include transition_bg;
       &:hover {
-        background: url(../img/icons/import.png) no-repeat;
+        background: url(../img/svg/button_import.svg) no-repeat;
         @include transition_bg;
       }
 }
 .import-friendmap {
       display: block;
-      width: 33px;
-      height: 33px;
+      width: 42px;
+      height: 41px;
       border-radius: 3px;
       position: absolute !important;
-      top: 50px;
+      top: 42px;
       right: 60px;
-      background: url(../img/icons/fb-export.png) no-repeat;
+      background: url(../img/svg/social/facebook_top_icon.svg) no-repeat;
       @include transition_bg;
       &:hover {
-        background: url(../img/icons/fb-export.png) no-repeat;
         @include transition_bg;
       }
   }
@@ -649,6 +645,14 @@ sign-in, sign-up {
   }
 }
 
+.saved-search {
+  .wrap-from-share {
+    position: relative;
+    display: block;
+    top: 1.2rem;
+  }
+}
+
 .video-size {
   width: 100%;
   position: relative;
@@ -811,8 +815,8 @@ sign-in, sign-up {
     padding: 0;
     .followers {
       .avatar {
-        width: 220px;
-        height: 220px;
+        width: 15rem;
+        height: 15rem;
       }
     }
   }
@@ -909,7 +913,6 @@ sign-in, sign-up {
   }
   /*end blog page*/
   .tools li:last-child {
-    margin-right: 3.7rem;
   }
 }
 
@@ -1027,9 +1030,9 @@ sign-in, sign-up {
   }
   /*end zoomers*/
 
-  .tools {
-    padding-bottom: 1rem;
-  }
+ .tools li {
+  margin-bottom: 15px;
+ }
 }
 
 /*end responsive*/
@@ -1081,7 +1084,7 @@ html {
 }
 
 @media (max-width: 1024px) {
-.location-link, .image-wrapper, .article-description, .article-info {
+.location-link, .article-description, .article-info {
     padding: 1rem 0;
   }
   .title-blog {
@@ -1105,7 +1108,7 @@ box-shadow:         0px 2px 1px 0px rgba(50, 50, 50, 0.2);
     line-height: 2rem;
   }
   .main-blog-content .central, .article-info {
-    background-color: #F5F8FA !important;
+    background-color: #f4f5f6 !important;
     border: 0 !important
   }
   .main-blog-content .image-wrapper, .main-blog-content .title-blog {
@@ -1234,7 +1237,7 @@ box-shadow:         0px 2px 1px 0px rgba(50, 50, 50, 0.2);
 }
 span.location-icon {
   display: inline-block;
-  background: url(../img/icons/map-loc.png) no-repeat 0 0;
+  background: url(../img/svg/location.svg) no-repeat 0 0;
   width: 2rem;
   height: 17px;
 }
@@ -1323,4 +1326,24 @@ span.location-icon {
     }
   }
 }
-/* svg icons */
+.datepicker {
+  padding-left: 1rem;
+}
+/* bs3 modal style */
+.modal-dialog {
+    width: 30rem;
+}
+.modal-content {
+    border-radius: 0;
+}
+.modal-content {
+    box-shadow: none;
+}
+.media-object.attachment-link {
+    width: 10rem !important;
+    height: 10rem !important;
+    border-radius: 50%;
+  }
+.attach-event {
+  text-align: left;
+}

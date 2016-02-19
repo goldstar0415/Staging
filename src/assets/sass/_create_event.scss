@@ -85,7 +85,7 @@
   button.close {
     width: 3rem;
     height: 3rem;
-    background: url(../img/icons/close-activity.png) no-repeat;
+    background: url(../img/svg/close_button.svg) no-repeat;
     opacity: 1;
     margin-bottom: 1rem;
     margin-right: 1.5rem;
@@ -102,8 +102,11 @@
   width: 100%;
   margin-top: 1rem;
   .compass {
-    background-image: url(../img/icons/loc-delete.png);
-    right: 3px !important;
+    background: url(../img/svg/close_icon.svg) no-repeat;
+    background-size: 22px;
+    background-color: #E2E2E2;
+    background-position: center;
+    right: 5px !important;
   }
 }
 .event-main-info {
@@ -169,7 +172,7 @@
   padding: 15px 10px 0;
   display: block;
   clear: both;
-
+  
   img {
     width: 12rem;
     height: 12rem;
@@ -202,7 +205,7 @@
     border-radius: 0;
   }
   }
-
+  
 }
 
 .sidebar-event {
@@ -260,13 +263,6 @@
     font: $navigation_font;
     font-size: 22px;
     color: $dark_blue;
-  }
-}
-
-.privacy-block .radio-group {
-  display: inline-block;
-  &:first-child {
-    margin-left: -5px;
   }
 }
 

@@ -1,12 +1,5 @@
 /*     spot page  */
 
-.invite-friend {
-  background: url(../img/icons/sprite-invite.png) 1px 3px no-repeat;
-  &:hover {
-    background: url(../img/icons/sprite-invite.png) 1px -32px no-repeat;
-    color: $blue;
-  }
-}
 .title-spot {
   font-size: 2rem;
   font-weight: bold;
@@ -60,6 +53,7 @@
     text-transform: uppercase;
     color:#a2acb3;
     padding: 1rem 3rem;
+    margin-bottom: 5px;
   }
 }
 
@@ -80,7 +74,6 @@
   position: absolute;
   bottom: -17px;
   right: -8px;
-  top: 20px;
   padding-top: 0;
   background: url(../img/icons/min-corner.png) top 0 right 17px no-repeat;
   z-index: 1000;
@@ -90,7 +83,7 @@
     -moz-border-radius: 5px;
     border-radius: 5px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .2);
-    padding: 1px;
+    padding: 4px;
     margin-bottom: -2px;
 
     li {
@@ -107,7 +100,6 @@
       }
       a {
         display: block;
-        padding: 0;
         width: 16px;
         height: 16px;
         overflow: hidden;
@@ -194,36 +186,53 @@
   }
 }
 .delete {
-  background: url(../img/icons/sprite-edits.png) -83px 2px no-repeat;
-  background-position: -83px 2px ;
+  background-image: url('../img/svg/delete_icon.svg');
+  background-size: 15px;
   color:#889197;
+  background-repeat: no-repeat;
   &:hover, &:active, &:focus {
-    background: url(../img/icons/sprite-edits.png) -83px -33px no-repeat;
+    background-image: url('../img/svg/delete_icon_hover.svg');
     color: $blue;
   }
 }
 
 .save-event {
-  background: url(../img/icons/sprite-edits.png) -264px 1px no-repeat;
+   background-image: url('../img/svg/save_icon.svg');
+  background-size: 15px;
+  color:#889197;
+  background-repeat: no-repeat;
   &:hover, &:active, &:focus {
-    background: url(../img/icons/sprite-edits.png) -264px -34px no-repeat;
+    background-image: url('../img/svg/save_icon_hover.svg');
     color: $blue;
   }
-
 }
-
-.saved {
-  background: url(../img/icons/sprite-edits.png) -264px -34px no-repeat;
-}
-
-.favorited {
-  background: url(../img/icons/sprite-edits.png) -370px -35px no-repeat;
-}
-
 .favorite-spot {
-  background: url(../img/icons/sprite-edits.png) -369px 1px no-repeat;
+  background-image: url('../img/svg/favorite_icon.svg');
+  background-size: 17px;
+  color:#889197;
+  background-repeat: no-repeat;
   &:hover, &:active, &:focus {
-    background: url(../img/icons/sprite-edits.png) -369px -34px no-repeat;
+    background-image: url('../img/svg/favorite_icon_hover.svg');
+    color: $blue;
+  }
+}
+.fav.favorited {
+  background-image: url('../img/svg/favorite_icon_hover.svg');
+  background-size: 17px;
+  color:#889197;
+  background-repeat: no-repeat;
+  &:hover, &:active, &:focus {
+    background-image: url('../img/svg/favorite_icon.svg');
+    color: $blue;
+  }
+}
+.invite-friend {
+  background-image: url('../img/svg/invite_icon.svg');
+  background-size: 18px;
+  color:#889197;
+  background-repeat: no-repeat;
+  &:hover, &:active, &:focus {
+    background-image: url('../img/svg/invite_icon_hover.svg');
     color: $blue;
   }
 }
@@ -407,7 +416,7 @@
       float: left;
       margin-right: 15px;
       margin-bottom: 15px;
-
+      
       img {
         width: 12rem;
         height: 12rem;
@@ -452,7 +461,7 @@
     img {
       width: 100%;
     }
-
+    
   }
 }
 .attach-event {
@@ -476,7 +485,6 @@
 .spot-block {
   margin-bottom: 15px;
 }
-.info {
   .delete {
     padding-left: 2rem;
   }
@@ -491,7 +499,7 @@
                 color: $blue_btn;
             }
         }
-}
+
 .photos-mini {
   position: relative;
 }

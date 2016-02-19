@@ -36,6 +36,8 @@
       };
     };
 
-
+    vm.isVisibleProfileBlock = function () {
+      return !$state.is('spot') && !$state.is('followers') && !$state.is('followings');
+    };
   }
 })();

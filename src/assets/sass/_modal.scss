@@ -10,7 +10,9 @@
 .sidebar-menu-wrap {
   z-index: 1;
 }
-
+#modal-id .modal-dialog {
+  margin: 1rem auto;
+}
 .authentication {
   .modal-dialog {
     width: 340px;

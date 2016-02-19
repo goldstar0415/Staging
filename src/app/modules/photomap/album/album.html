@@ -23,7 +23,9 @@
         <a class="delete" title="Delete" ng-click="Album.deletePhoto(item.id, $index)"></a>
       </div>
 
-      <img photo-viewer items="Album.photos" index="$index" ng-src="{{item.photo_url.medium}}" alt="Photo not found"/>
+      <div class="photo-wrapper">
+        <img photo-viewer items="Album.photos" index="$index" ng-src="{{item.photo_url.medium}}" alt="Photo not found"/>
+      </div>
     </div>
   </div>
 </div>

@@ -1,5 +1,4 @@
-
-<div class=" wrap">
+<div class="wrap">
   <!-- section with calendar -->
   <section class="col-xs-12 create-new-plan">
     <div ui-calendar="Planner.calendarConfig" class="span8 calendar" ng-model="Planner.sourceEvents"></div>
@@ -32,6 +31,7 @@
         </h3>
 
         <p class="place">{{plan.address}}</p>
+
         <div class="date">
           <date-range item="plan"></date-range>
         </div>
@@ -47,15 +47,12 @@
             <a class="delete" ng-click="Planner.deletePlan(plan, $index)">Delete</a>
           </li>
 
-          <li>
+          <!-- <li>
             <invite-friends item="plan" type="plan"></invite-friends>
-          </li>
-          <li>
-            <share item="plan" type="plan"></share>
-          </li>
-          <li>
-            <a class="download"
-               ng-href="{{Planner.API_URL + '/plans/' + plan.id + '/export'}}" target="_blank">Export ICS</a>
+          </li> -->
+
+          <li class="visible-xs">
+            <a class="download">Save to calendar</a>
           </li>
         </ul>
         <share item="plan" class="visible-xs" type="plan"></share>

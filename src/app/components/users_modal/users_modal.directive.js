@@ -6,7 +6,7 @@
     .directive('usersModal', UsersModal);
 
   /** @ngInject */
-  function UsersModal($modal) {
+  function UsersModal($modal, $rootScope, $state) {
     return {
       restrict: 'A',
       scope: {
@@ -19,33 +19,36 @@
     /** @ngInject */
     function UsersModalLink(s, e, a) {
       e.click(function () {
-        $modal.open({
-          templateUrl: 'FollowersModal.html',
-          controller: FollowersModalController,
-          controllerAs: 'modal',
-          modalClass: 'authentication',
-          resolve: {
-            usersType: function () {
-              return s.type;
-            },
-            user: function () {
-              return s.user;
-            },
-            users: function (User, Spot) {
-              console.log(s.type);
-              switch (s.type) {
-                case 'followers':
-                  return User.followers({user_id: s.user.id}).$promise;
-                case 'followings':
-                  return User.followings({user_id: s.user.id}).$promise;
-                case 'members':
-                  return Spot.members({id: s.user.id}).$promise;
+        if (angular.element(window).width() <= 992) {
+          $state.go(s.type, {user_id: $rootScope.profileUser.alias || $rootScope.profileUser.id});
+        } else {
+          $modal.open({
+            templateUrl: 'FollowersModal.html',
+            controller: FollowersModalController,
+            controllerAs: 'modal',
+            modalClass: 'authentication',
+            resolve: {
+              usersType: function () {
+                return s.type;
+              },
+              user: function () {
+                return s.user;
+              },
+              users: function (User, Spot) {
+                console.log(s.type);
+                switch (s.type) {
+                  case 'followers':
+                    return User.followers({user_id: s.user.id}).$promise;
+                  case 'followings':
+                    return User.followings({user_id: s.user.id}).$promise;
+                  case 'members':
+                    return Spot.members({id: s.user.id}).$promise;
+                }
               }
             }
-          }
-        });
+          });
+        }
       });
-
     }
 
     /** @ngInject */

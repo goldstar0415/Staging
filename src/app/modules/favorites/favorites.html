@@ -23,9 +23,8 @@
           <a ng-click="item.visible_submenu = !item.visible_submenu" class="more-info">. . .</a>
           <div ng-show="item.visible_submenu" class="more-info-popup">
             <ul class="list-unstyled">
-              <li ng-if="currentUser && !item.isReported">
-                <a report-spot="item">Report</a>
-              </li>
+              <li><a href="">Claim Spot</a></li>
+              <li><a href="">Report</a></li>
             </ul>
           </div>
           <h2>
@@ -52,40 +51,42 @@
           <!--  tags -->
 
           <ul class="tools">
-            <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')">
+            <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')" class="hidden-xs">
               <a ui-sref="spot_edit({spot_id: item.id})" class="edit-tools">Edit</a>
             </li>
-            <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')">
-              <a ng-click="Favorite.removeSpot(item, $index);" class="delete">Delete</a>
+            <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')" class="hidden-xs">
+              <a ng-click="Spots.removeSpot(item, $index);" class="delete">Delete</a>
             </li>
 
             <li ng-if="!item.is_saved && item.type == 'Event'">
-              <a class="save-event" ng-click="Favorite.saveToCalendar(item)">Save</a>
+              <a class="save-event" ng-click="Spots.saveToCalendar(item)">Save</a>
             </li>
             <li ng-if="item.is_saved && item.type == 'Event'">
-              <a class="save-event saved clicked" ng-click="Favorite.removeFromCalendar(item)">Remove</a>
+              <a class="save-event saved clicked" ng-click="Spots.removeFromCalendar(item)">Remove</a>
             </li>
             <li ng-if="!item.is_favorite">
-              <a class="favorite-spot" ng-click="Favorite.addToFavorite(item)">Favorite</a>
+              <a class="favorite-spot" ng-click="Spots.addToFavorite(item)">Favorite</a>
             </li>
             <li ng-if="item.is_favorite">
-              <a class="fav favorited" ng-click="Favorite.removeFromFavorite(item)">Unfavorite</a>
+              <a class="fav favorited" ng-click="Spots.removeFromFavorite(item)">Unfavorite</a>
             </li>
             <li>
               <invite-friends item="item"></invite-friends>
             </li>
             <li>
-              <share item="item" type="spot"></share>
+              <a class="share-btn" target="_blank">Share</a>
             </li>
-            <li ng-if="item.type == 'Event'">
+            <li ng-if="item.type == 'Event'" class="hidden-xs">
               <a class="download"
-                 ng-href="{{Favorite.API_URL + '/spots/' + item.id + '/export'}}" target="_blank">Export to ICS</a>
+                 ng-href="{{Spots.API_URL + '/spots/' + item.id + '/export'}}" target="_blank">Export to ICS</a>
             </li>
           </ul>
-          <share item="item" class="visible-xs" type="spot" only-icon="true"></share>
+          <share item="item" type="spot"></share>
+          <!-- share-wrap -->
 
         </div>
       </div>
+
     </div>
   </section>
 </div>

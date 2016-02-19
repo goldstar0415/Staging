@@ -1,4 +1,4 @@
-<div class="col-xs-12">
+<div class="">
   <div class="container wrap mgt25">
     <div class="text-center"><h2 class="title-name">Blog</h2></div>
     <!-- carousel -->
@@ -46,8 +46,35 @@
     <div class="main-blog-content">
 
 
-      <popular-posts show-banner="true"></popular-posts>
+      <div class="media-wrap">
+        <popular-posts show-banner="true" class="hidden-xs"></popular-posts>
+      </div>
+      <div class="visible-xs media-banner-blog">
+        <div class="banner-for-bloggers col-xs-12">
+          <div class="banner-logo"></div>
+          <p class="text-banner">Want to add a post to our blog?</p>
+          <button type="button" blogger-request="" class="banner-btn">Send request!
+            <script type="text/ng-template" id="BloggerRequestModal.html">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="modal.close()">&times;</button>
+                <h4 class="modal-title send-message">Send request</h4>
+              </div>
+              <div class="modal-body clearfix no-pad no-pad-bottom">
+                <form class="new-post clearfix" name="form" ng-submit="modal.submit()">
+            <textarea name="message"
+                      ng-model="modal.message"
+                      placeholder="Start typing..."
+                      ctrl-enter="modal.submit()"
+                      required></textarea>
 
+                  <input type="submit" class="submit-send" value="Send">
+
+                </form>
+              </div>
+            </script>
+          </button>
+        </div>
+      </div>
 
       <!-- blog content -->
       <div class="central col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12">
@@ -76,17 +103,17 @@
                 <div class="row">
                   <!-- <p class="date col-xs-12 col-sm-2">{{post.created_at | toTimezone:'MM.DD.YYYY'}}</p> -->
 
-                  <p class="col-xs-4 col-sm-4 author">Author:
+                  <p class="col-xs-12 col-sm-4 author">Author:
                     <a ui-sref="profile.main({user_id: post.user.alias || post.user.id})">
                       {{post.user.first_name}} {{post.user.last_name}}
                     </a>
                   </p>
 
-                  <p class="col-xs-4 col-sm-4 category">Category:
+                  <p class="col-xs-5 col-sm-4 category">Category:
                     <a>{{post.category.display_name}}</a>
                   </p>
 
-                  <p class="col-xs-4 col-sm-3 views">Views: {{post.count_views}}</p>
+                  <p class="col-xs-5 col-sm-3 views">Views: {{post.count_views}}</p>
                   <share item="post" class="pull-right" type="post"></share>
 
                 </div>

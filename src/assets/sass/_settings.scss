@@ -190,12 +190,26 @@
     }
   }
 }
-
+.birthday {
+    display: block;
+    width: 4rem;
+    height: 4rem;
+    background: url(../img/svg/vertical_menu/calendar.svg) no-repeat;
+    background-size: 22px;
+    background-position: center;
+    background-color: #00c9f8;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem !important;
+    z-index: 2;
+}
 .compass {
   display: block;
   width: 4rem;
   height: 4rem;
-  background: url(../img/icons/compass.png) no-repeat;
+  background: url(../img/svg/add_icon.svg) no-repeat;
+  background-position: center;
+  background-color: #00c9f8;
   position: absolute;
   top: 0.5rem;
   right: 0.5rem !important;
@@ -221,28 +235,30 @@ input[type="radio"]:checked + label span {
 }
 .social-input {
   padding-left: 6rem;
-  background: url(../img/social-sprite.png) center 0 no-repeat;
+  background-repeat: no-repeat;
+  background-position: 4px 4px;
+  background-size: 40px;
 }
 #fb_input {
-  background-position: 4px 4px;
+  background-image: url(../img/svg/social/facebook_icon.svg);
 }
 #tw_input {
-  background-position: 4px -46px;
+  background-image: url(../img/svg/social/twitter_icon.svg);
 }
 #in_input {
-  background-position: 4px -102px;
+  background-image: url(../img/svg/social/instagram_icon.svg);
 }
 #t_input {
-  background-position: 4px -157px;
+  background-image: url(../img/svg/social/tumbler_icon.svg);
 }
 #vk_input {
-  background-position: 4px -214px;
+  background-image: url(../img/svg/social/vk_icon.svg);
 }
 #custom_input {
-  background-position: 4px -269px;
+  background-image: url(../img/svg/social/logo_icon.svg);
 }
 #google_input {
-  background-position: 4px -322px;
+  background-image: url(../img/svg/social/google_icon.svg);
 }
 
 
@@ -331,3 +347,36 @@ input[type="radio"]:checked + label span {
 }
 
 //---</settings styles--->
+
+.modal-settings {
+  padding:0;
+  .media-radiobox {
+    margin-bottom: 0;
+    li {
+      padding: 2rem;
+      border-bottom: 1px solid #e6e6e6;
+      &:last-child {
+        border: 0;
+      }
+    }
+    input[type="radio"] + label {
+      font-weight: normal;
+      color: #929fa7;
+      margin-bottom: 0;
+    }
+    input[type="radio"] + label span {
+      display: inline-block;
+      vertical-align: middle;
+      width: 30px;
+      height: 22px;
+      background: url(../img/radio2.png) 0px -27px no-repeat;
+    }
+    input[type="radio"]:checked + label {
+      color: #00c9f8;
+    }
+    input[type="radio"]:checked + label span {
+        background: url(../img/radio2.png) 0 0 no-repeat;
+    }
+  }
+}
+

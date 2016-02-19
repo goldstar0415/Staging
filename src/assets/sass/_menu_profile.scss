@@ -10,85 +10,83 @@
     padding: 0;
     margin: 0;
     height: 6rem;
+    margin-left: 1rem;
     li {
+        a {
+          padding-left: 3rem;
+          padding-top: 1rem;
+          padding-bottom: 0;
+          font-size: 1.4rem;
+          color: #111;
+          font-weight: bold;
+          background-repeat: no-repeat;
+          background-position: 4px 7px;
+          background-size: 22px;
+          &:hover, &.active {
+              color: #00b7f3;
+          }
+        }
         .nav-spots {
-            background-image: url('icons/icons.svg');
-            background-position: 1.6px -373.5px;
+            background-image: url('../img/svg/profile_menu/icon_spot.svg');
+            background-position: 4px 3px;
             &:hover, &.active {
-            background-image: url('icons/icons.svg');
-            background-position: 9px -238px;
-            background-size: 22px;
-            color: $nav_green;
+              background-image: url('../img/svg/profile_menu/icon_spot_hover.svg');
+              color: $nav_green;
           }
         }
         .nav-favorites {
-          background-image: url('icons/icons.svg');
-          background-position: 0 -74px;
+          background-image: url('../img/svg/profile_menu/icon_heart.svg');
           &:hover, &.active {
             color: $nav_red;
-            background-image: url('icons/icons.svg');
-            background-position: 0 -111px;
+            background-image: url('../img/svg/profile_menu/icon_heart_hover.svg');
           }
         }
         .nav-searches {
-          background-image: url('icons/icons.svg');
-          background-position: 0 -296px;
+          background-image: url('../img/svg/profile_menu/icon_save.svg');
            &:hover, &.active {
             color: $nav_yellow;
-            background-image: url('icons/icons.svg');
-            background-position: 0 -333px;
+            background-image: url('../img/svg/profile_menu/icon_save_hover.svg');
           }
         }
         .nav-friendmap {
-          background-image: url('icons/icons.svg');
-          background-position: 0 0;
+          background-image: url('../img/svg/profile_menu/friend_icon.svg');
+          background-size: 25px;
+          background-position: 4px 9px !important;
            &:hover, &.active {
             color: $nav_blue;
-            background-position: 0 -37px;
+            background-image: url('../img/svg/profile_menu/friend_icon_hover.svg');
           }
         }
         .nav-photomap {
-          background-image: url('icons/icons.svg');
-          background-position: 0 -148px;
+          background-image: url('../img/svg/profile_menu/icon_photo.svg');
+          background-size: 25px;
+          background-position: 4px 9px !important;
            &:hover, &.active {
             color: $nav_green2;
-            background-position: 0 -185px;
+            background-image: url('../img/svg/profile_menu/icon_photo_hover.svg');
           }
         }
         .nav-planner {
-          background-image: url('icons/icons.svg');
-          background-position: 0 -222px;
+          background-image: url('../img/svg/profile_menu/icon_planner.svg');
           &:hover, &.active {
             color: $nav_blue;
-            background-position: 0 -259px;
+            background-image: url('../img/svg/profile_menu/icon_planner_hover.svg');
           }
         }
         .nav-settings {
-          background-image: url('icons/icons.svg');
-          background-position: 0 -444px;
+          background-image: url('../img/svg/profile_menu/home.svg');
           &:hover, &.active {
-             background-position: 0 -481px;
+             background-image: url('../img/svg/profile_menu/home_hover.svg');
           }
         }
         .nav-blog {
-          background: url(../img/topnav-sprite.png) -946px 4px no-repeat;
+          background-image: url('../img/svg/profile_menu/blog_icon.svg');
+          background-size: 25px;
+          background-position: 4px 3px;
           &:hover, &.active {
-             background: url(../img/topnav-sprite.png) -946px -40px no-repeat;
+             background-image: url('../img/svg/profile_menu/blog_icon_hover.svg');
           }
         }
-
-      a {
-        padding-left: 3.5rem;
-        padding-top: 1rem;
-        padding-bottom: 0;
-        font-size: 1.4rem;
-        color: #111;
-        font-weight: bold;
-        background-repeat: no-repeat;
-        &:hover, &.active {
-            color: #00b7f3;
-        }
-      }
       a.active {
         color: $blue;
       }
@@ -131,7 +129,7 @@
     margin: 0 auto;
   }
   .import-friendmap {
-    top: 28px !important;
+    top: 19px !important;
     right: auto;
     left: 17px;
   }

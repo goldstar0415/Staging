@@ -27,7 +27,7 @@
 
       <p class="place" ng-if="Spot.spot.points.length > 0">{{::Spot.spot.points[0].address}}</p>
 
-      <p class="description"><span>{{Spot.spot.description}}</span>
+      <p class="description"><span ng-bind-html="Spot.spot.description"></span>
       </p>
 
       <div class="external-link" ng-repeat="item in Spot.spot.web_sites track by $index">
@@ -104,31 +104,33 @@
        class="clearfix" infinite-scroll-distance="1">
     <div class="col-xs-12 post" ng-repeat="post in Spot.comments.data">
       <div class="col-xs-12 no-pad">
-        <button type="button" class="close" ng-click="Spot.deleteComment(post, $index)"
-                ng-if="currentUser.id == Spot.spot.user_id || currentUser.id == post.sender.id || isRole(currentUser, 'admin')">
-          <span aria-hidden="true">×</span>
-        </button>
       </div>
-      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 padding-0">
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 padding-0">
         <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">
           <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
         </a>
       </div>
-      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 info">
-        <div class="plus-minus ng-scope" ng-if="currentUser">
+      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8 info">
+        <!-- <div class="plus-minus ng-scope" ng-if="currentUser">
           <a class="plus" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)"></a>
           <span class="value-rating ng-binding">0</span>
           <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
-        </div>
+        </div> -->
         <h3 class="name">
           <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
         </h3>
 
-        <p class="line-break" ng-bind-html="post.body | linky:'_blank'"></p>
+        <p ng-bind-html="post.body | linky:'_blank'"></p>
+
+
+      </div>
+      <div class="col-xs-12">
         <attachments items="post.attachments"></attachments>
-
-        <p class="time">{{post.created_at | fromNow}}</p>
-
+        <p class="time text-right">{{post.created_at | fromNow}}</p>
+        <div class="text-right">
+          <a class="like">Like</a>
+          <a class="delete">Delete</a>
+        </div>
       </div>
     </div>
     <preloader ng-show="Spot.pagination.busy"></preloader>

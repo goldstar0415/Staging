@@ -18,13 +18,13 @@
     &.new {
       background: #f5f8fa;
       .name-data {
-        width: 83%;
         p {
           display: block !important;
           overflow: hidden;
           text-overflow: ellipsis;
           font-size: 1.4rem;
           color: #889197;
+          max-height: 10rem;
         }
       }
     }
@@ -41,7 +41,9 @@
     }
     .name-data {
       padding-left: 0;
-
+      p.send-message {
+          display: none;
+      }
       .name {
         margin: 0;
         font-size: 2rem;
@@ -88,7 +90,7 @@
             color: $blue_btn;
             font-weight: bold;
           }
-        }
+        } 
         p {
           padding: 0;
           font-size: 1.4rem;
@@ -110,7 +112,6 @@
           border-left: 1px solid #e9edf0;
         } */
       }
-      .incoming-messages {
         .incoming-avatar {
           float: right;
           width: 13rem;
@@ -125,7 +126,7 @@
             float: right;
           }
         }
-      }
+      
     }
     &:hover {
       background: #e9edf0;

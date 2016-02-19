@@ -503,12 +503,21 @@
 	float: right;
 	font-size: 2.5rem;
 }
+.leaflet-control-zoom a {
+	background-image: url(images/icon_minus.svg);
+	background-size: 22px;
+	color: rgba(0,0,0,0) !important;
+}
 .leaflet-bar a:first-child {
 	border-left: 1px solid rgba(255,255,255,0.8);
+	background-image: url(images/icon_plus.svg);
+	background-size: 22px;
+	color: rgba(0,0,0,0) !important;
 }
 .leaflet-top .leaflet-control {
 	margin-left: 2.5rem;
-	margin-top: 2.5rem;
+	margin-top: 0;
+	top: 5rem;
 }
 .leaflet-left {
 	bottom: 4.5rem;

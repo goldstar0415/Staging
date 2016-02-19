@@ -1,9 +1,64 @@
-<div ng-include="'app/components/navigation/profile_menu/profile_links.html'"></div>
+<div class="col-xs-12 menu-profile">
+  <div class="hide-menu-profile visible-xs"></div>
+  <div class="container mobile-nopad">
+    <div class="col-xs-12 col-md-10 col-md-offset-2 col-sm-12 col-sm-offset-0 col-xs-offset-0 no-pad">
+      <ul ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
+        <li>
+          <a class="nav-spots" ui-sref="spots({user_id: $root.currentUser.id})"
+             ng-class="{active: Profile.$state.current.name == 'spots' || Profile.$state.current.name == 'spot'}">
+            <span>My spots</span>
+          </a>
+        </li>
+        <li ng-if="$root.isRole($root.currentUser, 'blogger')">
+          <a class="nav-blog" ui-sref="profile_blog({user_id: $root.currentUser.id})" ui-sref-active="active"><span>My Blog</span></a>
+        </li>
+        <li><a class="nav-favorites" ui-sref="favorites({user_id: $root.currentUser.id})" ui-sref-active="active"><span>Favorites</span></a>
+        </li>
+        <li><a class="nav-searches" ui-sref="areas" ui-sref-active="active"><span>Saved Searches</span></a></li>
+        <li><a class="nav-friendmap" ui-sref="friendsmap" ui-sref-active="active"><span>Friends Map</span></a></li>
+        <li><a class="nav-photomap" ui-sref="photos.list({user_id: $root.currentUser.id})"
+               ng-class="Profile.isActive('photos')"><span>Photo
+          Map</span></a>
+        </li>
+        <li><a class="nav-planner" ui-sref="planner.list"
+               ng-class="Profile.isActive('planner')"><span>Planner</span></a></li>
+      </ul>
+      <ul ng-if="$root.currentUser && $root.currentUser.id != $root.profileUser.id">
+        <li ng-if="Profile.checkPermission(profileUser.privacy_events)">
+          <a ui-sref="spots({user_id: $root.profileUser.id})"
+             ng-class="{active: Profile.$state.current.name == 'spots' || Profile.$state.current.name == 'spot'}"
+             class="my-spots nav-spots"><span>Spots</span></a>
+        </li>
+        <li ng-if="Profile.checkPermission(profileUser.privacy_favorites)">
+          <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active"
+             class="favorites nav-favorites"><span>Favorites</span></a>
+        </li>
+        <li ng-if="Profile.checkPermission(profileUser.privacy_photo_map)">
+          <a ui-sref="photos.list({user_id: $root.profileUser.id})" ng-class="Profile.isActive('photos')"
+             class="photomap nav-photomap"><span>Photo
+            Map</span></a>
+        </li>
+        <li ng-if="$root.isRole($root.profileUser, 'blogger')">
+          <a ui-sref="profile_blog({user_id: $root.profileUser.id})" class="nav-blog"
+             ui-sref-active="active"><span>Blog</span></a>
+        </li>
+
+      </ul>
+
+      <div ng-if="!$root.currentUser" class="unauthorized">
+        <b>You should &nbsp;
+          <sign-in title="sign in" class="sign-in"></sign-in>
+          &nbsp;to get all features</b>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="col-xs-12 mobile-nopad">
   <div class="container wrap">
 
-    <div class="col-xs-12 col-md-3 information-profile hidden-xs">
+    <div class="col-xs-12 col-md-3 information-profile ">
       <section class="col-xs-12 col-sm-2 col-md-12 avatar-wrap" ng-if="$root.profileUser.id">
         <a ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})" class="avatar">
           <img ng-src="{{$root.profileUser.avatar_url.medium}}"/>
@@ -26,7 +81,9 @@
             <span ng-if="$root.profileUser.sex">{{$root.profileUser.sex == 'm' ? 'male' : 'female'}}</span>
             <span ng-if="$root.profileUser.birth_date">, {{$root.profileUser.birth_date | age}} years</span>
           </div>
-          <div class="location" ng-if="$root.profileUser.address"><span class="location-icon"></span> {{$root.profileUser.address}}</div>
+          <div class="location" ng-if="$root.profileUser.address"><span class="location-icon"></span>
+            {{$root.profileUser.address}}
+          </div>
 
           <div ng-if="$root.profileUser.description">
             <div ng-init="Profile.textLimit = 50"
@@ -40,149 +97,182 @@
               </a>
             </div>
           </div>
-        </div>
 
 
-        <div ng-if="$root.currentUser && $root.profileUser.id != $root.currentUser.id">
-          <send-message></send-message>
+          <div ng-if="$root.currentUser && $root.profileUser.id != $root.currentUser.id">
+            <send-message></send-message>
 
-          <div class="form-group">
-            <button type="button" class="btn btn-default"
-                    ng-click="Profile.follow($root.profileUser)"
-                    ng-class="{'red-btn': !$root.profileUser.can_follow, 'green-btn': $root.profileUser.can_follow}">
-              {{$root.profileUser.can_follow ? 'Follow' : 'Unfollow'}}
-            </button>
-          </div>
-        </div>
-
-        <div ng-if="$root.currentUser.social_links.facebook">Facebook: <a ng-href="{{ $root.currentUser.social_links.facebook }}" rel="nofollow" target="_blank">LINK</a></div>
-        <div ng-if="$root.currentUser.social_links.twitter">Twitter: <a ng-href="{{ $root.currentUser.social_links.twitter }}" rel="nofollow" target="_blank">LINK</a></div>
-        <div ng-if="$root.currentUser.social_links.instagram">Instagram: <a ng-href="{{ $root.currentUser.social_links.instagram }}" rel="nofollow" target="_blank">LINK</a></div>
-        <div ng-if="$root.currentUser.social_links.tumblr">Tumblr: <a ng-href="{{ $root.currentUser.social_links.tumblr }}" rel="nofollow" target="_blank">LINK</a></div>
-        <div ng-if="$root.currentUser.social_links.vk">VK: <a ng-href="{{ $root.currentUser.social_links.vk }}" rel="nofollow" target="_blank">LINK</a></div>
-        <div ng-if="$root.currentUser.social_links.custom">Personal site: <a ng-href="{{ $root.currentUser.social_links.custom }}" rel="nofollow" target="_blank">LINK</a></div>
-        <div ng-if="$root.currentUser.social_links.google">Google+: <a ng-href="{{ $root.currentUser.social_links.google }}" rel="nofollow" target="_blank">LINK</a></div>
-
-
-        <div class="info-links hidden-lg hidden-md visible-sm visible-xs  ng-show col-xs-12">
-          <a ui-sref="spots({user_id: $root.profileUser.id})" class="events">
-            {{$root.profileUser.count_spots}}
-          </a>
-          <a users-modal="followers" user="$root.profileUser" class="followers"
-             ng-if="Profile.checkPermission(profileUser.privacy_followers)">
-            {{$root.profileUser.count_followers}}
-          </a>
-          <a users-modal="followings" user="$root.profileUser" class="followings"
-             ng-if="Profile.checkPermission(profileUser.privacy_followings)">
-            {{ $root.profileUser.count_followings}}
-          </a>
-          <a ui-sref="photos.list({user_id: $root.profileUser.id})" class="albums"
-             ng-if="Profile.checkPermission(profileUser.privacy_photo_map)">
-            {{$root.profileUser.count_photos}}
-          </a>
-          <a ui-sref="favorites({user_id: $root.profileUser.id})" class="fav"
-             ng-if="Profile.checkPermission(profileUser.privacy_favorites)">
-            {{$root.profileUser.count_favorites}}
-          </a>
-        </div>
-        <aside class="module-sidebar clearfix"
-               ng-if="!Profile.$state.is('spot') && $root.profileUser.followers.length > 0 && Profile.checkPermission(profileUser.privacy_followers)">
-          <h2 class="sidebar-title">
-            <a users-modal="followers" user="$root.profileUser">
-              Followers
-              <span class="counter">{{$root.profileUser.count_followers}}</span>
-            </a>
-          </h2>
-
-          <div class="sidebar-row row-min clearfix">
-            <div class="col-sm-4 col-xs-4 pad-min" ng-repeat="item in $root.profileUser.followers">
-              <a ui-sref="profile.main({user_id: item.alias || item.id})">
-                <img ng-src="{{item.avatar_url.thumb}}" class="img-responsive"/>
-                <div class="sidebar-user-name" ui-sref="profile.main({user_id: item.alias || item.id})">{{item.first_name}} <br>{{item.last_name}}</div>
-              </a>
+            <div class="form-group">
+              <button type="button" class="btn btn-default"
+                      ng-click="Profile.follow($root.profileUser)"
+                      ng-class="{'red-btn': !$root.profileUser.can_follow, 'green-btn': $root.profileUser.can_follow}">
+                {{$root.profileUser.can_follow ? 'Follow' : 'Unfollow'}}
+              </button>
             </div>
           </div>
 
-        </aside>
+          <ul class="list-inline social-links">
+            <li><a ng-href="{{ $root.currentUser.social_links.facebook }}"
+                   ng-if="$root.currentUser.social_links.facebook"
+                   rel="nofollow" target="_blank" class="facebook">
+            </a></li>
+            <li><a ng-href="{{ $root.currentUser.social_links.twitter }}" ng-if="$root.currentUser.social_links.twitter"
+                   rel="nofollow" target="_blank" class="twitter">
+            </a></li>
+            <li><a ng-href="{{ $root.currentUser.social_links.instagram }}"
+                   ng-if="$root.currentUser.social_links.instagram"
+                   rel="nofollow" target="_blank" class="instagram">
+            </a></li>
+            <li><a ng-href="{{ $root.currentUser.social_links.tumblr }}" ng-if="$root.currentUser.social_links.tumblr"
+                   rel="nofollow" target="_blank" class="tumblr">
+            </a></li>
+            <li><a ng-href="{{ $root.currentUser.social_links.vk }}" ng-if="$root.currentUser.social_links.vk"
+                   rel="nofollow"
+                   target="_blank" class="vk">
+            </a></li>
+            <li><a ng-href="{{ $root.currentUser.social_links.custom }}" ng-if="$root.currentUser.social_links.custom"
+                   rel="nofollow" target="_blank" class="custom">
+            </a></li>
+            <li><a ng-href="{{ $root.currentUser.social_links.google }}" ng-if="$root.currentUser.social_links.google"
+                   rel="nofollow" target="_blank" class="google-plus">
+            </a></li>
+          </ul>
 
-        <aside class="module-sidebar clearfix"
-               ng-if="!Profile.$state.is('spot') && $root.profileUser.followings.length > 0 && Profile.checkPermission(profileUser.privacy_followings)">
-          <h2 class="sidebar-title">
-            <a users-modal="followings" user="$root.profileUser">
-              Following
-              <span class="counter">{{$root.profileUser.count_followings}}</span>
+
+          <div class="info-links hidden-lg hidden-md visible-sm visible-xs  ng-show col-xs-12">
+            <a users-modal="followers" user="$root.profileUser"
+               ng-if="Profile.checkPermission(profileUser.privacy_followers)">
+              <i class="followers"></i>
+              <span>{{$root.profileUser.count_followers}}</span>
+              <br> Followers
             </a>
-          </h2>
-
-          <div class="sidebar-row row-min ">
-            <div class="col-sm-4 col-xs-4 pad-min" ng-repeat="item in $root.profileUser.followings">
-              <a ui-sref="profile.main({user_id: item.alias || item.id})">
-
-                <img ng-src="{{item.avatar_url.thumb}}" alt="" class="img-responsive" />
-                <div class="sidebar-user-name" ui-sref="profile.main({user_id: item.alias || item.id})">{{item.first_name}} <br>{{item.last_name}}</div>
-              </a>
-            </div>
-          </div>
-
-        </aside>
-
-        <aside class="module-sidebar clearfix"
-               ng-if="!Profile.$state.is('spot') && $root.profileUser.spots.length > 0">
-          <h2 class="sidebar-title">
-            <a ui-sref="spots({user_id: $root.profileUser.id})">
-              Spots
-              <span class="counter">{{$root.profileUser.count_spots}}</span>
+            <a users-modal="followings" user="$root.profileUser"
+               ng-if="Profile.checkPermission(profileUser.privacy_followings)">
+              <i class="followings"></i>
+              <span>{{ $root.profileUser.count_followings}}</span>
+              <br> Followings
             </a>
-          </h2>
-
-          <div class="sidebar-row row-min">
-            <div class="col-sm-4 pad-min col-xs-4" ng-repeat="item in $root.profileUser.spots">
-              <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
-
-                <img ng-src="{{item.cover_url.thumb}}" alt="" class="img-responsive" />
-                <div class="sidebar-user-name" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</div>
-                <!--  <a class="sidebar-user-name" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a> -->
-              </a>
-            </div>
-          </div>
-
-        </aside>
-
-        <!--<aside class="module-sidebar text-center clearfix" ng-if="Profile.$state.is('spot')">-->
-          <!--<h2 class="sidebar-title" ng-if="$root.currentSpot.photos.length > 0">-->
-            <!--<a>-->
-              <!--Photos-->
-              <!--<span class="counter">{{$root.currentSpot.photos.length}}</span>-->
-            <!--</a>-->
-          <!--</h2>-->
-
-          <!--<div class="sidebar-row " ng-if="$root.currentSpot.photos.length > 0">-->
-            <!--<div jcarousel images="$root.currentSpot.photos"></div>-->
-          <!--</div>-->
-
-          <!--<a upload-modal="$root.currentSpot" class="btn btn-default green-btn add-photos-btn">Add photos</a>-->
-
-        <!--</aside>-->
-
-        <aside class="module-sidebar clearfix" ng-if="Profile.$state.is('spot') && $root.currentSpot.count_members > 0">
-          <h2 class="sidebar-title">
-            <a users-modal="members" user="$root.currentSpot">
-              Members
-              <span class="counter">{{$root.currentSpot.count_members}}</span>
+            <a ui-sref="spots({user_id: $root.profileUser.id})"
+               ng-if="Profile.checkPermission(profileUser.privacy_events)">
+              <i class="events"></i>
+              <span>{{$root.profileUser.count_spots}}</span>
+              <br> Spots
             </a>
-          </h2>
-
-          <div class="sidebar-row row-min">
-            <div class="col-sm-4 pad-min col-xs-4" ng-repeat="item in $root.currentSpot.members">
-              <a ui-sref="profile.main({user_id: item.alias || item.id})">
-                <img ng-src="{{item.avatar_url.thumb}}" class="avatar"/>
-
-                <!-- <p class="sidebar-user-name">{{item.first_name}} {{item.last_name}}</p> -->
-              </a>
-            </div>
+            <!-- <a ui-sref="photos.list({user_id: $root.profileUser.id})" class="albums"
+               ng-if="Profile.checkPermission(profileUser.privacy_photo_map)">
+              {{$root.profileUser.count_photos}}
+            </a>
+            <a ui-sref="favorites({user_id: $root.profileUser.id})" class="fav"
+               ng-if="Profile.checkPermission(profileUser.privacy_favorites)">
+              {{$root.profileUser.count_favorites}}
+            </a> -->
           </div>
+          <aside class="module-sidebar clearfix"
+                 ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.followers.length > 0 && Profile.checkPermission(profileUser.privacy_followers)">
+            <h2 class="sidebar-title mgb20">
+              <a users-modal="followers" user="$root.profileUser">
+                Followers
+                <span class="counter">{{$root.profileUser.count_followers}}</span>
+              </a>
+            </h2>
 
-        </aside>
+            <div class="sidebar-row row-min clearfix">
+              <div class="col-sm-4 col-xs-4 pad-min" ng-repeat="item in $root.profileUser.followers">
+                <a ui-sref="profile.main({user_id: item.alias || item.id})">
+                  <img ng-src="{{item.avatar_url.thumb}}" class="img-responsive"/>
+
+                  <div class="sidebar-user-name" ui-sref="profile.main({user_id: item.alias || item.id})">
+                    {{item.first_name}} <br>{{item.last_name}}
+                  </div>
+                </a>
+              </div>
+            </div>
+
+          </aside>
+
+          <aside class="module-sidebar clearfix"
+                 ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.followings.length > 0 && Profile.checkPermission(profileUser.privacy_followings)">
+            <h2 class="sidebar-title">
+              <a users-modal="followings" user="$root.profileUser">
+                Following
+                <span class="counter">{{$root.profileUser.count_followings}}</span>
+              </a>
+            </h2>
+
+            <div class="sidebar-row row-min ">
+              <div class="col-sm-4 col-xs-4 pad-min" ng-repeat="item in $root.profileUser.followings">
+                <a ui-sref="profile.main({user_id: item.alias || item.id})">
+
+                  <img ng-src="{{item.avatar_url.thumb}}" alt="" class="img-responsive"/>
+
+                  <div class="sidebar-user-name" ui-sref="profile.main({user_id: item.alias || item.id})">
+                    {{item.first_name}} <br>{{item.last_name}}
+                  </div>
+                </a>
+              </div>
+            </div>
+
+          </aside>
+
+          <aside class="module-sidebar clearfix"
+                 ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.spots.length > 0 && Profile.checkPermission(profileUser.privacy_events)">
+            <h2 class="sidebar-title">
+              <a ui-sref="spots({user_id: $root.profileUser.id})">
+                Spots
+                <span class="counter">{{$root.profileUser.count_spots}}</span>
+              </a>
+            </h2>
+
+            <div class="sidebar-row row-min">
+              <div class="col-sm-4 pad-min col-xs-4" ng-repeat="item in $root.profileUser.spots">
+                <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
+
+                  <img ng-src="{{item.cover_url.thumb}}" alt="" class="img-responsive"/>
+
+                  <div class="sidebar-user-name" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
+                    {{item.title}}
+                  </div>
+                  <!--  <a class="sidebar-user-name" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a> -->
+                </a>
+              </div>
+            </div>
+
+          </aside>
+
+          <!-- <aside class="module-sidebar clearfix" ng-if="Profile.$state.is('spot') && $root.currentSpot.photos.length > 0">
+            <h2 class="sidebar-title">
+              <a>
+                Photos
+                <span class="counter">{{$root.currentSpot.photos.length}}</span>
+              </a>
+            </h2>
+
+            <div class="sidebar-row ">
+              <div jcarousel images="$root.currentSpot.photos"></div>
+            </div>
+
+          </aside> -->
+
+          <aside class="module-sidebar clearfix"
+                 ng-if="Profile.$state.is('spot') && $root.currentSpot.count_members > 0">
+            <h2 class="sidebar-title">
+              <a users-modal="members" user="$root.currentSpot">
+                Members
+                <span class="counter">{{$root.currentSpot.count_members}}</span>
+              </a>
+            </h2>
+
+            <div class="sidebar-row row-min">
+              <div class="col-sm-4 pad-min col-xs-4" ng-repeat="item in $root.currentSpot.members">
+                <a ui-sref="profile.main({user_id: item.alias || item.id})">
+                  <img ng-src="{{item.avatar_url.thumb}}" class="avatar"/>
+
+                  <!-- <p class="sidebar-user-name">{{item.first_name}} {{item.last_name}}</p> -->
+                </a>
+              </div>
+            </div>
+
+          </aside>
       </section>
     </div>
 

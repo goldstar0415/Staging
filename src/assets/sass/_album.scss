@@ -9,11 +9,18 @@
     -webkit-box-shadow: 0px 3px 3px 0px rgba(191, 191, 191, 0.3);
     -moz-box-shadow: 0px 3px 3px 0px rgba(191, 191, 191, 0.3);
     box-shadow: 0px 3px 3px 0px rgba(191, 191, 191, 0.3);
-    img {
-      width: 100%;
-      min-height: 100px;
-      cursor: pointer;
+    .photo-wrapper {
+      vertical-align: middle;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 15rem;
+      img {
+        max-width: 100%;
+        min-height: 100px;
+        cursor: pointer;
 
+      }
     }
     .album-tools-wrap {
       padding: 0;
@@ -29,13 +36,16 @@
         @include transition_bg_color;
       }
       .set-avatar {
-        background: url(../img/icons/edit-album.png) no-repeat;
+        background: url(../img/svg/edit_button.svg) no-repeat;
       }
       .set-location {
-        background: url(../img/icons/location.png) no-repeat;
+        background: url(../img/svg/location.svg) no-repeat;
+        background-color: #fff;
+        background-size: 16px;
+        background-position: center center;
       }
       .delete {
-        background: url(../img/icons/delete-album.png) no-repeat;
+        background: url(../img/svg/delete_button.svg) no-repeat;
       }
     }
     &:hover {
@@ -69,14 +79,14 @@
   .delete {
     height: 40px;
     width: 40px;
-    background: url(../img/icons/delete-photo.png) no-repeat;
+    background: url(../img/svg/delete_button.svg) no-repeat;
   }
   .edit {
     height: 40px;
     width: 40px;
-    background: url(../img/icons/edit-photo.png) no-repeat;
+    background: url(../img/svg/edit_button.svg) no-repeat;
     &:hover {
-      background-image: url(../img/icons/edit-photo.png) no-repeat !important;
+      background: url(../img/svg/edit_button.svg) no-repeat;
     }
   }
 }

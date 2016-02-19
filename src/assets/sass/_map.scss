@@ -9,7 +9,7 @@
 .map.full-size {
   position: absolute;
   height: calc(100% - 70px);
-  //top: 0;
+
   &.menu-offset {
     height: calc(100% - 70px - 60px);
   }
@@ -43,21 +43,31 @@
   }
 
   .radius-selection {
-    background: url(../img/icons/radius.png) 5px 5px no-repeat rgba(159, 173, 173, .8);
+    background-image: url(../img/svg/map/round.svg);
+    background-repeat: no-repeat;
+    background-color: rgba(159, 173, 173, 0.8);
+    background-size: 50px;
+    background-position: -6px -3px;
     &:hover, &.active {
-      background: url(../img/icons/radius.png) 5px 5px no-repeat rgba(0, 207, 255, .8);
+      background-color: rgba(0, 207, 255, .8);
     }
   }
   .lasso-selection {
-    background: url(../img/icons/lasso.png) 4px 5px no-repeat rgba(159, 173, 173, .8);
+    background-image: url(../img/svg/map/lasso.svg);
+    background-repeat: no-repeat;
+    background-position: 0 6px;
+    background-color: rgba(159, 173, 173, .8);
     &:hover, &.active {
-      background: url(../img/icons/lasso.png) 4px 5px no-repeat rgba(0, 207, 255, .8);
+      background-color: rgba(0, 207, 255, .8);
     }
   }
   .path-selection {
-    background: url(../img/icons/path.png) 6px 3px no-repeat rgba(159, 173, 173, .8);
+    background-image: url(../img/svg/map/custom.svg);
+    background-repeat: no-repeat;
+    background-position: -1px 3px;
+    background-color: rgba(159, 173, 173, .8);
     &:hover, &.active {
-      background: url(../img/icons/path.png) 6px 3px no-repeat rgba(0, 207, 255, .8);
+      background-color: rgba(0, 207, 255, .8);
     }
   }
   .save-selection {
@@ -110,13 +120,14 @@
 }
 
 .leaflet
-  &-bottom &-control {
-    margin-bottom: 0 !important;
-  }
+&-bottom &-control {
+  margin-bottom: 0 !important;
+}
 
 .leaflet-right .map-tools-top:last-child {
   margin-top: 0;
 }
+
 
 .map-block .menu-profile {
   position: absolute;

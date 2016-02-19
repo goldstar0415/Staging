@@ -140,6 +140,7 @@
 
   .module-banner {
     display: block;
+  }
     .banner-for-bloggers {
       width: 100%;
       height: 100%;
@@ -173,7 +174,7 @@
         @include transition_bg();
       }
     }
-  }
+  
 }
 
 .title-blog {

@@ -15,8 +15,10 @@
         <a class="delete" tooltip="Delete album" ng-click="Photomap.deleteAlbum(item, $index)"></a>
         <a class="edit" tooltip="Edit Album" ui-sref="photos.editAlbum({album_id: item.id})"></a>
       </div>
-      <img ng-src="{{item.cover.medium}}" ui-sref="photos.album({user_id: item.user_id, album_id: item.id})" alt="">
-      <a ui-sref="photos.album({user_id: item.user_id, album_id: item.id})">{{item.title}} <span class="count">(12)</span></a>
+      <div class="photo-wrapper">
+        <img ng-src="{{item.cover.medium}}" ui-sref="photos.album({user_id: item.user_id, album_id: item.id})" alt="">
+      </div>
+      <a ui-sref="photos.album({user_id: item.user_id, album_id: item.id})" class="album-title text-left"><div class="title-width">{{item.title}} <span class="count">(12)</span></div></a>
     </div>
   </div>
   <div class="col-xs-12" ng-if="Photomap.albums.length == 0">

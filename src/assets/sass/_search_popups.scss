@@ -65,7 +65,7 @@
     .close {
       margin-top: -1rem;
       margin-right: 0;
-      background-image: url(../img/icons/close.png);
+      background-image: url(../img/svg/close_icon.svg);
       opacity: 1;
       background-repeat: no-repeat;
       background-position: center;
@@ -104,7 +104,7 @@
       li {
         width: 60px;
         height: 50px;
-        border-radius: 0; 
+        border-radius: 0;
         border: 0;
         display: inline-block;
         margin: 20px 10px;
@@ -112,27 +112,31 @@
         background-color: $dark_blue_hover;
         color: $href_color;
         &.path a{
-          background: url(../img/icons/sprite-popup.png) no-repeat;
-          background-position: 4px 0;
-           &:hover {
+          background-image: url(../img/svg/map/custom.svg);
+          background-repeat: no-repeat;
+          background-size: 40px;
+          background-position: 10px 10px;
+          &:hover {
             color: #fff;
-            background-position: 4px -53px; 
+            background-image: url(../img/svg/map/custom_hover.svg);
           }
         }
         &.radius a {
-          background: url(../img/icons/sprite-popup.png) no-repeat;
-          background-position: -70px 0;
-           &:hover {
+          background-image: url(../img/svg/map/round.svg);
+          background-repeat: no-repeat;
+          &:hover {
             color: #fff;
-            background-position: -70px -53px; 
+            background-image: url(../img/svg/map/round_hover.svg);
           }
         }
         &.lasso a {
-          background: url(../img/icons/sprite-popup.png) no-repeat;
-          background-position: -148px 0;
-           &:hover {
+          background-image: url(../img/svg/map/lasso.svg);
+          background-repeat: no-repeat;
+          background-size: 40px;
+          background-position: 10px 10px;
+          &:hover {
             color: #fff;
-            background-position: -148px -53px; 
+            background-image: url(../img/svg/map/lasso_hover.svg);
           }
         }
         a {
@@ -230,49 +234,49 @@
         margin: 0 auto;
         padding: 15px 10px 15px 42px;
         text-align: center;
+        background-size: 25px;
+        background-repeat: no-repeat;
+        background-position: 10px 8px;
       }
       .full-small {
         background: url(../img/icons/right-arrow.png) 10px 8px no-repeat;
         padding: 25px 30px;
       }
       .events {
-        background: url(../img/icons/vertical-menu.png) 15px -159px no-repeat;
-        &:hover, &:active {
-          background-position: 15px -6px;
-        }
+        background-image: url(../img/svg/vertical_menu/calendar.svg);
       }
       .recreation {
-        background: url(../img/icons/vertical-menu.png) -90px -159px no-repeat;
-        &:hover, &:active {
-          background-position: -90px -6px;
-        }
+        background-image: url(../img/svg/vertical_menu/recrearion_icon.svg);
+        background-repeat: no-repeat;
+        background-position: 7px 2px;
+        background-size: 36px;
       }
       .pit-stops {
-        background: url(../img/icons/vertical-menu.png) -226px -159px no-repeat;
-        &:hover, &:active {
-          background-position: -226px -6px;
-        }
+        background-image: url(../img/svg/vertical_menu/pit_stops.svg);
+        background-size: 30px;
+        background-repeat: no-repeat;
+        background-position: 8px 6px;
       }
       .weather-link {
-        background: url(../img/icons/vertical-menu.png) -347px -159px no-repeat;
-        &:hover {
-          background-position: -347px -6px;
-        }
+        background-image: url(../img/svg/vertical_menu/weather_icons.svg);
+        background-size: 40px;
+        background-repeat: no-repeat;
+        background-position: 4px 6px;
       }
       &:hover, &.active {
         background-color: #fff;
         @include transition_bg_color;
         .weather-link {
-          background-position: -347px -6px;
+          background-image: url(../img/svg/vertical_menu/weather_icons_active.svg);
         }
         .pit-stops {
-          background-position: -226px -6px;
+          background-image: url(../img/svg/vertical_menu/pit_stops_active.svg);
         }
         .recreation {
-          background-position: -90px -6px;
+          background-image: url(../img/svg/vertical_menu/recrearion_icon_active.svg);
         }
         .events {
-          background-position: 15px -6px;
+          background-image: url(../img/svg/vertical_menu/calendar_active.svg);
         }
         a {
           color: #00cfff;
@@ -294,29 +298,29 @@
   z-index: 101;
   background: #fff;
   width: 450px;
-    .close-popup {
-      height: 51px;
-      width: 49px;
-      background: url(../img/icons/right-arrow.png) 6px 10px no-repeat;
-      padding: 27px 18px;
-      background-color: #929fa7;
-      display: block;
-      @include transition_bg_color;
-      position: absolute;
-      left: -51px;
-      top: -3px;
-      transform: rotate(-90deg);
-      &:hover {
-        background-color: #fff;
-        background-position: -68px 10px;
-      
+  .close-popup {
+    height: 51px;
+    width: 49px;
+    background: url(../img/icons/right-arrow.png) 6px 10px no-repeat;
+    padding: 27px 18px;
+    background-color: #929fa7;
+    display: block;
+    @include transition_bg_color;
+    position: absolute;
+    left: -51px;
+    top: -3px;
+    transform: rotate(-90deg);
+    &:hover {
+      background-color: #fff;
+      background-position: -68px 10px;
+
     }
   }
 }
 
 .sidebar-menu-horizontal {
-	position: relative;
-  	ul {
+  position: relative;
+  ul {
     padding: 0;
     margin: 0;
     width: 100%;
@@ -329,23 +333,46 @@
       border-left: 1px solid #aabac1;
       float: left;
       .events {
-        background: url(../img/icons/vertical-menu.png) 6px -159px no-repeat;
+        background-image: url(../img/svg/vertical_menu/calendar.svg);
+        background-repeat: no-repeat;
+        background-size: 26px;
+        background-position: 2px 6px;
       }
       .recreation {
-        background: url(../img/icons/vertical-menu.png) -100px -159px no-repeat;
+        background-image: url(../img/svg/vertical_menu/recrearion_icon.svg);
+        background-repeat: no-repeat;
+        background-position: 3px 2px;
+        background-size: 36px;
       }
       .pit-stops {
-        background: url(../img/icons/vertical-menu.png) -237px -159px no-repeat;
+        background-image: url(../img/svg/vertical_menu/pit_stops.svg);
+        background-size: 28px;
+        background-repeat: no-repeat;
+        background-position: -2px 8px;
       }
       .weather-link {
-        background: url(../img/icons/vertical-menu.png) -360px -159px no-repeat;
+        background-image: url(../img/svg/vertical_menu/weather_icons.svg);
+        background-size: 40px;
+        background-repeat: no-repeat;
+        background-position: -8px 5px;
       }
       &:hover, &.active {
         background-color: #fff;
         @include transition_bg_color;
+        .weather-link {
+          background-image: url(../img/svg/vertical_menu/weather_icons_active.svg);
+        }
+        .pit-stops {
+          background-image: url(../img/svg/vertical_menu/pit_stops_active.svg);
+        }
+        .recreation {
+          background-image: url(../img/svg/vertical_menu/recrearion_icon_active.svg);
+        }
+        .events {
+          background-image: url(../img/svg/vertical_menu/calendar_active.svg);
+        }
         a {
-        	background-position-y: -6px;
-        	color: $blue_btn;
+          color: $blue_btn;
         }
       }
       a {
@@ -378,6 +405,7 @@
   width: 100%;
   height: calc(100% - 104px);
   overflow-y: auto;
+  background-color: #fff;
   .numbers-events {
     padding: 12px 15px;
     border: 1px solid #c2c7ca;
@@ -398,8 +426,8 @@
     }
   }
   .sort-date {
-  	padding: 0 1.5rem;
-  	margin-bottom: 1.5rem;
+    padding: 0 1.5rem;
+    margin-bottom: 1.5rem;
     p {
       font-size: 16px;
       color: #929fa7;
@@ -442,7 +470,7 @@
   }
 
   .categories {
-  	padding: 0 1.5rem;
+    padding: 0 1.5rem;
     p {
       font-size: 16px;
       color: #929fa7;
@@ -500,8 +528,8 @@
   }
 
   .search-by-name {
-  	margin-top: 1.5rem;
-  	padding: 0 1.5rem;
+    margin-top: 1.5rem;
+    padding: 0 1.5rem;
     p {
       font: 500 20px/26px;
       color: #000;
@@ -514,12 +542,12 @@
       margin: 0;
     }
     .filters-button {
-      	background-image: url(../img/header/header_search.png);
-      	background-repeat: no-repeat;
-      	background-position: center;
-      	background-color: $blue_btn;
-      	width: 50px;
-      }
+      background-image: url(../img/header/header_search.png);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: $blue_btn;
+      width: 50px;
+    }
   }
   .filters-button {
     font-size: 1.4rem;
@@ -619,13 +647,13 @@
     overflow: auto;
     display: inline-block;
     .right-now {
-      	color:#00cfff;
-      	font-weight: bold;
-      	text-transform: uppercase;
-    	text-align: center;
-    	font-size: 2.4rem;
-    	margin-bottom: 0;
-      }
+      color:#00cfff;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 2.4rem;
+      margin-bottom: 0;
+    }
     .weatherName {
       text-align: center;
       font-size: 2rem;
@@ -654,7 +682,7 @@
           float: right;
         }
         .weatherImg {
-          width: 15rem;
+          width: 14rem;
           height: 100%;
           background-size: 130% !important;
           float: left;
@@ -767,18 +795,18 @@
   .weekForecast {
     padding: 0;
     .weekForecast-inner {
-    	background-color: #f4f5f6;
-	    	&:first-child {
-	      	background-color: #fff;
-	      	-webkit-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
-    			-moz-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
-    			box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
-    			z-index: 2;
-          .weather-summary {
-            color: #000;
-            font-weight: bold;
-          }
-	      }
+      background-color: #f4f5f6;
+      &:first-child {
+        background-color: #fff;
+        -webkit-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+        -moz-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+        box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+        z-index: 2;
+        .weather-summary {
+          color: #000;
+          font-weight: bold;
+        }
+      }
     }
     .weekForecast-wrapper {
       float: left;
@@ -792,7 +820,7 @@
       -webkit-align-items: center;
       -webkit-box-align: center;
 
-  align-items: center;
+      align-items: center;
       .weatherIcon {
         float: left;
         width: 15%;
@@ -858,7 +886,7 @@
         height: 4rem;
       }
       .weather-summary {
-      	font-size: 1.5rem;
+        font-size: 1.5rem;
         color: #889197;
         width: 55%;
         font-weight: bold;

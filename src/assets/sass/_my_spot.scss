@@ -57,7 +57,9 @@
   .place {
     font: 400 14px;
     color: #000;
-    background: url(../img/icons/map-loc.png) no-repeat 0 0;
+    background: url(../img/svg/location.svg) no-repeat 0 0;
+    padding-top: 2px;
+    background-size: 16px;
     padding-left: 2rem;
     margin-top: 1rem;
   }
@@ -111,44 +113,13 @@
 }
 
 .edit-tools {
-  background: url(../img/icons/sprite-edits.png) 1px 3px no-repeat;
-  padding-top: 2px;
+  background-image: url('../img/svg/edit_icon.svg');
+  background-size: 15px;
+  color:#889197;
+  background-repeat: no-repeat;
   &:hover, &:active, &:focus {
+    background-image: url('../img/svg/edit_icon_hover.svg');
     color: $blue;
-    background: url(../img/icons/sprite-edits.png) 1px -32px no-repeat;
-  }
-}
-
-.delete {
-  background: url(../img/icons/sprite-edits.png) 1px 2px no-repeat;
-  &:hover, &:active, &:focus {
-    background: url(../img/icons/sprite-edits.png) 1px -34px no-repeat;
-    color: $blue;
-  }
-}
-
-.save-event {
-  background: url(../img/icons/sprite-edits.png) -5px -4px no-repeat;
-  &:hover, &:active, &:focus {
-    background: url(../img/icons/sprite-edits.png) -5px -34px no-repeat;
-    color: $blue;
-  }
-}
-
-.favorite-spot {
-  background: url(../img/icons/sprite-edits.png) -369px 1px no-repeat;
-  &:hover, &:active, &:focus {
-    background: url(../img/icons/sprite-edits.png) -369px -34px no-repeat;
-    color: $blue;
-  }
-}
-
-.invite-friend {
-  background: url(../img/icons/sprite-edits.png) -3px 3px no-repeat;
-  &:hover, &:active, &:focus {
-    background: url(../img/icons/sprite-edits.png) -3px -32px no-repeat;
-    color: $blue;
-
   }
 }
 
@@ -161,10 +132,6 @@
   position: absolute;
   right: 15px;
   background: url(../img/icons/share.png) no-repeat;
-}
-
-.wrap-from-share {
-  position: relative;
 }
 
 .share-wrap {
@@ -200,8 +167,6 @@
     }
     a {
       display: block;
-      padding: 0;
-      padding: 0;
       width: 16px;
       height: 16px;
       overflow: hidden;
@@ -224,7 +189,8 @@
     position: absolute;
     top: 5rem;
     right: 2rem;
-    background: url(../img/icons/plus.png) 2px 2px no-repeat;
+    background: url(../img/svg/add_icon.svg) no-repeat;
+    background-position: center;
     background-color: #00b7f3;
     -webkit-transition: background 0.3s;
     -moz-transition: background 0.3s;
@@ -260,8 +226,4 @@
 .img-size {
   width: 100%;
 //  height: 242px;
-}
-
-.reason-block span {
-  padding-left: 35px;
 }
