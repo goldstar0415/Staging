@@ -241,7 +241,7 @@
 	}
 .leaflet-bar a.leaflet-disabled {
 	cursor: default;
-	background-color: #f4f4f4;
+	/* background-color: #f4f4f4; */
 	color: #bbb;
 	}
 
@@ -509,7 +509,6 @@
 	color: rgba(0,0,0,0) !important;
 }
 .leaflet-bar a:first-child {
-	border-left: 1px solid rgba(255,255,255,0.8);
 	background-image: url(images/icon_plus.svg);
 	background-size: 22px;
 	color: rgba(0,0,0,0) !important;
