@@ -79,7 +79,8 @@
            </div> -->
           <div class="age">
             <span ng-if="$root.profileUser.sex">{{$root.profileUser.sex == 'm' ? 'male' : 'female'}}</span>
-            <span ng-if="$root.profileUser.birth_date">, {{$root.profileUser.birth_date | age}} years</span>
+            <span ng-if="$root.profileUser.sex">{{$root.profileUser.sex && $root.profileUser.birth_date}}, </span>
+            <span ng-if="$root.profileUser.birth_date">{{$root.profileUser.birth_date | age}} years</span>
           </div>
           <div class="location" ng-if="$root.profileUser.address"><span class="location-icon"></span>
             {{$root.profileUser.address}}
