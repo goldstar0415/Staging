@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\GeneratedUser;
 use App\Jobs\Job;
 use App\Mailers\AppMailer;
+use App\Services\GoogleAddress;
 use App\Services\SpotsImportFile;
 use App\Spot;
 use App\SpotTypeCategory;
@@ -41,6 +42,8 @@ abstract class SpotsImport extends Job implements SelfHandling
      */
     private $mailer;
 
+    protected $date_format = 'm/d/Y';
+
     /**
      * Create a new job instance.
      *
@@ -63,6 +66,19 @@ abstract class SpotsImport extends Job implements SelfHandling
         if ($imported_spot->image_links) {
             $imported_spot->put('image_links', explode(',', $imported_spot->image_links));
         }
+
+        if (isset($this->data['get_address']) and
+            $this->data['get_address'] and
+            !$imported_spot->address and
+            $imported_spot->latitude and
+            $imported_spot->longitude) {
+            /**
+             * @var GoogleAddress $google_address
+             */
+            $google_address = app(GoogleAddress::class);
+            $imported_spot->put('address', $google_address->get($imported_spot->latitude, $imported_spot->longitude));
+        }
+
         /**
          * @var \Illuminate\Validation\Validator $validator
          */
@@ -81,8 +97,8 @@ abstract class SpotsImport extends Job implements SelfHandling
         }
 
         if ($this->type === self::EVENT) {
-            $rules['start_date'] = 'required|date_format:Y-m-d';
-            $rules['end_date'] = 'required|date_format:Y-m-d';
+            $rules['start_date'] = 'required|date_format:' . $this->date_format;
+            $rules['end_date'] = 'required|date_format:' . $this->date_format;
         }
 
         if ($imported_spot->image_links) {
@@ -138,8 +154,8 @@ abstract class SpotsImport extends Job implements SelfHandling
                 $spot->web_sites = [$imported_spot->website];
             }
             if ($this->type === self::EVENT) {
-                $spot->start_date = Carbon::createFromDate(...explode('-', $imported_spot->start_date));
-                $spot->end_date = Carbon::createFromDate(...explode('-', $imported_spot->end_date));
+                $spot->start_date = Carbon::createFromFormat($this->date_format, $imported_spot->start_date);
+                $spot->end_date = Carbon::createFromFormat($this->date_format, $imported_spot->end_date);
             }
             $spot->is_approved = true;
             $owner = null;
@@ -168,7 +184,7 @@ abstract class SpotsImport extends Job implements SelfHandling
                 [
                     'location' => [
                         'lat' => $imported_spot->latitude,
-                        'lng' => $imported_spot->longtitude
+                        'lng' => $imported_spot->longitude
                     ],
                     'address' => $imported_spot->address
                 ]

@@ -72,7 +72,8 @@ class SpotImportController extends Controller
         $job = new SpotsImportColumns($request->all(), [
             'admin' => $request->user(),
             'spot_category' => $request->spot_category,
-            'instagram_photos' => $request->ins_photos
+            'instagram_photos' => $request->ins_photos,
+            'get_address' => $request->get_address
         ], SpotsImport::EVENT);
         if ((bool)$request->preview) {
             $request->session()->flashInput($request->all());

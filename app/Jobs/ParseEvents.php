@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Jobs\Job;
 use App\Services\AppSettings;
+use App\Services\GoogleAddress;
 use App\Spot;
 use App\SpotPhoto;
 use App\SpotTypeCategory;
@@ -14,6 +15,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
+use Storage;
 
 class ParseEvents extends Job implements SelfHandling, ShouldQueue
 {
@@ -35,15 +37,22 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
     private $settings;
 
     /**
+     * @var GoogleAddress
+     */
+    private $google_address = null;
+
+    /**
      * Execute the job.
      *
      * @param Client $http
      * @param AppSettings $settings
+     * @param GoogleAddress $address
      */
-    public function handle(Client $http, AppSettings $settings)
+    public function handle(Client $http, AppSettings $settings, GoogleAddress $address)
     {
         $this->http = $http;
         $this->settings = $settings;
+        $this->google_address = $address;
 
         $query_string = ['sort' => 'id.desc', 'page' => 1, 'per_page' => 1000];
         $parser_settings = $this->settings->parser;
@@ -99,8 +108,30 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
             $import_event->web_sites = $this->getWebSites($event);
             $import_event->is_approved = true;
             $import_event->save();
+
+            $address = '';
+            if (is_null($event['venue']['address'])) {
+                $address = $this->google_address->get(
+                    $event['venue']['location']['lat'],
+                    $event['venue']['location']['lon']
+                );
+            } else {
+                $venue = $event['venue'];
+
+                $address = implode(', ', array_filter(
+                    [
+                        $venue['address'],
+                        $venue['city'],
+                        $venue['extended_address'],
+                        $venue['state']
+                    ],
+                    function ($value) {
+                        return !empty($value);
+                    }
+                ));
+            }
             $import_event->points()->create([
-                'address' => $this->getEventAddress($event),
+                'address' => $address,
                 'location' => [
                     'lat' => $event['venue']['location']['lat'],
                     'lng' => $event['venue']['location']['lon']
@@ -147,36 +178,6 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
         }
 
         return $photos;
-    }
-
-    protected function getEventAddress(array $event)
-    {
-        if (is_null($event['venue']['address'])) {
-            $response = $this->http->get('http://maps.googleapis.com/maps/api/geocode/json', [
-                'query' => [
-                    'latlng' => $event['venue']['location']['lat'] . ',' . $event['venue']['location']['lon'],
-                    'sensor' => true
-                ]
-            ]);
-
-            $data = json_decode((string)$response->getBody(), true);
-
-            return $data['results'][0]['formatted_address'];
-        }
-
-        $venue = $event['venue'];
-
-        return implode(', ', array_filter(
-            [
-                $venue['address'],
-                $venue['city'],
-                $venue['extended_address'],
-                $venue['state']
-            ],
-            function ($value) {
-                return !empty($value);
-            }
-        ));
     }
 
     /**
