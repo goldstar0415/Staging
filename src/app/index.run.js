@@ -42,8 +42,8 @@
       }
 
       MapService.clearLayers();
-      $rootScope.changeMapState(current.mapState, current, true);
       angular.element('.map-tools').hide();
+      $rootScope.changeMapState(current.mapState, current, true);
 
       //switch (current.locate) {
       //  case 'fit':

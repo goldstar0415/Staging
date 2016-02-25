@@ -504,12 +504,12 @@
 	font-size: 2.5rem;
 }
 .leaflet-control-zoom a {
-	background-image: url(images/icon_minus.svg);
+	background-image: url(/assets/libs/Leaflet/images/icon_minus.svg);
 	background-size: 22px;
 	color: rgba(0,0,0,0) !important;
 }
 .leaflet-bar a:first-child {
-	background-image: url(images/icon_plus.svg);
+	background-image: url(/assets/libs/Leaflet/images/icon_plus.svg);
 	background-size: 22px;
 	color: rgba(0,0,0,0) !important;
 }
