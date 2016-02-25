@@ -1,4 +1,5 @@
-<div ngf-drop
+<div class="clearfix"
+     ngf-drop
      ngf-select
      ng-model="Uploader.images"
      ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
@@ -12,6 +13,6 @@
      ngf-drop-available="dropAvailable"
   >
   <p ng-if="Uploader.dropZone">Drag photos here or click to upload</p>
-  <button ng-if="!Uploader.dropZone" type="button" class="btn green-btn">{{Uploader.buttonText || 'Upload'}}</button>
+  <a ng-if="!Uploader.dropZone" class="btn green-btn">{{Uploader.buttonText || 'Upload'}}</a>
 </div>
 <div ngf-no-file-drop>File Drop not available</div>

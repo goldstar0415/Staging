@@ -35,6 +35,7 @@
             scrollInput: false,
             timepicker: false,
             validateOnBlur: false,
+            yearStart: 1920,
             format: format,
             formatDate: format,
             minDate: s.startDate || false,

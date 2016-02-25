@@ -16,7 +16,7 @@
     vm.removeSocial = removeSocial;
     vm.images = UploaderService.images;
     vm.saveSocialNetworks = saveSocialNetworks;
-    vm.minDate = '01.01.1940';
+    vm.minDate = '01.01.1920';
 
     vm.privacyOptions = [
       {value: 1, label: 'All users have access'},

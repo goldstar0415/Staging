@@ -1,5 +1,6 @@
 <div class="col-xs-12 menu-profile">
   <div class="hide-menu-profile"
+       ng-hide="$root.$state.current.name == 'index'"
        ng-class="{'rotate-down': $root.mapState == 'small-size'}"
        ng-click="$root.toggleMapState()"></div>
 
@@ -8,7 +9,7 @@
       <ul ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
         <li>
           <a class="nav-spots" ui-sref="spots({user_id: $root.currentUser.id})"
-             ng-class="{active: Profile.$state.current.name == 'spots' || Profile.$state.current.name == 'spot'}">
+             ng-class="{active: $root.$state.current.name == 'spots' || $root.$state.current.name == 'spot'}">
             <span>My spots</span>
           </a>
         </li>

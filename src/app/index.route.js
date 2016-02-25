@@ -425,6 +425,15 @@
         parent: 'main',
         mapState: 'hidden'
       })
+      //Contact us page
+      .state('terms', {
+        url: "/terms",
+        templateUrl: '/app/modules/terms/terms.html',
+        controller: 'TermsController',
+        controllerAs: 'Term',
+        parent: 'main',
+        mapState: 'hidden'
+      })
 
       //Zoomers page
       .state('zoomers', {

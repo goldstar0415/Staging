@@ -1,12 +1,14 @@
 <form name="form" class="form-horizontal spot-bg" role="form" novalidate>
   <div ng-hide="SpotCreate.loading">
-    <a ui-sref="spots({user_id: profileUser.id})" class="btn-back" title="back" class="back"></a>
+    <a ui-sref="spots({user_id: profileUser.id})" class="btn-back back" title="back"></a>
 
-    <div class="text-center"><h2 ng-if="!SpotCreate.edit" class="title-name">Create new spot</h2></div>
+    <div class="text-center">
+      <h2 ng-if="!SpotCreate.edit" class="title-name">Create new spot</h2>
+      <h2 ng-if="SpotCreate.edit" class="event-title">Update Spot</h2>
+    </div>
 
     <facebook-events ng-if="!SpotCreate.edit"></facebook-events>
 
-    <h2 ng-if="SpotCreate.edit" class="event-title">Update Spot</h2>
     <section class="event-main-info">
       <div class="spot-section">
         <div ng-if="!SpotCreate.edit" class="form-group hidden-xs">
@@ -53,13 +55,13 @@
           <label class="col-md-3 col-sm-12 col-xs-12 control-label">Privacy</label>
 
           <div class="col-md-9 col-sm-12 col-xs-7">
-            <div class="radio-group" >
+            <div class="radio-group">
               <input type="radio" name="radio" value="1" id="radio1" class="radio"
                      ng-model="SpotCreate.is_private">
               <label for="radio1" popover="Only Followers/Followings can see"
                      popover-trigger="mouseenter"><span></span>Private</label>
             </div>
-            <div class="radio-group" >
+            <div class="radio-group">
               <input type="radio" name="radio" value="0" id="radio2" class="radio"
                      ng-model="SpotCreate.is_private">
               <label for="radio2" popover="Requires Admin approval of up to 24 hours"
@@ -67,15 +69,15 @@
             </div>
 
             <!--<div class="radio-group" popover="Only Followers/Followings can see"-->
-                 <!--popover-trigger="mouseenter">-->
-              <!--<input type="radio" name="radio" value="1" id="privacy_private" class="radio"-->
-                     <!--ng-model="SpotCreate.is_private">-->
-              <!--<label for="privacy_private" class="radio-label">Private</label>-->
+            <!--popover-trigger="mouseenter">-->
+            <!--<input type="radio" name="radio" value="1" id="privacy_private" class="radio"-->
+            <!--ng-model="SpotCreate.is_private">-->
+            <!--<label for="privacy_private" class="radio-label">Private</label>-->
             <!--</div>-->
             <!--<div class="radio-group" popover="Requires Admin approval of up to 24 hours" popover-trigger="mouseenter">-->
-              <!--<input type="radio" name="radio" value="0" id="privacy_public" class="radio"-->
-                     <!--ng-model="SpotCreate.is_private">-->
-              <!--<label for="privacy_public" class="radio-label">Public</label>-->
+            <!--<input type="radio" name="radio" value="0" id="privacy_public" class="radio"-->
+            <!--ng-model="SpotCreate.is_private">-->
+            <!--<label for="privacy_public" class="radio-label">Public</label>-->
             <!--</div>-->
           </div>
         </div>
