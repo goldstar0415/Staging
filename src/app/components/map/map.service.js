@@ -459,16 +459,21 @@
       //Layers
 
       //switch map states;
-      function ChangeState(state) {
-
+      function ChangeState(state, clear) {
         switch (state.toLowerCase()) {
           case "big":
-            showEventsLayer(true);
+            if (clear) {
+              showEventsLayer(true);
+            }
+
             $rootScope.mapState = "full-size";
             map.scrollWheelZoom.enable();
             break;
           case "small":
-            showOtherLayers();
+            if (clear) {
+              showOtherLayers();
+            }
+
             $rootScope.mapState = "small-size";
             map.scrollWheelZoom.disable();
             break;
@@ -477,10 +482,13 @@
             removeAllLayers();
             break;
         }
-        map.closePopup();
-        markersLayer.clearLayers();
-        draggableMarkerLayer.clearLayers();
-        drawLayer.clearLayers();
+
+        if (clear) {
+          map.closePopup();
+          markersLayer.clearLayers();
+          draggableMarkerLayer.clearLayers();
+          drawLayer.clearLayers();
+        }
 
         $timeout(function () {
           map.invalidateSize();

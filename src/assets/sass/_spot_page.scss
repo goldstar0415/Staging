@@ -74,6 +74,7 @@
   position: absolute;
   bottom: -17px;
   right: -8px;
+  top: 20px;
   padding-top: 0;
   background: url(../img/icons/min-corner.png) top 0 right 17px no-repeat;
   z-index: 1000;
@@ -83,7 +84,7 @@
     -moz-border-radius: 5px;
     border-radius: 5px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .2);
-    padding: 4px;
+    padding: 1px;
     margin-bottom: -2px;
 
     li {
@@ -100,6 +101,7 @@
       }
       a {
         display: block;
+        padding: 0;
         width: 16px;
         height: 16px;
         overflow: hidden;
@@ -416,7 +418,7 @@
       float: left;
       margin-right: 15px;
       margin-bottom: 15px;
-      
+
       img {
         width: 12rem;
         height: 12rem;
@@ -461,7 +463,7 @@
     img {
       width: 100%;
     }
-    
+
   }
 }
 .attach-event {
@@ -494,7 +496,7 @@
             background: url(../img/icons/like.png) 0 2px no-repeat;
             min-height: 2rem;
             margin-right: 1rem;
-            &:hover {
+            &:hover, .clicked {
                 background-position: 0 -18px;
                 color: $blue_btn;
             }

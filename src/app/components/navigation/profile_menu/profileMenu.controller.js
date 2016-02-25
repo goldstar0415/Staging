@@ -9,7 +9,7 @@
     .controller('ProfileMenuController', ProfileMenuController);
 
   /** @ngInject */
-  function ProfileMenuController(User, $state, PermissionService) {
+  function ProfileMenuController(User, $state, $rootScope, PermissionService) {
     var vm = this;
     vm.$state = $state;
     vm.checkPermission = PermissionService.checkPermission;
@@ -39,5 +39,6 @@
     vm.isVisibleProfileBlock = function () {
       return !$state.is('spot') && !$state.is('followers') && !$state.is('followings');
     };
+
   }
 })();

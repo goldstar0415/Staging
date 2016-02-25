@@ -384,18 +384,6 @@
   .menu-profile ul li {
     width: 10.5%;
   }
-  .hide-menu-profile {
-    display: block;
-    width: 5rem;
-    height: 5rem;
-    position: absolute;
-    right: 2rem;
-    top: -7rem;
-    transform: rotate(180deg);
-    background-image: url(../img/svg/arrow.svg);
-    background-repeat: no-repeat;
-    border-radius: 50%;
-  }
   .show-menu-profile {
     display: block;
     width: 5rem;

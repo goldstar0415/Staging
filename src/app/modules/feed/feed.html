@@ -1,4 +1,3 @@
-
 <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
 
 <div class="col-xs-12">
@@ -53,6 +52,14 @@
                 <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})"
                   >{{item.feedable.title}}
                 </a>
+              </div>
+
+              <div ng-switch-when="OnSpotComment" class="mgb10">
+                <a ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">
+                  {{item.sender.first_name}} {{item.sender.last_name}}
+                </a>
+                commented your
+                <a ui-sref="spot({user_id: (item.sender.alias || item.sender.id), spot_id: item.feedable.commentable_id})">spot</a>
               </div>
 
               <div ng-switch-when="OnAddToCalendar" class="mgb10">

@@ -131,6 +131,10 @@ textarea {
   }
 }
 
+.line-break {
+  white-space: pre-wrap;
+}
+
 h3 {
   margin: 25px auto;
   font: 500 20px/26px ;
@@ -1346,4 +1350,20 @@ span.location-icon {
   }
 .attach-event {
   text-align: left;
+}
+
+.hide-menu-profile {
+  cursor: pointer;
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  right: 2rem;
+  top: -7rem;
+  background-image: url(../img/svg/arrow.svg);
+  background-repeat: no-repeat;
+  border-radius: 50%;
+
+  &.rotate-down {
+    transform: rotate(180deg);
+  }
 }

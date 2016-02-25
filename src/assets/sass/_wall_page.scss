@@ -11,7 +11,7 @@
         padding: 0;
     }
     .new-post {
-        
+
         }
     .post {
         padding: 15px 10px;
@@ -128,7 +128,7 @@
             background: url(../img/icons/like.png) 0 2px no-repeat;
             min-height: 2rem;
             margin-right: 1rem;
-            &:hover {
+            &:hover, &.clicked {
                 background-position: 0 -18px;
                 color: $blue_btn;
             }
@@ -183,7 +183,7 @@
 @media (max-width: 600px) {
   .content-wall {
     .post {
-      
+
       .info {
       }
     }

@@ -6,8 +6,9 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, $modalStack, USER_ONLINE_MINUTE) {
-
+  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
+    $rootScope.$state = $state;
+    $rootScope.checkPermission = PermissionService.checkPermission;
     $rootScope.isMobile = L.Browser.touch;
     L.Icon.Default.imagePath = '/assets/libs/Leaflet/images';
     $rootScope.plannerIcon = '/assets/img/icons/planner_icon.png';
@@ -41,25 +42,19 @@
       }
 
       MapService.clearLayers();
-      MapService.ChangeState(current.mapState);
+      $rootScope.changeMapState(current.mapState, current, true);
+      angular.element('.map-tools').hide();
 
-      if (current.mapState == 'big') {
-        angular.element('.map-tools').show();
-        MapService.FocusMapToCurrentLocation(12);
-      } else {
-        angular.element('.map-tools').hide();
-      }
-
-      switch (current.locate) {
-        case 'fit':
-          MapService.FitBoundsOfCurrentLayer();
-          break;
-        case 'none':
-          break;
-        default:
-          //MapService.FocusMapToCurrentLocation(4);
-          break;
-      }
+      //switch (current.locate) {
+      //  case 'fit':
+      //    MapService.FitBoundsOfCurrentLayer();
+      //    break;
+      //  case 'none':
+      //    break;
+      //  default:
+      //    //MapService.FocusMapToCurrentLocation(4);
+      //    break;
+      //}
 
       //scroll top
       window.scrollTo(0, 0);
@@ -109,6 +104,23 @@
 
     ////// COMMON FUNCTIONS
 
+    //show/hide map
+    $rootScope.changeMapState = function (mapState, urlState, isClearLayers) {
+      MapService.ChangeState(mapState, isClearLayers);
+
+      if (urlState.name == 'index' && mapState == 'big') {
+          angular.element('.map-tools').show();
+          MapService.FocusMapToCurrentLocation(12);
+      } else {
+        $rootScope.showHintPopup = false;
+      }
+    };
+
+    $rootScope.toggleMapState = function () {
+      var mapState = $rootScope.mapState == 'full-size' ? 'small' : 'big';
+      $rootScope.changeMapState(mapState, $state.current, false);
+    };
+
     //check user online
     $rootScope.isOnline = function (user) {
       var online = false;
@@ -126,6 +138,13 @@
         var roles = _.pluck(user.roles, 'name');
         return roles.length > 0 && roles.indexOf(name) >= 0;
       }
+    };
+
+    $rootScope.isActiveState = function (state) {
+      return {
+        //active: $state.includes()
+        active: state == $state.current.name || $state.current.name.indexOf(state + '.') >= 0
+      };
     };
 
     $rootScope.$apply();
