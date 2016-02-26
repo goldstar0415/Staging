@@ -70,7 +70,7 @@
 <div class="col-xs-12 mobile-nopad">
   <div class="container wrap">
 
-    <div class="col-xs-12 col-md-3 information-profile ">
+    <div class="col-xs-12 col-md-3 information-profile " ng-if="!$root.isMobile || Profile.isStream()">
       <section class="col-xs-12 col-sm-2 col-md-12 avatar-wrap" ng-if="$root.profileUser.id">
         <a ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})" class="avatar">
           <img ng-src="{{$root.profileUser.avatar_url.medium}}"/>
@@ -180,7 +180,9 @@
               {{$root.profileUser.count_favorites}}
             </a> -->
           </div>
-          <aside class="module-sidebar clearfix"
+
+
+          <aside class="module-sidebar clearfix visible-md"
                  ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.followers.length > 0 && Profile.checkPermission(profileUser.privacy_followers)">
             <h2 class="sidebar-title mgb20">
               <a users-modal="followers" user="$root.profileUser">
@@ -203,7 +205,7 @@
 
           </aside>
 
-          <aside class="module-sidebar clearfix"
+          <aside class="module-sidebar clearfix visible-md"
                  ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.followings.length > 0 && Profile.checkPermission(profileUser.privacy_followings)">
             <h2 class="sidebar-title">
               <a users-modal="followings" user="$root.profileUser">
@@ -227,7 +229,7 @@
 
           </aside>
 
-          <aside class="module-sidebar clearfix"
+          <aside class="module-sidebar clearfix visible-md"
                  ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.spots.length > 0 && Profile.checkPermission(profileUser.privacy_events)">
             <h2 class="sidebar-title">
               <a ui-sref="spots({user_id: $root.profileUser.id})">

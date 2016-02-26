@@ -469,7 +469,7 @@
   .comments-section {
     padding-bottom: 4rem;
     max-height: 40vh;
-    overflow: scroll;
+    overflow: auto;
     background-color: #fff;
   }
   .event-upload-photos {

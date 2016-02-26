@@ -137,3 +137,9 @@
     margin-left: 8.33333%;
   }
 }
+
+@media (max-width: 991px) {
+  .map.small-size {
+    height: 40%;
+  }
+}

@@ -87,7 +87,7 @@
     .reviews {
       height: 30rem;
       padding: 0;
-      overflow-y: scroll;
+      overflow-y: auto;
       margin-top: 1rem;
       .post {
         position: relative;

@@ -36,8 +36,12 @@
       };
     };
 
+    vm.isStream = function () {
+      return $state.is('profile.main') || $state.is('feeds') || $state.is('reviews') || $state.is('chat') || $state.is('chatRoom');
+    };
+
     vm.isVisibleProfileBlock = function () {
-      return !$state.is('spot') && !$state.is('followers') && !$state.is('followings');
+      return  !$state.is('followers') && !$state.is('followings');
     };
 
   }
