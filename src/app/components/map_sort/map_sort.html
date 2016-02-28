@@ -1,384 +1,426 @@
 <div ng-if="MapSort.vertical && $root.$state.current.name == 'index'" class="sidebar-menu-wrap">
-  <div class="show-menu-profile visible-xs" ng-click="MapSort.vertical = !MapSort.vertical"></div>
-  <div class="sidebar-menu-vertical hidden-xs">
-    <ul>
-      <li><a ng-click="MapSort.vertical = !MapSort.vertical" class="full-small"></a></li>
-      <li ng-class="{'active': MapSort.sortLayer == 'event'}"><a ng-click="MapSort.toggleLayer('events')"
-                                                                 class="events"><span>Events</span></a></li>
-      <li ng-class="{'active': MapSort.sortLayer == 'recreation'}"><a ng-click="MapSort.toggleLayer('recreations')"
-                                                                      class="recreation">Recreation</a></li>
-      <li ng-class="{'active': MapSort.sortLayer == 'pitstop'}"><a ng-click="MapSort.toggleLayer('pitstops')"
-                                                                   class="pit-stops">Pit Stops</a></li>
-      <li ng-class="{'active': MapSort.sortLayer == 'weather'}"><a ng-click="MapSort.toggleWeather()"
-                                                                   class="weather-link">Weather</a></li>
-    </ul>
-  </div>
+    <div class="show-menu-profile visible-xs" ng-click="MapSort.vertical = !MapSort.vertical"></div>
+    <div class="sidebar-menu-vertical hidden-xs">
+        <ul>
+            <li><a ng-click="MapSort.vertical = !MapSort.vertical" class="full-small"></a></li>
+            <li ng-class="{'active': MapSort.sortLayer == 'event'}"><a ng-click="MapSort.toggleLayer('events')"
+                                                                       class="events"><span>Events</span></a></li>
+            <li ng-class="{'active': MapSort.sortLayer == 'recreation'}"><a ng-click="MapSort.toggleLayer('recreations')"
+                                                                            class="recreation">Recreation</a></li>
+            <li ng-class="{'active': MapSort.sortLayer == 'pitstop'}"><a ng-click="MapSort.toggleLayer('pitstops')"
+                                                                         class="pit-stops">Pit Stops</a></li>
+            <li ng-class="{'active': MapSort.sortLayer == 'weather'}"><a ng-click="MapSort.toggleWeather()"
+                                                                         class="weather-link">Weather</a></li>
+        </ul>
+    </div>
 </div>
 
 <div ng-if="!MapSort.vertical" class="col-xs-3 no-pad sort-menu">
-  <div class="hide-menu-profile visible-xs" ng-click="MapSort.vertical = !MapSort.vertical"></div>
-  <div class="sidebar-menu-horizontal">
-    <ul>
-      <li ng-class="{'active': MapSort.sortLayer == 'event'}"><a ng-click="MapSort.toggleLayer('events')"
-                                                                 class="events"><span>Events</span></a></li>
-      <li ng-class="{'active': MapSort.sortLayer == 'recreation'}"><a ng-click="MapSort.toggleLayer('recreations')"
-                                                                      class="recreation"><span>Recreation</span></a>
-      </li>
-      <li ng-class="{'active': MapSort.sortLayer == 'pitstop'}"><a ng-click="MapSort.toggleLayer('pitstops')"
-                                                                   class="pit-stops"><span>Pit Stops</span></a></li>
-      <li ng-class="{'active': MapSort.sortLayer == 'weather'}"><a ng-click="MapSort.toggleLayer('other')"
-                                                                   class="weather-link"><span>Weather</span></a></li>
-    </ul>
-  </div>
-  <div class="search-filters">
+    <div class="hide-menu-profile visible-xs" ng-click="MapSort.vertical = !MapSort.vertical"></div>
+    <div class="sidebar-menu-horizontal">
+        <ul>
+            <li ng-class="{'active': MapSort.sortLayer == 'event'}"><a ng-click="MapSort.toggleLayer('events')"
+                                                                       class="events"><span>Events</span></a></li>
+            <li ng-class="{'active': MapSort.sortLayer == 'recreation'}"><a ng-click="MapSort.toggleLayer('recreations')"
+                                                                            class="recreation"><span>Recreation</span></a>
+            </li>
+            <li ng-class="{'active': MapSort.sortLayer == 'pitstop'}"><a ng-click="MapSort.toggleLayer('pitstops')"
+                                                                         class="pit-stops"><span>Pit Stops</span></a></li>
+            <li ng-class="{'active': MapSort.sortLayer == 'weather'}"><a ng-click="MapSort.toggleLayer('other')"
+                                                                         class="weather-link"><span>Weather</span></a></li>
+        </ul>
+    </div>
+ <!--Attantion! HERE ADD CLASS "applyed"-->   <div class="search-filters col-xs-12"><!--ADD CLASS "applyed" here and styles will change-->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="country-filter">
+                    <input type="text" role="search"/>
+                    <span class="icon-nav"></span>
+                </div>
+                <div class="filters-button"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="filer-defenition">
+                    <div class="destination-filter clearfix">
+                        <input type="text" role="search" placeholder="Add destination (road trip)"/>
+                        <span class="icon-navpoint"></span>
+                        <button class="action-btn"><span class="minus"></span></button>
+                    </div>
+                    <div class="date-filters clearfix">
+                        <!-- <p ng-click="eventsNameToggle = !eventsNameToggle">Sort by date
+                             <span class="filters-arrow"
+                                   ng-class="{'open-arrow': eventsNameToggle}">
+                             </span>
+                         </p>ng-show="eventsNameToggle"-->
+                        <div class="form-group">
+                            <span class="icon-calendar"></span>
+                            <input ng-datepicker ng-model="MapSort.startDate" class="date" placeholder="FROM DATE" type="zoomdate">
+                        </div>
+                        <div class="form-group">
+                            <span class="icon-calendar"></span>
+                            <input ng-datepicker ng-model="MapSort.endDate" class="date" pleceholder="TO DATE" type="zoomdate">
+                        </div>
+                        <button class="action-btn"><span class="minus"></span></button>
+                        <!--<input type="button" ng-click="eventsSortByDate()" value="Go" class="filters-button mgt23">-->
+                    </div>
+                    <div class="keyword-filters clearfix">
+                        <input type="text" role="search" placeholder="Filter by keyword"/>
+                        <span class="icon-key"></span>
+                        <button class="action-btn"><span class="minus"></span></button>
+
+                    </div>
+                    <div class="rating-filters clearfix">
+                        <input type="text" role="search" placeholder="star ratings"/>
+                        <span class="icon-star"></span>
+                        <button class="action-btn"><span class="minus"></span></button>
+                    </div>
+                    <div class="clearfix relative">
+                        <div class="category-filer clearfix">
+                            <input type="text" placeholder="Filter by categories" role="search" ng-click="eventsCategoryToggle = !eventsCategoryToggle"/>
+                            <span class="icon-category"></span>
+                            <span class="filters-arrow" ng-class="{'open-arrow': eventsCategoryToggle}"></span>
+                            <button class="action-btn"><span class="minus"></span></button>
+
+                            <div class="categories">
+                                <div ng-show="eventsCategoryToggle" class="hide-block-subcategory form-group">
+                                    <ul class="list-unstyled">
+                                        <li><a ng-click="toggleEventCategories();" ng-model="MapSort.eventsSelectAll">Select all sub-categories</a>
+                                            <span class="icon-selected"></span>
+                                        </li>
+                                        <li ng-repeat="item in eventCategories track by item.id"
+                                            ng-click="checkItem(item, eventCategories, 'event'); sortEventsByCategories();">
+                                            <a ng-class="{'active': item.selected}">{{item.display_name}}</a>
+                                            <span class="icon-selected"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-apply"><span class="icon-apply"></span></div>
+                    </div>
+
+                    <div class="results">
+                        <div class="search-by-name">
+                            <input type="text" ng-model="eventsSearch.spot.title" placeholder="Search by name..." class="search-input">
+                            <input type="submit" value="" class="filters-search">
+                        </div>
+                        <div ng-repeat="item in MapSort.displayEventsArray | filter: eventsSearch">
+                            <div class="event-result clearfix">
+                                <div class="col-xs-2 padding-0">
+                                    <div class="event-result-logo">
+                                        <img ng-src="{{ item.spot.cover_url.thumb}}">
+                                    </div>
+                                </div>
+                                <div class="col-xs-10 padding-0">
+                                    <stars item="item.spot"></stars>
+                                    <div class="col-xs-12 padding-0">
+                                        <h2 class="name">
+                                            <a ui-sref="spot({user_id: item.spot.user_id, spot_id: item.spot.id})">{{item.spot.title}}</a>
+                                        </h2>
+                                        <p class="location">{{item.address}}</p>
+                                        <div class=" col-xs-8 date">
+                                            <date-range item="item.spot"></date-range>
+                                        </div>
+                                        <p class="description">{{item.spot.description}}</p>
+                                        <div class="links-nav">
+                                            <ul class="tools clearfix">
+                                                <li>
+                                                <invite-friends item="item.spot"></invite-friends>
+                                                </li>
+                                                <li ng-if="!item.spot.is_saved">
+                                                    <a class="save-event" ng-click="saveToCalendar(item.spot)">Save</a>
+                                                </li>
+                                                <li ng-if="$root.currentUser && item.spot.is_saved">
+                                                    <a class="save-event saved clicked" ng-click="removeFromCalendar(item.spot)">Remove</a>
+                                                </li>
+                                                <li ng-if="!item.spot.is_favorite">
+                                                    <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
+                                                </li>
+                                                <li ng-if="$root.currentUser && item.spot.is_favorite">
+                                                    <a class="fav favorited" ng-click="removeFromFavorite(item.spot)">Unfavorite</a>
+                                                </li>
+                                                <li><a href="#">Share</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
     <div ng-show="MapSort.sortLayer == 'event'">
-      <div class="text-center">
-        <div class="numbers-events">
-          <a href="" class="hide" title="Close"></a>
-
-          <p>{{MapSort.displayEventsArray.length || 0}} Event Spots found</p>
-        </div>
-      </div>
-      <div class="sort-date">
-        <p ng-click="eventsNameToggle = !eventsNameToggle">Sort by date
-               <span class="filters-arrow"
-                     ng-class="{'open-arrow': eventsNameToggle}">
-               </span>
-        </p>
-
-        <div ng-show="eventsNameToggle" class="date-filters">
-          <div class="form-group">
-            <label>From</label>
-            <input ng-datepicker ng-model="MapSort.startDate" class="date" type="zoomdate">
-          </div>
-          <div class="form-group">
-            <label>To</label>
-            <input ng-datepicker ng-model="MapSort.endDate" class="date" type="zoomdate">
-          </div>
-          <input type="button" ng-click="eventsSortByDate()" value="Go" class="filters-button mgt23">
-        </div>
-      </div>
-      <div class="categories">
-        <p ng-click="eventsCategoryToggle = !eventsCategoryToggle">{{eventsCategoryToggle ? 'Hide': 'Show all'}}
-          sub-categories
-               <span class="filters-arrow"
-                     ng-class="{'open-arrow': eventsCategoryToggle}">
-               </span>
-        </p>
-
-        <div ng-show="eventsCategoryToggle" class="hide-block-subcategory form-group">
-          <ul class="list-unstyled">
-            <li><a ng-click="toggleEventCategories();" ng-model="MapSort.eventsSelectAll">Select all sub-categories</a>
-            </li>
-            <li ng-repeat="item in eventCategories track by item.id"
-                ng-click="checkItem(item, eventCategories, 'event'); sortEventsByCategories();">
-              <a ng-class="{'active': item.selected}">{{item.display_name}}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="results">
-        <div class="search-by-name">
-          <input type="text" ng-model="eventsSearch.spot.title" placeholder="Search by name..." class="search-input">
-          <input type="submit" value="" class="filters-button">
-        </div>
-        <div ng-repeat="item in MapSort.displayEventsArray | filter: eventsSearch">
-          <div class="event-result clearfix">
-            <div class="col-xs-2 padding-0">
-              <div class="event-result-logo">
-                <img ng-src="{{ item.spot.cover_url.thumb }}">
-              </div>
+        <div class="text-center">
+            <div class="numbers-events">
+                <a href="" class="hide" title="Close"></a>
+                <p>{{MapSort.displayEventsArray.length|| 0}} Event Spots found</p>
             </div>
-            <div class="col-xs-10 padding-0">
-              <stars item="item.spot"></stars>
-
-              <div class="col-xs-12 padding-0">
-                <h2 class="name">
-                  <a ui-sref="spot({user_id: item.spot.user_id, spot_id: item.spot.id})">{{item.spot.title}}</a>
-                </h2>
-
-                <p class="location">{{item.address}}</p>
-
-                <div class=" col-xs-8 date">
-                  <date-range item="item.spot"></date-range>
-                </div>
-
-                <p class="description">{{item.spot.description}}</p>
-
-                <div class="links-nav">
-                  <ul class="tools clearfix">
-                    <li>
-                      <invite-friends item="item.spot"></invite-friends>
-                    </li>
-                    <li ng-if="!item.spot.is_saved">
-                      <a class="save-event" ng-click="saveToCalendar(item.spot)">Save</a>
-                    </li>
-                    <li ng-if="$root.currentUser && item.spot.is_saved">
-                      <a class="save-event saved clicked" ng-click="removeFromCalendar(item.spot)">Remove</a>
-                    </li>
-                    <li ng-if="!item.spot.is_favorite">
-                      <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
-                    </li>
-                    <li ng-if="$root.currentUser && item.spot.is_favorite">
-                      <a class="fav favorited" ng-click="removeFromFavorite(item.spot)">Unfavorite</a>
-                    </li>
-                    <li><a href="#">Share</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
+
+
+        <!--            <div class="categories">
+                        <p ng-click="eventsCategoryToggle = !eventsCategoryToggle">{{eventsCategoryToggle ? 'Hide': 'Show all'}}
+                            sub-categories
+                            <span class="filters-arrow"
+                                  ng-class="{'open-arrow': eventsCategoryToggle}">
+                            </span>
+                        </p>
+                        <div ng-show="eventsCategoryToggle" class="hide-block-subcategory form-group">
+                            <ul class="list-unstyled">
+                                <li><a ng-click="toggleEventCategories();" ng-model="MapSort.eventsSelectAll">Select all sub-categories</a>
+                                </li>
+                                <li ng-repeat="item in eventCategories track by item.id"
+                                    ng-click="checkItem(item, eventCategories, 'event'); sortEventsByCategories();">
+                                    <a ng-class="{'active': item.selected}">{{item.display_name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>-->
+
     </div>
     <div ng-show="MapSort.sortLayer == 'recreation'">
-      <div class="text-center">
-        <div class="numbers-events">
-          <a href="" class="hide" title="Close"></a>
+        <div class="text-center">
+            <div class="numbers-events">
+                <a href="" class="hide" title="Close"></a>
 
-          <p>{{MapSort.displayRrecreationsArray.length || 0}} Recreation Spots found</p>
-        </div>
-      </div>
-      <div class="categories">
-        <p ng-click="recreationsCategoryToggle = !recreationsCategoryToggle">
-          {{recreationsCategoryToggle ? 'Hide': 'Show all'}} sub-categories
-          <span class="filters-arrow" ng-class="{'open-arrow': recreationsCategoryToggle}"></span>
-        </p>
-
-        <div ng-show="recreationsCategoryToggle" class="hide-block-subcategory form-group">
-          <ul class="list-unstyled">
-            <li><a ng-click="toggleRecreationCategories();" ng-model="MapSort.recreationSelectAll">Select all
-              sub-categories</a></li>
-            <li ng-repeat="item in recreationCategories track by item.id"
-                ng-click="checkItem(item, recreationCategories, 'recreation'); sortRecreationsByCategories();">
-              <a ng-class="{'active': item.selected}">{{item.display_name}}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="results">
-        <div class="search-by-name">
-          <input type="text" ng-model="recreationsSearch.spot.title" placeholder="Search by name" class="search-input">
-          <input type="submit" value="" class="filters-button">
-        </div>
-        <div ng-repeat="item in MapSort.displayRrecreationsArray | filter: recreationsSearch">
-          <div class="event-result clearfix">
-            <div class="col-xs-2 padding-0">
-              <div class="event-result-logo">
-                <img src="assets/img/icons/bed.png">
-              </div>
+                <p>{{MapSort.displayRrecreationsArray.length|| 0}} Recreation Spots found</p>
             </div>
-            <div class="col-xs-10 padding-0">
-              <stars item="item.spot"></stars>
-              <div class=" col-xs-8 date">
-                <date-range item="item.spot"></date-range>
-              </div>
-              <div class="col-xs-12 padding-0">
-                <h2 class="name">
-                  <a ui-sref="spot({user_id: item.spot.user_id, spot_id: item.spot.id})">{{item.spot.title}}</a>
-                </h2>
+        </div>
+        <div class="categories">
+            <p ng-click="recreationsCategoryToggle = !recreationsCategoryToggle">
+                {{recreationsCategoryToggle ? 'Hide': 'Show all'}} sub-categories
+                <span class="filters-arrow" ng-class="{'open-arrow': recreationsCategoryToggle}"></span>
+            </p>
+            <div ng-show="recreationsCategoryToggle" class="hide-block-subcategory form-group">
+                <ul class="list-unstyled">
+                    <li><a ng-click="toggleRecreationCategories();" ng-model="MapSort.recreationSelectAll">Select all
+                            sub-categories</a></li>
+                    <li ng-repeat="item in recreationCategories track by item.id"
+                        ng-click="checkItem(item, recreationCategories, 'recreation'); sortRecreationsByCategories();">
+                        <a ng-class="{'active': item.selected}">{{item.display_name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="results">
+            <div class="search-by-name">
+                <input type="text" ng-model="recreationsSearch.spot.title" placeholder="Search by name" class="search-input">
+                <input type="submit" value="" class="filters-button">
+            </div>
+            <div ng-repeat="item in MapSort.displayRrecreationsArray | filter: recreationsSearch">
+                <div class="event-result clearfix">
+                    <div class="col-xs-2 padding-0">
+                        <div class="event-result-logo">
+                            <img src="assets/img/icons/bed.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-10 padding-0">
+                        <stars item="item.spot"></stars>
+                        <div class=" col-xs-8 date">
+                            <date-range item="item.spot"></date-range>
+                        </div>
+                        <div class="col-xs-12 padding-0">
+                            <h2 class="name">
+                                <a ui-sref="spot({user_id: item.spot.user_id, spot_id: item.spot.id})">{{item.spot.title}}</a>
+                            </h2>
+                            <p class="location">{{item.address}}</p>
 
-                <p class="location">{{item.address}}</p>
-
-                <p class="description">{{item.spot.description}}</p>
-
-                <div class="event-result-nav col-xs-12 padding-0">
-                  <div class="links-nav">
-                    <ul class="tools clearfix">
-                      <li>
-                        <invite-friends item="item.spot"></invite-friends>
-                      </li>
-                      <li ng-if="!item.spot.is_favorite">
-                        <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
-                      </li>
-                      <li ng-if="$root.currentUser && item.spot.is_favorite">
-                        <a class="fav favorited" ng-click="removeFromFavorite(item.spot)">Unfavorite</a>
-                      </li>
-                    </ul>
-                    <share item="item.spot" type="spot"></share>
-                  </div>
+                            <p class="description">{{item.spot.description}}</p>
+                            <div class="event-result-nav col-xs-12 padding-0">
+                                <div class="links-nav">
+                                    <ul class="tools clearfix">
+                                        <li>
+                                        <invite-friends item="item.spot"></invite-friends>
+                                        </li>
+                                        <li ng-if="!item.spot.is_favorite">
+                                            <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
+                                        </li>
+                                        <li ng-if="$root.currentUser && item.spot.is_favorite">
+                                            <a class="fav favorited" ng-click="removeFromFavorite(item.spot)">Unfavorite</a>
+                                        </li>
+                                    </ul>
+                                    <share item="item.spot" type="spot"></share>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
     <div ng-show="MapSort.sortLayer == 'pitstop'">
-      <div class="text-center">
-        <div class="numbers-events">
-          <a href="" class="hide" title="Close"></a>
-
-          <p>{{MapSort.displayPitstopsArray.length || 0}} Pit Stop Spots found</p>
-        </div>
-      </div>
-      <div class="categories">
-        <p ng-click="pitstopsCategoryToggle = !pitstopsCategoryToggle">{{pitstopsCategoryToggle ? 'Hide': 'Show all'}}
-          sub-categories
-               <span class="filters-arrow"
-                     ng-class="{'open-arrow' : pitstopsCategoryToggle}">
-               </span>
-        </p>
-
-        <div ng-show="pitstopsCategoryToggle" class="hide-block-subcategory form-group">
-          <ul class="list-unstyled">
-            <li><a ng-click="togglePitstopCategories();" ng-model="MapSort.pitstopSelectAll">Select all
-              sub-categories</a></li>
-            <li ng-repeat="item in pitstopCategories track by item.id"
-                ng-click="checkItem(item, pitstopCategories, 'pitstop'); sortPitstopsByCategories();">
-              <a ng-class="{'active': item.selected}">{{item.display_name}}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="results">
-        <div class="search-by-name">
-          <input type="text" ng-model="pitstopsSearch.spot.title" placeholder="Search by name" class="search-input">
-          <input type="submit" value="" class="filters-button">
-        </div>
-        <div ng-repeat="item in MapSort.displayPitstopsArray | filter: pitstopsSearch">
-          <div class="event-result clearfix">
-            <div class="col-xs-2 padding-0">
-              <div class="event-result-logo">
-                <img src="assets/img/icons/bed.png">
-              </div>
+        <div class="text-center">
+            <div class="numbers-events">
+                <a href="" class="hide" title="Close"></a>
+                <p>{{MapSort.displayPitstopsArray.length|| 0}} Pit Stop Spots found</p>
             </div>
-            <div class="col-xs-10 padding-0">
-              <stars item="item.spot"></stars>
-              <div class=" col-xs-8 date">
-                <date-range item="item.spot"></date-range>
-              </div>
-              <div class="col-xs-12 padding-0">
-                <h2 class="name">
-                  <a ui-sref="spot({user_id: item.spot.user_id, spot_id: item.spot.id})">{{item.spot.title}}</a>
-                </h2>
+        </div>
+        <div class="categories">
+            <p ng-click="pitstopsCategoryToggle = !pitstopsCategoryToggle">{{pitstopsCategoryToggle ? 'Hide': 'Show all'}}
+                sub-categories
+                <span class="filters-arrow"
+                      ng-class="{'open-arrow' : pitstopsCategoryToggle}">
+                </span>
+            </p>
 
-                <p class="location">{{item.address}}</p>
-
-                <p class="description">{{item.spot.description}}</p>
-
-                <div class="event-result-nav col-xs-12 padding-0">
-                  <ul class="tools clearfix">
-                    <li ng-if="!item.spot.is_favorite">
-                      <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
+            <div ng-show="pitstopsCategoryToggle" class="hide-block-subcategory form-group">
+                <ul class="list-unstyled">
+                    <li><a ng-click="togglePitstopCategories();" ng-model="MapSort.pitstopSelectAll">Select all
+                            sub-categories</a></li>
+                    <li ng-repeat="item in pitstopCategories track by item.id"
+                        ng-click="checkItem(item, pitstopCategories, 'pitstop'); sortPitstopsByCategories();">
+                        <a ng-class="{'active': item.selected}">{{item.display_name}}</a>
                     </li>
-                    <li ng-if="$root.currentUser && item.spot.is_favorite">
-                      <a class="fav favorited" ng-click="removeFromFavorite(item.spot)">Unfavorite</a>
-                    </li>
-                    <li>
-                      <invite-friends item="item.spot"></invite-friends>
-                    </li>
-                  </ul>
+                </ul>
+            </div>
+        </div>
+        <div class="results">
+            <div class="search-by-name">
+                <input type="text" ng-model="pitstopsSearch.spot.title" placeholder="Search by name" class="search-input">
+                <input type="submit" value="" class="filters-button">
+            </div>
+            <div ng-repeat="item in MapSort.displayPitstopsArray | filter: pitstopsSearch">
+                <div class="event-result clearfix">
+                    <div class="col-xs-2 padding-0">
+                        <div class="event-result-logo">
+                            <img src="assets/img/icons/bed.png">
+                        </div>
+                    </div>
+                    <div class="col-xs-10 padding-0">
+                        <stars item="item.spot"></stars>
+                        <div class=" col-xs-8 date">
+                            <date-range item="item.spot"></date-range>
+                        </div>
+                        <div class="col-xs-12 padding-0">
+                            <h2 class="name">
+                                <a ui-sref="spot({user_id: item.spot.user_id, spot_id: item.spot.id})">{{item.spot.title}}</a>
+                            </h2>
+                            <p class="location">{{item.address}}</p>
+                            <p class="description">{{item.spot.description}}</p>
+                            <div class="event-result-nav col-xs-12 padding-0">
+                                <ul class="tools clearfix">
+                                    <li ng-if="!item.spot.is_favorite">
+                                        <a class="favorite-spot" ng-click="addToFavorite(item.spot)">Favorite</a>
+                                    </li>
+                                    <li ng-if="$root.currentUser && item.spot.is_favorite">
+                                        <a class="fav favorited" ng-click="removeFromFavorite(item.spot)">Unfavorite</a>
+                                    </li>
+                                    <li>
+                                    <invite-friends item="item.spot"></invite-friends>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
     <div ng-show="MapSort.sortLayer == 'weather'">
-      <div ng-show="currentWeather" class="weather-wrap">
-        <div class="firstBlock-wrapper">
-          <p class="right-now">Right now</p>
+        <div ng-show="currentWeather" class="weather-wrap">
+            <div class="firstBlock-wrapper">
+                <p class="right-now">Right now</p>
 
-          <p class="weatherName">{{currentWeather.summary}}</p>
+                <p class="weatherName">{{currentWeather.summary}}</p>
 
-          <div class="weatherImg-block">
-            <!-- <p class="weatherData">{{currentWeather.formattedDate}}</p> -->
-            <div class="temperature-block">
-              <span class="temperature-text">Clear Feels like {{currentWeather.temperatureMin | number:0}}</span><span
-              class="unit">°F</span>
-              <!-- <p class="unit2"><span>H</span>{{currentWeather.temperatureMax | number:0}}° </p>
-                 <p class="unit2"><span>L</span>{{currentWeather.temperatureMin | number:0}}°</p> -->
-            </div>
-            <div class="weatherImg-wrapper">
-              <div class="weatherImg" ng-class="currentWeather.icon"></div>
-              <span class="temperature-img">{{currentWeather.temperature}}°F</span>
-            </div>
-            <div class="row weather-parameters">
-              <div class="col-md-3 col-xs-3 text-center">
-                <p class="mainParameters">{{currentWeather.sunrise}}</p>
-
-                <p class="description">sunrise</p>
-              </div>
-              <div class="col-md-3 col-xs-3 text-center">
-                <p class="mainParameters">{{currentWeather.sunset}}</p>
-
-                <p class="description">sunset</p>
-              </div>
-              <div class="col-md-3 col-xs-3 text-center">
-                <p class="mainParameters">{{currentWeather.windSpeed | number:0}} <span>km/h</span></p>
-
-                <p class="description">wind</p>
-              </div>
-              <div class="col-md-3 col-xs-3 text-center">
-                <p class="mainParameters">{{currentWeather.humidity * 100}} <span>%</span></p>
-
-                <p class="description">humidity</p>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="parameters">
-             <div>
-               <p class="mainParameters">{{currentWeather.sunrise}}</p>
-
-               <p class="description">sunrise</p>
-             </div>
-             <div>
-               <p class="mainParameters">{{currentWeather.sunset}}</p>
-
-               <p class="description">sunset</p>
-             </div>
-             <div>
-               <p class="mainParameters">{{currentWeather.windSpeed | number:0}} <span>km/h</span></p>
-
-               <p class="description">wind</p>
-             </div>
-             <div>
-               <p class="mainParameters">{{currentWeather.humidity * 100}} <span>%</span></p>
-
-               <p class="description">humidity</p>
-             </div>
-             </div> -->
-        </div>
-        <div class="wrapperHr">
-          <hr/>
-        </div>
-        <div class="weekForecast col-xs-12">
-          <div class="col-xs-12 no-pad weekForecast-inner">
-            <div class="weekForecast-wrapper">
-              <span class="data">Today</span>
-
-              <div class="weatherIcon">
-                <div ng-class="currentWeather.icon"></div>
-              </div>
-              <div class="weather-summary col-xs-12">{{currentWeather.summary}}</div>
+                <div class="weatherImg-block">
+                    <!-- <p class="weatherData">{{currentWeather.formattedDate}}</p> -->
+                    <div class="temperature-block">
+                        <span class="temperature-text">Clear Feels like {{currentWeather.temperatureMin| number:0}}</span><span
+                            class="unit">°F</span>
+                        <!-- <p class="unit2"><span>H</span>{{currentWeather.temperatureMax | number:0}}° </p>
+                           <p class="unit2"><span>L</span>{{currentWeather.temperatureMin | number:0}}°</p> -->
+                    </div>
+                    <div class="weatherImg-wrapper">
+                        <div class="weatherImg" ng-class="currentWeather.icon"></div>
+                        <span class="temperature-img">{{currentWeather.temperature}}°F</span>
+                    </div>
+                    <div class="row weather-parameters">
+                        <div class="col-md-3 col-xs-3 text-center">
+                            <p class="mainParameters">{{currentWeather.sunrise}}</p>
+                            <p class="description">sunrise</p>
+                        </div>
+                        <div class="col-md-3 col-xs-3 text-center">
+                            <p class="mainParameters">{{currentWeather.sunset}}</p>
+                            <p class="description">sunset</p>
+                        </div>
+                        <div class="col-md-3 col-xs-3 text-center">
+                            <p class="mainParameters">{{currentWeather.windSpeed| number:0}} <span>km/h</span></p>
+                            <p class="description">wind</p>
+                        </div>
+                        <div class="col-md-3 col-xs-3 text-center">
+                            <p class="mainParameters">{{currentWeather.humidity * 100}} <span>%</span></p>
+                            <p class="description">humidity</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="parameters">
+                   <div>
+                     <p class="mainParameters">{{currentWeather.sunrise}}</p>
+      
+                     <p class="description">sunrise</p>
+                   </div>
+                   <div>
+                     <p class="mainParameters">{{currentWeather.sunset}}</p>
+      
+                     <p class="description">sunset</p>
+                   </div>
+                   <div>
+                     <p class="mainParameters">{{currentWeather.windSpeed | number:0}} <span>km/h</span></p>
+      
+                     <p class="description">wind</p>
+                   </div>
+                   <div>
+                     <p class="mainParameters">{{currentWeather.humidity * 100}} <span>%</span></p>
+      
+                     <p class="description">humidity</p>
+                   </div>
+                   </div> -->
             </div>
             <div class="wrapperHr">
-              <hr/>
+                <hr/>
             </div>
-          </div>
-          <div ng-repeat="item in weatherForecast track by $index" class="col-xs-12 no-pad weekForecast-inner">
-            <div class="weekForecast-wrapper">
-              <span class="data">{{item.formattedDate}}</span>
+            <div class="weekForecast col-xs-12">
+                <div class="col-xs-12 no-pad weekForecast-inner">
+                    <div class="weekForecast-wrapper">
+                        <span class="data">Today</span>
 
-              <div class="weatherIcon">
-                <div ng-class="item.icon"></div>
-              </div>
-              <div class="weather-summary col-xs-12">{{item.summary}}</div>
-                     <span
-                       class="temperatureWeek">{{item.temperatureMax | number:0}}°F <br>{{item.temperatureMin | number:0}}°F </span>
+                        <div class="weatherIcon">
+                            <div ng-class="currentWeather.icon"></div>
+                        </div>
+                        <div class="weather-summary col-xs-12">{{currentWeather.summary}}</div>
+                    </div>
+                    <div class="wrapperHr">
+                        <hr/>
+                    </div>
+                </div>
+                <div ng-repeat="item in weatherForecast track by $index" class="col-xs-12 no-pad weekForecast-inner">
+                    <div class="weekForecast-wrapper">
+                        <span class="data">{{item.formattedDate}}</span>
+
+                        <div class="weatherIcon">
+                            <div ng-class="item.icon"></div>
+                        </div>
+                        <div class="weather-summary col-xs-12">{{item.summary}}</div>
+                        <span
+                            class="temperatureWeek">{{item.temperatureMax| number:0}}°F <br>{{item.temperatureMin| number:0}}°F </span>
+                    </div>
+                    <div class="wrapperHr">
+                        <hr/>
+                    </div>
+                </div>
             </div>
-            <div class="wrapperHr">
-              <hr/>
-            </div>
-          </div>
         </div>
-      </div>
-      <div ng-show="!currentWeather" class="col-xs-12 weather-info">
-        <p>Click on map to check weather in this area</p>
-      </div>
+        <div ng-show="!currentWeather" class="col-xs-12 weather-info">
+            <p>Click on map to check weather in this area</p>
+        </div>
     </div>
-  </div>
-  <a class="close-popup" ng-click="MapSort.toggleMenu() "></a>
+    <a class="close-popup" ng-click="MapSort.toggleMenu()"></a>
 </div>
