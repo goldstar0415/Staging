@@ -1,4 +1,6 @@
-<div class="intro" ng-show="$state.current.name == 'intro'">
+<ui-view></ui-view>
+
+<div class="intro" ng-class="{small: $state.current.name != 'intro'}">
   <a ui-sref="intro.events">Find Events</a>
   <a ui-sref="intro.road">Plan a Road Trip</a>
   <a ui-sref="intro.social">Be Social</a>
@@ -8,8 +10,6 @@
   <a ui-sref="intro.room">Get a Room</a>
   <a ui-sref="intro.blog">Blog Adventures</a>
 </div>
-
-<ui-view></ui-view>
 
 <div class="social-block">
   <h2>Social Networks</h2>
