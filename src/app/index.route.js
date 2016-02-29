@@ -72,6 +72,65 @@
         mapState: 'big'
       })
 
+
+      //Intro pages
+      .state('intro', {
+        url: '/intro',
+        templateUrl: '/app/modules/intro/main.html',
+        controller: 'IntroController',
+        controllerAs: 'Intro',
+        parent: 'main',
+        mapState: 'hidden'
+      })
+      .state('intro.events', {
+        url: '/events',
+        templateUrl: '/app/modules/intro/events.html',
+        parent: 'intro',
+        mapState: 'hidden'
+      })
+      .state('intro.road', {
+        url: '/road',
+        templateUrl: '/app/modules/intro/road.html',
+        parent: 'intro',
+        mapState: 'hidden'
+      })
+      .state('intro.social', {
+        url: '/social',
+        templateUrl: '/app/modules/intro/social.html',
+        parent: 'intro',
+        mapState: 'hidden'
+      })
+      .state('intro.grub', {
+        url: '/grub',
+        templateUrl: '/app/modules/intro/grub.html',
+        parent: 'intro',
+        mapState: 'hidden'
+      })
+      .state('intro.photos', {
+        url: '/photos',
+        templateUrl: '/app/modules/intro/photos.html',
+        parent: 'intro',
+        mapState: 'hidden'
+      })
+      .state('intro.todo', {
+        url: '/to-do',
+        templateUrl: '/app/modules/intro/todo.html',
+        parent: 'intro',
+        mapState: 'hidden'
+      })
+      .state('intro.room', {
+        url: '/get-room',
+        templateUrl: '/app/modules/intro/get_room.html',
+        parent: 'intro',
+        mapState: 'hidden'
+      })
+      .state('intro.blog', {
+        url: '/blog',
+        templateUrl: '/app/modules/intro/blog.html',
+        parent: 'intro',
+        mapState: 'hidden'
+      })
+
       //Blog page
       .state('blog', {
         url: '/blog',
@@ -425,7 +484,7 @@
         parent: 'main',
         mapState: 'hidden'
       })
-      //Contact us page
+      //Terms page
       .state('terms', {
         url: "/terms",
         templateUrl: '/app/modules/terms/terms.html',
