@@ -68,10 +68,10 @@
             <li ng-if="item.is_saved && item.type == 'Event'">
               <a class="save-event saved clicked" ng-click="Spots.removeFromCalendar(item)">Remove</a>
             </li>
-            <li ng-if="!item.is_favorite">
+            <li ng-if="currentUser.id != item.user_id && !item.is_favorite">
               <a class="favorite-spot" ng-click="Spots.addToFavorite(item)">Favorite</a>
             </li>
-            <li ng-if="item.is_favorite">
+            <li ng-if="$root.currentUser && currentUser.id != item.user_id && item.is_favorite">
               <a class="fav favorited" ng-click="Spots.removeFromFavorite(item)">Unfavorite</a>
             </li>
             <li>

@@ -90,10 +90,10 @@
         <li ng-if="$root.currentUser && data.spot.is_saved">
           <a class="save-event saved clicked" ng-click="removeFromCalendar(data.spot)">Remove</a>
         </li>
-        <li ng-if="!data.spot.is_favorite">
+        <li ng-if="$root.currentUser.id != data.spot.user_id && !data.spot.is_favorite">
           <a class="favorite-spot" ng-click="addToFavorite(data.spot)">Favorite</a>
         </li>
-        <li ng-if="$root.currentUser && data.spot.is_favorite">
+        <li ng-if="$root.currentUser && $root.currentUser.id != data.spot.user_id && data.spot.is_favorite">
           <a class="fav favorited" ng-click="removeFromFavorite(data.spot)">Unfavorite</a>
         </li>
         <li>
@@ -108,8 +108,15 @@
       </ul>
       <!--<share item="data.spot" type="spot" class="hidden"></share>-->
     </div>
-    <div class="close-event">
-      <a ng-click="marker.closePopup()" class="close">. . .</a>
+    <div class="close-event" ng-if="$root.currentUser && !data.spot.isReported">
+      <a ng-click="visible_submenu = !visible_submenu"  class="close">. . .</a>
+      <div ng-show="visible_submenu" class="more-info-popup">
+        <ul class="list-unstyled">
+          <li>
+            <a report-spot="data.spot">Report</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
   <div class="leaflet-popup-tip-container">

@@ -182,7 +182,7 @@
           </div>
 
 
-          <aside class="module-sidebar clearfix visible-md"
+          <aside class="module-sidebar clearfix visible-md visible-lg"
                  ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.followers.length > 0 && Profile.checkPermission(profileUser.privacy_followers)">
             <h2 class="sidebar-title mgb20">
               <a users-modal="followers" user="$root.profileUser">
@@ -205,7 +205,7 @@
 
           </aside>
 
-          <aside class="module-sidebar clearfix visible-md"
+          <aside class="module-sidebar clearfix visible-md visible-lg"
                  ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.followings.length > 0 && Profile.checkPermission(profileUser.privacy_followings)">
             <h2 class="sidebar-title">
               <a users-modal="followings" user="$root.profileUser">
@@ -229,7 +229,7 @@
 
           </aside>
 
-          <aside class="module-sidebar clearfix visible-md"
+          <aside class="module-sidebar clearfix visible-md visible-lg"
                  ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.spots.length > 0 && Profile.checkPermission(profileUser.privacy_events)">
             <h2 class="sidebar-title">
               <a ui-sref="spots({user_id: $root.profileUser.id})">

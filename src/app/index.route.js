@@ -89,13 +89,13 @@
         mapState: 'hidden'
       })
       .state('intro.road', {
-        url: '/road',
+        url: '/roadtrips',
         templateUrl: '/app/modules/intro/road.html',
         parent: 'intro',
         mapState: 'hidden'
       })
       .state('intro.social', {
-        url: '/social',
+        url: '/besocial',
         templateUrl: '/app/modules/intro/social.html',
         parent: 'intro',
         mapState: 'hidden'
@@ -113,13 +113,13 @@
         mapState: 'hidden'
       })
       .state('intro.todo', {
-        url: '/to-do',
+        url: '/thingstodo',
         templateUrl: '/app/modules/intro/todo.html',
         parent: 'intro',
         mapState: 'hidden'
       })
       .state('intro.room', {
-        url: '/get-room',
+        url: '/rooms',
         templateUrl: '/app/modules/intro/get_room.html',
         parent: 'intro',
         mapState: 'hidden'
