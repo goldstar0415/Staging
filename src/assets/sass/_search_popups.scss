@@ -1,788 +1,799 @@
 .relative {
-    position: relative;
+  position: relative;
 }
+
 .banner-wrap {
-    bottom: 0;
-    height: calc(100% - 70px);
-    top: 0;
-    z-index: 9999;
-    margin-top: 0;
-    .banner-content {
+  bottom: 0;
+  height: calc(100% - 70px);
+  top: 0;
+  z-index: 9999;
+  margin-top: 0;
+  .banner-content {
+    height: 100%;
+    float: right;
+    .banner-for-unregistered {
+      background: linear-gradient(to top, rgba(0, 0, 0, .75) 1%, rgba(12, 38, 56, 0.75) 21%, rgba(12, 38, 56, 0.75) 46%,
+        rgba(3, 181, 213, 0.75) 73%, rgba(12, 38, 56, 0.75) 100%) $dark_blue;
+      padding: 0;
+      z-index: 1;
+      height: 100%;
+      .bg-image {
+        background: url(../img/banner-bg.png) top center repeat-y;
         height: 100%;
-        float: right;
-        .banner-for-unregistered {
-            background: linear-gradient(to top, rgba(0, 0, 0, .75) 1%, rgba(12, 38, 56, 0.75) 21%, rgba(12, 38, 56, 0.75) 46%,
-                rgba(3, 181, 213, 0.75) 73%, rgba(12, 38, 56, 0.75) 100%) $dark_blue;
-            padding: 0;
-            z-index: 1;
-            height: 100%;
-            .bg-image {
-                background: url(../img/banner-bg.png) top center repeat-y;
-                height: 100%;
-                .banner-logo {
-                    background: url(../img/banner-logo.png) no-repeat center;
-                    background-size: 25%;
-                    padding-top: 50%;
-                }
-                p {
-                    color: #fff;
-                    font: 500 40px/52px 'Ubuntu titling bold';
-                    text-align: center;
-                    text-shadow: 0 3px 3px rgba(0, 0, 0, .4);
-                }
-                span {
-                    font: 500 52px/56px 'Ubuntu titling bold';
-                    display: block;
-                }
-                .zoom-now {
-                    margin: 60px auto;
-                    display: block;
-                    width: 200px;
-                    font: 500 26px/26px;
-                    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .45);
-                    z-index: 10;
-                    background-color: $green;
-                }
-            }
+        .banner-logo {
+          background: url(../img/banner-logo.png) no-repeat center;
+          background-size: 25%;
+          padding-top: 50%;
         }
+        p {
+          color: #fff;
+          font: 500 40px/52px 'Ubuntu titling bold';
+          text-align: center;
+          text-shadow: 0 3px 3px rgba(0, 0, 0, .4);
+        }
+        span {
+          font: 500 52px/56px 'Ubuntu titling bold';
+          display: block;
+        }
+        .zoom-now {
+          margin: 60px auto;
+          display: block;
+          width: 200px;
+          font: 500 26px/26px;
+          box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .45);
+          z-index: 10;
+          background-color: $green;
+        }
+      }
     }
+  }
 }
 
 .tools-wrap {
-    z-index: 10 !important;
-    padding: 0;
-    display: block;
-    margin: 0 auto;
-    float: none;
-    width: 420px;
+  z-index: 10 !important;
+  padding: 0;
+  display: block;
+  margin: 0 auto;
+  float: none;
+  width: 420px;
+  position: relative;
+  .tools-hint-block {
+    padding: 20px 10px;
+    background: #0c2638;
+    border-radius: 0;
+    color: #fff;
+    text-align: center;
     position: relative;
-    .tools-hint-block {
-        padding: 20px 10px;
-        background: #0c2638;
-        border-radius: 0;
-        color: #fff;
-        text-align: center;
-        position: relative;
-        top: 20px;
-        height:284px;
-        .close {
-            margin-top: -1rem;
-            margin-right: 0;
-            background-image: url(../img/svg/close_icon.svg);
-            opacity: 1;
-            background-repeat: no-repeat;
-            background-position: center;
-            height: 16px;
-            width: 16px;
-            span {
-                display: none;
-            }
-        }
-        a.hide {
-            display: block !important;
-            width: 8px;
-            height: 8px;
-            background: url(../img/cross.png) no-repeat;
-            position: absolute;
-            top: 15px;
-            right: 15px;
-        }
-        h2 {
-            font: 500 24px/38px;
-            color: #fff;
-            font-size: 2rem;
-            span {
-                display: block;
-                font-size: 2.4rem;
-                margin-bottom: 1rem;
-            }
-        }
-        p {
-            font: 500;
-            font-size: 1.6rem;
-            color: $href_color;
-        }
-        ul {
-            padding: 0;
-            li {
-                width: 60px;
-                height: 50px;
-                border-radius: 0; 
-                border: 0;
-                display: inline-block;
-                margin: 20px 10px;
-                font: 600 14px/20px 'Ubuntu light';
-                background-color: $dark_blue_hover;
-                color: $href_color;
-                &.path a{
-                    background-image: url(../img/svg/map/custom.svg);
-                    background-repeat: no-repeat;
-                    background-size: 40px;
-                    background-position: 10px 10px;
-                    &:hover {
-                        color: #fff;
-                        background-image: url(../img/svg/map/custom_hover.svg);
-                    }
-                }
-                &.radius a {
-                    background-image: url(../img/svg/map/round.svg);
-                    background-repeat: no-repeat;
-                    &:hover {
-                        color: #fff;
-                        background-image: url(../img/svg/map/round_hover.svg);
-                    }
-                }
-                &.lasso a {
-                    background-image: url(../img/svg/map/lasso.svg);
-                    background-repeat: no-repeat;
-                    background-size: 40px;
-                    background-position: 10px 10px;
-                    &:hover {
-                        color: #fff;
-                        background-image: url(../img/svg/map/lasso_hover.svg);
-                    }
-                }
-                a {
-                    display: block;
-                    padding: 1rem;
-                    height: 5.5rem;
-                    width: 6rem;
-                }
-                .path-map, .radius-map, .lasso-map {
-                    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .28);
-                    height: 0;
-                    border-radius: 0;
-                }
-                .path-map {
-                    background: url(../img/path-map.png) no-repeat center top;
-                    transition: display 5s ease;
-                    border: none;
-                }
-                .radius-map {
-                    background: url(..//img/radius-map.png) no-repeat center top;
-                    transition: display 5s ease;
-                    border: none;
-                }
-                .lasso-map {
-                    background: url(../img/lasso-map.png) no-repeat center top;
-                    transition: display 5s ease;
-                    border: none;
-                }
-                &:hover {
-                    border: 0;
-                    background-color: transparent;
-                    .path-map, .radius-map, .lasso-map {
-                        position: absolute;
-                        width: 100%;
-                        top: 284px;
-                        left: 0;
-                        display: block;
-                        height: 170px;
-                        //transition: height 5s;
-                        //transition: display 5s;
-                        border: 2px solid #0b2639 !important;
-                        transition: height .5s ease;
-                    }
-                }
-            }
-        }
+    top: 20px;
+    height: 284px;
+    .close {
+      margin-top: -1rem;
+      margin-right: 0;
+      background-image: url(../img/svg/close_icon.svg);
+      opacity: 1;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 16px;
+      width: 16px;
+      span {
+        display: none;
+      }
     }
+    a.hide {
+      display: block !important;
+      width: 8px;
+      height: 8px;
+      background: url(../img/cross.png) no-repeat;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+    h2 {
+      font: 500 24px/38px;
+      color: #fff;
+      font-size: 2rem;
+      span {
+        display: block;
+        font-size: 2.4rem;
+        margin-bottom: 1rem;
+      }
+    }
+    p {
+      font: 500;
+      font-size: 1.6rem;
+      color: $href_color;
+    }
+    ul {
+      padding: 0;
+      li {
+        width: 60px;
+        height: 50px;
+        border-radius: 0;
+        border: 0;
+        display: inline-block;
+        margin: 20px 10px;
+        font: 600 14px/20px 'Ubuntu light';
+        background-color: $dark_blue_hover;
+        color: $href_color;
+        &.path a {
+          background-image: url(../img/svg/map/custom.svg);
+          background-repeat: no-repeat;
+          background-size: 40px;
+          background-position: 10px 10px;
+          &:hover {
+            color: #fff;
+            background-image: url(../img/svg/map/custom_hover.svg);
+          }
+        }
+        &.radius a {
+          background-image: url(../img/svg/map/round.svg);
+          background-repeat: no-repeat;
+          &:hover {
+            color: #fff;
+            background-image: url(../img/svg/map/round_hover.svg);
+          }
+        }
+        &.lasso a {
+          background-image: url(../img/svg/map/lasso.svg);
+          background-repeat: no-repeat;
+          background-size: 40px;
+          background-position: 10px 10px;
+          &:hover {
+            color: #fff;
+            background-image: url(../img/svg/map/lasso_hover.svg);
+          }
+        }
+        a {
+          display: block;
+          padding: 1rem;
+          height: 5.5rem;
+          width: 6rem;
+        }
+        .path-map, .radius-map, .lasso-map {
+          box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .28);
+          height: 0;
+          border-radius: 0;
+        }
+        .path-map {
+          background: url(../img/path-map.png) no-repeat center top;
+          transition: display 5s ease;
+          border: none;
+        }
+        .radius-map {
+          background: url(..//img/radius-map.png) no-repeat center top;
+          transition: display 5s ease;
+          border: none;
+        }
+        .lasso-map {
+          background: url(../img/lasso-map.png) no-repeat center top;
+          transition: display 5s ease;
+          border: none;
+        }
+        &:hover {
+          border: 0;
+          background-color: transparent;
+          .path-map, .radius-map, .lasso-map {
+            position: absolute;
+            width: 100%;
+            top: 284px;
+            left: 0;
+            display: block;
+            height: 170px;
+            //transition: height 5s;
+            //transition: display 5s;
+            border: 2px solid #0b2639 !important;
+            transition: height .5s ease;
+          }
+        }
+      }
+    }
+  }
 }
 
 .search-area-hint, .weather-hint {
-    background: rgba(242, 242, 242, .8);
-    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .34);
-    margin: 3em auto 0;
-    position: relative;
-    border-radius: 6px;
-    p {
-        font: 500 28px/34px;
-        color: #0c2638;
-        text-align: center;
-        padding: 1em;
-    }
+  background: rgba(242, 242, 242, .8);
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .34);
+  margin: 3em auto 0;
+  position: relative;
+  border-radius: 6px;
+  p {
+    font: 500 28px/34px;
+    color: #0c2638;
+    text-align: center;
+    padding: 1em;
+  }
 }
 
 .sidebar-menu-wrap {
-    //width: 500px;
-    padding: 0;
-    position: absolute;
-    right: -225px;
-    top: 54%;
-    bottom: 25%;
-    display: block;
-    width: 510px;
-    height: 60px;
-    transform: rotate(90deg);
+  //width: 500px;
+  padding: 0;
+  position: absolute;
+  right: -225px;
+  top: 54%;
+  bottom: 25%;
+  display: block;
+  width: 510px;
+  height: 60px;
+  transform: rotate(90deg);
 }
 
 .sidebar-menu-vertical {
-    ul {
-        padding: 0;
-        margin: 0;
-        li {
-            font: 500 14px/24px;
-            color: #fff;
-            background-color: #929fa7;
-            display: inline-block;
-            border-left: 1px solid #aabac1;
-            float: left;
-            &:first-child {
-                width: 60px;
-                border-left: 0;
-            }
-            a {
-                color: #fff;
-                display: block;
-                margin: 0 auto;
-                padding: 15px 10px 15px 42px;
-                text-align: center;
-                background-size: 25px;
-                background-repeat: no-repeat;
-                background-position: 10px 8px;
-            }
-            .full-small {
-                background: url(../img/icons/right-arrow.png) 10px 8px no-repeat;
-                padding: 25px 30px;
-            }
-            .events {
-                background-image: url(../img/svg/vertical_menu/calendar.svg);
-            }
-            .recreation {
-                background-image: url(../img/svg/vertical_menu/recrearion_icon.svg);
-                background-repeat: no-repeat;
-                background-position: 7px 2px;
-                background-size: 36px;
-            }
-            .pit-stops {
-                background-image: url(../img/svg/vertical_menu/pit_stops.svg);
-                background-size: 30px;
-                background-repeat: no-repeat;
-                background-position: 8px 6px;
-            }
-            .weather-link {
-                background-image: url(../img/svg/vertical_menu/weather_icons.svg);
-                background-size: 40px;
-                background-repeat: no-repeat;
-                background-position: 4px 6px;
-            }
-            &:hover, &.active {
-                background-color: #fff;
-                @include transition_bg_color;
-                .weather-link {
-                    background-image: url(../img/svg/vertical_menu/weather_icons_active.svg);
-                }
-                .pit-stops {
-                    background-image: url(../img/svg/vertical_menu/pit_stops_active.svg);
-                }
-                .recreation {
-                    background-image: url(../img/svg/vertical_menu/recrearion_icon_active.svg);
-                }
-                .events {
-                    background-image: url(../img/svg/vertical_menu/calendar_active.svg);
-                }
-                a {
-                    color: #00cfff;
-                }
-                .full-small {
-                    background-position: -65px 8px;
-                }
-            }
+  ul {
+    padding: 0;
+    margin: 0;
+    li {
+      font: 500 14px/24px;
+      color: #fff;
+      background-color: #929fa7;
+      display: inline-block;
+      border-left: 1px solid #aabac1;
+      float: left;
+      &:first-child {
+        width: 60px;
+        border-left: 0;
+      }
+      a {
+        color: #fff;
+        display: block;
+        margin: 0 auto;
+        padding: 15px 10px 15px 42px;
+        text-align: center;
+        background-size: 25px;
+        background-repeat: no-repeat;
+        background-position: 10px 8px;
+      }
+      .full-small {
+        background: url(../img/icons/right-arrow.png) 10px 8px no-repeat;
+        padding: 25px 30px;
+      }
+      .events {
+        background-image: url(../img/svg/vertical_menu/calendar.svg);
+      }
+      .recreation {
+        background-image: url(../img/svg/vertical_menu/recrearion_icon.svg);
+        background-repeat: no-repeat;
+        background-position: 7px 2px;
+        background-size: 36px;
+      }
+      .pit-stops {
+        background-image: url(../img/svg/vertical_menu/pit_stops.svg);
+        background-size: 30px;
+        background-repeat: no-repeat;
+        background-position: 8px 6px;
+      }
+      .weather-link {
+        background-image: url(../img/svg/vertical_menu/weather_icons.svg);
+        background-size: 40px;
+        background-repeat: no-repeat;
+        background-position: 4px 6px;
+      }
+      &:hover, &.active {
+        background-color: #fff;
+        @include transition_bg_color;
+        .weather-link {
+          background-image: url(../img/svg/vertical_menu/weather_icons_active.svg);
         }
+        .pit-stops {
+          background-image: url(../img/svg/vertical_menu/pit_stops_active.svg);
+        }
+        .recreation {
+          background-image: url(../img/svg/vertical_menu/recrearion_icon_active.svg);
+        }
+        .events {
+          background-image: url(../img/svg/vertical_menu/calendar_active.svg);
+        }
+        a {
+          color: #00cfff;
+        }
+        .full-small {
+          background-position: -65px 8px;
+        }
+      }
     }
+  }
 }
 
 .sort-menu {
+  position: absolute;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  height: auto;
+  z-index: 101;
+  background: #fff;
+  width: 450px;
+  .close-popup {
+    height: 3rem;
+    width: 5rem;
+    background: url(../img/icons/right-arrow.png) -68px -2px no-repeat;
+    background-color: #fff;
+    display: block;
+    @include transition_bg_color;
     position: absolute;
-    top: 70px;
-    right: 0;
-    bottom: 0;
-    height: auto;
-    z-index: 101;
-    background: #fff;
-    width: 450px;
-    .close-popup {
-        height: 3rem;
-        width: 5rem;
-        background: url(../img/icons/right-arrow.png) -68px -2px no-repeat;
-        background-color: #fff;
-        display: block;
-        @include transition_bg_color;
-        position: absolute;
-        left: -4rem;
-        top: 45%;
-        transform: rotate(-90deg);
-        &:hover {
-            background-color: $blue_btn;
-            background-position: 6px -2px;
+    left: -4rem;
+    top: 45%;
+    transform: rotate(-90deg);
+    &:hover {
+      background-color: $blue_btn;
+      background-position: 6px -2px;
 
-        }
     }
+  }
 }
 
 .sidebar-menu-horizontal {
-    position: relative;
-    ul {
-        padding: 0;
-        margin: 0;
-        width: 100%;
-        li {
-            font: 500 14px/24px;
-            color: #fff;
-            background-color: #929fa7;
-            display: inline-block;
-            width: 25%;
-            border-left: 1px solid #aabac1;
-            float: left;
-            &:first-child {
-                border-left: 0;
-            }
+  position: relative;
+  ul {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    li {
+      font: 500 14px/24px;
+      color: #fff;
+      background-color: #929fa7;
+      display: inline-block;
+      width: 25%;
+      border-left: 1px solid #aabac1;
+      float: left;
+      &:first-child {
+        border-left: 0;
+      }
 
-            .events {
-                background-image: url(../img/svg/vertical_menu/calendar.svg);
-                background-repeat: no-repeat;
-                background-size: 26px;
-                background-position: 2px 6px;
-            }
-            .recreation {
-                background-image: url(../img/svg/vertical_menu/recrearion_icon.svg);
-                background-repeat: no-repeat;
-                background-position: 3px 2px;
-                background-size: 36px;
-            }
-            .pit-stops {
-                background-image: url(../img/svg/vertical_menu/pit_stops.svg);
-                background-size: 28px;
-                background-repeat: no-repeat;
-                background-position: -2px 8px;
-            }
-            .weather-link {
-                background-image: url(../img/svg/vertical_menu/weather_icons.svg);
-                background-size: 40px;
-                background-repeat: no-repeat;
-                background-position: -8px 5px;
-            }
-            &:hover, &.active {
-                background-color: #fff;
-                @include transition_bg_color;
-                .weather-link {
-                    background-image: url(../img/svg/vertical_menu/weather_icons_active.svg);
-                }
-                .pit-stops {
-                    background-image: url(../img/svg/vertical_menu/pit_stops_active.svg);
-                }
-                .recreation {
-                    background-image: url(../img/svg/vertical_menu/recrearion_icon_active.svg);
-                }
-                .events {
-                    background-image: url(../img/svg/vertical_menu/calendar_active.svg);
-                }
-                a {
-                    color: $blue_btn;
-                }
-            }
-            a {
-                color: #fff;
-                display: table;
-                margin: 0 auto;
-                padding: 15px 8px 15px 30px;
-                text-align: left;
-            }
+      .events {
+        background-image: url(../img/svg/vertical_menu/calendar.svg);
+        background-repeat: no-repeat;
+        background-size: 26px;
+        background-position: 2px 6px;
+      }
+      .recreation {
+        background-image: url(../img/svg/vertical_menu/recrearion_icon.svg);
+        background-repeat: no-repeat;
+        background-position: 3px 2px;
+        background-size: 36px;
+      }
+      .pit-stops {
+        background-image: url(../img/svg/vertical_menu/pit_stops.svg);
+        background-size: 28px;
+        background-repeat: no-repeat;
+        background-position: -2px 8px;
+      }
+      .weather-link {
+        background-image: url(../img/svg/vertical_menu/weather_icons.svg);
+        background-size: 40px;
+        background-repeat: no-repeat;
+        background-position: -8px 5px;
+      }
+      &:hover, &.active {
+        background-color: #fff;
+        @include transition_bg_color;
+        .weather-link {
+          background-image: url(../img/svg/vertical_menu/weather_icons_active.svg);
         }
+        .pit-stops {
+          background-image: url(../img/svg/vertical_menu/pit_stops_active.svg);
+        }
+        .recreation {
+          background-image: url(../img/svg/vertical_menu/recrearion_icon_active.svg);
+        }
+        .events {
+          background-image: url(../img/svg/vertical_menu/calendar_active.svg);
+        }
+        a {
+          color: $blue_btn;
+        }
+      }
+      a {
+        color: #fff;
+        display: table;
+        margin: 0 auto;
+        padding: 15px 8px 15px 30px;
+        text-align: left;
+      }
     }
+  }
 }
 
 .not-active {
-    opacity: 0.7;
-    li {
-        &:hover {
-            background: #379948 !important;
-            border: 2px solid #379948 !important;
-            padding: 15px 10px !important;
-        }
-        a {
-            cursor: default;
-        }
+  opacity: 0.7;
+  li {
+    &:hover {
+      background: #379948 !important;
+      border: 2px solid #379948 !important;
+      padding: 15px 10px !important;
     }
+    a {
+      cursor: default;
+    }
+  }
 }
 
 .search-filters {
-    float: right;
-    width: 100%;
-    height: calc(100% - 104px);
-    overflow-y: auto;
-    background-color: #fff;
-    padding: 1.5rem;
+  float: right;
+  width: 100%;
+  height: calc(100% - 104px);
+  overflow-y: auto;
+  background-color: #fff;
+  padding: 1.5rem;
 
+  input {
+    color: $blue_btn;
+    background-color: #f5f5f7;
+    text-overflow: ellipsis;
+    box-shadow: none;
+    border-color: transparent;
+    float: left;
+  }
+  .action-btn {
+    display: none;
+  }
+  .icon-navpoint,
+  .icon-calendar,
+  .icon-key,
+  .icon-star,
+  .icon-category {
+    position: absolute;
+    left: 1.5rem;
+    width: 2rem;
+    top: 2.5rem;
+    height: 2rem;
+    background: url(../img/icons/icons_search_filters.png) no-repeat;
+  }
+  .icon-calendar {
+    background-position: 0 -26px;
+    z-index: 1;
+  }
+  .icon-category {
+    background-position: -46px -28px;
+    width: 21px;
+    height: 26px
+  }
+  .icon-star {
+    background-position: -67px -28px;
+    height: 25px;
+    width: 24px;
+  }
+  .icon-key {
+    background-position: -21px -28px;
+    width: 25px;
+    height: 22px;
+  }
+
+  .country-filter,
+  .filer-defenition {
+    width: 85%;
+    padding-right: 1rem;
+    position: relative;
+  }
+  .country-filter {
     input {
-        color: $blue_btn;
-        background-color: #f5f5f7;
-        text-overflow:ellipsis;
-        box-shadow: none;
-        border-color: transparent;
-        float: left;
-    }
-    .action-btn {
-        display: none;
-    }
-    .icon-navpoint,
-    .icon-calendar,
-    .icon-key,
-    .icon-star,
-    .icon-category  {
-        position: absolute;
-        left: 1.5rem;
-        width: 2rem;
-        top: 2.5rem;
-        height: 2rem;
-        background: url(../img/icons/icons_search_filters.png) no-repeat;
-    }
-    .icon-calendar {
-        background-position: 0 -26px;
-        z-index: 1;
-    }
-    .icon-category {
-        background-position: -46px -28px;
-        width: 21px;
-        height: 26px
-    }
-    .icon-star {
-        background-position: -67px -28px;
-        height: 25px;
-        width: 24px;
-    }
-    .icon-key {
-        background-position: -21px -28px;
-        width: 25px;
-        height: 22px;
-    }
-
-    .country-filter, 
-    .filer-defenition {
-        width: 85%;
-        padding-right: 1rem;           
-        position: relative;
-    }
-    .country-filter{    
-        input {
-            padding-right: 3rem;
-        }
-        .icon-nav {
-            background: url(../img/icons/map-loc.png) no-repeat;
-            position: absolute;
-            right: 2rem;
-            width: 2rem;
-            top: 1.5rem;
-            height: 2rem;
-        }
-        + .filters-button {
-            position: absolute;
-            background: url(../img/icons/icon_filter_add_blue.png) no-repeat #f5f5f7 center;
-            height: 5rem;
-            border-radius: 0;
-            width: 7rem;
-            left: 82.5%;
-
-            &:hover {
-                background-color: $light_blue_btn;
-                background-image: url(../img/icons/icon_filter_add_w.png);
-                box-shadow: none;
-            }
-        }
-    }
-    .filer-defenition {
-        input {
-            margin-top: 1rem;
-            &::-webkit-input-placeholder {color: $blue_btn; text-transform: uppercase;} 
-            &::-moz-placeholder {color: $blue_btn; text-transform: uppercase;}
-        }
-    }
-
-    .destination-filter,
-    .date-filters,
-    .keyword-filters,
-    .rating-filters,
-    .category-filer {
-        position: relative;
-        input {
-            padding-left: 5rem;
-        }
-    }
-    .destination-filter {
-        .icon-navpoint {
-            background: url(../img/icons/map-loc.png) no-repeat;
-        }
-    }
-    .category-filer +.btn-apply {
-        float: left;
-        width: 6.5rem;
-        background-color: $blue_btn;
-        height: 5rem;
-        position: absolute;
-        right: -7.5rem;
-        top:1rem;
-        cursor: pointer;
-        .icon-apply {
-            background: url(../img/icons/icons_apply_cancel.png) no-repeat;
-            width: 27px;
-            right: 1.5rem;
-            height: 21px;
-            position: absolute;
-            top: 1.5rem;
-        }
-    }
-
-
-
-
-    .date-filters {
-        .form-group {
-            padding: 0 0 0 1rem;
-            width: 50%;
-            float: left;
-            position: relative;
-            margin: 0;
-
-            input {
-                line-height: 3rem;
-            }
-            &:first-child {
-                padding: 0;
-            }
-            &:nth-child(2n) {
-                .icon-calendar {
-                    left: 2.5rem;
-                }
-            }
-        }    
-    }
-    .categories {
-        float: left;
-        width: 100%;
-
-        p {
-            font-size: 16px;
-            color: #929fa7;
-            display: inline-block;
-            margin-bottom: 0;
-            width: 100%;
-            padding: 12px 15px;
-            background-color: #f4f5f6;
-        }
-        .hide-block-subcategory {
-            label {
-                font: 500 16px/24px;
-                color: #656565;
-                padding: 13px 0 13px 15px;
-            }
-            input {
-                float: left;
-                margin: 18px 0 13px 0;
-                width: auto;
-            }
-        }
-        li {
-            font: 500 16px/24px;
-            width:  100%;
-            margin-top: 1rem;
-            float: left;
-
-            a {
-                text-transform: uppercase;
-                color:$blue_btn;;
-                display: block;
-                padding: 1rem 2rem;
-                @include transition_color;
-                float:left;
-                width: calc(100% - 3rem);
-
-                + span {
-                    width: 3rem;
-                    background-color: #fff;
-                    float: left;
-                    height: 4rem;
-                }
-
-                &:hover {
-                    background-color: #f5f5f7;
-                    color: rgba(0, 183, 243, .8);
-                    //background: url(../img/selected-category.png) no-repeat left center;
-                }
-                &.active {
-                    padding: 1rem 2rem;
-                    background-color: #f5f5f7;
-
-                    + .icon-selected {
-                        background: url(../img/selected-category.png) no-repeat 0.7rem 1.3rem;
-                        border: 1px solid #f4f5f6;
-
-                    }
-                }
-            }
-
-        }
-    }
-
-    .filters-arrow {
-        background: url(../img/icons/slider-arrow.png) no-repeat -29px -47px;
-        position: absolute;
-        top: 2.2rem;
-        right: 1rem;
-        width: 16px;
-        height: 31px;
-    }
-    .open-arrow {
-        background: url(../img/icons/right-arrow.png) no-repeat -79px 0;
-        height: 27px;
-        top: 1.7rem;
-        width: 31px;
-    }
-
-    .search-by-name {
-        margin-top: 1.5rem;
-        p {
-            font: 500 20px/26px;
-            color: #000;
-            display: inline-block;
-        }
-        .search-input {
-            float: left;
-            background-image: none;
-            width: calc(100% - 50px);
-            margin: 0;
-            border: 1px solid $blue_btn;
-
-            &::-webkit-input-placeholder {color: $blue_btn;} 
-            &::-moz-placeholder {color: $blue_btn;}
-        }
-        .filters-search {
-            background: url(../img/header/header_search.png)no-repeat center $blue_btn;
-            height: 5rem;
-            width: 50px;
-            margin: 0;
-            border: 0;
-            font-size: 1.4rem;
-            padding: 5px 7px 5px;
-            border-radius: 3px;
-            display: inline-block;
-            @include transition_bg_color;
-            cursor:pointer;
-        }
-    }
-
-    .green-btn {
-        margin: 20px 0 30px;
-        width: 100%;
-    }
-    .results {
-        .event-result {
-            .tools {
-                padding: 0;
-            }
-        }
-    }
-}
-.search-filters.applyed {
-    .country-filter input {
-        width: 100%;
+      padding-right: 3rem;
     }
     .icon-nav {
-        background: url(../img/icons/icon_location.png) no-repeat;
+      background: url(../img/icons/map-loc.png) no-repeat;
+      position: absolute;
+      right: 2rem;
+      width: 2rem;
+      top: 1.5rem;
+      height: 2rem;
     }
-    .filters-button {
-        background: url(../img/icons/icon_filter_add_w.png) no-repeat $blue_btn center;
-    } 
+    + .filters-button {
+      position: absolute;
+      background: url(../img/icons/icon_filter_add_blue.png) no-repeat #f5f5f7 center;
+      height: 5rem;
+      border-radius: 0;
+      width: 7rem;
+      left: 82.5%;
 
+      &:hover {
+        background-color: $light_blue_btn;
+        background-image: url(../img/icons/icon_filter_add_w.png);
+        box-shadow: none;
+      }
+    }
+  }
+  .filer-defenition {
     input {
-        background-color: $blue_btn;
-        color: #fff;
-        width: calc(100% - 3rem);
+      margin-top: 1rem;
+      &::-webkit-input-placeholder {
+        color: $blue_btn;
+        text-transform: uppercase;
+      }
+      &::-moz-placeholder {
+        color: $blue_btn;
+        text-transform: uppercase;
+      }
     }
-    .date-filters {
-        .form-group {
-            width: calc(50% - 1.5rem);
-            input {
-                width: 100%;
-            }
-        }
+  }
+
+  .destination-filter,
+  .date-filters,
+  .keyword-filters,
+  .rating-filters,
+  .category-filer {
+    position: relative;
+    input {
+      padding-left: 5rem;
     }
-    .action-btn {
-        display: inline-block;
-        background-color: #fff;
-        height: 5rem;
-        width: 3rem;
-        float: left;
-        margin-top: 1rem;
-        border: 1px solid #e3e3e3;
+  }
+  .destination-filter {
+    .icon-navpoint {
+      background: url(../img/icons/map-loc.png) no-repeat;
+    }
+  }
+  .category-filer + .btn-apply {
+    float: left;
+    width: 6.5rem;
+    background-color: $blue_btn;
+    height: 5rem;
+    position: absolute;
+    right: -7.5rem;
+    top: 1rem;
+    cursor: pointer;
+    .icon-apply {
+      background: url(../img/icons/icons_apply_cancel.png) no-repeat;
+      width: 27px;
+      right: 1.5rem;
+      height: 21px;
+      position: absolute;
+      top: 1.5rem;
+    }
+  }
+
+  .date-filters {
+    .form-group {
+      padding: 0 0 0 1rem;
+      width: 50%;
+      float: left;
+      position: relative;
+      margin: 0;
+
+      input {
+        line-height: 3rem;
+      }
+      &:first-child {
         padding: 0;
-
-        &:hover, &:focus {
-            outline: none;
-            background-color: $blue_btn;
-            border-color: $blue_btn;
+      }
+      &:nth-child(2n) {
+        .icon-calendar {
+          left: 2.5rem;
         }
-        .minus {
-            background: url(../img/icons/icons_plus_minus.png)no-repeat  -21px 0;
-            width: 21px;
-            height: 21px;
-            display: inline-block;
-        }
-        &:hover .minus {
-            background-position: -21px -21px;
-
-        }
+      }
     }
-    .destination-filter {
-        .icon-navpoint {
-            background: url(../img/icons/icon_location.png) no-repeat;
-        }
-    }
-    .icon-calendar {
-        background-position: 0 0;
-        z-index: 1;
-    }
-    .icon-category {
-        background-position: -46px 0;
-    }
-    .icon-star {
-        background-position: -67px 0;
-        height: 25px;
-        width: 24px;
-    }
-    .icon-key {
-        background-position: -21px 0;
-        width: 25px;
-        height: 22px;
-    }
-    .filters-arrow  {
-        visibility: hidden;
-    }
-}
-.numbers-events {
-    padding: 12px 15px;
-    border: 1px solid #c2c7ca;
-    background-color: #707d85;
-    float:left;
-    width:100%;
-    line-height: 2.95rem;
+  }
+  .categories {
+    float: left;
+    width: 100%;
 
     p {
-        font-size: 1.6rem;
-        color: #fff;
+      font-size: 16px;
+      color: #929fa7;
+      display: inline-block;
+      margin-bottom: 0;
+      width: 100%;
+      padding: 12px 15px;
+      background-color: #f4f5f6;
+    }
+    .hide-block-subcategory {
+      label {
+        font: 500 16px/24px;
+        color: #656565;
+        padding: 13px 0 13px 15px;
+      }
+      input {
+        float: left;
+        margin: 18px 0 13px 0;
+        width: auto;
+      }
+    }
+    li {
+      font: 500 16px/24px;
+      width: 100%;
+      margin-top: 1rem;
+      float: left;
+
+      a {
         text-transform: uppercase;
-        margin: 0 auto;
-        width:80%;
-    }
-    .hide {
+        color: $blue_btn;;
         display: block;
-        width: 8px;
-        height: 8px;
-        background: url(../img/cross.png) no-repeat;
-        position: absolute;
-        top: 10px;
-        right: 10px;
+        padding: 1rem 2rem;
+        @include transition_color;
+        float: left;
+        width: calc(100% - 3rem);
+
+        + span {
+          width: 3rem;
+          background-color: #fff;
+          float: left;
+          height: 4rem;
+        }
+
+        &:hover {
+          background-color: #f5f5f7;
+          color: rgba(0, 183, 243, .8);
+          //background: url(../img/selected-category.png) no-repeat left center;
+        }
+        &.active {
+          padding: 1rem 2rem;
+          background-color: #f5f5f7;
+
+          + .icon-selected {
+            background: url(../img/selected-category.png) no-repeat 0.7rem 1.3rem;
+            border: 1px solid #f4f5f6;
+
+          }
+        }
+      }
+
     }
+  }
+
+  .filters-arrow {
+    background: url(../img/icons/slider-arrow.png) no-repeat -29px -47px;
+    position: absolute;
+    top: 2.2rem;
+    right: 1rem;
+    width: 16px;
+    height: 31px;
+  }
+  .open-arrow {
+    background: url(../img/icons/right-arrow.png) no-repeat -79px 0;
+    height: 27px;
+    top: 1.7rem;
+    width: 31px;
+  }
+
+  .search-by-name {
+    margin-top: 1.5rem;
+    p {
+      font: 500 20px/26px;
+      color: #000;
+      display: inline-block;
+    }
+    .search-input {
+      float: left;
+      background-image: none;
+      width: calc(100% - 50px);
+      margin: 0;
+      border: 1px solid $blue_btn;
+
+      &::-webkit-input-placeholder {
+        color: $blue_btn;
+      }
+      &::-moz-placeholder {
+        color: $blue_btn;
+      }
+    }
+    .filters-search {
+      background: url(../img/header/header_search.png) no-repeat center $blue_btn;
+      height: 5rem;
+      width: 50px;
+      margin: 0;
+      border: 0;
+      font-size: 1.4rem;
+      padding: 5px 7px 5px;
+      border-radius: 3px;
+      display: inline-block;
+      @include transition_bg_color;
+      cursor: pointer;
+    }
+  }
+
+  .green-btn {
+    margin: 20px 0 30px;
+    width: 100%;
+  }
+  .results {
+    .event-result {
+      .tools {
+        padding: 0;
+      }
+    }
+  }
 }
+
+.search-filters.applyed {
+  .country-filter input {
+    width: 100%;
+  }
+  .icon-nav {
+    background: url(../img/icons/icon_location.png) no-repeat;
+  }
+  .filters-button {
+    background: url(../img/icons/icon_filter_add_w.png) no-repeat $blue_btn center;
+  }
+
+  input {
+    background-color: $blue_btn;
+    color: #fff;
+    width: calc(100% - 3rem);
+  }
+  .date-filters {
+    .form-group {
+      width: calc(50% - 1.5rem);
+      input {
+        width: 100%;
+      }
+    }
+  }
+  .action-btn {
+    display: inline-block;
+    background-color: #fff;
+    height: 5rem;
+    width: 3rem;
+    float: left;
+    margin-top: 1rem;
+    border: 1px solid #e3e3e3;
+    padding: 0;
+
+    &:hover, &:focus {
+      outline: none;
+      background-color: $blue_btn;
+      border-color: $blue_btn;
+    }
+    .minus {
+      background: url(../img/icons/icons_plus_minus.png) no-repeat  -21px 0;
+      width: 21px;
+      height: 21px;
+      display: inline-block;
+    }
+    &:hover .minus {
+      background-position: -21px -21px;
+
+    }
+  }
+  .destination-filter {
+    .icon-navpoint {
+      background: url(../img/icons/icon_location.png) no-repeat;
+    }
+  }
+  .icon-calendar {
+    background-position: 0 0;
+    z-index: 1;
+  }
+  .icon-category {
+    background-position: -46px 0;
+  }
+  .icon-star {
+    background-position: -67px 0;
+    height: 25px;
+    width: 24px;
+  }
+  .icon-key {
+    background-position: -21px 0;
+    width: 25px;
+    height: 22px;
+  }
+  .filters-arrow {
+    visibility: hidden;
+  }
+}
+
+.numbers-events {
+  padding: 12px 15px;
+  border: 1px solid #c2c7ca;
+  background-color: #707d85;
+  float: left;
+  width: 100%;
+  line-height: 2.95rem;
+
+  p {
+    font-size: 1.6rem;
+    color: #fff;
+    text-transform: uppercase;
+    margin: 0 auto;
+    width: 80%;
+  }
+  .hide {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: url(../img/cross.png) no-repeat;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}
+
 //.weatherImg {
 //  background: url(../img/cloud.png) no-repeat center center;
 //  width: 100%;
@@ -790,357 +801,401 @@
 //  margin: 0 auto;
 //}
 .footer-search {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  .icon-tick {
+    background: url(../img/icons/icons_search_filters.png) no-repeat -92px -28px;
+    height: 24px;
+    width: 24px;
     position: absolute;
-    bottom: 0;
-    width: 100%;
-    .icon-tick {
-        background: url(../img/icons/icons_search_filters.png) no-repeat -92px -28px;
-        height: 24px;
-        width: 24px;
-        position: absolute;
-        left: 1.5rem;
-        top: 1.5rem;
-    }
-    .icon-arrow {
-        background: url(../img/icons/right-arrow.png) no-repeat -77px -10px;
-        height: 17px;
-        width: 34px;
-        position: absolute;
-        right: 1.5rem;
-        top: 1.8rem;
-    }
+    left: 1.5rem;
+    top: 1.5rem;
+  }
+  .icon-arrow {
+    background: url(../img/icons/right-arrow.png) no-repeat -77px -10px;
+    height: 17px;
+    width: 34px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.8rem;
+  }
 }
+
 .weather-info {
-    padding: 10px 15px;
-    p {
-        font: 500 20px/26px;
-        color: #000;
-        width: 80%;
-        margin: 0 auto;
-        text-align: center;
-    }
+  padding: 10px 15px;
+  p {
+    font: 500 20px/26px;
+    color: #000;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+  }
 }
 
 .unit {
-    font: 500 50px;
+  font: 500 50px;
 }
 
 .temperature {
-    font: 500 88px;
+  font: 500 88px;
 }
 
 .banner-for-blogers {
-    width: 100%;
-    height: 100%;
-    background: url(../img/banner_for_blogers.png) 0 0 no-repeat;
-    /*    background-color: linear-gradient(to top, rgba(0,0,0,.75) 1%, rgba(12,38,56,0.75) 21%, rgba(12,38,56,0.75) 46%,
-            rgba(3,181,213,0.75) 73%, rgba(12,38,56,0.75) 100%);*/
-    right: 0;
-    top: 66px;
-    .banner-logo {
-        background: url(../img/blog-icon.png) no-repeat center bottom;
-        background-size: 25%;
-        padding-top: 46%;
-    }
-    p {
-        color: #fff;
-        font: 500 34px/40px 'Ubuntu titling bold';
-        padding: 20px 15px 0;
-        text-align: center;
-        text-shadow: 0 3px 3px rgba(0, 0, 0, .4);
-    }
-    input {
-        margin: 60px auto;
-        display: table;
-        width: 200px;
-        height: 47px;
-        font: 500 22px/26px;
-        box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .45);
-    }
+  width: 100%;
+  height: 100%;
+  background: url(../img/banner_for_blogers.png) 0 0 no-repeat;
+  /*    background-color: linear-gradient(to top, rgba(0,0,0,.75) 1%, rgba(12,38,56,0.75) 21%, rgba(12,38,56,0.75) 46%,
+          rgba(3,181,213,0.75) 73%, rgba(12,38,56,0.75) 100%);*/
+  right: 0;
+  top: 66px;
+  .banner-logo {
+    background: url(../img/blog-icon.png) no-repeat center bottom;
+    background-size: 25%;
+    padding-top: 46%;
+  }
+  p {
+    color: #fff;
+    font: 500 34px/40px 'Ubuntu titling bold';
+    padding: 20px 15px 0;
+    text-align: center;
+    text-shadow: 0 3px 3px rgba(0, 0, 0, .4);
+  }
+  input {
+    margin: 60px auto;
+    display: table;
+    width: 200px;
+    height: 47px;
+    font: 500 22px/26px;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, .45);
+  }
 }
 
 /** WEATHER **/
 .weather-wrap {
-    height: 100%;
-    bottom: 0;
-    width: 100%;
-    display: table;
-    background-color: #fff;
+  height: 100%;
+  bottom: 0;
+  width: 100%;
+  display: table;
+  background-color: #fff;
 
-    .firstBlock-wrapper {
-        padding: 15px 20px;
-        width: 100%;
-        height: 30rem;
-        overflow: auto;
-        display: inline-block;
-        .right-now {
-            color:#00cfff;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-align: center;
-            font-size: 2.4rem;
-            margin-bottom: 0;
+  .firstBlock-wrapper {
+    padding: 15px 20px;
+    width: 100%;
+    height: 30rem;
+    overflow: auto;
+    display: inline-block;
+    .right-now {
+      color: #00cfff;
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 2.4rem;
+      margin-bottom: 0;
+    }
+    .weatherName {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 0 0 10px;
+      color: #889197;
+    }
+    .weatherImg-block {
+      width: 100%;
+      //height: 305px;
+      float: left;
+      .weatherData {
+        text-align: center;
+        font: 200 14px;
+        color: darkgrey;
+        margin: 0 0 10px;
+      }
+      .weatherImg-wrapper {
+        width: 27.5rem;
+        margin: 0 auto;
+        height: 130px;
+        .temperature-img {
+          font-size: 5.5rem;
+          padding-top: 3rem;
+          color: #000;
+          float: right;
         }
-        .weatherName {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 0 0 10px;
-            color: #889197;
+        .weatherImg {
+          width: 14rem;
+          height: 100%;
+          background-size: 130% !important;
+          float: left;
         }
-        .weatherImg-block {
-            width: 100%;
-            //height: 305px;
-            float: left;
-            .weatherData {
-                text-align: center;
-                font: 200 14px;
-                color: darkgrey;
-                margin: 0 0 10px;
-            }
-            .weatherImg-wrapper {
-                width: 27.5rem;
-                margin: 0 auto;
-                height: 130px;
-                .temperature-img {
-                    font-size: 5.5rem;
-                    padding-top: 3rem;
-                    color: #000;
-                    float: right;
-                }
-                .weatherImg {
-                    width: 14rem;
-                    height: 100%;
-                    background-size: 130% !important;
-                    float: left;
-                }
-                .clear-day {
-                    background: url(../img/weather-svg/Sun.svg) no-repeat center center;
-                }
-                .clear-night {
-                    background: url(../img/weather-svg/Moon.svg) no-repeat center center;
-                }
-                .rain {
-                    background: url(../img/weather-svg/Cloud-Drizzle-Sun-Alt.svg) no-repeat center center;
-                }
-                .snow {
-                    background: url(../img/weather-svg/Cloud-Snow-Sun.svg) no-repeat center center;
-                }
-                .sleet {
-                    background: url(../img/weather-svg/Cloud-Hail-Sun.svg) no-repeat center center;
-                }
-                .wind {
-                    background: url(../img/weather-svg/Wind.svg) no-repeat center center;
-                }
-                .fog {
-                    background: url(../img/weather-svg/Cloud-Fog.svg) no-repeat center center;
-                }
-                .cloudy {
-                    background: url(../img/weather-svg/Cloud.svg) no-repeat center center;
-                }
-                .partly-cloudy-day {
-                    background: url(../img/weather-svg/Cloud-Sun.svg) no-repeat center center;
-                }
-                .partly-cloudy-night {
-                    background: url(../img/weather-svg/Cloud-Moon.svg) no-repeat center center;
-                }
-            }
+        .clear-day {
+          background: url(../img/weather-svg/Sun.svg) no-repeat center center;
         }
-        .parameters {
-            float: left;
-            width: 40%;
-            padding: 15px 0 0 10px;
-            box-sizing: border-box;
-            div {
-                word-wrap: break-word;
-                p {
-                    white-space: pre;
-                }
-                .mainParameters {
-                    font: 500 22px;
-                    color: #0c2638;
-                    margin: 0;
-                    span {
-                        font-size: 16px;
-                    }
-                }
-            }
+        .clear-night {
+          background: url(../img/weather-svg/Moon.svg) no-repeat center center;
+        }
+        .rain {
+          background: url(../img/weather-svg/Cloud-Drizzle-Sun-Alt.svg) no-repeat center center;
+        }
+        .snow {
+          background: url(../img/weather-svg/Cloud-Snow-Sun.svg) no-repeat center center;
+        }
+        .sleet {
+          background: url(../img/weather-svg/Cloud-Hail-Sun.svg) no-repeat center center;
+        }
+        .wind {
+          background: url(../img/weather-svg/Wind.svg) no-repeat center center;
+        }
+        .fog {
+          background: url(../img/weather-svg/Cloud-Fog.svg) no-repeat center center;
+        }
+        .cloudy {
+          background: url(../img/weather-svg/Cloud.svg) no-repeat center center;
+        }
+        .partly-cloudy-day {
+          background: url(../img/weather-svg/Cloud-Sun.svg) no-repeat center center;
+        }
+        .partly-cloudy-night {
+          background: url(../img/weather-svg/Cloud-Moon.svg) no-repeat center center;
+        }
+      }
+    }
+    .parameters {
+      float: left;
+      width: 40%;
+      padding: 15px 0 0 10px;
+      box-sizing: border-box;
+      div {
+        word-wrap: break-word;
+        p {
+          white-space: pre;
         }
         .mainParameters {
-            color: #000;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 0;
+          font: 500 22px;
+          color: #0c2638;
+          margin: 0;
+          span {
+            font-size: 16px;
+          }
         }
-        .description {
-            color: #ccc;
-            margin-top: 0;
-            margin-bottom: 0;
-        }
+      }
+    }
+    .mainParameters {
+      color: #000;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+    .description {
+      color: #ccc;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  .temperature-block {
+    width: 100%;
+    height: 100%;
+    display: table;
+    margin: 0 auto;
+    text-align: center;
+    .temperature, .temperature-text {
+      font-size: 2rem;
+      color: #889197;
+    }
+    .unit {
+      margin-top: 10px;
+      font-size: 2rem;
+      color: #889197;
+    }
+    .unit2 {
+      margin: 0px 2px;
+      display: table;
+      font: 500 17px;
+      color: gray;
+      &:last-child {
+        float: right;
+      }
     }
 
-    .temperature-block {
-        width: 100%;
-        height: 100%;
-        display: table;
-        margin: 0 auto;
-        text-align: center;
-        .temperature, .temperature-text {
-            font-size: 2rem;
-            color: #889197;
-        }
-        .unit {
-            margin-top: 10px;
-            font-size: 2rem;
-            color: #889197;
-        }
-        .unit2 {
-            margin: 0px 2px;
-            display: table;
-            font: 500 17px;
-            color: gray;
-            &:last-child {
-                float: right;
-            }
-        }
-
-        .unit2 span {
-            color: #ccc;
-        }
+    .unit2 span {
+      color: #ccc;
     }
+  }
 
-    .wrapperHr {
+  .wrapperHr {
+    float: left;
+    width: 100%;
+    hr {
+      margin: 0;
+      border: 0;
+      border-top: 1px solid #eee;
+    }
+  }
+
+  .weekForecast {
+    padding: 0;
+    .weekForecast-inner {
+      background-color: #f4f5f6;
+      &:first-child {
+        background-color: #fff;
+        -webkit-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+        -moz-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+        box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
+        z-index: 2;
+        .weather-summary {
+          color: #000;
+          font-weight: bold;
+        }
+      }
+    }
+    .weekForecast-wrapper {
+      float: left;
+      width: 100%;
+      padding: 10px 15px;
+      box-sizing: border-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+
+      align-items: center;
+      .weatherIcon {
         float: left;
-        width: 100%;
-        hr {
-            margin: 0;
-            border: 0;
-            border-top: 1px solid #eee;
+        width: 15%;
+        div {
+          background-size: 100% !important;
+          padding-top: 28%;
+          height: 45px;
         }
+        .clear-day {
+          background: url(../img/weather-svg/Sun.svg) no-repeat center center;
+          background-size: 100%;
+        }
+        .clear-night {
+          background: url(../img/weather-svg/Moon.svg) no-repeat center center;
+          background-size: 100%;
+        }
+        .rain {
+          background: url(../img/weather-svg/Cloud-Drizzle-Sun-Alt.svg) no-repeat center center;
+          background-size: 100%;
+        }
+        .snow {
+          background: url(../img/weather-svg/Cloud-Snow-Sun.svg) no-repeat center center;
+          background-size: 100%;
+        }
+        .sleet {
+          background: url(../img/weather-svg/Cloud-Hail-Sun.svg) no-repeat center center;
+          background-size: 100%;
+        }
+        .wind {
+          background: url(../img/weather-svg/Wind.svg) no-repeat center center;
+          background-size: 100%;
+        }
+        .fog {
+          background: url(../img/weather-svg/Cloud-Fog.svg) no-repeat center center;
+          background-size: 100%;
+        }
+        .cloudy {
+          background: url(../img/weather-svg/Cloud.svg) no-repeat center center;
+          background-size: 100%;
+        }
+        .partly-cloudy-day {
+          background: url(../img/weather-svg/Cloud-Sun.svg) no-repeat center center;
+          background-size: 100%;
+        }
+        .partly-cloudy-night {
+          background: url(../img/weather-svg/Cloud-Moon.svg) no-repeat center center;
+          background-size: 100%;
+        }
+      }
+      .data, .temperatureWeek {
+        float: left;
+        //text-align: center;
+        color: gray;
+      }
+      .data {
+        float: left;
+        width: 15%;
+        font-size: 2rem;
+        font-weight: bold;
+        color: #000;
+        overflow: hidden;
+        padding-top: 5px;
+        height: 4rem;
+      }
+      .weather-summary {
+        font-size: 1.5rem;
+        color: #889197;
+        width: 55%;
+        font-weight: bold;
+      }
+      .temperatureWeek {
+        float: right;
+        width: 15%;
+        font-size: 1.4rem;
+        color: #889197;
+      }
     }
-
-    .weekForecast {
-        padding: 0;
-        .weekForecast-inner {
-            background-color: #f4f5f6;
-            &:first-child {
-                background-color: #fff;
-                -webkit-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
-                -moz-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
-                box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
-                z-index: 2;
-                .weather-summary {
-                    color: #000;
-                    font-weight: bold;
-                }
-            }
-        }
-        .weekForecast-wrapper {
-            float: left;
-            width: 100%;
-            padding: 10px 15px;
-            box-sizing: border-box;display: -ms-flexbox;
-            display: -webkit-flex;
-            display: flex;
-
-            -ms-flex-align: center;
-            -webkit-align-items: center;
-            -webkit-box-align: center;
-
-            align-items: center;
-            .weatherIcon {
-                float: left;
-                width: 15%;
-                div {
-                    background-size: 100% !important;
-                    padding-top: 28%;
-                    height: 45px;
-                }
-                .clear-day {
-                    background: url(../img/weather-svg/Sun.svg) no-repeat center center;
-                    background-size: 100%;
-                }
-                .clear-night {
-                    background: url(../img/weather-svg/Moon.svg) no-repeat center center;
-                    background-size: 100%;
-                }
-                .rain {
-                    background: url(../img/weather-svg/Cloud-Drizzle-Sun-Alt.svg) no-repeat center center;
-                    background-size: 100%;
-                }
-                .snow {
-                    background: url(../img/weather-svg/Cloud-Snow-Sun.svg) no-repeat center center;
-                    background-size: 100%;
-                }
-                .sleet {
-                    background: url(../img/weather-svg/Cloud-Hail-Sun.svg) no-repeat center center;
-                    background-size: 100%;
-                }
-                .wind {
-                    background: url(../img/weather-svg/Wind.svg) no-repeat center center;
-                    background-size: 100%;
-                }
-                .fog {
-                    background: url(../img/weather-svg/Cloud-Fog.svg) no-repeat center center;
-                    background-size: 100%;
-                }
-                .cloudy {
-                    background: url(../img/weather-svg/Cloud.svg) no-repeat center center;
-                    background-size: 100%;
-                }
-                .partly-cloudy-day {
-                    background: url(../img/weather-svg/Cloud-Sun.svg) no-repeat center center;
-                    background-size: 100%;
-                }
-                .partly-cloudy-night {
-                    background: url(../img/weather-svg/Cloud-Moon.svg) no-repeat center center;
-                    background-size: 100%;
-                }
-            }
-            .data, .temperatureWeek {
-                float: left;
-                //text-align: center;
-                color: gray;
-            }
-            .data {
-                float: left;
-                width: 15%;
-                font-size: 2rem;
-                font-weight: bold;
-                color: #000;
-                overflow: hidden;
-                padding-top: 5px;
-                height: 4rem;
-            }
-            .weather-summary {
-                font-size: 1.5rem;
-                color: #889197;
-                width: 55%;
-                font-weight: bold;
-            }
-            .temperatureWeek {
-                float: right;
-                width: 15%;
-                font-size: 1.4rem;
-                color: #889197;
-            }
-        }
-    }
+  }
 }
 
 .results-btn {
-    display: block;
+  display: block;
+  color: #fff;
+  background-color: $green;
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  top: 0;
+  font: 500 20px/30px;
+  &:hover {
+    background-color: $light_green;
+    @include transition_bg_color;
     color: #fff;
-    background-color: $green;
-    position: absolute;
-    z-index: 2;
-    width: 100%;
-    top: 0;
-    font: 500 20px/30px;
-    &:hover {
-        background-color: $light_green;
-        @include transition_bg_color;
-        color: #fff;
+  }
+}
+
+@media(max-width: 767px) {
+
+  .hide-menu-profile {
+    //width: 7rem;
+    //height: 7rem;
+    transform: rotate(180deg);
+  }
+
+  .sidebar-menu-wrap {
+    position: absolute !important;
+
+    .show-menu-profile {
+      top: 83vh;
+      //width: 7rem;
+      //height: 7rem;
     }
+
+    .sidebar-menu-vertical {
+      width: 100%;
+      bottom: 60px;
+      left: 0;
+      position: fixed;
+      opacity: 0.8;
+
+      ul li {
+        width: 25%;
+        height: 50px;
+
+        a {
+          height: 50px;
+          background-size: 40px;
+          background-position: 45%;
+          &.weather-link {
+            background-size: 55px;
+            background-position: 45% 3px;
+          }
+        }
+      }
+    }
+  }
 }
 

@@ -43,7 +43,6 @@
 @import "admin_users";
 @import "reviews";
 @import "saved_searches";
-@import "intro";
 @import "admin_user_info_page";
 @import "admin_edit_user_page";
 @import "admin_spot_categories";
@@ -53,6 +52,7 @@
 @import "admin_reaction_requests";
 @import "popup";
 @import "preloader";
+@import "intro";
 @import "preload_scroll";
 @import "report_modal";
 @import "jcarousel";
@@ -1281,6 +1281,7 @@ span.location-icon {
   position: absolute;
   top: -2.75rem;
   right: 3rem;
+  cursor: auto;
   ul {
     margin-bottom: 0;
     li {
