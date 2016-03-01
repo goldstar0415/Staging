@@ -1,7 +1,77 @@
-.intro {
 
-  &.small {
-    //for example :)
-    font-size: 8px;
-  }
+.landing-wrapper {
+    height: calc(100% - 70px);
+}
+.landing {
+    height: 100%;
+    padding-top: 10%;
+    background-color: #fff;
+
+    h1 {
+        text-transform: initial;
+        text-decoration: none;
+        border-bottom: 0;
+        font-size: 4rem;
+    }
+    .intro {
+        padding-top: 7%;
+        height: 89%;
+        ul {
+            padding-left: 0;
+            li {
+                text-align: center;
+                margin-top: 3rem;
+
+                a {
+                    font-size: 2rem;
+                    font-weight: bold;
+                    display: block;
+                    color: $blue_btn;
+                    padding: 2rem 0;
+                    transition: 0.7s ease-out;
+                    &:hover {
+                        color: #2A81B6;
+                    }
+                }
+            }
+        }
+    }
+    &.small {
+        .container {
+            height: 100%;
+        }
+        h1 {
+            display: none;
+        }
+        .intro{
+            background-color: #F5F5F7 ;
+            padding: 5% 0 1%;
+            text-align: center;
+            height: auto;
+
+            li {
+                width: auto;
+                float: none;
+                display: inline-block;
+                a {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+}
+footer{
+    div:first-child  { display: none;}
+    border-top: 1px solid #DEDEDE;
+    padding: 3rem 2rem;
+    background-color: #fff ;
+    .fmenu a {
+        display: inline-block;
+        margin-right: 3rem;
+        font-size: 1.2rem;
+        color: #9EA2A5;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
