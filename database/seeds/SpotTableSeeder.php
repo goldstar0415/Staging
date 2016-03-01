@@ -22,7 +22,7 @@ class SpotTableSeeder extends Seeder
                 $category = SpotTypeCategory::random()->first();
                 $type = $category->type['name'];
 
-                if ($type === 'recreation' or $type === 'pitstop') {
+                if ($type === 'todo' or $type === 'food' or $type === 'shelter') {
                     $spot->is_approved = true;
                 }
                 $spot->category()->associate($category);

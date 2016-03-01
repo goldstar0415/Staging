@@ -39,7 +39,7 @@ class ShowLogController extends Controller
      */
     public function show($type)
     {
-        $validator = $this->validator->make(compact('type'), ['type' => 'required|in:event,recreation,pitstop']);
+        $validator = $this->validator->make(compact('type'), ['type' => 'required|in:event,todo,food,shelter']);
 
         if ($validator->fails()) {
             abort(403, 'Forbidden');

@@ -109,10 +109,12 @@ class SpotImportController extends Controller
         switch ($request->type) {
             case 'event':
                 return SpotsImportCsv::getLog(SpotsImportCsv::EVENT);
-            case 'recreation':
-                return SpotsImportCsv::getLog(SpotsImportCsv::RECREATION);
-            case 'pitstop':
-                return SpotsImportCsv::getLog(SpotsImportCsv::PITSTOP);
+            case 'todo':
+                return SpotsImportCsv::getLog(SpotsImportCsv::TODO);
+            case 'food':
+                return SpotsImportCsv::getLog(SpotsImportCsv::FOOD);
+            case 'shelter':
+                return SpotsImportCsv::getLog(SpotsImportCsv::SHELTER);
         }
     }
 
@@ -123,11 +125,14 @@ class SpotImportController extends Controller
             case 'event':
                 $result = SpotsImportCsv::removeLog(SpotsImportCsv::EVENT);
                 break;
-            case 'recreation':
-                $result = SpotsImportCsv::removeLog(SpotsImportCsv::RECREATION);
+            case 'todo':
+                $result = SpotsImportCsv::removeLog(SpotsImportCsv::TODO);
                 break;
-            case 'pitstop':
-                $result = SpotsImportCsv::removeLog(SpotsImportCsv::PITSTOP);
+            case 'food':
+                $result = SpotsImportCsv::removeLog(SpotsImportCsv::FOOD);
+                break;
+            case 'shelter':
+                $result = SpotsImportCsv::removeLog(SpotsImportCsv::SHELTER);
                 break;
         }
 

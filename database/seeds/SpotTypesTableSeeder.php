@@ -9,7 +9,8 @@ class SpotTypesTableSeeder extends Seeder
     public function run()
     {
         factory(SpotType::class, 'event')->create();
-        factory(SpotType::class, 'recreation')->create();
-        factory(SpotType::class, 'pitstop')->create();
+        factory(SpotType::class, 'todo')->create();
+        factory(SpotType::class, 'food')->create();
+        factory(SpotType::class, 'shelter')->create();
     }
 }
