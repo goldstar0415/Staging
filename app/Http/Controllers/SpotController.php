@@ -71,7 +71,7 @@ class SpotController extends Controller
         $target = User::find($user_id);
 
         $spots = $spots->where('user_id', $user_id);
-        if ($user->id !== $user_id and !$privacy->hasPermission($target, $target->privacy_events)) {
+        if (!$user or $user->id !== $user_id and !$privacy->hasPermission($target, $target->privacy_events)) {
             $spots = $spots->where('is_private', false);
         }
         $spots = $spots->with('comments');
