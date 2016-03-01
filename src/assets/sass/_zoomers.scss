@@ -32,7 +32,7 @@ ul {
   a {
     display: inline-block;
     text-align: center;
-    width: 100%;
+    //width: 100%;
   }
 }
   .followers {
@@ -50,13 +50,13 @@ ul {
       }
     }
     .avatar {
-      float: none;
+      float: left;
       width: 120px;
       height: 120px;
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       border-radius: 50%;
-      margin: 0 auto;
+      margin: 0;
       border: 2px solid #a6b1b7;
       background: $white;
       padding: .5rem;
@@ -86,14 +86,13 @@ ul {
       .f-count {
         display: block;
         float: left;
-        padding: 18px 10px;
-        margin-left: 0;
-        background: url(../img/icons/follower.png) no-repeat;
-        color: $blue;
-        background-position: center top;
-        font-size: 2.4rem;
-        margin-bottom: 0;
-        line-height: 2rem;
+        padding: 0px 10px;
+        margin-left: 2rem;
+        background: url(../img/icons/follower.png)left top no-repeat;
+        background-size: 90%;
+        /* font-size: 2.4rem; */
+        /* margin-bottom: 0; */
+        /* line-height: 2rem; */
         color: #222;
         span {
           color: #929fa7;
@@ -154,7 +153,7 @@ ul {
       word-break: break-all;
       font-size: 2rem;
      font-weight: bold;
-     line-height: 4rem;
+     line-height: 2rem;
       &:hover {
         color: $navy_blue;
         text-decoration: none;
@@ -170,6 +169,29 @@ ul {
     }
   }
 
+}
+.zoomer-thumb {
+  figure {
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto 1rem;
+    .zoomer-event-type {
+      position: absolute;
+      bottom: -5rem;
+      left: 0;
+      height: 8rem;
+      text-align: center;
+      background-color: #ee4633;
+      border-radius: 50%;
+      width: 100%;
+      font-size: 12px;
+      color: #fff;
+      padding-top: 0.5rem;
+    }
+  }
 }
 
 .zoomers-sidebar {

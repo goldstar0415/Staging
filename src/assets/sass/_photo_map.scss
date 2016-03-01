@@ -18,6 +18,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
     .album-tools-wrap {
       padding: 0;
@@ -43,7 +44,8 @@
       }
     }
     img {
-      max-width: 100%;
+      width: 100%;
+      min-height: 100%;
       border-top-left-radius: 0;
       border-top-right-radius: 0;
     }
@@ -135,7 +137,7 @@
 }
 
 @media (max-width: 550px) {
-  
+
   .album-tools-wrap {
     display: block !important;
     position: absolute;

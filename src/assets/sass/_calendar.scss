@@ -41,7 +41,7 @@ body .fc {
 }
 
 .fc-unthemed .fc-today {
-  background: #fcf8e3;
+  background: #f5f8fa;
 }
 
 .fc-highlight {
@@ -1359,9 +1359,9 @@ th.fc-day-header {
   .fc-axis.fc-time {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    -webkit-box-shadow: inset 0px 0px 13px 0px rgba(50, 50, 50, 0.3);
-    -moz-box-shadow:    inset 0px 0px 13px 0px rgba(50, 50, 50, 0.3);
-    box-shadow:         inset 0px 0px 13px 0px rgba(50, 50, 50, 0.3);
+    -webkit-box-shadow: inset 0px 0px 13px 0px rgba(50, 50, 50, 0.15);
+    -moz-box-shadow:    inset 0px 0px 13px 0px rgba(50, 50, 50, 0.15);
+    box-shadow:         inset 0px 0px 13px 0px rgba(50, 50, 50, 0.15);
     text-align: center;
     text-transform: uppercase;
   }
