@@ -31,7 +31,7 @@ ul {
 .zoomer-user {
   a {
     display: inline-block;
-    text-align: center;
+    //text-align: center;
     //width: 100%;
   }
 }
@@ -50,9 +50,9 @@ ul {
       }
     }
     .avatar {
-      float: left;
-      width: 120px;
-      height: 120px;
+      //float: left;
+      width: 110px;
+      height: 110px;
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       border-radius: 50%;
@@ -65,7 +65,7 @@ ul {
   }
 
   .info {
-    text-align: center;
+    //text-align: center;
     .age {
       font: 400 15px/14px;
       color: grey;
@@ -77,22 +77,17 @@ ul {
       display: flex;
       .e-count {
         float: left;
-        color: $blue;
+        color: $black;
         display: block;
-        height: 12px;
-        padding: 0 0 2px 14px;
-        background: url(../img/icons/count.png) 0 -1px no-repeat;
+        padding: 0 0 0 25px;
+        background: url(../img/icons/location-follow.png) left top no-repeat;  height: 17px;
       }
       .f-count {
         display: block;
         float: left;
-        padding: 0px 10px;
+        padding: 0 0 0 35px;
         margin-left: 2rem;
-        background: url(../img/icons/follower.png)left top no-repeat;
-        background-size: 90%;
-        /* font-size: 2.4rem; */
-        /* margin-bottom: 0; */
-        /* line-height: 2rem; */
+        background: url(../img/icons/follow-man.png)left top no-repeat; height: 17px;
         color: #222;
         span {
           color: #929fa7;
@@ -147,7 +142,7 @@ ul {
   .name {
     margin-top: 1rem;
     margin-bottom: 5px;
-    text-align: center;
+    //text-align: center;
     a {
       color: #222;
       word-break: break-all;
@@ -172,8 +167,8 @@ ul {
 }
 .zoomer-thumb {
   figure {
-    width: 12rem;
-    height: 12rem;
+    width: 11rem;
+    height: 11rem;
     border-radius: 50%;
     position: relative;
     overflow: hidden;
@@ -297,4 +292,26 @@ ul {
 .no-margin-left-right {
   margin-left: 0 !important;
   margin-right: 0 !important;
+}
+.follow-btn {
+  @include button;
+  background-color: #98c352;
+  padding:  5px 40px;
+  border: none;
+  height: 4rem;
+  text-transform: uppercase;
+  @include transition_bg_color;
+  @include border-radius;
+  margin: 0 15px;
+  outline: none !important;
+  border-radius: 0;
+  &:hover, &:focus, &:active, &:visited {
+    background-color: #9ECC53;
+    box-shadow: none;
+    border: none;
+    outline: none !important;
+    color: $white !important;
+    @include transition_none;
+    @include box_shadow_none;
+  }
 }

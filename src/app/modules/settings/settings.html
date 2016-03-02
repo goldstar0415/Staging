@@ -1,12 +1,12 @@
 <div class="col-xs-12">
   <div class="container wrap mgt25">
 
-    <div class="col-md-9 col-md-offset-3 col-xs-12 col-xs-offset-0">
+    <div class="col-md-9 col-md-offset-3 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
       <div class="col-xs-12 text-center">
         <h2 class="title-name">Profile settings</h2>
       </div>
     </div>
-    <div class="col-xs-12 col-md-3 avatar-block ">
+    <div class="col-xs-12 col-sm-12  col-md-3 avatar-block ">
       <div class="bg-thumb">
         <figure class="avatar">
           <img ng-src="{{Settings.data.avatar_url.medium}}" class="img-responsive"/>
@@ -15,7 +15,7 @@
         <uploader button-text="EDIT AVATAR"></uploader>
       </div>
     </div>
-    <div class="col-xs-12 col-md-9 central">
+    <div class="col-xs-12 col-sm-12 col-md-9 central">
 
       <!----Personal information block---->
       <div class="col-xs-12 settings-block">
@@ -25,7 +25,7 @@
               <div class="col-md-3 col-xs-12 no-pad">
                 <label>Name</label>
               </div>
-              <div class="col-xs-12 col-md-9 no-pad">
+              <div class="col-xs-12 col-sm-12 col-md-9 no-pad">
                 <div class="row">
                   <div class="col-xs-6 col-md-6">
                     <input class="mgb15" type="text" placeholder="First name..."
@@ -39,10 +39,10 @@
               </div>
             </div>
             <div class="col-xs-12 form-group no-pad">
-              <div class="col-xs-12 col-md-3 no-pad">
+              <div class="col-xs-12 col-sm-12 col-md-3 no-pad">
                 <label>Birthday</label>
               </div>
-              <div class="col-md-9 col-xs-12 no-pad">
+              <div class="col-md-9 col-sm-12 col-xs-12 no-pad">
                 <input ng-datepicker name="date" ng-model="Settings.data.birth_date" start-date="Settings.minDate"
                        type="text" class="grey-bg">
               </div>
@@ -51,7 +51,7 @@
               <div class="col-xs-12 col-md-3 no-pad">
                 <label>Page URL</label>
               </div>
-              <div class="col-md-9 col-xs-12 no-pad">
+              <div class="col-md-9 col-sm-12 col-xs-12 no-pad">
                 <input name="alias" ng-model="Settings.data.alias" ng-blur="Settings.checkAlias(form)" type="text"/>
 
                 <div ng-if="Settings.aliasErrorMessage" class="error-message-inline">
@@ -60,10 +60,10 @@
               </div>
             </div>
             <div class="col-xs-12 form-group no-pad">
-              <div class="col-xs-12 col-md-3 no-pad">
+              <div class="col-xs-12 col-sm-12 col-md-3 no-pad">
                 <label>Gender</label>
               </div>
-              <div class="col-xs-12  col-md-4 no-pad">
+              <div class="col-xs-12 col-sm-12 col-md-4 no-pad">
                 <div class="form-group half-width">
                   <input type="radio" name="radio" value="m" id="radio1" class="radio"
                          ng-model="Settings.data.sex">
@@ -77,10 +77,10 @@
               </div>
             </div>
             <div class="col-xs-12 form-group no-pad">
-              <div class="col-xs-12 col-md-3 no-pad">
+              <div class="col-xs-12 col-sm-12 col-md-3 no-pad">
                 <label>Location</label>
               </div>
-              <div class="col-md-9 col-xs-12 no-pad">
+              <div class="col-md-9 col-sm-12 col-xs-12 no-pad">
                 <location address="Settings.data.address" location="Settings.data.location" limit="15"
                           bind-marker="false" show-user-location="true"></location>
               </div>

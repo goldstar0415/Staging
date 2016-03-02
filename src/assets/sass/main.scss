@@ -190,9 +190,7 @@ h3 {
 .central {
   @include content_bg;
   margin-bottom: 2rem;
-  padding: 0;
-  padding-top: 4rem;
-  padding-bottom: 2rem;
+  padding: 4rem 0 2rem;
   border-radius: 0 !important
 }
 
@@ -507,7 +505,7 @@ facebook-events a {
 .red-btn {
   @include button;
   background-color: $red;
-  padding: 5px 25px;
+  padding: 5px 30px;
   height: 4rem;
   border: none;
   text-transform: uppercase;
