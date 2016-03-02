@@ -3,28 +3,77 @@
         <ui-view></ui-view>
         <div class="text-center"><h1 class="title-name">What do you want to do?</h1></div>
     </div>
-    <section class="intro" role="navigation">
+    <section class="intro container" role="navigation">
+        <div class="text-center"><h3 class="title-name">Other things</h3></div>
+
         <ul class="clearfix" >
-            <li class="col-md-3 col-sm-6 col-xs-12"><a ui-sref="intro.events">Find Events</a></li>
-            <li class="col-md-3 col-sm-6 col-xs-12"><a ui-sref="intro.road">Plan a Road Trip</a></li>
-            <li class="col-md-3 col-sm-6 col-xs-12"><a ui-sref="intro.social">Be Social</a></li>
-            <li class="col-md-3 col-sm-6 col-xs-12"><a ui-sref="intro.grub">Grab Grub</a></li>
-            <li class="col-md-3 col-sm-6 col-xs-12"><a ui-sref="intro.photos">Map Photos</a></li>
-            <li class="col-md-3 col-sm-6 col-xs-12"><a ui-sref="intro.todo">Things to Do & See</a></li>
-            <li class="col-md-3 col-sm-6 col-xs-12"><a ui-sref="intro.room">Get a Room</a></li>
-            <li class="col-md-3 col-sm-6 col-xs-12"><a ui-sref="intro.blog">Blog Adventures</a></li>
+            <li class="col-md-3 col-sm-6 col-xs-12">
+                <a ui-sref="intro.events">
+                    <span><img src="../assets/img/icons/find-events.png" alt=""/></span>
+                    <span class="center-block">Find Events</span>
+                </a>
+            </li>
+            <li class="col-md-3 col-sm-6 col-xs-12">
+                <a ui-sref="intro.road">
+                    <span><img src="../assets/img/icons/plan.png" alt=""/></span>
+                    <span class="center-block">Plan a Road Trip</span>
+                </a>
+            </li>
+            <li class="col-md-3 col-sm-6 col-xs-12">
+                <a ui-sref="intro.social">
+                    <span><img src="../assets/img/icons/be-social.png" alt=""/></span>
+                    <span class="center-block">Be Social</span>
+                </a>
+            </li>
+            <li class="col-md-3 col-sm-6 col-xs-12">
+                <a ui-sref="intro.grub">
+                    <span><img src="../assets/img/icons/grad-grub.png" alt=""/>
+                    </span><span class="center-block">Grab Grub</span>
+                </a>
+            </li>
+            <li class="col-md-3 col-sm-6 col-xs-12">
+                <a ui-sref="intro.photos">
+                    <span><img src="../assets/img/icons/map-photos.png" alt=""/></span>
+                    <span class="center-block">Map Photos</span>
+                </a>
+            </li>
+            <li class="col-md-3 col-sm-6 col-xs-12">
+                <a ui-sref="intro.todo">
+                    <span><img src="../assets/img/icons/things.png" alt=""/></span>
+                    <span class="center-block">Things to Do & See</span>
+                </a>
+            </li>
+            <li class="col-md-3 col-sm-6 col-xs-12">
+                <a ui-sref="intro.room">
+                    <span><img src="../assets/img/icons/get-room.png" alt=""/></span>
+                    <span class="center-block">Get a Room</span>
+                </a>
+            </li>
+            <li class="col-md-3 col-sm-6 col-xs-12">
+                <a ui-sref="intro.blog">
+                    <span><img src="../assets/img/icons/blog-adventures.png" alt=""/></span>
+                    <span class="center-block">Blog Adventures</span>
+                </a>
+            </li>
         </ul>
     </section>
-    <footer class="clearfix">
-        <div class="social-block">
-            <div class="text-center"><h2 class="title-name">Social Networks</h2></div>
-        </div> 
-        <div class="col-sm-6 col-xs-12 fmenu">
-            <a title="Terms" ui-sref="terms">Terms</a>
-            <a title="Conditions" ui-sref="terms">Conditions</a>
-            <a title="Contact Us" ui-sref="contact_us">Contact us</a>
-        </div>
-        <div class="col-sm-6 col-xs-12">
+    <footer class="col-xs-12">
+        <div class="row">
+            <div class="col-sm-6 col-xs-12 fmenu">
+                <a title="Terms" ui-sref="terms">Terms</a>
+                <a title="Conditions" ui-sref="terms">Conditions</a>
+                <a title="Contact Us" ui-sref="contact_us">Contact us</a>
+            </div>
+            <div class="col-sm-6 col-xs-12">
+                <ul class="social-icon list-inline pull-right">
+                    <li><a title="facebook" class="facebook" href="#"></a></li>
+                    <li><a title="tumbler" class="tumbler" href="#"></a></li>
+                    <li><a title="twitter" class="twitter" href="#"></a></li>
+                    <li><a title="instagram" class="instagram" href="#"></a></li>
+                    <li><a title="goole plus" class="google-plus" href="#"></a></li>
+                    <li><a title="VK" class="vk" href="#"></a></li>
+                </ul> 
+            </div>
         </div>
     </footer>
 </div>
