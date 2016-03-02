@@ -94,7 +94,7 @@
                 <div class="clearfix"></div>
               </h2>
 
-              <div class="location-link col-xs-12">
+              <div class="location-link col-xs-12" ng-if="post.address">
                 <a ui-sref="index.post({slug: post.slug})">{{post.address}}</a>
               </div>
 

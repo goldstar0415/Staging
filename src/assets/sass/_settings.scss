@@ -82,6 +82,7 @@
         height: 40px;
         background-color: $blue_btn;
         border-radius: 0;
+
         &:hover {
           background-color: $light_blue_btn;
         }
@@ -281,10 +282,7 @@ input[type="radio"]:checked + label span {
   }
 }
 @media (max-width: 767px) {
-  .bg-thumb {
-    margin-right: 0 !important;
-    margin-bottom: 2rem;
-  }
+
   .central {
     padding-top: 0 !important;
     .title-name {

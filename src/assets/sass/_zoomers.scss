@@ -31,8 +31,8 @@ ul {
 .zoomer-user {
   a {
     display: inline-block;
-    text-align: center;
-    width: 100%;
+    //text-align: center;
+    //width: 100%;
   }
 }
   .followers {
@@ -50,13 +50,13 @@ ul {
       }
     }
     .avatar {
-      float: none;
-      width: 120px;
-      height: 120px;
+      //float: left;
+      width: 110px;
+      height: 110px;
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       border-radius: 50%;
-      margin: 0 auto;
+      margin: 0;
       border: 2px solid #a6b1b7;
       background: $white;
       padding: .5rem;
@@ -65,7 +65,7 @@ ul {
   }
 
   .info {
-    text-align: center;
+    //text-align: center;
     .age {
       font: 400 15px/14px;
       color: grey;
@@ -77,23 +77,17 @@ ul {
       display: flex;
       .e-count {
         float: left;
-        color: $blue;
+        color: $black;
         display: block;
-        height: 12px;
-        padding: 0 0 2px 14px;
-        background: url(../img/icons/count.png) 0 -1px no-repeat;
+        padding: 0 0 0 25px;
+        background: url(../img/icons/location-follow.png) left top no-repeat;  height: 17px;
       }
       .f-count {
         display: block;
         float: left;
-        padding: 18px 10px;
-        margin-left: 0;
-        background: url(../img/icons/follower.png) no-repeat;
-        color: $blue;
-        background-position: center top;
-        font-size: 2.4rem;
-        margin-bottom: 0;
-        line-height: 2rem;
+        padding: 0 0 0 35px;
+        margin-left: 2rem;
+        background: url(../img/icons/follow-man.png)left top no-repeat; height: 17px;
         color: #222;
         span {
           color: #929fa7;
@@ -148,13 +142,13 @@ ul {
   .name {
     margin-top: 1rem;
     margin-bottom: 5px;
-    text-align: center;
+    //text-align: center;
     a {
       color: #222;
       word-break: break-all;
       font-size: 2rem;
      font-weight: bold;
-     line-height: 4rem;
+     line-height: 2rem;
       &:hover {
         color: $navy_blue;
         text-decoration: none;
@@ -170,6 +164,29 @@ ul {
     }
   }
 
+}
+.zoomer-thumb {
+  figure {
+    width: 11rem;
+    height: 11rem;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto 1rem;
+    .zoomer-event-type {
+      position: absolute;
+      bottom: -5rem;
+      left: 0;
+      height: 8rem;
+      text-align: center;
+      background-color: #ee4633;
+      border-radius: 50%;
+      width: 100%;
+      font-size: 12px;
+      color: #fff;
+      padding-top: 0.5rem;
+    }
+  }
 }
 
 .zoomers-sidebar {
@@ -275,4 +292,26 @@ ul {
 .no-margin-left-right {
   margin-left: 0 !important;
   margin-right: 0 !important;
+}
+.follow-btn {
+  @include button;
+  background-color: #98c352;
+  padding:  5px 40px;
+  border: none;
+  height: 4rem;
+  text-transform: uppercase;
+  @include transition_bg_color;
+  @include border-radius;
+  margin: 0 15px;
+  outline: none !important;
+  border-radius: 0;
+  &:hover, &:focus, &:active, &:visited {
+    background-color: #9ECC53;
+    box-shadow: none;
+    border: none;
+    outline: none !important;
+    color: $white !important;
+    @include transition_none;
+    @include box_shadow_none;
+  }
 }

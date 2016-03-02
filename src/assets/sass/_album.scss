@@ -15,9 +15,10 @@
       align-items: center;
       justify-content: center;
       height: 15rem;
+      overflow: hidden;
       img {
-        max-width: 100%;
-        min-height: 100px;
+        width: 100%;
+        min-height: 100%;
         cursor: pointer;
 
       }

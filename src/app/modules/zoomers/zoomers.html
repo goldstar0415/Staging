@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="col-md-9 col-sm-9 col-xs-12 zoomers-content">
+    <div class="col-md-9 col-sm-12 col-xs-12 zoomers-content">
       <!-- search block -->
       <div class="search-block">
         <form ng-submit="Zoomers.getUsers()">
@@ -38,19 +38,19 @@
         <!-- section post -->
         <section class="post col-xs-12" ng-repeat="user in Zoomers.users.data"
                  ng-if="Zoomers.users.data.length > 0">
-          <div class="media zoomer-user media-visible col-md-6 col-sm-12 col-xs-12 no-pad ">
-            <a ui-sref="profile.main({user_id: user.alias || user.id})" class="">
+          <div class=" zoomer-user media-visible col-lg-6 col-md-6 col-sm-12 col-xs-12 no-pad ">
+            <a ui-sref="profile.main({user_id: user.alias || user.id})" class="col-sm-12 col-md-6 col-xs-12">
               <img ng-src="{{user.avatar_url.medium}}" class="avatar"
                    alt="{{user.first_name}} {{user.last_name}}">
             </a>
 
             <!-- media-body-content -->
-            <div class="media-body media-body-content">
-              <h3 class="media-heading name">
+            <div class="col-md-6 col-sm-12 col-xs-12">
+              <h3 class=" name">
                 <a ui-sref="profile.main({user_id: user.alias || user.id})">{{user.first_name}} {{user.last_name}}</a>
               </h3>
 
-              <div class="info">
+              <div class="info clearfix">
                 <div ng-if="Zoomers.checkPermission(user.privacy_info, user)">
                   <p class="age">
                     <span ng-if="user.sex">{{user.sex == 'm' ? 'male' : 'female'}}</span>
@@ -66,34 +66,38 @@
                     {{ user.count_spots }}
                   </a>
                   <a class="f-count" title="Followings" users-modal="followings" user="user"
-                     ng-if="Zoomers.checkPermission(user.privacy_followings, user)"><br>
+                     ng-if="Zoomers.checkPermission(user.privacy_followings, user)">
                     {{ user.count_followings }}
                   </a>
                 </p>
 
-                <div class="clearfix">
-                  <button type="button" ng-if="currentUser && currentUser.id != user.id"
-                          class="btn btn-default no-margin-left-right"
-                          ng-click="Zoomers.follow(user)"
-                          ng-class="{'red-btn': !user.can_follow, 'green-btn': user.can_follow}">
-                    {{user.can_follow ? 'Follow' : 'Unfollow'}}
-                  </button>
-                </div>
+
+              </div>
+              <!-- end info -->
+              <div class="clearfix">
+                <button type="button" ng-if="currentUser && currentUser.id != user.id"
+                        class="btn btn-default no-margin-left-right"
+                        ng-click="Zoomers.follow(user)"
+                        ng-class="{'red-btn': !user.can_follow, 'follow-btn': user.can_follow}">
+                  {{user.can_follow ? 'Follow' : 'Unfollow'}}
+                </button>
               </div>
             </div>
             <!--end media-body-content  -->
 
           </div>
 
-          <div class="col-md-6 col-sm-12 col-xs-12 no-pad">
+          <div class="col-lg-6 col-md-6 hidden-sm hidden-xs no-pad">
             <ul class="events" ng-if="Zoomers.checkPermission(user.privacy_events, user) && user.spots.length > 0">
-              <li class="col-xs-4 pad-min events-width" ng-repeat="spot in user.spots">
+              <li class="col-xs-4  zoomer-thumb events-width" ng-repeat="spot in user.spots">
                 <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
-                  <img class="frame" ng-src="{{spot.cover_url.medium}}" alt="{{spot.title}}">
+                  <figure>
+                    <img class="frame img-responsive" ng-src="{{spot.cover_url.medium}}" alt="{{spot.title}}">
+                    <span class="zoomer-event-type">Event</span>
+                  </figure>
                 </a>
-                <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-link"
-                  >{{spot.title}}
-                </a>
+                <!--<a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-link">{{spot.title}}-->
+                <!--</a>-->
               </li>
             </ul>
           </div>
