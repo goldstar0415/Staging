@@ -140,3 +140,17 @@ Route::group(['prefix' => 'import/logs', 'middleware' => 'admin'], function () {
 Route::post('contact-us', 'UserController@contactUs');
 
 get('google-contacts', 'SocialContactsController@google');
+
+
+Route::get('mongo', function () {
+    $mongo = new MongoClient('mongodb://54.174.50.110:27017');
+    $db = $mongo->selectDB('airbnb');
+    $coll = new MongoCollection($db, 'apartments');
+    $cursor = $coll->find()->skip(298);
+    $elems = [];
+    foreach ($cursor as $item) {
+        $elems[] = $item;
+    }
+
+    return $elems;
+});

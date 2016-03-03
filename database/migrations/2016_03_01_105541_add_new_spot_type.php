@@ -22,9 +22,13 @@ class AddNewSpotType extends Migration
             'display_name' => 'Food'
         ]);
         if (!SpotType::whereName('shelter')->exists()) {
-            SpotType::create([
+            $shelter = SpotType::create([
                 'name' => 'shelter',
                 'display_name' => 'Shelter'
+            ]);
+            $shelter->categories()->create([
+                'name' => 'air_bnb',
+                'display_name' => 'AirBNB'
             ]);
         }
     }
@@ -45,7 +49,9 @@ class AddNewSpotType extends Migration
             'display_name' => 'Pitstop'
         ]);
         if (SpotType::whereName('shelter')->exists()) {
-            SpotType::whereName('shelter')->delete();
+            $shelter = SpotType::whereName('shelter')->first();
+            $shelter->categories()->delete();
+            $shelter->delete();
         }
     }
 }
