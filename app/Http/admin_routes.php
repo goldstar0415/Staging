@@ -55,3 +55,4 @@ get('email/users', 'EmailController@users')->name('admin.email.users');
 get('settings', 'SettingsController@index')->name('admin.settings');
 put('settings', 'SettingsController@update');
 get('settings/parse-run', 'SettingsController@parserRun')->name('admin.parser.run');
+get('settings/crawler-run', 'SettingsController@crawlerRun')->name('admin.crawler.run');

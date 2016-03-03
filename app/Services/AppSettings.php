@@ -27,6 +27,7 @@ class AppSettings implements \ArrayAccess
         if (Storage::exists($this->file_name)) {
             $this->data = (array)json_decode(Storage::get($this->file_name));
         }
+        $this->setDefaults();
     }
 
     public function all()
@@ -76,5 +77,15 @@ class AppSettings implements \ArrayAccess
     public function __destruct()
     {
         Storage::put($this->file_name, json_encode($this->data, JSON_NUMERIC_CHECK | JSON_PRETTY_PRINT));
+    }
+
+    protected function setDefaults()
+    {
+        if (!isset($this->data['parser'])) {
+            $this->data['parser'] = new stdClass();
+        }
+        if (!isset($this->data['crawler'])) {
+            $this->data['crawler'] = new stdClass();
+        }
     }
 }

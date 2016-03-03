@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Jobs\CrawlerRun;
 use App\Jobs\ParseEvents;
 use App\Services\AppSettings;
 use Illuminate\Http\Request;
@@ -51,6 +52,13 @@ class SettingsController extends Controller
     public function parserRun()
     {
         $this->dispatch(new ParseEvents);
+
+        return back()->with('run', true);
+    }
+
+    public function crawlerRun()
+    {
+        $this->dispatch(new CrawlerRun);
 
         return back()->with('run', true);
     }
