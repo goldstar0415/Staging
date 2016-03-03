@@ -22,15 +22,20 @@
                       ng-class="SpotCreate.type == 'event' ? 'active-point' : ''">Event
               </button>
 
-              <button ng-click="SpotCreate.type = 'recreation'"
+              <button ng-click="SpotCreate.type = 'todo'"
                       type="button"
                       class="btn btn-default btn-event"
-                      ng-class="SpotCreate.type == 'recreation' ? 'active-point' : ''">Recreation
+                      ng-class="SpotCreate.type == 'todo' ? 'active-point' : ''">To-Do
               </button>
-              <button ng-click="SpotCreate.type = 'pitstop'"
+              <button ng-click="SpotCreate.type = 'food'"
                       type="button"
                       class="btn btn-default btn-event"
-                      ng-class="SpotCreate.type == 'pitstop' ? 'active-point' : ''">PitStop
+                      ng-class="SpotCreate.type == 'food' ? 'active-point' : ''">Food
+              </button>
+              <button ng-click="SpotCreate.type = 'shelter'"
+                      type="button"
+                      class="btn btn-default btn-event"
+                      ng-class="SpotCreate.type == 'shelter' ? 'active-point' : ''">Shelter
               </button>
             </div>
           </div>
@@ -40,12 +45,13 @@
 
           <div class="col-md-9 col-sm-12 col-xs-7">
             <ui-select
-              ng-model="SpotCreate.is_private"
+              ng-model="SpotCreate.type"
+              search-enabled="false"
               theme="bootstrap">
-              <ui-select-match>{{$select.selected.label}}</ui-select-match>
+              <ui-select-match placeholder="Select category id...">{{$select.selected.name}}</ui-select-match>
               <ui-select-choices
-                repeat="item.value as item in SpotCreate.privacies | filter : $select.search track by $index">
-                <div ng-bind-html="item.label | highlight: $select.search"></div>
+                repeat="item.value as item in SpotCreate.spotTypes">
+                <div ng-bind-html="item.name "></div>
               </ui-select-choices>
             </ui-select>
           </div>

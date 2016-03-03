@@ -5,12 +5,7 @@
       <div class="col-xs-12 no-pad">
         <stars item="Spot.spot" class="clearfix"></stars>
 
-                            <span ng-class="{'event-spot-page':item.type == 'Event',
-                                     'recreation-spot':item.type == 'Recreation',
-                                     'pitstop-spot':item.type == 'PitStop'}">
-                        {{item.type}}
-                    </span>
-
+        <spot-type type="Spot.spot.type"></spot-type>
       </div>
 
       <div ng-if="Spot.spot.is_approved == false">

@@ -12,11 +12,7 @@
         <div class="col-md-2 col-xs-3 col-sm-4 spot-thumb">
           <figure>
             <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" ui-sref="spot({user_id: item.user_id, spot_id: item.id})" class="img-size">
-          <span class="spot-type" ng-class="{'event-spot-page':item.type == 'Event',
-                                       'recreation-spot':item.type == 'Recreation',
-                                       'pitstop-spot':item.type == 'PitStop'}">
-                          {{item.type}}
-                      </span>
+            <spot-type type="item.type"></spot-type>
           </figure>
         </div>
         <div class="col-md-10 col-xs-9 col-sm-8">

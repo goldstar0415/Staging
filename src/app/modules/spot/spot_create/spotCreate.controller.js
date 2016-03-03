@@ -42,7 +42,19 @@
     vm.youtube_links = [];
     vm.locations = [];
     vm.images = UploaderService.images;
-
+    vm.spotTypes = [{
+      name: 'Event',
+      value: 'event'
+    }, {
+      name: 'To-Do',
+      value: 'todo'
+    }, {
+      name: 'Food',
+      value: 'food'
+    }, {
+      name: 'Shelter',
+      value: 'shelter'
+    }];
 
     $scope.$watch('SpotCreate.images.files.length', function () {
       vm.checkFilesRestrictions();

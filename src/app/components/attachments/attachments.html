@@ -18,11 +18,7 @@
         <figure>
           <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="pull-left wrap-img-event nopad">
             <img class="media-object attachment-link" ng-src="{{spot.cover_url.medium}}">
-               <span class="spot-type" ng-class="{'event-spot-page':item.type == 'Event',
-                  'recreation-spot':item.type == 'Recreation',
-                  'pitstop-spot':item.type == 'PitStop'}">
-               Event
-               </span>
+            <spot-type type="spot.type"></spot-type>
           </a>
         </figure>
         <stars item="item"></stars>
