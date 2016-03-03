@@ -56,11 +56,11 @@
             {!! Form::label('email') !!}
             {!! Form::textarea('email', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
         </div>
-        <div class="form-group">
+        <div class="form-group event-only">
             {!! Form::label('start_date') !!}
             {!! Form::textarea('start_date', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
         </div>
-        <div class="form-group">
+        <div class="form-group event-only">
             {!! Form::label('end_date') !!}
             {!! Form::textarea('end_date', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
         </div>
