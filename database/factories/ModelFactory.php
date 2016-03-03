@@ -146,17 +146,24 @@ $factory->defineAs(App\SpotType::class, 'event', function (Generator $faker) {
     ];
 });
 
-$factory->defineAs(App\SpotType::class, 'recreation', function (Generator $faker) {
+$factory->defineAs(App\SpotType::class, 'todo', function (Generator $faker) {
     return [
-        'name' => 'recreation',
-        'display_name' => 'Recreation'
+        'name' => 'todo',
+        'display_name' => 'To-Do'
     ];
 });
 
-$factory->defineAs(App\SpotType::class, 'pitstop', function (Generator $faker) {
+$factory->defineAs(App\SpotType::class, 'food', function (Generator $faker) {
     return [
-        'name' => 'pitstop',
-        'display_name' => 'Pit Stop'
+        'name' => 'food',
+        'display_name' => 'Food'
+    ];
+});
+
+$factory->defineAs(App\SpotType::class, 'shelter', function (Generator $faker) {
+    return [
+        'name' => 'shelter',
+        'display_name' => 'Shelter'
     ];
 });
 

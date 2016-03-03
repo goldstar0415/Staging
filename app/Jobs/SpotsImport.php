@@ -24,8 +24,9 @@ use Vinkla\Instagram\InstagramManager;
 abstract class SpotsImport extends Job implements SelfHandling
 {
     const EVENT = 'event';
-    const RECREATION = 'recreation';
-    const PITSTOP = 'pitstop';
+    const TODO = 'todo';
+    const FOOD = 'food';
+    const SHELTER = 'shelter';
 
     /**
      * @var int
