@@ -14,7 +14,7 @@
     </div>
     <div class="clearfix"></div>
     <div ng-repeat="spot in Attachments.items.spots" class="media media-visible padding-bottom add-event row">
-      <div class="col-md-2 col-xs-3 col-sm-4 spot-thumb">
+      <div class="col-md-2 col-xs-4 col-sm-2 spot-thumb">
         <figure>
           <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="pull-left wrap-img-event nopad">
             <img class="media-object attachment-link" ng-src="{{spot.cover_url.medium}}">
@@ -23,7 +23,7 @@
         </figure>
         <stars item="item"></stars>
       </div>
-      <div class="attach-event col-md-9 col-xs-9">
+      <div class="attach-event col-md-9 col-xs-8 col-sm-9">
         <h3 class="media-heading ">
           <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-img clearfix">{{spot.title}}</a>
         </h3>
