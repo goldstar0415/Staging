@@ -12,7 +12,7 @@
           <img ng-src="{{Settings.data.avatar_url.medium}}" class="img-responsive"/>
         </figure>
         <!--<a ng-click="Setting.setAvatar()" class="edit-photo">Edit avatar</a>-->
-        <uploader button-text="EDIT AVATAR"></uploader>
+        <uploader class="pdt10" button-text="EDIT AVATAR"></uploader>
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-9 central">
@@ -578,11 +578,11 @@
             <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
               <input name="facebook_url" ng-model="Settings.data.social_links.facebook" class="social-input"
                      placeholder="URL..." id="fb_input"
-                     type="url"/>
+                     type="text" validate-link/>
 
               <div class="error-message-inline" ng-messages="socialForm.facebook_url.$error"
                    ng-if="socialForm.$submitted || socialForm.facebook_url.$touched">
-                <div ng-message="url">wrong url</div>
+                <div ng-message="link">wrong url</div>
               </div>
             </div>
           </div>
@@ -590,11 +590,11 @@
             <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
               <input name="twitter_url" ng-model="Settings.data.social_links.twitter" class="social-input"
                      placeholder="URL..." id="tw_input"
-                     type="url"/>
+                     type="text" validate-link/>
 
               <div class="error-message-inline" ng-messages="socialForm.twitter_url.$error"
                    ng-if="socialForm.$submitted || socialForm.twitter_url.$touched">
-                <div ng-message="url">wrong url</div>
+                <div ng-message="link">wrong url</div>
               </div>
             </div>
           </div>
@@ -602,11 +602,11 @@
             <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
               <input name="instagram_url" ng-model="Settings.data.social_links.instagram" class="social-input"
                      placeholder="URL..." id="in_input"
-                     type="url"/>
+                     type="text" validate-link/>
 
               <div class="error-message-inline" ng-messages="socialForm.instagram_url.$error"
                    ng-if="socialForm.$submitted || socialForm.instagram_url.$touched">
-                <div ng-message="url">wrong url</div>
+                <div ng-message="link">wrong url</div>
               </div>
             </div>
           </div>
@@ -614,11 +614,11 @@
             <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
               <input name="tumblr_url" ng-model="Settings.data.social_links.tumblr" class="social-input"
                      placeholder="URL..." id="t_input"
-                     type="url"/>
+                     type="text" validate-link/>
 
               <div class="error-message-inline" ng-messages="socialForm.tumblr_url.$error"
                    ng-if="socialForm.$submitted || socialForm.tumblr_url.$touched">
-                <div ng-message="url">wrong url</div>
+                <div ng-message="link">wrong url</div>
               </div>
             </div>
           </div>
@@ -626,11 +626,11 @@
             <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
               <input name="vk_url" ng-model="Settings.data.social_links.vk" class="social-input" placeholder="URL..."
                      id="vk_input"
-                     type="url"/>
+                     type="text" validate-link/>
 
               <div class="error-message-inline" ng-messages="socialForm.vk_url.$error"
                    ng-if="socialForm.$submitted || socialForm.vk_url.$touched">
-                <div ng-message="url">wrong url</div>
+                <div ng-message="link">wrong url</div>
               </div>
             </div>
           </div>
@@ -638,11 +638,11 @@
             <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
               <input name="custom_url" ng-model="Settings.data.social_links.custom" class="social-input"
                      placeholder="URL..."
-                     id="custom_input" type="url"/>
+                     id="custom_input" type="text" validate-link/>
 
               <div class="error-message-inline" ng-messages="socialForm.custom_url.$error"
                    ng-if="socialForm.$submitted || socialForm.custom_url.$touched">
-                <div ng-message="url">wrong url</div>
+                <div ng-message="link">wrong url</div>
               </div>
             </div>
           </div>
@@ -650,11 +650,11 @@
             <div class="col-md-9 col-md-offset-3 col-xs-12 no-pad">
               <input name="google_url" ng-model="Settings.data.social_links.google" class="social-input"
                      placeholder="URL..."
-                     id="google_input" type="url"/>
+                     id="google_input" type="text" validate-link/>
 
               <div class="error-message-inline" ng-messages="socialForm.google_url.$error"
                    ng-if="socialForm.$submitted || socialForm.google_url.$touched">
-                <div ng-message="url">wrong url</div>
+                <div ng-message="link">wrong url</div>
               </div>
             </div>
           </div>

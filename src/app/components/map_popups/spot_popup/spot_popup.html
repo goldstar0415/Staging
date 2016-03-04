@@ -153,9 +153,7 @@
       <div class="col-xs-3 mobile-popup-img spot-thumb">
         <figure>
           <img ng-src="{{data.spot.cover_url.medium}}" alt="Test spot" class="img-size" src="{{data.spot.cover_url.medium}}">
-               <span class="spot-type ng-binding event-spot-page" ng-class="{'event-spot-page':item.type == 'Event',
-                  'recreation-spot':item.type == 'Recreation',
-                  'pitstop-spot':item.type == 'PitStop'}">Event</span>
+          <spot-type type="data.spot.type"></spot-type>
         </figure>
         <stars item="data.spot" class="star-event"></stars>
       </div>

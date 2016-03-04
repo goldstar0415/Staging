@@ -27,6 +27,12 @@
         delete data.categories;
         delete data.images;
 
+        //get wysiwyg content
+        var editor = ContentTools.EditorApp.get();
+        editor.save();
+        editor.destroy();
+        vm.body = angular.element('[content-tools]').html();
+
         req.payload = JSON.stringify(data);
         if (vm.id) {
           req._method = 'PUT';

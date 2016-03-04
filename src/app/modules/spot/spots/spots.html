@@ -16,11 +16,7 @@
         <div class="col-md-2 col-xs-3 col-sm-4 spot-thumb">
           <figure>
             <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" class="img-size">
-          <span class="spot-type" ng-class="{'event-spot-page':item.type == 'Event',
-                                       'recreation-spot':item.type == 'Recreation',
-                                       'pitstop-spot':item.type == 'PitStop'}">
-                          {{item.type}}
-                      </span>
+            <spot-type type="item.type"></spot-type>
           </figure>
           <stars item="item"></stars>
         </div>

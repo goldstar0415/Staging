@@ -42,7 +42,15 @@
     width: 25rem !important;
     height: 25rem !important;
   }
-}
+  .left-menu-snap ul .map-profile a .map-icon {
+    background: none;
+  }
+  .article-wrap .share{
+    bottom: 0;
+    right: 0;
+    top: -2rem;
+    }
+  }
 
 @media (max-width: 991px) and (min-width: 767px) {
   .information-profile .avatar-wrap .avatar {
@@ -59,6 +67,9 @@
   .article-wrapper, .article-wrap {
     margin-bottom: 2rem;
     padding: 0;
+  }
+  .import-friendmap {
+    margin-right: 4rem;
   }
 }
 

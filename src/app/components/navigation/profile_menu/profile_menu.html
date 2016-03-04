@@ -36,16 +36,16 @@
         </li>
       </ul>
       <ul ng-if="$root.currentUser && $root.currentUser.id != $root.profileUser.id">
-        <li ng-if="Profile.checkPermission(profileUser.privacy_events)">
+        <li ng-if="Profile.checkPermission($root.profileUser.privacy_events)">
           <a ui-sref="spots({user_id: $root.profileUser.id})"
              ng-class="{active: Profile.$state.current.name == 'spots' || Profile.$state.current.name == 'spot'}"
              class="my-spots nav-spots"><span>Spots</span></a>
         </li>
-        <li ng-if="Profile.checkPermission(profileUser.privacy_favorites)">
+        <li ng-if="Profile.checkPermission($root.profileUser.privacy_favorites)">
           <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active"
              class="favorites nav-favorites"><span>Favorites</span></a>
         </li>
-        <li ng-if="Profile.checkPermission(profileUser.privacy_photo_map)">
+        <li ng-if="Profile.checkPermission($root.profileUser.privacy_photo_map)">
           <a ui-sref="photos.list({user_id: $root.profileUser.id})" ng-class="Profile.isActive('photos')"
              class="photomap nav-photomap"><span>Photo
             Map</span></a>
@@ -85,7 +85,7 @@
           </a>
         </h2>
 
-        <div class="text-center" ng-if="Profile.checkPermission(profileUser.privacy_info)">
+        <div class="text-center" ng-if="Profile.checkPermission($root.profileUser.privacy_info)">
           <!--  <div class="activity-level">
              {{$root.profileUser.activity_level}}
            </div> -->
@@ -125,28 +125,28 @@
           </div>
 
           <ul class="list-inline social-links">
-            <li><a ng-href="{{ $root.currentUser.social_links.facebook }}"
+            <li><a ng-href="{{ $root.currentUser.social_links.facebook | absoluteLink}}"
                    ng-if="$root.currentUser.social_links.facebook"
                    rel="nofollow" target="_blank" class="facebook">
             </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.twitter }}" ng-if="$root.currentUser.social_links.twitter"
+            <li><a ng-href="{{ $root.currentUser.social_links.twitter | absoluteLink}}" ng-if="$root.currentUser.social_links.twitter"
                    rel="nofollow" target="_blank" class="twitter">
             </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.instagram }}"
+            <li><a ng-href="{{ $root.currentUser.social_links.instagram | absoluteLink}}"
                    ng-if="$root.currentUser.social_links.instagram"
                    rel="nofollow" target="_blank" class="instagram">
             </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.tumblr }}" ng-if="$root.currentUser.social_links.tumblr"
+            <li><a ng-href="{{ $root.currentUser.social_links.tumblr | absoluteLink }}" ng-if="$root.currentUser.social_links.tumblr"
                    rel="nofollow" target="_blank" class="tumblr">
             </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.vk }}" ng-if="$root.currentUser.social_links.vk"
+            <li><a ng-href="{{ $root.currentUser.social_links.vk | absoluteLink }}" ng-if="$root.currentUser.social_links.vk"
                    rel="nofollow"
                    target="_blank" class="vk">
             </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.custom }}" ng-if="$root.currentUser.social_links.custom"
+            <li><a ng-href="{{ $root.currentUser.social_links.custom | absoluteLink }}" ng-if="$root.currentUser.social_links.custom"
                    rel="nofollow" target="_blank" class="custom">
             </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.google }}" ng-if="$root.currentUser.social_links.google"
+            <li><a ng-href="{{ $root.currentUser.social_links.google | absoluteLink }}" ng-if="$root.currentUser.social_links.google"
                    rel="nofollow" target="_blank" class="google-plus">
             </a></li>
           </ul>
@@ -154,36 +154,36 @@
 
           <div class="info-links hidden-lg hidden-md visible-sm visible-xs  ng-show col-xs-12">
             <a users-modal="followers" user="$root.profileUser"
-               ng-if="Profile.checkPermission(profileUser.privacy_followers)">
+               ng-if="Profile.checkPermission($root.profileUser.privacy_followers)">
               <i class="followers"></i>
               <span>{{$root.profileUser.count_followers}}</span>
               <br> Followers
             </a>
             <a users-modal="followings" user="$root.profileUser"
-               ng-if="Profile.checkPermission(profileUser.privacy_followings)">
+               ng-if="Profile.checkPermission($root.profileUser.privacy_followings)">
               <i class="followings"></i>
               <span>{{ $root.profileUser.count_followings}}</span>
               <br> Followings
             </a>
             <a ui-sref="spots({user_id: $root.profileUser.id})"
-               ng-if="Profile.checkPermission(profileUser.privacy_events)">
+               ng-if="Profile.checkPermission($root.profileUser.privacy_events)">
               <i class="events"></i>
               <span>{{$root.profileUser.count_spots}}</span>
               <br> Spots
             </a>
             <!-- <a ui-sref="photos.list({user_id: $root.profileUser.id})" class="albums"
-               ng-if="Profile.checkPermission(profileUser.privacy_photo_map)">
+               ng-if="Profile.checkPermission($root.profileUser.privacy_photo_map)">
               {{$root.profileUser.count_photos}}
             </a>
             <a ui-sref="favorites({user_id: $root.profileUser.id})" class="fav"
-               ng-if="Profile.checkPermission(profileUser.privacy_favorites)">
+               ng-if="Profile.checkPermission($root.profileUser.privacy_favorites)">
               {{$root.profileUser.count_favorites}}
             </a> -->
           </div>
 
 
           <aside class="module-sidebar clearfix visible-md visible-lg"
-                 ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.followers.length > 0 && Profile.checkPermission(profileUser.privacy_followers)">
+                 ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.followers.length > 0 && Profile.checkPermission($root.profileUser.privacy_followers)">
             <h2 class="sidebar-title mgb20">
               <a users-modal="followers" user="$root.profileUser">
                 Followers
@@ -206,7 +206,7 @@
           </aside>
 
           <aside class="module-sidebar clearfix visible-md visible-lg"
-                 ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.followings.length > 0 && Profile.checkPermission(profileUser.privacy_followings)">
+                 ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.followings.length > 0 && Profile.checkPermission($root.profileUser.privacy_followings)">
             <h2 class="sidebar-title">
               <a users-modal="followings" user="$root.profileUser">
                 Following
@@ -230,7 +230,7 @@
           </aside>
 
           <aside class="module-sidebar clearfix visible-md visible-lg"
-                 ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.spots.length > 0 && Profile.checkPermission(profileUser.privacy_events)">
+                 ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.spots.length > 0 && Profile.checkPermission($root.profileUser.privacy_events)">
             <h2 class="sidebar-title">
               <a ui-sref="spots({user_id: $root.profileUser.id})">
                 Spots
