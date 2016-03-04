@@ -2,7 +2,9 @@
 .settings {
   padding: 0 !important;
 }
-
+.pdt10 a {
+  padding-top: 10px;
+}
 .edit-photo {
   @include button;
   background-color: $green;

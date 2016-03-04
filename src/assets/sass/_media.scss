@@ -42,6 +42,9 @@
     width: 25rem !important;
     height: 25rem !important;
   }
+  .left-menu-snap ul .map-profile a .map-icon {
+    background: none;
+  }
 }
 
 @media (max-width: 991px) and (min-width: 767px) {
