@@ -79,7 +79,7 @@
   <div id="map" class="mapResize map {{mapState}}" ng-class="{'menu-offset': currentUser}"></div>
 
   <!-- content container-->
-  <div ng-show="mapState != 'full-size'" ui-view></div>
+  <div ng-show="mapState != 'full-size'" ui-view class="landing-wrapper"></div>
 
   <div ng-include="'app/components/navigation/profile_menu/profile_links.html'" class="map-block" ng-if="mapState == 'full-size' && currentUser"></div>
 
