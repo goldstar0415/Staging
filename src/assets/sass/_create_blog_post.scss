@@ -12,6 +12,12 @@
   location input {
     background: url(../img/icons/compass.png) no-repeat 99% center;
   }
+
+  div[content-tools] {
+    border: 1px solid #e9edf0;
+    margin: 15px;
+    min-height: 200px;
+  }
 }
 .event-additionl-info {
   location input {

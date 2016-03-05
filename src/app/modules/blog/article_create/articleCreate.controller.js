@@ -30,8 +30,7 @@
         //get wysiwyg content
         var editor = ContentTools.EditorApp.get();
         editor.save();
-        editor.destroy();
-        vm.body = angular.element('[content-tools]').html();
+        data.body = angular.element('[content-tools]').html();
 
         req.payload = JSON.stringify(data);
         if (vm.id) {

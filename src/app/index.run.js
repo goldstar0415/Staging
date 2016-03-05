@@ -62,6 +62,12 @@
       //close all modals
       $modalStack.dismissAll();
 
+      //close editor
+      if (angular.isDefined(window.ContentTools)) {
+        var editor = ContentTools.EditorApp.get();
+        editor.destroy();
+      }
+
       $rootScope.pageLoaded = true;
     }
 
