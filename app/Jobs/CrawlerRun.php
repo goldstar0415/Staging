@@ -17,14 +17,15 @@ use MongoClient;
 use MongoCollection;
 use Validator;
 
-class CrawlerRun extends Job implements SelfHandling/*, ShouldQueue*/
+class CrawlerRun extends Job implements SelfHandling, ShouldQueue
 {
-    use /*InteractsWithQueue,*/ SerializesModels;
+    use InteractsWithQueue, SerializesModels;
 
     /**
      * @var AppSettings
      */
     protected $settings = null;
+
     /**
      * Create a new job instance.
      *

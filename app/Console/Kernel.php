@@ -60,6 +60,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             $this->dispatch(app(\App\Jobs\ParseEvents::class));
+            $this->dispatch(app(\App\Jobs\CrawlerRun::class));
         })->weekly();
     }
 }
