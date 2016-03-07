@@ -37,10 +37,10 @@ class SpotPhoto extends BaseModel implements StaplerableInterface, Commentable
         $this->hasAttachedFile('photo', [
             'styles' => [
                 'thumb' => [
-                    'dimensions' => '100x100#',
+                    'dimensions' => '70x70#',
                     'convert_options' => ['quality' => 100]
                 ],
-                'medium' => '180x180'
+                'medium' => '160x160'
             ]
         ]);
         parent::__construct($attributes);
