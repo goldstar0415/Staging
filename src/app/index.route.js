@@ -34,7 +34,13 @@
       .state('index', {
         url: '/',
         parent: 'main',
-        mapState: 'big'
+        mapState: 'big',
+        params: {
+          radiusSelection: false,
+          pathSelection: false,
+          openSignIn: false,
+          activeSpotType: ''
+        }
       })
 
       .state('index.post', {

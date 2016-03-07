@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
+  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, SignInService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
     $rootScope.$state = $state;
     $rootScope.checkPermission = PermissionService.checkPermission;
     $rootScope.isMobile = L.Browser.touch;
@@ -14,7 +14,6 @@
     $rootScope.plannerIcon = '/assets/img/icons/planner_icon.png';
 
     MapService.Init('map');
-    //$rootScope.timezonesList = moment.tz.names();
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     $rootScope.$on("$stateChangeError", onStateChangeError);
@@ -55,6 +54,8 @@
       //    //MapService.FocusMapToCurrentLocation(4);
       //    break;
       //}
+
+      initIntroPage();
 
       //scroll top
       window.scrollTo(0, 0);
@@ -109,6 +110,22 @@
     };
 
     ////// COMMON FUNCTIONS
+
+    //intro page params
+    function initIntroPage() {
+      if ($state.params.radiusSelection) {
+        $rootScope.RadiusSelectionTool();
+      }
+      if ($state.params.pathSelection) {
+        $rootScope.PathSelectionTool();
+      }
+      if ($state.params.activeSpotType) {
+
+      }
+      if ($state.params.openSignIn) {
+        SignInService.openModal();
+      }
+    }
 
     //show/hide map
     $rootScope.changeMapState = function (mapState, urlState, isClearLayers) {

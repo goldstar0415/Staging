@@ -106,16 +106,6 @@ header {
         }
         .authorisation {
             height: 100%;
-            transition: 0.5s; 
-            cursor: pointer;
-
-            &:not(.separator-bg) { 
-                background-color: #EF4633;
-                a {
-                    color: #fff;
-                }
-            }
-            &:hover { background-color: #BF3C32; }
             a {
                 color: #8fa9bc;
                 @include vertical_align;

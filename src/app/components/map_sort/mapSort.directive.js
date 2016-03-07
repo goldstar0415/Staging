@@ -144,6 +144,8 @@
     function loadCategories() {
       $http.get(API_URL + '/spots/categories')
         .success(function (data) {
+          $rootScope.spotCategories = data;
+
           for (var k in data) {
             if (data[k].name == 'event') {
               $scope.eventCategories = data[k].categories;

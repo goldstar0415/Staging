@@ -24,7 +24,8 @@
       date: 'MM.DD.YYYY',
       time: 'hh:mm a',
       full: 'MMM DD, YYYY H:mm A',
-      backend: 'YYYY-MM-DD HH:mm:ss'
+      backend: 'YYYY-MM-DD HH:mm:ss',
+      backend_date: 'YYYY-MM-DD'
     })
 
 })();
