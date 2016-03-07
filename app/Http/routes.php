@@ -106,6 +106,7 @@ Route::get('message/{user_id}/read', 'ChatController@read');
  * Map Controls
  */
 Route::get('map/search', 'MapController@getSearch');
+Route::get('map/spots', 'MapController@getSpots');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
 Route::get('areas/{areas}/preview', 'AreaController@preview');
 Route::get('weather', 'MapController@getWeather');
@@ -140,17 +141,3 @@ Route::group(['prefix' => 'import/logs', 'middleware' => 'admin'], function () {
 Route::post('contact-us', 'UserController@contactUs');
 
 get('google-contacts', 'SocialContactsController@google');
-
-
-Route::get('mongo', function () {
-    $mongo = new MongoClient('mongodb://54.174.50.110:27017');
-    $db = $mongo->selectDB('airbnb');
-    $coll = new MongoCollection($db, 'apartments');
-    $cursor = $coll->find()->skip(298);
-    $elems = [];
-    foreach ($cursor as $item) {
-        $elems[] = $item;
-    }
-
-    return $elems;
-});
