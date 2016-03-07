@@ -71,12 +71,12 @@
                 $('#location_lng').val(location.lng);
             })
         ;
-    });
-    $(".new_multiple").select2({
-        tags: true,
-        tokenSeparators: [',', ' ']
-    });
 
+        $(".new_multiple").select2({
+            tags: true,
+            tokenSeparators: [',', ' ']
+        });
+    });
 
 //--------------------------------------------------
     $(document).ready(function () {
@@ -84,9 +84,7 @@
             var $spotsType;
 
             spotType();
-
             newTypeShowLog();
-
             deleteLogValue();
 
             function deleteLogValue() {
@@ -127,6 +125,12 @@
             function spotType() {
                 $spotsType = $("#spot_type option:selected").text().replace(/\s+/g, '').toLowerCase();
                 addSpotsCategory($spotsType);
+
+                if ($spotsType == 'event') {
+                    $('.event-only').show();
+                } else {
+                    $('.event-only').hide();
+                }
             }
         });
 
