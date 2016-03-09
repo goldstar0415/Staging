@@ -46,6 +46,8 @@ class MapController extends Controller
     /**
      * Get spots by special filters
      * @param SpotsSearchRequest $request
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function getSpots(SpotsSearchRequest $request)
     {
@@ -58,6 +60,12 @@ class MapController extends Controller
             });
         }
 
+        if ($request->has('type')) {
+            $spots->whereHas('category.type', function ($query) use ($request) {
+                $query->where('name', $request->type);
+            });
+        }
+
         if ($request->has('start_date')) {
             $spots->where('start_date', '>=', $request->start_date);
         } else {
@@ -65,7 +73,7 @@ class MapController extends Controller
         }
 
         if ($request->has('end_date')) {
-            $spots->where('end_date', '=>', $request->end_date);
+            $spots->where('end_date', '<=', $request->end_date);
         }
 
         if ($request->has('category')) {
@@ -75,7 +83,11 @@ class MapController extends Controller
         }
 
         if ($request->has('rating')) {
-
+            $spots->whereHas('votes', function ($query) {
+                $query->select(\DB::raw("avg(vote) as avg_vote"));
+            }, '>=', $request->rating);
         }
+
+        return $spots->get();
     }
 }
