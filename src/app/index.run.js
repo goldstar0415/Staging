@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, SignInService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
+  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, SpotService, SignInService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
     $rootScope.$state = $state;
     $rootScope.checkPermission = PermissionService.checkPermission;
     $rootScope.isMobile = L.Browser.touch;
@@ -55,7 +55,9 @@
       //    break;
       //}
 
-      initIntroPage();
+      if ($state.params.spotSearch) {
+        initIntroPage();
+      }
 
       //scroll top
       window.scrollTo(0, 0);
@@ -113,31 +115,50 @@
 
     //intro page params
     function initIntroPage() {
-      if ($state.params.radiusSelection) {
+      if ($state.params.spotSearch.radiusSelection) {
         $rootScope.RadiusSelectionTool();
       }
-      if ($state.params.pathSelection) {
+      if ($state.params.spotSearch.pathSelection) {
         $rootScope.PathSelectionTool();
       }
-      if ($state.params.activeSpotType) {
+      if ($state.params.spotSearch.activeSpotType) {
 
       }
-      if ($state.params.openSignIn) {
+      if ($state.params.spotSearch.openSignIn) {
         SignInService.openModal();
       }
-      if ($state.params.roadSelection) {
-        MapService.LoadSelections($state.params.roadSelection);
+      if ($state.params.spotSearch.roadSelection) {
+        MapService.LoadSelections($state.params.spotSearch.roadSelection);
       }
+      if ($state.params.spotSearch.spots && $state.params.spotSearch.spots.length > 0) {
+        showMarkers($state.params.spotSearch.spots);
+      }
+    }
+
+    function showMarkers(spots) {
+      spots = SpotService.formatSpot(spots);
+      var spotsArray = _.map(spots, function (item) {
+        return {
+          id: item.id,
+          spot_id: item.spot_id,
+          locations: item.points,
+          address: '',
+          spot: item
+        };
+      });
+
+      MapService.drawSpotMarkers(spotsArray, $state.params.spotSearch.activeSpotType, true);
+      //MapService.FitBoundsOfCurrentLayer();
     }
 
     //show/hide map
     $rootScope.changeMapState = function (mapState, urlState, isClearLayers) {
       MapService.ChangeState(mapState, isClearLayers);
 
-      if (urlState.name == 'index' && mapState == 'big') {
+      if (urlState.name == 'index' && mapState == 'big' &&  !$state.params.spotSearch) {
           angular.element('.map-tools').show();
           MapService.FocusMapToCurrentLocation(12);
-      } else {
+      } else if (!$state.params.spotSearch) {
         $rootScope.showHintPopup = false;
       }
     };

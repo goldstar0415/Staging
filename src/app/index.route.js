@@ -36,11 +36,7 @@
         parent: 'main',
         mapState: 'big',
         params: {
-          radiusSelection: false,
-          pathSelection: false,
-          openSignIn: false,
-          activeSpotType: '',
-          roadSelection: null
+          spotSearch: null
         }
       })
 

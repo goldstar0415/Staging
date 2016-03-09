@@ -49,10 +49,7 @@
           data.filter.end_date = moment(vm.searchParams.filter.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
         }
 
-        doSearch(data)
-          .success(function (data) {
-            console.log(data);
-          });
+        doSearch(data);
       }
     }
 
@@ -67,11 +64,7 @@
           }
         };
 
-        doSearch(data)
-          .success(function (data) {
-            console.log(data);
-          })
-        ;
+        doSearch(data);
       }
     }
 
@@ -86,11 +79,7 @@
           }
         };
 
-        doSearch(data)
-          .success(function (data) {
-            console.log(data);
-          })
-        ;
+        doSearch(data);
       }
     }
 
@@ -115,11 +104,7 @@
           data.filter.category_ids.push(category.id);
         }
 
-        doSearch(data)
-          .success(function (data) {
-            console.log(data);
-          })
-        ;
+        doSearch(data);
       }
     }
 
@@ -156,13 +141,18 @@
           },
           waypoints: [points]
         };
-        $state.go('index', {roadSelection: selection});
+        $state.go('index', {spotSearch: {roadSelection: selection}});
       }
     }
 
 
     function doSearch(params) {
       var promise = $http.get(SEARCH_URL + '?' + $.param(params));
+
+      promise.success(function (resp) {
+        console.log(resp);
+        $state.go('index', {spotSearch: {spots: resp, activeSpotType: params.type}});
+      });
 
       promise.catch(function (resp) {
         console.log(resp);
@@ -174,15 +164,15 @@
 
 
     function routeSearch() {
-      $state.go('index', {pathSelection: true, activeSpotType: 'event'});
+      $state.go('index', {spotSearch: {pathSelection: true, activeSpotType: 'event'}});
     }
 
     function radiusSearch() {
-      $state.go('index', {radiusSelection: true, activeSpotType: 'event'});
+      $state.go('index', {spotSearch: {radiusSelection: true, activeSpotType: 'event'}});
     }
 
     function goSignIn() {
-      $state.go('index', {openSignIn: !$rootScope.currentUser});
+      $state.go('index',{spotSearch: {openSignIn: !$rootScope.currentUser}});
     }
   }
 })();
