@@ -39,6 +39,10 @@ class AppServiceProvider extends ServiceProvider
         Spot::deleting(function (Spot $spot) {
             $spot->comments()->delete();
         });
+
+//        \DB::listen(function ($query, $bindings) {
+//            \Log::info('QUERY: ' . $query, $bindings);
+//        }); //TODO: delete
         
         User::creating(function (User $user) {
             $user->alias = str_slug($user->full_name);
