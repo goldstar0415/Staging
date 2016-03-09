@@ -6,12 +6,13 @@
     .controller('IntroController', IntroController);
 
   /** @ngInject */
-  function IntroController($state, $rootScope, toastr, $http, API_URL, DATE_FORMAT) {
+  function IntroController($state, $rootScope, toastr, $http, MapService, API_URL, DATE_FORMAT) {
     var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
 
     vm.searchParams = {
-      filter: {}
+      filter: {},
+      addresses: []
     };
     vm.ratings = [];
 
@@ -19,6 +20,7 @@
     vm.searchGrub = searchGrub;
     vm.searchTodo = searchTodo;
     vm.searchRoom = searchRoom;
+    vm.searchRoute = searchRoute;
     vm.routeSearch = routeSearch;
     vm.radiusSearch = radiusSearch;
     vm.goSignIn = goSignIn;
@@ -119,11 +121,32 @@
       }
     }
 
+    function searchRoute() {
+      if (vm.searchParams.search_text) {
+        var data = {
+          search_text: vm.searchParams.search_text
+        };
+
+        doSearch(data)
+          .success(function (data) {
+            console.log(data);
+
+            var selection = {
+              data: {
+                type: "FeatureCollection",
+                features: []
+              },
+              waypoints: [[{"lat": 49.97574, "lng": 36.144984}, {"lat": 49.993888, "lng": 36.316354}]]
+            };
+            MapService.LoadSelections(selection);
+          })
+        ;
+      }
+    }
+
 
     function doSearch(params) {
-      var promise = $http.get(SEARCH_URL, {
-        params: params
-      });
+      var promise = $http.get(SEARCH_URL + '?' + $.param(params));
 
       promise.catch(function (resp) {
         console.log(resp);
@@ -132,7 +155,6 @@
 
       return promise;
     }
-
 
 
     function routeSearch() {
