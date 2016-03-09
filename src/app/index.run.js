@@ -125,6 +125,9 @@
       if ($state.params.openSignIn) {
         SignInService.openModal();
       }
+      if ($state.params.roadSelection) {
+        MapService.LoadSelections($state.params.roadSelection);
+      }
     }
 
     //show/hide map

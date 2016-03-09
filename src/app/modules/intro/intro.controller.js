@@ -14,13 +14,15 @@
       filter: {},
       addresses: []
     };
-    vm.ratings = [];
+    vm.locations = [];
 
     vm.searchEvent = searchEvent;
     vm.searchGrub = searchGrub;
     vm.searchTodo = searchTodo;
     vm.searchRoom = searchRoom;
     vm.searchRoute = searchRoute;
+    vm.addLocation = addLocation;
+    vm.removeLocation = removeLocation;
     vm.routeSearch = routeSearch;
     vm.radiusSearch = radiusSearch;
     vm.goSignIn = goSignIn;
@@ -121,26 +123,40 @@
       }
     }
 
+    function addLocation() {
+      if (vm.newLocation && vm.newLocation.address && vm.newLocation.location) {
+        var item = angular.copy(vm.newLocation);
+        vm.locations.unshift(item);
+        vm.newLocation = {};
+      } else {
+        toastr.error('Wrong location');
+        vm.newLocation = {};
+      }
+    }
+
+    function removeLocation(idx) {
+      vm.locations.splice(idx, 1);
+    }
+
     function searchRoute() {
-      if (vm.searchParams.search_text) {
-        var data = {
-          search_text: vm.searchParams.search_text
+      var points = [];
+
+      if (vm.newLocation && vm.newLocation.location) {
+        points.push(vm.newLocation.location);
+      }
+      if (vm.locations.length > 0) {
+        points = _.union(points, _.pluck(vm.locations, 'location'));
+      }
+
+      if (points.length > 0) {
+        var selection = {
+          data: {
+            type: "FeatureCollection",
+            features: []
+          },
+          waypoints: [points]
         };
-
-        doSearch(data)
-          .success(function (data) {
-            console.log(data);
-
-            var selection = {
-              data: {
-                type: "FeatureCollection",
-                features: []
-              },
-              waypoints: [[{"lat": 49.97574, "lng": 36.144984}, {"lat": 49.993888, "lng": 36.316354}]]
-            };
-            MapService.LoadSelections(selection);
-          })
-        ;
+        $state.go('index', {roadSelection: selection});
       }
     }
 
@@ -158,7 +174,7 @@
 
 
     function routeSearch() {
-      $state.go('index', {pathSelection: true, spotType: 'event'});
+      $state.go('index', {pathSelection: true, activeSpotType: 'event'});
     }
 
     function radiusSearch() {

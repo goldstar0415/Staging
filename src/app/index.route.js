@@ -39,7 +39,8 @@
           radiusSelection: false,
           pathSelection: false,
           openSignIn: false,
-          activeSpotType: ''
+          activeSpotType: '',
+          roadSelection: null
         }
       })
 
