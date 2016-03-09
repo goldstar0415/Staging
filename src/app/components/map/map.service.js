@@ -18,8 +18,9 @@
       };
       //============================================
       var eventsLayer = new L.MarkerClusterGroup(clusterOptions);
-      var pitstopsLayer = new L.MarkerClusterGroup(clusterOptions);
-      var recreationsLayer = new L.MarkerClusterGroup(clusterOptions);
+      var foodLayer = new L.MarkerClusterGroup(clusterOptions);
+      var shelterLayer = new L.MarkerClusterGroup(clusterOptions);
+      var todoLayer = new L.MarkerClusterGroup(clusterOptions);
       var otherLayer = new L.MarkerClusterGroup(clusterOptions);
       //===============================================
       var currentLayer = "";
@@ -434,11 +435,14 @@
           case "events":
             layer = eventsLayer;
             break;
-          case "recreations":
-            layer = recreationsLayer;
+          case "todo":
+            layer = todoLayer;
             break;
-          case "pitstops":
-            layer = pitstopsLayer;
+          case "food":
+            layer = foodLayer;
+            break;а
+          case "shelter":
+            layer = shelterLayer;
             break;
           case "other":
             layer = otherLayer;
@@ -502,36 +506,53 @@
           eventsLayer.clearLayers();
         }
         map.addLayer(eventsLayer);
-        map.removeLayer(recreationsLayer);
-        map.removeLayer(pitstopsLayer);
+        map.removeLayer(todoLayer);
+        map.removeLayer(foodLayer);
+        map.removeLayer(shelterLayer);
         map.removeLayer(otherLayer);
         currentLayer = "events";
       }
 
-      //show pitstops layer on map
-      function showPitstopsLayer(clearLayers) {
+      //show food layer on map
+      function showFoodLayer(clearLayers) {
         ClearSelectionListeners();
         if (clearLayers) {
-          pitstopsLayer.clearLayers();
+          foodLayer.clearLayers();
         }
-        map.addLayer(pitstopsLayer);
-        map.removeLayer(recreationsLayer);
+        map.addLayer(foodLayer);
+        map.removeLayer(shelterLayer);
+        map.removeLayer(todoLayer);
         map.removeLayer(eventsLayer);
         map.removeLayer(otherLayer);
-        currentLayer = "pitstops";
+        currentLayer = "food";
       }
 
-      //show recreations layer
-      function showRecreationsLayer(clearLayers) {
+      //show shelter layer on map
+      function showShelterLayer(clearLayers) {
         ClearSelectionListeners();
         if (clearLayers) {
-          recreationsLayer.clearLayers();
+          shelterLayer.clearLayers();
         }
-        map.addLayer(recreationsLayer);
+        map.addLayer(shelterLayer);
+        map.removeLayer(todoLayer);
+        map.removeLayer(foodLayer);
         map.removeLayer(eventsLayer);
-        map.removeLayer(pitstopsLayer);
         map.removeLayer(otherLayer);
-        currentLayer = "recreations";
+        currentLayer = "shelter";
+      }
+
+      //show todo layer
+      function showTodoLayer(clearLayers) {
+        ClearSelectionListeners();
+        if (clearLayers) {
+          todoLayer.clearLayers();
+        }
+        map.addLayer(todoLayer);
+        map.removeLayer(eventsLayer);
+        map.removeLayer(foodLayer);
+        map.removeLayer(shelterLayer);
+        map.removeLayer(otherLayer);
+        currentLayer = "todo";
       }
 
       //show other layers
@@ -539,8 +560,9 @@
         ClearSelectionListeners();
         otherLayer.clearLayers();
         map.addLayer(otherLayer);
-        map.removeLayer(recreationsLayer);
-        map.removeLayer(pitstopsLayer);
+        map.removeLayer(todoLayer);
+        map.removeLayer(foodLayer);
+        map.removeLayer(shelterLayer);
         map.removeLayer(eventsLayer);
         currentLayer = "other";
       }
@@ -549,16 +571,18 @@
       function removeAllLayers() {
         currentLayer = "none";
         map.removeLayer(otherLayer);
-        map.removeLayer(recreationsLayer);
-        map.removeLayer(pitstopsLayer);
+        map.removeLayer(todoLayer);
+        map.removeLayer(foodLayer);
+        map.removeLayer(shelterLayer);
         map.removeLayer(eventsLayer);
       }
 
       //clear all layers
       function clearLayers() {
         eventsLayer.clearLayers();
-        recreationsLayer.clearLayers();
-        pitstopsLayer.clearLayers();
+        todoLayer.clearLayers();
+        foodLayer.clearLayers();
+        shelterLayer.clearLayers();
         otherLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
       }
@@ -1061,8 +1085,9 @@
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
         eventsLayer.clearLayers();
-        pitstopsLayer.clearLayers();
-        recreationsLayer.clearLayers();
+        foodLayer.clearLayers();
+        shelterLayer.clearLayers();
+        todoLayer.clearLayers();
         otherLayer.clearLayers();
 
         ClearSelectionListeners();
@@ -1604,12 +1629,16 @@
             item.markers = spotMarkers;
           }
         });
+
         switch (type) {
-          case 'pitstop':
-            pitstopsLayer.addLayers(markers);
+          case 'food':
+            foodLayer.addLayers(markers);
             break;
-          case 'recreation':
-            recreationsLayer.addLayers(markers);
+          case 'shelter':
+            shelterLayer.addLayers(markers);
+            break;
+          case 'todo':
+            todoLayer.addLayers(markers);
             break;
           case 'event':
             eventsLayer.addLayers(markers);
@@ -1663,8 +1692,9 @@
         //Layers
         ChangeState: ChangeState,
         showEvents: showEventsLayer,
-        showPitstops: showPitstopsLayer,
-        showRecreations: showRecreationsLayer,
+        showFood: showFoodLayer,
+        showShelter: showShelterLayer,
+        showTodo: showTodoLayer,
         showOtherLayers: showOtherLayers,
         clearLayers: clearLayers,
         //Selections

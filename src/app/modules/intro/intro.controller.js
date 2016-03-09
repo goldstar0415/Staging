@@ -149,9 +149,9 @@
     function doSearch(params) {
       var promise = $http.get(SEARCH_URL + '?' + $.param(params));
 
-      promise.success(function (resp) {
-        console.log(resp);
-        $state.go('index', {spotSearch: {spots: resp, activeSpotType: params.type}});
+      promise.success(function (spots) {
+        console.log(spots);
+        $state.go('index', {spotSearch: {spots: spots, activeSpotType: params.type}});
       });
 
       promise.catch(function (resp) {

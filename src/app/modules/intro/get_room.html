@@ -1,39 +1,40 @@
-<div class="content-block text-center"><h2 class="title-name">Get a Rooms</h2>
-    <h4>Million of Events for Everyone. Festivals. Concerts. Fairs &AMP; Fun Stuff</h4>
-    <div class="img-wrap"><img src="/assets/img/icons/get-room.png" alt=""/></div>
-    <div class="col-xs-12">
-        <div class="row">
-            <div class="search-filters search-block no-pad"><!--Please add here class="applyed" for re-color inputs to blue-->
-                <div class="country-filter">
-                    <input type="text" role="search" ng-model="Intro.searchParams.search_text"/>
-                    <span class="icon-nav"></span>
-                </div>
+<form ng-submit="Intro.searchRoom()">
+    <div class="content-block text-center"><h2 class="title-name">Get a Rooms</h2>
+        <h4>Million of Events for Everyone. Festivals. Concerts. Fairs &AMP; Fun Stuff</h4>
+        <div class="img-wrap"><img src="/assets/img/icons/get-room.png" alt=""/></div>
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="search-filters search-block no-pad"><!--Please add here class="applyed" for re-color inputs to blue-->
+                    <div class="country-filter">
+                        <input type="text" role="search" ng-model="Intro.searchParams.search_text"/>
+                        <span class="icon-nav"></span>
+                    </div>
 
-                <div class="radio-group">
-                    <input type="radio" class="radio" id="airbnb" name="AirBNB" value="1" ng-model="Intro.searchParams.category_airbnb">
-                    <label for="airbnb"><span></span>AirBnB</label>
-                    <input id="hotel" type="radio" class="radio" value="1" ng-model="Intro.searchParams.category_hotel">
-                    <label for="hotel"><span></span>Hotel</label>
-                </div>
+                    <div class="radio-group">
+                        <input type="radio" class="radio" id="airbnb" name="AirBNB" value="1" ng-model="Intro.searchParams.category_airbnb">
+                        <label for="airbnb"><span></span>AirBnB</label>
+                        <input id="hotel" type="radio" class="radio" value="1" ng-model="Intro.searchParams.category_hotel">
+                        <label for="hotel"><span></span>Hotel</label>
+                    </div>
 
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-default green-btn " >search</button>
+            </div>
+            <div class="row other-search">
+                <p class="text-uppercase">Other Search tools</p>
+                <a ng-click="Intro.routeSearch()"><span><i class="icon-route"></i></span><span>Route Search</span></a>
+                <a ng-click="Intro.radiusSearch()"><span><i class="icon-map-search"></i></span><span>Map Search</span></a>
+            </div>
+            <div class="row">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                    sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </div>
         </div>
-        <div class="row">
-            <button type="button" class="btn btn-default green-btn " ng-click="Intro.searchRoom()">search</button>
-        </div>
-        <div class="row other-search">
-            <p class="text-uppercase">Other Search tools</p>
-            <a ng-click="Intro.routeSearch()"><span><i class="icon-route"></i></span><span>Route Search</span></a>
-            <a ng-click="Intro.radiusSearch()"><span><i class="icon-map-search"></i></span><span>Map Search</span></a>
-        </div>
-        <div class="row">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
     </div>
-</div>
-
+</form>

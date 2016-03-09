@@ -130,34 +130,39 @@
       if ($state.params.spotSearch.roadSelection) {
         MapService.LoadSelections($state.params.spotSearch.roadSelection);
       }
-      if ($state.params.spotSearch.spots && $state.params.spotSearch.spots.length > 0) {
+      if ($state.params.spotSearch.spots) {
         showMarkers($state.params.spotSearch.spots);
       }
     }
 
     function showMarkers(spots) {
-      spots = SpotService.formatSpot(spots);
-      var spotsArray = _.map(spots, function (item) {
-        return {
-          id: item.id,
-          spot_id: item.spot_id,
-          locations: item.points,
-          address: '',
-          spot: item
-        };
-      });
+      if (spots.length > 0) {
+        spots = SpotService.formatSpot(spots);
+        var spotsArray = _.map(spots, function (item) {
+          return {
+            id: item.id,
+            spot_id: item.spot_id,
+            locations: item.points,
+            address: '',
+            spot: item
+          };
+        });
 
-      MapService.drawSpotMarkers(spotsArray, $state.params.spotSearch.activeSpotType, true);
-      //MapService.FitBoundsOfCurrentLayer();
+        MapService.drawSpotMarkers(spotsArray, $state.params.spotSearch.activeSpotType, true);
+        $rootScope.toggleLayer($state.params.spotSearch.activeSpotType);
+        //MapService.FitBoundsByLayer($state.params.spotSearch.activeSpotType);
+      } else {
+        toastr.error('Spots not found');
+      }
     }
 
     //show/hide map
     $rootScope.changeMapState = function (mapState, urlState, isClearLayers) {
       MapService.ChangeState(mapState, isClearLayers);
 
-      if (urlState.name == 'index' && mapState == 'big' &&  !$state.params.spotSearch) {
-          angular.element('.map-tools').show();
-          MapService.FocusMapToCurrentLocation(12);
+      if (urlState.name == 'index' && mapState == 'big' && !$state.params.spotSearch) {
+        angular.element('.map-tools').show();
+        MapService.FocusMapToCurrentLocation(12);
       } else if (!$state.params.spotSearch) {
         $rootScope.showHintPopup = false;
       }
