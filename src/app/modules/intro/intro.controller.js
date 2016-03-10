@@ -147,7 +147,7 @@
 
 
     function doSearch(params) {
-      var promise = $http.get(SEARCH_URL + '?' + $.param(params));
+      var promise = $http.get(SEARCH_URL + '?' + jQuery.param(params));
 
       promise.success(function (spots) {
         console.log(spots);

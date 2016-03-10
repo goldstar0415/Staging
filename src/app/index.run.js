@@ -29,6 +29,7 @@
         params: fromParams
       };
 
+      $rootScope.mapSortSpots =  {};
       $rootScope.currentParams = toParams;
 
       if (current.require_auth && !$rootScope.currentUser) {
@@ -44,16 +45,6 @@
       angular.element('.map-tools').hide();
       $rootScope.changeMapState(current.mapState, current, true);
 
-      //switch (current.locate) {
-      //  case 'fit':
-      //    MapService.FitBoundsOfCurrentLayer();
-      //    break;
-      //  case 'none':
-      //    break;
-      //  default:
-      //    //MapService.FocusMapToCurrentLocation(4);
-      //    break;
-      //}
 
       if ($state.params.spotSearch) {
         initIntroPage();
@@ -137,19 +128,8 @@
 
     function showMarkers(spots) {
       if (spots.length > 0) {
-        spots = SpotService.formatSpot(spots);
-        var spotsArray = _.map(spots, function (item) {
-          return {
-            id: item.id,
-            spot_id: item.spot_id,
-            locations: item.points,
-            address: '',
-            spot: item
-          };
-        });
-
-        $rootScope.$emit('update-map-data', spotsArray, $state.params.spotSearch.activeSpotType, false);
-        //MapService.FitBoundsByLayer($state.params.spotSearch.activeSpotType);
+        $rootScope.$emit('update-map-data', spots, $state.params.spotSearch.activeSpotType, false);
+        MapService.FitBoundsByLayer($state.params.spotSearch.activeSpotType);
       } else {
         toastr.error('Spots not found');
       }

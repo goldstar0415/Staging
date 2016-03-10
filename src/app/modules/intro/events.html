@@ -15,14 +15,12 @@
                         <div class="form-group">
                             <span class="icon-calendar"></span>
                             <input ng-datepicker class="datepicker" name="start_date" ng-model="Intro.searchParams.filter.start_date"
-                                   start-date="Intro.startDate"
                                    type="text">
                         </div>
                         <div class="form-group">
                             <span class="icon-calendar"></span>
                             <input ng-datepicker class="datepicker" name="end_date" ng-model="Intro.searchParams.filter.end_date"
-                                   start-date="Intro.start_date"
-                                   type="text">
+                                   start-date="Intro.searchParams.filter.start_date" type="text">
                         </div>
                     </div>
                 </div>
