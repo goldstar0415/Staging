@@ -7,7 +7,7 @@
         <a ng-click="MapSort.vertical = !MapSort.vertical" class="full-small"></a>
       </li>
       <li ng-class="{'active': $root.sortLayer == 'event'}">
-        <a ng-click="$root.toggleLayer('events')" class="events"><span class="hidden-xs">Events</span></a>
+        <a ng-click="$root.toggleLayer('event')" class="events"><span class="hidden-xs">Events</span></a>
       </li>
       <li ng-class="{'active': $root.sortLayer == 'todo'}">
         <a ng-click="$root.toggleLayer('todo')" class="recreation"><span class="hidden-xs">To-Do</span></a>
@@ -19,7 +19,7 @@
         <a ng-click="$root.toggleLayer('shelter')" class="pit-stops"><span class="hidden-xs">Shelter</span></a>
       </li>
       <li ng-class="{'active': $root.sortLayer == 'weather'}">
-        <a ng-click="MapSort.toggleWeather()" class="weather-link"><span class="hidden-xs">Weather</span></a>
+        <a ng-click="MapSort.toggleLayer('weather')" class="weather-link"><span class="hidden-xs">Weather</span></a>
       </li>
     </ul>
   </div>
@@ -31,7 +31,7 @@
   <div class="sidebar-menu-horizontal">
     <ul>
       <li ng-class="{'active': $root.sortLayer == 'event'}">
-        <a ng-click="$root.toggleLayer('events')" class="events"><span>Events</span></a>
+        <a ng-click="$root.toggleLayer('event')" class="events"><span>Events</span></a>
       </li>
       <li ng-class="{'active': $root.sortLayer == 'todo'}">
         <a ng-click="$root.toggleLayer('todo')" class="recreation"><span>To-Do</span>
@@ -44,12 +44,13 @@
         <a ng-click="$root.toggleLayer('shelter')" class="pit-stops"><span>Shelter</span></a>
       </li>
       <li ng-class="{'active': $root.sortLayer == 'weather'}">
-        <a ng-click="$root.toggleLayer('other')" class="weather-link"><span>Weather</span></a>
+        <a ng-click="$root.toggleLayer('weather')" class="weather-link"><span>Weather</span></a>
       </li>
     </ul>
   </div>
   <!--Attantion! HERE ADD CLASS "applyed"-->
-  <div class="search-filters col-xs-12" ng-show="$root.sortLayer != 'weather'"><!--ADD CLASS "applyed" here and styles will change-->
+  <div class="search-filters col-xs-12" ng-show="$root.sortLayer != 'weather'">
+    <!--ADD CLASS "applyed" here and styles will change-->
     <div class="row">
       <div class="col-xs-12">
         <div class="country-filter">
@@ -97,20 +98,19 @@
           <div class="clearfix relative">
             <div class="category-filer clearfix">
               <input type="text" placeholder="Filter by categories" role="search"
-                     ng-click="MapSort.eventsCategoryToggle = !MapSort.eventsCategoryToggle"/>
+                     ng-click="MapSort.categoryToggle = !MapSort.categoryToggle"/>
               <span class="icon-category"></span>
-              <span class="filters-arrow" ng-class="{'open-arrow': MapSort.eventsCategoryToggle}"></span>
+              <span class="filters-arrow" ng-class="{'open-arrow': MapSort.categoryToggle}"></span>
               <button class="action-btn"><span class="minus"></span></button>
 
               <div class="categories">
-                <div ng-show="MapSort.eventsCategoryToggle" class="hide-block-subcategory form-group">
+                <div ng-show="MapSort.categoryToggle" class="hide-block-subcategory form-group">
                   <ul class="list-unstyled">
-                    <li><a ng-click="toggleEventCategories();" ng-model="MapSort.eventsSelectAll">Select all
-                      sub-categories</a>
+                    <li>
+                      <a ng-click="" ng-model="MapSort.eventsSelectAll">Select all sub-categories</a>
                       <span class="icon-selected"></span>
                     </li>
-                    <li ng-repeat="item in eventCategories track by item.id"
-                        ng-click="MapSort.checkItem(item, eventCategories, 'event'); MapSort.sortEventsByCategories();">
+                    <li ng-repeat="item in MapSort.spotCategories[$root.sortLayer] ">
                       <a ng-class="{'active': item.selected}">{{item.display_name}}</a>
                       <span class="icon-selected"></span>
                     </li>
@@ -123,7 +123,7 @@
         </div>
 
         <div class="results">
-          <div ng-repeat="item in MapSort.displayEventsArray">
+          <div ng-repeat="item in $root.mapSortSpots[$root.sortLayer]">
             <div class="event-result clearfix">
               <div class="col-xs-2 padding-0">
                 <div class="event-result-logo">
@@ -162,7 +162,7 @@
                         ng-if="$root.currentUser && $root.currentUser.id != item.spot.user_id && item.spot.is_favorite">
                         <a class="fav favorited" ng-click="MapSort.removeFromFavorite(item.spot)">Unfavorite</a>
                       </li>
-                      <li><a href="#">Share</a></li>
+                      <li><a>Share</a></li>
                     </ul>
                   </div>
                 </div>
@@ -170,12 +170,11 @@
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
-
   </div>
+
+
   <div class="footer-search">
     <span class="icon-tick" ng-show="$root.sortLayer != 'weather'"></span>
     <span class="icon-arrow" ng-show="$root.sortLayer != 'weather'"></span>
@@ -185,19 +184,19 @@
         <div class="numbers-events">
           <a href="" class="hide" title="Close"></a>
 
-          <p>{{MapSort.displayEventsArray.length|| 0}} {{ $root.sortLayer }} Spots found</p>
+          <p>{{$root.mapSortSpots[$root.sortLayer].length || 0}} {{ $root.sortLayer }} Spots found</p>
         </div>
       </div>
 
 
       <!--            <div class="categories">
-                      <p ng-click="MapSort.eventsCategoryToggle = !MapSort.eventsCategoryToggle">{{MapSort.eventsCategoryToggle ? 'Hide': 'Show all'}}
+                      <p ng-click="MapSort.categoryToggle = !MapSort.categoryToggle">{{MapSort.categoryToggle ? 'Hide': 'Show all'}}
                           sub-categories
                           <span class="filters-arrow"
-                                ng-class="{'open-arrow': MapSort.eventsCategoryToggle}">
+                                ng-class="{'open-arrow': MapSort.categoryToggle}">
                           </span>
                       </p>
-                      <div ng-show="MapSort.eventsCategoryToggle" class="hide-block-subcategory form-group">
+                      <div ng-show="MapSort.categoryToggle" class="hide-block-subcategory form-group">
                           <ul class="list-unstyled">
                               <li><a ng-click="toggleEventCategories();" ng-model="MapSort.eventsSelectAll">Select all sub-categories</a>
                               </li>
@@ -210,8 +209,6 @@
                   </div>-->
 
     </div>
-
-
 
 
     <div ng-show="$root.sortLayer == 'weather'">
@@ -318,5 +315,5 @@
       </div>
     </div>
   </div>
-  <a class="close-popup" ng-click="MapSort.toggleMenu()"></a>
+  <a class="close-popup" ng-click="MapSort.vertical = !MapSort.vertical"></a>
 </div>

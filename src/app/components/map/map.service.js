@@ -440,7 +440,7 @@
             break;
           case "food":
             layer = foodLayer;
-            break;а
+            break;
           case "shelter":
             layer = shelterLayer;
             break;
@@ -497,6 +497,26 @@
         $timeout(function () {
           map.invalidateSize();
         })
+      }
+
+      function showLayer(layer) {
+        switch (layer) {
+          case 'event':
+            showEventsLayer();
+            break;
+          case 'todo':
+            showTodoLayer();
+            break;
+          case 'food':
+            showFoodLayer();
+            break;
+          case 'shelter':
+            showShelterLayer();
+            break;
+          case 'other':
+            showOtherLayers();
+            break;
+        }
       }
 
       //show events layer on map.
@@ -1210,22 +1230,22 @@
 
           marker.on('click', function () {
             //if (!scope.item.spot.photos) {
-              Spot.get({id: scope.item.spot.id}, function (fullSpot) {
-                //merge photos
-                fullSpot.photos = _.union(fullSpot.comments_photos, fullSpot.photos);
-                scope.item.spot = fullSpot;
+            Spot.get({id: scope.item.spot.id}, function (fullSpot) {
+              //merge photos
+              fullSpot.photos = _.union(fullSpot.comments_photos, fullSpot.photos);
+              scope.item.spot = fullSpot;
 
-                var params = {
-                  page: 1,
-                  limit: 10,
-                  spot_id: fullSpot.id
-                };
-                SpotComment.query(params, function (comments) {
-                  scope.item.spot.comments = comments.data;
+              var params = {
+                page: 1,
+                limit: 10,
+                spot_id: fullSpot.id
+              };
+              SpotComment.query(params, function (comments) {
+                scope.item.spot.comments = comments.data;
 
-                  SpotService.initMarker(scope.item.spot);
-                });
+                SpotService.initMarker(scope.item.spot);
               });
+            });
             //}
           });
         }
@@ -1478,7 +1498,7 @@
                 }
               });
               spots = FilterUniqueObjects(spots);
-              $rootScope.$emit('update-map-data', spots);
+              $rootScope.$emit('update-map-data', spots, null, true);
 
               if (isFocus) {
                 FitBoundsOfDrawLayer();
@@ -1489,7 +1509,7 @@
             });
         } else {
           clearLayers();
-          $rootScope.$emit('update-map-data', []);
+          $rootScope.$emit('update-map-data', [], null, false);
         }
 
         //fix $.param bug with object keys
@@ -1691,6 +1711,7 @@
         GetDraggableLayer: GetDraggableLayer,
         //Layers
         ChangeState: ChangeState,
+        showLayer: showLayer,
         showEvents: showEventsLayer,
         showFood: showFoodLayer,
         showShelter: showShelterLayer,
