@@ -55,6 +55,9 @@
                     span:first-child {
                         height: 15rem;
                         line-height: 15rem;
+                        img {
+                            max-height: 15rem;
+                        }
                     }
                 }
             }
@@ -180,6 +183,9 @@
                     }
                 }
             }
+        }
+        .road-trip {
+            
         }
         .other-search {
             color: $blue;
