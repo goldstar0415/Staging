@@ -82,6 +82,12 @@ class MapController extends Controller
             });
         }
 
+        if ($request->has('tags')) {
+            $spots->whereHas('tags', function ($query) use ($request) {
+                $query->whereIn('name', $request->tags);
+            });
+        }
+
         if ($request->has('rating')) {
             $spots->whereHas('votes', function ($query) {
                 $query->select(\DB::raw("avg(vote) as avg_vote"));
