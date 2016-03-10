@@ -71,7 +71,7 @@ class MapController extends Controller
         if ($request->has('filter.start_date')) {
             $spots->where('start_date', '>=', $request->filter['start_date']);
         } else {
-            $spots->where('start_date', '>=', Carbon::now()->format('Y-m-d'));
+//            $spots->where('start_date', '>=', Carbon::now()->format('Y-m-d'));
         }
 
         if ($request->has('filter.end_date')) {
@@ -99,7 +99,9 @@ class MapController extends Controller
         $points = [];
         $spots->get()->each(function ($spot) use (&$points) {
             return $spot->points->each(function ($point) use ($spot, &$points) {
-                $points[] = $point->setRelation('spot', $spot->setRelations([]));
+                $points[] = $point->setRelation('spot', $spot->setRelations([
+                    'categoty' => $spot->category->setRelation('type', $spot->category->type)
+                ]));
             });
         });
 
