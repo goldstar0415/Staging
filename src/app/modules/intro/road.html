@@ -4,8 +4,9 @@
     <div class="img-wrap"><img src="/assets/img/icons/plan.png" alt=""/></div>
     <div class="col-xs-12">
         <div class="row road-trip">
-            <div class="search-filters search-block no-pad"><!--Please add here class="applyed" for re-color inputs to blue-->
+            <div class="search-filters search-block no-pad applyed"><!--Please add here class="applyed" for re-color inputs to blue-->
                 <div class="country-filter clearfix">
+                    <span class="icon-play" ></span>
                     <location address="Intro.newLocation.address" location="Intro.newLocation.location"
                               bind-marker="false" limit="15"></location>
                     <span class="icon-nav" ></span>
@@ -16,8 +17,9 @@
                     <location address="item.address" location="item.location" limit="15" bind-marker="false"></location>
                     <span class="icon-nav"></span>
                 </div>
-
-                <a class="add" ng-click="Intro.addLocation()">Add another stop</a>
+                <div class="country-filter clearfix ">
+                    <a class="add-row" ng-click="Intro.addLocation()"><span></span>Add another stop</a>
+                </div>
             </div>
         </div>
 
@@ -26,7 +28,7 @@
             <button type="submit" class="btn btn-default green-btn " ng-click="Intro.searchRoute()">search</button>
         </div>
         <div class="row other-search">
-          <a ng-click="Intro.routeSearch()"><span><i class="icon-route"></i></span><span>use map tool</span></a>
+            <a class="long-btn-map" ng-click="Intro.routeSearch()"><span><i class="icon-route"></i>use map tool</span></a>
         </div>
         <div class="row">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
