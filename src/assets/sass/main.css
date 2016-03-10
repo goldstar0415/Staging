@@ -996,6 +996,9 @@
     .search-filters {
         min-height: 30rem;
     }
+    .landing .search-filters {
+        min-height: auto;
+    }
 }
 
 @media (min-device-width: 240px) and (max-device-width: 767px) and (orientation: landscape) {

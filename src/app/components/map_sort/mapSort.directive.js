@@ -18,6 +18,12 @@
 
   function mapSort($rootScope, MapService, $http, SpotService, API_URL, DATE_FORMAT) {
     var vm = this;
+    var SEARCH_URL = API_URL + '/map/spots';
+    var restrictions = {
+      tags: 7,
+      locations: 20
+    };
+    var isSelectedAll = false;
 
     vm.vertical = true;
     vm.weatherForecast = [];
@@ -25,9 +31,18 @@
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
     vm.removeFromFavorite = SpotService.removeFromFavorite;
+    vm.search = search;
+    vm.selectAllCategories = selectAllCategories;
+    vm.invalidTag = invalidTag;
+    vm.onTagsAdd = onTagsAdd;
 
-    $rootScope.mapSortSpots = $rootScope.mapSortSpots || {};
+    vm.searchParams = {
+      locations: [],
+      tags: []
+    };
+
     $rootScope.sortLayer = $rootScope.sortLayer || 'event';
+    $rootScope.isDrawArea = false;
     $rootScope.toggleLayer = toggleLayer;
 
     $rootScope.$on('update-map-data', onUpdateMapData);
@@ -42,7 +57,6 @@
 
 
     function onUpdateMapData(event, spots, layer, isDrawArea) {
-      console.log(arguments);
       layer = layer || $rootScope.sortLayer;
 
       //group by spot type
@@ -61,7 +75,7 @@
     }
 
     function toggleLayer(layer, isDrawArea) {
-      isDrawArea = _.isUndefined(isDrawArea) ? true : isDrawArea;
+      $rootScope.isDrawArea = _.isUndefined(isDrawArea) ? true : isDrawArea;
       var wp = MapService.GetPathWaypoints();
       var geoJson = MapService.GetGeoJSON();
 
@@ -85,6 +99,23 @@
       }
     }
 
+    function onTagsAdd(q, w, e) {
+      if (vm.searchParams.tags.length < restrictions.tags) {
+        return true;
+      } else {
+        toastr.error('You can\'t add more than ' + restrictions.tags + ' tags');
+        return false;
+      }
+    }
+
+    function invalidTag(tag) {
+      if (tag.name.length > 64) {
+        toastr.error('Your tag is too long. Max 64 symbols.');
+      } else {
+        toastr.error('Invalid input.');
+      }
+    }
+
     function loadCategories() {
       if (!$rootScope.spotCategories) {
         $http.get(API_URL + '/spots/categories')
@@ -98,13 +129,50 @@
     }
 
     function _loadCategories(data) {
-      vm.spotCategories = _.map(data, function (item) {
-        var category = {};
-        category[item.name] = item.categories;
-        return category;
+      vm.spotCategories = {};
+      _.each(data, function (item) {
+        vm.spotCategories[item.name] = item.categories;
       });
+      console.log(vm.spotCategories);
     }
 
+
+    function search() {
+      var data = {
+        search_text: vm.searchParams.search_text,
+        filter: {
+          tags: vm.searchParams.tags,
+          rating: vm.searchParams.rating
+        }
+      };
+
+      if (vm.searchParams.start_date) {
+        data.filter.start_date = moment(vm.searchParams.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
+      }
+      if (vm.searchParams.end_date) {
+        data.filter.end_date = moment(vm.searchParams.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
+      }
+console.log(vm.spotCategories,$rootScope.sortLayer);
+      var categories = _.where(vm.spotCategories[$rootScope.sortLayer], {selected: true});
+      if (categories.length > 0) {
+        data.filter.category_ids = _.pluck(categories, 'id');
+      }
+      console.log(data);
+      $http.get(SEARCH_URL + '?' + jQuery.param(data))
+        .success(function (spots) {
+          console.log(spots);
+        }).catch(function (resp) {
+          console.warn(resp);
+          toastr.error('Search error');
+        });
+    }
+
+    function selectAllCategories() {
+      isSelectedAll = !isSelectedAll;
+      _.each(vm.spotCategories[$rootScope.sortLayer], function (item) {
+        item.selected = isSelectedAll;
+      });
+    }
 
     //============================ weather section =========================
     function weather(resp) {
