@@ -49,12 +49,18 @@
         font-family: 'ralewayblack';
     }
     .intro {
+        background-color: #fff;
+
         h3 {
             display: none;
         }
         min-height: 86.5%;
         ul {
             padding-left: 0;
+            @media(min-width:1440px){
+                max-width: 80%;
+                margin: 0 auto;
+            }
             li {
                 text-align: center;
                 margin-top: 7rem;
@@ -166,38 +172,38 @@
                     color: #929fa7;
                 }
             }
-            //.dropdown-block {
-            //  padding-bottom: 1rem;
-            //  .btn-group {
-            //    width: 100%;
-            //    .btn {
-            //      border-radius: 0;
-            //      background-color: #f5f5f7 !important;
-            //      text-overflow: ellipsis;
-            //      box-shadow: none;
-            //      border-color: transparent;
-            //      color: $blue;
-            //      height: 5rem;
-            //      width: 100%;
-            //      line-height: 3rem;
-            //
-            //      &:hover, &:focus {
-            //        border: 1px solid #76c7dc;
-            //        -webkit-transition: box-shadow .3s, border-color .3s;
-            //        transition: box-shadow .3s, border-colors .3s;
-            //        box-shadow: inset 0 1px 2px 0 #fff, 0 0 3px 0 #00b7f3;
-            //        background-color: #f5f5f7;
-            //      }
-            //      .caret {
-            //        border: 0.75rem solid transparent;
-            //        border-top-color: $blue-btn;
-            //        border-bottom: 0;
-            //        background: none;
-            //        margin-top: 1rem;
-            //      }
-            //    }
-            //  }
-            //}
+            .dropdown-block {
+                padding-bottom: 1rem;
+                //  .btn-group {
+                //    width: 100%;
+                .btn {
+                    border-radius: none;
+                    background-color: #f5f5f7 !important;
+                    text-overflow: ellipsis;
+                    box-shadow: none;
+                    border-color: transparent;
+                    color: $blue;
+                    /*                    height: 5rem;
+                                        width: 100%;
+                                        line-height: 3rem;*/
+
+                    &:hover, &:focus {
+                        border: 1px solid #76c7dc;
+                        -webkit-transition: box-shadow .3s, border-color .3s;
+                        transition: box-shadow .3s, border-colors .3s;
+                        box-shadow: inset 0 1px 2px 0 #fff, 0 0 3px 0 #00b7f3;
+                        background-color: #f5f5f7;
+                    }
+                    .caret {
+                        border: 0.75rem solid transparent;
+                        border-top-color: $blue-btn;
+                        border-bottom: 0;
+                        background: none;
+                        margin-top: 0;
+                    }
+                }
+                //  }
+            }
         }
         .road-trip {
             margin-bottom: 1rem;
