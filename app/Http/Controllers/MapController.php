@@ -54,9 +54,11 @@ class MapController extends Controller
         $spots = Spot::query();
 
         if ($request->has('search_text')) {
-            $spots->where('title', 'ilike', "%$request->search_text%");
-            $spots->orWhereHas('points', function ($query) use ($request) {
-                $query->where('address', 'ilike', "%$request->search_text%");
+            $spots->where(function ($query) use ($request) {
+                $query->where('title', 'ilike', "%$request->search_text%")
+                    ->orWhereHas('points', function ($query) use ($request) {
+                    $query->where('address', 'ilike', "%$request->search_text%");
+                });
             });
         }
 
@@ -94,6 +96,13 @@ class MapController extends Controller
             }, '>=', $request->filter['rating']);
         }
 
-        return $spots->get();
+        $points = [];
+        $spots->get()->each(function ($spot) use (&$points) {
+            return $spot->points->each(function ($point) use ($spot, &$points) {
+                $points[] = $point->setRelation('spot', $spot->setRelations([]));
+            });
+        });
+
+        return $points;
     }
 }
