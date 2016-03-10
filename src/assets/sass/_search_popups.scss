@@ -1220,7 +1220,7 @@
     position: absolute !important;
 
     .show-menu-profile {
-      top: 83vh;
+      top: 75vh;
       //width: 7rem;
       //height: 7rem;
     }
@@ -1233,10 +1233,12 @@
       opacity: 0.8;
 
       ul li {
-        width: 25%;
+        width: 20%;
         height: 50px;
 
         a {
+          margin-top: 0;
+          padding-top: 8px;
           height: 50px;
           background-size: 40px;
           background-position: 45%;
