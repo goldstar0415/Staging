@@ -23,6 +23,7 @@
       tags: 7,
       locations: 20
     };
+    var isSelectedAll = false;
 
     vm.vertical = true;
     vm.weatherForecast = [];
@@ -31,6 +32,7 @@
     vm.addToFavorite = SpotService.addToFavorite;
     vm.removeFromFavorite = SpotService.removeFromFavorite;
     vm.search = search;
+    vm.selectAllCategories = selectAllCategories;
     vm.invalidTag = invalidTag;
     vm.onTagsAdd = onTagsAdd;
 
@@ -55,7 +57,6 @@
 
 
     function onUpdateMapData(event, spots, layer, isDrawArea) {
-      console.log(arguments);
       layer = layer || $rootScope.sortLayer;
 
       //group by spot type
@@ -128,17 +129,21 @@
     }
 
     function _loadCategories(data) {
-      vm.spotCategories = _.map(data, function (item) {
-        var category = {};
-        category[item.name] = item.categories;
-        return category;
+      vm.spotCategories = {};
+      _.each(data, function (item) {
+        vm.spotCategories[item.name] = item.categories;
       });
+      console.log(vm.spotCategories);
     }
 
 
     function search() {
       var data = {
-        filter: {}
+        search_text: vm.searchParams.search_text,
+        filter: {
+          tags: vm.searchParams.tags,
+          rating: vm.searchParams.rating
+        }
       };
 
       if (vm.searchParams.start_date) {
@@ -147,7 +152,12 @@
       if (vm.searchParams.end_date) {
         data.filter.end_date = moment(vm.searchParams.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
       }
-
+console.log(vm.spotCategories,$rootScope.sortLayer);
+      var categories = _.where(vm.spotCategories[$rootScope.sortLayer], {selected: true});
+      if (categories.length > 0) {
+        data.filter.category_ids = _.pluck(categories, 'id');
+      }
+      console.log(data);
       $http.get(SEARCH_URL + '?' + jQuery.param(data))
         .success(function (spots) {
           console.log(spots);
@@ -155,6 +165,13 @@
           console.warn(resp);
           toastr.error('Search error');
         });
+    }
+
+    function selectAllCategories() {
+      isSelectedAll = !isSelectedAll;
+      _.each(vm.spotCategories[$rootScope.sortLayer], function (item) {
+        item.selected = isSelectedAll;
+      });
     }
 
     //============================ weather section =========================

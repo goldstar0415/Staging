@@ -58,7 +58,8 @@
           <span class="icon-nav"></span>
         </div>
         <div class="filters-button" ng-click="isShowFilter = !isShowFilter"></div>
-        <div class="btn-apply btn-top" ng-click="MapSort.search()" ng-hide="isShowFilter || $root.isDrawArea"><span class="icon-apply"></span></div>
+        <div class="btn-apply btn-top" ng-click="MapSort.search()" ng-hide="isShowFilter || $root.isDrawArea"><span
+          class="icon-apply"></span></div>
       </div>
     </div>
     <div class="row">
@@ -73,7 +74,8 @@
           <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea}">
             <div class="form-group">
               <span class="icon-calendar"></span>
-              <input ng-datepicker ng-model="MapSort.searchParams.startDate" class="date" placeholder="FROM DATE" type="text">
+              <input ng-datepicker ng-model="MapSort.searchParams.startDate" class="date" placeholder="FROM DATE"
+                     type="text">
             </div>
             <div class="form-group">
               <span class="icon-calendar"></span>
@@ -100,7 +102,8 @@
               ng-model="MapSort.searchParams.rating"
               search-enabled="false"
               theme="bootstrap">
-              <ui-select-match placeholder="star rating">Rated Higher than {{ $select.selected }} Stars</ui-select-match>
+              <ui-select-match placeholder="star rating">Rated Higher than {{ $select.selected }} Stars
+              </ui-select-match>
               <ui-select-choices repeat="item in [5,4,3,2]">
                 <div ng-bind-html="'Rated Higher than ' + item + ' Stars'"></div>
               </ui-select-choices>
@@ -119,11 +122,12 @@
               <div class="categories">
                 <div ng-show="MapSort.categoryToggle" class="hide-block-subcategory form-group">
                   <ul class="list-unstyled">
-                    <li>
-                      <a ng-click="" ng-model="MapSort.eventsSelectAll">Select all sub-categories</a>
+                    <li ng-click="MapSort.selectAllCategories()">
+                      <a>Select all sub-categories</a>
                       <span class="icon-selected"></span>
                     </li>
-                    <li ng-repeat="item in MapSort.spotCategories[$root.sortLayer] ">
+                    <li ng-repeat="item in MapSort.spotCategories[$root.sortLayer]"
+                        ng-click="item.selected = !item.selected">
                       <a ng-class="{'active': item.selected}">{{item.display_name}}</a>
                       <span class="icon-selected"></span>
                     </li>
@@ -136,7 +140,7 @@
           </div>
         </div>
 
-        <div class="results" >
+        <div class="results">
           <div ng-repeat="item in $root.mapSortSpots[$root.sortLayer]">
             <div class="event-result clearfix">
               <div class="col-xs-2 padding-0">
