@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
+  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, SpotService, SignInService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
     $rootScope.$state = $state;
     $rootScope.checkPermission = PermissionService.checkPermission;
     $rootScope.isMobile = L.Browser.touch;
@@ -14,7 +14,6 @@
     $rootScope.plannerIcon = '/assets/img/icons/planner_icon.png';
 
     MapService.Init('map');
-    //$rootScope.timezonesList = moment.tz.names();
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     $rootScope.$on("$stateChangeError", onStateChangeError);
@@ -55,6 +54,10 @@
       //    //MapService.FocusMapToCurrentLocation(4);
       //    break;
       //}
+
+      if ($state.params.spotSearch) {
+        initIntroPage();
+      }
 
       //scroll top
       window.scrollTo(0, 0);
@@ -110,14 +113,57 @@
 
     ////// COMMON FUNCTIONS
 
+    //intro page params
+    function initIntroPage() {
+      if ($state.params.spotSearch.radiusSelection) {
+        $rootScope.RadiusSelectionTool();
+      }
+      if ($state.params.spotSearch.pathSelection) {
+        $rootScope.PathSelectionTool();
+      }
+      if ($state.params.spotSearch.activeSpotType) {
+
+      }
+      if ($state.params.spotSearch.openSignIn) {
+        SignInService.openModal();
+      }
+      if ($state.params.spotSearch.roadSelection) {
+        MapService.LoadSelections($state.params.spotSearch.roadSelection);
+      }
+      if ($state.params.spotSearch.spots) {
+        showMarkers($state.params.spotSearch.spots);
+      }
+    }
+
+    function showMarkers(spots) {
+      if (spots.length > 0) {
+        spots = SpotService.formatSpot(spots);
+        var spotsArray = _.map(spots, function (item) {
+          return {
+            id: item.id,
+            spot_id: item.spot_id,
+            locations: item.points,
+            address: '',
+            spot: item
+          };
+        });
+
+        MapService.drawSpotMarkers(spotsArray, $state.params.spotSearch.activeSpotType, true);
+        $rootScope.toggleLayer($state.params.spotSearch.activeSpotType);
+        //MapService.FitBoundsByLayer($state.params.spotSearch.activeSpotType);
+      } else {
+        toastr.error('Spots not found');
+      }
+    }
+
     //show/hide map
     $rootScope.changeMapState = function (mapState, urlState, isClearLayers) {
       MapService.ChangeState(mapState, isClearLayers);
 
-      if (urlState.name == 'index' && mapState == 'big') {
-          angular.element('.map-tools').show();
-          MapService.FocusMapToCurrentLocation(12);
-      } else {
+      if (urlState.name == 'index' && mapState == 'big' && !$state.params.spotSearch) {
+        angular.element('.map-tools').show();
+        MapService.FocusMapToCurrentLocation(12);
+      } else if (!$state.params.spotSearch) {
         $rootScope.showHintPopup = false;
       }
     };

@@ -102,7 +102,17 @@
      * Convert spot dates to normal format
      * @param spot {Spot}
      */
-    function formatSpot(spot) {
+    function formatSpot(spots) {
+      if (spots instanceof Array) {
+        return _.each(spots, function (spot) {
+          _formatSpot(spot);
+        });
+      } else {
+        return _formatSpot(spots);
+      }
+    }
+
+    function _formatSpot(spot) {
       spot.type = spot.category.type.display_name;
       if (spot.start_date && spot.end_date) {
         spot.start_time = moment(spot.start_date).format(DATE_FORMAT.time);

@@ -1033,6 +1033,9 @@
 
   .weekForecast {
     padding: 0;
+    height: 22rem;
+    overflow: auto;
+
     .weekForecast-inner {
       background-color: #f4f5f6;
       &:first-child {

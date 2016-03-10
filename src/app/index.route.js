@@ -34,7 +34,10 @@
       .state('index', {
         url: '/',
         parent: 'main',
-        mapState: 'big'
+        mapState: 'big',
+        params: {
+          spotSearch: null
+        }
       })
 
       .state('index.post', {

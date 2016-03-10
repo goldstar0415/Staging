@@ -11,72 +11,84 @@
         templateUrl: '/app/components/map_sort/map_sort.html',
         controller: mapSort,
         controllerAs: 'MapSort',
+        bindToController: true,
         scope: {}
       }
     });
 
-  function mapSort($rootScope, $scope, MapService, $http, SpotService, API_URL, DATE_FORMAT) {
+  function mapSort($rootScope, $scope, MapService, $http, $state, SpotService, API_URL, DATE_FORMAT) {
     var vm = this;
     var originalSpotsArray = [];
-    $scope.weatherForecast = [];
-    $scope.saveToCalendar = SpotService.saveToCalendar;
-    $scope.removeFromCalendar = SpotService.removeFromCalendar;
-    $scope.addToFavorite = SpotService.addToFavorite;
-    $scope.removeFromFavorite = SpotService.removeFromFavorite;
+    vm.weatherForecast = [];
+    vm.saveToCalendar = SpotService.saveToCalendar;
+    vm.removeFromCalendar = SpotService.removeFromCalendar;
+    vm.addToFavorite = SpotService.addToFavorite;
+    vm.removeFromFavorite = SpotService.removeFromFavorite;
 
     vm.vertical = true;
-    vm.sortLayer = 'event';
-    vm.toggleLayer = toggleLayer;
+    $rootScope.sortLayer = $rootScope.sortLayer || 'event';
+
+    $rootScope.toggleLayer = toggleLayer;
     vm.toggleMenu = function () {
       vm.vertical = !vm.vertical;
     };
     vm.toggleWeather = function () {
-      vm.toggleLayer('other');
+      toggleLayer('other');
     };
 
     $rootScope.$on('update-map-data', onUpdateMapData);
 
     //============================ events section ==========================
-    $scope.eventsDateToggle = false;
-    $scope.eventsCategoryToggle = false;
+    vm.eventsCategoryToggle = false;
     vm.eventsSelectAll = false;
 
-    $scope.checkItem = checkItem;
-    $scope.eventsSortByDate = eventsSortByDate;
-    $scope.toggleEventCategories = toggleEventCategories;
-    $scope.sortEventsByCategories = sortEventsByCategories;
+    vm.checkItem = checkItem;
 
-    //============================ recreation section ======================
-    $scope.recreationsCategoryToggle = false;
-    vm.recreationSelectAll = false;
+    //TODO: DELETE THIS SHIT
+    vm.eventsSortByDate = eventsSortByDate;
+    vm.toggleEventCategories = toggleEventCategories;
+    vm.sortEventsByCategories = sortEventsByCategories;
 
-    $scope.toggleRecreationCategories = toggleRecreationCategories;
-    $scope.sortRecreationsByCategories = sortRecreationsByCategories;
-    //============================ pitstop section =========================
-    $scope.pitstopsCategoryToggle = false;
-    vm.pitstopSelectAll = false;
+    //============================ todos section ======================
+    vm.todoCategoryToggle = false;
+    vm.todoSelectAll = false;
 
-    $scope.togglePitstopCategories = togglePitstopCategories;
-    $scope.sortPitstopsByCategories = sortPitstopsByCategories;
+    vm.toggleTodoCategories = toggleTodoCategories;
+    vm.sortTodoByCategories = sortTodoByCategories;
+    //============================ food section =========================
+    vm.foodCategoryToggle = false;
+    vm.foodSelectAll = false;
 
+    vm.toggleFoodCategories = toggleFoodCategories;
+    vm.sortFoodByCategories = sortFoodByCategories;
+    //============================ shelter section =========================
+    vm.shelterCategoryToggle = false;
+    vm.shelterSelectAll = false;
+
+    vm.toggleShelterCategories = toggleShelterCategories;
+    vm.sortShelterByCategories = sortShelterByCategories;
 
     loadCategories();
 
     function onUpdateMapData(event, spots) {
       originalSpotsArray = spots;
       vm.eventsArray = [];
-      vm.recreationsArray = [];
-      vm.pitstopsArray = [];
+      vm.todoArray = [];
+      vm.foodArray = [];
+      vm.shelterArray = [];
 
       _.each(spots, function (item) {
         var type = item.spot.category.type.name;
 
         switch (type) {
-          case 'pitstop':
-            vm.pitstopsArray.push(item);
+          case 'food':
+            vm.foodArray.push(item);
             break;
-          case 'recreation':
-            vm.recreationsArray.push(item);
+          case 'shelter':
+            vm.shelterArray.push(item);
+            break;
+          case 'todo':
+            vm.todoArray.push(item);
             break;
           case 'event':
             SpotService.formatSpot(item.spot);
@@ -86,18 +98,22 @@
       });
 
       vm.eventsArray = MapService.SortByRating(vm.eventsArray);
-      vm.recreationsArray = MapService.SortByRating(vm.recreationsArray);
-      vm.pitstopsArray = MapService.SortByRating(vm.pitstopsArray);
+      vm.todoArray = MapService.SortByRating(vm.todoArray);
+      vm.foodArray = MapService.SortByRating(vm.foodArray);
+      vm.shelterArray = MapService.SortByRating(vm.shelterArray);
 
-      switch (vm.sortLayer) {
+      switch ($rootScope.sortLayer) {
         case 'event':
-          $scope.sortEventsByCategories();
+          vm.sortEventsByCategories();
           break;
-        case 'recreation':
-          $scope.sortRecreationsByCategories();
+        case 'todo':
+          vm.sortTodoByCategories();
           break;
-        case 'pitstop':
-          $scope.sortPitstopsByCategories();
+        case 'food':
+          vm.sortFoodByCategories();
+          break;
+        case 'shelter':
+          vm.sortShelterByCategories();
           break;
       }
     }
@@ -106,28 +122,35 @@
       var wp = MapService.GetPathWaypoints();
       var geoJson = MapService.GetGeoJSON();
 
-
       switch (layer) {
         case 'events':
           MapService.showEvents();
-          vm.sortLayer = 'event';
-          $scope.sortEventsByCategories();
-          if (wp.length < 1 && geoJson && geoJson.features.length < 1) {
+          $rootScope.sortLayer = 'event';
+          vm.sortEventsByCategories();
+          if ( wp.length < 1 && geoJson && geoJson.features.length < 1) {
             toastr.info('Draw the search area');
           }
           break;
-        case 'pitstops':
-          MapService.showPitstops();
-          vm.sortLayer = 'pitstop';
-          $scope.sortPitstopsByCategories();
-          if (wp.length < 1 && geoJson && geoJson.features.length < 1) {
+        case 'food':
+          MapService.showFood();
+          $rootScope.sortLayer = 'food';
+          vm.sortFoodByCategories();
+          if ( wp.length < 1 && geoJson && geoJson.features.length < 1) {
             toastr.info('Draw the search area');
           }
           break;
-        case 'recreations':
-          MapService.showRecreations();
-          vm.sortLayer = 'recreation';
-          $scope.sortRecreationsByCategories();
+        case 'shelter':
+          MapService.showShelter();
+          $rootScope.sortLayer = 'shelter';
+          vm.sortShelterByCategories();
+          if ( wp.length < 1 && geoJson && geoJson.features.length < 1) {
+            toastr.info('Draw the search area');
+          }
+          break;
+        case 'todo':
+          MapService.showTodo();
+          $rootScope.sortLayer = 'todo';
+          vm.sortTodoByCategories();
           if (wp.length < 1 && geoJson && geoJson.features.length < 1) {
             toastr.info('Draw the search area');
           }
@@ -135,38 +158,54 @@
         case 'other':
           MapService.showOtherLayers();
           MapService.WeatherSelection(weather);
-          vm.sortLayer = 'weather';
+          $rootScope.sortLayer = 'weather';
           toastr.info('Click on map to check weather in this area');
           break;
       }
     }
 
     function loadCategories() {
-      $http.get(API_URL + '/spots/categories')
-        .success(function (data) {
-          for (var k in data) {
-            if (data[k].name == 'event') {
-              $scope.eventCategories = data[k].categories;
-              for (var i in $scope.eventCategories) {
-                $scope.eventCategories[i].selected = false;
-              }
-            }
+      if (!$rootScope.spotCategories) {
+        $http.get(API_URL + '/spots/categories')
+          .success(function (data) {
+            $rootScope.spotCategories = data;
+            _loadCategories(data)
+          });
+      } else {
+        _loadCategories($rootScope.spotCategories);
+      }
+    }
 
-            if (data[k].name == 'recreation') {
-              $scope.recreationCategories = data[k].categories;
-              for (var i in $scope.recreationCategories) {
-                $scope.recreationCategories[i].selected = false;
-              }
-            }
-
-            if (data[k].name == 'pitstop') {
-              $scope.pitstopCategories = data[k].categories;
-              for (var i in $scope.pitstopCategories) {
-                $scope.pitstopCategories[i].selected = false;
-              }
-            }
+    function _loadCategories(data) {
+      for (var k in data) {
+        if (data[k].name == 'event') {
+          vm.eventCategories = data[k].categories;
+          for (var i in vm.eventCategories) {
+            vm.eventCategories[i].selected = false;
           }
-        });
+        }
+
+        if (data[k].name == 'todo') {
+          vm.todoCategories = data[k].categories;
+          for (var i in vm.todoCategories) {
+            vm.todoCategories[i].selected = false;
+          }
+        }
+
+        if (data[k].name == 'food') {
+          vm.foodCategories = data[k].categories;
+          for (var i in vm.foodCategories) {
+            vm.foodCategories[i].selected = false;
+          }
+        }
+
+        if (data[k].name == 'shelter') {
+          vm.shelterCategories = data[k].categories;
+          for (var i in vm.shelterCategories) {
+            vm.shelterCategories[i].selected = false;
+          }
+        }
+      }
     }
 
     function checkItem(item, items, type) {
@@ -176,11 +215,14 @@
           case 'event':
             vm.eventsSelectAll = false;
             break;
-          case 'recreation':
-            vm.recreationSelectAll = false;
+          case 'todo':
+            vm.todoSelectAll = false;
             break;
-          case 'pitstop':
-            vm.pitstopSelectAll = false;
+          case 'food':
+            vm.foodSelectAll = false;
+            break;
+          case 'shelter':
+            vm.shelterSelectAll = false;
             break;
         }
       } else {
@@ -188,11 +230,14 @@
           case 'event':
             vm.eventsSelectAll = checkAll(items);
             break;
-          case 'recreation':
-            vm.recreationSelectAll = checkAll(items);
+          case 'todo':
+            vm.todoSelectAll = checkAll(items);
             break;
-          case 'pitstop':
-            vm.pitstopSelectAll = checkAll(items);
+          case 'food':
+            vm.foodSelectAll = checkAll(items);
+            break;
+          case 'shelter':
+            vm.shelterSelectAll = checkAll(items);
             break;
         }
       }
@@ -219,86 +264,109 @@
 
     function toggleEventCategories() {
       if (!vm.eventsSelectAll) {
-        _.map($scope.eventCategories, function (item) {
+        _.map(vm.eventCategories, function (item) {
           item.selected = true;
         });
       } else {
-        _.map($scope.eventCategories, function (item) {
+        _.map(vm.eventCategories, function (item) {
           item.selected = false;
         });
       }
       vm.eventsSelectAll = !vm.eventsSelectAll;
-      $scope.sortEventsByCategories();
+      vm.sortEventsByCategories();
     }
 
     function sortEventsByCategories() {
-      var categories = _.reject($scope.eventCategories, function (item) {
+      var categories = _.reject(vm.eventCategories, function (item) {
         return !item.selected;
       });
       vm.displayEventsArray = MapService.SortBySubcategory(vm.eventsArray, categories);
       MapService.drawSpotMarkers(vm.displayEventsArray, 'event', true);
     }
 
-    function toggleRecreationCategories() {
-      if (!vm.recreationSelectAll) {
-        _.map($scope.recreationCategories, function (item) {
+    function toggleTodoCategories() {
+      if (!vm.todoSelectAll) {
+        _.map(vm.todoCategories, function (item) {
           item.selected = true;
         });
       } else {
-        _.map($scope.recreationCategories, function (item) {
+        _.map(vm.todoCategories, function (item) {
           item.selected = false;
         });
       }
-      vm.recreationSelectAll = !vm.recreationSelectAll;
-      $scope.sortRecreationsByCategories();
+      vm.todoSelectAll = !vm.todoSelectAll;
+      vm.sortTodoByCategories();
     }
 
-    function sortRecreationsByCategories() {
-      var categories = _.reject($scope.recreationCategories, function (item) {
+    function sortTodoByCategories() {
+      var categories = _.reject(vm.todoCategories, function (item) {
         return !item.selected;
       });
-      vm.displayRrecreationsArray = MapService.SortBySubcategory(vm.recreationsArray, categories);
-      MapService.drawSpotMarkers(vm.displayRrecreationsArray, 'recreation', true);
+      vm.displayTodoArray = MapService.SortBySubcategory(vm.todoArray, categories);
+      MapService.drawSpotMarkers(vm.displayTodoArray, 'todo', true);
     }
 
-    function togglePitstopCategories() {
-      if (!vm.pitstopSelectAll) {
-        _.map($scope.pitstopCategories, function (item) {
+    function toggleFoodCategories() {
+      if (!vm.foodSelectAll) {
+        _.map(vm.foodCategories, function (item) {
           item.selected = true;
         });
       } else {
-        _.map($scope.pitstopCategories, function (item) {
+        _.map(vm.foodCategories, function (item) {
           item.selected = false;
         });
       }
-      vm.pitstopSelectAll = !vm.pitstopSelectAll;
-      $scope.sortPitstopsByCategories();
+      vm.foodSelectAll = !vm.foodSelectAll;
+      vm.sortFoodByCategories();
     }
 
-    function sortPitstopsByCategories() {
-      var categories = _.reject($scope.pitstopCategories, function (item) {
+    function sortFoodByCategories() {
+      var categories = _.reject(vm.foodCategories, function (item) {
         return !item.selected;
       });
-      vm.displayPitstopsArray = MapService.SortBySubcategory(vm.pitstopsArray, categories);
-      MapService.drawSpotMarkers(vm.displayPitstopsArray, 'pitstop', true);
+      vm.displayFoodArray = MapService.SortBySubcategory(vm.foodArray, categories);
+      MapService.drawSpotMarkers(vm.displayFoodArray, 'food', true);
     }
+
+    function toggleShelterCategories() {
+      if (!vm.shelterSelectAll) {
+        _.map(vm.shelterCategories, function (item) {
+          item.selected = true;
+        });
+      } else {
+        _.map(vm.shelterCategories, function (item) {
+          item.selected = false;
+        });
+      }
+      vm.shelterSelectAll = !vm.shelterSelectAll;
+      vm.sortShelterByCategories();
+    }
+
+    function sortShelterByCategories() {
+      var categories = _.reject(vm.shelterCategories, function (item) {
+        return !item.selected;
+      });
+      vm.displayShelterArray = MapService.SortBySubcategory(vm.shelterArray, categories);
+      MapService.drawSpotMarkers(vm.displayShelterArray, 'shelter', true);
+    }
+
 
     //============================ weather section =========================
     function weather(resp) {
       vm.vertical = false;
-      $scope.weatherForecast = [];
+      vm.weatherForecast = [];
       var daily = resp.daily.data;
 
       for (var k in daily) {
         daily[k].formattedDate = moment(daily[k].time * 1000).format('DD MMMM');
         if (k != 0) {
-          $scope.weatherForecast.push(daily[k]);
+          vm.weatherForecast.push(daily[k]);
         }
       }
-      $scope.currentWeather = daily[0];
-      $scope.currentWeather.sunrise = moment(daily[0].sunriseTime * 1000).format(DATE_FORMAT.time);
-      $scope.currentWeather.sunset = moment(daily[0].sunsetTime * 1000).format(DATE_FORMAT.time);
-      $scope.currentWeather.temperature = Math.round((daily[0].temperatureMax + daily[0].temperatureMin) / 2);
+      vm.currentWeather = daily[0];
+      vm.currentWeather.sunrise = moment(daily[0].sunriseTime * 1000).format(DATE_FORMAT.time);
+      vm.currentWeather.sunset = moment(daily[0].sunsetTime * 1000).format(DATE_FORMAT.time);
+      vm.currentWeather.temperature = Math.round((daily[0].temperatureMax + daily[0].temperatureMin) / 2);
     }
   }
 })();
