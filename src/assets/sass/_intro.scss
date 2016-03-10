@@ -49,12 +49,18 @@
         font-family: 'ralewayblack';
     }
     .intro {
+        background-color: #fff;
+
         h3 {
             display: none;
         }
         min-height: 86.5%;
         ul {
             padding-left: 0;
+            @media(min-width:1440px){
+                max-width: 80%;
+                margin: 0 auto;
+            }
             li {
                 text-align: center;
                 margin-top: 7rem;
@@ -177,9 +183,9 @@
                     box-shadow: none;
                     border-color: transparent;
                     color: $blue;
-/*                    height: 5rem;
-                    width: 100%;
-                    line-height: 3rem;*/
+                    /*                    height: 5rem;
+                                        width: 100%;
+                                        line-height: 3rem;*/
 
                     &:hover, &:focus {
                         border: 1px solid #76c7dc;
