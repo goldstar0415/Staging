@@ -334,15 +334,17 @@
       display: inline-block;
       width: 25%;
       border-left: 1px solid #aabac1;
-      float: left;
+      //float: left;
       &:first-child {
         border-left: 0;
       }
 
       .events {
-        background-image: url(../img/svg/vertical_menu/calendar.svg);
-        background-repeat: no-repeat;
-        background-size: 26px;
+        background: url(../img/icons/event-icon.png) no-repeat;
+        width: 21px;
+        height: 21px;
+        //background-repeat: no-repeat;
+        //background-size: 26px;
         background-position: 2px 6px;
       }
       .recreation {
@@ -367,7 +369,10 @@
         background-color: #fff;
         @include transition_bg_color;
         .weather-link {
-          background-image: url(../img/svg/vertical_menu/weather_icons_active.svg);
+          background: url(../img/icons/event-hover.png) no-repeat;
+          width: 21px;
+          height: 21px;
+          //background-image: url(../img/svg/vertical_menu/weather_icons_active.svg);
         }
         .pit-stops {
           background-image: url(../img/svg/vertical_menu/pit_stops_active.svg);
