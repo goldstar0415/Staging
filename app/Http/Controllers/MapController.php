@@ -66,32 +66,32 @@ class MapController extends Controller
             });
         }
 
-        if ($request->has('start_date')) {
-            $spots->where('start_date', '>=', $request->start_date);
+        if ($request->has('filter.start_date')) {
+            $spots->where('start_date', '>=', $request->filter['start_date']);
         } else {
             $spots->where('start_date', '>=', Carbon::now()->format('Y-m-d'));
         }
 
-        if ($request->has('end_date')) {
-            $spots->where('end_date', '<=', $request->end_date);
+        if ($request->has('filter.end_date')) {
+            $spots->where('end_date', '<=', $request->filter['end_date']);
         }
 
-        if ($request->has('category')) {
+        if ($request->has('filter.category_ids')) {
             $spots->whereHas('category', function ($query) use ($request) {
-                $query->whereIn('id', $request->category_ids);
+                $query->whereIn('id', $request->filter['category_ids']);
             });
         }
 
-        if ($request->has('tags')) {
+        if ($request->has('filter.tags')) {
             $spots->whereHas('tags', function ($query) use ($request) {
-                $query->whereIn('name', $request->tags);
+                $query->whereIn('name', $request->filter['tags']);
             });
         }
 
-        if ($request->has('rating')) {
+        if ($request->has('filter.rating')) {
             $spots->whereHas('votes', function ($query) {
                 $query->select(\DB::raw("avg(vote) as avg_vote"));
-            }, '>=', $request->rating);
+            }, '>=', $request->filter['rating']);
         }
 
         return $spots->get();
