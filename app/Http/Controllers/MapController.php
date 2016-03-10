@@ -100,7 +100,7 @@ class MapController extends Controller
         $spots->get()->each(function ($spot) use (&$points) {
             return $spot->points->each(function ($point) use ($spot, &$points) {
                 $points[] = $point->setRelation('spot', $spot->setRelations([
-                    'categoty' => $spot->category->setRelation('type', $spot->category->type)
+                    'category' => $spot->category->setRelation('type', $spot->category->type)
                 ]));
             });
         });
