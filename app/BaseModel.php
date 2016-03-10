@@ -60,4 +60,11 @@ abstract class BaseModel extends Model
 
         return $urls;
     }
+
+    public function without(...$relations)
+    {
+        $this->with = array_except($this->with, $relations);
+
+        return $this;
+    }
 }
