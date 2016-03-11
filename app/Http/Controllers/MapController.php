@@ -69,13 +69,19 @@ class MapController extends Controller
         }
 
         if ($request->has('filter.start_date')) {
-            $spots->where('start_date', '>=', $request->filter['start_date'])->orWhereNull('start_date');
+            $spots->where(function ($query) use ($request) {
+                $query->where('start_date', '>=', $request->filter['start_date'])->orWhereNull('start_date');
+            });
         } else {
-            $spots->where('start_date', '>=', Carbon::now()->format('Y-m-d'))->orWhereNull('start_date');
+            $spots->where(function ($query) use ($request) {
+                $query->where('start_date', '>=', Carbon::now()->format('Y-m-d'))->orWhereNull('start_date');
+            });
         }
 
         if ($request->has('filter.end_date')) {
-            $spots->where('end_date', '<=', $request->filter['end_date'])->orWhereNull('end_date');
+            $spots->where(function ($query) use ($request) {
+                $query->where('end_date', '<=', $request->filter['end_date'])->orWhereNull('end_date');
+            });
         }
 
         if ($request->has('filter.category_ids')) {
