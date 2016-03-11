@@ -116,10 +116,12 @@
           </div>
           <div class="clearfix relative">
             <div class="category-filer clearfix">
-              <input type="text" placeholder="Filter by categories"
-                     ng-click="MapSort.categoryToggle = !MapSort.categoryToggle"/>
+              <button type="button" ng-click="MapSort.categoryToggle = !MapSort.categoryToggle">
+                Filter by categories
+              </button>
               <span class="icon-category"></span>
-              <span class="filters-arrow" ng-class="{'open-arrow': MapSort.categoryToggle}"></span>
+              <span class="filters-arrow" ng-click="MapSort.categoryToggle = !MapSort.categoryToggle"
+                    ng-class="{'open-arrow': MapSort.categoryToggle}"></span>
               <button class="action-btn"><span class="minus"></span></button>
 
               <div class="categories">

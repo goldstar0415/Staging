@@ -165,8 +165,6 @@
       }
 
       data = _.omit(data, _.isEmpty);
-      data.filter = _.omit(data.filter, _.isEmpty);
-      console.log(data);
       $http.get(SEARCH_URL + '?' + jQuery.param(data))
         .success(function (spots) {
           console.log(spots);
