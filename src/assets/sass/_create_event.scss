@@ -265,7 +265,10 @@
     color: $dark_blue;
   }
 }
-
+.ui-select-placeholder {
+  color: $blue_btn;
+  text-transform: uppercase;
+}
 .input-group {
   margin-bottom: 1rem;
 }
