@@ -24,7 +24,6 @@ class SpotImportRequest extends Request
     public function rules()
     {
         return [
-            'spot_type' => 'required|integer|exists:spot_types,id',
             'spot_category' => 'required|integer|exists:spot_type_categories,id',
             'document' => 'required|mimes:txt',
         ];

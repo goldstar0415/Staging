@@ -123,7 +123,7 @@
             }
 
             function spotType() {
-                $spotsType = $("#spot_type option:selected").text().replace(/\s+/g, '').toLowerCase();
+                $spotsType = $("#spot_type option:selected").val();
                 addSpotsCategory($spotsType);
 
                 if ($spotsType == 'event') {
