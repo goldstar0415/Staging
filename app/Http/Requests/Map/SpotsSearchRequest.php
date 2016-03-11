@@ -28,9 +28,10 @@ class SpotsSearchRequest extends Request
             'search_text' => 'string',
             'filter.start_date' => 'date_format:Y-m-d',
             'filter.end_date' => 'date_format:Y-m-d',
-            'category_ids' => 'array',
-            'tags' => 'array',
-            'rating' => 'integer'
+            'filter.category_ids' => 'array',
+            'filter.tags' => 'array',
+            'filter.rating' => 'integer',
+            'filter.b_boxes' => 'array'
         ];
         $rules = array_merge($rules, $this->arrayFieldRules('category_ids', 'integer'));
         $rules = array_merge($rules, $this->arrayFieldRules('tags', 'string'));
