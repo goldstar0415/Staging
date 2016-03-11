@@ -75,7 +75,10 @@
     }
 
     function toggleLayer(layer, isDrawArea) {
-      $rootScope.isDrawArea = !!isDrawArea;
+      if (angular.isDefined(isDrawArea)) {
+        $rootScope.isDrawArea = isDrawArea;
+      }
+      console.log(isDrawArea);
       var wp = MapService.GetPathWaypoints();
       var geoJson = MapService.GetGeoJSON();
 
@@ -170,12 +173,12 @@
           console.log(spots);
           if (spots.length > 0) {
             onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0);
-          } else {
-            toastr.error('Spots not found');
-          }
 
-          if (bbox_array.length == 0) {
-            MapService.FitBoundsByLayer($rootScope.sortLayer);
+            if (bbox_array.length == 0) {
+              MapService.FitBoundsByLayer($rootScope.sortLayer);
+            }
+          } else {
+            onUpdateMapData(null, [], null, bbox_array.length > 0);
           }
         }).catch(function (resp) {
           console.warn(resp);

@@ -6,20 +6,20 @@
       <li class="hidden-xs">
         <a ng-click="MapSort.vertical = !MapSort.vertical" class="full-small"></a>
       </li>
-      <li ng-class="{'active': $root.sortLayer == 'event'}">
-        <a ng-click="$root.toggleLayer('event')" class="events"><span class="hidden-xs">Events</span></a>
+      <li ng-click="$root.toggleLayer('event')" ng-class="{'active': $root.sortLayer == 'event'}">
+        <a class="events"><span class="hidden-xs">Events</span></a>
       </li>
-      <li ng-class="{'active': $root.sortLayer == 'todo'}">
-        <a ng-click="$root.toggleLayer('todo')" class="recreation"><span class="hidden-xs">To-Do</span></a>
+      <li ng-click="$root.toggleLayer('todo')" ng-class="{'active': $root.sortLayer == 'todo'}">
+        <a class="recreation"><span class="hidden-xs">To-Do</span></a>
       </li>
-      <li ng-class="{'active': $root.sortLayer == 'food'}">
-        <a ng-click="$root.toggleLayer('food')" class="pit-stops"><span class="hidden-xs">Food</span></a>
+      <li ng-click="$root.toggleLayer('food')" ng-class="{'active': $root.sortLayer == 'food'}">
+        <a class="pit-stops"><span class="hidden-xs">Food</span></a>
       </li>
-      <li ng-class="{'active': $root.sortLayer == 'shelter'}">
-        <a ng-click="$root.toggleLayer('shelter')" class="shelter"><span class="hidden-xs">Shelter</span></a>
+      <li ng-click="$root.toggleLayer('shelter')" ng-class="{'active': $root.sortLayer == 'shelter'}">
+        <a class="shelter"><span class="hidden-xs">Shelter</span></a>
       </li>
-      <li ng-class="{'active': $root.sortLayer == 'weather'}">
-        <a ng-click="MapSort.toggleLayer('weather')" class="weather-link"><span class="hidden-xs">Weather</span></a>
+      <li ng-click="MapSort.toggleLayer('weather')" ng-class="{'active': $root.sortLayer == 'weather'}">
+        <a class="weather-link"><span class="hidden-xs">Weather</span></a>
       </li>
     </ul>
   </div>
@@ -30,21 +30,21 @@
 
   <div class="sidebar-menu-horizontal">
     <ul>
-      <li ng-class="{'active': $root.sortLayer == 'event'}">
-        <a ng-click="$root.toggleLayer('event')" class="events"><span>Events</span></a>
+      <li ng-click="$root.toggleLayer('event')" ng-class="{'active': $root.sortLayer == 'event'}">
+        <a class="events"><span>Events</span></a>
       </li>
-      <li ng-class="{'active': $root.sortLayer == 'todo'}">
-        <a ng-click="$root.toggleLayer('todo')" class="recreation"><span>To-Do</span>
+      <li ng-click="$root.toggleLayer('todo')" ng-class="{'active': $root.sortLayer == 'todo'}">
+        <a class="recreation"><span>To-Do</span>
         </a>
       </li>
-      <li ng-class="{'active': $root.sortLayer == 'food'}">
-        <a ng-click="$root.toggleLayer('food')" class="pit-stops"><span>Food</span></a>
+      <li ng-click="$root.toggleLayer('food')" ng-class="{'active': $root.sortLayer == 'food'}">
+        <a class="pit-stops"><span>Food</span></a>
       </li>
-      <li ng-class="{'active': $root.sortLayer == 'shelter'}">
-        <a ng-click="$root.toggleLayer('shelter')" class="shelter"><span>Shelter</span></a>
+      <li ng-click="$root.toggleLayer('shelter')" ng-class="{'active': $root.sortLayer == 'shelter'}">
+        <a class="shelter"><span>Shelter</span></a>
       </li>
-      <li ng-class="{'active': $root.sortLayer == 'weather'}">
-        <a ng-click="$root.toggleLayer('weather')" class="weather-link"><span>Weather</span></a>
+      <li ng-click="$root.toggleLayer('weather')" ng-class="{'active': $root.sortLayer == 'weather'}">
+        <a class="weather-link"><span>Weather</span></a>
       </li>
     </ul>
   </div>
