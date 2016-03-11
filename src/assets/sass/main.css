@@ -984,6 +984,10 @@
     .share {
         bottom: 3rem;
     }
+    .search-filters .country-filter, 
+    .search-filters .filer-defenition {
+        width: 75%;
+    }
 }
 
 @media (max-height: 400px) {
