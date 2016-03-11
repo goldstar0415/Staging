@@ -48,7 +48,7 @@
       </li>
     </ul>
   </div>
-  <!--Attantion! HERE ADD CLASS "applyed"-->
+  <!--Attention! HERE ADD CLASS "applyed"-->
   <div class="search-filters col-xs-12" ng-show="$root.sortLayer != 'weather'">
     <!--ADD CLASS "applyed" here and styles will change-->
     <div class="row">
@@ -102,10 +102,10 @@
               ng-model="MapSort.searchParams.rating"
               search-enabled="false"
               theme="bootstrap">
-              <ui-select-match placeholder="star rating">Rated Higher than {{ $select.selected }} Stars
+              <ui-select-match class="star-rated" placeholder="star rating">Rated Higher than {{ $select.selected }} Stars
               </ui-select-match>
               <ui-select-choices repeat="item in [5,4,3,2]">
-                <div ng-bind-html="'Rated Higher than ' + item + ' Stars'"></div>
+                <div   ng-bind-html="'Rated Higher than ' + item + ' Stars'"></div>
               </ui-select-choices>
             </ui-select>
             <span class="icon-star"></span>

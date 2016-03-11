@@ -476,6 +476,13 @@
     height: 2rem;
     background: url(../img/icons/icons_search_filters.png) no-repeat;
   }
+  .icon-key,
+  .icon-star {
+    top: 1.5rem;
+  }
+  .star-rated {
+    padding-left: 3.5rem;
+  }
   .icon-calendar {
     background-position: 0 -26px;
     z-index: 1;
