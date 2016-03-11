@@ -477,15 +477,13 @@
     background: url(../img/icons/icons_search_filters.png) no-repeat;
   }
 
-  .icon-star {
-    top: 1.5rem;
-  }
   .star-rated {
-    padding-left: 3.5rem;
-
+    margin-top: 1rem;
     .ui-select-placeholder {
       color: $blue_btn;
       text-transform: uppercase;
+      padding-left: 3.5rem;
+
     }
   }
   .icon-calendar {
