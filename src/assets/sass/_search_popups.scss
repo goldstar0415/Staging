@@ -2,6 +2,16 @@
   position: relative;
 }
 
+.mt0 {
+  tags {
+    .tags {
+      input {
+        margin: 0;
+      }
+    }
+  }
+}
+
 .banner-wrap {
   bottom: 0;
   height: calc(100% - 70px);

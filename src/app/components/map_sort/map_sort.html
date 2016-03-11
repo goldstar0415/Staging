@@ -85,15 +85,17 @@
             <button class="action-btn"><span class="minus"></span></button>
           </div>
           <div class="keyword-filters clearfix">
-            <tags-input class="tags-input-custom"
-                        ng-model="MapSort.searchParams.tags"
-                        on-tag-adding="MapSort.onTagsAdd()"
-                        max-length="64"
-                        placeholder="Filter by keyword"
-                        on-invalid-tag="MapSort.invalidTag($tag)"
-                        display-property="name"
-                        key-property="name">
-            </tags-input>
+            <div class="mt0">
+              <tags-input class="tags-input-custom"
+                          ng-model="MapSort.searchParams.tags"
+                          on-tag-adding="MapSort.onTagsAdd()"
+                          max-length="64"
+                          placeholder="Filter by keyword"
+                          on-invalid-tag="MapSort.invalidTag($tag)"
+                          display-property="name"
+                          key-property="name">
+              </tags-input>
+            </div>
             <span class="icon-key"></span>
             <button class="action-btn"><span class="minus"></span></button>
           </div>
@@ -102,10 +104,11 @@
               ng-model="MapSort.searchParams.rating"
               search-enabled="false"
               theme="bootstrap">
-              <ui-select-match class="star-rated" placeholder="star rating">Rated Higher than {{ $select.selected }} Stars
+              <ui-select-match class="star-rated" placeholder="star rating">Rated Higher than {{ $select.selected }}
+                Stars
               </ui-select-match>
               <ui-select-choices repeat="item in [5,4,3,2]">
-                <div   ng-bind-html="'Rated Higher than ' + item + ' Stars'"></div>
+                <div ng-bind-html="'Rated Higher than ' + item + ' Stars'"></div>
               </ui-select-choices>
             </ui-select>
             <span class="icon-star"></span>
