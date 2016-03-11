@@ -7,7 +7,7 @@
     @endif
     <div>
         {!! Form::label('spot_type', 'Choose Spot Type:') !!}
-        {!! Form::select('spot_type', App\SpotType::all()->pluck('display_name', 'id'), null, ['class' => 'form-control']) !!}
+        {!! Form::select('spot_type', App\SpotType::all()->pluck('display_name', 'name'), null, ['class' => 'form-control']) !!}
     </div>
     <div>
         {!! Form::label('spot_category', 'Choose Spot Category: ') !!}
