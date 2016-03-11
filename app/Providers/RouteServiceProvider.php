@@ -58,7 +58,7 @@ class RouteServiceProvider extends ServiceProvider
             'comments' => '\d+',
             'wall' => '\d+',
             'plans' => '\d+',
-            'posts' => '\d+',
+            'posts' => '^[\w\-_]*$',
             'activitylevel' => '\d+',
             'social' => '\w+',
             'post_slug' => '\w+'
@@ -98,8 +98,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('comments', Comment::class);
         $router->model('wall', Wall::class);
         $router->model('plans', Plan::class);
-        $router->model('posts', Blog::class);
-        $router->bind('post_slug', function ($value) {
+        $router->bind('posts', function ($value) {
             $blog_post = Blog::where('slug', $value)->first();
 
             if ($blog_post === null) {
