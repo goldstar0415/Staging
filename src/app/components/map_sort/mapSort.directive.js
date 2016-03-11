@@ -75,7 +75,7 @@
     }
 
     function toggleLayer(layer, isDrawArea) {
-      $rootScope.isDrawArea = _.isUndefined(isDrawArea) ? true : isDrawArea;
+      $rootScope.isDrawArea = !!isDrawArea;
       var wp = MapService.GetPathWaypoints();
       var geoJson = MapService.GetGeoJSON();
 
@@ -146,21 +146,36 @@
         }
       };
 
+      var bbox_array = MapService.GetBBoxes();
+      if (bbox_array.length > 0) {
+        bbox_array = MapService.BBoxToParams(bbox_array);
+        data.filter.b_boxes = bbox_array;
+      }
+
       if (vm.searchParams.start_date) {
         data.filter.start_date = moment(vm.searchParams.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
       }
       if (vm.searchParams.end_date) {
         data.filter.end_date = moment(vm.searchParams.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
       }
-console.log(vm.spotCategories,$rootScope.sortLayer);
+
       var categories = _.where(vm.spotCategories[$rootScope.sortLayer], {selected: true});
       if (categories.length > 0) {
         data.filter.category_ids = _.pluck(categories, 'id');
       }
+
+      data = _.omit(data, _.isEmpty);
+      data.filter = _.omit(data.filter, _.isEmpty);
       console.log(data);
       $http.get(SEARCH_URL + '?' + jQuery.param(data))
         .success(function (spots) {
           console.log(spots);
+          if (spots.length > 0) {
+            onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0);
+          } else {
+            toastr.error('Spots not found');
+          }
+          MapService.FitBoundsByLayer($rootScope.sortLayer);
         }).catch(function (resp) {
           console.warn(resp);
           toastr.error('Search error');
