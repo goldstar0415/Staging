@@ -482,6 +482,11 @@
   }
   .star-rated {
     padding-left: 3.5rem;
+
+    .ui-select-placeholder {
+      color: $blue_btn;
+      text-transform: uppercase;
+    }
   }
   .icon-calendar {
     background-position: 0 -26px;
