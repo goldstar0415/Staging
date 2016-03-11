@@ -175,7 +175,10 @@
           } else {
             toastr.error('Spots not found');
           }
-          MapService.FitBoundsByLayer($rootScope.sortLayer);
+
+          if (bbox_array.length == 0) {
+            MapService.FitBoundsByLayer($rootScope.sortLayer);
+          }
         }).catch(function (resp) {
           console.warn(resp);
           toastr.error('Search error');

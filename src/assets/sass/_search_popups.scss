@@ -457,6 +457,83 @@
   background-color: #fff;
   padding: 1.5rem;
 
+  &.applyed {
+    .country-filter input {
+      width: 100%;
+    }
+    .icon-nav {
+      background: url(../img/icons/icon_location.png) no-repeat;
+    }
+    .filters-button {
+      background: url(../img/icons/icon_filter_add_w.png) no-repeat $blue_btn center;
+    }
+
+    input {
+      background-color: $blue_btn;
+      color: #fff;
+      width: calc(100% - 3rem);
+    }
+    .date-filters {
+      .form-group {
+        width: calc(50% - 1.5rem);
+        input {
+          width: 100%;
+        }
+      }
+    }
+    .action-btn {
+      display: inline-block;
+      background-color: #fff;
+      height: 5rem;
+      width: 3rem;
+      float: left;
+      margin-top: 1rem;
+      border: 1px solid #e3e3e3;
+      padding: 0;
+
+      &:hover, &:focus {
+        outline: none;
+        background-color: $blue_btn;
+        border-color: $blue_btn;
+      }
+      .minus {
+        background: url(../img/icons/icons_plus_minus.png) no-repeat  -21px 0;
+        width: 21px;
+        height: 21px;
+        display: inline-block;
+      }
+      &:hover .minus {
+        background-position: -21px -21px;
+
+      }
+    }
+    .destination-filter {
+      .icon-navpoint {
+        background: url(../img/icons/icon_location.png) no-repeat;
+      }
+    }
+    .icon-calendar {
+      background-position: 0 0;
+      z-index: 1;
+    }
+    .icon-category {
+      background-position: -46px 0;
+    }
+    .icon-star {
+      background-position: -67px 0;
+      height: 25px;
+      width: 24px;
+    }
+    .icon-key {
+      background-position: -21px 0;
+      width: 25px;
+      height: 22px;
+    }
+    .filters-arrow {
+      visibility: hidden;
+    }
+  }
+
   .results {
     margin-top: 15px;
   }
@@ -552,6 +629,10 @@
       position: absolute;
       right: -7.3rem;
       top: 5px;
+    }
+
+    .tags input {
+      margin-top: 0;
     }
 
     input {
@@ -757,82 +838,7 @@
   }
 }
 
-.search-filters.applyed {
-  .country-filter input {
-    width: 100%;
-  }
-  .icon-nav {
-    background: url(../img/icons/icon_location.png) no-repeat;
-  }
-  .filters-button {
-    background: url(../img/icons/icon_filter_add_w.png) no-repeat $blue_btn center;
-  }
 
-  input {
-    background-color: $blue_btn;
-    color: #fff;
-    width: calc(100% - 3rem);
-  }
-  .date-filters {
-    .form-group {
-      width: calc(50% - 1.5rem);
-      input {
-        width: 100%;
-      }
-    }
-  }
-  .action-btn {
-    display: inline-block;
-    background-color: #fff;
-    height: 5rem;
-    width: 3rem;
-    float: left;
-    margin-top: 1rem;
-    border: 1px solid #e3e3e3;
-    padding: 0;
-
-    &:hover, &:focus {
-      outline: none;
-      background-color: $blue_btn;
-      border-color: $blue_btn;
-    }
-    .minus {
-      background: url(../img/icons/icons_plus_minus.png) no-repeat  -21px 0;
-      width: 21px;
-      height: 21px;
-      display: inline-block;
-    }
-    &:hover .minus {
-      background-position: -21px -21px;
-
-    }
-  }
-  .destination-filter {
-    .icon-navpoint {
-      background: url(../img/icons/icon_location.png) no-repeat;
-    }
-  }
-  .icon-calendar {
-    background-position: 0 0;
-    z-index: 1;
-  }
-  .icon-category {
-    background-position: -46px 0;
-  }
-  .icon-star {
-    background-position: -67px 0;
-    height: 25px;
-    width: 24px;
-  }
-  .icon-key {
-    background-position: -21px 0;
-    width: 25px;
-    height: 22px;
-  }
-  .filters-arrow {
-    visibility: hidden;
-  }
-}
 
 .numbers-events {
   padding: 12px 15px;
