@@ -1483,11 +1483,30 @@
         return waypoints;
       }
 
+      //fix $.param bug with object keys
+      function BBoxToParams(bbox_array) {
+        function toSimpleObject(obj) {
+          return _.object(_.map(obj, function (item, key) {
+            return [key, item]
+          }));
+        }
+
+        return _.map(bbox_array, function (item, key) {
+          var obj = toSimpleObject(item);
+
+          for (var i in obj) {
+            obj[i] = toSimpleObject(obj[i]);
+          }
+
+          return obj;
+        });
+      }
+
       function GetDataByBBox(bbox_array, isFocus) {
         isFocus = isFocus || false;
         var spots = [];
         if (bbox_array.length > 0) {
-          var params = makeArray(bbox_array);
+          var params = BBoxToParams(bbox_array);
           params = $.param({b_boxes: params});
 
           $http.get(API_URL + '/map/search?' + params)
@@ -1510,25 +1529,6 @@
         } else {
           clearLayers();
           $rootScope.$emit('update-map-data', [], null, false);
-        }
-
-        //fix $.param bug with object keys
-        function toSimpleObject(obj) {
-          return _.object(_.map(obj, function (item, key) {
-            return [key, item]
-          }));
-        }
-
-        function makeArray(array) {
-          return _.map(array, function (item, key) {
-            var obj = toSimpleObject(item);
-
-            for (var i in obj) {
-              obj[i] = toSimpleObject(obj[i]);
-            }
-
-            return obj;
-          });
         }
       }
 
@@ -1755,6 +1755,7 @@
         GetPathWaypoints: GetDrawLayerPathWaypoints,
         GetGeoJSON: GetDrawLayerGeoJSON,
         GetDataByBBox: GetDataByBBox,
+        BBoxToParams: BBoxToParams,
         drawSpotMarkers: drawSpotMarkers,
         drawBlogMarkers: drawBlogMarkers,
         WeatherSelection: WeatherSelection

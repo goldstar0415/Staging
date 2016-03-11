@@ -30,7 +30,7 @@
 
   <div class="sidebar-menu-horizontal">
     <ul>
-      <li ng-class="{'active': $root.sortLayer == 'events'}">
+      <li ng-class="{'active': $root.sortLayer == 'event'}">
         <a ng-click="$root.toggleLayer('event')" class="events"><span>Events</span></a>
       </li>
       <li ng-class="{'active': $root.sortLayer == 'todo'}">
@@ -53,8 +53,8 @@
     <!--ADD CLASS "applyed" here and styles will change-->
     <div class="row">
       <div class="col-xs-12">
-        <div class="country-filter" ng-show="!$root.isDrawArea">
-          <input type="text" role="search" ng-model="MapSort.search_text"/>
+        <div class="country-filter" ng-hide="$root.isDrawArea">
+          <input type="text" role="search" ng-model="MapSort.searchParams.search_text"/>
           <span class="icon-nav"></span>
         </div>
         <div class="filters-button" ng-click="isShowFilter = !isShowFilter"></div>
@@ -65,7 +65,7 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="filer-defenition" ng-show="isShowFilter">
-          <div class="destination-filter clearfix" ng-show="!$root.isDrawArea">
+          <div class="destination-filter clearfix" ng-hide="$root.isDrawArea">
             <location address="MapSort.searchParams.address" location="MapSort.searchParams.location"
                       input-placeholder="Add destination (road trip)" bind-marker="false" limit="15"></location>
             <span class="icon-navpoint"></span>
@@ -74,12 +74,12 @@
           <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea}">
             <div class="form-group">
               <span class="icon-calendar"></span>
-              <input ng-datepicker ng-model="MapSort.searchParams.startDate" class="date" placeholder="FROM DATE"
+              <input ng-datepicker ng-model="MapSort.searchParams.start_date" class="date" placeholder="FROM DATE"
                      type="text">
             </div>
             <div class="form-group">
               <span class="icon-calendar"></span>
-              <input ng-datepicker ng-model="MapSort.searchParams.endDate" start-date="MapSort.searchParams.startDate"
+              <input ng-datepicker ng-model="MapSort.searchParams.end_date" start-date="MapSort.searchParams.start_date"
                      class="date" pleceholder="TO DATE" type="text">
             </div>
             <button class="action-btn"><span class="minus"></span></button>
