@@ -96,6 +96,22 @@ class MapController extends Controller
             }, '>=', $request->filter['rating']);
         }
 
+        if ($request->has('filter.b_boxes')) {
+            $spots->whereHas('points', function ($query) use ($request) {
+                $search_areas = [];
+                foreach ($request->filter['b_boxes'] as $b_box) {
+                    $search_areas[] = sprintf(
+                        '"location" && ST_MakeEnvelope(%s, %s, %s, %s, 4326)',
+                        $b_box['_southWest']['lng'],
+                        $b_box['_southWest']['lat'],
+                        $b_box['_northEast']['lng'],
+                        $b_box['_northEast']['lat']
+                    );
+                }
+                $query->whereRaw(implode(' OR ', $search_areas));
+            });
+        }
+
         $points = [];
         $spots->get()->each(function ($spot) use (&$points) {
             return $spot->points->each(function ($point) use ($spot, &$points) {
@@ -104,6 +120,7 @@ class MapController extends Controller
                 ]));
             });
         });
+
 
         return $points;
     }
