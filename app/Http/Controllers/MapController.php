@@ -121,7 +121,6 @@ class MapController extends Controller
             });
         });
 
-
         return $points;
     }
 }
