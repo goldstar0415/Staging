@@ -87,7 +87,7 @@ class AlbumController extends Controller
      */
     public function show($album)
     {
-        return $album;
+        return $album->append('count_photos');
     }
 
     /**

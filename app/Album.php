@@ -66,4 +66,9 @@ class Album extends BaseModel
     {
         return $this->hasMany(AlbumPhoto::class);
     }
+
+    public function getCountPhotosAttribute()
+    {
+        return $this->photos()->count();
+    }
 }
