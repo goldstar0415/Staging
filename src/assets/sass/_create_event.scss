@@ -80,6 +80,7 @@
     display: inline-table;
   }
 }
+
 .event-additionl-info {
   border-bottom: 0 !important;
   button.close {
@@ -92,12 +93,15 @@
     margin-top: 5px;
   }
 }
+
 .event-add-video {
   border: 0 !important;
 }
+
 .event-additionl-info .compass, .event-main-info .compass, .event-add-video .compass {
   right: 2rem !important;
 }
+
 .remove-compass {
   width: 100%;
   margin-top: 1rem;
@@ -109,9 +113,11 @@
     right: 5px !important;
   }
 }
+
 .event-main-info {
   border-top: 0 !important;
 }
+
 .form-group {
   .control-label {
     font-weight: bold;
@@ -195,15 +201,15 @@
       display: block;
     }
     .delete {
-    display: none;
-    top: 5px;
-    right: 5px;
-    width: 42px;
-    height: 42px;
-    position: absolute;
-    background: url(../img/icons/close-photo.png) center center no-repeat;
-    border-radius: 0;
-  }
+      display: none;
+      top: 5px;
+      right: 5px;
+      width: 42px;
+      height: 42px;
+      position: absolute;
+      background: url(../img/icons/close-photo.png) center center no-repeat;
+      border-radius: 0;
+    }
   }
 
 }
@@ -282,7 +288,7 @@
       background: $blue_btn;
       border-radius: 0;
       border: 0;
-      color:#fff;
+      color: #fff;
       text-transform: uppercase;
       .remove-button {
         color: #fff;
@@ -290,7 +296,6 @@
     }
   }
 }
-
 
 .input-group {
   input {
@@ -306,6 +311,24 @@
 
 //---</create new event--->
 /* create spot */
-.no-pad input {
+.no-pad input, button.category-dropdown {
   min-height: 5rem;
+}
+
+.category-dropdown {
+  margin-top: 1rem;
+  text-transform: uppercase;
+  &:hover, &:focus, &:active {
+    background-color: #00c9f8;
+    color: $white;
+  }
+}
+
+.category-filer {
+  button {
+    padding-left: 5rem;
+    span {
+      float: left;
+    }
+  }
 }

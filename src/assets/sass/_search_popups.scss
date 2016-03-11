@@ -457,6 +457,7 @@
   background-color: #fff;
   padding: 1.5rem;
 
+
   &.applyed {
     .country-filter input {
       width: 100%;
@@ -470,7 +471,7 @@
 
     input {
       background-color: $blue_btn;
-      color: #fff;
+      color: $white;
       width: calc(100% - 3rem);
     }
     .date-filters {
@@ -538,7 +539,7 @@
     margin-top: 15px;
   }
 
-  input {
+  input, button {
     color: $blue_btn;
     background-color: #f5f5f7;
     text-overflow: ellipsis;
@@ -564,7 +565,7 @@
 
   .star-rated {
     margin-top: 1rem;
-    .ui-select-placeholder {
+    .ui-select-placeholder,  .ui-select-placeholder + span {
       color: $blue_btn;
       text-transform: uppercase;
       padding-left: 3.5rem;

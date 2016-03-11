@@ -114,14 +114,16 @@
             <span class="icon-star"></span>
             <button class="action-btn"><span class="minus"></span></button>
           </div>
-          <div class="clearfix relative">
-            <div class="category-filer clearfix">
-              <button type="button" ng-click="MapSort.categoryToggle = !MapSort.categoryToggle">
-                Filter by categories
-              </button>
-              <span class="icon-category"></span>
+          <div class="category-filer clearfix relative">
+            <div class=" clearfix">
+              <button type="button" class="category-dropdown"
+                      ng-click="MapSort.categoryToggle = !MapSort.categoryToggle">
+              <span> Filter by categories</span>
+
+                <span class="icon-category"></span>
               <span class="filters-arrow" ng-click="MapSort.categoryToggle = !MapSort.categoryToggle"
                     ng-class="{'open-arrow': MapSort.categoryToggle}"></span>
+              </button>
               <button class="action-btn"><span class="minus"></span></button>
 
               <div class="categories">
