@@ -67,8 +67,18 @@
         <div class="filer-defenition" ng-show="isShowFilter">
           <div class="destination-filter clearfix" ng-hide="$root.isDrawArea">
             <location address="MapSort.searchParams.address" location="MapSort.searchParams.location"
-                      input-placeholder="Add destination (road trip)" bind-marker="false" limit="15"></location>
+                      input-placeholder="Add {{ MapSort.searchParams.locations.length == 0 ? 'first' : 'next' }} destination"
+                      bind-marker="false" limit="15"></location>
             <span class="icon-navpoint"></span>
+            <a ng-click="MapSort.addLocation()">+</a>
+            <button class="action-btn"><span class="minus"></span></button>
+          </div>
+          <div class="destination-filter clearfix"
+               ng-repeat="item in MapSort.searchParams.locations" ng-hide="$root.isDrawArea">
+            <location address="item.address" location="item.location"
+                      input-placeholder="Add next destination" bind-marker="false" limit="15"></location>
+            <span class="icon-navpoint"></span>
+            <a ng-click="MapSort.removeLocation($index)">-</a>
             <button class="action-btn"><span class="minus"></span></button>
           </div>
           <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea}">
@@ -118,7 +128,7 @@
             <div class=" clearfix">
               <button type="button" class="category-dropdown"
                       ng-click="MapSort.categoryToggle = !MapSort.categoryToggle">
-              <span> Filter by categories</span>
+                <span> Filter by categories</span>
 
                 <span class="icon-category"></span>
               <span class="filters-arrow" ng-click="MapSort.categoryToggle = !MapSort.categoryToggle"

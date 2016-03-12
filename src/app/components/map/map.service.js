@@ -820,7 +820,10 @@
 
                   popup.openOn(map);
                 });
-                callback();
+
+                if (callback) {
+                  callback();
+                }
               }
             }, {geometryOnly: true});
           } else {

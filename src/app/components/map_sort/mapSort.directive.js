@@ -35,6 +35,8 @@
     vm.selectAllCategories = selectAllCategories;
     vm.invalidTag = invalidTag;
     vm.onTagsAdd = onTagsAdd;
+    vm.addLocation = addLocation;
+    vm.removeLocation = removeLocation;
 
     vm.searchParams = {
       locations: [],
@@ -149,6 +151,10 @@
         }
       };
 
+      if (vm.searchParams.location || vm.searchParams.locations.length > 0) {
+        drawPathSelection();
+      }
+
       var bbox_array = MapService.GetBBoxes();
       if (bbox_array.length > 0) {
         bbox_array = MapService.BBoxToParams(bbox_array);
@@ -184,6 +190,38 @@
           console.warn(resp);
           toastr.error('Search error');
         });
+    }
+
+    function drawPathSelection() {
+      var points = [];
+      if (vm.searchParams.location && vm.searchParams.location) {
+        points.push(vm.searchParams.location);
+      }
+      if (vm.searchParams.locations.length > 0) {
+        points = _.union(points, _.pluck(vm.searchParams.locations, 'location'));
+      }
+
+      MapService.clearLayers();
+      MapService.PathSelection(points);
+    }
+
+    function addLocation() {
+      if ( vm.searchParams.address && vm.searchParams.location) {
+        vm.searchParams.locations.unshift({
+            address: vm.searchParams.address,
+          location: vm.searchParams.location
+        });
+        vm.searchParams.address = '';
+        vm.searchParams.location = {};
+      } else {
+        toastr.error('Wrong location');
+        vm.searchParams.address = '';
+        vm.searchParams.location = {};
+      }
+    }
+
+    function removeLocation(idx) {
+      vm.searchParams.locations.splice(idx, 1);
     }
 
     function selectAllCategories() {
