@@ -2,6 +2,7 @@
 .create-event-page {
   margin-bottom: 15px;
 }
+
 .pl0 {
   padding-left: 0;
 }
@@ -335,6 +336,7 @@
     }
   }
 }
+
 .search-filters .filer-defenition .tags input {
   &:active, &:focus, &:visited {
     padding-left: 0;
@@ -342,9 +344,10 @@
 }
 
 .icon-plus {
-  background: url(../img/icons/big-plus.png) no-repeat 0.7rem 0.7rem #00c9f8;
-  padding: 2rem;
+  background: url(../img/icons/big-plus.png) no-repeat 0.7rem 1.2rem #00c9f8;
+  padding: 2rem 2rem 3rem;
   float: left;
+  margin-top: 1rem;
 }
 
 //.destination-filter > a + span {
