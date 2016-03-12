@@ -70,7 +70,9 @@
                       input-placeholder="Add {{ MapSort.searchParams.locations.length == 0 ? 'first' : 'next' }} destination"
                       bind-marker="false" limit="15"></location>
             <span class="icon-navpoint"></span>
-            <a ng-click="MapSort.addLocation()">+</a>
+            <a ng-click="MapSort.addLocation()" class="clearfix">
+              <span class="icon-plus"></span>
+            </a>
             <button class="action-btn"><span class="minus"></span></button>
           </div>
           <div class="destination-filter clearfix"

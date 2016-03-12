@@ -2,6 +2,9 @@
 .create-event-page {
   margin-bottom: 15px;
 }
+.pl0 {
+  padding-left: 0;
+}
 
 .buttons-set-new-event {
   width: 100%;
@@ -332,3 +335,20 @@
     }
   }
 }
+.search-filters .filer-defenition .tags input {
+  &:active, &:focus, &:visited {
+    padding-left: 0;
+  }
+}
+
+.icon-plus {
+  background: url(../img/icons/big-plus.png) no-repeat 0.7rem 0.7rem #00c9f8;
+  padding: 2rem;
+  float: left;
+}
+
+//.destination-filter > a + span {
+//  width: 3rem;
+//  float: left;
+//  height: 4rem;
+//}
