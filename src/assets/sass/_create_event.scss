@@ -344,14 +344,16 @@
 }
 
 .icon-plus {
-  background: url(../img/icons/big-plus.png) no-repeat 0.7rem 1.2rem #00c9f8;
+  background: url(../img/icons/category-plus.png) no-repeat 1rem 1.2rem #00c9f8;
   padding: 2rem 2rem 3rem;
   float: left;
   margin-top: 1rem;
 }
 
-//.destination-filter > a + span {
-//  width: 3rem;
-//  float: left;
-//  height: 4rem;
-//}
+.icon-minus {
+  background: url(../img/icons/blue-minus.png) no-repeat 1.2rem 2.4rem #fff;
+  padding: 1.8rem 1.9rem 3rem;
+  float: left;
+  margin-top: 1rem;
+  border: 1px solid #eee;
+}
