@@ -199,7 +199,7 @@
 }
 .icon-nav {
     background: url(../img/icons/map-loc.png) no-repeat;
-    height: 2rem; 
+    height: 2rem;
     width: 2rem;
     display: inline-block;
     vertical-align: middle;
@@ -467,7 +467,7 @@
         h2 {
             font-size: 2rem;
             letter-spacing: 2px;
-        }  
+        }
         p {
             padding-top: 0.5rem;
             color: #0c2638;
@@ -479,7 +479,7 @@
         .description {
             color: $grey;
         }
-        .event-result .links-nav .tools li { 
+        .event-result .links-nav .tools li {
             a {
                 font-size: 1.15rem;
                 letter-spacing: 1px;
@@ -636,7 +636,7 @@
     }
 
     .country-filter,
-    .filer-defenition {
+    .filter-definition {
         width: 83%;
         padding-right: 1rem;
         position: relative;
@@ -664,7 +664,7 @@
             }
         }
     }
-    .filer-defenition {
+    .filter-definition {
 
         .btn-apply {
             position: absolute;
@@ -674,6 +674,10 @@
 
         .tags input {
             margin-top: 0;
+        }
+
+        location input {
+          width: 88%;
         }
 
         input {
@@ -693,7 +697,7 @@
     .date-filters,
     .keyword-filters,
     .rating-filters,
-    .category-filer {
+    .category-filter {
         position: relative;
         input {
             padding-left: 5rem;
