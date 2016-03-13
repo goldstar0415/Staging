@@ -108,7 +108,7 @@
                           key-property="name">
               </tags-input>
             </div>
-            <span class="icon-key"></span>
+            <span class="icon-key" ng-show="MapSort.searchParams.tags.length == 0"></span>
             <button class="action-btn"><span class="minus"></span></button>
           </div>
           <div class="rating-filters clearfix">
@@ -164,6 +164,16 @@
           <div class="destination-filter clearfix" ng-if="$root.mapSortFilters.search_text">
             <input type="text" role="search" ng-model="$root.mapSortFilters.search_text" disabled/>
             <a ng-click="$root.mapSortFilters.search_text = ''">-</a>
+          </div>
+          <div class="date-filters clearfix"  ng-if="$root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date">
+            <div class="form-group" ng-if="$root.mapSortFilters.filter.start_date">
+              <span class="icon-calendar"></span>
+              <input ng-model="$root.mapSortFilters.filter.start_date" class="date" type="text" disabled>
+            </div>
+            <div class="form-group" ng-if="$root.mapSortFilters.filter.end_date">
+              <span class="icon-calendar"></span>
+              <input ng-model="$root.mapSortFilters.filter.end_date" class="date" type="text" disabled>
+            </div>
           </div>
 
         </div>
