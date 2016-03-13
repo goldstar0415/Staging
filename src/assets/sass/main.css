@@ -789,7 +789,7 @@
     .search-filters {
         padding-left: 9%;
     }
-    .search-filters .country-filter, .search-filters .filer-defenition {
+    .search-filters .country-filter, .search-filters .filter-definition {
         width: 79%;
     }
 }
@@ -984,8 +984,8 @@
     .share {
         bottom: 3rem;
     }
-    .search-filters .country-filter, 
-    .search-filters .filer-defenition {
+    .search-filters .country-filter,
+    .search-filters .filter-definition {
         width: 75%;
     }
 }

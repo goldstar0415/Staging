@@ -2586,7 +2586,7 @@ JSONPPolling.prototype.doPoll = function () {
   this.script = script;
 
   var isUAgecko = 'undefined' != typeof navigator && /gecko/i.test(navigator.userAgent);
-  
+
   if (isUAgecko) {
     setTimeout(function () {
       var iframe = document.createElement('iframe');
@@ -5659,7 +5659,7 @@ exports.removeBlobs = function(data, callback) {
         (global.File && obj instanceof File)) {
       pendingBlobs++;
 
-      // async filereader
+      // async filtereader
       var fileReader = new FileReader();
       fileReader.onload = function() { // this.result == arraybuffer
         if (containingObject) {

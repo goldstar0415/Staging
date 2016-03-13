@@ -636,7 +636,7 @@
     }
 
     .country-filter,
-    .filer-defenition {
+    .filter-definition {
         width: 83%;
         padding-right: 1rem;
         position: relative;
@@ -664,7 +664,7 @@
             }
         }
     }
-    .filer-defenition {
+    .filter-definition {
 
         .btn-apply {
             position: absolute;
@@ -684,6 +684,10 @@
           }
         }
 
+        location input {
+          width: 88%;
+        }
+
         input {
             margin-top: 1rem;
             &::-webkit-input-placeholder {
@@ -701,7 +705,7 @@
     .date-filters,
     .keyword-filters,
     .rating-filters,
-    .category-filer {
+    .category-filter {
         position: relative;
         input {
             padding-left: 5rem;
