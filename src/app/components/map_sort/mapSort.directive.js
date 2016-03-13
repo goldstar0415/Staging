@@ -45,6 +45,7 @@
 
     $rootScope.sortLayer = $rootScope.sortLayer || 'event';
     $rootScope.isDrawArea = false;
+    $rootScope.mapSortFilters = $rootScope.mapSortFilters || {};
     $rootScope.toggleLayer = toggleLayer;
 
     $rootScope.$on('update-map-data', onUpdateMapData);
@@ -143,16 +144,23 @@
 
 
     function search() {
+      if (vm.searchParams.location || vm.searchParams.locations.length > 0) {
+        drawPathSelection(doSearch);
+      } else {
+        doSearch();
+      }
+    }
+
+    function doSearch() {
       var data = {
         search_text: vm.searchParams.search_text,
         filter: {
-          tags: vm.searchParams.tags,
-          rating: vm.searchParams.rating
+          tags: vm.searchParams.tags
         }
       };
 
-      if (vm.searchParams.location || vm.searchParams.locations.length > 0) {
-        drawPathSelection();
+      if (vm.searchParams.rating) {
+        data.rating = vm.searchParams.rating;
       }
 
       var bbox_array = MapService.GetBBoxes();
@@ -160,6 +168,7 @@
         bbox_array = MapService.BBoxToParams(bbox_array);
         data.filter.b_boxes = bbox_array;
       }
+      console.log(bbox_array);
 
       if (vm.searchParams.start_date) {
         data.filter.start_date = moment(vm.searchParams.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
@@ -174,6 +183,7 @@
       }
 
       data = _.omit(data, _.isEmpty);
+      $rootScope.mapSortFilters = data;
       $http.get(SEARCH_URL + '?' + jQuery.param(data))
         .success(function (spots) {
           console.log(spots);
@@ -192,7 +202,7 @@
         });
     }
 
-    function drawPathSelection() {
+    function drawPathSelection(callback) {
       var points = [];
       if (vm.searchParams.location && vm.searchParams.location) {
         points.push(vm.searchParams.location);
@@ -202,17 +212,19 @@
       }
 
       MapService.clearLayers();
-      MapService.PathSelection(points);
+      MapService.PathSelection(points, callback);
     }
 
     function addLocation() {
-      if ( vm.searchParams.address && vm.searchParams.location) {
+      if (vm.searchParams.address && vm.searchParams.location) {
         vm.searchParams.locations.unshift({
-            address: vm.searchParams.address,
+          address: vm.searchParams.address,
           location: vm.searchParams.location
         });
         vm.searchParams.address = '';
         vm.searchParams.location = {};
+
+        angular.element('#new_location input').attr('placeholder', 'Add next destination'); //fix location placeholder
       } else {
         toastr.error('Wrong location');
         vm.searchParams.address = '';
@@ -222,6 +234,9 @@
 
     function removeLocation(idx) {
       vm.searchParams.locations.splice(idx, 1);
+      if (vm.searchParams.locations.length == 0) {
+        angular.element('#new_location input').attr('placeholder', 'Add first destination');  //fix location placeholder
+      }
     }
 
     function selectAllCategories() {

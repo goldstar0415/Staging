@@ -67,7 +67,7 @@
         <div class="filer-defenition" ng-show="isShowFilter">
           <div class="destination-filter clearfix" ng-hide="$root.isDrawArea">
             <location address="MapSort.searchParams.address" location="MapSort.searchParams.location"
-                      input-placeholder="Add {{ MapSort.searchParams.locations.length == 0 ? 'first' : 'next' }} destination"
+                      input-placeholder="Add first destination" id="new_location"
                       bind-marker="false" limit="15"></location>
             <span class="icon-navpoint"></span>
             <a ng-click="MapSort.addLocation()">+</a>
@@ -157,6 +157,16 @@
           </div>
         </div>
 
+        <!--Applied filter-->
+        <div class="filer-defenition">
+          <div class="destination-filter clearfix" ng-if="$root.mapSortFilters.search_text">
+            <input type="text" role="search" ng-model="$root.mapSortFilters.search_text" disabled/>
+            <a ng-click="$root.mapSortFilters.search_text = ''">-</a>
+          </div>
+
+        </div>
+
+        <!--Search results-->
         <div class="results">
           <div ng-repeat="item in $root.mapSortSpots[$root.sortLayer]">
             <div class="event-result clearfix">
