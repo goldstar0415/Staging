@@ -37,6 +37,7 @@
     vm.onTagsAdd = onTagsAdd;
     vm.addLocation = addLocation;
     vm.removeLocation = removeLocation;
+    vm.removeFilter = removeFilter;
 
     vm.searchParams = {
       locations: [],
@@ -155,13 +156,8 @@
       var data = {
         search_text: vm.searchParams.search_text,
         filter: {
-          tags: vm.searchParams.tags
         }
       };
-
-      if (vm.searchParams.rating) {
-        data.rating = vm.searchParams.rating;
-      }
 
       var bbox_array = MapService.GetBBoxes();
       if (bbox_array.length > 0) {
@@ -169,6 +165,14 @@
         data.filter.b_boxes = bbox_array;
       }
       console.log(bbox_array);
+
+      if (vm.searchParams.rating) {
+        data.filter.rating = vm.searchParams.rating;
+      }
+
+      if (vm.searchParams.tags) {
+        data.filter.tags = _.pluck(vm.searchParams.tags, 'text');
+      }
 
       if (vm.searchParams.start_date) {
         data.filter.start_date = moment(vm.searchParams.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
@@ -190,6 +194,7 @@
           if (spots.length > 0) {
             onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0);
 
+            vm.isShowFilter = false;
             if (bbox_array.length == 0) {
               MapService.FitBoundsByLayer($rootScope.sortLayer);
             }
@@ -239,12 +244,24 @@
       }
     }
 
+    function removeFilter(type) {
+      switch (type) {
+        case 'date':
+          if ($rootScope.mapSortFilters.filter) {
+            $rootScope.mapSortFilters.filter.start_date = '';
+            $rootScope.mapSortFilters.filter.end_date = '';
+          }
+          break;
+      }
+    }
+
     function selectAllCategories() {
       isSelectedAll = !isSelectedAll;
       _.each(vm.spotCategories[$rootScope.sortLayer], function (item) {
         item.selected = isSelectedAll;
       });
     }
+
 
     //============================ weather section =========================
     function weather(resp) {

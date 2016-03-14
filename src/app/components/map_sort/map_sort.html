@@ -48,40 +48,36 @@
       </li>
     </ul>
   </div>
-  <!--Attention! HERE ADD CLASS "applyed"-->
+  <!--Attention! HERE ADD CLASS "applied"-->
   <div class="search-filters col-xs-12" ng-show="$root.sortLayer != 'weather'">
-    <!--ADD CLASS "applyed" here and styles will change-->
+    <!--ADD CLASS "applied" here and styles will change-->
     <div class="row">
       <div class="col-xs-12">
         <div class="country-filter" ng-hide="$root.isDrawArea">
           <input type="text" role="search" ng-model="MapSort.searchParams.search_text"/>
           <span class="icon-nav"></span>
         </div>
-        <div class="filters-button" ng-click="isShowFilter = !isShowFilter"></div>
-        <div class="btn-apply btn-top" ng-click="MapSort.search()" ng-hide="isShowFilter || $root.isDrawArea"><span
+        <div class="filters-button" ng-click="MapSort.isShowFilter = !MapSort.isShowFilter"></div>
+        <div class="btn-apply btn-top" ng-click="MapSort.search()" ng-hide="MapSort.isShowFilter || $root.isDrawArea"><span
           class="icon-apply"></span></div>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <div class="filter-definition" ng-show="isShowFilter">
+        <div class="filter-definition" ng-show="MapSort.isShowFilter">
           <div class="destination-filter clearfix" ng-hide="$root.isDrawArea">
             <location address="MapSort.searchParams.address" location="MapSort.searchParams.location"
                       input-placeholder="Add first destination" id="new_location"
                       bind-marker="false" limit="15"></location>
             <span class="icon-navpoint"></span>
-            <a ng-click="MapSort.addLocation()" class="clearfix">
-              <span class="icon-plus"></span>
-            </a>
-            <button class="action-btn"><span class="minus"></span></button>
+            <a ng-click="MapSort.addLocation()" class="clearfix"><span class="icon-plus"></span></a>
           </div>
           <div class="destination-filter clearfix"
                ng-repeat="item in MapSort.searchParams.locations" ng-hide="$root.isDrawArea">
             <location address="item.address" location="item.location"
                       input-placeholder="Add next destination" bind-marker="false" limit="15"></location>
             <span class="icon-navpoint"></span>
-            <a ng-click="MapSort.removeLocation($index)">-</a>
-            <button class="action-btn"><span class="minus"></span></button>
+            <a ng-click="MapSort.removeLocation($index)" class="clearfix"><span class="icon-minus"></span></a>
           </div>
           <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea}">
             <div class="form-group">
@@ -104,8 +100,7 @@
                           max-length="64"
                           placeholder="Filter by keyword"
                           on-invalid-tag="MapSort.invalidTag($tag)"
-                          display-property="name"
-                          key-property="name">
+                          >
               </tags-input>
             </div>
             <span class="icon-key" ng-show="MapSort.searchParams.tags.length == 0"></span>
@@ -113,7 +108,7 @@
           </div>
           <div class="rating-filters clearfix">
             <ui-select
-              ng-model="MapSort.searchParams.rating"
+              ng-model="MapSort.searchParams.filter.rating"
               search-enabled="false"
               theme="bootstrap">
               <ui-select-match class="star-rated" placeholder="star rating">Rated Higher than {{ $select.selected }}
@@ -160,10 +155,11 @@
         </div>
 
         <!--Applied filter-->
-        <div class="filer-defenition">
+        <div class="filter-definition applied">
           <div class="destination-filter clearfix" ng-if="$root.mapSortFilters.search_text">
             <input type="text" role="search" ng-model="$root.mapSortFilters.search_text" disabled/>
-            <a ng-click="$root.mapSortFilters.search_text = ''">-</a>
+            <!--<span class="icon-nav"></span>-->
+            <a ng-click="$root.mapSortFilters.search_text = ''" class="clearfix"><span class="icon-minus"></span></a>
           </div>
           <div class="date-filters clearfix"  ng-if="$root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date">
             <div class="form-group" ng-if="$root.mapSortFilters.filter.start_date">
@@ -174,8 +170,22 @@
               <span class="icon-calendar"></span>
               <input ng-model="$root.mapSortFilters.filter.end_date" class="date" type="text" disabled>
             </div>
+            <a ng-click="MapSort.removeFilter('date')" class="clearfix"><span class="icon-minus"></span></a>
           </div>
-
+          <div class="destination-filter clearfix" ng-if="$root.mapSortFilters.filter.tags.length"
+            ng-repeat="tag in $root.mapSortFilters.filter.tags">
+            <input type="text" ng-model="tag" disabled/>
+            <a ng-click="$root.mapSortFilters.filter.tags.splice($index, 1)" class="clearfix"><span class="icon-minus"></span></a>
+          </div>
+          <div class="destination-filter clearfix" ng-if="$root.mapSortFilters.filter.rating">
+            <input type="text" role="search" ng-value="'Rated Higher than ' + $root.mapSortFilters.filter.rating + ' stars'" disabled/>
+            <a ng-click="$root.mapSortFilters.filter.rating= ''" class="clearfix"><span class="icon-minus"></span></a>
+          </div>
+          <div class="destination-filter clearfix" ng-if="$root.mapSortFilters.filter.category_ids.length"
+               ng-repeat="category in MapSort.spotCategories[$root.sortLayer] | filter:{selected: true}">
+            <input type="text" ng-value="category.display_name" disabled/>
+            <a ng-click="category.selected = false" class="clearfix"><span class="icon-minus"></span></a>
+          </div>
         </div>
 
         <!--Search results-->
