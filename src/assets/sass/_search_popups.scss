@@ -570,6 +570,15 @@
   .country-filter {
     input {
       padding-right: 3rem;
+
+      &::-webkit-input-placeholder {
+        color: $blue_btn;
+        text-transform: uppercase;
+      }
+      &::-moz-placeholder {
+        color: $blue_btn;
+        text-transform: uppercase;
+      }
     }
     .icon-nav {
       position: absolute;
@@ -606,12 +615,13 @@
         }
       }
       input {
+        width: 200px !important;
         margin-top: 0;
       }
     }
 
     location input {
-      width: 87%
+      width: 88%
     }
 
     input {
@@ -626,93 +636,108 @@
       }
     }
 
-    &.applied {
-      max-height: 30rem;
-      overflow: auto;
+    //max-height: 30rem;
+    //overflow: auto;
 
-      .destination-filter input {
-        width: 87%;
-      }
-
-      .date-filters .form-group {
-        width: 43.5%;
-      }
-
-      //.country-filter input {
-      //  width: 100%;
-      //}
-      //.icon-nav {
-      //  background: url(../img/icons/icon_location.png) no-repeat;
-      //}
-      //.filters-button {
-      //  background: url(../img/icons/icon_filter_add_w.png) no-repeat $blue_btn center;
-      //}
-      //
-      //input {
-      //  background-color: $blue_btn;
-      //  color: $white;
-      //  width: calc(100% - 3rem);
-      //}
-      //.date-filters {
-      //  .form-group {
-      //    width: calc(50% - 1.5rem);
-      //    input {
-      //      width: 100%;
-      //    }
-      //  }
-      //}
-      //.action-btn {
-      //  display: inline-block;
-      //  background-color: #fff;
-      //  height: 5rem;
-      //  width: 3rem;
-      //  float: left;
-      //  margin-top: 1rem;
-      //  border: 1px solid #e3e3e3;
-      //  padding: 0;
-      //
-      //  &:hover, &:focus {
-      //    outline: none;
-      //    background-color: $blue_btn;
-      //    border-color: $blue_btn;
-      //  }
-      //  .minus {
-      //    background: url(../img/icons/icons_plus_minus.png) no-repeat  -21px 0;
-      //    width: 21px;
-      //    height: 21px;
-      //    display: inline-block;
-      //  }
-      //  &:hover .minus {
-      //    background-position: -21px -21px;
-      //
-      //  }
-      //}
-      //.destination-filter {
-      //  .icon-navpoint {
-      //    background: url(../img/icons/icon_location.png) no-repeat;
-      //  }
-      //}
-      //.icon-calendar {
-      //  background-position: 0 0;
-      //  z-index: 1;
-      //}
-      //.icon-category {
-      //  background-position: -46px 0;
-      //}
-      //.icon-star {
-      //  background-position: -67px 0;
-      //  height: 25px;
-      //  width: 24px;
-      //}
-      //.icon-key {
-      //  background-position: -21px 0;
-      //  width: 25px;
-      //  height: 22px;
-      //}
-      //.filters-arrow {
-      //  visibility: hidden;
-      //}
+    //applied
+    .destination-filter.applied input,
+    .rating-filters.applied .star-rated,
+    .keyword-filters.applied .tags {
+      width: 88%;
+      float: left;
     }
+
+    .date-filters.applied .form-group {
+      width: 43.5%;
+    }
+
+    .keyword-filters.applied  {
+      .tags {
+        height: 50px;
+      }
+      .icon-minus {
+        margin-top: 0;
+      }
+      input {
+        display: none;
+      }
+    }
+
+
+    //.country-filter input {
+    //  width: 100%;
+    //}
+    //.icon-nav {
+    //  background: url(../img/icons/icon_location.png) no-repeat;
+    //}
+    //.filters-button {
+    //  background: url(../img/icons/icon_filter_add_w.png) no-repeat $blue_btn center;
+    //}
+    //
+    //input {
+    //  background-color: $blue_btn;
+    //  color: $white;
+    //  width: calc(100% - 3rem);
+    //}
+    //.date-filters {
+    //  .form-group {
+    //    width: calc(50% - 1.5rem);
+    //    input {
+    //      width: 100%;
+    //    }
+    //  }
+    //}
+    //.action-btn {
+    //  display: inline-block;
+    //  background-color: #fff;
+    //  height: 5rem;
+    //  width: 3rem;
+    //  float: left;
+    //  margin-top: 1rem;
+    //  border: 1px solid #e3e3e3;
+    //  padding: 0;
+    //
+    //  &:hover, &:focus {
+    //    outline: none;
+    //    background-color: $blue_btn;
+    //    border-color: $blue_btn;
+    //  }
+    //  .minus {
+    //    background: url(../img/icons/icons_plus_minus.png) no-repeat  -21px 0;
+    //    width: 21px;
+    //    height: 21px;
+    //    display: inline-block;
+    //  }
+    //  &:hover .minus {
+    //    background-position: -21px -21px;
+    //
+    //  }
+    //}
+    //.destination-filter {
+    //  .icon-navpoint {
+    //    background: url(../img/icons/icon_location.png) no-repeat;
+    //  }
+    //}
+    //.icon-calendar {
+    //  background-position: 0 0;
+    //  z-index: 1;
+    //}
+    //.icon-category {
+    //  background-position: -46px 0;
+    //}
+    //.icon-star {
+    //  background-position: -67px 0;
+    //  height: 25px;
+    //  width: 24px;
+    //}
+    //.icon-key {
+    //  background-position: -21px 0;
+    //  width: 25px;
+    //  height: 22px;
+    //}
+    //.filters-arrow {
+    //  visibility: hidden;
+    //}
   }
 
   .destination-filter,
@@ -721,6 +746,14 @@
   .rating-filters,
   .category-filter {
     position: relative;
+
+    .category-dropdown {
+      &:focus, &:active {
+        color: #00c9f8;
+        background-color: #f5f5f7;
+      }
+    }
+
     input {
       padding-left: 5rem;
     }
@@ -741,6 +774,25 @@
 
     .icon-apply {
       background: url(../img/icons/icons_apply_cancel.png) no-repeat;
+      width: 27px;
+      right: 2rem;
+      height: 21px;
+      position: absolute;
+      top: 1.5rem;
+    }
+  }
+
+  .btn-cancel {
+    float: right;
+    width: 7rem;
+    margin-top: 5px;
+    background-color: #f5f5f7;
+    height: 5rem;
+    position: relative;
+    cursor: pointer;
+
+    .icon-cancel {
+      background: url(../img/icons/icons_apply_cancel.png) 0 90% no-repeat;
       width: 27px;
       right: 2rem;
       height: 21px;
@@ -826,6 +878,7 @@
           color: rgba(0, 183, 243, .8);
           //background: url(../img/selected-category.png) no-repeat left center;
         }
+
         &.active {
           padding: 1rem 2rem;
           background-color: #f5f5f7;

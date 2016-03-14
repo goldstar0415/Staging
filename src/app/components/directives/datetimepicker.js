@@ -14,11 +14,12 @@
           startDate: '=',
           endDate: '=',
           model: '=ngModel',
+          placeholder: '@',
           today: '='
         },
         link: function (s, e, a) {
           var format = DATE_FORMAT.datepicker.date;
-          var placeholder = moment().format(DATE_FORMAT.date);
+          var placeholder = s.placeholder ? s.placeholder : moment().format(DATE_FORMAT.date);
 
           if (s.today) {
             s.startDate = moment().format(DATE_FORMAT.date);

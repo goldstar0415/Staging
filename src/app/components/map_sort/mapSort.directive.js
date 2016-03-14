@@ -38,6 +38,7 @@
     vm.addLocation = addLocation;
     vm.removeLocation = removeLocation;
     vm.removeFilter = removeFilter;
+    vm.clearFilters = clearFilters;
 
     vm.searchParams = {
       locations: [],
@@ -116,7 +117,7 @@
     }
 
     function invalidTag(tag) {
-      if (tag.name.length > 64) {
+      if (tag.text.length > 64) {
         toastr.error('Your tag is too long. Max 64 symbols.');
       } else {
         toastr.error('Invalid input.');
@@ -155,16 +156,8 @@
     function doSearch() {
       var data = {
         search_text: vm.searchParams.search_text,
-        filter: {
-        }
+        filter: {}
       };
-
-      var bbox_array = MapService.GetBBoxes();
-      if (bbox_array.length > 0) {
-        bbox_array = MapService.BBoxToParams(bbox_array);
-        data.filter.b_boxes = bbox_array;
-      }
-      console.log(bbox_array);
 
       if (vm.searchParams.rating) {
         data.filter.rating = vm.searchParams.rating;
@@ -186,8 +179,19 @@
         data.filter.category_ids = _.pluck(categories, 'id');
       }
 
-      data = _.omit(data, _.isEmpty);
-      $rootScope.mapSortFilters = data;
+      $rootScope.mapSortFilters = angular.copy(data);
+
+      var bbox_array = MapService.GetBBoxes();
+      if (bbox_array.length > 0) {
+        bbox_array = MapService.BBoxToParams(bbox_array);
+        data.filter.b_boxes = bbox_array;
+      }
+
+      if (bbox_array.length == 0 && !vm.searchParams.search_text) {
+        toastr.error('Enter location or draw the area');
+        $rootScope.mapSortFilters = {};
+        return;
+      }
       $http.get(SEARCH_URL + '?' + jQuery.param(data))
         .success(function (spots) {
           console.log(spots);
@@ -244,13 +248,31 @@
       }
     }
 
+    function clearFilters() {
+      $rootScope.mapSortFilters = {};
+      vm.searchParams = {
+        locations: [],
+        tags: []
+      };
+    }
+
     function removeFilter(type) {
       switch (type) {
         case 'date':
           if ($rootScope.mapSortFilters.filter) {
             $rootScope.mapSortFilters.filter.start_date = '';
             $rootScope.mapSortFilters.filter.end_date = '';
+            vm.searchParams.start_date = '';
+            vm.searchParams.end_date = '';
           }
+          break;
+        case 'tags':
+          $rootScope.mapSortFilters.filter.tags = [];
+          vm.searchParams.tags = [];
+          break;
+        case 'rating':
+          $rootScope.mapSortFilters.filter.rating = null;
+          vm.searchParams.rating = null;
           break;
       }
     }
