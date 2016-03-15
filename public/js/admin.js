@@ -80,59 +80,59 @@
 
 //--------------------------------------------------
     $(document).ready(function () {
-        $('#spot_type').change(function () {
-            var $spotsType;
+        if ($('#spot_type option').length) {
+            hideDates();
 
-            spotType();
-            newTypeShowLog();
-            deleteLogValue();
+            $('#spot_type').change(function () {
+                var $spotsType;
 
-            function deleteLogValue() {
-                var $deleteLog = $('#deleteLog input[name="type"]');
-                var per =  $deleteLog.attr('value', $spotsType);
-            }
+                spotType();
+                newTypeShowLog();
+                deleteLogValue();
 
-            function newTypeShowLog() {
-                function getLocation(href) {
-                    var l = document.createElement("a");
-                    l.href = href;
-                    return l;
+                function deleteLogValue() {
+                    var $deleteLog = $('#deleteLog input[name="type"]');
+                    var per = $deleteLog.attr('value', $spotsType);
                 }
 
-                var $logLink = $('#log_link'),
-                    link = $logLink.attr('href');
-                var parsedLink = getLocation(link);
-                var nLink = parsedLink.origin + parsedLink.pathname + '?type=' + $spotsType;
-                $logLink.attr('href', nLink);
-            }
-
-            function addSpotsCategory(spType) {
-                $.getJSON("/spots/categories?type=" + spType, function (data) {
-                    $('option', $("#spot_category")).remove();
-
-                    for (var obj in data) {
-                        var displayName = data[obj].display_name;
-                        var value = data[obj].id;
-                        var category = document.getElementById("spot_category");
-                        var option = document.createElement("option");
-                        option.text = displayName;
-                        option.value = value;
-                        category.add(option);
+                function newTypeShowLog() {
+                    function getLocation(href) {
+                        var l = document.createElement("a");
+                        l.href = href;
+                        return l;
                     }
-                });
-            }
 
-            function spotType() {
-                $spotsType = $("#spot_type option:selected").val();
-                addSpotsCategory($spotsType);
-
-                if ($spotsType == 'event') {
-                    $('.event-only').show();
-                } else {
-                    $('.event-only').hide();
+                    var $logLink = $('#log_link'),
+                    link = $logLink.attr('href');
+                    var parsedLink = getLocation(link);
+                    var nLink = parsedLink.origin + parsedLink.pathname + '?type=' + $spotsType;
+                    $logLink.attr('href', nLink);
                 }
-            }
-        });
+
+                function addSpotsCategory(spType) {
+                    $.getJSON("/spots/categories?type=" + spType, function (data) {
+                        $('option', $("#spot_category")).remove();
+
+                        for (var obj in data) {
+                            var displayName = data[obj].display_name;
+                            var value = data[obj].id;
+                            var category = document.getElementById("spot_category");
+                            var option = document.createElement("option");
+                            option.text = displayName;
+                            option.value = value;
+                            category.add(option);
+                        }
+                    });
+                }
+
+                function spotType() {
+                    $spotsType = $("#spot_type option:selected").val();
+                    addSpotsCategory($spotsType);
+
+                    hideDates();
+                }
+            });
+        }
 
         $('#limit').change(function () {
             var search = '';
@@ -145,40 +145,50 @@
             location.href = location.origin + location.pathname + search;
         });
 
-        $('form').submit(function(e){
-            var emptyinputs = $(this).find('input').filter(function(){
+        $('form').submit(function (e) {
+            var emptyinputs = $(this).find('input').filter(function () {
                 return !$.trim(this.value).length;  // get all empty fields
-            }).prop('disabled',true);
+            }).prop('disabled', true);
         });
 
-        $('#bulk input[type=checkbox]').change(function(e) {
+        $('#bulk input[type=checkbox]').change(function (e) {
             var $row = $('.row-select');
             if ($(this).prop('checked')) {
-                 $row.prop('checked', true);
-             } else {
+                $row.prop('checked', true);
+            } else {
                 $row.prop('checked', false);
-             }
+            }
         });
 
         $('#bulk-edit').submit(function (e) {
             var $form = $(this);
-            $('.row-select:checked').each(function() {
+            $('.row-select:checked').each(function () {
                 $("<input>").attr({
-                    'type':'hidden',
-                    'name':'spots[]'
+                    'type': 'hidden',
+                    'name': 'spots[]'
                 }).val($(this).val()).appendTo($form);
             });
         });
 
-        $('#bulk-delete, #email-users').click(function(e) {
+        $('#bulk-delete, #email-users').click(function (e) {
             $(this).attr('href', $(this).attr('href') + '?' + getBulkRows(true));
         });
+
+        function hideDates() {
+            var spotsType = $("#spot_type option:selected").val();
+
+            if (spotsType == 'event') {
+                $('.event-only').show();
+            } else {
+                $('.event-only').hide();
+            }
+        }
 
         function getBulkRows(queryFormat) {
             queryFormat = typeof queryFormat === 'undefined' ? false : queryFormat;
 
             var result = {};
-            $('.row-select:checked').each(function(e) {
+            $('.row-select:checked').each(function (e) {
                 var key = $(this).attr('name').replace('[]', '');
                 if (!result.hasOwnProperty(key)) {
                     result[key] = [];
