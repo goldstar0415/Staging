@@ -49,7 +49,8 @@
     </ul>
   </div>
   <!--Attention! HERE ADD CLASS "applied"-->
-  <div class="search-filters col-xs-12" ng-show="$root.sortLayer != 'weather'">
+  <div class="search-filters col-xs-12" ng-show="$root.sortLayer != 'weather'"
+       ng-class="{'applied-filter': !MapSort.isShowFilter && !$root.isEmpty($root.mapSortFilters)}">
     <!--ADD CLASS "applied" here and styles will change-->
     <div class="row">
       <div class="col-xs-12">

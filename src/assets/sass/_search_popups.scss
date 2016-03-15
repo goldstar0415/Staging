@@ -336,7 +336,7 @@
   height: auto;
   z-index: 101;
   background: #fff;
-  width: 450px;
+  width: 470px;
   .close-popup {
     height: 3rem;
     width: 5rem;
@@ -464,6 +464,22 @@
   overflow-y: auto;
   background-color: #fff;
   padding: 1.5rem;
+
+  &.applied-filter {
+    input, button, .btn-cancel, .country-filter + .filters-button, .form-control[disabled], .filter-definition .tags{
+      background-color: $blue_btn;
+      color: #fff;
+      opacity: 1;
+    }
+
+    .star-rated .ui-select-placeholder + span {
+      color: #fff;
+    }
+
+    .country-filter + .filters-button {
+      background-image: url(../img/icons/icon_filter_add_w.png);
+    }
+  }
 
   .results {
     h2 {
@@ -601,9 +617,13 @@
   }
   .filter-definition {
 
+    .icon-minus {
+      margin-left: 10px;
+    }
+
     .btn-apply {
       position: absolute;
-      right: -7.3rem;
+      right: -8rem;
       top: 5px;
     }
 
@@ -611,11 +631,12 @@
       background-color: #f5f5f7;
       &.focused {
         input {
+          padding-left: 5rem;
           //margin-left: 45px;
         }
       }
       input {
-        width: 200px !important;
+        width: 335px !important;
         margin-top: 0;
       }
     }
@@ -643,12 +664,12 @@
     .destination-filter.applied input,
     .rating-filters.applied .star-rated,
     .keyword-filters.applied .tags {
-      width: 88%;
+      width: 85%;
       float: left;
     }
 
     .date-filters.applied .form-group {
-      width: 43.5%;
+      width: 42.5%;
     }
 
     .keyword-filters.applied  {
@@ -788,7 +809,10 @@
     margin-top: 5px;
     background-color: #f5f5f7;
     height: 5rem;
-    position: relative;
+    position: absolute;
+    z-index: 10;
+    right: 1.5rem;
+    top: 5.5rem;
     cursor: pointer;
 
     .icon-cancel {
