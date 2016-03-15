@@ -218,6 +218,10 @@
 
     //links
     vm.addLink = function (validLink) {
+      if (vm.links.length >= vm.restrictions.links) {
+        toastr.error('You can\'t add more than ' + vm.restrictions.links + ' links');
+        return;
+      }
       if (validLink && vm.newLink) {
         vm.links.unshift(vm.newLink);
         console.log(vm.links);
