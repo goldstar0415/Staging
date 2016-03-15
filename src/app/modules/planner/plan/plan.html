@@ -14,15 +14,12 @@
         <span>{{Plan.description}}</span>
       </p>
       <ul class="tools clearfix">
-        <li>
-          <a class="save-event" ng-click="Plan.saveToCalendar(Plan.spot)">Save</a>
-        </li>
-        <li>
-          <a class="favorite-spot" ng-click="Plan.addToFavorite(Plan.spot)">Favorite</a>
+        <li ng-if="Plan.user_id != currentUser.id">
+          <a class="save-event" ng-click="Plan.saveToCalendar()">Save</a>
         </li>
 
         <li>
-          <invite-friends item="Plan.spot"></invite-friends>
+          <invite-friends item="Plan" type="plan"></invite-friends>
         </li>
         <li ng-if="currentUser && !Plan.spot.isReported">
           <a class="report-icon" report-spot="Plan.spot">Report</a>

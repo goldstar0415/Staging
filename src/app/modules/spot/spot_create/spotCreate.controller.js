@@ -23,7 +23,7 @@
     vm.selectCover = false;
     vm.crop = {
       width: 512,
-      height: 256
+      height: 512
     };
     vm.firstload = true;
     vm.category_id = '';

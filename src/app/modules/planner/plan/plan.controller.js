@@ -10,8 +10,8 @@
     var vm = this;
     vm = _.extend(vm, plan);
     vm.comments = {};
-    vm.saveToCalendar = SpotService.saveToCalendar;
-    vm.removeFromCalendar = SpotService.removeFromCalendar;
+    vm.saveToCalendar = saveToCalendar;
+    vm.removeFromCalendar = removeFromCalendar;
     vm.send = send;
     formatAttachments();
 
@@ -46,6 +46,14 @@
         }, function error(resp) {
           toastr.error('Send message failed');
         })
+    }
+
+    function saveToCalendar() {
+
+    }
+
+    function removeFromCalendar() {
+
     }
 
     //show plans on map
