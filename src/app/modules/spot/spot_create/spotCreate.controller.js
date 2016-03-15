@@ -117,7 +117,7 @@
       if (vm.newLocation && vm.newLocation.address) {
         vm.addLocation(vm.newLocation);
       }
-      if (form.$valid && vm.category_id !== '') {
+      if (form.$valid && vm.category_id !== '' && vm.locations.length > 0) {
         var tags = filterTags();
         var locations = filterLocations();
         var request = {};
@@ -195,10 +195,13 @@
             });
         }
       } else {
+        console.log(vm.newLocation, vm.locations);
         if (!vm.title) {
           toastr.error('Title is required!');
         } else if (!vm.category_id) {
           toastr.error('Category is required!');
+        }else if ( vm.locations.length == 0) {
+          toastr.error('Location is required!');
         }
 
         if (vm.type === 'Event') {

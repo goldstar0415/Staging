@@ -297,7 +297,6 @@
                 </div>
                 <a ng-hide="SpotCreate.selectCover" class="delete" ng-click="SpotCreate.deleteImage($index, item.id)"
                    title="Delete"></a>
-
               </li>
             </ul>
             <div ng-if="SpotCreate.selectCover">Choose the photo</div>
@@ -370,13 +369,9 @@
     </section>
     <div class="form-group">
       <div class="col-xs-12 mobile-text-center">
-        <button ng-if="SpotCreate.edit" type="button" ng-click="SpotCreate.create(form)"
-                class="btn btn-default green-btn pull-right">Update
+        <button  type="button" ng-click="SpotCreate.create(form)" class="btn btn-default green-btn pull-right">
+          {{ SpotCreate.edit ? 'Update' : 'Create' }}
         </button>
-        <button ng-if="!SpotCreate.edit" type="button" ng-click="SpotCreate.create(form)"
-                class="btn btn-default green-btn pull-right">Create
-        </button>
-
       </div>
     </div>
   </div>
