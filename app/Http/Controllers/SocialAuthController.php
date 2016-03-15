@@ -43,6 +43,9 @@ class SocialAuthController extends Controller
         $provider = Socialite::with($social->name);
 
         if ($this->isConfirmed($request)) {
+            if ($error = $this->checkError($request)) {
+                return $error;
+            }
             /**
              * @var \Laravel\Socialite\Contracts\User $user
              */
@@ -152,5 +155,23 @@ class SocialAuthController extends Controller
     private function attachSocial($user, $social, $key)
     {
         $user->socials()->attach($social, ['social_key' => $key]);
+    }
+
+    protected function checkError(Request $request)
+    {
+        if ($request->has('error')) {
+            $response = [
+                'auth_error' => [
+                    'error' => $request->error
+                ]
+            ];
+            $response['auth_error']['description'] = $request->has('error_description') ? $request->error_description : null;
+            $response['auth_error']['reason'] = $request->has('error_reason') ? $request->error_reason : null;
+            $response['auth_error']['code'] = $request->has('error_code') ? $request->error_code : null;
+
+            return redirect()->away(frontend_url() . '?' . http_build_query($response));
+        }
+
+        return null;
     }
 }
