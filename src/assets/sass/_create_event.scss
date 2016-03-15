@@ -39,7 +39,7 @@
 .category-dropdown {
   width: 100%;
   .btn-default {
-    &:hover, &:focus, &:active {
+    &:hover .icon-category, &:focus, &:active {
       @include blue_shadow;
       background-color: $white;
     }
@@ -322,9 +322,18 @@
 .category-dropdown {
   margin-top: 1rem;
   text-transform: uppercase;
-  &:hover, &:focus, &:active {
+  &:hover, &:active {
     background-color: #00c9f8;
     color: $white;
+    .icon-category {
+      background-position: -46px 0;
+    }
+    .filters-arrow {
+      background: url(../img/icons/slider-arrow.png) no-repeat -29px 0px;
+    }
+    .open-arrow {
+      background: url(../img/icons/right-arrow.png) no-repeat -3px 0;
+    }
   }
 }
 

@@ -481,6 +481,7 @@
     .icon-star {
       background-image: url(../img/icons/white-star.png);
       background-position: 0;
+      background-size: 85%;
     }
     .star-rated .ui-select-placeholder + span {
       color: $white;
@@ -633,19 +634,45 @@
     }
   }
   .filter-definition {
-
     .icon-minus {
       margin-left: 10px;
     }
-
+    .rating-filters {
+      .star-rated {
+        .btn-default {
+          .caret {
+            background: url(../img/icons/slider-arrow.png) no-repeat -29px -47px;
+            position: absolute;
+            top: 1.2rem !important;
+            right: 1rem  !important;
+            width: 16px  !important;
+            height: 30px  !important;
+          }
+        }
+      }
+    }
     .btn-apply {
       position: absolute;
       right: -8rem;
       top: 5px;
     }
-
+    .rating-filters {
+      .btn-default {
+        border: none;
+        outline: none;
+        box-shadow: none;
+        &:hover, &:active, &:focus {
+          border: 1px solid #76c7dc;
+          -webkit-transition: box-shadow .3s, border-color .3s;
+          transition: box-shadow .3s, border-colors .3s;
+          box-shadow: inset 0 1px 2px 0 #fff, 0 0 3px 0 #00b7f3;
+          background-color: #f5f5f7;
+        }
+      }
+    }
     .tags {
       background-color: #f5f5f7;
+      border: none;
       &.focused {
         input {
           padding-left: 5rem;
@@ -785,7 +812,7 @@
     position: relative;
 
     .category-dropdown {
-      &:focus, &:active {
+      &:focus,  &:active {
         color: #00c9f8;
         background-color: #f5f5f7;
       }
