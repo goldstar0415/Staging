@@ -200,7 +200,14 @@ class User extends BaseModel implements
      */
     public function __construct(array $attributes = [])
     {
-        $this->hasAttachedFile('avatar');
+        $this->hasAttachedFile('avatar', [
+            'styles' => [
+                'thumb' => [
+                    'dimensions' => '80x80#',
+                    'convert_options' => ['quality' => 100]
+                ]
+            ]
+        ]);
         parent::__construct($attributes);
     }
 
