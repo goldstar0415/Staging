@@ -34,7 +34,7 @@
           <div class="message-in">
             <h3 class="name">
               <a ui-sref="chatRoom({user_id: dialog.user.id})">
-                John Doe
+                {{currentUser.first_name}} {{currentUser.last_name}}
               </a>
             </h3>
             <p ng-if="dialog.last_message.message">{{dialog.last_message.message}}</p>
