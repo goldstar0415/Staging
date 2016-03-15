@@ -70,15 +70,13 @@
               <invite-friends item="item"></invite-friends>
             </li>
             <li>
-              <a class="share-btn" target="_blank">Share</a>
+              <share item="item" type="spot"></share>
             </li>
             <li ng-if="item.type == 'Event'" class="hidden-xs">
               <a class="download"
                  ng-href="{{Favorite.API_URL + '/spots/' + item.id + '/export'}}" target="_blank">Export to ICS</a>
             </li>
           </ul>
-          <share item="item" type="spot"></share>
-          <!-- share-wrap -->
 
         </div>
       </div>
