@@ -137,26 +137,26 @@
               color: #00b7f3;
             }
             &.menu-about {
-              background-image: url(../img/svg/popup/icon_photo.svg);
-              background-position: 0 1px;
+              background-image: url(../img/svg/popup/icon_planner.svg);
             }
             &.menu-reviews {
               background-image: url(../img/svg/popup/blog_icon.svg);
             }
             &.menu-photos {
-              background-image: url(../img/svg/popup/icon_planner.svg);
+              background-image: url(../img/svg/popup/icon_photo.svg);
+              background-position: 0 1px;
             }
           }
         &:active, &:hover {
             .menu-about {
-              background-image: url(../img/svg/popup/icon_photo_active.svg);
-              background-position: 0 1px;
+              background-image: url(../img/svg/popup/icon_planner_active.svg);
             }
             .menu-reviews {
               background-image: url(../img/svg/popup/blog_icon_active.svg);
             }
             .menu-photos {
-              background-image: url(../img/svg/popup/icon_planner_active.svg);
+              background-image: url(../img/svg/popup/icon_photo_active.svg);
+              background-position: 0 1px;
             }
           }
         }
