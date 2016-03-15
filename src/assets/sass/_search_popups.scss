@@ -466,18 +466,35 @@
   padding: 1.5rem;
 
   &.applied-filter {
-    input, button, .btn-cancel, .country-filter + .filters-button, .form-control[disabled], .filter-definition .tags{
+    input, button, .btn-cancel, .country-filter + .filters-button, .form-control[disabled], .filter-definition .tags {
       background-color: $blue_btn;
-      color: #fff;
+      color: $white;
       opacity: 1;
     }
-
+    .icon-nav {
+      background-image: url(../img/icons/white-location.png);
+    }
+    .icon-calendar {
+      background-image: url(../img/icons/white-calendar.png);
+      background-position: 0;
+    }
+    .icon-star {
+      background-image: url(../img/icons/white-star.png);
+      background-position: 0;
+    }
     .star-rated .ui-select-placeholder + span {
-      color: #fff;
+      color: $white;
     }
 
     .country-filter + .filters-button {
       background-image: url(../img/icons/icon_filter_add_w.png);
+    }
+    .btn-cancel .icon-cancel {
+      background: url(../img/icons/white-big-cross.png) 0 80% no-repeat;
+      position: absolute;
+      idth: 25px;
+      top: 1.1rem;
+      height: 25px;
     }
   }
 
@@ -672,7 +689,7 @@
       width: 42.5%;
     }
 
-    .keyword-filters.applied  {
+    .keyword-filters.applied {
       .tags {
         height: 50px;
       }
@@ -683,7 +700,6 @@
         display: none;
       }
     }
-
 
     //.country-filter input {
     //  width: 100%;
