@@ -67,7 +67,7 @@
 </div>
 
 
-<div class="col-xs-12 mobile-nopad">
+<div class="col-xs-12 mobile-nopad main-container">
   <div class="container wrap">
 
     <div class="col-xs-12 col-md-3 information-profile " ng-if="!$root.isMobile || Profile.isStream()">
@@ -269,7 +269,7 @@
           </aside> -->
 
           <aside class="module-sidebar clearfix"
-                 ng-if="Profile.$state.is('spot') && $root.currentSpot.count_members > 0">
+                 ng-if="Profile.$state.is('spot')">
             <h2 class="sidebar-title">
               <a users-modal="members" user="$root.currentSpot">
                 Members

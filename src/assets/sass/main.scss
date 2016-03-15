@@ -86,13 +86,14 @@
         url('../css/fonts/raleway-regular-webfont.woff') format('woff'),
         url('../css/fonts/raleway-regular-webfont.ttf') format('truetype');
 }
-.snap-content {
-    background: #f5f8fa;
+
+.snap-content, .main-container {
+  background: #f5f8fa;
 }
 
 body {
-    font-family: 'Open Sans', sans-serif !important;
-    background-color: transparent;
+  font-family: 'Open Sans', sans-serif !important;
+  background-color: transparent;
 }
 
 a {

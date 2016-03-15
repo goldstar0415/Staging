@@ -41,7 +41,7 @@
     };
 
     vm.isVisibleProfileBlock = function () {
-      return  !$state.is('followers') && !$state.is('followings');
+      return !$state.is('followers') && !$state.is('followings') && !$state.is('spot');
     };
 
   }
