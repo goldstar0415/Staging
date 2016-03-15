@@ -89,7 +89,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     'dimensions' => '100x100#',
                     'convert_options' => ['quality' => 100]
                 ],
-                'medium' => '180x180'
+                'medium' => '180x180#'
             ]
         ]);
         parent::__construct($attributes);
