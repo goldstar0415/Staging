@@ -40,7 +40,7 @@
             } else if (resp.status == 422) {
               toastr.error('Wrong email or password');
             } else {
-              toastr.error('Account not confirmed');
+              toastr.error('Account is not verified');
             }
           });
       }
