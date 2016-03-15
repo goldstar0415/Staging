@@ -50,7 +50,8 @@ class PrivacyCheck
             $spot = $request->route('spots');
             $target = $spot->user;
 
-            if (!$target or $spot->is_private and $this->privacy->hasPermission($target, $target->privacy_events)) {
+            if (!$target or !$spot->is_private
+                or $spot->is_private and $this->privacy->hasPermission($target, $target->privacy_events)) {
                 $allow = true;
             }
         } elseif ($request->is('followers/*')) {
