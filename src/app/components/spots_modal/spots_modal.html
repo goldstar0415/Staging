@@ -22,7 +22,7 @@
         <img class="friend-avatar" ng-src="{{spot.cover_url.thumb }}">
         <h4 class="name-friend">{{spot.title}}</h4>
 
-        <p class="time">{{spot.start_date | toTimezone:'MM.DD.YYYY'}} - {{spot.end_date | toTimezone:'MM.DD.YYYY'}}</p>
+        <p class="time" ng-if="spot.category.type.name == 'event'">{{spot.start_date | toTimezone:'MM.DD.YYYY'}} - {{spot.end_date | toTimezone:'MM.DD.YYYY'}}</p>
       </div>
     </div>
   </div>
