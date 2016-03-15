@@ -42,6 +42,9 @@
         <div ng-if="form.$submitted && !Plan.address" class="error-message-inline">
           <div>is required</div>
         </div>
+        <div ng-if="form.$submitted && Plan.address && !Plan.location" class="error-message-inline">
+          <div>wrong location</div>
+        </div>
       </div>
     </div>
     <div class="form-group ">

@@ -6,7 +6,7 @@
     .controller('PlanCreateController', PlanCreateController);
 
   /** @ngInject */
-  function PlanCreateController($scope, Plan, plan, categories, $state, DATE_FORMAT) {
+  function PlanCreateController($scope, Plan, plan, toastr, categories, $state, DATE_FORMAT) {
     var vm = this;
     vm = _.extend(vm, plan);
     vm.attachments = [];
@@ -25,7 +25,8 @@
 
     //submit form
     function save(form) {
-      if (form.$valid) {
+      if (form.$valid && vm.location) {
+
         if (vm.id) {
           Plan.update(_convertData(), function (resp) {
             $state.go('planner.list');
