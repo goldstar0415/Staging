@@ -59,7 +59,8 @@
                     description: event.description,
                     start_date: start_date,
                     end_date: end_date,
-                    spot_type_category_id: 6,  //delete it. for testing
+                    type: 'event',
+                    is_facebook_import: true,
                     locations: [{
                       location: {
                         lat: event.place.location.latitude,

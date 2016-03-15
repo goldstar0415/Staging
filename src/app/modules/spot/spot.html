@@ -29,11 +29,14 @@
         <a target="_blank" rel="nofollow" href="{{item}}">{{item | shortLink}}</a>
       </div>
 
+      <div jcarousel images="Spot.spot.photos"></div>
+
       <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
         <li ng-repeat="link in Spot.spot.videos" class="video-size">
           <youtube-player src="link"></youtube-player>
         </li>
       </ul>
+
 
       <ul class="tags ">
         <li ng-repeat="tag in Spot.spot.tags">

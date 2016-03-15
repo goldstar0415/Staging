@@ -72,10 +72,14 @@
      * @param post {Post}
      */
     vm.like = function (post) {
-      if (post.user_rating < 1) {
+      if (post.user_rating == 0) {
         Wall.like({id: post.id});
         post.user_rating++;
         post.rating++;
+      } else if (post.user_rating == 1) {
+        Wall.dislike({id: post.id});
+        post.user_rating--;
+        post.rating--;
       }
     };
 

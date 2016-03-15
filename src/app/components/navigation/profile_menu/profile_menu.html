@@ -247,26 +247,11 @@
                   <div class="sidebar-user-name" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
                     {{item.title}}
                   </div>
-                  <!--  <a class="sidebar-user-name" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a> -->
                 </a>
               </div>
             </div>
 
           </aside>
-
-          <!-- <aside class="module-sidebar clearfix" ng-if="Profile.$state.is('spot') && $root.currentSpot.photos.length > 0">
-            <h2 class="sidebar-title">
-              <a>
-                Photos
-                <span class="counter">{{$root.currentSpot.photos.length}}</span>
-              </a>
-            </h2>
-
-            <div class="sidebar-row ">
-              <div jcarousel images="$root.currentSpot.photos"></div>
-            </div>
-
-          </aside> -->
 
           <aside class="module-sidebar clearfix"
                  ng-if="Profile.$state.is('spot')">
