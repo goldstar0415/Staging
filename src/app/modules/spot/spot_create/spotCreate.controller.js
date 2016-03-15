@@ -140,11 +140,15 @@
           request.web_sites = vm.links;
           console.log(request.web_sites);
         }
-        if (vm.youtube_links && vm.youtube_links.length > 0) {
+        if (vm.newYoutubeLink || (vm.youtube_links && vm.youtube_links.length > 0)) {
+          if (!vm.youtube_links) {
+            vm.youtube_links = [];
+          }
           if (vm.newYoutubeLink) {
             vm.youtube_links.push(vm.newYoutubeLink);
           }
           request.videos = vm.youtube_links;
+          console.log(request);
         }
         if (locations.length > 0) {
           request.locations = locations;
