@@ -330,8 +330,11 @@
     };
 
     vm.InvalidTag = function (tag) {
+      console.log(vm.tags, tag.name);
       if (tag.name.length > 64) {
         toastr.error('Your tag is too long. Max 64 symbols.');
+      } else if (_.find(vm.tags, {name: tag.name})) {
+        toastr.error('Tag with this name has already been added');
       } else {
         toastr.error('Invalid input.');
       }
