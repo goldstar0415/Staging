@@ -37,7 +37,7 @@
         case 'area':
           vm.text = vm.item.title;
           vm.url = $state.href('areas.preview', {area_id: vm.item.id}, {absolute: true});
-          vm.picture = logo;
+          vm.picture = vm.item.cover_url.medium;
           break;
         case 'post':
           vm.text = vm.item.title;

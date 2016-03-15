@@ -51,7 +51,11 @@
               <img class="avatar" ng-src="{{comment.sender.avatar_url.thumb}}">
             </div>
             <div class="info">
-              <h3 class="name">{{comment.sender.first_name}} {{comment.sender.last_name}}</h3>
+              <h3 class="name" >
+                <a ui-sref="profile.main({user_id: comment.sender.alias || comment.sender.id})">
+                  {{comment.sender.first_name}} {{comment.sender.last_name}}
+                </a>
+              </h3>
 
               <p class="line-break" ng-bind-html="comment.body | linky:'_blank'"></p>
 

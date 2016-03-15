@@ -219,16 +219,14 @@
           return container;
         },
         _click: function (e) {
-          //if ($rootScope.currentUser) {
-          //  L.DomEvent.stopPropagation(e);
-          //  L.DomEvent.preventDefault(e);
-          //  OpenSaveSelectionsPopup();
-          //} else {
-          //  SignUpService.openModal('SignUpModal.html');
-          //}
-
+          if ($rootScope.currentUser) {
+            L.DomEvent.stopPropagation(e);
+            L.DomEvent.preventDefault(e);
+            OpenSaveSelectionsPopup(true);
+          } else {
+            SignUpService.openModal('SignUpModal.html');
+          }
         }
-
       });
       L.Control.ShareSelection = function (options) {
         return new L.Control.shareSelection(options);
