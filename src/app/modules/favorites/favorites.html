@@ -11,7 +11,8 @@
       <div class="row">
         <div class="col-md-2 col-xs-3 col-sm-4 spot-thumb">
           <figure>
-            <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" ui-sref="spot({user_id: item.user_id, spot_id: item.id})" class="img-size">
+            <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}"
+                 ui-sref="spot({user_id: item.user_id, spot_id: item.id})" class="img-size">
             <spot-type type="item.type"></spot-type>
           </figure>
 
@@ -21,6 +22,7 @@
         </div>
         <div class="col-md-10 col-xs-9 col-sm-8">
           <a ng-click="item.visible_submenu = !item.visible_submenu" class="more-info">. . .</a>
+
           <div ng-show="item.visible_submenu" class="more-info-popup">
             <ul class="list-unstyled">
               <li><a href="">Claim Spot</a></li>
@@ -32,8 +34,8 @@
           </h2>
 
 
-
           <p class="place" ng-if="item.points.length > 0">{{item.points[0].address}}</p>
+
           <div ng-if="item.type == 'Event'" class="date">
             <date-range item="item"></date-range>
           </div>
@@ -41,16 +43,21 @@
 
 
           <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">
-            <li ng-repeat="tag in item.tags"><a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{tag.name}}</a>
+            <li ng-repeat="tag in item.tags"><a
+              ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{tag.name}}</a>
             </li>
           </ul>
           <!--  tags -->
 
           <ul class="tools">
-            <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')" class="hidden-xs">
+            <li
+              ng-if="(currentUser.id == item.user_id && currentUser.id == profileUser.id) || isRole(currentUser, 'admin')"
+              class="hidden-xs">
               <a ui-sref="spot_edit({spot_id: item.id})" class="edit-tools">Edit</a>
             </li>
-            <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')" class="hidden-xs">
+            <li
+              ng-if="(currentUser.id == item.user_id && currentUser.id == profileUser.id) || isRole(currentUser, 'admin')"
+              class="hidden-xs">
               <a ng-click="Favorite.removeSpot(item, $index);" class="delete">Delete</a>
             </li>
 
