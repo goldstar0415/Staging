@@ -127,8 +127,8 @@ Route::get('posts/categories', 'BlogController@categories');
 Route::get('posts/popular', 'BlogController@popular');
 Route::post('posts/request', 'BlogController@bloggerRequest');
 Route::resource('posts', 'BlogController', ['except' => ['create', 'edit']]);
-Route::get('posts/{posts}/preview', 'BlogController@preview');
 Route::resource('posts.comments', 'BlogCommentController', ['only' => ['index', 'store', 'destroy']]);
+Route::get('posts/{posts}/preview', 'BlogController@preview');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
 Route::get('url-parse', 'UrlMetaParserController@getContentFromSite');
