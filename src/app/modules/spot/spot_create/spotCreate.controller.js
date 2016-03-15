@@ -179,9 +179,13 @@
           UploaderService
             .upload(url, req)
             .then(function (resp) {
-              if (vm.type != 'event') {
+              if (vm.is_private) {
+                toastr.success('Spot successfully saved');
+              } else {
                 toastr.info('Your submittal is under review and will be posted shortly.');
+              }
 
+              if (vm.type != 'event') {
                 $timeout(function () {
                   $state.go('spots', {user_id: resp.data.user_id});
                 }, 3000);
