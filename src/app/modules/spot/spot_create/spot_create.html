@@ -4,6 +4,7 @@
 
     <div class="text-center">
       <h2 ng-if="!SpotCreate.edit" class="title-name">Create new spot</h2>
+
       <h2 ng-if="SpotCreate.edit" class="event-title">Update Spot</h2>
     </div>
 
@@ -139,13 +140,12 @@
               <label class="col-md-3 col-sm-12 col-xs-12 control-label"></label>
 
               <div class="col-md-9 col-sm-12 col-xs-12">
-                <div class="input-group">
+                <div class="input-group remove-compass">
                   <input validate-link ng-model="item" name="link_{{$index}}" type="text" class="form-control"
                          placeholder="http://zoomtivity.com">
-          <span class="input-group-btn">
-                 <button ng-click="SpotCreate.removeLink($index)" class="btn btn-default" type="button"><i
-                   class="glyphicon glyphicon-minus"></i></button>
-          </span>
+                  <a class="btn-add compass" ng-click="SpotCreate.removeLink($index)"
+                     type="button">
+                  </a>
                 </div>
 
                 <div ng-messages="form['link_' + $index].$error" class="error-message-inline">

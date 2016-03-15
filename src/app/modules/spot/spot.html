@@ -25,7 +25,7 @@
       <p class="description"><span ng-bind-html="Spot.spot.description"></span>
       </p>
 
-      <div class="external-link" ng-repeat="item in Spot.spot.web_sites track by $index">
+      <div class="external-link clearfix" ng-repeat="item in Spot.spot.web_sites track by $index">
         <a target="_blank" rel="nofollow" href="{{item}}">{{item | shortLink}}</a>
       </div>
 

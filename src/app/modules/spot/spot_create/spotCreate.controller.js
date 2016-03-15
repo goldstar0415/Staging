@@ -133,12 +133,14 @@
             request.cover = vm.cover;
           }
         }
-        if (vm.links && vm.links.length > 0) {
+        if (vm.newLink || (vm.links && vm.links.length > 0)) {
+          if (!vm.links) {
+            vm.links = [];
+          }
           if (vm.newLink) {
             vm.links.push(vm.newLink);
           }
           request.web_sites = vm.links;
-          console.log(request.web_sites);
         }
         if (vm.newYoutubeLink || (vm.youtube_links && vm.youtube_links.length > 0)) {
           if (!vm.youtube_links) {
@@ -148,7 +150,6 @@
             vm.youtube_links.push(vm.newYoutubeLink);
           }
           request.videos = vm.youtube_links;
-          console.log(request);
         }
         if (locations.length > 0) {
           request.locations = locations;
