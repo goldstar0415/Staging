@@ -11,7 +11,7 @@
       </div>
       <div class="col-xs-9 no-pad input-width">
         <input placeholder="Start typing..." class="form-control  " ng-minlength="3" ng-maxlength="128" name="title"
-               ng-model="CreateAlbum.album.title" type="text">
+               ng-model="CreateAlbum.album.title" type="text" required>
 
         <div class="error-message-inline" ng-messages="form.title.$error"
              ng-if="form.$submitted || form.title.$touched">
