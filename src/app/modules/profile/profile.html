@@ -1,9 +1,4 @@
 <div class="content-wall" ng-if="Profile.checkPermission(profileUser.privacy_wall)">
-  <!-- <div class="text-center">
-    <h2 class="title-name">
-      {{currentUser.id == profileUser.id ? 'My profile' : profileUser.first_name + "'s profile"}}
-    </h2>
-  </div> -->
   <div ng-if="profileUser.id == currentUser.id">
     <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
   </div>
@@ -20,9 +15,12 @@
       </div>
       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 info">
         <h3 class="name">
-          <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
+          <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">{{post.sender.first_name}}
+            {{post.sender.last_name}}</a>
         </h3>
+
         <p class="time">{{post.created_at | fromNow}}</p>
+
         <p ng-bind-html="post.body | linky:'_blank'" class="color-link"></p>
       </div>
       <div class="row">
@@ -31,17 +29,13 @@
         </div>
       </div>
 
+      <div class="col-xs-12 edit-delete">
+        <a class="like" ng-if="currentUser" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)">
+          {{post.rating}}
+        </a>
 
-      <!-- <div class="plus-minus" ng-if="currentUser">
-        <a class="plus" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)"></a>
-        <span class="value-rating">{{post.rating}}</span>
-        <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
-      </div> -->
-
-      <div class="col-xs-12 edit-delete"
-           ng-if="currentUser.id == profileUser.id || currentUser.id == post.sender.id || isRole(currentUser, 'admin')">
-        <a class="like" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)">{{post.rating}} </a>
-        <a ng-click="Profile.deletePost(post, $index)" class="delete">Delete</a>
+        <a ng-if="currentUser.id == profileUser.id || currentUser.id == post.sender.id || isRole(currentUser, 'admin')"
+           ng-click="Profile.deletePost(post, $index)" class="delete">Delete</a>
       </div>
 
     </div>
@@ -55,4 +49,3 @@
   <h4 class="text-center description">Wall is empty</h4>
 </div>
 
-</div>

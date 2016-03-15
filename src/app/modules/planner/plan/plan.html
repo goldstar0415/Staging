@@ -15,9 +15,8 @@
       </p>
       <ul class="tools clearfix">
         <li ng-if="Plan.user_id != currentUser.id">
-          <a class="save-event" ng-click="Plan.saveToCalendar()">Save</a>
+          <a class="save-event" ng-click="Plan.savePlanToCalendar()">Save</a>
         </li>
-
         <li>
           <invite-friends item="Plan" type="plan"></invite-friends>
         </li>
@@ -105,9 +104,6 @@
           <p class="time">{{post.created_at | fromNow}}</p>
           <p ng-bind-html="post.body | linky:'_blank'"></p>
           <attachments items="post.attachments"></attachments>
-
-
-
         </div>
       </div>
 

@@ -10,8 +10,10 @@
     var vm = this;
     vm = _.extend(vm, plan);
     vm.comments = {};
-    vm.saveToCalendar = saveToCalendar;
-    vm.removeFromCalendar = removeFromCalendar;
+    vm.saveToCalendar = SpotService.saveToCalendar;
+    vm.removeFromCalendar = SpotService.removeFromCalendar;
+    vm.savePlanToCalendar = savePlanToCalendar;
+    vm.removePlanFromCalendar = removePlanFromCalendar;
     vm.send = send;
     formatAttachments();
 
@@ -48,11 +50,11 @@
         })
     }
 
-    function saveToCalendar() {
+    function savePlanToCalendar() {
 
     }
 
-    function removeFromCalendar() {
+    function removePlanFromCalendar() {
 
     }
 
