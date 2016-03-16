@@ -8,7 +8,6 @@
   /** @ngInject */
   function SettingsController($scope, $rootScope, UploaderService, currentUser, User, DATE_FORMAT, CropService, toastr, moment, $http, API_URL) {
     var vm = this;
-    vm.endDate = moment().toDate();
     vm.data = currentUser;
     vm.data.social_facebook = isSocial('facebook');
     vm.data.social_google = isSocial('google');
@@ -17,6 +16,7 @@
     vm.images = UploaderService.images;
     vm.saveSocialNetworks = saveSocialNetworks;
     vm.minDate = '01.01.1920';
+    vm.maxDate = moment().toDate();
 
     vm.privacyOptions = [
       {value: 1, label: 'All users have access'},
