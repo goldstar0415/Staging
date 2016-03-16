@@ -15,8 +15,11 @@
 
   div[content-tools] {
     border: 1px solid #e9edf0;
-    margin: 15px;
     min-height: 200px;
+
+    .ce-element--focused, .ce-element--over {
+      background-color: transparent;
+    }
   }
 }
 .event-additionl-info {

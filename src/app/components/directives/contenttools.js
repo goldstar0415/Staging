@@ -35,6 +35,7 @@
       var editor = new ContentTools.EditorApp.get();
       editor.init('[content-tools]', 'article-body');
       editor.start();
+      window.onbeforeunload = null;
     }
   }
 
