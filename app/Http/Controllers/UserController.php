@@ -342,6 +342,7 @@ class UserController extends Controller
     protected function resetPassword($user, $password)
     {
         $user->password = bcrypt($password);
+        $user->verified = true;
 
         $user->save();
 
