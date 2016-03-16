@@ -18,7 +18,7 @@
       <div class="choose-friend choose-spot"
            ng-class="{choose: spot.selected}"
            ng-click="modal.addSpot(spot)"
-           ng-repeat="spot in modal.spots | filter:search">
+           ng-repeat="spot in modal.spots | filter:{is_approved: true, title: search}">
         <img class="friend-avatar" ng-src="{{spot.cover_url.thumb }}">
         <h4 class="name-friend">{{spot.title}}</h4>
 

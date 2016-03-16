@@ -1,51 +1,8 @@
 <div class="main-container">
   <div class="container wrap mgt25">
     <div class="text-center"><h2 class="title-name">Blog</h2></div>
-    <!-- carousel -->
-    <!--<div class="col-lg-10 col-lg-push-1 col-sm-12 col-md-12 col-xs-12 carousel-section hidden-md hidden-sm hidden-xs">-->
-    <!--<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">-->
-
-    <!--<div class="carousel-inner" role="listbox">-->
-    <!--<div class="item active">-->
-    <!--<img src="http://zoomzoom.itechhighway.com/upload/articles/large_ovrQ9hq8j1qaZnug.jpg">-->
-
-    <!--<div class="carousel-caption carousel-description">-->
-    <!--<h2><a href="" class="carousel-title col-xs-12">Third slide label</a></h2>-->
-
-    <!--<a class="carousel-text col-xs-12">Praesent commodo cursus magna, vel scelerisque nisl-->
-    <!--consectetur.</a>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="item">-->
-    <!--<img src="http://zoomzoom.itechhighway.com/upload/articles/large_ZY7VhyETYuKw5OQS.JPG">-->
-
-    <!--<div class="carousel-caption carousel-description">-->
-    <!--<h2><a href="" class="carousel-title col-xs-12">Third slide label</a></h2>-->
-
-    <!--<p class="carousel-text col-xs-12">Praesent commodo cursus magna2222 vel scelerisque nisl-->
-    <!--consectetur.</p>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="item">-->
-    <!--<img src="http://zoomzoom.itechhighway.com/upload/articles/large_NJwPG6vaIl9VfWWh.jpg">-->
-
-    <!--<div class="carousel-caption carousel-description">-->
-    <!--<h2><a href="" class="carousel-title col-xs-12">Third slide label</a></h2>-->
-
-    <!--<p class="carousel-text col-xs-12">Praesent commodo 123 magna2222 vel scelerisque nisl-->
-    <!--consectetur.</p>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-
-    <!--</div>-->
-
-    <!--</div>-->
-    <!-- end carousel -->
 
     <div class="main-blog-content">
-
-
       <div class="media-wrap">
         <popular-posts show-banner="true" class="hidden-xs"></popular-posts>
       </div>
@@ -53,26 +10,7 @@
         <div class="banner-for-bloggers col-xs-12">
           <div class="banner-logo"></div>
           <p class="text-banner">Want to add a post to our blog?</p>
-          <button type="button" blogger-request="" class="banner-btn">Send request!
-            <script type="text/ng-template" id="BloggerRequestModal.html">
-              <div class="modal-header">
-                <button type="button" class="close" ng-click="modal.close()">&times;</button>
-                <h4 class="modal-title send-message">Send request</h4>
-              </div>
-              <div class="modal-body clearfix no-pad no-pad-bottom">
-                <form class="new-post clearfix" name="form" ng-submit="modal.submit()">
-            <textarea name="message"
-                      ng-model="modal.message"
-                      placeholder="Start typing..."
-                      ctrl-enter="modal.submit()"
-                      required></textarea>
-
-                  <input type="submit" class="submit-send" value="Send">
-
-                </form>
-              </div>
-            </script>
-          </button>
+          <button type="button" blogger-request="" class="banner-btn" ></button>
         </div>
       </div>
 
@@ -91,6 +29,7 @@
               <h2 class="title-blog row">
                 <a class="col-md-12 col-xs-9" ui-sref="blog.article({slug: post.slug})">{{post.title}}</a>
                 <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right">11<br>May</span>
+
                 <div class="clearfix"></div>
               </h2>
 
@@ -99,6 +38,7 @@
               </div>
 
               <p class="article-description" ng-bind-html="post.body"></p>
+
               <div class="article-info col-xs-12">
                 <div class="row">
                   <!-- <p class="date col-xs-12 col-sm-2">{{post.created_at | toTimezone:'MM.DD.YYYY'}}</p> -->
