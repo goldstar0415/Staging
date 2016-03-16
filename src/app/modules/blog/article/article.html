@@ -28,7 +28,7 @@
             </div>
 
 
-            <p class="article-description" ng-bind-html="Article.body"></p>
+            <p class="article-description" ng-bind-html="Article.body | toTrustedHtml"></p>
 
             <div class="row">
               <div class="article-info col-xs-12">
