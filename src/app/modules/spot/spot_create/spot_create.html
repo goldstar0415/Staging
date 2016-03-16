@@ -325,9 +325,9 @@
                              result-image="SpotCreate.cover" auto-crop="false"
                              crop-height="SpotCreate.crop.height" crop-width="SpotCreate.crop.width"></image-cropper>
 
-              <img ng-src="{{SpotCreate.cover}}" ng-if="SpotCreate.saveCrop"/>
+              <img class="img-responsive" ng-src="{{SpotCreate.cover}}" ng-if="SpotCreate.saveCrop"/>
 
-              <button type="button" ng-click="SpotCreate.saveCrop = true"
+              <button type="button" ng-click="SpotCreate.saveCover()"
                       class="btn btn-default green green-btn pull-left margin-bottom save-cover-btn"
                       ng-if="!SpotCreate.selectCover && !SpotCreate.saveCrop">Save cover
               </button>

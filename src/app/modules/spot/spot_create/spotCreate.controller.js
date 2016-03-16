@@ -9,6 +9,7 @@
   function SpotCreateController(spot, $stateParams, $state, $modal, toastr, $scope, MapService, UploaderService, CropService, $timeout, moment, API_URL, $http, DATE_FORMAT, categories) {
     var vm = this;
     var coverName = null;
+    var isChangedCover = false;
 
     vm.deletedImages = [];
     vm.edit = $state.current.edit || false;
@@ -126,12 +127,8 @@
         request.spot_type_category_id = vm.category_id;
         request.is_private = vm.is_private;
 
-        if (vm.cover) {
+        if (vm.cover && isChangedCover) {
           request.cover = vm.cover;
-
-          if (!vm.edit) {
-            request.cover = vm.cover;
-          }
         }
         if (vm.newLink || (vm.links && vm.links.length > 0)) {
           if (!vm.links) {
@@ -204,7 +201,7 @@
           toastr.error('Title is required!');
         } else if (!vm.category_id) {
           toastr.error('Category is required!');
-        }else if ( vm.locations.length == 0) {
+        } else if (vm.locations.length == 0) {
           toastr.error('Location is required!');
         }
 
@@ -329,6 +326,11 @@
       }
     };
 
+    vm.saveCover = function () {
+      vm.saveCrop = true;
+      isChangedCover = true;
+    };
+
     vm.InvalidTag = function (tag) {
       console.log(vm.tags, tag.name);
       if (tag.name.length > 64) {
@@ -384,6 +386,7 @@
 
     if (vm.edit) {
       vm.convertSpot();
+      vm.saveCrop = true;
     }
   }
 })
