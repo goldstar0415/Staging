@@ -586,6 +586,11 @@ facebook-events a {
 }
 .outline-none {
     outline: none;
+
+    &.readonly [ng-click] {
+      cursor: default;
+    }
+
     span {
         outline: none;
         &:hover, &:focus, &:active, &:visited {

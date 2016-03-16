@@ -1,4 +1,5 @@
-<div class="outline-none text-center">
+<div class="outline-none text-center"
+     ng-class="{readonly: Stars.item.is_rated || !$root.currentUser || Stars.item.user_id == $root.currentUser.id}">
   <rating
     ng-model="Stars.item.rating"
     readonly="Stars.item.is_rated || !$root.currentUser || Stars.item.user_id == $root.currentUser.id"
