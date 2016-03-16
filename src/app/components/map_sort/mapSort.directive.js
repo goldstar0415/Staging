@@ -257,6 +257,10 @@
         locations: [],
         tags: []
       };
+
+      //clear categories
+      isSelectedAll = true;
+      selectAllCategories();
     }
 
     function removeFilter(type) {

@@ -811,12 +811,12 @@
   .category-filter {
     position: relative;
 
-    .category-dropdown {
-      &:focus,  &:active {
-        color: #00c9f8;
-        background-color: #f5f5f7;
-      }
-    }
+    //.category-dropdown {
+    //  &:focus,  &:active {
+    //    color: #00c9f8;
+    //    background-color: #f5f5f7;
+    //  }
+    //}
 
     input {
       padding-left: 5rem;
