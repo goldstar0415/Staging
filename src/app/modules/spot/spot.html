@@ -126,8 +126,8 @@
         <attachments items="post.attachments"></attachments>
         <p class="time text-right">{{post.created_at | fromNow}}</p>
         <div class="text-right">
-          <a class="like">Like</a>
-          <a class="delete" ng-click="Spot.deleteComment(post, $index)">Delete</a>
+          <!--<a class="like">Like</a>-->
+          <a class="delete" ng-if="post.user_id == currentUser.id" ng-click="Spot.deleteComment(post, $index)">Delete</a>
         </div>
       </div>
     </div>

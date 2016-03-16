@@ -80,7 +80,8 @@
               <p>{{post.body}}</p>
 
               <div class="col-xs-12 edit-delete">
-                <a class="like">1</a><a ng-click="Article.deleteComment(post, $index)" class="delete">Delete</a>
+                <!--<a class="like">1</a>-->
+                <a ng-if="post.user_id == currentUser.id" ng-click="Article.deleteComment(post, $index)" class="delete">Delete</a>
               </div>
 
             </div>

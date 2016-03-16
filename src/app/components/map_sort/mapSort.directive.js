@@ -198,13 +198,16 @@
           if (spots.length > 0) {
             onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0);
 
-            vm.isShowFilter = false;
             if (bbox_array.length == 0) {
               MapService.FitBoundsByLayer($rootScope.sortLayer);
             }
           } else {
+            toastr.error('Not found');
             onUpdateMapData(null, [], null, bbox_array.length > 0);
           }
+
+          vm.categoryToggle = false;
+          vm.isShowFilter = false;
         }).catch(function (resp) {
           console.warn(resp);
           toastr.error('Search error');
