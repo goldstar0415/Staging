@@ -22,7 +22,7 @@
             <a ui-sref="blog.article({slug: post.slug})">{{post.title}}</a>
           </h4>
 
-          <p class="description">{{post.body | limitTo: 100}}...</p>
+          <p class="description" ng-bind-html="(post.body | limitTo: 100) + (post.body.length > 100 ? '...' : '')"></p>
 
           <div class="views">Views: {{post.count_views}}</div>
           <div class="date">{{post.created_at | toTimezone:'MM.DD.YYYY'}}</div>

@@ -1,4 +1,4 @@
-<div class="">
+<div class="main-container">
   <div class="container wrap mgt25">
     <div class="main-blog-article-content">
 
@@ -58,23 +58,7 @@
       <!--block with comets  -->
       <section class="col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12 comments-section">
         <div class="comments-content ng-scope hidden-xs">
-          <form name="form" ng-submit="Article.sendComment(form)" class="new-post-spot">
-            <textarea class="form-control" rows="4" placeholder="Start typing..." ng-model="Article.message" name="body"
-                      ng-maxlength="255" required></textarea>
-
-            <div ng-if="form.body.$error.maxlength && (form.$submitted || form.comment.$touched)"
-                 class="error-message-inline">
-              <div>can't be longer then 255 symbols</div>
-            </div>
-
-            <div class="attachments-preview mgt20">
-              <div class="buttons clearfix">
-                <input type="submit" value="Send" class="btn-send-comment col-sm-2 col-xs-12 mgr0"/><a href=""
-                                                                                                       class="add-photo"></a><a
-                href="" class="add-attach"></a>
-              </div>
-            </div>
-          </form>
+          <ng-input message="Article.message" attachments="Article.attachments" on-submit="Article.sendComment()"></ng-input>
         </div>
 
         <div infinite-scroll="Article.pagination.nextPage()" infinite-scroll-disabled="Article.pagination.busy"

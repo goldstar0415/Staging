@@ -24,18 +24,16 @@
      * Send comment to form
      * @param form {ngForm}
      */
-    function sendComment(form) {
-      if (form.$valid) {
-        PostComment.save({post_id: article.id},
-          {
-            body: vm.message
-          }, function success(message) {
-            vm.comments.data.unshift(message);
-            vm.message = '';
-          }, function error(resp) {
-            toastr.error('Send message failed');
-          });
-      }
+    function sendComment() {
+      PostComment.save({post_id: article.id},
+        {
+          body: vm.message
+        }, function success(message) {
+          vm.comments.data.unshift(message);
+          vm.message = '';
+        }, function error(resp) {
+          toastr.error('Send message failed');
+        });
     }
 
     /*
