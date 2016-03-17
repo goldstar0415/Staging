@@ -4,6 +4,7 @@ namespace App;
 
 use App\Contracts\CalendarExportable;
 use App\Contracts\Commentable;
+use App\Extensions\Attachable;
 use App\Extensions\GeoTrait;
 use App\Extensions\StartEndDatesTrait;
 use Eluceo\iCal\Component\Event;
@@ -32,7 +33,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
  */
 class Plan extends BaseModel implements CalendarExportable, Commentable
 {
-    use PostgisTrait, GeoTrait, StartEndDatesTrait;
+    use PostgisTrait, GeoTrait, StartEndDatesTrait, Attachable;
 
     protected $guarded = ['id', 'user_id'];
 

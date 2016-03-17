@@ -50,7 +50,7 @@ trait Attachments
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function spots()
     {
@@ -58,7 +58,7 @@ trait Attachments
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function plans()
     {
@@ -66,7 +66,7 @@ trait Attachments
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function albumPhotos()
     {
@@ -74,11 +74,11 @@ trait Attachments
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function areas()
     {
-        return $this->morphToMany(Area::class, 'areable', 'area_attachable')->withTimestamps();
+        return $this->morphToMany(Area::class, 'areaable', 'area_attachable')->withTimestamps();
     }
 
     /**
@@ -87,5 +87,14 @@ trait Attachments
     public function links()
     {
         return $this->morphMany(Link::class, 'linkable');
+    }
+
+    public function countAttachments()
+    {
+        return $this->spots()->withoutNewest()->count() +
+                $this->plans()->count() +
+                $this->albumPhotos()->count() +
+                $this->areas()->count() +
+                $this->links()->count();
     }
 }

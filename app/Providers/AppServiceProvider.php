@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\AlbumPhoto;
+use App\Area;
 use App\BloggerRequest;
 use App\Comment;
 use App\Events\OnComment;
@@ -9,6 +11,8 @@ use App\Events\OnSpotCreate;
 use App\Exceptions\TokenException;
 use App\Extensions\Validations;
 use App\Http\Controllers\SocialContactsController;
+use App\Link;
+use App\Plan;
 use App\Role;
 use App\Services\Attachments;
 use App\Services\Privacy;
@@ -32,44 +36,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \Carbon\Carbon::setToStringFormat('Y-m-d h:i:s a');
-        Comment::created(function (Comment $comment) {
-            event(new OnComment($comment));
-        });
-        
-        Spot::deleting(function (Spot $spot) {
-            $spot->comments()->delete();
-        });
+        $this->modelsEvents();
 
 //        \DB::listen(function ($query, $bindings) {
 //            \Log::info('QUERY: ' . $query, $bindings);
 //        }); //TODO: delete
         
-        User::creating(function (User $user) {
-            $user->alias = str_slug($user->full_name);
-            $pattern = "^{$user->alias}([0-9]*)?$";
-            $latest_slug = User::where('alias', '~', $pattern)->latest('id')->pluck('alias');
-            if ($latest_slug) {
-                preg_match('/' . $pattern . '/', $latest_slug, $pieces);
-
-                $number = intval(end($pieces));
-
-                $user->alias .= ($number + 1);
-            }
-            $user->random_hash = str_random();
-            $user->token = str_random(30);
-        });
-
-        BloggerRequest::updated(function (BloggerRequest $request) {
-            switch ($request->status) {
-                case 'accepted':
-                    $user = $request->user;
-                    if (!$user->hasRole('blogger')) {
-                        $user->roles()->attach(Role::take('blogger'));
-                    }
-                    break;
-            }
-        });
-
         Validator::resolver(function ($translator, $data, $rules, $messages) {
             return new Validations($translator, $data, $rules, $messages);
         });
@@ -115,6 +87,59 @@ class AppServiceProvider extends ServiceProvider
             $token = unserialize($app['session']->get('google_token'));
 
             return new GoogleClient($token);
+        });
+    }
+
+    protected function modelsEvents()
+    {
+        Comment::created(function (Comment $comment) {
+            event(new OnComment($comment));
+        });
+
+        Spot::deleting(function (Spot $spot) {
+            $spot->comments()->delete();
+        });
+
+        User::creating(function (User $user) {
+            $user->alias = str_slug($user->full_name);
+            $pattern = "^{$user->alias}([0-9]*)?$";
+            $latest_slug = User::where('alias', '~', $pattern)->latest('id')->pluck('alias');
+            if ($latest_slug) {
+                preg_match('/' . $pattern . '/', $latest_slug, $pieces);
+
+                $number = intval(end($pieces));
+
+                $user->alias .= ($number + 1);
+            }
+            $user->random_hash = str_random();
+            $user->token = str_random(30);
+        });
+
+        BloggerRequest::updated(function (BloggerRequest $request) {
+            switch ($request->status) {
+                case 'accepted':
+                    $user = $request->user;
+                    if (!$user->hasRole('blogger')) {
+                        $user->roles()->attach(Role::take('blogger'));
+                    }
+                    break;
+            }
+        });
+
+        Link::deleting(function (Link $link) {
+            $link->cleanAttached();
+        });
+        Spot::deleting(function (Spot $spot) {
+            $spot->cleanAttached();
+        });
+        Plan::deleting(function (Plan $plan) {
+            $plan->cleanAttached();
+        });
+        AlbumPhoto::deleting(function (AlbumPhoto $albumPhoto) {
+            $albumPhoto->cleanAttached();
+        });
+        Area::deleting(function (Area $area) {
+            $area->cleanAttached();
         });
     }
 }

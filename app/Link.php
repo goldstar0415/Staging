@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\Attachable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Link extends Model
 {
+    use Attachable;
     /**
      * {@inheritDoc}
      */

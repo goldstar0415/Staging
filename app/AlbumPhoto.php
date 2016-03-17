@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Contracts\Commentable;
+use App\Extensions\Attachable;
 use App\Extensions\GeoTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
@@ -30,7 +31,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  */
 class AlbumPhoto extends BaseModel implements StaplerableInterface, Commentable
 {
-    use PostgisTrait, StaplerTrait, GeoTrait;
+    use PostgisTrait, StaplerTrait, GeoTrait, Attachable;
 
     protected $postgisFields = [
         'location' => Point::class,

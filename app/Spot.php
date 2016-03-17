@@ -4,6 +4,7 @@ namespace App;
 
 use App\Contracts\CalendarExportable;
 use App\Contracts\Commentable;
+use App\Extensions\Attachable;
 use App\Extensions\StartEndDatesTrait;
 use App\Scopes\ApprovedScopeTrait;
 use App\Scopes\NewestScopeTrait;
@@ -54,7 +55,7 @@ use Request;
  */
 class Spot extends BaseModel implements StaplerableInterface, CalendarExportable, Commentable
 {
-    use StaplerTrait, StartEndDatesTrait, NewestScopeTrait, ApprovedScopeTrait;
+    use StaplerTrait, StartEndDatesTrait, NewestScopeTrait, ApprovedScopeTrait, Attachable;
 
     protected $guarded = ['id', 'user_id'];
 

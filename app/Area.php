@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\Attachable;
 use App\Services\SocialSharing;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
@@ -25,7 +26,7 @@ use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
  */
 class Area extends BaseModel implements StaplerableInterface
 {
-    use StaplerTrait;
+    use StaplerTrait, Attachable;
 
     protected $fillable = ['cover', 'title', 'description', 'data', 'waypoints', 'zoom'];
 
