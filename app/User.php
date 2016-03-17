@@ -205,7 +205,8 @@ class User extends BaseModel implements
                 'thumb' => [
                     'dimensions' => '80x80#',
                     'convert_options' => ['quality' => 100]
-                ]
+                ],
+                'medium' => '160x160#'
             ]
         ]);
         parent::__construct($attributes);
