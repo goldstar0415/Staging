@@ -54,21 +54,23 @@
             }
 
             if (event.start_date) {
-              event.start = event.start_date;
+              event.start =  moment(event.start_date, DATE_FORMAT.backend).toDate();
             }
             if (event.end_date) {
-              event.end = event.end_date;
+              event.end = moment(event.end_date, DATE_FORMAT.backend).toDate();
             }
           });
         });
 
         events = _.union(events.plans, events.spots);
+        console.log(events);
         callback(events);
       });
     }
 
     function eventRender(event, element, view) {
-      var tooltip = moment(event.start_date, DATE_FORMAT.backend).format(DATE_FORMAT.full) + '\n - \n' + moment(event.end_date, DATE_FORMAT.backend).format(DATE_FORMAT.full);
+      var tooltip = moment(event.start_date, DATE_FORMAT.backend).format(DATE_FORMAT.full)
+        + '\n - \n' + moment(event.end_date, DATE_FORMAT.backend).format(DATE_FORMAT.full);
       element.attr({
         'tooltip': tooltip,
         'tooltip-append-to-body': true
@@ -97,10 +99,21 @@
 
     //show plan markers
     function InitMap() {
-      for (var k in displayPlans) {
-        var m = CreateMarker($rootScope.plannerIcon, displayPlans[k].title, displayPlans[k].id, displayPlans[k].location);
-        markers.push({id: displayPlans[k].id, marker: m});
-      }
+      _.each(displayPlans, function (plan) {
+        var marker = CreateMarker($rootScope.plannerIcon, plan.title, plan.id, plan.location);
+        markers.push({id: plan.id, marker: marker});
+
+        _.each(plan.activities, function (activity) {
+          var activityMarker = CreateMarker(activity.category.icon_url, activity.title, plan.id, activity.location);
+          markers.push({id: plan.id, marker: activityMarker});
+        });
+
+        _.each(plan.spots, function (spot) {
+          var spotMarker = CreateMarker(spot.category.icon_url, spot.title, plan.id, spot.points[0].location);
+          markers.push({id: plan.id, marker: spotMarker});
+        });
+      });
+
       MapService.FitBoundsOfCurrentLayer();
     }
 

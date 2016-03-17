@@ -18,11 +18,12 @@
       <div class="choose-friend choose-spot"
            ng-class="{choose: spot.selected}"
            ng-click="modal.addSpot(spot)"
-           ng-repeat="spot in modal.spots | filter:{is_approved: true, title: search}">
+           ng-repeat="spot in modal.spots | filter:{is_approved: true, is_private: false, title: search}">
         <img class="friend-avatar" ng-src="{{spot.cover_url.thumb }}">
         <h4 class="name-friend">{{spot.title}}</h4>
 
-        <p class="time" ng-if="spot.category.type.name == 'event'">{{spot.start_date | toTimezone:'MM.DD.YYYY'}} - {{spot.end_date | toTimezone:'MM.DD.YYYY'}}</p>
+        <p class="time" ng-if="spot.category.type.name == 'event'">{{spot.start_date | toTimezone:'MM.DD.YYYY'}} -
+          {{spot.end_date | toTimezone:'MM.DD.YYYY'}}</p>
       </div>
     </div>
   </div>

@@ -4,6 +4,7 @@
   font-size: 2rem;
   font-weight: bold;
 }
+
 .external-link {
   margin-bottom: 5px;
   margin-top: 10px;
@@ -39,34 +40,36 @@
 .spot-stars {
   margin-top: 15px;
 }
+
 .datepicker {
   background-color: #f4f5f6;
 }
+
 .tags {
   margin-bottom: 0;
-  background:none;
+  background: none;
   padding-left: 0;
-  margin-top: 0 !important;
+  //margin-top: 0 !important;
   li {
     border: 1px solid #e2e5e7;
     font-size: 1.4rem;
     text-transform: uppercase;
-    color:#a2acb3;
+    color: #a2acb3;
     padding: 1rem 3rem;
     margin-bottom: 5px;
   }
 }
 
 .share {
-      display: block;
-      width: 33px;
-      height: 33px;
-      text-indent: 10000px;
-      overflow: hidden;
-      position: absolute;
-      bottom: 1rem;
-      right: 2rem;
-      background: url(../img/icons/share-icon.png) no-repeat;
+  display: block;
+  width: 33px;
+  height: 33px;
+  text-indent: 10000px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 1rem;
+  right: 2rem;
+  background: url(../img/icons/share-icon.png) no-repeat;
 }
 
 .share-wrap {
@@ -118,11 +121,11 @@
 }
 
 .place {
-    font: 400 14px;
-    color: #000;
-    background: url(../img/icons/map-loc.png) no-repeat 0 0;
-    padding-left: 2rem;
-    margin-top: 1rem;
+  font: 400 14px;
+  color: #000;
+  background: url(../img/icons/map-loc.png) no-repeat 0 0;
+  padding-left: 2rem;
+  margin-top: 1rem;
 }
 
 .date {
@@ -155,6 +158,7 @@
   }
 
 }
+
 .spot-thumb {
   figure {
     width: 10rem;
@@ -187,10 +191,11 @@
     }
   }
 }
+
 .delete {
   background-image: url('../img/svg/delete_icon.svg');
   background-size: 15px;
-  color:#889197;
+  color: #889197;
   background-repeat: no-repeat;
   &:hover, &:active, &:focus {
     background-image: url('../img/svg/delete_icon_hover.svg');
@@ -199,39 +204,42 @@
 }
 
 .save-event {
-   background-image: url('../img/svg/save_icon.svg');
+  background-image: url('../img/svg/save_icon.svg');
   background-size: 15px;
-  color:#889197;
+  color: #889197;
   background-repeat: no-repeat;
-  &:hover, &:active, &:focus {
+  &:hover, &:active, &:focus, &.saved {
     background-image: url('../img/svg/save_icon_hover.svg');
     color: $blue;
   }
 }
+
 .favorite-spot {
   background-image: url('../img/svg/favorite_icon.svg');
   background-size: 17px;
-  color:#889197;
+  color: #889197;
   background-repeat: no-repeat;
   &:hover, &:active, &:focus {
     background-image: url('../img/svg/favorite_icon_hover.svg');
     color: $blue;
   }
 }
+
 .fav.favorited {
   background-image: url('../img/svg/favorite_icon_hover.svg');
   background-size: 17px;
-  color:#889197;
+  color: #889197;
   background-repeat: no-repeat;
   &:hover, &:active, &:focus {
     background-image: url('../img/svg/favorite_icon.svg');
     color: $blue;
   }
 }
+
 .invite-friend {
   background-image: url('../img/svg/invite_icon.svg');
   background-size: 18px;
-  color:#889197;
+  color: #889197;
   background-repeat: no-repeat;
   &:hover, &:active, &:focus {
     background-image: url('../img/svg/invite_icon_hover.svg');
@@ -273,52 +281,51 @@
   .comments-content {
     background: #fff;
   }
-    .new-post, .new-post-spot {
-      background: #fff;
-      padding-bottom: 1.5rem;
-      padding: 1.5rem;
-      textarea {
-        resize: none;
-        margin-bottom: 0;
-        background-color: #f4f5f6;
-      }
+  .new-post, .new-post-spot {
+    background: #fff;
+    padding-bottom: 1.5rem;
+    padding: 1.5rem;
+    textarea {
+      resize: none;
+      margin-bottom: 0;
+      background-color: #f4f5f6;
+    }
 
-      .add-photo {
-        display: block;
-        float: right;
-        width: 16px;
-        height: 16px;
-        margin: 6px 5px 0 10px;
-        background: url(../img/icons/clip-photo.png) -20px 2px no-repeat;
-      }
-      .add-attach {
-        display: block;
-        float: right;
-        width: 15px;
-        height: 16px;
-        margin-top: 6px;
-        background: url(../img/icons/clip-photo.png) 0 2px no-repeat;
-        margin-right: 10px;
-      }
-      .btn-send-comment, .submit-send {
-        float: right;
-        height: 3rem;
-        width: 8rem;
-        margin-right: 0;
-        margin-left: 1rem;
-        background: $blue_btn;
+    .add-photo {
+      display: block;
+      float: right;
+      width: 16px;
+      height: 16px;
+      margin: 6px 5px 0 10px;
+      background: url(../img/icons/clip-photo.png) -20px 2px no-repeat;
+    }
+    .add-attach {
+      display: block;
+      float: right;
+      width: 15px;
+      height: 16px;
+      margin-top: 6px;
+      background: url(../img/icons/clip-photo.png) 0 2px no-repeat;
+      margin-right: 10px;
+    }
+    .btn-send-comment, .submit-send {
+      float: right;
+      height: 3rem;
+      width: 8rem;
+      margin-right: 0;
+      margin-left: 1rem;
+      background: $blue_btn;
+      color: $white;
+      @include transition_bg;
+      &:hover {
+        background: $light_blue_btn;
         color: $white;
         @include transition_bg;
-        &:hover {
-          background: $light_blue_btn;
-          color: $white;
-          @include transition_bg;
-          box-shadow: none;
-        }
+        box-shadow: none;
       }
     }
   }
-
+}
 
 .attachments-preview {
   //  padding: 10px;
@@ -437,12 +444,13 @@
   }
 
 }
+
 .spot-photos {
   margin-bottom: 2rem;
   .row {
     margin-left: -5px;
     margin-right: -5px;
-    &>div {
+    & > div {
       padding-left: 5px;
       padding-right: 5px;
     }
@@ -450,22 +458,23 @@
   &-thumb {
     margin-bottom: 2rem;
     -webkit-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.3);
-    -moz-box-shadow:    1px 1px 5px 0px rgba(50, 50, 50, 0.3);
-    box-shadow:         1px 1px 5px 0px rgba(50, 50, 50, 0.3);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.3);
+    box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.3);
     img {
       width: 100%;
     }
   }
   &-preview {
     -webkit-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.3);
-    -moz-box-shadow:    1px 1px 5px 0px rgba(50, 50, 50, 0.3);
-    box-shadow:         1px 1px 5px 0px rgba(50, 50, 50, 0.3);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.3);
+    box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.3);
     img {
       width: 100%;
     }
 
   }
 }
+
 .attach-event {
   padding-left: 2rem;
   display: inline-block;
@@ -487,24 +496,27 @@
 .spot-block {
   margin-bottom: 15px;
 }
-  .delete {
-    padding-left: 2rem;
+
+.delete {
+  padding-left: 2rem;
+}
+
+.like {
+  color: #889197;
+  padding-left: 2rem;
+  background: url(../img/icons/like.png) 0 2px no-repeat;
+  min-height: 2rem;
+  margin-right: 1rem;
+  &:hover, .clicked {
+    background-position: 0 -18px;
+    color: $blue_btn;
   }
-  .like {
-            color: #889197;
-            padding-left: 2rem;
-            background: url(../img/icons/like.png) 0 2px no-repeat;
-            min-height: 2rem;
-            margin-right: 1rem;
-            &:hover, .clicked {
-                background-position: 0 -18px;
-                color: $blue_btn;
-            }
-        }
+}
 
 .photos-mini {
   position: relative;
 }
+
 .photos-controls {
   height: 5rem;
   width: 100%;

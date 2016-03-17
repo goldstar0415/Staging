@@ -36,7 +36,7 @@
       <div class="tab-pane col-sm-12 no-pad " ng-if="modal.tab == 'spots'"
            ng-class="{active: modal.tab == 'spots'}">
         <div class="col-sm-12 no-pad choose-friend-block">
-          <div ng-repeat="spot in modal.spots | filter: {is_approved: true, title: search}"
+          <div ng-repeat="spot in modal.spots | filter: {is_approved: true, is_private: false, title: search}"
                class="choose-friend choose-spot"
                ng-class="{choose: spot.selected}"
                ng-click="modal.addSpot(spot)">
@@ -57,7 +57,7 @@
            ng-class="{active: modal.tab == 'favorites'}">
         <div class="col-sm-12 no-pad choose-friend-block">
           <div class="">
-            <div ng-repeat="spot in modal.favorites | filter: {title: search}"
+            <div ng-repeat="spot in modal.favorites | filter:{is_approved: true, is_private: false, title: search}"
                  class="choose-friend choose-spot col-sm-12"
                  ng-class="{choose: spot.selected}"
                  ng-click="modal.addSpot(spot)">

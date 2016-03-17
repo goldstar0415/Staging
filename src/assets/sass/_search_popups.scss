@@ -471,6 +471,9 @@
       color: $white;
       opacity: 1;
     }
+    .filter-definition .keyword-filters.applied .icon-minus {
+      margin-top: 5px;
+    }
     .icon-nav {
       background-image: url(../img/icons/white-location.png);
     }
@@ -673,6 +676,8 @@
     .tags {
       background-color: #f5f5f7;
       border: none;
+      margin-top: 5px;
+
       &.focused {
         input {
           padding-left: 5rem;
