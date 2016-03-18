@@ -23,6 +23,7 @@ use App\Spot;
 use App\SpotPhoto;
 use App\SpotReport;
 use App\SpotType;
+use App\SpotTypeCategory;
 use App\SpotVote;
 use App\User;
 use App\SpotOwnerRequest as SpotOwnerRequestModel;
@@ -86,13 +87,25 @@ class SpotController extends Controller
      */
     public function store(SpotStoreRequest $request)
     {
-        $spot = new Spot($request->except(['locations', 'tags', 'files', 'cover', 'description']));
+        $spot = new Spot($request->except([
+            'locations',
+            'tags',
+            'files',
+            'cover',
+            'description',
+            'is_facebook_import'
+        ]));
+
         if ($request->hasFile('cover')) {
             $cover = $request->file('cover');
             $spot->cover = $cover->getRealPath();
         }
-        if ($spot->is_private) {
+        if ($spot->is_private or $request->is_facebook_import) {
             $spot->is_approved = true;
+        }
+        if ($request->is_facebook_import) {
+            $spot->is_private = false;
+            $spot->category()->associate(SpotTypeCategory::whereName('general')->first());
         }
         if ($request->has('description')) {
             $spot->description = e($request->description);

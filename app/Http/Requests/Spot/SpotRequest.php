@@ -34,9 +34,11 @@ class SpotRequest extends Request
             'locations' => 'array|count_max:20',
             'videos' => 'array|count_max:5',
             'web_sites' => 'array|count_max:5',
-            'spot_type_category_id' => 'required|exists:spot_type_categories,id',
+            'spot_type_category_id' => 'required_without:is_facebook_import|exists:spot_type_categories,id',
             'tags' => 'array|count_max:7',
-            'files' => 'array|count_max:10'
+            'files' => 'array|count_max:10',
+            'is_private' => 'required_without:is_facebook_import|boolean',
+            'is_facebook_import' => 'required_without_all:is_private,spot_type_category_id|boolean'
         ];
         $rules = array_merge($rules, $this->arrayFieldRules(
             'locations',
