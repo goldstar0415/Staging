@@ -86,7 +86,7 @@
 
   <section class="comments-section">
     <div class="comments-content clearfix ">
-      <ng-input message="Plan.message" attachments="Plan.attachments" on-submit="Plan.send()"></ng-input>
+      <ng-input message="Plan.message" attachments="Plan.attachments" on-submit="Plan.send()" maxlength="5000"></ng-input>
     </div>
 
     <div infinite-scroll="Plan.pagination.nextPage()" infinite-scroll-disabled="Plan.pagination.busy"

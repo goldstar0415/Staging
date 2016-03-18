@@ -2,7 +2,7 @@
   "name": "zoomtivity",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "~1.4.0",
+    "angular": "~1.4.9",
     "angular-animate": "~1.4.0",
     "angular-bootstrap": "0.12.1",
     "angular-dialog-service": "5.2.8",
@@ -13,7 +13,7 @@
     "angular-sanitize": "~1.4.0",
     "angular-scroll-glue": "~2.0.6",
     "angular-snap": "~1.8.3",
-    "angular-ui-calendar": "~1.0.3",
+    "angular-ui-calendar": "~1.0.1",
     "angular-ui-router": "~0.2.15",
     "angular-ui-select": "~0.12.1",
     "animate.css": "~3.3.0",

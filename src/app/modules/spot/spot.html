@@ -81,9 +81,11 @@
         <li ng-if="(!Spot.spot.user_id || !Spot.spot.user.verified) && !Spot.spot.isClaimed">
           <a class="report-icon" claim-spot="Spot.spot">Claim listing</a>
         </li>
+        <li>
+          <share item="Spot.spot" class="" type="spot"></share>
+        </li>
       </ul>
 
-      <share item="Spot.spot" class="visible-xs" type="spot"></share>
 
     </div>
   </section>

@@ -3,7 +3,7 @@
     <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
   </div>
 
-  <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()"></ng-input>
+  <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()" maxlength="5000"></ng-input>
 
   <div infinite-scroll="Profile.pagination.nextPage()" infinite-scroll-disabled="Profile.pagination.busy"
        class="clearfix" infinite-scroll-distance="1">

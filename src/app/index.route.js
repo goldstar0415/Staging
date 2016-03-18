@@ -621,7 +621,7 @@
           spots: function (user, Spot, $stateParams) {
             return Spot.query({
               user_id: user.id
-            }).$promise;
+            });
           }
         },
         parent: 'profile',

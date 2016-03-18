@@ -96,7 +96,7 @@
     </div>
   </div>
 
-  <ng-input message="ChatRoom.message" attachments="ChatRoom.attachments" on-submit="ChatRoom.sendMessage()"
+  <ng-input message="ChatRoom.message" attachments="ChatRoom.attachments" on-submit="ChatRoom.sendMessage()" maxlength="5000"
             on-focus="ChatRoom.markAsRead()" class="hidden-xs"></ng-input>
 </div>
 <div class="fixed visible-xs">

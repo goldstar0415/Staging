@@ -19,8 +19,10 @@
     vm.pagination = new ScrollService(Wall.query, vm.wall, params);
 
     if (spots) {
-      var formatedSpots = SpotService.formatSpot(spots);
-      ShowMarkers(formatedSpots);
+      spots.$promise.then(function () {
+        var formatedSpots = SpotService.formatSpot(spots);
+        ShowMarkers(formatedSpots);
+      });
     }
 
     /*
