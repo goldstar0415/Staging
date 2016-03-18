@@ -163,8 +163,8 @@ class BlogController extends Controller
             'og',
             $og->title($blog->title)
                 ->image($blog->cover->url())//TODO: change image
-                ->description($blog->description)
-                ->url(config('app.frontend_url') . '/blog/' . $blog->id)
+                ->description($blog->body)
+                ->url(frontend_url('article', $blog->slug))
         );
     }
 

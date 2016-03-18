@@ -66,7 +66,7 @@ class Area extends BaseModel implements StaplerableInterface
      */
     public function getShareLinksAttribute()
     {
-        $url = url('areas', [$this->id, 'preview']);
+        $url = frontend_url('api', 'areas', $this->id, 'preview');
 
         return [
             'facebook' => SocialSharing::facebook($url),

@@ -5,6 +5,7 @@ namespace App;
 use App\Contracts\Commentable;
 use App\Extensions\GeoTrait;
 use App\Scopes\NewestScopeTrait;
+use App\Services\SocialSharing;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
@@ -36,7 +37,7 @@ class Blog extends BaseModel implements StaplerableInterface, Commentable
 
     protected $guarded = ['id', 'user_id', 'count_views'];
 
-    protected $appends = ['cover_url'];
+    protected $appends = ['cover_url', 'share_links'];
 
     /**
      * Field for postgis extension
@@ -127,6 +128,22 @@ class Blog extends BaseModel implements StaplerableInterface, Commentable
     public function commentResourceOwnerId()
     {
         return $this->user_id;
+    }
+
+    /**
+     * Get social share links of the area
+     *
+     * @return array
+     */
+    public function getShareLinksAttribute()
+    {
+        $url = frontend_url('api', 'posts', $this->slug, 'preview');
+
+        return [
+            'facebook' => SocialSharing::facebook($url),
+            'twitter' => SocialSharing::twitter($url),
+            'google' => SocialSharing::google($url)
+        ];
     }
 
     /**
