@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Files\ExcelFile;
 class SpotsImportFile extends ExcelFile
 {
 
-    protected $delimiter = ';';
+    protected $delimiter = ',';
     protected $enclosure = '"';
     protected $lineEnding = '\n';
 
