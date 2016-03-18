@@ -177,6 +177,10 @@ class SpotController extends Controller
         }
         $spot->locations = $request->input('locations');
 
+        if (!$spot->is_private) {
+            $spot->is_approved = false;
+        }
+
         $spot->save();
 
         $deleted_files = $request->input('deleted_files');
