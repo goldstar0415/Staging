@@ -64,8 +64,12 @@
     }
 
     function _convertDates(data) {
+      data.start_time = data.start_time || '00:00:00';
+      data.end_time = data.end_time || '00:00:00';
+
       data.start_date = moment(data.start_date + ' ' + data.start_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.datepicker.time).format(DATE_FORMAT.backend);
       data.end_date = moment(data.end_date + ' ' + data.end_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.datepicker.time).format(DATE_FORMAT.backend);
+
       delete data.start_time;
       delete data.end_time;
       return data;

@@ -79,21 +79,21 @@
       <div class="col-md-10 col-sm-12 col-xs-12">
         <div class="col-sm-4 col-xs-5 no-pad media-nopad">
           <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.start_time" name="start_time"
-                 type="text" required class="grey-bg">
+                 type="text" class="grey-bg">
 
-          <div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">Start time field can't be empty</div>
-          </div>
+          <!--<div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
+            <!--<div ng-message="required">Start time field can't be empty</div>-->
+          <!--</div>-->
         </div>
         <span class="col-sm-1 col-xs-2 mgt15 text-center">—</span>
 
         <div class="col-sm-4 col-xs-5 no-pad media-nopad">
           <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.end_time" name="end_time"
-                 type="text" required class="grey-bg">
+                 type="text" class="grey-bg">
 
-          <div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">
-            <div ng-message="required">End time field can't be empty</div>
-          </div>
+          <!--<div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
+            <!--<div ng-message="required">End time field can't be empty</div>-->
+          <!--</div>-->
         </div>
       </div>
     </div>
@@ -208,11 +208,11 @@
         <div class="col-md-10 col-sm-12 col-xs-12">
           <div class="col-sm-4 col-xs-12 no-pad">
             <input ng-timepicker step="30" placeholder="12:00..." name="start_time_{{$index}}"
-                   ng-model="attachment.data.start_time" type="text" required class="grey-bg">
+                   ng-model="attachment.data.start_time" type="text"  class="grey-bg">
 
-            <div ng-messages="form['start_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
-              <div ng-message="required">Start time field can't be empty</div>
-            </div>
+            <!--<div ng-messages="form['start_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">-->
+              <!--<div ng-message="required">Start time field can't be empty</div>-->
+            <!--</div>-->
           </div>
 
           <span class="hidden-xs col-sm-1 mgt15">—</span>
@@ -220,11 +220,11 @@
           <div class="col-sm-4 col-xs-12 no-pad">
             <input ng-timepicker step="30" placeholder="12:00..." name="end_time_{{$index}}"
                    ng-model="attachment.data.end_time"
-                   type="text" required class="grey-bg">
+                   type="text" class="grey-bg">
 
-            <div ng-messages="form['end_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
-              <div ng-message="required">End time field can't be empty</div>
-            </div>
+            <!--<div ng-messages="form['end_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">-->
+              <!--<div ng-message="required">End time field can't be empty</div>-->
+            <!--</div>-->
           </div>
         </div>
       </div>
