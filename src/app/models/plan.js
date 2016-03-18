@@ -28,6 +28,10 @@
       inviteFriends: {
         url: API_URL + '/plans/invite',
         method: 'POST'
+      },
+      report: {
+        url: API_URL + '/plans/:id/report',
+        method: 'POST'
       }
     });
   }

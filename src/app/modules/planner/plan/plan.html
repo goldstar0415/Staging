@@ -14,14 +14,8 @@
         <span>{{Plan.description}}</span>
       </p>
       <ul class="tools clearfix">
-        <li ng-if="Plan.user_id != currentUser.id">
-          <a class="save-event" ng-click="Plan.savePlanToCalendar()">Save</a>
-        </li>
         <li>
           <invite-friends item="Plan" type="plan"></invite-friends>
-        </li>
-        <li ng-if="currentUser && !Plan.spot.isReported">
-          <a class="report-icon" report-spot="Plan.spot">Report</a>
         </li>
       </ul>
     </div>
