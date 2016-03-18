@@ -9,6 +9,7 @@ use App\Http\Requests\PaginateRequest;
 use ChrisKonnertz\OpenGraph\OpenGraph;
 
 use App\Http\Requests;
+use Illuminate\Http\Request;
 
 /**
  * Class AreaController
@@ -24,7 +25,7 @@ class AreaController extends Controller
     public function __construct()
     {
         $this->middleware('base64upload:cover', ['only' => ['store', 'update']]);
-        $this->middleware('auth', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('auth', ['only' => ['store', 'update', 'destroy', 'show']]);
     }
 
     /**
@@ -53,11 +54,16 @@ class AreaController extends Controller
 
     /**
      * Display the specified area.
+     * @param Request $request
      * @param Area $area
      * @return Area
      */
-    public function show($area)
+    public function show(Request $request, $area)
     {
+        if ($request->user()->id !== $area->user_id) {
+            abort(403, 'Access denied');
+        }
+
         return $area;
     }
 
