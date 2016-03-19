@@ -59,7 +59,6 @@
                     description: event.description,
                     start_date: start_date,
                     end_date: end_date,
-                    type: 'event',
                     is_facebook_import: true,
                     locations: [{
                       location: {

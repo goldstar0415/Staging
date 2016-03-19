@@ -1193,24 +1193,24 @@
       }
 
       function BindSpotPopup(marker, spot) {
-        if ($rootScope.isMobile) {
-          marker.on('click', function () {
-            $modal.open({
-              templateUrl: 'SpotMapModal.html',
-              controller: 'SpotMapModalController',
-              controllerAs: 'SpotPopup',
-              modalClass: 'spot-mobile-modal',
-              resolve: {
-                spot: function () {
-                  return spot;
-                },
-                marker: function () {
-                  return marker;
-                }
-              }
-            });
-          });
-        } else {
+        //if ($rootScope.isMobile) {
+        //  marker.on('click', function () {
+        //    $modal.open({
+        //      templateUrl: 'SpotMapModal.html',
+        //      controller: 'SpotMapModalController',
+        //      controllerAs: 'SpotPopup',
+        //      modalClass: 'spot-mobile-modal',
+        //      resolve: {
+        //        spot: function () {
+        //          return spot;
+        //        },
+        //        marker: function () {
+        //          return marker;
+        //        }
+        //      }
+        //    });
+        //  });
+        //} else {
           var scope = $rootScope.$new();
           var offset = 75;
           var options = {
@@ -1249,7 +1249,7 @@
             });
             //}
           });
-        }
+        //}
       }
 
       function BindBlogPopup(marker, post) {
