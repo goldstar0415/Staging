@@ -69,7 +69,7 @@ class EmailChangeBroker implements EmailChangeContract
         // the current URI having nothing set in the session to indicate errors.
         $token = $this->tokens->create($user, $email);
 
-        $this->emailChangeLink($user, $token, $callback);
+        $this->emailChangeLink($user, $token, $email, $callback);
 
         return EmailChangeContract::RESET_LINK_SENT;
     }
@@ -77,20 +77,21 @@ class EmailChangeBroker implements EmailChangeContract
     /**
      * Send the password reset link via e-mail.
      *
-     * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
-     * @param  string  $token
-     * @param  \Closure|null  $callback
+     * @param  \Illuminate\Contracts\Auth\Authenticatable $user
+     * @param  string $token
+     * @param string $email
+     * @param  \Closure|null $callback
      * @return int
      */
-    public function emailChangeLink(Authenticatable $user, $token, Closure $callback = null)
+    public function emailChangeLink(Authenticatable $user, $token, $email, Closure $callback = null)
     {
         // We will use the reminder view that was given to the broker to display the
         // password reminder e-mail. We'll pass a "token" variable into the views
         // so that it may be displayed for an user to click for password reset.
         $view = $this->emailView;
 
-        return $this->mailer->send($view, compact('token', 'user'), function ($m) use ($user, $token, $callback) {
-            $m->to($user->email);
+        return $this->mailer->send($view, compact('token', 'user'), function ($m) use ($user, $token, $email, $callback) {
+            $m->to($email);
 
             if (! is_null($callback)) {
                 call_user_func($callback, $m, $user, $token);
