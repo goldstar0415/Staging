@@ -74,6 +74,14 @@
         parent: 'main',
         mapState: 'big'
       })
+      .state('index.token_expired', {
+        url: '/settings/token-expired',
+        controller: function () {
+          toastr.error('This token is expired');
+        },
+        parent: 'main',
+        mapState: 'big'
+      })
 
 
       //Intro pages
