@@ -6,6 +6,7 @@ use App\Http\Requests\CommentsRequest;
 use App\Http\Requests\CommentStoreRequest;
 use App\Comment;
 use App\Http\Requests\PaginateRequest;
+use App\Http\Requests\Plan\PlanCommentStoreRequest;
 use App\Services\Attachments;
 
 use App\Http\Requests;
@@ -49,11 +50,11 @@ class PlanCommentController extends Controller
     /**
      * Store a newly created plan comment in storage.
      *
-     * @param CommentStoreRequest $request
+     * @param PlanCommentStoreRequest $request
      * @param \App\Plan $plan
      * @return \App\Comment
      */
-    public function store(CommentStoreRequest $request, $plan)
+    public function store(PlanCommentStoreRequest $request, $plan)
     {
         $comment = new Comment($request->except('attachments'));
         $comment->sender()->associate($request->user());
