@@ -10,6 +10,7 @@ use App\Http\Requests\UserListRequest;
 use App\Mailers\AppMailer;
 use App\Role;
 use App\Services\EmailChange\EmailChangeBroker;
+use App\Services\EmailChange\EmailChangeContract;
 use App\Services\Privacy;
 use App\User;
 use DB;
@@ -287,10 +288,17 @@ class UserController extends Controller
 
     public function changeEmail(Request $request, $token, EmailChangeBroker $emailChangeBroker)
     {
-        $emailChangeBroker->change($request->user(), $token, function ($user, $email) {
+        $result = $emailChangeBroker->change($request->user(), $token, function ($user, $email) {
             $user->email = $email;
             $user->save();
         });
+
+        switch ($result) {
+            case EmailChangeContract::INVALID_TOKEN:
+                return redirect(frontend_url('settings', 'token-expired'));
+            case EmailChangeContract::EMAIL_CHANGE:
+                return redirect(frontend_url('settings', 'email-changed'));
+        }
 
         return redirect(frontend_url('settings', 'email-changed'));
     }
