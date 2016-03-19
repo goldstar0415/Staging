@@ -49,7 +49,7 @@
             if (response && !response.error) {
               var events = [];
               _.each(response.data, function (event) {
-                if (event.name && event.place && event.place.location && event.start_time) {
+                if (event.name && event.place && event.place.location && event.place.location.latitude && event.start_time) {
                   var start_date = moment(event.start_time).format(DATE_FORMAT.backend),
                     end_date = event.end_time ? moment(event.end_time).format(DATE_FORMAT.backend) : start_date,
                     address = [event.place.location.street, event.place.location.city, event.place.location.country].join(', ');
