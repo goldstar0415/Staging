@@ -10,6 +10,7 @@ use App\Http\Requests\PaginateRequest;
 use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests;
+use Illuminate\Http\Request;
 
 /**
  * Class AlbumController
@@ -82,11 +83,21 @@ class AlbumController extends Controller
     /**
      * Display the specified album.
      *
+     * @param Request $request
      * @param  Album $album Specific album
      * @return Album
      */
-    public function show($album)
+    public function show(Request $request, $album)
     {
+        $user = $request->user();
+        if ($album->is_private and
+            !($this->auth->check() and
+                ($user->id === $album->user_id or
+                $album->user->followings()->where('users.id', $user->id)->exists()))
+        ) {
+            abort(403, 'Access denied');
+        }
+
         return $album->append('count_photos');
     }
 
