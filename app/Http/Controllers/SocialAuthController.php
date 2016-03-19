@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\Social;
 use App\User;
 use Illuminate\Contracts\Auth\Guard;
@@ -81,9 +82,11 @@ class SocialAuthController extends Controller
                     'email' => $user->getEmail(),
                     'first_name' => $first_name,
                     'last_name' => $last_name,
-                    'avatar' => $user->getAvatar()
+                    'avatar' => $user->getAvatar(),
+                    'verified' => true
                 ]);
                 $this->attachSocial($new_user, $social, $user->getId());
+                $new_user->roles()->attach(Role::take(config('entrust.default')));
                 $this->auth->login($new_user);
 
                 return redirect()->away(frontend_url($new_user->alias ?: $new_user->id));
