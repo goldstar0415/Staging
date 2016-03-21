@@ -21,11 +21,16 @@
     $scope.showNextReview = false;
     $scope.showPrevReview = false;
 
-    $scope.nextPhoto = SpotService.mapNextPhoto;
-    $scope.prevPhoto = SpotService.mapPrevPhoto;
+    //$scope.nextPhoto = SpotService.mapNextPhoto;
+    //$scope.prevPhoto = SpotService.mapPrevPhoto;
 
     $scope.nextReview = SpotService.mapNextReview;
     $scope.prevReview = SpotService.mapPrevReview;
+
+    $scope.photoControl = {
+      start: 0,
+      step: 4
+    };
 
     run();
 
