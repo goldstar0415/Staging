@@ -121,34 +121,39 @@
         display: inline-block;
         margin: 20px 10px;
         font: 600 14px/20px 'Ubuntu light';
-        background-color: $dark_blue_hover;
+        background-color: $white;
         color: $href_color;
         &.path a {
-          background-image: url(../img/svg/map/custom.svg);
+          background-image: url(../img/svg/Road_icon.svg);
           background-repeat: no-repeat;
           background-size: 40px;
           background-position: 10px 10px;
           &:hover {
             color: #fff;
-            background-image: url(../img/svg/map/custom_hover.svg);
+            background-image: url(../img/svg/Road_icon_mouseover.svg);
+            background-color: #00cfff;
           }
         }
         &.radius a {
-          background-image: url(../img/svg/map/round.svg);
+          background-image: url(../img/svg/Radius.svg);
           background-repeat: no-repeat;
+          background-position: 10px 4px;
+          background-size: 40px;
           &:hover {
             color: #fff;
-            background-image: url(../img/svg/map/round_hover.svg);
+            background-image: url(../img/svg/Radius_mouseover.svg);
+            background-color: #00cfff;
           }
         }
         &.lasso a {
-          background-image: url(../img/svg/map/lasso.svg);
+          background-image: url(../img/svg/Lasso.svg);
           background-repeat: no-repeat;
           background-size: 40px;
-          background-position: 10px 10px;
+          background-position: 10px 4px;
           &:hover {
             color: #fff;
-            background-image: url(../img/svg/map/lasso_hover.svg);
+            background-image: url(../img/svg/Lasso_mouseover.svg);
+            background-color: #00cfff;
           }
         }
         a {
@@ -168,7 +173,7 @@
           border: none;
         }
         .radius-map {
-          background: url(..//img/radius-map.png) no-repeat center top;
+          background: url(../img/radius-map.png) no-repeat center top;
           transition: display 5s ease;
           border: none;
         }
@@ -179,7 +184,7 @@
         }
         &:hover {
           border: 0;
-          background-color: transparent;
+          background-color: #00cfff;
           .path-map, .radius-map, .lasso-map {
             position: absolute;
             width: 100%;
