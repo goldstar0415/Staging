@@ -11,12 +11,13 @@
     <div class="article">
       <div class="image-wrapper">
         <img ng-if="post.cover_url" ng-src="{{post.cover_url.original}}" class="article-img">
-        <span class="date-sm hidden-xs">11<br>May</span>
+        <span class="date-sm hidden-xs" ng-bind-html="Blog.getDate(post.created_at)"></span>
       </div>
 
       <h2 class="title-blog">
         <a ui-sref="blog.article({slug: post.slug})">{{post.title}}</a>
-        <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right">11<br>May</span>
+        <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right"
+              ng-bind-html="Blog.getDate(post.created_at)"></span>
       </h2>
 
       <div class="location-link col-xs-12">
@@ -24,8 +25,8 @@
       </div>
 
 
-
       <p class="article-description" ng-bind-html="post.body"></p>
+
       <div class="article-info col-xs-12">
 
         <div class="row">
@@ -34,6 +35,7 @@
               {{post.user.first_name}} {{post.user.last_name}}
             </a>
           </p>
+
           <p class="col-xs-5 col-sm-3 category">Category:
             <a>{{post.category.display_name}}</a>
           </p>

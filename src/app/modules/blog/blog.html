@@ -24,11 +24,11 @@
             <div class="article-wrapper">
               <div class="image-wrapper clearfix">
                 <img ng-src="{{post.cover_url.original}}" class="article-img">
-                <span class="date-sm hidden-xs">11<br>May</span>
+                <span class="date-sm hidden-xs" ng-bind-html="Blog.getDate(post.created_at)"></span>
               </div>
               <h2 class="title-blog row">
                 <a class="col-md-12 col-xs-9" ui-sref="blog.article({slug: post.slug})">{{post.title}}</a>
-                <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right">11<br>May</span>
+                <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right" ng-bind-html="Blog.getDate(post.created_at)"></span>
 
                 <div class="clearfix"></div>
               </h2>

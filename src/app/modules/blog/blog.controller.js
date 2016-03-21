@@ -17,5 +17,14 @@
     };
     vm.pagination = new ScrollService(Post.paginate, vm.posts, params);
 
+    vm.getDate = getDate;
+
+    ////////////////////////////
+
+    function getDate(date) {
+      var $date = moment(date);
+      return $date.format('DD') + '<br/>' + $date.format('MMM');
+    }
+
   }
 })();
