@@ -25,8 +25,13 @@
 
     //submit form
     function save(form) {
-      if (form.$valid && vm.location) {
+      _.each(vm.attachments, function (attachment, idx) {
+        if (attachment.type == 'activity') {
+            attachment.isSubmitted = true; // fix visible errors when activity was added
+        }
+      });
 
+      if (form.$valid && vm.location) {
         if (vm.id) {
           Plan.update(_convertData(), function (resp) {
             $state.go('planner.list');
@@ -84,6 +89,7 @@
     function addActivity() {
       vm.attachments.push({
         type: 'activity',
+        isSubmitted: false,
         data: {}
       });
     }

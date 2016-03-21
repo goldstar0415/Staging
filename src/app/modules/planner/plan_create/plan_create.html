@@ -7,6 +7,7 @@
   <section class="event-main-info">
     <div class="form-group">
       <label for="title" class="col-sm-2 control-label">Title</label>
+
       <div class="col-sm-10">
         <input type="text" class="form-control" name="title" ng-model="Plan.title" id="title"
                placeholder="Start typing..."
@@ -82,7 +83,7 @@
                  type="text" class="grey-bg">
 
           <!--<div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
-            <!--<div ng-message="required">Start time field can't be empty</div>-->
+          <!--<div ng-message="required">Start time field can't be empty</div>-->
           <!--</div>-->
         </div>
         <span class="col-sm-1 col-xs-2 mgt15 text-center">—</span>
@@ -92,7 +93,7 @@
                  type="text" class="grey-bg">
 
           <!--<div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
-            <!--<div ng-message="required">End time field can't be empty</div>-->
+          <!--<div ng-message="required">End time field can't be empty</div>-->
           <!--</div>-->
         </div>
       </div>
@@ -123,7 +124,8 @@
                  placeholder="Start typing..." ng-minlength="3" ng-maxlength="255" required>
 
           <div ng-messages="form['title_activity_' + $index].$error"
-               ng-if="form.$submitted || form['title_activity_' +$index].$touched" class="error-message">
+               ng-if="(form.$submitted || form['title_activity_' +$index].$touched) && attachment.isSubmitted"
+               class="error-message">
             <div ng-message="required">is required</div>
             <div ng-message="minlength">too short</div>
             <div ng-message="maxlength">can't be longer then 255 symbols</div>
@@ -145,7 +147,8 @@
           <input type="hidden" ng-model="attachment.data.category.id" name="category_activity_{{$index}}" required/>
 
           <div ng-messages="form['category_activity_' + $index].$error"
-               ng-if="form.$submitted || form['category_activity_' +$index].$touched" class="error-message">
+               ng-if="(form.$submitted || form['category_activity_' +$index].$touched) && attachment.isSubmitted"
+               class="error-message">
             <div ng-message="required">is required</div>
           </div>
         </div>
@@ -160,7 +163,8 @@
                   ng-maxlength="250"></textarea>
 
           <div ng-messages="form['description_activity_' + $index].$error"
-               ng-if="form.$submitted || form['description_activity_' + $index].$touched" class="error-message">
+               ng-if="(form.$submitted || form['description_activity_' + $index].$touched) && attachment.isSubmitted"
+               class="error-message">
             <div ng-message="maxlength">Description can't be longer then 250 symbols</div>
           </div>
         </div>
@@ -173,6 +177,15 @@
           <location address="attachment.data.address" location="attachment.data.location" limit="15"
                     bind-marker="true"></location>
           <a ng-click="PlanCreate.addLocation(PlanCreate.newLocation)" class="btn-add compass" type="button"></a>
+
+          <div ng-if="form.$submitted && attachment.isSubmitted && !attachment.data.address "
+               class="error-message-inline">
+            <div>is required</div>
+          </div>
+          <div ng-if="form.$submitted && attachment.isSubmitted && attachment.data.address && !attachment.data.location"
+               class="error-message-inline">
+            <div>wrong location</div>
+          </div>
         </div>
       </div>
 
@@ -184,7 +197,8 @@
             <input ng-datepicker name="start_date_{{$index}}" ng-model="attachment.data.start_date"
                    start-date="Plan.start_date" end-date="Plan.end_date" type="text" required class="grey-bg">
 
-            <div ng-messages="form['start_date_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-messages="form['start_date_' + $index].$error" ng-if="form.$submitted && attachment.isSubmitted"
+                 class="error-message-inline">
               <div ng-message="required">Start date field can't be empty</div>
             </div>
           </div>
@@ -195,7 +209,8 @@
             <input ng-datepicker name="end_date_{{$index}}" ng-model="attachment.data.end_date"
                    start-date="Plan.start_date" end-date="Plan.end_date" type="text" required class="grey-bg">
 
-            <div ng-messages="form['end_date_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-messages="form['end_date_' + $index].$error" ng-if="form.$submitted && attachment.isSubmitted"
+                 class="error-message-inline">
               <div ng-message="required">End date field can't be empty</div>
             </div>
           </div>
@@ -208,10 +223,10 @@
         <div class="col-md-10 col-sm-12 col-xs-12">
           <div class="col-sm-4 col-xs-12 no-pad">
             <input ng-timepicker step="30" placeholder="12:00..." name="start_time_{{$index}}"
-                   ng-model="attachment.data.start_time" type="text"  class="grey-bg">
+                   ng-model="attachment.data.start_time" type="text" class="grey-bg">
 
             <!--<div ng-messages="form['start_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">-->
-              <!--<div ng-message="required">Start time field can't be empty</div>-->
+            <!--<div ng-message="required">Start time field can't be empty</div>-->
             <!--</div>-->
           </div>
 
@@ -223,7 +238,7 @@
                    type="text" class="grey-bg">
 
             <!--<div ng-messages="form['end_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">-->
-              <!--<div ng-message="required">End time field can't be empty</div>-->
+            <!--<div ng-message="required">End time field can't be empty</div>-->
             <!--</div>-->
           </div>
         </div>
