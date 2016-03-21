@@ -1431,12 +1431,27 @@
   }
 
   .sidebar-menu-wrap {
-    position: absolute !important;
+    right: 0;
+    top: initial;
+    bottom: 0;
+    width: 100%;
+    transform: rotate(0deg);
+    height: initial;
+
+    &.to-bottom {
+      .sidebar-menu-vertical {
+        bottom: 0;
+      }
+
+      .show-menu-profile {
+        top: initial;
+        bottom: 7rem;
+      }
+    }
 
     .show-menu-profile {
-      top: 75vh;
-      //width: 7rem;
-      //height: 7rem;
+      top: initial;
+      bottom: 13rem;
     }
 
     .sidebar-menu-vertical {

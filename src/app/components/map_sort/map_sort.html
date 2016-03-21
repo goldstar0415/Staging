@@ -1,4 +1,4 @@
-<div ng-if="MapSort.vertical && $root.$state.current.name == 'index'" class="sidebar-menu-wrap">
+<div ng-if="MapSort.vertical && $root.$state.current.name == 'index'" class="sidebar-menu-wrap" ng-class="{'to-bottom': !$root.currentUser}">
   <div class="show-menu-profile visible-xs" ng-click="MapSort.vertical = !MapSort.vertical"></div>
 
   <div class="sidebar-menu-vertical">
