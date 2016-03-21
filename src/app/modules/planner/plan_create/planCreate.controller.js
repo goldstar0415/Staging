@@ -91,11 +91,18 @@
     //add spot to plan attachments
     function addSpots() {
       if (vm.newSpots && vm.newSpots.length > 0) {
+        var isExists;
         _.each(vm.newSpots, function (spot) {
-          vm.attachments.push({
-            type: 'spot',
-            data: spot
-          });
+          isExists = _.filter(vm.attachments,  function (item) {
+            return item.type == 'spot' && item.data.id == spot.id;
+          }).length;
+
+          if (!isExists) {
+            vm.attachments.push({
+              type: 'spot',
+              data: spot
+            });
+          }
         });
 
         vm.newSpots = [];
