@@ -250,10 +250,10 @@
                       <li>
                         <invite-friends item="item.spot"></invite-friends>
                       </li>
-                      <li ng-if="!item.spot.is_saved">
+                      <li ng-if="$root.sortLayer == 'event' && !item.spot.is_saved">
                         <a class="save-event" ng-click="MapSort.saveToCalendar(item.spot)">Save</a>
                       </li>
-                      <li ng-if="$root.currentUser && item.spot.is_saved">
+                      <li ng-if="$root.sortLayer == 'event' && $root.currentUser && item.spot.is_saved">
                         <a class="save-event saved clicked" ng-click="MapSort.removeFromCalendar(item.spot)">Remove</a>
                       </li>
                       <li ng-if="$root.currentUser.id != item.spot.user_id && !item.spot.is_favorite">

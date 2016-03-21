@@ -63,7 +63,6 @@
 
     function onUpdateMapData(event, spots, layer, isDrawArea) {
       layer = layer || $rootScope.sortLayer;
-
       //group by spot type
       $rootScope.mapSortSpots = _.groupBy(spots, function (item) {
         return item.spot.category.type.name
@@ -83,7 +82,6 @@
       if (angular.isDefined(isDrawArea)) {
         $rootScope.isDrawArea = isDrawArea;
       }
-      console.log(isDrawArea);
       var wp = MapService.GetPathWaypoints();
       var geoJson = MapService.GetGeoJSON();
 
@@ -99,7 +97,9 @@
       } else {
         MapService.showLayer(layer);
 
-        MapService.drawSpotMarkers($rootScope.mapSortSpots[layer], layer, true);
+        if ($rootScope.mapSortSpots[layer]) {
+          MapService.drawSpotMarkers($rootScope.mapSortSpots[layer], layer, true);
+        }
 
         if (isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1) {
           toastr.info('Draw the search area');
