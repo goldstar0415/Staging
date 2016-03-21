@@ -110,43 +110,51 @@
               </a>
             </div>
           </div>
+        </div>
 
 
-          <div ng-if="$root.currentUser && $root.profileUser.id != $root.currentUser.id">
-            <send-message></send-message>
+        <div class="text-center" ng-if="$root.currentUser && $root.profileUser.id != $root.currentUser.id">
+          <send-message></send-message>
 
-            <div class="form-group">
-              <button type="button" class="btn btn-default"
-                      ng-click="Profile.follow($root.profileUser)"
-                      ng-class="{'red-btn': !$root.profileUser.can_follow, 'green-btn': $root.profileUser.can_follow}">
-                {{$root.profileUser.can_follow ? 'Follow' : 'Unfollow'}}
-              </button>
-            </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-default"
+                    ng-click="Profile.follow($root.profileUser)"
+                    ng-class="{'red-btn': !$root.profileUser.can_follow, 'green-btn': $root.profileUser.can_follow}">
+              {{$root.profileUser.can_follow ? 'Follow' : 'Unfollow'}}
+            </button>
           </div>
+        </div>
+
+        <div class="text-center" ng-if="Profile.checkPermission($root.profileUser.privacy_info)">
 
           <ul class="list-inline social-links">
             <li><a ng-href="{{ $root.currentUser.social_links.facebook | absoluteLink}}"
                    ng-if="$root.currentUser.social_links.facebook"
                    rel="nofollow" target="_blank" class="facebook">
             </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.twitter | absoluteLink}}" ng-if="$root.currentUser.social_links.twitter"
+            <li><a ng-href="{{ $root.currentUser.social_links.twitter | absoluteLink}}"
+                   ng-if="$root.currentUser.social_links.twitter"
                    rel="nofollow" target="_blank" class="twitter">
             </a></li>
             <li><a ng-href="{{ $root.currentUser.social_links.instagram | absoluteLink}}"
                    ng-if="$root.currentUser.social_links.instagram"
                    rel="nofollow" target="_blank" class="instagram">
             </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.tumblr | absoluteLink }}" ng-if="$root.currentUser.social_links.tumblr"
+            <li><a ng-href="{{ $root.currentUser.social_links.tumblr | absoluteLink }}"
+                   ng-if="$root.currentUser.social_links.tumblr"
                    rel="nofollow" target="_blank" class="tumblr">
             </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.vk | absoluteLink }}" ng-if="$root.currentUser.social_links.vk"
+            <li><a ng-href="{{ $root.currentUser.social_links.vk | absoluteLink }}"
+                   ng-if="$root.currentUser.social_links.vk"
                    rel="nofollow"
                    target="_blank" class="vk">
             </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.custom | absoluteLink }}" ng-if="$root.currentUser.social_links.custom"
+            <li><a ng-href="{{ $root.currentUser.social_links.custom | absoluteLink }}"
+                   ng-if="$root.currentUser.social_links.custom"
                    rel="nofollow" target="_blank" class="custom">
             </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.google | absoluteLink }}" ng-if="$root.currentUser.social_links.google"
+            <li><a ng-href="{{ $root.currentUser.social_links.google | absoluteLink }}"
+                   ng-if="$root.currentUser.social_links.google"
                    rel="nofollow" target="_blank" class="google-plus">
             </a></li>
           </ul>
