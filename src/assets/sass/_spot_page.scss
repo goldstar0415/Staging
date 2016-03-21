@@ -79,6 +79,7 @@
   right: -8px;
   top: 20px;
   padding-top: 0;
+  width: 65px;
   background: url(../img/icons/min-corner.png) top 0 right 17px no-repeat;
   z-index: 1000;
   .share-buttons {
@@ -88,7 +89,6 @@
     border-radius: 5px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .2);
     padding: 1px;
-    margin-bottom: -2px;
 
     li {
       float: left;

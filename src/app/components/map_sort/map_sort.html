@@ -263,7 +263,9 @@
                         ng-if="$root.currentUser && $root.currentUser.id != item.spot.user_id && item.spot.is_favorite">
                         <a class="fav favorited" ng-click="MapSort.removeFromFavorite(item.spot)">Unfavorite</a>
                       </li>
-                      <li><a>Share</a></li>
+                      <li>
+                        <share item="item.spot" type="spot"></share>
+                      </li>
                     </ul>
                   </div>
                 </div>

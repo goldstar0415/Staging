@@ -176,7 +176,7 @@
           UploaderService
             .upload(url, req)
             .then(function (resp) {
-              if (vm.is_private) {
+              if (request.is_private == '1') {
                 toastr.success('Spot successfully saved');
               } else {
                 toastr.info('Your submittal is under review and will be posted shortly.');
