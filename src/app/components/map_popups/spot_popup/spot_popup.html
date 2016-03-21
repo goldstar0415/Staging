@@ -15,7 +15,7 @@
   </div>
   <div class="col-xs-8 popup-main">
     <div class="popup-header">
-      <a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})">{{::data.spot.title}}</a>
+      <a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})">{{data.spot.title}}</a>
       <p class="star-event-mobile">
         <stars item="data.spot"></stars>
       </p>
@@ -159,7 +159,7 @@
       </div>
       <div class="col-xs-9 mobile-popup-content">
         <div class="popup-header">
-          <a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})">{{::data.spot.title}}</a>
+          <a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})">{{data.spot.title}}</a>
           <p class="location-event">{{data.address}}</p>
           <p class="date-event" ng-if="data.spot.category.type.name == 'event'">
             <span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>

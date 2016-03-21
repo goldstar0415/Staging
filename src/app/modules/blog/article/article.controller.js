@@ -16,7 +16,7 @@
     var params = {
       page: 0,
       limit: 10,
-      post_id: article.id
+      post_id: article.slug
     };
     vm.pagination = new ScrollService(PostComment.query, vm.comments, params);
 
@@ -25,7 +25,7 @@
      * @param form {ngForm}
      */
     function sendComment() {
-      PostComment.save({post_id: article.id},
+      PostComment.save({post_id: article.slug},
         {
           body: vm.message
         }, function success(message) {
@@ -43,7 +43,7 @@
      */
     function deleteComment(comment, idx) {
       dialogs.confirm('Confirmation', 'Are you sure you want to delete comment?').result.then(function () {
-        PostComment.delete({post_id: article.id, id: comment.id}, function () {
+        PostComment.delete({post_id: article.slug, id: comment.id}, function () {
           toastr.info('Comment successfully deleted');
           vm.comments.data.splice(idx, 1);
         });

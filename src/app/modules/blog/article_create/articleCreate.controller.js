@@ -35,7 +35,7 @@
         req.payload = JSON.stringify(data);
         if (vm.id) {
           req._method = 'PUT';
-          url = API_URL + '/posts/' + vm.id;
+          url = API_URL + '/posts/' + vm.slug;
         }
 
         vm.images.files.splice(0, vm.images.files.length - 1);  //save last image
