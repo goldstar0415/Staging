@@ -51,7 +51,8 @@ class PrivacyCheck
             $target = $spot->user;
 
             if (!$target or !$spot->is_private
-                or $spot->is_private and $this->privacy->hasPermission($target, $target->privacy_events)) {
+                or $spot->is_private and $this->privacy->hasPermission($target, $target->privacy_events)
+            ) {
                 $allow = true;
             }
         } elseif ($request->is('followers/*')) {
@@ -82,6 +83,12 @@ class PrivacyCheck
             $target = $request->route('users');
 
             if ($this->privacy->hasPermission($target, $target->privacy_photo_map)) {
+                $allow = true;
+            }
+        } elseif ($request->is('spots/favorites') and $request->has('user_id')) {
+            $target = User::find($request->user_id);
+
+            if ($this->privacy->hasPermission($target, $target->privacy_favorites)) {
                 $allow = true;
             }
         } else {

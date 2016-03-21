@@ -90,7 +90,7 @@ class AlbumController extends Controller
     public function show(Request $request, $album)
     {
         $user = $request->user();
-        if ($album->is_private and
+        if ($album->is_private || $album->user->privacy_photo_map and
             !($this->auth->check() and
                 ($user->id === $album->user_id or
                 $album->user->followings()->where('users.id', $user->id)->exists()))
