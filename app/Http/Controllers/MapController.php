@@ -51,7 +51,7 @@ class MapController extends Controller
      */
     public function getSpots(SpotsSearchRequest $request)
     {
-        $spots = Spot::query();
+        $spots = Spot::where('is_private', false);
 
         if ($request->has('search_text')) {
             $spots->where(function ($query) use ($request) {
