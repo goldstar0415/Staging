@@ -169,9 +169,9 @@ class SpotController extends Controller
             $cover = $request->file('cover');
             $spot->cover = $cover->getRealPath();
         }
-        if ($request->has('description')) {
-            $spot->description = e($request->description);
-        }
+
+        $spot->description = $request->has('description') ? e($request->description) : '';
+
         if ($request->has('tags')) {
             $spot->tags = $request->input('tags');
         }
