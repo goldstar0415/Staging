@@ -115,7 +115,7 @@
       padding: 0;
       li {
         width: 60px;
-        height: 50px;
+        height: 55px;
         border-radius: 0;
         border: 0;
         display: inline-block;
@@ -137,7 +137,7 @@
         &.radius a {
           background-image: url(../img/svg/Radius.svg);
           background-repeat: no-repeat;
-          background-position: 10px 4px;
+          background-position: 10px 8px;
           background-size: 40px;
           &:hover {
             color: #fff;
@@ -244,83 +244,56 @@
     margin: 0;
     li {
       font: 500 14px/24px;
-      color: #fff;
-      background-color: #929fa7;
+      color: #000;
+      background-color: #fff;
       display: inline-block;
       border-left: 1px solid #aabac1;
       float: left;
       &:first-child {
         width: 60px;
+        height: 67px;
         border-left: 0;
+        background-color: #000;
+        &:hover {
+          background-color: #000;
+        }
       }
       a {
-        color: #fff;
+        color: #000;
         display: block;
-        margin: 8px auto 0;
-        padding: 23px 20px 8px;
+        //margin: 8px auto 0;
+        padding: 40px 20px 8px;
         text-align: center;
         background-size: 25px;
         background-repeat: no-repeat;
         background-position: 10px 8px;
+        transform: rotate(-90deg);
       }
       .full-small {
         background: url(../img/icons/right-arrow.png) 10px 8px no-repeat;
         padding: 25px 30px;
+        transform: rotate(0deg);
       }
-      //.events {
-      //  background-image: url(../img/svg/vertical_menu/calendar.svg);
-      //}
-      //.recreation {
-      //  background-image: url(../img/svg/vertical_menu/recrearion_icon.svg);
-      //  background-repeat: no-repeat;
-      //  background-position: 7px 2px;
-      //  background-size: 36px;
-      //}
-      //.pit-stops {
-      //  background-image: url(../img/svg/vertical_menu/pit_stops.svg);
-      //  background-size: 30px;
-      //  background-repeat: no-repeat;
-      //  background-position: 8px 6px;
-      //}
-      //.weather-link {
-      //  background-image: url(../img/svg/vertical_menu/weather_icons.svg);
-      //  background-size: 40px;
-      //  background-repeat: no-repeat;
-      //  background-position: 4px 6px;
-      //}
       .events {
-        background: url(../img/icons/event-icon.png) no-repeat center top;
+        background: url(../img/icons/events_right_menu.png) no-repeat center top;
       }
       .recreation {
-        background: url(../img/icons/todo.png) no-repeat center top;
+        background: url(../img/icons/to_do_right_menu.png) no-repeat center top;
       }
       .pit-stops {
-        background: url(../img/icons/food.png) no-repeat center top;
+        background: url(../img/icons/food_right_menu.png) no-repeat center top;
       }
       .shelter {
-        background: url(../img/icons/Shelter.png) no-repeat center top;
+        background: url(../img/icons/shelter_right_menu.png) no-repeat center top;
       }
       .weather-link {
-        background: url(../img/icons/weather.png) no-repeat center top;
+        background: url(../img/icons/weather_right_menu.png) no-repeat center top;
       }
       &:hover, &.active {
-        background-color: #fff;
+        background-color: #00cfff;
         @include transition_bg_color;
-        .events {
-          background-image: url(../img/icons/event-hover.png);
-        }
-        .weather-link {
-          background: url(../img/icons/weather-hover.png) no-repeat center top;
-          //background-image: url(../img/svg/vertical_menu/weather_icons_active.svg);
-        }
-        .pit-stops {
-          background-image: url(../img/icons/food-hover.png);
-        }
-        .shelter {
-          background-image: url(../img/icons/shelter-hover.png);
-        }
-        .recreation {
-          background-image: url(../img/icons/todo-hover.png);
+        .events, .weather-link, .pit-stops, .shelter, .recreation {
+          color: #fff;
         }
         a {
           color: #00cfff;
@@ -652,9 +625,9 @@
             background: url(../img/icons/slider-arrow.png) no-repeat -29px -47px;
             position: absolute;
             top: 1.2rem !important;
-            right: 1rem  !important;
-            width: 16px  !important;
-            height: 30px  !important;
+            right: 1rem !important;
+            width: 16px !important;
+            height: 30px !important;
           }
         }
       }
@@ -1434,7 +1407,10 @@
     //height: 7rem;
     transform: rotate(180deg);
   }
-
+  .sidebar-menu-vertical ul li a {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
   .sidebar-menu-wrap {
     right: 0;
     top: initial;
