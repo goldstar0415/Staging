@@ -12,9 +12,9 @@
         This submittal is under review and will be posted shortly.
       </div>
 
-      <span ng-if="Spot.spot.type == 'Event'" class="date">
+      <div ng-if="Spot.spot.type == 'Event'" class="date clearfix">
           <date-range item="Spot.spot"></date-range>
-      </span>
+      </div>
 
       <h2 class="">
         <a>{{Spot.spot.title}}</a>
