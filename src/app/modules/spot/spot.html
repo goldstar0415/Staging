@@ -32,7 +32,7 @@
       <ng-carousel images="Spot.spot.photos"></ng-carousel>
 
       <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
-        <li ng-repeat="link in Spot.spot.videos" class="video-size">
+        <li ng-repeat="link in Spot.spot.videos track by $index" class="video-size">
           <youtube-player src="link"></youtube-player>
         </li>
       </ul>

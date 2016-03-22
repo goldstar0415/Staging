@@ -192,6 +192,7 @@
             })
             .catch(function (resp) {
               vm.loading = false;
+              console.log(resp);
               toastr.error('Save error');
             });
         }
@@ -344,8 +345,12 @@
     //videos
     vm.addYoutubeLink = function (validLink) {
       if (validLink && vm.newYoutubeLink) {
-        vm.youtube_links.unshift(vm.newYoutubeLink);
-        vm.newYoutubeLink = '';
+        if (vm.youtube_links.indexOf(vm.newYoutubeLink) == -1) {
+          vm.youtube_links.unshift(vm.newYoutubeLink);
+          vm.newYoutubeLink = '';
+        } else {
+          toastr.error('Video with this link has already been added');
+        }
       } else {
         toastr.error('Link is not valid');
         vm.newYoutubeLink = '';
@@ -363,7 +368,7 @@
       vm.title = data.title;
       vm.description = data.description;
       vm.links = data.web_sites || [];
-      vm.youtube_links = data.videos;
+      vm.youtube_links = data.videos || [];
       vm.category_id = data.spot_type_category_id;
       vm.tags = data.tags || [];
       vm.cover = data.cover_url.original;

@@ -25,6 +25,10 @@
     function NgCarouselController() {
       var vm = this;
 
+      if (vm.images.length == 0) {
+        return;
+      }
+
       vm.mainImage = vm.images[0];
       vm.mainImage.idx = 0;
       vm.imageControl = {
