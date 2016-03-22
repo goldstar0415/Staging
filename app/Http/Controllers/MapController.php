@@ -80,7 +80,7 @@ class MapController extends Controller
 
         if ($request->has('filter.end_date')) {
             $spots->where(function ($query) use ($request) {
-                $query->where('end_date', '<=', $request->filter['end_date'])->orWhereNull('end_date');
+                $query->where('end_date', '<=', $request->filter['end_date'] . ' 23:59:59')->orWhereNull('end_date');
             });
         }
 
