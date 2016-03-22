@@ -253,10 +253,7 @@
         width: 60px;
         height: 67px;
         border-left: 0;
-        background-color: #000;
-        &:hover {
-          background-color: #000;
-        }
+        background-color: #fff;
       }
       a {
         color: #000;
@@ -270,9 +267,12 @@
         transform: rotate(-90deg);
       }
       .full-small {
-        background: url(../img/icons/right-arrow.png) 10px 8px no-repeat;
-        padding: 25px 30px;
-        transform: rotate(0deg);
+        background: url(../img/icons/dark_arrow.png) no-repeat;
+        padding: 14px 30px;
+        transform: rotate(-90deg);
+        &:hover {
+          background: url(../img/icons/dark_arrow.png) no-repeat;
+        }
       }
       .events {
         background: url(../img/icons/events_right_menu.png) no-repeat center top;
@@ -298,9 +298,7 @@
         a {
           color: #00cfff;
         }
-        .full-small {
-          background-position: -65px 8px;
-        }
+
       }
     }
   }
