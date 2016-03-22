@@ -31,20 +31,20 @@
             background-position: 4px 3px;
             &:hover, &.active {
               background-image: url('../img/svg/profile_menu/icon_spot_hover.svg');
-              color: $nav_green;
+              //color: $nav_green;
           }
         }
         .nav-favorites {
           background-image: url('../img/svg/profile_menu/icon_heart.svg');
           &:hover, &.active {
-            color: $nav_red;
+            //color: $nav_red;
             background-image: url('../img/svg/profile_menu/icon_heart_hover.svg');
           }
         }
         .nav-searches {
           background-image: url('../img/svg/profile_menu/icon_save.svg');
            &:hover, &.active {
-            color: $nav_yellow;
+            //color: $nav_yellow;
             background-image: url('../img/svg/profile_menu/icon_save_hover.svg');
           }
         }
@@ -53,7 +53,7 @@
           background-size: 25px;
           background-position: 4px 9px !important;
            &:hover, &.active {
-            color: $nav_blue;
+            //color: $nav_blue;
             background-image: url('../img/svg/profile_menu/friend_icon_hover.svg');
           }
         }
@@ -62,14 +62,14 @@
           background-size: 25px;
           background-position: 4px 9px !important;
            &:hover, &.active {
-            color: $nav_green2;
+            //color: $nav_green2;
             background-image: url('../img/svg/profile_menu/icon_photo_hover.svg');
           }
         }
         .nav-planner {
           background-image: url('../img/svg/profile_menu/icon_planner.svg');
           &:hover, &.active {
-            color: $nav_blue;
+            //color: $nav_blue;
             background-image: url('../img/svg/profile_menu/icon_planner_hover.svg');
           }
         }
