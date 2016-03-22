@@ -26,21 +26,27 @@
       var vm = this;
 
       vm.mainImage = vm.images[0];
+      vm.mainImage.idx = 0;
       vm.imageControl = {
         start: 0,
         step: 4
       };
 
       vm.prev = prev;
+      vm.next = next;
+      vm.setMainImage = setMainImage;
 
       function prev() {
         vm.imageControl.start--;
       }
 
-      vm.next = next;
-
       function next() {
         vm.imageControl.start++;
+      }
+
+      function setMainImage(item, idx) {
+        vm.mainImage = item;
+        vm.mainImage.idx = idx;
       }
     }
   }

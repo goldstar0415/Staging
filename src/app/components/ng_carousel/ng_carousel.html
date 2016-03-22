@@ -1,6 +1,8 @@
 <div class="carousel-wrapper" ng-if="Carousel.images.length > 0">
   <div class="col-sm-12">
-    <img ng-src="{{ Carousel.mainImage.photo_url.original }}" alt="" class="img-responsive">
+    <a photo-viewer items="Carousel.images" index="Carousel.mainImage.idx" current-item="Carousel.mainImage">
+      <img ng-src="{{ Carousel.mainImage.photo_url.original }}" alt="" class="img-responsive">
+    </a>
   </div>
 
   <div class="carousel-navigation">
@@ -10,7 +12,7 @@
 
     <div class="col-sm-3"
          ng-repeat="item in Carousel.images.slice(Carousel.imageControl.start, Carousel.imageControl.start + Carousel.imageControl.step)">
-      <a ng-click="Carousel.mainImage = item">
+      <a ng-click="Carousel.setMainImage(item, $index)">
         <img ng-src="{{ item.photo_url.medium }}" alt="" class="img-responsive">
       </a>
     </div>
