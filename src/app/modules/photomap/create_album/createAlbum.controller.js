@@ -45,7 +45,11 @@
             $state.go('photos.album', {album_id: resp.data.id, user_id: resp.data.user_id});
           })
           .catch(function (resp) {
-            toastr.error('Upload failed');
+            if (resp.status == 413) {
+              toastr.error('Images too large');
+            } else {
+              toastr.error('Upload failed');
+            }
           });
       } else if (vm.images.files.length < 1 && !album.id) {
         toastr.error("You can't save album without images");
