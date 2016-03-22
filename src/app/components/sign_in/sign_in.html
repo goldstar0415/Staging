@@ -6,7 +6,7 @@
   <form ng-submit="modal.userLogin(form)" name="form" novalidate>
     <input type="email" name="email" ng-model="modal.email" class="white" placeholder="E-mail..." required>
 
-    <div class="error-message" ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched">
+    <div class="error-message" ng-messages="form.email.$error" ng-if="form.$submitted">
       <div ng-messages-include="error-email-messages"></div>
     </div>
 
@@ -16,7 +16,7 @@
       <a class="eye" eye-password></a>
 
       <div class="error-message" ng-messages="form.password.$error"
-           ng-if="form.$submitted || form.password.$touched">
+           ng-if="form.$submitted">
         <div ng-messages-include="error-password-messages"></div>
       </div>
     </div>
