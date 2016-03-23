@@ -188,8 +188,9 @@
               <img ng-src="{{currentReview.sender.avatar_url.thumb}}">
             </div>
             <div class="col-xs-9 content">
-                     <span><a class="reviews-user">{{currentReview.sender.first_name + ' ' +
-                       currentReview.sender.last_name}}</a></span>
+              <span>
+                <a class="reviews-user">{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}</a>
+              </span>
 
               <p class="description line-break" ng-bind-html="currentReview.body | linky:'_blank'"></p>
 
@@ -225,7 +226,7 @@
             <li ng-if="$root.currentUser && data.spot.is_saved">
               <a class="save-event saved clicked" ng-click="removeFromCalendar(data.spot)">Remove</a>
             </li>
-            <li ng-if="!data.spot.is_favorite">
+            <li ng-if="$root.currentUser.id != data.spot.user_id && !data.spot.is_favorite">
               <a class="favorite-spot" ng-click="addToFavorite(data.spot)">Favorite</a>
             </li>
             <li ng-if="$root.currentUser && data.spot.is_favorite">
