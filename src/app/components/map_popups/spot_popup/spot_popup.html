@@ -188,8 +188,9 @@
               <img ng-src="{{currentReview.sender.avatar_url.thumb}}">
             </div>
             <div class="col-xs-9 content">
-                     <span><a class="reviews-user">{{currentReview.sender.first_name + ' ' +
-                       currentReview.sender.last_name}}</a></span>
+              <span>
+                <a class="reviews-user">{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}</a>
+              </span>
 
               <p class="description line-break" ng-bind-html="currentReview.body | linky:'_blank'"></p>
 
