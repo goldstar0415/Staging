@@ -559,10 +559,14 @@
       .next {
         background: url(../img/icons/blue_arrow_next_prev.png) no-repeat -60px 5px #0b2639;
         content: none;
+        height: 3rem;
+        width: 3rem;
       }
       .prev {
         background: url(../img/icons/blue_arrow_next_prev.png) no-repeat 10px 5px #0b2639;
         content: none;
+        height: 3rem;
+        width: 3rem;
       }
       .glyphicon-chevron-right.next:before, .glyphicon-chevron-left.prev:before {
         content: " ";
