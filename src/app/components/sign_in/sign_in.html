@@ -4,9 +4,10 @@
 </div>
 <div class="modal-body">
   <form ng-submit="modal.userLogin(form)" name="form" novalidate>
-    <input type="email" name="email" ng-model="modal.email" class="white" placeholder="E-mail..." required>
+    <input type="email" name="email" ng-model="modal.email" class="white" placeholder="E-mail..."
+           ng-focus="focused = true" ng-blur="focused = false" required>
 
-    <div class="error-message" ng-messages="form.email.$error" ng-if="form.$submitted">
+    <div class="error-message" ng-messages="form.email.$error" ng-if="form.$submitted && !focused">
       <div ng-messages-include="error-email-messages"></div>
     </div>
 
