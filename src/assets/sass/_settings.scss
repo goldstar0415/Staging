@@ -2,9 +2,11 @@
 .settings {
   padding: 0 !important;
 }
+
 .pdt10 a {
   padding-top: 10px;
 }
+
 .edit-photo {
   @include button;
   background-color: $green;
@@ -69,32 +71,35 @@
     padding-top: 0 !important;
   }
 }
-.avatar-block {
-    padding: 0;
-    .bg-thumb {
-      background-color: #fff;
-      border: 1px solid #e9edf0;
-      padding: 5rem 2rem;
-      margin-right: 2rem;
-      text-align: center;
-      h2 {
-        margin-top: 0;
-      }
-      .green-btn {
-        height: 40px;
-        background-color: $blue_btn;
-        border-radius: 0;
 
-        &:hover {
-          background-color: $light_blue_btn;
-        }
+.avatar-block {
+  padding: 0;
+  .bg-thumb {
+    background-color: #fff;
+    border: 1px solid #e9edf0;
+    padding: 5rem 2rem;
+    margin-right: 2rem;
+    text-align: center;
+    h2 {
+      margin-top: 0;
+    }
+    .green-btn {
+      height: 40px;
+      background-color: $blue_btn;
+      border-radius: 0;
+
+      &:hover {
+        background-color: $light_blue_btn;
       }
     }
-
   }
-.avatar img {
-    width: 100%;
+
 }
+
+.avatar img {
+  width: 100%;
+}
+
 .settings-block {
   border-bottom: 1px solid $light_grey;
   padding: 2rem;
@@ -193,78 +198,86 @@
     }
   }
 }
+
 .birthday {
-    display: block;
-    width: 4rem;
-    height: 4rem;
-    background: url(../img/svg/vertical_menu/calendar.svg) no-repeat;
-    background-size: 22px;
-    background-position: center;
-    background-color: #00c9f8;
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem !important;
-    z-index: 2;
+  display: block;
+  width: 4rem;
+  height: 4rem;
+  background: url(../img/svg/vertical_menu/calendar.svg) #00c9f8 center no-repeat;
+  background-size: 22px;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem !important;
+  z-index: 2;
 }
+
 .compass {
   display: block;
   width: 4rem;
   height: 4rem;
-  background: url(../img/svg/add_icon.svg) no-repeat;
-  background-position: center;
-  background-color: #00c9f8;
+  background: url(../img/svg/add_icon.svg) #00c9f8 center no-repeat;
   position: absolute;
   top: 0.5rem;
   right: 0.5rem !important;
   z-index: 5;
 }
+
 /* radiobox */
 input[type="radio"] {
-    display: none;
+  display: none;
 }
+
 label {
   cursor: pointer;
   color: #555;
 }
+
 input[type="radio"] + label span {
-    display: inline-block;
-    vertical-align: middle;
-    width: 30px;
-    height: 21px;
-    background: url(../img/checkbox.png) 0px center no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: 30px;
+  height: 21px;
+  background: url(../img/checkbox.png) 0px center no-repeat;
 }
+
 input[type="radio"]:checked + label span {
-    background: url(../img/checkbox.png) -39px center no-repeat;
+  background: url(../img/checkbox.png) -39px center no-repeat;
 }
+
 .social-input {
   padding-left: 6rem;
   background-repeat: no-repeat;
   background-position: 4px 4px;
   background-size: 40px;
 }
+
 #fb_input {
   background-image: url(../img/svg/social/facebook_icon.svg);
 }
+
 #tw_input {
   background-image: url(../img/svg/social/twitter_icon.svg);
 }
+
 #in_input {
   background-image: url(../img/svg/social/instagram_icon.svg);
 }
+
 #t_input {
   background-image: url(../img/svg/social/tumbler_icon.svg);
 }
+
 #vk_input {
   background-image: url(../img/svg/social/vk_icon.svg);
 }
+
 #custom_input {
   background-image: url(../img/svg/social/logo_icon.svg);
 }
+
 #google_input {
   background-image: url(../img/svg/social/google_icon.svg);
 }
-
-
 
 .avatar-block {
   .avatar {
@@ -277,12 +290,14 @@ input[type="radio"]:checked + label span {
   @include input_hover_effects;
   font-family: 'Ubuntu bold';
 }
+
 .social-section {
   padding-top: 1rem;
   .radio-group {
     margin-top: .5rem;
   }
 }
+
 @media (max-width: 767px) {
 
   .central {
@@ -293,6 +308,7 @@ input[type="radio"]:checked + label span {
     }
   }
 }
+
 @media (max-width: 650px) {
   .settings-block {
     .avatar-block, .main-information {
@@ -349,7 +365,7 @@ input[type="radio"]:checked + label span {
 //---</settings styles--->
 
 .modal-settings {
-  padding:0;
+  padding: 0;
   .media-radiobox {
     margin-bottom: 0;
     li {
@@ -375,7 +391,7 @@ input[type="radio"]:checked + label span {
       color: #00c9f8;
     }
     input[type="radio"]:checked + label span {
-        background: url(../img/radio2.png) 0 0 no-repeat;
+      background: url(../img/radio2.png) 0 0 no-repeat;
     }
   }
 }
