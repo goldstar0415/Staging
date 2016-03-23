@@ -204,18 +204,10 @@
           toastr.error('Category is required!');
         } else if (vm.locations.length == 0) {
           toastr.error('Location is required!');
-        }
-
-        if (vm.type === 'Event') {
-          if (!vm.start_date) {
+        } else if (vm.type === 'event' && !vm.start_date) {
             toastr.error('Start date is required!');
-          } else if (!vm.end_date) {
-            toastr.error('End date is required!');
-          } else if (!vm.start_time) {
-            toastr.error('Start time is required!');
-          } else if (!vm.end_time) {
-            toastr.error('End time is required!');
-          }
+        } else if (vm.type === 'event' && !vm.end_date) {
+          toastr.error('End date is required!');
         }
       }
 

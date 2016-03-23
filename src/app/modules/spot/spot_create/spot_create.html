@@ -49,7 +49,7 @@
               ng-model="SpotCreate.type"
               search-enabled="false"
               theme="bootstrap">
-              <ui-select-match placeholder="Select category id...">{{$select.selected.name}}</ui-select-match>
+              <ui-select-match placeholder="Select type...">{{$select.selected.name}}</ui-select-match>
               <ui-select-choices
                 repeat="item.value as item in SpotCreate.spotTypes">
                 <div ng-bind-html="item.name "></div>
@@ -172,6 +172,10 @@
                 <div ng-bind-html="item.display_name | highlight: $select.search"></div>
               </ui-select-choices>
             </ui-select>
+
+            <div ng-if="form.$submitted && !SpotCreate.category_id" class="error-message">
+              <div>is required</div>
+            </div>
           </div>
         </div>
 
@@ -212,6 +216,13 @@
                         on-empty="SpotCreate.removeLocation($index)" bind-marker="true"></location>
               <a ng-click="SpotCreate.removeLocation($index)" class="btn-add compass" type="button"></a>
             </div>
+
+            <div ng-if="form.$submitted && !SpotCreate.newLocation.address && SpotCreate.locations.length == 0" class="error-message-inline">
+              <div>is required</div>
+            </div>
+            <!--<div ng-if="form.$submitted && SpotCreate.newLocation.address && !SpotCreate.newLocation.location && SpotCreate.locations.length == 0" class="error-message-inline">-->
+              <!--<div>wrong location</div>-->
+            <!--</div>-->
           </div>
         </div>
 
