@@ -15,7 +15,8 @@
       transclude: true,
       templateUrl: '/app/components/spots_modal/spots_modal.html',
       scope: {
-        items: '='
+        items: '=',
+        attachments: '='
       },
       link: SpotsModalLink
     };
@@ -37,6 +38,9 @@
             selectedSpots: function () {
               return scope.items;
             },
+            attachments: function () {
+              return scope.attachments;
+            },
             spots: function (Spot, $rootScope) {
               return Spot.query({
                 user_id: $rootScope.currentUser.id
@@ -48,9 +52,9 @@
     }
 
     /** @ngInject */
-    function SpotsModalController(selectedSpots, spots, $modalInstance, Spot) {
+    function SpotsModalController(selectedSpots, spots, $modalInstance, attachments) {
       var vm = this;
-      vm.spots = spots;
+      vm.spots = filterSpots(spots);
       vm.close = close;
       vm.addSpot = addSpot;
 
@@ -70,6 +74,15 @@
       //mark as selected spot
       function addSpot(spot) {
         spot.selected = !spot.selected;
+      }
+
+      function filterSpots(spots) {
+        return _.filter(spots, function (spot) {
+          var isExists = _.filter(attachments, function (item) {
+            return item.type == 'spot' && item.data.id == spot.id;
+          });
+          return isExists.length == 0;
+        });
       }
     }
   }

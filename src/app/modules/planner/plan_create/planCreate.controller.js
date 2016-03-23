@@ -27,7 +27,7 @@
     function save(form) {
       _.each(vm.attachments, function (attachment, idx) {
         if (attachment.type == 'activity') {
-            attachment.isSubmitted = true; // fix visible errors when activity was added
+          attachment.isSubmitted = true; // fix visible errors when activity was added
         }
       });
 
@@ -97,18 +97,11 @@
     //add spot to plan attachments
     function addSpots() {
       if (vm.newSpots && vm.newSpots.length > 0) {
-        var isExists;
         _.each(vm.newSpots, function (spot) {
-          isExists = _.filter(vm.attachments,  function (item) {
-            return item.type == 'spot' && item.data.id == spot.id;
-          }).length;
-
-          if (!isExists) {
-            vm.attachments.push({
-              type: 'spot',
-              data: spot
-            });
-          }
+          vm.attachments.push({
+            type: 'spot',
+            data: spot
+          });
         });
 
         vm.newSpots = [];
