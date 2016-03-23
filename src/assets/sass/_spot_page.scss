@@ -558,17 +558,19 @@
       opacity: 1;
       .next {
         background: url(../img/icons/blue_arrow_next_prev.png) no-repeat -60px 5px #0b2639;
-        content: none;
-        height: 3rem;
-        width: 3rem;
+        right: 50%;
       }
       .prev {
         background: url(../img/icons/blue_arrow_next_prev.png) no-repeat 10px 5px #0b2639;
+        left: 50%;
+      }
+      .next, .prev {
         content: none;
         height: 3rem;
         width: 3rem;
       }
-      .glyphicon-chevron-right.next:before, .glyphicon-chevron-left.prev:before {
+      .glyphicon-chevron-right.next:before,
+      .glyphicon-chevron-left.prev:before {
         content: " ";
       }
     }
@@ -579,6 +581,15 @@
       }
 
     }
+  }
+}
+
+@media (max-width: 717px) {
+  .carousel-wrapper .carousel-navigation .carousel-control .next {
+    right: 54%;
+  }
+  .carousel-wrapper .carousel-navigation .carousel-control .prev {
+    left: 54%;
   }
 }
 

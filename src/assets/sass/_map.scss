@@ -78,7 +78,7 @@
     }
   }
   .save-selection {
-    background: url(../img/icons/sprite-top-map.png) -39px -2px no-repeat rgba(159, 173, 173, .8);
+    background: url(../img/icons/sprite-top-map.png) -34px 5px no-repeat rgba(159, 173, 173, .8);
     transform: rotate(-90deg);
     border-right: 1px solid rgba(255,255,255,0.8);
     &:hover {
@@ -86,14 +86,14 @@
     }
   }
   .clear-selection {
-    background: url(../img/icons/sprite-top-map.png) -80px -1px no-repeat rgba(159, 173, 173, .8);
+    background: url(../img/icons/sprite-top-map.png) -77px 5px no-repeat rgba(159, 173, 173, .8);
     transform: rotate(-90deg);
     &:hover {
       background-color: rgba(0, 207, 255, .8);
     }
   }
   .share-selection {
-    background: url(../img/icons/sprite-top-map.png) 0 -1px no-repeat rgba(159, 173, 173, .8);
+    background: url(../img/icons/sprite-top-map.png) 0 5px no-repeat rgba(159, 173, 173, .8);
     transform: rotate(-90deg);
     border-right: 1px solid rgba(255,255,255,0.8);
     &:hover {
