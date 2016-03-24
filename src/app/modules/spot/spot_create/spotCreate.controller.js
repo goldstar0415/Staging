@@ -118,7 +118,7 @@
       if (vm.newLocation && vm.newLocation.address) {
         vm.addLocation(vm.newLocation);
       }
-      if (form.$valid && vm.category_id !== '' && vm.locations.length > 0) {
+      if (form.$valid && vm.category_id !== '' && vm.locations.length > 0 && (!vm.cropCover || vm.saveCrop)) {
         var tags = filterTags();
         var locations = filterLocations();
         var request = {};
@@ -208,6 +208,8 @@
             toastr.error('Start date is required!');
         } else if (vm.type === 'event' && !vm.end_date) {
           toastr.error('End date is required!');
+        } else if (vm.cropCover || !vm.saveCrop) {
+          toastr.error('Please save cover');
         }
       }
 

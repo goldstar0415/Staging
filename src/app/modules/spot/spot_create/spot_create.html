@@ -342,6 +342,10 @@
                       class="btn btn-default green green-btn pull-left margin-bottom save-cover-btn"
                       ng-if="!SpotCreate.selectCover && !SpotCreate.saveCrop">Save cover
               </button>
+
+              <div ng-if="form.$submitted && !SpotCreate.saveCrop" class="col-xs-12 error-message-inline">
+                <div>is required</div>
+              </div>
               <!--<a class="delete" ng-click="SpotCreate.cover = null" title="Delete"></a>-->
             </div>
           </div>
