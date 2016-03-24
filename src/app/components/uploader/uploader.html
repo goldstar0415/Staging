@@ -17,7 +17,6 @@
     <p ng-if="Uploader.dropZone">Drag photos here or click to upload</p>
     <a ng-if="!Uploader.dropZone" class="btn green-btn">{{Uploader.buttonText || 'Upload'}}</a>
   </div>
-  {{ uploaderForm }}
   <div ng-if="uploaderForm.images.$error.maxSize">max size</div>
 </form>
 <div ngf-no-file-drop>File Drop not available</div>
