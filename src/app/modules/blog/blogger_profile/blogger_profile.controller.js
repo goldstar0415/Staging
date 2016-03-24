@@ -8,8 +8,9 @@
   /** @ngInject */
   function BloggerProfileController(posts, Post, dialogs, MapService) {
     var vm = this;
-    vm.removePost = removePost;
     vm.posts = posts;
+    vm.removePost = removePost;
+    vm.getDate = getDate;
 
     showMarkers();
 
@@ -33,6 +34,11 @@
       if (posts.length > 0) {
         MapService.drawBlogMarkers(posts, true);
       }
+    }
+
+    function getDate(date) {
+      var $date = moment(date);
+      return $date.format('DD') + '<br/>' + $date.format('MMM');
     }
 
   }
