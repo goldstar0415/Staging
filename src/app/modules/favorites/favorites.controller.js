@@ -28,11 +28,13 @@
      */
     function UnFavorite(spot, idx) {
       SpotService.removeFromFavorite(spot, function () {
-        vm.spots.data.splice(idx, 1);
-        if (vm.markersSpots[idx].marker) {
-          MapService.GetCurrentLayer().removeLayer(vm.markersSpots[idx].marker);
-        } else {
-          MapService.GetCurrentLayer().removeLayers(vm.markersSpots[idx].markers)
+        if ($rootScope.currentUser.id == $rootScope.profileUser.id) {
+          vm.spots.data.splice(idx, 1);
+          if (vm.markersSpots[idx].marker) {
+            MapService.GetCurrentLayer().removeLayer(vm.markersSpots[idx].marker);
+          } else {
+            MapService.GetCurrentLayer().removeLayers(vm.markersSpots[idx].markers)
+          }
         }
       })
     }
