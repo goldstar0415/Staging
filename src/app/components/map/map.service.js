@@ -1281,7 +1281,7 @@
         scope.addmarker = addmarker;
 
         scope.popup = L.popup({
-          keepInView: true,
+          keepInView: false,
           autoPan: true,
           offset: L.point(-40, 0),
           closeButton: false,
