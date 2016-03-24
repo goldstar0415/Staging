@@ -16,14 +16,15 @@
 
     //@return $promise
     function upload(url, data, fileFormDataName) {
-      fileFormDataName = fileFormDataName || 'files[]';
-      return Upload.upload({
+      fileFormDataName = fileFormDataName || 'files';
+      var params = {
         url: url,
-        file: images.files,
-        fields: data,
-        fileFormDataName: fileFormDataName,
         method: 'POST'
-      });
+      };
+      params.data = data;
+      params.data[fileFormDataName] = images.files;
+      console.log(params);
+      return Upload.upload(params);
     }
 
   }

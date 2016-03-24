@@ -1,4 +1,4 @@
-<form name="uploaderForm">
+<ng-form name="uploaderForm">
   <div class="clearfix"
        ngf-drop
        ngf-select
@@ -6,7 +6,6 @@
        ng-model="Uploader.images"
        ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
        ng-class="{'drop-box': Uploader.dropZone}"
-       ngf-multiple="Uploader.dropZone"
        ngf-keep="true"
        ngf-allow-dir="true"
        ngf-keep-distinct="true"
@@ -17,6 +16,9 @@
     <p ng-if="Uploader.dropZone">Drag photos here or click to upload</p>
     <a ng-if="!Uploader.dropZone" class="btn green-btn">{{Uploader.buttonText || 'Upload'}}</a>
   </div>
-  <div ng-if="uploaderForm.images.$error.maxSize">max size</div>
-</form>
+
+  <div class="error-message-inline text-center" ng-if="uploaderForm.images.$error.maxSize">
+    <div>max photo size is 10MB</div>
+  </div>
+</ng-form>
 <div ngf-no-file-drop>File Drop not available</div>
