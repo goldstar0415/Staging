@@ -13,6 +13,13 @@
 #modal-id .modal-dialog {
   margin: 1rem auto;
 }
+
+.send-message {
+  .modal-dialog {
+    width: 700px;
+  }
+}
+
 .authentication {
   .modal-dialog {
     width: 340px;

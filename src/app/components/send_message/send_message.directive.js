@@ -27,7 +27,7 @@
         $modal.open({
           templateUrl: 'SendMessageModal.html',
           controller: SendMessageModalController,
-          modalClass: 'authentication',
+          modalClass: ' send-message',
           controllerAs: 'modal'
         });
       };
