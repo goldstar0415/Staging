@@ -22,7 +22,11 @@
         method: 'POST'
       };
       params.data = data;
-      params.data[fileFormDataName] = images.files;
+      if (fileFormDataName == 'cover') {
+        params.data[fileFormDataName] = images.files[0];
+      } else {
+        params.data[fileFormDataName] = images.files;
+      }
       console.log(params);
       return Upload.upload(params);
     }

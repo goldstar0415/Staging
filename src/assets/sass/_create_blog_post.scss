@@ -21,6 +21,22 @@
       background-color: transparent;
     }
   }
+
+  .add-image {
+    position: relative;
+    height: 15rem;
+    width: 15rem;
+    margin: 1rem 0;
+
+    .close-img {
+      top: 0;
+      right: 0;
+      width: 42px;
+      height: 42px;
+      position: absolute;
+      background: url(../img/icons/close-photo.png) center center no-repeat;
+    }
+  }
 }
 .event-additionl-info {
   location input {

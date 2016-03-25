@@ -49,10 +49,14 @@
         <img ng-if="Article.cover_url && Article.images.files.length == 0"
              class="img-thumbnail col-sm-3"
              ng-src="{{Article.cover_url.original}}"/>
-        <img ng-if="Article.images.files.length > 0"
-             class="img-thumbnail col-sm-3"
-             ngf-src="Article.images.files[Article.images.files.length - 1]"/>
 
+        <div class="add-image" ng-if="Article.images.files.length > 0">
+          <img class="img-responsive"
+               ngf-src="Article.images.files[Article.images.files.length - 1]"/>
+
+          <a class="close-img" ng-click="Article.images.files.splice(0, 1)" data-toggle="tooltip"
+             data-placement="top" title="Delete"></a>
+        </div>
       </div>
     </div>
 
@@ -78,12 +82,19 @@
       <div class="col-sm-9 col-xs-12">
         <div content-tools data-name="article-body">
           <p ng-bind-html="Article.body | toTrustedHtml"></p>
+
           <p></p>
+
           <p></p>
+
           <p></p>
+
           <p></p>
+
           <p></p>
+
           <p></p>
+
           <p></p>
         </div>
       </div>
