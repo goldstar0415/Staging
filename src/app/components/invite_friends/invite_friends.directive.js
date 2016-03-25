@@ -56,7 +56,7 @@
     /** @ngInject */
     function InviteFriendsModalController(type, item, friends, $modalInstance, Spot, Plan) {
       var vm = this;
-      vm.friends = friends;
+      vm.friends = filterOwner(friends);
       type = type || 'spot';
 
       vm.close = function () {
@@ -89,6 +89,12 @@
       vm.isAnySelected = function () {
         return _.findWhere(vm.friends, {selected: true});
       };
+
+      function filterOwner(friends) {
+        return _.filter(friends, function (user) {
+          return user.id != item.user_id;
+        });
+      }
     }
   }
 

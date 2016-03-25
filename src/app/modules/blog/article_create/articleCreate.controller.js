@@ -45,10 +45,11 @@
             $state.go('blog.article', {slug: resp.data.slug});
           })
           .catch(function (resp) {
-            //var message = vm.images.files.length > 0 ? 'Upload failed' : 'Wrong input';
             _.each(resp.data, function (message) {
               toastr.error(_.isArray(message) ? message[0] : message);
             });
+
+            editor.start();
           });
       }
     }
