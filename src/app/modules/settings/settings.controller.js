@@ -114,7 +114,7 @@
             toastr.success('Settings saved')
           })
           .error(function (data, status, headers, config) {
-            toastr.error('Incorrect input ')
+            toastr.error('Incorrect current password ')
           });
       } else {
         toastr.error('Incorrect input');
