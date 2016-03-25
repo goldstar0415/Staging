@@ -135,13 +135,13 @@
             vm.links = [];
           }
           if (vm.newLink) {
-            vm.links.push(vm.newLink);
+            vm.links.push(vm.newLink);  //TODO: add validations
           }
           request.web_sites = vm.links;
         }
         if (vm.newYoutubeLink || (vm.youtube_links && vm.youtube_links.length > 0)) {
           if (!vm.youtube_links) {
-            vm.youtube_links = [];
+            vm.youtube_links = [];     //TODO: add validations
           }
           if (vm.newYoutubeLink) {
             vm.youtube_links.push(vm.newYoutubeLink);
@@ -193,7 +193,12 @@
             .catch(function (resp) {
               vm.loading = false;
               console.log(resp);
-              toastr.error('Save error');
+
+              if (resp.status == 413) {
+                toastr.error('Images too large');
+              } else {
+                toastr.error('Save error');
+              }
             });
         }
       } else {
@@ -205,10 +210,10 @@
         } else if (vm.locations.length == 0) {
           toastr.error('Location is required!');
         } else if (vm.type === 'event' && !vm.start_date) {
-            toastr.error('Start date is required!');
+          toastr.error('Start date is required!');
         } else if (vm.type === 'event' && !vm.end_date) {
           toastr.error('End date is required!');
-        } else if (vm.cropCover || !vm.saveCrop) {
+        } else if (vm.cropCover && !vm.saveCrop) {
           toastr.error('Please save cover');
         }
       }
