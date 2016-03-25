@@ -41,7 +41,7 @@
         </li>
       </ul>
       <ul ng-if="$root.currentUser && $root.currentUser.id != $root.profileUser.id">
-        <li>
+        <li ng-if="$root.checkPermission($root.profileUser.privacy_events)">
           <a ui-sref="spots({user_id: $root.profileUser.id})"
              ng-class="{active: $root.$state.current.name == 'spots' || $root.$state.current.name == 'spot'}"
              class="my-spots nav-spots"><span>Spots</span></a>
