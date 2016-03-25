@@ -282,6 +282,8 @@
           vm.searchParams.rating = null;
           break;
       }
+
+      search();
     }
 
     function selectAllCategories() {

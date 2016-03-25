@@ -188,40 +188,6 @@
           </div>
         </div>
 
-        <!--Applied filter-->
-        <!--<div class="filter-definition applied">-->
-        <!--&lt;!&ndash;<div class="destination-filter clearfix" ng-if="$root.mapSortFilters.search_text">&ndash;&gt;-->
-        <!--&lt;!&ndash;<input type="text" role="search" ng-model="$root.mapSortFilters.search_text" disabled/>&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash;<span class="icon-nav"></span>&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;<a ng-click="$root.mapSortFilters.search_text = ''" class="clearfix"><span class="icon-minus"></span></a>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-        <!--<div class="date-filters clearfix"  ng-if="$root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date">-->
-        <!--<div class="form-group" ng-if="$root.mapSortFilters.filter.start_date">-->
-        <!--<span class="icon-calendar"></span>-->
-        <!--<input ng-model="$root.mapSortFilters.filter.start_date" class="date" type="text" disabled>-->
-        <!--</div>-->
-        <!--<div class="form-group" ng-if="$root.mapSortFilters.filter.end_date">-->
-        <!--<span class="icon-calendar"></span>-->
-        <!--<input ng-model="$root.mapSortFilters.filter.end_date" class="date" type="text" disabled>-->
-        <!--</div>-->
-        <!--<a ng-click="MapSort.removeFilter('date')" class="clearfix"><span class="icon-minus"></span></a>-->
-        <!--</div>-->
-        <!--<div class="destination-filter clearfix" ng-if="$root.mapSortFilters.filter.tags.length"-->
-        <!--ng-repeat="tag in $root.mapSortFilters.filter.tags">-->
-        <!--<input type="text" ng-model="tag" disabled/>-->
-        <!--<a ng-click="$root.mapSortFilters.filter.tags.splice($index, 1)" class="clearfix"><span class="icon-minus"></span></a>-->
-        <!--</div>-->
-        <!--<div class="destination-filter clearfix" ng-if="$root.mapSortFilters.filter.rating">-->
-        <!--<input type="text" role="search" ng-value="'Rated Higher than ' + $root.mapSortFilters.filter.rating + ' stars'" disabled/>-->
-        <!--<a ng-click="$root.mapSortFilters.filter.rating= ''" class="clearfix"><span class="icon-minus"></span></a>-->
-        <!--</div>-->
-        <!--<div class="destination-filter clearfix" ng-if="$root.mapSortFilters.filter.category_ids.length"-->
-        <!--ng-repeat="category in MapSort.spotCategories[$root.sortLayer] | filter:{selected: true}">-->
-        <!--<input type="text" ng-value="category.display_name" disabled/>-->
-        <!--<a ng-click="category.selected = false" class="clearfix"><span class="icon-minus"></span></a>-->
-        <!--</div>-->
-        <!--</div>-->
-
         <!--Search results-->
         <div class="results">
           <div ng-repeat="item in $root.mapSortSpots[$root.sortLayer]">
