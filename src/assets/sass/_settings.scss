@@ -323,6 +323,17 @@ input[type="radio"]:checked + label span {
     .social-section {
       width: 50%;
     }
+    .form-group {
+      .no-pad {
+        .dropdown {
+          .ui-select-match-text {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 100%;
+          }
+        }
+      }
+    }
   }
 }
 
