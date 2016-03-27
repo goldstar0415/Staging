@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Events\OnSpotCreate;
+use App\Events\OnSpotUpdate;
 use App\Http\Requests\Admin\SearchRequest;
 use App\Spot;
 use Illuminate\Http\Request;
@@ -34,9 +35,11 @@ class SpotRequestController extends Controller
      */
     public function approve($spot)
     {
+        $event = $spot->created_at == $spot->updated_at ? new OnSpotCreate($spot) : new OnSpotUpdate($spot);
+
         $spot->update(['is_approved' => true]);
 
-        event(new OnSpotCreate($spot));
+        event($event);
 
         return back();
     }
