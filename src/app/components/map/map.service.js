@@ -1684,9 +1684,12 @@
         _.each(posts, function (item) {
           //var icon = CreateCustomIcon(item.cover_url.thumb, 'custom-map-icons', [50, 50]);
           if (item.location) {
+
             var marker = L.marker(item.location);
+            marker.on('click', function () {
+              $state.go('blog.article', {slug: item.slug});
+            });
             item.marker = marker;
-            BindBlogPopup(marker, item);
 
             markers.push(marker);
           }
