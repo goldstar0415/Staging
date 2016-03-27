@@ -335,6 +335,9 @@ input[type="radio"]:checked + label span {
       }
     }
   }
+  .ui-select-bootstrap .ui-select-choices-row>a {
+    white-space: normal;
+  }
 }
 
 @media (max-width: 550px) {
