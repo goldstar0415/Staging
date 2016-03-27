@@ -48,6 +48,7 @@ trait Attachable
         $collection = $this->attached_chat_messages->merge($this->attached_walls->merge($this->attached_comments));
         $collection->each(function ($message) {
             if (empty($message->body) and $message->countAttachments() === 1) {
+                $message->feeds()->delete();
                 $message->delete();
             }
         });

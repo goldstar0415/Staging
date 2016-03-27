@@ -66,6 +66,16 @@ class ChatMessage extends BaseModel
     }
 
     /**
+     * Get feed where attached this chat message
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function feeds()
+    {
+        return $this->morphMany(Feed::class, 'feedable');
+    }
+
+    /**
      * Soft delete message for the receiver
      *
      * @return int

@@ -44,6 +44,14 @@ class Comment extends BaseModel
     }
 
     /**
+     * Get feeds where attached this comment
+     */
+    public function feeds()
+    {
+        return $this->morphMany(Feed::class, 'feedable');
+    }
+
+    /**
      * Get all of the owning commentable models.
      */
     public function commentable()

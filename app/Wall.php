@@ -70,6 +70,16 @@ class Wall extends BaseModel
     }
 
     /**
+     * Get feeds where attached this wall post
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function feeds()
+    {
+        return $this->morphMany(Feed::class, 'feedable');
+    }
+
+    /**
      * Get the rating for the wall post
      *
      * @return int
