@@ -30,7 +30,9 @@
 
         <p class="place">{{ spot.address }}</p>
 
-        <p class="date">{{ spot.created_at | toTimezone:'MM.DD.YYYY' }}</p>
+        <p class="date">
+          <date-range item="spot" class="ng-isolate-scope"></date-range>
+        </p>
 
         <div class="description-link">{{spot.description}}</div>
       </div>

@@ -45,7 +45,9 @@
               <a class="event-img clearfix">{{spot.title}}</a>
             </h3>
             <!--<p class="place">London</p>-->
-            <p class="date">{{spot.start_date | toTimezone : 'DD MMM YYYY'}}</p>
+            <p class="date">
+              <date-range item="spot" class="ng-isolate-scope"></date-range>
+            </p>
             <div class="description-link">{{spot.description}}</div>
           </div>
         </div>
