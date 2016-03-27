@@ -51,7 +51,7 @@ class SocialAuthController extends Controller
              * @var \Laravel\Socialite\Contracts\User $user
              */
             $user = $provider->user();
-            if (!$user) {
+            if (!$user or !$user->getEmail()) {
                 abort(400);
             }
 
@@ -77,7 +77,8 @@ class SocialAuthController extends Controller
                 }
 
                 //If account for current social data doesn't exist - create new one
-                list($first_name, $last_name) = explode(' ', $user->getName());
+                $name = $user->getName();
+                list($first_name, $last_name) = str_contains($name, ' ') ? explode(' ', $name) : [$name, null];
                 $new_user = User::create([
                     'email' => $user->getEmail(),
                     'first_name' => $first_name,
