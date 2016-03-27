@@ -70,17 +70,17 @@
               fillOpacity: 0.4
             }).addTo(drawLayer);
 
-            var popup = RemoveMarkerPopup(
-              function () {
-                drawLayer.removeLayer(poly);
-                var bboxes = GetDrawLayerBBoxes();
-                GetDataByBBox(bboxes);
-              },
-              function () {
-                poly.closePopup();
-              });
-
-            poly.bindPopup(popup);
+            //var popup = RemoveMarkerPopup(
+            //  function () {
+            //    drawLayer.removeLayer(poly);
+            //    var bboxes = GetDrawLayerBBoxes();
+            //    GetDataByBBox(bboxes);
+            //  },
+            //  function () {
+            //    poly.closePopup();
+            //  });
+            //
+            //poly.bindPopup(popup);
             snapRemote.enable();
 
             var bboxes = GetDrawLayerBBoxes();
@@ -133,17 +133,17 @@
               fillOpacity: 0.4
             });
 
-            var popup = RemoveMarkerPopup(
-              function () {
-                drawLayer.removeLayer(circle);
-                var bboxes = GetDrawLayerBBoxes();
-                GetDataByBBox(bboxes);
-              },
-              function () {
-                circle.closePopup();
-              });
-
-            circle.bindPopup(popup);
+            //var popup = RemoveMarkerPopup(
+            //  function () {
+            //    drawLayer.removeLayer(circle);
+            //    var bboxes = GetDrawLayerBBoxes();
+            //    GetDataByBBox(bboxes);
+            //  },
+            //  function () {
+            //    circle.closePopup();
+            //  });
+            //
+            //circle.bindPopup(popup);
 
 
             circle.addTo(drawLayer);
@@ -721,21 +721,21 @@
             markers.push(marker);
           }
 
-          var popup = RemoveMarkerPopup(
-            function () {
-              for (var k in markers) {
-                if (markers[k]._leaflet_id == marker._leaflet_id) {
-                  markersLayer.removeLayer(marker);
-                  markers.splice(k, 1);
-                  RecalculateRoute();
-                }
-              }
-            },
-            function () {
-              marker.closePopup();
-            });
-
-          marker.bindPopup(popup);
+          //var popup = RemoveMarkerPopup(
+          //  function () {
+          //    for (var k in markers) {
+          //      if (markers[k]._leaflet_id == marker._leaflet_id) {
+          //        markersLayer.removeLayer(marker);
+          //        markers.splice(k, 1);
+          //        RecalculateRoute();
+          //      }
+          //    }
+          //  },
+          //  function () {
+          //    marker.closePopup();
+          //  });
+          //
+          //marker.bindPopup(popup);
           marker.on('dragend', function () {
             if (cancelPopup && pathSelectionStarted) {
               cancelPopup
@@ -814,9 +814,9 @@
                     map.closePopup();
                   }
 
-                  var popup = RemoveMarkerPopup(remove, cancel, addmarker, e.latlng);
-
-                  popup.openOn(map);
+                  //var popup = RemoveMarkerPopup(remove, cancel, addmarker, e.latlng);
+                  //
+                  //popup.openOn(map);
                 });
 
                 if (callback) {
@@ -1056,17 +1056,17 @@
                   fillOpacity: 0.4
                 });
 
-                var popup = RemoveMarkerPopup(
-                  function () {
-                    drawLayer.removeLayer(circle);
-                    var bboxes = GetDrawLayerBBoxes();
-                    GetDataByBBox(bboxes);
-                  },
-                  function () {
-                    circle.closePopup();
-                  });
-
-                circle.bindPopup(popup);
+                //var popup = RemoveMarkerPopup(
+                //  function () {
+                //    drawLayer.removeLayer(circle);
+                //    var bboxes = GetDrawLayerBBoxes();
+                //    GetDataByBBox(bboxes);
+                //  },
+                //  function () {
+                //    circle.closePopup();
+                //  });
+                //
+                //circle.bindPopup(popup);
 
                 circle.addTo(drawLayer);
               } else {
@@ -1081,17 +1081,17 @@
                     fillOpacity: 0.4
                   }).addTo(drawLayer);
 
-                  var popup = RemoveMarkerPopup(
-                    function () {
-                      drawLayer.removeLayer(poly);
-                      var bboxes = GetDrawLayerBBoxes();
-                      GetDataByBBox(bboxes);
-                    },
-                    function () {
-                      poly.closePopup();
-                    });
-
-                  poly.bindPopup(popup);
+                  //var popup = RemoveMarkerPopup(
+                  //  function () {
+                  //    drawLayer.removeLayer(poly);
+                  //    var bboxes = GetDrawLayerBBoxes();
+                  //    GetDataByBBox(bboxes);
+                  //  },
+                  //  function () {
+                  //    poly.closePopup();
+                  //  });
+                  //
+                  //poly.bindPopup(popup);
                 });
               }
             }
@@ -1274,25 +1274,25 @@
         marker.bindPopup(popup);
       }
 
-      function RemoveMarkerPopup(remove, cancel, addmarker, location) {
-        var scope = $rootScope.$new();
-        scope.remove = remove;
-        scope.cancel = cancel;
-        scope.addmarker = addmarker;
-
-        scope.popup = L.popup({
-          keepInView: false,
-          autoPan: true,
-          offset: L.point(-40, 0),
-          closeButton: false,
-          className: 'remove-popup clearfix'
-        }).setLatLng(location);
-        var popupContent = $compile('<confirm-popup></confirm-popup>')(scope);
-        scope.popup.setContent(popupContent[0]);
-
-
-        return scope.popup;
-      }
+      //function RemoveMarkerPopup(remove, cancel, addmarker, location) {
+      //  var scope = $rootScope.$new();
+      //  scope.remove = remove;
+      //  scope.cancel = cancel;
+      //  scope.addmarker = addmarker;
+      //
+      //  scope.popup = L.popup({
+      //    keepInView: false,
+      //    autoPan: true,
+      //    offset: L.point(-40, 0),
+      //    closeButton: false,
+      //    className: 'remove-popup clearfix'
+      //  }).setLatLng(location);
+      //  var popupContent = $compile('<confirm-popup></confirm-popup>')(scope);
+      //  scope.popup.setContent(popupContent[0]);
+      //
+      //
+      //  return scope.popup;
+      //}
 
       //Processing functions
       //Return concave hull from points array
