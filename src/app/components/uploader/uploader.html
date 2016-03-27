@@ -12,7 +12,6 @@
        ngf-keep-distinct="true"
        ngf-accept="'image/*'"
        ngf-max-size="5000000"
-       ngf-drop-available="Uploader.dropZone"
     >
     <p ng-if="Uploader.dropZone">Drag photos here or click to upload</p>
     <a ng-if="!Uploader.dropZone" class="btn green-btn">{{Uploader.buttonText || 'Upload'}}</a>
