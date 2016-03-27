@@ -7,7 +7,7 @@
   <div class="container mobile-nopad">
     <div class="col-xs-12 col-md-10 col-md-offset-2 col-sm-12 col-sm-offset-0 col-xs-offset-0 no-pad menu-offset">
       <ul ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
-        <li ng-if="$root.checkPermission($root.profileUser.privacy_events)">
+        <li >
           <a class="nav-spots" ui-sref="spots({user_id: $root.currentUser.id})"
              ng-class="{active: $root.$state.current.name == 'spots' || $root.$state.current.name == 'spot'}">
             <span>My spots</span>
@@ -25,7 +25,7 @@
         </li>
         <li><a class="nav-searches" ui-sref="areas" ui-sref-active="active"><span>Saved Searches</span></a></li>
         <li><a class="nav-friendmap" ui-sref="friendsmap" ui-sref-active="active"><span>Friends Map</span></a></li>
-        <li ng-if="$root.checkPermission($root.profileUser.privacy_photo_map)">
+        <li >
           <a class="nav-photomap" ui-sref="photos.list({user_id: $root.currentUser.id})" ng-class="$root.isActiveState('photos')">
             <span>Photo Map</span>
           </a>
@@ -41,7 +41,7 @@
         </li>
       </ul>
       <ul ng-if="$root.currentUser && $root.currentUser.id != $root.profileUser.id">
-        <li ng-if="$root.checkPermission($root.profileUser.privacy_events)">
+        <li >
           <a ui-sref="spots({user_id: $root.profileUser.id})"
              ng-class="{active: $root.$state.current.name == 'spots' || $root.$state.current.name == 'spot'}"
              class="my-spots nav-spots"><span>Spots</span></a>
@@ -50,7 +50,7 @@
           <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active"
              class="favorites nav-favorites"><span>Favorites</span></a>
         </li>
-        <li ng-if="$root.checkPermission(profileUser.privacy_photo_map)">
+        <li>
           <a ui-sref="photos.list({user_id: $root.profileUser.id})" ng-class="$root.isActiveState('photos')"
              class="photomap nav-photomap"><span>Photo
             Map</span></a>

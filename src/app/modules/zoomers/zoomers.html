@@ -61,8 +61,7 @@
                 </div>
 
                 <p class="counters">
-                  <a ui-sref="spots({user_id: user.id})" class="e-count" title="Spots"
-                     ng-if="Zoomers.checkPermission(user.privacy_events, user)">
+                  <a ui-sref="spots({user_id: user.id})" class="e-count" title="Spots">
                     {{ user.count_spots }}
                   </a>
                   <a class="f-count" title="Followings" users-modal="followings" user="user"
@@ -88,12 +87,12 @@
           </div>
 
           <div class="col-lg-6 col-md-6 hidden-sm hidden-xs no-pad">
-            <ul class="events" ng-if="Zoomers.checkPermission(user.privacy_events, user) && user.spots.length > 0">
+            <ul class="events" ng-if="user.spots.length > 0">
               <li class="col-xs-4  zoomer-thumb events-width" ng-repeat="spot in user.spots">
                 <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
                   <figure>
                     <img class="frame img-responsive" ng-src="{{spot.cover_url.medium}}" alt="{{spot.title}}">
-                    <span class="zoomer-event-type">Event</span>
+                    <spot-type type="spot.category.type.display_name" class="zoomer-event-type"></spot-type>
                   </figure>
                 </a>
                 <!--<a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-link">{{spot.title}}-->

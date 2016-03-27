@@ -36,7 +36,7 @@
         </li>
       </ul>
       <ul ng-if="$root.currentUser && $root.currentUser.id != $root.profileUser.id">
-        <li ng-if="Profile.checkPermission($root.profileUser.privacy_events)">
+        <li >
           <a ui-sref="spots({user_id: $root.profileUser.id})"
              ng-class="{active: Profile.$state.current.name == 'spots' || Profile.$state.current.name == 'spot'}"
              class="my-spots nav-spots"><span>Spots</span></a>
@@ -45,7 +45,7 @@
           <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active"
              class="favorites nav-favorites"><span>Favorites</span></a>
         </li>
-        <li ng-if="Profile.checkPermission($root.profileUser.privacy_photo_map)">
+        <li>
           <a ui-sref="photos.list({user_id: $root.profileUser.id})" ng-class="Profile.isActive('photos')"
              class="photomap nav-photomap"><span>Photo
             Map</span></a>
@@ -173,8 +173,7 @@
               <span>{{ $root.profileUser.count_followings}}</span>
               <br> Followings
             </a>
-            <a ui-sref="spots({user_id: $root.profileUser.id})"
-               ng-if="Profile.checkPermission($root.profileUser.privacy_events)">
+            <a ui-sref="spots({user_id: $root.profileUser.id})">
               <i class="events"></i>
               <span>{{$root.profileUser.count_spots}}</span>
               <br> Spots
@@ -238,7 +237,7 @@
           </aside>
 
           <aside class="module-sidebar clearfix visible-md visible-lg"
-                 ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.spots.length > 0 && Profile.checkPermission($root.profileUser.privacy_events)">
+                 ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.spots.length > 0 ">
             <h2 class="sidebar-title">
               <a ui-sref="spots({user_id: $root.profileUser.id})">
                 Spots
