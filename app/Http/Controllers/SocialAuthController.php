@@ -52,7 +52,11 @@ class SocialAuthController extends Controller
              */
             $user = $provider->user();
             if (!$user or !$user->getEmail()) {
-                abort(400);
+                return redirect()->away(frontend_url() . '?' . http_build_query([
+                    'auth_error' => [
+                        'error' => 'No user data'
+                    ]                    
+                ]));
             }
 
             if (!$this->auth->check()) {
