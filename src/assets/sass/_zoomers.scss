@@ -314,3 +314,11 @@ ul {
     @include box_shadow_none;
   }
 }
+
+@media (max-width: 767px) {
+  .counters {
+    .e-count, .f-count {
+      text-align: center;
+    }
+  }
+}
