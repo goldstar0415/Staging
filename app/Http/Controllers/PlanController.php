@@ -42,7 +42,7 @@ class PlanController extends Controller
         return Plan::where('user_id', $request->get(
             'user_id',
             $request->user() ? $request->user()->id : null
-        ))->paginate((int)$request->get('limit', 10));
+        ))->latest()->paginate((int)$request->get('limit', 10));
     }
 
     /**
