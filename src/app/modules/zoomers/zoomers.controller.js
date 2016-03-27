@@ -6,18 +6,21 @@
     .controller('ZoomersController', ZoomersController);
 
   /** @ngInject */
-  function ZoomersController(User, users, PermissionService) {
+  function ZoomersController(User, ScrollService, PermissionService) {
     var vm = this;
     vm.type = 'all';
-    vm.limit = 10;
-    vm.page = 1;
-    vm.users = users;
+    vm.users = {};
     vm.checkPermission = PermissionService.checkPermission;
+
+    var params = {
+      page: 0,
+      limit: 10,
+      type: 'all'
+    };
+    vm.pagination = new ScrollService(User.query, vm.users, params);
 
     vm.setType = function (type) {
       vm.type = type;
-      vm.limit = 10;
-      vm.page = 1;
       vm.getUsers();
     };
 
@@ -38,14 +41,11 @@
      *  Load users
      */
     vm.getUsers = function () {
-      User.query({
-        type: vm.type,
-        page: vm.page,
-        limit: vm.limit,
-        filter: vm.filter
-      }, function (users) {
-        vm.users = users;
-      })
+      vm.users.data = [];
+      vm.pagination.params.page = 0;
+      vm.pagination.params.type = vm.type;
+      vm.pagination.params.filter = vm.filter;
+      vm.pagination.nextPage();
     }
 
   }

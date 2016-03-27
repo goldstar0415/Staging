@@ -511,11 +511,6 @@
         templateUrl: '/app/modules/zoomers/zoomers.html',
         controller: 'ZoomersController',
         controllerAs: 'Zoomers',
-        resolve: {
-          users: function (User) {
-            return User.query().$promise;
-          }
-        },
         parent: 'main',
         mapState: 'hidden'
       })
