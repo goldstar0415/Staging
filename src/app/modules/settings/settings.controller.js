@@ -175,6 +175,7 @@
      * @param name {name}  name of social
      */
     function addSocial(name) {
+      console.log(name);
       if (!isSocial(name)) {
         window.location.href = API_URL + '/account/' + name;
       }
