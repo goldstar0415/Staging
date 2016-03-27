@@ -58,7 +58,8 @@
       <!--block with comets  -->
       <section class="col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12 comments-section">
         <div class="comments-content ng-scope hidden-xs">
-          <ng-input message="Article.message" attachments="Article.attachments" on-submit="Article.sendComment()" maxlength="5000"></ng-input>
+          <ng-input message="Article.message" attachments="Article.attachments" on-submit="Article.sendComment()"
+                    maxlength="5000"></ng-input>
         </div>
 
         <div infinite-scroll="Article.pagination.nextPage()" infinite-scroll-disabled="Article.pagination.busy"
@@ -78,6 +79,10 @@
               </h3>
 
               <p>{{post.body}}</p>
+
+              <div class="col-xs-12">
+                <attachments items="post.attachments"></attachments>
+              </div>
 
               <div class="col-xs-12 edit-delete">
                 <!--<a class="like">1</a>-->
