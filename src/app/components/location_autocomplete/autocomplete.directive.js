@@ -95,7 +95,7 @@
             } else {
               createMarker(latlng);
             }
-            MapService.GetMap().setView(s.marker.getLatLng(), 12);
+            MapService.GetMap().setView(s.marker.getLatLng());
           }
         }
 
