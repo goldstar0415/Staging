@@ -38,6 +38,7 @@
     vm.addLocation = addLocation;
     vm.removeLocation = removeLocation;
     vm.removeFilter = removeFilter;
+    vm.removeFilterCategory = removeFilterCategory;
     vm.clearFilters = clearFilters;
     vm.isEmptyFilters = isEmptyFilters;
 
@@ -46,6 +47,7 @@
       tags: []
     };
 
+    $rootScope.doSearchMap = search;
     $rootScope.sortLayer = $rootScope.sortLayer || 'event';
     $rootScope.isDrawArea = false;
     $rootScope.mapSortFilters = $rootScope.mapSortFilters || {};
@@ -62,12 +64,21 @@
     }
 
 
-    function onUpdateMapData(event, spots, layer, isDrawArea) {
+    function onUpdateMapData(event, mapSpots, layer, isDrawArea) {
       layer = layer || $rootScope.sortLayer;
       $rootScope.sortLayer = layer;
       if (angular.isDefined(isDrawArea)) {
         $rootScope.isDrawArea = isDrawArea;
       }
+
+      var spots = [];
+      _.each(mapSpots, function (item) {
+        if (MapService.PointInPolygon(item.location)) {
+          spots.push(item);
+        }
+      });
+      //spots = MapService.FilterUniqueObjects(spots);
+
       //group by spot type
       $rootScope.mapSortSpots = _.groupBy(spots, function (item) {
         return item.spot.category.type.name
@@ -147,7 +158,6 @@
       _.each(data, function (item) {
         vm.spotCategories[item.name] = item.categories;
       });
-      console.log(vm.spotCategories);
     }
 
 
@@ -201,7 +211,6 @@
       data.type = $rootScope.sortLayer;
       $http.get(SEARCH_URL + '?' + jQuery.param(data))
         .success(function (spots) {
-          console.log(spots);
           if (spots.length > 0) {
             onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0);
 
@@ -217,7 +226,7 @@
           vm.isShowFilter = false;
         }).catch(function (resp) {
           console.warn(resp);
-          toastr.error('Search error');
+          toastr.error(resp.data ? resp.data.message : 'Something went wrong')
         });
     }
 
@@ -268,6 +277,12 @@
       //clear categories
       isSelectedAll = true;
       selectAllCategories();
+
+      if ($rootScope.isDrawArea) {
+        search();
+      } else {
+        MapService.clearLayers();
+      }
     }
 
     function removeFilter(type) {
@@ -293,6 +308,13 @@
       search();
     }
 
+    function removeFilterCategory(item) {
+      item.selected = false;
+      if ($rootScope.mapSortFilters && $rootScope.mapSortFilters.filter && $rootScope.mapSortFilters.filter.category_ids) {
+        $rootScope.mapSortFilters.filter.category_ids = _.without($rootScope.mapSortFilters.filter.category_ids, item.id);
+      }
+    }
+
     function selectAllCategories() {
       isSelectedAll = !isSelectedAll;
       _.each(vm.spotCategories[$rootScope.sortLayer], function (item) {
@@ -301,8 +323,7 @@
     }
 
     function isEmptyFilters() {
-      var isEmpty = true,
-      activeCategoryCount = _.where(vm.spotCategories[$rootScope.sortLayer], {selected: true}).length;
+      var isEmpty = true;
 
       $rootScope.mapSortFilters.filter = $rootScope.mapSortFilters.filter || {};
 
@@ -310,7 +331,7 @@
         $rootScope.mapSortFilters.filter.start_date || $rootScope.mapSortFilters.filter.end_date ||
         $rootScope.mapSortFilters.filter.rating ||
         ($rootScope.mapSortFilters.filter.tags && $rootScope.mapSortFilters.filter.tags.length > 0) ||
-        activeCategoryCount > 0) {
+        ($rootScope.mapSortFilters.filter.category_ids && $rootScope.mapSortFilters.filter.category_ids.length > 0)) {
         isEmpty = false;
       }
       return isEmpty;

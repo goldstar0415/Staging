@@ -10,22 +10,15 @@
 
   /** @ngInject */
   function SpotPopupController($scope, SpotService) {
+    $scope.view = 'about';
+    $scope.reviewIndex = 0;
     $scope.saveToCalendar = SpotService.saveToCalendar;
     $scope.removeFromCalendar = SpotService.removeFromCalendar;
     $scope.addToFavorite = SpotService.addToFavorite;
     $scope.removeFromFavorite = SpotService.removeFromFavorite;
-    $scope.view = 'about';
-    $scope.showNextPhoto = false;
-    $scope.showPrevPhoto = false;
+    $scope.changeReview = changeReview;
+    $scope.changePhoto = changePhoto;
 
-    $scope.showNextReview = false;
-    $scope.showPrevReview = false;
-
-    //$scope.nextPhoto = SpotService.mapNextPhoto;
-    //$scope.prevPhoto = SpotService.mapPrevPhoto;
-
-    $scope.nextReview = SpotService.mapNextReview;
-    $scope.prevReview = SpotService.mapPrevReview;
 
     $scope.photoControl = {
       start: 0,
@@ -34,10 +27,25 @@
 
     run();
 
+
     ///////
 
     function run() {
       SpotService.setScope($scope);
+    }
+
+    function changeReview(step) {
+      var nextIndex = $scope.reviewIndex + step;
+      if (nextIndex >= 0 && nextIndex < $scope.data.spot.comments.length) {
+        $scope.reviewIndex = nextIndex;
+      }
+    }
+
+    function changePhoto(step) {
+      var nextIndex = $scope.photoControl.start + step;
+      if (nextIndex >= 0 && nextIndex + $scope.photoControl.step <= $scope.data.spot.photos.length) {
+        $scope.photoControl.start = nextIndex;
+      }
     }
 
   }
