@@ -38,6 +38,7 @@
     vm.addLocation = addLocation;
     vm.removeLocation = removeLocation;
     vm.removeFilter = removeFilter;
+    vm.removeFilterCategory = removeFilterCategory;
     vm.clearFilters = clearFilters;
     vm.isEmptyFilters = isEmptyFilters;
 
@@ -268,6 +269,12 @@
       //clear categories
       isSelectedAll = true;
       selectAllCategories();
+
+      if ($rootScope.isDrawArea) {
+        search();
+      } else {
+        MapService.clearLayers();
+      }
     }
 
     function removeFilter(type) {
@@ -293,6 +300,14 @@
       search();
     }
 
+    function removeFilterCategory(item) {
+      item.selected = false;
+      if ($rootScope.mapSortFilters && $rootScope.mapSortFilters.filter && $rootScope.mapSortFilters.filter.category_ids) {
+        $rootScope.mapSortFilters.filter.category_ids = _.without($rootScope.mapSortFilters.filter.category_ids, item.id);
+      }
+      console.log($rootScope.mapSortFilters);
+    }
+
     function selectAllCategories() {
       isSelectedAll = !isSelectedAll;
       _.each(vm.spotCategories[$rootScope.sortLayer], function (item) {
@@ -301,8 +316,7 @@
     }
 
     function isEmptyFilters() {
-      var isEmpty = true,
-      activeCategoryCount = _.where(vm.spotCategories[$rootScope.sortLayer], {selected: true}).length;
+      var isEmpty = true;
 
       $rootScope.mapSortFilters.filter = $rootScope.mapSortFilters.filter || {};
 
@@ -310,7 +324,7 @@
         $rootScope.mapSortFilters.filter.start_date || $rootScope.mapSortFilters.filter.end_date ||
         $rootScope.mapSortFilters.filter.rating ||
         ($rootScope.mapSortFilters.filter.tags && $rootScope.mapSortFilters.filter.tags.length > 0) ||
-        activeCategoryCount > 0) {
+        ($rootScope.mapSortFilters.filter.category_ids && $rootScope.mapSortFilters.filter.category_ids.length > 0)) {
         isEmpty = false;
       }
       return isEmpty;

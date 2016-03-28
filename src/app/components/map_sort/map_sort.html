@@ -184,7 +184,7 @@
           <div class="destination-filter applied" ng-show="!MapSort.isShowFilter"
                ng-repeat="item in MapSort.spotCategories[$root.sortLayer] | filter:{selected: true}">
             <input type="text" role="search" ng-model="item.display_name" disabled/>
-            <a ng-click="item.selected = false" class="clearfix"><span class="icon-minus"></span></a>
+            <a ng-click="MapSort.removeFilterCategory(item)" class="clearfix"><span class="icon-minus"></span></a>
           </div>
         </div>
 
