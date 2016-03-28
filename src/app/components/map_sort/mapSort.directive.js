@@ -98,7 +98,10 @@
         MapService.clearLayers();
       }
 
-      MapService.showLayer(layer);
+      console.log(MapService.GetCurrentLayer().name, layer);
+      if (MapService.GetCurrentLayer().name != layer) {
+        MapService.showLayer(layer);
+      }
 
     }
 
@@ -232,11 +235,11 @@
           vm.categoryToggle = false;
           vm.isShowFilter = false;
         }).catch(function (resp) {
-          if (cancellerHttp) {
+          if (resp.status > 0) {
             toastr.error(resp.data ? resp.data.message : 'Something went wrong')
           }
-          cancellerHttp = null;
           console.warn(resp, cancellerHttp);
+          cancellerHttp = null;
         });
     }
 

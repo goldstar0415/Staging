@@ -433,7 +433,7 @@
       function GetCurrentLayer() {
         var layer = null;
         switch (currentLayer) {
-          case "events":
+          case "event":
             layer = eventsLayer;
             break;
           case "todo":
@@ -452,6 +452,7 @@
             layer = null;
             break;
         }
+        layer.name = currentLayer;
 
         return layer;
       }
@@ -531,7 +532,7 @@
         map.removeLayer(foodLayer);
         map.removeLayer(shelterLayer);
         map.removeLayer(otherLayer);
-        currentLayer = "events";
+        currentLayer = "event";
       }
 
       //show food layer on map
