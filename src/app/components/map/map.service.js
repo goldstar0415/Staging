@@ -291,6 +291,9 @@
           ClearSelections();
           map.closePopup();
 
+          $rootScope.isDrawArea = false;
+          $rootScope.$apply();
+
           angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
         }
 
@@ -1211,44 +1214,46 @@
         //    });
         //  });
         //} else {
-          var scope = $rootScope.$new();
-          var offset = 75;
-          var options = {
-            keepInView: false,
-            autoPan: true,
-            closeButton: false,
-            className: 'popup',
-            autoPanPaddingTopLeft: L.point(offset, offset),
-            autoPanPaddingBottomRight: L.point(offset, offset)
-          };
+        var scope = $rootScope.$new();
+        var offset = 75;
+        var options = {
+          keepInView: false,
+          autoPan: true,
+          closeButton: false,
+          className: 'popup',
+          autoPanPaddingTopLeft: L.point(offset, offset),
+          autoPanPaddingBottomRight: L.point(offset, offset)
+        };
 
 
-          scope.item = spot;
-          scope.marker = marker;
-          var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
-          var popup = L.popup(options).setContent(popupContent[0]);
-          marker.bindPopup(popup);
+        scope.item = spot;
+        scope.marker = marker;
+        var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
+        var popup = L.popup(options).setContent(popupContent[0]);
+        marker.bindPopup(popup);
 
-          marker.on('click', function () {
-            //if (!scope.item.spot.photos) {
-            Spot.get({id: scope.item.spot.id}, function (fullSpot) {
-              //merge photos
-              fullSpot.photos = _.union(fullSpot.comments_photos, fullSpot.photos);
-              scope.item.spot = fullSpot;
+        marker.on('click', function () {
+          console.log(scope);
+          //if (!scope.item.spot.photos) {
+          scope.item.$loading = true;
+          Spot.get({id: scope.item.id}, function (fullSpot) {
+            //merge photos
+            fullSpot.photos = _.union(fullSpot.comments_photos, fullSpot.photos);
+            scope.item.spot = fullSpot;
 
-              var params = {
-                page: 1,
-                limit: 10,
-                spot_id: fullSpot.id
-              };
-              SpotComment.query(params, function (comments) {
-                scope.item.spot.comments = comments.data;
-
-                SpotService.initMarker(scope.item.spot);
-              });
+            var params = {
+              page: 1,
+              limit: 10,
+              spot_id: fullSpot.id
+            };
+            SpotComment.query(params, function (comments) {
+              scope.item.spot.comments = comments.data;
+              SpotService.initMarker(scope.item.spot);
+              scope.item.$loading = false;
             });
-            //}
           });
+          //}
+        });
         //}
       }
 
@@ -1507,10 +1512,15 @@
         isFocus = isFocus || false;
         var spots = [];
         if (bbox_array.length > 0) {
-          var params = BBoxToParams(bbox_array);
-          params = $.param({b_boxes: params});
+          var params = {
+            type: $rootScope.sortLayer,
+            filter: {}
+          };
 
-          $http.get(API_URL + '/map/search?' + params)
+          bbox_array = BBoxToParams(bbox_array);
+          params.filter.b_boxes = bbox_array;
+
+          $http.get(API_URL + '/map/spots' + '?' + jQuery.param(params))
             .success(function (data) {
               _.each(data, function (item) {
                 if (PointInPolygon(item.location)) {

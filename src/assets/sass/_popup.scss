@@ -28,6 +28,13 @@
   .popup-width {
     width: 53.5rem;
     height: 19rem;
+
+    .loading {
+      position: absolute;
+      top: 7rem;
+      left: 4rem;
+    }
+
     .download {
       width: auto;
     }
@@ -576,6 +583,7 @@
     }
     .popup-width {
       width: 100vw;
+
       .nav-popup {
         width: 100%;
         background: $dark_blue;

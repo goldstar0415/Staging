@@ -1,20 +1,17 @@
-<div class="popup-width hidden-xs">
-  <div class="col-xs-4 nav-popup hidden-xs">
+<div class="popup-width" >
+  <div class="col-xs-12 loading" ng-show="data.$loading">
+    <preloader ></preloader>
+  </div>
+
+  <div class="col-xs-4 nav-popup " ng-hide="data.$loading">
     <div class="img-event">
       <stars item="data.spot" class="star-event"></stars>
          <span class="wrap-img" style="background-image:url({{data.spot.cover_url.medium}})">
-            <div class="arrow">
-            </div>
+            <span class="arrow"></span>
          </span>
-
-      <div class="star-event">
-        <!--<img src="/assets/img/icons/star.png"><img src="/assets/img/icons/star.png">-->
-        <!--<img src="/assets/img/icons/star.png"><img src="/assets/img/icons/star.png">-->
-        <!--<img src="/assets/img/icons/star.png">-->
-      </div>
     </div>
   </div>
-  <div class="col-xs-8 popup-main">
+  <div class="col-xs-8 popup-main" ng-hide="data.$loading">
     <div class="popup-header">
       <a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})">{{data.spot.title}}</a>
 
@@ -27,9 +24,9 @@
         <span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>
       </p>
       <a class="author-event" ui-sref="profile.main({user_id: data.spot.user.alias || data.spot.user_id})"
-         ng-if="data.spot.user">{{'by ' +
-        data.spot.user.first_name + '
-        ' + data.spot.user.last_name}}</a>
+         ng-if="data.spot.user">
+        {{'by ' + data.spot.user.first_name + ' ' + data.spot.user.last_name}}
+      </a>
     </div>
     <div class="popup-links">
       <ul class="list-inline">
@@ -132,127 +129,127 @@
 
 
 <!-- mobile view -->
-<div class="popup-width mobile-popup visible-xs">
-  <div class="mobile-popup-header">
-    <div class="mobile-popup-close text-center">
-      <span class="popup-close"></span>
-    </div>
-    <div class="mobile-popup-nav">
-      <div class="popup-links">
-        <ul class="list-inline">
-          <li><a ng-click="view = 'about'" class="menu-about">About</a>
-          </li>
-          <li><a ng-click="view = 'reviews'" class="menu-reviews">Reviews</a>
-          </li>
-          <li><a ng-click="view = 'photos'" class="menu-photos">Photos</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="mobile-popup-content">
-    <div class="row">
-      <div class="col-xs-3 mobile-popup-img spot-thumb">
-        <figure>
-          <img ng-src="{{data.spot.cover_url.medium}}" alt="Test spot" class="img-size"
-               src="{{data.spot.cover_url.medium}}">
-          <spot-type type="data.spot.category.type.display_name"></spot-type>
-        </figure>
-        <stars item="data.spot" class="star-event"></stars>
-      </div>
-      <div class="col-xs-9 mobile-popup-content">
-        <div class="popup-header">
-          <a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})">{{data.spot.title}}</a>
+<!--<div class="popup-width mobile-popup visible-xs">-->
+<!--<div class="mobile-popup-header">-->
+<!--<div class="mobile-popup-close text-center">-->
+<!--<span class="popup-close"></span>-->
+<!--</div>-->
+<!--<div class="mobile-popup-nav">-->
+<!--<div class="popup-links">-->
+<!--<ul class="list-inline">-->
+<!--<li><a ng-click="view = 'about'" class="menu-about">About</a>-->
+<!--</li>-->
+<!--<li><a ng-click="view = 'reviews'" class="menu-reviews">Reviews</a>-->
+<!--</li>-->
+<!--<li><a ng-click="view = 'photos'" class="menu-photos">Photos</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="mobile-popup-content">-->
+<!--<div class="row">-->
+<!--<div class="col-xs-3 mobile-popup-img spot-thumb">-->
+<!--<figure>-->
+<!--<img ng-src="{{data.spot.cover_url.medium}}" alt="Test spot" class="img-size"-->
+<!--src="{{data.spot.cover_url.medium}}">-->
+<!--<spot-type type="data.spot.category.type.display_name"></spot-type>-->
+<!--</figure>-->
+<!--<stars item="data.spot" class="star-event"></stars>-->
+<!--</div>-->
+<!--<div class="col-xs-9 mobile-popup-content">-->
+<!--<div class="popup-header">-->
+<!--<a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})">{{data.spot.title}}</a>-->
 
-          <p class="location-event">{{data.address}}</p>
+<!--<p class="location-event">{{data.address}}</p>-->
 
-          <p class="date-event" ng-if="data.spot.category.type.name == 'event'">
-            <span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>
-          </p>
-          <a class="author-event text-left" ui-sref="profile.main({user_id: data.spot.user.alias || data.spot.user_id})"
-             ng-if="data.spot.user">
-            {{'by ' + data.spot.user.first_name + ' ' + data.spot.user.last_name}}
-          </a>
-        </div>
-        <div class="close-event">
-          <a ng-click="marker.closePopup()" class="close">. . .</a>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="content-popup clearfix">
-        <div ng-show="view == 'about'" class="description col-xs-offset-3 col-xs-9">{{data.spot.description}}</div>
-        <div ng-show="view == 'reviews'" class=" col-xs-12 reviews-popup">
-          <div ng-if="data.spot.comments.length > 0">
-            <div class="col-xs-12 previous-next" ng-if="data.spot.comments.length > 1">
-              <a ng-click="prevReview()" class="previous"></a> <a ng-click="nextReview()" class="next "></a>
-            </div>
-            <div class="col-xs-3 avatar">
-              <img ng-src="{{currentReview.sender.avatar_url.thumb}}"
-                   ui-sref="profile.main({user_id: currentReview.sender.alias || currentReview.sender.user_id})">
-            </div>
-            <div class="col-xs-9 content">
-              <span>
-                <a class="reviews-user"
-                   ui-sref="profile.main({user_id: currentReview.sender.alias || currentReview.sender.user_id})">
-                  {{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}
-                </a>
-              </span>
+<!--<p class="date-event" ng-if="data.spot.category.type.name == 'event'">-->
+<!--<span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>-->
+<!--</p>-->
+<!--<a class="author-event text-left" ui-sref="profile.main({user_id: data.spot.user.alias || data.spot.user_id})"-->
+<!--ng-if="data.spot.user">-->
+<!--{{'by ' + data.spot.user.first_name + ' ' + data.spot.user.last_name}}-->
+<!--</a>-->
+<!--</div>-->
+<!--<div class="close-event">-->
+<!--<a ng-click="marker.closePopup()" class="close">. . .</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div class="content-popup clearfix">-->
+<!--<div ng-show="view == 'about'" class="description col-xs-offset-3 col-xs-9">{{data.spot.description}}</div>-->
+<!--<div ng-show="view == 'reviews'" class=" col-xs-12 reviews-popup">-->
+<!--<div ng-if="data.spot.comments.length > 0">-->
+<!--<div class="col-xs-12 previous-next" ng-if="data.spot.comments.length > 1">-->
+<!--<a ng-click="prevReview()" class="previous"></a> <a ng-click="nextReview()" class="next "></a>-->
+<!--</div>-->
+<!--<div class="col-xs-3 avatar">-->
+<!--<img ng-src="{{currentReview.sender.avatar_url.thumb}}"-->
+<!--ui-sref="profile.main({user_id: currentReview.sender.alias || currentReview.sender.user_id})">-->
+<!--</div>-->
+<!--<div class="col-xs-9 content">-->
+<!--<span>-->
+<!--<a class="reviews-user"-->
+<!--ui-sref="profile.main({user_id: currentReview.sender.alias || currentReview.sender.user_id})">-->
+<!--{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}-->
+<!--</a>-->
+<!--</span>-->
 
-              <p class="description line-break" ng-bind-html="currentReview.body | linky:'_blank'"></p>
+<!--<p class="description line-break" ng-bind-html="currentReview.body | linky:'_blank'"></p>-->
 
-              <p class="date-reviews ">{{currentReview.created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>
-            </div>
-          </div>
-          <div ng-if="!data.spot.comments.length" class="photos-event clearfix">
-            <span>There are no reviews yet</span>
-          </div>
-        </div>
-        <div ng-show="view == 'photos'" class=" col-xs-12 photo-popup">
-          <div class="col-xs-12 previous-next">
-            <a ng-click="prevPhoto()" class="previous"></a>
-            <a ng-click="nextPhoto()" class="next"></a>
-          </div>
-          <div ng-if="data.spot.photos.length > 0" class="photos-event clearfix row">
-            <a ng-repeat="item in data.spot.photos"
-               photo-viewer items="data.spot.photos" index="$index" current-item="item" class="col-xs-3">
-              <img ng-src="{{item.photo_url.thumb}}">
-            </a>
-          </div>
-          <div ng-if="data.spot.photos.length == 0" class="photos-event clearfix">
-            <span>There are no photos yet</span>
-          </div>
-        </div>
+<!--<p class="date-reviews ">{{currentReview.created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div ng-if="!data.spot.comments.length" class="photos-event clearfix">-->
+<!--<span>There are no reviews yet</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div ng-show="view == 'photos'" class=" col-xs-12 photo-popup">-->
+<!--<div class="col-xs-12 previous-next">-->
+<!--<a ng-click="prevPhoto()" class="previous"></a>-->
+<!--<a ng-click="nextPhoto()" class="next"></a>-->
+<!--</div>-->
+<!--<div ng-if="data.spot.photos.length > 0" class="photos-event clearfix row">-->
+<!--<a ng-repeat="item in data.spot.photos"-->
+<!--photo-viewer items="data.spot.photos" index="$index" current-item="item" class="col-xs-3">-->
+<!--<img ng-src="{{item.photo_url.thumb}}">-->
+<!--</a>-->
+<!--</div>-->
+<!--<div ng-if="data.spot.photos.length == 0" class="photos-event clearfix">-->
+<!--<span>There are no photos yet</span>-->
+<!--</div>-->
+<!--</div>-->
 
 
-        <div class="links-nav">
-          <ul class="tools clearfix">
-            <li ng-if="!data.spot.is_saved">
-              <a class="save-event" ng-click="saveToCalendar(data.spot)">Save</a>
-            </li>
-            <li ng-if="$root.currentUser && data.spot.is_saved">
-              <a class="save-event saved clicked" ng-click="removeFromCalendar(data.spot)">Remove</a>
-            </li>
-            <li ng-if="$root.currentUser.id != data.spot.user_id && !data.spot.is_favorite">
-              <a class="favorite-spot" ng-click="addToFavorite(data.spot)">Favorite</a>
-            </li>
-            <li ng-if="$root.currentUser && data.spot.is_favorite">
-              <a class="fav favorited" ng-click="removeFromFavorite(data.spot)">Unfavorite</a>
-            </li>
-            <li>
-              <invite-friends item="data.spot"></invite-friends>
-            </li>
-            <li>
-              <share item="data.spot" type="spot"></share>
-            </li>
-            <li>
-              <a class="download" ng-click="">Export to ICS</a>
-            </li>
-          </ul>
-          <!--<share item="data.spot" type="spot" class="hidden"></share>-->
-        </div>
-        <div class="clearfix"></div>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div class="links-nav">-->
+<!--<ul class="tools clearfix">-->
+<!--<li ng-if="!data.spot.is_saved">-->
+<!--<a class="save-event" ng-click="saveToCalendar(data.spot)">Save</a>-->
+<!--</li>-->
+<!--<li ng-if="$root.currentUser && data.spot.is_saved">-->
+<!--<a class="save-event saved clicked" ng-click="removeFromCalendar(data.spot)">Remove</a>-->
+<!--</li>-->
+<!--<li ng-if="$root.currentUser.id != data.spot.user_id && !data.spot.is_favorite">-->
+<!--<a class="favorite-spot" ng-click="addToFavorite(data.spot)">Favorite</a>-->
+<!--</li>-->
+<!--<li ng-if="$root.currentUser && data.spot.is_favorite">-->
+<!--<a class="fav favorited" ng-click="removeFromFavorite(data.spot)">Unfavorite</a>-->
+<!--</li>-->
+<!--<li>-->
+<!--<invite-friends item="data.spot"></invite-friends>-->
+<!--</li>-->
+<!--<li>-->
+<!--<share item="data.spot" type="spot"></share>-->
+<!--</li>-->
+<!--<li>-->
+<!--<a class="download" ng-click="">Export to ICS</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--&lt;!&ndash;<share item="data.spot" type="spot" class="hidden"></share>&ndash;&gt;-->
+<!--</div>-->
+<!--<div class="clearfix"></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->

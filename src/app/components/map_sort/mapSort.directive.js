@@ -63,6 +63,10 @@
 
     function onUpdateMapData(event, spots, layer, isDrawArea) {
       layer = layer || $rootScope.sortLayer;
+      $rootScope.sortLayer = layer;
+      if (angular.isDefined(isDrawArea)) {
+        $rootScope.isDrawArea = isDrawArea;
+      }
       //group by spot type
       $rootScope.mapSortSpots = _.groupBy(spots, function (item) {
         return item.spot.category.type.name
@@ -75,16 +79,14 @@
         });
       }
 
-      toggleLayer(layer, isDrawArea);
+      if ($rootScope.mapSortSpots[layer]) {
+        MapService.drawSpotMarkers($rootScope.mapSortSpots[layer], layer, true);
+      }
+      MapService.showLayer(layer);
+
     }
 
-    function toggleLayer(layer, isDrawArea) {
-      if (angular.isDefined(isDrawArea)) {
-        $rootScope.isDrawArea = isDrawArea;
-      }
-      var wp = MapService.GetPathWaypoints();
-      var geoJson = MapService.GetGeoJSON();
-
+    function toggleLayer(layer) {
       $rootScope.sortLayer = layer;
 
       if (layer == 'weather') {
@@ -95,13 +97,13 @@
           toastr.info('Click on map to check weather in this area');
         }
       } else {
+        search();
         MapService.showLayer(layer);
 
-        if ($rootScope.mapSortSpots[layer]) {
-          MapService.drawSpotMarkers($rootScope.mapSortSpots[layer], layer, true);
-        }
+        var wp = MapService.GetPathWaypoints();
+        var geoJson = MapService.GetGeoJSON();
 
-        if (isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1) {
+        if ($rootScope.isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1) {
           toastr.info('Draw the search area');
         }
       }
@@ -192,6 +194,7 @@
         $rootScope.mapSortFilters = {};
         return;
       }
+      data.type = $rootScope.sortLayer;
       $http.get(SEARCH_URL + '?' + jQuery.param(data))
         .success(function (spots) {
           console.log(spots);

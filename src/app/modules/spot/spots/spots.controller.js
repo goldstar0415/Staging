@@ -62,6 +62,7 @@
           spot: item
         };
       });
+      console.log(spotsArray);
       MapService.drawSpotMarkers(spotsArray, 'other', true);
       MapService.FitBoundsOfCurrentLayer();
 
