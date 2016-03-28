@@ -275,19 +275,24 @@
         }
       }
       .events {
-        background: url(../img/icons/events_right_menu.png) no-repeat center top;
+        background: url(../img/svg/Icon_Events.svg) no-repeat center top;
+        background-size: 53%;
       }
       .recreation {
-        background: url(../img/icons/to_do_right_menu.png) no-repeat center top;
+        background: url(../img/svg/Icon_To_do.svg) no-repeat center top;
+        background-size: 40%;
       }
       .pit-stops {
-        background: url(../img/icons/food_right_menu.png) no-repeat center top;
+        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center top;
+        background-size: 60%;
       }
       .shelter {
-        background: url(../img/icons/shelter_right_menu.png) no-repeat center top;
+        background: url(../img/svg/Icon_Get_a_room.svg) no-repeat center top;
+        background-size: 40%;
       }
       .weather-link {
-        background: url(../img/icons/weather_right_menu.png) no-repeat center top;
+        background: url(../img/svg/Icon_Weather.svg) no-repeat center top;
+        background-size: 40%;
       }
       &:hover, &.active {
         background-color: #00cfff;
@@ -298,7 +303,26 @@
         a {
           color: #00cfff;
         }
-
+        .events {
+          background: url(../img/svg/Icon_Events_mouseover.svg) no-repeat center top;
+          background-size: 53%;
+        }
+        .recreation {
+          background: url(../img/svg/Icon_To_do_Mouseover.svg) no-repeat center top;
+          background-size: 40%;
+        }
+        .pit-stops {
+          background: url(../img/svg/Icon_Grab_Grub_Mouseover.svg) no-repeat center top;
+          background-size: 60%;
+        }
+        .shelter {
+          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center top;
+          background-size: 40%;
+        }
+        .weather-link {
+          background: url(../img/svg/Icon_Weather_mouseover.svg) no-repeat center top;
+          background-size: 40%;
+        }
       }
     }
   }
@@ -341,79 +365,73 @@
     li {
       font: 500 14px/24px;
       color: #fff;
-      background-color: #929fa7;
+      background-color: #fff;
       display: inline-block;
       width: 19%;
       border-left: 1px solid #aabac1;
       //float: left;
+      box-shadow: 0px 0px 24px 0.00px rgba(0, 0, 0, 0.15);
+
       &:first-child {
         border-left: 0;
       }
-
       .events {
-        background: url(../img/icons/event-icon.png) no-repeat center top;
-        //background-size: 26px;
-        //background-position: 0 12px;
+        background: url(../img/svg/Icon_Events.svg) no-repeat center top;
+        background-size: 90%;
       }
       .recreation {
-        background: url(../img/icons/todo.png) no-repeat center top;
-        //background-image: url(../img/svg/vertical_menu/recrearion_icon.svg);
-        //background-position: 3px 2px;
-        //background-size: 36px;
+        background: url(../img/svg/Icon_To_do.svg) no-repeat center top;
+        background-size: 65%;
       }
       .pit-stops {
-        background: url(../img/icons/food.png) no-repeat center top;
-        //background-image: url(../img/svg/vertical_menu/pit_stops.svg);
-        //background-size: 28px;
-        //background-repeat: no-repeat;
-        //background-position: -2px 8px;
+        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center top;
+        background-size: 100%;
       }
       .shelter {
-        background: url(../img/icons/Shelter.png) no-repeat center top;
-        //background-image: url(../img/svg/vertical_menu/pit_stops.svg);
-        //background-size: 28px;
-        //background-repeat: no-repeat;
-        //background-position: -2px 8px;
+        background: url(../img/svg/Icon_Get_a_room.svg) no-repeat center top;
+        background-size: 65%;
       }
       .weather-link {
-        background: url(../img/icons/weather.png) no-repeat center top;
-        //background-image: url(../img/svg/vertical_menu/weather_icons.svg);
-        //background-size: 40px;
-        //background-repeat: no-repeat;
-        //background-position: -8px 5px;
+        background: url(../img/svg/Icon_Weather.svg) no-repeat center top;
+        background-size: 60%;
       }
       &:hover, &.active {
-        background-color: #fff;
+        background-color: #00cfff;
         @include transition_bg_color;
+        .events, .weather-link, .pit-stops, .shelter, .recreation {
+          color: $white;
+        }
         .events {
-          background-image: url(../img/icons/event-hover.png);
-        }
-        .weather-link {
-          background: url(../img/icons/weather-hover.png) no-repeat center top;
-          //background-image: url(../img/svg/vertical_menu/weather_icons_active.svg);
-        }
-        .pit-stops {
-          background-image: url(../img/icons/food-hover.png);
-        }
-        .shelter {
-          background-image: url(../img/icons/shelter-hover.png);
+          background: url(../img/svg/Icon_Events_mouseover.svg) no-repeat center top;
+          background-size: 90%;
         }
         .recreation {
-          background-image: url(../img/icons/todo-hover.png);
+          background: url(../img/svg/Icon_To_do_Mouseover.svg) no-repeat center top;
+          background-size: 65%;
         }
-
+        .pit-stops {
+          background: url(../img/svg/Icon_Grab_Grub_Mouseover.svg) no-repeat center top;
+          background-size: 100%;
+        }
+        .shelter {
+          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center top;
+          background-size: 65%;
+        }
+        .weather-link {
+          background: url(../img/svg/Icon_Weather_mouseover.svg) no-repeat center top;
+          background-size: 60%;
+        }
         a {
           color: $blue_btn;
         }
       }
       a {
-        color: #fff;
+        color: #929fa7;
         display: table;
         margin: 1rem auto 0;
-        //padding: 15px 8px 15px 30px;
         padding-bottom: 10px;
-        padding-top: 23px;
-        text-align: left;
+        padding-top: 35px;
+        text-align: center;
       }
     }
   }
