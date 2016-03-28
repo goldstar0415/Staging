@@ -16,7 +16,7 @@
       }
     });
 
-  function mapSort($rootScope, MapService, $http, SpotService, API_URL, DATE_FORMAT) {
+  function mapSort($rootScope, $q, MapService, $http, SpotService, API_URL, DATE_FORMAT) {
     var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
     var restrictions = {
@@ -24,6 +24,7 @@
       locations: 20
     };
     var isSelectedAll = false;
+    var cancellerHttp;
 
     vm.vertical = true;
     vm.weatherForecast = [];
@@ -209,7 +210,13 @@
         return;
       }
       data.type = $rootScope.sortLayer;
-      $http.get(SEARCH_URL + '?' + jQuery.param(data))
+
+      if (cancellerHttp) {
+        cancellerHttp.resolve();
+      }
+      cancellerHttp = $q.defer();
+
+      $http.get(SEARCH_URL + '?' + jQuery.param(data), {timeout: cancellerHttp.promise})
         .success(function (spots) {
           if (spots.length > 0) {
             onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0);
@@ -221,12 +228,15 @@
             toastr.error('Not found');
             onUpdateMapData(null, [], null, bbox_array.length > 0);
           }
-
+          cancellerHttp = null;
           vm.categoryToggle = false;
           vm.isShowFilter = false;
         }).catch(function (resp) {
-          console.warn(resp);
-          toastr.error(resp.data ? resp.data.message : 'Something went wrong')
+          if (cancellerHttp) {
+            toastr.error(resp.data ? resp.data.message : 'Something went wrong')
+          }
+          cancellerHttp = null;
+          console.warn(resp, cancellerHttp);
         });
     }
 
