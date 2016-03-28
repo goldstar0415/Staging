@@ -158,7 +158,6 @@
       _.each(data, function (item) {
         vm.spotCategories[item.name] = item.categories;
       });
-      console.log(vm.spotCategories);
     }
 
 
@@ -212,7 +211,6 @@
       data.type = $rootScope.sortLayer;
       $http.get(SEARCH_URL + '?' + jQuery.param(data))
         .success(function (spots) {
-          console.log(spots);
           if (spots.length > 0) {
             onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0);
 
@@ -315,7 +313,6 @@
       if ($rootScope.mapSortFilters && $rootScope.mapSortFilters.filter && $rootScope.mapSortFilters.filter.category_ids) {
         $rootScope.mapSortFilters.filter.category_ids = _.without($rootScope.mapSortFilters.filter.category_ids, item.id);
       }
-      console.log($rootScope.mapSortFilters);
     }
 
     function selectAllCategories() {

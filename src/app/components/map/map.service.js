@@ -1233,7 +1233,6 @@
         marker.bindPopup(popup);
 
         marker.on('click', function () {
-          console.log(scope);
           //if (!scope.item.spot.photos) {
           scope.item.$loading = true;
           Spot.get({id: scope.item.id}, function (fullSpot) {

@@ -19,8 +19,8 @@
       formatSpot: formatSpot,
       //mapNextPhoto: mapNextPhoto,
       //mapPrevPhoto: mapPrevPhoto,
-      mapNextReview: mapNextReview,
-      mapPrevReview: mapPrevReview,
+      //mapNextReview: mapNextReview,
+      //mapPrevReview: mapPrevReview,
       initMarker: initMarker,
       saveToCalendar: saveToCalendar,
       removeFromCalendar: removeFromCalendar,
@@ -154,45 +154,22 @@
 
     function initMarker(spot) {
       $scope.data.spot = spot;
-      //if ($scope.data.spot.photos.length > 0) {
-      //  getPhotosIndex(0);
-      //}
 
-      if ($scope.data.spot.comments.length > 0) {
-        getReviewIndex(0)
-      }
-
-      //$scope.showPhotos = $scope.data.spot.photos.length > 0;
-      //$scope.showPhotosControls = $scope.data.spot.photos.length > 2;
-      if ($scope.data.spot.comments.length > 0) {
-        $scope.currentReview = $scope.data.spot.comments[0];
-      }
-      $scope.view = 'about';
     }
 
-    //function mapNextPhoto() {
-    //  if ($scope.data.spot.photos.length > 1) {
-    //    getPhotosIndex(firstPhotoIndex + 1);
+
+
+    //function mapNextReview() {
+    //  if ($scope.data.spot.comments.length > 1) {
+    //    setReviewIndex(reviewIndex + 1)
     //  }
     //}
     //
-    //function mapPrevPhoto() {
-    //  if ($scope.data.spot.photos.length > 1) {
-    //    getPhotosIndex(firstPhotoIndex - 1);
+    //function mapPrevReview() {
+    //  if ($scope.data.spot.comments.length > 1) {
+    //    setReviewIndex(reviewIndex - 1);
     //  }
     //}
-
-    function mapNextReview() {
-      if ($scope.data.spot.comments.length > 1) {
-        getReviewIndex(reviewIndex + 1)
-      }
-    }
-
-    function mapPrevReview() {
-      if ($scope.data.spot.comments.length > 1) {
-        getReviewIndex(reviewIndex - 1);
-      }
-    }
 
     //function getPhotosIndex(idx) {
     //  if (idx < 0) {
@@ -220,18 +197,18 @@
     //  }
     //}
 
-    function getReviewIndex(idx) {
-      var reviews = $scope.data.spot.comments;
-      if (idx > reviews.length - 1) {
-        idx = 0;
-      }
-
-      if (idx < 0) {
-        idx = reviews.length - 1;
-      }
-      reviewIndex = idx;
-      $scope.currentReview = reviews[idx];
-    }
+    //function setReviewIndex(idx) {
+    //  var reviews = $scope.data.spot.comments;
+    //  if (idx > reviews.length - 1) {
+    //    idx = 0;
+    //  }
+    //
+    //  if (idx < 0) {
+    //    idx = reviews.length - 1;
+    //  }
+    //  reviewIndex = idx;
+    //  $scope.currentReview = reviews[idx];
+    //}
 
     function setScope(s) {
       $scope = s;
