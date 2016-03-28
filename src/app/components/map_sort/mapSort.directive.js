@@ -70,14 +70,14 @@
       if (angular.isDefined(isDrawArea)) {
         $rootScope.isDrawArea = isDrawArea;
       }
-      var spots = [];
 
+      var spots = [];
       _.each(mapSpots, function (item) {
         if (MapService.PointInPolygon(item.location)) {
           spots.push(item);
         }
       });
-      //spots = FilterUniqueObjects(spots);
+      //spots = MapService.FilterUniqueObjects(spots);
 
       //group by spot type
       $rootScope.mapSortSpots = _.groupBy(spots, function (item) {

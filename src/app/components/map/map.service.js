@@ -1510,9 +1510,12 @@
 
       function GetDataByBBox(bbox_array, isFocus) {
         isFocus = isFocus || false;
-        var spots = [];
         if (bbox_array.length > 0) {
           $rootScope.doSearchMap();
+
+          if (isFocus) {
+            FitBoundsOfDrawLayer();
+          }
         } else {
           clearLayers();
           $rootScope.$emit('update-map-data', [], null, false);
