@@ -3,8 +3,8 @@
 
   <div class="sidebar-menu-vertical">
     <ul>
-      <li class="hidden-xs">
-        <a ng-click="MapSort.vertical = !MapSort.vertical" class="full-small"></a>
+      <li class="hidden-xs" ng-click="MapSort.vertical = !MapSort.vertical">
+        <a  class="full-small"></a>
       </li>
       <li ng-click="$root.toggleLayer('event')" ng-class="{'active': $root.sortLayer == 'event'}">
         <a class="events"><span class="hidden-xs">Events</span></a>
@@ -50,7 +50,7 @@
   </div>
   <!--Attention! HERE ADD CLASS "applied"-->
   <div class="search-filters col-xs-12" ng-show="$root.sortLayer != 'weather'"
-       ng-class="{'applied-filter': !MapSort.isShowFilter && !$root.isEmpty($root.mapSortFilters)}">
+       ng-class="{'applied-filter': !MapSort.isShowFilter && !MapSort.isEmptyFilters()}">
     <!--ADD CLASS "applied" here and styles will change-->
     <div class="row">
       <div class="col-xs-12">
@@ -61,11 +61,11 @@
         </div>
         <div class="filters-button" ng-click="MapSort.isShowFilter = !MapSort.isShowFilter"></div>
         <div class="btn-apply btn-top" ng-click="MapSort.search()"
-             ng-show="!MapSort.isShowFilter && !$root.isDrawArea && $root.isEmpty($root.mapSortFilters)">
+             ng-show="!MapSort.isShowFilter && !$root.isDrawArea && MapSort.isEmptyFilters()">
           <span class="icon-apply"></span>
         </div>
         <div class="btn-cancel btn-top" ng-click="MapSort.clearFilters()"
-             ng-show="!MapSort.isShowFilter && !$root.isEmpty($root.mapSortFilters)">
+             ng-show="!MapSort.isShowFilter && !MapSort.isEmptyFilters()">
           <span class="icon-cancel"></span>
         </div>
       </div>

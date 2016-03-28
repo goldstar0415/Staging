@@ -39,6 +39,7 @@
     vm.removeLocation = removeLocation;
     vm.removeFilter = removeFilter;
     vm.clearFilters = clearFilters;
+    vm.isEmptyFilters = isEmptyFilters;
 
     vm.searchParams = {
       locations: [],
@@ -81,7 +82,10 @@
 
       if ($rootScope.mapSortSpots[layer]) {
         MapService.drawSpotMarkers($rootScope.mapSortSpots[layer], layer, true);
+      } else {
+        MapService.clearLayers();
       }
+
       MapService.showLayer(layer);
 
     }
@@ -294,6 +298,22 @@
       _.each(vm.spotCategories[$rootScope.sortLayer], function (item) {
         item.selected = isSelectedAll;
       });
+    }
+
+    function isEmptyFilters() {
+      var isEmpty = true,
+      activeCategoryCount = _.where(vm.spotCategories[$rootScope.sortLayer], {selected: true}).length;
+
+      $rootScope.mapSortFilters.filter = $rootScope.mapSortFilters.filter || {};
+
+      if ($rootScope.mapSortFilters.search_text ||
+        $rootScope.mapSortFilters.filter.start_date || $rootScope.mapSortFilters.filter.end_date ||
+        $rootScope.mapSortFilters.filter.rating ||
+        ($rootScope.mapSortFilters.filter.tags && $rootScope.mapSortFilters.filter.tags.length > 0) ||
+        activeCategoryCount > 0) {
+        isEmpty = false;
+      }
+      return isEmpty;
     }
 
 
