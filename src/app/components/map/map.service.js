@@ -1236,7 +1236,7 @@
         marker.on('click', function () {
           //if (!scope.item.spot.photos) {
           scope.item.$loading = true;
-          Spot.get({id: scope.item.id}, function (fullSpot) {
+          Spot.get({id: scope.item.spot_id}, function (fullSpot) {
             //merge photos
             fullSpot.photos = _.union(fullSpot.comments_photos, fullSpot.photos);
             scope.item.spot = fullSpot;

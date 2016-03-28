@@ -73,11 +73,15 @@
       }
 
       var spots = [];
-      _.each(mapSpots, function (item) {
-        if (MapService.PointInPolygon(item.location)) {
-          spots.push(item);
-        }
-      });
+      if ($rootScope.isDrawArea) {
+        _.each(mapSpots, function (item) {
+          if (MapService.PointInPolygon(item.location)) {
+            spots.push(item);
+          }
+        });
+      } else {
+        spots = mapSpots;
+      }
       //spots = MapService.FilterUniqueObjects(spots);
 
       //group by spot type
@@ -98,7 +102,6 @@
         MapService.clearLayers();
       }
 
-      console.log(MapService.GetCurrentLayer().name, layer);
       if (MapService.GetCurrentLayer().name != layer) {
         MapService.showLayer(layer);
       }
