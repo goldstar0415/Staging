@@ -15,9 +15,9 @@
             if (n) {
               $timeout(function () {
                 e.justifiedGallery({
-                  rowHeight: 100,
-                  maxRowHeight: 150,
-                  lastRow: 'justify',
+                  //rowHeight: 100,
+                  //maxRowHeight: 150,
+                  //lastRow: 'justify',
                   margins: 1,
                   captions: false,
                   cssAnimation: true

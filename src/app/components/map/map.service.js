@@ -433,7 +433,7 @@
       function GetCurrentLayer() {
         var layer = null;
         switch (currentLayer) {
-          case "events":
+          case "event":
             layer = eventsLayer;
             break;
           case "todo":
@@ -452,6 +452,7 @@
             layer = null;
             break;
         }
+        layer.name = currentLayer;
 
         return layer;
       }
@@ -531,7 +532,7 @@
         map.removeLayer(foodLayer);
         map.removeLayer(shelterLayer);
         map.removeLayer(otherLayer);
-        currentLayer = "events";
+        currentLayer = "event";
       }
 
       //show food layer on map
@@ -1235,7 +1236,7 @@
         marker.on('click', function () {
           //if (!scope.item.spot.photos) {
           scope.item.$loading = true;
-          Spot.get({id: scope.item.id}, function (fullSpot) {
+          Spot.get({id: scope.item.spot_id}, function (fullSpot) {
             //merge photos
             fullSpot.photos = _.union(fullSpot.comments_photos, fullSpot.photos);
             scope.item.spot = fullSpot;
