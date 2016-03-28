@@ -1512,31 +1512,7 @@
         isFocus = isFocus || false;
         var spots = [];
         if (bbox_array.length > 0) {
-          var params = {
-            type: $rootScope.sortLayer,
-            filter: {}
-          };
-
-          bbox_array = BBoxToParams(bbox_array);
-          params.filter.b_boxes = bbox_array;
-
-          $http.get(API_URL + '/map/spots' + '?' + jQuery.param(params))
-            .success(function (data) {
-              _.each(data, function (item) {
-                if (PointInPolygon(item.location)) {
-                  spots.push(item);
-                }
-              });
-              spots = FilterUniqueObjects(spots);
-              $rootScope.$emit('update-map-data', spots, null, true);
-
-              if (isFocus) {
-                FitBoundsOfDrawLayer();
-              }
-            })
-            .catch(function (resp) {
-              toastr.error(resp.data ? resp.data.message : 'Something went wrong')
-            });
+          $rootScope.doSearchMap();
         } else {
           clearLayers();
           $rootScope.$emit('update-map-data', [], null, false);

@@ -47,6 +47,7 @@
       tags: []
     };
 
+    $rootScope.doSearchMap = search;
     $rootScope.sortLayer = $rootScope.sortLayer || 'event';
     $rootScope.isDrawArea = false;
     $rootScope.mapSortFilters = $rootScope.mapSortFilters || {};
@@ -63,12 +64,21 @@
     }
 
 
-    function onUpdateMapData(event, spots, layer, isDrawArea) {
+    function onUpdateMapData(event, mapSpots, layer, isDrawArea) {
       layer = layer || $rootScope.sortLayer;
       $rootScope.sortLayer = layer;
       if (angular.isDefined(isDrawArea)) {
         $rootScope.isDrawArea = isDrawArea;
       }
+      var spots = [];
+
+      _.each(mapSpots, function (item) {
+        if (MapService.PointInPolygon(item.location)) {
+          spots.push(item);
+        }
+      });
+      //spots = FilterUniqueObjects(spots);
+
       //group by spot type
       $rootScope.mapSortSpots = _.groupBy(spots, function (item) {
         return item.spot.category.type.name
@@ -218,7 +228,7 @@
           vm.isShowFilter = false;
         }).catch(function (resp) {
           console.warn(resp);
-          toastr.error('Search error');
+          toastr.error(resp.data ? resp.data.message : 'Something went wrong')
         });
     }
 
