@@ -1523,11 +1523,7 @@
         }
       }
 
-      function FilterUniqueObjects(array) {
-        return _.uniq(array, function (item) {
-          return item.spot_id
-        })
-      }
+
 
       //return sorted by rating array
       function SortByRating(array) {

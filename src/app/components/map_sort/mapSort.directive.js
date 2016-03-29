@@ -82,7 +82,6 @@
       } else {
         spots = mapSpots;
       }
-      //spots = MapService.FilterUniqueObjects(spots);
 
       //group by spot type
       $rootScope.mapSortSpots = _.groupBy(spots, function (item) {
@@ -98,6 +97,8 @@
 
       if ($rootScope.mapSortSpots[layer]) {
         MapService.drawSpotMarkers($rootScope.mapSortSpots[layer], layer, true);
+
+        $rootScope.mapSortSpots[layer] = _filterUniqueSpots($rootScope.mapSortSpots[layer]);
       } else {
         MapService.clearLayers();
       }
@@ -106,6 +107,12 @@
         MapService.showLayer(layer);
       }
 
+    }
+
+    function _filterUniqueSpots(array) {
+      return _.uniq(array, function (item) {
+        return item.spot_id
+      })
     }
 
     function toggleLayer(layer) {
