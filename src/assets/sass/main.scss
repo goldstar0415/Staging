@@ -350,11 +350,11 @@ facebook-events a {
   display: block;
   width: 42px;
   height: 41px;
-  border-radius: 3px;
+  border-radius: 0;
   position: absolute !important;
-  top: 42px;
-  right: 60px;
-  background: url(../img/svg/social/facebook_top_icon.svg) no-repeat;
+  top: 50px;
+  right: 50px;
+  background: url(../img/google-plus.png) no-repeat;
   @include transition_bg;
   &:hover {
     @include transition_bg;

@@ -93,15 +93,14 @@
     margin-bottom: 2rem;
     padding: 0;
   }
-  .import-friendmap {
-    margin-right: 4rem;
-  }
+  //.import-friendmap {
+  //  margin-right: 4rem;
+  //}
   .zoomers-content .info .counters {
     left: 35%;
     width: 50%;
   }
 }
-
 
 @media (max-width: 500px) {
   header nav ul li .user-name {
@@ -142,6 +141,13 @@
     width: 60%;
   }
 }
+
+@media (max-width: 380px) {
+  .import-friendmap, .add-page {
+    top: 0 !important;
+  }
+}
+
 @media (max-width: 330px) {
   .zoomers-content .info .counters {
     left: 12%;
