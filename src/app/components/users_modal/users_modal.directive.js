@@ -20,7 +20,7 @@
     function UsersModalLink(s, e, a) {
       e.click(function () {
         if (angular.element(window).width() <= 992) {
-          $state.go(s.type, {user_id: $rootScope.profileUser.alias || $rootScope.profileUser.id});
+          $state.go(s.type, {user_id: s.user.alias || s.user.id});
         } else {
           $modal.open({
             templateUrl: 'FollowersModal.html',
