@@ -1512,6 +1512,12 @@
           background-size: 26%;
         }
       }
+      .weather-link {
+        background: url(../img/svg/Icon_Weather.svg) no-repeat center center;
+        &:hover, &:active, &:focus {
+          background: url(../img/svg/Icon_Weather_mouseover.svg) no-repeat center center;
+        }
+      }
     }
     li {
       .events {
@@ -1545,6 +1551,12 @@
         &:hover, &:active, &:focus {
           background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center center;
           background-size: 26%;
+        }
+      }
+      .weather-link {
+        background: url(../img/svg/Icon_Weather.svg) no-repeat center center;
+        &:hover, &:active, &:focus {
+          background: url(../img/svg/Icon_Weather_mouseover.svg) no-repeat center center;
         }
       }
     }
