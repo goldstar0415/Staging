@@ -371,29 +371,29 @@
       display: inline-block;
       width: 20%;
       border-left: 1px solid #aabac1;
-      box-shadow: 0px 0px 24px 0.00px rgba(0, 0, 0, 0.15);
+      //box-shadow: 0px 0px 24px 0.00px rgba(0, 0, 0, 0.15);
 
       &:first-child {
         border-left: 0;
       }
       .events {
-        background: url(../img/svg/Icon_Events.svg) no-repeat center center;
+        background: url(../img/svg/Icon_Events.svg) no-repeat top center;
         background-size: 90%;
       }
       .recreation {
-        background: url(../img/svg/Icon_To_do.svg) no-repeat center center;
+        background: url(../img/svg/Icon_To_do.svg) no-repeat top center;
         background-size: 65%;
       }
       .pit-stops {
-        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center center;
+        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat top center;
         background-size: 100%;
       }
       .shelter {
-        background: url(../img/svg/Icon_Get_a_room.svg) no-repeat center center;
+        background: url(../img/svg/Icon_Get_a_room.svg) no-repeat top center;
         background-size: 65%;
       }
       .weather-link {
-        background: url(../img/svg/Icon_Weather.svg) no-repeat center center;
+        background: url(../img/svg/Icon_Weather.svg) no-repeat top center;
         background-size: 60%;
       }
       &:hover, &.active {
@@ -403,23 +403,23 @@
           color: $white;
         }
         .events {
-          background: url(../img/svg/Icon_Events_mouseover.svg) no-repeat center center;
+          background: url(../img/svg/Icon_Events_mouseover.svg) no-repeat top center;
           background-size: 90%;
         }
         .recreation {
-          background: url(../img/svg/Icon_To_do_Mouseover.svg) no-repeat center center;
+          background: url(../img/svg/Icon_To_do_Mouseover.svg) no-repeat top center;
           background-size: 65%;
         }
         .pit-stops {
-          background: url(../img/svg/Icon_Grab_Grub_Mouseover.svg) no-repeat center center;
+          background: url(../img/svg/Icon_Grab_Grub_Mouseover.svg) no-repeat top center;
           background-size: 100%;
         }
         .shelter {
-          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center center;
+          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat top center;
           background-size: 65%;
         }
         .weather-link {
-          background: url(../img/svg/Icon_Weather_mouseover.svg) no-repeat center center;
+          background: url(../img/svg/Icon_Weather_mouseover.svg) no-repeat top center;
           background-size: 60%;
         }
         a {

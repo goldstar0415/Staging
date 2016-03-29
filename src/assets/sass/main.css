@@ -179,16 +179,16 @@
         width: 7rem;
         height: 7rem;
     }
-    .sidebar-menu-horizontal ul li a span {
-        display: none;
-        margin-top: 0 !important;
-    }
-    .sidebar-menu-horizontal ul li {
-        width: 25%;
-    }
-    .sidebar-menu-horizontal ul li a {
-        height: 4rem;
-    }
+    /*.sidebar-menu-horizontal ul li a span {*/
+        /*display: none;*/
+        /*margin-top: 0 !important;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li {*/
+        /*width: 25%;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li a {*/
+        /*height: 4rem;*/
+    /*}*/
     .sort-menu {
         margin-top: 20rem;
     }
@@ -317,49 +317,49 @@
     .modal-content, .modal-dialog {
         transform: none !important;
     }
-    .sidebar-menu-horizontal {
-        background-color: #fff;
-        border: 0;
-    }
-    .sidebar-menu-horizontal ul {
-        height: 5rem;
-        padding-top: 5px;
-        webkit-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
-        -moz-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
-        box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);
-    }
-    .sidebar-menu-horizontal ul li {
-        border: 0;
-        background-color: #fff;
-    }
-    .sidebar-menu-horizontal ul li a.events {
-        background-image: url(../img/svg/vertical_menu/calendar_unactive.svg) !important;
-    }
-    .sidebar-menu-horizontal ul li a.recreation {
-        background-image: url(../img/svg/vertical_menu/recrearion_icon_unactive.svg) !important;
-    }
-    .sidebar-menu-horizontal ul li a.pit-stops {
-        background-image: url(../img/svg/vertical_menu/pit_stops_unactive.svg) !important;
-        background-size: 31px;
-        background-position: 0 5px;
-    }
-    .sidebar-menu-horizontal ul li a.weather-link {
-        background-image: url(../img/svg/vertical_menu/weather_icons_unactive.svg) !important;
-    }
-    .sidebar-menu-horizontal ul li.active a.events {
-        background-image: url(../img/svg/vertical_menu/calendar_active.svg) !important;
-    }
-    .sidebar-menu-horizontal ul li.active a.recreation {
-        background-image: url(../img/svg/vertical_menu/recrearion_icon_active.svg) !important;
-    }
-    .sidebar-menu-horizontal ul li.active a.pit-stops {
-        background-image: url(../img/svg/vertical_menu/pit_stops_active.svg) !important;
-        background-size: 31px;
-        background-position: 0 5px;
-    }
-    .sidebar-menu-horizontal ul li.active a.weather-link {
-        background-image: url(../img/svg/vertical_menu/weather_icons_active.svg) !important;
-    }
+    /*.sidebar-menu-horizontal {*/
+        /*background-color: #fff;*/
+        /*border: 0;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul {*/
+        /*height: 5rem;*/
+        /*padding-top: 5px;*/
+        /*webkit-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);*/
+        /*-moz-box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);*/
+        /*box-shadow: 0px 5px 5px 0px rgba(191, 191, 191, 0.3);*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li {*/
+        /*border: 0;*/
+        /*background-color: #fff;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li a.events {*/
+        /*background-image: url(../img/svg/vertical_menu/calendar_unactive.svg) !important;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li a.recreation {*/
+        /*background-image: url(../img/svg/vertical_menu/recrearion_icon_unactive.svg) !important;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li a.pit-stops {*/
+        /*background-image: url(../img/svg/vertical_menu/pit_stops_unactive.svg) !important;*/
+        /*background-size: 31px;*/
+        /*background-position: 0 5px;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li a.weather-link {*/
+        /*background-image: url(../img/svg/vertical_menu/weather_icons_unactive.svg) !important;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li.active a.events {*/
+        /*background-image: url(../img/svg/vertical_menu/calendar_active.svg) !important;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li.active a.recreation {*/
+        /*background-image: url(../img/svg/vertical_menu/recrearion_icon_active.svg) !important;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li.active a.pit-stops {*/
+        /*background-image: url(../img/svg/vertical_menu/pit_stops_active.svg) !important;*/
+        /*background-size: 31px;*/
+        /*background-position: 0 5px;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li.active a.weather-link {*/
+        /*background-image: url(../img/svg/vertical_menu/weather_icons_active.svg) !important;*/
+    /*}*/
     .search-filters .numbers-events {
         border: 0;
         border-bottom: 2px solid #00c9f8;
@@ -795,15 +795,15 @@
 }
 
 @media (max-width: 500px) {
-    .sidebar-menu-horizontal ul li {
-        width: 25%;
-    }
-    .sidebar-menu-horizontal ul li:nth-child(3), .sidebar-menu-horizontal ul li:nth-child(4) {
-        margin-top: 0;
-    }
-    .sidebar-menu-horizontal ul li:nth-child(3) a, .sidebar-menu-horizontal ul li:nth-child(4) a {
-        padding: 20px 0px 20px 31px;
-    }
+    /*.sidebar-menu-horizontal ul li {*/
+        /*width: 25%;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li:nth-child(3), .sidebar-menu-horizontal ul li:nth-child(4) {*/
+        /*margin-top: 0;*/
+    /*}*/
+    /*.sidebar-menu-horizontal ul li:nth-child(3) a, .sidebar-menu-horizontal ul li:nth-child(4) a {*/
+        /*padding: 20px 0px 20px 31px;*/
+    /*}*/
     .title-blog .date-xs {
         margin-top: 1px;
     }
