@@ -153,9 +153,7 @@
     .search-filters .country-filter + .filters-button {
         left: 83.8%;
     }
-    .search-filters {
-        padding-left: 15%;
-    }
+
 }
 
 @media (max-width: 767px) {
@@ -374,9 +372,9 @@
         text-transform: uppercase;
         font-size: 2rem;
     }
-    .search-filters {
-        padding-left: 15%;
-    }
+    /*.search-filters {*/
+        /*padding-left: 15%;*/
+    /*}*/
     .search-filters .country-filter + .filters-button {
         left: 83.6%;
     }
@@ -593,9 +591,9 @@
     .main-blog-content .article .article-info {
         margin-top: 2rem;
     }
-    .sort-menu {
-        width: 100%;
-    }
+    /*.sort-menu {*/
+        /*width: 100%;*/
+    /*}*/
     .sidebar-menu-wrap .show-menu-profile {
         right: 1.5rem;
     }
@@ -786,9 +784,9 @@
     .search-filters .country-filter + .filters-button {
         left: 77.5%;
     }
-    .search-filters {
-        padding-left: 9%;
-    }
+    /*.search-filters {*/
+        /*padding-left: 9%;*/
+    /*}*/
     .search-filters .country-filter, .search-filters .filter-definition {
         width: 79%;
     }

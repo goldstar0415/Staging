@@ -196,9 +196,9 @@
                 <div class="event-result-logo">
                   <img ng-src="{{ item.spot.cover_url.thumb }}">
                 </div>
+                <stars item="item.spot"></stars>
               </div>
               <div class="col-xs-8 padding-0">
-                <stars item="item.spot"></stars>
                 <div class="col-xs-12 padding-0">
                   <h2 class="name">
                     <a ui-sref="spot({user_id: item.spot.user_id, spot_id: item.spot.id})">{{item.spot.title}}</a>
