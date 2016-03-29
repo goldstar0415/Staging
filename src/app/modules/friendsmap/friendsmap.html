@@ -1,7 +1,6 @@
 <div class="">
   <div class="text-center"><h2 class="title-name nav-blue">Friends map</h2></div>
 
-
   <div class="album-tools">
     <a ng-click="Friendsmap.googleImport()" class="import-friendmap"></a>
     <a title="Create new album" ui-sref="friendsmap_create" class="add-page nav-bg-blue"></a>
@@ -9,8 +8,8 @@
 </div>
 <div ng-repeat="item in Friendsmap.friends" class="col-xs-12 friends-block">
   <div class="friends-wrapper">
-    <div class="avatar-wrap">
-      <a class="review-img avatar" tooltip="Edit avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
+    <div class="avatar-wrap" tooltip="Edit avatar">
+      <a class="review-img avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
          ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="10000000">
         <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar">
       </a>
@@ -18,8 +17,9 @@
     <div class="text-block">
       <h3 class="feeds-title">
       <span class="col-xs-12 wrap-name">
-        <a ng-if="item.friend_id" ui-sref="profile.main({user_id: item.friend.alias || item.friend_id})">{{item.first_name + " " +
-          item.last_name}}</a>
+        <a ng-if="item.friend_id" ui-sref="profile.main({user_id: item.friend.alias || item.friend_id})">
+          {{item.first_name + " " + item.last_name}}
+        </a>
         <span ng-if="!item.friend_id">{{item.first_name + " " + item.last_name}}</span>
       </span>
 
@@ -45,11 +45,6 @@
         <div class="col-xs-12 no-pad">
           <p ng-show="item.displayAddress" class="friendmap-loc">{{item.displayAddress}}</p>
         </div>
-
-        <!--<div class="col-xs-4 location-btn" >-->
-        <!--<a class="custom-location" ></a>-->
-        <!--<a class="default-location" ></a>-->
-        <!--</div>-->
       </div>
 
 
@@ -57,6 +52,7 @@
         <p ng-show="item.note" class="description">
           {{item.note}}
         </p>
+
         <div class="col-xs-12 edit-delete text-left hidden-xs">
           <a class="edit edit-friendmap" ui-sref="friendsmap_edit({id: item.id})">Edit</a>
           <a class="delete" ng-click="Friendsmap.removeFriend(item.id, $index)">Delete</a>
