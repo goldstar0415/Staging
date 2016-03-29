@@ -231,7 +231,7 @@
               MapService.FitBoundsByLayer($rootScope.sortLayer);
             }
           } else {
-            toastr.error('Not found');
+            toastr.info('0 spots found');
             onUpdateMapData(null, [], null, bbox_array.length > 0);
           }
           cancellerHttp = null;
