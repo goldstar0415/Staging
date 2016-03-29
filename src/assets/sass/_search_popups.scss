@@ -275,23 +275,23 @@
         }
       }
       .events {
-        background: url(../img/svg/Icon_Events.svg) no-repeat center top;
+        background: url(../img/svg/Icon_Events.svg) no-repeat top center;
         background-size: 53%;
       }
       .recreation {
-        background: url(../img/svg/Icon_To_do.svg) no-repeat center top;
+        background: url(../img/svg/Icon_To_do.svg) no-repeat top center;
         background-size: 40%;
       }
       .pit-stops {
-        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center top;
+        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat top center;
         background-size: 60%;
       }
       .shelter {
-        background: url(../img/svg/Icon_Get_a_room.svg) no-repeat center top;
+        background: url(../img/svg/Icon_Get_a_room.svg) no-repeat top center;
         background-size: 40%;
       }
       .weather-link {
-        background: url(../img/svg/Icon_Weather.svg) no-repeat center top;
+        background: url(../img/svg/Icon_Weather.svg) no-repeat top center;
         background-size: 40%;
       }
       &:hover, &.active {
@@ -304,23 +304,23 @@
           color: #00cfff;
         }
         .events {
-          background: url(../img/svg/Icon_Events_mouseover.svg) no-repeat center top;
+          background: url(../img/svg/Icon_Events_mouseover.svg) no-repeat top center;
           background-size: 53%;
         }
         .recreation {
-          background: url(../img/svg/Icon_To_do_Mouseover.svg) no-repeat center top;
+          background: url(../img/svg/Icon_To_do_Mouseover.svg) no-repeat top center;
           background-size: 40%;
         }
         .pit-stops {
-          background: url(../img/svg/Icon_Grab_Grub_Mouseover.svg) no-repeat center top;
+          background: url(../img/svg/Icon_Grab_Grub_Mouseover.svg) no-repeat top center;
           background-size: 60%;
         }
         .shelter {
-          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center top;
+          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat top center;
           background-size: 40%;
         }
         .weather-link {
-          background: url(../img/svg/Icon_Weather_mouseover.svg) no-repeat center top;
+          background: url(../img/svg/Icon_Weather_mouseover.svg) no-repeat top center;
           background-size: 40%;
         }
       }
@@ -377,23 +377,23 @@
         border-left: 0;
       }
       .events {
-        background: url(../img/svg/Icon_Events.svg) no-repeat center top;
+        background: url(../img/svg/Icon_Events.svg) no-repeat center center;
         background-size: 90%;
       }
       .recreation {
-        background: url(../img/svg/Icon_To_do.svg) no-repeat center top;
+        background: url(../img/svg/Icon_To_do.svg) no-repeat center center;
         background-size: 65%;
       }
       .pit-stops {
-        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center top;
+        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center center;
         background-size: 100%;
       }
       .shelter {
-        background: url(../img/svg/Icon_Get_a_room.svg) no-repeat center top;
+        background: url(../img/svg/Icon_Get_a_room.svg) no-repeat center center;
         background-size: 65%;
       }
       .weather-link {
-        background: url(../img/svg/Icon_Weather.svg) no-repeat center top;
+        background: url(../img/svg/Icon_Weather.svg) no-repeat center center;
         background-size: 60%;
       }
       &:hover, &.active {
@@ -403,23 +403,23 @@
           color: $white;
         }
         .events {
-          background: url(../img/svg/Icon_Events_mouseover.svg) no-repeat center top;
+          background: url(../img/svg/Icon_Events_mouseover.svg) no-repeat center center;
           background-size: 90%;
         }
         .recreation {
-          background: url(../img/svg/Icon_To_do_Mouseover.svg) no-repeat center top;
+          background: url(../img/svg/Icon_To_do_Mouseover.svg) no-repeat center center;
           background-size: 65%;
         }
         .pit-stops {
-          background: url(../img/svg/Icon_Grab_Grub_Mouseover.svg) no-repeat center top;
+          background: url(../img/svg/Icon_Grab_Grub_Mouseover.svg) no-repeat center center;
           background-size: 100%;
         }
         .shelter {
-          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center top;
+          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center center;
           background-size: 65%;
         }
         .weather-link {
-          background: url(../img/svg/Icon_Weather_mouseover.svg) no-repeat center top;
+          background: url(../img/svg/Icon_Weather_mouseover.svg) no-repeat center center;
           background-size: 60%;
         }
         a {
@@ -1467,15 +1467,88 @@
           margin-top: 0;
           padding-top: 8px;
           height: 50px;
-          background-size: 40px;
+          //background-size: 40px;
           background-position: 45%;
           &.weather-link {
-            background-size: 55px;
-            background-position: 45% 3px;
+            background-size: 35px;
+            //background-position: 45% 3px;
           }
         }
       }
     }
   }
+  .sidebar-menu-vertical ul {
+    li.active {
+      .events {
+        background: url(../img/svg/Icon_Events.svg) no-repeat center center;
+        background-size: 45px;
+        &:hover, &:active, &:focus {
+          background: url(../img/svg/Icon_Events_mouseover.svg) no-repeat center center;
+          background-size: 45px;
+        }
+      }
+      .recreation {
+        background: url(../img/svg/Icon_To_do.svg) no-repeat center center;
+        background-size: 20%;
+        &:hover, &:active, &:focus {
+          background: url(../img/svg/Icon_To_do_Mouseover.svg) no-repeat center center;
+          background-size: 20%;
+        }
+      }
+
+      .pit-stops {
+        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center center;
+        background-size: 35%;
+        &:hover, &:active, &:focus {
+          background: url(../img/svg/Icon_Grab_Grub_Mouseover.svg) no-repeat center center;
+          background-size: 35%;
+        }
+      }
+      .shelter {
+        background: url(../img/svg/Icon_Get_a_room.svg) no-repeat center center;
+        background-size: 26%;
+        &:hover, &:active, &:focus {
+          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center center;
+          background-size: 26%;
+        }
+      }
+    }
+    li {
+      .events {
+        background: url(../img/svg/Icon_Events.svg) no-repeat center center;
+        background-size: 45px;
+        &:hover, &:active, &:focus {
+          background: url(../img/svg/Icon_Events_mouseover.svg) no-repeat center center;
+          background-size: 45px;
+        }
+      }
+      .recreation {
+        background: url(../img/svg/Icon_To_do.svg) no-repeat center center;
+        background-size: 20%;
+        &:hover, &:active, &:focus {
+          background: url(../img/svg/Icon_To_do_Mouseover.svg) no-repeat center center;
+          background-size: 20%;
+        }
+      }
+
+      .pit-stops {
+        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center center;
+        background-size: 35%;
+        &:hover, &:active, &:focus {
+          background: url(../img/svg/Icon_Grab_Grub_Mouseover.svg) no-repeat center center;
+          background-size: 35%;
+        }
+      }
+      .shelter {
+        background: url(../img/svg/Icon_Get_a_room.svg) no-repeat center center;
+        background-size: 26%;
+        &:hover, &:active, &:focus {
+          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center center;
+          background-size: 26%;
+        }
+      }
+    }
+  }
+
 }
 
