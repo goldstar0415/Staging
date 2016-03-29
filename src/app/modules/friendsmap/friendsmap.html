@@ -10,7 +10,7 @@
   <div class="friends-wrapper">
     <div class="avatar-wrap" tooltip="Edit avatar">
       <a class="review-img avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
-         ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="10000000">
+         ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="5MB">
         <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar">
       </a>
     </div>
