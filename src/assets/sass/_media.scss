@@ -83,6 +83,12 @@
     height: 10rem;
   }
 }
+@media (max-width: 767px) {
+  .authentication .modal-dialog {
+    width: 100% !important;
+    margin: 30px auto;
+  }
+}
 
 @media (max-width: 640px) {
   /* blog */
