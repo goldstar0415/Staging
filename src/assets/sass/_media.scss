@@ -191,11 +191,17 @@
       }
     }
   }
+  .add-friend {
+    right: 6rem;
+  }
 }
 
 
 //iphone 6
 @media (max-width: 375px) {
+  .add-friend {
+    right: 1.6rem;
+  }
   .sidebar-menu-vertical ul {
     li {
       .pit-stops {
@@ -239,6 +245,12 @@
 
 //iphone 5
 @media (max-width: 320px) {
+  .btn-back {
+    top: 0 !important;
+  }
+  .add-friend {
+    right: 1.6rem;
+  }
   .sidebar-menu-vertical ul {
     li {
       .pit-stops {
