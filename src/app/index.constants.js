@@ -24,6 +24,7 @@
       date: 'MM.DD.YYYY',
       time: 'hh:mm a',
       full: 'MMM DD, YYYY H:mm A',
+      planner_date: 'MMM DD, YYYY',
       backend: 'YYYY-MM-DD HH:mm:ss',
       backend_date: 'YYYY-MM-DD'
     })

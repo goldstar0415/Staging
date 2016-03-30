@@ -50,7 +50,7 @@
 
       function setMainImage(item, idx) {
         vm.mainImage = item;
-        vm.mainImage.idx = idx;
+        vm.mainImage.idx = vm.imageControl.start + idx;
       }
     }
   }

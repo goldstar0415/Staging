@@ -3,10 +3,10 @@
 
   angular
     .module('zoomtivity')
-    .filter('fromNow', function () {
+    .filter('fromNow', function (DATE_FORMAT) {
       return function (input) {
-        var utcOffset = moment().utcOffset();
-        return moment(input).add(utcOffset, 'm').fromNow();
+        window.utcOffset = window.utcOffset || moment().utcOffset();
+        return moment(input, DATE_FORMAT.backend).add(window.utcOffset, 'm').fromNow();
       }
     })
 

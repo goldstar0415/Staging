@@ -32,6 +32,14 @@
 .one-spot-section {
   padding: 15px;
   position: relative;
+
+  .description {
+    display: block;
+    unicode-bidi: embed;
+    font-family: monospace;
+    white-space: pre;
+  }
+
   .share {
     bottom: 0;
   }
@@ -543,7 +551,6 @@
 
 .carousel-wrapper {
   .carousel-img-wrapper {
-    background-color: #0b2639;
     a {
       .img-responsive {
         max-width: 100%;

@@ -54,7 +54,7 @@
             }
 
             if (event.start_date) {
-              event.start =  moment(event.start_date, DATE_FORMAT.backend).toDate();
+              event.start = moment(event.start_date, DATE_FORMAT.backend).toDate();
             }
             if (event.end_date) {
               event.end = moment(event.end_date, DATE_FORMAT.backend).toDate();
@@ -69,8 +69,14 @@
     }
 
     function eventRender(event, element, view) {
-      var tooltip = moment(event.start_date, DATE_FORMAT.backend).format(DATE_FORMAT.full)
-        + '\n - \n' + moment(event.end_date, DATE_FORMAT.backend).format(DATE_FORMAT.full);
+      var tooltip = '',
+      $start_date = moment(event.start_date, DATE_FORMAT.backend),
+      $end_date = moment(event.end_date, DATE_FORMAT.backend);
+
+      tooltip += $start_date.format($start_date.hours() == 0 && $start_date.minutes() == 0 ? DATE_FORMAT.planner_date : DATE_FORMAT.full);
+      tooltip += '\n - \n';
+      tooltip += $end_date.format($end_date.hours() == 0 && $end_date.minutes() == 0 ? DATE_FORMAT.planner_date : DATE_FORMAT.full);
+
       element.attr({
         'tooltip': tooltip,
         'tooltip-append-to-body': true
