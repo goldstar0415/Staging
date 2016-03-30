@@ -166,7 +166,7 @@
             <ui-select
               ng-model="SpotCreate.category_id"
               theme="bootstrap">
-              <ui-select-match placeholder="Select category id...">{{$select.selected.display_name}}</ui-select-match>
+              <ui-select-match placeholder="Select category...">{{$select.selected.display_name}}</ui-select-match>
               <ui-select-choices
                 repeat="item.id as item in SpotCreate.categories[SpotCreate.type] | filter : $select.search track by $index">
                 <div ng-bind-html="item.display_name | highlight: $select.search"></div>

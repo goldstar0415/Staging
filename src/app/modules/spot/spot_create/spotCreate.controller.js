@@ -363,7 +363,8 @@
     vm.convertSpot = function () {
       //TODO: add array to display all kinds of images (attachments from albums, photos for upload, and old photos)
       var data = spot;
-      vm.type = data.category.type.display_name.toLowerCase();
+      vm.type = data.category.type.name.toLowerCase();
+      console.log(vm.type, vm.categories);
       vm.title = data.title;
       vm.description = data.description;
       vm.links = data.web_sites || [];
