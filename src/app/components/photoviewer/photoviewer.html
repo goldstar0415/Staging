@@ -34,7 +34,7 @@
         </button>
         <p class="location hidden-xs">{{PV.currentPhoto.address}}</p>
 
-        <form name="form" ng-submit="PV.sendComment(form)" class="new-post hidden-xs">
+        <form name="form" ng-submit="PV.sendComment(form)" class="new-post">
           <textarea ng-model="PV.comment" name="comment" ng-maxlength="255" placeholder="Start typing..."
                     required class="grey-bg"></textarea>
 
