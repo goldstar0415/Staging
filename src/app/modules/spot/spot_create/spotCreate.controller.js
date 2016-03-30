@@ -323,6 +323,7 @@
 
         vm.selectCover = false;
         vm.saveCrop = false;
+        angular.element('#cover_cancel_button').addClass('ng-hide');  //quirk. without it the "cancel" button disappears 1 second
       }
     };
 
@@ -364,7 +365,6 @@
       //TODO: add array to display all kinds of images (attachments from albums, photos for upload, and old photos)
       var data = spot;
       vm.type = data.category.type.name.toLowerCase();
-      console.log(vm.type, vm.categories);
       vm.title = data.title;
       vm.description = data.description;
       vm.links = data.web_sites || [];

@@ -315,10 +315,10 @@
           <div ng-if="SpotCreate.images.files.length > 0">
             <button type="button" ng-click="SpotCreate.selectCover = true"
                     class="btn btn-default green-btn green pull-left margin-bottom"
-                    ng-if="!SpotCreate.selectCover">Select cover
+                    ng-show="!SpotCreate.selectCover">Select cover
             </button>
             <button type="button" ng-click="SpotCreate.selectCover = false" class="btn btn-default green-btn pull-left"
-                    ng-if="SpotCreate.selectCover">Cancel
+                    ng-show="SpotCreate.selectCover" id="cover_cancel_button">Cancel
             </button>
 
           </div>
