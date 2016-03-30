@@ -143,8 +143,84 @@
 }
 
 @media (max-width: 380px) {
-  .import-friendmap, .add-page, .google-plus-friendmap {
+  .add-page, .google-plus-friendmap {
     top: 0 !important;
+  }
+  .import-friendmap {
+    top: -1rem !important;
+  }
+}
+
+//iphone 6 plus
+@media (max-width: 414px) {
+  .sidebar-menu-vertical ul {
+    li {
+      .pit-stops {
+        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center center;
+        background-size: 45px;
+      }
+      .recreation {
+        background: url(../img/svg/Icon_To_do.svg) no-repeat center center;
+        background-size: 40%;
+      }
+      .shelter {
+        background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center center;
+        background-size: 45%;
+      }
+    }
+    li.active {
+      &:hover, &:active {
+        .pit-stops {
+          background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center center;
+          background-size: 45px;
+        }
+        .recreation {
+          background: url(../img/svg/Icon_To_do.svg) no-repeat center center;
+          background-size: 40%;
+        }
+        .shelter {
+          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center center;
+          background-size: 45%;
+        }
+      }
+    }
+  }
+}
+
+
+//iphone 6
+@media (max-width: 375px) {
+  .sidebar-menu-vertical ul {
+    li {
+      .pit-stops {
+        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center center;
+        background-size: 45px;
+      }
+      .recreation {
+        background: url(../img/svg/Icon_To_do.svg) no-repeat center center;
+        background-size: 45%;
+      }
+      .shelter {
+        background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center center;
+        background-size: 55%;
+      }
+    }
+    li.active {
+      &:hover, &:active {
+        .pit-stops {
+          background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center center;
+          background-size: 45px;
+        }
+        .recreation {
+          background: url(../img/svg/Icon_To_do.svg) no-repeat center center;
+          background-size: 45%;
+        }
+        .shelter {
+          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center center;
+          background-size: 55%;
+        }
+      }
+    }
   }
 }
 
@@ -152,5 +228,42 @@
   .zoomers-content .info .counters {
     left: 12%;
     width: 80%;
+  }
+}
+
+//iphone 5
+@media (max-width: 320px) {
+  .sidebar-menu-vertical ul {
+    li {
+      .pit-stops {
+        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center center;
+        background-size: 70%;
+      }
+      .recreation {
+        background: url(../img/svg/Icon_To_do.svg) no-repeat center center;
+        background-size: 45%;
+      }
+      .shelter {
+        background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center center;
+        background-size: 55%;
+      }
+    }
+    li.active {
+      &:hover, &:active {
+        .pit-stops {
+          background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center center;
+          background-size: 70%;
+        }
+        .recreation {
+          background: url(../img/svg/Icon_To_do.svg) no-repeat center center;
+          background-size: 45%;
+        }
+        .shelter {
+          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center center;
+          background-size: 55%;
+        }
+      }
+    }
+
   }
 }
