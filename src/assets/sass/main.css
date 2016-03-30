@@ -128,9 +128,9 @@
         width: 10rem;
         height: 10rem;
     }
-    .sort-menu {
-        width: 100%;
-    }
+    /*.sort-menu {*/
+        /*width: 100%;*/
+    /*}*/
     .sort-menu .hide-wrap .close-popup {
         width: 100%;
     }

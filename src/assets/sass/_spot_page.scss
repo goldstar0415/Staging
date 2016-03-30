@@ -553,7 +553,7 @@
   }
   .carousel-navigation {
     padding: 0;
-    margin-top: 2rem;
+    margin: 2rem 0;
     .carousel-control {
       z-index: 25;
       width: 7%;
@@ -586,7 +586,12 @@
     }
   }
 }
+@media (max-width: 768px) {
+  .carousel-wrapper .carousel-navigation a img {
+    height: auto;
 
+  }
+}
 @media (max-width: 717px) {
   .carousel-wrapper .carousel-navigation .carousel-control .next {
     right: 54%;
