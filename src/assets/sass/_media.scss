@@ -88,6 +88,9 @@
     width: 100% !important;
     margin: 30px auto;
   }
+  .event-upload-photos {
+    background: $white;
+  }
 }
 
 @media (max-width: 640px) {
@@ -164,6 +167,7 @@
 
 //iphone 6 plus
 @media (max-width: 414px) {
+
   .sidebar-menu-vertical ul {
     li {
       .pit-stops {
