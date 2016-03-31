@@ -308,9 +308,6 @@
     float: left;
     margin: 5px 10px;
   }
-  &:hover {
-    background-color: $light-grey;
-  }
   .friend-avatar {
     width: 40px;
     height: 40px;
@@ -335,6 +332,13 @@
       display: inline;
 
     }
+  }
+}
+
+//fix hover on mobile
+@media only screen and (min-width:1024px) {
+  .choose-friend:hover {
+    background-color: $light-grey;
   }
 }
 

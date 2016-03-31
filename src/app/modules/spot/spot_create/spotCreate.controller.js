@@ -278,21 +278,23 @@
     };
 
     function _setCover(image, id) {
-      if (typeof image === 'string') {
-        vm.cropCover = image;
-        coverName = id;
-      } else if (image.photo_url) {
-        vm.cropCover = image.photo_url.original;
-        coverName = image.id;
-      } else {
-        var reader = new FileReader();
-        reader.onloadend = function () {
-          vm.cropCover = reader.result;
-          $scope.$apply();
-        };
-        coverName = image.name;
-        reader.readAsDataURL(image);
-      }
+      $timeout(function() {
+        if (typeof image === 'string') {
+          vm.cropCover = image;
+          coverName = id;
+        } else if (image.photo_url) {
+          vm.cropCover = image.photo_url.original;
+          coverName = image.id;
+        } else {
+          var reader = new FileReader();
+          reader.onloadend = function () {
+            vm.cropCover = reader.result;
+            $scope.$apply();
+          };
+          coverName = image.name;
+          reader.readAsDataURL(image);
+        }
+      });
     }
 
     vm.deleteImage = function (idx, id) {
