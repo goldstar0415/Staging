@@ -1,16 +1,19 @@
 <script type="text/ng-template" id="photoViewer.html">
   <div class="fixed visible-xs photo-preview">
-    <ul class="list-inline">
-      <li><a class="add-attach" ng-click="NgInput.openActivityModal()"></a></li>
-      <li class="chat-input">
-        <textarea name="message" ng-model="NgInput.message" placeholder="Start typing..." ng-focus="NgInput.onFocus()"
-                  ctrl-enter="NgInput.submit(form)" ng-maxlength="5000"
-                  ng-required="!NgInput.attachments.photos.length && !NgInput.attachments.spots.length && !NgInput.attachments.areas.length && !NgInput.attachments.links.length"
-                  class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-valid-maxlength ng-touched"
-                  required="required"></textarea>
-      </li>
-      <li><input type="submit" class="submit-send" value=""></li>
-    </ul>
+    <form name="form" ng-submit="PV.sendComment(form)" class="new-post">
+      <ul class="list-inline">
+        <li class="chat-input">
+          <textarea ng-model="PV.comment" name="comment" ng-maxlength="255" placeholder="Start typing..."
+                    required class="grey-bg"></textarea>
+
+          <div ng-if="form.comment.$error.maxlength && (form.$submitted || form.comment.$touched)"
+               class="error-message-inline">
+            <div>can't be longer then 255 symbols</div>
+          </div>
+        </li>
+        <li><input type="submit" class="submit-send" value=""></li>
+      </ul>
+    </form>
   </div>
   <div class="viewer-content">
     <div class="photo-viewer">
@@ -34,9 +37,9 @@
         </button>
         <p class="location hidden-xs">{{PV.currentPhoto.address}}</p>
 
-        <form name="form" ng-submit="PV.sendComment(form)" class="new-post">
+        <form name="form" ng-submit="PV.sendComment(form)" class="new-post hidden-xs">
           <textarea ng-model="PV.comment" name="comment" ng-maxlength="255" placeholder="Start typing..."
-                    required class="grey-bg"></textarea>
+                    required class="grey-bg no-attachments"></textarea>
 
           <div ng-if="form.comment.$error.maxlength && (form.$submitted || form.comment.$touched)"
                class="error-message-inline">
@@ -51,7 +54,7 @@
               <img class="avatar" ng-src="{{comment.sender.avatar_url.thumb}}">
             </div>
             <div class="info">
-              <h3 class="name" >
+              <h3 class="name">
                 <a ui-sref="profile.main({user_id: comment.sender.alias || comment.sender.id})">
                   {{comment.sender.first_name}} {{comment.sender.last_name}}
                 </a>
