@@ -285,16 +285,15 @@
     </section>
     <section class="event-upload-photos">
       <div class="form-group">
-        <div class="spot-section">
+        <div class="spot-section clearfix">
           <label class="col-md-3 col-sm-12 col-xs-12 control-label hidden-xs">Add photos </label>
 
-          <!--<label class="col-sm-12" style="font-size: 30px; text-align: center;">Добавить D & D</label>-->
           <div class="col-md-9 col-sm-12 col-xs-12">
             <uploader drop-zone="true"></uploader>
           </div>
         </div>
 
-        <div class="spot-section">
+        <div class="spot-section clearfix">
           <div class="col-md-12 col-sm-12 col-xs-12">
             <ul class="photos row">
               <li ng-repeat="item in SpotCreate.images.files track by $index">
@@ -312,7 +311,7 @@
             </ul>
             <div ng-if="SpotCreate.selectCover">Choose the photo</div>
           </div>
-          <div ng-if="SpotCreate.images.files.length > 0">
+          <div ng-if="SpotCreate.images.files.length > 0" class="clearfix">
             <button type="button" ng-click="SpotCreate.selectCover = true"
                     class="btn btn-default green-btn green pull-left margin-bottom"
                     ng-show="!SpotCreate.selectCover">Select cover
