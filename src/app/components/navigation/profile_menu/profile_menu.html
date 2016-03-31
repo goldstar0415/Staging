@@ -9,7 +9,7 @@
         <li>
           <a class="nav-spots" ui-sref="spots({user_id: $root.currentUser.id})"
              ng-class="{active: Profile.$state.current.name == 'spots' || Profile.$state.current.name == 'spot'}">
-            <span>My spots</span>
+            <span>My Spots</span>
           </a>
         </li>
         <li ng-if="$root.isRole($root.currentUser, 'blogger')">
