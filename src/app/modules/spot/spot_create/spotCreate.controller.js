@@ -384,8 +384,11 @@
       if (data.start_date && data.end_date) {
         vm.start_date = data.start_date;
         vm.end_date = data.end_date;
-        vm.start_time = data.start_date;
-        vm.end_time = data.end_date;
+
+        if (data.start_date.indexOf('00:00:00') === -1 || data.end_date.indexOf('00:00:00') === -1) {
+          vm.start_time = data.start_date;
+          vm.end_time = data.end_date;
+        }
       }
 
       _setCover(data.cover_url.original, data.id);
