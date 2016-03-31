@@ -1,22 +1,19 @@
 <header>
   <nav class="hidden-md hidden-lg nav-mobile">
     <ul>
-      <li class="separator-bg map-profile"> <!-- ng-if="Header.$state.current.name == 'index'" -->
-        <a ui-sref="index" ui-sref-active="active"><span class="map-icon"></span></a>
-      </li>
-      <!-- <li ng-if="$root.currentUser && Header.$state.current.name != 'index'" class="map-profile">
-        <a ui-sref="profile.main({user_id: $root.currentUser.alias || $root.currentUser.id})" ui-sref-active="active" class="user-name">
-          <span>{{$root.currentUser.first_name}}</span>
-          <span class="user-ava"><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
+      <li class="">
+        <a class="menu-btn pull-left" snap-toggle="left">
+          <span class="menu-icon "></span>
         </a>
-      </li> -->
-      <li class="logo-mini">
-        <a ui-sref="index"><img src="assets/img/svg/logo.svg" alt="logo"></a>
       </li>
-
-      <li>
-        <a class="menu-btn pull-right" snap-toggle="left">
-          <span class="menu-icon"></span>
+      <li class="logo-mini">
+        <a ui-sref="index">
+          <img src="assets/img/svg/logo.svg" alt="logo">
+        </a>
+      </li>
+      <li class="map-profile pull-right"> <!-- ng-if="Header.$state.current.name == 'index'" -->
+        <a ui-sref="index" ui-sref-active="active" class="pull-right">
+          <span class="map-icon"></span>
         </a>
       </li>
     </ul>

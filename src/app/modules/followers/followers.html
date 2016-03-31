@@ -2,11 +2,12 @@
   <h2 class="title-name nav-blue">
     {{currentUser.id == profileUser.id ? 'My' : profileUser.first_name + "'s"}}
     {{ Follower.isFollowings ? 'followings' : 'followers' }}
-    <!--{{ Follower.isFollowings ? profileUser.count_followings : profileUser.count_followers }}-->
   </h2>
 </div>
 
-<div ng-repeat="item in Follower.users" class="col-xs-4 col-md-3 mgt20">
+<div ng-repeat="item in Follower.users"
+     ui-sref="profile.main({user_id: item.alias || item.user_id})"
+     class="col-xs-4 col-md-3 mgt20">
   <img ng-src="{{ item.avatar_url.medium }}" alt="" class="media-full-width">
 </div>
 
