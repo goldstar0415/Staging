@@ -107,7 +107,12 @@
     width: 50%;
   }
 }
-
+//iPhone 5 landscape
+@media (max-width: 568px) {
+  .add-friend {
+    right: 6.6rem;
+  }
+}
 @media (max-width: 500px) {
   header nav ul li .user-name {
     max-width: 140px;
@@ -253,8 +258,10 @@
   .btn-back {
     top: 0 !important;
   }
+
   .add-friend {
-    right: 1.6rem;
+    right: 6.6rem;
+    top: 0 !important;
   }
   .sidebar-menu-vertical ul {
     li {
