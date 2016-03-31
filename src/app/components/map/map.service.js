@@ -1197,72 +1197,75 @@
       }
 
       function BindSpotPopup(marker, spot) {
-        //if ($rootScope.isMobile) {
-        //  marker.on('click', function () {
-        //    $modal.open({
-        //      templateUrl: 'SpotMapModal.html',
-        //      controller: 'SpotMapModalController',
-        //      controllerAs: 'SpotPopup',
-        //      modalClass: 'spot-mobile-modal',
-        //      resolve: {
-        //        spot: function () {
-        //          return spot;
-        //        },
-        //        marker: function () {
-        //          return marker;
-        //        }
-        //      }
-        //    });
-        //  });
-        //} else {
-        var scope = $rootScope.$new();
-        var offset = 75;
-        var options = {
-          keepInView: false,
-          autoPan: true,
-          closeButton: false,
-          className: 'popup',
-          autoPanPaddingTopLeft: L.point(offset, offset),
-          autoPanPaddingBottomRight: L.point(offset, offset)
-        };
+        if (angular.element(window).width() <= 992) {
+          marker.on('click', function () {
+            $modal.open({
+              templateUrl: 'SpotMapModal.html',
+              controller: 'SpotMapModalController',
+              controllerAs: 'SpotPopup',
+              modalClass: 'spot-mobile-modal',
+              resolve: {
+                spot: function () {
+                  return Spot.get({id: spot.spot.id}).$promise;
+                },
+                marker: function () {
+                  return marker;
+                }
+              }
+            });
+          });
+        } else {
+          var scope = $rootScope.$new();
+          var offset = 75;
+          var options = {
+            keepInView: false,
+            autoPan: true,
+            closeButton: false,
+            className: 'popup',
+            autoPanPaddingTopLeft: L.point(offset, offset),
+            autoPanPaddingBottomRight: L.point(offset, offset)
+          };
 
 
-        scope.item = spot;
-        scope.marker = marker;
-        var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
-        var popup = L.popup(options).setContent(popupContent[0]);
-        marker.bindPopup(popup);
+          scope.item = spot;
+          scope.marker = marker;
+          var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
+          var popup = L.popup(options).setContent(popupContent[0]);
+          marker.bindPopup(popup);
 
-        marker.on('click', function () {
-          console.log($rootScope.syncSpots);
-          console.log(scope.item);
-          var syncSpot;
-          if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: scope.item.spot.id}))) {
-            scope.item.spot = syncSpot;
-            SpotService.initMarker(scope.item.spot);
-          } else {
+          marker.on('click', function () {
             scope.item.$loading = true;
 
-            Spot.get({id: scope.item.spot.id}, function (fullSpot) {
-              //merge photos
-              fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
-              scope.item.spot = fullSpot;
-
-              var params = {
-                page: 1,
-                limit: 10,
-                spot_id: fullSpot.id
-              };
-              SpotComment.query(params, function (comments) {
-                scope.item.spot.comments = comments.data;
-                SpotService.initMarker(scope.item.spot);
-
-                scope.item.$loading = false;
+            var syncSpot;
+            if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: scope.item.spot.id}))) {
+              _loadSpotComments(scope, syncSpot);
+            } else {
+              Spot.get({id: scope.item.spot.id}, function (fullSpot) {
+                //merge photos
+                fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
+                _loadSpotComments(scope, fullSpot);
               });
-            });
-          }
+            }
+          });
+        }
+      }
+
+      function _loadSpotComments(scope, spot) {
+        scope.item.spot = spot;
+
+        var params = {
+          page: 1,
+          limit: 10,
+          spot_id: spot.id
+        };
+        SpotComment.query(params, function (comments) {
+          scope.item.spot.comments = comments.data;
+          SpotService.initMarker(scope.item.spot);
+
+          scope.item.$loading = false;
+        }, function (resp) {
+          console.warn(resp);
         });
-        //}
       }
 
       function BindBlogPopup(marker, post) {
@@ -1529,7 +1532,6 @@
           $rootScope.$emit('update-map-data', [], null, false);
         }
       }
-
 
 
       //return sorted by rating array

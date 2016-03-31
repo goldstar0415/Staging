@@ -5,7 +5,7 @@
 </div>
 <a ui-sref="spot_create" ng-if="currentUser.id == profileUser.id" class="add-friend nav-bg-green"
    title="Create new spot"></a>
-<facebook-events ng-if="currentUser.id == profileUser.id"></facebook-events>
+<facebook-events ng-if="currentUser.id == profileUser.id" spots="Spots.spots"></facebook-events>
 
 <div infinite-scroll="Spots.pagination.nextPage()" infinite-scroll-disabled="Spots.pagination.busy"
      class="clearfix" infinite-scroll-distance="1">

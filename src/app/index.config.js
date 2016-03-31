@@ -61,6 +61,24 @@
       DIALOGS_NO: 'No'
     });
 
+    moment.locale('en', {
+      relativeTime : {
+        future : 'in %s',
+        past : '%s ago',
+        s : 'a few moments',
+        m : 'a minute',
+        mm : '%d minutes',
+        h : 'an hour',
+        hh : '%d hours',
+        d : 'a day',
+        dd : '%d days',
+        M : 'a month',
+        MM : '%d months',
+        y : 'a year',
+        yy : '%d years'
+      }
+    });
+
     //enable js console
     //if (DEBUG && windowWidth < 992) {
     //  var script = angular.element('<script>')

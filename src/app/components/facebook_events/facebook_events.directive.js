@@ -15,7 +15,10 @@
       template: '<a ng-click="FB.import()" class="import-friendmap"></a>',
       controller: FacebookEventsCtrl,
       controllerAs: 'FB',
-      bindToController: true
+      bindToController: true,
+      scope: {
+        spots: '='
+      }
     };
 
 
@@ -90,6 +93,9 @@
           controller: SpotsModalController,
           controllerAs: 'modal',
           resolve: {
+            sourceSpots: function () {
+              return vm.spots;
+            },
             spots: function () {
               return events;
             }
@@ -99,7 +105,7 @@
     }
 
     /** @ngInject */
-    function SpotsModalController(spots, $modalInstance, API_URL, Spot) {
+    function SpotsModalController(spots, sourceSpots, $modalInstance, API_URL, Spot) {
       var vm = this;
       vm.API_URL = API_URL;
       vm.spots = spots;
@@ -114,7 +120,10 @@
           _.each(vm.spots, function (spot) {
             if (spot.selected) {
               delete spot.selected;
-              Spot.save(spot, function () {
+              Spot.save(spot, function (newSpot) {
+                if (sourceSpots && sourceSpots.data) {
+                  sourceSpots.data.unshift(newSpot);
+                }
                 toastr.success(spot.title + ' successfully imported')
               }, function () {
                 toastr.error(spot.title + ' import failed')

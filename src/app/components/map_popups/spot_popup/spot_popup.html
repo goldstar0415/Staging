@@ -69,7 +69,7 @@
         </div>
       </div>
       <div ng-show="view == 'photos'" class=" col-xs-12 photo-popup">
-        <div class="col-xs-12 previous-next">
+        <div class="col-xs-12 previous-next" ng-if="data.spot.photos.length > 0">
           <a ng-click="changePhoto(-1)"
              ng-show="photoControl.start > 0" class="previous"></a>
           <a ng-click="changePhoto(1)"
@@ -81,7 +81,7 @@
             <img ng-src="{{item.photo_url.thumb}}">
           </a>
         </div>
-        <div ng-if="data.spot.photos.length == 0" class="photos-event clearfix">
+        <div ng-if="!data.spot.photos || data.spot.photos.length == 0" class="photos-event clearfix">
           <span>There are no photos yet</span>
         </div>
       </div>
@@ -107,7 +107,9 @@
           <share item="data.spot" type="spot"></share>
         </li>
         <li ng-if="data.spot.category.type.name == 'event'">
-          <a class="download" ng-click="">Export to ICS</a>
+          <a class="download" ng-href="{{API_URL + '/spots/' + data.spot.id + '/export'}}" target="_blank">
+            Export to ICS
+          </a>
         </li>
       </ul>
       <!--<share item="data.spot" type="spot" class="hidden"></share>-->
