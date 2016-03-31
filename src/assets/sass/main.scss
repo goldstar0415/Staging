@@ -1450,6 +1450,9 @@ span.location-icon {
 .description *, .half-width label {
   color: grey;
   font-weight: normal !important;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  white-space: pre-line;
 }
 
 .one-spot-section stars .outline-none {
