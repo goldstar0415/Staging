@@ -36,7 +36,6 @@
         toastr.error('Unauthorized!');
         $state.go('index');
       }
-
       if ($rootScope.currentUser && current.parent != 'profile') {
         UserService.setProfileUser($rootScope.currentUser);
       }

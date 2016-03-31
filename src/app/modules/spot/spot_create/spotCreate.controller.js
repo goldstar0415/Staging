@@ -315,6 +315,8 @@
 
     vm.changeCover = function (image) {
       if (vm.selectCover) {
+        angular.element('#cover_cancel_button').addClass('ng-hide');  //quirk. without it the "cancel" button disappears 1 second
+
         if (image.photo_url) {
           _setCover(image.photo_url.original, image.id);
         } else {
@@ -323,7 +325,6 @@
 
         vm.selectCover = false;
         vm.saveCrop = false;
-        angular.element('#cover_cancel_button').addClass('ng-hide');  //quirk. without it the "cancel" button disappears 1 second
       }
     };
 

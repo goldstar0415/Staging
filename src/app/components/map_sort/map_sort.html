@@ -1,10 +1,11 @@
-<div ng-if="MapSort.vertical && ($root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview')" class="sidebar-menu-wrap" ng-class="{'to-bottom': !$root.currentUser}">
+<div ng-if="MapSort.vertical && ($root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview')"
+     class="sidebar-menu-wrap" ng-class="{'to-bottom': !$root.currentUser}">
   <div class="show-menu-profile visible-xs" ng-click="MapSort.vertical = !MapSort.vertical"></div>
 
   <div class="sidebar-menu-vertical">
     <ul>
       <li class="hidden-xs" ng-click="MapSort.vertical = !MapSort.vertical">
-        <a  class="full-small"></a>
+        <a class="full-small"></a>
       </li>
       <li ng-click="$root.toggleLayer('event')" ng-class="{'active': $root.sortLayer == 'event'}">
         <a class="events"><span class="hidden-xs">Events</span></a>

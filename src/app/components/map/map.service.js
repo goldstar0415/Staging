@@ -1234,35 +1234,38 @@
         marker.bindPopup(popup);
 
         marker.on('click', function () {
-          console.log($rootScope.syncSpots);
-          console.log(scope.item);
+          scope.item.$loading = true;
+
           var syncSpot;
           if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: scope.item.spot.id}))) {
-            scope.item.spot = syncSpot;
-            SpotService.initMarker(scope.item.spot);
+            _loadSpotComments(scope, syncSpot);
           } else {
-            scope.item.$loading = true;
-
             Spot.get({id: scope.item.spot.id}, function (fullSpot) {
               //merge photos
               fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
-              scope.item.spot = fullSpot;
-
-              var params = {
-                page: 1,
-                limit: 10,
-                spot_id: fullSpot.id
-              };
-              SpotComment.query(params, function (comments) {
-                scope.item.spot.comments = comments.data;
-                SpotService.initMarker(scope.item.spot);
-
-                scope.item.$loading = false;
-              });
+              _loadSpotComments(scope, fullSpot);
             });
           }
         });
         //}
+      }
+
+      function _loadSpotComments(scope, spot) {
+        scope.item.spot = spot;
+
+        var params = {
+          page: 1,
+          limit: 10,
+          spot_id: spot.id
+        };
+        SpotComment.query(params, function (comments) {
+          scope.item.spot.comments = comments.data;
+          SpotService.initMarker(scope.item.spot);
+
+          scope.item.$loading = false;
+        }, function (resp) {
+          console.warn(resp);
+        });
       }
 
       function BindBlogPopup(marker, post) {
