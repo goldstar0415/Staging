@@ -83,6 +83,7 @@
     height: 10rem;
   }
 }
+
 @media (max-width: 767px) {
   .authentication .modal-dialog {
     width: 100% !important;
@@ -90,6 +91,10 @@
   }
   .event-upload-photos {
     background: $white;
+  }
+
+  .viewer-wrap .modal-dialog .photo-viewer .image .close {
+    top: -3rem;
   }
 }
 
@@ -110,12 +115,14 @@
     width: 50%;
   }
 }
+
 //iPhone 5 landscape
 @media (max-width: 568px) {
   .add-friend {
     right: 6.6rem;
   }
 }
+
 @media (max-width: 500px) {
   header nav ul li .user-name {
     max-width: 140px;
@@ -204,7 +211,6 @@
     right: 6rem;
   }
 }
-
 
 //iphone 6
 @media (max-width: 375px) {
