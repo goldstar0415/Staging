@@ -23,9 +23,9 @@
                 follows you
               </span>
               <span ng-if="currentUser.id != item.feedable.id" class="mgb10">
-                add <a ui-sref="profile.main({user_id: item.feedable.alias || item.feedable.id})">
+                now following <a ui-sref="profile.main({user_id: item.feedable.alias || item.feedable.id})">
                 {{item.feedable.first_name}} {{item.feedable.last_name}}
-              </a> to following
+              </a>
               </span>
               </div>
 
@@ -48,7 +48,7 @@
               </div>
 
               <div ng-switch-when="OnSpotCreate" class="mgb10">
-                create spot
+                created spot:
                 <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})"
                   >{{item.feedable.title}}
                 </a>

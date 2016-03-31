@@ -16,7 +16,7 @@
      * @param idx {number} area index
      */
     vm.RemoveArea = function (id, idx) {
-      dialogs.confirm('Confirmation', 'Are you sure you want to delete area?').result.then(function () {
+      dialogs.confirm('Confirmation', 'Are you sure you want to delete?').result.then(function () {
         Area.delete({area_id: id}, function () {
           vm.areas.splice(idx, 1);
           toastr.info('Area successfully deleted');
