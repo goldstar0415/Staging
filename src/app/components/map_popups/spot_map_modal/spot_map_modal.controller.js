@@ -9,51 +9,57 @@
     .controller('SpotMapModalController', SpotMapModalController);
 
   /** @ngInject */
-  function SpotMapModalController($scope, spot, marker, SpotService, $modalInstance, Spot, SpotComment) {
-    $scope.data = spot;
+  function SpotMapModalController($scope, spot, marker, SpotService, $modalInstance, API_URL, SpotComment) {
+    $scope.data = {spot: spot};
     $scope.marker = marker;
+    $scope.close = close;
+
+    $scope.API_URL = API_URL;
+    $scope.view = 'about';
+    $scope.reviewIndex = 0;
     $scope.saveToCalendar = SpotService.saveToCalendar;
     $scope.removeFromCalendar = SpotService.removeFromCalendar;
     $scope.addToFavorite = SpotService.addToFavorite;
     $scope.removeFromFavorite = SpotService.removeFromFavorite;
-    $scope.view = 'about';
-    $scope.showNextPhoto = false;
-    $scope.showPrevPhoto = false;
+    $scope.changeReview = changeReview;
+    $scope.changePhoto = changePhoto;
 
-    $scope.showNextReview = false;
-    $scope.showPrevReview = false;
 
-    $scope.nextPhoto = SpotService.mapNextPhoto;
-    $scope.prevPhoto = SpotService.mapPrevPhoto;
-
-    $scope.nextReview = SpotService.mapNextReview;
-    $scope.prevReview = SpotService.mapPrevReview;
-
-    $scope.close = close;
+    $scope.photoControl = {
+      start: 0,
+      step: 4
+    };
 
     run();
 
-    /////////
+
+    ///////
 
     function run() {
-      SpotService.setScope($scope);
+      $scope.data.spot.photos = _.union($scope.data.spot.photos, $scope.data.spot.comments_photos);
 
-      Spot.get({id:$scope.data.spot.id}, function (fullSpot) {
-        //merge photos
-        fullSpot.photos = _.union(fullSpot.comments_photos, fullSpot.photos);
-        $scope.data.spot = fullSpot;
-
-        var params = {
-          page: 1,
-          limit: 10,
-          spot_id: fullSpot.id
-        };
-        SpotComment.query(params, function (comments) {
-          $scope.data.spot.comments = comments.data;
-
-          SpotService.initMarker($scope.data.spot);
-        });
+      var params = {
+        page: 1,
+        limit: 10,
+        spot_id: $scope.data.spot.id
+      };
+      SpotComment.query(params, function (comments) {
+        $scope.data.spot.comments = comments.data;
       });
+    }
+
+    function changeReview(step) {
+      var nextIndex = $scope.reviewIndex + step;
+      if (nextIndex >= 0 && nextIndex < $scope.data.spot.comments.length) {
+        $scope.reviewIndex = nextIndex;
+      }
+    }
+
+    function changePhoto(step) {
+      var nextIndex = $scope.photoControl.start + step;
+      if (nextIndex >= 0 && nextIndex + $scope.photoControl.step <= $scope.data.spot.photos.length) {
+        $scope.photoControl.start = nextIndex;
+      }
     }
 
     function close() {

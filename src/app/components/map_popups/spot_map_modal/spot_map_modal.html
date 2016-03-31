@@ -24,16 +24,17 @@
       <div class="col-xs-12 no-pad">
         <h3 class="col-xs-12 no-pad">
           <a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})"
-            >{{::data.spot.title}}</a>
+            >{{data.spot.title}}</a>
         </h3>
 
-        <p class="location">{{::data.address}}</p>
+        <p class="location">{{data.address}}</p>
 
         <p class="date-popup" ng-if="data.spot.category.type.name == 'event'">
           <span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>
         </p>
 
-        <a class="author-popup" ui-sref="profile.main({user_id: data.spot.user.alias || data.spot.user_id})" ng-if="data.spot.user">{{'by ' + data.spot.user.first_name
+        <a class="author-popup" ui-sref="profile.main({user_id: data.spot.user.alias || data.spot.user_id})"
+           ng-if="data.spot.user">{{'by ' + data.spot.user.first_name
           + ' ' + data.spot.user.last_name}}</a>
       </div>
 
@@ -44,55 +45,56 @@
         </div>
 
         <div ng-show="view == 'reviews'" class=" col-xs-12 reviews-popup">
-          <div ng-if="data.spot.comments.length > 0">
-            <div class="col-xs-12 previous-next" ng-if="data.spot.comments.length > 1">
-              <a ng-click="prevReview()" class="previous">Previous</a> <a ng-click="nextReview()" class="next ">Next</a>
+          <div ng-if="data.spot.comments.length > 0" >
+            <div class="col-xs-12 previous-next" ng-if="data.spot.comments.length > 1 " >
+              <a ng-click="changeReview(-1)" ng-show="reviewIndex > 0" class="previous"></a>
+              <a ng-click="changeReview(1)" ng-show="reviewIndex < data.spot.comments.length - 1" class="next "></a>
             </div>
-            <div class="col-xs-2 avatar">
-              <img ng-src="{{currentReview.sender.avatar_url.thumb}}">
+
+            <div class="col-xs-3 avatar">
+              <img ng-src="{{data.spot.comments[reviewIndex].sender.avatar_url.thumb}}"
+                   ui-sref="profile.main({user_id: data.spot.comments[reviewIndex].sender.alias || data.spot.comments[reviewIndex].sender.user_id})">
             </div>
-            <div class="col-xs-10 content">
-              <span><a class="reviews-user">{{currentReview.sender.first_name + ' ' + currentReview.sender.last_name}}</a></span>
+            <div class="col-xs-9 content">
+                  <span><a class="reviews-user"
+                           ui-sref="profile.main({user_id: data.spot.comments[reviewIndex].sender.alias || data.spot.comments[reviewIndex].sender.user_id})">
+                    {{data.spot.comments[reviewIndex].sender.first_name + ' ' + data.spot.comments[reviewIndex].sender.last_name}}
+                  </a></span>
 
-              <p class="description line-break" ng-bind-html="currentReview.body | linky:'_blank'"></p>
+              <p class="date-reviews ">{{data.spot.comments[reviewIndex].created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>
 
-              <p class="date-reviews ">{{currentReview.created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>
+              <p class="description line-break" ng-bind-html="data.spot.comments[reviewIndex].body | linky:'_blank'"></p>
 
             </div>
           </div>
-
           <div ng-if="!data.spot.comments.length" class="photos-event clearfix">
-            <span>here is no reviews yet</span>
+            <span>There are no reviews yet</span>
           </div>
         </div>
 
         <div ng-show="view == 'photos'" class=" col-xs-12 wrapper">
-          <div ng-if="showPhotosControls" class="col-xs-12 previous-next">
-            <a ng-click="prevPhoto()" class="previous">Previous</a>
-            <a ng-click="nextPhoto()" class="next">Next</a>
+          <div class="col-xs-12 previous-next">
+            <a ng-click="changePhoto(-1)"
+               ng-show="photoControl.start > 0" class="previous"></a>
+            <a ng-click="changePhoto(1)"
+               ng-show="photoControl.start + photoControl.step < data.spot.photos.length" class="next"></a>
           </div>
-
-          <div ng-if="showPhotos" class="col-xs-12 photos-popup">
-            <a photo-viewer items="data.spot.photos" index="firstPhotoIndex" current-item="firstItem">
-              <img ng-src="{{firstPhoto}}">
-            </a>
-            <a ng-if="secondItem" photo-viewer items="data.spot.photos" index="secondPhotoIndex"
-               current-item="secondItem">
-              <img ng-src="{{secondPhoto}}">
+          <div ng-if="data.spot.photos.length > 0" class="photos-event clearfix row">
+            <a ng-repeat="item in data.spot.photos.slice(photoControl.start, photoControl.start + photoControl.step)"
+               photo-viewer items="data.spot.photos" index="$index" current-item="item" class="col-xs-3">
+              <img ng-src="{{item.photo_url.thumb}}">
             </a>
           </div>
-
-          <div ng-if="!showPhotos" class="photos-event clearfix">
-            <span>here is no photos yet</span>
+          <div ng-if="data.spot.photos.length == 0" class="photos-event clearfix">
+            <span>There are no photos yet</span>
           </div>
 
         </div>
 
       </div>
-      <div class="links-nav col-xs-12">
-        <ul class="tools">
-
-          <li ng-if="!data.spot.is_saved">
+      <div class="links-nav">
+        <ul class="tools col-xs-offset-3 clearfix">
+          <li ng-if="!data.spot.is_saved && data.spot.category.type.name == 'event'">
             <a class="save-event" ng-click="saveToCalendar(data.spot)">Save</a>
           </li>
           <li ng-if="$root.currentUser && data.spot.is_saved">
@@ -101,15 +103,22 @@
           <li ng-if="$root.currentUser.id != data.spot.user_id && !data.spot.is_favorite">
             <a class="favorite-spot" ng-click="addToFavorite(data.spot)">Favorite</a>
           </li>
-          <li ng-if="$root.currentUser.id != data.spot.user_id && data.spot.is_favorite">
+          <li ng-if="$root.currentUser && $root.currentUser.id != data.spot.user_id && data.spot.is_favorite">
             <a class="fav favorited" ng-click="removeFromFavorite(data.spot)">Unfavorite</a>
           </li>
           <li>
             <invite-friends item="data.spot"></invite-friends>
           </li>
+          <li>
+            <share item="data.spot" type="spot"></share>
+          </li>
+          <li ng-if="data.spot.category.type.name == 'event'">
+            <a class="download" ng-href="{{API_URL + '/spots/' + data.spot.id + '/export'}}" target="_blank">
+              Export to ICS
+            </a>
+          </li>
         </ul>
-
-        <share item="data.spot" type="spot"></share>
+        <!--<share item="data.spot" type="spot" class="hidden"></share>-->
       </div>
     </div>
 

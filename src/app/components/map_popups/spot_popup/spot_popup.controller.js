@@ -9,7 +9,7 @@
     .controller('SpotPopupController', SpotPopupController);
 
   /** @ngInject */
-  function SpotPopupController($scope, SpotService) {
+  function SpotPopupController($scope, SpotService, API_URL) {
     $scope.view = 'about';
     $scope.reviewIndex = 0;
     $scope.saveToCalendar = SpotService.saveToCalendar;
@@ -18,6 +18,7 @@
     $scope.removeFromFavorite = SpotService.removeFromFavorite;
     $scope.changeReview = changeReview;
     $scope.changePhoto = changePhoto;
+    $scope.API_URL = API_URL;
 
 
     $scope.photoControl = {
