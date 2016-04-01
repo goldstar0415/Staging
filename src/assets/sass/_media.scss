@@ -210,6 +210,10 @@
   .add-friend {
     right: 6rem;
   }
+  .spot-mobile-modal .modal-dialog {
+    width: 100%;
+    margin: 11rem 0;
+  }
 }
 
 //iphone 6
@@ -217,6 +221,10 @@
   .add-friend {
     right: 6.6rem;
     top: 0 !important;
+  }
+  .spot-mobile-modal .modal-dialog {
+    width: 100%;
+    margin: 11rem 0;
   }
   .event .row share .wrap-from-share .share {
     bottom: 1rem !important;
@@ -268,7 +276,10 @@
   .btn-back {
     top: 0 !important;
   }
+.form-horizontal .create-article-btn {
+  left: -0.5rem;
 
+}
   .add-friend {
     right: 6.6rem;
     top: 0 !important;
