@@ -70,7 +70,6 @@
      */
     vm.deletePhoto = function (id, idx) {
       dialogs.confirm('Confirmation', 'Are you sure you want to delete photo?').result.then(function () {
-
         Photo.delete({id: id}, function () {
           vm.photos.splice(idx, 1);
           for (var k in markers) {

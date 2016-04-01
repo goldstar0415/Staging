@@ -103,6 +103,10 @@
   .viewer-wrap .modal-dialog .photo-viewer .image .close {
     top: -3rem;
   }
+
+  uploader .drop-box {
+    height: 16rem;
+  }
 }
 
 @media (max-width: 640px) {
@@ -221,14 +225,14 @@
     width: 100%;
     margin: 11rem 0;
   }
-  .ng-pristine .drop-box {
+  uploader .drop-box {
     height: 17rem;
   }
 }
 
 //iphone 6
 @media (max-width: 375px) {
-  .ng-pristine .drop-box {
+  uploader .drop-box {
     height: 17rem;
   }
   .add-friend {
