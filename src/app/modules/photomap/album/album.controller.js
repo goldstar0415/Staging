@@ -69,13 +69,16 @@
      * @param idx {number} photo index
      */
     vm.deletePhoto = function (id, idx) {
-      Photo.delete({id: id}, function () {
-        vm.photos.splice(idx, 1);
-        for (var k in markers) {
-          if (markers[k].photo_id == id) {
-            MapService.RemoveMarker(markers[k].marker);
+      dialogs.confirm('Confirmation', 'Are you sure you want to delete photo?').result.then(function () {
+
+        Photo.delete({id: id}, function () {
+          vm.photos.splice(idx, 1);
+          for (var k in markers) {
+            if (markers[k].photo_id == id) {
+              MapService.RemoveMarker(markers[k].marker);
+            }
           }
-        }
+        });
       });
     };
 
