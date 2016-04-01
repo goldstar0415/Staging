@@ -201,6 +201,21 @@
     -o-transition: background 0.3s;
     transition: background 0.3s;
 }
+.add-friend-my-blog {
+  display: block;
+  width: 33px;
+  height: 33px;
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  background: url(../img/svg/add_icon.svg) no-repeat;
+  background-position: center;
+  background-color: #00b7f3;
+  -webkit-transition: background 0.3s;
+  -moz-transition: background 0.3s;
+  -o-transition: background 0.3s;
+  transition: background 0.3s;
+}
 
 .tags {
   background: url(../img/icons/tag.png) 0 2px no-repeat;

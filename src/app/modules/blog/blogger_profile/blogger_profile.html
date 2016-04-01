@@ -2,7 +2,7 @@
   <div class="text-center"><h2 class="title-name">
     {{currentUser.id == profileUser.id ? 'My blog' : profileUser.first_name + "'s blog"}}
   </h2></div>
-  <a ui-sref="profile_blog.create" class="add-friend" title="Create new post"
+  <a ui-sref="profile_blog.create" class="add-friend-my-blog" title="Create new post"
      ng-if="currentUser.id == profileUser.id"></a>
 </div>
 
