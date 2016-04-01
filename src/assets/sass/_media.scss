@@ -76,11 +76,18 @@
     float: none;
   }
 }
-
+@media (min-width: 992px) {
+  .nav-bg-green2 {
+    top: 5rem !important;
+  }
+}
 @media (max-width: 991px) and (min-width: 767px) {
   .information-profile .avatar-wrap .avatar {
     width: 10rem;
     height: 10rem;
+  }
+  .nav-bg-green2 {
+    top: 5rem !important;
   }
 }
 
@@ -164,7 +171,7 @@
 }
 
 @media (max-width: 380px) {
-  .add-page, .google-plus-friendmap {
+  .add-page, .album-tools .google-plus-friendmap {
     top: 0 !important;
   }
   .import-friendmap {
@@ -210,13 +217,30 @@
   .add-friend {
     right: 6rem;
   }
+  .spot-mobile-modal .modal-dialog {
+    width: 100%;
+    margin: 11rem 0;
+  }
+  .ng-pristine .drop-box {
+    height: 17rem;
+  }
 }
 
 //iphone 6
 @media (max-width: 375px) {
+  .ng-pristine .drop-box {
+    height: 17rem;
+  }
   .add-friend {
     right: 6.6rem;
     top: 0 !important;
+  }
+  .add-friend-my-blog {
+    top: 2.8rem !important;
+  }
+  .spot-mobile-modal .modal-dialog {
+    width: 100%;
+    margin: 11rem 0;
   }
   .event .row share .wrap-from-share .share {
     bottom: 1rem !important;
@@ -268,10 +292,19 @@
   .btn-back {
     top: 0 !important;
   }
-
+  .form-horizontal .create-article-btn {
+    left: -0.5rem;
+  }
+  .nav-bg-green2 {
+    top: 3rem !important;
+  }
   .add-friend {
     right: 6.6rem;
     top: 0 !important;
+  }
+  .add-friend-my-blog {
+    right: 1.6rem;
+    top: 3rem !important;
   }
   .sidebar-menu-vertical ul {
     li {
