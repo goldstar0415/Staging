@@ -10,7 +10,7 @@
           <div class="article-wrapper">
             <div class="image-wrapper clearfix">
               <img ng-if="Article.cover_url" ng-src="{{Article.cover_url.original}}" class="article-img">
-              <span class="date-sm hidden-xs">{{ Article.created_at | toTimezone:'DD' }}<br>{{ Article.created_at | toTimezone:'MMM' }}</span>
+              <span class="date-sm hidden-xs" ng-bind-html="Article.getDate(Article.created_at)"></span>
             </div>
             <div class="row">
               <h2 class="title-blog row">
@@ -18,7 +18,8 @@
                 {{Article.title}}
               </span>
 
-                <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right">11<br>May</span>
+              <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right"
+                    ng-bind-html="Article.getDate(Article.created_at)"></span>
 
                 <div class="clearfix"></div>
               </h2>
@@ -40,11 +41,11 @@
                   </a>
                 </p>
 
-                <p class="col-xs-5  col-sm-4 category">Category:
+                <p class="col-xs-12  col-sm-4 category">Category:
                   <a>{{Article.category.display_name}}</a>
                 </p>
 
-                <p class="col-xs-5 col-sm-3 views">Views: {{Article.count_views}}</p>
+                <p class="col-xs-12 col-sm-3 views">Views: {{Article.count_views}}</p>
               </div>
             </div>
             <share item="Article" type="post" only-icon="true"></share>
@@ -57,9 +58,9 @@
 
       <!--block with comets  -->
       <section class="col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12 comments-section">
-        <div class="comments-content ng-scope hidden-xs">
+        <div class="comments-content ng-scope">
           <ng-input message="Article.message" attachments="Article.attachments" on-submit="Article.sendComment()"
-                    maxlength="5000"></ng-input>
+                    maxlength="5000" mobile="true"></ng-input>
         </div>
 
         <div infinite-scroll="Article.pagination.nextPage()" infinite-scroll-disabled="Article.pagination.busy"
@@ -85,7 +86,6 @@
               </div>
 
               <div class="col-xs-12 edit-delete">
-                <!--<a class="like">1</a>-->
                 <a ng-if="post.user_id == currentUser.id" ng-click="Article.deleteComment(post, $index)" class="delete">Delete</a>
               </div>
 
@@ -97,18 +97,5 @@
 
       <!--end block with comets  -->
     </div>
-  </div>
-  <div class="fixed visible-xs">
-    <ul class="list-inline">
-      <li><a class="add-attach" ng-click="NgInput.openActivityModal()"></a></li>
-      <li class="chat-input">
-        <textarea name="message" ng-model="NgInput.message" placeholder="Start typing..." ng-focus="NgInput.onFocus()"
-                  ctrl-enter="NgInput.submit(form)" ng-maxlength="5000"
-                  ng-required="!NgInput.attachments.photos.length &amp;&amp; !NgInput.attachments.spots.length &amp;&amp; !NgInput.attachments.areas.length &amp;&amp; !NgInput.attachments.links.length"
-                  class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-valid-maxlength ng-touched"
-                  required="required"></textarea>
-      </li>
-      <li><input type="submit" class="submit-send" value=""></li>
-    </ul>
   </div>
 </div>

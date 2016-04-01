@@ -18,7 +18,7 @@
         onSubmit: '&',
         onFocus: '&',
         maxlength: '=',
-        fixedMobile: '='
+        mobile: '='
       },
       templateUrl: '/app/components/ng_input/ng_input.html',
       controller: NgInputController,
@@ -120,7 +120,7 @@
       //Open modal with user photos
       vm.openPhotosModal = function () {
         $modal.open({
-          templateUrl: 'PhotosModal.html',
+          templateUrl: '/app/components/ng_input/photos_modal.html',
           controller: 'PhotosModalController',
           controllerAs: 'modal',
           modalContentClass: 'clearfix',
@@ -138,7 +138,7 @@
       //Open modal with user spots and areas
       vm.openActivityModal = function () {
         $modal.open({
-          templateUrl: 'ActivityModal.html',
+          templateUrl: '/app/components/ng_input/activity_modal.html',
           controller: 'ActivityModalController',
           controllerAs: 'modal',
           //modalContentClass: 'clearfix',

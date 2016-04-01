@@ -36,11 +36,11 @@
             </a>
           </p>
 
-          <p class="col-xs-5 col-sm-3 category">Category:
+          <p class="col-xs-12 col-sm-3 category">Category:
             <a>{{post.category.display_name}}</a>
           </p>
 
-          <p class="col-xs-5  col-sm-3 views">Views: {{post.count_views}}</p></div>
+          <p class="col-xs-12  col-sm-3 views">Views: {{post.count_views}}</p></div>
       </div>
       <div class="row">
         <div class="col-xs-2 col-sm-2" ng-if="currentUser.id == post.user_id || isRole(currentUser, 'admin')">

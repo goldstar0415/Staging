@@ -11,6 +11,7 @@
     vm = _.extend(vm, article);
     vm.sendComment = sendComment;
     vm.deleteComment = deleteComment;
+    vm.getDate = getDate;
 
     vm.comments = {};
     var params = {
@@ -19,6 +20,11 @@
       post_id: article.slug
     };
     vm.pagination = new ScrollService(PostComment.query, vm.comments, params);
+
+    function getDate(date) {
+      var $date = moment(date);
+      return $date.format('DD') + '<br/>' + $date.format('MMM');
+    }
 
     /*
      * Send comment to form
