@@ -76,11 +76,18 @@
     float: none;
   }
 }
-
+@media (min-width: 992px) {
+  .nav-bg-green2 {
+    top: 5rem !important;
+  }
+}
 @media (max-width: 991px) and (min-width: 767px) {
   .information-profile .avatar-wrap .avatar {
     width: 10rem;
     height: 10rem;
+  }
+  .nav-bg-green2 {
+    top: 5rem !important;
   }
 }
 
@@ -214,10 +221,16 @@
     width: 100%;
     margin: 11rem 0;
   }
+  .ng-pristine .drop-box {
+    height: 17rem;
+  }
 }
 
 //iphone 6
 @media (max-width: 375px) {
+  .ng-pristine .drop-box {
+    height: 17rem;
+  }
   .add-friend {
     right: 6.6rem;
     top: 0 !important;
@@ -281,7 +294,9 @@
   }
   .form-horizontal .create-article-btn {
     left: -0.5rem;
-
+  }
+  .nav-bg-green2 {
+    top: 3rem !important;
   }
   .add-friend {
     right: 6.6rem;
