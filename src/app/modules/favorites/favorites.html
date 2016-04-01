@@ -25,7 +25,9 @@
 
           <div ng-show="item.visible_submenu" class="more-info-popup">
             <ul class="list-unstyled">
-              <!--<li><a href="">Claim Spot</a></li>-->
+              <li ng-if="!item.user_id && !item.isClaimed">
+                <a claim-spot="item">Claim listing</a>
+              </li>
               <li ng-if="currentUser && !item.isReported">
                 <a report-spot="item">Report</a>
               </li>
