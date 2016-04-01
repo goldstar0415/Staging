@@ -51,15 +51,7 @@
       }
     }
     .share {
-      display: block;
-      width: 33px;
-      height: 33px;
-      text-indent: 10000px;
-      overflow: hidden;
-      position: absolute;
-      bottom: 1rem;
-      right: 0;
-      background: url(../img/icons/share-icon.png) no-repeat;
+      bottom: -2rem;
     }
 
     .article-info {
@@ -174,7 +166,7 @@
         @include transition_bg();
       }
     }
-  
+
 }
 
 .title-blog {

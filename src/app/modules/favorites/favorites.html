@@ -6,7 +6,7 @@
 
 <div infinite-scroll="Favorite.pagination.nextPage()" infinite-scroll-disabled="Favorite.pagination.busy"
      class="clearfix" infinite-scroll-distance="1">
-  <section ng-repeat="item in Favorite.spots.data" class="border-bottom">
+  <section ng-repeat="item in Favorite.spots.data" class="border-bottom favorites-section">
     <div class="event">
       <div class="row">
         <div class="col-md-2 col-xs-3 col-sm-4 spot-thumb">
@@ -88,6 +88,7 @@
                  ng-href="{{Favorite.API_URL + '/spots/' + item.id + '/export'}}" target="_blank">Export to ICS</a>
             </li>
           </ul>
+          <share item="item" class="visible-xs" type="spot" only-icon="true"></share>
 
         </div>
       </div>

@@ -86,15 +86,11 @@
       }
     }
     .share {
-      display: block;
-      width: 33px;
-      height: 33px;
-      text-indent: 10000px;
-      overflow: hidden;
-      position: absolute;
-      bottom: 5rem;
-      right: 8rem;
-      background: url(../img/icons/share-icon.png) no-repeat;
+      bottom: 1rem;
+    }
+
+    .share-wrap{
+      top: -1rem;
     }
 
     .article-info {
@@ -182,7 +178,7 @@
   border: 0;
   .post-spot {
     background-color: #fff;
-  }  
+  }
 }
 .post .info .delete-link {
     background: url(../img/icons/trash-ico.png) no-repeat;

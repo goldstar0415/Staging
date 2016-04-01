@@ -22,10 +22,14 @@
       overflow: hidden;
       position: absolute;
       float: right;
-      bottom: 5rem;
-      right: 8rem;
+      bottom: 3rem;
+      right: 0;
       background: url(../img/icons/share-icon.png) no-repeat;
     }
+  .share-wrap {
+    top: -3rem;
+    right: -17px;
+  }
 }
 .location-link {
   padding-left: 2rem;

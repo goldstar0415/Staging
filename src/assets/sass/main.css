@@ -9,10 +9,6 @@
     padding-top: 2rem !important;
   }
 
-  .share {
-    bottom: 2rem;
-  }
-
   .comments-section {
     background-color: #f4f5f6 !important;
   }
@@ -32,6 +28,11 @@
   .article-wrapper, .article-wrap {
     margin-bottom: 4rem;
   }
+
+  .favorites-section .share-wrap {
+    top: -2rem;
+  }
+
 
   .album-container .img-wrap .album-tools-wrap {
     display: block;
@@ -113,8 +114,8 @@
     font-size: 12px;
   }
 
-  .my-spots-section .share {
-    bottom: 0.5rem !important;
+  .my-spots-section .event .share {
+    bottom: 0.5rem;
   }
 
   .menu-profile ul li a span {
@@ -219,6 +220,16 @@
     width: 7rem;
     height: 7rem;
   }
+
+  .share-wrap, .article-wrap .share-wrap {
+    top: 0;
+    right: 2px;
+  }
+
+  .main-blog-article-content .article .share-wrap {
+    top: -4rem;
+  }
+
 
   /*.sidebar-menu-horizontal ul li a span {*/
   /*display: none;*/
@@ -554,10 +565,6 @@
     padding-bottom: 1.5rem;
   }
 
-  .share-wrap .share-buttons {
-    display: none;
-  }
-
   .event .place {
     margin-top: 0;
   }
@@ -635,7 +642,7 @@
   }
 
   .event .share {
-    bottom: 2rem !important;
+    bottom: 2rem ;
   }
 
   .event h2 {
@@ -714,7 +721,7 @@
   }
 
   .main-blog-content .article .share {
-    bottom: .5rem !important;
+    bottom: .5rem;
   }
 
   .main-blog-content .article .article-info {
@@ -743,7 +750,7 @@
 
   .saved-search .share {
     right: 3.5rem;
-    bottom: 1rem;
+    bottom: 8px
   }
 
   .saved-search .delete {
