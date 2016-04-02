@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\Cache\Cacheable;
 use Zizaco\Entrust\EntrustPermission;
 
 /**
@@ -10,5 +11,11 @@ use Zizaco\Entrust\EntrustPermission;
  */
 class Permission extends EntrustPermission
 {
-    //
+    use Cacheable;
+
+    public function __construct(array $attributes = [])
+    {
+        $this->cacheFull = true;
+        parent::__construct($attributes);
+    }
 }

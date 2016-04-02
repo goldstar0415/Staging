@@ -2,8 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Model ActivityLevel
  * @package App
@@ -12,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property integer $favorites_count
  */
-class ActivityLevel extends Model
+class ActivityLevel extends BaseModel
 {
     protected $fillable = ['name', 'favorites_count'];
 

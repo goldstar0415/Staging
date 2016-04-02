@@ -209,9 +209,18 @@ class User extends BaseModel implements
                 'medium' => '160x160#'
             ]
         ]);
+        
         parent::__construct($attributes);
     }
 
+    public function acceptCacheFlush()
+    {
+        if (count($dirty = $this->getDirty()) === 1 and array_has($dirty, 'last_action_at')) {
+            return false;
+        }
+        
+        return true;
+    }
     /**
      * Set the user's birth date
      *

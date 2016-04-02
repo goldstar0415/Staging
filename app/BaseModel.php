@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\Cache\Cacheable;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 
@@ -13,6 +14,7 @@ use DB;
  */
 abstract class BaseModel extends Model
 {
+    use Cacheable;
     /**
      * The format of date
      *
