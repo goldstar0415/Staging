@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Extensions\Cache\Cacheable;
 use Zizaco\Entrust\EntrustRole;
 
 /**
@@ -17,6 +18,14 @@ use Zizaco\Entrust\EntrustRole;
  */
 class Role extends EntrustRole
 {
+    use Cacheable;
+
+    public function __construct(array $attributes = [])
+    {
+        $this->cacheFull = true;
+        parent::__construct($attributes);
+    }
+
     /**
      * Retrieve a role model by it's name
      * @param string $role_name

@@ -93,7 +93,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         OnMessage::class => [
             MailNotifier::class
-        ]
+        ],
     ];
 
     /**
