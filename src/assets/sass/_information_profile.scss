@@ -85,8 +85,10 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
     color: #889197;
+    word-break: break-all;
     .small, .full-text {
       word-wrap: break-word;
+      word-break: break-all;
     }
   }
   .moderator {
@@ -109,7 +111,7 @@
       &:last-of-type {
         border: 0;
       }
-    
+
     i {
       display: block;
       width: 53px;
@@ -172,7 +174,7 @@
     }
   }
   }
-  
+
 }
 .mgt20 {
   margin-bottom: 10px !important
