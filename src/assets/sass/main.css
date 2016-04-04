@@ -363,7 +363,7 @@
     width: calc(100% - 6.5rem);
   }
 
-  .fixed ul .add-attach {
+  .fixed .add-attach {
     display: block;
     float: right;
     width: 15px;
@@ -393,6 +393,16 @@
     display: block;
     background: url(../img/icons/send-btn.png) no-repeat;
     background-size: contain;
+  }
+
+  .fixed .mobile-attachments .add-attach {
+    float: left;
+    margin-left: 5rem;
+  }
+
+  .fixed .mobile-attachments .badge {
+    position: absolute;
+    bottom: 8px;
   }
 
   .chat-conversation .dialog-user .dialog-content .dial:after {

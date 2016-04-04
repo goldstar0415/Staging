@@ -117,6 +117,17 @@
         blackListLinks.push(deletedLink);
       };
 
+      vm.getAttachmentsCount = function () {
+        return vm.attachments.links.length + vm.attachments.spots.length + vm.attachments.areas.length;
+      };
+
+      vm.clearAttachments = function () {
+        vm.attachments.photos = [];
+        vm.attachments.spots = [];
+        vm.attachments.areas = [];
+        vm.attachments.links = [];
+      };
+
       //Open modal with user photos
       vm.openPhotosModal = function () {
         $modal.open({

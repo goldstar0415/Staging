@@ -108,5 +108,10 @@
       </li>
       <li><input type="submit" class="submit-send" value=""></li>
     </ul>
+    <div class="mobile-attachments" ng-if="NgInput.getAttachmentsCount() > 0">
+      <span class="add-attach"></span>
+      <span class="">{{ NgInput.getAttachmentsCount() }}</span>
+      <a ng-click="NgInput.clearAttachments()">X</a>
+    </div>
   </div>
 </form>
