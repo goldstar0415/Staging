@@ -99,6 +99,7 @@
   }
 
 }
+
 @media (max-width: 768px) {
   .btn-back-wrapper {
     margin-bottom: 5rem;
@@ -107,6 +108,7 @@
     }
   }
 }
+
 @media (max-width: 767px) {
   .authentication .modal-dialog {
     width: 100% !important;
@@ -145,6 +147,10 @@
       top: 0 !important;
     }
   }
+  form .comments-section {
+    max-height: 42vh;
+    overflow: visible;
+  }
 }
 
 //iPhone 6 landscape
@@ -160,6 +166,10 @@
     .btn-back-planner {
       top: 0 !important;
     }
+  }
+  form .comments-section {
+    max-height: 46vh;
+    overflow: visible;
   }
 }
 
@@ -194,6 +204,10 @@
     .btn-back-planner {
       top: 0 !important;
     }
+  }
+  form .comments-section {
+    max-height: 55vh;
+    overflow: visible;
   }
 }
 
@@ -250,6 +264,10 @@
 
 //iphone 6 plus
 @media (max-width: 414px) {
+  form .comments-section {
+    max-height: 23vh;
+    overflow: visible;
+  }
   .weather-wrap .firstBlock-wrapper {
     height: auto;
     margin-top: 7rem;
@@ -328,6 +346,10 @@
 
 //iphone 6
 @media (max-width: 375px) {
+  form .comments-section {
+    max-height: 30vh;
+    overflow: visible;
+  }
   uploader .drop-box {
     height: 17rem;
   }
