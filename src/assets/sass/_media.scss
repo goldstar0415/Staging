@@ -110,12 +110,17 @@
     height: 16rem;
   }
 }
+
 //iPhone 6 Plus landscape
 @media (max-width: 736px) {
   .central .title-name {
     margin-bottom: 3rem;
   }
+  facebook-events .fb-open .import-friendmap {
+    top: 4rem !important;
+  }
 }
+
 //iPhone 6 landscape
 @media (max-width: 667px) {
   .central .title-name {
@@ -192,9 +197,7 @@
   .add-page, .album-tools .google-plus-friendmap {
     //top: 0 !important;
   }
-  .import-friendmap {
-    top: -1rem !important;
-  }
+
   .album-tools .google-plus-friendmap {
     left: 2rem;
     top: 28px !important;
@@ -206,6 +209,18 @@
   .album-tools .google-plus-friendmap {
     left: 2rem;
     top: 28px !important;
+  }
+  facebook-events .import-friendmap {
+    top: 2rem !important;
+  }
+  facebook-events.fb-open .import-friendmap {
+    top: 4rem !important;
+  }
+  .nav-bg-green {
+    left: 2rem;
+  }
+  .fb-open {
+    top: 4rem !important;
   }
   .sidebar-menu-vertical ul {
     li {
@@ -259,6 +274,15 @@
   uploader .drop-box {
     height: 17rem;
   }
+  .import-friendmap {
+    top: 4rem !important;
+  }
+  facebook-events .import-friendmap {
+    top: 2rem !important;
+  }
+  facebook-events.fb-open .import-friendmap {
+    top: 4rem !important;
+  }
   .article .location-link {
     padding-bottom: 2rem;
   }
@@ -309,6 +333,9 @@
       }
     }
   }
+  .nav-bg-green {
+    left: 2rem;
+  }
 }
 
 @media (max-width: 330px) {
@@ -323,15 +350,32 @@
   .btn-back {
     top: 0 !important;
   }
+  facebook-events .import-friendmap {
+    top: 2rem !important;
+  }
   .form-horizontal .create-article-btn {
     left: -0.5rem;
   }
   .nav-bg-green2 {
     top: 3rem !important;
   }
+  .spot-bg .btn-back {
+    top: 5rem !important;
+    left: 0.5rem !important;
+  }
+  facebook-events.fb-open .import-friendmap {
+    top: 4rem !important;
+    right: 0.5rem !important;
+  }
+  .nav-bg-green {
+    left: 2rem;
+  }
   .add-friend {
     right: 6.6rem;
     //top: 0 !important;
+  }
+  .import-friendmap {
+    top: -1rem !important;
   }
   .add-friend-my-blog {
     right: 1.6rem;
