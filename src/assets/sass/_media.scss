@@ -81,6 +81,12 @@
   .nav-bg-green2 {
     top: 5rem !important;
   }
+  .btn-back-wrapper {
+    margin-bottom: 5rem;
+    .btn-back-planner {
+      top: 0 !important;
+    }
+  }
 }
 
 @media (max-width: 991px) and (min-width: 767px) {
@@ -91,8 +97,16 @@
   .nav-bg-green2 {
     top: 5rem !important;
   }
-}
 
+}
+@media (max-width: 768px) {
+  .btn-back-wrapper {
+    margin-bottom: 5rem;
+    .btn-back-planner {
+      top: 0 !important;
+    }
+  }
+}
 @media (max-width: 767px) {
   .authentication .modal-dialog {
     width: 100% !important;
@@ -109,6 +123,9 @@
   uploader .drop-box {
     height: 16rem;
   }
+  .btn-back-wrapper .btn-back-planner {
+    top: -3rem;
+  }
 }
 
 //iPhone 6 Plus landscape
@@ -122,6 +139,12 @@
   .btn-back-planner {
     top: 2.5rem !important;
   }
+  .btn-back-wrapper {
+    margin-bottom: 5rem;
+    .btn-back-planner {
+      top: 0 !important;
+    }
+  }
 }
 
 //iPhone 6 landscape
@@ -131,6 +154,12 @@
   }
   .btn-back-planner {
     top: 2.5rem !important;
+  }
+  .btn-back-wrapper {
+    margin-bottom: 5rem;
+    .btn-back-planner {
+      top: 0 !important;
+    }
   }
 }
 
@@ -159,6 +188,12 @@
   }
   .btn-back-planner {
     top: 2.5rem !important;
+  }
+  .btn-back-wrapper {
+    margin-bottom: 5rem;
+    .btn-back-planner {
+      top: 0 !important;
+    }
   }
 }
 
@@ -219,7 +254,12 @@
     height: auto;
     margin-top: 7rem;
   }
-
+  .btn-back-wrapper {
+    margin-bottom: 5rem;
+    .btn-back-planner {
+      top: 0 !important;
+    }
+  }
   .btn-back-planner {
     top: 2.5rem !important;
   }

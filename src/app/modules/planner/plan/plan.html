@@ -1,13 +1,16 @@
-<a ui-sref="planner.list" class="btn-back back btn-back-planner" title="back" ></a>
 <div class="col-xs-12 no-pad">
-
+  <div class="col-xs-12 clearfix btn-back-wrapper">
+    <a ui-sref="planner.list" class="btn-back back btn-back-planner" title="back"></a>
+  </div>
   <!-- section with spot -->
   <section class="no-margin-bottom clearfix">
+
     <div class="one-spot-section">
 
       <h2 class="title-planner">{{Plan.title}}</h2>
 
       <p class="place">{{Plan.address}}</p>
+
       <div class="date">
         <date-range item="Plan"></date-range>
       </div>
@@ -81,7 +84,8 @@
 
   <section class="comments-section">
     <div class="comments-content clearfix ">
-      <ng-input message="Plan.message" attachments="Plan.attachments" on-submit="Plan.send()" maxlength="5000"></ng-input>
+      <ng-input message="Plan.message" attachments="Plan.attachments" on-submit="Plan.send()"
+                maxlength="5000"></ng-input>
     </div>
 
     <div infinite-scroll="Plan.pagination.nextPage()" infinite-scroll-disabled="Plan.pagination.busy"
@@ -94,9 +98,12 @@
         </div>
         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8 info">
           <h3 class="name">
-            <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
+            <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}}
+              {{post.sender.last_name}}</a>
           </h3>
+
           <p class="time">{{post.created_at | fromNow}}</p>
+
           <p ng-bind-html="post.body | linky:'_blank'"></p>
           <attachments items="post.attachments"></attachments>
         </div>
@@ -115,11 +122,11 @@
 
 </div>
 <!--<div class="fixed visible-xs">-->
-  <!--<ul class="list-inline">-->
-    <!--<li><a class="add-attach" ng-click="NgInput.openActivityModal()"></a></li>-->
-    <!--<li class="chat-input">-->
-      <!--<textarea name="message" ng-model="NgInput.message" placeholder="Start typing..." ng-focus="NgInput.onFocus()" ctrl-enter="NgInput.submit(form)" ng-maxlength="5000" ng-required="!NgInput.attachments.photos.length &amp;&amp; !NgInput.attachments.spots.length &amp;&amp; !NgInput.attachments.areas.length &amp;&amp; !NgInput.attachments.links.length" class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-valid-maxlength ng-touched" required="required"></textarea>-->
-    <!--</li>-->
-    <!--<li><input type="submit" class="submit-send" value=""></li>-->
-  <!--</ul>-->
+<!--<ul class="list-inline">-->
+<!--<li><a class="add-attach" ng-click="NgInput.openActivityModal()"></a></li>-->
+<!--<li class="chat-input">-->
+<!--<textarea name="message" ng-model="NgInput.message" placeholder="Start typing..." ng-focus="NgInput.onFocus()" ctrl-enter="NgInput.submit(form)" ng-maxlength="5000" ng-required="!NgInput.attachments.photos.length &amp;&amp; !NgInput.attachments.spots.length &amp;&amp; !NgInput.attachments.areas.length &amp;&amp; !NgInput.attachments.links.length" class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-valid-maxlength ng-touched" required="required"></textarea>-->
+<!--</li>-->
+<!--<li><input type="submit" class="submit-send" value=""></li>-->
+<!--</ul>-->
 <!--</div>-->
