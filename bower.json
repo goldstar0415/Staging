@@ -19,7 +19,7 @@
     "animate.css": "~3.3.0",
     "bootstrap-datepicker": "~1.4.0",
     "bootstrap-sass-official": "~3.3.4",
-    "cropper": "~0.11.1",
+    "cropper": "~2.3.0",
     "jquery": "~2.1.4",
     "Justified-Gallery": "~3.6.0",
     "moment": "~2.10.3",
