@@ -119,12 +119,18 @@
   facebook-events .fb-open .import-friendmap {
     top: 4rem !important;
   }
+  .btn-back-planner {
+    top: 2.5rem !important;
+  }
 }
 
 //iPhone 6 landscape
 @media (max-width: 667px) {
   .central .title-name {
     margin-bottom: 3rem;
+  }
+  .btn-back-planner {
+    top: 2.5rem !important;
   }
 }
 
@@ -150,6 +156,9 @@
 @media (max-width: 568px) {
   .add-friend {
     right: 6.6rem;
+  }
+  .btn-back-planner {
+    top: 2.5rem !important;
   }
 }
 
@@ -206,6 +215,9 @@
 
 //iphone 6 plus
 @media (max-width: 414px) {
+  .btn-back-planner {
+    top: 2.5rem !important;
+  }
   .album-tools .google-plus-friendmap {
     left: 2rem;
     top: 28px !important;
@@ -276,6 +288,9 @@
   }
   .import-friendmap {
     top: 4rem !important;
+  }
+  .btn-back-planner {
+    top: 2.5rem !important;
   }
   facebook-events .import-friendmap {
     top: 2rem !important;
