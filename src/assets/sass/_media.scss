@@ -76,11 +76,13 @@
     float: none;
   }
 }
+
 @media (min-width: 992px) {
   .nav-bg-green2 {
     top: 5rem !important;
   }
 }
+
 @media (max-width: 991px) and (min-width: 767px) {
   .information-profile .avatar-wrap .avatar {
     width: 10rem;
@@ -176,16 +178,23 @@
 
 @media (max-width: 380px) {
   .add-page, .album-tools .google-plus-friendmap {
-    top: 0 !important;
+    //top: 0 !important;
   }
   .import-friendmap {
     top: -1rem !important;
+  }
+  .album-tools .google-plus-friendmap {
+    left: 2rem;
+    top: 28px !important;
   }
 }
 
 //iphone 6 plus
 @media (max-width: 414px) {
-
+  .album-tools .google-plus-friendmap {
+    left: 2rem;
+    top: 28px !important;
+  }
   .sidebar-menu-vertical ul {
     li {
       .pit-stops {
