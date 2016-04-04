@@ -22,7 +22,7 @@
       <div class="image"
            ng-class="{'col-xs-8': !PV.hideComments && $root.currentUser, 'col-xs-12': PV.hideComments || !$root.currentUser}">
         <button type="button" class="close hidden-lg visible-sm hidden-md visible-xs" ng-click="PV.close()"
-                ng-class="{'without-location': !PV.currentPhoto.address}" aria-label="Close">
+                ng-class="{'with-location': PV.currentPhoto.address}" aria-label="Close">
           <span aria-hidden="true"></span>
         </button>
         <img ng-src="{{PV.currentPhoto.photo_url.original}}">
