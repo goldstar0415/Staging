@@ -121,6 +121,10 @@
   .viewer-wrap .modal-dialog .photo-viewer .image .close {
     top: -3rem;
   }
+  .viewer-wrap .modal-dialog .photo-viewer .image .close.with-location {
+    top: -4.5rem;
+    right: 1rem;
+  }
 
   uploader .drop-box {
     height: 16rem;
