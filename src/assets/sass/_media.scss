@@ -228,12 +228,18 @@
   uploader .drop-box {
     height: 17rem;
   }
+  .article .location-link {
+    padding-bottom: 2rem;
+  }
 }
 
 //iphone 6
 @media (max-width: 375px) {
   uploader .drop-box {
     height: 17rem;
+  }
+  .article .location-link {
+    padding-bottom: 2rem;
   }
   .add-friend {
     right: 6.6rem;
