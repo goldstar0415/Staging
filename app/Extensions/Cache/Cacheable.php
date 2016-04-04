@@ -14,7 +14,7 @@ trait Cacheable
 
     public static function bootCacheable()
     {
-        self::updating(function ($model) {
+        $closure = function ($model) {
             $cache = Cache::driver();
             $tags = $model->getCacheTags();
             $cache = $tags ? $cache->tags($tags) : $cache;
@@ -26,7 +26,10 @@ trait Cacheable
             } else {
                 $cache->flush();
             }
-        });
+        };
+        self::updating($closure);
+        self::creating($closure);
+        self::deleting($closure);
     }
 
     protected function mutateAttribute($key, $value)
