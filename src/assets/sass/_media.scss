@@ -110,6 +110,18 @@
     height: 16rem;
   }
 }
+//iPhone 6 Plus landscape
+@media (max-width: 736px) {
+  .central .title-name {
+    margin-bottom: 3rem;
+  }
+}
+//iPhone 6 landscape
+@media (max-width: 667px) {
+  .central .title-name {
+    margin-bottom: 3rem;
+  }
+}
 
 @media (max-width: 640px) {
   /* blog */
