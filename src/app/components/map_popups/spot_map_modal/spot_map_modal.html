@@ -41,7 +41,7 @@
       <div class="content-popup-spot col-xs-12">
 
         <div ng-show="view == 'about'" class="col-xs-12 wrapper">
-          <p class="description">{{data.spot.description}}</p>
+          <div class="description" ng-bind-html="data.spot.description | toParagraphs"></div>
         </div>
 
         <div ng-show="view == 'reviews'" class=" col-xs-12 reviews-popup no-pad">

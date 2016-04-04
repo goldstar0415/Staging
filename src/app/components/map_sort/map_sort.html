@@ -27,7 +27,9 @@
 </div>
 
 <div ng-if="!MapSort.vertical" class="col-xs-3 no-pad sort-menu">
-  <div class="hide-menu-profile visible-xs" ng-click="MapSort.vertical = !MapSort.vertical"></div>
+  <div class="hide-menu-profile visible-xs" ng-click="MapSort.vertical = !MapSort.vertical"
+       ng-class="{'rotate-down': !MapSort.vertical}"
+    ></div>
 
   <div class="sidebar-menu-horizontal">
     <ul>
@@ -245,7 +247,7 @@
   </div>
 
 
-  <div class="footer-search">
+  <div class="footer-search" ng-class="{'active-weather': $root.sortLayer == 'weather'}">
     <span class="icon-tick" ng-show="$root.sortLayer != 'weather'"></span>
     <span class="icon-arrow" ng-show="$root.sortLayer != 'weather'"></span>
 
@@ -312,12 +314,12 @@
                 <p class="description">sunset</p>
               </div>
               <div class="col-md-3 col-xs-3 text-center">
-                <p class="mainParameters">{{MapSort.currentWeather.windSpeed| number:0}} <span>km/h</span></p>
+                <p class="mainParameters">{{MapSort.currentWeather.windSpeed | number:0}} <span>km/h</span></p>
 
                 <p class="description">wind</p>
               </div>
               <div class="col-md-3 col-xs-3 text-center">
-                <p class="mainParameters">{{MapSort.currentWeather.humidity * 100}} <span>%</span></p>
+                <p class="mainParameters">{{(MapSort.currentWeather.humidity * 100) | number:0 }} <span>%</span></p>
 
                 <p class="description">humidity</p>
               </div>

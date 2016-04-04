@@ -37,7 +37,11 @@
     display: block;
     unicode-bidi: embed;
     font-family: monospace;
-    white-space: pre;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    p {
+      text-indent: 3rem;
+    }
   }
 
   .share {
@@ -149,6 +153,10 @@
 .description {
   font: 13px/19px;
   margin: 10px 0 12px;
+
+  p {
+    text-indent: 3rem;
+  }
 }
 
 .tools {

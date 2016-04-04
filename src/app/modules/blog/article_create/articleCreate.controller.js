@@ -14,6 +14,10 @@
 
     vm.save = save;
 
+    if(!vm.body) {
+      vm.body = '<p></p><p></p><p></p><p></p><p></p><p></p>';
+    }
+
     /*
      * Create post
      * @param form {ngForm}

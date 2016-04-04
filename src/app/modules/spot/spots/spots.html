@@ -40,7 +40,8 @@
           <div ng-if="item.type == 'Event'" class="date">
             <date-range item="item"></date-range>
           </div>
-          <p class="description"><span>{{::item.description}}</span></p>
+          <div class="description" ng-bind-html="item.description | toParagraphs"></div>
+
 
 
           <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">

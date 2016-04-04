@@ -336,6 +336,8 @@
       if ($rootScope.mapSortFilters && $rootScope.mapSortFilters.filter && $rootScope.mapSortFilters.filter.category_ids) {
         $rootScope.mapSortFilters.filter.category_ids = _.without($rootScope.mapSortFilters.filter.category_ids, item.id);
       }
+
+      search();
     }
 
     function selectAllCategories() {

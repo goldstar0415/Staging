@@ -39,7 +39,7 @@
       </ul>
     </div>
     <div class="content-popup clearfix">
-      <p ng-show="view == 'about'" class="description">{{data.spot.description}}</p>
+      <div ng-show="view == 'about'" class="description" ng-bind-html="data.spot.description | toParagraphs"></div>
 
       <div ng-show="view == 'reviews'" class=" col-xs-12 reviews-popup">
         <div ng-if="data.spot.comments.length > 0" >
