@@ -37,7 +37,11 @@
     display: block;
     unicode-bidi: embed;
     font-family: monospace;
-    white-space: pre;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    p {
+      text-indent: 3rem;
+    }
   }
 
   .share {
