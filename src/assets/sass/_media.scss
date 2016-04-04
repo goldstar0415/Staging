@@ -346,6 +346,9 @@
   .article .location-link {
     padding-bottom: 2rem;
   }
+  .section-event .event .avatar  {
+    margin-right: 2rem;
+  }
 }
 
 //iphone 6
@@ -353,6 +356,9 @@
   form .comments-section {
     max-height: 30vh;
     overflow: visible;
+  }
+  .section-event .event .avatar  {
+    margin-right: 2rem;
   }
   uploader .drop-box {
     height: 17rem;
