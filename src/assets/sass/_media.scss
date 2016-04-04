@@ -100,12 +100,16 @@
 
 }
 
+//iPad
 @media (max-width: 768px) {
   .btn-back-wrapper {
     margin-bottom: 5rem;
     .btn-back-planner {
       top: 0 !important;
     }
+  }
+  .spot-mobile-modal .modal-dialog {
+    margin-top: 10rem;
   }
 }
 
@@ -155,6 +159,23 @@
     max-height: 42vh;
     overflow: visible;
   }
+  .content-popup-spot {
+    margin-bottom: 1rem;
+    .reviews-popup {
+      .avatar {
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        img {
+          width: 11rem !important;
+          height: 11rem !important;
+        }
+      }
+      .content {
+        text-align: center;
+      }
+    }
+  }
 }
 
 //iPhone 6 landscape
@@ -174,6 +195,23 @@
   form .comments-section {
     max-height: 46vh;
     overflow: visible;
+  }
+  .content-popup-spot {
+    margin-bottom: 1rem;
+    .reviews-popup {
+      .avatar {
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        img {
+          width: 11rem !important;
+          height: 11rem !important;
+        }
+      }
+      .content {
+        text-align: center;
+      }
+    }
   }
 }
 
@@ -212,6 +250,23 @@
   form .comments-section {
     max-height: 55vh;
     overflow: visible;
+  }
+  .content-popup-spot {
+    margin-bottom: 1rem;
+    .reviews-popup {
+      .avatar {
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        img {
+          width: 11rem !important;
+          height: 11rem !important;
+        }
+      }
+      .content {
+        text-align: center;
+      }
+    }
   }
 }
 
@@ -268,6 +323,23 @@
 
 //iphone 6 plus
 @media (max-width: 414px) {
+  .content-popup-spot {
+    margin-bottom: 1rem;
+    .reviews-popup {
+      .avatar {
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        img {
+          width: 11rem !important;
+          height: 11rem !important;
+        }
+      }
+      .content {
+        text-align: center;
+      }
+    }
+  }
   form .comments-section {
     max-height: 23vh;
     overflow: visible;
@@ -346,8 +418,11 @@
   .article .location-link {
     padding-bottom: 2rem;
   }
-  .section-event .event .avatar  {
+  .section-event .event .avatar {
     margin-right: 2rem;
+  }
+  .central .chat-conversation .text-center .btn-back {
+    position: static;
   }
 }
 
@@ -357,7 +432,7 @@
     max-height: 30vh;
     overflow: visible;
   }
-  .section-event .event .avatar  {
+  .section-event .event .avatar {
     margin-right: 2rem;
   }
   uploader .drop-box {
