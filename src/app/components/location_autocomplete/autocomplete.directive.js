@@ -34,7 +34,7 @@
         var bindMarker = s.bindMarker;
         var provider = s.provider || 'google';
 
-        s.placeHolder = s.inputPlaceholder || "Type location or clock on map...";
+        s.placeHolder = s.inputPlaceholder || "Type location or click on map...";
         s.provider = provider;
         s.className = '';
         s.viewAddress = '';
