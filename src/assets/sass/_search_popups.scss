@@ -203,6 +203,8 @@
   }
 }
 
+
+
 .icon-nav {
   background: url(../img/icons/map-loc.png) no-repeat;
   height: 2rem;
@@ -1589,3 +1591,13 @@
 
 }
 
+@media screen and (min-height: 750px)  {
+  .sidebar-menu-vertical ul li:first-child {
+    margin-bottom: 100%;
+  }
+}
+@media screen and (max-height: 640px)  {
+  .sidebar-menu-vertical ul li:first-child {
+    margin-bottom: 0;
+  }
+}
