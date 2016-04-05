@@ -354,7 +354,7 @@ facebook-events a {
   position: absolute !important;
   top: 42px;
   right: 60px;
-  background: url(../img/svg/social/facebook_top_icon.svg) no-repeat;
+  background: url(../img/svg/social/facebook_top_icon.svg) no-repeat #fff;
   @include transition_bg;
   &:hover {
     @include transition_bg;
