@@ -10,15 +10,17 @@
 
   /** @ngInject */
   function SpotPopupController($scope, SpotService, API_URL) {
+    $scope.API_URL = API_URL;
     $scope.view = 'about';
     $scope.reviewIndex = 0;
+
     $scope.saveToCalendar = SpotService.saveToCalendar;
     $scope.removeFromCalendar = SpotService.removeFromCalendar;
     $scope.addToFavorite = SpotService.addToFavorite;
     $scope.removeFromFavorite = SpotService.removeFromFavorite;
     $scope.changeReview = changeReview;
     $scope.changePhoto = changePhoto;
-    $scope.API_URL = API_URL;
+    $scope.isEmptyAttachments = isEmptyAttachments;
 
 
     $scope.photoControl = {
@@ -46,6 +48,13 @@
       var nextIndex = $scope.photoControl.start + step;
       if (nextIndex >= 0 && nextIndex + $scope.photoControl.step <= $scope.data.spot.photos.length) {
         $scope.photoControl.start = nextIndex;
+      }
+    }
+
+    function isEmptyAttachments() {
+      var review = $scope.data.spot.comments[$scope.reviewIndex].attachments;
+      if (review) {
+        return review.spots.length == 0 && review.album_photos.length == 0 && review.areas.length == 0 && review.links.length == 0;
       }
     }
 

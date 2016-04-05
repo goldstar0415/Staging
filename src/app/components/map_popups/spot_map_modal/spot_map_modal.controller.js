@@ -23,7 +23,7 @@
     $scope.removeFromFavorite = SpotService.removeFromFavorite;
     $scope.changeReview = changeReview;
     $scope.changePhoto = changePhoto;
-
+    $scope.isEmptyAttachments = isEmptyAttachments;
 
     $scope.photoControl = {
       start: 0,
@@ -59,6 +59,13 @@
       var nextIndex = $scope.photoControl.start + step;
       if (nextIndex >= 0 && nextIndex + $scope.photoControl.step <= $scope.data.spot.photos.length) {
         $scope.photoControl.start = nextIndex;
+      }
+    }
+
+    function isEmptyAttachments() {
+      var review = $scope.data.spot.comments[$scope.reviewIndex].attachments;
+      if (review) {
+        return review.spots.length == 0 && review.album_photos.length == 0 && review.areas.length == 0 && review.links.length == 0;
       }
     }
 

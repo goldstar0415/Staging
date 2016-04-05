@@ -1,6 +1,6 @@
-<div class="popup-width" >
+<div class="popup-width">
   <div class="col-xs-12 loading" ng-show="data.$loading">
-    <preloader ></preloader>
+    <preloader></preloader>
   </div>
 
   <div class="col-xs-4 nav-popup " ng-hide="data.$loading">
@@ -21,7 +21,8 @@
       <p class="location-event">{{data.address}}</p>
 
       <p class="date-event" ng-if="data.spot.category.type.name == 'event'">
-        <span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>
+        <span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> -
+        <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>
       </p>
       <a class="author-event" ui-sref="profile.main({user_id: data.spot.user.alias || data.spot.user_id})"
          ng-if="data.spot.user">
@@ -42,8 +43,8 @@
       <div ng-show="view == 'about'" class="description" ng-bind-html="data.spot.description | toParagraphs"></div>
 
       <div ng-show="view == 'reviews'" class=" col-xs-12 reviews-popup">
-        <div ng-if="data.spot.comments.length > 0" >
-          <div class="col-xs-12 previous-next" ng-if="data.spot.comments.length > 1 " >
+        <div ng-if="data.spot.comments.length > 0">
+          <div class="col-xs-12 previous-next" ng-if="data.spot.comments.length > 1 ">
             <a ng-click="changeReview(-1)" ng-show="reviewIndex > 0" class="previous"></a>
             <a ng-click="changeReview(1)" ng-show="reviewIndex < data.spot.comments.length - 1" class="next "></a>
           </div>
@@ -55,12 +56,19 @@
           <div class="col-xs-9 content">
                   <span><a class="reviews-user"
                            ui-sref="profile.main({user_id: data.spot.comments[reviewIndex].sender.alias || data.spot.comments[reviewIndex].sender.user_id})">
-                    {{data.spot.comments[reviewIndex].sender.first_name + ' ' + data.spot.comments[reviewIndex].sender.last_name}}
+                    {{data.spot.comments[reviewIndex].sender.first_name + ' ' +
+                    data.spot.comments[reviewIndex].sender.last_name}}
                   </a></span>
 
-            <p class="date-reviews ">{{data.spot.comments[reviewIndex].created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>
+            <p class="date-reviews ">
+              {{data.spot.comments[reviewIndex].created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}
+            </p>
 
-            <p class="description line-break" ng-bind-html="data.spot.comments[reviewIndex].body | linky:'_blank'"></p>
+            <div class="description">
+              <span ng-bind-html="data.spot.comments[reviewIndex].body | linky:'_blank'"></span>
+              <span class="attachments" ng-hide="isEmptyAttachments()">&nbsp;</span>
+            </div>
+
 
           </div>
         </div>

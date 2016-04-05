@@ -65,8 +65,10 @@
               <p class="date-reviews ">
                 {{data.spot.comments[reviewIndex].created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>
 
-              <p class="description line-break"
-                 ng-bind-html="data.spot.comments[reviewIndex].body | linky:'_blank'"></p>
+              <div class="description">
+                <span ng-bind-html="data.spot.comments[reviewIndex].body | linky:'_blank'"></span>
+                <span class="attachments" ng-hide="isEmptyAttachments()">&nbsp;</span>
+              </div>
 
             </div>
           </div>
