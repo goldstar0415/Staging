@@ -321,7 +321,7 @@ class User extends BaseModel implements
     {
         $user = Request::user();
         if (isset($user)) {
-            return $user->followings()->find($this->id) ? false : true;
+            return !$user->followings()->where('users.id', $this->id)->exists();
         }
 
         return false;

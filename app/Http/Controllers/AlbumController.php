@@ -7,10 +7,12 @@ use App\Http\Requests\Album\AlbumRequest;
 use App\Http\Requests\Album\PhotoUpdateRequest;
 use App\Http\Requests\Album\StoreRequest;
 use App\Http\Requests\PaginateRequest;
+use App\Services\Privacy;
 use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 /**
  * Class AlbumController
@@ -25,16 +27,22 @@ class AlbumController extends Controller
      * @var Guard
      */
     private $auth;
+    /**
+     * @var Privacy
+     */
+    private $privacy;
 
     /**
      * AlbumController constructor.
      * @param Guard $auth
+     * @param Privacy $privacy
      */
-    public function __construct(Guard $auth)
+    public function __construct(Guard $auth, Privacy $privacy)
     {
         $this->auth = $auth;
         $this->middleware('auth', ['except' => ['index', 'show', 'showForUser']]);
         $this->middleware('privacy', ['only' => 'showForUser']);
+        $this->privacy = $privacy;
     }
 
     /**
@@ -77,7 +85,22 @@ class AlbumController extends Controller
      */
     public function showForUser(PaginateRequest $request, $user)
     {
-        return $this->paginatealbe($request, $user->albums());
+        $result = $this->paginatealbe($request, $user->albums());
+
+        $collection = null;
+        if (!$result instanceof Collection) {
+            $collection = $result->getCollection();
+        } else {
+            $collection = $result;
+        }
+        $collection->each(function ($album, $key) use ($collection) {
+            if ($album->is_private and !$this->privacy->hasPermission($album->user, Privacy::FOLLOWINGS) or
+                !$album->is_private and !$this->privacy->hasPermission($album->user, $album->user->privacy_photo_map)) {
+                    $collection->offsetUnset($key);
+            }
+        });
+
+        return $result;
     }
 
     /**
@@ -90,11 +113,9 @@ class AlbumController extends Controller
     public function show(Request $request, $album)
     {
         $user = $request->user();
-        if ($album->is_private || $album->user->privacy_photo_map and
-            !($this->auth->check() and
-                ($user->id === $album->user_id or
-                $album->user->followings()->where('users.id', $user->id)->exists()))
-        ) {
+
+        if ($album->is_private and !$this->privacy->hasPermission($album->user, Privacy::FOLLOWINGS) or
+            !$album->is_private and !$this->privacy->hasPermission($album->user, $album->user->privacy_photo_map)) {
             abort(403, 'Access denied');
         }
 

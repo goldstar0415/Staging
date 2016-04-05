@@ -79,12 +79,6 @@ class PrivacyCheck
             if ($this->privacy->hasPermission($target, $target->privacy_wall)) {
                 $allow = true;
             }
-        } elseif ($request->is('users/*/albums')) {
-            $target = $request->route('users');
-
-            if ($this->privacy->hasPermission($target, $target->privacy_photo_map)) {
-                $allow = true;
-            }
         } elseif ($request->is('spots/favorites') and $request->has('user_id')) {
             $target = User::find($request->user_id);
 

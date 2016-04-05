@@ -19,10 +19,11 @@ class RemoveFriend
      */
     public function handle(UserUnfollowEvent $event)
     {
-        $event->getFollower()
+        $friend = $event->getFollower()
             ->friends()
-            ->where('friend_id', $event->getFollowing()->id)
-            ->first()
-            ->delete();
+            ->where('friend_id', $event->getFollowing()->id);
+        if ($friend->exists()) {
+            $friend->delete();
+        }
     }
 }

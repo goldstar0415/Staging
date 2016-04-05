@@ -62,12 +62,12 @@ class Privacy
                         $is_permitted = $target
                             ->followers()
                             ->where('follower_id', $this->viewer->id)
-                            ->first()
+                            ->exists()
                         ||
                         $target
                             ->followings()
                             ->where('following_id', $this->viewer->id)
-                            ->first();
+                            ->exists();
                     }
                     break;
                 case self::FOLLOWINGS:
@@ -75,7 +75,7 @@ class Privacy
                         $is_permitted = $target
                             ->followings()
                             ->where('following_id', $this->viewer->id)
-                            ->first();
+                            ->exists();
                     }
                     break;
                 case self::NOBODY:
