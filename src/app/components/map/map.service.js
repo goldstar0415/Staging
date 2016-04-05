@@ -1664,8 +1664,6 @@
             break;
         }
 
-        //currentLayer = type;
-
         $rootScope.syncMapSpots = spots;
       }
 
