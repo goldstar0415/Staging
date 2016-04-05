@@ -48,6 +48,11 @@
     function _convertData() {
       var data = angular.copy(vm);
       data = _convertDates(data);
+      if (data.start_date == 'Invalid date' || data.end_date == 'Invalid date') {
+        toastr.error('Wrong dates');
+        return;
+      }
+
       data.activities = [];
       data.spots = [];
       _.each(data.attachments, function (attachment, idx) {
