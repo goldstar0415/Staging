@@ -77,7 +77,7 @@
   }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 991px) {
   .nav-bg-green2 {
     top: 5rem !important;
   }
@@ -86,6 +86,10 @@
     .btn-back-planner {
       top: 0 !important;
     }
+  }
+  .modal .modal-dialog .modal-content .modal-body .tab-content .choose-some-photos-body .choose-album img.tab-photo {
+    width: 152px;
+    height: 147px;
   }
 }
 
