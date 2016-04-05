@@ -709,11 +709,20 @@
     //overflow: auto;
 
     //applied
+    .search-filters .filter-definition .icon-minus {
+      float: right;
+    }
+
     .destination-filter.applied input,
     .rating-filters.applied .star-rated,
     .keyword-filters.applied .tags {
       width: 85%;
       float: left;
+    }
+
+    &.open-filter .rating-filters.applied .star-rated {
+      width: 85%;
+
     }
 
     .date-filters.applied .form-group {

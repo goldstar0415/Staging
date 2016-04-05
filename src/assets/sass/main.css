@@ -13,7 +13,7 @@
     background-color: #f4f5f6 !important;
   }
 
-  activity-mobile {
+  .activity-mobile {
     text-align: center;
   }
 
@@ -32,7 +32,6 @@
   .favorites-section .share-wrap {
     top: -2rem;
   }
-
 
   .album-container .img-wrap .album-tools-wrap {
     display: block;
@@ -230,7 +229,6 @@
     top: -4rem;
   }
 
-
   /*.sidebar-menu-horizontal ul li a span {*/
   /*display: none;*/
   /*margin-top: 0 !important;*/
@@ -241,10 +239,9 @@
   /*.sidebar-menu-horizontal ul li a {*/
   /*height: 4rem;*/
   /*}*/
-  .sort-menu {
-    margin-top: 20rem;
-  }
-
+  /*.sort-menu {*/
+  /*margin-top: 20rem;*/
+  /*}*/
   .tools-hint-block {
     display: none;
   }
@@ -657,7 +654,7 @@
   }
 
   .event .share {
-    bottom: 2rem ;
+    bottom: 2rem;
   }
 
   .event h2 {
@@ -817,7 +814,7 @@
   }
 
   .main-blog-article-content .article .share {
-    right: -0.5rem ;
+    right: -0.5rem;
     bottom: 3.5rem;
   }
 
@@ -1010,10 +1007,9 @@
     height: 7rem !important;
   }
 
-  .search-filters {
-    height: calc(100% - 14px);
-  }
-
+  /*.search-filters {*/
+  /*height: calc(100% - 14px);*/
+  /*}*/
   .search-filters .sort-date .date-filters .form-group {
     width: 50%;
   }
@@ -1082,6 +1078,25 @@
 @media (max-width: 450px) {
   .sort-menu {
     width: 100%;
+    height: 70%;
+    top: auto;
+  }
+
+  /*.search-filters .filter-definition .icon-minus {*/
+  /*margin-left: 0;*/
+  /*}*/
+  .search-filters .filter-definition location input {
+    width: 86%;
+  }
+
+  .search-filters .filter-definition .date-filters.applied .form-group {
+    width: 40%;
+  }
+
+  .search-filters .filter-definition .destination-filter.applied input,
+  .search-filters .filter-definition .rating-filters.applied .star-rated,
+  .search-filters .filter-definition .keyword-filters.applied .tags {
+    width: 80%;
   }
 
   .leaflet-left {
@@ -1221,6 +1236,14 @@
   .search-filters .filter-definition {
     width: 75%;
   }
+
+  .search-filters .filter-definition .date-filters.applied .form-group {
+    width: 37.5%;
+  }
+
+  .search-filters .filter-definition .destination-filter.applied input, .search-filters .filter-definition .rating-filters.applied .star-rated, .search-filters .filter-definition .keyword-filters.applied .tags {
+    width: 75%;
+  }
 }
 
 @media (max-height: 400px) {
@@ -1229,7 +1252,7 @@
   }
 }
 
-@media (max-height: 400px) {
+@media (max-height: 400px) and (orientation: portrait) {
   .search-filters {
     min-height: 30rem;
   }

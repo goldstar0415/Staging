@@ -75,7 +75,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-        <div class="filter-definition">
+        <div class="filter-definition" ng-class="{'open-filter': MapSort.isShowFilter}">
           <div class="destination-filter clearfix" ng-show="MapSort.isShowFilter && !$root.isDrawArea">
             <location address="MapSort.searchParams.address" location="MapSort.searchParams.location"
                       input-placeholder="Add first destination" id="new_location"
