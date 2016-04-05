@@ -193,7 +193,7 @@
         <label class="col-sm-2 col-xs-12 control-label">Date</label>
 
         <div class="col-md-10 col-sm-5 col-xs-12">
-          <div class="col-sm-4 col-xs-12 no-pad">
+          <div class="col-sm-4 col-xs-5 no-pad">
             <input ng-datepicker name="start_date_{{$index}}" ng-model="attachment.data.start_date"
                    start-date="Plan.start_date" end-date="Plan.end_date" type="text" required class="grey-bg">
 
@@ -203,9 +203,9 @@
             </div>
           </div>
 
-          <span class="hidden-xs col-sm-1 col-xs-2 mgt15">—</span>
+          <span class="col-sm-1 col-xs-2 text-center mgt15">—</span>
 
-          <div class="col-sm-4 col-xs-15 no-pad">
+          <div class="col-sm-4 col-xs-5 no-pad">
             <input ng-datepicker name="end_date_{{$index}}" ng-model="attachment.data.end_date"
                    start-date="Plan.start_date" end-date="Plan.end_date" type="text" required class="grey-bg">
 
@@ -221,7 +221,7 @@
         <label class="col-sm-2 control-label">Time</label>
 
         <div class="col-md-10 col-sm-12 col-xs-12">
-          <div class="col-sm-4 col-xs-12 no-pad">
+          <div class="col-sm-4 col-xs-5 no-pad">
             <input ng-timepicker step="30" placeholder="12:00..." name="start_time_{{$index}}"
                    ng-model="attachment.data.start_time" type="text" class="grey-bg">
 
@@ -230,9 +230,9 @@
             <!--</div>-->
           </div>
 
-          <span class="hidden-xs col-sm-1 mgt15">—</span>
+          <span class="col-xs-2 col-sm-1 text-center mgt15">—</span>
 
-          <div class="col-sm-4 col-xs-12 no-pad">
+          <div class="col-sm-4 col-xs-5 no-pad">
             <input ng-timepicker step="30" placeholder="12:00..." name="end_time_{{$index}}"
                    ng-model="attachment.data.end_time"
                    type="text" class="grey-bg">
