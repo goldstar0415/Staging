@@ -323,6 +323,14 @@
 
 //iphone 6 plus
 @media (max-width: 414px) {
+  .reviews {
+    .text-block {
+      width: 75%;
+    }
+    .review-img {
+      margin-right: 2rem;
+    }
+  }
   .content-popup-spot {
     margin-bottom: 1rem;
     .reviews-popup {
@@ -428,6 +436,14 @@
 
 //iphone 6
 @media (max-width: 375px) {
+  .reviews {
+    .text-block {
+      width: 70%;
+    }
+    .review-img {
+      margin-right: 2rem;
+    }
+  }
   form .comments-section {
     max-height: 30vh;
     overflow: visible;
@@ -514,6 +530,14 @@
 
 //iphone 5
 @media (max-width: 320px) {
+  .reviews {
+    .text-block {
+      width: 68%;
+    }
+    .review-img {
+      margin-right: 2rem;
+    }
+  }
   .btn-back {
     top: 0 !important;
   }
