@@ -160,6 +160,11 @@
         if (vm.type === 'event') {
           request.start_date = moment(vm.start_date + ' ' + vm.start_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.datepicker.time).format(DATE_FORMAT.backend);
           request.end_date = moment(vm.end_date + ' ' + vm.end_time, DATE_FORMAT.date + ' ' + DATE_FORMAT.datepicker.time).format(DATE_FORMAT.backend);
+
+          if (request.start_date == 'Invalid date' || request.end_date == 'Invalid date') {
+            toastr.error('Wrong dates');
+            return;
+          }
         }
         var url = API_URL + '/spots';
         var req = {};
