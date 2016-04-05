@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Map\MapSearchRequest;
+use App\Http\Requests\Map\SpotListRequest;
 use App\Http\Requests\Map\SpotsSearchRequest;
 use App\Http\Requests\WeatherRequest;
 use App\Spot;
 use App\SpotPoint;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Nwidart\ForecastPhp\Forecast;
 
 use App\Http\Requests;
@@ -28,7 +30,7 @@ class MapController extends Controller
      */
     public function getSearch(MapSearchRequest $request)
     {
-        return SpotPoint::getInBBoxes($request->get('b_boxes'));
+        return SpotPoint::getInBBoxes($request->get('b_boxes'))->get();
     }
 
     /**
@@ -118,15 +120,27 @@ class MapController extends Controller
             });
         }
 
+        if ($spots->withoutNewest()->count() > 1000) {
+            return abort(403, ['message' => 'Too many points found']);
+        }
+
         $points = [];
         $spots->get()->each(function ($spot) use (&$points) {
-            return $spot->points->each(function ($point) use ($spot, &$points) {
-                $points[] = $point->setRelation('spot', $spot->setRelations([
-                    'category' => $spot->category->setRelation('type', $spot->category->type)
-                ]));
-            });
+            $points = array_merge($points, $spot->points->map(function (SpotPoint $point) use ($spot) {
+                $point->setAttribute('category_icon_url', $spot->category->icon_url);
+                return $point;
+            })->all());
         });
 
         return $points;
+    }
+
+    /**
+     * @param SpotListRequest $request
+     * @return mixed
+     */
+    public function getList(SpotListRequest $request)
+    {
+        return Spot::whereIsPrivate(false)->whereIn('id', $request->ids)->get();
     }
 }

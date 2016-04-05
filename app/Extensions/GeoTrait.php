@@ -106,9 +106,9 @@ trait GeoTrait
         })->whereRaw(implode(' OR ', $search_areas));
 
         if ($points->count() > 1000) {
-            return response()->json(['message' => 'Too many points found'], 403);
+            return abort(403, ['message' => 'Too many points found']);
         }
 
-        return $points->get();
+        return $points;
     }
 }

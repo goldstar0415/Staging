@@ -34,7 +34,7 @@ trait Cacheable
 
     protected function mutateAttribute($key, $value)
     {
-        return Cache::tags(array_merge($this->getCacheTags(), ['attributes']))->remember(
+        return Cache::tags(array_merge($this->getCacheTags(true), ['attributes']))->remember(
             $key, 
             $this->cacheTime, 
             function () use ($key, $value) {
@@ -43,13 +43,14 @@ trait Cacheable
     }
 
     /**
+     * @param bool $for_mutated
      * @return mixed
      */
-    public function getCacheTags()
+    public function getCacheTags($for_mutated = false)
     {
         $cache_tags = (array)$this->cacheTags;
         array_push($cache_tags, $this->getTable());
-        if (!$this->isCacheFull() and $this->exists) {
+        if (!$this->isCacheFull() || $for_mutated and $this->exists) {
             array_push($cache_tags, $this->getCacheKey());
         }
         
@@ -69,11 +70,10 @@ trait Cacheable
      */
     public function getCacheKey()
     {
-        return sprintf("%s/%s-%s",
+        return sprintf("%s/%s",
             get_class($this),
-            $this->getKey(),
-            $this->updated_at->timestamp
-        );
+            $this->getKey()
+        ) . (isset($this->attributes['updated_at']) ? '-' . $this->updated_at->timestamp : '');
     }
 
     /**
