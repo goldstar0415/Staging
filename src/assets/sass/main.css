@@ -608,8 +608,8 @@
   }
 
   .comments-section {
-    padding-bottom: 4rem;
-    max-height: 40vh;
+    /*padding-bottom: 4rem;*/
+    /*max-height: 40vh;*/
     overflow: auto;
     background-color: #fff;
   }
