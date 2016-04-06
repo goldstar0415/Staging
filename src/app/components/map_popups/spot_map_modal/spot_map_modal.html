@@ -18,7 +18,7 @@
     <div class="col-xs-12 popup-main">
 
       <div class="col-xs-12 rating-mobile">
-        <stars item="data.spot"></stars>
+        <stars item="data.spot" ng-if="data.spot.title"></stars>
       </div>
 
       <div class="col-xs-12 no-pad">
@@ -116,7 +116,7 @@
           <li>
             <invite-friends item="data.spot"></invite-friends>
           </li>
-          <li>
+          <li ng-if="data.spot.share_links">
             <share item="data.spot" type="spot"></share>
           </li>
           <li ng-if="data.spot.category.type.name == 'event'">
@@ -125,7 +125,6 @@
             </a>
           </li>
         </ul>
-        <!--<share item="data.spot" type="spot" class="hidden"></share>-->
       </div>
     </div>
 

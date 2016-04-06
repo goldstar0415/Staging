@@ -16,9 +16,11 @@
       }
     });
 
-  function mapSort($rootScope, $q, MapService, $http, SpotService, API_URL, DATE_FORMAT) {
+  function mapSort($rootScope, $q, MapService, $http, $timeout, Spot, SpotService, API_URL, DATE_FORMAT) {
     var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
+    var SPOT_LIST_URL = API_URL + '/map/spots/list';
+    var SPOTS_PER_PAGE = 10;
     var restrictions = {
       tags: 7,
       locations: 20
@@ -42,6 +44,7 @@
     vm.removeFilterCategory = removeFilterCategory;
     vm.clearFilters = clearFilters;
     vm.isEmptyFilters = isEmptyFilters;
+    vm.loadNextSpots = loadNextSpots;
 
     vm.searchParams = {
       locations: [],
@@ -72,47 +75,69 @@
         $rootScope.isDrawArea = isDrawArea;
       }
 
-      var spots = [];
+      $rootScope.mapSortSpots = {
+        markers: [],
+        data: [],
+        page: 0
+      };
       if ($rootScope.isDrawArea) {
         _.each(mapSpots, function (item) {
           if (MapService.PointInPolygon(item.location)) {
-            spots.push(item);
+            $rootScope.mapSortSpots.markers.push(item);
           }
         });
       } else {
-        spots = mapSpots;
+        $rootScope.mapSortSpots.markers = mapSpots;
       }
 
-      //group by spot type
-      $rootScope.mapSortSpots = _.groupBy(spots, function (item) {
-        return item.spot.category.type.name
+      $timeout(function () {
+        if ($rootScope.mapSortSpots.markers.length > 0) {
+          MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
+          if (!$rootScope.isDrawArea) {
+            MapService.FitBoundsByLayer($rootScope.sortLayer);
+          }
+        } else {
+          MapService.clearLayers();
+        }
       });
 
-      if ($rootScope.mapSortSpots.event && $rootScope.mapSortSpots.event.length > 0) {
-        $rootScope.mapSortSpots.event = _.map($rootScope.mapSortSpots.event, function (item) {
-          SpotService.formatSpot(item.spot);
-          return item;
-        });
-      }
-
-      if ($rootScope.mapSortSpots[layer]) {
-        MapService.drawSpotMarkers($rootScope.mapSortSpots[layer], layer, true);
-
-        $rootScope.mapSortSpots[layer] = _filterUniqueSpots($rootScope.mapSortSpots[layer]);
-      } else {
-        MapService.clearLayers();
-      }
-
-      if (MapService.GetCurrentLayer().name != layer) {
-        MapService.showLayer(layer);
-      }
-
+      $rootScope.mapSortSpots.sourceSpots = _filterUniqueSpots($rootScope.mapSortSpots.markers);
+      loadNextSpots();
     }
 
     function _filterUniqueSpots(array) {
       return _.uniq(array, function (item) {
         return item.spot_id
       })
+    }
+
+    function loadNextSpots() {
+      if ($rootScope.mapSortSpots.sourceSpots && $rootScope.mapSortSpots.sourceSpots.length > 0) {
+        var startIdx = $rootScope.mapSortSpots.page * SPOTS_PER_PAGE,
+        endIdx = startIdx + SPOTS_PER_PAGE,
+        spots = $rootScope.mapSortSpots.sourceSpots.slice(startIdx, endIdx),
+        ids = _.pluck(spots, 'spot_id');
+
+        if (ids.length > 0) {
+          $rootScope.mapSortSpots.isLoading = true;
+          $http.get(SPOT_LIST_URL + '?' + jQuery.param({ids: ids}))
+            .success(function success(data) {
+              console.log(data);
+              if ($rootScope.sortLayer == 'event') {
+                data = SpotService.formatSpot(data);
+              }
+
+              $rootScope.mapSortSpots.data = _.union($rootScope.mapSortSpots.data, data);
+              $rootScope.mapSortSpots.isLoading = false;
+            })
+            .catch(function (resp) {
+              console.log(resp);
+              $rootScope.mapSortSpots.isLoading = false;
+            });
+
+          $rootScope.mapSortSpots.page++;
+        }
+      }
     }
 
     function toggleLayer(layer) {
@@ -215,6 +240,7 @@
       if (bbox_array.length > 0) {
         bbox_array = MapService.BBoxToParams(bbox_array);
         data.filter.b_boxes = bbox_array;
+        data.search_text = '';
       }
 
       if (bbox_array.length == 0 && !vm.searchParams.search_text) {
@@ -233,10 +259,6 @@
         .success(function (spots) {
           if (spots.length > 0) {
             onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0);
-
-            if (bbox_array.length == 0) {
-              MapService.FitBoundsByLayer($rootScope.sortLayer);
-            }
           } else {
             toastr.info('0 spots found');
             onUpdateMapData(null, [], null, bbox_array.length > 0);

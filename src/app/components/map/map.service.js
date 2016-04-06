@@ -1197,6 +1197,8 @@
       }
 
       function BindSpotPopup(marker, spot) {
+        var spot_id = spot.spot_id ? spot.spot_id : spot.spot.id;
+
         if (angular.element(window).width() <= 992) {
           marker.on('click', function () {
             $modal.open({
@@ -1206,7 +1208,7 @@
               modalClass: 'spot-mobile-modal',
               resolve: {
                 spot: function () {
-                  return Spot.get({id: spot.spot.id}).$promise;
+                  return Spot.get({id: spot_id}).$promise;
                 },
                 marker: function () {
                   return marker;
@@ -1226,6 +1228,9 @@
             autoPanPaddingBottomRight: L.point(offset, offset)
           };
 
+          if (spot.spot_id) {
+            delete spot.id;
+          }
 
           scope.item = spot;
           scope.marker = marker;
@@ -1237,10 +1242,10 @@
             scope.item.$loading = true;
 
             var syncSpot;
-            if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: scope.item.spot.id}))) {
+            if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: spot_id}))) {
               _loadSpotComments(scope, syncSpot);
             } else {
-              Spot.get({id: scope.item.spot.id}, function (fullSpot) {
+              Spot.get({id: spot_id}, function (fullSpot) {
                 //merge photos
                 fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
                 _loadSpotComments(scope, fullSpot);
@@ -1667,6 +1672,42 @@
         $rootScope.syncMapSpots = spots;
       }
 
+      function drawSearchSpotMarkers(spots, type, clear) {
+        if (clear) {
+          GetCurrentLayer().clearLayers();
+        }
+        var markers = [];
+        _.each(spots, function (item) {
+          var icon = CreateCustomIcon(item.category_icon_url, 'custom-map-icons', [50, 50]);
+          if (item.location) {
+            var marker = L.marker(item.location, {icon: icon});
+            item.marker = marker;
+            BindSpotPopup(marker, item);
+
+            markers.push(marker);
+          }
+        });
+
+        switch (type) {
+          case 'food':
+            foodLayer.addLayers(markers);
+            break;
+          case 'shelter':
+            shelterLayer.addLayers(markers);
+            break;
+          case 'todo':
+            todoLayer.addLayers(markers);
+            break;
+          case 'event':
+            eventsLayer.addLayers(markers);
+            break;
+          case 'other':
+            otherLayer.addLayers(markers);
+            break;
+        }
+
+      }
+
       function drawBlogMarkers(posts, clear) {
         //currentLayer = 'other';
         if (clear) {
@@ -1754,6 +1795,7 @@
         GetDataByBBox: GetDataByBBox,
         BBoxToParams: BBoxToParams,
         drawSpotMarkers: drawSpotMarkers,
+        drawSearchSpotMarkers: drawSearchSpotMarkers,
         drawBlogMarkers: drawBlogMarkers,
         WeatherSelection: WeatherSelection
       };

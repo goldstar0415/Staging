@@ -144,23 +144,26 @@
 
 //iPhone 6 Plus landscape
 @media (max-width: 736px) {
-  .ct-widget.ct-dialog.ct-video-dialog.ct-widget--active {
-    height: 415px !important;
-    left: 2%;
-    top: 0;
-    margin-left: 0;
-    margin-top: 0;
+  .ct-app {
+    display: none;
   }
-  .ct-widget .ct-dialog__controls {
-    margin-top: 5px !important;
-  }
-  .ct-widget .ct-dialog__body {
-    width: 100% !important;
-  }
-  .ct-widget .ct-dialog__view {
-    height: 280px !important;
-    margin-top: 15px !important;
-  }
+  //.ct-widget.ct-dialog.ct-video-dialog.ct-widget--active {
+  //  height: 415px !important;
+  //  left: 2%;
+  //  top: 0;
+  //  margin-left: 0;
+  //  margin-top: 0;
+  //}
+  //.ct-widget .ct-dialog__controls {
+  //  margin-top: 5px !important;
+  //}
+  //.ct-widget .ct-dialog__body {
+  //  width: 100% !important;
+  //}
+  //.ct-widget .ct-dialog__view {
+  //  height: 280px !important;
+  //  margin-top: 15px !important;
+  //}
   .central .title-name {
     margin-bottom: 3rem;
   }
