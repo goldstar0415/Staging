@@ -551,9 +551,9 @@
     top: -9rem;
   }
 
-  .media-nopad:first-child {
-    padding-right: 1rem !important;
-  }
+  /*.media-nopad:first-child {*/
+    /*padding-right: 1rem !important;*/
+  /*}*/
 
   .media-nopad:nth-child(2) {
     padding-left: 1rem !important;
