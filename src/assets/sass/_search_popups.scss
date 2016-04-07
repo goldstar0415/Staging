@@ -1317,7 +1317,7 @@
 
   .weekForecast {
     padding: 0;
-    height: 31rem;
+    height: calc(100vh - 435px);
     overflow: auto;
 
     .weekForecast-inner {
