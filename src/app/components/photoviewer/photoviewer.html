@@ -25,7 +25,7 @@
                 ng-class="{'with-location': PV.currentPhoto.address}" aria-label="Close">
           <span aria-hidden="true"></span>
         </button>
-        <img ng-src="{{PV.currentPhoto.photo_url.original}}">
+        <img ng-src="{{PV.currentPhoto.avatar_url ? PV.currentPhoto.avatar_url.original : PV.currentPhoto.photo_url.original}}">
 
         <a ng-click="PV.previousPhoto($event)" ng-if="PV.countPhotos > 1" class="previous"></a>
         <a ng-click="PV.nextPhoto($event)" ng-if="PV.countPhotos > 1" class="next"></a>
