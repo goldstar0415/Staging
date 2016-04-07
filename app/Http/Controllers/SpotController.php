@@ -129,7 +129,7 @@ class SpotController extends Controller
             event(new OnSpotCreate($spot));
         }
 
-        return $spot;
+        return $spot->load('category.type');
     }
 
     /**

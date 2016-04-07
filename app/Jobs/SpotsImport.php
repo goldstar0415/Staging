@@ -90,7 +90,7 @@ abstract class SpotsImport extends Job implements SelfHandling
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'address' => 'required|string|max:255',
-            'rating' => 'numeric'
+            'rating' => 'integer'
         ];
 
         if (isset($imported_spot->email) and !empty($imported_spot->email)) {
