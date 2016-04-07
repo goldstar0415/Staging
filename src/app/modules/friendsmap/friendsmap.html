@@ -25,8 +25,10 @@
 
         <div class="col-xs-4 location-btn" ng-if="item.showSwitch">
           <a class="custom-location" ng-class="{'active': item.showCustom}"
+             tooltip="User's&nbsp;Listed&nbsp;Location"
              ng-click="Friendsmap.switchLocation(item, true)"></a>
           <a class="default-location" ng-class="{'active': !item.showCustom}"
+             tooltip="Custom&nbsp;Location"
              ng-click="Friendsmap.switchLocation(item, false)"></a>
         </div>
       </h3>

@@ -93,18 +93,33 @@
             category_ids: []
           }
         };
-        var category;
 
-        if (vm.searchParams.category_airbnb && $rootScope.spotCategories) {
-          category = _.find($rootScope.spotCategories[3].categories, {name: 'air_bnb'});
-          data.filter.category_ids.push(category.id);
+        if ($rootScope.spotCategories) {
+          var shelterCategory = _.findWhere($rootScope.spotCategories, {name: 'shelter'});
+
+          if (vm.searchParams.category_airbnb) {
+            _addCategory(shelterCategory, data.filter, 'air_bnb');
+          }
+          if (vm.searchParams.category_hotel) {
+            _addCategory(shelterCategory, data.filter, 'hotel');
+          }
+          if (vm.searchParams.category_campground) {
+            _addCategory(shelterCategory, data.filter, 'campground');
+          }
         }
-        if (vm.searchParams.category_hotel && $rootScope.spotCategories) {
-          category = _.find($rootScope.spotCategories[3].categories, {name: 'hotel'});
-          data.filter.category_ids.push(category.id);
-        }
+
 
         doSearch(data);
+      }
+    }
+
+    function _addCategory(shelterCategory, filter, name) {
+      if (shelterCategory) {
+        var category = _.findWhere(shelterCategory.categories, {name: name});
+        if (category) {
+          console.log(category, name);
+          filter.category_ids.push(category.id);
+        }
       }
     }
 
@@ -172,7 +187,7 @@
     }
 
     function goSignIn() {
-      $state.go('index',{spotSearch: {openSignIn: !$rootScope.currentUser}});
+      $state.go('index', {spotSearch: {openSignIn: !$rootScope.currentUser}});
     }
   }
 })();

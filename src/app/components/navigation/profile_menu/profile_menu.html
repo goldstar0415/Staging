@@ -72,7 +72,9 @@
 
     <div class="col-xs-12 col-md-3 information-profile " ng-if="!$root.isMobile || Profile.isStream()">
       <section class="col-xs-12 col-sm-2 col-md-12 avatar-wrap" ng-if="$root.profileUser.id">
-        <a ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})" class="avatar">
+        <a ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})"
+           tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}"
+           class="avatar">
           <img ng-src="{{$root.profileUser.avatar_url.medium}}"/>
         </a>
       </section>

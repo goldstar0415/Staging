@@ -65,6 +65,7 @@
       }
     }
 
+    //set current user location by IP
     function sendIpLocation() {
       $http.jsonp("http://ipinfo.io?callback=JSON_CALLBACK").success(function (response) {
         User.setLocation({

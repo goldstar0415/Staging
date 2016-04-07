@@ -9,11 +9,10 @@
     .controller('ProfileMenuController', ProfileMenuController);
 
   /** @ngInject */
-  function ProfileMenuController(User, $state, $rootScope, PermissionService) {
+  function ProfileMenuController(User, $state, PermissionService) {
     var vm = this;
     vm.$state = $state;
     vm.checkPermission = PermissionService.checkPermission;
-
     //follow user and reload page
     vm.follow = function (user) {
       if (user.can_follow) {
