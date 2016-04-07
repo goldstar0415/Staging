@@ -6,23 +6,45 @@
     .controller('ProfileController', ProfileController);
 
   /** @ngInject */
-  function ProfileController(user, Wall, spots, SpotService, dialogs, MapService, ScrollService, PermissionService) {
+  function ProfileController($rootScope, user, Wall, Spot, SpotService, dialogs, MapService, ScrollService, PermissionService) {
     var vm = this;
-    vm.checkPermission = PermissionService.checkPermission;
-
+    var isLoadedSpots = false;
     vm.wall = {};
-    var params = {
-      page: 0,
-      limit: 10,
-      user_id: user.id
-    };
-    vm.pagination = new ScrollService(Wall.query, vm.wall, params);
+    vm.checkPermission = PermissionService.checkPermission;
+    $rootScope.$on('change-map-state', loadAllSpots);
 
-    if (spots) {
-      spots.$promise.then(function () {
+    run();
+
+    /////////
+
+    function run() {
+      var wallParams = {
+        page: 0,
+        limit: 10,
+        user_id: user.id
+      };
+      vm.pagination = new ScrollService(Wall.query, vm.wall, wallParams);
+
+      var spotParams = {
+        page: 1,
+        limit: 30,
+        user_id: user.id
+      };
+      Spot.paginate(spotParams, function (spots) {
+        showSpots(spots.data);
+      });
+    }
+
+    function loadAllSpots(e, mapState) {
+      if (mapState == 'big' && !isLoadedSpots) {
+        Spot.query({user_id: user.id}, showSpots);
+        isLoadedSpots = true;
+      }
+    }
+
+    function showSpots(spots) {
         var formatedSpots = SpotService.formatSpot(spots);
         ShowMarkers(formatedSpots);
-      });
     }
 
     /*

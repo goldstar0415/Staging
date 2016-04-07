@@ -108,7 +108,7 @@
     function _filterUniqueSpots(array) {
       return _.uniq(array, function (item) {
         return item.spot_id
-      })
+      });
     }
 
     function loadNextSpots() {

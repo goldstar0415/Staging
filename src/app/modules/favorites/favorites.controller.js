@@ -6,20 +6,58 @@
     .controller('FavoritesController', FavoritesController);
 
   /** @ngInject */
-  function FavoritesController($scope, $rootScope, Spot, ScrollService, SpotService, allSpots, MapService, API_URL) {
+  function FavoritesController($scope, $rootScope, Spot, ScrollService, SpotService, MapService, API_URL) {
     var vm = this;
+    var isLoadedSpots = false;
+
     vm.API_URL = API_URL;
-
     vm.spots = {};
+    vm.markersSpots = [];
 
-    vm.markersSpots = formatSpots(allSpots.data);
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
-    vm.markersSpots = ShowMarkers(vm.markersSpots);
     vm.removeSpot = removeSpot;
-
     vm.removeFromFavorite = UnFavorite;
+    $rootScope.$on('change-map-state', loadAllSpots);
+    $scope.$watch('Favorite.spots.data', updateSpots);
+
+    var params = {
+      page: 0,
+      limit: 5,
+      user_id: $rootScope.profileUser.id
+    };
+    vm.pagination = new ScrollService(Spot.favorites, vm.spots, params);
+
+    function updateSpots(value, old) {
+      value = formatSpots(value);
+
+      if (old && old.length > 0) {
+        var newSpots = _.select(value, function (item) {
+          return !_.findWhere(old, {id: item.id});
+        });
+
+        vm.markersSpots = _.union(vm.markersSpots, ShowMarkers(newSpots));
+      } else {
+        vm.markersSpots = _.union(vm.markersSpots, ShowMarkers(value));
+      }
+    }
+
+    function formatSpots(spots) {
+      return _.each(spots, function (spot) {
+        SpotService.formatSpot(spot);
+      });
+    }
+
+    function loadAllSpots(e, mapState) {
+      if (mapState == 'big' && !isLoadedSpots) {
+        Spot.favorites({user_id: $rootScope.profileUser.id}, function (spots) {
+          vm.spots.data = spots; //show all spots
+          vm.pagination.disabled = true;
+        });
+        isLoadedSpots = true;
+      }
+    }
 
     /*
      * Delete spot from favorites
@@ -54,7 +92,7 @@
         };
       });
 
-      MapService.drawSpotMarkers(spotsArray, 'other', true);
+      MapService.drawSpotMarkers(spotsArray, 'other', false);
       MapService.FitBoundsOfCurrentLayer();
 
       return spotsArray;
@@ -73,22 +111,6 @@
         } else {
           MapService.GetCurrentLayer().removeLayers(vm.markersSpots[idx].markers)
         }
-      });
-    }
-
-    var params = {
-      page: 0,
-      limit: 10,
-      user_id: $rootScope.profileUser.id
-    };
-    vm.pagination = new ScrollService(Spot.favorites, vm.spots, params);
-    $scope.$watch('Favorite.spots.data', function (value) {
-      formatSpots(value);
-    });
-
-    function formatSpots(spots) {
-      return _.each(spots, function (spot) {
-        SpotService.formatSpot(spot);
       });
     }
   }

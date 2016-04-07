@@ -578,12 +578,7 @@
         controllerAs: 'Spots',
         parent: 'profile',
         locate: 'none',
-        mapState: 'small',
-        resolve: {
-          allSpots: function (Spot, $stateParams) {
-            return Spot.query({user_id: $stateParams.user_id}).$promise;
-          }
-        }
+        mapState: 'small'
       })
       .state('spot', {
         url: '/spot/:spot_id',
@@ -620,13 +615,6 @@
         templateUrl: '/app/modules/profile/profile.html',
         controller: 'ProfileController',
         controllerAs: 'Profile',
-        resolve: {
-          spots: function (user, Spot, $stateParams) {
-            return Spot.query({
-              user_id: user.id
-            });
-          }
-        },
         parent: 'profile',
         mapState: 'small'
       })
@@ -637,12 +625,7 @@
         controllerAs: 'Favorite',
         parent: 'profile',
         locate: 'none',
-        mapState: 'small',
-        resolve: {
-          allSpots: function (Spot, $stateParams) {
-            return Spot.favorites({user_id: $stateParams.user_id}).$promise;
-          }
-        }
+        mapState: 'small'
       })
       //Photomap view state
       .state('photos', {

@@ -12,10 +12,11 @@
       this.items = items;
       this.params = params;
       this.busy = false;
+      this.disabled = false;
     };
 
     Scroll.prototype.nextPage = function () {
-      if (this.busy) return;
+      if (this.busy || this.disabled) return;
       if (_.isUndefined(this.totalItems) || this.totalItems > 0 && (this.params.page * this.params.limit) < this.totalItems) {
         this.busy = true;
         this.params.page++;
