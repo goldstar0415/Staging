@@ -93,7 +93,7 @@ abstract class SpotsImport extends Job implements SelfHandling
             'rating' => 'numeric'
         ];
 
-        if (isset($imported_spot->email)) {
+        if (isset($imported_spot->email) and !empty($imported_spot->email)) {
             $rules['email'] = 'required|email';
         }
 
