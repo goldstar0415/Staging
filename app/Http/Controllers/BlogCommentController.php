@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Http\Requests\Blog\BlogCommentRequest;
 use App\Http\Requests\CommentsRequest;
 use App\Http\Requests\CommentStoreRequest;
 use App\Http\Requests\PaginateRequest;
+use App\Services\Attachments;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -40,16 +42,18 @@ class BlogCommentController extends Controller
     /**
      * Store a newly created blog comment in storage.
      *
-     * @param CommentStoreRequest $request
+     * @param BlogCommentRequest $request
+     * @param Attachments $attachments
      * @param \App\Blog $blog
      * @return Comment
      */
-    public function store(CommentStoreRequest $request, $blog)
+    public function store(BlogCommentRequest $request, Attachments $attachments, $blog)
     {
         $comment = new Comment($request->except('attachments'));
         $comment->sender()->associate($request->user());
 
         $blog->comments()->save($comment);
+        $attachments->make($comment);
 
         return $comment;
     }

@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests\Blog;
 
-use App\Http\Requests\AttachableRequest;
 use App\Http\Requests\Request;
 
 class BlogRequest extends Request
 {
-    use AttachableRequest;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,23 +23,15 @@ class BlogRequest extends Request
      */
     public function rules()
     {
-        $rules = [
+        return [
             'cover' => 'image',
             'blog_category_id' => 'required|exists:blog_categories,id',
             'title' => 'required|max:255',
-            'body' => [
-                $this->message_rule,
-                'string',
-                'max:5000'
-            ],
+            'body' => 'required|max:5000',
             'slug' => 'alpha_dash|max:255|unique:blogs',
             'location.lat' => 'numeric',
             'location.lng' => 'numeric',
             'address' => 'required_with:location|string|max:255',
         ];
-        
-        $rules = $this->attachmentsRules($rules, 'body');
-        
-        return $rules;
     }
 }
