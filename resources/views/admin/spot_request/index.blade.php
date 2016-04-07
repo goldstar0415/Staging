@@ -21,12 +21,16 @@
         @foreach($spots as $spot)
             <tr>
                 <td>
-                    <a href="{!! frontend_url($spot->user->id) !!}">
-                        {{ $spot->user->first_name . ' ' . $spot->user->last_name }}
-                    </a>
+                    @if ($spot->hasOwner())
+                        <a href="{!! frontend_url($spot->user->id) !!}">
+                            {{ $spot->user->first_name . ' ' . $spot->user->last_name }}
+                        </a>
+                    @else
+                        No owner
+                    @endif
                 </td>
                 <td>
-                    <a href="{!! frontend_url($spot->user->id, 'spot', $spot->id) !!}">{{ $spot->title }}</a>
+                {{ link_to(frontend_url($spot->user_id ?: Request::user()->id, 'spot', $spot->id), $spot->title) }}
                 </td>
                 <td>
                     {{ $spot->description }}
