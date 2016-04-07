@@ -209,7 +209,7 @@
                       <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})" target="_blank">{{item.title}}</a>
                     </h2>
 
-                    <p class="location">{{item.address}}</p>
+                    <p class="location">{{item.points[0].address}}</p>
 
                     <div class=" col-xs-8 date">
                       <date-range item="item"></date-range>

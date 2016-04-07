@@ -122,7 +122,6 @@
           $rootScope.mapSortSpots.isLoading = true;
           $http.get(SPOT_LIST_URL + '?' + jQuery.param({ids: ids}))
             .success(function success(data) {
-              console.log(data);
               if ($rootScope.sortLayer == 'event') {
                 data = SpotService.formatSpot(data);
               }
@@ -131,7 +130,6 @@
               $rootScope.mapSortSpots.isLoading = false;
             })
             .catch(function (resp) {
-              console.log(resp);
               $rootScope.mapSortSpots.isLoading = false;
             });
 
@@ -270,7 +268,6 @@
           if (resp.status > 0) {
             toastr.error(resp.data ? resp.data.message : 'Something went wrong')
           }
-          console.warn(resp, cancellerHttp);
           cancellerHttp = null;
         });
     }
