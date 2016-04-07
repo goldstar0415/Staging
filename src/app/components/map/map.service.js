@@ -878,6 +878,7 @@
 
         if (wp.length > 0 || geoJson && geoJson.features.length > 0) {
           FitBoundsOfDrawLayer();
+          map.zoomOut();
 
           var modalInstance = $modal.open({
             animation: true,
@@ -968,22 +969,22 @@
           myDivicons[i].style.top = dy[i] + "px";
         }
 
-        //var mapWidth = parseFloat($("#map").css("width").replace("px", ""));
-        //var mapHeight = parseFloat($("#map").css("height").replace("px", ""));
+        var mapWidth = parseFloat($("#map").css("width").replace("px", ""));
+        var mapHeight = parseFloat($("#map").css("height").replace("px", ""));
 
         var linesLayer = $("canvas.leaflet-zoom-animated")[0];
-        //var oldLinesWidth = linesLayer.getAttribute("width");
-        //var oldLinesHeight = linesLayer.getAttribute("height");
-        //var oldViewbox = linesLayer.getAttribute("viewBox");
+        var oldLinesWidth = linesLayer.getAttribute("width");
+        var oldLinesHeight = linesLayer.getAttribute("height");
+        var oldViewbox = linesLayer.getAttribute("viewBox");
         //linesLayer.setAttribute("width", mapWidth);
         //linesLayer.setAttribute("height", mapHeight);
-        //linesLayer.setAttribute("viewBox", "0 0 " + mapWidth + " " + mapHeight);
-        //var linesTransform = linesLayer.style.transform.split(",");
-        //var linesX = parseFloat(linesTransform[0].split("(")[1].replace("px", ""));
-        //var linesY = parseFloat(linesTransform[1].replace("px", ""));
+        linesLayer.setAttribute("viewBox", "0 0 " + mapWidth + " " + mapHeight);
+        var linesTransform = linesLayer.style.transform.split(",");
+        var linesX = parseFloat(linesTransform[0].split("(")[1].replace("px", ""));
+        var linesY = parseFloat(linesTransform[1].replace("px", ""));
         //linesLayer.style.transform = "";
-        //linesLayer.style.left = "";
-        //linesLayer.style.top = "";
+        linesLayer.style.left = "";
+        linesLayer.style.top = "";
 
         controls.hide();
 
@@ -991,6 +992,7 @@
           useCORS: true,
           logging: true,
           allowTaint: false,
+          taintTest: false,
           //background: "#E8F0F6",
           onrendered: function onrendered(canvas) {
             for (var i = 0; i < myTiles.length; i++) {
@@ -1012,8 +1014,8 @@
               myDivicons[i].style.left = "0px";
               myDivicons[i].style.top = "0px";
             }
-            //linesLayer.style.transform = "translate(" + (linesX) + "px," + (linesY) + "px)";
-            //linesLayer.setAttribute("viewBox", oldViewbox);
+            linesLayer.style.transform = "translate(" + (linesX) + "px," + (linesY) + "px)";
+            linesLayer.setAttribute("viewBox", oldViewbox);
             //linesLayer.setAttribute("width", oldLinesWidth);
             //linesLayer.setAttribute("height", oldLinesHeight);
             mapPane.style.transform = "translate(" + (mapX) + "px," + (mapY) + "px)";
