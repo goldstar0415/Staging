@@ -11,6 +11,7 @@ trait Cacheable
     protected $cacheFull = false;
     protected $cacheTags = [];
     protected $cacheTime = 60;
+    protected $exceptCacheAttributes = [];
 
     public static function bootCacheable()
     {
@@ -18,28 +19,30 @@ trait Cacheable
             $cache = Cache::driver();
             $tags = $model->getCacheTags();
             $cache = $tags ? $cache->tags($tags) : $cache;
-            if (method_exists($model, 'acceptCacheFlush')) {
-                if ($model->acceptCacheFlush()) {
-                    $cache->flush();
-                    Cache::tags(array_merge($tags, ['attributes']))->flush();
-                }
-            } else {
+            $method_exists = method_exists($model, 'acceptCacheFlush');
+            if (!$method_exists or $method_exists and $model->acceptCacheFlush()) {
                 $cache->flush();
+                Cache::tags(array_merge($tags, ['attributes']))->flush();
             }
         };
-        self::updating($closure);
-        self::creating($closure);
-        self::deleting($closure);
+        self::updated($closure);
+        self::created($closure);
+        self::deleted($closure);
+        self::saved($closure);
     }
 
     protected function mutateAttribute($key, $value)
     {
-        return Cache::tags(array_merge($this->getCacheTags(true), ['attributes']))->remember(
-            $key, 
-            $this->cacheTime, 
-            function () use ($key, $value) {
-            return parent::mutateAttribute($key, $value);
-        });        
+        if (!array_has($this->exceptCacheAttributes, $key)) {
+            return Cache::tags(array_merge($this->getCacheTags(true), ['attributes']))->remember(
+                $key,
+                $this->cacheTime,
+                function () use ($key, $value) {
+                    return parent::mutateAttribute($key, $value);
+                });
+        }
+
+        return parent::mutateAttribute($key, $value);
     }
 
     /**
