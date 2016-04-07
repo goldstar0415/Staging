@@ -87,7 +87,7 @@
       if (vm.searchParams.search_text || vm.searchParams.category_airbnb || vm.searchParams.category_hotel) {
 
         var data = {
-          type: 'food',
+          type: 'shelter',
           search_text: vm.searchParams.search_text,
           filter: {
             category_ids: []
