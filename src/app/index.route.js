@@ -13,6 +13,7 @@
         template: '<ui-view  />',
         resolve: {
           currentUser: function ($q, User, $rootScope, UserService, $state) {
+            console.log('currentUser');
             if ($rootScope.currentUser) {
               return $rootScope.currentUser;
             } else if (!$rootScope.currentUserFailed) {

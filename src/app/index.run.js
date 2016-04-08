@@ -9,7 +9,7 @@
   function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, SpotService, SignInService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
     $rootScope.$state = $state;
     $rootScope.checkPermission = PermissionService.checkPermission;
-    $rootScope.isMobile = L.Browser.touch;
+    $rootScope.isMobile = angular.element(window).width() <= 992;
     L.Icon.Default.imagePath = '/assets/libs/Leaflet/images';
     $rootScope.plannerIcon = '/assets/img/icons/planner_icon.png';
 
