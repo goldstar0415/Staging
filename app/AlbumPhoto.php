@@ -48,7 +48,12 @@ class AlbumPhoto extends BaseModel implements StaplerableInterface, Commentable
      */
     public function __construct(array $attributes = [])
     {
-        $this->hasAttachedFile('photo');
+        $this->hasAttachedFile('photo', [
+            'styles' => [
+                'medium' => '160x150#',
+                'thumb' => ['dimensions' => '70x70', 'convert_options' => ['quality' => 100]]
+            ]
+        ]);
         parent::__construct($attributes);
     }
 
