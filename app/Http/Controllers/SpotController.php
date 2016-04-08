@@ -312,6 +312,9 @@ class SpotController extends Controller
     public function invite(SpotInviteRequest $request)
     {
         $user = $request->user();
+        if (!Spot::whereId($request->spot_id)->exists()) {
+            abort(403, 'The spot not found or not approved');
+        }
         foreach ($request->input('users') as $user_id) {
             $message = new ChatMessage(['body' => '']);
             $user->chatMessagesSend()->save($message, ['receiver_id' => $user_id]);
