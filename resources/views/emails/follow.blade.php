@@ -1,1 +1,1 @@
-<a href="{{ frontend_url($sender->id) }}">{{ $sender->first_name }} {{ $sender->last_name }}</a> follows you
+Zoomer <a href="{{ frontend_url($sender->id) }}">{{ $sender->full_name }}</a> follows <a href="{{ frontend_url($following->id) }}">{{ $following->full_name }}</a>

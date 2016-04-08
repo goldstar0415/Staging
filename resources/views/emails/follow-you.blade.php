@@ -1,0 +1,1 @@
+<a href="{{ frontend_url($sender->id) }}">{{ $sender->full_name }}</a> follows you

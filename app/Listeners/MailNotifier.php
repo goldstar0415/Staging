@@ -56,26 +56,29 @@ class MailNotifier
                 break;
             case $event instanceof UserFollowEvent:
                 $sender = $event->getFeedSender();
+                $subject = 'Following feed';
                 $following = $event->getFollowing();
-                $this->send(
-                    $event->getFollower()->followers->filter(function ($follower) {
-                        return $follower->notification_follow;
-                    }),
-                    'follow',
-                    compact('sender', 'following'),
-                    "Zoomer $sender->first_name $sender->last_name follows you"
-                );
+                $event->getFollower()->followers->filter(function ($follower) use ($following) {
+                    return $follower->notification_follow and $follower->id !== $following->id;
+                })->each(function ($follower) use ($sender, $following, $subject) {
+                    $this->send($follower, 'follow', compact('sender', 'following'), $subject);
+                });
+                if ($following->notification_follow) {
+                    $this->send($following, 'follow-you', compact('sender'), $subject);
+                }
                 break;
             case $event instanceof UserUnfollowEvent:
                 $sender = $event->getFeedSender();
+                $subject = 'UnFollowing feed';
                 $following = $event->getFollowing();
-                $this->send(
-                    $event->getFollower()->followers->filter(function ($follower) {
-                        return $follower->notification_follow;
-                    }),
-                    'unfollow', compact('sender', 'following'),
-                    "Zoomer $sender->first_name $sender->last_name unfollows you"
-                );
+                $event->getFollower()->followers->filter(function ($follower) use ($following) {
+                    return $follower->notification_follow and $follower->id !== $following->id;
+                })->each(function ($follower) use ($sender, $following, $subject) {
+                    $this->send($follower, 'unfollow', compact('sender', 'following'), $subject);
+                });
+                if ($following->notification_follow) {
+                    $this->send($following, 'unfollow-you', compact('sender'), $subject);
+                }
                 break;
             case $event instanceof OnWallMessage:
                 if (!$event->isSelf()) {
