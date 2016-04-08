@@ -14,9 +14,14 @@ class SocialContactsController extends Controller
 {
     public function google(Request $request, GoogleClient $googleClient)
     {
+        $contacts = $googleClient->getContacts();
+        if (!isset($contacts['feed']) or !isset($contacts['feed']['entry'])) {
+            abort(204);
+        }
+
         return view('google-contacts')->with(
             'contacts',
-            new GoogleContacts($googleClient->getContacts()['feed']['entry'], $googleClient->getToken())
+            new GoogleContacts($contacts['feed']['entry'], $googleClient->getToken())
         );
     }
 }
