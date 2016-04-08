@@ -108,7 +108,7 @@
         <li ng-if="$root.currentUser && $root.currentUser.id != data.spot.user_id && data.spot.is_favorite">
           <a class="fav favorited" ng-click="removeFromFavorite(data.spot)">Unfavorite</a>
         </li>
-        <li>
+        <li ng-if="data.spot.is_approved">
           <invite-friends item="data.spot"></invite-friends>
         </li>
         <li ng-if="data.spot.share_links">

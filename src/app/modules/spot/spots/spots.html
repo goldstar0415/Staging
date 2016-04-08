@@ -71,7 +71,7 @@
             <li ng-if="$root.currentUser && currentUser.id != item.user_id && item.is_favorite">
               <a class="fav favorited" ng-click="Spots.removeFromFavorite(item)">Unfavorite</a>
             </li>
-            <li>
+            <li ng-if="item.is_approved">
               <invite-friends item="item"></invite-friends>
             </li>
             <li>

@@ -77,7 +77,7 @@
             <li ng-if="item.is_favorite">
               <a class="fav favorited" ng-click="Favorite.removeFromFavorite(item, $index)">Unfavorite</a>
             </li>
-            <li>
+            <li ng-if="item.is_approved">
               <invite-friends item="item"></invite-friends>
             </li>
             <li>

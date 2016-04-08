@@ -64,7 +64,7 @@
         <li ng-if="currentUser && currentUser.id != Spot.spot.user_id && Spot.spot.is_favorite">
           <a class="fav favorited" ng-click="Spot.removeFromFavorite(Spot.spot)">Unfavorite</a>
         </li>
-        <li>
+        <li ng-if="Spot.spot.is_approved">
           <invite-friends item="Spot.spot"></invite-friends>
         </li>
         <li ng-if="Spot.spot.type == 'Event'">

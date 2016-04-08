@@ -218,7 +218,7 @@
 
                     <div class="links-nav">
                       <ul class="tools clearfix">
-                        <li>
+                        <li ng-if="item.is_approved">
                           <invite-friends item="item"></invite-friends>
                         </li>
                         <li ng-if="$root.sortLayer == 'event' && !item.is_saved">
