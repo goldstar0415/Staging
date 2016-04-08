@@ -30,7 +30,7 @@
                     @endif
                 </td>
                 <td>
-                {{ link_to(frontend_url($spot->user_id ?: Request::user()->id, 'spot', $spot->id), $spot->title) }}
+                {!! link_to(frontend_url($spot->user_id ?: Request::user()->id, 'spot', $spot->id), $spot->title) !!}
                 </td>
                 <td>
                     {{ $spot->description }}
