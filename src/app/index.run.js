@@ -57,8 +57,7 @@
 
       //close editor
       if (angular.isDefined(window.ContentTools)) {
-        var editor = ContentTools.EditorApp.get();
-        editor.destroy();
+        ContentTools.EditorApp.get().destroy();
       }
 
       $rootScope.pageLoaded = true;

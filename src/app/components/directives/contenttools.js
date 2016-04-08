@@ -6,7 +6,7 @@
     .directive('contentTools', contenttools);
 
   /* @ngInject */
-  function contenttools() {
+  function contenttools($timeout) {
     var directive = {
       link: link,
       restrict: 'EA',
@@ -17,22 +17,24 @@
     return directive;
 
     function link(scope, element, attrs) {
+
       if (!window.ContentTools) {
         $.getScript('/assets/libs/contenttools/content-tools.min.js', function () {
           $.get('/assets/libs/contenttools/content-tools.min.css', function (css) {
             $('head').append('<style>' + css + '</style>');
 
-            initEditor();
+            $timeout(initEditor);
           });
         });
       } else {
-        initEditor();
+        $timeout(initEditor);
       }
     }
 
     function initEditor() {
       // Initialise the editor
       var editor = new ContentTools.EditorApp.get();
+      console.log($('[content-tools]'));
       editor.init('[content-tools]', 'article-body');
       editor.start();
       window.onbeforeunload = null;

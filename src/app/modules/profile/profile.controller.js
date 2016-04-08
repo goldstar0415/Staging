@@ -18,12 +18,14 @@
     /////////
 
     function run() {
-      var wallParams = {
-        page: 0,
-        limit: 10,
-        user_id: user.id
-      };
-      vm.pagination = new ScrollService(Wall.query, vm.wall, wallParams);
+      if (PermissionService.checkPermission(user.privacy_wall)) {
+        var wallParams = {
+          page: 0,
+          limit: 10,
+          user_id: user.id
+        };
+        vm.pagination = new ScrollService(Wall.query, vm.wall, wallParams);
+      }
 
       var spotParams = {
         page: 1,
