@@ -29,6 +29,10 @@ trait Cacheable
         self::created($closure);
         self::deleted($closure);
         self::saved($closure);
+        self::updating($closure);
+        self::creating($closure);
+        self::deleting($closure);
+        self::saving($closure);
     }
 
     protected function mutateAttribute($key, $value)
