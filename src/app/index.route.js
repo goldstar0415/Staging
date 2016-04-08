@@ -538,9 +538,8 @@
         template: '<ui-view  />',
         abstract: true,
         resolve: {
-          user: function ($rootScope, User, currentUser, $stateParams, UserService, $state) {
-
-            if (currentUser && currentUser.alias == $stateParams.user_id) {
+          user: function ($rootScope, User, currentUser, $stateParams, UserService) {
+            if (currentUser && (currentUser.id == $stateParams.user_id || currentUser.alias == $stateParams.user_id)) {
               return User.currentUser({}, function (user) {
                 $rootScope.currentUser = user;
                 UserService.setProfileUser(user);

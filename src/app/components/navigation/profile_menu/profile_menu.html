@@ -215,7 +215,7 @@
                 <a ui-sref="profile.main({user_id: item.alias || item.id})">
                   <img ng-src="{{item.avatar_url.thumb}}" class="img-responsive"/>
 
-                  <div class="sidebar-user-name" ui-sref="profile.main({user_id: item.alias || item.id})">
+                  <div class="sidebar-user-name">
                     {{item.first_name}} <br>{{item.last_name}}
                   </div>
                 </a>
@@ -239,7 +239,7 @@
 
                   <img ng-src="{{item.avatar_url.thumb}}" alt="" class="img-responsive"/>
 
-                  <div class="sidebar-user-name" ui-sref="profile.main({user_id: item.alias || item.id})">
+                  <div class="sidebar-user-name" >
                     {{item.first_name}} <br>{{item.last_name}}
                   </div>
                 </a>
