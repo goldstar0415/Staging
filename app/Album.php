@@ -48,7 +48,13 @@ class Album extends BaseModel
      */
     public function getCoverAttribute()
     {
-        return $this->photos()->first()->photo_url;
+        $cover = $this->photos()->first();
+        $url = url('uploads/missings/covers');
+        return $cover ? $cover->photo_url : [
+            'original' => $url . '/original/missing.png',
+            'medium' => $url . '/medium/missing.png',
+            'thumb' => $url . '/thumb/missing.png',
+        ];
     }
 
     /**
