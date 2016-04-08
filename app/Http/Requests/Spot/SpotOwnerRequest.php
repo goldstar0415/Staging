@@ -13,7 +13,9 @@ class SpotOwnerRequest extends Request
      */
     public function authorize()
     {
-        return is_null($this->route('spots')->user_id);
+        $spot = $this->route('spots');
+
+        return !$spot->hasOwner() or $spot->hasOwner() and !$spot->user->verified;
     }
 
     /**
