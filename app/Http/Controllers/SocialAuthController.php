@@ -87,7 +87,7 @@ class SocialAuthController extends Controller
                     'email' => $user->getEmail(),
                     'first_name' => $first_name,
                     'last_name' => $last_name,
-                    'avatar' => $user->getAvatar(),
+                    'avatar' => preg_replace('/\?sz=\d+/', '', $user->getAvatar()),
                     'verified' => true
                 ]);
                 $this->attachSocial($new_user, $social, $user->getId());
