@@ -25,6 +25,7 @@ class MapController extends Controller
     /**
      * Get spots in bounding box
      *
+     * @deprecated Now all request sends to getSpots
      * @param MapSearchRequest $request
      * @return mixed
      */

@@ -105,7 +105,6 @@ Route::get('message/{user_id}/read', 'ChatController@read');
 /**
  * Map Controls
  */
-Route::get('map/search', 'MapController@getSearch');
 Route::get('map/spots', 'MapController@getSpots');
 Route::get('map/spots/list', 'MapController@getList');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
