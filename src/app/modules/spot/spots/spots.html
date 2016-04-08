@@ -16,7 +16,7 @@
         <div class="col-md-2 col-xs-3 col-sm-4 spot-thumb">
           <figure>
             <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" class="img-size">
-            <spot-type type="item.type"></spot-type>
+            <spot-type type="item.category.type.display_name"></spot-type>
           </figure>
           <stars item="item"></stars>
         </div>
