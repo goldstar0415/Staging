@@ -1,14 +1,15 @@
-<div ng-if="MapSort.vertical && ($root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview')"
+<user-hints></user-hints>
+<div ng-show="MapSort.vertical && ($root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview')"
      class="sidebar-menu-wrap" ng-class="{'to-bottom': !$root.currentUser}">
   <div class="show-menu-profile visible-xs" ng-click="MapSort.vertical = !MapSort.vertical"></div>
 
   <div class="sidebar-menu-vertical">
     <ul>
-      <li class="hidden-xs" ng-click="MapSort.vertical = !MapSort.vertical">
-        <a class="full-small"></a>
+      <li class="hidden-xs" ng-click="MapSort.vertical = !MapSort.vertical" id="menu_expand">
+        <a class="full-small" ></a>
       </li>
       <li ng-click="$root.toggleLayer('event')" ng-class="{'active': $root.sortLayer == 'event'}">
-        <a class="events"><span class="hidden-xs">Events</span></a>
+        <a class="events" id="events_map_icon"><span class="hidden-xs">Events</span></a>
       </li>
       <li ng-click="$root.toggleLayer('todo')" ng-class="{'active': $root.sortLayer == 'todo'}">
         <a class="recreation"><span class="hidden-xs">To-Do</span></a>
@@ -20,13 +21,13 @@
         <a class="shelter"><span class="hidden-xs">Shelter</span></a>
       </li>
       <li ng-click="$root.toggleLayer('weather')" ng-class="{'active': $root.sortLayer == 'weather'}">
-        <a class="weather-link"><span class="hidden-xs">Weather</span></a>
+        <a class="weather-link" id="weather_map_icon"><span class="hidden-xs">Weather</span></a>
       </li>
     </ul>
   </div>
 </div>
 
-<div ng-if="!MapSort.vertical" class="col-xs-3 no-pad sort-menu">
+<div ng-show="!MapSort.vertical" class="col-xs-3 no-pad sort-menu">
   <div class="hide-menu-profile visible-xs" ng-click="MapSort.vertical = !MapSort.vertical"
        ng-class="{'rotate-down': !MapSort.vertical}"
     ></div>
@@ -193,7 +194,8 @@
 
         <!--Search results-->
         <div class="results">
-          <div  infinite-scroll="MapSort.loadNextSpots()" infinite-scroll-disabled="$root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length"
+          <div infinite-scroll="MapSort.loadNextSpots()"
+               infinite-scroll-disabled="$root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length"
                class="clearfix" infinite-scroll-distance="1" infinite-scroll-container='".search-filters"'>
             <div ng-repeat="item in $root.mapSortSpots.data">
               <div class="event-result clearfix">

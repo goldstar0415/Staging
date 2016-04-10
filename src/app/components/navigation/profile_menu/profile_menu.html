@@ -36,7 +36,7 @@
         </li>
       </ul>
       <ul ng-if="$root.currentUser && $root.currentUser.id != $root.profileUser.id">
-        <li >
+        <li>
           <a ui-sref="spots({user_id: $root.profileUser.id})"
              ng-class="{active: Profile.$state.current.name == 'spots' || Profile.$state.current.name == 'spot'}"
              class="my-spots nav-spots"><span>Spots</span></a>
@@ -73,10 +73,10 @@
     <div class="col-xs-12 col-md-3 information-profile " ng-if="!$root.isMobile || Profile.isStream()">
       <section class="col-xs-12 col-sm-2 col-md-12 avatar-wrap" ng-if="$root.profileUser.id">
         <a ng-if="$root.$state.current.name != 'profile.main'"
-          ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})"
+           ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})"
            tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}"
            class="avatar">
-          <img ng-src="{{$root.profileUser.avatar_url.medium}}" />
+          <img ng-src="{{$root.profileUser.avatar_url.medium}}"/>
         </a>
         <a ng-if="$root.$state.current.name == 'profile.main'"
            tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}"
@@ -140,35 +140,41 @@
         <div class="text-center" ng-if="Profile.checkPermission($root.profileUser.privacy_info)">
 
           <ul class="list-inline social-links">
-            <li><a ng-href="{{ $root.currentUser.social_links.facebook | absoluteLink}}"
-                   ng-if="$root.currentUser.social_links.facebook"
-                   rel="nofollow" target="_blank" class="facebook">
-            </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.twitter | absoluteLink}}"
-                   ng-if="$root.currentUser.social_links.twitter"
-                   rel="nofollow" target="_blank" class="twitter">
-            </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.instagram | absoluteLink}}"
-                   ng-if="$root.currentUser.social_links.instagram"
-                   rel="nofollow" target="_blank" class="instagram">
-            </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.tumblr | absoluteLink }}"
-                   ng-if="$root.currentUser.social_links.tumblr"
-                   rel="nofollow" target="_blank" class="tumblr">
-            </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.vk | absoluteLink }}"
-                   ng-if="$root.currentUser.social_links.vk"
-                   rel="nofollow"
-                   target="_blank" class="vk">
-            </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.custom | absoluteLink }}"
-                   ng-if="$root.currentUser.social_links.custom"
-                   rel="nofollow" target="_blank" class="custom">
-            </a></li>
-            <li><a ng-href="{{ $root.currentUser.social_links.google | absoluteLink }}"
-                   ng-if="$root.currentUser.social_links.google"
-                   rel="nofollow" target="_blank" class="google-plus">
-            </a></li>
+            <li ng-if="$root.currentUser.social_links.facebook">
+              <a ng-href="{{ $root.currentUser.social_links.facebook | absoluteLink}}"
+                 rel="nofollow" target="_blank" class="facebook">
+              </a>
+            </li>
+            <li ng-if="$root.currentUser.social_links.twitter">
+              <a ng-href="{{ $root.currentUser.social_links.twitter | absoluteLink}}"
+                 rel="nofollow" target="_blank" class="twitter">
+              </a>
+            </li>
+            <li ng-if="$root.currentUser.social_links.instagram">
+              <a ng-href="{{ $root.currentUser.social_links.instagram | absoluteLink}}"
+                 rel="nofollow" target="_blank" class="instagram">
+              </a>
+            </li>
+            <li ng-if="$root.currentUser.social_links.tumblr">
+              <a ng-href="{{ $root.currentUser.social_links.tumblr | absoluteLink }}"
+                 rel="nofollow" target="_blank" class="tumblr">
+              </a>
+            </li>
+            <li ng-if="$root.currentUser.social_links.vk"
+              ><a ng-href="{{ $root.currentUser.social_links.vk | absoluteLink }}"
+                  rel="nofollow" target="_blank" class="vk">
+            </a>
+            </li>
+            <li ng-if="$root.currentUser.social_links.custom">
+              <a ng-href="{{ $root.currentUser.social_links.custom | absoluteLink }}"
+                 rel="nofollow" target="_blank" class="custom">
+              </a>
+            </li>
+            <li ng-if="$root.currentUser.social_links.google">
+              <a ng-href="{{ $root.currentUser.social_links.google | absoluteLink }}"
+                 rel="nofollow" target="_blank" class="google-plus">
+              </a>
+            </li>
           </ul>
 
 
@@ -239,7 +245,7 @@
 
                   <img ng-src="{{item.avatar_url.thumb}}" alt="" class="img-responsive"/>
 
-                  <div class="sidebar-user-name" >
+                  <div class="sidebar-user-name">
                     {{item.first_name}} <br>{{item.last_name}}
                   </div>
                 </a>
