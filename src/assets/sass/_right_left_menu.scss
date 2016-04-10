@@ -136,6 +136,11 @@
       background-size: 23px;
       background-position: 13px 13px;
     }
+    .terms-conditions-links {
+      background: url(../img/svg/new_icons/Terms_Conditions.svg) no-repeat;
+      background-size: 19px;
+      background-position: 13px 8px;
+    }
     .sign-btn {
       @include button;
       background-color: $navy_blue;
