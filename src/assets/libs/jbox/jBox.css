@@ -17,7 +17,8 @@
 }
 
 .jBox-container {
-	background: #fff;
+  color: #fff;
+	background: #00cfff;
 }
 
 .jBox-content {
@@ -25,14 +26,16 @@
 	overflow: auto;
 	-webkit-transition: opacity .15s;
 	transition: opacity .15s;
+  font-weight: 600;
 }
 
 /* jBox Tooltip */
 
 .jBox-Tooltip .jBox-container,
 .jBox-Mouse .jBox-container {
-	border-radius: 3px;
+	border-radius: 13px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+  opacity: 0.8;
 }
 
 .jBox-Tooltip .jBox-title,
@@ -75,8 +78,8 @@
 	width: 20px;
 	height: 20px;
 	position: absolute;
-	background: #fff;
-	-webkit-transform: rotate(45deg);
+  background: #00cfff;
+  -webkit-transform: rotate(45deg);
 	transform: rotate(45deg);
 }
 
@@ -363,15 +366,15 @@
 }
 
 .jBox-closeButton path {
-	fill: #aaa;
+	fill: #fff;
 }
 
 .jBox-closeButton:hover path {
-	fill: #888;
+	fill: #fff;
 }
 
 .jBox-closeButton:active path {
-	fill: #666;
+	fill: #fff;
 }
 
 /* Close button in overlay */
@@ -399,7 +402,7 @@
 }
 
 #jBox-overlay .jBox-closeButton:active path {
-	fill: #b2b4b6;
+	fill: #fff;
 }
 
 /* Close button in title */
@@ -425,7 +428,7 @@
 	right: -10px;
 	width: 24px;
 	height: 24px;
-	background: #fff;
+  background: #00cfff;
 	border-radius: 50%;
 }
 

@@ -8,6 +8,7 @@
         restrict: 'EA',
         link: function (scope, elem, attrs) {
           if (window.localStorage && localStorage.getItem('disable_hints')) {
+            $rootScope.hideHints = true;
             return;
           }
 
