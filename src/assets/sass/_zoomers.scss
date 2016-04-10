@@ -206,68 +206,63 @@ ul {
     padding-left: 0;
     margin-bottom: 0px;
     li {
-
+      border-bottom: 1px solid $light_grey;
       a {
-        border-bottom: 1px solid $light_grey;
         &.current {
-          @include zoomers_sidebar();
-          background: url(../img/icons/zoomers.png) 0 -1px no-repeat;
+          background: url(../img/svg/new_icons/icon_Zoomers.svg) no-repeat;
           color: $dark_blue;
           padding-right: 0 !important;
-
+          @include zoomers_sidebar();
           &:hover {
             color: $blue;
             text-decoration: none;
-            background: url(../img/icons/zoomers.png) 0 -42px no-repeat;
-
+            background: url(../img/svg/new_icons/icon_Zoomers_active.svg) no-repeat;
+            @include zoomers_sidebar();
           }
           &.active {
             color: $navy_blue;
             font: $navigation_font;
+            background: url(../img/svg/new_icons/icon_Zoomers_active.svg) no-repeat;
             @include zoomers_sidebar();
-            background: url(../img/icons/zoomers.png) 0 -42px no-repeat;
           }
         }
 
         &.followers {
-          @include zoomers_sidebar();
-          background: url(../img/icons/followers.png) 0 -1px no-repeat;
+          background: url(../img/svg/new_icons/icon_Followers.svg) no-repeat;
           color: $dark_blue;
           padding-right: 0 !important;
-
+          @include zoomers_sidebar();
           &:hover {
             color: $blue;
             text-decoration: none;
-            background: url(../img/icons/followers.png) 0 -42px no-repeat;
-
+            background: url(../img/svg/new_icons/icon_Followers_active.svg) no-repeat;
+            @include zoomers_sidebar();
           }
           &.active {
             color: $navy_blue;
             font: $navigation_font;
+            background: url(../img/svg/new_icons/icon_Followers_active.svg) no-repeat;
             @include zoomers_sidebar();
-            background: url(../img/icons/followers.png) 0 -42px no-repeat;
           }
         }
 
         &.followings {
-          @include zoomers_sidebar();
-          background: url(../img/icons/followings.png) 0 -1px no-repeat;
+          background: url(../img/svg/new_icons/icon_Following.svg) no-repeat;
           color: $dark_blue;
           padding-right: 0 !important;
-
+          @include zoomers_sidebar();
           &:hover {
             color: $blue;
             text-decoration: none;
-            background: url(../img/icons/followings.png) 0 -42px no-repeat;
-
+            background: url(../img/svg/new_icons/icon_Following_active.svg) no-repeat;
+            @include zoomers_sidebar();
           }
           &.active {
             color: $navy_blue;
             font: $navigation_font;
-            @include zoomers_sidebar();
-            background: url(../img/icons/followings.png) 0 -42px no-repeat;
+            background: url(../img/svg/new_icons/icon_Following_active.svg) no-repeat;
             padding-right: 0 !important;
-
+            @include zoomers_sidebar();
           }
         }
 

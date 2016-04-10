@@ -38,7 +38,7 @@ header {
                         }
                     }
                     .map-icon {
-                        background: url(../img/header/header_search.png) center center no-repeat;
+                        background: url(../img/svg/new_icons/Search.svg) center center no-repeat;
                         width: 38px;
                         height: 38px;
                     }
@@ -89,7 +89,7 @@ header {
             .active {
                 color: $blue;
                 .map-icon {
-                    background: url(../img/header/header_search.png) center center no-repeat;
+                    background: url(../img/svg/new_icons/Search.svg) center center no-repeat;
                 }
                 .admin-icon {
                     background: url(../img/header/admin-icon.png) center center no-repeat;
@@ -97,7 +97,7 @@ header {
             }
             &:hover {
                 .map-icon {
-                    background: url(../img/header/header_search.png) center center no-repeat;
+                    background: url(../img/svg/new_icons/Search.svg) center center no-repeat;
                 }
                 .admin-icon {
                     background: url(../img/header/admin-icon.png) center center no-repeat;
@@ -134,18 +134,18 @@ header {
         display: block;
         float: right;
         .menu-icon {
-            background: url(../img/icons/menu.png) no-repeat;
-            width: 24px;
-            height: 22px;
+            background: url(../img/svg/new_icons/menu.svg) no-repeat;
+            width: 3rem;
+            height: 3rem;
             display: block;
             float: right;
-            margin: 24px 20px;
-            background-position: 0 -76px;
+            margin: 24px 10px 16px;
+            //background-position: 0 -76px;
         }
         &:hover {
             transition: color .3s;
             .menu-icon {
-                background: url(../img/icons/menu.png) 0 -76px no-repeat;
+                background: url(../img/svg/new_icons/menu.svg) no-repeat;
             }
         }
     }
