@@ -1151,7 +1151,10 @@
   .weather-wrap .weekForecast .weekForecast-wrapper {
     padding-right: 0 !important;
   }
-
+  .weather-wrap .firstBlock-wrapper {
+    height: auto;
+    width: 100% !important;
+  }
   .weather-wrap .weekForecast .weekForecast-wrapper .data {
     width: 25%;
     font-size: 1.3rem;
@@ -1261,6 +1264,7 @@
   .landing .search-filters {
     min-height: auto;
   }
+
 }
 
 /*@media (min-device-width: 240px) and (max-device-width: 767px) and (orientation: landscape) {*/

@@ -405,6 +405,10 @@
 
 //iphone 6 plus
 @media (max-width: 414px) {
+  .weather-wrap .firstBlock-wrapper {
+    height: auto;
+    width: 100% !important;
+  }
   .media-object.attachment-link {
     width: 10rem !important;
     height: 10rem !important;
