@@ -392,6 +392,11 @@
 
 //iphone 6 plus
 @media (max-width: 414px) {
+  .media-object.attachment-link {
+    width: 10rem !important;
+    height: 10rem !important;
+    border-radius: 36% !important;
+  }
   .modal .modal-dialog .modal-content .modal-body .tab-content .choose-some-photos-body .choose-album a {
     margin: 0 auto;
     width: 147px;
