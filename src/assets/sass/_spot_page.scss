@@ -310,18 +310,20 @@
     .add-photo {
       display: block;
       float: right;
-      width: 16px;
-      height: 16px;
+      width: 25px;
+      height: 25px;
       margin: 6px 5px 0 10px;
-      background: url(../img/icons/clip-photo.png) -20px 2px no-repeat;
+      background: url(../img/svg/new_icons/Photo_map.svg) center center no-repeat;
+      background-size: 25px;
     }
     .add-attach {
       display: block;
       float: right;
-      width: 15px;
-      height: 16px;
+      width: 25px;
+      height: 25px;
       margin-top: 6px;
-      background: url(../img/icons/clip-photo.png) 0 2px no-repeat;
+      background: url(../img/svg/new_icons/Attach_icon.svg) center center no-repeat;
+      background-size: 17px;
       margin-right: 10px;
     }
     .btn-send-comment, .submit-send {
@@ -520,7 +522,7 @@
 .like {
   color: #889197;
   padding-left: 2rem;
-  background: url(../img/icons/like.png) 0 2px no-repeat;
+  background: url(../img/svg/new_icons/like_icon.svg) center center no-repeat;
   min-height: 2rem;
   margin-right: 1rem;
   &:hover, .clicked {

@@ -147,6 +147,9 @@
   .ct-app {
     display: none;
   }
+  .mobile-nopad .wrap .central .text-center .btn-back {
+    top: 0 !important;
+  }
   //.ct-widget.ct-dialog.ct-video-dialog.ct-widget--active {
   //  height: 415px !important;
   //  left: 2%;
@@ -396,6 +399,9 @@
     width: 10rem !important;
     height: 10rem !important;
     border-radius: 36% !important;
+  }
+  .mobile-nopad .wrap .central .text-center .btn-back {
+    top: 0 !important;
   }
   .modal .modal-dialog .modal-content .modal-body .tab-content .choose-some-photos-body .choose-album a {
     margin: 0 auto;

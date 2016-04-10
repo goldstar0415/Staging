@@ -37,7 +37,9 @@
         @include transition_bg_color;
       }
       .set-avatar {
-        background: url(../img/svg/edit_button.svg) no-repeat;
+        background: url(../img/svg/new_icons/zoomers-avatar.svg) no-repeat center center;
+        background-size: 20px;
+        background-color: #00C9F8;
       }
       .set-location {
         background: url(../img/svg/location.svg) no-repeat;
