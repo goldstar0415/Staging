@@ -118,6 +118,9 @@
   .wrap .planner-page .central .add-planner {
     top: 5rem;
   }
+  .messages .message {
+    padding: 12px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -549,6 +552,9 @@
   .ct-widget .ct-table-dialog__view {
     overflow: hidden;
   }
+  .messages .message .name-data {
+    padding-left: 10px;
+  }
 }
 
 //iphone 6
@@ -655,6 +661,7 @@
       margin-right: 2rem;
     }
   }
+
   .btn-back {
     top: 0 !important;
   }
