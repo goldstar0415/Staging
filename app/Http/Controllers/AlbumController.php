@@ -85,20 +85,15 @@ class AlbumController extends Controller
      */
     public function showForUser(PaginateRequest $request, $user)
     {
-        $result = $this->paginatealbe($request, $user->albums());
-
-        $collection = null;
-        if (!$result instanceof Collection) {
-            $collection = $result->getCollection();
-        } else {
-            $collection = $result;
-        }
-        $collection->each(function ($album, $key) use ($collection) {
-            if ($album->is_private and !$this->privacy->hasPermission($album->user, Privacy::FOLLOWINGS) or
-                !$album->is_private and !$this->privacy->hasPermission($album->user, $album->user->privacy_photo_map)) {
-                    $collection->offsetUnset($key);
-            }
-        });
+        $result = $this->paginatealbe($request, $user->albums()->where(function ($query) use ($user) {
+            $query->where(function ($query) use ($user) {
+                $query->where('is_private', false)
+                    ->whereRaw($this->privacy->hasPermission($user, $user->privacy_photo_map) ? 'true' : 'false');
+            })->orWhere(function ($query) use ($user) {
+                $query->where('is_private', true)
+                    ->whereRaw($this->privacy->hasPermission($user, Privacy::FOLLOWINGS) ? 'true' : 'false');
+            });
+        }));
 
         return $result;
     }
