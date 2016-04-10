@@ -18,6 +18,7 @@
     &.new {
       background: #f5f8fa;
       .name-data {
+        padding-left: 1rem;
         p {
           display: block !important;
           overflow: hidden;
@@ -90,7 +91,7 @@
             color: $blue_btn;
             font-weight: bold;
           }
-        } 
+        }
         p {
           padding: 0;
           font-size: 1.4rem;
@@ -126,7 +127,7 @@
             float: right;
           }
         }
-      
+
     }
     &:hover {
       background: #e9edf0;

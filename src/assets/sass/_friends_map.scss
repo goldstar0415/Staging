@@ -18,7 +18,12 @@
       margin: 0 0 5px;
       .wrap-name {
         padding-left: 0;
-        a {
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        white-space: inherit;
+        word-break: break-all;
+        overflow: hidden;
+        a, span {
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
@@ -43,7 +48,7 @@
       font: 16px/19px;
       margin: 10px 0 !important;
       color: #889197;
-    }    
+    }
     .location-btn {
       border: 1px solid $green;
       border-radius: 5px;

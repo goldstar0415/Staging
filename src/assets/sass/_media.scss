@@ -115,9 +115,32 @@
   .spot-mobile-modal .modal-dialog {
     margin-top: 10rem;
   }
+  .wrap .planner-page .central .add-planner {
+    top: 5rem;
+  }
+  .messages .message {
+    padding: 12px;
+  }
 }
 
 @media (max-width: 767px) {
+  .fixed .mobile-attachments .add-attach {
+    margin-right: 1rem;
+  }
+  .mobile-attachments .count-attachments {
+    float: left;
+    color: #9EA9B1;
+  }
+  .mobile-attachments .attachment-close {
+    background-image: url(../img/svg/close_attachment.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 19px;
+    width: 11px;
+    margin-left: 1rem;
+    display: flex;
+    float: left;
+  }
   .authentication .modal-dialog {
     width: 100% !important;
     margin: 30px auto;
@@ -285,8 +308,12 @@
     left: 35%;
     width: 50%;
   }
+
   .central .add-friend {
     left: 2rem;
+  }
+  .wrap .planner-page .central .add-planner {
+    right: 2rem;
   }
 }
 
@@ -395,10 +422,17 @@
 
 //iphone 6 plus
 @media (max-width: 414px) {
+  .weather-wrap .firstBlock-wrapper {
+    height: auto;
+    width: 100% !important;
+  }
   .media-object.attachment-link {
     width: 10rem !important;
     height: 10rem !important;
     border-radius: 36% !important;
+  }
+  .wrap .planner-page .central .add-planner {
+    top: 3rem;
   }
   .mobile-nopad .wrap .central .text-center .btn-back {
     top: 0 !important;
@@ -539,6 +573,9 @@
   .ct-widget .ct-table-dialog__view {
     overflow: hidden;
   }
+  .messages .message .name-data {
+    padding-left: 10px;
+  }
 }
 
 //iphone 6
@@ -645,6 +682,7 @@
       margin-right: 2rem;
     }
   }
+
   .btn-back {
     top: 0 !important;
   }

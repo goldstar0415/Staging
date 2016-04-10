@@ -1,4 +1,4 @@
-<div class="wrap">
+<div class="wrap planner-page">
   <!-- section with calendar -->
   <section class="col-xs-12 create-new-plan">
     <div ui-calendar="Planner.calendarConfig" class="span8 calendar" ng-model="Planner.sourceEvents"></div>
@@ -19,7 +19,7 @@
     <div class="text-center">
       <h2 class="title-name nav-blue">Plans</h2>
     </div>
-    <a ui-sref="planner.create" class="add-friend nav-bg-blue" title="Create new plan"></a>
+    <a ui-sref="planner.create" class=" add-planner nav-bg-blue" title="Create new plan"></a>
 
     <div infinite-scroll="Planner.pagination.nextPage()" infinite-scroll-disabled="Planner.pagination.busy"
          class="clearfix" infinite-scroll-distance="1">
