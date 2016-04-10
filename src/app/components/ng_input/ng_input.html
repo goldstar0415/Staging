@@ -110,8 +110,8 @@
     </ul>
     <div class="mobile-attachments" ng-if="NgInput.getAttachmentsCount() > 0">
       <span class="add-attach"></span>
-      <span class="">{{ NgInput.getAttachmentsCount() }}</span>
-      <a ng-click="NgInput.clearAttachments()">X</a>
+      <span class="count-attachments">{{ NgInput.getAttachmentsCount() }}</span>
+      <a ng-click="NgInput.clearAttachments()" class="attachment-close"></a>
     </div>
   </div>
 </form>
