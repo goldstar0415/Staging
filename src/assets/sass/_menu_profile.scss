@@ -27,65 +27,36 @@
           }
         }
         .nav-spots {
-            background-image: url('../img/svg/profile_menu/icon_spot.svg');
+            background-image: url('../img/svg/new_icons/icon_main_menu/spot.svg');
             background-position: 4px 3px;
-            &:hover, &.active {
-              background-image: url('../img/svg/profile_menu/icon_spot_hover.svg');
-              //color: $nav_green;
-          }
         }
+
         .nav-favorites {
-          background-image: url('../img/svg/profile_menu/icon_heart.svg');
-          &:hover, &.active {
-            //color: $nav_red;
-            background-image: url('../img/svg/profile_menu/icon_heart_hover.svg');
-          }
+          background-image: url('../img/svg/new_icons/icon_main_menu/heart.svg');
         }
         .nav-searches {
-          background-image: url('../img/svg/profile_menu/icon_save.svg');
-           &:hover, &.active {
-            //color: $nav_yellow;
-            background-image: url('../img/svg/profile_menu/icon_save_hover.svg');
-          }
+          background-image: url('../img/svg/new_icons/icon_main_menu/save.svg');
         }
         .nav-friendmap {
-          background-image: url('../img/svg/profile_menu/friend_icon.svg');
+          background-image: url('../img/svg/new_icons/icon_main_menu/friend.svg');
           background-size: 25px;
           background-position: 4px 9px !important;
-           &:hover, &.active {
-            //color: $nav_blue;
-            background-image: url('../img/svg/profile_menu/friend_icon_hover.svg');
-          }
         }
         .nav-photomap {
-          background-image: url('../img/svg/profile_menu/icon_photo.svg');
+          background-image: url('../img/svg/new_icons/icon_main_menu/photo.svg');
           background-size: 25px;
           background-position: 4px 9px !important;
-           &:hover, &.active {
-            //color: $nav_green2;
-            background-image: url('../img/svg/profile_menu/icon_photo_hover.svg');
-          }
         }
         .nav-planner {
-          background-image: url('../img/svg/profile_menu/icon_planner.svg');
-          &:hover, &.active {
-            //color: $nav_blue;
-            background-image: url('../img/svg/profile_menu/icon_planner_hover.svg');
-          }
+          background-image: url('../img/svg/new_icons/icon_main_menu/planner.svg');
         }
         .nav-settings {
-          background-image: url('../img/svg/profile_menu/home.svg');
-          &:hover, &.active {
-             background-image: url('../img/svg/profile_menu/home_hover.svg');
-          }
+          background-image: url('../img/svg/new_icons/icon_main_menu/home.svg');
         }
         .nav-blog {
           background-image: url('../img/svg/profile_menu/blog_icon.svg');
           background-size: 25px;
           background-position: 4px 3px;
-          &:hover, &.active {
-             background-image: url('../img/svg/profile_menu/blog_icon_hover.svg');
-          }
         }
       a.active {
         color: $blue;
