@@ -27,7 +27,7 @@
     };
 
     /** @ngInject */
-    function NgInputController($modal, $scope, $rootScope, $http, API_URL) {
+    function NgInputController($modal, $scope, $rootScope, toastr, $http, API_URL) {
       var vm = this;
       var LINKS_PATERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)/gi;
       var blackListLinks = [];
@@ -74,6 +74,11 @@
        */
       vm.submit = function (form) {
         if (form.$valid) {
+          if (vm.attachments.photos.length > 10) {
+            toastr.error('The maximum number of attached photo is 10');
+            return;
+          }
+
           if (blackListLinks.length > 0 && blackListLinks[0].url == vm.message) {
             vm.message = '';
           }
