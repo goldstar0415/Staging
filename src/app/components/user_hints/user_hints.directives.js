@@ -7,32 +7,39 @@
       return {
         restrict: 'EA',
         link: function (scope, elem, attrs) {
-          if (window.localStorage && localStorage.getItem('disable_hints')) {
-            $rootScope.hideHints = true;
-            return;
-          }
-
-          $('.radius-selection').attr('id', 'radius_map_icon'); //add "id" to radius
-
-          makeHint('menu_expand', 'EXPAND THE SIDE BAR');
-          makeHint('events_map_icon', 'SELECT YOUR SEARCH CATEGORY', {width: 200});
-          makeHint('weather_map_icon', 'SELECT WEATHER AND THEN CLICK THE MAP TO FIND OUT THE CURRENT WEATHER AND FORECAST', {width: 300});
-          makeHint('radius_map_icon', 'SEARCH TOOLS:<br/>Search by<br/>Radius,<br/>Custom Area<br/>Road Trip', {
-            width: 130,
-            offset: {
-              y: 5
+          $timeout(function () {
+            if (window.localStorage && localStorage.getItem('disable_hints')) {
+              $rootScope.hideHints = true;
+              return;
             }
+
+            makeHint('#menu_expand', 'EXPAND THE SIDE BAR');
+            makeHint('#events_map_icon', 'SELECT YOUR SEARCH CATEGORY', {width: 200});
+            makeHint('#weather_map_icon', 'SELECT WEATHER AND THEN CLICK THE MAP TO FIND OUT THE CURRENT WEATHER AND FORECAST', {width: 300});
+            makeHint('.radius-selection', 'SEARCH TOOLS:<br/>Search by<br/>Radius,<br/>Custom Area<br/>Road Trip', {
+              width: 130,
+              offset: {
+                y: 5
+              }
+            });
+            makeHint('.unauthorized-menu li a', 'PLEASE SIGN IN OR SIGN UP TO USE THESE AWESOME FEATURES', {
+              width: 300,
+              position: {
+                y: 'bottom'
+              },
+              outside: 'y',
+              trigger: 'click'
+            });
           });
         }
       };
 
-      function makeHint(id, hint, options) {
+      function makeHint(elem, hint, options) {
         options = options || {};
 
         var tooltip,
-        $elem = $('#' + id), //.on('click', closeAll),
+        $elem = $(elem), //.on('click', closeAll),
         defaultOptions = {
-          id: id + '_hint',
           theme: 'TooltipBorder',
           width: 150,
           adjustTracker: true,
