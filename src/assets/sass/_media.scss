@@ -115,6 +115,9 @@
   .spot-mobile-modal .modal-dialog {
     margin-top: 10rem;
   }
+  .wrap .planner-page .central .add-planner {
+    top: 5rem;
+  }
 }
 
 @media (max-width: 767px) {
@@ -285,8 +288,12 @@
     left: 35%;
     width: 50%;
   }
+
   .central .add-friend {
     left: 2rem;
+  }
+  .wrap .planner-page .central .add-planner {
+    right: 2rem;
   }
 }
 
@@ -399,6 +406,9 @@
     width: 10rem !important;
     height: 10rem !important;
     border-radius: 36% !important;
+  }
+  .wrap .planner-page .central .add-planner {
+    top: 3rem;
   }
   .mobile-nopad .wrap .central .text-center .btn-back {
     top: 0 !important;

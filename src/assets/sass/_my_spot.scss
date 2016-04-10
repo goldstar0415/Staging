@@ -192,7 +192,7 @@
   }
 }
 
-.add-friend {
+.add-friend, .add-planner {
     display: block;
     width: 33px;
     height: 33px;
@@ -207,6 +207,7 @@
     -o-transition: background 0.3s;
     transition: background 0.3s;
 }
+
 .add-friend-my-blog {
   display: block;
   width: 33px;
