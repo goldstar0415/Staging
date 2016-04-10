@@ -45,10 +45,10 @@
           <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active"
              class="favorites nav-favorites"><span>Favorites</span></a>
         </li>
-        <li>
+        <li ng-if="Profile.checkPermission($root.profileUser.privacy_photo_map)">
           <a ui-sref="photos.list({user_id: $root.profileUser.id})" ng-class="Profile.isActive('photos')"
-             class="photomap nav-photomap"><span>Photo
-            Map</span></a>
+             class="photomap nav-photomap"><span>Photo Map</span>
+          </a>
         </li>
         <li ng-if="$root.isRole($root.profileUser, 'blogger')">
           <a ui-sref="profile_blog({user_id: $root.profileUser.id})" class="nav-blog"

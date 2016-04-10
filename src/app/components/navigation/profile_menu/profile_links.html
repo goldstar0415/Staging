@@ -5,7 +5,7 @@
        ng-click="$root.toggleMapState()"></div>
 
   <div class="container mobile-nopad">
-    <div class="col-xs-12 col-md-10 col-md-offset-2 col-sm-12 col-sm-offset-0 col-xs-offset-0 no-pad menu-offset">
+    <div class="col-xs-12 col-md-10 col-md-offset-2 col-sm-12 col-sm-offset-0 col-xs-offset-0 no-pad">
       <ul ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
         <li >
           <a class="nav-spots" ui-sref="spots({user_id: $root.currentUser.id})"
@@ -46,11 +46,11 @@
              ng-class="{active: $root.$state.current.name == 'spots' || $root.$state.current.name == 'spot'}"
              class="my-spots nav-spots"><span>Spots</span></a>
         </li>
-        <li ng-if="$root.checkPermission(profileUser.privacy_favorites)">
+        <li ng-if="$root.checkPermission($root.profileUser.privacy_favorites)">
           <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active"
              class="favorites nav-favorites"><span>Favorites</span></a>
         </li>
-        <li>
+        <li ng-if="$root.checkPermission($root.profileUser.privacy_photo_map)">
           <a ui-sref="photos.list({user_id: $root.profileUser.id})" ng-class="$root.isActiveState('photos')"
              class="photomap nav-photomap"><span>Photo
             Map</span></a>
