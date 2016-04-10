@@ -78,7 +78,8 @@
     }
   }
   .save-selection {
-    background: url(../img/icons/sprite-top-map.png) -34px 5px no-repeat rgba(159, 173, 173, .8);
+    background: url(../img/svg/new_icons/icon_main_menu/save-selection.svg) center center no-repeat rgba(159, 173, 173, .8);
+    background-size: 24px;
     transform: rotate(-90deg);
     border-right: 1px solid rgba(255,255,255,0.8);
     &:hover {

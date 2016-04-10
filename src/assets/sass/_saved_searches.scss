@@ -3,13 +3,15 @@
   border-bottom: 1px solid $light_grey;
   .edit-delete {
     .delete {
-      background: url(../img/icons/trash-search.png) no-repeat;
+      background: url(../img/svg/new_icons/delete_icon.svg) no-repeat center center;
       display: block;
       height: 30px;
       width: 30px;
       position: absolute;
       bottom: 14px;
       right: -15px;
+      background-color: #FBCF62;
+      background-size: 13px;
     }
   }
   .search-container {

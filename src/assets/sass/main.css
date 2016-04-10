@@ -393,8 +393,9 @@
     height: 3.5rem;
     width: 3.5rem;
     display: block;
-    background: url(../img/icons/send-btn.png) no-repeat;
-    background-size: contain;
+    background: url(../img/svg/new_icons/Send_message.svg) no-repeat center center;
+    background-size: 23px;
+    background-color: #00C9F8;
   }
 
   .fixed .mobile-attachments .add-attach {
