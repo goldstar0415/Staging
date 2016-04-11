@@ -51,7 +51,15 @@ class Friend extends BaseModel implements StaplerableInterface
      */
     public function __construct(array $attributes = [])
     {
-        $this->hasAttachedFile('avatar');
+        $this->hasAttachedFile('avatar', [
+            'styles' => [
+                'thumb' => [
+                    'dimensions' => '100x100#',
+                    'convert_options' => ['quality' => 100]
+                ],
+                'medium' => '180x180#'
+            ]
+        ]);
         parent::__construct($attributes);
     }
 
