@@ -121,6 +121,9 @@
   .messages .message {
     padding: 12px;
   }
+  .messages .name-data {
+    width: 75%;
+  }
 }
 
 @media (max-width: 767px) {
@@ -173,6 +176,14 @@
   .mobile-nopad .wrap .central .text-center .btn-back {
     top: 0 !important;
   }
+
+  //.attachments-preview .add-event .wrap-img-event {
+  //  width: 10rem;
+  //  height: 10rem;
+  //}
+  //.attachments-preview .links a {
+  //  overflow: visible;
+  //}
   //.ct-widget.ct-dialog.ct-video-dialog.ct-widget--active {
   //  height: 415px !important;
   //  left: 2%;
@@ -682,7 +693,9 @@
       margin-right: 2rem;
     }
   }
-
+  .messages .name-data {
+    width: 83%;
+  }
   .btn-back {
     top: 0 !important;
   }
