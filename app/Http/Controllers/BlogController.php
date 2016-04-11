@@ -8,6 +8,7 @@ use App\BloggerRequest as BloggerRequestModel;
 use App\Http\Requests\Blog\BlogCategoryRequest;
 use App\Http\Requests\Blog\BlogDestroyRequest;
 use App\Http\Requests\Blog\BloggerRequest;
+use App\Http\Requests\Blog\BlogImageUploadRequest;
 use App\Http\Requests\Blog\BlogRequest;
 use App\Http\Requests\Blog\BlogStoreRequest;
 use App\Http\Requests\Blog\BlogUpdateRequest;
@@ -211,5 +212,20 @@ class BlogController extends Controller
         $request->user()->bloggerRequest()->save($blogger_request);
 
         return $blogger_request;
+    }
+
+    /**
+     * Upload images for blog posts
+     * @param BlogImageUploadRequest $request
+     */
+    public function upload(BlogImageUploadRequest $request)
+    {
+        $image = $request->file('image');
+        $name = str_random() . '.' . $image->guessExtension();
+        $path = 'uploads/posts';
+
+        $image->move(public_path($path), $name);
+
+        return url($path, $name);
     }
 }

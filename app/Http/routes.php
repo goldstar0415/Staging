@@ -126,6 +126,7 @@ Route::get('feeds', 'FeedController@index');
 Route::get('posts/categories', 'BlogController@categories');
 Route::get('posts/popular', 'BlogController@popular');
 Route::post('posts/request', 'BlogController@bloggerRequest');
+Route::post('posts/upload', 'BlogController@upload');
 Route::resource('posts', 'BlogController', ['except' => ['create', 'edit']]);
 Route::resource('posts.comments', 'BlogCommentController', ['only' => ['index', 'store', 'destroy']]);
 Route::get('posts/{posts}/preview', 'BlogController@preview');
