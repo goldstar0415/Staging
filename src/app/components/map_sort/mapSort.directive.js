@@ -26,7 +26,6 @@
       locations: 20
     };
     var isSelectedAll = false;
-    var cancellerHttp;
 
     vm.vertical = true;
     vm.weatherForecast = [];
@@ -248,12 +247,10 @@
       }
       data.type = $rootScope.sortLayer;
 
-      if (cancellerHttp) {
-        cancellerHttp.resolve();
-      }
-      cancellerHttp = $q.defer();
+      MapService.cancelHttpRequest();
+      $rootScope.mapSortSpots.cancellerHttp = $q.defer();
 
-      $http.get(SEARCH_URL + '?' + jQuery.param(data), {timeout: cancellerHttp.promise})
+      $http.get(SEARCH_URL + '?' + jQuery.param(data), {timeout: $rootScope.mapSortSpots.cancellerHttp.promise})
         .success(function (spots) {
           if (spots.length > 0) {
             onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0);
@@ -261,14 +258,14 @@
             toastr.info('0 spots found');
             onUpdateMapData(null, [], null, bbox_array.length > 0);
           }
-          cancellerHttp = null;
+          $rootScope.mapSortSpots.cancellerHttp = null;
           vm.categoryToggle = false;
           vm.isShowFilter = false;
         }).catch(function (resp) {
           if (resp.status > 0) {
             toastr.error(resp.data ? resp.data.message : 'Something went wrong')
           }
-          cancellerHttp = null;
+          $rootScope.mapSortSpots.cancellerHttp = null;
         });
     }
 

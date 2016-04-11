@@ -292,6 +292,7 @@
           map.closePopup();
 
           $rootScope.isDrawArea = false;
+          cancelHttpRequest();
           $rootScope.$apply();
 
           angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
@@ -1742,6 +1743,12 @@
         }
       }
 
+      function cancelHttpRequest() {
+        if ($rootScope.mapSortSpots.cancellerHttp) {
+          $rootScope.mapSortSpots.cancellerHttp.resolve();
+        }
+      }
+
       return {
         Init: InitMap,
         GetMap: GetMap,
@@ -1799,7 +1806,9 @@
         drawSpotMarkers: drawSpotMarkers,
         drawSearchSpotMarkers: drawSearchSpotMarkers,
         drawBlogMarkers: drawBlogMarkers,
-        WeatherSelection: WeatherSelection
+        WeatherSelection: WeatherSelection,
+
+        cancelHttpRequest: cancelHttpRequest
       };
     });
 

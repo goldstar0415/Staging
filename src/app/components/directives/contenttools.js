@@ -6,7 +6,7 @@
     .directive('contentTools', contenttools);
 
   /* @ngInject */
-  function contenttools($timeout, API_URL) {
+  function contenttools($timeout, API_URL, $http) {
     var directive = {
       link: link,
       restrict: 'EA',
@@ -70,74 +70,78 @@
 
       //IMAGE UPLOADER FILEREADY START ----------------------------------------------------
       dialog.bind('imageUploader.fileReady', function (file) {
-
         // Upload a file to the server
-        var formData;
+        var formDataParam;
 
         // Set the dialog state to uploading and reset the progress bar to 0
         dialog.state('uploading');
         dialog.progress(0);
 
         // Build the form data to post  to the server
-        formData = new FormData();
-        formData.append('image', file);
+        formDataParam = new FormData();
+        formDataParam.append('image', file);
 
         //AJAX CALL START -------------------------------------------------------------------
-        $.ajax({
-          xhr: function () {
-            //Instantiate XHR
-            var xhr = new window.XMLHttpRequest();
+        $http.post(API_URL + '/posts/upload', formDataParam, {
+          transformRequest: angular.identity,
+          headers: {'Content-Type': undefined}
+        }).success(function (response) {
+console.log(response);
+          // Store the image details
+          image = {
+            size: [response.image_size.width, response.image_size.height],
+            url: response.image_url
+          };
 
-            //Add Progress Event Listener
-            xhr.upload.addEventListener("progress", function (evt) {
-              if (evt.lengthComputable) {
-                var percentComplete = evt.loaded / evt.total;
-                percentComplete = parseInt(percentComplete * 100);
-                console.log(percentComplete);
-                dialog.progress(percentComplete);
+          // Populate the dialog
+          dialog.populate(image.url, image.size);
 
-                if (percentComplete === 100) {
-                  //Upload Is Complete
-                }
-              }
-            }, false);
-            return xhr;
-          },
-          url: API_URL + '/posts/upload',
-          data: formData,
-          cache: false,
-          type: 'POST',
-          contentType: false,
-          processData: false,
-          success: function (result) {
+          dialog.save(
+            image.url,
+            image.size,
+            {
+              "data-ce-max-width": response.image_size.width
+            })
+          ;
 
-            // Unpack the response (from JSON)
-            var response = JSON.parse(result);
+          // Clear the request
+          xhr = null;
+          xhrProgress = null;
+          xhrComplete = null;
 
-            // Store the image details
-            image = {
-              size: response.image_size,
-              url: response.image_url
-            };
-
-            // Populate the dialog
-            dialog.populate(image.url, image.size);
-
-            dialog.save(
-              image.url,
-              image.size,
-              {
-                "data-ce-max-width": response.image_size.width
-              })
-            ;
-
-            // Clear the request
-            xhr = null;
-            xhrProgress = null;
-            xhrComplete = null;
-
-          }
         });
+
+        //$.ajax({
+        //  xhr: function () {
+        //    //Instantiate XHR
+        //    var xhr = new window.XMLHttpRequest();
+        //
+        //    //Add Progress Event Listener
+        //    xhr.upload.addEventListener("progress", function (evt) {
+        //      if (evt.lengthComputable) {
+        //        var percentComplete = evt.loaded / evt.total;
+        //        percentComplete = parseInt(percentComplete * 100);
+        //        console.log(percentComplete);
+        //        dialog.progress(percentComplete);
+        //
+        //        if (percentComplete === 100) {
+        //          //Upload Is Complete
+        //        }
+        //      }
+        //    }, false);
+        //    return xhr;
+        //  },
+        //  url: API_URL + '/posts/upload',
+        //  data: formData,
+        //  cache: false,
+        //  type: 'POST',
+        //  contentType: false,
+        //  processData: false,
+        //  success: function (result) {
+        //
+        //
+        //  }
+        //});
         //AJAX CALL END ---------------------------------------------------------------------
       });
       //IMAGE UPLOADER FILEREADY END --------------------------------------------------------
