@@ -59,7 +59,8 @@
         pointer: 'top:15',
         content: hint,
         onOpen: function () {
-          $('.jBox-closeButton').on('click', function () {
+          $('.jBox-closeButton').off('click').on('click', function () {
+            console.log(111);
             dialogs.confirm('Confirmation', 'Do you want disable hints?').result.then(disableHints);
           });
 
