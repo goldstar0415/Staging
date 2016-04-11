@@ -35,7 +35,7 @@ class AreaController extends Controller
      */
     public function index(PaginateRequest $request)
     {
-        return $this->paginatealbe($request, $request->user()->areas());
+        return $this->paginatealbe($request, $request->user()->areas()->latest());
     }
 
     /**
