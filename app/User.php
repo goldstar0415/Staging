@@ -168,7 +168,8 @@ class User extends BaseModel implements
         'instagram_link',
         'tumblr_link',
         'google_link',
-        'custom_link'
+        'custom_link',
+        'is_hints'
     ];
 
     protected $dates = ['deleted_at', 'banned_at', 'birth_date', 'last_action_at'];
