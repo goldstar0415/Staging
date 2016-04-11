@@ -291,8 +291,8 @@
           ClearSelections();
           map.closePopup();
 
-          $rootScope.isDrawArea = false;
           cancelHttpRequest();
+          $rootScope.isDrawArea = false;
           $rootScope.$apply();
 
           angular.element('.leaflet-control-container .map-tools > div').removeClass('active');

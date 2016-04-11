@@ -77,7 +77,8 @@
       $rootScope.mapSortSpots = {
         markers: [],
         data: [],
-        page: 0
+        page: 0,
+        cancellerHttp: $rootScope.mapSortSpots.cancellerHttp
       };
       if ($rootScope.isDrawArea) {
         _.each(mapSpots, function (item) {
@@ -258,14 +259,12 @@
             toastr.info('0 spots found');
             onUpdateMapData(null, [], null, bbox_array.length > 0);
           }
-          $rootScope.mapSortSpots.cancellerHttp = null;
           vm.categoryToggle = false;
           vm.isShowFilter = false;
         }).catch(function (resp) {
           if (resp.status > 0) {
             toastr.error(resp.data ? resp.data.message : 'Something went wrong')
           }
-          $rootScope.mapSortSpots.cancellerHttp = null;
         });
     }
 
@@ -321,6 +320,7 @@
         search();
       } else {
         MapService.clearLayers();
+        MapService.cancelHttpRequest();
       }
     }
 

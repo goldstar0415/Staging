@@ -86,7 +86,6 @@
           transformRequest: angular.identity,
           headers: {'Content-Type': undefined}
         }).success(function (response) {
-console.log(response);
           // Store the image details
           image = {
             size: [response.image_size.width, response.image_size.height],
