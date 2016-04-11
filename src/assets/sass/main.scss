@@ -360,6 +360,7 @@ facebook-events a {
     @include transition_bg;
   }
 }
+
 .google-plus-friendmap {
   display: block;
   width: 42px;
@@ -374,6 +375,7 @@ facebook-events a {
     @include transition_bg;
   }
 }
+
 .no-padding {
   padding: 0;
 }
@@ -1531,8 +1533,16 @@ span.location-icon {
   }
 }
 
-
 //JIRA ISSUE COLLECTOR
 .atlwdg-trigger.atlwdg-TOP {
   z-index: 2;
+  background: $blue_btn;
+  opacity: 0.9;
+  font-size: 13px;
+}
+
+@media (max-width: 767px) {
+  body .atlwdg-trigger.atlwdg-TOP {
+    left: 37vw;
+  }
 }
