@@ -1534,7 +1534,8 @@ span.location-icon {
 }
 
 //JIRA ISSUE COLLECTOR
-.atlwdg-trigger.atlwdg-TOP {
+body .atlwdg-trigger.atlwdg-TOP {
+  position: absolute;
   z-index: 2;
   background: $blue_btn;
   font-size: 13px;
