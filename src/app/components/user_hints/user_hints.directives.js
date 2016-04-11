@@ -19,7 +19,7 @@
           makeHint('#menu_expand', 'EXPAND THE SIDE BAR');
           makeHint('#events_map_icon', 'SELECT YOUR SEARCH CATEGORY', {width: 200});
           makeHint('#weather_map_icon', 'SELECT WEATHER AND THEN CLICK THE MAP TO FIND OUT THE CURRENT WEATHER AND FORECAST', {width: 300});
-          makeHint('.radius-selection', 'SEARCH TOOLS:<br/>Search by<br/>Radius,<br/>Custom Area<br/>Road Trip', {
+          makeHint('.radius-selection', 'SEARCH TOOLS:<br/>Search by<br/>Radius,<br/>Custom Area,<br/>Road Trip', {
             width: 130,
             offset: {
               y: 5
