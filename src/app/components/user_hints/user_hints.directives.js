@@ -12,8 +12,8 @@
       link: function (scope, elem, attrs) {
         $timeout(function () {
           if (window.localStorage && localStorage.getItem('disable_hints')) {
+            window.isHintsDisable = true;
             $rootScope.hideHints = true;
-            return;
           }
 
           makeHint('#menu_expand', 'EXPAND THE SIDE BAR');
@@ -32,12 +32,12 @@
             },
             outside: 'y',
             trigger: 'click'
-          });
+          }, true);
         });
       }
     };
 
-    function makeHint(elem, hint, options) {
+    function makeHint(elem, hint, options, isAlwaysOpen) {
       options = options || {};
 
       var tooltip,
@@ -64,8 +64,9 @@
             dialogs.confirm('Confirmation', 'Do you want disable hints?').result.then(disableHints);
           });
 
-          if (window.isHintsDisable) {
-            $('.jBox-wrapper').remove();
+          if (!isAlwaysOpen && window.isHintsDisable) {
+            tooltip.close();
+            tooltip.disable();
           }
 
         }
