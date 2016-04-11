@@ -13,7 +13,7 @@ class BlogImageUploadRequest extends Request
      */
     public function authorize()
     {
-        return $this->user()->hasRole('blogger');
+        return true;
     }
 
     /**

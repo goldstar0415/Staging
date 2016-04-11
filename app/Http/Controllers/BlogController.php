@@ -32,7 +32,7 @@ class BlogController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show', 'preview', 'popular', 'categories']]);
-        $this->middleware('blogger', ['only' => ['store', 'update', 'destroy']]);
+        $this->middleware('blogger', ['only' => ['store', 'update', 'destroy' , 'upload']]);
     }
 
     /**
