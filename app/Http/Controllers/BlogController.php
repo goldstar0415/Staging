@@ -217,6 +217,7 @@ class BlogController extends Controller
     /**
      * Upload images for blog posts
      * @param BlogImageUploadRequest $request
+     * @return array
      */
     public function upload(BlogImageUploadRequest $request)
     {
@@ -224,8 +225,14 @@ class BlogController extends Controller
         $name = str_random() . '.' . $image->guessExtension();
         $path = 'uploads/posts';
 
-        $image->move(public_path($path), $name);
+        $sizes = getimagesize($image->move(public_path($path), $name));
 
-        return url($path, $name);
+        return [
+            'image_url' => frontend_url('api/'. $path, $name),
+            'image_size'=> [
+                'width' => $sizes[0],
+                'height' => $sizes[1]
+            ]
+        ];
     }
 }
