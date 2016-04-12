@@ -204,7 +204,7 @@ ul {
     text-decoration: none;
     list-style-type: none;
     padding-left: 0;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     li {
       border-bottom: 1px solid $light_grey;
       a {
@@ -212,18 +212,18 @@ ul {
           background: url(../img/svg/new_icons/icon_Zoomers.svg) no-repeat;
           color: $dark_blue;
           padding-right: 0 !important;
-          @include zoomers_sidebar();
+          @include zoomers_sidebar;
           &:hover {
             color: $blue;
             text-decoration: none;
             background: url(../img/svg/new_icons/icon_Zoomers_active.svg) no-repeat;
-            @include zoomers_sidebar();
+            @include zoomers_sidebar;
           }
           &.active {
             color: $navy_blue;
             font: $navigation_font;
             background: url(../img/svg/new_icons/icon_Zoomers_active.svg) no-repeat;
-            @include zoomers_sidebar();
+            @include zoomers_sidebar;
           }
         }
 
@@ -231,18 +231,18 @@ ul {
           background: url(../img/svg/new_icons/icon_Followers.svg) no-repeat;
           color: $dark_blue;
           padding-right: 0 !important;
-          @include zoomers_sidebar();
+          @include zoomers_sidebar;
           &:hover {
             color: $blue;
             text-decoration: none;
             background: url(../img/svg/new_icons/icon_Followers_active.svg) no-repeat;
-            @include zoomers_sidebar();
+            @include zoomers_sidebar;
           }
           &.active {
             color: $navy_blue;
             font: $navigation_font;
             background: url(../img/svg/new_icons/icon_Followers_active.svg) no-repeat;
-            @include zoomers_sidebar();
+            @include zoomers_sidebar;
           }
         }
 
@@ -250,19 +250,19 @@ ul {
           background: url(../img/svg/new_icons/icon_Following.svg) no-repeat;
           color: $dark_blue;
           padding-right: 0 !important;
-          @include zoomers_sidebar();
+          @include zoomers_sidebar;
           &:hover {
             color: $blue;
             text-decoration: none;
             background: url(../img/svg/new_icons/icon_Following_active.svg) no-repeat;
-            @include zoomers_sidebar();
+            @include zoomers_sidebar;
           }
           &.active {
             color: $navy_blue;
             font: $navigation_font;
             background: url(../img/svg/new_icons/icon_Following_active.svg) no-repeat;
             padding-right: 0 !important;
-            @include zoomers_sidebar();
+            @include zoomers_sidebar;
           }
         }
 
