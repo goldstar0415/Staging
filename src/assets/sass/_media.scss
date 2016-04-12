@@ -124,6 +124,9 @@
   .messages .name-data {
     width: 75%;
   }
+  .atlwdg-popup {
+    width: calc(100% - 100px) !important;
+  }
 }
 
 @media (max-width: 767px) {
@@ -170,6 +173,12 @@
 
 //iPhone 6 Plus landscape
 @media (max-width: 736px) {
+  .main-blog-article-content .article .article-info {
+    height: 15rem;
+  }
+  .main-blog-article-content .article .share {
+    bottom: 6.5rem !important;
+  }
   .ct-app {
     display: none;
   }
@@ -249,6 +258,12 @@
 
 //iPhone 6 landscape
 @media (max-width: 667px) {
+  .main-blog-article-content .article .article-info {
+    height: 15rem;
+  }
+  .main-blog-article-content .article .share {
+    bottom: 6.5rem !important;
+  }
   .ct-widget .ct-dialog__view {
     height: 270px !important;
     margin-top: 0 !important;
@@ -330,7 +345,12 @@
 
 //iPhone 5 landscape
 @media (max-width: 568px) {
-
+  .main-blog-article-content .article .article-info {
+    height: 15rem;
+  }
+  .main-blog-article-content .article .share {
+    bottom: 6.5rem !important;
+  }
   .ct-widget .ct-video-dialog__preview:empty {
     line-height: 210px;
   }
@@ -433,6 +453,39 @@
 
 //iphone 6 plus
 @media (max-width: 414px) {
+  .main-blog-article-content .article .article-info {
+    height: 15rem;
+  }
+  .main-blog-article-content .article .share {
+    bottom: 6.5rem !important;
+  }
+  .main-blog-article-content .article .location-link {
+    padding-bottom: 2rem !important;
+  }
+  form.aui .icon-required {
+    left: 0 !important;
+  }
+  form.aui legend, form.aui .field-group > label {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  .atlwdg-container #atlwdg-frame form.aui .field-group,
+  form.aui .group,
+  form.aui .date-select,
+  form.aui fieldset.ratings,
+  .content-body fieldset.group {
+    padding-left: 0 !important;
+  }
+  form.aui legend,
+  form.aui .field-group > label {
+    margin-left: 0 !important;
+  }
+  .group > legend > span, form.aui fieldset.ratings {
+    padding-left: 10px !important;
+  }
+  .aui-dialog .content-body {
+    padding-left: 0 !important;
+  }
   .weather-wrap .firstBlock-wrapper {
     height: auto;
     width: 100% !important;
@@ -591,6 +644,7 @@
 
 //iphone 6
 @media (max-width: 375px) {
+
   .reviews {
     .text-block {
       width: 70%;
@@ -692,6 +746,9 @@
     .review-img {
       margin-right: 2rem;
     }
+  }
+  .main-blog-article-content .article .location-link {
+    padding-bottom: 2rem;
   }
   .messages .name-data {
     width: 83%;
