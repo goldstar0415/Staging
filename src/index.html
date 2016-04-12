@@ -81,8 +81,8 @@
   <!-- content container-->
   <div ng-show="mapState != 'full-size'" ui-view ng-class="{'landing-wrapper': $state.includes('intro')}"></div>
 
+  <div ng-include="'app/components/navigation/profile_menu/profile_links_unauthorized.html'" class="map-block" ></div>
   <div ng-include="'app/components/navigation/profile_menu/profile_links.html'" class="map-block" ng-if="mapState == 'full-size' && currentUser"></div>
-  <div ng-include="'app/components/navigation/profile_menu/profile_links_unauthorized.html'" class="map-block" ng-show="mapState == 'full-size' && !currentUser"></div>
 
 </div>
 
