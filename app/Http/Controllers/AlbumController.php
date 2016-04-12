@@ -52,7 +52,9 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        return $this->auth->user()->albums;
+        return $this->auth->user()->albums->each(function (Album $album) {
+            $album->append('count_photos');
+        });
     }
 
     /**
