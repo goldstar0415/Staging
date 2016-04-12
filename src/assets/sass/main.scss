@@ -1546,3 +1546,18 @@ body .atlwdg-trigger.atlwdg-TOP {
     left: 37vw;
   }
 }
+
+@media (max-width: 767px)  {
+  .atlwdg-popup {
+    left: 0 !important;
+    top: 0 !important;
+    //height: 90% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    iframe {
+      //height: 90% !important;
+      width: 100% !important;
+    }
+  }
+}
