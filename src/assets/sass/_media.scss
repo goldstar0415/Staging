@@ -194,6 +194,7 @@
   //  overflow: visible;
   //}
   //.ct-widget.ct-dialog.ct-video-dialog.ct-widget--active {
+
   //  height: 415px !important;
   //  left: 2%;
   //  top: 0;
@@ -453,6 +454,9 @@
 
 //iphone 6 plus
 @media (max-width: 414px) {
+  .atlwdg-popup {
+    width: 100% !important;
+  }
   .main-blog-article-content .article .article-info {
     height: 15rem;
   }
