@@ -65,7 +65,7 @@
       relativeTime : {
         future : 'in %s',
         past : '%s ago',
-        s : 'a few moments',
+        s : 'moments',
         m : 'a minute',
         mm : '%d minutes',
         h : 'an hour',
