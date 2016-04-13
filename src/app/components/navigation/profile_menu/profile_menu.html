@@ -112,13 +112,18 @@
 
           <div ng-if="$root.profileUser.description">
             <div ng-init="Profile.textLimit = 50"
-                 ng-class="{small: Profile.textLimit == 50, 'full-text': Profile.textLimit == 1000}"
+                 ng-class="{small: Profile.textLimit == 50, 'full-text': Profile.textLimit == 150}"
                  class="biography">
               {{$root.profileUser.description | limitTo: Profile.textLimit}}
             </div>
             <div ng-if="Profile.textLimit == 50 && $root.profileUser.description.length > 50">
-              <a class="more" ng-click="Profile.textLimit = 1000">
-                see more
+              <a class="more" ng-click="Profile.textLimit = 150">
+                Show All
+              </a>
+            </div>
+            <div ng-if="Profile.textLimit == 150 && $root.profileUser.description.length > 50">
+              <a class="more" ng-click="Profile.textLimit = 50">
+                Show Less
               </a>
             </div>
           </div>
