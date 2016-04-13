@@ -63,12 +63,12 @@
                  placeholder="LOCATION OR SPOT NAME"/>
           <span class="icon-nav"></span>
         </div>
-        <div class="filters-button" ng-click="MapSort.isShowFilter = !MapSort.isShowFilter"></div>
+        <div class="filters-button" id="filters-button-open" ng-click="MapSort.isShowFilter = !MapSort.isShowFilter"></div>
         <div class="btn-apply btn-top" ng-click="MapSort.search()"
              ng-show="!MapSort.isShowFilter && !$root.isDrawArea && MapSort.isEmptyFilters()">
           <span class="icon-apply"></span>
         </div>
-        <div class="btn-cancel btn-top" ng-click="MapSort.clearFilters()"
+        <div class="btn-cancel btn-top" id="btn-cancel" ng-click="MapSort.clearFilters()"
              ng-show="!MapSort.isShowFilter && !MapSort.isEmptyFilters()">
           <span class="icon-cancel"></span>
         </div>
@@ -257,7 +257,6 @@
 
 
   <div class="footer-search" ng-class="{'active-weather': $root.sortLayer == 'weather'}">
-    <span class="icon-tick" ng-show="$root.sortLayer != 'weather'"></span>
     <span class="icon-arrow" ng-show="$root.sortLayer != 'weather'"></span>
 
     <div ng-show="$root.sortLayer != 'weather'">
