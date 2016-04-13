@@ -76,7 +76,7 @@
   <map-sort ng-if="mapState == 'full-size'"></map-sort>
 
   <!-- map container-->
-  <div id="map" class="mapResize map {{mapState}}" ng-class="{'menu-offset': currentUser}"></div>
+  <div id="map" class="mapResize map {{mapState}}"></div>
 
   <!-- content container-->
   <div ng-show="mapState != 'full-size'" ui-view ng-class="{'landing-wrapper': $state.includes('intro')}"></div>

@@ -8,11 +8,7 @@
 
 .map.full-size {
   position: absolute;
-  height: calc(100% - 70px);
-
-  &.menu-offset {
-    height: calc(100% - 70px - 60px);
-  }
+  height: calc(100% - 130px);
 }
 
 .hide-tools {
