@@ -386,7 +386,7 @@
       var daily = resp.daily.data;
 
       for (var k in daily) {
-        daily[k].formattedDate = moment(daily[k].time * 1000).format('DD MMMM');
+        daily[k].formattedDate = moment(daily[k].time * 1000).format('ddd');
         if (k != 0) {
           vm.weatherForecast.push(daily[k]);
         }
