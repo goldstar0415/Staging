@@ -390,7 +390,7 @@
         border-left: 0;
       }
       .events {
-        background: url(../img/svg/Icon_Events.svg) no-repeat top center;
+        background: url(../img/svg/Icon_Events.svg) no-repeat center 20%;
         background-size: 90%;
       }
       .recreation {
@@ -398,11 +398,11 @@
         background-size: 65%;
       }
       .pit-stops {
-        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat top center;
+        background: url(../img/svg/Icon_Grab_Grub.svg) no-repeat center 15%;
         background-size: 100%;
       }
       .shelter {
-        background: url(../img/svg/Icon_Get_a_room.svg) no-repeat top center;
+        background: url(../img/svg/Icon_Get_a_room.svg) no-repeat center 10%;
         background-size: 65%;
       }
       .weather-link {
@@ -416,7 +416,7 @@
           color: $white;
         }
         .events {
-          background: url(../img/svg/Icon_Events_mouseover.svg) no-repeat top center;
+          background: url(../img/svg/Icon_Events_mouseover.svg) no-repeat center 20%;
           background-size: 90%;
         }
         .recreation {
@@ -424,11 +424,11 @@
           background-size: 65%;
         }
         .pit-stops {
-          background: url(../img/svg/Icon_Grab_Grub_Mouseover.svg) no-repeat top center;
+          background: url(../img/svg/Icon_Grab_Grub_Mouseover.svg) no-repeat center 15%;
           background-size: 100%;
         }
         .shelter {
-          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat top center;
+          background: url(../img/svg/Icon_Get_a_room_mouseover.svg) no-repeat center 10%;
           background-size: 65%;
         }
         .weather-link {
