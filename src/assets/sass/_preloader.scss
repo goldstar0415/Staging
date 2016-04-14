@@ -5,8 +5,9 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: -webkit-linear-gradient(0deg, #4CB8C4 10%, #3CD3AD 90%);
-  background: linear-gradient(90deg, #4CB8C4 10%, #3CD3AD 90%);
+  background: -webkit-linear-gradient(90deg, #00CFFF 5%, #fff 95%);
+  background: linear-gradient(90deg, #00CFFF 5%, #fff 95%);
+ 
   z-index: 999999;
 
   *, *:before, *:after {
@@ -22,7 +23,7 @@
   }
 
   .ferris_wheel, .wheel {
-    border: 6px solid #fff;
+    border: 6px solid #0B2639;
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -46,7 +47,7 @@
     content: "";
     height: 50px;
     width: 50px;
-    background: #888;
+    background: #0B2639;
     position: absolute;
     border-radius: 50%;
     left: 50%;
@@ -67,13 +68,13 @@
     margin-top: -12px;
     margin-left: -12px;
     border-radius: 50%;
-    border: 4px solid #F3AE34;
+    border: 4px solid #000;
     z-index: 1;
   }
 
   .wheel span:nth-child(1):before {
     content: "";
-    border-bottom: 2px solid #BABCBA;
+    border-bottom: 2px solid #000;
     position: absolute;
     top: 0;
     left: 0;
@@ -84,7 +85,7 @@
 
   .wheel span:nth-child(1):after {
     content: "";
-    border-right: 2px solid #BABCBA;
+    border-right: 2px solid #000;
     position: absolute;
     top: 0;
     left: 0;
@@ -98,7 +99,7 @@
 
   .wheel span:nth-child(2):before {
     content: "";
-    border-right: 2px solid #BABCBA;
+    border-right: 2px solid #000;
     position: absolute;
     top: 0;
     left: 0;
@@ -112,7 +113,7 @@
 
   .wheel span:nth-child(2):after {
     content: "";
-    border-right: 2px solid #BABCBA;
+    border-right: 2px solid #000;
     position: absolute;
     top: 0;
     left: 0;
@@ -125,7 +126,7 @@
   div.stand:after {
     content: "";
     position: absolute;
-    border-right: 4px solid #F3AE34;
+    border-right: 4px solid #683C10;
     height: 120px;
     -webkit-transform: rotate(15deg);
     -ms-transform: rotate(15deg);
@@ -145,7 +146,7 @@
   .stand span {
     position: absolute;
     height: 10px;
-    background: #683C10;
+    background: #0B2639;
     width: 100px;
     bottom: -60px;
     left: 50%;
@@ -177,7 +178,7 @@
 
   .buckets {
     position: absolute;
-    border: 6px solid #fff;
+    border: 6px solid #0B2639;
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -219,7 +220,7 @@
 
   .buckets span {
     display: inline-block;
-    border-top: 15px solid #A84172;
+    border-top: 15px solid #E84735;
     border-left: 3px solid transparent;
     border-right: 3px solid transparent;
     height: 0;
@@ -234,7 +235,7 @@
     height: 3px;
     width: 25px;
     left: -2px;
-    background: #652382;
+    background: #0B2639;
   }
 
   .buckets span:after {
