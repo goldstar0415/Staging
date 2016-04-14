@@ -14,7 +14,7 @@
       <span class="glyphicon glyphicon-chevron-right next"></span>
     </a>
 
-    <div class="col-xs-3"
+    <div class="col-xs-2"
          ng-repeat="item in Carousel.images.slice(Carousel.imageControl.start, Carousel.imageControl.start + Carousel.imageControl.step)">
       <a ng-click="Carousel.setMainImage(item, $index)">
         <img ng-src="{{ item.photo_url.medium }}" alt="" class="img-responsive">
@@ -22,3 +22,4 @@
     </div>
   </div>
 </div>
+

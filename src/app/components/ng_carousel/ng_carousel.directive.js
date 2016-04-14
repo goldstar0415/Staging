@@ -33,7 +33,7 @@
       vm.mainImage.idx = 0;
       vm.imageControl = {
         start: 0,
-        step: 4
+        step: 6
       };
 
       vm.prev = prev;
