@@ -120,6 +120,16 @@ class Builder extends LaravelBuilder
     protected function getCache()
     {
         $cache = Cache::driver();
+        if (count($this->joins) === 1 and $relation = $this->joins[0] and $relation->type === 'inner') {
+            if (count($relation->clauses) === 1) {
+                $column = $relation->clauses[0]['second'];
+                foreach ($this->wheres as $condition) {
+                    if ($condition['type'] === 'Basic' and starts_with($condition['column'], strstr($column, '.', true))) {
+                        array_push($this->cacheTags, $relation->table . '-' . $condition['value']);
+                    }
+                }
+            }
+        }
 
         return $this->cacheTags ? $cache->tags($this->cacheTags) : $cache;
     }

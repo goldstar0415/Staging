@@ -19,7 +19,7 @@ use Zizaco\Entrust\EntrustRole;
 class Role extends EntrustRole
 {
     use Cacheable;
-
+    
     public function __construct(array $attributes = [])
     {
         $this->cacheFull = true;

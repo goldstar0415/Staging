@@ -18,4 +18,15 @@ class Permission extends EntrustPermission
         $this->cacheFull = true;
         parent::__construct($attributes);
     }
+
+    /**
+     * Relations which needs to flush from cache
+     * @return array
+     */
+    public function flushRelations()
+    {
+        return [
+            'roles'
+        ];
+    }
 }

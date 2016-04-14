@@ -13,26 +13,30 @@ trait Cacheable
     protected $cacheTime = 60;
     protected $exceptCacheAttributes = [];
 
+    public static function clearCache($model)
+    {
+        $cache = Cache::driver();
+        $tags = $model->getCacheTags();
+        $cache = $tags ? $cache->tags($tags) : $cache;
+        $method_exists = method_exists($model, 'acceptCacheFlush');
+        if (!$method_exists or $method_exists and $model->acceptCacheFlush()) {
+            $cache->flush();
+            Cache::tags(array_merge($tags, ['attributes']))->flush();
+            if ($model->exists and method_exists($model, 'flushRelations') and is_array($relations = $model->flushRelations())) {
+                foreach ($relations as $relation) {
+                    $relation = $model->$relation();
+                    Cache::tags([$relation->getRelated()->getTable(), $relation->getTable() . '-' . $model->getKey()])->flush();
+                }
+            }
+        }
+    }
+
     public static function bootCacheable()
     {
-        $closure = function ($model) {
-            $cache = Cache::driver();
-            $tags = $model->getCacheTags();
-            $cache = $tags ? $cache->tags($tags) : $cache;
-            $method_exists = method_exists($model, 'acceptCacheFlush');
-            if (!$method_exists or $method_exists and $model->acceptCacheFlush()) {
-                $cache->flush();
-                Cache::tags(array_merge($tags, ['attributes']))->flush();
-            }
-        };
-        self::updated($closure);
-        self::created($closure);
-        self::deleted($closure);
-        self::saved($closure);
-        self::updating($closure);
-        self::creating($closure);
-        self::deleting($closure);
-        self::saving($closure);
+        self::updating([self::class, 'clearCache']);
+        self::creating([self::class, 'clearCache']);
+        self::deleting([self::class, 'clearCache']);
+        self::saving([self::class, 'clearCache']);
     }
 
     protected function mutateAttribute($key, $value)

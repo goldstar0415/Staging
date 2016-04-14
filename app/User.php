@@ -717,4 +717,20 @@ class User extends BaseModel implements
 
         $this->save();
     }
+
+    /**
+     * Relations which needs to flush from cache
+     * @return array
+     */
+    public function flushRelations()
+    {
+        return [
+            'invitedPlans',
+            'favorites',
+            'calendarSpots',
+            'socials',
+            'reviews',
+            'roles'
+        ];
+    }
 }

@@ -116,7 +116,7 @@ class AlbumController extends Controller
             abort(403, 'Access denied');
         }
 
-        return $album->append('count_photos');
+        return $album;
     }
 
     /**

@@ -476,4 +476,16 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             ->whereRaw("(LOWER(\"title\") like LOWER('%$filter%') OR LOWER(\"description\") like LOWER('%$filter%'))");
     }
 
+    /**
+     * Relations which needs to flush from cache
+     * @return array
+     */
+    public function flushRelations()
+    {
+        return [
+            'tags',
+            'favorites',
+            'calendarUsers'
+        ];
+    }
 }
