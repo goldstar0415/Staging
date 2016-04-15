@@ -30,6 +30,7 @@
       };
 
       $rootScope.mapSortSpots = {};
+      $rootScope.mapSortFilters = {};
       $rootScope.currentParams = toParams;
 
       if (current.require_auth && !$rootScope.currentUser) {
