@@ -74,7 +74,7 @@ class SpotImportController extends Controller
             'spot_category' => $request->spot_category,
             'instagram_photos' => $request->ins_photos,
             'get_address' => $request->get_address
-        ], SpotsImport::EVENT);
+        ], $request->spot_type);
         if ((bool)$request->preview) {
             $request->session()->flashInput($request->all());
             return view('admin.spot_import_columns.index')->with('spots', $job->getSpots());

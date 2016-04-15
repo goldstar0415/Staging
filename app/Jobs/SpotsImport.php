@@ -160,7 +160,7 @@ abstract class SpotsImport extends Job implements SelfHandling
             }
             $spot->is_approved = true;
             $owner = null;
-            if (isset($imported_spot->email)) {
+            if (isset($imported_spot->email) and !empty($imported_spot->email)) {
                 $owner = $this->generateUser($imported_spot->title, $imported_spot->email);
             }
             if (!is_null($owner)) {
