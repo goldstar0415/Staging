@@ -54,21 +54,30 @@ class MapController extends Controller
      */
     public function getSpots(SpotsSearchRequest $request)
     {
-        $spots = Spot::where('is_private', false);
+        /**
+         * @var $spots \Illuminate\Database\Query\Builder
+         */
+        $spots = Spot::select('spots.*')->where('is_private', false);
 
         if ($request->has('search_text')) {
+            $spots->join('spot_points', 'spots.id', '=', 'spot_points.spot_id');
             $spots->where(function ($query) use ($request) {
-                $query->where('title', 'ilike', "%$request->search_text%")
-                    ->orWhereHas('points', function ($query) use ($request) {
-                    $query->where('address', 'ilike', "%$request->search_text%");
-                });
+                $query->where('spots.title', 'ilike', "%$request->search_text%")
+                    ->orWhere('spot_points.address', 'ilike', "%$request->search_text%");
             });
         }
 
+        if ($request->has('filter.category_ids')) {
+            $spots->join('spot_type_categories', 'spot_type_categories.id', '=', 'spots.spot_type_category_id')
+                ->whereIn('spot_type_categories.id', $request->filter['category_ids']);
+        }
+
         if ($request->has('type')) {
-            $spots->whereHas('category.type', function ($query) use ($request) {
-                $query->where('name', $request->type);
-            });
+            if (!$request->has('filter.category_ids')) {
+                $spots->join('spot_type_categories', 'spot_type_categories.id', '=', 'spots.spot_type_category_id');
+            }
+            $spots->join('spot_types', 'spot_type_categories.spot_type_id', '=', 'spot_types.id')
+                ->where('spot_types.name', $request->type);
         }
 
         if ($request->has('filter.start_date')) {
@@ -87,42 +96,39 @@ class MapController extends Controller
             });
         }
 
-        if ($request->has('filter.category_ids')) {
-            $spots->whereHas('category', function ($query) use ($request) {
-                $query->whereIn('id', $request->filter['category_ids']);
-            });
-        }
-
         if ($request->has('filter.tags')) {
-            $spots->whereHas('tags', function ($query) use ($request) {
-                $query->whereIn('name', $request->filter['tags']);
+            $spots->joinWhere('tags', 'tags.name', 'in', $request->filter['tags']);
+            $spots->join('spot_tag', function ($join) {
+                $join->on('spot_tag.spot_id', '=', 'spots.id')->on('spot_tag.tag_id', '=', 'tags.id');
             });
         }
 
         if ($request->has('filter.rating')) {
-            $spots->whereHas('votes', function ($query) {
-                $query->select(\DB::raw("avg(vote) as avg_vote"));
-            }, '>=', $request->filter['rating']);
+            $spots->addSelect('spot_votes.vote');
+            $spots->join('spot_votes', 'spot_votes.spot_id', '=', 'spots.id');
+            $spots->groupBy('spots.id', 'vote')->havingRaw('avg(vote) > ' . $request->filter['rating']);
         }
 
         if ($request->has('filter.b_boxes')) {
-            $spots->whereHas('points', function ($query) use ($request) {
-                $search_areas = [];
-                foreach ($request->filter['b_boxes'] as $b_box) {
-                    $search_areas[] = sprintf(
-                        '"location" && ST_MakeEnvelope(%s, %s, %s, %s, 4326)',
-                        $b_box['_southWest']['lng'],
-                        $b_box['_southWest']['lat'],
-                        $b_box['_northEast']['lng'],
-                        $b_box['_northEast']['lat']
-                    );
-                }
-                $query->whereRaw(implode(' OR ', $search_areas));
-            });
+            if ($request->has('search_text')) {
+                $spots->join('spot_points', 'spots.id', '=', 'spot_points.spot_id');
+            }
+
+            $search_areas = [];
+            foreach ($request->filter['b_boxes'] as $b_box) {
+                $search_areas[] = sprintf(
+                    '"location" && ST_MakeEnvelope(%s, %s, %s, %s, 4326)',
+                    $b_box['_southWest']['lng'],
+                    $b_box['_southWest']['lat'],
+                    $b_box['_northEast']['lng'],
+                    $b_box['_northEast']['lat']
+                );
+            }
+            $spots->whereRaw(implode(' OR ', $search_areas));
         }
 
         if ($spots->withoutNewest()->count() > 1000) {
-            return abort(403, ['message' => 'Too many points found']);
+            return abort(403, 'Too many points found');
         }
 
         $points = [];
