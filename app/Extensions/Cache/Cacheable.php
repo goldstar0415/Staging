@@ -41,7 +41,7 @@ trait Cacheable
 
     protected function mutateAttribute($key, $value)
     {
-        if (!array_has($this->exceptCacheAttributes, $key)) {
+        if (!in_array($key, $this->exceptCacheAttributes)) {
             return Cache::tags(array_merge($this->getCacheTags(true), ['attributes']))->remember(
                 $key,
                 $this->cacheTime,
