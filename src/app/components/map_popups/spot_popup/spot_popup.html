@@ -86,7 +86,7 @@
         </div>
         <div ng-if="data.spot.photos.length > 0" class="photos-event clearfix row">
           <a ng-repeat="item in data.spot.photos.slice(photoControl.start, photoControl.start + photoControl.step)"
-             photo-viewer items="data.spot.photos" index="$index" current-item="item" class="col-xs-3">
+             photo-viewer items="data.spot.photos" index="$index + photoControl.start" current-item="item" class="col-xs-3">
             <img ng-src="{{item.photo_url.thumb}}">
           </a>
         </div>
