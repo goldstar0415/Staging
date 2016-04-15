@@ -141,17 +141,3 @@ Route::group(['prefix' => 'import/logs', 'middleware' => 'admin'], function () {
 Route::post('contact-us', 'UserController@contactUs');
 
 get('google-contacts', 'SocialContactsController@google');
-
-get('test', function () {
-
-
-    return App\User::with('calendarSpots')->first();
-});
-
-get('test-update', function () {
-    /**
-     * @var $spot App\Spot
-     */
-    $spot = App\Spot::with('tags')->first();
-    $spot->tags()->sync([1]);
-});
