@@ -1543,6 +1543,7 @@
         background: url(../img/svg/Icon_Weather.svg) no-repeat center center;
         &:hover, &:active, &:focus {
           background: url(../img/svg/Icon_Weather_mouseover.svg) no-repeat center center;
+		  background-size: 36px;
         }
       }
     }
