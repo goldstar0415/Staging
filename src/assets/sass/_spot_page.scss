@@ -599,17 +599,17 @@
       img {
         height: 13rem;
         box-shadow: 0 1px 5px 0.00px rgba(0, 0, 0, 0.25);
-		min-width: 136px;
-		min-height: 130px;
+        min-width: 136px;
+        min-height: 130px;
       }
 
     }
-	div{
-      margin:2px 0 0 2px;	
-		
-      width:136px;
+    div {
+      margin: 2px 0 0 2px;
+
+      width: 136px;
       height: 130px;
-	}
+    }
   }
 }
 
@@ -644,7 +644,8 @@
 .content-popup-spot .wrapper .previous-next {
   position: absolute;
   z-index: 3;
-  top: 25px;
+  top: 30px;
+  margin: -1rem;
   .next {
     float: right;
     padding-right: 2rem;
@@ -652,7 +653,7 @@
   }
   .previous {
     float: left;
-    padding-left: 1rem;
+    padding-left: 1.8rem;
     background: url(../img/icons/slider-arrow.png) 1px -20px no-repeat;
   }
   .next, .previous {
@@ -663,7 +664,7 @@
     line-height: 2rem;
     font-size: 25px;
     color: #00b7f3;
-
+    background-color: #0e2c42;
   }
 }
 

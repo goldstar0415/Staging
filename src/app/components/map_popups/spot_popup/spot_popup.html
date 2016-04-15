@@ -58,7 +58,8 @@
                            ui-sref="profile.main({user_id: data.spot.comments[reviewIndex].sender.alias || data.spot.comments[reviewIndex].sender.user_id})">
                     {{data.spot.comments[reviewIndex].sender.first_name + ' ' +
                     data.spot.comments[reviewIndex].sender.last_name}}
-                  </a></span>
+                  </a>
+                  </span>
 
             <p class="date-reviews ">
               {{data.spot.comments[reviewIndex].created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}

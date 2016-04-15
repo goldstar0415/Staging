@@ -106,6 +106,11 @@
 
 //iPad
 @media (max-width: 768px) {
+  .mobile-popup .popup-links ul li a {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+  }
   .btn-back-wrapper {
     margin-bottom: 5rem;
     .btn-back-planner {
@@ -173,6 +178,12 @@
 
 //iPhone 6 Plus landscape
 @media (max-width: 736px) {
+  .mobile-popup .popup-links ul li a {
+    width: 53%;
+    //text-align: center;
+    padding-left: 35px;
+    //font-size: 14px;
+  }
   .main-blog-article-content .article .article-info {
     height: 15rem;
   }
@@ -257,8 +268,28 @@
 
 }
 
+@media (min-width: 737px) {
+  .content-popup-spot {
+    .reviews-popup {
+      .content {
+        width: 79%;
+        padding-left: 3rem;
+      }
+    }
+  }
+}
+
 //iPhone 6 landscape
 @media (max-width: 667px) {
+  .popup-main .mobile-popup-content {
+    padding-left: 4rem;
+  }
+  .mobile-popup .popup-links ul li a {
+    width: 60%;
+    padding-left: 29px;
+    margin: 0 auto;
+    text-align: center;
+  }
   .main-blog-article-content .article .article-info {
     height: 15rem;
   }
@@ -346,6 +377,11 @@
 
 //iPhone 5 landscape
 @media (max-width: 568px) {
+  .mobile-popup .popup-links ul li a {
+    width: 68%;
+    text-align: center;
+    padding-left: 24px;
+  }
   .main-blog-article-content .article .article-info {
     height: 15rem;
   }
@@ -454,6 +490,15 @@
 
 //iphone 6 plus
 @media (max-width: 414px) {
+  .mobile-popup .popup-links ul li a {
+    width: 84%;
+    text-align: center;
+    font-size: 12px;
+
+  }
+  //.mobile-popup .mobile-popup-nav {
+  //  margin-bottom: 2rem;
+  //}
   .atlwdg-popup {
     width: 100% !important;
   }
@@ -522,6 +567,7 @@
   }
   .content-popup-spot {
     margin-bottom: 1rem;
+    //overflow: auto;
     .reviews-popup {
       .avatar {
         text-align: center;
@@ -732,6 +778,21 @@
   .nav-bg-green {
     left: 2rem;
   }
+  .mobile-popup .popup-links ul li a {
+    width: 90%;
+    text-align: center;
+    font-size: 12px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 344px) {
+  .content-popup-spot .wrapper .previous-next .next {
+    padding-right: 3rem;
+  }
+  .content-popup-spot {
+    overflow-x: hidden;
+  }
 }
 
 @media (max-width: 330px) {
@@ -743,6 +804,15 @@
 
 //iphone 5
 @media (max-width: 320px) {
+  .mobile-popup-content {
+    padding: 0 0 0 3rem;
+  }
+  .mobile-popup .popup-links ul li a {
+    font-size: 12px;
+  }
+  .mobile-popup .popup-links ul li a {
+    padding-left: 22px;
+  }
   .reviews {
     .text-block {
       width: 68%;
