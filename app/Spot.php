@@ -79,6 +79,12 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
 
     protected $dates = ['start_date', 'end_date'];
 
+    public $exceptCacheAttributes = [
+        'is_favorite',
+        'is_saved',
+        'is_rated'
+    ];
+
     /**
      * {@inheritdoc}
      */

@@ -36,6 +36,10 @@ class Wall extends BaseModel
 
     protected $with = ['sender'];
 
+    public $exceptCacheAttributes = [
+        'user_rating'
+    ];
+
     /**
      * {@inheritDoc}
      */
