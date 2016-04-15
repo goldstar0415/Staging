@@ -154,7 +154,6 @@ return [
         /*
          * Packages Services
          */
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Phaza\LaravelPostgis\DatabaseServiceProvider::class,
