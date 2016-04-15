@@ -180,10 +180,10 @@ class User extends BaseModel implements
 
     public static $aliasRule = '/(?=[a-zA-Z]+)\S*/';
     
-    public $exceptCacheAttributes = [
-        'can_follow',
-        'is_following'
-    ];
+//    public $exceptCacheAttributes = [
+//        'can_follow',
+//        'is_following'
+//    ];
 
     /**
      * Scope a query to search by user full name.
