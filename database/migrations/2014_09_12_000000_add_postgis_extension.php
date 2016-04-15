@@ -12,7 +12,7 @@ class AddPostgisExtension extends Migration
      */
     public function up()
     {
-        DB::statement('CREATE EXTENSION postgis;');
+//        DB::statement('CREATE EXTENSION postgis;');
     }
 
     /**
@@ -22,6 +22,6 @@ class AddPostgisExtension extends Migration
      */
     public function down()
     {
-        DB::statement('DROP EXTENSION postgis;');
+//        DB::statement('DROP EXTENSION postgis;');
     }
 }
