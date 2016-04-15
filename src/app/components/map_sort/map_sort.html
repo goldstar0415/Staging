@@ -93,7 +93,7 @@
           </div>
 
           <div class="date-filters clearfix"
-               ng-show="MapSort.isShowFilter || $root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date"
+               ng-show="(MapSort.isShowFilter || $root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date) && $root.sortLayer == 'event'"
                ng-class="{'move-top': $root.isDrawArea, applied: ($root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date)}">
             <div class="form-group">
               <span class="icon-calendar"></span>
@@ -195,7 +195,7 @@
         <!--Search results-->
         <div class="results">
           <div infinite-scroll="MapSort.loadNextSpots()"
-               infinite-scroll-disabled="$root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length"
+               infinite-scroll-disabled="($root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length) && MapSort.vertical"
                class="clearfix" infinite-scroll-distance="1" infinite-scroll-container='".search-filters"'>
             <div ng-repeat="item in $root.mapSortSpots.data">
               <div class="event-result clearfix">

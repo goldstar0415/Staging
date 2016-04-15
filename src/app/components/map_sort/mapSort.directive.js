@@ -149,6 +149,12 @@
           toastr.info('Click on map to check weather in this area');
         }
       } else {
+        if (layer != 'event') {
+          $rootScope.mapSortFilters.filter = $rootScope.mapSortFilters.filter || {};
+          $rootScope.mapSortFilters.filter.start_date = $rootScope.mapSortFilters.filter.end_date = '';
+          vm.searchParams.start_date = vm.searchParams.end_date = '';
+        }
+
         search();
         MapService.showLayer(layer);
 
