@@ -163,7 +163,7 @@ class BlogController extends Controller
         return view('opengraph')->with(
             'og',
             $og->title($blog->title)
-                ->image($blog->cover->url())//TODO: change image
+                ->image($blog->cover->url())
                 ->description($blog->body)
                 ->url(frontend_url('article', $blog->slug))
         );

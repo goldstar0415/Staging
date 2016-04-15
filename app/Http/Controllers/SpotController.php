@@ -338,7 +338,7 @@ class SpotController extends Controller
         return view('opengraph')->with(
             'og',
             $og->title($spot->title)
-            ->image($spot->cover->url())//TODO: change image
+            ->image($spot->cover->url())
             ->description($spot->description)
             ->url(config('app.frontend_url') . '/user/' . $spot->user_id . '/spots/' . $spot->id)
         );

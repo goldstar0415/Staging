@@ -71,7 +71,7 @@ WHERE cm.receiver_id = $user_id AND cm."receiver_deleted_at" is null
 OR cm.sender_id = $user_id AND cm."sender_deleted_at" is null
 order by cm.sender_id+cm.receiver_id, m.created_at desc
 QUERY
-        ));//TODO: optimize
+        ));
 
         $dialogs = $messages->map(function ($item, $key) use ($user) {
             $last_user_id = null;

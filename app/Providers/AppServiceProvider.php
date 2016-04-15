@@ -38,9 +38,9 @@ class AppServiceProvider extends ServiceProvider
         \Carbon\Carbon::setToStringFormat('Y-m-d h:i:s a');
         $this->modelsEvents();
 
-        \DB::listen(function ($query, $bindings) {
-            \Log::info('QUERY: ' . $query, $bindings);
-        }); //TODO: delete
+//        \DB::listen(function ($query, $bindings) {
+//            \Log::info('QUERY: ' . $query, $bindings);
+//        }); //TODO: delete
         
         Validator::resolver(function ($translator, $data, $rules, $messages) {
             return new Validations($translator, $data, $rules, $messages);
