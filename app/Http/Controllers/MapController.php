@@ -110,7 +110,7 @@ class MapController extends Controller
         }
 
         if ($request->has('filter.b_boxes')) {
-            if ($request->has('search_text')) {
+            if (!$request->has('search_text')) {
                 $spots->join('spot_points', 'spots.id', '=', 'spot_points.spot_id');
             }
 
