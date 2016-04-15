@@ -539,12 +539,13 @@
     .event-result-logo {
       text-align: center;
       img {
-        width: 60%;
-        height: auto;
+        //width: 60%;
+        //height: auto;
         border: none;
         border-radius: 50%;
         margin-bottom: 1rem;
-
+        width: 9rem;
+        height: 9rem;
       }
     }
   }
