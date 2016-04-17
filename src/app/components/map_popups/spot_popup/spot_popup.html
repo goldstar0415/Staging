@@ -122,7 +122,7 @@
         </li>
       </ul>
     </div>
-    <div class="close-event" ng-if="$root.currentUser && !data.spot.isReported">
+    <div class="close-event" ng-if="$root.currentUser && $root.currentUser.id != data.spot.user_id && !data.spot.isReported">
       <a ng-click="visible_submenu = !visible_submenu" class="close">. . .</a>
 
       <div ng-show="visible_submenu" class="more-info-popup">

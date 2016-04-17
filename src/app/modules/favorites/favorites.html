@@ -28,7 +28,7 @@
               <li ng-if="!item.user_id && !item.isClaimed">
                 <a claim-spot="item">Claim listing</a>
               </li>
-              <li ng-if="currentUser && !item.isReported">
+              <li ng-if="currentUser && currentUser.id != item.user_id && !item.isReported">
                 <a report-spot="item">Report</a>
               </li>
             </ul>

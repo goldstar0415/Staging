@@ -71,7 +71,7 @@
           <a class="download"
              ng-href="{{Spot.API_URL + '/spots/' + Spot.spot.id + '/export'}}" target="_blank">Export ICS</a>
         </li>
-        <li ng-if="currentUser && !Spot.spot.isReported">
+        <li ng-if="currentUser && currentUser.id != Spot.spot.user_id && !Spot.spot.isReported">
           <a class="report-icon" report-spot="Spot.spot">Report</a>
         </li>
         <li ng-if="(!Spot.spot.user_id || !Spot.spot.user.verified) && !Spot.spot.isClaimed">

@@ -21,11 +21,12 @@
           <stars item="item"></stars>
         </div>
         <div class="col-md-10 col-xs-9 col-sm-8">
-          <a ng-click="item.visible_submenu = !item.visible_submenu" class="more-info">. . .</a>
+          <a ng-click="item.visible_submenu = !item.visible_submenu"
+             ng-if="currentUser && currentUser.id != item.user_id && !item.isReported" class="more-info">. . .</a>
 
           <div ng-show="item.visible_submenu" class="more-info-popup">
             <ul class="list-unstyled">
-              <li ng-if="currentUser && !item.isReported">
+              <li ng-if="currentUser && currentUser.id != item.user_id && !item.isReported">
                 <a report-spot="item">Report</a>
               </li>
             </ul>
@@ -41,7 +42,6 @@
             <date-range item="item"></date-range>
           </div>
           <div class="description" ng-bind-html="item.description | toParagraphs"></div>
-
 
 
           <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">
