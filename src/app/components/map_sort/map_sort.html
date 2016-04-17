@@ -195,7 +195,7 @@
         <!--Search results-->
         <div class="results">
           <div infinite-scroll="MapSort.loadNextSpots()"
-               infinite-scroll-disabled="($root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length) && MapSort.vertical"
+               infinite-scroll-disabled="$root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length || MapSort.vertical"
                class="clearfix" infinite-scroll-distance="1" infinite-scroll-container='".search-filters"'>
             <div ng-repeat="item in $root.mapSortSpots.data">
               <div class="event-result clearfix">
@@ -208,7 +208,7 @@
                 <div class="col-xs-8 padding-0">
                   <div class="col-xs-12 padding-0">
                     <h2 class="name">
-                      <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})" target="_blank">{{item.title}}</a>
+                      <a ui-sref="spot({user_id: item.user_id || '', spot_id: item.id})" target="_blank">{{item.title}}</a>
                     </h2>
 
                     <p class="location">{{item.points[0].address}}</p>
