@@ -538,13 +538,14 @@
         abstract: true,
         resolve: {
           user: function ($rootScope, User, currentUser, $stateParams, UserService) {
+            console.log($stateParams);
             if (currentUser && (currentUser.id == $stateParams.user_id || currentUser.alias == $stateParams.user_id)) {
               return User.currentUser({}, function (user) {
                 $rootScope.currentUser = user;
                 UserService.setProfileUser(user);
                 return user;
               }).$promise;
-            } else if ($stateParams.user_id) {
+            } else if ($stateParams.user_id && $stateParams.user_id != 0) {
               return User.get({id: $stateParams.user_id}, function (user) {
                 UserService.setProfileUser(user);
                 return user;

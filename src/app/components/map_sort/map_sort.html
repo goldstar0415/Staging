@@ -208,7 +208,7 @@
                 <div class="col-xs-8 padding-0">
                   <div class="col-xs-12 padding-0">
                     <h2 class="name">
-                      <a ui-sref="spot({user_id: item.user_id || '', spot_id: item.id})" target="_blank">{{item.title}}</a>
+                      <a ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})" target="_blank">{{item.title}}</a>
                     </h2>
 
                     <p class="location">{{item.points[0].address}}</p>
