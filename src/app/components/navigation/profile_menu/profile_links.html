@@ -62,10 +62,44 @@
 
       </ul>
 
-      <div ng-if="!$root.currentUser" class="unauthorized">
-        <b>You should &nbsp;
-          <sign-in title="sign in" class="sign-in"></sign-in>
-          &nbsp;to get all features</b>
+      <div ng-if="!$root.currentUser" class="unauthorized" user-hints>
+        <ul>
+          <li>
+            <a class="nav-spots">
+              <span>My spots</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-blog">
+              <span>My Blog</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-favorites">
+              <span>Favorites</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-searches"><span>Saved Searches</span></a>
+          </li>
+          <li>
+            <a class="nav-friendmap">
+              <span>Friends Map</span></a>
+          </li>
+          <li>
+            <a class="nav-photomap">
+              <span>Photo Map</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-planner"><span>Planner</span></a>
+          </li>
+          <li>
+            <a class="nav-settings">
+              <span>Stream</span>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
