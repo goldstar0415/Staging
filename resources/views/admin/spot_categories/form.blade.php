@@ -3,8 +3,11 @@
     <h2>Spot category name</h2>
 </legend>
 <div class="col-xs-12 padding-0">
-    <div class="col-xs-5">
-        {!! Form::text('display_name', null, ['class' => 'spot-categories-name', 'placeholder' => 'New-name']) !!}
+    <div class="col-xs-2">
+        {!! Form::text('name', null, ['class' => 'spot-categories-name', 'placeholder' => 'Slug name']) !!}
+    </div>
+    <div class="col-xs-3">
+        {!! Form::text('display_name', null, ['class' => 'spot-categories-name', 'placeholder' => 'Display name']) !!}
     </div>
     <div class="col-xs-3">
         {!! Form::select('spot_type_id', App\SpotType::all()->pluck('display_name', 'id'), $type, [

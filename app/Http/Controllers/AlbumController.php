@@ -97,6 +97,10 @@ class AlbumController extends Controller
             });
         }));
 
+        foreach ($result as $album) {
+            $album->append('count_photos');
+        }
+
         return $result;
     }
 
