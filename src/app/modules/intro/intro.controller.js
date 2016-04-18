@@ -97,14 +97,14 @@
         if ($rootScope.spotCategories) {
           var shelterCategory = _.findWhere($rootScope.spotCategories, {name: 'shelter'});
 
-          if (vm.searchParams.category_airbnb) {
-            _addCategory(shelterCategory, data.filter, 'air_bnb');
+          if (vm.searchParams.category_hotels) {
+            _addCategory(shelterCategory, data.filter, 'hotels');
           }
-          if (vm.searchParams.category_hotel) {
-            _addCategory(shelterCategory, data.filter, 'hotel');
+          if (vm.searchParams.category_homes) {
+            _addCategory(shelterCategory, data.filter, 'homes-condos');
           }
           if (vm.searchParams.category_campground) {
-            _addCategory(shelterCategory, data.filter, 'campground');
+            _addCategory(shelterCategory, data.filter, 'cabins-campgrounds');
           }
         }
 
