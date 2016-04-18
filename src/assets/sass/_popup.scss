@@ -263,6 +263,7 @@
       width: 95%;
       display: block;
       color: #000;
+      word-break: break-all;
     }
     .star-event-mobile {
       display: none;
@@ -642,6 +643,7 @@
           line-height: 26px;
           margin: 5px 0 2px 0;
           color: #000;
+          word-break: break-all;
         }
         .star-event-mobile {
           display: inline-block;
@@ -700,6 +702,7 @@
       font-size: 2rem;
       color: #000;
       font-weight: bold;
+      word-break: break-all;
     }
     .close-event {
       top: -10px;
