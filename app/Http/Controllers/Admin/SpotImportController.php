@@ -95,9 +95,8 @@ class SpotImportController extends Controller
          * @var SpotsImportFile $import
          */
         $csv_file = $request->document->move(storage_path('csvs'), str_random(8) . '.' . $request->document->getClientOriginalExtension());
-        $import = app(SpotsImportFile::class, [app(), app(Excel::class), $csv_file->getRealPath()]);
 
-        if ($this->dispatch(new SpotsImportCsv($import, ['admin' => $request->user(), 'spot_category' => $request->spot_category, 'document' => $csv_file->getRealPath()], $request->spot_type))) {
+        if ($this->dispatch(new SpotsImportCsv(['admin' => $request->user(), 'spot_category' => $request->spot_category, 'document' => $csv_file->getRealPath()], $request->spot_type))) {
             return back()->with('import', true);
         }
 

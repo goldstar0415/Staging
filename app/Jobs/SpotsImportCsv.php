@@ -15,7 +15,10 @@ use Codesleeve\Stapler\AttachmentConfig;
 use Codesleeve\Stapler\Stapler;
 use File;
 use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
 use Log;
+use Maatwebsite\Excel\Excel;
 use Storage;
 use Validator;
 
@@ -24,8 +27,9 @@ use Validator;
  * Job for import spot from csv file
  * @package App\Jobs
  */
-class SpotsImportCsv extends SpotsImport
+class SpotsImportCsv extends SpotsImport implements ShouldQueue
 {
+    use InteractsWithQueue;
     /**
      * @var SpotsImportFile
      */
@@ -38,15 +42,20 @@ class SpotsImportCsv extends SpotsImport
      * @param array $data
      * @param string $type
      */
-    public function __construct(SpotsImportFile $importFile, array $data, $type = self::EVENT)
+    public function __construct(array $data, $type = self::EVENT)
     {
         parent::__construct($data, $type);
-
-        $this->importFile = $importFile;
     }
 
     public function getSpots()
     {
         return $this->importFile->all();
+    }
+
+    public function handle(AppMailer $mailer)
+    {
+        $this->importFile = app(SpotsImportFile::class, [app(), app(Excel::class), $this->data['document']]);
+        
+        return parent::handle($mailer);
     }
 }

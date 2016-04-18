@@ -36,7 +36,7 @@ abstract class SpotsImport extends Job implements SelfHandling
     /**
      * @var array
      */
-    private $data;
+    protected $data;
 
     /**
      * @var \App\Mailers\AppMailer
