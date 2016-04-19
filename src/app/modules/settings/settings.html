@@ -223,7 +223,7 @@
       <div class="col-xs-12 settings-block">
         <form role="form" name="passForm" ng-submit="Settings.savePasswordSettings(passForm)" autocomplete="off"
               novalidate>
-          <div class="col-md-3 col-xs-12 no-pad">
+          <div class="col-md-3 col-xs-12 no-pad" ng-if="Settings.data.is_registered">
             <label class="">Current password</label>
           </div>
           <div class="col-xs-12 col-md-9 form-group no-pad" ng-if="Settings.data.is_registered">
