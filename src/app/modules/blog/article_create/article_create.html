@@ -1,5 +1,5 @@
 <form class="form-horizontal  no-pad" name="form" role="form" ng-submit="Article.save(form)" novalidate>
-  <a ui-sref="profile_blog" class="btn-back create-article-btn"></a>
+  <a ui-sref="profile_blog({user_id: profileUser.id})" class="btn-back create-article-btn"></a>
 
   <div class="text-center">
     <h2 class="title-name">Create blog post</h2>
