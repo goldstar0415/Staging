@@ -9,7 +9,7 @@
   function userHintsDirective($rootScope, $timeout, dialogs) {
     return {
       restrict: 'EA',
-      link: function (scope, elem, attrs) {
+      link: function () {
         $timeout(function () {
           if (window.localStorage && localStorage.getItem('disable_hints')) {
             window.isHintsDisable = true;
@@ -62,13 +62,15 @@
       options = options || {};
 
       var tooltip,
-      $elem = $(elem), //.on('click', closeAll),
+      $elem = $(elem),
       defaultOptions = {
         theme: 'TooltipBorder',
         width: 150,
         adjustTracker: true,
         closeButton: 'box',
         closeOnMouseleave: true,
+        closeOnClick:true,
+        closeOnEsc: true,
         animation: 'move',
         attach: $elem,
         zIndex: 8000,
@@ -89,12 +91,15 @@
             tooltip.disable();
           }
 
+          if(window.tooltipTimeoutId) {
+            clearTimeout(window.tooltipTimeoutId);
+          }
+          window.tooltipTimeoutId = window.setTimeout(function(){tooltip.close();},3000);
         }
       };
 
       angular.extend(defaultOptions, options);
       tooltip = new jBox('Tooltip', defaultOptions);
-      //tooltip.open();
     }
 
     function disableHints() {
@@ -104,7 +109,5 @@
         localStorage.setItem('disable_hints', true);
       }
     }
-
-
   }
 })();
