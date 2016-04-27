@@ -1590,7 +1590,36 @@
       }
     }
   }
-
+  
+  .weather-wrap {
+	  .firstBlock-wrapper {
+	    padding: 5px 20px;
+		.right-now {  
+		  font-size: 2.0rem;  
+		}
+		.weatherName {
+		  font-size: 1.8rem;    
+		}
+		.weatherImg-block {    
+		  .weatherImg-wrapper {   
+			height: 70px;		  
+			.temperature-img {
+			  font-size: 4rem;
+			  padding-top: 1rem;         
+			}       
+		  }
+		}   
+	  }
+	}
+	
+	.weekForecast {  
+		.weekForecast-wrapper {      
+		  .data {      
+			padding-top: 2px;
+			height: 2rem;
+		  }     
+		}
+	}
 }
 
 @media screen and (min-height: 750px)  {
