@@ -36,10 +36,10 @@
         parent: 'main',
         mapState: 'big',
         params: {
-          spotSearch: null
+          spotSearch: null,
+          spotLocation: null
         }
       })
-
       .state('index.post', {
         url: '/map/post/:slug',
         controller: 'MapPostController',

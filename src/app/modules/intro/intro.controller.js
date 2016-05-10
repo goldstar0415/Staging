@@ -9,17 +9,22 @@
   function IntroController($state, $rootScope, toastr, $http, MapService, API_URL, DATE_FORMAT) {
     var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
+    var geocoder = new google.maps.Geocoder();
 
     vm.searchParams = {
       filter: {},
       addresses: []
     };
+
     vm.locations = [];
+    vm.location = {};
 
     vm.searchEvent = searchEvent;
     vm.searchGrub = searchGrub;
     vm.searchTodo = searchTodo;
     vm.searchRoom = searchRoom;
+    vm.searchAddress = searchAddress;
+    vm.selectLocation = selectLocation;
     vm.searchRoute = searchRoute;
     vm.addLocation = addLocation;
     vm.removeLocation = removeLocation;
@@ -29,10 +34,23 @@
 
     run();
 
-    /////
-
     function run() {
 
+    }
+
+    function selectLocation(location) {
+      vm.location = {
+        latitude: location.geometry.location.lat(),
+        longitude: location.geometry.location.lng(),
+        address: location.formatted_address
+      };
+    }
+
+    function searchAddress() {
+      vm.locations = [];
+      geocoder.geocode({address: vm.searchParams.search_text}, function(results) {
+        vm.locations = results;
+      });
     }
 
     function searchEvent() {
@@ -40,6 +58,7 @@
         var data = {
           type: 'event',
           search_text: vm.searchParams.search_text,
+          location: vm.location,
           filter: {}
         };
         if (vm.searchParams.filter.start_date) {
@@ -48,7 +67,7 @@
         if (vm.searchParams.filter.end_date) {
           data.filter.end_date = moment(vm.searchParams.filter.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
         }
-
+        MapService.FocusMapToGivenLocation({latitude: 0, longitude: 0, zoom: 20});
         doSearch(data);
       }
     }
@@ -165,8 +184,10 @@
       var promise = $http.get(SEARCH_URL + '?' + jQuery.param(params));
 
       promise.success(function (spots) {
-        console.log(spots);
-        $state.go('index', {spotSearch: {spots: spots, activeSpotType: params.type}});
+        $state.go('index', {
+          spotSearch: {spots: spots, activeSpotType: params.type},
+          spotLocation: params.location
+        });
       });
 
       promise.catch(function (resp) {
