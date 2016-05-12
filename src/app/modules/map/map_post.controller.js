@@ -7,6 +7,7 @@
 
   /** @ngInject */
   function MapPostController(post, MapService, $rootScope) {
+
     $rootScope.hideHints = true;
     var posts = [post];
 

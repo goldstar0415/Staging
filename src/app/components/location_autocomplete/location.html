@@ -5,6 +5,7 @@
 
        ng-model="viewAddress"
        ng-change="onChange()"
+       ng-model-options="{ debounce: 200 }"
 
        popover="{{bindMarker && !location ? 'Type address or click on the map to set location(s)'  : ''}}"
        popover-trigger="focus"
@@ -36,5 +37,3 @@
    ng-click="SetCurrentLocation();"
    class="compass compass-location"
    title="Find out the location"></a>
-
-

@@ -16,7 +16,11 @@
       }
     });
 
-  function mapSort($rootScope, $q, MapService, $http, $timeout, Spot, SpotService, API_URL, DATE_FORMAT) {
+  function mapSort($rootScope, $q, MapService, $http, $timeout, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
+
+    console.log('MapSort params', $stateParams);
+    console.log('Map Service', MapService);
+
     var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
     var SPOT_LIST_URL = API_URL + '/map/spots/list';
@@ -60,14 +64,25 @@
 
     run();
 
-    ////////////////////////////
 
     function run() {
       loadCategories();
+      vm.searchParams.search_text = ($stateParams.searchText || '');
+      if (_.isObject($stateParams.spotLocation)) {
+        MapService.FocusMapToGivenLocation($stateParams.spotLocation);
+        MapService.GetBoundsByCircle($stateParams.spotLocation, getCircleBounds);
+      } else {
+        MapService.FocusMapToCurrentLocation();
+      }
     }
 
+    function getCircleBounds(bounds) {
+      console.log('Circle Bounds', bounds);
+      search();
+    }
 
     function onUpdateMapData(event, mapSpots, layer, isDrawArea) {
+      console.log('update map');
       layer = layer || $rootScope.sortLayer;
       $rootScope.sortLayer = layer;
       if (angular.isDefined(isDrawArea)) {
@@ -113,6 +128,7 @@
     }
 
     function loadNextSpots() {
+      console.log('loadNextSpots');
       if ($rootScope.mapSortSpots.sourceSpots && $rootScope.mapSortSpots.sourceSpots.length > 0) {
         var startIdx = $rootScope.mapSortSpots.page * SPOTS_PER_PAGE,
         endIdx = startIdx + SPOTS_PER_PAGE,
@@ -140,6 +156,7 @@
     }
 
     function toggleLayer(layer) {
+      console.log('toggle layer');
       $rootScope.sortLayer = layer;
 
       if (layer == 'weather') {
@@ -169,6 +186,7 @@
     }
 
     function onTagsAdd(q, w, e) {
+      console.log('add tags');
       if (vm.searchParams.tags.length < restrictions.tags) {
         return true;
       } else {
@@ -186,10 +204,12 @@
     }
 
     function loadCategories() {
+      console.log('Load Categories');
       if (!$rootScope.spotCategories) {
         $http.get(API_URL + '/spots/categories')
           .success(function (data) {
             $rootScope.spotCategories = data;
+            console.log('Categories', data);
             _loadCategories(data)
           });
       } else {
@@ -206,6 +226,7 @@
 
 
     function search() {
+      console.log('searching');
       if (vm.searchParams.location || vm.searchParams.locations.length > 0) {
         drawPathSelection(doSearch);
       } else {
@@ -214,6 +235,7 @@
     }
 
     function doSearch() {
+      console.log('do search');
       var data = {
         search_text: vm.searchParams.search_text,
         filter: {}
@@ -275,6 +297,7 @@
     }
 
     function drawPathSelection(callback) {
+      console.log('Draw Path');
       var points = [];
       if (vm.searchParams.location && vm.searchParams.location) {
         points.push(vm.searchParams.location);
@@ -288,6 +311,7 @@
     }
 
     function addLocation() {
+      console.log('adding location');
       if (vm.searchParams.address && vm.searchParams.location) {
         vm.searchParams.locations.unshift({
           address: vm.searchParams.address,
@@ -404,5 +428,3 @@
     }
   }
 })();
-
-

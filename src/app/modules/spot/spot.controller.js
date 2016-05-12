@@ -7,6 +7,9 @@
 
   /** @ngInject */
   function SpotController(spot, SpotService, ScrollService, SpotComment, $state, MapService, $rootScope, dialogs, API_URL) {
+
+    console.log('Spot Init');
+
     var vm = this;
     vm.API_URL = API_URL;
     vm.spot = SpotService.formatSpot(spot);

@@ -37,7 +37,8 @@
         mapState: 'big',
         params: {
           spotSearch: null,
-          spotLocation: null
+          spotLocation: null,
+          searchText: ''
         }
       })
       .state('index.post', {

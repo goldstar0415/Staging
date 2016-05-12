@@ -40,8 +40,8 @@
 
     function selectLocation(location) {
       vm.location = {
-        latitude: location.geometry.location.lat(),
-        longitude: location.geometry.location.lng(),
+        lat: location.geometry.location.lat(),
+        lng: location.geometry.location.lng(),
         address: location.formatted_address
       };
     }
@@ -58,7 +58,7 @@
         var data = {
           type: 'event',
           search_text: vm.searchParams.search_text,
-          location: vm.location,
+          location: vm.location || {},
           filter: {}
         };
         if (vm.searchParams.filter.start_date) {
@@ -67,7 +67,6 @@
         if (vm.searchParams.filter.end_date) {
           data.filter.end_date = moment(vm.searchParams.filter.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
         }
-        MapService.FocusMapToGivenLocation({latitude: 0, longitude: 0, zoom: 20});
         doSearch(data);
       }
     }
@@ -181,12 +180,14 @@
 
 
     function doSearch(params) {
+
       var promise = $http.get(SEARCH_URL + '?' + jQuery.param(params));
 
       promise.success(function (spots) {
         $state.go('index', {
+          searchText: params.search_text,
           spotSearch: {spots: spots, activeSpotType: params.type},
-          spotLocation: params.location
+          spotLocation: (params.location || {lat: 0, lng: 0, address: ''})
         });
       });
 

@@ -4,6 +4,9 @@
   angular
     .module('zoomtivity')
     .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, Area, SignUpService, Spot, SpotComment, SpotService) {
+
+      console.log('MapService');
+
       var map = null;
       var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
@@ -663,7 +666,6 @@
         map.on('mousemove', move);
         map.on('mouseup', end);
 
-
         function start(e) {
           started = true;
           startPoint = L.latLng(e.latlng.lat, e.latlng.lng);
@@ -841,6 +843,13 @@
             }
           }
         }
+      }
+
+      function GetBoundsByCircle(latlng, callback) {
+        var circle = null;
+        circle = L.circle(latlng, 5000, {color: 'red', weight: 3}).addTo(drawLayer);
+        var b_box = circle.getBounds();
+        callback(b_box);
       }
 
       //cancel path selection
@@ -1803,6 +1812,8 @@
         FitBoundsByLayer: FitBoundsByLayer,
         FitBoundsOfCurrentLayer: FitBoundsOfCurrentLayer,
         FitBoundsOfDrawLayer: FitBoundsOfDrawLayer,
+        //get bounds based on a point
+        GetBoundsByCircle: GetBoundsByCircle,
         //sorting
         SortByRating: SortByRating,
         SortByDate: SortByDate,
