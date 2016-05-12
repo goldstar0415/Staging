@@ -68,12 +68,20 @@
     function run() {
       loadCategories();
       vm.searchParams.search_text = ($stateParams.searchText || '');
+      if (vm.searchParams.search_text.length > 0) {
+        vm.vertical = false;
+        MapService.FocusMapToCurrentLocation();
+        toggleLayer();
+        search();
+      }
+      /**
       if (_.isObject($stateParams.spotLocation)) {
         MapService.FocusMapToGivenLocation($stateParams.spotLocation);
         MapService.GetBoundsByCircle($stateParams.spotLocation, getCircleBounds);
       } else {
         MapService.FocusMapToCurrentLocation();
       }
+      **/
     }
 
     function getCircleBounds(bounds) {
