@@ -37,6 +37,7 @@ class SpotTypeCategory extends BaseModel implements StaplerableInterface
         $this->hasAttachedFile(
             'icon',
             [
+				'storage' => 's3',
                 'styles' => ['original' => '70x70']
             ]
         );

@@ -54,6 +54,7 @@ class Blog extends BaseModel implements StaplerableInterface, Commentable
     public function __construct(array $attributes = [])
     {
         $this->hasAttachedFile('cover', [
+			'storage' => 's3',
             'styles' => [
                 'thumb' => [
                     'dimensions' => '70x70#',

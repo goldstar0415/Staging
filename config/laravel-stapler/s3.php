@@ -13,10 +13,15 @@ return [
     |
     */
     's3_client_config' => [
-        'key' => '',
-        'secret' => '',
-        'region' => '',
-        'scheme' => 'http'
+	    'credentials' => [
+            'key'		=> env('S3_KEY', ''),
+            'secret'	=> env('S3_SECRET', ''),
+		],
+	    'key'		=> env('S3_KEY', ''),
+	    'secret'	=> env('S3_SECRET', ''),
+        'region'	=> env('S3_REGION', ''),
+        'scheme'	=> env('S3_SCHEME', ''),
+	    'version'	=> env('S3_VERSION', ''),
     ],
     
     /*
@@ -31,8 +36,8 @@ return [
     |
     */
     's3_object_config' => [
-        'Bucket' => '',
-        'ACL' => 'public-read'
+        'Bucket'	=> env('S3_BUCKET', ''),
+        'ACL'		=> env('S3_ACL', '')
     ],
 
     /*

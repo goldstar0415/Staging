@@ -207,6 +207,7 @@ class User extends BaseModel implements
     public function __construct(array $attributes = [])
     {
         $this->hasAttachedFile('avatar', [
+			'storage' => 's3',
             'styles' => [
                 'thumb' => [
                     'dimensions' => '80x80#',
