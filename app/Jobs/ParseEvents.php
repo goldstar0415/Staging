@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use App\RemotePhoto;
 use App\Services\AppSettings;
 use App\Services\GoogleAddress;
 use App\Spot;
@@ -16,6 +17,7 @@ use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
 use Storage;
+use Log;
 
 class ParseEvents extends Job implements SelfHandling, ShouldQueue
 {
@@ -137,11 +139,8 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
                     'lng' => $event['venue']['location']['lon']
                 ]
             ]);
-            $photos = $import_event->photos()->saveMany($this->getPhotos($event));
-            if (!empty($photos[0])) {
-                $import_event->cover = $photos[0]->photo->path();
-                $import_event->save();
-            }
+
+            $import_event->remotePhotos()->saveMany( $this->getRemotePhotos($event) );
         }
 
         return true;
@@ -167,6 +166,7 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
      *
      * @param $event
      * @return array
+	 * @deprecated
      */
     protected function getPhotos($event)
     {
@@ -178,6 +178,28 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
         }
 
         return $photos;
+    }
+
+	/**
+	 * Get remote photos
+	 * @param $event
+	 * @return array
+	 */
+    protected function getRemotePhotos($event)
+    {
+        $remotePhotos = [];
+        $needCover = true;
+        foreach ($event['performers'] as $performer) {
+            if ($performer['image']) {
+                $remotePhotos[] = new RemotePhoto([
+                    'url' => $performer['image'],
+                    'image_type' => $needCover ? 1 : 0, // 1 - cover, 0 - regular
+                    'size' => 'original',
+                ]);
+                $needCover = false;
+            }
+        }
+        return $remotePhotos;
     }
 
     /**

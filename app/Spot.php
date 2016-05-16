@@ -15,6 +15,7 @@ use DB;
 use Eluceo\iCal\Component\Event;
 use Eluceo\iCal\Property\Event\Organizer;
 use Request;
+use Log;
 
 /**
  * Class Spot
@@ -107,7 +108,22 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      */
     public function getCoverUrlAttribute()
     {
-        return $this->getPictureUrls('cover');
+		$covers = [];
+		foreach ( $this->remotePhotos()->get() as $rph ) {
+			if ( $rph->image_type == 1 ) {
+				$url = $rph->url;
+				$covers = [
+					"original" => $url,
+    				"medium" => $url,
+    				"thumb" => $url
+				];
+			}
+		}
+		if ( !$covers ) {
+			$covers = $this->getPictureUrls('cover');
+		}
+
+		return $covers;
     }
 
     /**
@@ -359,6 +375,14 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function photos()
     {
         return $this->hasMany(SpotPhoto::class);
+    }
+
+    /**
+     * Get remote photos
+     */
+    public function remotePhotos()
+    {
+        return $this->morphMany(RemotePhoto::class, 'associated');
     }
 
     /**

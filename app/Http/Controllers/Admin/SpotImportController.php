@@ -70,7 +70,7 @@ class SpotImportController extends Controller
         }
 
         $job = new SpotsImportColumns($request->all(), [
-            'admin' => $request->user(),
+            'admin' => [],
             'spot_category' => $request->spot_category,
             'instagram_photos' => $request->ins_photos,
             'get_address' => $request->get_address
@@ -80,7 +80,7 @@ class SpotImportController extends Controller
             return view('admin.spot_import_columns.index')->with('spots', $job->getSpots());
         }
 
-        return back()->with('import', $this->dispatch($job));
+        return back()->with('import', $this->dispatch($job->onQueue(env('SPOT_IMPORT_QUEUE', 'default'))));
     }
 
     /**
