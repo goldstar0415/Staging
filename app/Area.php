@@ -39,9 +39,7 @@ class Area extends BaseModel implements StaplerableInterface
 
     public function __construct(array $attributes = [])
     {
-        $this->hasAttachedFile('cover', [
-			'storage' => 's3'
-		]);
+        $this->hasAttachedFile('cover');
         parent::__construct($attributes);
     }
 

@@ -91,7 +91,6 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function __construct(array $attributes = [])
     {
         $this->hasAttachedFile('cover', [
-			'storage' => 's3',
             'styles' => [
                 'thumb' => [
                     'dimensions' => '100x100#',
