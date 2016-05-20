@@ -21,7 +21,8 @@
         "eluceo/ical": "dev-master",
         "yangqi/htmldom": "dev-master",
         "vinkla/instagram": "^3.2",
-        "bosnadev/database": "0.12"
+        "bosnadev/database": "0.12",
+        "aws/aws-sdk-php": "<3.0.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

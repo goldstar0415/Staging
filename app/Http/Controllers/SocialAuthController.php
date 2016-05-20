@@ -87,7 +87,7 @@ class SocialAuthController extends Controller
                     'email' => $user->getEmail(),
                     'first_name' => $first_name,
                     'last_name' => $last_name,
-                    'avatar' => preg_replace('/\?sz=\d+/', '', $user->getAvatar()),
+                    'avatar' => self::getLargeAvatarUrl( $social->name, $user->getAvatar() ),
                     'verified' => true
                 ]);
                 $this->attachSocial($new_user, $social, $user->getId());
@@ -116,6 +116,29 @@ class SocialAuthController extends Controller
         }
 
         return $provider->redirect();
+    }
+
+    /**
+     * Get a large avatar URL
+     * @param $socialName
+     * @param $sourceUrl
+     * @return string
+     */
+    final protected static function getLargeAvatarUrl($socialName, $sourceUrl)
+    {
+        if ( !$sourceUrl )
+            return '';
+        $s = 720; // max avatar size we have to request via any OAuth API
+        switch ( $socialName ) {
+            case 'facebook':
+                $segments = explode('?', $sourceUrl);
+                return implode('?', [reset($segments), "type=large&width={$s}&height={$s}"]);
+            case 'google':
+                $segments = explode('?', $sourceUrl);
+                return implode('?', [reset($segments), "sz={$s}"]);
+            default:
+                return $sourceUrl;
+        }
     }
 
     /**

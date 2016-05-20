@@ -140,9 +140,22 @@ class SpotController extends Controller
      */
     public function show($spot)
     {
-        return $spot
-            ->load(['photos', 'user', 'tags', 'comments'])
+		$res = $spot
+            ->load(['photos', 'user', 'tags', 'comments', 'remotePhotos'])
             ->append(['count_members', 'members', 'comments_photos']);
+		if (isset($res->remotePhotos)) {
+			foreach($res->remotePhotos as $p) {
+				if (isset($p->url)) {
+					$p->photo_url = [
+						'original'	=> $p->url,
+						'medium'	=> $p->url,
+						'thumb'		=> $p->url
+					];
+					$res->photos->push($p);
+				}
+			}
+		}
+		return $res;
     }
 
     /**

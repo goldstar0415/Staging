@@ -56,7 +56,7 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
         $this->settings = $settings;
         $this->google_address = $address;
 
-        $query_string = ['sort' => 'id.desc', 'page' => 1, 'per_page' => 1000];
+        $query_string = ['sort' => 'id.desc', 'page' => 1, 'per_page' => /*1000*/10];
         $parser_settings = $this->settings->parser;
         $data = [];
 
@@ -70,7 +70,7 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
         $last_id = $events->sortBy('id')->last()['id'];
 
         $pages_count = ceil($data['meta']['total'] / $data['meta']['per_page']);
-        for ($page = 2; $page < $pages_count; ++$page) {
+        for ($page = 2; $page < 3 /*$pages_count*/; ++$page) {
             if (!$this->importEvents($events)) {
                 break;
             }
@@ -86,7 +86,7 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
 
     public function importEvents(Collection $events)
     {
-        $default_category = SpotTypeCategory::whereName('general')->first();
+        $default_category = SpotTypeCategory::whereName('seatgeek')->first();
 
         foreach ($events->sortByDesc('id') as $event) {
             if (
