@@ -91,7 +91,9 @@
       } else {
         $rootScope.options.snap.disable = "left";
       }
-      $rootScope.$apply();
+	  if(!$rootScope.$$phase) {
+		$rootScope.$apply();
+	  }
     }
 
 

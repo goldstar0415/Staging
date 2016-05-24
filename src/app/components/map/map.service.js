@@ -57,6 +57,7 @@
           return container;
         },
         _click: function (e) {
+          ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
             $rootScope.$apply();
@@ -118,6 +119,7 @@
           return container;
         },
         _click: function (e) {
+          ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
             $rootScope.$apply();
@@ -155,7 +157,7 @@
             GetDataByBBox(bboxes);
             _activateControl(false);
           });
-
+		  
           _activateControl('.radius-selection');
         }
 
@@ -183,6 +185,7 @@
           return container;
         },
         _click: function (e) {
+          ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
             $rootScope.$apply();
@@ -626,6 +629,8 @@
         map.on('mouseup', end);
 
         function start(e) {
+			e.originalEvent.preventDefault();
+
           points = [];
           started = true;
           polyline = L.polyline([], {color: 'red'}).addTo(drawLayer);
@@ -633,7 +638,9 @@
           polyline.setLatLngs(points);
         }
 
-        function move(e) {
+		function move(e) {
+			e.originalEvent.preventDefault();
+
           if (started) {
             points.push(e.latlng);
             polyline.setLatLngs(points);
@@ -641,6 +648,8 @@
         }
 
         function end(e) {
+			e.originalEvent.preventDefault();
+
           if (started) {
             ClearSelectionListeners();
             map.dragging.enable();
@@ -656,7 +665,7 @@
       //Radius selection
       function RadiusSelection(callback) {
         ClearSelectionListeners();
-        map.dragging.disable();
+		map.dragging.disable();
         var started = false;
         var startPoint = null;
         var radius = 1000;
@@ -667,12 +676,16 @@
         map.on('mouseup', end);
 
         function start(e) {
-          started = true;
-          startPoint = L.latLng(e.latlng.lat, e.latlng.lng);
-          circle = L.circle(e.latlng, radius, {color: 'red', weight: 3}).addTo(drawLayer);
+			e.originalEvent.preventDefault();
+
+			started = true;
+			startPoint = L.latLng(e.latlng.lat, e.latlng.lng);
+			circle = L.circle(e.latlng, radius, {color: 'red', weight: 3}).addTo(drawLayer);
         }
 
         function move(e) {
+			e.originalEvent.preventDefault();
+
           if (started) {
             var endPoint = L.latLng(e.latlng.lat, e.latlng.lng);
             var distance = startPoint.distanceTo(endPoint);
@@ -684,6 +697,8 @@
         }
 
         function end(e) {
+			e.originalEvent.preventDefault();
+
           if (started) {
             ClearSelectionListeners();
             map.dragging.enable();
@@ -721,6 +736,8 @@
         }
 
         function onMapClick(e, idx, dontBuildPath) {
+			e.originalEvent.preventDefault();
+
           var marker = L.marker(e.latlng, {draggable: true}).addTo(markersLayer);
           if (!isNaN(idx)) {
             markers.splice(idx + 1, 0, marker);
@@ -744,6 +761,7 @@
           //
           //marker.bindPopup(popup);
           marker.on('dragend', function () {
+			  e.originalEvent.preventDefault();
             if (cancelPopup && pathSelectionStarted) {
               cancelPopup
                 .setLatLng(marker.getLatLng())

@@ -48,6 +48,14 @@
     vm.clearFilters = clearFilters;
     vm.isEmptyFilters = isEmptyFilters;
     vm.loadNextSpots = loadNextSpots;
+    vm.autocompleteSearch = autocompleteSearch;
+    vm.autocompleteSelectLocation = autocompleteSelectLocation;
+
+    vm.geocoder = new google.maps.Geocoder();
+    vm.filter = {
+      locations: [],
+      selectedLocation: null
+    };
 
     vm.searchParams = {
       locations: [],
@@ -68,20 +76,46 @@
     function run() {
       loadCategories();
       vm.searchParams.search_text = ($stateParams.searchText || '');
-      if (vm.searchParams.search_text.length > 0) {
+
+      if (_.isObject($stateParams.spotLocation) && $stateParams.spotLocation.lat !== undefined && $stateParams.spotLocation.lat) { // from 'intro'
         vm.vertical = false;
-        MapService.FocusMapToCurrentLocation();
-        toggleLayer();
-        search();
-      }
-      /**
-      if (_.isObject($stateParams.spotLocation)) {
-        MapService.FocusMapToGivenLocation($stateParams.spotLocation);
-        MapService.GetBoundsByCircle($stateParams.spotLocation, getCircleBounds);
+        toggleLayer('event');
+
+        MapService.FocusMapToGivenLocation($stateParams.spotLocation, 13);
+        MapService.GetBoundsByCircle($stateParams.spotLocation, getCircleBounds);  // search() included
+        MapService.FitBoundsOfCurrentLayer();
       } else {
-        MapService.FocusMapToCurrentLocation();
+        // just search
+        if (vm.searchParams.search_text.length > 0) {
+          vm.vertical = false;
+          MapService.FocusMapToCurrentLocation();
+          toggleLayer();
+          search();
+        }
       }
-      **/
+
+    }
+
+    function autocompleteSearch() {
+      var text = vm.searchParams.search_text || '';
+      if ( text.length > 0 ) {
+        vm.filter.locations = [];
+        vm.geocoder.geocode({address: text}, function (results) {
+          vm.filter.locations = results;
+          console.log('Geocoded address', results);
+        });
+      }
+    }
+
+    function autocompleteSelectLocation(location) {
+      console.log('Selected location', location);
+      vm.filter.selectedLocation = {
+        lat: location.geometry.location.lat(),
+        lng: location.geometry.location.lng(),
+        address: location.formatted_address
+      };
+      MapService.FocusMapToGivenLocation(vm.filter.selectedLocation, 13);
+      MapService.GetBoundsByCircle(vm.filter.selectedLocation, getCircleBounds);  // search() included
     }
 
     function getCircleBounds(bounds) {
