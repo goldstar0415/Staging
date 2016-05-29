@@ -17,7 +17,8 @@
       var drawLayerGeoJSON;
       var controlGroup = L.featureGroup();
       var clusterOptions = {
-        disableClusteringAtZoom: 8
+        //disableClusteringAtZoom: 8,
+		//chunkedLoading: true
       };
       //============================================
       var eventsLayer = new L.MarkerClusterGroup(clusterOptions);
@@ -1275,11 +1276,15 @@
 
           scope.item = spot;
           scope.marker = marker;
-          var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
-          var popup = L.popup(options).setContent(popupContent[0]);
-          marker.bindPopup(popup);
 
-          marker.on('click', function () {
+		  marker.on('click', function () {
+			if (this.getPopup()) {
+				this.unbindPopup();
+			}
+			var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
+			var popup = L.popup(options).setContent(popupContent[0]);
+			this.bindPopup(popup).openPopup();
+			  
             scope.item.$loading = true;
 
             var syncSpot;
