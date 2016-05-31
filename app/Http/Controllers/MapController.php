@@ -72,27 +72,22 @@ class MapController extends Controller
         }
 
         if ($request->has('type')) {
-			try {
-				// pick hardcoded type id
-				$spots->where('spots.spot_type_category_id', \App\SpotType::getTypeId($request->type));
-			} catch (Exception $ex) {
-				if (!$request->has('filter.category_ids')) {
-					$spots->join('spot_type_categories', 'spot_type_categories.id', '=', 'spots.spot_type_category_id');
-				}
-				$spots->join('spot_types', 'spot_type_categories.spot_type_id', '=', 'spot_types.id')
-					->where('spot_types.name', $request->type);
+			if (!$request->has('filter.category_ids')) {
+				$spots->join('spot_type_categories', 'spot_type_categories.id', '=', 'spots.spot_type_category_id');
 			}
+			$spots->join('spot_types', 'spot_type_categories.spot_type_id', '=', 'spot_types.id')
+				->where('spot_types.name', $request->type);
         }
 
-        if ($request->has('filter.start_date')) {
-            $spots->where(function ($query) use ($request) {
-                $query->where('start_date', '>=', $request->filter['start_date'])->orWhereNull('start_date');
-            });
-        } else {
-            $spots->where(function ($query) use ($request) {
-                $query->where('start_date', '>=', Carbon::now()->format('Y-m-d'))->orWhereNull('start_date');
-            });
-        }
+		if ($request->has('filter.start_date')) {
+			$spots->where(function ($query) use ($request) {
+				$query->where('start_date', '>=', $request->filter['start_date'])->orWhereNull('start_date');
+			});
+		} else {
+			$spots->where(function ($query) use ($request) {
+				$query->where('start_date', '>=', Carbon::now()->format('Y-m-d'))->orWhereNull('start_date');
+			});
+		}
 
         if ($request->has('filter.end_date')) {
             $spots->where(function ($query) use ($request) {

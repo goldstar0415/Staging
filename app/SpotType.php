@@ -32,7 +32,7 @@ class SpotType extends BaseModel
 			case 'shelter':
 				return 5;
 			default:
-				throw new Exception("Unknown spot type {$stringTypeName}");
+				throw new \Exception("Unknown spot type {$stringTypeName}");
 		}
 	}
 	
