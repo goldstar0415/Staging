@@ -22,7 +22,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\Inspire::class,
-        \App\Console\Commands\AppInstallCommand::class
+        \App\Console\Commands\AppInstallCommand::class,
+		\App\Console\Commands\RefreshSpotsView::class
     ];
 
     /**
@@ -62,5 +63,7 @@ class Kernel extends ConsoleKernel
             $this->dispatch(app(\App\Jobs\ParseEvents::class));
 //            $this->dispatch(app(\App\Jobs\CrawlerRun::class));
         })->weekly();
+		
+		$schedule->command('command:refreshspotsview')->withoutOverlapping()->cron('2 * * * *');
     }
 }

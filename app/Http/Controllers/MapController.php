@@ -9,6 +9,7 @@ use App\Http\Requests\WeatherRequest;
 use App\Spot;
 use App\SpotView;
 use App\SpotPoint;
+use App\SpotTypeCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Nwidart\ForecastPhp\Forecast;
@@ -60,23 +61,19 @@ class MapController extends Controller
         /**
          * @var $spots \Illuminate\Database\Query\Builder
          */
-        $spots = SpotView::select(
+		$spots = SpotView::select(
 			'mv_spots_spot_points.*',
 			DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 2)::float AS lat"),
 			DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 1)::float AS lng")
-		)->where('is_private', false);
-		/** @todo search text */
-        /*if ($request->has('search_text')) {
-            $spots->where(function ($query) use ($request) {
-                $query->where('spots.title', 'ilike', "%$request->search_text%")
-                    ->orWhereRaw('spots.id in (select spot_id from spot_points where address ilike ?)', ["%$request->search_text%"]);
-            });
+		)->where('is_private', false)->where('is_approved', true);
+		
+        if ($request->has('search_text')) {
+            $spots->where('title_address', 'ilike', "%$request->search_text%");
         }
-		/** @todo catgory ids */
-        /*if ($request->has('filter.category_ids')) {
-            $spots->join('spot_type_categories', 'spot_type_categories.id', '=', 'spots.spot_type_category_id')
-                ->whereIn('spot_type_categories.id', $request->filter['category_ids']);
-        }*/
+
+        if ($request->has('filter.category_ids')) {
+            $spots->whereIn('spot_type_category_id', $request->filter['category_ids']);
+        }
 
         if ($request->has('type')) {
 			$spots->whereRaw("spot_type_category_id in (
@@ -94,19 +91,17 @@ class MapController extends Controller
         if ($request->has('filter.end_date')) {
             $spots->where('end_date', '<=', $request->filter['end_date'] . ' 23:59:59');
         }
-		/** @todo tags */
-        /*if ($request->has('filter.tags')) {
+
+        if ($request->has('filter.tags')) {
             $spots->joinWhere('tags', 'tags.name', 'in', $request->filter['tags']);
             $spots->join('spot_tag', function ($join) {
-                $join->on('spot_tag.spot_id', '=', 'spots.id')->on('spot_tag.tag_id', '=', 'tags.id');
+                $join->on('spot_tag.spot_id', '=', 'mv_spots_spot_points.id')->on('spot_tag.tag_id', '=', 'tags.id');
             });
-        }*/
-		/** @todo rating */
-        /*if ($request->has('filter.rating')) {
-            $spots->addSelect('spot_votes.vote');
-            $spots->join('spot_votes', 'spot_votes.spot_id', '=', 'spots.id');
-            $spots->groupBy('spots.id', 'vote')->havingRaw('avg(vote) > ' . $request->filter['rating']);
-        }*/
+        }
+
+		if ($request->has('filter.rating')) {
+            $spots->whereRaw("mv_spots_spot_points.id in (select qRating.spot_id from (select spot_votes.spot_id, avg(spot_votes.vote) OVER (PARTITION BY spot_id) as ratingAvg from spot_votes) qRating where ratingAvg > ?)", [$request->filter['rating']]);
+        }
 
         if ($request->has('filter.b_boxes')) {
             if (!$request->has('search_text')) {
@@ -123,15 +118,16 @@ class MapController extends Controller
 				$spots->whereRaw(implode(' OR ', $search_areas));
 			}
         }
-		// Display all SQL executed in Eloquent
-
-		/** @todo icon_url */
-        $points = [];
-		//Log::debug($spots);
-		Log::debug($spots->skip(0)->take(1000)->toSql());
-		$iconUrlCache = [];
-		$tt = microtime(1);
+		// search spots
         $spotsArr = $spots->skip(0)->take(1000)->get();
+		// cache cetegory icon URLs
+		$cats = SpotTypeCategory::select("spot_type_categories.id")->get();
+		$iconsCache = [];
+		foreach($cats as $c) {
+			$iconsCache[$c->id] = $c->icon_url;
+		}
+		$points = [];
+		// fill spots
 		foreach($spotsArr as $spot) {
 			$points[] = [
 				'id'		=> $spot->spot_point_id,
@@ -140,24 +136,9 @@ class MapController extends Controller
 					'lat' => $spot->lat,
 					'lng' => $spot->lng
 				],
-				'category_icon_url' => "http://zoomtivity.wirnex.com/uploads/missings/icons/original/missing.png",
-				//'address'			=> $spot->address
+				'category_icon_url' => $iconsCache[$spot->spot_type_category_id]
 			];
 		}
-				//each(function ($spot) use (&$points, &$iconUrlCache) {
-			//Log::debug((array)$spot);
-            //$points = array_merge($points, $spot->points->map(function (SpotPoint $point) use ($spot, &$iconUrlCache) {
-				/*if (!array_key_exists($spot->spot_type_category_id, $iconUrlCache)) {
-					$iconUrlCache[$spot->spot_type_category_id] = $spot->category->icon_url;
-					Log::debug('cache miss '.$spot->spot_type_category_id);
-				}
-                $point->setAttribute('category_icon_url', $iconUrlCache[$spot->spot_type_category_id]);*/
-			//	unset($point->address);
-//                return $point;
-  //          })->all());
-        //});
-		Log::debug(microtime(1) - $tt);
-		Log::debug("");
 		return $points;
     }
 
