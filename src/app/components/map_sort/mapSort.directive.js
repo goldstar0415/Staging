@@ -77,11 +77,12 @@
      */
     function run() {
       loadCategories();
-      vm.searchParams.search_text = ($stateParams.searchText || '');
+      vm.searchParams.search_text	= ($stateParams.searchText || '');
+	  vm.searchParams.searchType	= _.isObject($stateParams.spotSearch) ? $stateParams.spotSearch.activeSpotType || 'event' : 'event';
 
       if (_.isObject($stateParams.spotLocation) && $stateParams.spotLocation.lat !== undefined && $stateParams.spotLocation.lat) { // from 'intro'
         vm.vertical = false;
-        toggleLayer('event'); // fixme
+        toggleLayer(vm.searchParams.searchType);
 
         MapService.FocusMapToGivenLocation($stateParams.spotLocation, 13);
         MapService.GetBoundsByCircle($stateParams.spotLocation, getCircleBounds);  // search() included
@@ -91,7 +92,7 @@
         if (vm.searchParams.search_text.length > 0) {
           vm.vertical = false;
           MapService.FocusMapToCurrentLocation();
-          toggleLayer();
+          toggleLayer(vm.searchParams.searchType);
           search();
         }
       }
@@ -103,6 +104,9 @@
      */
     function typeaheadSearch() {
       if ( !_.isEmpty(vm.searchParams.search_text) ) {
+		if (vm.searchParams.typeahead === undefined) {
+			vm.searchParams.typeahead = {};
+		}
         vm.searchParams.typeahead.list = [];
         geocoder.geocode({address: vm.searchParams.search_text}, function (results) {
           vm.searchParams.typeahead.list = results;
@@ -224,7 +228,7 @@
      * @param layer
      */
     function toggleLayer(layer) {
-      console.log('toggle layer');
+      console.log('toggle layer '+layer);
       $rootScope.sortLayer = layer;
 
       if (layer == 'weather') {
@@ -317,7 +321,6 @@
           if ( vm.searchParams.locations.length == 1 ) {
             l = vm.searchParams.locations[0].location;
           } else {
-            //ll = vm.searchParams.locations.map( function(a) { return a.location } );
             ll = vm.searchParams.locations;
           }
         }
@@ -325,34 +328,49 @@
       }
 
       // search
-
-      if ( l ) {
-        console.log('Search by ONE location', l);
-        // focus & draw a circle
-        MapService.FocusMapToGivenLocation(l, 13);
-        MapService.GetBoundsByCircle(l, function(){
-          doSearch();
-          MapService.FitBoundsOfCurrentLayer();
-        });
-      } else {
-
-        if ( !_.isEmpty(ll) ) {
-          console.log('Search by multiple locations', vm.searchParams.locations.length);
-          // draw a path
-          drawPathSelection(doSearch);
+      if ( !$rootScope.isDrawArea ) {
+        if (l) {
+          console.log('Search by ONE location', l);
+          MapService.clearSelections(true);
+          // focus & draw a circle
+          MapService.FocusMapToGivenLocation(l, 13);
+          MapService.GetBoundsByCircle(l, function () {
+            doSearch();
+            MapService.FitBoundsOfCurrentLayer();
+          });
         } else {
-          // search by filter
-          doSearch();
-        }
 
+          if (!_.isEmpty(ll)) {
+            console.log('Search by multiple locations', vm.searchParams.locations.length);
+            // draw a path
+            drawPathSelection(doSearch);
+          } else {
+            // search by filter
+            doSearch();
+          }
+
+        }
+      } else {
+        // don't draw new selections
+        console.log('Search spots for existing selection');
+        doSearch();
       }
 
     }
 
     /**
+     * Search spots when adding locations using the filter
+     */
+    function intermediateSearch() {
+      if ( !_.isEmpty(vm.searchParams.locations) && vm.searchParams.locations.length > 1 ) {
+        drawPathSelection(function(){ doSearch(true); }, true);
+      }
+    }
+
+    /**
      * API-request - apply a custom filter and update the map
      */
-    function doSearch() {
+    function doSearch(isIntermediateSearch) {
       console.log('do search');
       var data = {
         search_text: vm.searchParams.search_text,
@@ -398,6 +416,8 @@
       MapService.cancelHttpRequest();
       $rootScope.mapSortSpots.cancellerHttp = $q.defer();
 
+      isIntermediateSearch = isIntermediateSearch === true;
+
       $http.get(SEARCH_URL + '?' + jQuery.param(data), {timeout: $rootScope.mapSortSpots.cancellerHttp.promise})
         .success(function (spots) {
           if (spots.length > 0) {
@@ -406,7 +426,10 @@
             onUpdateMapData(null, [], null, bbox_array.length > 0, false);
           }
           vm.categoryToggle = false;
-          vm.isShowFilter = false;
+          vm.isShowFilter = isIntermediateSearch;
+          if ( isIntermediateSearch ) {
+            $rootScope.isDrawArea = false;
+          }
         }).catch(function (resp) {
           if (resp.status > 0) {
             toastr.error(resp.data ? resp.data.message : 'Something went wrong')
@@ -417,8 +440,9 @@
     /**
      * Draw points on the map as a path
      * @param callback
+     * @param isIntermediateSearch
      */
-    function drawPathSelection(callback) {
+    function drawPathSelection(callback, isIntermediateSearch) {
       console.log('Draw Path');
 
       console.log('old locations:', vm.searchParams.locations);
@@ -432,15 +456,30 @@
         points = _.union(points, _.pluck(vm.searchParams.locations, 'location'));
       }
 
+      if (_.isArray(points) && isIntermediateSearch ) {
+        var buf = [];
+        $.each(points, function(j, p){
+          // destroy links to objects
+          var cp = angular.copy(p);
+          cp.ignoreMarkerEvents = true;
+          buf.push(cp);
+        });
+        points = buf;
+      }
+
       console.log('new points');
       console.log(points);
 
-      //MapService.clearLayers();
-      MapService.clearSelections();
+      if (!isIntermediateSearch) {
+        MapService.clearSelections();
+      } else {
+        MapService.clearSelections(true);
+      }
+
       var next = function() {
         // display the entire path
         MapService.FitBoundsOfDrawLayer();
-        callback();
+        if (callback) callback();
       };
       MapService.PathSelection(points, next);
     }
@@ -485,7 +524,11 @@
           console.log('Updating a location');
           vm.searchParams.locations[ idxForUpdate ] = loc;
         } else {
-          vm.searchParams.locations.unshift(loc);
+          if (loc.location.isFirst === true) {
+            vm.searchParams.locations.push(loc);
+          } else {
+            vm.searchParams.locations.unshift(loc);
+          }
         }
 
         angular.element('#new_location input').attr('placeholder', 'Add next destination'); // fixme: fix location placeholder
@@ -497,6 +540,9 @@
       vm.searchParams.location = {};
 
       console.log('After location add, locations are: ', vm.searchParams.locations);
+
+      // search spots when adding locations one by one
+      intermediateSearch();
     }
 
     /**
@@ -504,12 +550,26 @@
      * @param idx
      */
     function removeLocation(idx) {
+      var removingTheFirst = vm.searchParams.locations[idx].location.isFirst === true;
       vm.searchParams.locations.splice(idx, 1);
       if (vm.searchParams.locations.length == 0) {
         angular.element('#new_location input').attr('placeholder', 'Add first destination');  // fixme: fix location placeholder
         // remove all the selections on the map
-        console.log(1234);
         MapService.clearSelections();
+      } else {
+        if ( vm.searchParams.locations.length == 1 ) {
+          if ( removingTheFirst ) {
+            // we've removed the first route point, set a regular point as the first one
+            vm.searchParams.location = angular.copy(vm.searchParams.locations[0].location);
+            vm.searchParams.search_text = vm.searchParams.locations[0].address;
+          }
+          // we have only one point, focus
+          MapService.clearSelections(true);
+          MapService.FocusMapToGivenLocation(vm.searchParams.locations[0].location, 13);
+        }
+        if (vm.searchParams.locations.length > 1) {
+          intermediateSearch();
+        }
       }
     }
 

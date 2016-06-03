@@ -180,23 +180,11 @@
 
 
     function doSearch(params) {
-
-      var promise = $http.get(SEARCH_URL + '?' + jQuery.param(params));
-
-      promise.success(function (spots) {
         $state.go('index', {
           searchText: params.search_text,
-          spotSearch: {spots: spots, activeSpotType: params.type},
+          spotSearch: {activeSpotType: params.type},
           spotLocation: (params.location || {lat: 0, lng: 0, address: ''})
         });
-      });
-
-      promise.catch(function (resp) {
-        console.log(resp);
-        toastr.error('Search error');
-      });
-
-      return promise;
     }
 
 

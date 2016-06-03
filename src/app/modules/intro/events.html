@@ -12,6 +12,7 @@
                               ng-model="Intro.searchParams.search_text"
                               ng-change="Intro.searchAddress()"
                               ng-model-options="{ debounce: 200 }"
+							  typeahead-wait-ms="100"
                               typeahead-on-select="Intro.selectLocation($item)"
                               typeahead="address.formatted_address for address in Intro.locations">
                         <span class="icon-nav"></span>

@@ -65,6 +65,7 @@
                  ng-model-options="{debounce: 200}"
                  typeahead="address.formatted_address for address in MapSort.searchParams.typeahead.list"
                  typeahead-on-select="MapSort.typeaheadSelectLocation($item)"
+				 typeahead-wait-ms="100"
                  ng-change="MapSort.typeaheadSearch()">
           <span class="icon-nav"></span>
         </div>
