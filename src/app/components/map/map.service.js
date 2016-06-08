@@ -663,7 +663,7 @@
         }
       }
 
-      //Radius selection
+      // Radius selection
       function RadiusSelection(callback) {
         ClearSelectionListeners();
 		map.dragging.disable();
@@ -677,6 +677,9 @@
         map.on('mouseup', end);
 
         function start(e) {
+            if ( started ) {
+              return;
+            }
 			e.originalEvent.preventDefault();
 
 			started = true;
