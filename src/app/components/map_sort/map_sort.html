@@ -63,9 +63,9 @@
                  placeholder="LOCATION OR SPOT NAME"
                  ng-model="MapSort.searchParams.search_text"
                  ng-model-options="{debounce: 200}"
-                 typeahead="address.formatted_address for address in MapSort.filter.locations"
-                 typeahead-on-select="MapSort.autocompleteSelectLocation($item)"
-                 ng-change="MapSort.autocompleteSearch()">
+                 typeahead="address.formatted_address for address in MapSort.searchParams.typeahead.list"
+                 typeahead-on-select="MapSort.typeaheadSelectLocation($item)"
+                 ng-change="MapSort.typeaheadSearch()">
           <span class="icon-nav"></span>
         </div>
         <div class="filters-button" id="filters-button-open" ng-click="MapSort.isShowFilter = !MapSort.isShowFilter"></div>

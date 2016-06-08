@@ -10,7 +10,7 @@
       var map = null;
       var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
-      var radiusSelectionLimit = 500000; //in meters
+      var radiusSelectionLimit = 500000; // in meters
       var markersLayer = L.featureGroup();
       var drawLayer = L.featureGroup();
       var draggableMarkerLayer = L.featureGroup();
@@ -732,7 +732,7 @@
         if (wpArray) {
           showCancelPopup = false;
           for (var k in wpArray) {
-            onMapClick({latlng: wpArray[k]}, null, true);
+            onMapClick({latlng: wpArray[k]}, null, true); // fixme!
           }
           RecalculateRoute();
         } else {
@@ -740,8 +740,11 @@
         }
 
         function onMapClick(e, idx, dontBuildPath) {
-			e.originalEvent.preventDefault();
-
+          try {
+            e.originalEvent.preventDefault(); // fixme (what's the original event? ^^)
+          } catch (ex) {
+            console.log('onMapClick Wrong event', e);
+          }
           var marker = L.marker(e.latlng, {draggable: true}).addTo(markersLayer);
           if (!isNaN(idx)) {
             markers.splice(idx + 1, 0, marker);
@@ -820,6 +823,7 @@
               }
               if (err) {
                 console.warn(err);
+                $rootScope.$broadcast('impossible-route');
               } else {
                 line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
                 line.on('linetouched', function (e) {
@@ -1167,6 +1171,7 @@
 
         GetDrawLayerBBoxes();
         GetDataByBBox([]);
+        $rootScope.$broadcast('clear-map-selection');
       }
 
       //Controls

@@ -30,6 +30,7 @@
       locations: 20
     };
     var isSelectedAll = false;
+    var geocoder = new google.maps.Geocoder();
 
     vm.vertical = true;
     vm.weatherForecast = [];
@@ -48,16 +49,13 @@
     vm.clearFilters = clearFilters;
     vm.isEmptyFilters = isEmptyFilters;
     vm.loadNextSpots = loadNextSpots;
-    vm.autocompleteSearch = autocompleteSearch;
-    vm.autocompleteSelectLocation = autocompleteSelectLocation;
-
-    vm.geocoder = new google.maps.Geocoder();
-    vm.filter = {
-      locations: [],
-      selectedLocation: null
-    };
+    vm.typeaheadSearch = typeaheadSearch;
+    vm.typeaheadSelectLocation = typeaheadSelectLocation;
 
     vm.searchParams = {
+      typeahead: {
+        list: []
+      },
       locations: [],
       tags: []
     };
@@ -69,17 +67,21 @@
     $rootScope.toggleLayer = toggleLayer;
 
     $rootScope.$on('update-map-data', onUpdateMapData);
+    $rootScope.$on('clear-map-selection', onRemoveSelection);
+    $rootScope.$on('impossible-route', onImpossibleRoute);
 
     run();
 
-
+    /**
+     * Initialization
+     */
     function run() {
       loadCategories();
       vm.searchParams.search_text = ($stateParams.searchText || '');
 
       if (_.isObject($stateParams.spotLocation) && $stateParams.spotLocation.lat !== undefined && $stateParams.spotLocation.lat) { // from 'intro'
         vm.vertical = false;
-        toggleLayer('event');
+        toggleLayer('event'); // fixme
 
         MapService.FocusMapToGivenLocation($stateParams.spotLocation, 13);
         MapService.GetBoundsByCircle($stateParams.spotLocation, getCircleBounds);  // search() included
@@ -96,26 +98,30 @@
 
     }
 
-    function autocompleteSearch() {
-      var text = vm.searchParams.search_text || '';
-      if ( text.length > 0 ) {
-        vm.filter.locations = [];
-        vm.geocoder.geocode({address: text}, function (results) {
-          vm.filter.locations = results;
+    /**
+     * Search locations when typing - ok
+     */
+    function typeaheadSearch() {
+      if ( !_.isEmpty(vm.searchParams.search_text) ) {
+        vm.searchParams.typeahead.list = [];
+        geocoder.geocode({address: vm.searchParams.search_text}, function (results) {
+          vm.searchParams.typeahead.list = results;
           console.log('Geocoded address', results);
         });
       }
     }
 
-    function autocompleteSelectLocation(location) {
+    /**
+     * Select a location from typeahead list
+     * @param location
+     */
+    function typeaheadSelectLocation(location) {
       console.log('Selected location', location);
-      vm.filter.selectedLocation = {
-        lat: location.geometry.location.lat(),
-        lng: location.geometry.location.lng(),
-        address: location.formatted_address
-      };
-      MapService.FocusMapToGivenLocation(vm.filter.selectedLocation, 13);
-      MapService.GetBoundsByCircle(vm.filter.selectedLocation, getCircleBounds);  // search() included
+      var point = { lat: location.geometry.location.lat(), lng: location.geometry.location.lng(), isFirst: true };
+      vm.searchParams.address = location.formatted_address;
+      vm.searchParams.location = point;
+
+      addLocation();
     }
 
     function getCircleBounds(bounds) {
@@ -123,8 +129,19 @@
       search();
     }
 
-    function onUpdateMapData(event, mapSpots, layer, isDrawArea) {
+    /**
+     * Render map data
+     * @param event
+     * @param mapSpots
+     * @param layer
+     * @param isDrawArea
+     * @param {Boolean} ignoreEmptyList
+     */
+    function onUpdateMapData(event, mapSpots, layer, isDrawArea, ignoreEmptyList) {
       console.log('update map');
+
+      ignoreEmptyList = ignoreEmptyList === undefined || ignoreEmptyList === true;
+
       layer = layer || $rootScope.sortLayer;
       $rootScope.sortLayer = layer;
       if (angular.isDefined(isDrawArea)) {
@@ -154,7 +171,9 @@
             MapService.FitBoundsByLayer($rootScope.sortLayer);
           }
         } else {
-          toastr.info('0 spots found');
+          if ( !ignoreEmptyList ) {
+            toastr.info('0 spots found');
+          }
           MapService.clearLayers();
         }
       });
@@ -169,6 +188,9 @@
       });
     }
 
+    /**
+     * Infinite scroll - ok
+     */
     function loadNextSpots() {
       console.log('loadNextSpots');
       if ($rootScope.mapSortSpots.sourceSpots && $rootScope.mapSortSpots.sourceSpots.length > 0) {
@@ -197,6 +219,10 @@
       }
     }
 
+    /**
+     * Switch a layer and apply UI changes
+     * @param layer
+     */
     function toggleLayer(layer) {
       console.log('toggle layer');
       $rootScope.sortLayer = layer;
@@ -245,6 +271,9 @@
       }
     }
 
+    /**
+     * API-request or get from $rootScope
+     */
     function loadCategories() {
       console.log('Load Categories');
       if (!$rootScope.spotCategories) {
@@ -267,15 +296,62 @@
     }
 
 
+    /**
+     * Search - use existing points or do search
+     */
     function search() {
       console.log('searching');
-      if (vm.searchParams.location || vm.searchParams.locations.length > 0) {
-        drawPathSelection(doSearch);
+      console.log('Search params: ', vm.searchParams);
+
+      var l = null, ll = [];
+
+      // get entered location(s)
+
+      if ( !_.isEmpty(vm.searchParams.location) ) {
+
+        l = vm.searchParams.location;
+
       } else {
-        doSearch();
+
+        if ( !_.isEmpty(vm.searchParams.locations) ) {
+          if ( vm.searchParams.locations.length == 1 ) {
+            l = vm.searchParams.locations[0].location;
+          } else {
+            //ll = vm.searchParams.locations.map( function(a) { return a.location } );
+            ll = vm.searchParams.locations;
+          }
+        }
+
       }
+
+      // search
+
+      if ( l ) {
+        console.log('Search by ONE location', l);
+        // focus & draw a circle
+        MapService.FocusMapToGivenLocation(l, 13);
+        MapService.GetBoundsByCircle(l, function(){
+          doSearch();
+          MapService.FitBoundsOfCurrentLayer();
+        });
+      } else {
+
+        if ( !_.isEmpty(ll) ) {
+          console.log('Search by multiple locations', vm.searchParams.locations.length);
+          // draw a path
+          drawPathSelection(doSearch);
+        } else {
+          // search by filter
+          doSearch();
+        }
+
+      }
+
     }
 
+    /**
+     * API-request - apply a custom filter and update the map
+     */
     function doSearch() {
       console.log('do search');
       var data = {
@@ -325,9 +401,9 @@
       $http.get(SEARCH_URL + '?' + jQuery.param(data), {timeout: $rootScope.mapSortSpots.cancellerHttp.promise})
         .success(function (spots) {
           if (spots.length > 0) {
-            onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0);
+            onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0, false);
           } else {
-            onUpdateMapData(null, [], null, bbox_array.length > 0);
+            onUpdateMapData(null, [], null, bbox_array.length > 0, false);
           }
           vm.categoryToggle = false;
           vm.isShowFilter = false;
@@ -338,43 +414,116 @@
         });
     }
 
+    /**
+     * Draw points on the map as a path
+     * @param callback
+     */
     function drawPathSelection(callback) {
       console.log('Draw Path');
+
+      console.log('old locations:', vm.searchParams.locations);
+
       var points = [];
-      if (vm.searchParams.location && vm.searchParams.location) {
+      if (_.isObject(vm.searchParams.location) && !_.isEmpty(vm.searchParams.location)) {
         points.push(vm.searchParams.location);
       }
       if (vm.searchParams.locations.length > 0) {
+        toastr.success('Routing...');
         points = _.union(points, _.pluck(vm.searchParams.locations, 'location'));
       }
 
-      MapService.clearLayers();
-      MapService.PathSelection(points, callback);
+      console.log('new points');
+      console.log(points);
+
+      //MapService.clearLayers();
+      MapService.clearSelections();
+      var next = function() {
+        // display the entire path
+        MapService.FitBoundsOfDrawLayer();
+        callback();
+      };
+      MapService.PathSelection(points, next);
     }
 
+    /**
+     * Filter: add a location
+     */
     function addLocation() {
       console.log('adding location');
-      if (vm.searchParams.address && vm.searchParams.location) {
-        vm.searchParams.locations.unshift({
+
+      if ( !_.isEmpty(vm.searchParams.address) && !_.isEmpty(vm.searchParams.location) ) {
+        var loc = {
           address: vm.searchParams.address,
           location: vm.searchParams.location
-        });
-        vm.searchParams.address = '';
-        vm.searchParams.location = {};
+        };
+        console.log(loc);
 
-        angular.element('#new_location input').attr('placeholder', 'Add next destination'); //fix location placeholder
+        var idxForUpdate = -1;
+        var idxDuplicate = -1;
+
+        angular.forEach(vm.searchParams.locations, function (l, idx) {
+
+          if (loc.location.isFirst === true && l.location.isFirst === true) {
+            idxForUpdate = idx;
+          }
+
+          if ( loc.location.isFirst !== true && Math.round( loc.location.lat*10e7 ) == Math.round( l.location.lat*10e7 ) && Math.round( loc.location.lng*10e7 ) ==  Math.round( l.location.lng*10e7 ) ) {
+            idxDuplicate = idx;
+          }
+        });
+
+        if ( idxDuplicate != -1 ) {
+          toastr.warning('The point yoy have entered duplicates the point: "' + vm.searchParams.locations[idxDuplicate].address + '"');
+          console.log(vm.searchParams.locations, loc);
+          return;
+        }
+
+        console.log('idxForUpdate: ', idxForUpdate);
+
+        // update the first location instead of adding
+        if ( idxForUpdate != -1 ) {
+          console.log('Updating a location');
+          vm.searchParams.locations[ idxForUpdate ] = loc;
+        } else {
+          vm.searchParams.locations.unshift(loc);
+        }
+
+        angular.element('#new_location input').attr('placeholder', 'Add next destination'); // fixme: fix location placeholder
       } else {
         toastr.error('Wrong location');
-        vm.searchParams.address = '';
-        vm.searchParams.location = {};
       }
+
+      vm.searchParams.address = '';
+      vm.searchParams.location = {};
+
+      console.log('After location add, locations are: ', vm.searchParams.locations);
     }
 
+    /**
+     * Filter: remove the location
+     * @param idx
+     */
     function removeLocation(idx) {
       vm.searchParams.locations.splice(idx, 1);
       if (vm.searchParams.locations.length == 0) {
-        angular.element('#new_location input').attr('placeholder', 'Add first destination');  //fix location placeholder
+        angular.element('#new_location input').attr('placeholder', 'Add first destination');  // fixme: fix location placeholder
+        // remove all the selections on the map
+        console.log(1234);
+        MapService.clearSelections();
       }
+    }
+
+    function onRemoveSelection() {
+      console.log('onRemoveSelection');
+      vm.searchParams.search_text = '';
+      vm.searchParams.location = {};
+      vm.searchParams.address = '';
+      vm.searchParams.locations = [];
+    }
+
+    function onImpossibleRoute() {
+      toastr.warning("Couldn't build a route between points you have selected.");
+      MapService.clearSelections();
     }
 
     function clearFilters() {
@@ -396,6 +545,10 @@
       }
     }
 
+    /**
+     * Remove a filter
+     * @param type
+     */
     function removeFilter(type) {
       switch (type) {
         case 'date':
