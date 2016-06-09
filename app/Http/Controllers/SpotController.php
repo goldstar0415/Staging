@@ -105,7 +105,7 @@ class SpotController extends Controller
         }
         if ($request->is_facebook_import) {
             $spot->is_private = false;
-            $spot->category()->associate(SpotTypeCategory::whereName('general')->first());
+            $spot->category()->associate(SpotTypeCategory::whereName('FaceBook')->first());
         }
         if ($request->has('description')) {
             $spot->description = e($request->description);
