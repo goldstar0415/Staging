@@ -10,7 +10,7 @@
       var map = null;
       var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
       var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
-      var radiusSelectionLimit = 500000; //in meters
+      var radiusSelectionLimit = 500000; // in meters
       var markersLayer = L.featureGroup();
       var drawLayer = L.featureGroup();
       var draggableMarkerLayer = L.featureGroup();
@@ -509,7 +509,8 @@
         })
       }
 
-      function showLayer(layer) {
+      function showLayer(layer, keepListeners) {
+        keepListeners = keepListeners === true;
         switch (layer) {
           case 'event':
             showEventsLayer();
@@ -518,7 +519,7 @@
             showTodoLayer();
             break;
           case 'food':
-            showFoodLayer();
+            showFoodLayer(false, keepListeners);
             break;
           case 'shelter':
             showShelterLayer();
@@ -544,8 +545,10 @@
       }
 
       //show food layer on map
-      function showFoodLayer(clearLayers) {
-        ClearSelectionListeners();
+      function showFoodLayer(clearLayers, keepListeners) {
+        if (keepListeners !== true) {
+          ClearSelectionListeners();
+        }
         if (clearLayers) {
           foodLayer.clearLayers();
         }
@@ -732,7 +735,10 @@
         if (wpArray) {
           showCancelPopup = false;
           for (var k in wpArray) {
-            onMapClick({latlng: wpArray[k]}, null, true);
+            onMapClick({
+              latlng: wpArray[k],
+              originalEvent: new Event('click') // emulate a 'click' event
+            }, null, true);
           }
           RecalculateRoute();
         } else {
@@ -740,9 +746,11 @@
         }
 
         function onMapClick(e, idx, dontBuildPath) {
-			e.originalEvent.preventDefault();
-
-          var marker = L.marker(e.latlng, {draggable: true}).addTo(markersLayer);
+          // ignore empty originalEvent
+          if (e && e.originalEvent !== undefined) {
+            e.originalEvent.preventDefault();
+          }
+          var marker = L.marker(e.latlng, {draggable: !e.latlng.ignoreMarkerEvents}).addTo(markersLayer);
           if (!isNaN(idx)) {
             markers.splice(idx + 1, 0, marker);
           } else {
@@ -764,20 +772,26 @@
           //  });
           //
           //marker.bindPopup(popup);
-          marker.on('dragend', function () {
-			  e.originalEvent.preventDefault();
-            if (cancelPopup && pathSelectionStarted) {
-              cancelPopup
-                .setLatLng(marker.getLatLng())
-                .openOn(map);
-            }
 
-            angular.element('.cancel-selection').on('click', function () {
-              ClearSelectionListeners();
-              map.closePopup();
+          if ( !e.latlng.ignoreMarkerEvents  ) {
+            marker.on('dragend', function () {
+              // ignore empty originalEvent
+              if (e && e.originalEvent !== undefined) {
+                e.originalEvent.preventDefault();
+              }
+              if (cancelPopup && pathSelectionStarted) {
+                cancelPopup
+                    .setLatLng(marker.getLatLng())
+                    .openOn(map);
+              }
+
+              angular.element('.cancel-selection').on('click', function () {
+                ClearSelectionListeners();
+                map.closePopup();
+              });
+              RecalculateRoute();
             });
-            RecalculateRoute();
-          });
+          }
 
           if (!dontBuildPath) {
             if (markers.length > 1 && showCancelPopup) {
@@ -820,6 +834,7 @@
               }
               if (err) {
                 console.warn(err);
+                $rootScope.$broadcast('impossible-route');
               } else {
                 line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
                 line.on('linetouched', function (e) {
@@ -849,7 +864,8 @@
                 });
 
                 if (callback) {
-                  callback();
+                  // a small timeout in order to wait for a route been recalculated & rendered
+                  $timeout(callback, 1000);
                 }
               }
             }, {geometryOnly: true});
@@ -1150,7 +1166,7 @@
         GetDataByBBox(bboxes, true);
       }
 
-      function ClearSelections() {
+      function ClearSelections(mapOnly) {
         markersLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
@@ -1167,6 +1183,9 @@
 
         GetDrawLayerBBoxes();
         GetDataByBBox([]);
+        if (!mapOnly) {
+          $rootScope.$broadcast('clear-map-selection');
+        }
       }
 
       //Controls
@@ -1471,6 +1490,9 @@
       }
 
       function FocusMapToGivenLocation(location, zoom) {
+
+        //console.log('old center: ', location);
+
         if (location.lat && location.lng) {
           map.panTo(new L.LatLng(location.lat, location.lng));
 
@@ -1478,6 +1500,50 @@
             map.setZoom(zoom);
           }
         }
+      }
+
+      /**
+       * fixme!
+       * @param padding
+       * @constructor
+	     */
+      function PanToVisibleCenter(padding) {
+        if ( !_.isObject(padding) ) return;
+        var c = map.getCenter();
+        var sz = map.getSize();
+        var bs = map.getBounds();
+
+        console.log('Size', sz);
+        console.log('Bounds', bs, 'x1', bs.getWest(), 'x2', bs.getEast());
+
+        var oldX = sz.x / 2;
+        var oldY = sz.y / 2
+
+        console.log('oldX: ', oldX, 'oldY', oldY);
+
+        var newX = (sz.x - (padding.right || 0) + (padding.left || 0)) / 2;
+        var newY = (sz.y - (padding.bottom || 0) + (padding.top || 0)) / 2;
+
+        console.log('newX', newX, 'newY', newY); // новые координаты центра в px
+
+        console.log('lng diff: ', bs.getEast() - bs.getWest());
+
+        var dgrPerPixel = Math.abs(bs.getEast() - bs.getWest()) / sz.x;
+
+        var newLat = c.lat*1 + ( oldY - newY ) * dgrPerPixel;
+        var newLng = c.lng*1 + ( oldX - newX ) * dgrPerPixel;
+
+        console.log('dgrPerPixel', dgrPerPixel);
+
+        if ( newLat > 180 ) newLat -= 180;
+        if ( newLat < -180 ) newLat += 180;
+        if ( newLng > 180 ) newLng -= 180;
+        if ( newLng < -180 ) newLng += 180;
+
+        console.log('newLat', newLat, 'newLng', newLng);
+
+        var newCenter = new L.LatLng(newLat , newLng);
+        map.panTo( newCenter );
       }
 
       function FitBoundsByLayer(layer) {

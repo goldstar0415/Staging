@@ -19,6 +19,7 @@
        * Connect to socket
        */
       function connect(socket_id) {
+
         socket = io.connect(SOCKET_URL);
 
         //socket.on('connect', function () {

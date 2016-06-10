@@ -38,7 +38,8 @@
         params: {
           spotSearch: null,
           spotLocation: null,
-          searchText: ''
+          searchText: '',
+		  filter: {}
         }
       })
       .state('index.post', {

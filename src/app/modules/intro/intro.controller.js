@@ -77,6 +77,7 @@
         var data = {
           type: 'food',
           search_text: vm.searchParams.search_text,
+          location: vm.location || {},
           filter: {
             rating: vm.searchParams.rating
           }
@@ -180,32 +181,23 @@
 
 
     function doSearch(params) {
-
-      var promise = $http.get(SEARCH_URL + '?' + jQuery.param(params));
-
-      promise.success(function (spots) {
         $state.go('index', {
           searchText: params.search_text,
-          spotSearch: {spots: spots, activeSpotType: params.type},
-          spotLocation: (params.location || {lat: 0, lng: 0, address: ''})
+          spotSearch: {activeSpotType: params.type},
+          spotLocation: (params.location || {lat: 0, lng: 0, address: ''}),
+		  filter: params.filter || {}
         });
-      });
-
-      promise.catch(function (resp) {
-        console.log(resp);
-        toastr.error('Search error');
-      });
-
-      return promise;
     }
 
 
-    function routeSearch() {
-      $state.go('index', {spotSearch: {pathSelection: true, activeSpotType: 'event'}});
+    function routeSearch(spotType) {
+      spotType = spotType === undefined ? 'event' : spotType;
+      $state.go('index', {spotSearch: {pathSelection: true, activeSpotType: spotType}});
     }
 
-    function radiusSearch() {
-      $state.go('index', {spotSearch: {radiusSelection: true, activeSpotType: 'event'}});
+    function radiusSearch(spotType) {
+      spotType = spotType === undefined ? 'event' : spotType;
+      $state.go('index', {spotSearch: {radiusSelection: true, activeSpotType: spotType}});
     }
 
     function goSignIn() {
