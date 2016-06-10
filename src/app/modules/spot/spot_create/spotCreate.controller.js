@@ -147,7 +147,10 @@
             vm.youtube_links.push(vm.newYoutubeLink);
           }
           request.videos = vm.youtube_links;
-        }
+        } else {
+			// no videos in the Spot (could be deleted)
+			request.videos = [];
+		}
         if (locations.length > 0) {
           request.locations = locations;
         }
