@@ -77,6 +77,7 @@
         var data = {
           type: 'food',
           search_text: vm.searchParams.search_text,
+          location: vm.location || {},
           filter: {
             rating: vm.searchParams.rating
           }
@@ -183,17 +184,20 @@
         $state.go('index', {
           searchText: params.search_text,
           spotSearch: {activeSpotType: params.type},
-          spotLocation: (params.location || {lat: 0, lng: 0, address: ''})
+          spotLocation: (params.location || {lat: 0, lng: 0, address: ''}),
+		  filter: params.filter || {}
         });
     }
 
 
-    function routeSearch() {
-      $state.go('index', {spotSearch: {pathSelection: true, activeSpotType: 'event'}});
+    function routeSearch(spotType) {
+      spotType = spotType === undefined ? 'event' : spotType;
+      $state.go('index', {spotSearch: {pathSelection: true, activeSpotType: spotType}});
     }
 
-    function radiusSearch() {
-      $state.go('index', {spotSearch: {radiusSelection: true, activeSpotType: 'event'}});
+    function radiusSearch(spotType) {
+      spotType = spotType === undefined ? 'event' : spotType;
+      $state.go('index', {spotSearch: {radiusSelection: true, activeSpotType: spotType}});
     }
 
     function goSignIn() {

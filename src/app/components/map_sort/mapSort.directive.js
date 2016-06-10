@@ -79,7 +79,8 @@
       loadCategories();
       vm.searchParams.search_text	= ($stateParams.searchText || '');
 	  vm.searchParams.searchType	= _.isObject($stateParams.spotSearch) ? $stateParams.spotSearch.activeSpotType || 'event' : 'event';
-
+	  vm.searchParams.rating		= _.isObject($stateParams.filter) ? $stateParams.filter.rating || null : null;
+	  
       if (_.isObject($stateParams.spotLocation) && $stateParams.spotLocation.lat !== undefined && $stateParams.spotLocation.lat) { // from 'intro'
         vm.vertical = false;
         toggleLayer(vm.searchParams.searchType);
@@ -94,6 +95,12 @@
           MapService.FocusMapToCurrentLocation();
           toggleLayer(vm.searchParams.searchType);
           search();
+        } else {
+          // activate a search tool and desired layer (from intro)
+          if ( vm.searchParams.searchType ) {
+            // toggle a layer, but don't start a search
+            toggleLayer(vm.searchParams.searchType, false);
+          }
         }
       }
 
@@ -226,8 +233,9 @@
     /**
      * Switch a layer and apply UI changes
      * @param layer
+     * @param startSearch
      */
-    function toggleLayer(layer) {
+    function toggleLayer(layer, startSearch) {
       console.log('toggle layer '+layer);
       $rootScope.sortLayer = layer;
 
@@ -245,9 +253,13 @@
           vm.searchParams.start_date = vm.searchParams.end_date = '';
         }
 
-        search();
-        MapService.showLayer(layer);
-
+        if (startSearch !== false) {
+          search();
+          MapService.showLayer(layer);
+        } else {
+          // show a layer, but keep existing event listeners, for ex. if path selection has started
+          MapService.showLayer(layer, true);
+        }
         var wp = MapService.GetPathWaypoints();
         var geoJson = MapService.GetGeoJSON();
 
@@ -304,8 +316,7 @@
      * Search - use existing points or do search
      */
     function search() {
-      console.log('searching');
-      console.log('Search params: ', vm.searchParams);
+      console.log('search() vm.searchParams: ', vm.searchParams);
 
       var l = null, ll = [];
 
@@ -341,7 +352,6 @@
         } else {
 
           if (!_.isEmpty(ll)) {
-            console.log('Search by multiple locations', vm.searchParams.locations.length);
             // draw a path
             drawPathSelection(doSearch);
           } else {
@@ -352,10 +362,8 @@
         }
       } else {
         // don't draw new selections
-        console.log('Search spots for existing selection');
         doSearch();
       }
-
     }
 
     /**

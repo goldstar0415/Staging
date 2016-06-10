@@ -509,7 +509,8 @@
         })
       }
 
-      function showLayer(layer) {
+      function showLayer(layer, keepListeners) {
+        keepListeners = keepListeners === true;
         switch (layer) {
           case 'event':
             showEventsLayer();
@@ -518,7 +519,7 @@
             showTodoLayer();
             break;
           case 'food':
-            showFoodLayer();
+            showFoodLayer(false, keepListeners);
             break;
           case 'shelter':
             showShelterLayer();
@@ -544,8 +545,10 @@
       }
 
       //show food layer on map
-      function showFoodLayer(clearLayers) {
-        ClearSelectionListeners();
+      function showFoodLayer(clearLayers, keepListeners) {
+        if (keepListeners !== true) {
+          ClearSelectionListeners();
+        }
         if (clearLayers) {
           foodLayer.clearLayers();
         }
