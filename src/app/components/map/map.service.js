@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, Area, SignUpService, Spot, SpotComment, SpotService) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, Area, SignUpService, Spot, SpotComment, SpotService, ip_api) {
 
       console.log('MapService');
 
@@ -1463,30 +1463,11 @@
         if ($state.current.name != 'index') return;
         zoom = zoom || 8;
 
-        map
-          .locate({setView: true})
-          .on('locationfound', function (e) {
-            var location = {lat: e.latitude, lng: e.longitude};
-            $rootScope.currentLocation = location;
-            FocusMapToGivenLocation(location, zoom)
-          })
-          .on('locationerror', function () {
-            //detect country by ip
-            var latLng = localStorage.getItem('country_location');
-            if (latLng) {
-              focusonLocation(latLng);
-            } else {
-              $.get("http://ipinfo.io", function (response) {
-                localStorage.setItem('country_location', response.loc);
-                focusonLocation(response.loc);
-              }, "jsonp");
-            }
+		ip_api.locateUser().then(function(c) {
+            $rootScope.currentLocation = c.location;
+            FocusMapToGivenLocation(c.location, zoom)
+		});
 
-            function focusonLocation(latlng) {
-              var location = latlng.split(',');
-              FocusMapToGivenLocation({lat: location[0], lng: location[1]}, 6);
-            }
-          });
       }
 
       function FocusMapToGivenLocation(location, zoom) {
