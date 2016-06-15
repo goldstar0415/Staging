@@ -24,10 +24,10 @@ class SpotCategoryRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|alpha_dash|max:64|unique:spot_type_categories',
+            'name' => "required|alpha_dash|max:64|unique:spot_type_categories,name" . (preg_match('/\/(\d+)$/', $this->url(), $matches) ? ",{$matches[1]}" : ''),
             'display_name' => 'required|max:64',
             'spot_type_id' => 'required|integer|exists:spot_types,id',
-            'icon' => 'image'
+            'icon'         => 'image'
         ];
     }
 }
