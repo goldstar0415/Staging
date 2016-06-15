@@ -9,7 +9,7 @@
             <img src="{{ $user->avatar_url['medium'] }}">
         </div>
         <div class="col-sm-10">
-            <h3>{{ $user->first_name . ' ' . $user->last_name }}</h3>
+            <h3><a target="_blank" href="{{ config('app.frontend_url').'/'.$user->alias }}">{{ $user->first_name . ' ' . $user->last_name }}</a></h3>
 
             <p><span>E-mail: </span>{!! link_to('mailto:' . $user->email, $user->email) !!}</p>
 
