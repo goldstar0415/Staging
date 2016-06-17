@@ -141,3 +141,5 @@ Route::group(['prefix' => 'import/logs', 'middleware' => 'admin'], function () {
 Route::post('contact-us', 'UserController@contactUs');
 
 get('google-contacts', 'SocialContactsController@google');
+
+Route::get('prerender/{page_url}', 'PrerenderController@render')->where('page_url', '(.*)');
