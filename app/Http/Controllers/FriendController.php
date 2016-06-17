@@ -25,7 +25,7 @@ class FriendController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('base64upload:avatar', ['only' => 'setAvatar']);
+        $this->middleware('base64upload:avatar', ['only' => ['setAvatar', 'store', 'update']]);
     }
 
     /**
@@ -45,9 +45,13 @@ class FriendController extends Controller
      */
     public function store(StoreFriendRequest $request)
     {
-        $inputs = $request->all();
-
+        $inputs = $request->except(['avatar', 'files']);
         $friend = new Friend($inputs);
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $friend->avatar = $avatar;
+        }
 
         $request->user()->friends()->save($friend);
 
@@ -73,7 +77,12 @@ class FriendController extends Controller
      */
     public function update(UpdateFriendRequest $request, $friend)
     {
-        $inputs = $request->all();
+        $inputs = $request->except(['avatar', 'files', 'avatar_url', 'default_location']);
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $friend->avatar = $avatar;
+        }
 
         $friend->update($inputs);
 
