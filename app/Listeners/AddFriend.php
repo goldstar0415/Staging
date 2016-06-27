@@ -4,7 +4,8 @@ namespace App\Listeners;
 
 use App\Events\UserFollowEvent;
 use App\Friend;
-use File;
+use Storage;
+use Log;
 
 /**
  * Class AddFriend
@@ -30,10 +31,36 @@ class AddFriend
             'address' => $friend->address,
             'location' => $friend->location
         ]);
-        if ($friend->avatar_file_name !== null) {
-            $avatar_copy_path = storage_path('tmp/') . $friend->avatar_file_name;
-            File::copy($friend->avatar->path(), $avatar_copy_path);
-            $friend_model->avatar = $avatar_copy_path;
+
+        if ($friend->avatar_file_name !== null)
+        {
+            // get the original avatar img
+            $avatarUrl = $friend->avatar->url('original');
+            $avatarFileName = $friend->avatar_file_name;
+            $avatarLocalStoragePath = 'tmp/' . $avatarFileName;
+            try
+            {
+                if ( !$avatarUrl )
+                    throw new \Exception('avatar URL is empty');
+
+                // download from S3 and save locally
+                $avatarData = @file_get_contents($avatarUrl);
+                if ( !$avatarData )
+                    throw new \Exception("Couldn't download old file");
+
+                Storage::disk('local')->put($avatarLocalStoragePath, $avatarData);
+                $avatarTmpPath = storage_path('app/') . $avatarLocalStoragePath;
+
+                if ( !file_exists( $avatarTmpPath ) )
+                    throw new \Exception('Local tmp file does not exist');
+
+                // just attach a local file
+                $friend_model->avatar = $avatarTmpPath;
+
+            } catch (\Exception $ex)
+            {
+                Log::error('Could not copy avatar: ' . $avatarUrl . ', ' . $ex->getMessage());
+            }
         }
         $user = $event->getFollower();
         $friend_model->friend()->associate($friend);
