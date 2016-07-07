@@ -77,13 +77,12 @@ class FriendController extends Controller
      */
     public function update(UpdateFriendRequest $request, $friend)
     {
-        $inputs = $request->except(['avatar', 'files', 'avatar_url', 'default_location']);
-
+        $inputs = $request->except(['avatar', 'files', 'avatar_url', 'default_location', 'friend']);
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $friend->avatar = $avatar;
         }
-
+		
         $friend->update($inputs);
 
         return $friend;
