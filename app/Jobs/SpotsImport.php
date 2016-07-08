@@ -20,6 +20,7 @@ use Log;
 use Storage;
 use Validator;
 use Vinkla\Instagram\InstagramManager;
+use App\Role;
 
 abstract class SpotsImport extends Job implements SelfHandling
 {
@@ -170,7 +171,7 @@ abstract class SpotsImport extends Job implements SelfHandling
             }
             if ($imported_spot->rating) {
                 $vote = new SpotVote(['vote' => $imported_spot->rating]);
-                $vote->user()->associate($this->data['admin']);
+                $vote->user()->associate(Role::take('admin')->users()->first());
                 $spot->votes()->save($vote);
             }
             if ($imported_spot->image_links) {

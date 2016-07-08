@@ -83,8 +83,8 @@ class MapController extends Controller
 		if ($request->has('filter.start_date')) {
 			$spots->where('start_date', '>=', $request->filter['start_date']);
 		} else {
-			if ($request->has('type') && in_array($request->type, ['event'])) {
-				$spots->where('start_date', '>=', Carbon::now()->format('Y-m-d'));
+			if ($request->has('type') && in_array($request->type, ['event']) and !$request->has('filter.end_date')) {
+				$spots->where('end_date', '>', Carbon::now()->format('Y-m-d'));
 			}
 		}
 
