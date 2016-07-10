@@ -65,6 +65,9 @@ abstract class SpotsImport extends Job implements SelfHandling
 
     protected function import($imported_spot)
     {
+		if (!empty($imported_spot->website)) {
+			$imported_spot->put('website', trim($imported_spot->website));
+		}
         if ($imported_spot->image_links) {
             $imported_spot->put('image_links', explode(',', $imported_spot->image_links));
         }
