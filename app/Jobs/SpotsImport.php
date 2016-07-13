@@ -21,6 +21,7 @@ use Storage;
 use Validator;
 use Vinkla\Instagram\InstagramManager;
 use App\Role;
+use Cache;
 
 abstract class SpotsImport extends Job implements SelfHandling
 {
@@ -209,16 +210,24 @@ abstract class SpotsImport extends Job implements SelfHandling
      */
     public function handle(AppMailer $mailer)
     {
-        $this->mailer = $mailer;
+        $this->mailer	= $mailer;
+		$jobId			= $this->job->getJobId();
+		$cacheKey		= "spot-import-{$jobId}-".env('QUEUE_WORK_NAME', 'default');
+
+		if (Cache::has($cacheKey)) {
+			return true;
+		} else {
+			Cache::put($cacheKey, $jobId, 10);
+		}
 
         foreach ($this->getSpots() as $spot) {
             $this->import($spot);
         }
-
+		
         if (isset($this->data['document'])) {
             File::delete($this->data['document']);
         }
-
+		Cache::forget($cacheKey);
         return true;
     }
 
