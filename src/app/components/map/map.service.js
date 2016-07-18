@@ -10,6 +10,8 @@
       var map = null;
       var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
       var tilesUrl = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+      var tilesWeatherUrl = 'http://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-900913/{z}/{x}/{y}.png?' + (new Date()).getTime();
+
       var radiusSelectionLimit = 500000; // in meters
       var markersLayer = L.featureGroup();
       var drawLayer = L.featureGroup();
@@ -406,7 +408,11 @@
           maxZoom: 17,
           minZoom: 3
         }).addTo(map);
-		  
+
+        map.weatherLayer = L.tileLayer(tilesWeatherUrl, {
+          maxZoom: 17,
+          minZoom: 3
+        });
 
         //add controls
         AddControls();
@@ -1466,6 +1472,7 @@
 
 		ip_api.locateUser().then(function(c) {
             $rootScope.currentLocation = c.location;
+            $rootScope.currentCountryCode = c.countryCode;
             FocusMapToGivenLocation(c.location, zoom)
 		});
 
@@ -1843,6 +1850,14 @@
         }
       }
 
+      function toggleWeatherLayer(show) {
+        var hasWeather = map.hasLayer(map.weatherLayer);
+        if (show && !hasWeather)
+            map.addLayer(map.weatherLayer);
+        if (!show && hasWeather)
+            map.removeLayer(map.weatherLayer);
+      }
+
       return {
         Init: InitMap,
         GetMap: GetMap,
@@ -1859,6 +1874,7 @@
         showTodo: showTodoLayer,
         showOtherLayers: showOtherLayers,
         clearLayers: clearLayers,
+        toggleWeatherLayer: toggleWeatherLayer,
         //Selections
         clearSelections: ClearSelections,
         LassoSelection: LassoSelection,
