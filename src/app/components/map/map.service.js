@@ -9,7 +9,7 @@
 
       var map = null;
       var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
-      var tilesUrl = 'http://otile3.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
+      var tilesUrl = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
       var radiusSelectionLimit = 500000; // in meters
       var markersLayer = L.featureGroup();
       var drawLayer = L.featureGroup();
@@ -406,6 +406,7 @@
           maxZoom: 17,
           minZoom: 3
         }).addTo(map);
+		  
 
         //add controls
         AddControls();
