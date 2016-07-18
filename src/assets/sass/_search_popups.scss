@@ -1087,6 +1087,10 @@
 
   &.active-weather {
     height: auto;
+    top: 74px;
+    @media screen and (min-width: 767px) and (max-width: 991px) {
+      top: 0;
+    }
   }
   //top: 7rem;
   .icon-tick {
@@ -1104,14 +1108,6 @@
     position: absolute;
     right: 1.5rem;
     top: 1.8rem;
-  }
-}
-
-@media(max-width: 767px) {
-  .footer-search {
-    &.active-weather {
-      height: 100%;
-    }
   }
 }
 
@@ -1610,7 +1606,10 @@
 		}
 		.weatherImg-block {    
 		  .weatherImg-wrapper {   
-			height: 70px;		  
+			height: 70px;
+            .weatherImg {
+              background-size: inherit !important;
+            }
 			.temperature-img {
 			  font-size: 4rem;
 			  padding-top: 1rem;         
