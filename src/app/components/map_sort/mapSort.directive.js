@@ -241,12 +241,21 @@
 
       if (layer == 'weather') {
         MapService.showOtherLayers();
+
+        // show weather radar data for US users
+        if ($rootScope.currentCountryCode === 'us') {
+          MapService.toggleWeatherLayer(true);
+        } else {
+          console.log('Current country: ', $rootScope.currentCountryCode);
+        }
+
         MapService.WeatherSelection(weather);
 
         if (!vm.currentWeather) {
           toastr.info('Click on map to check weather in this area');
         }
       } else {
+        MapService.toggleWeatherLayer(false);
         if (layer != 'event') {
           $rootScope.mapSortFilters.filter = $rootScope.mapSortFilters.filter || {};
           $rootScope.mapSortFilters.filter.start_date = $rootScope.mapSortFilters.filter.end_date = '';
