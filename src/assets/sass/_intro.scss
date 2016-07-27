@@ -101,6 +101,15 @@
         .intro {
             background-color: #F5F5F7;
             padding: 3% 0 1%;
+			@media (min-width: 768px) {
+				padding-bottom: 78px+50px;
+			}
+			@media (max-width: 767px) {
+				padding-bottom: 160px;
+			}
+			@media (max-width: 300px) {
+				padding-bottom: 230px;
+			}
             text-align: center;
             overflow: hidden;
             width: 100%;
@@ -289,32 +298,33 @@
         }
 
     }
-    footer {
-        border-top: 1px solid #DEDEDE;
-        padding: 3rem 2rem 1rem;
-        background-color: #fff;
-        .fmenu {
-            a {
-                display: inline-block;
-                margin-right: 3rem;
-                font-size: 1.2rem;
-                color: #9EA2A5;
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
+}
 
-        }
-        ul {
-            li a {
-                display: inline-block;
-                width: 2.2rem;
-                height: 2.2rem;
-                background-color: #000;
+footer.footer-intro {
+	border-top: 1px solid #DEDEDE;
+	padding: 3rem 2rem 1rem;
+	background-color: #fff;
+	.fmenu {
+		a {
+			display: inline-block;
+			margin-right: 3rem;
+			font-size: 1.2rem;
+			color: #9EA2A5;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
 
-            }
-        }
-    }
+	}
+	ul {
+		li a {
+			display: inline-block;
+			width: 2.2rem;
+			height: 2.2rem;
+			background-color: #000;
+
+		}
+	}
     .icon-play, .icon-pause {
         position: absolute;
         left: 1rem;
@@ -367,7 +377,7 @@
         &:hover {
             background-position: -211px -50px;
         }
-    }
+	}
 }
 
 .icon-map-search {

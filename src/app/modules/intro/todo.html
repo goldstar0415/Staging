@@ -6,7 +6,13 @@
             <div class="row">
                 <div class="search-filters search-block no-pad">
                     <div class="country-filter clearfix">
-                        <input type="text" role="search" ng-model="Intro.searchParams.search_text" />
+                        <input type="text" role="search"
+                              ng-model="Intro.searchParams.search_text"
+                              ng-change="Intro.searchAddress()"
+                              ng-model-options="{ debounce: 200 }"
+							  typeahead-wait-ms="100"
+                              typeahead-on-select="Intro.selectLocation($item)"
+                              typeahead="address.formatted_address for address in Intro.locations">
                         <span class="icon-nav"></span>
                     </div>
                     <div class="dropdown-block">
@@ -27,8 +33,8 @@
             </div>
             <div class="row other-search">
                 <p class="text-uppercase">Other Search tools</p>
-                <a ng-click="Intro.routeSearch()"><span><i class="icon-route"></i></span><span>Route Search</span></a>
-                <a ng-click="Intro.radiusSearch()"><span><i class="icon-map-search"></i></span><span>Map Search</span></a>
+                <a ng-click="Intro.routeSearch('todo')"><span><i class="icon-route"></i></span><span>Route Search</span></a>
+                <a ng-click="Intro.radiusSearch('todo')"><span><i class="icon-map-search"></i></span><span>Map Search</span></a>
             </div>
             <div class="row">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

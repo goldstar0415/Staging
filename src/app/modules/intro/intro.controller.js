@@ -62,10 +62,10 @@
           filter: {}
         };
         if (vm.searchParams.filter.start_date) {
-          data.filter.start_date = moment(vm.searchParams.filter.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
+          data.filter.start_date = vm.searchParams.filter.start_date;
         }
         if (vm.searchParams.filter.end_date) {
-          data.filter.end_date = moment(vm.searchParams.filter.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
+          data.filter.end_date = vm.searchParams.filter.end_date;
         }
         doSearch(data);
       }
@@ -88,18 +88,18 @@
     }
 
     function searchTodo() {
-      if (vm.searchParams.search_text || vm.searchParams.rating) {
+		if (vm.searchParams.search_text || vm.searchParams.rating) {
+			var data = {
+				type: 'todo',
+				search_text: vm.searchParams.search_text,
+				location: vm.location || {},
+				filter: {
+					rating: vm.searchParams.rating
+				}
+			};
 
-        var data = {
-          type: 'todo',
-          search_text: vm.searchParams.search_text,
-          filter: {
-            rating: vm.searchParams.rating
-          }
-        };
-
-        doSearch(data);
-      }
+			doSearch(data);
+		}
     }
 
     function searchRoom() {
@@ -108,12 +108,23 @@
         var data = {
           type: 'shelter',
           search_text: vm.searchParams.search_text,
+		  location: vm.location || {},
           filter: {
             category_ids: []
           }
         };
 
-        if ($rootScope.spotCategories) {
+        addCategories(data);
+
+        doSearch(data);
+      }
+    }
+
+	function addCategories(data) {
+		if ($rootScope.spotCategories) {
+			if (!Array.isArray(data.filter.category_ids)) {
+				data.filter.category_ids = [];
+			}
           var shelterCategory = _.findWhere($rootScope.spotCategories, {name: 'shelter'});
 
           if (vm.searchParams.category_hotels) {
@@ -126,17 +137,12 @@
             _addCategory(shelterCategory, data.filter, 'cabins-campgrounds');
           }
         }
-
-
-        doSearch(data);
-      }
-    }
+	}
 
     function _addCategory(shelterCategory, filter, name) {
       if (shelterCategory) {
         var category = _.findWhere(shelterCategory.categories, {name: name});
         if (category) {
-          console.log(category, name);
           filter.category_ids.push(category.id);
         }
       }
@@ -191,15 +197,37 @@
 
 
     function routeSearch(spotType) {
-      spotType = spotType === undefined ? 'event' : spotType;
-      $state.go('index', {spotSearch: {pathSelection: true, activeSpotType: spotType}});
+		spotType = spotType === undefined ? 'event' : spotType;
+		var data = {spotSearch: {pathSelection: true, activeSpotType: spotType}, filter: {}};
+		if (vm.searchParams.rating) {
+			data.filter.rating = vm.searchParams.rating;
+		}
+		if (vm.searchParams.filter.start_date) {
+			data.filter.start_date = vm.searchParams.filter.start_date;
+		}
+		if (vm.searchParams.filter.end_date) {
+			data.filter.end_date = vm.searchParams.filter.end_date;
+		}
+		addCategories(data);
+		$state.go('index', data);
     }
 
-    function radiusSearch(spotType) {
-      spotType = spotType === undefined ? 'event' : spotType;
-      $state.go('index', {spotSearch: {radiusSelection: true, activeSpotType: spotType}});
-    }
-
+	function radiusSearch(spotType) {
+		spotType = spotType === undefined ? 'event' : spotType;
+		var data = {spotSearch: {radiusSelection: true, activeSpotType: spotType}, filter: {}};
+		if (vm.searchParams.rating) {
+			data.filter.rating = vm.searchParams.rating;
+		}
+		if (vm.searchParams.filter.start_date) {
+			data.filter.start_date = vm.searchParams.filter.start_date;
+		}
+		if (vm.searchParams.filter.end_date) {
+			data.filter.end_date = vm.searchParams.filter.end_date;
+		}
+		addCategories(data);
+		$state.go('index', data);
+	}
+  
     function goSignIn() {
       $state.go('index', {spotSearch: {openSignIn: !$rootScope.currentUser}});
     }
