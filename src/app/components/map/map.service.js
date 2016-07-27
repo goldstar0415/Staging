@@ -520,16 +520,16 @@
         keepListeners = keepListeners === true;
         switch (layer) {
           case 'event':
-            showEventsLayer();
+            showEventsLayer(false, keepListeners);
             break;
           case 'todo':
-            showTodoLayer();
+            showTodoLayer(false, keepListeners);
             break;
           case 'food':
             showFoodLayer(false, keepListeners);
             break;
           case 'shelter':
-            showShelterLayer();
+            showShelterLayer(false, keepListeners);
             break;
           case 'other':
             showOtherLayers();
@@ -538,8 +538,10 @@
       }
 
       //show events layer on map.
-      function showEventsLayer(clearLayers) {
-        ClearSelectionListeners();
+      function showEventsLayer(clearLayers, keepListeners) {
+        if (keepListeners !== true) {
+          ClearSelectionListeners();
+        }
         if (clearLayers) {
           eventsLayer.clearLayers();
         }
@@ -568,8 +570,10 @@
       }
 
       //show shelter layer on map
-      function showShelterLayer(clearLayers) {
-        ClearSelectionListeners();
+      function showShelterLayer(clearLayers, keepListeners) {
+        if (keepListeners !== true) {
+          ClearSelectionListeners();
+        }
         if (clearLayers) {
           shelterLayer.clearLayers();
         }
@@ -582,8 +586,10 @@
       }
 
       //show todo layer
-      function showTodoLayer(clearLayers) {
-        ClearSelectionListeners();
+      function showTodoLayer(clearLayers, keepListeners) {
+        if (keepListeners !== true) {
+          ClearSelectionListeners();
+        }
         if (clearLayers) {
           todoLayer.clearLayers();
         }
@@ -674,28 +680,28 @@
       }
 
       // Radius selection
-      function RadiusSelection(callback) {
-        ClearSelectionListeners();
-		map.dragging.disable();
-        var started = false;
-        var startPoint = null;
-        var radius = 1000;
-        var circle = null;
+		function RadiusSelection(callback) {
+			ClearSelectionListeners();
+			map.dragging.disable();
+			var started = false;
+			var startPoint = null;
+			var radius = 1000;
+			var circle = null;
 
-        map.on('mousedown', start);
-        map.on('mousemove', move);
-        map.on('mouseup', end);
+			map.on('mousedown', start);
+			map.on('mousemove', move);
+			map.on('mouseup', end);
 
-        function start(e) {
-            if ( started ) {
-              return;
-            }
-			e.originalEvent.preventDefault();
+			function start(e) {
+				if ( started ) {
+					return;
+				}
+				e.originalEvent.preventDefault();
 
-			started = true;
-			startPoint = L.latLng(e.latlng.lat, e.latlng.lng);
-			circle = L.circle(e.latlng, radius, {color: 'red', weight: 3}).addTo(drawLayer);
-        }
+				started = true;
+				startPoint = L.latLng(e.latlng.lat, e.latlng.lng);
+				circle = L.circle(e.latlng, radius, {color: 'red', weight: 3}).addTo(drawLayer);
+			}
 
         function move(e) {
 			e.originalEvent.preventDefault();

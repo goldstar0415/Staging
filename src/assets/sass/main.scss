@@ -894,8 +894,10 @@ sign-in, sign-up {
   .landing {
     height: auto;
     .intro {
-      padding-bottom: 7rem;
-
+      padding-bottom: 14rem;
+	  @media (max-width: 767px) {
+	    padding-bottom: 20rem;
+     }
     }
     /*        &.small {
                 height: 100%;
