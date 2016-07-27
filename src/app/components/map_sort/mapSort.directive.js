@@ -73,15 +73,11 @@
      * Initialization
      */
     function run() {
-      loadCategories();
-      vm.searchParams.search_text	= ($stateParams.searchText || '');
-	  vm.searchParams.searchType	= _.isObject($stateParams.spotSearch) ? $stateParams.spotSearch.activeSpotType || 'event' : 'event';
-	  vm.searchParams.rating		= _.isObject($stateParams.filter) ? $stateParams.filter.rating || null : null;
+		loadCategories();
+		vm.searchParams.search_text	= ($stateParams.searchText || '');
+		vm.searchParams.searchType	= _.isObject($stateParams.spotSearch) ? $stateParams.spotSearch.activeSpotType || 'event' : 'event';
+		vm.searchParams.rating		= _.isObject($stateParams.filter) ? $stateParams.filter.rating || null : null;
 	  
-      if (_.isObject($stateParams.spotLocation) && $stateParams.spotLocation.lat !== undefined && $stateParams.spotLocation.lat) { // from 'intro'
-        vm.vertical = false;
-        toggleLayer(vm.searchParams.searchType, false);
-
 		if (_.isObject($stateParams.filter)) {
 			if ($stateParams.filter.start_date) {
 				vm.searchParams.start_date = moment($stateParams.filter.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
@@ -89,30 +85,39 @@
 			if ($stateParams.filter.end_date) {
 				vm.searchParams.end_date = moment($stateParams.filter.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
 			}
+			if (Array.isArray($stateParams.filter.category_ids) && $stateParams.filter.category_ids.length) {
+				_.each(vm.spotCategories[vm.searchParams.searchType], function(item) {
+					item.selected = $stateParams.filter.category_ids.indexOf(item.id) >= 0 ? true : false;
+				});
+			}
         }
+		
+		if (_.isObject($stateParams.spotLocation) && $stateParams.spotLocation.lat !== undefined && $stateParams.spotLocation.lat) { // from 'intro'
+			vm.vertical = false;
+			toggleLayer(vm.searchParams.searchType, false);
 
-        MapService.FocusMapToGivenLocation($stateParams.spotLocation, 13);
-        MapService.GetBoundsByCircle($stateParams.spotLocation, function() {
-			search();
-		});
-        MapService.FitBoundsOfCurrentLayer();
-      } else {
-        // just search
-        if (vm.searchParams.search_text.length > 0) {
-          vm.vertical = false;
-          MapService.FocusMapToCurrentLocation();
-          toggleLayer(vm.searchParams.searchType);
-          search();
-        } else {
-          // activate a search tool and desired layer (from intro)
-          if ( vm.searchParams.searchType ) {
-            // toggle a layer, but don't start a search
-            toggleLayer(vm.searchParams.searchType, false);
-          }
-        }
-      }
+			MapService.FocusMapToGivenLocation($stateParams.spotLocation, 13);
+			MapService.GetBoundsByCircle($stateParams.spotLocation, function() {
+				search();
+			});
+			MapService.FitBoundsOfCurrentLayer();
+		} else {
+			// just search
+			if (vm.searchParams.search_text.length > 0) {
+				vm.vertical = false;
+				MapService.FocusMapToCurrentLocation();
+				toggleLayer(vm.searchParams.searchType);
+				search();
+			} else {
+				// activate a search tool and desired layer (from intro)
+				if ( vm.searchParams.searchType ) {
+					// toggle a layer, but don't start a search
+					toggleLayer(vm.searchParams.searchType, false);
+				}
+			}
+		}
 
-    }
+	}
 
     /**
      * Search locations when typing - ok
@@ -310,10 +315,10 @@
     }
 
     function _loadCategories(data) {
-      vm.spotCategories = {};
-      _.each(data, function (item) {
-        vm.spotCategories[item.name] = item.categories;
-      });
+		vm.spotCategories = {};
+		_.each(data, function (item) {
+			vm.spotCategories[item.name] = item.categories;
+		});
     }
 
 
