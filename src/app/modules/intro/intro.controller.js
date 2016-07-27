@@ -62,10 +62,10 @@
           filter: {}
         };
         if (vm.searchParams.filter.start_date) {
-          data.filter.start_date = moment(vm.searchParams.filter.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
+          data.filter.start_date = vm.searchParams.filter.start_date;
         }
         if (vm.searchParams.filter.end_date) {
-          data.filter.end_date = moment(vm.searchParams.filter.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
+          data.filter.end_date = vm.searchParams.filter.end_date;
         }
         doSearch(data);
       }
@@ -191,15 +191,23 @@
 
 
     function routeSearch(spotType) {
-      spotType = spotType === undefined ? 'event' : spotType;
-      $state.go('index', {spotSearch: {pathSelection: true, activeSpotType: spotType}});
+		spotType = spotType === undefined ? 'event' : spotType;
+		var data = {spotSearch: {pathSelection: true, activeSpotType: spotType}, filter: {}};
+		if (vm.searchParams.rating) {
+			data.filter.rating = vm.searchParams.rating;
+		}
+		$state.go('index', data);
     }
 
-    function radiusSearch(spotType) {
-      spotType = spotType === undefined ? 'event' : spotType;
-      $state.go('index', {spotSearch: {radiusSelection: true, activeSpotType: spotType}});
-    }
-
+	function radiusSearch(spotType) {
+		spotType = spotType === undefined ? 'event' : spotType;
+		var data = {spotSearch: {radiusSelection: true, activeSpotType: spotType}, filter: {}};
+		if (vm.searchParams.rating) {
+			data.filter.rating = vm.searchParams.rating;
+		}
+		$state.go('index', data);
+	}
+  
     function goSignIn() {
       $state.go('index', {spotSearch: {openSignIn: !$rootScope.currentUser}});
     }

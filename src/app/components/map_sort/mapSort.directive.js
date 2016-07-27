@@ -18,9 +18,6 @@
 
   function mapSort($rootScope, $q, MapService, $http, $timeout, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
 
-    console.log('MapSort params', $stateParams);
-    console.log('Map Service', MapService);
-
     var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
     var SPOT_LIST_URL = API_URL + '/map/spots/list';
@@ -83,10 +80,21 @@
 	  
       if (_.isObject($stateParams.spotLocation) && $stateParams.spotLocation.lat !== undefined && $stateParams.spotLocation.lat) { // from 'intro'
         vm.vertical = false;
-        toggleLayer(vm.searchParams.searchType);
+        toggleLayer(vm.searchParams.searchType, false);
+
+		if (_.isObject($stateParams.filter)) {
+			if ($stateParams.filter.start_date) {
+				vm.searchParams.start_date = moment($stateParams.filter.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
+			}
+			if ($stateParams.filter.end_date) {
+				vm.searchParams.end_date = moment($stateParams.filter.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
+			}
+        }
 
         MapService.FocusMapToGivenLocation($stateParams.spotLocation, 13);
-        MapService.GetBoundsByCircle($stateParams.spotLocation, getCircleBounds);  // search() included
+        MapService.GetBoundsByCircle($stateParams.spotLocation, function() {
+			search();
+		});
         MapService.FitBoundsOfCurrentLayer();
       } else {
         // just search
@@ -236,7 +244,6 @@
      * @param startSearch
      */
     function toggleLayer(layer, startSearch) {
-      console.log('toggle layer '+layer);
       $rootScope.sortLayer = layer;
 
       if (layer == 'weather') {
@@ -291,12 +298,10 @@
      * API-request or get from $rootScope
      */
     function loadCategories() {
-      console.log('Load Categories');
       if (!$rootScope.spotCategories) {
         $http.get(API_URL + '/spots/categories')
           .success(function (data) {
             $rootScope.spotCategories = data;
-            console.log('Categories', data);
             _loadCategories(data)
           });
       } else {
@@ -316,8 +321,6 @@
      * Search - use existing points or do search
      */
     function search() {
-      console.log('search() vm.searchParams: ', vm.searchParams);
-
       var l = null, ll = [];
 
       // get entered location(s)
@@ -378,71 +381,79 @@
     /**
      * API-request - apply a custom filter and update the map
      */
-    function doSearch(isIntermediateSearch) {
-      console.log('do search');
-      var data = {
-        search_text: vm.searchParams.search_text,
-        filter: {}
-      };
+	function doSearch(isIntermediateSearch) {
+		var data = {
+			search_text: vm.searchParams.search_text,
+			filter: {}
+		};
 
-      if (vm.searchParams.rating) {
-        data.filter.rating = vm.searchParams.rating;
-      }
+		if (vm.searchParams.rating) {
+			data.filter.rating = vm.searchParams.rating;
+		}
 
-      if (vm.searchParams.tags) {
-        data.filter.tags = _.pluck(vm.searchParams.tags, 'text');
-      }
+		if (vm.searchParams.tags) {
+			data.filter.tags = _.pluck(vm.searchParams.tags, 'text');
+		}
 
-      if (vm.searchParams.start_date) {
-        data.filter.start_date = moment(vm.searchParams.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
-      }
-      if (vm.searchParams.end_date) {
-        data.filter.end_date = moment(vm.searchParams.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
-      }
+		if (vm.searchParams.start_date) {
+			if (vm.searchParams.start_date.match(/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/)) {
+				data.filter.start_date = moment(vm.searchParams.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
+			} else if (vm.searchParams.start_date.match(/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/)) {
+				data.filter.start_date = vm.searchParams.start_date;
+			}
+		}
+	  
+		if (vm.searchParams.end_date) {
+			if (vm.searchParams.end_date.match(/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/)) {
+				data.filter.end_date = moment(vm.searchParams.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
+			} else if (vm.searchParams.end_date.match(/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/)) {
+				data.filter.end_date = vm.searchParams.end_date;
+			}
+		}
+		
+		var categories = _.where(vm.spotCategories[$rootScope.sortLayer], {selected: true});
+		if (categories.length > 0) {
+			data.filter.category_ids = _.pluck(categories, 'id');
+		}
 
-      var categories = _.where(vm.spotCategories[$rootScope.sortLayer], {selected: true});
-      if (categories.length > 0) {
-        data.filter.category_ids = _.pluck(categories, 'id');
-      }
+		$rootScope.mapSortFilters = angular.copy(data);
 
-      $rootScope.mapSortFilters = angular.copy(data);
+		var bbox_array = MapService.GetBBoxes();
+		if (bbox_array.length > 0) {
+			bbox_array = MapService.BBoxToParams(bbox_array);
+			data.filter.b_boxes = bbox_array;
+			data.search_text = '';
+		}
+	  
+		if (bbox_array.length == 0 && !vm.searchParams.search_text) {
+			toastr.error('Enter location or draw the area');
+			$rootScope.mapSortFilters = {};
+			return;
+		}
+		data.type = $rootScope.sortLayer;
 
-      var bbox_array = MapService.GetBBoxes();
-      if (bbox_array.length > 0) {
-        bbox_array = MapService.BBoxToParams(bbox_array);
-        data.filter.b_boxes = bbox_array;
-        data.search_text = '';
-      }
+		MapService.cancelHttpRequest();
+		$rootScope.mapSortSpots.cancellerHttp = $q.defer();
 
-      if (bbox_array.length == 0 && !vm.searchParams.search_text) {
-        toastr.error('Enter location or draw the area');
-        $rootScope.mapSortFilters = {};
-        return;
-      }
-      data.type = $rootScope.sortLayer;
+		isIntermediateSearch = isIntermediateSearch === true;
 
-      MapService.cancelHttpRequest();
-      $rootScope.mapSortSpots.cancellerHttp = $q.defer();
-
-      isIntermediateSearch = isIntermediateSearch === true;
-
-      $http.get(SEARCH_URL + '?' + jQuery.param(data), {timeout: $rootScope.mapSortSpots.cancellerHttp.promise})
-        .success(function (spots) {
-          if (spots.length > 0) {
-            onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0, false);
-          } else {
-            onUpdateMapData(null, [], null, bbox_array.length > 0, false);
-          }
-          vm.categoryToggle = false;
-          vm.isShowFilter = isIntermediateSearch;
-          if ( isIntermediateSearch ) {
-            $rootScope.isDrawArea = false;
-          }
-        }).catch(function (resp) {
-          if (resp.status > 0) {
-            toastr.error(resp.data ? resp.data.message : 'Something went wrong')
-          }
-        });
+		$http.get(SEARCH_URL + '?' + jQuery.param(data), {timeout: $rootScope.mapSortSpots.cancellerHttp.promise})
+			.success(function (spots) {
+				if (spots.length > 0) {
+				onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0, false);
+				} else {
+					onUpdateMapData(null, [], null, bbox_array.length > 0, false);
+				}
+				vm.categoryToggle = false;
+				vm.isShowFilter = isIntermediateSearch;
+				if ( isIntermediateSearch ) {
+					$rootScope.isDrawArea = false;
+				}
+			}).catch(function (resp) {
+				if (resp.status > 0) {
+					toastr.error(resp.data ? resp.data.message : 'Something went wrong')
+				}
+			});
     }
 
     /**
