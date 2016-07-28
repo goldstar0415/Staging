@@ -10,6 +10,8 @@
     return {
       restrict: 'EA',
       link: function () {
+		  /** @todo https://trello.com/c/p5ZPBWsV Hints are disabled */
+		  return;
         $timeout(function () {
           if (window.localStorage && localStorage.getItem('disable_hints')) {
             window.isHintsDisable = true;
