@@ -249,45 +249,45 @@
      * @param startSearch
      */
     function toggleLayer(layer, startSearch) {
-      $rootScope.sortLayer = layer;
+		$rootScope.sortLayer = layer;
 
-      if (layer == 'weather') {
-        MapService.showOtherLayers();
+		if (layer == 'weather') {
+			MapService.showOtherLayers();
 
-        // show weather radar data for US users
-        if ($rootScope.currentCountryCode === 'us') {
-          MapService.toggleWeatherLayer(true);
-        } else {
-          console.log('Current country: ', $rootScope.currentCountryCode);
-        }
+			// show weather radar data for US users
+			if ($rootScope.currentCountryCode === 'us') {
+				MapService.toggleWeatherLayer(true);
+			} else {
+				console.log('Current country: ', $rootScope.currentCountryCode);
+			}
 
-        MapService.WeatherSelection(weather);
+			MapService.WeatherSelection(weather, geocodeCallback);
 
-        if (!vm.currentWeather) {
-          toastr.info('Click on map to check weather in this area');
-        }
-      } else {
-        MapService.toggleWeatherLayer(false);
-        if (layer != 'event') {
-          $rootScope.mapSortFilters.filter = $rootScope.mapSortFilters.filter || {};
-          $rootScope.mapSortFilters.filter.start_date = $rootScope.mapSortFilters.filter.end_date = '';
-          vm.searchParams.start_date = vm.searchParams.end_date = '';
-        }
+			if (!vm.currentWeather) {
+				toastr.info('Click on map to check weather in this area');
+			}
+		} else {
+			MapService.toggleWeatherLayer(false);
+			if (layer != 'event') {
+				$rootScope.mapSortFilters.filter = $rootScope.mapSortFilters.filter || {};
+				$rootScope.mapSortFilters.filter.start_date = $rootScope.mapSortFilters.filter.end_date = '';
+				vm.searchParams.start_date = vm.searchParams.end_date = '';
+			}
 
-        if (startSearch !== false) {
-          search();
-          MapService.showLayer(layer);
-        } else {
-          // show a layer, but keep existing event listeners, for ex. if path selection has started
-          MapService.showLayer(layer, true);
-        }
-        var wp = MapService.GetPathWaypoints();
-        var geoJson = MapService.GetGeoJSON();
+			if (startSearch !== false) {
+				search();
+				MapService.showLayer(layer);
+			} else {
+				// show a layer, but keep existing event listeners, for ex. if path selection has started
+				MapService.showLayer(layer, true);
+			}
+			var wp = MapService.GetPathWaypoints();
+			var geoJson = MapService.GetGeoJSON();
 
-        if ($rootScope.isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1) {
-          toastr.info('Draw the search area');
-        }
-      }
+			if ($rootScope.isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1) {
+				toastr.info('Draw the search area');
+			}
+		}
     }
 
     function onTagsAdd(q, w, e) {
@@ -714,5 +714,16 @@
       vm.currentWeather.sunset = moment(daily[0].sunsetTime * 1000).format(DATE_FORMAT.time);
       vm.currentWeather.temperature = Math.round((daily[0].temperatureMax + daily[0].temperatureMin) / 2);
     }
+	
+	/**
+	 * Detect City in the Weather Panel
+	 */
+	function geocodeCallback(data) {
+		if (data.address) {
+			vm.currentWeatherLocation = {placeName: data.address.city || data.address.state || data.address.country};
+		} else {
+			vm.currentWeatherLocation = {placeName: 'N/A'};
+		}
+	}
   }
 })();
