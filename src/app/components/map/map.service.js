@@ -325,7 +325,8 @@
         //Leaflet touch hook
         L.Map.mergeOptions({
           tap: true,
-          tapTolerance: 15
+          tapTolerance: 15,
+		  worldCopyJump: true
         });
         L.Map.Tap = L.Handler.extend({
           addHooks: function () {
@@ -402,7 +403,8 @@
         //map init
         map = L.map(mapDOMElement, {
           attributionControl: false,
-          zoomControl: true
+          zoomControl: true,
+		  worldCopyJump: true
         });
         L.tileLayer(tilesUrl, {
           maxZoom: 17,
@@ -909,16 +911,27 @@
       }
 
       //weather selection
-      function WeatherSelection(callback) {
-        map.on('click', function (e) {
-          $http.get(API_URL + '/weather?lat=' + e.latlng.lat + '&lng=' + e.latlng.lng)
+	function WeatherSelection(callback, geocodeCallback) {
+		map.on('click', function (e) {
+			var lng = e.latlng.lng;
+			if (Math.abs(lng) > 180) {
+				lng = lng > 0 ? lng -= 360 : lng += 360;
+			}
+			$http.get(API_URL + '/weather?lat=' + e.latlng.lat + '&lng=' + lng)
             .success(function (data) {
-              callback(data);
+				callback(data);
             })
             .error(function (data) {
-              callback(null);
-            })
+				callback(null);
+            });
+			$http.jsonp('https://nominatim.openstreetmap.org/reverse', {params: {lat: e.latlng.lat, lon: lng, "accept-language": 'en', format: 'json', json_callback: 'JSON_CALLBACK'}})
+				.then(function(resp) {
+					if (resp.status === 200 && geocodeCallback && typeof geocodeCallback === 'function') {
+						geocodeCallback(resp.data);
+					}
+				});
         });
+		
       }
 
       //remove all selection listeners
