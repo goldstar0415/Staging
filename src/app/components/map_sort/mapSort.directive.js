@@ -720,7 +720,7 @@
 	 */
 	function geocodeCallback(data) {
 		if (data.address) {
-			vm.currentWeatherLocation = {placeName: data.address.city || data.address.state || data.address.country};
+			vm.currentWeatherLocation = {placeName: data.address.city || data.address.county || data.address.state || data.address.country};
 		} else {
 			vm.currentWeatherLocation = {placeName: 'N/A'};
 		}
