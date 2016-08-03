@@ -156,7 +156,7 @@
       $rootScope.changeMapState(mapState, $state.current, false);
 
       //load all user spots when open map on profile
-      console.log(mapState, $state.current.name);
+      console.log('STATE:', mapState, $state.current.name);
       if (mapState == 'big' && ($state.current.name == 'profile.main' || $state.current.name == 'spots' || $state.current.name == 'favorites')) {
         $rootScope.$emit('change-map-state', mapState);
       }

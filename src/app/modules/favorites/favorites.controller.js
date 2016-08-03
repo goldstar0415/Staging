@@ -52,7 +52,7 @@
     function loadAllSpots(e, mapState) {
       if (mapState == 'big' && !isLoadedSpots) {
         Spot.favorites({user_id: $rootScope.profileUser.id}, function (spots) {
-          vm.spots.data = spots; //show all spots
+          vm.spots.data = spots.data; //show all spots
           vm.pagination.disabled = true;
         });
         isLoadedSpots = true;
