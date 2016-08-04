@@ -451,6 +451,11 @@
 
 		isIntermediateSearch = isIntermediateSearch === true;
 
+		if ($rootScope.routeInterpolated) {
+			data.filter.path = _.map($rootScope.routeInterpolated, function(e) { return {lat: e.latLng.lat, lng: e.latLng.lng}; });
+			$rootScope.routeInterpolated = [];
+		}
+
 		$http.get(SEARCH_URL + '?' + jQuery.param(data), {timeout: $rootScope.mapSortSpots.cancellerHttp.promise})
 			.success(function (spots) {
 				if (spots.length > 0) {
