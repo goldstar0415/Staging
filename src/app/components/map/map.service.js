@@ -849,6 +849,12 @@
                 console.warn(err);
                 $rootScope.$broadcast('impossible-route');
               } else {
+				$rootScope.routeInterpolated = [];
+				var simplified = turf.simplify(L.polyline(routes[0].coordinates).toGeoJSON(), 0.1, false);
+				simplified.geometry.coordinates.forEach(function(e) {
+				    $rootScope.routeInterpolated.push({latLng: {lat: e[1], lng: e[0]}});
+				});
+				  
                 line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
                 line.on('linetouched', function (e) {
                   function remove() {
