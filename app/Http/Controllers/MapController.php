@@ -92,7 +92,7 @@ class MapController extends Controller
             $spots->where('end_date', '<=', $request->filter['end_date'] . ' 23:59:59');
         }
 
-        if ($request->has('filter.tags')) {
+        if ($request->has('filter.tags') && !empty($request->filter['tags'])) {
             $spots->joinWhere('tags', 'tags.name', 'in', $request->filter['tags']);
             $spots->join('spot_tag', function ($join) {
                 $join->on('spot_tag.spot_id', '=', 'mv_spots_spot_points.id')->on('spot_tag.tag_id', '=', 'tags.id');
@@ -118,6 +118,14 @@ class MapController extends Controller
 				$spots->whereRaw(implode(' OR ', $search_areas));
 			}
         }
+
+		if ($request->has('filter.path')) {
+			$path = [];
+			foreach($request->filter['path'] as $p) {
+				$path[] = "{$p['lng']} {$p['lat']}";
+			}
+			$spots->whereRaw("ST_Distance(ST_GeogFromText('LINESTRING(".implode(",", $path).")'),mv_spots_spot_points.location::geography) < ?", [6000]);
+		}
 		// search spots
         $spotsArr = $spots->skip(0)->take(1000)->get();
 		// cache cetegory icon URLs
