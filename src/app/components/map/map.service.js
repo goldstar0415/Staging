@@ -834,7 +834,7 @@
             RecalculateRoute();
           }
         }
-
+		/** Recalculate Route */
         function RecalculateRoute() {
           if (markers.length >= 2) {
             var waypoints = _.map(markers, function (m) {
@@ -852,7 +852,7 @@
                 $rootScope.$broadcast('impossible-route');
               } else {
 				$rootScope.routeInterpolated = [];
-				var simplified = turf.simplify(L.polyline(routes[0].coordinates).toGeoJSON(), 0.1, false);
+				var simplified = turf.simplify(L.polyline(routes[0].coordinates).toGeoJSON(), 0.02, false);
 				simplified.geometry.coordinates.forEach(function(e) {
 				    $rootScope.routeInterpolated.push({latLng: {lat: e[1], lng: e[0]}});
 				});
