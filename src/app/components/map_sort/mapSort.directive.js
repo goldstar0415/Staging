@@ -156,10 +156,10 @@
     /**
      * Render map data
      * @param event
-     * @param mapSpots
-     * @param layer
-     * @param isDrawArea
-     * @param {Boolean} ignoreEmptyList
+     * @param {array} mapSpots
+     * @param {string} layer
+     * @param {boolean} isDrawArea
+     * @param {boolean} ignoreEmptyList
      */
     function onUpdateMapData(event, mapSpots, layer, isDrawArea, ignoreEmptyList) {
       console.log('update map');
@@ -178,6 +178,10 @@
         page: 0,
         cancellerHttp: $rootScope.mapSortSpots.cancellerHttp
       };
+
+	  if (!MapService.hasLayer(layer)) {
+		  toggleLayer(layer, false);
+	  }
       if ($rootScope.isDrawArea) {
         _.each(mapSpots, function (item) {
           if (MapService.PointInPolygon(item.location)) {
@@ -245,8 +249,8 @@
 
     /**
      * Switch a layer and apply UI changes
-     * @param layer
-     * @param startSearch
+     * @param {string} layer
+     * @param {boolean} startSearch
      */
     function toggleLayer(layer, startSearch) {
       $rootScope.sortLayer = layer;
