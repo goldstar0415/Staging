@@ -4,7 +4,7 @@
   angular
     .module('zoomtivity')
     .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, Area, SignUpService, Spot, SpotComment, SpotService, ip_api) {
-
+		
       console.log('MapService');
 
       var map = null;
@@ -568,7 +568,34 @@
         map.removeLayer(otherLayer);
         currentLayer = "food";
       }
-
+		
+		/**
+		 * If Map has the layer
+		 * @param {string} layer
+		 * @returns {boolean}
+		 */
+		function hasLayer(layer) {
+			switch (layer) {
+				case 'event':
+				return map.hasLayer(eventsLayer);
+				break;
+			case 'todo':
+	            return map.hasLayer(todoLayer);
+		        break;
+			case 'food':
+	            return map.hasLayer(foodLayer);
+		        break;
+			case 'shelter':
+				return map.hasLayer(shelterLayer);
+				break;
+			case 'other':
+				return map.hasLayer(otherLayer);
+				break;
+			default:
+				return false;
+			}
+		}
+		
       //show shelter layer on map
       function showShelterLayer(clearLayers, keepListeners) {
         if (keepListeners !== true) {
@@ -1863,7 +1890,7 @@
         if (!show && hasWeather)
             map.removeLayer(map.weatherLayer);
       }
-
+	  
       return {
         Init: InitMap,
         GetMap: GetMap,
@@ -1926,7 +1953,8 @@
         drawBlogMarkers: drawBlogMarkers,
         WeatherSelection: WeatherSelection,
 
-        cancelHttpRequest: cancelHttpRequest
+        cancelHttpRequest: cancelHttpRequest,
+		hasLayer: hasLayer
       };
     });
 
