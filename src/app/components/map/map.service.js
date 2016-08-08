@@ -320,6 +320,10 @@
       var saveSelectionControl = L.Control.SaveSelection();
       //var shareSelectionControl = L.Control.ShareSelection();
 
+	  function clearPathFilter() {
+		  $rootScope.routeInterpolated = null;
+	  }
+
       //initialization
       function InitMap(mapDOMElement) {
         //Leaflet touch hook
@@ -1186,6 +1190,7 @@
       }
 
       function ClearSelections(mapOnly) {
+		clearPathFilter();
         markersLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
