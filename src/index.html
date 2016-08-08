@@ -73,7 +73,7 @@
 
   <hints-popup></hints-popup>
 
-  <map-sort></map-sort>
+  <map-sort ng-if="['full-size', 'big'].indexOf(mapState) >= 0"></map-sort>
 
   <!-- map container-->
   <div id="map" class="mapResize map {{mapState}}"></div>

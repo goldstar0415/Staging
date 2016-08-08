@@ -18,7 +18,7 @@
 
   function mapSort($rootScope, $q, MapService, $http, $timeout, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
 
-    var vm = this;
+	var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
     var SPOT_LIST_URL = API_URL + '/map/spots/list';
     var SPOTS_PER_PAGE = 10;
@@ -109,8 +109,8 @@
 				toggleLayer(vm.searchParams.searchType);
 				search();
 			} else {
-				// activate a search tool and desired layer (from intro)
-				if ( vm.searchParams.searchType ) {
+				// activate a search tool and desired layer (from intro) if not from profile
+				if (vm.searchParams.searchType && !($rootScope.$state && $rootScope.$state.current && ['profile', 'profile_menu'].indexOf($rootScope.$state.current.parent) >= 0)) {
 					// toggle a layer, but don't start a search
 					toggleLayer(vm.searchParams.searchType, false);
 				}
