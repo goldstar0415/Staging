@@ -18,7 +18,7 @@
 
   function mapSort($rootScope, $q, MapService, $http, $timeout, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
 
-    var vm = this;
+	var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
     var SPOT_LIST_URL = API_URL + '/map/spots/list';
     var SPOTS_PER_PAGE = 10;
@@ -109,8 +109,8 @@
 				toggleLayer(vm.searchParams.searchType);
 				search();
 			} else {
-				// activate a search tool and desired layer (from intro)
-				if ( vm.searchParams.searchType ) {
+				// activate a search tool and desired layer (from intro) if not from profile
+				if (vm.searchParams.searchType && !($rootScope.$state && $rootScope.$state.current && ['profile', 'profile_menu'].indexOf($rootScope.$state.current.parent) >= 0)) {
 					// toggle a layer, but don't start a search
 					toggleLayer(vm.searchParams.searchType, false);
 				}
@@ -156,10 +156,10 @@
     /**
      * Render map data
      * @param event
-     * @param mapSpots
-     * @param layer
-     * @param isDrawArea
-     * @param {Boolean} ignoreEmptyList
+     * @param {array} mapSpots
+     * @param {string} layer
+     * @param {boolean} isDrawArea
+     * @param {boolean} ignoreEmptyList
      */
     function onUpdateMapData(event, mapSpots, layer, isDrawArea, ignoreEmptyList) {
       console.log('update map');
@@ -178,6 +178,10 @@
         page: 0,
         cancellerHttp: $rootScope.mapSortSpots.cancellerHttp
       };
+
+	  if (!MapService.hasLayer(layer)) {
+		  toggleLayer(layer, false);
+	  }
       if ($rootScope.isDrawArea) {
         _.each(mapSpots, function (item) {
           if (MapService.PointInPolygon(item.location)) {
@@ -245,8 +249,8 @@
 
     /**
      * Switch a layer and apply UI changes
-     * @param layer
-     * @param startSearch
+     * @param {string} layer
+     * @param {boolean} startSearch
      */
     function toggleLayer(layer, startSearch) {
 		$rootScope.sortLayer = layer;
