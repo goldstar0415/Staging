@@ -112,10 +112,10 @@ class MailNotifier
     {
         if ($user_data instanceof Collection) {
             $user_data->each(function ($user) use ($view, $data, $subject) {
-                $this->sendMail($user, $view, array_merge($data, ['user' => $user] ), $subject);
+                $this->sendMail($user, $view, array_merge($data, ['user' => $user, 'token' => $user->token] ), $subject);
             });
         } elseif ($user_data instanceof User) {
-            $this->sendMail($user_data, $view, array_merge($data, ['user' => $user_data] ), $subject);
+            $this->sendMail($user_data, $view, array_merge($data, ['user' => $user_data, 'token' => $user_data->token] ), $subject);
         }
     }
 
