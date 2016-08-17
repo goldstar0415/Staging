@@ -9,12 +9,13 @@
     .factory('UserService', UserService);
 
   /** @ngInject */
-  function UserService($rootScope, $q, User, socket, $state, $http, $timeout, DATE_FORMAT) {
+  function UserService($rootScope, $q, User, socket, $state, $http, $timeout, DATE_FORMAT, API_URL, toastr) {
     return {
       getCurrentUserPromise: getCurrentUserPromise,
       setCurrentUser: setCurrentUser,
       setProfileUser: setProfileUser,
-      logOut: logOut
+      logOut: logOut,
+      unSubscribe: unSubscribe
     };
 
     function getCurrentUserPromise() {
@@ -73,6 +74,21 @@
           country: response.country
         });
       });
+    }
+    
+    function unSubscribe(toastr) {
+      $http.get(API_URL + '/unsubscribe')
+          .success(function (data, status, headers, config) {
+            toastr.success('You successfully unsubscribed');
+            $rootScope.currentUser.notification_letter = false;
+            $rootScope.currentUser.notification_wall_post = false;
+            $rootScope.currentUser.notification_follow = false;
+            $rootScope.currentUser.notification_new_spot = false;
+            $rootScope.currentUser.notification_coming_spot = false;
+          })
+          .error(function (data, status, headers, config) {
+            toastr.error('You are not authorized')
+          });
     }
 
     function fixFacebookHashUrl() {
