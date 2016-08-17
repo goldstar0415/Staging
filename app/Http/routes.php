@@ -31,6 +31,8 @@ Route::controller('settings', 'SettingsController');
 Route::get('account/{social}', 'SocialAuthController@getAccount');
 Route::delete('account/{social}', 'SocialAuthController@deleteAccount');
 
+Route::get('unsubscribe', 'UserController@unsubscribe');
+
 /**
  * User albums
  */

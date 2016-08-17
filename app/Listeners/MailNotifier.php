@@ -50,7 +50,6 @@ class MailNotifier
             case $event instanceof OnMessage:
                 $this->send($event->message->receiver, 'message', [
                     'sender' => $event->message->sender()->first(),
-                    'receiver' => $event->message->receiver()->first()
                 ], 'New message');
                 break;
             case $event instanceof UserFollowEvent:
@@ -60,10 +59,10 @@ class MailNotifier
                 $event->getFollower()->followers->filter(function ($follower) use ($following) {
                     return $follower->notification_follow and $follower->id !== $following->id;
                 })->each(function ($follower) use ($sender, $following, $subject) {
-                    $this->send($follower, 'follow', compact('sender', 'following'), $subject);
+                    $this->send($follower, 'follow', ['sender' => $sender, 'following' => $following], $subject);
                 });
                 if ($following->notification_follow) {
-                    $this->send($following, 'follow-you', compact('sender'), $subject);
+                    $this->send($following, 'follow-you', ['sender' => $sender], $subject);
                 }
                 break;
             case $event instanceof UserUnfollowEvent:
@@ -73,10 +72,10 @@ class MailNotifier
                 $event->getFollower()->followers->filter(function ($follower) use ($following) {
                     return $follower->notification_follow and $follower->id !== $following->id;
                 })->each(function ($follower) use ($sender, $following, $subject) {
-                    $this->send($follower, 'unfollow', compact('sender', 'following'), $subject);
+                    $this->send($follower, 'unfollow', ['sender' => $sender, 'following' => $following], $subject);
                 });
                 if ($following->notification_follow) {
-                    $this->send($following, 'unfollow-you', compact('sender'), $subject);
+                    $this->send($following, 'unfollow-you', [ 'sender' => $sender], $subject);
                 }
                 break;
             case $event instanceof OnWallMessage:
@@ -84,7 +83,8 @@ class MailNotifier
                     $receiver = $event->wall->receiver;
                     if ($receiver->notification_wall_post) {
                         $this->send($receiver, 'wall-post', [
-                            'sender' => $event->getFeedSender(), 'wall' => $event->wall
+                            'sender' => $event->getFeedSender(), 
+                            'wall' => $event->wall,
                         ], 'New message on the wall');
                     }
                 }
@@ -92,12 +92,12 @@ class MailNotifier
             case $event instanceof OnSpotCreate:
                 $this->send($event->getFeedSender()->followers->filter(function ($follower) {
                     return $follower->notification_new_spot;
-                }), 'spot', ['sender' => $event->getFeedSender(), 'spot' => $event->spot], 'New event');
+                }), 'spot', ['sender' => $event->getFeedSender(), 'spot' => $event->spot, 'user' => $follower], 'New event');
                 break;
             case $event instanceof OnSpotRemind:
                 $this->send($event->spot->calendarUsers->filter(function ($user) {
                     return $user->notification_coming_spot;
-                }), 'coming_spot', ['sender' => $event->getFeedSender(), 'spot' => $event->spot], 'Spot remind');
+                }), 'coming_spot', ['sender' => $event->getFeedSender(), 'spot' => $event->spot, 'user' => $event->spot->calendarUsers()->first()], 'Spot remind');
                 break;
         }
     }
@@ -112,10 +112,10 @@ class MailNotifier
     {
         if ($user_data instanceof Collection) {
             $user_data->each(function ($user) use ($view, $data, $subject) {
-                $this->sendMail($user, $view, $data, $subject);
+                $this->sendMail($user, $view, array_merge($data, ['user' => $user, 'token' => $user->token] ), $subject);
             });
         } elseif ($user_data instanceof User) {
-            $this->sendMail($user_data, $view, $data, $subject);
+            $this->sendMail($user_data, $view, array_merge($data, ['user' => $user_data, 'token' => $user_data->token] ), $subject);
         }
     }
 
