@@ -1440,11 +1440,13 @@ span.location-icon {
     margin-bottom: 0;
     li {
       border: 1px solid #e9edf0;
-      padding: 10px 15px;
       a {
         color: #444;
+        display: block;
+        padding: 10px 15px;
         &:hover {
-          color: $blue_btn;
+          color: #fff;
+          background: $blue_btn;
         }
       }
     }
