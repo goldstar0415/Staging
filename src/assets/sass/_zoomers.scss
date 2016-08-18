@@ -206,14 +206,15 @@ ul {
     padding-left: 0;
     margin-bottom: 0;
     li {
-      border-bottom: 1px solid $light_grey;
       a {
+        border-bottom: 1px solid $light_grey;
+
         &.current {
-          background: url(../img/svg/new_icons/icon_Zoomers.svg) left center no-repeat;
-          background-size: 2.5rem;
           color: $dark_blue;
           padding-right: 0 !important;
-          @include zoomers_sidebar;
+          @include zoomers_sidebar();
+          background: url(../img/icons/zoomers.png) 0 -1px no-repeat;
+
           &:hover {
             color: $blue;
             text-decoration: none;
@@ -229,11 +230,11 @@ ul {
         }
 
         &.followers {
-          background: url(../img/svg/new_icons/icon_Followers.svg) left center no-repeat;
-          background-size: 2.5rem;
           color: $dark_blue;
           padding-right: 0 !important;
-          @include zoomers_sidebar;
+          @include zoomers_sidebar();
+          background: url(../img/icons/followers.png) 0 -1px no-repeat;
+
           &:hover {
             color: $blue;
             text-decoration: none;
@@ -249,11 +250,11 @@ ul {
         }
 
         &.followings {
-          background: url(../img/svg/new_icons/icon_Following.svg) left center no-repeat;
-          background-size: 2.5rem;
           color: $dark_blue;
           padding-right: 0 !important;
-          @include zoomers_sidebar;
+          @include zoomers_sidebar();
+          background: url(../img/icons/followings.png) 0 -1px no-repeat;
+
           &:hover {
             color: $blue;
             text-decoration: none;

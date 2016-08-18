@@ -84,6 +84,15 @@
         parent: 'main',
         mapState: 'big'
       })
+      .state('index.unsubscribe', {
+        url: '/unsubscribe',
+        controller: function (UserService, $stateParams) {
+          UserService.unSubscribe(toastr);
+        },
+        parent: 'main',
+        mapState: 'big',
+        require_auth: true
+      })
 
 
       //Intro pages
