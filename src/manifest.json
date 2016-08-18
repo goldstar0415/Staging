@@ -1,0 +1,13 @@
+{
+  "short_name": "Zoomtivity",
+  "name": "Zoomtivity App",
+  "icons": [
+    {
+      "src": "/assets/img/logo.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone"
+}
