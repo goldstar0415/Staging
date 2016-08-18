@@ -7344,7 +7344,7 @@ button.close {
 }
 .admin .admin-menu ul li a {
   display: block;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   color: #0c2638;
   padding: 10px 40px;
@@ -7496,6 +7496,7 @@ button.close {
   font: 500 16px/16px 'Questrial';
 }
 .admin .editing table thead th {
+  font-size: 12px;
   border: 1px solid #e9edf0;
 }
 .admin .editing table tbody {
@@ -7514,6 +7515,7 @@ button.close {
   border-right: 1px solid #e9edf0;
   padding: 10px 15px;
   word-wrap: break-word;
+  font-size: 12px;
 }
 .admin .editing table tbody td img {
   width: 30px;
