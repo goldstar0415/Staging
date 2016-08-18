@@ -12,17 +12,20 @@
     right: 5px;
 
     .more-info-popup {
-      right: 1rem;
+      right: -5px;
+      top: -41px;
     }
 
     .close {
-      display: block !important;
-      width: 8px;
-      height: 8px;
+      display: inline-block !important;
+      width: 6px;
+      height: 25px;
       line-height: 5px;
       color: #000;
       font-size: 2rem;
       opacity: .5;
+      box-sizing: content-box;
+      padding: 2px 10px;
     }
     &:hover {
       cursor: pointer;
