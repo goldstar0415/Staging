@@ -41,7 +41,6 @@
                                                                                                                             <a href="{{ frontend_url($sender->id) }}" target="_blank">
                                                                                                                             <img class="center" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;clear: both;display: block;border: none;height: auto;line-height: 100%;margin: 0 auto;float: none;width: 100px;max-width: 100px" align="center" border="0" src="{{ $sender->avatar->url('thumb') }}" alt="{{ $sender->first_name }} {{ $sender->last_name }}" title="{{ $sender->first_name }} {{ $sender->last_name }}" width="100">
                                                                                                                             </a>
-                                                                                                                            {{ $sender->avatar_type }}
                                                                                                                         </div>
                                                                                                                     </td>
                                                                                                                 </tr>
