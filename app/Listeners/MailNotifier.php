@@ -48,6 +48,7 @@ class MailNotifier
     {
         switch (true) {
             case $event instanceof OnMessage:
+                $sender = $event->message->sender()->first();
                 $this->send($event->message->receiver, 'message', [
                     'sender' => $event->message->sender()->first(),
                 ], 'New message');
@@ -81,23 +82,26 @@ class MailNotifier
             case $event instanceof OnWallMessage:
                 if (!$event->isSelf()) {
                     $receiver = $event->wall->receiver;
+                    $sender = $event->getFeedSender();
                     if ($receiver->notification_wall_post) {
                         $this->send($receiver, 'wall-post', [
-                            'sender' => $event->getFeedSender(), 
+                            'sender' => $sender,
                             'wall' => $event->wall,
                         ], 'New message on the wall');
                     }
                 }
                 break;
             case $event instanceof OnSpotCreate:
-                $this->send($event->getFeedSender()->followers->filter(function ($follower) {
+                $sender = $event->getFeedSender();
+                $this->send($sender->followers->filter(function ($follower) {
                     return $follower->notification_new_spot;
-                }), 'spot', ['sender' => $event->getFeedSender(), 'spot' => $event->spot, 'user' => $follower], 'New event');
+                }), 'spot', ['sender' => $sender, 'spot' => $event->spot, 'user' => $follower], 'New event');
                 break;
             case $event instanceof OnSpotRemind:
+                $sender = $event->getFeedSender();
                 $this->send($event->spot->calendarUsers->filter(function ($user) {
                     return $user->notification_coming_spot;
-                }), 'coming_spot', ['sender' => $event->getFeedSender(), 'spot' => $event->spot, 'user' => $event->spot->calendarUsers()->first()], 'Spot remind');
+                }), 'coming_spot', ['sender' => $sender, 'spot' => $event->spot, 'user' => $event->spot->calendarUsers()->first()], 'Spot remind');
                 break;
         }
     }
