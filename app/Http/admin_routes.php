@@ -56,3 +56,4 @@ get('settings', 'SettingsController@index')->name('admin.settings');
 put('settings', 'SettingsController@update');
 get('settings/parse-run', 'SettingsController@parserRun')->name('admin.parser.run');
 get('settings/crawler-run', 'SettingsController@crawlerRun')->name('admin.crawler.run');
+get('settings/ticketmaster-run', 'SettingsController@ticketMasterRun')->name('admin.ticket-master.run');
