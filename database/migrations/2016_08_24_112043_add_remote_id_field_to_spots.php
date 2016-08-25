@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTokenFieldToUsers extends Migration
+class AddRemoteIdFieldToSpots extends Migration
 {
     /**
      * Run the migrations.

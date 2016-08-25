@@ -14,21 +14,20 @@ class AddNewSpotTypeCategory extends Migration
      */
     public function up()
     {
-        if (!SpotType::whereName('event')->exists()) {
+        /*if (!SpotType::whereName('event')->exists()) {
             $spotType = SpotType::create([
                 'name' => 'event',
                 'display_name' => 'Event'
             ]);
-        }
-        else{
+        }*/
+        //else{
             $spotType = SpotType::whereName('event')->first();
-        }
-
-        $spotTypeCategory = SpotTypeCategory::create([
-            'name'         => 'ticketmaster',
-            'display_name' => 'TicketMaster',
-            'spot_type_id' => $spotType->id
-        ]);
+        //}
+        $spotTypeCategory = new SpotTypeCategory;
+        $spotTypeCategory->name = 'ticketmaster';
+        $spotTypeCategory->display_name = 'TicketMaster';
+        $spotTypeCategory->spot_type_id = $spotType->id;
+        $spotTypeCategory->save();
     }
 
     /**
