@@ -75,6 +75,12 @@ gulp.task('fonts', function () {
     .pipe($.flatten())
     .pipe(gulp.dest(path.join(conf.paths.dist, '/fonts/')));
 });
+gulp.task('service-worker', function () {
+  return gulp.src([
+    path.join(conf.paths.src, '/service-worker.js'),
+  ])
+    .pipe(gulp.dest(conf.paths.dist));
+});
 
 gulp.task('other', function () {
   var fileFilter = $.filter(function (file) {
@@ -95,4 +101,4 @@ gulp.task('clean', function (done) {
 });
 
 
-gulp.task('build', ['clean', 'html', 'fonts', 'other']);
+gulp.task('build', ['clean', 'html', 'fonts', 'other', 'service-worker']);
