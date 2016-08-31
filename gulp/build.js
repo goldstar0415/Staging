@@ -4,7 +4,6 @@ var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
 var clean = require('gulp-clean');
-var babel = require('gulp-babel');
 
 var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
@@ -46,9 +45,6 @@ gulp.task('html', ['inject', 'partials'], function () {
     .pipe(assets = $.useref.assets())
     .pipe($.rev())
     .pipe(jsFilter)
-    .pipe(babel({
-            presets: ['es2015']
-        }))
     .pipe($.ngAnnotate())
     //.pipe($.uglify({preserveComments: $.uglifySaveLicense, mangle: false})).on('error', conf.errorHandler('Uglify'))
     .pipe(jsFilter.restore())
