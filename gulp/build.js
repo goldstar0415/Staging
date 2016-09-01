@@ -46,7 +46,7 @@ gulp.task('html', ['inject', 'partials'], function () {
     .pipe($.rev())
     .pipe(jsFilter)
     .pipe($.ngAnnotate())
-    .pipe($.uglify({preserveComments: $.uglifySaveLicense})).on('error', conf.errorHandler('Uglify'))
+    .pipe($.uglify({preserveComments: $.uglifySaveLicense, mangle: false})).on('error', conf.errorHandler('Uglify'))
     .pipe(jsFilter.restore())
     .pipe(cssFilter)
     .pipe($.replace('../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/', '../fonts/'))
@@ -75,6 +75,12 @@ gulp.task('fonts', function () {
     .pipe($.flatten())
     .pipe(gulp.dest(path.join(conf.paths.dist, '/fonts/')));
 });
+gulp.task('service-worker', function () {
+  return gulp.src([
+    path.join(conf.paths.src, '/service-worker.js'),
+  ])
+    .pipe(gulp.dest(conf.paths.dist));
+});
 
 gulp.task('other', function () {
   var fileFilter = $.filter(function (file) {
@@ -95,4 +101,4 @@ gulp.task('clean', function (done) {
 });
 
 
-gulp.task('build', ['clean', 'html', 'fonts', 'other']);
+gulp.task('build', ['clean', 'html', 'fonts', 'other', 'service-worker']);
