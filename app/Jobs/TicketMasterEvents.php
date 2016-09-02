@@ -59,18 +59,20 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
         $this->http = $http;
         $this->settings = config('ticket-master');
         $page = !empty($this->page)?$this->page:1;
+        //Log::info('$page = ' . $page);
         $query_string = ['apikey' => $this->settings['apikey'] , 'size' => 500, 'page' => $page];
         $data = [];
         $data = $this->fetchData($query_string);
         $pages_count = $data['page']['totalPages'];
         $nextPage = $data['page']['number']+1;
+        //Log::info('nextPage = ' . $nextPage);
         $events = collect($data['_embedded']['events']);
         $this->importEvents($events);
         
         // comment it if you want to do all job in one queue
         if($nextPage <= 5) //may set all pages instead of 5: $pages_count
         {
-            Log::info('$nextPage <= 5');
+            //Log::info('$nextPage <= 5');
             $newJob = (new TicketMasterEvents);
             $newJob->page = $nextPage;
             dispatch($newJob);
