@@ -29,4 +29,4 @@ Server [ci.zoomtivity.com](http://ci.zoomtivity.com)
 ![Bibbucket](https://i.gyazo.com/d1fffe67ba922dd288acb9a839854263.png "Заголовок изображения")
 
 * do manual testing on your own testing website
-* the notify a reviewer do final testing and accept the pull request
+* notify a reviewer do final a testing and accept the pull request
