@@ -5,7 +5,7 @@
 	 */
 	angular.module('zoomtivity')
 		.factory('ip_api', function ($http, $q) {
-			var IP_URL =  "http://ip-api.com/json?callback=JSON_CALLBACK";
+			var IP_URL =  "//ip-api.com/json?callback=JSON_CALLBACK";
 
 			return {
 				locateUser: function() {
