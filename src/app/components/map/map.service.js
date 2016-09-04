@@ -9,8 +9,8 @@
 
       var map = null;
       var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
-      var tilesUrl = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
-      var tilesWeatherUrl = 'http://mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-900913/{z}/{x}/{y}.png?' + (new Date()).getTime();
+      var tilesUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
+      var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-900913/{z}/{x}/{y}.png?' + (new Date()).getTime();
 
       var radiusSelectionLimit = 500000; // in meters
       var markersLayer = L.featureGroup();
@@ -36,8 +36,8 @@
       var pathSelectionStarted = false;
 
       //GEOCODING
-      var GeocodingSearchUrl = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&key=' + GEOCODING_KEY + '&addressdetails=1&limit=3&q=';
-      var GeocodingReverseUrl = 'http://open.mapquestapi.com/nominatim/v1/reverse.php?format=json&key=' + GEOCODING_KEY;
+      var GeocodingSearchUrl = '//open.mapquestapi.com/nominatim/v1/search.php?format=json&key=' + GEOCODING_KEY + '&addressdetails=1&limit=3&q=';
+      var GeocodingReverseUrl = '//open.mapquestapi.com/nominatim/v1/reverse.php?format=json&key=' + GEOCODING_KEY;
 
       //MAP CONTROLS
       // Lasso controls
