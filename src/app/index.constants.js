@@ -13,6 +13,7 @@
     .constant('GOOGLE_CLIENT_ID', '499164554835-tnvq6glehrsnf73he3u353jaqn5ikpc8.apps.googleusercontent.com')
     .constant('JS_CONSOLE_KEY', 'FASSX1CD-12A0-4SD3-AE36-757BVB26SBEZX')
     .constant('GEOCODING_KEY', 'peVrdYeAJADUMTIMKXuK4j9G52cnsY8p')
+	.constant('MAPBOX_API_KEY', 'pk.eyJ1IjoiaW5ndmFyIiwiYSI6ImNpcWwwOTFsbjAwMm9pd20yYmhlMDloc3gifQ.hEl195NS4jCsaDxSq2rEyA')
     .constant('toastr', toastr)
     .constant('moment', moment)
     .constant('USER_ONLINE_MINUTE', -5)
