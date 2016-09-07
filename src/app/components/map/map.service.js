@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, Area, SignUpService, Spot, SpotComment, SpotService, ip_api) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, ip_api) {
 		
       console.log('MapService');
 
@@ -32,7 +32,25 @@
       var currentLayer = "";
 
       // Path variables
-      var pathRouter = L.Routing.osrm({geometryOnly: true});
+      var pathRouter		= L.Routing.osrmv1({geometryOnly: true});
+	  var pathRouter2		= L.Routing.mapbox(MAPBOX_API_KEY);
+	  var pathRouterFail	= 0;
+	  
+		function getPathRouter() {
+			switch(pathRouterFail) {
+				case 0:
+					return pathRouter;
+				case 1:
+					return pathRouter2;
+				default:
+					return pathRouter;
+			}
+		}
+		
+		function pathRouterFailed() {
+			pathRouterFail++;
+		}
+	  
       var pathSelectionStarted = false;
 
       //GEOCODING
@@ -867,71 +885,77 @@
         }
 		/** Recalculate Route */
         function RecalculateRoute() {
-          if (markers.length >= 2) {
-            var waypoints = _.map(markers, function (m) {
-              return {latLng: m.getLatLng()};
-            });
-
-            pathRouter.route(waypoints, function (err, routes) {
-
-              if (line) {
-                drawLayer.removeLayer(line);
-                line.off('linetouched');
-              }
-              if (err) {
-                console.warn(err);
-                $rootScope.$broadcast('impossible-route');
-              } else {
-				$rootScope.routeInterpolated = [];
-				var simplified = turf.simplify(L.polyline(routes[0].coordinates).toGeoJSON(), 0.02, false);
-				simplified.geometry.coordinates.forEach(function(e) {
-				    $rootScope.routeInterpolated.push({latLng: {lat: e[1], lng: e[0]}});
+			if (markers.length >= 2) {
+				var waypoints = _.map(markers, function (m) {
+					return {latLng: m.getLatLng()};
 				});
+
+				getPathRouter().route(waypoints, function (err, routes) {
+
+					if (line) {
+						drawLayer.removeLayer(line);
+						line.off('linetouched');
+					}
+					if (err) {
+						console.log('route failed', pathRouterFail);
+						if (pathRouterFail === 0) {
+							pathRouterFailed();
+							RecalculateRoute();
+						} else {
+							console.warn(err);
+							$rootScope.$broadcast('impossible-route');
+						}
+					} else {
+						$rootScope.routeInterpolated = [];
+						var simplified = turf.simplify(L.polyline(routes[0].coordinates).toGeoJSON(), 0.02, false);
+						simplified.geometry.coordinates.forEach(function(e) {
+							$rootScope.routeInterpolated.push({latLng: {lat: e[1], lng: e[0]}});
+						});
 				  
-                line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
-                line.on('linetouched', function (e) {
-                  function remove() {
-                    for (var k in markers) {
-                      markersLayer.removeLayer(markers[k]);
-                      var bboxes = GetDrawLayerBBoxes();
-                      GetDataByBBox(bboxes);
-                    }
-                    drawLayer.removeLayer(line);
-                    map.closePopup();
-                    ClearSelectionListeners();
-                  }
+						line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
+						line.on('linetouched', function (e) {
+							function remove() {
+								for (var k in markers) {
+									markersLayer.removeLayer(markers[k]);
+									var bboxes = GetDrawLayerBBoxes();
+									GetDataByBBox(bboxes);
+								}
+								drawLayer.removeLayer(line);
+								map.closePopup();
+								ClearSelectionListeners();
+							}
 
-                  function cancel() {
-                    map.closePopup();
-                  }
+							function cancel() {
+								map.closePopup();
+							}
 
-                  function addmarker() {
-                    onMapClick(e, e.afterIndex);
-                    map.closePopup();
-                  }
+							function addmarker() {
+								onMapClick(e, e.afterIndex);
+								map.closePopup();
+							}
 
-                  //var popup = RemoveMarkerPopup(remove, cancel, addmarker, e.latlng);
-                  //
-                  //popup.openOn(map);
-                });
+							//var popup = RemoveMarkerPopup(remove, cancel, addmarker, e.latlng);
+							//
+							//popup.openOn(map);
+						});
 
-                if (callback) {
-                  // a small timeout in order to wait for a route been recalculated & rendered
-                  $timeout(callback, 1000);
-                }
-              }
-            }, {geometryOnly: true});
-          } else {
-            if (!pathSelectionStarted) {
-              for (var k in markers) {
-                markersLayer.removeLayer(markers[k]);
-              }
-            }
-            if (line) {
-              drawLayer.removeLayer(line);
-              line.off('linetouched');
-            }
-          }
+						if (callback) {
+							// a small timeout in order to wait for a route been recalculated & rendered
+							$timeout(callback, 1000);
+						}
+					}
+				}, {geometryOnly: true});
+			} else {
+				if (!pathSelectionStarted) {
+					for (var k in markers) {
+						markersLayer.removeLayer(markers[k]);
+					}
+				}
+				if (line) {
+					drawLayer.removeLayer(line);
+					line.off('linetouched');
+				}
+			}
         }
       }
 
