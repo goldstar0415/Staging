@@ -330,12 +330,53 @@
         return new L.Control.clearSelection(options);
       };
 
+	/**
+	 * Focus Geolocation
+	 */
+	L.Control.focusGeolocation = L.Control.extend({
+		options: {
+			position: 'topleft',
+			title: {
+				'false': 'Save selection',
+				'true': 'Save selection'
+			}
+		},
+		onAdd: function (map) {
+			var container = L.DomUtil.create('div', 'focus-geolocation');
+
+			this.link = L.DomUtil.create('div', 'ion-android-locate', container);
+			this.link.href = '#';
+			this._map = map;
+
+			L.DomEvent.on(this.link, 'click', this._click, this);
+			return container;
+		},
+		_click: function (e) {
+			//var 
+			if ("geolocation" in navigator) {
+				/* geolocation is available */
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var location = {lat: position.coords.latitude, lng: position.coords.longitude};
+					$rootScope.currentLocation = location;
+					FocusMapToGivenLocation(location, 16);
+				});
+			} else {
+				/* geolocation IS NOT available */
+			}
+		}
+	});
+	L.Control.SaveSelection = function (options) {
+		return new L.Control.saveSelection(options);
+	};
+
+
       //controls
       var lassoControl = L.Control.Lasso();
       var radiusControl = L.Control.Radius();
       var pathControl = L.Control.Path();
       var clearSelectionControl = L.Control.ClearSelection();
       var saveSelectionControl = L.Control.SaveSelection();
+	  var focusGeolocation = new L.Control.focusGeolocation();
       //var shareSelectionControl = L.Control.ShareSelection();
 
 	  function clearPathFilter() {
@@ -1284,6 +1325,7 @@
         //map.removeLayer(shareSelectionControl);
         map.removeLayer(saveSelectionControl);
         map.removeLayer(clearSelectionControl);
+		map.removeLayer(focusGeolocation);
       }
 
       function AddControls() {
@@ -1293,6 +1335,7 @@
         pathControl.addTo(map);
         lassoControl.addTo(map);
         radiusControl.addTo(map);
+		focusGeolocation.addTo(map);
       }
 
       //Makers
