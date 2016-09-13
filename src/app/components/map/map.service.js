@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, ip_api) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
 		
       console.log('MapService');
 
@@ -352,17 +352,10 @@
 			return container;
 		},
 		_click: function (e) {
-			//var 
-			if ("geolocation" in navigator) {
-				/* geolocation is available */
-				navigator.geolocation.getCurrentPosition(function(position) {
-					var location = {lat: position.coords.latitude, lng: position.coords.longitude};
-					$rootScope.currentLocation = location;
-					FocusMapToGivenLocation(location, 16);
-				});
-			} else {
-				/* geolocation IS NOT available */
-			}
+			LocationService.getUserLocation().then(function(location) {
+				$rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
+				FocusMapToGivenLocation($rootScope.currentLocation, 16);
+			});
 		}
 	});
 	L.Control.SaveSelection = function (options) {
@@ -1590,30 +1583,28 @@
         //map.locate({setView: false});
       }
 
-      function FocusMapToCurrentLocation(zoom) {
-        if ($state.current.name != 'index') return;
-        zoom = zoom || 8;
+		function FocusMapToCurrentLocation(zoom) {
+			if ($state.current.name != 'index')
+				return;
+			zoom = zoom || 8;
 
-		ip_api.locateUser().then(function(c) {
-            $rootScope.currentLocation = c.location;
-            $rootScope.currentCountryCode = c.countryCode;
-            FocusMapToGivenLocation(c.location, zoom)
-		});
+			LocationService.getUserLocation().then(function(location) {
+				$rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
+				$rootScope.currentCountryCode = location.countryCode ? location.countryCode : 'N/A';
+				FocusMapToGivenLocation($rootScope.currentLocation, 16, true);
+			});
+		}
 
-      }
-
-      function FocusMapToGivenLocation(location, zoom) {
-
-        //console.log('old center: ', location);
-
-        if (location.lat && location.lng) {
-          map.panTo(new L.LatLng(location.lat, location.lng));
-
-          if (zoom) {
-            map.setZoom(zoom);
-          }
-        }
-      }
+		function FocusMapToGivenLocation(location, zoom, pause) {
+			if (location.lat && location.lng) {
+				setTimeout(function() {
+					map.panTo(new L.LatLng(location.lat, location.lng));
+				}, !pause ? 1 : 500);
+				if (zoom) {
+					map.setZoom(zoom);
+				}
+			}
+		}
 
       /**
        * fixme!
