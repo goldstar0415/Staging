@@ -11,7 +11,7 @@
             <ul class="list-inline">
               <li><a ng-click="view = 'about'" class="menu-about">About</a>
               </li>
-              <li><a ng-click="view = 'reviews'" class="menu-reviews">Reviews</a>
+              <li><a ng-click="view = 'comments'" class="menu-reviews">Comments</a>
               </li>
               <li><a ng-click="view = 'photos'" class="menu-photos">Photos</a>
               </li>
@@ -92,39 +92,39 @@
         </div>
         <div class="row">
           <div class="content-popup-spot col-xs-12">
-            <div ng-show="view == 'reviews'" class=" col-xs-12 reviews-popup">
+            <div ng-show="view == 'comments'" class=" col-xs-12 reviews-popup">
               <div ng-if="data.spot.comments.length > 0">
                 <div class="col-xs-12 previous-next" ng-if="data.spot.comments.length > 1">
-                  <a ng-click="changeReview(-1)" ng-show="reviewIndex > 0" class="previous"></a>
-                  <a ng-click="changeReview(1)" ng-show="reviewIndex < data.spot.comments.length - 1" class="next "></a>
+                  <a ng-click="changeComment(-1)" ng-show="commentIndexIndex > 0" class="previous"></a>
+                  <a ng-click="changeComment(1)" ng-show="commentIndexIndex < data.spot.comments.length - 1" class="next "></a>
                 </div>
                 <div class="col-sm-3 col-xs-12 avatar">
-                  <img ng-src="{{data.spot.comments[reviewIndex].sender.avatar_url.thumb}}"
-                       ui-sref="profile.main({user_id: data.spot.comments[reviewIndex].sender.alias || data.spot.comments[reviewIndex].sender.user_id})">
+                  <img ng-src="{{data.spot.comments[commentIndexIndex].sender.avatar_url.thumb}}"
+                       ui-sref="profile.main({user_id: data.spot.comments[commentIndexIndex].sender.alias || data.spot.comments[commentIndexIndex].sender.user_id})">
                 </div>
 
                 <div class="col-xs-12 col-sm-9 content">
                   <span>
                     <a class="reviews-user"
-                       ui-sref="profile.main({user_id: currentReview.sender.alias || currentReview.sender.user_id})">
-                      {{data.spot.comments[reviewIndex].sender.first_name + ' ' +
-                      data.spot.comments[reviewIndex].sender.last_name}}
+                       ui-sref="profile.main({user_id: currentComment.sender.alias || currentComment.sender.user_id})">
+                      {{data.spot.comments[commentIndexIndex].sender.first_name + ' ' +
+                      data.spot.comments[commentIndexIndex].sender.last_name}}
                     </a>
                   </span>
 
                   <div class="description">
-                    <span ng-bind-html="data.spot.comments[reviewIndex].body | linky:'_blank'"></span>
+                    <span ng-bind-html="data.spot.comments[commentIndex].body | linky:'_blank'"></span>
                     <span class="attachments" ng-hide="isEmptyAttachments()">&nbsp;</span>
                   </div>
 
                   <p class="date-reviews">
-                    {{data.spot.comments[reviewIndex].created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}
+                    {{data.spot.comments[commentIndex].created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}
                   </p>
                 </div>
               </div>
 
               <div ng-if="!data.spot.comments.length" class="photos-event clearfix">
-                <span>There are no reviews yet</span>
+                <span>There are no comments yet</span>
               </div>
             </div>
             <div ng-show="view == 'photos'" class="wrapper">
@@ -190,7 +190,7 @@
     <!--<ul class="tabs">-->
     <!--<li><a ng-click="view = 'about'">About</a>-->
     <!--</li>-->
-    <!--<li><a ng-click="view = 'reviews'">Reviews</a>-->
+    <!--<li><a ng-click="view = 'comments'">Comments</a>-->
     <!--</li>-->
     <!--<li><a ng-click="view = 'photos'">Photos</a>-->
     <!--</li>-->
@@ -225,36 +225,36 @@
     <!--<div class="description" ng-bind-html="data.spot.description | toParagraphs"></div>-->
     <!--</div>-->
 
-    <!--<div ng-show="view == 'reviews'" class=" col-xs-12 reviews-popup no-pad">-->
+    <!--<div ng-show="view == 'comments'" class=" col-xs-12 reviews-popup no-pad">-->
     <!--<div ng-if="data.spot.comments.length > 0">-->
     <!--<div class="col-xs-12 previous-next" ng-if="data.spot.comments.length > 1 ">-->
-    <!--<a ng-click="changeReview(-1)" ng-show="reviewIndex > 0" class="previous"></a>-->
-    <!--<a ng-click="changeReview(1)" ng-show="reviewIndex < data.spot.comments.length - 1" class="next "></a>-->
+    <!--<a ng-click="changeComment(-1)" ng-show="commentIndex > 0" class="previous"></a>-->
+    <!--<a ng-click="changeComment(1)" ng-show="commentIndex < data.spot.comments.length - 1" class="next "></a>-->
     <!--</div>-->
 
     <!--<div class="col-sm-3 col-xs-12 avatar">-->
-    <!--<img ng-src="{{data.spot.comments[reviewIndex].sender.avatar_url.thumb}}"-->
-    <!--ui-sref="profile.main({user_id: data.spot.comments[reviewIndex].sender.alias || data.spot.comments[reviewIndex].sender.user_id})">-->
+    <!--<img ng-src="{{data.spot.comments[commentIndex].sender.avatar_url.thumb}}"-->
+    <!--ui-sref="profile.main({user_id: data.spot.comments[commentIndex].sender.alias || data.spot.comments[commentIndex].sender.user_id})">-->
     <!--</div>-->
     <!--<div class="col-xs-12 col-sm-9 content">-->
     <!--<span><a class="reviews-user"-->
-    <!--ui-sref="profile.main({user_id: data.spot.comments[reviewIndex].sender.alias || data.spot.comments[reviewIndex].sender.user_id})">-->
-    <!--{{data.spot.comments[reviewIndex].sender.first_name + ' ' +-->
-    <!--data.spot.comments[reviewIndex].sender.last_name}}-->
+    <!--ui-sref="profile.main({user_id: data.spot.comments[commentIndex].sender.alias || data.spot.comments[commentIndex].sender.user_id})">-->
+    <!--{{data.spot.comments[commentIndex].sender.first_name + ' ' +-->
+    <!--data.spot.comments[commentIndex].sender.last_name}}-->
     <!--</a></span>-->
 
     <!--<p class="date-reviews ">-->
-    <!--{{data.spot.comments[reviewIndex].created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>-->
+    <!--{{data.spot.comments[commentIndex].created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>-->
 
     <!--<div class="description">-->
-    <!--<span ng-bind-html="data.spot.comments[reviewIndex].body | linky:'_blank'"></span>-->
+    <!--<span ng-bind-html="data.spot.comments[commentIndex].body | linky:'_blank'"></span>-->
     <!--<span class="attachments" ng-hide="isEmptyAttachments()">&nbsp;</span>-->
     <!--</div>-->
 
     <!--</div>-->
     <!--</div>-->
     <!--<div ng-if="!data.spot.comments.length" class="photos-event clearfix">-->
-    <!--<span>There are no reviews yet</span>-->
+    <!--<span>There are no comments yet</span>-->
     <!--</div>-->
     <!--</div>-->
 

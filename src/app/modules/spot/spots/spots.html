@@ -32,7 +32,7 @@
             </ul>
           </div>
           <h2>
-            <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{::item.title}}</a>
+            <a ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})">{{::item.title}}</a>
           </h2>
 
 
@@ -46,7 +46,7 @@
 
           <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">
             <li ng-repeat="tag in item.tags"><a
-              ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{tag.name}}</a>
+              ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})">{{tag.name}}</a>
             </li>
           </ul>
           <!--  tags -->

@@ -304,11 +304,11 @@
 
             <div class="sidebar-row row-min">
               <div class="col-sm-4 pad-min col-xs-4" ng-repeat="item in $root.profileUser.spots">
-                <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
+                <a ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})">
 
                   <img ng-src="{{item.cover_url.thumb}}" alt="" class="img-responsive"/>
 
-                  <div class="sidebar-user-name" ui-sref="spot({user_id: item.user_id, spot_id: item.id})">
+                  <div class="sidebar-user-name" ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})">
                     {{item.title}}
                   </div>
                 </a>

@@ -1,139 +1,193 @@
 <div class="spot-block no-margin-bottom">
-  <!-- section with spot -->
-  <section class="one-spot-section no-pad-bottom">
-    <div>
-      <div class="col-xs-12 no-pad">
-        <stars item="Spot.spot" class="clearfix"></stars>
+    <!-- section with spot -->
+    <section class="one-spot-section no-pad-bottom">
+        <div>
+            <div class="col-xs-12 no-pad">
+                <stars item="Spot.spot" class="clearfix"></stars>
 
-        <spot-type type="Spot.spot.type"></spot-type>
-      </div>
+                <spot-type type="Spot.spot.type"></spot-type>
+            </div>
 
-      <div ng-if="Spot.spot.is_approved == false">
-        This submittal is under review and will be posted shortly.
-      </div>
+            <div ng-if="Spot.spot.is_approved == false">
+                This submittal is under review and will be posted shortly.
+            </div>
 
-      <div ng-if="Spot.spot.type == 'Event'" class="date clearfix">
-          <date-range item="Spot.spot"></date-range>
-      </div>
+            <div ng-if="Spot.spot.type == 'Event'" class="date clearfix">
+                <date-range item="Spot.spot"></date-range>
+            </div>
 
-      <h2 class="">
-        <a>{{Spot.spot.title}}</a>
-      </h2>
+            <h2 class="">
+                <a>{{Spot.spot.title}}</a>
+            </h2>
 
-      <p class="place" ng-if="Spot.spot.points.length > 0">{{::Spot.spot.points[0].address}}</p>
+            <p class="place" ng-if="Spot.spot.points.length > 0">{{::Spot.spot.points[0].address}}</p>
 
-      <div class="description" ng-bind-html="Spot.spot.description | toParagraphs"></div>
+            <div class="description" ng-bind-html="Spot.spot.description | toParagraphs"></div>
 
-      <div class="external-link clearfix" ng-repeat="item in Spot.spot.web_sites track by $index">
-        <a target="_blank" rel="nofollow" href="{{item}}">{{item | shortLink}}</a>
-      </div>
+            <div class="external-link clearfix" ng-repeat="item in Spot.spot.web_sites track by $index">
+                <a target="_blank" rel="nofollow" href="{{item}}">{{item | shortLink}}</a>
+            </div>
 
-      <ng-carousel images="Spot.spot.photos"></ng-carousel>
+            <ng-carousel images="Spot.spot.photos"></ng-carousel>
 
-      <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
-        <li ng-repeat="link in Spot.spot.videos track by $index" class="video-size">
-          <youtube-player src="link"></youtube-player>
-        </li>
-      </ul>
+            <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
+                <li ng-repeat="link in Spot.spot.videos track by $index" class="video-size">
+                <youtube-player src="link"></youtube-player>
+                </li>
+            </ul>
 
 
-      <ul class="tags ">
-        <li ng-repeat="tag in Spot.spot.tags">
-          {{tag.name}}
-        </li>
-      </ul>
-      <!--  tags -->
+            <ul class="tags ">
+                <li ng-repeat="tag in Spot.spot.tags">
+                    {{tag.name}}
+                </li>
+            </ul>
+            <!--  tags -->
 
-      <ul class="tools clearfix">
-        <li ng-if="currentUser.id == Spot.spot.user_id || isRole(currentUser, 'admin')">
-          <a ui-sref="spot_edit({spot_id: Spot.spot.id})" class="edit-tools">Edit</a>
-        </li>
-        <li ng-if="currentUser.id == Spot.spot.user_id || isRole(currentUser, 'admin')">
-          <a ng-click="Spot.removeSpot(Spot.spot, $index);" class="delete">Delete</a>
-        </li>
+            <ul class="tools clearfix">
+                <li ng-if="currentUser.id == Spot.spot.user_id || isRole(currentUser, 'admin')">
+                    <a ui-sref="spot_edit({spot_id: Spot.spot.id})" class="edit-tools">Edit</a>
+                </li>
+                <li ng-if="currentUser.id == Spot.spot.user_id || isRole(currentUser, 'admin')">
+                    <a ng-click="Spot.removeSpot(Spot.spot, $index);" class="delete">Delete</a>
+                </li>
 
-        <li ng-if="!Spot.spot.is_saved">
-          <a class="save-event" ng-click="Spot.saveToCalendar(Spot.spot)">Save</a>
-        </li>
-        <li ng-if="currentUser && Spot.spot.is_saved">
-          <a class="save-event saved clicked" ng-click="Spot.removeFromCalendar(Spot.spot)">Remove</a>
-        </li>
-        <li ng-if="currentUser.id != Spot.spot.user_id && !Spot.spot.is_favorite">
-          <a class="favorite-spot" ng-click="Spot.addToFavorite(Spot.spot)">Favorite</a>
-        </li>
-        <li ng-if="currentUser && currentUser.id != Spot.spot.user_id && Spot.spot.is_favorite">
-          <a class="fav favorited" ng-click="Spot.removeFromFavorite(Spot.spot)">Unfavorite</a>
-        </li>
-        <li ng-if="Spot.spot.is_approved">
-          <invite-friends item="Spot.spot"></invite-friends>
-        </li>
-        <li ng-if="Spot.spot.type == 'Event'">
-          <a class="download"
-             ng-href="{{Spot.API_URL + '/spots/' + Spot.spot.id + '/export'}}" target="_blank">Export ICS</a>
-        </li>
-        <li ng-if="currentUser && currentUser.id != Spot.spot.user_id && !Spot.spot.isReported">
-          <a class="report-icon" report-spot="Spot.spot">Report</a>
-        </li>
-        <li ng-if="(!Spot.spot.user_id || !Spot.spot.user.verified) && !Spot.spot.isClaimed">
-          <a class="report-icon" claim-spot="Spot.spot">Claim listing</a>
-        </li>
-        <li>
-          <share item="Spot.spot" class="" type="spot"></share>
-        </li>
-      </ul>
-      <share item="Spot.spot" class="visible-xs" type="spot" only-icon="true"></share>
+                <li ng-if="!Spot.spot.is_saved">
+                    <a class="save-event" ng-click="Spot.saveToCalendar(Spot.spot)">Save</a>
+                </li>
+                <li ng-if="currentUser && Spot.spot.is_saved">
+                    <a class="save-event saved clicked" ng-click="Spot.removeFromCalendar(Spot.spot)">Remove</a>
+                </li>
+                <li ng-if="currentUser.id != Spot.spot.user_id && !Spot.spot.is_favorite">
+                    <a class="favorite-spot" ng-click="Spot.addToFavorite(Spot.spot)">Favorite</a>
+                </li>
+                <li ng-if="currentUser && currentUser.id != Spot.spot.user_id && Spot.spot.is_favorite">
+                    <a class="fav favorited" ng-click="Spot.removeFromFavorite(Spot.spot)">Unfavorite</a>
+                </li>
+                <li ng-if="Spot.spot.is_approved">
+                <invite-friends item="Spot.spot"></invite-friends>
+                </li>
+                <li ng-if="Spot.spot.type == 'Event'">
+                    <a class="download"
+                       ng-href="{{Spot.API_URL + '/spots/' + Spot.spot.id + '/export'}}" target="_blank">Export ICS</a>
+                </li>
+                <li ng-if="currentUser && currentUser.id != Spot.spot.user_id && !Spot.spot.isReported">
+                    <a class="report-icon" report-spot="Spot.spot">Report</a>
+                </li>
+                <li ng-if="(!Spot.spot.user_id || !Spot.spot.user.verified) && !Spot.spot.isClaimed">
+                    <a class="report-icon" claim-spot="Spot.spot">Claim listing</a>
+                </li>
+                <li>
+                <share item="Spot.spot" class="" type="spot"></share>
+                </li>
+            </ul>
+            <share item="Spot.spot" class="visible-xs" type="spot" only-icon="true"></share>
 
-    </div>
-  </section>
-  <!-- end section with spot -->
+        </div>
+    </section>
+    <!-- end section with spot -->
 
 </div>
 
+<section class="review-section clearfix">
+    <div class="review-content clearfix">
+        <review-input 
+            ng-if="ReviewInput.item.auth_rate.user_id != $root.currentUser.id"
+            review="Spot.review" vote="Spot.vote" item="Spot.spot"
+                      maxlength="255"></review-input>
+    </div>
+    <div ng-if="Spot.spot.votes.length" class="new-review col-xs-12"><h3 class="col-xs-12">Recent</h3></div>
+    <div class="review post clearfix" ng-repeat="review in Spot.spot.votes">
+        <div ng-if="!review.deleted">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 padding-0">
+                <a ui-sref="profile.main({user_id: review.user.alias || review.user.id})">
+                    <img ng-src="{{review.user.avatar_url.thumb}}" class="avatar">
+                </a>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8 info">
+
+                <div>
+                    <div class="pull-left outline-none" ng-class="{readonly: !review.edit}">
+                        <rating
+                            ng-model="review.vote"
+                            max="5"
+                            readonly="!review.edit"
+                            state-on="'glyphicon glyphicon-star star-active'"
+                            state-off="'glyphicon glyphicon-star star-default'"
+                            ></rating>
+                    </div>
+                    <span class="name">
+                        &nbsp; by <a ui-sref="profile.main({user_id: review.user.alias || review.user.id})">{{review.user.first_name}} {{review.user.last_name}}</a>
+                    </span>
+                    <span class="time">{{review.created_at| fromNow}}</span>
+                </div>
+                <p  ng-if="!review.edit" ng-bind-html="review.message | linky:'_blank'"></p>
+                <textarea name="review" ng-model="review.message" placeholder="Start typing..."
+                    ng-if="review.edit && isRole(currentUser, 'admin')"
+                    ctrl-enter="ReviewInput.submit(reviewForm)" ng-maxlength="5000"
+                    class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-valid-maxlength ng-touched"
+                    required="required"></textarea>
+            </div>
+            
+        </div>
+        <div>
+            <div class="text-right" ng-if="isRole(currentUser, 'admin')">
+                <!--<a class="like">Like</a>-->
+                <a class="action edit" ng-if="!review.edit" ng-click="Spot.editReview(review)">Edit</a>
+                <a class="action delete" ng-click="Spot.deleteReview(review, $index)">Delete</a>
+                <a class="action save" ng-if="review.edit"ng-click="Spot.updateReview(review)">Save</a>
+                <a class="action cancel" ng-if="review.edit"ng-click="Spot.cancelEditReview(review)">Cancel</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 <!-- section with comment -->
 <section class="comments-section" >
-  <div class="comments-content clearfix">
-    <ng-input message="Spot.message" attachments="Spot.attachments" on-submit="Spot.postComment()"
-              maxlength="255"></ng-input>
-  </div>
-
-  <div infinite-scroll="Spot.pagination.nextPage()" infinite-scroll-disabled="Spot.pagination.busy"
-       class="clearfix" infinite-scroll-distance="1">
-    <div class="col-xs-12 post" ng-repeat="post in Spot.comments.data">
-      <div class="col-xs-12 no-pad">
-      </div>
-      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 padding-0">
-        <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">
-          <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
-        </a>
-      </div>
-      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8 info">
-        <!-- <div class="plus-minus ng-scope" ng-if="currentUser">
-          <a class="plus" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)"></a>
-          <span class="value-rating ng-binding">0</span>
-          <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
-        </div> -->
-        <h3 class="name">
-          <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
-        </h3>
-
-        <p ng-bind-html="post.body | linky:'_blank'"></p>
-
-
-      </div>
-      <div class="col-xs-12">
-        <attachments items="post.attachments"></attachments>
-        <p class="time text-right">{{post.created_at | fromNow}}</p>
-        <div class="text-right">
-          <!--<a class="like">Like</a>-->
-          <a class="delete" ng-if="post.user_id == currentUser.id" ng-click="Spot.deleteComment(post, $index)">Delete</a>
-        </div>
-      </div>
+    <div class="new-review col-xs-12"><h3 class="col-xs-12">Comments</h3></div>
+    <div class="comments-content clearfix">
+        <ng-input message="Spot.message" attachments="Spot.attachments" on-submit="Spot.postComment()"
+                  maxlength="255"></ng-input>
     </div>
-    <preloader ng-show="Spot.pagination.busy"></preloader>
-  </div>
+    <div infinite-scroll="Spot.pagination.nextPage()" infinite-scroll-disabled="Spot.pagination.busy"
+         class="clearfix" infinite-scroll-distance="1">
+        <div class="col-xs-12 post" ng-repeat="post in Spot.comments.data">
+            <div class="col-xs-12 no-pad">
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 padding-0">
+                <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">
+                    <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
+                </a>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8 info">
+                <!-- <div class="plus-minus ng-scope" ng-if="currentUser">
+                  <a class="plus" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)"></a>
+                  <span class="value-rating ng-binding">0</span>
+                  <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
+                </div> -->
+                <h3 class="name">
+                    <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
+                </h3>
 
-  <div class="spot-post empty" ng-if="Spot.comments.data.length == 0 && !Spot.pagination.busy">
-    <p class="comment-text">There are no comments.</p>
-  </div>
+                <p ng-bind-html="post.body | linky:'_blank'"></p>
+
+
+            </div>
+            <div class="col-xs-12">
+                <attachments items="post.attachments"></attachments>
+                <p class="time text-right">{{post.created_at | fromNow}}</p>
+                <div class="text-right">
+                    <!--<a class="like">Like</a>-->
+                    <a class="delete" ng-if="post.user_id == currentUser.id" ng-click="Spot.deleteComment(post, $index)">Delete</a>
+                </div>
+            </div>
+        </div>
+        <preloader ng-show="Spot.pagination.busy"></preloader>
+    </div>
+
+    <div class="spot-post empty" ng-if="Spot.comments.data.length == 0 && !Spot.pagination.busy">
+        <p class="comment-text">There are no comments.</p>
+    </div>
 </section>
 <!-- end section with comment -->
