@@ -4,7 +4,7 @@
   angular
     .module('zoomtivity', [
       'ngAnimate',
-      //'ngCookies',
+      'ngCookies',
       //'ngTouch',
       'ngSanitize',
       'ngResource',
