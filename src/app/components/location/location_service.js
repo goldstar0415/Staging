@@ -73,6 +73,7 @@
 		 */
 		this.getUserLocation = function() {
 			var deferred = $q.defer();
+			checkPermissions();
 			if (permissionsGranted || canAskGeolocation()) {
 				if (!permissionsGranted) {
 					saveAskGeolocation();
