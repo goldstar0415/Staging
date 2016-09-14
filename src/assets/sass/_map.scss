@@ -109,7 +109,32 @@
     width: auto !important;
   }
 }
-
+.leaflet-control-container {
+	.leaflet-control-zoom {
+		&.leaflet-bar a {
+			float: none !important;
+		}
+	}
+	.focus-geolocation {
+		div {
+			margin-top: 5px;
+			background-color: rgba(159, 173, 173, .8);
+			border-radius: 0;
+			color: #fff;
+			height: 40px;
+			width: 40px;
+			line-height: 40px;
+			border: 0;
+			font-weight: 100;
+			font-size: 30px;
+			text-align: center;
+			&:hover {
+				background-color: rgba(0, 207, 255, .8);
+				
+			}
+		}
+	}
+}
 .custom-map-icons {
   // border-radius: 50%;
   display: block;

@@ -490,7 +490,7 @@
 }
 .leaflet-control-zoom a:hover {
 	background-color: rgba(0, 207, 255, .8);
-	height: 100%;
+	height: 40px;
 	width: 40px;
 	line-height: 40px;
 	color: #fff;

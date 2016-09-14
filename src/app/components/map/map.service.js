@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, ip_api) {
+    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
 		
       console.log('MapService');
 
@@ -330,12 +330,46 @@
         return new L.Control.clearSelection(options);
       };
 
+	/**
+	 * Focus Geolocation
+	 */
+	L.Control.focusGeolocation = L.Control.extend({
+		options: {
+			position: 'topleft',
+			title: {
+				'false': 'Save selection',
+				'true': 'Save selection'
+			}
+		},
+		onAdd: function (map) {
+			var container = L.DomUtil.create('div', 'focus-geolocation');
+
+			this.link = L.DomUtil.create('div', 'ion-android-locate', container);
+			this.link.href = '#';
+			this._map = map;
+
+			L.DomEvent.on(this.link, 'click', this._click, this);
+			return container;
+		},
+		_click: function (e) {
+			LocationService.getUserLocation().then(function(location) {
+				$rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
+				FocusMapToGivenLocation($rootScope.currentLocation, 16);
+			});
+		}
+	});
+	L.Control.SaveSelection = function (options) {
+		return new L.Control.saveSelection(options);
+	};
+
+
       //controls
       var lassoControl = L.Control.Lasso();
       var radiusControl = L.Control.Radius();
       var pathControl = L.Control.Path();
       var clearSelectionControl = L.Control.ClearSelection();
       var saveSelectionControl = L.Control.SaveSelection();
+	  var focusGeolocation = new L.Control.focusGeolocation();
       //var shareSelectionControl = L.Control.ShareSelection();
 
 	  function clearPathFilter() {
@@ -1284,6 +1318,7 @@
         //map.removeLayer(shareSelectionControl);
         map.removeLayer(saveSelectionControl);
         map.removeLayer(clearSelectionControl);
+		map.removeLayer(focusGeolocation);
       }
 
       function AddControls() {
@@ -1293,6 +1328,7 @@
         pathControl.addTo(map);
         lassoControl.addTo(map);
         radiusControl.addTo(map);
+		focusGeolocation.addTo(map);
       }
 
       //Makers
@@ -1547,30 +1583,28 @@
         //map.locate({setView: false});
       }
 
-      function FocusMapToCurrentLocation(zoom) {
-        if ($state.current.name != 'index') return;
-        zoom = zoom || 8;
+		function FocusMapToCurrentLocation(zoom) {
+			if ($state.current.name != 'index')
+				return;
+			zoom = zoom || 8;
 
-		ip_api.locateUser().then(function(c) {
-            $rootScope.currentLocation = c.location;
-            $rootScope.currentCountryCode = c.countryCode;
-            FocusMapToGivenLocation(c.location, zoom)
-		});
+			LocationService.getUserLocation().then(function(location) {
+				$rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
+				$rootScope.currentCountryCode = location.countryCode ? location.countryCode : 'N/A';
+				FocusMapToGivenLocation($rootScope.currentLocation, 16, true);
+			});
+		}
 
-      }
-
-      function FocusMapToGivenLocation(location, zoom) {
-
-        //console.log('old center: ', location);
-
-        if (location.lat && location.lng) {
-          map.panTo(new L.LatLng(location.lat, location.lng));
-
-          if (zoom) {
-            map.setZoom(zoom);
-          }
-        }
-      }
+		function FocusMapToGivenLocation(location, zoom, pause) {
+			if (location.lat && location.lng) {
+				setTimeout(function() {
+					map.panTo(new L.LatLng(location.lat, location.lng));
+				}, !pause ? 1 : 500);
+				if (zoom) {
+					map.setZoom(zoom);
+				}
+			}
+		}
 
       /**
        * fixme!
