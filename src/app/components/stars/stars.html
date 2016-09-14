@@ -1,11 +1,14 @@
-<div class="outline-none text-center"
-     ng-class="{readonly: Stars.item.is_rated || !$root.currentUser || Stars.item.user_id == $root.currentUser.id}">
+<div class="outline-none text-center readonly" >
   <rating
     ng-model="Stars.item.rating"
-    readonly="Stars.item.is_rated || !$root.currentUser || Stars.item.user_id == $root.currentUser.id"
+    readonly="true"
     max="5"
     state-on="'glyphicon glyphicon-star star-active'"
     state-off="'glyphicon glyphicon-star star-default'"
     ></rating>
 </div>
 
+<!-- 
+Stars.item.is_rated || !$root.currentUser || Stars.item.user_id == $root.currentUser.id 
+readonly="Stars.item.is_rated || !$root.currentUser || Stars.item.user_id == $root.currentUser.id"
+-->

@@ -10,7 +10,7 @@
 
   /** @ngInject */
   function SpotService(Spot, moment, toastr, dialogs, $rootScope, SignUpService, DATE_FORMAT) {
-    var reviewIndex;
+    var commentIndex;
     var $scope;
 
     return {

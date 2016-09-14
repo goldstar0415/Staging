@@ -36,7 +36,12 @@
     };
 
     vm.isStream = function () {
-      return $state.is('profile.main') || $state.is('feeds') || $state.is('reviews') || $state.is('chat') || $state.is('chatRoom');
+      return $state.is('profile.main') 
+              || $state.is('feeds') 
+              || $state.is('comments') 
+              || $state.is('chat') 
+              || $state.is('chatRoom')
+              || $state.is('reviews');
     };
 
     vm.isVisibleProfileBlock = function () {

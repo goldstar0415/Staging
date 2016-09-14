@@ -259,7 +259,7 @@
           <div class="media-body">
             <h2 class="media-heading feeds-title">
               <button type="button" ng-click="Plan.deleteAttachment($parent.$index)" class="close">x</button>
-              <a ui-sref="spot({user_id: attachment.data.user_id, spot_id: attachment.data.id})">{{attachment.data.title}}</a>
+              <a ui-sref="spot({user_id: attachment.data.user_id || 0, spot_id: attachment.data.id})">{{attachment.data.title}}</a>
             </h2>
 
             <p class="time">

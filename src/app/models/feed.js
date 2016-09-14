@@ -16,6 +16,10 @@
         isArray: false,
         ignoreLoadingBar: true
       },
+      comments: {
+        url: API_URL + '/comments',
+        ignoreLoadingBar: true
+      },
       reviews: {
         url: API_URL + '/reviews',
         ignoreLoadingBar: true
