@@ -12,6 +12,8 @@
 		var COOKIE_DESKTOP_EXPIRE_SEC		= 60*60*24*7; // 7 days
 		var COOKIE_MOBILE_EXPIRE_SEC		= 60*60*24*1; // 1 day
 		var TIME_NEXT_LOCATION_PROMT_SEC	= 60*60*24*1; // 1 day
+		var timeLastUpdateCookie			= 0;
+		var TIME_USE_COOKIE_SEC				= 10;		  // 1 day
 		
 		var getUserLocationIpApi = function() {
 			var deferred = $q.defer();
@@ -37,7 +39,7 @@
 					deferred.resolve(location);
 				}, function(e) {
 					deferred.reject(e);
-				});
+				}, {timeout: 5000});
 			} else {
 				deferred.reject('Geolocation not supported');
 			}
@@ -50,6 +52,7 @@
 			}
 			watchId = navigator.geolocation.watchPosition(function(position) {
 				console.log('LocationService', 'update cookie with latest position');
+				timeLastUpdateCookie = moment().unix();
 				storeLocation(position.coords);
 			});
 		};
@@ -74,7 +77,12 @@
 		this.getUserLocation = function() {
 			var deferred = $q.defer();
 			checkPermissions();
-			if (permissionsGranted || canAskGeolocation()) {
+			if ((moment().unix() - timeLastUpdateCookie < TIME_USE_COOKIE_SEC) && 'latitude' in storage && 'longitude' in storage) {
+				// get fast from fresh cookie data
+				// sorry for code duplicating
+				console.log('LocationService', 'coords from cookie fresh');
+				deferred.resolve(storage);
+			} else if (permissionsGranted || canAskGeolocation()) {
 				if (!permissionsGranted) {
 					saveAskGeolocation();
 				}
@@ -100,7 +108,6 @@
 			if ("lastTimeGetLocation" in storage) {
 				return (moment().unix() - storage.lastTimeGetLocation) >= TIME_NEXT_LOCATION_PROMT_SEC ? true : false;
 			} else {
-				console.log('no lastTimeGetLocation in cookies ');
 				return true;
 			}
 		};
@@ -108,7 +115,6 @@
 		var saveAskGeolocation = function() {
 			storage.lastTimeGetLocation = moment().unix();
 			saveStorage();
-			console.log('saveAskGeolocation');
 		};
 		
 		var saveStorage = function() {
@@ -117,7 +123,6 @@
 		
 		var checkPermissions = function() {
 			// check if permission is granted
-			permissionsGranted = false;
 			if ("permissions" in navigator && "query" in navigator.permissions) {
 				navigator.permissions.query({name:'geolocation'}).then(function(result) {
 					if (result.state === 'granted') {
@@ -125,9 +130,12 @@
 						watchNavigatorGeolocation();
 					} else if (result.state === 'prompt') {
 						console.log('navigator', 'geolocation', 'promt');
+						permissionsGranted = false;
 					}
 					// Don't do anything if the permission was denied.
 				});
+			} else {
+				permissionsGranted = false;
 			}
 		};
 		
@@ -138,14 +146,18 @@
 				storage = JSON.parse($cookies.get('browserGeolocation'));
 				if (storage) {
 					console.log('LocationService', 'read storage ok', storage);
+				} else {
+					storage = {};
 				}
 			} catch (e) {
 				console.log('LocationService', 'read storage failed', e);
+				storage = {};
 			}
 			checkPermissions();
 			// we always need country code
 			getUserLocationIpApi().then(function(l) {
 				ipApiLocation = l;
+				storage.countryCode = l.countryCode;
 			});
 		};
 		
