@@ -12,7 +12,7 @@ use App\Http\Requests\Spot\SpotFavoriteRequest;
 use App\Http\Requests\Spot\SpotIndexRequest;
 use App\Http\Requests\Spot\SpotInviteRequest;
 use App\Http\Requests\Spot\SpotOwnerRequest;
-use App\Http\Requests\Spot\SpotRateRequest;
+use App\Http\Requests\Spot\Review\SpotReviewRequest;
 use App\Http\Requests\Spot\SpotReportRequest;
 use App\Http\Requests\Spot\SpotStoreRequest;
 use App\Http\Requests\Spot\SpotUnFavoriteRequest;
@@ -29,6 +29,7 @@ use App\User;
 use App\SpotOwnerRequest as SpotOwnerRequestModel;
 use ChrisKonnertz\OpenGraph\OpenGraph;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Auth\Guard;
 
 use App\Http\Requests;
 
@@ -40,14 +41,21 @@ use App\Http\Requests;
  */
 class SpotController extends Controller
 {
+    
+    /**
+     * @var Guard
+     */
+    private $auth;
+    
     /**
      * SpotController constructor.
      */
-    public function __construct()
+    public function __construct(Guard $auth)
     {
         $this->middleware('auth', ['except' => ['index', 'show', 'categories', 'favorites', 'preview', 'export']]);
         $this->middleware('base64upload:cover', ['only' => ['store', 'update']]);
         $this->middleware('privacy', ['except' => ['store', 'update', 'destroy']]);
+        $this->auth = $auth;
     }
 
     /**
@@ -140,22 +148,31 @@ class SpotController extends Controller
      */
     public function show($spot)
     {
-		$res = $spot
+        $auth = $this->auth;
+        $res = $spot
             ->load(['photos', 'user', 'tags', 'comments', 'remotePhotos'])
             ->append(['count_members', 'members', 'comments_photos']);
-		if (isset($res->remotePhotos)) {
-			foreach($res->remotePhotos as $p) {
-				if (isset($p->url)) {
-					$p->photo_url = [
-						'original'	=> $p->url,
-						'medium'	=> $p->url,
-						'thumb'		=> $p->url
-					];
-					$res->photos->push($p);
-				}
-			}
-		}
-		return $res;
+        $res->load(['votes' => function($query) use ($auth) {
+            if($auth->check()) {
+                $query->where('user_id', '!=', $auth->user()->id);
+            }
+            $query->with('user');
+            $query->orderBy('created_at', 'DESC');
+        }]);
+        $res->auth_rate = ($auth->check())?$res->votes()->where('user_id', $auth->user()->id)->with('user')->first():false;
+        if (isset($res->remotePhotos)) {
+            foreach($res->remotePhotos as $p) {
+                if (isset($p->url)) {
+                    $p->photo_url = [
+                            'original'	=> $p->url,
+                            'medium'	=> $p->url,
+                            'thumb'		=> $p->url
+                    ];
+                    $res->photos->push($p);
+                }
+            }
+        }
+        return $res;
     }
 
     /**
@@ -261,11 +278,27 @@ class SpotController extends Controller
     /**
      * Rate the spot
      *
-     * @param SpotRateRequest $request
+     * @param SpotReviewRequest $request
      * @param \App\Spot $spot
      * @return SpotVote
      */
-    public function rate(SpotRateRequest $request, $spot)
+    public function rate(SpotReviewRequest $request, $spot)
+    {
+        $vote = new SpotVote($request->all());
+        $vote->user()->associate($request->user());
+        $spot->votes()->save($vote);
+
+        return $vote;
+    }
+    
+    /**
+     * Add a review
+     *
+     * @param SpotReviewRequest $request
+     * @param \App\Spot $spot
+     * @return SpotVote
+     */
+    public function reviews(SpotReviewRequest $request, $spot)
     {
         $vote = new SpotVote($request->all());
         $vote->user()->associate($request->user());

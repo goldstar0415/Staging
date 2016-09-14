@@ -13,6 +13,8 @@ use App\Services\EmailChange\EmailChangeBroker;
 use App\Services\EmailChange\EmailChangeContract;
 use App\Services\Privacy;
 use App\User;
+use App\Spot;
+use App\SpotVote;
 use DB;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
@@ -59,6 +61,7 @@ class UserController extends Controller
             'getMe',
             'getIndex',
             'getList',
+            'comments',
             'reviews',
             'contactUs',
             'changeEmail'
@@ -252,6 +255,20 @@ class UserController extends Controller
     }
 
     /**
+     * Display a listing of the my comments.
+     *
+     * @param PaginateRequest $request
+     * @return \Illuminate\Database\Eloquent\Collection
+     * @internal param Spot $spot
+     */
+    public function comments(PaginateRequest $request)
+    {
+        $comments = Comment::with('commentable','sender')
+            ->where('user_id', $request->user()->id)->where('commentable_type', Spot::class);
+        return $this->paginatealbe($request, $comments);
+    }
+    
+    /**
      * Display a listing of the my reviews.
      *
      * @param PaginateRequest $request
@@ -260,7 +277,9 @@ class UserController extends Controller
      */
     public function reviews(PaginateRequest $request)
     {
-        return $this->paginatealbe($request, $request->user()->reviews()->with('commentable', 'sender'));
+        $reviews = SpotVote::with('user','spot')
+            ->where('user_id', $request->user()->id);
+        return $this->paginatealbe($request, $reviews);
     }
 
     /**

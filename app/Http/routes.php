@@ -58,9 +58,11 @@ Route::post('friends/{friends}/setavatar', 'FriendController@setAvatar');
  * Spot resource
  */
 Route::get('spots/categories', 'SpotController@categories');
+Route::get('comments', 'UserController@comments');
 Route::get('reviews', 'UserController@reviews');
 Route::get('spots/favorites', 'SpotController@favorites');
 Route::post('spots/invite', 'SpotController@invite');
+Route::post('spots/{spots}/reviews', 'SpotController@reviews');
 Route::post('spots/{spots}/rate', 'SpotController@rate');
 Route::post('spots/{spots}/report', 'SpotController@report');
 Route::post('spots/{spots}/owner', 'SpotController@ownerRequest');
@@ -71,6 +73,7 @@ Route::get('spots/{spots}/preview', 'SpotController@preview');
 Route::get('spots/{spots}/export', 'SpotController@export');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 Route::resource('spots.comments', 'SpotCommentController', ['except' => ['create', 'edit']]);
+Route::resource('spots.reviews', 'SpotReviewController', ['except' => ['create', 'edit']]);
 Route::resource('spots.photos', 'SpotPhotoController', ['only' => 'store']);
 Route::resource(
     'spots.photos.comments',

@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Spot;
+namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-
-class SpotRateRequest extends Request
+/**
+ * Class PaginateCommentRequest
+ * @package App\Http\Requests
+ */
+class PaginateReviewRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +15,7 @@ class SpotRateRequest extends Request
      */
     public function authorize()
     {
-        return $this->route('spots')->votes()->where('user_id', $this->user()->id)->first() === null;
+        return true;
     }
 
     /**
@@ -24,7 +26,8 @@ class SpotRateRequest extends Request
     public function rules()
     {
         return [
-            'vote' => 'required|integer|between:1,5'
+            'page' => 'integer',
+            'limit' => 'integer'
         ];
     }
 }

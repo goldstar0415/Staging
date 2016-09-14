@@ -37,7 +37,7 @@ class AddReview implements ShouldQueue
         }
 
         if ($user = User::find($user_id)) {
-            $user->reviews()->save($event->comment);
+            $user->comments()->save($event->comment);
         }
     }
 }

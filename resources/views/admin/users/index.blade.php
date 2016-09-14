@@ -30,6 +30,7 @@
             <th>Location</th>
             <th>Geo location</th>
             <th>Last login</th>
+            <th>Count of reviews</th>
             <th>Count of spots</th>
             <th>Count of followers</th>
             <th></th>
@@ -53,6 +54,7 @@
                     {{ $user->geo_location }}
                 </td>
                 <td>{{ $user->last_action_at }}</td>
+                <td>{{ $user->count_reviews }}</td>
                 <td>{{ $user->count_spots }}</td>
                 <td>{{ $user->count_followers }}</td>
                 <td>

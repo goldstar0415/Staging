@@ -10,6 +10,7 @@ namespace App;
  * @property integer $user_id
  * @property integer $spot_id
  * @property integer $vote
+ * @property text    $message
  *
  * Relation properties
  * @property Spot $spot
@@ -17,7 +18,7 @@ namespace App;
  */
 class SpotVote extends BaseModel
 {
-    protected $fillable = ['vote'];
+    protected $fillable = ['vote', 'message'];
 
     /**
      * Get the spot that belongs to the vote

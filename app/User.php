@@ -18,6 +18,7 @@ use Request;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
+use App\SpotVote;
 
 /**
  * Class User
@@ -150,6 +151,7 @@ class User extends BaseModel implements
         'count_followers',
         'count_followings',
         'count_spots',
+        'count_reviews',
         'is_following',
         'activity_level',
         'social_links'
@@ -270,6 +272,15 @@ class User extends BaseModel implements
         }
 
         return $result;
+    }
+    
+    
+    /**
+     * Get the user's reviews count
+     */
+    public function getCountReviewsAttribute()
+    {
+        return SpotVote::where('user_id', $this->id)->count();
     }
 
     /**
@@ -516,11 +527,12 @@ class User extends BaseModel implements
     }
 
     /**
-     * The reviews that belongs to the user
+     * The comments that belongs to the user
      */
-    public function reviews()
+    public function comments()
     {
-        return $this->belongsToMany(Comment::class, 'reviews');
+        // reviews table is a relations table for comments
+        return $this->belongsToMany(Comment::class, 'reviews', 'user_id', 'comment_id');
     }
 
     /**
@@ -734,7 +746,7 @@ class User extends BaseModel implements
             'favorites',
             'calendarSpots',
             'socials',
-            'reviews',
+            'comments', // through 'reviews' table
             'roles'
         ];
     }
