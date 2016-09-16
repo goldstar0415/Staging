@@ -1565,3 +1565,9 @@ body .atlwdg-trigger.atlwdg-TOP {
     }
   }
 }
+
+.event, figure, .event-result-logo {
+    img  {
+        object-fit: cover;
+    }
+}
