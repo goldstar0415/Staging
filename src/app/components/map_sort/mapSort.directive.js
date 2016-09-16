@@ -62,6 +62,7 @@
     $rootScope.isDrawArea = false;
     $rootScope.mapSortFilters = $rootScope.mapSortFilters || {};
     $rootScope.toggleLayer = toggleLayer;
+    $rootScope.showMessage = showMessage;
 
     $rootScope.$on('update-map-data', onUpdateMapData);
     $rootScope.$on('clear-map-selection', onRemoveSelection);
@@ -77,7 +78,7 @@
 		vm.searchParams.search_text	= ($stateParams.searchText || '');
 		vm.searchParams.searchType	= _.isObject($stateParams.spotSearch) ? $stateParams.spotSearch.activeSpotType || 'event' : 'event';
 		vm.searchParams.rating		= _.isObject($stateParams.filter) ? $stateParams.filter.rating || null : null;
-	  
+
 		if (_.isObject($stateParams.filter)) {
 			if ($stateParams.filter.start_date) {
 				vm.searchParams.start_date = moment($stateParams.filter.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
@@ -91,7 +92,7 @@
 				});
 			}
         }
-		
+
 		if (_.isObject($stateParams.spotLocation) && $stateParams.spotLocation.lat !== undefined && $stateParams.spotLocation.lat) { // from 'intro'
 			vm.vertical = false;
 			toggleLayer(vm.searchParams.searchType, false);
@@ -118,6 +119,10 @@
 		}
 
 	}
+
+    function showMessage(type, text) {
+        toastr[type](text);
+    }
 
     /**
      * Search locations when typing - ok
@@ -420,7 +425,7 @@
 				data.filter.start_date = vm.searchParams.start_date;
 			}
 		}
-	  
+
 		if (vm.searchParams.end_date) {
 			if (vm.searchParams.end_date.match(/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/)) {
 				data.filter.end_date = moment(vm.searchParams.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
@@ -428,7 +433,7 @@
 				data.filter.end_date = vm.searchParams.end_date;
 			}
 		}
-		
+
 		var categories = _.where(vm.spotCategories[$rootScope.sortLayer], {selected: true});
 		if (categories.length > 0) {
 			data.filter.category_ids = _.pluck(categories, 'id');
@@ -442,7 +447,7 @@
 			data.filter.b_boxes = bbox_array;
 			data.search_text = '';
 		}
-	  
+
 		if (bbox_array.length == 0 && !vm.searchParams.search_text) {
 			toastr.error('Enter location or draw the area');
 			$rootScope.mapSortFilters = {};
@@ -722,7 +727,7 @@
       vm.currentWeather.sunset = moment(daily[0].sunsetTime * 1000).format(DATE_FORMAT.time);
       vm.currentWeather.temperature = Math.round((daily[0].temperatureMax + daily[0].temperatureMin) / 2);
     }
-	
+
 	/**
 	 * Detect City in the Weather Panel
 	 */
