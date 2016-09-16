@@ -7,7 +7,7 @@
     .constant('DEBUG', true)
     .constant('MOBILE_APP', false)
     .constant('BACKEND_URL', '//api.zoomtivity.com')
-    .constant('API_URL', '//zoomtivity.com/api')
+    .constant('API_URL', '//api.zoomtivity.com')
     .constant('SOCKET_URL', 'https://api.zoomtivity.com')
     .constant('GOOGLE_API_KEY', 'AIzaSyBbBdjAuH8wCJsLBThDXYRBYX9e45Dyf_8')
     .constant('GOOGLE_CLIENT_ID', '499164554835-tnvq6glehrsnf73he3u353jaqn5ikpc8.apps.googleusercontent.com')
