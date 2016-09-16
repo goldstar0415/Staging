@@ -152,3 +152,16 @@ header {
 
 }
 
+#map-profile-profile {
+    width: 100%;
+    li {
+        width: 100%;
+        a {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            max-width: 1000px;
+        }
+    }
+}
