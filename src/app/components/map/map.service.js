@@ -4,7 +4,7 @@
   angular
     .module('zoomtivity')
     .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
-		
+
       console.log('MapService');
 
       var map = null;
@@ -35,7 +35,7 @@
       var pathRouter		= L.Routing.osrmv1({geometryOnly: true});
 	  var pathRouter2		= L.Routing.mapbox(MAPBOX_API_KEY);
 	  var pathRouterFail	= 0;
-	  
+
 		function getPathRouter() {
 			switch(pathRouterFail) {
 				case 0:
@@ -46,11 +46,11 @@
 					return pathRouter;
 			}
 		}
-		
+
 		function pathRouterFailed() {
 			pathRouterFail++;
 		}
-	  
+
       var pathSelectionStarted = false;
 
       //GEOCODING
@@ -71,13 +71,19 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'lasso-selection', container);
+
           this.link.href = '#';
           this._map = map;
 
           L.DomEvent.on(this.link, 'click', this._click, this);
           return container;
         },
+
         _click: function (e) {
+            var el = document.querySelector('.pick-notification');
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -140,6 +146,10 @@
           return container;
         },
         _click: function (e) {
+            var el = document.querySelector('.pick-notification');
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -178,7 +188,7 @@
             GetDataByBBox(bboxes);
             _activateControl(false);
           });
-		  
+
           _activateControl('.radius-selection');
         }
 
@@ -206,6 +216,10 @@
           return container;
         },
         _click: function (e) {
+            var el = document.querySelector('.pick-notification');
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -626,7 +640,7 @@
         map.removeLayer(otherLayer);
         currentLayer = "food";
       }
-		
+
 		/**
 		 * If Map has the layer
 		 * @param {string} layer
@@ -653,7 +667,7 @@
 				return false;
 			}
 		}
-		
+
       //show shelter layer on map
       function showShelterLayer(clearLayers, keepListeners) {
         if (keepListeners !== true) {
@@ -945,7 +959,7 @@
 						simplified.geometry.coordinates.forEach(function(e) {
 							$rootScope.routeInterpolated.push({latLng: {lat: e[1], lng: e[0]}});
 						});
-				  
+
 						line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
 						line.on('linetouched', function (e) {
 							function remove() {
@@ -1026,7 +1040,7 @@
 					}
 				});
         });
-		
+
       }
 
       //remove all selection listeners
@@ -1430,7 +1444,7 @@
 			var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
 			var popup = L.popup(options).setContent(popupContent[0]);
 			this.bindPopup(popup).openPopup();
-			  
+
             scope.item.$loading = true;
 
             var syncSpot;
@@ -1972,7 +1986,7 @@
         if (!show && hasWeather)
             map.removeLayer(map.weatherLayer);
       }
-	  
+
       return {
         Init: InitMap,
         GetMap: GetMap,
