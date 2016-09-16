@@ -1565,3 +1565,18 @@ body .atlwdg-trigger.atlwdg-TOP {
     }
   }
 }
+
+.radius-selection, .lasso-selection, .path-selection {
+    p {
+        display: none;
+    }
+    &:hover {
+        width: 200px;
+        text-align: center;
+        padding: 15px 0 0 50px;
+        color: white;
+        p {
+            display: block;
+        }
+    }
+}

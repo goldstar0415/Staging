@@ -1,4 +1,4 @@
-<div class="col-xs-12 menu-profile unauthorized-menu" ng-show="$root.mapState == 'full-size' && !$root.currentUser">
+<div class="col-xs-12 menu-profile unauthorized-menu" ng-show="$root.mapState == 'full-size' && !$root.currentUser" ng-click="$root.showMessage('info', 'Please Log In to Use These Features')">
   <div class="hide-menu-profile"
        ng-hide="$root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview'"
        ng-class="{'rotate-down': $root.mapState == 'small-size'}"
@@ -7,37 +7,37 @@
     <div class="col-xs-12 col-md-12 col-sm-12 col-sm-offset-0 col-xs-offset-0 no-pad">
       <ul>
         <li>
-          <a class="nav-spots">
+          <a class="nav-spots grey">
             <span>My spots</span>
           </a>
         </li>
         <li>
-          <a class="nav-blog">
+          <a class="nav-blog grey">
             <span>My Blog</span>
           </a>
         </li>
         <li>
-          <a class="nav-favorites">
+          <a class="nav-favorites grey">
             <span>Favorites</span>
           </a>
         </li>
         <li>
-          <a class="nav-searches"><span>Saved Searches</span></a>
+          <a class="nav-searches grey"><span>Saved Searches</span></a>
         </li>
         <li>
-          <a class="nav-friendmap">
+          <a class="nav-friendmap grey">
             <span>Friends Map</span></a>
         </li>
         <li>
-          <a class="nav-photomap">
+          <a class="nav-photomap grey">
             <span>Photo Map</span>
           </a>
         </li>
         <li>
-          <a class="nav-planner"><span>Planner</span></a>
+          <a class="nav-planner grey"><span>Planner</span></a>
         </li>
         <li>
-          <a class="nav-settings">
+          <a class="nav-settings grey">
             <span>Stream</span>
           </a>
         </li>
