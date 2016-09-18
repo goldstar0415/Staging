@@ -78,7 +78,7 @@ class SettingsController extends Controller
                 }
                 $user->password = $hash->make($params['password']);
                 $user->save();
-                $this->mailer->send('emails.password-change', [], function ($message) use ($user) {
+                $this->mailer->send('emails.password-change', ['user' => $user], function ($message) use ($user) {
                     $message->subject('Password change');
                     $message->to($user->email);
                 });

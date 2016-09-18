@@ -64,9 +64,10 @@ class UserController extends Controller
             'comments',
             'reviews',
             'contactUs',
-            'changeEmail'
+            'changeEmail',
+            'unsubscribe'
         ]]);
-        $this->middleware('auth', ['only' => ['getMe', 'changeEmail']]);
+        $this->middleware('auth', ['only' => ['getMe', 'changeEmail', 'unsubscribe']]);
         $this->auth = $auth;
     }
 
@@ -411,5 +412,22 @@ class UserController extends Controller
         }
 
         return $user->load($append);
+    }
+    
+    protected function unsubscribe() {
+        
+        if($this->auth->check()) {
+            $user = $this->auth->user();
+            $user->notification_letter = false;
+            $user->notification_wall_post = false;
+            $user->notification_follow = false;
+            $user->notification_new_spot = false;
+            $user->notification_coming_spot =false;
+            $user->save();
+        }
+        else {
+            abort(401);
+        }
+        
     }
 }

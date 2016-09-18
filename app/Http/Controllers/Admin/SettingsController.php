@@ -4,14 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Jobs\CrawlerRun;
 use App\Jobs\ParseEvents;
+use App\Jobs\TicketMasterEvents;
 use App\Services\AppSettings;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Spot;
+use App\SpotTypeCategory;
+
 
 class SettingsController extends Controller
 {
+    
     /**
      * @var AppSettings
      */
@@ -33,7 +38,21 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        return view('admin.settings')->with('settings', $this->settings);
+        $ticketMastercategory = SpotTypeCategory::whereName('ticketmaster')->first();
+        $lastTicketMasterSpot = Spot::where('spot_type_category_id', $ticketMastercategory->id)
+                ->orderBy('id', 'desc')
+                ->first();
+        
+        $seatGeekCategory = SpotTypeCategory::whereName('seatgeek')->first();
+        $lastSeatGeekSpot = Spot::where('spot_type_category_id', $seatGeekCategory->id)
+                ->orderBy('id', 'desc')
+                ->first();
+        
+        return view('admin.settings', [
+            'ticketMasterSpot' => $lastTicketMasterSpot,
+            'seatGeekSpot'     => $lastSeatGeekSpot
+                ])
+                ->with('settings', $this->settings);
     }
 
     /**
@@ -45,7 +64,7 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         $this->settings->parser->aid = $request->aid;
-
+        
         return back();
     }
 
@@ -59,6 +78,13 @@ class SettingsController extends Controller
     public function crawlerRun()
     {
         $this->dispatch(new CrawlerRun);
+
+        return back()->with('run', true);
+    }
+    
+    public function ticketMasterRun()
+    {
+        $this->dispatch(new TicketMasterEvents);
 
         return back()->with('run', true);
     }

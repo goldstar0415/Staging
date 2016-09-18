@@ -2,7 +2,14 @@
 
 @section('content')
     <h2>
-        Parser settings
+        TicketMaster parser
+    </h2>
+    <p class="text-info">
+        Last imported row: {{ isset($ticketMasterSpot->id) ? $ticketMasterSpot->id : null }}
+    </p>
+    <a href="{{ route('admin.ticket-master.run') }}" type="button" class="btn btn-success">Run</a>
+    <h2>
+        SeatGeek parser settings
     </h2>
     <hr>
     {!! Form::open(['method' => 'PUT']) !!}
@@ -16,7 +23,7 @@
         {!! Form::submit('Save', ['class' => 'btn btn-default']) !!}
     </div>
     <p class="text-info">
-        Last imported id: {{ isset($settings->parser->last_imported_id) ? $settings->parser->last_imported_id : null }}
+        Last imported id: {{ isset($seatGeekSpot->id) ? $seatGeekSpot->id : null }}
     </p>
     {!! Form::close() !!}
     <a href="{{ route('admin.parser.run') }}" type="button" class="btn btn-success">Run</a>
@@ -27,6 +34,7 @@
         Last imported row: {{ isset($settings->crawler->last_imported_row) ? $settings->crawler->last_imported_row : null }}
     </p>
     <a href="{{ route('admin.crawler.run') }}" type="button" class="btn btn-success">Run</a>
+    
     @if (session('run'))
         <p class="text-info">Event parser goes to the queue</p>
     @endif

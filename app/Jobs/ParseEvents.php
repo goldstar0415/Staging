@@ -37,11 +37,21 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
      * @var AppSettings
      */
     private $settings;
+    
+    /**
+     * @var array
+     */
+    private $config;
 
     /**
      * @var GoogleAddress
      */
     private $google_address = null;
+    
+    /**
+     * @var integer
+     */
+    public $page;
 
     /**
      * Execute the job.
@@ -53,35 +63,55 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
     public function handle(Client $http, AppSettings $settings, GoogleAddress $address)
     {
         $this->http = $http;
+        $this->config = config('seatgeek');
         $this->settings = $settings;
         $this->google_address = $address;
+        $page = !empty($this->page)?$this->page:1;
+        Log::info('$page = ' . $page);
 
-        $query_string = ['sort' => 'id.desc', 'page' => 1, 'per_page' => /*1000*/10];
+        $query_string = ['sort' => 'id.desc', 'page' => $page, 'per_page' => 500]; //1000 
         $parser_settings = $this->settings->parser;
         $data = [];
-
-        if (isset($parser_settings->aid)) {
+        if (isset($parser_settings->aid) && !empty($parser_settings->aid)) {
             $query_string['aid'] = $this->settings->parser->aid;
         }
+        $query_string['client_id'] = $this->config['client_id'];
+        $query_string['client_secret'] = $this->config['secret'];
+        $nextPage = $page+1;
+        Log::info('nextPage = ' . $nextPage);
 
         $pages_count = 0;
         $data = $this->fetchData($query_string);
         $events = collect($data['events']);
-        $last_id = $events->sortBy('id')->last()['id'];
-
-        $pages_count = ceil($data['meta']['total'] / $data['meta']['per_page']);
-        for ($page = 2; $page < 3 /*$pages_count*/; ++$page) {
+        $this->importEvents($events);
+        
+        if($nextPage <= 10) //may set all pages instead of 5: $pages_count
+        {
+            Log::info('$nextPage <= 5');
+            $newJob = (new ParseEvents);
+            $newJob->page = $nextPage;
+            dispatch($newJob);
+        }
+        
+        // uncomment it if you want to do all job in one queue
+        /*for ($nextPage; $nextPage <=  5 ; $nextPage++) //may set all pages instead of 5: $pages_count
+        {
+            $query_string['page'] = $nextPage;
+            $data = $this->fetchData($query_string);
+            $events = collect($data['_embedded']['events']);
+            $this->importEvents($events);
+        }*/
+        
+        /*$pages_count = ceil($data['meta']['total'] / $data['meta']['per_page']);
+        for ($page = 2; $page < 5 ; ++$page) {
             if (!$this->importEvents($events)) {
                 break;
             }
             $query_string['page'] = $page;
             $data = $this->fetchData($query_string);
             $events = collect($data['events']);
-        }
+        }*/
 
-        $parser_settings->last_imported_id = $last_id;
-
-        $this->settings->parser = $parser_settings;
     }
 
     public function importEvents(Collection $events)
@@ -89,12 +119,12 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
         $default_category = SpotTypeCategory::whereName('seatgeek')->first();
 
         foreach ($events->sortByDesc('id') as $event) {
-            if (
-                isset($this->settings->parser->last_imported_id) and
-                $this->settings->parser->last_imported_id === $event['id']
-            ) {
-                return false;
+            
+            if(Spot::where('spot_type_category_id', $default_category->id)->where('remote_id', 'sg_' . $event['id'])->exists())
+            {
+                continue;
             }
+            
             $date = DateTime::createFromFormat(DateTime::ISO8601, $event['datetime_local'] . '+0000');
 
             $import_event = new Spot();
@@ -105,10 +135,11 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
                 '<a href="' . $event['venue']['url'] . '">' . $event['venue']['name'] . '</a>',
                 $event['datetime_local']
             ]);
-            $import_event->start_date = $date->format('Y-m-d H:i:s');
-            $import_event->end_date = $date->format('Y-m-d 23:59:59');
-            $import_event->web_sites = $this->getWebSites($event);
+            $import_event->start_date  = $date->format('Y-m-d H:i:s');
+            $import_event->end_date    = $date->format('Y-m-d 23:59:59');
+            $import_event->web_sites   = $this->getWebSites($event);
             $import_event->is_approved = true;
+            $import_event->remote_id   = 'sg_' . $event['id'];
             $import_event->save();
 
             $address = '';
