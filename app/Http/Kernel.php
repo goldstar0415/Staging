@@ -35,6 +35,7 @@ class Kernel extends HttpKernel
         'base64upload' => \App\Http\Middleware\Base64Upload::class,
         'privacy' => \App\Http\Middleware\PrivacyCheck::class,
         'blogger' => \App\Http\Middleware\BloggerCheck::class,
-        'admin' => \App\Http\Middleware\AdminCheck::class
+        'admin' => \App\Http\Middleware\AdminCheck::class,
+        'bloggerOrAdmin' => \App\Http\Middleware\BloggerOrAdmin::class
     ];
 }

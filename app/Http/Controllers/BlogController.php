@@ -32,7 +32,8 @@ class BlogController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show', 'preview', 'popular', 'categories']]);
-        $this->middleware('blogger', ['only' => ['store', 'update', 'destroy' , 'upload']]);
+        $this->middleware('blogger', ['only' => ['store']]);
+        $this->middleware('bloggerOrAdmin', ['only' => ['update', 'destroy', 'upload']]);
     }
 
     /**
@@ -56,16 +57,10 @@ class BlogController extends Controller
     public function store(BlogStoreRequest $request)
     {
         $blog = new Blog($request->only(['blog_category_id', 'title', 'body']));
-
-        if ($request->has('slug')) {
-            $blog->slug = $request->input('slug');
-        } else {
-            $slug = str_slug($blog->title);
-            $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|max:255|unique:blogs']);
-            if ($validator->fails()) {
-                abort(422, $validator->messages()->get('slug')[0]);
-            }
-
+        
+        $slug = str_slug($blog->title);
+        $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|max:255|unique:blogs']);
+        if (!$validator->fails() && !is_numeric($slug)) {
             $blog->slug = $slug;
         }
 
@@ -109,19 +104,14 @@ class BlogController extends Controller
 
         $blog->fill($request->only(['blog_category_id', 'title', 'body']));
 
-        if ($request->has('slug')) {
-            $slug = $request->input('slug');
-        } else {
-            $slug = str_slug($blog->title);
-        }
-
-        if ($blog->slug !== $slug) {
-            $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|unique:blogs']);
-            if ($validator->fails()) {
-                abort(422, $validator->messages()->get('slug')[0]);
-            }
-
+        $slug = str_slug($blog->title);
+        $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|max:255|unique:blogs']);
+        if (!$validator->fails() && !is_numeric($slug)) {
             $blog->slug = $slug;
+        }
+        else
+        {
+            $blog->slug = NULL;
         }
 
         if ($request->hasFile('cover')) {
