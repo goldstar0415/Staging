@@ -99,7 +99,8 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('wall', Wall::class);
         $router->model('plans', Plan::class);
         $router->bind('posts', function ($value) {
-            $blog_post = Blog::where('slug', $value)->first();
+
+            $blog_post = Blog::where(is_numeric($value)?'id':'slug', $value)->first();
 
             if ($blog_post === null) {
                 throw new NotFoundHttpException;
