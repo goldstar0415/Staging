@@ -154,7 +154,7 @@
         vm.locations.unshift(item);
         vm.newLocation = {};
       } else {
-        toastr.error('Wrong location');
+        toastr.error('Please add correct location.');
         vm.newLocation = {};
       }
     }
@@ -169,9 +169,15 @@
       if (vm.newLocation && vm.newLocation.location) {
         points.push(vm.newLocation.location);
       }
+      if (vm.finalLocation && vm.finalLocation.location) {
+          points.push(vm.finalLocation.location);
+      } else {
+          toastr.error('Please add final destination.');
+          return;
+      }
       if (vm.locations.length > 0) {
         points = _.union(points, _.pluck(vm.locations, 'location'));
-      }
+    }
 
       if (points.length > 0) {
         var selection = {
@@ -227,7 +233,7 @@
 		addCategories(data);
 		$state.go('index', data);
 	}
-  
+
     function goSignIn() {
       $state.go('index', {spotSearch: {openSignIn: !$rootScope.currentUser}});
     }
