@@ -8,16 +8,34 @@
 
 <div class="modal-body ">
   <ul class="nav nav-tabs font-weight600">
-    <li ng-click="modal.selectedAlbum = null" ng-class="{active: !modal.selectedAlbum}">
+	<li ng-click="modal.selectUpload()" ng-class="{active: modal.selectedUpload}">
+      <a>Upload</a>
+    </li>
+    <li ng-click="modal.selectAlbums()" ng-class="{active: !modal.selectedAlbum && !modal.selectedUpload}">
       <a>Albums</a>
     </li>
-    <li ng-class="{active: modal.selectedAlbum}" ng-if="modal.selectedAlbum">
+    <li ng-class="{active: modal.selectedAlbum}" ng-if="modal.selectedAlbum && !modal.selectedUpload">
       <a>Photos</a>
     </li>
   </ul>
-  <div class="tab-content clearfix">
-    <div class="tab-pane choose-some-photos-body col-sm-12" ng-class="{active: !modal.selectedAlbum}">
-      <div class="choose-album col-sm-4"
+	<div class="tab-content clearfix">
+		<div class="tab-pane choose-some-photos-body col-sm-12" ng-class="{active: modal.selectedUpload}" ng-if="modal.selectedUpload">
+			<div class="col-xs-12 upload-photos">
+				<uploader drop-zone="true"></uploader>
+				<div class="photos no-pad" style="padding-top: 35px;">
+					<div class="add-img"
+						ng-repeat="image in modal.images.files track by $index"
+						ng-mouseenter="showDelete = true" ng-mouseleave="showDelete = false">
+						<img ngf-src="image">
+						<a class="close-img" ng-show="showDelete" ng-click="modal.deleteImage($index)" data-toggle="tooltip"
+							data-placement="top" title="Delete">
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+    <div class="tab-pane choose-some-photos-body col-sm-12" ng-class="{active: !modal.selectedAlbum}" ng-if="!modal.selectedUpload">
+      <div class="choose-album col-sm-4" 
            ng-repeat="item in modal.albums"
            ng-click="modal.selectAlbum(item.id, $index)">
         <img class="img-responsive tab-photo" ng-src="{{item.cover.medium}}">
@@ -29,7 +47,7 @@
 
     </div>
 
-    <div class="tab-pane choose-some-photos-body col-sm-12" ng-if="modal.selectedAlbum"
+    <div class="tab-pane choose-some-photos-body col-sm-12" ng-if="modal.selectedAlbum && !modal.selectedUpload"
          ng-class="{active: modal.selectedAlbum}">
       <div class="album-title">
         <a class="back" ng-click="modal.selectedAlbum = null"></a>
@@ -44,7 +62,8 @@
       </div>
     </div>
     <div class="col-xs-12 padding-top-bottom no-pad-left-right">
-      <button type="button" ng-click="modal.close()" class="btn btn-default green-btn no-margin-left ">OK</button>
+      <button type="button" ng-click="modal.close()" class="btn btn-default green-btn no-margin-left " ng-show="!modal.selectedUpload">OK</button>
+	  <button type="button" ng-click="modal.uploadImages()" ng-show="modal.selectedUpload" ng-disabled="!modal.images.files || modal.images.files.length === 0" class="btn btn-default green-btn no-margin-left ">Upload Images</button>
     </div>
   </div>
 
