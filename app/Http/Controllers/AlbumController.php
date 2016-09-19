@@ -87,6 +87,17 @@ class AlbumController extends Controller
      */
     public function showForUser(PaginateRequest $request, $user)
     {
+		// check if Uploads album exists for a user
+		if (!$user->albums()->where('title', 'Uploads')->first()) {
+			$album				= new Album();
+			$album->user_id		= $user->id;
+			$album->title		= 'Uploads';
+			$album->is_private	= true;
+			$album->save();
+		} else {
+			//Log::debug('album exists');
+		}
+		
         $result = $this->paginatealbe($request, $user->albums()->where(function ($query) use ($user) {
             $query->where(function ($query) use ($user) {
                 $query->where('is_private', false)
@@ -132,18 +143,20 @@ class AlbumController extends Controller
      */
     public function update(PhotoUpdateRequest $request, $albums)
     {
+		$photos = [];
         $albums->update($request->only(['title', 'is_private']));
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
-                $albums->photos()->create([
+                $f = $albums->photos()->create([
                     'photo' => $file
                 ]);
+				$photos[] = $f->id;
             }
         }
-
+		$request->session()->put('lastPhotosSaved-album-'.$albums->id, $photos);
         return $albums;
     }
-
+	
     /**
      * Remove the specified album from storage.
      *

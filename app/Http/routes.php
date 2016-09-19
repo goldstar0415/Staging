@@ -44,6 +44,7 @@ Route::resource('photos', 'AlbumPhotoController', ['only' => ['show', 'update', 
 Route::get('photos/{photos}/avatar', 'AlbumPhotoController@setAvatar');
 Route::resource('photos.comments', 'AlbumPhotoCommentController', ['only' => ['index', 'store', 'destroy']]);
 Route::get('albums/{albums}/photos', 'AlbumPhotoController@photos');
+Route::get('albums/{albums}/lastUploadedPhotos', 'AlbumPhotoController@lastUploadedPhotos');
 /**
  * Follow
  */

@@ -7,7 +7,7 @@ use App\Http\Requests\AlbumPhoto\AlbumPhotoRequest;
 use App\Http\Requests\AlbumPhoto\AlbumPhotoUpdateRequest;
 use App\Http\Requests\PaginateRequest;
 use Illuminate\Contracts\Auth\Guard;
-
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use Phaza\LaravelPostgis\Geometries\Point;
 
@@ -88,4 +88,14 @@ class AlbumPhotoController extends Controller
     {
         return $this->paginatealbe($request, $album->photos());
     }
+	
+	/**
+	 * Get last uploaded photos for specified album for authorized User
+	 * @param \App\Http\Controllers\Request $request
+	 * @return type
+	 */
+	public function lastUploadedPhotos(Request $request, $album) {
+		$photosIds = $request->session()->pull('lastPhotosSaved-album-'.$album->id, []);
+		return $photos = count($photosIds) ? AlbumPhoto::whereIn('id', $photosIds)->get() : [];
+	}
 }
