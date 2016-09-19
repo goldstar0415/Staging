@@ -6,18 +6,19 @@
     .controller('ArticleController', ArticleController);
 
   /** @ngInject */
-  function ArticleController(article, ScrollService, PostComment, dialogs, toastr) {
+  function ArticleController(article, ScrollService, PostComment, dialogs, toastr, $window) {
     var vm = this;
     vm = _.extend(vm, article);
     vm.sendComment = sendComment;
     vm.deleteComment = deleteComment;
     vm.getDate = getDate;
+    vm.back = back;
 
     vm.comments = {};
     var params = {
       page: 0,
       limit: 10,
-      post_id: article.slug
+      post_id: article.slug || article.id
     };
     vm.pagination = new ScrollService(PostComment.query, vm.comments, params);
 
@@ -25,13 +26,17 @@
       var $date = moment(date);
       return $date.format('DD') + '<br/>' + $date.format('MMM');
     }
+    
+    function back() {
+        $window.history.back();
+    }
 
     /*
      * Send comment to form
      * @param form {ngForm}
      */
     function sendComment() {
-      PostComment.save({post_id: article.slug},
+      PostComment.save({post_id: article.slug || article.id},
         {
           body: vm.message || '',
           attachments: {
@@ -59,7 +64,7 @@
      */
     function deleteComment(comment, idx) {
       dialogs.confirm('Confirmation', 'Are you sure you want to delete comment?').result.then(function () {
-        PostComment.delete({post_id: article.slug, id: comment.id}, function () {
+        PostComment.delete({post_id: article.slug || article.id, id: comment.id}, function () {
           toastr.info('Comment successfully deleted');
           vm.comments.data.splice(idx, 1);
         });

@@ -20,7 +20,8 @@
       'ngTagsInput',
       'ui.select',
       'ui.utils.masks',
-      'infinite-scroll'
+      'infinite-scroll',
+      'summernote'
     ]);
 
 })();
