@@ -11,6 +11,7 @@
 	/** @ngInject */
 	function PhotosModalController(Album, albums, attachments, $modalInstance, UploaderService, API_URL) {
 		var vm = this;
+		vm.inRequestUpload = false;
 		vm.albums = albums;
 		vm.attachments = attachments;
 		vm.selectedUpload = false;
@@ -61,7 +62,6 @@
 		 * Upload Photos to the Uploads Album
 		 */
 		vm.uploadImages = function () {
-			console.log('uploadImages', UploaderService.images);
 			if (UploaderService.images.files.length === 0) {
 				toastr.error('No images selected');
 				return;
@@ -81,7 +81,7 @@
 				is_private: +uploadsAlbum.is_private
 			};
 			var url = API_URL + '/albums/' + uploadsAlbum.id;
-
+			vm.inRequestUpload = true;
 			UploaderService
 				.upload(url, request)
 				.then(function (resp) {
@@ -89,8 +89,8 @@
 					vm.close();
 					// get last two uploaded pics
 					Album.lastUploadedPhotos({album_id: uploadsAlbum.id}, function (photos) {
-						console.log(photos);
 						vm.attachments.photos = vm.attachments.photos.concat(photos);
+						vm.inRequestUpload = false;
 					});
 				})
 				.catch(function (resp) {
@@ -99,7 +99,12 @@
 					} else {
 						toastr.error('Upload failed');
 					}
+					vm.inRequestUpload = false;
 				});
+		};
+		
+		vm.isUploadDisabled = function() {
+			return !vm.images.files || vm.images.files.length === 0 || vm.inRequestUpload;
 		};
 	}
 })();
