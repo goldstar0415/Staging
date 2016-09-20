@@ -16,7 +16,7 @@
       }
     });
 
-  function mapSort($rootScope, $q, MapService, $http, $timeout, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
+  function mapSort($rootScope, $q, MapService, $http, $timeout, LocationService, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
 
 	var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
@@ -48,6 +48,10 @@
     vm.loadNextSpots = loadNextSpots;
     vm.typeaheadSearch = typeaheadSearch;
     vm.typeaheadSelectLocation = typeaheadSelectLocation;
+    vm.openedItem = null;
+    vm.setOpenedItem = setOpenedItem;
+    // vm.getLocation = getLocation;
+    vm.location = "Location";
 
     vm.searchParams = {
       typeahead: {
@@ -68,6 +72,19 @@
     $rootScope.$on('impossible-route', onImpossibleRoute);
 
     run();
+    getLocation();
+
+    function setOpenedItem(item) {
+        vm.openedItem = item;
+    }
+
+    function getLocation() {
+        // LocationService.getUserLocation()
+        //     .then(function(data) {
+        //         $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + data.latitude + "," + data.langitude + "&key=AIzaSyBbBdjAuH8wCJsLBThDXYRBYX9e45Dyf_8")
+        //             .then(function(response){ vm.location = response.data; console.log(vm.location);});
+        //     });
+    }
 
     /**
      * Initialization
@@ -77,7 +94,7 @@
 		vm.searchParams.search_text	= ($stateParams.searchText || '');
 		vm.searchParams.searchType	= _.isObject($stateParams.spotSearch) ? $stateParams.spotSearch.activeSpotType || 'event' : 'event';
 		vm.searchParams.rating		= _.isObject($stateParams.filter) ? $stateParams.filter.rating || null : null;
-	  
+
 		if (_.isObject($stateParams.filter)) {
 			if ($stateParams.filter.start_date) {
 				vm.searchParams.start_date = moment($stateParams.filter.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
@@ -91,7 +108,7 @@
 				});
 			}
         }
-		
+
 		if (_.isObject($stateParams.spotLocation) && $stateParams.spotLocation.lat !== undefined && $stateParams.spotLocation.lat) { // from 'intro'
 			vm.vertical = false;
 			toggleLayer(vm.searchParams.searchType, false);
@@ -420,7 +437,7 @@
 				data.filter.start_date = vm.searchParams.start_date;
 			}
 		}
-	  
+
 		if (vm.searchParams.end_date) {
 			if (vm.searchParams.end_date.match(/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/)) {
 				data.filter.end_date = moment(vm.searchParams.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
@@ -428,7 +445,7 @@
 				data.filter.end_date = vm.searchParams.end_date;
 			}
 		}
-		
+
 		var categories = _.where(vm.spotCategories[$rootScope.sortLayer], {selected: true});
 		if (categories.length > 0) {
 			data.filter.category_ids = _.pluck(categories, 'id');
@@ -442,7 +459,7 @@
 			data.filter.b_boxes = bbox_array;
 			data.search_text = '';
 		}
-	  
+
 		if (bbox_array.length == 0 && !vm.searchParams.search_text) {
 			toastr.error('Enter location or draw the area');
 			$rootScope.mapSortFilters = {};
@@ -722,7 +739,7 @@
       vm.currentWeather.sunset = moment(daily[0].sunsetTime * 1000).format(DATE_FORMAT.time);
       vm.currentWeather.temperature = Math.round((daily[0].temperatureMax + daily[0].temperatureMin) / 2);
     }
-	
+
 	/**
 	 * Detect City in the Weather Panel
 	 */

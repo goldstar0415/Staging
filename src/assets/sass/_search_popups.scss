@@ -468,10 +468,14 @@
 .search-filters {
   float: right;
   width: 100%;
-  height: calc(100% - 125px);
+  height: calc(100% - 134px);
   overflow-y: auto;
   background-color: #fff;
   padding: 1.5rem;
+
+  @media(max-width: 450px) {
+       height: calc(100% - 75px);
+  }
 
   &.applied-filter {
     input, button, .btn-cancel, .country-filter + .filters-button, .form-control[disabled], .filter-definition .tags {
@@ -546,6 +550,7 @@
         margin-bottom: 1rem;
         width: 9rem;
         height: 9rem;
+        object-fit: cover;
       }
     }
   }
@@ -609,7 +614,7 @@
 
   .country-filter,
   .filter-definition {
-    width: 83%;
+    width: 100%;
     padding-right: 1rem;
     position: relative;
   }
@@ -664,9 +669,9 @@
       }
     }
     .btn-apply {
-      position: absolute;
-      right: -8rem;
-      top: 5px;
+    //   position: absolute;
+    //   right: -8rem;
+    //   top: 5px;
     }
     .rating-filters {
       .btn-default {
@@ -700,7 +705,7 @@
     }
 
     location input {
-      width: 88%
+      width: 90%
     }
 
     input {
@@ -851,13 +856,19 @@
     }
   }
   .btn-apply {
-    float: right;
-    width: 7rem;
-    margin-top: 5px;
+    // float: right;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 35px;
     background-color: $blue_btn;
-    height: 5rem;
+    height: 4rem;
     position: relative;
     cursor: pointer;
+    color: white;
+    font-weight: bold;
+    padding: 15px;
 
     .icon-apply {
       background: url(../img/icons/icons_search_cancel.png) no-repeat;
@@ -893,7 +904,7 @@
 
   .date-filters {
     &.move-top {
-      margin-top: -60px;
+    //   margin-top: -60px;
     }
 
     .form-group {
@@ -1055,6 +1066,13 @@
   float: left;
   width: 100%;
   line-height: 2.95rem;
+  height: 6rem;
+  display: flex;
+  align-items: center;
+
+  @media(max-width: 450px) {
+       display: none;
+  }
 
   p {
     font-size: 1.6rem;
@@ -1084,6 +1102,7 @@
   position: absolute;
   bottom: 0;
   width: 100%;
+  height: 6rem;
 
   &.active-weather {
     height: auto;
@@ -1595,37 +1614,37 @@
       }
     }
   }
-  
+
   .weather-wrap {
 	  .firstBlock-wrapper {
 	    padding: 5px 20px;
-		.right-now {  
-		  font-size: 2.0rem;  
+		.right-now {
+		  font-size: 2.0rem;
 		}
 		.weatherName {
-		  font-size: 1.8rem;    
+		  font-size: 1.8rem;
 		}
-		.weatherImg-block {    
-		  .weatherImg-wrapper {   
+		.weatherImg-block {
+		  .weatherImg-wrapper {
 			height: 70px;
             .weatherImg {
               background-size: inherit !important;
             }
 			.temperature-img {
 			  font-size: 4rem;
-			  padding-top: 1rem;         
-			}       
+			  padding-top: 1rem;
+			}
 		  }
-		}   
+		}
 	  }
 	}
-	
-	.weekForecast {  
-		.weekForecast-wrapper {      
-		  .data {      
+
+	.weekForecast {
+		.weekForecast-wrapper {
+		  .data {
 			padding-top: 2px;
 			height: 2rem;
-		  }     
+		  }
 		}
 	}
 }
@@ -1639,4 +1658,150 @@
   .sidebar-menu-vertical ul li:first-child {
     margin-bottom: 0;
   }
+}
+
+#filters-button-open {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 17px;
+    right: 22px;
+    color: white;
+    font-size: 19px;
+    p {
+        margin: 0;
+    }
+    @media (max-width: 450px) {
+        display: none;
+    }
+}
+
+.icon-plus {
+    width: 10%;
+}
+
+.filter-definition.open-filter {
+    background-color: rgb(245, 245, 247);
+    padding: 5px 15px 15px;
+    width: 100% !important;
+}
+
+.new-filter {
+    background-color: rgb(245, 245, 247);
+    padding: 5px 15px 15px;
+    min-height: 520px;
+    margin-bottom: 15px;
+    @media (max-width: 450px) {
+        // display: none;
+    }
+    .filter-header {
+        font-weight: bold;
+        border-bottom: 1px solid lightgrey;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        p {
+            margin: 0;
+        }
+    }
+    input {
+        margin: 0;
+        padding: 10px;
+        font-weight: bold;
+        background-color: white;
+        border: 1px solid lightgrey;
+        &:first-child {
+            margin-right: 4px;
+        }
+        &:last-child {
+            margin-left: 4px;
+        }
+    }
+    .form-group {
+        label {
+            color: rgb(180, 180, 180);
+            padding: 10px 0;
+        }
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        input, select {
+            height: 3.5rem;
+            min-height: 3.5rem;
+            width: 80%;
+
+        }
+        .date-filters {
+            width: 80%;
+            position: relative;
+            display: flex;
+            // justify-content: space-between;
+            input {
+                width: 50%;
+                padding: 10px;
+            }
+        }
+        .filter-clear {
+            width: 17%;
+            background-color: white;
+            border: 1px solid lightgrey;
+            color: rgb(180, 180, 180);
+            height: 3.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            p {
+                margin: 0;
+                @media(max-width: 765px) {
+                    display: none;
+                }
+            }
+            @media(max-width: 765px) {
+                justify-content: center;
+            }
+        }
+    }
+    .date-filters {
+        input {
+            width: 40%;
+        }
+        button {
+            width: 20%;
+        }
+    }
+    .filter-apply {
+        color: white;
+        // padding: 10px;
+        height: 3.5rem;
+        font-weight: bold;
+        background-color: #01CFFF;
+        &:hover {
+
+        }
+    }
+}
+
+.new-search {
+    // background-color: red;
+    display: flex;
+    .btn-apply {
+        margin: 0;
+    }
+    input, .btn-apply {
+        height: 3.5rem;
+        min-height: 3.5rem;
+    }
+    input {
+        margin: 0;
+        padding: 10px;
+        font-weight: bold;
+        background-color: white;
+        border: 1px solid lightgrey;
+    }
+    .icon-nav {
+        top: 0.8rem !important;
+    }
 }

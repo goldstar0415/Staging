@@ -55,6 +55,7 @@
 @import "intro";
 @import "preload_scroll";
 @import "report_modal";
+@import "_spot";
 @import "media.scss";
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
@@ -1564,4 +1565,10 @@ body .atlwdg-trigger.atlwdg-TOP {
       width: 100% !important;
     }
   }
+}
+
+.fb-page,
+.fb-page span,
+.fb-page span iframe[style] {
+    width: 100% !important;
 }
