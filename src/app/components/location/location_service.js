@@ -13,7 +13,7 @@
 		var COOKIE_MOBILE_EXPIRE_SEC		= 60*60*24*1; // 1 day
 		var TIME_NEXT_LOCATION_PROMT_SEC	= 60*60*24*1; // 1 day
 		var timeLastUpdateCookie			= 0;
-		var TIME_USE_COOKIE_SEC				= 10;		  // 1 day
+		var TIME_USE_COOKIE_SEC				= 60;		  // 1 min
 		
 		var getUserLocationIpApi = function() {
 			var deferred = $q.defer();
@@ -77,25 +77,31 @@
 		this.getUserLocation = function() {
 			var deferred = $q.defer();
 			checkPermissions();
-			if ((moment().unix() - timeLastUpdateCookie < TIME_USE_COOKIE_SEC) && 'latitude' in storage && 'longitude' in storage) {
+			
+			var useStorage		= ('latitude' in storage && 'longitude' in storage) ? storage : null;
+			// get location from storage or from ip-api
+			var storageOrApi	= useStorage || ipApiLocation;
+			
+			if ((moment().unix() - timeLastUpdateCookie < TIME_USE_COOKIE_SEC) && useStorage) {
 				// get fast from fresh cookie data
 				// sorry for code duplicating
 				console.log('LocationService', 'coords from cookie fresh');
 				deferred.resolve(storage);
-			} else if (permissionsGranted || canAskGeolocation()) {
-				if (!permissionsGranted) {
-					saveAskGeolocation();
+			} else {
+				// try to get from navigator
+				if (permissionsGranted || canAskGeolocation()) {
+					if (!permissionsGranted) {
+						saveAskGeolocation();
+					}
+					getUserLocationNavigator().then(function(l) {
+						deferred.resolve(l);
+					}).
+					catch(function() {
+						storageOrApi ? deferred.resolve(storageOrApi) : deferred.reject("Couldn't locate user");
+					});
+				} else {
+					storageOrApi ? deferred.resolve(storageOrApi) : deferred.reject("Couldn't locate user");
 				}
-				getUserLocationNavigator().then(function(l) {
-					console.log('LocationService', 'coords from navigator');
-					deferred.resolve(l);
-				});
-			} else if ('latitude' in storage && 'longitude' in storage) {
-				console.log('LocationService', 'coords from cookie');
-				deferred.resolve(storage);
-			} else if (ipApiLocation !== null) {
-				console.log('LocationService', 'coords from ip-api');
-				deferred.resolve(ipApiLocation);
 			}
 			return deferred.promise;
 		};
