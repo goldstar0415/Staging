@@ -4,7 +4,7 @@
   angular
     .module('zoomtivity')
     .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
-		
+
       console.log('MapService');
 
       var map = null;
@@ -35,7 +35,7 @@
       var pathRouter		= L.Routing.osrmv1({geometryOnly: true});
 	  var pathRouter2		= L.Routing.mapbox(MAPBOX_API_KEY);
 	  var pathRouterFail	= 0;
-	  
+
 		function getPathRouter() {
 			switch(pathRouterFail) {
 				case 0:
@@ -46,16 +46,35 @@
 					return pathRouter;
 			}
 		}
-		
+
 		function pathRouterFailed() {
 			pathRouterFail++;
 		}
-	  
+
       var pathSelectionStarted = false;
 
       //GEOCODING
       var GeocodingSearchUrl = '//open.mapquestapi.com/nominatim/v1/search.php?format=json&key=' + GEOCODING_KEY + '&addressdetails=1&limit=3&q=';
       var GeocodingReverseUrl = '//open.mapquestapi.com/nominatim/v1/reverse.php?format=json&key=' + GEOCODING_KEY;
+
+      function plygonFromCircle(lat, lng, radius) {
+          var d2r = Math.PI / 180; // degrees to radians
+          var r2d = 180 / Math.PI; // radians to degrees
+          var earthsradius = 60;
+          var points = 32;
+          // find the radius in lat/lon
+          var rlat = (radius / earthsradius) * r2d;
+          var rlng = rlat / Math.cos(lat * d2r);
+          var extp = [];
+          for (var i = 0; i < points + 1; i++) // one extra here makes sure we connect the
+          {
+              var theta = Math.PI * (i / (points / 2));
+              var ex = lng + (rlng * Math.cos(theta)); // center a + radius x * cos(theta)
+              var ey = lat + (rlat * Math.sin(theta)); // center b + radius y * sin(theta)
+              extp.push(new L.LatLng(ey, ex));
+          }
+          return extp;
+      }
 
       //MAP CONTROLS
       // Lasso controls
@@ -71,13 +90,20 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'lasso-selection', container);
+          var p = L.DomUtil.create('p', '', this.link);
+          p.innerHTML = 'Draw Area';
           this.link.href = '#';
           this._map = map;
 
           L.DomEvent.on(this.link, 'click', this._click, this);
           return container;
         },
+
         _click: function (e) {
+            var el = document.querySelector('.pick-notification');
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -87,13 +113,18 @@
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
           LassoSelection(function LassoCallback(points, b_box) {
-            var poly = L.polygon(points, {
-              weight: 3,
-              color: '#00CFFF',
-              opacity: 0.9,
-              fillColor: '#0C2638',
-              fillOpacity: 0.4
-            }).addTo(drawLayer);
+              L.polygon([points,[[90, -180],[90, 180],[-90, 180],[-90, -180]]], {
+                weight: 3,
+                color: '#00CFFF',
+                opacity: 0.9,
+                fillColor: '#0C2638',
+                fillOpacity: 0.4
+              }).addTo(drawLayer);
+
+              L.polygon(points, {
+                opacity: 0.0,
+                fill: false
+              }).addTo(drawLayer);
 
             //var popup = RemoveMarkerPopup(
             //  function () {
@@ -133,6 +164,8 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'radius-selection', container);
+          var p = L.DomUtil.create('p', '', this.link);
+          p.innerHTML = 'Search by Radius';
           this.link.href = '#';
           this._map = map;
 
@@ -140,6 +173,10 @@
           return container;
         },
         _click: function (e) {
+            var el = document.querySelector('.pick-notification');
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -152,11 +189,8 @@
             snapRemote.enable();
 
             var circle = L.circle(startPoing, radius, {
-              weight: 3,
-              color: '#00CFFF',
-              opacity: 0.9,
-              fillColor: '#0C2638',
-              fillOpacity: 0.4
+              opacity: 0.0,
+              fill: false,
             });
 
             //var popup = RemoveMarkerPopup(
@@ -171,14 +205,25 @@
             //
             //circle.bindPopup(popup);
 
-
             circle.addTo(drawLayer);
 
             var bboxes = GetDrawLayerBBoxes();
+
+            var rds = (bboxes[0].getNorthWest().lat - bboxes[0].getSouthWest().lat) / 2;
+            var polyCrcl = plygonFromCircle(startPoing.lat, startPoing.lng, rds)
+
+            L.polygon([polyCrcl, [[90, -180],[90, 180],[-90, 180],[-90, -180]]], {
+              weight: 3,
+              color: '#00CFFF',
+              opacity: 0.9,
+              fillColor: '#0C2638',
+              fillOpacity: 0.4
+            }).addTo(drawLayer);
+
             GetDataByBBox(bboxes);
             _activateControl(false);
           });
-		  
+
           _activateControl('.radius-selection');
         }
 
@@ -199,6 +244,8 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'path-selection', container);
+          var p = L.DomUtil.create('p', '', this.link);
+          p.innerHTML = 'Search by Road Trip';
           this.link.href = '#';
           this._map = map;
 
@@ -206,6 +253,10 @@
           return container;
         },
         _click: function (e) {
+            var el = document.querySelector('.pick-notification');
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -626,7 +677,7 @@
         map.removeLayer(otherLayer);
         currentLayer = "food";
       }
-		
+
 		/**
 		 * If Map has the layer
 		 * @param {string} layer
@@ -653,7 +704,7 @@
 				return false;
 			}
 		}
-		
+
       //show shelter layer on map
       function showShelterLayer(clearLayers, keepListeners) {
         if (keepListeners !== true) {
@@ -822,7 +873,7 @@
         cancelPopup;
         var showCancelPopup = true;
         var lineOptions = {};
-        lineOptions.styles = [{type: 'polygon', color: 'blue', opacity: 0.6, weight: 3, fillOpacity: 0.2}, {
+        lineOptions.styles = [{type: 'polygon', color: 'red', opacity: 0.6, weight: 10, fillOpacity: 0.2}, {
           color: 'red',
           opacity: 1,
           weight: 3
@@ -945,7 +996,7 @@
 						simplified.geometry.coordinates.forEach(function(e) {
 							$rootScope.routeInterpolated.push({latLng: {lat: e[1], lng: e[0]}});
 						});
-				  
+
 						line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
 						line.on('linetouched', function (e) {
 							function remove() {
@@ -1026,7 +1077,7 @@
 					}
 				});
         });
-		
+
       }
 
       //remove all selection listeners
@@ -1430,7 +1481,7 @@
 			var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
 			var popup = L.popup(options).setContent(popupContent[0]);
 			this.bindPopup(popup).openPopup();
-			  
+
             scope.item.$loading = true;
 
             var syncSpot;
@@ -1517,7 +1568,7 @@
       function PointInPolygon(point) {
         var result = [];
         drawLayer.eachLayer(function (layer) {
-          if (result.length < 1) {
+          if (result.length < 1  && !layer.options.fill) {
             if (layer._route) {
               layer.eachLayer(function (l) {
                 if (!l._latlngs) {
@@ -1972,7 +2023,7 @@
         if (!show && hasWeather)
             map.removeLayer(map.weatherLayer);
       }
-	  
+
       return {
         Init: InitMap,
         GetMap: GetMap,

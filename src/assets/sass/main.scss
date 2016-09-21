@@ -1569,3 +1569,108 @@ body .atlwdg-trigger.atlwdg-TOP {
 .add-stop {
     margin: 10px 0 20px;
 }
+
+.pick-notification {
+    position: absolute;
+    left: 100px;
+    height: 150px !important;
+    width: 200px !important;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0px;
+    font-size: 20px;
+    z-index: 999;
+    border: 1px solid #dddddd;
+    animation: pick-appear 2s;
+    &::before {
+        content: '';
+        color: white;
+        background-color: white;
+        height: 50px;
+        width: 50px;
+        transform: scale(1, 2.1) rotate(45deg);
+        position: relative;
+        left: -46px;
+        margin-right: -50px;
+        z-index: 1;
+        border-left: 1px solid #dddddd;
+        border-bottom: 1px solid #dddddd;
+    }
+    p {
+        position: relative;
+        z-index: 999;
+        margin: 0;
+        color: #00CFFF;
+    }
+}
+
+@keyframes pick-appear {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.radius-selection, .lasso-selection, .path-selection {
+    p {
+        display: none;
+    }
+    &:hover {
+        width: 200px;
+        text-align: center;
+        padding: 15px 0 0 50px;
+        color: white;
+        p {
+            display: block;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .menu-profile-hidden {
+       display: none;
+    }
+    .sidebar-menu-vertical-bottom {
+        bottom: 0 !important
+    }
+}
+
+.hide-menu-profile {
+    display: none;
+}
+
+@media (max-width: 450px) {
+    .hide-menu-profile {
+        display: block;
+    }
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.blink {
+    animation: blink 2s infinite;
+}
+
+.event, figure, .event-result-logo {
+    img  {
+        object-fit: cover;
+    }
+}
+
+.modal-choose-photos {
+	.actions {
+		button {
+			transition: none;
+		}
+	}
+}
