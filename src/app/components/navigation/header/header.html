@@ -12,9 +12,27 @@
         </a>
       </li>
       <li class="map-profile pull-right"> <!-- ng-if="Header.$state.current.name == 'index'" -->
-        <a ui-sref="index" ui-sref-active="active" class="pull-right">
-          <span class="map-icon"></span>
-        </a>
+          <ul id="map-profile-profile">
+            <li class="separator-bg map-profile" ng-if="$root.isRole($root.currentUser, 'admin')">
+              <a ng-href="{{Header.BACKEND_URL}}/admin" target="_blank">
+                <span>Admin</span>
+                <span class="admin-icon"></span>
+              </a>
+            </li>
+            <li ng-if="!$root.currentUser" class="separator-bg authorisation">
+              <sign-in title="Sign in"></sign-in>
+            </li>
+            <li ng-if="!$root.currentUser" class="sep">|</li>
+            <li ng-if="!$root.currentUser" class="authorisation">
+              <sign-up></sign-up>
+            </li>
+            <li ng-if="$root.currentUser" class="map-profile separator-bg">
+              <a ui-sref="profile.main({user_id: $root.currentUser.alias || $root.currentUser.id})" ui-sref-active="active" class="user-name">
+                <span>{{ $root.currentUser.first_name }}</span>
+                <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
+              </a>
+            </li>
+          </ul>
       </li>
     </ul>
   </nav>
