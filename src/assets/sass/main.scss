@@ -1600,3 +1600,17 @@ body .atlwdg-trigger.atlwdg-TOP {
 .blink {
     animation: blink 2s infinite;
 }
+
+.event, figure, .event-result-logo {
+    img  {
+        object-fit: cover;
+    }
+}
+
+.modal-choose-photos {
+	.actions {
+		button {
+			transition: none;
+		}
+	}
+}
