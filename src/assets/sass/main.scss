@@ -1571,3 +1571,11 @@ body .atlwdg-trigger.atlwdg-TOP {
         object-fit: cover;
     }
 }
+
+.modal-choose-photos {
+	.actions {
+		button {
+			transition: none;
+		}
+	}
+}
