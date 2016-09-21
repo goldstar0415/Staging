@@ -25,6 +25,5 @@
       var $date = moment(date);
       return $date.format('DD') + '<br/>' + $date.format('MMM');
     }
-
   }
 })();

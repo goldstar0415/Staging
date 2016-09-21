@@ -4,7 +4,7 @@
   angular
     .module('zoomtivity')
     .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
-		
+
       console.log('MapService');
 
       var map = null;
@@ -35,7 +35,7 @@
       var pathRouter		= L.Routing.osrmv1({geometryOnly: true});
 	  var pathRouter2		= L.Routing.mapbox(MAPBOX_API_KEY);
 	  var pathRouterFail	= 0;
-	  
+
 		function getPathRouter() {
 			switch(pathRouterFail) {
 				case 0:
@@ -46,11 +46,11 @@
 					return pathRouter;
 			}
 		}
-		
+
 		function pathRouterFailed() {
 			pathRouterFail++;
 		}
-	  
+
       var pathSelectionStarted = false;
 
       //GEOCODING
@@ -178,7 +178,7 @@
             GetDataByBBox(bboxes);
             _activateControl(false);
           });
-		  
+
           _activateControl('.radius-selection');
         }
 
@@ -626,7 +626,7 @@
         map.removeLayer(otherLayer);
         currentLayer = "food";
       }
-		
+
 		/**
 		 * If Map has the layer
 		 * @param {string} layer
@@ -653,7 +653,7 @@
 				return false;
 			}
 		}
-		
+
       //show shelter layer on map
       function showShelterLayer(clearLayers, keepListeners) {
         if (keepListeners !== true) {
@@ -945,7 +945,7 @@
 						simplified.geometry.coordinates.forEach(function(e) {
 							$rootScope.routeInterpolated.push({latLng: {lat: e[1], lng: e[0]}});
 						});
-				  
+
 						line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
 						line.on('linetouched', function (e) {
 							function remove() {
@@ -1026,7 +1026,7 @@
 					}
 				});
         });
-		
+
       }
 
       //remove all selection listeners
@@ -1430,7 +1430,7 @@
 			var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
 			var popup = L.popup(options).setContent(popupContent[0]);
 			this.bindPopup(popup).openPopup();
-			  
+
             scope.item.$loading = true;
 
             var syncSpot;
@@ -1939,9 +1939,74 @@
           if (item.location) {
 
             var marker = L.marker(item.location);
+
+            var scope = $rootScope.$new();
+            var offset = 75;
+            var options = {
+              keepInView: false,
+              autoPan: true,
+              closeButton: false,
+              className: 'popup',
+              autoPanPaddingTopLeft: L.point(offset, offset),
+              autoPanPaddingBottomRight: L.point(offset, offset)
+            };
+
+            var post = {};
+            post.img = item.cover_url.medium;
+            post.title = item.title;
+            post.address = item.address;
+            post.date = item.created_at;
+            post.category = item.category.display_name;
+            post.author = item.user.first_name + ' ' + item.user.last_name;
+            post.slug = item.slug;
+
+            scope.item = post;
+            scope.marker = marker;
+
             marker.on('click', function () {
-              $state.go('blog.article', {slug: item.slug});
+              if (this.getPopup()) {
+                  this.unbindPopup();
+              }
+              var popupContent = $compile('<blogpopup post="item"></blogpopup>')(scope);
+              var popup = L.popup(options).setContent(popupContent[0]);
+              this.bindPopup(popup).openPopup();
+
+              scope.item.$loading = true;
+
+            //   var syncSpot;
+            //   if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: spot_id}))) {
+            //     _loadSpotComments(scope, syncSpot);
+            //   } else {
+            //     Spot.get({id: spot_id}, function (fullSpot) {
+            //       //merge photos
+            //       fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
+            //       _loadSpotComments(scope, fullSpot);
+            //     });
+            //   }
             });
+
+
+
+
+
+
+
+
+
+
+
+
+            // var popupContent = $compile('<blogpopup></blogpopup>')(scope);
+            // marker.bindPopup(popupContent);
+            // marker.openPopup();
+            // marker.on('click', function () {
+            //     console.log(marker);
+            //     // this.link = L.DomUtil.create('div', 'clear-selection', container);
+            //     // this.link.href = '#';
+            //     // this._map = map;
+            //     // console.log(item);
+            // //   $state.go('blog.article', {slug: item.slug});
+            // });
             item.marker = marker;
 
             markers.push(marker);
@@ -1972,7 +2037,7 @@
         if (!show && hasWeather)
             map.removeLayer(map.weatherLayer);
       }
-	  
+
       return {
         Init: InitMap,
         GetMap: GetMap,

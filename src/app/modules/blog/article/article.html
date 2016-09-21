@@ -13,16 +13,13 @@
           <div class="article-wrapper">
             <div class="image-wrapper clearfix">
               <img ng-if="Article.cover_url" ng-src="{{Article.cover_url.original}}" class="article-img">
-              <span class="date-sm hidden-xs" ng-bind-html="Article.getDate(Article.created_at)"></span>
+              <span class="date-sm" ng-bind-html="Article.getDate(Article.created_at)"></span>
             </div>
             <div class="row">
               <h2 class="title-blog row">
               <span class="col-xs-9 col-md-12">
                 {{Article.title}}
               </span>
-
-              <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right"
-                    ng-bind-html="Article.getDate(Article.created_at)"></span>
 
                 <div class="clearfix"></div>
               </h2>
@@ -34,24 +31,26 @@
 
             <p class="article-description" ng-bind-html="Article.body | toTrustedHtml"></p>
 
-            <div class="row">
-              <div class="article-info col-xs-12">
-                <!-- <p class="date col-xs-12 col-sm-2">{{Article.created_at | toTimezone:'MM.DD.YYYY'}}</p> -->
+            <div class="blog-bottom-row">
 
-                <p class="col-xs-12 col-sm-4 author">Author:
-                  <a ui-sref="profile.main({user_id: Article.user.alias || Article.user.id})">
-                    {{Article.user.first_name}} {{Article.user.last_name}}
-                  </a>
-                </p>
+              <p class="author">Author:
+                <a ui-sref="profile.main({user_id: post.user.alias || post.user.id})">
+                  {{Article.user.first_name}} {{Article.user.last_name}}
+                </a>
+              </p>
 
-                <p class="col-xs-12  col-sm-4 category">Category:
-                  <a>{{Article.category.display_name}}</a>
-                </p>
+              <p class="category">Category:
+                <a>{{Article.category.display_name}}</a>
+              </p>
 
-                <p class="col-xs-12 col-sm-3 views">Views: {{Article.count_views}}</p>
-              </div>
+              <p class="views">Views: {{Article.count_views}}</p>
+
+              <p class="views">Comments: {{Article.count_views}}</p>
+                <div>
+                    <share item="Article" class="pull-right" type="post" only-icon="true"></share>
+                </div>
+
             </div>
-            <share item="Article" type="post" only-icon="true"></share>
 
           </div>
 
