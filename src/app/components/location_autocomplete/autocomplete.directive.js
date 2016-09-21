@@ -25,7 +25,8 @@
         inputPlaceholder: '@',
         addClassOnchange: '=',
         inputClass: '@',
-        customClasses: '@'
+        customClasses: '@',
+        pls: '='
       },
       link: function autocompleteLink(s, e, a) {
         var className = s.inputClass || 'location-changed';
@@ -34,7 +35,7 @@
         var bindMarker = s.bindMarker;
         var provider = s.provider || 'google';
 
-        s.placeHolder = s.inputPlaceholder || "Type location or click on map...";
+        s.placeHolder = s.inputPlaceholder || s.pls || "Type location or click on map...";
         s.provider = provider;
         s.className = '';
         s.viewAddress = '';
