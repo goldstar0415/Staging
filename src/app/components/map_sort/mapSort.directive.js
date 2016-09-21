@@ -62,6 +62,7 @@
     $rootScope.isDrawArea = false;
     $rootScope.mapSortFilters = $rootScope.mapSortFilters || {};
     $rootScope.toggleLayer = toggleLayer;
+    $rootScope.showMessage = showMessage;
 
     $rootScope.$on('update-map-data', onUpdateMapData);
     $rootScope.$on('clear-map-selection', onRemoveSelection);
@@ -118,6 +119,10 @@
 		}
 
 	}
+
+    function showMessage(type, text) {
+        toastr[type](text);
+    }
 
     /**
      * Search locations when typing - ok

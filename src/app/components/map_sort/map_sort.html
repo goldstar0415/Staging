@@ -1,9 +1,9 @@
 <user-hints></user-hints>
 <div ng-show="MapSort.vertical && ($root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview')"
      class="sidebar-menu-wrap" >
-  <div class="show-menu-profile visible-xs" ng-click="MapSort.vertical = !MapSort.vertical"></div>
+  <div class="show-menu-profile" ng-class="$root.mapSortSpots.sourceSpots.length ? 'blink' : ''" ng-click="MapSort.vertical = !MapSort.vertical"></div>
 
-  <div class="sidebar-menu-vertical">
+  <div class="sidebar-menu-vertical" ng-class="$root.$state.current.name == 'index' ? 'sidebar-menu-vertical-bottom' : ''">
     <ul>
       <li class="hidden-xs" ng-click="MapSort.vertical = !MapSort.vertical" id="menu_expand">
         <a class="full-small" ></a>
@@ -28,7 +28,7 @@
 </div>
 
 <div ng-show="!MapSort.vertical" class="col-xs-3 no-pad sort-menu">
-  <div class="hide-menu-profile visible-xs" ng-click="MapSort.vertical = !MapSort.vertical"
+  <div class="hide-menu-profile" ng-click="MapSort.vertical = !MapSort.vertical"
        ng-class="{'rotate-down': !MapSort.vertical}"
     ></div>
 
