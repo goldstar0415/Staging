@@ -1997,7 +1997,7 @@
               keepInView: false,
               autoPan: true,
               closeButton: false,
-              className: 'popup',
+              className: 'popup blogpopup',
               autoPanPaddingTopLeft: L.point(offset, offset),
               autoPanPaddingBottomRight: L.point(offset, offset)
             };
