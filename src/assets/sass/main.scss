@@ -1279,6 +1279,10 @@ html {
   margin-top: 2.3rem;
 }
 
+.padt25 {
+  padding-top: 2.5rem;
+}
+
 .padt20 {
   padding-top: 2rem;
 }
@@ -1586,15 +1590,17 @@ body .atlwdg-trigger.atlwdg-TOP {
     &>p, &>div {
         padding: 0;
         margin: 0;
-        width: 100%;
+        // width: 100%;
         text-align: center;
         font-size: 10px !important;
         @media (max-width: 450px) {
             text-align: left;
+            width: 100%;
         }
     }
     &>div {
         height: 33px;
+        width: 33px;
         @media (max-width: 450px) {
             margin-top: -33px;
         }
