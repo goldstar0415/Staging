@@ -68,6 +68,8 @@
 
     //set current user location by IP
     function sendIpLocation() {
+		return;
+		// no another service is being used
       $http.jsonp("http://ipinfo.io?callback=JSON_CALLBACK").success(function (response) {
         User.setLocation({
           ip: response.ip,

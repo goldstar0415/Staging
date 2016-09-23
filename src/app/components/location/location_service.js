@@ -51,7 +51,6 @@
 				return;
 			}
 			watchId = navigator.geolocation.watchPosition(function(position) {
-				console.log('LocationService', 'update cookie with latest position');
 				timeLastUpdateCookie = moment().unix();
 				storeLocation(position.coords);
 			});
@@ -85,7 +84,6 @@
 			if ((moment().unix() - timeLastUpdateCookie < TIME_USE_COOKIE_SEC) && useStorage) {
 				// get fast from fresh cookie data
 				// sorry for code duplicating
-				console.log('LocationService', 'coords from cookie fresh');
 				deferred.resolve(storage);
 			} else {
 				// try to get from navigator
@@ -135,7 +133,6 @@
 						permissionsGranted = true;
 						watchNavigatorGeolocation();
 					} else if (result.state === 'prompt') {
-						console.log('navigator', 'geolocation', 'promt');
 						permissionsGranted = false;
 					}
 					// Don't do anything if the permission was denied.
@@ -151,7 +148,6 @@
 				// get last position from cookies if any
 				storage = JSON.parse($cookies.get('browserGeolocation'));
 				if (storage) {
-					console.log('LocationService', 'read storage ok', storage);
 				} else {
 					storage = {};
 				}
