@@ -66,6 +66,7 @@
     $rootScope.isDrawArea = false;
     $rootScope.mapSortFilters = $rootScope.mapSortFilters || {};
     $rootScope.toggleLayer = toggleLayer;
+    $rootScope.showMessage = showMessage;
 
     $rootScope.$on('update-map-data', onUpdateMapData);
     $rootScope.$on('clear-map-selection', onRemoveSelection);
@@ -135,6 +136,10 @@
 		}
 
 	}
+
+    function showMessage(type, text) {
+        toastr[type](text);
+    }
 
     /**
      * Search locations when typing - ok
@@ -461,7 +466,18 @@
 		}
 
 		if (bbox_array.length == 0 && !vm.searchParams.search_text) {
-			toastr.error('Enter location or draw the area');
+			// toastr.error('Enter location or draw the area');
+            var container = document.querySelector('.leaflet-bottom.leaflet-left');
+            if (!document.querySelector('.pick-notification')) {
+                var nt = L.DomUtil.create('div', 'pick-notification', container);
+                var ntText = L.DomUtil.create('p', '', nt);
+                ntText.innerHTML = "Pick a search tool";
+                nt.onclick = function() {
+                    var el = document.querySelector('.pick-notification');
+                    el.parentNode.removeChild(el);
+                }
+            }
+
 			$rootScope.mapSortFilters = {};
 			return;
 		}

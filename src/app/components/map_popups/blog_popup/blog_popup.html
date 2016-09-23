@@ -1,0 +1,13 @@
+<div class="blog-popup">
+    <div class="blog-popup-img">
+        <img src="{{BlogPopup.post.img}}" alt="img">
+    </div>
+    <div class="blog-popup-content">
+        <h2 ng-click="BlogPopup.goto(BlogPopup.post.slug)">{{BlogPopup.post.title}}</h2>
+        <p class="blog-popup-address"><span class="glyphicon glyphicon-map-marker"></span> {{BlogPopup.post.address}}</p>
+        <div class="line"></div>
+        <p>Date: <span>{{BlogPopup.post.date}}</span></p>
+        <p>Category: <span>{{BlogPopup.post.category}}</span></p>
+        <p>Author: <span>{{BlogPopup.post.author}}</span></p>
+    </div>
+</div>

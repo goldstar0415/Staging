@@ -5,22 +5,29 @@
     <div class="col-xs-12">
         <div class="row road-trip">
             <div class="search-filters search-block no-pad"><!--Please add here class="applyed" for re-color inputs to blue-->
-                <div class="country-filter clearfix">
-                    <span class="icon-play" ></span>
-
-                    <location address="Intro.newLocation.address" location="Intro.newLocation.location"
-                              bind-marker="false" limit="15"></location>
-
-                    <span class="icon-nav" ></span>
-                </div>
-
-                <div class="country-filter clearfix pause-block" ng-repeat="item in Intro.locations">
+                <div class="country-filter clearfix pause-block" ng-repeat="item in Intro.locations | orderBy:'-'">
                     <span class="icon-pause" ></span>
                     <location address="item.address" location="item.location" limit="15" bind-marker="false"></location>
                     <span class="icon-nav"></span>
                 </div>
-                <div class="country-filter clearfix ">
+                <div class="country-filter clearfix">
+                    <span class="icon-play" ></span>
+
+                    <location address="Intro.newLocation.address" location="Intro.newLocation.location"
+                              bind-marker="false" limit="15" pls="'Start location...'"></location>
+
+                    <span class="icon-nav" ></span>
+                </div>
+                <div class="country-filter clearfix add-stop">
                     <a class="add-row" ng-click="Intro.addLocation()"><span></span>Add another stop</a>
+                </div>
+                <div class="country-filter clearfix">
+                    <span class="icon-play" ></span>
+
+                    <location address="Intro.finalLocation.address" location="Intro.finalLocation.location"
+                              bind-marker="false" limit="15" pls="'Final destination...'"></location>
+
+                    <span class="icon-nav" ></span>
                 </div>
             </div>
         </div>

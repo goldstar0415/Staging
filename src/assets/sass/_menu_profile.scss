@@ -29,34 +29,58 @@
         .nav-spots {
             background-image: url('../img/svg/new_icons/icon_main_menu/spot.svg');
             background-position: 4px 3px;
+            &.grey {
+                background-image: url('../img/svg/new_icons/icon_main_menu/spot-grey.svg');
+            }
         }
 
         .nav-favorites {
           background-image: url('../img/svg/new_icons/icon_main_menu/heart.svg');
+          &.grey {
+               background-image: url('../img/svg/new_icons/icon_main_menu/heart-grey.svg');
+          }
         }
         .nav-searches {
           background-image: url('../img/svg/new_icons/icon_main_menu/save.svg');
+          &.grey {
+              background-image: url('../img/svg/new_icons/icon_main_menu/save-grey.svg');
+          }
         }
         .nav-friendmap {
           background-image: url('../img/svg/new_icons/icon_main_menu/friend.svg');
           background-size: 25px;
           background-position: 4px 9px !important;
+          &.grey {
+              background-image: url('../img/svg/new_icons/icon_main_menu/friend-grey.svg');
+          }
         }
         .nav-photomap {
           background-image: url('../img/svg/new_icons/icon_main_menu/photo.svg');
           background-size: 25px;
           background-position: 4px 9px !important;
+          &.grey {
+              background-image: url('../img/svg/new_icons/icon_main_menu/photo-grey.svg');
+          }
         }
         .nav-planner {
           background-image: url('../img/svg/new_icons/icon_main_menu/planner.svg');
+          &.grey {
+              background-image: url('../img/svg/new_icons/icon_main_menu/planner-grey.svg');
+          }
         }
         .nav-settings {
           background-image: url('../img/svg/new_icons/icon_main_menu/home.svg');
+          &.grey {
+              background-image: url('../img/svg/new_icons/icon_main_menu/home-grey.svg');
+          }
         }
         .nav-blog {
           background-image: url('../img/svg/profile_menu/blog_icon.svg');
           background-size: 25px;
           background-position: 4px 3px;
+          &.grey {
+              background-image: url('../img/svg/profile_menu/blog_icon-grey.svg');
+          }
         }
       a.active {
         color: $blue;
