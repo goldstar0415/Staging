@@ -1,5 +1,5 @@
 <div class="main-container">
-  <div class="container wrap mgt25">
+  <div class="container wrap padt25">
     <div class="text-center"><h2 class="title-name">Blog</h2></div>
 
     <div class="main-blog-content">
@@ -37,24 +37,27 @@
                 <a ui-sref="index.post({slug: post.slug})">{{post.address}}</a>
               </div>
 
-              <p class="article-description" ng-bind-html="post.body"></p>
+              <p class="article-description article-description-truncated" ng-bind-html="post.body" truncated></p>
 
               <div class="article-info col-xs-12">
-                <div class="row">
-                  <!-- <p class="date col-xs-12 col-sm-2">{{post.created_at | toTimezone:'MM.DD.YYYY'}}</p> -->
+                <div class="blog-bottom-row">
 
-                  <p class="col-xs-12 col-sm-4 author">Author:
+                  <p class="author">Author:
                     <a ui-sref="profile.main({user_id: post.user.alias || post.user.id})">
                       {{post.user.first_name}} {{post.user.last_name}}
                     </a>
                   </p>
 
-                  <p class="col-xs-12 col-sm-4 category">Category:
+                  <p class="category">Category:
                     <a>{{post.category.display_name}}</a>
                   </p>
 
-                  <p class="col-xs-12 col-sm-3 views">Views: {{post.count_views}}</p>
-                  <share item="post" class="pull-right" type="post" only-icon="true"></share>
+                  <p class="views">Views: {{post.count_views}}</p>
+
+                  <p class="views">Comments: {{post.count_views}}</p>
+                    <div>
+                        <share item="post" class="pull-right" type="post" only-icon="true"></share>
+                    </div>
 
                 </div>
               </div>
@@ -72,4 +75,3 @@
     </div>
   </div>
 </div>
-

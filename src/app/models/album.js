@@ -18,7 +18,11 @@
       photos: {
         url: API_URL + '/albums/:album_id/photos',
         isArray: true
-      }
+      },
+	  lastUploadedPhotos: {
+		url: API_URL + '/albums/:album_id/lastUploadedPhotos',
+        isArray: true
+	  }
     });
   }
 
