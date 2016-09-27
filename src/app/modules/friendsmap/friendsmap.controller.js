@@ -6,7 +6,7 @@
     .controller('FriendsmapController', FriendsmapController);
 
   /** @ngInject */
-  function FriendsmapController(friends, MapService, Friends, CropService, $state, $modal) {
+  function FriendsmapController(friends, MapService, Friends, CropService, $state, $modal, $scope, $timeout, API_URL) {
     var vm = this;
     var markers = [];
     vm.friends = format(friends);
@@ -154,7 +154,13 @@
     vm.googleImport = function () {
       var width = angular.element(window).width() / 2,
         height = angular.element(window).height() / 1.5;
-      openPopup(location.origin + '/api/google-contacts', "Google Contacts", width, height);
+		if($scope.$root.$$phase) {
+			$timeout(function() {
+				openPopup(API_URL + '/google-contacts', "Google Contacts", width, height);
+			}, 0, false);
+		} else {
+			openPopup(API_URL + '/google-contacts', "Google Contacts", width, height);
+		}
 
     };
 

@@ -1565,3 +1565,11 @@ body .atlwdg-trigger.atlwdg-TOP {
     }
   }
 }
+
+.modal-choose-photos {
+	.actions {
+		button {
+			transition: none;
+		}
+	}
+}
