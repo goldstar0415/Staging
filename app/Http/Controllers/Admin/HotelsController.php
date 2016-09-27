@@ -20,7 +20,7 @@ class HotelsController extends Controller
      */
     public function index(PaginateRequest $request)
     {
-        return view('admin.hotels')->with('hotels', $this->paginatealbe($request, Hotel::query()));
+        return view('admin.hotels')->with('hotels', $this->paginatealbe($request, Hotel::query(), 50));
     }
     
     /**
@@ -33,7 +33,7 @@ class HotelsController extends Controller
     {
         $query = $this->getFilterQuery($request, Hotel::query());
 
-        return view('admin.hotels')->with('hotels', $this->paginatealbe($request, $query, 15));
+        return view('admin.hotels')->with('hotels', $this->paginatealbe($request, $query, 50));
     }
     
     /**
