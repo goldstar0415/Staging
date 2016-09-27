@@ -21,6 +21,11 @@ get('spot-owner', 'SpotOwnerController@index')->name('admin.spot-owner.index');
 get('spot-owner/{owner_request}/accept', 'SpotOwnerController@accept')->name('admin.spot-owner.accept');
 get('spot-owner/{owner_request}/reject', 'SpotOwnerController@reject')->name('admin.spot-owner.reject');
 
+resource('hotels', 'HotelsController', ['only' => ['index', 'destroy']]);
+get('hotels/filter', 'HotelsController@filter')->name('admin.hotels.filter');
+patch('hotels/bulk-update', 'HotelsController@bulkUpdate')->name('admin.hotels.bulk-update');
+post('hotels/export', 'HotelsController@export')->name('admin.hotels.export');
+
 resource('posts', 'BlogController', ['except' => 'show']);
 get('posts/search', 'BlogController@search')->name('admin.posts.search');
 

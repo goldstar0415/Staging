@@ -23,6 +23,8 @@ use App\SpotReport;
 use App\SpotTypeCategory;
 use App\User;
 use App\Wall;
+use App\Hotel;
+use App\HotelAmenity;
 use Auth;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -96,6 +98,14 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('message', ChatMessage::class);
         $router->model('areas', Area::class);
         $router->model('comments', Comment::class);
+        $router->bind('hotels', function($value) {
+            $hotel = Hotel::where('id', $value)->with('remotePhotos')->first();
+            if ($hotel === null) {
+                throw new NotFoundHttpException;
+            }
+            return $hotel;
+            
+        });
         $router->model('wall', Wall::class);
         $router->model('plans', Plan::class);
         $router->bind('posts', function ($value) {
