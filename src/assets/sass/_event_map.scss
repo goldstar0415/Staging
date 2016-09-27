@@ -14,7 +14,7 @@
 }
 
 .mobile-view {
-    display: none;
+    display: block;
     position: relative;
     margin: 10px 0;
     @media(max-width: 450px) {

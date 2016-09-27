@@ -1,11 +1,15 @@
 <div class="opened-item" ng-if="Spot.spot" ng-style="Spot.small ? {'padding':'0'} : {'padding':'15px'}">
     <div class="opened-header" ng-if="Spot.small">
-        <a class="glyphicon glyphicon-fullscreen" ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id})"></a>
+        <a ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id})">
+            <img src="../../../assets/img/svg/fullscreen.svg" alt="">
+        </a>
         <img src="../../../assets/img/svg/Icon_Events.svg" alt="category" ng-if="Spot.spot.category.type.name == 'event'">
         <img src="../../../assets/img/svg/Icon_To_do.svg" alt="category" ng-if="Spot.spot.category.type.name == 'todo'">
         <img src="../../../assets/img/svg/Icon_Grab_Grub.svg" alt="category" ng-if="Spot.spot.category.type.name == 'food'">
         <img src="../../../assets/img/svg/Icon_Get_a_room.svg" alt="category" ng-if="Spot.spot.category.type.name == 'shelter'">
-        <span class="glyphicon glyphicon-remove" ng-click="Spot.close()"></span>
+        <span ng-click="Spot.close()">
+            <img src="../../../assets/img/svg/cancel.svg" alt="">
+        </span>
     </div>
     <div class="opened-img">
         <img src="{{Spot.spot.cover_url.original}}" alt="img">

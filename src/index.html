@@ -30,7 +30,7 @@
   <!-- endinject -->
   <!-- endbuild -->
 </head>
-<body autoscroll="true">
+<body autoscroll="true" id="body">
 <!--[if lt IE 10]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
   your browser</a> to improve your experience.</p>
@@ -80,7 +80,7 @@
   <map-sort ng-if="['full-size', 'big'].indexOf(mapState) >= 0"></map-sort>
 
   <!-- map container-->
-  <div id="map" class="mapResize map {{mapState}}"></div>
+  <div id="map" class="mapResize map {{mapState}}" ng-class="$root.$state.current.name != 'index' ? 'not-index' : ''"></div>
 
   <!-- content container-->
   <div ng-show="mapState != 'full-size'" ui-view ng-class="{'landing-wrapper': $state.includes('intro')}"></div>

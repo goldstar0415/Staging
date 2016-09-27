@@ -1,76 +1,35 @@
 <header>
-  <nav class="hidden-md hidden-lg nav-mobile">
-    <ul>
-      <li class="">
-        <a class="menu-btn pull-left" snap-toggle="left">
-          <span class="menu-icon "></span>
+    <nav>
+        <a class="menu-btn small-menu" snap-toggle="left">
+            <span class="menu-icon "></span>
         </a>
-      </li>
-      <li class="logo-mini">
-        <a ui-sref="index">
-          <img src="assets/img/svg/logo.svg" alt="logo">
+        <a ui-sref="index" class="main-logo">
+            <img src="assets/img/icons/logo.svg" alt="logo">
         </a>
-      </li>
-      <li class="map-profile pull-right"> <!-- ng-if="Header.$state.current.name == 'index'" -->
-          <ul id="map-profile-profile">
-            <li class="separator-bg map-profile" ng-if="$root.isRole($root.currentUser, 'admin')">
-              <a ng-href="{{Header.BACKEND_URL}}/admin" target="_blank">
-                <span>Admin</span>
-                <span class="admin-icon"></span>
-              </a>
-            </li>
-            <li ng-if="!$root.currentUser" class="separator-bg authorisation">
-              <sign-in title="Sign in"></sign-in>
-            </li>
-            <li ng-if="!$root.currentUser" class="sep">|</li>
-            <li ng-if="!$root.currentUser" class="authorisation">
-              <sign-up></sign-up>
-            </li>
-            <li ng-if="$root.currentUser" class="map-profile separator-bg">
-              <a ui-sref="profile.main({user_id: $root.currentUser.alias || $root.currentUser.id})" ui-sref-active="active" class="user-name">
-                <span>{{ $root.currentUser.first_name }}</span>
-                <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
-              </a>
-            </li>
-          </ul>
-      </li>
-    </ul>
-  </nav>
-
-  <div class="logo hidden-sm hidden-xs">
-    <a ui-sref="index"><img src="assets/img/icons/logo.svg" alt="logo"></a>
-  </div>
-
-  <nav class="hidden-sm hidden-xs">
-    <ul>
-
-      <li class="map-profile separator-bg">
-        <a ui-sref="index" ui-sref-active="active">
-          <span class="map-icon"></span>
-        </a>
-      </li>
-      <li class="separator-bg map-profile" ng-if="$root.isRole($root.currentUser, 'admin')">
-        <a ng-href="{{Header.BACKEND_URL}}/admin" target="_blank">
-          <span>Admin</span>
-          <span class="admin-icon"></span>
-        </a>
-      </li>
-      <li ng-if="!$root.currentUser" class="separator-bg authorisation">
-        <sign-in title="Sign in"></sign-in>
-      </li>
-      <li ng-if="!$root.currentUser" class="sep">|</li>
-      <li ng-if="!$root.currentUser" class="authorisation">
-        <sign-up></sign-up>
-      </li>
-      <li ng-if="$root.currentUser" class="map-profile separator-bg">
-        <a ui-sref="profile.main({user_id: $root.currentUser.alias || $root.currentUser.id})" ui-sref-active="active" class="user-name">
-          <span>{{ $root.currentUser.first_name }}</span>
-          <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
-        </a>
-      </li>
-    </ul>
-    <a class="menu-btn" snap-toggle="right">
-      <span class="menu-icon"></span>
-    </a>
-  </nav>
+        <input type="text" class="nav-search" placeholder="Search by place or keyword">
+        <div class="nav-right">
+            <div class="sign-up-in" ng-if="!$root.currentUser">
+                <div>
+                    <sign-up></sign-up>
+                </div>
+                <p>|</p>
+                <div>
+                    <sign-in title="Sign in"></sign-in>
+                </div>
+            </div>
+            <div class="user-avatar" ng-if="$root.currentUser">
+                <a ng-href="{{Header.BACKEND_URL}}/admin" target="_blank" ng-if="$root.isRole($root.currentUser, 'admin')" class="nav-admin">
+                    <span>Admin</span>
+                    <img src="../../../../assets/img/header/admin-icon.png">
+                </a>
+                <a ui-sref="profile.main({user_id: $root.currentUser.alias || $root.currentUser.id})" ui-sref-active="active" class="user-name">
+                    <span>{{ $root.currentUser.first_name }}</span>
+                    <img ng-src="{{$root.currentUser.avatar_url.thumb}}">
+                </a>
+            </div>
+            <a class="menu-btn big-menu" snap-toggle="right">
+                <span class="menu-icon "></span>
+            </a>
+        </div>
+    </nav>
 </header>
