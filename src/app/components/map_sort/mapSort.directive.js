@@ -50,7 +50,6 @@
     vm.typeaheadSelectLocation = typeaheadSelectLocation;
     vm.openedItem = null;
     vm.setOpenedItem = setOpenedItem;
-    // vm.getLocation = getLocation;
     vm.location = "Location";
 
     vm.searchParams = {
@@ -73,18 +72,9 @@
     $rootScope.$on('impossible-route', onImpossibleRoute);
 
     run();
-    getLocation();
 
     function setOpenedItem(item) {
         vm.openedItem = item;
-    }
-
-    function getLocation() {
-        // LocationService.getUserLocation()
-        //     .then(function(data) {
-        //         $http.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + data.latitude + "," + data.langitude + "&key=AIzaSyBbBdjAuH8wCJsLBThDXYRBYX9e45Dyf_8")
-        //             .then(function(response){ vm.location = response.data; console.log(vm.location);});
-        //     });
     }
 
     /**
@@ -466,17 +456,17 @@
 		}
 
 		if (bbox_array.length == 0 && !vm.searchParams.search_text) {
-			// toastr.error('Enter location or draw the area');
+		    toastr.error('Enter location or draw the area');
             var container = document.querySelector('.leaflet-bottom.leaflet-left');
-            if (!document.querySelector('.pick-notification')) {
-                var nt = L.DomUtil.create('div', 'pick-notification', container);
-                var ntText = L.DomUtil.create('p', '', nt);
-                ntText.innerHTML = "Pick a search tool";
-                nt.onclick = function() {
-                    var el = document.querySelector('.pick-notification');
-                    el.parentNode.removeChild(el);
-                }
-            }
+            // if (!document.querySelector('.pick-notification')) {
+            //     var nt = L.DomUtil.create('div', 'pick-notification', container);
+            //     var ntText = L.DomUtil.create('p', '', nt);
+            //     ntText.innerHTML = "Pick a search tool";
+            //     nt.onclick = function() {
+            //         var el = document.querySelector('.pick-notification');
+            //         el.parentNode.removeChild(el);
+            //     }
+            // }
 
 			$rootScope.mapSortFilters = {};
 			return;

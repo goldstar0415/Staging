@@ -90,8 +90,8 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'lasso-selection', container);
-          var p = L.DomUtil.create('p', '', this.link);
-          p.innerHTML = 'Draw Area';
+        //   var p = L.DomUtil.create('p', '', this.link);
+        //   p.innerHTML = 'Draw Area';
           this.link.href = '#';
           this._map = map;
 
@@ -164,8 +164,8 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'radius-selection', container);
-          var p = L.DomUtil.create('p', '', this.link);
-          p.innerHTML = 'Search by Radius';
+        //   var p = L.DomUtil.create('p', '', this.link);
+        //   p.innerHTML = 'Search by Radius';
           this.link.href = '#';
           this._map = map;
 
@@ -244,8 +244,8 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'path-selection', container);
-          var p = L.DomUtil.create('p', '', this.link);
-          p.innerHTML = 'Search by Road Trip';
+        //   var p = L.DomUtil.create('p', '', this.link);
+        //   p.innerHTML = 'Search by Road Trip';
           this.link.href = '#';
           this._map = map;
 
@@ -313,7 +313,7 @@
       // Save selection
       L.Control.saveSelection = L.Control.extend({
         options: {
-          position: 'topright',
+          position: 'bottomleft',
           title: {
             'false': 'Save selection',
             'true': 'Save selection'
@@ -323,6 +323,8 @@
           var container = L.DomUtil.create('div', 'map-tools map-tools-top hide-tools');
 
           this.link = L.DomUtil.create('div', 'save-selection', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/floppy-disk-save-file.svg";
           this.link.href = '#';
           this._map = map;
 
@@ -347,7 +349,7 @@
       // Clean selection
       L.Control.clearSelection = L.Control.extend({
         options: {
-          position: 'topright',
+          position: 'bottomleft',
           title: {
             'false': 'Clear selection',
             'true': 'Clear selection'
@@ -357,6 +359,8 @@
           var container = L.DomUtil.create('div', 'map-tools map-tools-top hide-tools');
 
           this.link = L.DomUtil.create('div', 'clear-selection', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/cancel-button.svg";
           this.link.href = '#';
           this._map = map;
 
@@ -386,7 +390,7 @@
 	 */
 	L.Control.focusGeolocation = L.Control.extend({
 		options: {
-			position: 'topleft',
+			position: 'bottomleft',
 			title: {
 				'false': 'Save selection',
 				'true': 'Save selection'
@@ -395,7 +399,9 @@
 		onAdd: function (map) {
 			var container = L.DomUtil.create('div', 'focus-geolocation');
 
-			this.link = L.DomUtil.create('div', 'ion-android-locate', container);
+			this.link = L.DomUtil.create('div', '', container);
+            var img = L.DomUtil.create('img', '', this.link);
+            img.src = "../../assets/img/svg/my-location.svg";
 			this.link.href = '#';
 			this._map = map;
 
@@ -1376,10 +1382,10 @@
         clearSelectionControl.addTo(map);
         saveSelectionControl.addTo(map);
         //shareSelectionControl.addTo(map);
+        focusGeolocation.addTo(map);
         pathControl.addTo(map);
         lassoControl.addTo(map);
         radiusControl.addTo(map);
-		focusGeolocation.addTo(map);
       }
 
       //Makers
