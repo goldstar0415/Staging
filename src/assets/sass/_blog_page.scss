@@ -28,14 +28,22 @@
     .image-wrapper {
       width: 100%;
       padding: 0;
+      margin: 40px 0 0;
     }
     .article-img {
       display: block;
       //float: left;
-      max-height: 400px;
+      height: 400px;
+      min-height: 400px;
       width: 100%;
       border-radius:0;
       margin-bottom: 0;
+      object-fit: cover;
+      font-family: 'object-fit: cover;';
+      @media(max-width: 767px) {
+          min-height: 50vh;
+          max-height: 50vh;
+      }
     }
   }
   .article {
@@ -126,6 +134,7 @@
         box-shadow: none;
         padding: 0;
 		object-fit: cover;
+        font-family: 'object-fit: cover;'
       }
 
     }
@@ -253,4 +262,9 @@
 }
 .info-post .date {
   float: right;
+}
+
+.title-blog {
+  background-color: #fff;
+  padding-top: 2rem !important;
 }

@@ -1,139 +1,191 @@
-<div class="spot-block no-margin-bottom">
-  <!-- section with spot -->
-  <section class="one-spot-section no-pad-bottom">
-    <div>
-      <div class="col-xs-12 no-pad">
-        <stars item="Spot.spot" class="clearfix"></stars>
-
-        <spot-type type="Spot.spot.type"></spot-type>
-      </div>
-
-      <div ng-if="Spot.spot.is_approved == false">
-        This submittal is under review and will be posted shortly.
-      </div>
-
-      <div ng-if="Spot.spot.type == 'Event'" class="date clearfix">
-          <date-range item="Spot.spot"></date-range>
-      </div>
-
-      <h2 class="">
-        <a>{{Spot.spot.title}}</a>
-      </h2>
-
-      <p class="place" ng-if="Spot.spot.points.length > 0">{{::Spot.spot.points[0].address}}</p>
-
-      <div class="description" ng-bind-html="Spot.spot.description | toParagraphs"></div>
-
-      <div class="external-link clearfix" ng-repeat="item in Spot.spot.web_sites track by $index">
-        <a target="_blank" rel="nofollow" href="{{item}}">{{item | shortLink}}</a>
-      </div>
-
-      <ng-carousel images="Spot.spot.photos"></ng-carousel>
-
-      <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
-        <li ng-repeat="link in Spot.spot.videos track by $index" class="video-size">
-          <youtube-player src="link"></youtube-player>
-        </li>
-      </ul>
-
-
-      <ul class="tags ">
-        <li ng-repeat="tag in Spot.spot.tags">
-          {{tag.name}}
-        </li>
-      </ul>
-      <!--  tags -->
-
-      <ul class="tools clearfix">
-        <li ng-if="currentUser.id == Spot.spot.user_id || isRole(currentUser, 'admin')">
-          <a ui-sref="spot_edit({spot_id: Spot.spot.id})" class="edit-tools">Edit</a>
-        </li>
-        <li ng-if="currentUser.id == Spot.spot.user_id || isRole(currentUser, 'admin')">
-          <a ng-click="Spot.removeSpot(Spot.spot, $index);" class="delete">Delete</a>
-        </li>
-
-        <li ng-if="!Spot.spot.is_saved">
-          <a class="save-event" ng-click="Spot.saveToCalendar(Spot.spot)">Save</a>
-        </li>
-        <li ng-if="currentUser && Spot.spot.is_saved">
-          <a class="save-event saved clicked" ng-click="Spot.removeFromCalendar(Spot.spot)">Remove</a>
-        </li>
-        <li ng-if="currentUser.id != Spot.spot.user_id && !Spot.spot.is_favorite">
-          <a class="favorite-spot" ng-click="Spot.addToFavorite(Spot.spot)">Favorite</a>
-        </li>
-        <li ng-if="currentUser && currentUser.id != Spot.spot.user_id && Spot.spot.is_favorite">
-          <a class="fav favorited" ng-click="Spot.removeFromFavorite(Spot.spot)">Unfavorite</a>
-        </li>
-        <li ng-if="Spot.spot.is_approved">
-          <invite-friends item="Spot.spot"></invite-friends>
-        </li>
-        <li ng-if="Spot.spot.type == 'Event'">
-          <a class="download"
-             ng-href="{{Spot.API_URL + '/spots/' + Spot.spot.id + '/export'}}" target="_blank">Export ICS</a>
-        </li>
-        <li ng-if="currentUser && currentUser.id != Spot.spot.user_id && !Spot.spot.isReported">
-          <a class="report-icon" report-spot="Spot.spot">Report</a>
-        </li>
-        <li ng-if="(!Spot.spot.user_id || !Spot.spot.user.verified) && !Spot.spot.isClaimed">
-          <a class="report-icon" claim-spot="Spot.spot">Claim listing</a>
-        </li>
-        <li>
-          <share item="Spot.spot" class="" type="spot"></share>
-        </li>
-      </ul>
-      <share item="Spot.spot" class="visible-xs" type="spot" only-icon="true"></share>
-
-    </div>
-  </section>
-  <!-- end section with spot -->
-
-</div>
-
-<!-- section with comment -->
-<section class="comments-section" >
-  <div class="comments-content clearfix">
-    <ng-input message="Spot.message" attachments="Spot.attachments" on-submit="Spot.postComment()"
-              maxlength="255"></ng-input>
-  </div>
-
-  <div infinite-scroll="Spot.pagination.nextPage()" infinite-scroll-disabled="Spot.pagination.busy"
-       class="clearfix" infinite-scroll-distance="1">
-    <div class="col-xs-12 post" ng-repeat="post in Spot.comments.data">
-      <div class="col-xs-12 no-pad">
-      </div>
-      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 padding-0">
-        <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">
-          <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
+<div class="opened-item" ng-if="Spot.spot" ng-style="Spot.small ? {'padding':'0'} : {'padding':'15px'}">
+    <div class="opened-header" ng-if="Spot.small">
+        <a ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id})">
+            <img src="../../../assets/img/svg/fullscreen.svg" alt="">
         </a>
-      </div>
-      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8 info">
-        <!-- <div class="plus-minus ng-scope" ng-if="currentUser">
-          <a class="plus" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)"></a>
-          <span class="value-rating ng-binding">0</span>
-          <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
-        </div> -->
-        <h3 class="name">
-          <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
-        </h3>
-
-        <p ng-bind-html="post.body | linky:'_blank'"></p>
-
-
-      </div>
-      <div class="col-xs-12">
-        <attachments items="post.attachments"></attachments>
-        <p class="time text-right">{{post.created_at | fromNow}}</p>
-        <div class="text-right">
-          <!--<a class="like">Like</a>-->
-          <a class="delete" ng-if="post.user_id == currentUser.id" ng-click="Spot.deleteComment(post, $index)">Delete</a>
-        </div>
-      </div>
+        <img src="../../../assets/img/svg/Icon_Events.svg" alt="category" ng-if="Spot.spot.category.type.name == 'event'">
+        <img src="../../../assets/img/svg/Icon_To_do.svg" alt="category" ng-if="Spot.spot.category.type.name == 'todo'">
+        <img src="../../../assets/img/svg/Icon_Grab_Grub.svg" alt="category" ng-if="Spot.spot.category.type.name == 'food'">
+        <img src="../../../assets/img/svg/Icon_Get_a_room.svg" alt="category" ng-if="Spot.spot.category.type.name == 'shelter'">
+        <span ng-click="Spot.close()">
+            <img src="../../../assets/img/svg/cancel.svg" alt="">
+        </span>
     </div>
-    <preloader ng-show="Spot.pagination.busy"></preloader>
-  </div>
+    <div class="opened-img">
+        <img src="{{Spot.spot.cover_url.original}}" alt="img">
+    </div>
+    <a class="opened-name" ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id})">{{Spot.spot.title}}</a>
+    <div class="opened-name-bottom">
+        <div class="opened-stars">
+            <stars item="Spot.spot"></stars>
+        </div>
+        <p class="opened-info">
+            0 Combined reviews
+        </p>
+    </div>
+    <p class="opened-address">
+        <p>
+            <span class="glyphicon glyphicon-map-marker"></span>
+            <span>{{::Spot.spot.points[0].address}}</span>
+        </p>
+    </p>
+    <div class="event-info" ng-if="Spot.spot.category.type.name == 'event'">
+        <span class="glyphicon glyphicon-calendar"></span>
+        <span ng-if="Spot.spot.start_date == Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}}</span>
+        <span ng-if="Spot.spot.start_date != Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}} - {{Spot.spot.end_date | date:'medium'}}</span>
+    </div>
+    <div class="opened-first-buttons">
+        <invite-friends item="Spot.spot"></invite-friends>
+        <div class="open-favorite" ng-if="$root.currentUser && $root.currentUser.id != Spot.spot.user_id">
+            <a ng-if="!Spot.spot.is_favorite" class="glyphicon glyphicon-heart" ng-click="Spot.addToFavorite(Spot.spot)" style="color:lightgrey"></a>
+            <a ng-if="Spot.spot.is_favorite" class="glyphicon glyphicon-heart" ng-click="Spot.removeFromFavorite(Spot.spot)" style="color:#EE4632"></a>
+            <p>Favourite</p>
+        </div>
+        <share item="Spot.spot" type="spot"></share>
+    </div>
+    <div class="opened-second-buttons">
+        <button class="button-order">Order</button>
+        <button class="button-table">Book table</button>
+        <button class="button-deals">Deals</button>
+    </div>
+    <div class="opened-tabs">
+        <div class="tabs-list">
+            <div class="tab" ng-class="OpenedItem.tab == 'overview' || OpenedItem.tab == null ? 'active' : ''" ng-click="OpenedItem.tab = 'overview'">Overview</div>
+            <div class="tab" ng-class="OpenedItem.tab == 'reviews' ? 'active' : ''" ng-click="OpenedItem.tab = 'reviews'">Reviews</div>
+            <div class="tab" ng-class="OpenedItem.tab == 'photos' ? 'active' : ''" ng-click="OpenedItem.tab = 'photos'">Photos</div>
+            <div class="tab" ng-class="OpenedItem.tab == 'menu' ? 'active' : ''" ng-click="OpenedItem.tab = 'menu'" ng-if="Spot.spot.category.type.name == 'food'">Menu</div>
+            <div class="tab" ng-class="OpenedItem.tab == 'chatter' ? 'active' : ''" ng-click="OpenedItem.tab = 'chatter'">Chatter</div>
+        </div>
+        <div class="tab-content-overview" ng-if="OpenedItem.tab == 'overview' || OpenedItem.tab == null">
+            <div class="slider">
+                <img src="{{Spot.spot.cover_url.original}}" alt="img">
+            </div>
+            <div class="overview about">
+                <h1>About:</h1>
+                <div ng-bind-html="Spot.spot.description"></div>
+            </div>
+            <div class="overview connect">
+                <h1>Connect:</h1>
+                <div class="tab-social-buttons">
+                    <a href="#">
+                        <img src="../../../assets/img/svg/social/google_icon.svg" alt="google" />
+                    </a>
+                    <a href="#">
+                        <img src="../../../assets/img/svg/social/facebook_icon.svg" alt="facebook" />
+                    </a>
+                    <a href="#">
+                        <img src="../../../assets/img/svg/social/instagram_icon.svg" alt="instagram" />
+                    </a>
+                    <a href="#">
+                        <img src="../../../assets/img/svg/social/tumbler_icon.svg" alt="tumbler" />
+                    </a>
+                    <a href="#">
+                        <img src="../../../assets/img/svg/social/twitter_icon.svg" alt="twitter" />
+                    </a>
+                    <a href="#">
+                        <img src="../../../assets/img/svg/social/vk_icon.svg" alt="vk" />
+                    </a>
+                </div>
+            </div>
+            <!-- <div class="overview cuisine">
+                <h1>Cuisine:</h1>
+                <p>American | Irish</p>
+            </div> -->
+            <!-- <div class="overview cost">
+                <h1>Cost:</h1>
+                <p>$$$$</p>
+            </div> -->
+            <!-- <div class="overview hours">
+                <p>
+                    Monday: 4PM - 11PM<br>
+                    Tuesday: 4PM - 12PM<br>
+                </p>
+            </div> -->
+            <div class="overview tags" ng-if="Spot.spot.tags.length > 0">
+                <h1>Tags:</h1>
+                <p ng-repeat="tag in Spot.spot.tags">{{tag.name}}</p>
+            </div>
+            <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
+              <li ng-repeat="link in Spot.spot.videos track by $index" class="video-size">
+                <youtube-player src="link"></youtube-player>
+              </li>
+            </ul>
+        </div>
+        <div class="tab-content-reviews" ng-if="OpenedItem.tab == 'reviews'">
+            <h1>Reviews</h1>
+        </div>
+        <div class="tab-content-photos" ng-if="OpenedItem.tab == 'photos'">
+            <ng-carousel images="Spot.spot.photos"></ng-carousel>
+        </div>
+        <div class="tab-content-menu" ng-if="OpenedItem.tab == 'menu'">
+            <h1>Menu</h1>
+        </div>
+        <div class="tab-content-chatter" ng-if="OpenedItem.tab == 'chatter'">
+            <div class="chatter-social-buttons">
+                <div class="chatter-social zoomtivity" ng-click="OpenedItem.chatterTab = 'zoomtivity'">
+                    <img src="../../../assets/img/logo.png" alt="zoomtivity">
+                    <p>Zoomtivity</p>
+                </div>
+                <div class="chatter-social facebook" ng-click="OpenedItem.chatterTab = 'facebook'">
+                    <img src="../../../assets/img/svg/social/facebook_icon.svg" alt="facebook">
+                    <p>Facebook</p>
+                </div>
+                <div class="chatter-social twitter" ng-click="OpenedItem.chatterTab = 'twitter'">
+                    <img src="../../../assets/img/svg/social/twitter_icon.svg" alt="twitter">
+                    <p>Twitter</p>
+                </div>
+            </div>
+            <!-- section with comment -->
+            <section class="comments-section" ng-show="OpenedItem.chatterTab == 'zoomtivity' || OpenedItem.chatterTab == null">
+              <div class="comments-content clearfix">
+                <ng-input message="Spot.message" attachments="Spot.attachments" on-submit="Spot.postComment()"
+                          maxlength="255"></ng-input>
+              </div>
 
-  <div class="spot-post empty" ng-if="Spot.comments.data.length == 0 && !Spot.pagination.busy">
-    <p class="comment-text">There are no comments.</p>
-  </div>
-</section>
-<!-- end section with comment -->
+              <div infinite-scroll="Spot.pagination.nextPage()" infinite-scroll-disabled="Spot.pagination.busy"
+                   class="clearfix" infinite-scroll-distance="1">
+                <div class="col-xs-12 post" ng-repeat="post in Spot.comments.data">
+                    <div class="comment-top">
+                        <div class="comment-avatar padding-0">
+                          <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">
+                            <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
+                          </a>
+                        </div>
+                        <div class="comment-content info">
+                          <!-- <div class="plus-minus ng-scope" ng-if="currentUser">
+                            <a class="plus" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)"></a>
+                            <span class="value-rating ng-binding">0</span>
+                            <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
+                          </div> -->
+                          <h3 class="name">
+                            <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
+                          </h3>
+                          <p ng-bind-html="post.body | linky:'_blank'"></p>
+                        </div>
+                    </div>
+                  <div class="col-xs-12">
+                    <attachments items="post.attachments"></attachments>
+                    <p class="time text-right">{{post.created_at | fromNow}}</p>
+                    <div class="text-right">
+                      <!--<a class="like">Like</a>-->
+                      <a class="delete" ng-if="post.user_id == currentUser.id" ng-click="Spot.deleteComment(post, $index)">Delete</a>
+                    </div>
+                  </div>
+                </div>
+                <preloader ng-show="Spot.pagination.busy"></preloader>
+              </div>
+
+              <div class="spot-post empty" ng-if="Spot.comments.data.length == 0 && !Spot.pagination.busy">
+                <p class="comment-text">There are no comments.</p>
+              </div>
+            </section>
+            <!-- end section with comment -->
+            <div ng-show="OpenedItem.chatterTab == 'facebook'" style="padding-top:20px;">
+                <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook&tabs=timeline&height=800&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="440" height="500" style="border:none;overflow:hidden;width:100%" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+            </div>
+            <div ng-show="OpenedItem.chatterTab == 'twitter'">
+                <a class="twitter-timeline" href="https://twitter.com/McGuiresPub">Tweets by McGuiresPub</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+        </div>
+    </div>
+</div>

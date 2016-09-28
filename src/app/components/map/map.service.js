@@ -4,7 +4,7 @@
   angular
     .module('zoomtivity')
     .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
-		
+
       console.log('MapService');
 
       var map = null;
@@ -15,6 +15,7 @@
       var radiusSelectionLimit = 500000; // in meters
       var markersLayer = L.featureGroup();
       var drawLayer = L.featureGroup();
+      var bgLayer = L.featureGroup();
       var draggableMarkerLayer = L.featureGroup();
       var drawLayerGeoJSON;
       var controlGroup = L.featureGroup();
@@ -35,7 +36,7 @@
       var pathRouter		= L.Routing.osrmv1({geometryOnly: true});
 	  var pathRouter2		= L.Routing.mapbox(MAPBOX_API_KEY);
 	  var pathRouterFail	= 0;
-	  
+
 		function getPathRouter() {
 			switch(pathRouterFail) {
 				case 0:
@@ -46,16 +47,59 @@
 					return pathRouter;
 			}
 		}
-		
+
 		function pathRouterFailed() {
 			pathRouterFail++;
 		}
-	  
+
       var pathSelectionStarted = false;
 
       //GEOCODING
       var GeocodingSearchUrl = '//open.mapquestapi.com/nominatim/v1/search.php?format=json&key=' + GEOCODING_KEY + '&addressdetails=1&limit=3&q=';
       var GeocodingReverseUrl = '//open.mapquestapi.com/nominatim/v1/reverse.php?format=json&key=' + GEOCODING_KEY;
+
+      function plygonFromCircle(lat, lng, radius) {
+          var d2r = Math.PI / 180; // degrees to radians
+          var r2d = 180 / Math.PI; // radians to degrees
+          var earthsradius = 60;
+          var points = 32;
+          // find the radius in lat/lon
+          var rlat = (radius / earthsradius) * r2d;
+          var rlng = rlat / Math.cos(lat * d2r);
+          var extp = [];
+          for (var i = 0; i < points + 1; i++) // one extra here makes sure we connect the
+          {
+              var theta = Math.PI * (i / (points / 2));
+              var ex = lng + (rlng * Math.cos(theta)); // center a + radius x * cos(theta)
+              var ey = lat + (rlat * Math.sin(theta)); // center b + radius y * sin(theta)
+              extp.push(new L.LatLng(ey, ex));
+          }
+          return extp;
+      }
+
+      L.HtmlIcon = L.Icon.extend({
+      	options: {
+      		/*
+      		html: (String) (required)
+      		iconAnchor: (Point)
+      		popupAnchor: (Point)
+      		*/
+      	},
+
+      	initialize: function (options) {
+      		L.Util.setOptions(this, options);
+      	},
+
+      	createIcon: function () {
+      		var div = document.createElement('div');
+      		div.innerHTML = this.options.html;
+      		return div;
+      	},
+
+      	createShadow: function () {
+      		return null;
+      	}
+      });
 
       //MAP CONTROLS
       // Lasso controls
@@ -71,13 +115,20 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'lasso-selection', container);
+        //   var p = L.DomUtil.create('p', '', this.link);
+        //   p.innerHTML = 'Draw Area';
           this.link.href = '#';
           this._map = map;
 
           L.DomEvent.on(this.link, 'click', this._click, this);
           return container;
         },
+
         _click: function (e) {
+            var el = document.querySelector('.pick-notification');
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -87,13 +138,18 @@
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
           LassoSelection(function LassoCallback(points, b_box) {
-            var poly = L.polygon(points, {
-              weight: 3,
-              color: '#00CFFF',
-              opacity: 0.9,
-              fillColor: '#0C2638',
-              fillOpacity: 0.4
-            }).addTo(drawLayer);
+              L.polygon([points,[[90, -180],[90, 180],[-90, 180],[-90, -180]]], {
+                  weight: 3,
+                  color: '#00CFFF',
+                  opacity: 0.9,
+                  fillColor: '#0C2638',
+                  fillOpacity: 0.4,
+                }).addTo(bgLayer);
+
+              L.polygon(points, {
+                opacity: 0.0,
+                fill: false
+              }).addTo(drawLayer);
 
             //var popup = RemoveMarkerPopup(
             //  function () {
@@ -133,6 +189,8 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'radius-selection', container);
+        //   var p = L.DomUtil.create('p', '', this.link);
+        //   p.innerHTML = 'Search by Radius';
           this.link.href = '#';
           this._map = map;
 
@@ -140,6 +198,10 @@
           return container;
         },
         _click: function (e) {
+            var el = document.querySelector('.pick-notification');
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -152,11 +214,8 @@
             snapRemote.enable();
 
             var circle = L.circle(startPoing, radius, {
-              weight: 3,
-              color: '#00CFFF',
-              opacity: 0.9,
-              fillColor: '#0C2638',
-              fillOpacity: 0.4
+              opacity: 0.0,
+              fill: false,
             });
 
             //var popup = RemoveMarkerPopup(
@@ -171,14 +230,25 @@
             //
             //circle.bindPopup(popup);
 
-
             circle.addTo(drawLayer);
 
             var bboxes = GetDrawLayerBBoxes();
+
+            var rds = (bboxes[0].getNorthWest().lat - bboxes[0].getSouthWest().lat) / 2;
+            var polyCrcl = plygonFromCircle(startPoing.lat, startPoing.lng, rds)
+
+            L.polygon([polyCrcl, [[90, -180],[90, 180],[-90, 180],[-90, -180]]], {
+              weight: 3,
+              color: '#00CFFF',
+              opacity: 0.9,
+              fillColor: '#0C2638',
+              fillOpacity: 0.4
+          }).addTo(bgLayer);
+
             GetDataByBBox(bboxes);
             _activateControl(false);
           });
-		  
+
           _activateControl('.radius-selection');
         }
 
@@ -199,6 +269,8 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'path-selection', container);
+        //   var p = L.DomUtil.create('p', '', this.link);
+        //   p.innerHTML = 'Search by Road Trip';
           this.link.href = '#';
           this._map = map;
 
@@ -206,6 +278,10 @@
           return container;
         },
         _click: function (e) {
+            var el = document.querySelector('.pick-notification');
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -262,7 +338,7 @@
       // Save selection
       L.Control.saveSelection = L.Control.extend({
         options: {
-          position: 'topright',
+          position: 'bottomleft',
           title: {
             'false': 'Save selection',
             'true': 'Save selection'
@@ -272,6 +348,8 @@
           var container = L.DomUtil.create('div', 'map-tools map-tools-top hide-tools');
 
           this.link = L.DomUtil.create('div', 'save-selection', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/floppy-disk-save-file.svg";
           this.link.href = '#';
           this._map = map;
 
@@ -296,7 +374,7 @@
       // Clean selection
       L.Control.clearSelection = L.Control.extend({
         options: {
-          position: 'topright',
+          position: 'bottomleft',
           title: {
             'false': 'Clear selection',
             'true': 'Clear selection'
@@ -306,6 +384,8 @@
           var container = L.DomUtil.create('div', 'map-tools map-tools-top hide-tools');
 
           this.link = L.DomUtil.create('div', 'clear-selection', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/cancel-button.svg";
           this.link.href = '#';
           this._map = map;
 
@@ -335,7 +415,7 @@
 	 */
 	L.Control.focusGeolocation = L.Control.extend({
 		options: {
-			position: 'topleft',
+			position: 'bottomleft',
 			title: {
 				'false': 'Save selection',
 				'true': 'Save selection'
@@ -344,7 +424,9 @@
 		onAdd: function (map) {
 			var container = L.DomUtil.create('div', 'focus-geolocation');
 
-			this.link = L.DomUtil.create('div', 'ion-android-locate', container);
+			this.link = L.DomUtil.create('div', '', container);
+            var img = L.DomUtil.create('img', '', this.link);
+            img.src = "../../assets/img/svg/my-location.svg";
 			this.link.href = '#';
 			this._map = map;
 
@@ -474,6 +556,7 @@
 
         //add controls
         AddControls();
+        map.addLayer(bgLayer);
         map.addLayer(draggableMarkerLayer);
         map.addLayer(drawLayer);
         map.addLayer(markersLayer);
@@ -567,6 +650,7 @@
           markersLayer.clearLayers();
           draggableMarkerLayer.clearLayers();
           drawLayer.clearLayers();
+          bgLayer.clearLayers();
         }
 
         $timeout(function () {
@@ -626,7 +710,7 @@
         map.removeLayer(otherLayer);
         currentLayer = "food";
       }
-		
+
 		/**
 		 * If Map has the layer
 		 * @param {string} layer
@@ -653,7 +737,7 @@
 				return false;
 			}
 		}
-		
+
       //show shelter layer on map
       function showShelterLayer(clearLayers, keepListeners) {
         if (keepListeners !== true) {
@@ -759,6 +843,7 @@
             points.push(points[0]);
             var b_box = polyline.getBounds();
             drawLayer.removeLayer(polyline);
+            bgLayer.removeLayer(polyline);
             callback(GetConcaveHull(points), b_box);
           }
         }
@@ -810,6 +895,7 @@
             started = false;
             var b_box = circle.getBounds();
             drawLayer.removeLayer(circle);
+            bgLayer.removeLayer(circle);
             callback(startPoint, radius, b_box);
           }
         }
@@ -822,11 +908,12 @@
         cancelPopup;
         var showCancelPopup = true;
         var lineOptions = {};
-        lineOptions.styles = [{type: 'polygon', color: 'blue', opacity: 0.6, weight: 3, fillOpacity: 0.2}, {
-          color: 'red',
-          opacity: 1,
-          weight: 3
-        }];
+        // lineOptions.styles = [{type: 'polygon', color: 'red', opacity: 0.6, weight: 10, fillOpacity: 0.2}, {
+        //   color: 'red',
+        //   opacity: 1,
+        //   weight: 3
+        // }];
+        lineOptions.styles = [{type: 'polygon', weight: 3, color: '#00CFFF', opacity: 0.9, fillColor: '#0C2638', fillOpacity: 0.4}, {color: 'red', opacity: 1, weight: 3}];
         ClearSelectionListeners();
 
         pathSelectionStarted = true;
@@ -928,6 +1015,7 @@
 
 					if (line) {
 						drawLayer.removeLayer(line);
+                        bgLayer.removeLayer(line);
 						line.off('linetouched');
 					}
 					if (err) {
@@ -945,8 +1033,32 @@
 						simplified.geometry.coordinates.forEach(function(e) {
 							$rootScope.routeInterpolated.push({latLng: {lat: e[1], lng: e[0]}});
 						});
-				  
-						line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
+
+						line = L.Routing.line(routes[0], lineOptions);
+                        var lastKey = line._layers[Object.keys(line._layers)[Object.keys(line._layers).length - 1]];
+                        var tmp = line._layers[Object.keys(line._layers)[Object.keys(line._layers).length - 2]];
+                        var almostLastKey = tmp._layers[Object.keys(tmp._layers)[Object.keys(tmp._layers).length - 1]];
+                        var lineLatlngs = lastKey._latlngs;
+                        var polyLatlngs = almostLastKey._latlngs;
+                        drawLayer.clearLayers();
+                        bgLayer.clearLayers();
+                        L.polygon([[[90, 180],[90, -180],[-90, -180],[-90, 180]], polyLatlngs], {
+                            weight: 3,
+                            color: '#00CFFF',
+                            opacity: 0.9,
+                            fillColor: '#0C2638',
+                            fillOpacity: 0.4,
+                        }).addTo(bgLayer);
+
+                        L.polyline(lineLatlngs, {color: 'red', smoothFactor: 1}).addTo(bgLayer);
+
+                        L.polygon(polyLatlngs, {
+                          opacity: 0.0,
+                          fill: false
+                        }).addTo(drawLayer);
+
+                        // line.addTo(drawLayer);
+
 						line.on('linetouched', function (e) {
 							function remove() {
 								for (var k in markers) {
@@ -955,6 +1067,7 @@
 									GetDataByBBox(bboxes);
 								}
 								drawLayer.removeLayer(line);
+                                bgLayer.removeLayer(line);
 								map.closePopup();
 								ClearSelectionListeners();
 							}
@@ -987,6 +1100,7 @@
 				}
 				if (line) {
 					drawLayer.removeLayer(line);
+                    bgLayer.removeLayer(line);
 					line.off('linetouched');
 				}
 			}
@@ -1026,7 +1140,7 @@
 					}
 				});
         });
-		
+
       }
 
       //remove all selection listeners
@@ -1292,6 +1406,7 @@
         markersLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
+        bgLayer.clearLayers();
         eventsLayer.clearLayers();
         foodLayer.clearLayers();
         shelterLayer.clearLayers();
@@ -1325,10 +1440,10 @@
         clearSelectionControl.addTo(map);
         saveSelectionControl.addTo(map);
         //shareSelectionControl.addTo(map);
+        focusGeolocation.addTo(map);
         pathControl.addTo(map);
         lassoControl.addTo(map);
         radiusControl.addTo(map);
-		focusGeolocation.addTo(map);
       }
 
       //Makers
@@ -1362,11 +1477,14 @@
       }
 
       function CreateCustomIcon(iconUrl, className, iconSize) {
-        var iconSize = iconSize || [50, 50];
-        return L.icon({
-          iconSize: iconSize,
-          iconUrl: iconUrl,
-          className: className
+        // var iconSize = iconSize || [50, 50];
+        // return L.icon({
+        //   iconSize: iconSize,
+        //   iconUrl: iconUrl,
+        //   className: className
+        // });
+        return new L.HtmlIcon({
+            html : "<div class='map-marker-icon' style='background:white;color:red;'>Hello, London</div>",
         });
       }
 
@@ -1430,7 +1548,7 @@
 			var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
 			var popup = L.popup(options).setContent(popupContent[0]);
 			this.bindPopup(popup).openPopup();
-			  
+
             scope.item.$loading = true;
 
             var syncSpot;
@@ -1939,9 +2057,74 @@
           if (item.location) {
 
             var marker = L.marker(item.location);
+
+            var scope = $rootScope.$new();
+            var offset = 75;
+            var options = {
+              keepInView: false,
+              autoPan: true,
+              closeButton: false,
+              className: 'popup blogpopup',
+              autoPanPaddingTopLeft: L.point(offset, offset),
+              autoPanPaddingBottomRight: L.point(offset, offset)
+            };
+
+            var post = {};
+            post.img = item.cover_url.medium;
+            post.title = item.title;
+            post.address = item.address;
+            post.date = item.created_at;
+            post.category = item.category.display_name;
+            post.author = item.user.first_name + ' ' + item.user.last_name;
+            post.slug = item.slug;
+
+            scope.item = post;
+            scope.marker = marker;
+
             marker.on('click', function () {
-              $state.go('blog.article', {slug: item.slug});
+              if (this.getPopup()) {
+                  this.unbindPopup();
+              }
+              var popupContent = $compile('<blogpopup post="item"></blogpopup>')(scope);
+              var popup = L.popup(options).setContent(popupContent[0]);
+              this.bindPopup(popup).openPopup();
+
+              scope.item.$loading = true;
+
+            //   var syncSpot;
+            //   if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: spot_id}))) {
+            //     _loadSpotComments(scope, syncSpot);
+            //   } else {
+            //     Spot.get({id: spot_id}, function (fullSpot) {
+            //       //merge photos
+            //       fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
+            //       _loadSpotComments(scope, fullSpot);
+            //     });
+            //   }
             });
+
+
+
+
+
+
+
+
+
+
+
+
+            // var popupContent = $compile('<blogpopup></blogpopup>')(scope);
+            // marker.bindPopup(popupContent);
+            // marker.openPopup();
+            // marker.on('click', function () {
+            //     console.log(marker);
+            //     // this.link = L.DomUtil.create('div', 'clear-selection', container);
+            //     // this.link.href = '#';
+            //     // this._map = map;
+            //     // console.log(item);
+            // //   $state.go('blog.article', {slug: item.slug});
+            // });
             item.marker = marker;
 
             markers.push(marker);
@@ -1972,7 +2155,7 @@
         if (!show && hasWeather)
             map.removeLayer(map.weatherLayer);
       }
-	  
+
       return {
         Init: InitMap,
         GetMap: GetMap,

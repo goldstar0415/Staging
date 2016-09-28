@@ -1,4 +1,4 @@
-<div class="col-xs-12 menu-profile">
+<div class="col-xs-12 menu-profile" ng-class="$root.$state.current.name == 'index' ? 'menu-profile-hidden' : ''">
   <div class="hide-menu-profile"
        ng-hide="$root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview'"
        ng-class="{'rotate-down': $root.mapState == 'small-size'}"

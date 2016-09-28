@@ -1,3 +1,112 @@
+.location {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid lightgrey;
+    font-size: 16px;
+    @media(max-width: 450px) {
+        justify-content: center;
+    }
+    p {
+        margin: 0 10px;
+    }
+}
+
+.mobile-view {
+    display: block;
+    position: relative;
+    margin: 10px 0;
+    @media(max-width: 450px) {
+        display: block;
+    }
+    .mobile-spots {
+        display: block;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+    .mobile-filter {
+        display: block;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+    .mobile-line {
+        border-bottom: 2px solid  rgb(2, 200, 246);
+        width: 100px;
+        margin: auto;
+    }
+}
+
+.new-result > div {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    // margin: -5px;
+    .new-spot {
+        padding: 5px;
+        width: 50%;
+        .spot-img {
+            position: relative;
+            height: 150px;
+            .spot-img-top, .spot-img-bottom {
+                position: absolute;
+                left: 0;
+                right: 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 10px;
+                height: 25px;
+                z-index: 0;
+                background-color: rgba(black, .5);
+                color: white;
+                p {
+                    margin: 0;
+                }
+                a {
+                    margin-top: -3px;
+                }
+
+            }
+            .spot-img-top {
+                top: 0;
+            }
+            .spot-img-bottom {
+                bottom: 0;
+            }
+            .img {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                position: relative;
+                height: 100%;
+                background-color: #DDDDDD;
+                img {
+                    width: 100%;
+                }
+            }
+        }
+        .spot-name {
+            margin: 5px 0 0;
+            font-weight: bold;
+        }
+        .spot-address {
+            margin: 0;
+            & + p {
+                font-size: 12px;
+                .glyphicon {
+                    color: #0DC8F4 !important;
+                }
+            }
+        }
+    }
+}
+
+
 .event-result {
     padding: 15px;
     background: rgba(239, 243, 241, 0.5);
@@ -14,6 +123,7 @@
             height: 42px;
             border: 3px solid $white;
             border-radius: 30px;
+            object-fit: cover;
         }
     }
     .date {
