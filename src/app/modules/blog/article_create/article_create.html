@@ -79,7 +79,7 @@
     <div class="form-group">
       <label class="col-sm-3 col-xs-12 control-label">Body </label>
       <div class="col-sm-9 col-xs-12">
-        <summernote ng-model="Article.body" config="Article.options"></summernote>
+        <summernote on-image-upload="imageUpload(files)" ng-model="Article.body" config="Article.options" editor="editor" editable="editable"></summernote>
       </div>
       <!--<div class="col-sm-9 col-xs-12">
         <div content-tools data-name="article-body" ng-bind-html="Article.body | toTrustedHtml">
