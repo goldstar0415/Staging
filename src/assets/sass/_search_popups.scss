@@ -1934,6 +1934,9 @@
             flex-direction: row;
             height: 50px !important;
         }
+        @media(max-width: 767px) and (orientation: landscape) {
+            height: calc(100vh - 50px);
+        }
         li {
             padding: 5px 0;
             width: 100%;

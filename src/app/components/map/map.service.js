@@ -15,6 +15,7 @@
       var radiusSelectionLimit = 500000; // in meters
       var markersLayer = L.featureGroup();
       var drawLayer = L.featureGroup();
+      var bgLayer = L.featureGroup();
       var draggableMarkerLayer = L.featureGroup();
       var drawLayerGeoJSON;
       var controlGroup = L.featureGroup();
@@ -114,12 +115,12 @@
           L.DomEvent.preventDefault(e);
           LassoSelection(function LassoCallback(points, b_box) {
               L.polygon([points,[[90, -180],[90, 180],[-90, 180],[-90, -180]]], {
-                weight: 3,
-                color: '#00CFFF',
-                opacity: 0.9,
-                fillColor: '#0C2638',
-                fillOpacity: 0.4
-              }).addTo(drawLayer);
+                  weight: 3,
+                  color: '#00CFFF',
+                  opacity: 0.9,
+                  fillColor: '#0C2638',
+                  fillOpacity: 0.4,
+                }).addTo(bgLayer);
 
               L.polygon(points, {
                 opacity: 0.0,
@@ -218,7 +219,7 @@
               opacity: 0.9,
               fillColor: '#0C2638',
               fillOpacity: 0.4
-            }).addTo(drawLayer);
+          }).addTo(bgLayer);
 
             GetDataByBBox(bboxes);
             _activateControl(false);
@@ -531,6 +532,7 @@
 
         //add controls
         AddControls();
+        map.addLayer(bgLayer);
         map.addLayer(draggableMarkerLayer);
         map.addLayer(drawLayer);
         map.addLayer(markersLayer);
@@ -624,6 +626,7 @@
           markersLayer.clearLayers();
           draggableMarkerLayer.clearLayers();
           drawLayer.clearLayers();
+          bgLayer.clearLayers();
         }
 
         $timeout(function () {
@@ -816,6 +819,7 @@
             points.push(points[0]);
             var b_box = polyline.getBounds();
             drawLayer.removeLayer(polyline);
+            bgLayer.removeLayer(polyline);
             callback(GetConcaveHull(points), b_box);
           }
         }
@@ -867,6 +871,7 @@
             started = false;
             var b_box = circle.getBounds();
             drawLayer.removeLayer(circle);
+            bgLayer.removeLayer(circle);
             callback(startPoint, radius, b_box);
           }
         }
@@ -879,11 +884,12 @@
         cancelPopup;
         var showCancelPopup = true;
         var lineOptions = {};
-        lineOptions.styles = [{type: 'polygon', color: 'red', opacity: 0.6, weight: 10, fillOpacity: 0.2}, {
-          color: 'red',
-          opacity: 1,
-          weight: 3
-        }];
+        // lineOptions.styles = [{type: 'polygon', color: 'red', opacity: 0.6, weight: 10, fillOpacity: 0.2}, {
+        //   color: 'red',
+        //   opacity: 1,
+        //   weight: 3
+        // }];
+        lineOptions.styles = [{type: 'polygon', weight: 3, color: '#00CFFF', opacity: 0.9, fillColor: '#0C2638', fillOpacity: 0.4}, {color: 'red', opacity: 1, weight: 3}];
         ClearSelectionListeners();
 
         pathSelectionStarted = true;
@@ -985,6 +991,7 @@
 
 					if (line) {
 						drawLayer.removeLayer(line);
+                        bgLayer.removeLayer(line);
 						line.off('linetouched');
 					}
 					if (err) {
@@ -1003,7 +1010,31 @@
 							$rootScope.routeInterpolated.push({latLng: {lat: e[1], lng: e[0]}});
 						});
 
-						line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
+						line = L.Routing.line(routes[0], lineOptions);
+                        var lastKey = line._layers[Object.keys(line._layers)[Object.keys(line._layers).length - 1]];
+                        var tmp = line._layers[Object.keys(line._layers)[Object.keys(line._layers).length - 2]];
+                        var almostLastKey = tmp._layers[Object.keys(tmp._layers)[Object.keys(tmp._layers).length - 1]];
+                        var lineLatlngs = lastKey._latlngs;
+                        var polyLatlngs = almostLastKey._latlngs;
+                        drawLayer.clearLayers();
+                        bgLayer.clearLayers();
+                        L.polygon([[[90, 180],[90, -180],[-90, -180],[-90, 180]], polyLatlngs], {
+                            weight: 3,
+                            color: '#00CFFF',
+                            opacity: 0.9,
+                            fillColor: '#0C2638',
+                            fillOpacity: 0.4,
+                        }).addTo(bgLayer);
+
+                        L.polyline(lineLatlngs, {color: 'red', smoothFactor: 1}).addTo(bgLayer);
+
+                        L.polygon(polyLatlngs, {
+                          opacity: 0.0,
+                          fill: false
+                        }).addTo(drawLayer);
+
+                        // line.addTo(drawLayer);
+
 						line.on('linetouched', function (e) {
 							function remove() {
 								for (var k in markers) {
@@ -1012,6 +1043,7 @@
 									GetDataByBBox(bboxes);
 								}
 								drawLayer.removeLayer(line);
+                                bgLayer.removeLayer(line);
 								map.closePopup();
 								ClearSelectionListeners();
 							}
@@ -1044,6 +1076,7 @@
 				}
 				if (line) {
 					drawLayer.removeLayer(line);
+                    bgLayer.removeLayer(line);
 					line.off('linetouched');
 				}
 			}
@@ -1349,6 +1382,7 @@
         markersLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
+        bgLayer.clearLayers();
         eventsLayer.clearLayers();
         foodLayer.clearLayers();
         shelterLayer.clearLayers();
@@ -1574,7 +1608,7 @@
       function PointInPolygon(point) {
         var result = [];
         drawLayer.eachLayer(function (layer) {
-          if (result.length < 1  && !layer.options.fill) {
+          if (result.length < 1) {
             if (layer._route) {
               layer.eachLayer(function (l) {
                 if (!l._latlngs) {
