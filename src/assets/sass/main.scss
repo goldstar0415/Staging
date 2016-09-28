@@ -1727,3 +1727,20 @@ body .atlwdg-trigger.atlwdg-TOP {
 		}
 	}
 }
+
+.map-marker-icon {
+    // width: 1px;
+    // height: 1px;
+    // position: absolute;
+    margin-left: -25px;
+    margin-top: -25px;
+    width: 50px;
+    height: 50px;
+    opacity: 1;
+    max-width: none !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    overflow: hidden;
+}
