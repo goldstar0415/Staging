@@ -77,6 +77,30 @@
           return extp;
       }
 
+      L.HtmlIcon = L.Icon.extend({
+      	options: {
+      		/*
+      		html: (String) (required)
+      		iconAnchor: (Point)
+      		popupAnchor: (Point)
+      		*/
+      	},
+
+      	initialize: function (options) {
+      		L.Util.setOptions(this, options);
+      	},
+
+      	createIcon: function () {
+      		var div = document.createElement('div');
+      		div.innerHTML = this.options.html;
+      		return div;
+      	},
+
+      	createShadow: function () {
+      		return null;
+      	}
+      });
+
       //MAP CONTROLS
       // Lasso controls
       L.Control.lasso = L.Control.extend({
@@ -1453,11 +1477,14 @@
       }
 
       function CreateCustomIcon(iconUrl, className, iconSize) {
-        var iconSize = iconSize || [50, 50];
-        return L.icon({
-          iconSize: iconSize,
-          iconUrl: iconUrl,
-          className: className
+        // var iconSize = iconSize || [50, 50];
+        // return L.icon({
+        //   iconSize: iconSize,
+        //   iconUrl: iconUrl,
+        //   className: className
+        // });
+        return new L.HtmlIcon({
+            html : "<div class='map-marker-icon' style='background:white;color:red;'>Hello, London</div>",
         });
       }
 
