@@ -366,16 +366,16 @@
     </div>
 
 
-    <div class="footer-search" ng-class="{'active-weather': $root.sortLayer == 'weather'}" ng-if="false">
-        <div ng-show="$root.sortLayer != 'weather'" id="filters-button-open" ng-click="MapSort.isShowFilter = !MapSort.isShowFilter">
+    <div class="footer-search" ng-class="{'active-weather': $root.sortLayer == 'weather'}">
+        <!-- <div ng-show="$root.sortLayer != 'weather'" id="filters-button-open" ng-click="MapSort.isShowFilter = !MapSort.isShowFilter">
             <span class="glyphicon glyphicon-filter"></span>
             <p> Filters</p>
-        </div>
+        </div> -->
         <!-- <span class="glyphicon glyphicon-filter"></span> -->
         <!-- <div class="filters-button" id="filters-button-open" ng-click="MapSort.isShowFilter = !MapSort.isShowFilter"></div> -->
 
 
-        <div ng-show="$root.sortLayer != 'weather'">
+        <!-- <div ng-show="$root.sortLayer != 'weather'">
             <div class="text-center">
                 <div class="numbers-events">
                     <a href="" class="hide" title="Close"></a>
@@ -383,7 +383,7 @@
                     <p>{{$root.mapSortSpots.sourceSpots.length || 0}} {{ $root.sortLayer }} Spots found</p>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
         <div ng-show="$root.sortLayer == 'weather'">
