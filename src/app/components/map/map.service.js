@@ -1348,13 +1348,33 @@
                 var startPoint = L.GeoJSON.coordsToLatLng(feature.geometry.coordinates);
                 var radius = feature.properties.radius;
 
+                // var circle = L.circle(startPoint, radius, {
+                //   weight: 3,
+                //   color: '#00CFFF',
+                //   opacity: 0.9,
+                //   fillColor: '#0C2638',
+                //   fillOpacity: 0.4
+                // });
+
                 var circle = L.circle(startPoint, radius, {
+                  opacity: 0.0,
+                  fill: false,
+                });
+
+                circle.addTo(drawLayer);
+
+                var bboxes = GetDrawLayerBBoxes();
+
+                var rds = (bboxes[0].getNorthWest().lat - bboxes[0].getSouthWest().lat) / 2;
+                var polyCrcl = plygonFromCircle(startPoint.lat, startPoint.lng, rds)
+
+                L.polygon([polyCrcl, [[90, -180],[90, 180],[-90, 180],[-90, -180]]], {
                   weight: 3,
                   color: '#00CFFF',
                   opacity: 0.9,
                   fillColor: '#0C2638',
                   fillOpacity: 0.4
-                });
+              }).addTo(bgLayer);
 
                 //var popup = RemoveMarkerPopup(
                 //  function () {
@@ -1373,12 +1393,17 @@
                 _.each(feature.geometry.coordinates, function (coords) {
                   var points = L.GeoJSON.coordsToLatLngs(coords);
 
-                  var poly = L.polygon(points, {
+                  var poly = L.polygon([points,[[90, -180],[90, 180],[-90, 180],[-90, -180]]], {
                     weight: 3,
                     color: '#00CFFF',
                     opacity: 0.9,
                     fillColor: '#0C2638',
                     fillOpacity: 0.4
+                }).addTo(bgLayer);
+
+                  var poly = L.polygon(points, {
+                    opacity: 0.0,
+                    fill: false
                   }).addTo(drawLayer);
 
                   //var popup = RemoveMarkerPopup(
