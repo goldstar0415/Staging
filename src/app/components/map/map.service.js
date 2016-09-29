@@ -1392,8 +1392,8 @@
               } else {
                 _.each(feature.geometry.coordinates, function (coords) {
                   var points = L.GeoJSON.coordsToLatLngs(coords);
-
-                  var poly = L.polygon([points,[[90, -180],[90, 180],[-90, 180],[-90, -180]]], {
+                  //[[[90, 180],[90, -180],[-90, -180],[-90, 180]], polyLatlngs]
+                  var poly = L.polygon([[[90, 180],[90, -180],[-90, -180],[-90, 180]], points], {
                     weight: 3,
                     color: '#00CFFF',
                     opacity: 0.9,
