@@ -1,6 +1,6 @@
 <user-hints></user-hints>
 <!-- ng-show="$root.mapSortSpots.sourceSpots.length || !MapSort.vertical" -->
-<div class="map-toggle-menu" ng-click="MapSort.vertical = !MapSort.vertical; MapSort.openedItem = null" ng-show="$root.mapSortSpots.sourceSpots.length" class="new-sidebar-menu" ng-class="!MapSort.vertical ? 'map-toggle-menu-opened' : ''">
+<div class="map-toggle-menu" ng-click="MapSort.vertical = !MapSort.vertical; MapSort.openedItem = null" ng-show="$root.$state.current.name == 'index' && $root.mapSortSpots.sourceSpots.length" class="new-sidebar-menu" ng-class="!MapSort.vertical ? 'map-toggle-menu-opened' : ''">
     <span class="glyphicon" ng-class="MapSort.vertical ? 'glyphicon-menu-up' : 'glyphicon-menu-down'"></span>
 </div>
 <!-- <div ng-show="MapSort.vertical && ($root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview')" class="new-sidebar-menu"> -->
@@ -9,26 +9,23 @@
 
     <div class="sidebar-menu-vertical" ng-class="$root.$state.current.name == 'index' ? 'sidebar-menu-vertical-bottom' : ''">
         <ul>
-            <!-- <li class="hidden-xs" ng-click="MapSort.vertical = !MapSort.vertical" id="menu_expand">
-                <a class="full-small"></a>
-            </li> -->
-            <li ng-click="$root.toggleLayer('event')" ng-class="{'active': $root.sortLayer == 'event'}">
+            <li ng-click="$root.toggleLayer('event')" ng-class="{'active': $root.sortLayer == 'event'}" class="event-sidebar">
                 <img src="../../../assets/img/svg/Icon_Events.svg" alt="img">
                 <p>Events</p>
             </li>
-            <li ng-click="$root.toggleLayer('todo')" ng-class="{'active': $root.sortLayer == 'todo'}">
+            <li ng-click="$root.toggleLayer('todo')" ng-class="{'active': $root.sortLayer == 'todo'}" class="todo-sidebar">
                 <img src="../../../assets/img/svg/Icon_To_do.svg" alt="img">
                 <p>To-Do</p>
             </li>
-            <li ng-click="$root.toggleLayer('food')" ng-class="{'active': $root.sortLayer == 'food'}">
+            <li ng-click="$root.toggleLayer('food')" ng-class="{'active': $root.sortLayer == 'food'}" class="food-sidebar">
                 <img src="../../../assets/img/svg/Icon_Grab_Grub.svg" alt="img">
                 <p>Food</p>
             </li>
-            <li ng-click="$root.toggleLayer('shelter')" ng-class="{'active': $root.sortLayer == 'shelter'}">
+            <li ng-click="$root.toggleLayer('shelter')" ng-class="{'active': $root.sortLayer == 'shelter'}" class="shelter-sidebar">
                 <img src="../../../assets/img/svg/Icon_Get_a_room.svg" alt="img">
                 <p>Shelter</p>
             </li>
-            <li ng-click="$root.toggleLayer('weather')" ng-class="{'active': $root.sortLayer == 'weather'}">
+            <li ng-click="$root.toggleLayer('weather')" ng-class="{'active': $root.sortLayer == 'weather'}" class="weather-sidebar">
                 <img src="../../../assets/img/svg/Icon_Weather.svg" alt="img">
                 <p>Weather</p>
             </li>
@@ -37,27 +34,11 @@
 </div>
 
 <div ng-show="!MapSort.vertical" class="col-xs-3 no-pad sort-menu">
-    <!-- <div class="hide-menu-profile" ng-click="MapSort.vertical = !MapSort.vertical" ng-class="{'rotate-down': !MapSort.vertical}"></div> -->
 
-    <!-- <div class="sidebar-menu-horizontal" ng-if="MapSort.openedItem == null">
-        <ul>
-            <li ng-click="$root.toggleLayer('event')" ng-class="{'active': $root.sortLayer == 'event'}">
-                <a class="events"><span>Events</span></a>
-            </li>
-            <li ng-click="$root.toggleLayer('todo')" ng-class="{'active': $root.sortLayer == 'todo'}">
-                <a class="recreation"><span>To-Do</span></a>
-            </li>
-            <li ng-click="$root.toggleLayer('food')" ng-class="{'active': $root.sortLayer == 'food'}">
-                <a class="pit-stops"><span>Food</span></a>
-            </li>
-            <li ng-click="$root.toggleLayer('shelter')" ng-class="{'active': $root.sortLayer == 'shelter'}">
-                <a class="shelter"><span>Shelter</span></a>
-            </li>
-            <li ng-click="$root.toggleLayer('weather')" ng-class="{'active': $root.sortLayer == 'weather'}">
-                <a class="weather-link"><span>Weather</span></a>
-            </li>
-        </ul>
-    </div> -->
+
+
+
+
 
     <!--Attention! HERE ADD CLASS "applied"-->
     <div class="search-filters col-xs-12" ng-show="$root.sortLayer != 'weather'" ng-class="{'applied-filter': !MapSort.isShowFilter && !MapSort.isEmptyFilters()}">
@@ -304,86 +285,12 @@
 
 
 
-
-
-
-                <!-- <div class="results">
-<div infinite-scroll="MapSort.loadNextSpots()" infinite-scroll-disabled="$root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length || MapSort.vertical" class="clearfix" infinite-scroll-distance="1" infinite-scroll-container='".search-filters"'>
-<div ng-repeat="item in $root.mapSortSpots.data">
-<div class="event-result clearfix">
-<div class="col-xs-4 no-pad-left">
-  <div class="event-result-logo">
-    <img ng-src="{{ item.cover_url.thumb }}">
-  </div>
-  <stars item="item"></stars>
-</div>
-<div class="col-xs-8 padding-0">
-  <div class="col-xs-12 padding-0">
-    <h2 class="name">
-      <a ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})" target="_blank">{{item.title}}</a>
-    </h2>
-
-    <p class="location">{{item.points[0].address}}</p>
-
-    <div class=" col-xs-8 date">
-      <date-range item="item"></date-range>
-    </div>
-    <p class="description">{{item.description}}</p>
-
-    <div class="links-nav">
-      <ul class="tools clearfix">
-        <li ng-if="item.is_approved">
-          <invite-friends item="item"></invite-friends>
-        </li>
-        <li ng-if="$root.sortLayer == 'event' && !item.is_saved">
-          <a class="save-event" ng-click="MapSort.saveToCalendar(item)">Save</a>
-        </li>
-        <li ng-if="$root.sortLayer == 'event' && $root.currentUser && item.is_saved">
-          <a class="save-event saved clicked" ng-click="MapSort.removeFromCalendar(item)">Remove</a>
-        </li>
-        <li ng-if="$root.currentUser.id != item.user_id && !item.is_favorite">
-          <a class="favorite-spot" ng-click="MapSort.addToFavorite(item)">Favorite</a>
-        </li>
-        <li ng-if="$root.currentUser && $root.currentUser.id != item.user_id && item.is_favorite">
-          <a class="fav favorited" ng-click="MapSort.removeFromFavorite(item)">Unfavorite</a>
-        </li>
-        <li>
-          <share item="item" type="spot"></share>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-</div>
-</div>
-</div>
-<div class="col-xs-12">
-<preloader ng-show="$root.mapSortSpots.isLoading"></preloader>
-</div>
-</div> -->
             </div>
         </div>
     </div>
 
 
     <div class="footer-search" ng-class="{'active-weather': $root.sortLayer == 'weather'}">
-        <!-- <div ng-show="$root.sortLayer != 'weather'" id="filters-button-open" ng-click="MapSort.isShowFilter = !MapSort.isShowFilter">
-            <span class="glyphicon glyphicon-filter"></span>
-            <p> Filters</p>
-        </div> -->
-        <!-- <span class="glyphicon glyphicon-filter"></span> -->
-        <!-- <div class="filters-button" id="filters-button-open" ng-click="MapSort.isShowFilter = !MapSort.isShowFilter"></div> -->
-
-
-        <!-- <div ng-show="$root.sortLayer != 'weather'">
-            <div class="text-center">
-                <div class="numbers-events">
-                    <a href="" class="hide" title="Close"></a>
-
-                    <p>{{$root.mapSortSpots.sourceSpots.length || 0}} {{ $root.sortLayer }} Spots found</p>
-                </div>
-            </div>
-        </div> -->
 
 
         <div ng-show="$root.sortLayer == 'weather'">

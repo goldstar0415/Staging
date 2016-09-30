@@ -115,8 +115,6 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'lasso-selection', container);
-        //   var p = L.DomUtil.create('p', '', this.link);
-        //   p.innerHTML = 'Draw Area';
           this.link.href = '#';
           this._map = map;
 
@@ -126,9 +124,7 @@
 
         _click: function (e) {
             var el = document.querySelector('.pick-notification');
-            if (el) {
-                el.parentNode.removeChild(el);
-            }
+            el.style = '';
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -189,8 +185,6 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'radius-selection', container);
-        //   var p = L.DomUtil.create('p', '', this.link);
-        //   p.innerHTML = 'Search by Radius';
           this.link.href = '#';
           this._map = map;
 
@@ -199,9 +193,7 @@
         },
         _click: function (e) {
             var el = document.querySelector('.pick-notification');
-            if (el) {
-                el.parentNode.removeChild(el);
-            }
+            el.style = '';
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -269,8 +261,6 @@
           var container = L.DomUtil.create('div', 'map-tools');
 
           this.link = L.DomUtil.create('div', 'path-selection', container);
-        //   var p = L.DomUtil.create('p', '', this.link);
-        //   p.innerHTML = 'Search by Road Trip';
           this.link.href = '#';
           this._map = map;
 
@@ -279,9 +269,7 @@
         },
         _click: function (e) {
             var el = document.querySelector('.pick-notification');
-            if (el) {
-                el.parentNode.removeChild(el);
-            }
+            el.style = '';
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -422,9 +410,9 @@
 			}
 		},
 		onAdd: function (map) {
-			var container = L.DomUtil.create('div', 'focus-geolocation');
+			var container = L.DomUtil.create('div', 'focus-geolocation-container');
 
-			this.link = L.DomUtil.create('div', '', container);
+			this.link = L.DomUtil.create('div', 'focus-geolocation', container);
             var img = L.DomUtil.create('img', '', this.link);
             img.src = "../../assets/img/svg/my-location.svg";
 			this.link.href = '#';
@@ -444,6 +432,72 @@
 		return new L.Control.saveSelection(options);
 	};
 
+    L.Control.showInfo = L.Control.extend({
+      options: {
+        position: 'bottomleft',
+        title: {
+          'false': 'Save selection',
+          'true': 'Save selection'
+        }
+      },
+      onAdd: function (map) {
+          var container = L.DomUtil.create('div', 'show-info-container');
+
+          this.link = L.DomUtil.create('div', 'show-info', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/rounded-info-button.svg";
+          this.link.href = '#';
+          this._map = map;
+
+          L.DomEvent.on(this.link, 'click', this._click, this);
+          return container;
+      },
+      _click: function (e) {
+        //   if (screenfull.enabled) {
+        //       screenfull.request();
+        //   }
+
+          ClearSelections();
+
+          function getElemCoords(element) {
+              var top = 0,
+                  left = 0;
+              do {
+                  top += element.offsetTop || 0;
+                  left += element.offsetLeft || 0;
+                  element = element.offsetParent;
+              } while (element);
+
+              return {
+                  top: top,
+                  left: left
+              };
+          };
+
+          function hintPosition(el) {
+              var coords = getElemCoords(document.querySelector(el.dataset.elem));
+              el.style.top = coords.top + 15 + 'px';
+              el.style.left = coords.left + 60 + 'px';
+          }
+
+          var layout = document.querySelector('.info-layout');
+          layout.style.display = 'block';
+          layout.onclick = function() {
+              layout.style.display = 'none';
+          };
+          var hints = document.querySelectorAll('.info-layout > p');
+          for (var i = 0; i < hints.length; i++) {
+              hintPosition(hints[i]);
+          }
+          window.onresize = function(event) {
+            layout.style.display = 'none';
+          };
+      }
+
+    });
+    L.Control.ShowInfo = function (options) {
+      return new L.Control.showInfo(options);
+    };
 
       //controls
       var lassoControl = L.Control.Lasso();
@@ -452,6 +506,7 @@
       var clearSelectionControl = L.Control.ClearSelection();
       var saveSelectionControl = L.Control.SaveSelection();
 	  var focusGeolocation = new L.Control.focusGeolocation();
+      var showInfo = new L.Control.showInfo();
       //var shareSelectionControl = L.Control.ShareSelection();
 
 	  function clearPathFilter() {
@@ -637,7 +692,7 @@
             }
 
             $rootScope.mapState = "small-size";
-            map.scrollWheelZoom.disable();
+            // map.scrollWheelZoom.disable();
             break;
           case "hidden":
             $rootScope.mapState = "hidden";
@@ -1459,16 +1514,18 @@
         map.removeLayer(saveSelectionControl);
         map.removeLayer(clearSelectionControl);
 		map.removeLayer(focusGeolocation);
+        map.removeLayer(showInfo);
       }
 
       function AddControls() {
+        focusGeolocation.addTo(map);
         clearSelectionControl.addTo(map);
         saveSelectionControl.addTo(map);
         //shareSelectionControl.addTo(map);
-        focusGeolocation.addTo(map);
         pathControl.addTo(map);
         lassoControl.addTo(map);
         radiusControl.addTo(map);
+        showInfo.addTo(map);
       }
 
       //Makers
