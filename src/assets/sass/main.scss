@@ -90,6 +90,11 @@
   url('../css/fonts/raleway-regular-webfont.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'GelPenUpright';
+  src: url('../css/fonts/GelPenUprightLight.ttf');
+}
+
 .snap-content, .main-container {
   background: #f5f8fa;
 }
@@ -1624,62 +1629,6 @@ body .atlwdg-trigger.atlwdg-TOP {
     margin: 10px 0 20px;
 }
 
-// .pick-notification {
-//     position: absolute;
-//     z-index: 1;
-//     left: 100px;
-//     height: 150px !important;
-//     width: 200px !important;
-//     background-color: white;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     top: 0px;
-//     font-size: 20px;
-//     border: 1px solid #dddddd;
-//     animation: pick-appear 2s;
-//     &::before {
-//         content: '';
-//         color: white;
-//         background-color: white;
-//         height: 50px;
-//         width: 50px;
-//         transform: scale(1, 2.1) rotate(45deg);
-//         position: relative;
-//         left: -46px;
-//         margin-right: -50px;
-//         z-index: 1;
-//         border-left: 1px solid #dddddd;
-//         border-bottom: 1px solid #dddddd;
-//     }
-//     p {
-//         position: relative;
-//         z-index: 999;
-//         margin: 0;
-//         color: #00CFFF;
-//     }
-// }
-//
-// @keyframes pick-appear {
-//     0% { opacity: 0; }
-//     100% { opacity: 1; }
-// }
-
-// .radius-selection, .lasso-selection, .path-selection {
-//     p {
-//         display: none;
-//     }
-//     &:hover {
-//         width: 200px;
-//         text-align: center;
-//         padding: 15px 0 0 50px;
-//         color: white;
-//         p {
-//             display: block;
-//         }
-//     }
-// }
-
 @media (max-width: 767px) {
     .menu-profile-hidden {
        display: none;
@@ -1690,7 +1639,7 @@ body .atlwdg-trigger.atlwdg-TOP {
 }
 
 .hide-menu-profile {
-    display: none;
+    display: block;
 }
 
 @media (max-width: 450px) {
@@ -1744,4 +1693,43 @@ body .atlwdg-trigger.atlwdg-TOP {
     top: 0;
     display: block;
     overflow: hidden;
+}
+
+.pick-notification {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+    position: absolute;
+    z-index: 0;
+    top: calc(50vh - 50px);
+    left: 70px;
+    max-height: 100px;
+    width: calc(100vw - 140px);
+    max-width: 400px;
+    img {
+        width: 100%;
+    }
+}
+
+.info-layout {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    font-family: 'GelPenUprightLight';
+    user-select: none;
+    p {
+        position: absolute;
+    }
+}
+
+.unauthorized-menu {
+    @media (max-width: 767px) {
+        display: none;
+    }
 }
