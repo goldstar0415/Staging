@@ -1559,15 +1559,15 @@
       }
 
       function CreateCustomIcon(iconUrl, className, iconSize) {
-        // var iconSize = iconSize || [50, 50];
-        // return L.icon({
-        //   iconSize: iconSize,
-        //   iconUrl: iconUrl,
-        //   className: className
-        // });
-        return new L.HtmlIcon({
-            html : "<div class='map-marker-icon' style='background:white;color:red;'>Hello, London</div>",
+        var iconSize = iconSize || [50, 50];
+        return L.icon({
+          iconSize: iconSize,
+          iconUrl: iconUrl,
+          className: className
         });
+        // return new L.HtmlIcon({
+        //     html : "<div class='map-marker-icon' style='background:white;color:red;'>Hello, London</div>",
+        // });
       }
 
       function BindMarkerToInput(Marker, Callback) {
