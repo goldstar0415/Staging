@@ -1558,16 +1558,21 @@
         if (callback) callback();
       }
 
-      function CreateCustomIcon(iconUrl, className, iconSize) {
+      function CreateCustomIcon(iconUrl, className, iconSize, type) {
         var iconSize = iconSize || [50, 50];
+        if (type === undefined && ($rootScope.$state.current.name === 'photos.list' || $rootScope.$state.current.name === 'photos.album')) {
+            return new L.HtmlIcon({
+                html : "<div class='map-marker-icon map-marker-icon-photo'><img src='" + iconUrl + "' /></div>",
+            });
+            // return new L.HtmlIcon({
+            //     html : "<div class='map-marker-icon' style='background:white;color:red;'>Hello, London</div>",
+            // });
+        }
         return L.icon({
           iconSize: iconSize,
           iconUrl: iconUrl,
           className: className
         });
-        // return new L.HtmlIcon({
-        //     html : "<div class='map-marker-icon' style='background:white;color:red;'>Hello, London</div>",
-        // });
       }
 
       function BindMarkerToInput(Marker, Callback) {
@@ -2043,7 +2048,7 @@
         }
         var markers = [];
         _.each(spots, function (item) {
-          var icon = CreateCustomIcon(item.spot.category.icon_url, 'custom-map-icons', [50, 50]);
+          var icon = CreateCustomIcon(item.spot.category.icon_url, 'custom-map-icons', [50, 50], type);
           if (item.location) {
             var marker = L.marker(item.location, {icon: icon});
             item.marker = marker;
@@ -2097,7 +2102,7 @@
         }
         var markers = [];
         _.each(spots, function (item) {
-          var icon = CreateCustomIcon(item.category_icon_url, 'custom-map-icons', [50, 50]);
+          var icon = CreateCustomIcon(item.category_icon_url, 'custom-map-icons', [50, 50], type);
           if (item.location) {
             var marker = L.marker(item.location, {icon: icon});
             item.marker = marker;
