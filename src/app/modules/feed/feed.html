@@ -42,14 +42,14 @@
 
               <div ng-switch-when="OnSpotUpdate" class="mgb10">
                 updated spot
-                <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})"
+                <a ui-sref="spot({user_id: item.feedable.user_id || 0, spot_id: item.feedable.id})"
                   >{{item.feedable.title}}
                 </a>
               </div>
 
               <div ng-switch-when="OnSpotCreate" class="mgb10">
                 created spot
-                <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})"
+                <a ui-sref="spot({user_id: item.feedable.user_id || 0, spot_id: item.feedable.id})"
                   >{{item.feedable.title}}
                 </a>
               </div>
@@ -64,7 +64,7 @@
 
               <div ng-switch-when="OnAddToCalendar" class="mgb10">
                 add spot
-                <a ui-sref="spot({user_id: item.feedable.user_id, spot_id: item.feedable.id})"
+                <a ui-sref="spot({user_id: item.feedable.user_id || 0, spot_id: item.feedable.id})"
                   >{{item.feedable.title}}
                 </a> to calendar
               </div>

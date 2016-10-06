@@ -1,0 +1,94 @@
+<form name="reviewForm" ng-submit="ReviewInput.submit(reviewForm)" novalidate class="clearfix" 
+    ng-if="$root.currentUser && ReviewInput.edit && $root.currentUser.id != ReviewInput.item.user_id">
+    <section class="review-section comments-section post" ng-class="{'hidden-xs': ReviewInput.mobile}">
+        <div class="new-review col-xs-12"><h3>Write your own review</h3></div>
+        <div class="new-post clearfix col-md-8 ">
+            <textarea name="review"
+                ng-model="ReviewInput.review"
+                placeholder="Start typing..."
+                ng-focus="ReviewInput.onFocus()"
+                ctrl-enter="ReviewInput.submit(reviewForm)"
+                ng-maxlength="ReviewInput.maxlength"></textarea>
+
+            <div ng-messages="reviewForm.review.$error" ng-if="reviewForm.$submitted" class="error-message">
+                <div ng-message="required">is required</div>
+                <div ng-message="maxlength">is too long</div>
+            </div>
+        </div>
+        <div class="new-post col-md-4 clearfix">
+            <div class="outline-none text-center pull-left" >
+                <rating
+                    ng-model="ReviewInput.rate"
+                    ng-change="ReviewInput.setRating()"
+                    max="5"
+                    state-on="'glyphicon glyphicon-star star-active'"
+                    state-off="'glyphicon glyphicon-star star-default'"
+                    ></rating>
+                <input type="hidden" name="vote" ng-model="ReviewInput.vote">
+            </div>
+
+            <div class="clearfix">
+                <input type="submit" class="submit-send" value="Send">
+            </div>
+            <div class="clearfix">
+                <a class="btn btn-cancel pull-right edit-cancel" 
+                   ng-click="ReviewInput.editCancel()"
+                   ng-if="ReviewInput.item.is_rated"
+                   >Cancel</a>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="fixed visible-xs" ng-if="ReviewInput.mobile">
+        <ul class="list-inline">
+            <li class="chat-input">
+                <textarea name="review" ng-model="ReviewInput.review" placeholder="Start typing..." 
+                          ctrl-enter="ReviewInput.submit(reviewForm)" ng-maxlength="5000"
+                          class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-valid-maxlength ng-touched"
+                          required="required"></textarea>
+            </li>
+            <li><input type="submit" class="submit-send" value=""></li>
+        </ul>
+    </div>
+</form>
+
+<div class="col-xs-12 review post"
+    ng-if="$root.currentUser && !ReviewInput.edit">
+    <div class="new-review col-xs-12"><h3>Your review</h3></div>
+    <div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 padding-0">
+            <a ui-sref="profile.main({user_id: $root.currentUser.alias || $root.currentUser.id})">
+                <img ng-src="{{$root.currentUser.avatar_url.thumb}}" class="avatar">
+            </a>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8 info">
+
+            <div>
+                <div class="pull-left outline-none">
+                    <rating
+                      ng-model="ReviewInput.item.auth_rate.vote"
+                      max="5"
+                      readonly="true"
+                      state-on="'glyphicon glyphicon-star star-active'"
+                      state-off="'glyphicon glyphicon-star star-default'"
+                      ></rating>
+                </div>
+                <span class="name">
+                    &nbsp; by <a ui-sref="profile.main({user_id: $root.currentUser.alias || $root.currentUser.id})">{{$root.currentUser.first_name}} {{$root.currentUser.last_name}}</a>
+                </span>
+                <span class="time">{{ReviewInput.item.auth_rate.created_at| fromNow}}</span>
+            </div>
+            <p ng-bind-html="ReviewInput.item.auth_rate.message | linky:'_blank'"></p>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="text-right" ng-if="ReviewInput.item.auth_rate.user_id == $root.currentUser.id">
+            <!--<a class="like">Like</a>-->
+            <a class="edit" ng-click="ReviewInput.editShow()">Edit</a>
+            <a class="delete" ng-click="ReviewInput.deleteReview(ReviewInput.item.auth_rate)">Delete</a>
+        </div>
+    </div>
+</div>
+
+

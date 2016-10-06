@@ -6,7 +6,7 @@
     .controller('SpotController', SpotController);
 
   /** @ngInject */
-  function SpotController(spot, SpotService, ScrollService, SpotComment, $state, MapService, $rootScope, dialogs, API_URL) {
+  function SpotController(spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, dialogs, API_URL) {
 
     console.log('Spot Init');
 
@@ -22,9 +22,11 @@
 
     vm.postComment = postComment;
     vm.deleteComment = deleteComment;
-
+    
     $rootScope.syncSpots = {data: [vm.spot]};
     $rootScope.currentSpot = vm.spot;
+
+    vm.votes = {};
 
     vm.comments = {};
     var params = {
@@ -33,7 +35,6 @@
       spot_id: spot.id
     };
     vm.pagination = new ScrollService(SpotComment.query, vm.comments, params);
-
     ShowMarkers([vm.spot]);
 
     /*
@@ -70,7 +71,7 @@
           toastr.error('Send message failed');
         })
     }
-
+    
     //show markers on map
     function ShowMarkers(spots) {
       var spotsArray = _.map(spots, function (item) {
@@ -99,5 +100,44 @@
         });
       });
     }
+    
+    vm.editReview = function(review) {
+        review.oldVote = review.vote;
+        review.oldMessage = review.message;
+        review.edit = true;
+    };
+    
+    vm.cancelEditReview = function(review) {
+        review.vote = review.oldVote;
+        review.message = review.oldMessage;
+        review.edit = false;
+    };
+    
+    vm.updateReview = function(review) {
+      SpotReview.update({spot_id: review.spot_id, id: review.id},
+        {
+          message: review.message || '',
+          vote: review.vote || ''
+        }, function success(newReview) {
+          vm.spot.rating = newReview.spot_rating;
+          review.edit = false;
+        }, function error(resp) {
+          console.warn(resp);
+          toastr.error('Edit review failed');
+        }
+      );
+    };
+    
+    vm.deleteReview = function(review, index) {
+      dialogs.confirm('Confirmation', 'Are you sure you want to delete review?').result.then(function () {
+        SpotReview.delete({spot_id: review.spot_id, id: review.id}, function success(result) {
+          vm.spot.rating = result.spot_rating;
+          delete result.spot_rating;
+          vm.spot.votes.splice(index, 1);
+          toastr.info('Review successfully deleted');
+        });
+      });
+    };
+    
   }
 })();

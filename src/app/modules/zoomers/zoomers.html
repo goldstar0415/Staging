@@ -93,13 +93,13 @@
             <div class="col-lg-6 col-md-6 hidden-sm hidden-xs no-pad">
               <ul class="events" ng-if="user.spots.length > 0">
                 <li class="col-xs-4  zoomer-thumb events-width" ng-repeat="spot in user.spots">
-                  <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})">
+                  <a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})">
                     <figure>
                       <img class="frame img-responsive" ng-src="{{spot.cover_url.medium}}" alt="{{spot.title}}">
                       <spot-type type="spot.category.type.display_name" class="zoomer-event-type"></spot-type>
                     </figure>
                   </a>
-                  <!--<a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="event-link">{{spot.title}}-->
+                  <!--<a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})" class="event-link">{{spot.title}}-->
                   <!--</a>-->
                 </li>
               </ul>

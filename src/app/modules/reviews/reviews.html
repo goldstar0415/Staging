@@ -4,92 +4,41 @@
      class="clearfix" infinite-scroll-distance="1">
   <div class="reviews col-xs-12" ng-repeat="item in Review.reviews.data">
 
-    <div ng-switch="item.commentable_type">
-      <div ng-switch-when="App\Plan">
-        <a class="review-img" ui-sref="planner.view({user_id: item.commentable.user_id, plan_id: item.commentable.id})">
-          <img class="media-object fav-avatar-icon feeds-img" src="assets/img/missing_thumb.png">
+      <div>
+
+        <a class="review-img" ui-sref="spot({user_id: item.spot.user_id || 0, spot_id: item.spot.id})">
+          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.spot.cover_url.medium}}">
         </a>
 
         <div class="text-block">
           <h2 class="media-heading feeds-title">
-            <a ui-sref="planner.view({user_id: item.commentable.user_id, plan_id: item.commentable.id})"
-              >{{item.commentable.title}}
+            
+            <a ui-sref="spot({user_id: item.spot.user_id || 0, spot_id: item.spot.id})"
+              >{{item.spot.title}}</a>
+          </h2>
+          <div>
+            <div class="pull-left outline-none text-center readonly stars">
+                <rating
+                  ng-model="item.vote"
+                  readonly="true"
+                  max="5"
+                  state-on="'glyphicon glyphicon-star star-active'"
+                  state-off="'glyphicon glyphicon-star star-default'"
+                  ></rating>
+            </div>
+            by
+            <a class="author-name" ui-sref="profile.main({user_id: item.user.alias || item.user.id})">
+              {{item.user.first_name}} {{item.user.last_name}}
             </a>
-          </h2>
-          <a class="author-name" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">
-            {{item.sender.first_name}}
-            {{item.sender.last_name}}
-          </a>
-          <!--at-->
-          <p class="time">{{item.created_at | toTimezone}}</p>
-
-          <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
-          <attachments items="item.attachments"></attachments>
-
-
-        </div>
-      </div>
-
-      <div ng-switch-when="App\Spot">
-        <!--<stars item="item" class="rating-stars"></stars>-->
-
-        <a class="review-img" ui-sref="spot({user_id: item.commentable.user_id, spot_id: item.commentable.id})">
-          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.cover_url.medium}}">
-        </a>
-
-        <div class="text-block">
-          <h2 class="media-heading feeds-title">
-            <a ui-sref="spot({user_id: item.commentable.user_id, spot_id: item.commentable.id})"
-              >{{item.commentable.title}}</a>
-          </h2>
-          <a class="author-name" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">
-            {{item.sender.first_name}} {{item.sender.last_name}}
-          </a>
+          </div>
 
           <p class="time">{{item.created_at | toTimezone}}</p>
           <!--at-->
-          <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
-          <attachments items="item.attachments"></attachments>
-
+          <p class="description" ng-bind-html="item.message | linky:'_blank'"></p>
 
         </div>
       </div>
 
-      <div ng-switch-when="App\AlbumPhoto">
-        <a class="review-img" photo-viewer items="[item.commentable]" index="0">
-          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.photo_url.medium}}">
-        </a>
-
-        <div class="text-block">
-
-          <a class="author-name" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">{{item.sender.first_name}}
-            {{item.sender.last_name}}</a>
-
-          <p class="time">{{item.created_at | toTimezone}}</p>
-
-          <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
-
-
-        </div>
-      </div>
-
-      <div ng-switch-when="App\SpotPhoto">
-        <a class="review-img" photo-viewer items="[item.commentable]" index="0">
-          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.photo_url.medium}}">
-        </a>
-
-        <div class="text-block">
-
-          <a class="author-name" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">{{item.sender.first_name}}
-            {{item.sender.last_name}}</a>
-
-          <p class="time">{{item.created_at | toTimezone}}</p>
-
-          <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
-
-
-        </div>
-      </div>
     </div>
   </div>
 
@@ -99,6 +48,5 @@
 </div>
 
 <div class="col-xs-12">
-  <h4 class="text-center description" ng-if="Review.reviews.data.length == 0 && !Review.pagination.busy">No reviews
-    yet.</h4>
+  <h4 class="text-center description" ng-if="Review.reviews.data.length == 0 && !Review.pagination.busy">No reviews yet.</h4>
 </div>
