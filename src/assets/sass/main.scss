@@ -1596,7 +1596,7 @@ body .atlwdg-trigger.atlwdg-TOP {
     // border-bottom: 1px solid lightgrey !important;
 }
 
-.blog-bottom-row {
+#body .blog-bottom-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -1618,7 +1618,9 @@ body .atlwdg-trigger.atlwdg-TOP {
         height: 33px;
         width: 33px;
         @media (max-width: 450px) {
-            margin-top: -33px;
+            right: 0px;
+            bottom: 10px;
+            position: absolute;
         }
     }
     a.share {
