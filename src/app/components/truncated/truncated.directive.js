@@ -1,13 +1,15 @@
 (function () {
     'use strict';
 
-    angular.module('zoomtivity').directive('truncated', [
-        function truncated() {
+    angular.module('zoomtivity').directive('truncated', ['$timeout',
+        function truncated($timeout) {
             return {
                 restrict: 'A',
-                link: function (scope, element, attrs) {
-                    scope.$evalAsync(function () {
-                        element.dotdotdot();
+                link: function(scope, element, attributes) {
+                    scope.$watch(attributes.dotdotdot, function() {
+                        $timeout(function() {
+                            element.dotdotdot();
+                        }, 400);
                     });
                 }
             };

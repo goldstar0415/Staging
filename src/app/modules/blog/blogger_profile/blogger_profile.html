@@ -14,14 +14,16 @@
       </div>
 
       <h2 class="title-blog">
-        <a ui-sref="blog.article({slug: post.slug})">{{post.title}}</a>
+        <a ui-sref="blog.article({slug: post.slug || post.id})">{{post.title}}</a>
         <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right"
               ng-bind-html="Blog.getDate(post.created_at)"></span>
       </h2>
 
-      <div class="location-link col-xs-12">
-        <a ui-sref="index.post({slug: post.slug})">{{post.address}}</a>
+      
+      <div class="location-link">
+        <a ui-sref="index.post({slug: post.slug || post.id})">{{post.address}}</a>
       </div>
+      <div class="clearfix"></div>
 
       <p class="article-description article-description-truncated" ng-bind-html="post.body" truncated></p>
 
@@ -50,7 +52,7 @@
       </div>
       <div class="row">
         <div class="col-xs-2 col-sm-2" ng-if="currentUser.id == post.user_id || isRole(currentUser, 'admin')">
-          <a ui-sref="profile_blog.edit({slug: post.slug})" class="edit-blog-article">Edit</a>
+          <a ui-sref="profile_blog.edit({slug: post.slug || post.id})" class="edit-blog-article">Edit</a>
         </div>
         <div class="col-xs-2 col-sm-2" ng-if="currentUser.id == post.user_id || isRole(currentUser, 'admin')">
           <a ng-click="Blog.removePost(post, $index)" class="delete-blog-article">Delete</a>

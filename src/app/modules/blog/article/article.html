@@ -6,7 +6,7 @@
       <!-- block with article -->
       <div class="blog-content col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12">
         <div class="clearfix btn-back-wrapper">
-          <a ui-sref="blog" class="btn-back back btn-back-planner" title="back"></a>
+          <a ng-click="Article.back()" class="btn-back back btn-back-planner" title="back"></a>
         </div>
 
         <div class="article">
@@ -24,9 +24,10 @@
                 <div class="clearfix"></div>
               </h2>
             </div>
-            <div class="location-link col-xs-12">
-              <a ui-sref="index.post({slug: Article.slug})">{{Article.address}}</a>
+            <div class="location-link">
+              <a ui-sref="index.post({slug: Article.slug || article.id})">{{Article.address}}</a>
             </div>
+            <div class="clearfix"></div>
 
 
             <p class="article-description" ng-bind-html="Article.body | toTrustedHtml"></p>

@@ -15,18 +15,22 @@
           endDate: '=',
           model: '=ngModel',
           placeholder: '@',
-          today: '='
+          today: '=',
+          format: '=',
+          formatDate: '='
+          
         },
         link: function (s, e, a) {
-          var format = DATE_FORMAT.datepicker.date;
+          var format = s.format || DATE_FORMAT.datepicker.date;
+          var formatDate =  s.formatDate || DATE_FORMAT.datepicker.date;
           var placeholder = s.placeholder ? s.placeholder : moment().format(DATE_FORMAT.date);
 
           if (s.today) {
-            s.startDate = moment().format(DATE_FORMAT.date);
+            s.startDate = moment().format(format);
           }
 
           if (s.model) {
-            s.model = moment(s.model).format(DATE_FORMAT.date);
+            s.model = moment(s.model).format(format);
           }
 
           $(e).datetimepicker({
@@ -38,7 +42,7 @@
             validateOnBlur: false,
             yearStart: 1920,
             format: format,
-            formatDate: format,
+            formatDate: formatDate,
             minDate: s.startDate || false,
             maxDate: s.endDate || false,
             closeOnDateSelect: true,

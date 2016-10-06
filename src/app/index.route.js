@@ -310,6 +310,32 @@
         require_auth: true,
         mapState: 'small'
       })
+      
+      //hotels
+      .state('hotels', {
+        url: '/hotels',
+        templateUrl: '/app/modules/hotel/hotels/hotels.html',
+        controller: 'HotelsController',
+        controllerAs: 'Hotels',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small'
+      })
+      .state('hotel', {
+        url: '/hotel/:hotel_id',
+        templateUrl: '/app/modules/hotel/hotel.html',
+        controller: 'HotelController',
+        controllerAs: 'Hotel',
+        parent: 'profile_menu',
+        resolve: {
+          hotel: function (Hotel, $stateParams) {
+            return Hotel.get({id: $stateParams.hotel_id}).$promise;
+          }
+        },
+        require_auth: true,
+        mapState: 'small',
+        edit: true
+      })
 
 
       //chat

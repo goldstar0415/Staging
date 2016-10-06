@@ -27,15 +27,16 @@
                 <span class="date-sm hidden-xs" ng-bind-html="Blog.getDate(post.created_at)"></span>
               </div>
               <h2 class="title-blog row">
-                <a class="col-md-12 col-xs-9" ui-sref="blog.article({slug: post.slug})">{{post.title}}</a>
+                <a class="col-md-12 col-xs-9" ui-sref="blog.article({slug: post.slug || post.id})">{{post.title}}</a>
                 <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right" ng-bind-html="Blog.getDate(post.created_at)"></span>
 
                 <div class="clearfix"></div>
               </h2>
 
-              <div class="location-link col-xs-12" ng-if="post.address">
-                <a ui-sref="index.post({slug: post.slug})">{{post.address}}</a>
+              <div class="location-link" ng-if="post.address">
+                <a ui-sref="index.post({slug: post.slug || post.id})">{{post.address}}</a>
               </div>
+              <div class="clearfix"></div>
 
               <p class="article-description article-description-truncated" ng-bind-html="post.body" truncated></p>
 
