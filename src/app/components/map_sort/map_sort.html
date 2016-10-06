@@ -98,7 +98,7 @@
                         <label for="filterCategory">Category</label>
                         <div class="filter-group">
                             <select class="form-control" id="filterCategory" placeholder="SELECT">
-                                <option value="1">SELECT</option>
+                                <option value="1">Any</option>
                                 <!-- <option value="2">★★</option>
                                 <option value="3">★★★</option>
                                 <option value="4">★★★★</option>
@@ -109,9 +109,10 @@
                     </div>
                     <div class="form-group">
                         <label for="filterTags">By tags & Keywords</label>
-                        <div class="filter-group">
+                        <div class="filter-group filter-group-tags">
+                            <tags-input id="filterTags" ng-model="MapSort.searchParams.tags"></tags-input>
                             <!-- <input type="text" id="filterTags" value="tag,keyword" data-role="tagsinput"> -->
-                            <input type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput">
+                            <!-- <input type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput"> -->
                             <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
                         </div>
                     </div>
@@ -142,7 +143,7 @@
 
 
                 <!--Filter-->
-                <div class="filter-definition" ng-class="{'open-filter': MapSort.isShowFilter}" ng-show="false">
+                <!-- <div class="filter-definition" ng-class="{'open-filter': MapSort.isShowFilter}" ng-show="false">
 
                     <div class="destination-filter clearfix" ng-show="MapSort.isShowFilter && !$root.isDrawArea">
                         <location address="MapSort.searchParams.address" location="MapSort.searchParams.location" input-placeholder="Add first destination" id="new_location" bind-marker="false" limit="15"></location>
@@ -228,7 +229,7 @@
                         <a ng-click="MapSort.removeFilterCategory(item)" class="clearfix"><span class="icon-minus"></span></a>
                     </div>
 
-                </div>
+                </div> -->
 
 
 

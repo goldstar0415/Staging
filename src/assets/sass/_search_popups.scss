@@ -1742,10 +1742,10 @@
         background-color: white;
         border: 1px solid lightgrey;
         &:first-child {
-            margin-right: 4px;
+            margin-right: 1%;
         }
         &:last-child {
-            margin-left: 4px;
+            margin-left: 1%;
         }
     }
     .form-group {
@@ -1770,7 +1770,7 @@
             display: flex;
             // justify-content: space-between;
             input {
-                width: 50%;
+                width: 49%;
                 padding: 10px;
             }
         }
