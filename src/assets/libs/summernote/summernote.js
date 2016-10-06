@@ -4867,6 +4867,7 @@
     var $editable = context.layoutInfo.editable;
     var $codable = context.layoutInfo.codable;
 
+    var $scroolTop = 0;
     var $window = $(window);
     var $scrollbar = $('html, body');
 
@@ -4882,6 +4883,10 @@
         }
       };
 
+      if (!this.isFullscreen())
+      {
+          $scroolTop = $('body').scrollTop();
+      }
       $editor.toggleClass('fullscreen');
       if (this.isFullscreen()) {
         $editable.data('orgHeight', $editable.css('height'));
@@ -4893,12 +4898,14 @@
         }).trigger('resize');
 
         $scrollbar.css('overflow', 'hidden');
+        $('body').scrollTop(0);
       } else {
         $window.off('resize');
         resize({
           h: $editable.data('orgHeight')
         });
         $scrollbar.css('overflow', 'visible');
+        $('body').scrollTop($scroolTop);
       }
 
       context.invoke('toolbar.updateFullscreen', this.isFullscreen());
@@ -6118,7 +6125,7 @@
       }
 
       var body = '<div class="form-group note-group-select-from-files">' +
-                   '<label>' + lang.image.selectFromFiles + '</label>' +
+                   '<label class="testClass">' + lang.image.selectFromFiles + '</label>' +
                    '<input class="note-image-input form-control" type="file" name="files" accept="image/*" multiple="multiple" />' +
                    imageLimitation +
                  '</div>' +

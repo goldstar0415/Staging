@@ -102,8 +102,21 @@ angular.module('summernote', [])
           $scope.blur({evt: evt});
         };
       }
+      
+      summernoteConfig.callbacks['onInit'] = function(){
+          var editor = jQuery(this).next();
+          editor.find('.dropdown-toggle').on('click', function(e){
+              e.preventDefault();
+              var dropdown = jQuery(this).next();
+              dropdown.toggle();
+          });
+          editor.find('.dropdown-menu').on('click', function(e){
+              e.preventDefault();
+              jQuery(this).hide();
+          });
+      };
+      
       element.summernote(summernoteConfig);
-
       var editor$ = element.next('.note-editor'),
           unwatchNgModel;
       editor$.find('.note-toolbar').click(function() {

@@ -6,7 +6,7 @@
         .controller('ArticleCreateController', ArticleCreateController);
 
     /** @ngInject */
-    function ArticleCreateController($state, article, categories, toastr, API_URL, UploaderService, $rootScope) {
+    function ArticleCreateController($state, $scope, article, categories, toastr, API_URL, UploaderService, $rootScope) {
         var vm = this;
         vm = _.extend(vm, article);
         vm.categories = categories;
@@ -16,10 +16,6 @@
         };
 
         vm.save = save;
-
-        if (!vm.body) {
-            vm.body = '<p></p><p></p><p></p><p></p><p></p><p></p>';
-        }
 
         /*
          * Create post
@@ -59,6 +55,40 @@
                         //editor.start();
                     });
             }
+        }
+        
+        $scope.imageUpload = function(files) {
+            
+            console.log(this);
+            var url = API_URL + '/posts/upload';
+            var req = {
+                image: files[0]
+            };
+            
+            UploaderService
+                .upload(url, req, 'cover')
+                .then(function (resp) {
+                    //console.log($.summernote);
+                    var //editor = $.summernote.eventHandler.getModule(),
+                        uploaded_file_name = resp.data.image_name,
+                        file_location = '/uploads/posts/'+ resp.data.image_name;
+                    //console.log(file_location);
+                    //console.log(uploaded_file_name);
+                    vm.body += '<img src="' + resp.data.image_url + '" />'
+                    //console.log($scope.editor.summernote('insertImage', file_location, uploaded_file_name));
+                    //editor.insertImage($scope.editable, file_location, uploaded_file_name);
+                    //console.log(resp);
+                })
+                .catch(function (resp) {
+                    //console.log(resp)
+                    _.each(resp.data, function (message) {
+                        toastr.error(_.isArray(message) ? message[0] : message);
+                    });
+                    //editor.start();
+                });
+            
+            console.log('image upload:', files);
+            console.log('image upload\'s editable:', $scope.editable);
         }
     }
 })();
