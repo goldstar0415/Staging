@@ -39,6 +39,11 @@
       setAvatar: {
         url: API_URL + '/friends/:id/setavatar',
         method: "POST"
+      },
+      followFacebook: {
+        url: API_URL + '/followings/:id/followFacebook',
+        method: 'POST',
+        data: {ids: '@ids'}
       }
     });
   }
