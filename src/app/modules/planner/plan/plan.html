@@ -51,13 +51,13 @@
     <!-- sub event -->
     <section ng-if="item.attachment_type == 'spot'" class="central no-margin-bottom sub-event">
       <div class="media media-visible">
-        <a ui-sref="spot({user_id: spot.user_id, spot_id: spot.id})" class="pull-left">
+        <a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})" class="pull-left">
           <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" class="media-object fav-avatar-icon">
         </a>
 
         <div class="media-body">
           <h2 class="media-heading title-planner">
-            <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a>
+            <a ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})">{{item.title}}</a>
           </h2>
 
           <p class="place">{{item.address}}</p>

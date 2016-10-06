@@ -358,6 +358,16 @@
         require_auth: true,
         mapState: 'small'
       })
+      .state('comments', {
+        url: '/comments',
+        templateUrl: '/app/modules/comments/comments.html',
+        controller: 'CommentsController',
+        controllerAs: 'Comment',
+        parent: 'profile_menu',
+        locate: 'none',
+        require_auth: true,
+        mapState: 'small'
+      })
       .state('reviews', {
         url: '/reviews',
         templateUrl: '/app/modules/reviews/reviews.html',
@@ -368,7 +378,6 @@
         require_auth: true,
         mapState: 'small'
       })
-
 
       .state('areas', {
         url: '/areas',
