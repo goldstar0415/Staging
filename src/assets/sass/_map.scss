@@ -260,3 +260,14 @@
         height: 50px;
     }
 }
+
+.map-marker-icon-photo {
+    background-image: url('\\assets\\img\\photostack.png');
+    padding: 6px;
+    background-size: cover;
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}
