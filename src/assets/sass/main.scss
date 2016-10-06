@@ -1733,3 +1733,25 @@ body .atlwdg-trigger.atlwdg-TOP {
         display: none;
     }
 }
+
+#filterTags {
+    width: 80%;
+    .host {
+        margin: 0;
+        .tags {
+            margin: 0;
+            border: 1px solid #ccc !important;
+            border-color: #ccc !important;
+            background-color: white;
+            input {
+                width: 100% !important;
+                margin: 0;
+                height: 30px;
+                min-height: 30px;
+                padding: 0 0 0 10px;
+                font-family: inherit;
+                box-shadow: none;
+            }
+        }
+    }
+}
