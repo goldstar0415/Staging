@@ -1023,6 +1023,12 @@ sign-in, sign-up {
   }
 }
 
+.article-img {
+    min-height: 40vh !important;
+    max-height: 50vh !important;
+    width: 100% !important;
+}
+
 @media (max-width: 491px) {
   /*zoomers*/
   .events {
