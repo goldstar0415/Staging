@@ -9,6 +9,9 @@
                     scope.$watch(attributes.dotdotdot, function() {
                         $timeout(function() {
                             element.dotdotdot();
+                            $(window).resize(function() {
+                                element.dotdotdot();
+                            });
                         }, 400);
                     });
                 }
