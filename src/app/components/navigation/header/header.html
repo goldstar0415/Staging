@@ -1,14 +1,17 @@
 <header>
     <nav>
-        <a class="menu-btn small-menu" snap-toggle="left">
-            <span class="menu-icon "></span>
-        </a>
         <a ui-sref="index" class="main-logo">
-            <img src="assets/img/icons/logo.svg" alt="logo">
+            <img class="main-logo-big" src="assets/img/icons/logo.svg" alt="logo">
+            <img class="main-logo-small" src="assets/img/svg/logo.svg" alt="logo">
         </a>
-        <input type="text" class="nav-search" placeholder="Search by place or keyword">
+        <div class="search">
+            <input type="text"  class="nav-search"  name="search" placeholder="Search by location or keyword...">
+            <button type="button" name="button">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </div>
         <div class="nav-right">
-            <div class="sign-up-in" ng-if="!$root.currentUser">
+            <!-- <div class="sign-up-in" ng-if="!$root.currentUser">
                 <div>
                     <sign-up></sign-up>
                 </div>
@@ -26,7 +29,7 @@
                     <span>{{ $root.currentUser.first_name }}</span>
                     <img ng-src="{{$root.currentUser.avatar_url.thumb}}">
                 </a>
-            </div>
+            </div> -->
             <a class="menu-btn big-menu" snap-toggle="right">
                 <span class="menu-icon "></span>
             </a>

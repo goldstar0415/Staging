@@ -1875,10 +1875,10 @@
 .new-sidebar-menu {
     position: fixed;
     z-index: 999;
-    top: 70px;
+    top: 50px;
     bottom: 0px;
     right: 0px;
-    width: 90px;
+    width: 70px;
     background-color: white;
     @media (min-width: 768px) {
         ul li img {
@@ -1937,7 +1937,7 @@
         align-items: center;
         flex-direction: column;
         position: relative;
-        height: calc(100vh - 70px);
+        height: calc(100vh - 50px);
         @media(max-width: 767px) and (orientation: portrait) {
             flex-direction: row;
             height: 50px !important;
