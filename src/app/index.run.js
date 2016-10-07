@@ -82,15 +82,11 @@
 
     //make menu on left sid when small screen
     $rootScope.windowWidth = $(window).width();
+    $rootScope.options.snap.disable = "left";
     $(window).resize(_.throttle(onWindowResize, 100));
     function onWindowResize() {
       $rootScope.windowWidth = $(window).width();
       MapService.InvalidateMapSize();
-      if ($rootScope.windowWidth < 992) {
-        $rootScope.options.snap.disable = "right";
-      } else {
-        $rootScope.options.snap.disable = "left";
-      }
 	  if(!$rootScope.$$phase) {
 		$rootScope.$apply();
 	  }
