@@ -24,7 +24,7 @@
             </div>
             <div class="clearfix"></div>
 
-            <p class="article-description article-description-truncated" ng-bind-html="post.body" truncated></p>
+            <p class="article-description article-description-truncated" ng-bind-html="post.body | htmlToPlaintext" truncated></p>
 
             <div class="article-info col-xs-12">
                 <div class="blog-bottom-row">
