@@ -1585,7 +1585,7 @@ body .atlwdg-trigger.atlwdg-TOP {
 }
 
 .article-description-truncated {
-    height: 110px;
+    height: 60px;
     img {
         display: none;
     }
@@ -1759,4 +1759,8 @@ body .atlwdg-trigger.atlwdg-TOP {
             }
         }
     }
+}
+
+.location-link {
+    float: none !important;
 }
