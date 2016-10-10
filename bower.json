@@ -33,7 +33,9 @@
     "jQuery.dotdotdot": "dotdotdot#^1.8.3",
     "object-fit-images": "*",
     "jquery-ui": "^1.12.1",
-    "bootstrap-modal": "2.2.6"
+    "bootstrap-modal": "2.2.6",
+    "kinetic-slider": "*",
+    "infinite-slider": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.0",

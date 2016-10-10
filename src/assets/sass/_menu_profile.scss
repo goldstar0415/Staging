@@ -5,8 +5,84 @@
     padding: 0;
     box-shadow: 0 5px 5px 0 rgba(191, 191, 191, 0.3);
     z-index: 1000;
+    display: flex !important;
+
+    .menu-user {
+        height: 75px;
+        width: 150px;
+        overflow: hidden;
+        position: relative;
+        top: -25px;
+        margin-bottom: -25px;
+        section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100px;
+                width: 100px;
+                background-color: white;
+                border-radius: 100%;
+                img {
+                    height: 100%;
+                    width: 100%;
+                    border: none;
+                }
+            }
+        }
+        @media (max-width: 767px) {
+            width: 70px;
+            height: 50px;
+            top: auto;
+            margin-bottom: 0;
+            section {
+                height: 50px;
+                width: 70px;
+                top: 0;
+                a {
+                    height: 40px;
+                    width: 40px;
+                    position: relative;
+                    img {
+                        height: 100% !important;
+                        width: 100% !important;
+                    }
+                }
+            }
+        }
+        @media (max-width: 500px) {
+            width: 50px;
+            section {
+                width: 50px;
+            }
+        }
+    }
+
+    .profile-toggle {
+        height: 50px;
+        width: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 30px;
+        position: relative;
+        img {
+            height: 30px;
+            width: 30px;
+            transform: rotate(-90deg);
+        }
+        @media (max-width: 500px) {
+            width: 50px;
+        }
+    }
 
     ul {
+        width: calc(100% - 220px);
         padding: 0;
         margin: 0;
         height: 50px;
@@ -14,6 +90,12 @@
         justify-content: center;
         align-items: center;
         position: relative;
+        @media (max-width: 767px) {
+            width: calc(100% - 140px);
+        }
+        @media (max-width: 500px) {
+            width: calc(100% - 100px);
+        }
 
         li {
             flex-grow: 1;
@@ -35,7 +117,8 @@
                     background-color: #00b7f3;
                 }
                 img {
-                    height: 50%;
+                    height: 40%;
+                    width: 25px;
                 }
                 span {
                     display: block !important;

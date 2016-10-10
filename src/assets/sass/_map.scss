@@ -168,13 +168,13 @@
     }
     .leaflet-left.leaflet-bottom {
         bottom: 0;
-        top: 80px;
+        top: 60px;
         left: 1rem !important;
         display: flex;
         justify-content: center;
         flex-direction: column;
         border: none;
-        height: calc(100vh - 150px);
+        height: calc(100vh - 120px);
         max-width: 50px;
         z-index: 999;
         opacity: 0.8;
