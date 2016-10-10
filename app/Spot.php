@@ -135,6 +135,26 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     {
         return (float)$this->votes()->avg('vote');
     }
+    
+    /**
+     * Get spot amenities
+     *
+     * @return query
+     */
+    public function amenities()
+    {
+        return $this->hasMany(SpotAmenity::class);
+    }
+    
+    /**
+     * Get spot amenities
+     *
+     * @return query
+     */
+    public function hotel()
+    {
+        return $this->hasOne(SpotHotel::class);
+    }
 
     /**
      * Check is spot favorite for authenticated user

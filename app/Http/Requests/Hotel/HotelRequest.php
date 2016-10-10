@@ -29,8 +29,6 @@ class HotelRequest extends Request
             'title' => 'required|string|max:255',
             'description' => 'string|max:5000',
             'locations' => 'array|count_max:20',
-            'hotels_url' => 'string|max:255',
-            'booking_url' => 'string|max:255'
         ];
 
         return $rules;

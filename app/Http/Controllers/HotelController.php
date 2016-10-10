@@ -9,9 +9,11 @@ use App\Http\Requests\Hotel\HotelIndexRequest;
 use App\Http\Requests\Hotel\HotelStoreRequest;
 use App\Http\Requests\Hotel\HotelUpdateRequest;
 use App\Services\Privacy;
-use App\Hotel;
-use App\HotelAmenity;
+use App\Spot;
+use App\SpotHotel;
+use App\SpotAmenity;
 use App\RemotePhoto;
+use App\SpotTypeCategory;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use GuzzleHttp\Exception\GuzzleException;
@@ -52,7 +54,11 @@ class HotelController extends Controller
     public function index(HotelIndexRequest $request, Privacy $privacy)
     {
 
-        $hotels = Hotel::orderBy('id')->with('remotePhotos'); //::query();
+        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
+            
+        $hotels = Spot::orderBy('id')
+                    ->where('spot_type_category_id', $spotTypeCategory->id)
+                    ->with('remotePhotos', 'hotel', 'amenities'); //::query();
 
         return $this->paginatealbe($request, $hotels, 15);
     }
@@ -64,12 +70,12 @@ class HotelController extends Controller
      */
     public function store(HotelStoreRequest $request)
     {
-        $hotel = new Hotel($request->except([
-            'desc_en',
+        $hotel = new Spot($request->except([
+            'description',
         ]));
 
-        if ($request->has('desc_en')) {
-            $hotel->desc_en = e($request->desc_en);
+        if ($request->has('description')) {
+            $hotel->description = e($request->description);
         }
 
         return $hotel;
@@ -86,7 +92,7 @@ class HotelController extends Controller
         $amenitiesArray = [];
         foreach($hotel->amenities as $item)
         {
-            $amenitiesArray[$item->hotel_name][] = $item->item;
+            $amenitiesArray[$item->title][] = $item->item;
         }
         $hotel->amenitiesArray = $amenitiesArray;
         
@@ -103,8 +109,8 @@ class HotelController extends Controller
      */
     public function update(HotelUpdateRequest $request, $hotel)
     {
-        $hotel->update($request->except(['desc_en']));
-        $hotel->desc_en = $request->has('desc_en') ? e($request->desc_en) : '';
+        $hotel->update($request->except(['description']));
+        $hotel->description = $request->has('description') ? e($request->description) : '';
         $hotel->save();
 
         return $hotel;
@@ -123,7 +129,7 @@ class HotelController extends Controller
     }
     
     
-    public function prices (Request $request, Hotel $hotel)
+    public function prices (Request $request, Spot $hotel)
     {
         $dates        = $request->all();
         $from         = date_parse_from_format ( 'm.d.Y' , $dates['start_date'] );
@@ -147,7 +153,7 @@ class HotelController extends Controller
             'q-room-0-children' => 0,
             'tab' => 'description'
         ];
-        $hotelsUrl = $hotel->hotelscom_url . '?' . http_build_query($hotelsQuery);
+        $hotelsUrl = $hotel->hotel->hotelscom_url . '?' . http_build_query($hotelsQuery);
         
         try {
             $hotelsContent = $client->get($hotelsUrl); 
@@ -187,7 +193,7 @@ class HotelController extends Controller
             'top_currency'      => 1, 
             'lang'              => 'en-us'
         ];
-        $bookingUrl = preg_replace( '#\..?.?.?.?.?\.?html#' , '.html' , $hotel->booking_url) . '?' . http_build_query($bookingQuery);
+        $bookingUrl = preg_replace( '#\..?.?.?.?.?\.?html#' , '.html' , $hotel->hotel->booking_url) . '?' . http_build_query($bookingQuery);
         try {
             $bookingContent = $client->get($bookingUrl, [
                 //'debug' => true,
@@ -220,7 +226,6 @@ class HotelController extends Controller
                 if( ($price && ( $newPrice < $price )) || !$price )
                 {
                     $price = $newPrice;
-                    
                 }
             }
             $bookingPrice = $price;
@@ -270,13 +275,13 @@ class HotelController extends Controller
                     foreach($facilitiesChecklistSection->find('li') as $sectionItem)
                     {
                         $body = trim($sectionItem->innertext());
-                        if( !HotelAmenity::where('hotel_id', $hotel->id)
+                        if( !SpotAmenity::where('spot_id', $hotel->id)
                                          ->where('title', $sectionTitle)
                                          ->where('item', $body)->exists() )
-                        $amenity = new HotelAmenity([
+                        $amenity = new SpotAmenity([
                             'title' => $sectionTitle, 
                             'item' => $body,
-                            'hotel_id' => $hotel->id
+                            'spot_id' => $hotel->id
                         ]);
                         $amenity->save();
                         $amenitiesArr[$sectionTitle][] = $body;

@@ -5,23 +5,23 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class SpotReport
+ * Class SpotAmenity
  * @package App
  *
  * @property integer $id
- * @property integer $hotel_id
+ * @property integer $spot_id
  * @property string $title
  * @property string $item
  *
  * @property Hotel $hotel
  */
-class HotelAmenity extends Model
+class SpotAmenity extends Model
 {
 
-    protected $fillable = ['title', 'item', 'hotel_id'];
+    protected $fillable = ['title', 'item', 'spot_id'];
 
-    public function hotel()
+    public function spot()
     {
-        return $this->belongsTo(Hotel::class);
+        return $this->belongsTo(Spot::class);
     }
 }

@@ -7,12 +7,12 @@
     <div class="row actions">
         {!! Form::open(['method' => 'GET', 'route' => 'admin.hotels.filter', 'class' => 'form-inline']) !!}
         <div class="form-group">
-            {!! Form::label('filter[hotel_name]', 'Title:') !!}
-            {!! Form::text('filter[hotel_name]', old('filter.hotel_name'), ['class' => 'form-control']) !!}
+            {!! Form::label('filter[title]', 'Title:') !!}
+            {!! Form::text('filter[title]', old('filter.title'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('filter[desc_en]', 'Description:') !!}
-            {!! Form::text('filter[desc_en]', old('filter.desc_en'), ['class' => 'form-control']) !!}
+            {!! Form::label('filter[description]', 'Description:') !!}
+            {!! Form::text('filter[description]', old('filter.description'), ['class' => 'form-control']) !!}
         </div>
         <div class="form-group">
             {!! Form::label('filter[created_at]', 'Created at:') !!}
@@ -37,11 +37,11 @@
         @foreach($hotels as $hotel)
             <tr>
                 <td>{!! Form::checkbox('hotels[]', $hotel->id, null, ['class' => 'row-select']) !!}</td>
-                <td>{!! link_to(frontend_url( 'hotel', $hotel->id), $hotel->hotel_name) !!}</td>
+                <td>{!! link_to(frontend_url( 'hotel', $hotel->id), $hotel->title) !!}</td>
                 <td>{{ $hotel->desc_en }}</td>
                 <td>{{ $hotel->created_at->format('Y-m-d') }}</td>
-                <td><a href="{{ url($hotel->hotelscom_url) }}">hotels.com</a></td>
-                <td><a href="{{ url($hotel->booking_url) }}">booking.com</a></td>
+                <td><a href="{{ url($hotel->hotel->hotelscom_url) }}">hotels.com</a></td>
+                <td><a href="{{ url($hotel->hotel->booking_url) }}">booking.com</a></td>
                 <td>
                     {!! link_delete(route('admin.hotels.destroy', [$hotel->id]), '', ['class' => 'delete']) !!}
                 </td>

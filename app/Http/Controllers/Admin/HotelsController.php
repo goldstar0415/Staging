@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\Admin\HotelFilterRequest;
-use App\Hotel;
+use App\SpotHotel;
+use App\SpotTypeCategory;
 use App\RemotePhoto;
+use App\SpotPoint;
+use App\Spot;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -18,6 +21,39 @@ class HotelsController extends Controller
 {
     
     private $stepCount = 1000;
+    
+    private $spotFields = [
+        'title' => 'hotel_name',
+        'description' => 'desc_en',
+        'web_sites' => 'homepage_url',
+    ];
+    
+    private $hotelFields = [
+        'class',
+        'hotelscom_url',
+        'booking_url',
+        'booking_id',
+        'booking_num_reviews',
+        'booking_rating',
+        'booking_rating_10',
+        'hotelscom_num_reviews',
+        'hotelscom_rating',
+        'facebook_url',
+        'twitter_url',
+        'trip_advisor_url',
+        'google_pid',
+        'google_rating',
+        'maxrate',
+        'minrate',
+        'nr_rooms',
+        'continent_id',
+        'country_code',
+        'city_hotel',
+        'zip',
+        'currencycode'
+    ];
+    
+    
 
     /**
      * Display a listing of the resource.
@@ -26,7 +62,8 @@ class HotelsController extends Controller
      */
     public function index(PaginateRequest $request)
     {
-        return view('admin.hotels.index')->with('hotels', $this->paginatealbe($request, Hotel::query(), 50));
+        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
+        return view('admin.hotels.index')->with('hotels', $this->paginatealbe($request, Spot::where('spot_type_category_id', $spotTypeCategory->id), 50));
     }
     
     /**
@@ -37,7 +74,8 @@ class HotelsController extends Controller
      */
     public function filter(HotelFilterRequest $request)
     {
-        $query = $this->getFilterQuery($request, Hotel::query());
+        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
+        $query = $this->getFilterQuery($request, Spot::where('spot_type_category_id', $spotTypeCategory->id));
 
         return view('admin.hotels.index')->with('hotels', $this->paginatealbe($request, $query, 50));
     }
@@ -49,11 +87,11 @@ class HotelsController extends Controller
      */
     protected function getFilterQuery(HotelFilterRequest $request, $query)
     {
-        if ($request->has('filter.hotel_name')) {
-            $query->where('hotel_name', 'ilike', '%' . $request->filter['hotel_name'] . '%');
+        if ($request->has('filter.title')) {
+            $query->where('title', 'ilike', '%' . $request->filter['title'] . '%');
         }
-        if ($request->has('filter.desc_en')) {
-            $query->where('desc_en', 'ilike', '%' . $request->filter['desc_en'] . '%');
+        if ($request->has('filter.description')) {
+            $query->where('description', 'ilike', '%' . $request->filter['description'] . '%');
         }
         if ($request->has('filter.created_at')) {
             $query->where(DB::raw('hotels.created_at::date'), $request->filter['created_at']);
@@ -146,6 +184,7 @@ class HotelsController extends Controller
         }
         else
         {
+            $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
             foreach ($reader->getSheetIterator() as $sheet) {
                 foreach ($sheet->getRowIterator() as $row) {
                     if($isFirstRow)
@@ -170,6 +209,7 @@ class HotelsController extends Controller
                     }
                     $rows[] = $item;
                     
+                    if(isset($item['latitude']) && isset($item['longitude']))
                     $item['location'] = [
                         'lat' => $item['latitude'],
                         'lng' => $item['longitude']
@@ -179,18 +219,61 @@ class HotelsController extends Controller
                     unset($item['longitude']);
                     unset($item['photo_url']);
                     
-                    if( !Hotel::where('booking_id', $item['booking_id'])->exists() )
+                    if( !SpotHotel::where('booking_id', $item['booking_id'])->exists() )
                     {
-                        $hotel = Hotel::create($item);
+                        $hotel = Spot::create([
+                            'spot_type_category_id' => $spotTypeCategory->id,
+                            'title' => isset($item['hotel_name']) ? $item['hotel_name']: '',
+                            'description' => isset($item['desc_en']) ? $item['desc_en']: '',
+                            'web_sites'	=> isset($item['homepage_url']) ? [$item['homepage_url']] : [],
+                            'is_approved' => true,
+                            'is_private' => false,
+                            'remote_id' => isset($item['booking_id']) ? 'bk_' . $item['booking_id']: ''
+                        ]);
+                        
+                        $hotelObj = new SpotHotel();
+                        foreach( $this->hotelFields as $field) {
+                            if(isset($item[$field]))
+                                $hotelObj->$field = $item[$field];
+                        }
+                        $hotel->hotel()->save($hotelObj);
+                        
+                        if(isset($item['location']) && isset($item['address']))
+                        {
+                            $point = new SpotPoint();
+                            $point->location = $item['location'];
+                            $point->address = $item['address'];
+                            $hotel->points()->save($point);
+                        }
                     }
                     else
                     {
-                        $hotel = Hotel::where('booking_id', $item['booking_id'])->first();
-                        foreach($item as $column => $value)
+                        $hotel = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
+                        foreach($this->spotFields as $column => $value)
                         {
-                            $hotel->$column = $value;
+                            if(isset($item[$value]))
+                            {
+                                $hotel->$column = $item[$value];
+                            }
+                            
                         }
                         $hotel->save();
+                        
+                        $hotelObj = $hotel->hotel;
+                        foreach( $this->hotelFields as $field) {
+                            if(isset($item[$field]))
+                                $hotelObj->$field = item[$field];
+                        }
+                        $hotelObj->save();
+                        
+                        if(isset($item['location']) && isset($item['address']))
+                        {
+                            $hotel->points()->delete();
+                            $point = new SpotPoint();
+                            $point->location = $item['location'];
+                            $point->address = $item['address'];
+                            $hotel->points()->save($point);
+                        }
                     }
                     if(!empty($picture))
                     {
