@@ -8,7 +8,7 @@
     class="clearfix" infinite-scroll-distance="1">
     <section class="hotels-section col-xs-12" ng-repeat="item in Hotels.hotels.data">
         <div class="title col-xs-6">
-            <a ui-sref="hotel({hotel_id: item.id})">{{ item.title }}</a>
+            <a ui-sref="hotel({hotel_id: item.id})">{{ item.hotel_name }}</a>
         </div>
         <div class="location col-xs-6">
             lat: {{ item.location.lat }} lon: {{ item.location.lng }}
