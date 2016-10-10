@@ -102,7 +102,7 @@ class RouteServiceProvider extends ServiceProvider
             
             $hotel = Spot::where('id', $value)
                     ->where('spot_type_category_id', $spotTypeCategory->id)
-                    ->with('remotePhotos', 'hotel', 'hotel')
+                    ->with('remotePhotos', 'hotel', 'amenities')
                     ->first();
             if ($hotel === null) {
                 throw new NotFoundHttpException;

@@ -219,73 +219,77 @@ class HotelsController extends Controller
                     unset($item['longitude']);
                     unset($item['photo_url']);
                     
-                    if( !SpotHotel::where('booking_id', $item['booking_id'])->exists() )
+                    if(isset($item['booking_id']) && !empty($item['booking_id']) )
                     {
-                        $hotel = Spot::create([
-                            'spot_type_category_id' => $spotTypeCategory->id,
-                            'title' => isset($item['hotel_name']) ? $item['hotel_name']: '',
-                            'description' => isset($item['desc_en']) ? $item['desc_en']: '',
-                            'web_sites'	=> isset($item['homepage_url']) ? [$item['homepage_url']] : [],
-                            'is_approved' => true,
-                            'is_private' => false,
-                            'remote_id' => isset($item['booking_id']) ? 'bk_' . $item['booking_id']: ''
-                        ]);
-                        
-                        $hotelObj = new SpotHotel();
-                        foreach( $this->hotelFields as $field) {
-                            if(isset($item[$field]))
-                                $hotelObj->$field = $item[$field];
-                        }
-                        $hotel->hotel()->save($hotelObj);
-                        
-                        if(isset($item['location']) && isset($item['address']))
+                    
+                        if( !SpotHotel::where('booking_id', $item['booking_id'])->exists() )
                         {
-                            $point = new SpotPoint();
-                            $point->location = $item['location'];
-                            $point->address = $item['address'];
-                            $hotel->points()->save($point);
-                        }
-                    }
-                    else
-                    {
-                        $hotel = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
-                        foreach($this->spotFields as $column => $value)
-                        {
-                            if(isset($item[$value]))
-                            {
-                                $hotel->$column = $item[$value];
+                            $hotel = Spot::create([
+                                'spot_type_category_id' => $spotTypeCategory->id,
+                                'title' => isset($item['hotel_name']) ? $item['hotel_name']: '',
+                                'description' => isset($item['desc_en']) ? $item['desc_en']: '',
+                                'web_sites'	=> isset($item['homepage_url']) ? [$item['homepage_url']] : [],
+                                'is_approved' => true,
+                                'is_private' => false,
+                                'remote_id' => isset($item['booking_id']) ? 'bk_' . $item['booking_id']: ''
+                            ]);
+
+                            $hotelObj = new SpotHotel();
+                            foreach( $this->hotelFields as $field) {
+                                if(isset($item[$field]))
+                                    $hotelObj->$field = $item[$field];
                             }
-                            
+                            $hotel->hotel()->save($hotelObj);
+
+                            if(isset($item['location']) && isset($item['address']))
+                            {
+                                $point = new SpotPoint();
+                                $point->location = $item['location'];
+                                $point->address = $item['address'];
+                                $hotel->points()->save($point);
+                            }
                         }
-                        $hotel->save();
-                        
-                        $hotelObj = $hotel->hotel;
-                        foreach( $this->hotelFields as $field) {
-                            if(isset($item[$field]))
-                                $hotelObj->$field = item[$field];
-                        }
-                        $hotelObj->save();
-                        
-                        if(isset($item['location']) && isset($item['address']))
+                        else
                         {
-                            $hotel->points()->delete();
-                            $point = new SpotPoint();
-                            $point->location = $item['location'];
-                            $point->address = $item['address'];
-                            $hotel->points()->save($point);
+                            $hotel = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
+                            foreach($this->spotFields as $column => $value)
+                            {
+                                if(isset($item[$value]))
+                                {
+                                    $hotel->$column = $item[$value];
+                                }
+
+                            }
+                            $hotel->save();
+
+                            $hotelObj = $hotel->hotel;
+                            foreach( $this->hotelFields as $field) {
+                                if(isset($item[$field]))
+                                    $hotelObj->$field = item[$field];
+                            }
+                            $hotelObj->save();
+
+                            if(isset($item['location']) && isset($item['address']))
+                            {
+                                $hotel->points()->delete();
+                                $point = new SpotPoint();
+                                $point->location = $item['location'];
+                                $point->address = $item['address'];
+                                $hotel->points()->save($point);
+                            }
                         }
+                        if(!empty($picture))
+                        {
+                            $pic = new RemotePhoto([
+                                'url' => $picture,
+                                'image_type' => 0,
+                                'size' => 'original',
+                            ]);
+                            $hotel->remotePhotos()->save($pic);
+                            unset($pic);
+                        }
+                        unset($picture);
                     }
-                    if(!empty($picture))
-                    {
-                        $pic = new RemotePhoto([
-                            'url' => $picture,
-                            'image_type' => 0,
-                            'size' => 'original',
-                        ]);
-                        $hotel->remotePhotos()->save($pic);
-                        unset($pic);
-                    }
-                    unset($picture);
                     $rows_parsed_now++;
                 }
             }
