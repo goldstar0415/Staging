@@ -1024,6 +1024,12 @@ sign-in, sign-up {
   }
 }
 
+.article-img {
+    min-height: 40vh !important;
+    max-height: 50vh !important;
+    width: 100% !important;
+}
+
 @media (max-width: 491px) {
   /*zoomers*/
   .events {
@@ -1586,7 +1592,7 @@ body .atlwdg-trigger.atlwdg-TOP {
 }
 
 .article-description-truncated {
-    height: 110px;
+    height: 60px;
     img {
         display: none;
     }
@@ -1764,4 +1770,8 @@ body .atlwdg-trigger.atlwdg-TOP {
 
 #body .modal.fade.in {
     top: 0;
+}
+
+.location-link {
+    float: none !important;
 }
