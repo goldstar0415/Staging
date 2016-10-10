@@ -112,14 +112,16 @@
           }
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools');
+            var container = L.DomUtil.create('div', 'map-tools');
 
-          this.link = L.DomUtil.create('div', 'lasso-selection', container);
-          this.link.href = '#';
-          this._map = map;
+            this.link = L.DomUtil.create('div', 'lasso-selection', container);
+            var img = L.DomUtil.create('img', '', this.link);
+            img.src = "../../assets/img/svg/Lasso.svg";
+            this.link.href = '#';
+            this._map = map;
 
-          L.DomEvent.on(this.link, 'click', this._click, this);
-          return container;
+            L.DomEvent.on(this.link, 'click', this._click, this);
+            return container;
         },
 
         _click: function (e) {
@@ -182,14 +184,16 @@
           }
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools');
+            var container = L.DomUtil.create('div', 'map-tools');
 
-          this.link = L.DomUtil.create('div', 'radius-selection', container);
-          this.link.href = '#';
-          this._map = map;
+            this.link = L.DomUtil.create('div', 'radius-selection', container);
+            var img = L.DomUtil.create('img', '', this.link);
+            img.src = "../../assets/img/svg/Radius.svg";
+            this.link.href = '#';
+            this._map = map;
 
-          L.DomEvent.on(this.link, 'click', this._click, this);
-          return container;
+            L.DomEvent.on(this.link, 'click', this._click, this);
+            return container;
         },
         _click: function (e) {
             var el = document.querySelector('.pick-notification');
@@ -258,14 +262,16 @@
           }
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools');
+            var container = L.DomUtil.create('div', 'map-tools');
 
-          this.link = L.DomUtil.create('div', 'path-selection', container);
-          this.link.href = '#';
-          this._map = map;
+            this.link = L.DomUtil.create('div', 'path-selection', container);
+            var img = L.DomUtil.create('img', '', this.link);
+            img.src = "../../assets/img/svg/Road_icon.svg";
+            this.link.href = '#';
+            this._map = map;
 
-          L.DomEvent.on(this.link, 'click', this._click, this);
-          return container;
+            L.DomEvent.on(this.link, 'click', this._click, this);
+            return container;
         },
         _click: function (e) {
             var el = document.querySelector('.pick-notification');
@@ -326,7 +332,7 @@
       // Save selection
       L.Control.saveSelection = L.Control.extend({
         options: {
-          position: 'bottomleft',
+          position: 'topleft',
           title: {
             'false': 'Save selection',
             'true': 'Save selection'
@@ -362,7 +368,7 @@
       // Clean selection
       L.Control.clearSelection = L.Control.extend({
         options: {
-          position: 'bottomleft',
+          position: 'topleft',
           title: {
             'false': 'Clear selection',
             'true': 'Clear selection'

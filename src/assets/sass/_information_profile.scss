@@ -1,7 +1,8 @@
 ////information-profile//////
 
 .information-profile {
-  padding: 0 15px 20px;
+  padding: 25px 15px 20px;
+  padding-left: 0;
   .avatar-wrap {
     padding: 0;
     .avatar {
@@ -22,7 +23,7 @@
   }
   .profile-name {
     margin-top: 10px;
-    text-align: center;
+    text-align: left;
 
     a {
       color: $blue;
