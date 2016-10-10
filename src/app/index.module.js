@@ -21,7 +21,9 @@
       'ui.select',
       'ui.utils.masks',
       'infinite-scroll',
-      'summernote'
+      'summernote',
+      'gilbox.infiniteSlider',
+      'gilbox.kineticSlider'
     ]);
 
 })();
