@@ -43,6 +43,8 @@
 <!--Others-->
 <script src="/js/admin.js"></script>
 
+@yield('scripts')
+
 </body>
 
 

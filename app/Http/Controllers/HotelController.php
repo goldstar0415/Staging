@@ -65,11 +65,11 @@ class HotelController extends Controller
     public function store(HotelStoreRequest $request)
     {
         $hotel = new Hotel($request->except([
-            'description',
+            'desc_en',
         ]));
 
-        if ($request->has('description')) {
-            $hotel->description = e($request->description);
+        if ($request->has('desc_en')) {
+            $hotel->desc_en = e($request->desc_en);
         }
 
         return $hotel;
@@ -86,7 +86,7 @@ class HotelController extends Controller
         $amenitiesArray = [];
         foreach($hotel->amenities as $item)
         {
-            $amenitiesArray[$item->title][] = $item->item;
+            $amenitiesArray[$item->hotel_name][] = $item->item;
         }
         $hotel->amenitiesArray = $amenitiesArray;
         
@@ -103,8 +103,8 @@ class HotelController extends Controller
      */
     public function update(HotelUpdateRequest $request, $hotel)
     {
-        $hotel->update($request->except(['description']));
-        $hotel->description = $request->has('description') ? e($request->description) : '';
+        $hotel->update($request->except(['desc_en']));
+        $hotel->desc_en = $request->has('desc_en') ? e($request->desc_en) : '';
         $hotel->save();
 
         return $hotel;
@@ -128,7 +128,7 @@ class HotelController extends Controller
         $dates        = $request->all();
         $from         = date_parse_from_format ( 'm.d.Y' , $dates['start_date'] );
         $to           = date_parse_from_format ( 'm.d.Y' , $dates['end_date'] );
-        $picsArr      = [];
+        //$picsArr      = [];
         $amenitiesArr = [];
         
         $fromString   = $from['year'] . '-' . (strlen($from['month']) == 1?'0':'') . $from['month'] . '-' . (strlen($from['day']) == 1?'0':'') . $from['day'];
@@ -147,7 +147,7 @@ class HotelController extends Controller
             'q-room-0-children' => 0,
             'tab' => 'description'
         ];
-        $hotelsUrl = $hotel->hotels_url . '?' . http_build_query($hotelsQuery);
+        $hotelsUrl = $hotel->hotelscom_url . '?' . http_build_query($hotelsQuery);
         
         try {
             $hotelsContent = $client->get($hotelsUrl); 
@@ -234,7 +234,7 @@ class HotelController extends Controller
                 $bookingPrice = explode(' ' , $bookingPriceObj->getAttribute('content'));
                 $bookingPrice = str_replace('US', '', array_pop($bookingPrice));
             }
-            if( $bookingSlider = $bookingRes->find('.hp-gallery-slides', 0) )
+            /*if( $bookingSlider = $bookingRes->find('.hp-gallery-slides', 0) )
             {
                 foreach( $bookingSlider->find('img') as $picture )
                 {
@@ -261,7 +261,7 @@ class HotelController extends Controller
                 
                 $hotel->description = $bookingDesc->innertext();
                 $hotelChanged = true;
-            }
+            }*/
             if( ( $bookingAmenities = $bookingRes->find('div.facilitiesChecklist', 0) ) && $hotel->amenities()->count() == 0 )
             {
                 foreach( $bookingAmenities->find('.facilitiesChecklistSection') as $facilitiesChecklistSection )
@@ -284,10 +284,10 @@ class HotelController extends Controller
                 }
             }
             
-            if($hotelChanged)
+            /*if($hotelChanged)
             {
                 $hotel->save();
-            }
+            }*/
             
         }
         else {
@@ -305,7 +305,7 @@ class HotelController extends Controller
                 'booking'           => $bookingPrice,
                 'bookingUrl'        => $bookingUrl,
                 'hotelsUrl'         => $hotelsUrl,
-                'remote_photos'     => $picsArr,      
+                //'remote_photos'     => $picsArr,      
                 'amenitiesArray'    => $amenitiesArr,
             ] 
         ]; 
