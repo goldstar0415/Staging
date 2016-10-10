@@ -1,12 +1,31 @@
 <div class="col-xs-12 menu-profile" ng-class="$root.$state.current.name == 'index' ? 'menu-profile-hidden' : ''">
     <div class="hide-menu-profile" ng-hide="$root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview'" ng-class="{'rotate-down': $root.mapState == 'small-size'}" ng-click="$root.toggleMapState()"></div>
 
+    <div class="menu-user">
+        <section class="avatar-wrap" ng-if="$root.profileUser.id">
+          <a ng-if="$root.$state.current.name != 'profile.main'"
+             ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})"
+             tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}"
+             class="avatar">
+            <img ng-src="{{$root.profileUser.avatar_url.medium}}"/>
+          </a>
+          <a ng-if="$root.$state.current.name == 'profile.main'"
+             tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}"
+             class="avatar">
+            <img ng-src="{{$root.profileUser.avatar_url.medium}}"
+                 photo-viewer
+                 index="0"
+                 hide-comments="1"
+                 items="[$root.profileUser]"/>
+          </a>
+        </section>
+    </div>
+
     <ul ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
         <li>
             <a class="nav-spots" ui-sref="spots({user_id: $root.currentUser.id})" ng-class="{active: $root.$state.current.name == 'spots' || $root.$state.current.name == 'spot'}">
                 <img src="assets/img/svg/new_icons/icon_main_menu/spot-white.svg" alt="icon" />
                 <span>Spots</span>
-                
             </a>
         </li>
         <li ng-if="$root.isRole($root.currentUser, 'blogger')">
@@ -30,13 +49,13 @@
         <li>
             <a class="nav-friendmap" ui-sref="friendsmap" ui-sref-active="active">
                 <img src="assets/img/svg/new_icons/icon_main_menu/friend-white.svg" alt="icon" />
-                <span>Friends Map</span>
+                <span>Friends</span>
             </a>
         </li>
         <li >
             <a class="nav-photomap" ui-sref="photos.list({user_id: $root.currentUser.id})" ng-class="$root.isActiveState('photos')">
                 <img src="assets/img/svg/new_icons/icon_main_menu/photo-white.svg" alt="icon" />
-                <span>Photo Map</span>
+                <span>Photos</span>
             </a>
         </li>
         <li>
@@ -52,6 +71,10 @@
             </a>
         </li>
     </ul>
+
+    <div class="profile-toggle">
+        <img src="assets/img/svg/arrow-circle.svg" alt="arrow">
+    </div>
     <!-- <ul ng-if="$root.currentUser && $root.currentUser.id != $root.profileUser.id">
         <li >
             <a ui-sref="spots({user_id: $root.profileUser.id})" ng-class="{active: $root.$state.current.name == 'spots' || $root.$state.current.name == 'spot'}" class="my-spots nav-spots">
