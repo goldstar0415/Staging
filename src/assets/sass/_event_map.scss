@@ -48,6 +48,9 @@
     .new-spot {
         padding: 5px;
         width: 50%;
+        @media (max-width: 500px) {
+            width: 100%;
+        }
         .spot-img {
             position: relative;
             height: 150px;

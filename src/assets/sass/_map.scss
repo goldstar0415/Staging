@@ -45,7 +45,7 @@
   }
 
   .radius-selection {
-    background-image: url(../img/svg/Radius.svg);
+    // background-image: url(../img/svg/Radius.svg);
     background-repeat: no-repeat;
     background-size: 40px;
     background-position: 6px 3px;
@@ -53,11 +53,11 @@
     // border-bottom: 1px solid #eee;
     &:hover, &.active {
       background-color: rgba(0, 207, 255, .8);
-      background-image: url(../img/svg/Radius_mouseover.svg);
+    //   background-image: url(../img/svg/Radius_mouseover.svg);
     }
   }
   .lasso-selection {
-    background: url(../img/svg/Lasso.svg) ;
+    // background: url(../img/svg/Lasso.svg) ;
     background-repeat: no-repeat;
     background-size: 40px;
     background-position: 6px 3px;
@@ -65,18 +65,18 @@
     // border-bottom: 1px solid #eee;
     &:hover, &.active {
       background-color: rgba(0, 207, 255, .8);
-      background-image: url(../img/svg/Lasso_mouseover.svg);
+    //   background-image: url(../img/svg/Lasso_mouseover.svg);
     }
   }
   .path-selection {
-    background-image: url(../img/svg/Road_icon.svg);
+    // background-image: url(../img/svg/Road_icon.svg);
     background-repeat: no-repeat;
     background-size: 40px;
     background-position: 6px 3px;
     background-color: $white;
     &:hover, &.active {
       background-color: rgba(0, 207, 255, .8);
-      background-image: url(../img/svg/Road_icon_mouseover.svg);
+    //   background-image: url(../img/svg/Road_icon_mouseover.svg);
     }
   }
   // .save-selection {
@@ -166,6 +166,9 @@
             display: none;
         }
     }
+    .leaflet-control {
+        border: none;
+    }
     .leaflet-left.leaflet-bottom {
         bottom: 0;
         top: 60px;
@@ -178,56 +181,72 @@
         max-width: 50px;
         z-index: 999;
         opacity: 0.8;
-        @media (max-height: 400px) {
-            // flex-wrap: wrap;
+        @media (max-height: 500px) {
+            top: 50px;
+            bottom: 50px;
+            height: calc(100vh - 100px);
         }
-        @media (max-width: 767px) {
-            top: 60px;
-            height: calc(100vh - 120px);
+        @media (max-width: 500px) {
+            left: 0 !important;
+            top: 50px;
+            bottom: 50px;
+            height: calc(100vh - 100px);
         }
-        @media (max-width: 767px) and (orientation: landscape) {
-            top: 60px;
-            height: calc(100vh - 120px);
+    }
+    .leaflet-left.leaflet-top {
+        top: 60px;
+        left: 70px !important;
+        width: 100px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        opacity: 0.8;
+        @media (max-height: 500px) {
+            top: 50px;
+            height: 40px;
         }
+        @media (max-width: 500px) {
+            top: 50px;
+        }
+        .map-tools-top {
+            top: 0;
+            & > div {
+                @media (max-height: 500px) {
+                    height: 40px;
+                }
+            }
+            // display: flex;
+            // justify-content: center;
+            // align-items: center;
+        }
+    }
+    .leaflet-left.leaflet-bottom, .leaflet-left.leaflet-top {
         .focus-geolocation-container, .show-info-container {
             display: flex;
             height: 100%;
-            min-height: 50px;
+            // min-height: 50px;
             flex-direction: column;
             justify-content: flex-end;
             margin: 0;
             @media (max-height: 400px) {
                 height: calc((100vh - 220px) / 2);
             }
-            .focus-geolocation, .show-info {
-                cursor: pointer;
-                margin: 0;
-                width: 50px;
-                height: 50px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background-color: white;
-                color: #414042;
-                font-size: 45px;
-                img {
-                    height: 100%;
-                    width: 100%;
-                    padding: 8px;
-                }
-                &:hover {
-                    background-color: $light_blue_btn;
-                    color: white;
-                }
-            }
         }
         .show-info-container {
             justify-content: flex-start;
         }
-        .save-selection, .clear-selection, .focus-geolocation {
+        .map-tools, .focus-geolocation, .show-info {
+            background-color: white;
+            position: relative;
+            @media (max-height: 500px) {
+                width: 40px;
+                height: 40px;
+            }
             img {
-                width: 50px;
-                height: 50px;
+                width: 100%;
+                height: 100%;
                 padding: 7px;
             }
             &:hover {
@@ -256,9 +275,9 @@
 }
 
 .sidebar-menu-vertical.sidebar-menu-vertical-bottom {
-    @media(max-width: 767px) {
-        height: 50px;
-    }
+    // @media(max-width: 767px) {
+    //     height: 50px;
+    // }
 }
 
 .map-marker-icon-photo {

@@ -339,9 +339,9 @@
 
 #body .sort-menu {
   position: absolute;
-  top: 70px;
+  top: 50px;
   right: 0;
-  bottom: 0;
+  bottom: 50px;
   height: auto;
   z-index: 101;
   background: #fff;
@@ -477,27 +477,35 @@
 
 .search-filters {
   width: 100%;
-  top: 55px;
+  // top: 55px;
   // bottom: 0;
-  height: calc(100% - 55px);
+  // height: calc(100% - 55px);
+  height: 100%;
   overflow-y: auto;
   background-color: #fff;
   padding: 1.5rem;
   @media (min-width: 768px) {
-      top: 80px;
-      height: calc(100% - 80px);
+    //   top: 80px;
+    //   height: calc(100% - 80px);
   }
   @media (max-width: 767px) {
       top: 0;
   }
-  @media (max-width: 767px) and (orientation: landscape) {
-      height: 100%;
-      width: calc(100vw - 50px);
+  // @media (max-width: 767px) and (orientation: landscape) {
+  //     height: 100%;
+  //     width: calc(100vw - 50px);
+  // }
+  @media (max-width: 767px) {
+      height: calc(100% - 50px);
+      width: calc(100vw - 70px);
+      left: 70px;
+      right: 0;
+    //   top: 55px;
   }
-  @media (max-width: 767px) and (orientation: portrait) {
-      height: calc(100% - 55px);
-      top: 55px;
-  }
+   @media (max-width: 500px) {
+       left: 50px;
+        width: calc(100vw - 50px);
+   }
 
   &.applied-filter {
     input, button, .btn-cancel, .country-filter + .filters-button, .form-control[disabled], .filter-definition .tags {
@@ -1128,9 +1136,16 @@
 
   &.active-weather {
     height: auto;
-    top: 74px;
-    @media screen and (min-width: 767px) and (max-width: 991px) {
-      top: 0;
+    top: 0;
+    @media (max-width: 767px) {
+        left: 70px;
+        right: 0;
+        width: calc(100vw - 70px);
+    }
+    @media (max-width: 500px) {
+        left: 50px;
+        right: 0;
+        width: calc(100vw - 50px);
     }
   }
   //top: 7rem;
@@ -1880,10 +1895,11 @@
     right: 0px;
     width: 70px;
     background-color: white;
+    opacity: 0.8;
     @media (min-width: 768px) {
         ul li img {
-            width: 40px;
-            height: 50px;
+            width: 35px;
+            height: 35px;
         }
         ul li p {
             font-size: 14px;
@@ -1901,10 +1917,7 @@
     //         height: 50px;
     //     }
     // }
-    @media(max-width: 500px) and (orientation: portrait) {
-        width: 50px;
-    }
-    @media(max-width: 767px) and (orientation: landscape) {
+    @media(max-width: 767px) {
         top: 50px;
         width: 70px;
         height: calc(100vh - 100px);
@@ -1916,25 +1929,33 @@
             }
         }
     }
+    @media(max-width: 500px) {
+        width: 50px;
+    }
     &.new-sidebar-menu-opened {
-        @media(max-width: 767px) and (orientation: portrait) {
+        right: 470px;
+        left: auto;
+        @media(max-width: 767px) {
             bottom: auto;
             top: 50px;
+            right: auto;
+            left: 0px;
         }
-        @media (min-width: 768px) {
-            bottom: auto;
-            top: 82px;
-            width: 470px;
-            height: 55px;
-            right: 0;
-            border-bottom: 1px solid lightgrey;
-            ul {
-                flex-direction: row;
-                height: 55px;
-            }
-        }
+        // @media (min-width: 768px) {
+        //     bottom: auto;
+        //     top: 50px;
+        //     width: 470px;
+        //     height: 55px;
+        //     right: 0;
+        //     border-bottom: 1px solid lightgrey;
+        //     ul {
+        //         flex-direction: row;
+        //         height: 55px;
+        //     }
+        // }
     }
     ul {
+        overflow: auto;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1945,10 +1966,15 @@
         //     flex-direction: row;
         //     height: 50px !important;
         // }
-        @media(max-width: 767px) and (orientation: landscape) {
+        @media (max-width: 767px) {
             height: calc(100vh - 100px);
         }
+        @media (max-height: 400px) {
+            justify-content: flex-start;
+        }
         li {
+            min-height: 50px;
+            height: 100%;
             padding: 5px 0;
             width: 100%;
             display: flex;
@@ -1972,6 +1998,9 @@
                 p {
                     color: white;
                 }
+            }
+            &.no-hover:hover {
+                background-color: white;
             }
         }
     }

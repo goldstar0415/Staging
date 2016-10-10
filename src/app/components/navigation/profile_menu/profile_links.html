@@ -1,5 +1,5 @@
 <div class="col-xs-12 menu-profile" ng-class="$root.$state.current.name == 'index' ? 'menu-profile-hidden' : ''">
-    <div class="hide-menu-profile" ng-hide="$root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview'" ng-class="{'rotate-down': $root.mapState == 'small-size'}" ng-click="$root.toggleMapState()"></div>
+    <!-- <div class="hide-menu-profile" ng-hide="$root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview'" ng-class="{'rotate-down': $root.mapState == 'small-size'}" ng-click="$root.toggleMapState()"></div> -->
 
     <div class="menu-user">
         <section class="avatar-wrap" ng-if="$root.profileUser.id">
@@ -63,7 +63,7 @@
         </li>
     </ul>
 
-    <div class="profile-toggle">
+    <div class="profile-toggle" ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})">
         <img src="assets/img/svg/arrow-circle.svg" alt="arrow">
     </div>
     <!-- <ul ng-if="$root.currentUser && $root.currentUser.id != $root.profileUser.id">

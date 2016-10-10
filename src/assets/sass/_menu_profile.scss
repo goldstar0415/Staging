@@ -7,6 +7,42 @@
     z-index: 1000;
     display: flex !important;
 
+    &.unauthorized-menu ul li a span {
+        color: #ccc;
+    }
+
+    &.menu-profile-opened {
+        .menu-user {
+            height: 100px;
+            margin-bottom: -50px;
+        }
+    }
+
+    .menu-unauthorized {
+        width: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        p {
+            margin: 0;
+        }
+        .menu-separator {
+            p {
+                margin: 0 10px;
+            }
+        }
+        @media (max-width: 767px) {
+            width: 70px;
+            .menu-separator, .menu-signup {
+                display: none;
+            }
+        }
+        @media (max-width: 500px) {
+            width: 50px;
+        }
+    }
+
     .menu-user {
         height: 75px;
         width: 150px;
@@ -92,6 +128,7 @@
         position: relative;
         @media (max-width: 767px) {
             width: calc(100% - 140px);
+            overflow: auto;
         }
         @media (max-width: 500px) {
             width: calc(100% - 100px);

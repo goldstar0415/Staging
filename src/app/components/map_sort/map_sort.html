@@ -1,14 +1,17 @@
 <user-hints></user-hints>
 <!-- ng-show="$root.mapSortSpots.sourceSpots.length || !MapSort.vertical" -->
-<div class="map-toggle-menu" ng-click="MapSort.vertical = !MapSort.vertical; MapSort.openedItem = null" ng-show="$root.mapSortSpots.sourceSpots.length || !MapSort.vertical" class="new-sidebar-menu" ng-class="!MapSort.vertical ? 'map-toggle-menu-opened' : ''">
+<!-- <div class="map-toggle-menu" ng-click="MapSort.vertical = !MapSort.vertical; MapSort.openedItem = null" ng-show="$root.mapSortSpots.sourceSpots.length || !MapSort.vertical" class="new-sidebar-menu" ng-class="!MapSort.vertical ? 'map-toggle-menu-opened' : ''">
     <span class="glyphicon" ng-class="MapSort.vertical ? 'glyphicon-menu-up' : 'glyphicon-menu-down'"></span>
-</div>
+</div> -->
 <!-- <div ng-show="MapSort.vertical && ($root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview')" class="new-sidebar-menu"> -->
 <div class="new-sidebar-menu" ng-class="!MapSort.vertical ? 'new-sidebar-menu-opened' : ''" ng-show="$root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview'">
     <!-- <div class="show-menu-profile visible-xs" ng-class="$root.mapSortSpots.sourceSpots.length ? 'blink' : ''" ng-click="MapSort.vertical = !MapSort.vertical"></div> -->
 
     <div class="sidebar-menu-vertical" ng-class="$root.$state.current.name == 'index' ? 'sidebar-menu-vertical-bottom' : ''">
         <ul>
+            <li class="no-hover" ng-click="MapSort.vertical = !MapSort.vertical; MapSort.openedItem = null" ng-show="$root.mapSortSpots.sourceSpots.length || !MapSort.vertical">
+                <img src="../../../assets/img/svg/arrow-circle-blue.svg" alt="img" style="transform: rotate({{!MapSort.vertical ? '0deg' : '180deg'}})">
+            </li>
             <li ng-click="$root.toggleLayer('event')" ng-class="{'active': $root.sortLayer == 'event'}" class="event-sidebar">
                 <img src="../../../assets/img/svg/Icon_Events.svg" alt="img">
                 <p>Events</p>
