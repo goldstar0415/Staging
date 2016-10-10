@@ -3,21 +3,12 @@
 
     <div class="menu-user">
         <section class="avatar-wrap" ng-if="$root.profileUser.id">
-          <a ng-if="$root.$state.current.name != 'profile.main'"
-             ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})"
-             tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}"
-             class="avatar">
-            <img ng-src="{{$root.profileUser.avatar_url.medium}}"/>
-          </a>
-          <a ng-if="$root.$state.current.name == 'profile.main'"
-             tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}"
-             class="avatar">
-            <img ng-src="{{$root.profileUser.avatar_url.medium}}"
-                 photo-viewer
-                 index="0"
-                 hide-comments="1"
-                 items="[$root.profileUser]"/>
-          </a>
+            <a ng-if="$root.$state.current.name != 'profile.main'" ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})" tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}" class="avatar">
+                <img ng-src="{{$root.profileUser.avatar_url.medium}}" />
+            </a>
+            <a ng-if="$root.$state.current.name == 'profile.main'" tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}" class="avatar">
+                <img ng-src="{{$root.profileUser.avatar_url.medium}}" photo-viewer index="0" hide-comments="1" items="[$root.profileUser]" />
+            </a>
         </section>
     </div>
 

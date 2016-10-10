@@ -179,7 +179,7 @@
         z-index: 999;
         opacity: 0.8;
         @media (max-height: 400px) {
-            flex-wrap: wrap;
+            // flex-wrap: wrap;
         }
         @media (max-width: 767px) {
             top: 60px;
@@ -187,7 +187,7 @@
         }
         @media (max-width: 767px) and (orientation: landscape) {
             top: 60px;
-            height: calc(100vh - 70px);
+            height: calc(100vh - 120px);
         }
         .focus-geolocation-container, .show-info-container {
             display: flex;
