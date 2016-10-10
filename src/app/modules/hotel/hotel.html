@@ -3,10 +3,10 @@
         <section class="hotel-section ">
             <div>
                 <h2 class="col-xs-12">
-                    {{Hotel.title}}
+                    {{Hotel.hotel_name}}
                 </h2>
                 <div>
-                    <div ng-bind-html="Hotel.description" class="description col-xs-8" ></div>
+                    <div ng-bind-html="Hotel.desc_en" class="description col-xs-8" ></div>
                     <div ng-if="Hotel.remote_photos[0]" class="hotel-img col-xs-4" >
                         <img class="col-xs-12" src="{{ Hotel.remote_photos[0].url }}" />
                     </div>
