@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\Admin\HotelFilterRequest;
 use App\SpotHotel;
+use App\SpotAmenity;
 use App\SpotTypeCategory;
 use App\RemotePhoto;
 use App\SpotPoint;
@@ -252,11 +253,11 @@ class HotelsController extends Controller
                         else
                         {
                             $hotel = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
-                            if(isset($item['homepage_url']))
+                            if(isset($item['homepage_url']) && !empty($item['homepage_url']))
                             {
                                 $hotel->web_sites = [$item['homepage_url']];
-                                unset($item['homepage_url']);
                             }
+                            unset($item['homepage_url']);
                             if(isset($item['booking_id']))unset($item['booking_id']);
                             foreach($this->spotFields as $column => $value)
                             {
@@ -326,6 +327,9 @@ class HotelsController extends Controller
      */
     public function destroy($hotel)
     {
+        $hotel->hotel->delete();
+        $hotel->amenities()->delete();
+        $hotel->remotePhotos()->delete();
         $hotel->delete();
 
         return back();
@@ -336,6 +340,8 @@ class HotelsController extends Controller
         $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
         
         Spot::where('spot_type_category_id', $spotTypeCategory->id)->delete();
+        SpotHotel::query()->delete();
+        SpotAmenity::query()->delete();
         
         return back();
     }
