@@ -271,7 +271,7 @@ class HotelsController extends Controller
                             $hotelObj = $hotel->hotel;
                             foreach( $this->hotelFields as $field) {
                                 if(isset($item[$field]))
-                                    $hotelObj->$field = item[$field];
+                                    $hotelObj->$field = $item[$field];
                             }
                             $hotelObj->save();
 
