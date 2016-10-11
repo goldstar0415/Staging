@@ -31,11 +31,9 @@
     "Ionicons": "ionicons#^2.0.1",
     "angular-cookies": "^1.5.8",
     "jQuery.dotdotdot": "dotdotdot#^1.8.3",
-    "object-fit-images": "*",
     "jquery-ui": "^1.12.1",
     "bootstrap-modal": "2.2.6",
-    "kinetic-slider": "*",
-    "infinite-slider": "*"
+    "malihu-custom-scrollbar-plugin": "^3.1.5"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.0",
