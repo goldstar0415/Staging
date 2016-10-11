@@ -77,7 +77,7 @@ $(function(){
     var $inputs          = $form.find('input');
     var $checks          = $form.find('.checkbox');
     var fileForParse     = false;
-    var step             = 0;
+    var step             = 1;
     var totalRows        = 0;
     var rowsParsed       = 0;
     var fileOffset       = 0;
@@ -216,7 +216,7 @@ $(function(){
     });
     
     var parseHandler = function() {
-        message('Parsing step ' + (step++) + ' started');
+        message('Parsing step ' + (step) + ' started');
         $.ajax({
             url: '{{ route("admin.hotels.export") }}',
             data: {
@@ -232,6 +232,7 @@ $(function(){
             dataType: 'json',
             success: function(response){
                 console.log(response);
+                step++;
                 if(response.success)
                 {
                     rowsParsed = response.rows_parsed;
@@ -277,6 +278,7 @@ $(function(){
                 }
             },
             error: function() {
+                step++;
                 $parseBtn.removeClass('disabled');
                 $parsePreloader.hide();
                 $parseText.show();
