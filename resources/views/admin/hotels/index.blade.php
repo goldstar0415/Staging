@@ -24,7 +24,7 @@
             <a href="javascript:void(0);" class="clean-btn btn btn-danger">Clean Hotels Database</a>
         </div>
         {!! Form::close() !!}
-        {!! Form::open(['method' => 'DELETE', 'route' => 'admin.hotels.clean-db', 'class' => 'form-for-trunkate']) !!}
+        {!! Form::open(['method' => 'POST', 'route' => 'admin.hotels.clean-db', 'class' => 'form-for-trunkate']) !!}
         {!! Form::close() !!}
     </div>
     <table class="col-xs-12">
