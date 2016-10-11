@@ -46,6 +46,8 @@ class HotelsRestructure extends Migration
             $table->string('zip', 20)->nullable();
             $table->string('currencycode', 20)->nullable();
             $table->timestamps();
+            $table->foreign('spot_id')->references('id')->on('spots')
+                ->onUpdate('cascade')->onDelete('cascade');
         });
         
         Schema::create('spot_amenities', function(Blueprint $table) {

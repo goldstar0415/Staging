@@ -49,6 +49,7 @@
                 <td><a href="{{ url($hotel->hotel->hotelscom_url) }}">hotels.com</a></td>
                 <td><a href="{{ url($hotel->hotel->booking_url) }}">booking.com</a></td>
                 <td>
+                    <a href="{!! route('admin.hotels.get-edit', [$hotel->id]) !!}" class="edit-spot"></a>
                     {!! link_delete(route('admin.hotels.destroy', [$hotel->id]), '', ['class' => 'delete']) !!}
                 </td>
             </tr>

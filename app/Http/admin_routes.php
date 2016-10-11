@@ -26,6 +26,8 @@ get('hotels/filter', 'HotelsController@filter')->name('admin.hotels.filter');
 get('hotels/hotels_parser', 'HotelsController@hotelsCsvParser')->name('admin.hotels.parser');
 post('hotels/export', 'HotelsController@export')->name('admin.hotels.export');
 post('hotels/exportUpload', 'HotelsController@exportUpload')->name('admin.hotels.export-upload');
+get('hotels/{hotels}/edit', 'HotelsController@getEdit')->name('admin.hotels.get-edit');
+post('hotels/{hotels}/edit', 'HotelsController@postEdit')->name('admin.hotels.post-edit');
 resource('hotels', 'HotelsController', ['only' => ['index', 'destroy']]);
 
 resource('posts', 'BlogController', ['except' => 'show']);

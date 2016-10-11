@@ -15,6 +15,15 @@
             </label>
             <input type="text" class="form-control" readonly>
         </div>
+        <div>
+            <div class="checkbox">
+                <label><input name="auto-parse" type="checkbox" value="" checked>Automaticly start parsing</label>
+            </div>
+            <div class="checkbox">
+                <label><input name="update-existing" type="checkbox" value="">Update existing rows</label>
+            </div>
+            
+        </div>
     </div>
     <div class="col col-sm-6">
         <button class="btn btn-submit" type="submit">
@@ -40,6 +49,9 @@
     {!! Form::close() !!}
     <div class="clearfix"></div>
     <div class="col-xs-12">
+        Time spent: <span class="timer">0:0:0</span>
+    </div>
+    <div class="col-xs-12">
         <div class="progress hotels-parser-progress">
             <div class="progress-bar progress-bar-striped active" role="progressbar"
             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
@@ -63,6 +75,7 @@ $(function(){
     var $consoleScroll   = $('.hotels-parser-info');
     var $form            = $('.export-form');
     var $inputs          = $form.find('input');
+    var $checks          = $form.find('.checkbox');
     var fileForParse     = false;
     var step             = 0;
     var totalRows        = 0;
@@ -70,6 +83,8 @@ $(function(){
     var fileOffset       = 0;
     var headers          = [];
     var token            = $('input[name="_token"]').val();
+    var timerInterval    = null;
+    var timerSeconds     = 0;
     
     var $progressRow     = $('.hotels-parser-progress');
     var $progress        = $progressRow.find('.progress-bar');
@@ -114,7 +129,10 @@ $(function(){
         {
             var formData = new FormData(this);
             
+            startTimer();
+            
             $inputs.attr('disabled', true);
+            $checks.addClass('disabled');
             $uploadBtn.addClass('disabled');
             $uploadPreloader.show();
             $uploadText.hide();
@@ -138,25 +156,34 @@ $(function(){
                         fileForParse = response.data.path;
                         totalRows = response.data.count - 1;
                         message('File uploaded: ' + response.data.filename + ';<br />' + 'Total rows: ' + totalRows);
-                        
+                        $form.removeClass('loading');
+                        stopTimer();
+                        if($('input[name="auto-parse"]').is(':checked'))
+                        {
+                            $parseBtn.click();
+                        }    
                     }
                     else
                     {
                         message(response.data[0]);
                         $uploadBtn.removeClass('disabled');
                         $inputs.attr('disabled', false);
+                        $checks.removeClass('disabled');
                         $uploadText.show();
+                        $form.removeClass('loading');
+                        stopTimer();
                     }
                     $uploadPreloader.hide();
-                    $form.removeClass('loading');
                 },
                 error: function(response){
                     message('File not loaded with error: ' + response.status + ' ' + response.statusText);
                     $uploadBtn.removeClass('disabled');
                     $inputs.attr('disabled', false);
+                    $checks.removeClass('disabled');
                     $uploadText.show();
                     $uploadPreloader.hide();
                     $form.removeClass('loading');
+                    stopTimer();
                 }
                 
             });
@@ -165,12 +192,14 @@ $(function(){
     
     $parseBtn.on('click', function(e) {
         e.preventDefault();
+        startTimer();
         
         if( !$form.is('.loading') )
         {
             if( !fileForParse )
             {
                 message('File for parse not loaded!');
+                stopTimer();
             }
             else
             {
@@ -184,7 +213,6 @@ $(function(){
             }
         }
         
-        
     });
     
     var parseHandler = function() {
@@ -197,6 +225,7 @@ $(function(){
                 rows_parsed: rowsParsed,
                 file_offset: fileOffset,
                 headers: headers,
+                update: $('input[name="update-existing"]').is(':checked'),
                 _token: token
             },
             type: 'POST',
@@ -219,7 +248,8 @@ $(function(){
                         message('Total rows parsed: ' + rowsParsed);
                         $progressRow.slideUp();
                         $parseDone.show();
-                        $parsePreloader.hide();
+                        stopTimer();
+                        //$parsePreloader.hide();
                     }
                     else if(rowsParsed < totalRows)
                     {
@@ -242,8 +272,18 @@ $(function(){
                     $parseText.show();
                     $form.removeClass('loading');
                     
-                    message('PARSE ERROR!');
+                    message('<span class="text-danger">PARSE ERROR!</span>');
+                    stopTimer();
                 }
+            },
+            error: function() {
+                $parseBtn.removeClass('disabled');
+                $parsePreloader.hide();
+                $parseText.show();
+                $form.removeClass('loading');
+                    
+                message('<span class="text-danger">PARSE ERROR!</span>');
+                stopTimer();
             }
         });
     }
@@ -253,6 +293,26 @@ $(function(){
         var height = $consoleScroll[0].scrollHeight;
         $consoleScroll.scrollTop(height);
     }
+    
+    function startTimer() {
+        timerInterval = setInterval(timerIntervalHandler, 1000);
+    }
+    
+    function stopTimer() {
+        clearInterval(timerInterval);
+    }
+    
+    function timerIntervalHandler() {
+        var sec = timerSeconds++;
+        var hour = parseInt(sec / 3600);
+        sec -= hour * 3600;
+        var min = parseInt(sec / 60);
+        sec -= min * 60;
+        
+        $('.timer').html(hour + ':' + min + ':' + sec);
+    }
+    
+    
     
 });
 </script>

@@ -169,6 +169,7 @@ class HotelsController extends Controller
         $path               = $request->path;
         $stepCount          = $this->stepCount;
         $total_rows         = $request->total_rows;
+        $updateExisting     = $request->input('update', false);
         $rows_parsed_before = $request->rows_parsed;
         $file_offset        = $request->file_offset;
         $headers            = $request->input('headers', []);
@@ -195,7 +196,7 @@ class HotelsController extends Controller
                         $isFirstRow = false;
                         continue;
                     }
-                    if($rows_parsed_now == $stepCount-1)
+                    if($rows_parsed_now < $stepCount)
                     {
                         $result['file_offset'] = $reader->getFilePointerOffset();
                     }
@@ -208,7 +209,7 @@ class HotelsController extends Controller
                         $item[$title] = mb_convert_encoding($row[$index], "UTF-8", "ISO-8859-16");
                         //$item[$title] = $row[$index];
                     }
-                    $rows[] = $item;
+                    
                     
                     if(isset($item['latitude']) && isset($item['longitude']))
                     $item['location'] = [
@@ -249,53 +250,70 @@ class HotelsController extends Controller
                                 $point->address = $item['address'];
                                 $hotel->points()->save($point);
                             }
+                            if(!empty($picture))
+                            {
+                                $pic = new RemotePhoto([
+                                    'url' => $picture,
+                                    'image_type' => 0,
+                                    'size' => 'original',
+                                ]);
+                                $hotel->remotePhotos()->save($pic);
+                                unset($pic);
+                            }
+                            unset($picture);
+                            $rows[] = $item;
                         }
                         else
                         {
-                            $hotel = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
-                            if(isset($item['homepage_url']) && !empty($item['homepage_url']))
+                            if($updateExisting)
                             {
-                                $hotel->web_sites = [$item['homepage_url']];
-                            }
-                            unset($item['homepage_url']);
-                            if(isset($item['booking_id']))unset($item['booking_id']);
-                            foreach($this->spotFields as $column => $value)
-                            {
-                                if(isset($item[$value]))
+                                $hotel = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
+                                if(isset($item['homepage_url']) && !empty($item['homepage_url']))
                                 {
-                                    $hotel->$column = $item[$value];
+                                    $hotel->web_sites = [$item['homepage_url']];
                                 }
+                                unset($item['homepage_url']);
+                                if(isset($item['booking_id']))unset($item['booking_id']);
+                                foreach($this->spotFields as $column => $value)
+                                {
+                                    if(isset($item[$value]))
+                                    {
+                                        $hotel->$column = $item[$value];
+                                    }
 
-                            }
-                            $hotel->save();
+                                }
+                                $hotel->save();
 
-                            $hotelObj = $hotel->hotel;
-                            foreach( $this->hotelFields as $field) {
-                                if(isset($item[$field]))
-                                    $hotelObj->$field = $item[$field];
-                            }
-                            $hotelObj->save();
+                                $hotelObj = $hotel->hotel;
+                                foreach( $this->hotelFields as $field) {
+                                    if(isset($item[$field]))
+                                        $hotelObj->$field = $item[$field];
+                                }
+                                $hotelObj->save();
 
-                            if(isset($item['location']) && isset($item['address']))
-                            {
-                                $hotel->points()->delete();
-                                $point = new SpotPoint();
-                                $point->location = $item['location'];
-                                $point->address = $item['address'];
-                                $hotel->points()->save($point);
+                                if(isset($item['location']) && isset($item['address']))
+                                {
+                                    $hotel->points()->delete();
+                                    $point = new SpotPoint();
+                                    $point->location = $item['location'];
+                                    $point->address = $item['address'];
+                                    $hotel->points()->save($point);
+                                }
+                                
+                                if(!empty($picture))
+                                {
+                                    $pic = new RemotePhoto([
+                                        'url' => $picture,
+                                        'image_type' => 0,
+                                        'size' => 'original',
+                                    ]);
+                                    $hotel->remotePhotos()->save($pic);
+                                    unset($pic);
+                                }
                             }
+                            unset($picture);
                         }
-                        if(!empty($picture))
-                        {
-                            $pic = new RemotePhoto([
-                                'url' => $picture,
-                                'image_type' => 0,
-                                'size' => 'original',
-                            ]);
-                            $hotel->remotePhotos()->save($pic);
-                            unset($pic);
-                        }
-                        unset($picture);
+                        
                     }
                     else {
                         $result['messages'][] = 'Booking.com ID missed in string #' . ($rows_parsed_now + 1);
@@ -342,6 +360,68 @@ class HotelsController extends Controller
         Spot::where('spot_type_category_id', $spotTypeCategory->id)->delete();
         SpotHotel::query()->delete();
         SpotAmenity::query()->delete();
+        
+        return back();
+    }
+    
+    public function getEdit(Spot $hotel) {
+        $spotFields = array_keys($this->spotFields);
+        $hotelFields = array_diff($this->hotelFields, ['booking_id']);
+        
+        return view('admin.hotels.item')->with([
+            'hotel' => $hotel,
+            'spotFields' => $spotFields,
+            'hotelFields' => $hotelFields,
+        ]);
+    }
+    
+    public function postEdit(Request $request, Spot $hotel) {
+        
+        $rules = [
+            'title' => 'required|max:255',
+            'description' => 'required|max:2000',
+            'web_sites' => 'sometimes|array',
+            
+            'class' => 'max:50',
+            'hotelscom_url' => 'sometimes|url|max:255',
+            'booking_url' => 'sometimes|url|max:255',
+            'booking_num_reviews' => 'max:255',
+            'booking_rating' => 'max:255',
+            'booking_rating_10' => 'max:255',
+            'hotelscom_num_reviews' => 'max:255',
+            'hotelscom_rating' => 'max:255',
+            'facebook_url' => 'sometimes|url|max:255',
+            'twitter_url' => 'sometimes|url|max:255',
+            'trip_advisor_url' => 'sometimes|url|max:255',
+            'google_pid' => 'max:255',
+            'google_rating' => 'max:20',
+            'maxrate' => 'max:20',
+            'minrate' => 'max:20',
+            'nr_rooms' => 'max:20',
+            'continent_id' => 'max:20',
+            'country_code' => 'max:20',
+            'city_hotel' => 'max:100',
+            'zip' => 'max:20',
+            'currencycode' => 'max:20'
+        ];
+        
+        
+        $this->validate($request, $rules);
+        $newValues = $request->all();
+        foreach(array_keys($this->spotFields) as $field)
+        {
+            if(isset($newValues[$field])) $hotel->$field = $newValues[$field];
+        }
+        $hotel->save();
+        $hotelAttrObj = $hotel->hotel;
+        if(!empty($hotelAttrObj))
+        {
+            foreach(array_diff($this->hotelFields, ['booking_id']) as $field)
+            {
+                if(isset($newValues[$field])) $hotelAttrObj->$field = $newValues[$field];
+            }
+            $hotelAttrObj->save();
+        }
         
         return back();
     }
