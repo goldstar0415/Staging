@@ -228,7 +228,12 @@ $(function(){
                         message('Rows parsed now: ' + rowsParsed);
                         parseHandler();
                     }
-                    
+                    if(response.messages && response.messages.length > 0)
+                    {
+                        $.each(response.messages, function(i, value){
+                            message('<span class="text-danger">' + value + '</span>');
+                        });
+                    }
                 }
                 else
                 {

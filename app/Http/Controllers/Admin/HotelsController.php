@@ -164,7 +164,7 @@ class HotelsController extends Controller
     public function export( Request $request ) 
     {    
         
-        $result             = ['success' => true, 'endOfParse' => false];
+        $result             = ['success' => true, 'endOfParse' => false, 'messages' => [] ];
         $path               = $request->path;
         $stepCount          = $this->stepCount;
         $total_rows         = $request->total_rows;
@@ -252,6 +252,12 @@ class HotelsController extends Controller
                         else
                         {
                             $hotel = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
+                            if(isset($item['homepage_url']))
+                            {
+                                $hotel->web_sites = [$item['homepage_url']];
+                                unset($item['homepage_url']);
+                            }
+                            if(isset($item['booking_id']))unset($item['booking_id']);
                             foreach($this->spotFields as $column => $value)
                             {
                                 if(isset($item[$value]))
@@ -290,6 +296,9 @@ class HotelsController extends Controller
                         }
                         unset($picture);
                     }
+                    else {
+                        $result['messages'][] = 'Booking.com ID missed in string #' . ($rows_parsed_now + 1);
+                    }
                     $rows_parsed_now++;
                 }
             }
@@ -321,4 +330,14 @@ class HotelsController extends Controller
 
         return back();
     }
+    
+    public function cleanDb(Request $request)
+    {
+        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
+        
+        Spot::where('spot_type_category_id', $spotTypeCategory->id)->delete();
+        
+        return back();
+    }
+    
 }

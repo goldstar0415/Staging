@@ -18,7 +18,13 @@
             {!! Form::label('filter[created_at]', 'Created at:') !!}
             {!! Form::text('filter[created_at]', old('filter.created_at'), ['class' => 'form-control']) !!}
         </div>
+        
         {!! Form::button('Filter', ['class' => 'btn btn-default', 'type' => 'submit']) !!}
+        <div class="form-group">
+            <a href="javascript:void(0);" class="clean-btn btn btn-danger">Clean Hotels Database</a>
+        </div>
+        {!! Form::close() !!}
+        {!! Form::open(['method' => 'DELETE', 'route' => 'admin.hotels.clean-db', 'class' => 'form-for-trunkate']) !!}
         {!! Form::close() !!}
     </div>
     <table class="col-xs-12">
@@ -57,4 +63,20 @@
     </div>
 </div>
 @include('admin.pagination', ['paginatable' => $hotels])
+@endsection
+
+@section('scripts')
+<script>
+$(function(){
+    $('.clean-btn').on('click', function(e){
+        e.preventDefault();
+        
+        if(confirm('Do you really want to clean hotels database?!'))
+        {
+            $('.form-for-trunkate').submit();
+        }
+        
+    });
+});
+</script>
 @endsection
