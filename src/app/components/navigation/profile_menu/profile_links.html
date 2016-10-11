@@ -1,5 +1,4 @@
 <div class="col-xs-12 menu-profile" ng-class="$root.$state.current.name == 'index' ? 'menu-profile-hidden' : ''">
-    <!-- <div class="hide-menu-profile" ng-hide="$root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview'" ng-class="{'rotate-down': $root.mapState == 'small-size'}" ng-click="$root.toggleMapState()"></div> -->
 
     <div class="menu-user">
         <section class="avatar-wrap" ng-if="$root.profileUser.id">
@@ -66,72 +65,5 @@
     <div class="profile-toggle" ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})">
         <img src="assets/img/svg/arrow-circle.svg" alt="arrow">
     </div>
-    <!-- <ul ng-if="$root.currentUser && $root.currentUser.id != $root.profileUser.id">
-        <li >
-            <a ui-sref="spots({user_id: $root.profileUser.id})" ng-class="{active: $root.$state.current.name == 'spots' || $root.$state.current.name == 'spot'}" class="my-spots nav-spots">
-                <span>Spots</span>
-            </a>
-        </li>
-        <li ng-if="$root.checkPermission($root.profileUser.privacy_favorites)">
-            <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active" class="favorites nav-favorites">
-                <span>Favorites</span>
-            </a>
-        </li>
-        <li ng-if="$root.checkPermission($root.profileUser.privacy_photo_map)">
-            <a ui-sref="photos.list({user_id: $root.profileUser.id})" ng-class="$root.isActiveState('photos')" class="photomap nav-photomap">
-                <span>Photo Map</span>
-            </a>
-        </li>
-        <li ng-if="$root.isRole($root.profileUser, 'blogger')">
-            <a ui-sref="profile_blog({user_id: $root.profileUser.id})" class="nav-blog" ui-sref-active="active">
-                <span>Blog</span>
-            </a>
-        </li>
 
-    </ul> -->
-
-    <!-- <div ng-if="!$root.currentUser" class="unauthorized" user-hints>
-        <ul>
-            <li>
-                <a class="nav-spots">
-                    <span>My spots</span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-blog">
-                    <span>My Blog</span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-favorites">
-                    <span>Favorites</span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-searches">
-                    <span>Saved Searches</span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-friendmap">
-                    <span>Friends Map</span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-photomap">
-                    <span>Photo Map</span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-planner">
-                    <span>Planner</span>
-                </a>
-            </li>
-            <li>
-                <a class="nav-settings">
-                    <span>Stream</span>
-                </a>
-            </li>
-        </ul>
-    </div> -->
 </div>
