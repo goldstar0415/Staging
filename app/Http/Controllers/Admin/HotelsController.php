@@ -64,7 +64,7 @@ class HotelsController extends Controller
     public function index(PaginateRequest $request)
     {
         $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
-        return view('admin.hotels.index')->with('hotels', $this->paginatealbe($request, Spot::where('spot_type_category_id', $spotTypeCategory->id), 50));
+        return view('admin.hotels.index')->with('hotels', $this->paginatealbe($request, Spot::where('spot_type_category_id', $spotTypeCategory->id),15));
     }
     
     /**
@@ -78,7 +78,7 @@ class HotelsController extends Controller
         $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
         $query = $this->getFilterQuery($request, Spot::where('spot_type_category_id', $spotTypeCategory->id));
 
-        return view('admin.hotels.index')->with('hotels', $this->paginatealbe($request, $query, 50));
+        return view('admin.hotels.index')->with('hotels', $this->paginatealbe($request, $query,15));
     }
     
     /**
@@ -169,7 +169,8 @@ class HotelsController extends Controller
         $path               = $request->path;
         $stepCount          = $this->stepCount;
         $total_rows         = $request->total_rows;
-        $updateExisting     = $request->input('update', false);
+        $updateExisting     = (int)$request->update;
+        $result['update']   = $updateExisting;
         $rows_parsed_before = $request->rows_parsed;
         $file_offset        = $request->file_offset;
         $headers            = $request->input('headers', []);
@@ -267,6 +268,7 @@ class HotelsController extends Controller
                         {
                             if($updateExisting)
                             {
+                                
                                 $hotel = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
                                 if(isset($item['homepage_url']) && !empty($item['homepage_url']))
                                 {
@@ -316,7 +318,7 @@ class HotelsController extends Controller
                         
                     }
                     else {
-                        $result['messages'][] = 'Booking.com ID missed in string #' . ($rows_parsed_now + 1);
+                        $result['messages'][] = 'Booking.com ID missed in string #' . ($rows_parsed_before + $rows_parsed_now + 1);
                     }
                     $rows_parsed_now++;
                 }
@@ -362,6 +364,10 @@ class HotelsController extends Controller
         SpotAmenity::query()->delete();
         
         return back();
+    }
+    
+    public function bulkDestroy() {
+        
     }
     
     public function getEdit(Spot $hotel) {

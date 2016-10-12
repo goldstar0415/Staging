@@ -46,8 +46,16 @@
                 <td>{!! link_to(frontend_url( 'hotel', $hotel->id), $hotel->title) !!}</td>
                 <td>{{ $hotel->desc_en }}</td>
                 <td>{{ $hotel->created_at->format('Y-m-d') }}</td>
-                <td><a href="{{ url($hotel->hotel->hotelscom_url) }}">hotels.com</a></td>
-                <td><a href="{{ url($hotel->hotel->booking_url) }}">booking.com</a></td>
+                <td>
+                    @if($hotel->hotel)
+                    <a href="{{ url($hotel->hotel->hotelscom_url) }}">hotels.com</a>
+                    @endif
+                </td>
+                <td>
+                    @if($hotel->hotel)
+                    <a href="{{ url($hotel->hotel->booking_url) }}">booking.com</a>
+                    @endif
+                </td>
                 <td>
                     <a href="{!! route('admin.hotels.get-edit', [$hotel->id]) !!}" class="edit-spot"></a>
                     {!! link_delete(route('admin.hotels.destroy', [$hotel->id]), '', ['class' => 'delete']) !!}

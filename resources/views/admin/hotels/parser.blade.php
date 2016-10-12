@@ -225,7 +225,7 @@ $(function(){
                 rows_parsed: rowsParsed,
                 file_offset: fileOffset,
                 headers: headers,
-                update: $('input[name="update-existing"]').is(':checked'),
+                update: $('input[name="update-existing"]').is(':checked')?1:0,
                 _token: token
             },
             type: 'POST',
