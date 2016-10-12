@@ -224,17 +224,16 @@ class HotelsController extends Controller
                     
                     if(isset($item['booking_id']) && !empty($item['booking_id']) )
                     {
-                        $spotExists = Spot::where('remote_id', 'bk_' . $item['booking_id'])->exists();
+                        $spotExists = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
                         
                         if($spotExists && $updateExisting)
                         {
-                            $hotel = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
+                            $hotel = $spotExists;
                             if(isset($item['homepage_url']) && !empty($item['homepage_url']))
                             {
                                 $hotel->web_sites = [$item['homepage_url']];
                             }
                             unset($item['homepage_url']);
-                            if(isset($item['booking_id']))unset($item['booking_id']);
                             foreach($this->spotFields as $column => $value)
                             {
                                 if(isset($item[$value]))
@@ -259,14 +258,14 @@ class HotelsController extends Controller
                         }
                         else
                         {
-                            $hotel = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
+                            $hotel = $spotExists;
                         }
                         
-                        $hotelExists = SpotHotel::where('booking_id',  $item['booking_id'])->exists();
+                        $hotelExists = SpotHotel::where('booking_id',  $item['booking_id'])->first();
                         
                         if( ( $hotelExists && $updateExisting) || !$hotelExists )
                         {
-                            $hotelObj = ($hotelExists) ? SpotHotel::where('booking_id', $item['booking_id']): (new SpotHotel);
+                            $hotelObj = ($hotelExists) ? $hotelExists: (new SpotHotel);
                             foreach( $this->hotelFields as $field) {
                                 if(isset($item[$field]))
                                     $hotelObj->$field = $item[$field];
@@ -275,7 +274,7 @@ class HotelsController extends Controller
                             $hotelObj->save();
                         }
                         
-                        $locationExists = SpotPoint::where('spot_id', $hotel->id);
+                        $locationExists = SpotPoint::where('spot_id', $hotel->id)->exists();
                         
                         if( (( $locationExists && $updateExisting) || !$locationExists) && (isset($item['location']) && isset($item['address'])) )
                         {
