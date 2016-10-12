@@ -1,18 +1,6 @@
 <div class="col-xs-12 menu-profile menu-profile-opened">
-    <!-- <div class="hide-menu-profile" ng-class="{'rotate-down': $root.mapState == 'small-size'}" ng-click="$root.toggleMapState()"></div> -->
 
-    <div class="menu-user">
-        <section class="avatar-wrap" ng-if="$root.profileUser.id">
-            <a ng-if="$root.$state.current.name != 'profile.main'" ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})" tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}" class="avatar">
-                <img ng-src="{{$root.profileUser.avatar_url.medium}}" />
-            </a>
-            <a ng-if="$root.$state.current.name == 'profile.main'" tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}" class="avatar">
-                <img ng-src="{{$root.profileUser.avatar_url.medium}}" photo-viewer index="0" hide-comments="1" items="[$root.profileUser]" />
-            </a>
-        </section>
-    </div>
-
-    <ul ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
+    <ul class="col-sm-offset-2 col-sm-10 col-md-offset-3 col-md-8 col-lg-offset-2 col-lg-8" ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
         <li>
             <a class="nav-spots" ui-sref="spots({user_id: $root.currentUser.id})" ng-class="{active: $root.$state.current.name == 'spots' || $root.$state.current.name == 'spot'}">
                 <img src="assets/img/svg/new_icons/icon_main_menu/spot-white.svg" alt="icon" />
@@ -63,8 +51,8 @@
         </li>
     </ul>
 
-    <div class="profile-toggle" ui-sref="index">
-        <img src="assets/img/svg/arrow-circle.svg" alt="arrow" style="transform: rotate(90deg)">
+    <div class="profile-toggle" ng-click="$root.toggleMapState()">
+        <img src="assets/img/svg/arrow-circle.svg" alt="arrow" style="transform: rotate({{$root.mapState == 'small-size' ? '90deg' : '270deg'}})">
     </div>
 
 </div>
@@ -78,18 +66,18 @@
 
 
 
-<div class="col-xs-12 mobile-nopad main-container">
+<div class="col-sm-offset-0 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8 mobile-nopad main-container">
     <div class="wrap">
 
         <div class="col-xs-12 col-md-3 information-profile " ng-if="!$root.isMobile || Profile.isStream()">
-            <!-- <section class="col-xs-12 col-sm-2 col-md-12 avatar-wrap" ng-if="$root.profileUser.id">
+            <section class="col-xs-12 col-sm-2 col-md-12 avatar-wrap" ng-if="$root.profileUser.id">
                 <a ng-if="$root.$state.current.name != 'profile.main'" ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})" tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}" class="avatar">
                     <img ng-src="{{$root.profileUser.avatar_url.medium}}" />
                 </a>
                 <a ng-if="$root.$state.current.name == 'profile.main'" tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}" class="avatar">
                     <img ng-src="{{$root.profileUser.avatar_url.medium}}" photo-viewer index="0" hide-comments="1" items="[$root.profileUser]" />
                 </a>
-            </section> -->
+            </section>
             <section class="col-xs-12 col-sm-10 col-md-12 no-pad activity-mobile" ng-if="$root.profileUser.id">
                 <div class="status moderator" ng-if="$root.profileUser.status">{{$root.profileUser.status}}</div>
                 <h2 class="profile-name ">
