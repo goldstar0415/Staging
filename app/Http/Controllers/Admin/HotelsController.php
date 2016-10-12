@@ -224,11 +224,11 @@ class HotelsController extends Controller
                     
                     if(isset($item['booking_id']) && !empty($item['booking_id']) )
                     {
-                        $spotExists = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
+                        $spotExists = Spot::where('remote_id', 'bk_' . $item['booking_id'])->exists();
                         
                         if($spotExists && $updateExisting)
                         {
-                            $hotel = $spotExists;
+                            $hotel = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
                             if(isset($item['homepage_url']) && !empty($item['homepage_url']))
                             {
                                 $hotel->web_sites = [$item['homepage_url']];
@@ -256,15 +256,10 @@ class HotelsController extends Controller
                                 'remote_id' => isset($item['booking_id']) ? 'bk_' . $item['booking_id']: ''
                             ]);
                         }
-                        else
-                        {
-                            $hotel = $spotExists;
-                        }
                         
-                        $hotelExists = SpotHotel::where('booking_id',  $item['booking_id'])->first();
-                        
-                        if( ( $hotelExists && $updateExisting) || !$hotelExists )
-                        {
+                        if($updateExisting || !$spotExists){
+                            $hotelExists = SpotHotel::where('booking_id',  $item['booking_id'])->first();
+
                             $hotelObj = ($hotelExists) ? $hotelExists: (new SpotHotel);
                             foreach( $this->hotelFields as $field) {
                                 if(isset($item[$field]))
@@ -272,40 +267,37 @@ class HotelsController extends Controller
                             }
                             $hotelObj->spot_id = $hotel->id;
                             $hotelObj->save();
-                        }
-                        
-                        $locationExists = SpotPoint::where('spot_id', $hotel->id)->exists();
-                        
-                        if( (( $locationExists && $updateExisting) || !$locationExists) && (isset($item['location']) && isset($item['address'])) )
-                        {
-                            if($locationExists)
-                            {
-                                $hotel->points()->delete();
-                            }
-                            $point = new SpotPoint();
-                            $point->location = $item['location'];
-                            $point->address = $item['address'];
-                            $hotel->points()->save($point);
-                        }
-                        
-                        $pictureExists = RemotePhoto::where('associated_id', $hotel->id)->where('associated_type', Spot::class)->exists();
-                        
-                        if( (( $pictureExists && $updateExisting) || !$pictureExists) && !empty($picture) )
-                        {
-                            if($pictureExists)
-                            {
-                                $hotel->remotePhotos()->delete();
-                            }
-                            $pic = new RemotePhoto([
-                                'url' => $picture,
-                                'image_type' => 0,
-                                'size' => 'original',
-                            ]);
-                            $hotel->remotePhotos()->save($pic);
-                            unset($pic);
-                        }
-                        unset($picture);
 
+                            if( isset($item['location']) && isset($item['address']) )
+                            {
+                                $locationExists = SpotPoint::where('spot_id', $hotel->id)->exists();
+                                if($locationExists)
+                                {
+                                    $hotel->points()->delete();
+                                }
+                                $point = new SpotPoint();
+                                $point->location = $item['location'];
+                                $point->address = $item['address'];
+                                $hotel->points()->save($point);
+                            }
+
+                            if( !empty($picture) )
+                            {
+                                $pictureExists = RemotePhoto::where('associated_id', $hotel->id)->where('associated_type', Spot::class)->exists();
+                                if($pictureExists)
+                                {
+                                    $hotel->remotePhotos()->delete();
+                                }
+                                $pic = new RemotePhoto([
+                                    'url' => $picture,
+                                    'image_type' => 0,
+                                    'size' => 'original',
+                                ]);
+                                $hotel->remotePhotos()->save($pic);
+                                unset($pic);
+                            }
+                            unset($picture);
+                        }
                         $rows[] = $item;
                     }
                     else {
