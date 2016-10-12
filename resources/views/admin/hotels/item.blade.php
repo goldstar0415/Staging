@@ -26,7 +26,8 @@
                 @if(!is_array($hotel->$field))
                 <input class="form-control" required type="text" name="{{ $field }}" value="{{ $hotel->$field }}">
                 @else
-                <input class="form-control" multiple type="text" name="{{ $field }}[]" value="{{ ($hotel->$field)[0] }}">
+                <?php $spotField = $hotel->$field; ?>
+                <input class="form-control" multiple type="text" name="{{ $field }}[]" value="{{ $spotField[0] }}">
                 @endif
             </div>
         </div>
@@ -44,7 +45,8 @@
                 @if(!is_array($hotel->hotel->$field))
                 <input class="form-control" type="text" name="{{ $field }}" value="{{ $hotel->hotel->$field }}">
                 @else
-                <input class="form-control" multiple type="text" name="{{ $field }}[]" value="{{ ($hotel->hotel->$field)[0] }}">
+                <?php $hotelField = $hotel->hotel->$field; ?>
+                <input class="form-control" multiple type="text" name="{{ $field }}[]" value="{{ $hotelField[0] }}">
                 @endif
             </div>
         </div>
