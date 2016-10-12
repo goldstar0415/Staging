@@ -1889,7 +1889,7 @@
 
 .new-sidebar-menu {
     position: fixed;
-    z-index: 999;
+    z-index: 1;
     top: 50px;
     bottom: 0px;
     right: 0px;
@@ -1973,6 +1973,7 @@
             justify-content: flex-start;
         }
         li {
+            max-height: 80px;
             min-height: 50px;
             height: 100%;
             padding: 5px 0;

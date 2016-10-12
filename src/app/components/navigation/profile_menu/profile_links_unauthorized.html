@@ -1,18 +1,9 @@
 <div class="col-xs-12 menu-profile unauthorized-menu" ng-show="$root.mapState == 'full-size' && !$root.currentUser" ng-click="$root.showMessage('info', 'Please Log In to Use These Features')">
 
-    <div class="menu-unauthorized">
-        <div class="menu-signin">
-            <sign-in title="Sign in"></sign-in>
-        </div>
-        <div class="menu-separator">
-            <p>|</p>
-        </div>
-        <div class="menu-signup">
-            <sign-up></sign-up>
-        </div>
+    <div class="profile-toggle">
     </div>
 
-    <ul>
+    <ul class="menu-ul">
         <li>
             <a class="nav-spots">
                 <img src="assets/img/svg/new_icons/icon_main_menu/spot-grey.svg" alt="icon" />
@@ -62,9 +53,5 @@
             </a>
         </li>
     </ul>
-
-    <div class="profile-toggle">
-        <img src="assets/img/svg/arrow-circle.svg" alt="arrow">
-    </div>
 
 </div>
