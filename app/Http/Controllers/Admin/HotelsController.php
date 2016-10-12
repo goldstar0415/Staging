@@ -224,7 +224,7 @@ class HotelsController extends Controller
                     if(isset($item['booking_id']) && !empty($item['booking_id']) )
                     {
                     
-                        if( !SpotHotel::where('booking_id', $item['booking_id'])->exists() )
+                        if( !Spot::where('remote_id', 'bk_' . $item['booking_id'])->exists() )
                         {
                             $hotel = Spot::create([
                                 'spot_type_category_id' => $spotTypeCategory->id,
