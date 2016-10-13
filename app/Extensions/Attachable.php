@@ -37,7 +37,7 @@ trait Attachable
         static $name = '';
 
         if (empty($name)) {
-            $name = snake_case(class_basename(self::class));
+            $name = snake_case(class_basename(get_called_class()));
         }
 
         return $name;

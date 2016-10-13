@@ -42,9 +42,9 @@
         <tbody>
         @foreach($hotels as $hotel)
             <tr>
-                <td>{!! Form::checkbox('hotels[]', $hotel->id, null, ['class' => 'row-select']) !!}</td>
+                <td class="text-center">{!! Form::checkbox('hotels[]', $hotel->id, null, ['class' => 'row-select']) !!}</td>
                 <td>{!! link_to(frontend_url( 'hotel', $hotel->id), $hotel->title) !!}</td>
-                <td>{{ $hotel->desc_en }}</td>
+                <td>{{ $hotel->description }}</td>
                 <td>{{ $hotel->created_at->format('Y-m-d') }}</td>
                 <td>
                     @if($hotel->hotel)

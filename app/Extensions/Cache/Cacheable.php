@@ -33,10 +33,10 @@ trait Cacheable
 
     public static function bootCacheable()
     {
-        self::updating([self::class, 'clearCache']);
-        self::creating([self::class, 'clearCache']);
-        self::deleting([self::class, 'clearCache']);
-        self::saving([self::class, 'clearCache']);
+        self::updating([get_called_class(), 'clearCache']);
+        self::creating([get_called_class(), 'clearCache']);
+        self::deleting([get_called_class(), 'clearCache']);
+        self::saving([get_called_class(), 'clearCache']);
     }
 
     protected function mutateAttribute($key, $value)

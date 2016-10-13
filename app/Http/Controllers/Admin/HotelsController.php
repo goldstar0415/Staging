@@ -330,7 +330,10 @@ class HotelsController extends Controller
      */
     public function destroy($hotel)
     {
-        $hotel->hotel->delete();
+        if( SpotHotel::where('spot_id', $hotel->id)->exists() )
+        {
+            $hotel->hotel->delete();
+        }
         $hotel->amenities()->delete();
         $hotel->remotePhotos()->delete();
         $hotel->delete();
@@ -372,16 +375,16 @@ class HotelsController extends Controller
             'web_sites' => 'sometimes|array',
             
             'class' => 'max:50',
-            'hotelscom_url' => 'sometimes|url|max:255',
-            'booking_url' => 'sometimes|url|max:255',
+            'hotelscom_url' => 'max:255',
+            'booking_url' => 'max:255',
             'booking_num_reviews' => 'max:255',
             'booking_rating' => 'max:255',
             'booking_rating_10' => 'max:255',
             'hotelscom_num_reviews' => 'max:255',
             'hotelscom_rating' => 'max:255',
-            'facebook_url' => 'sometimes|url|max:255',
-            'twitter_url' => 'sometimes|url|max:255',
-            'trip_advisor_url' => 'sometimes|url|max:255',
+            'facebook_url' => 'max:255',
+            'twitter_url' => 'max:255',
+            'trip_advisor_url' => 'max:255',
             'google_pid' => 'max:255',
             'google_rating' => 'max:20',
             'maxrate' => 'max:20',
