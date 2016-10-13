@@ -80,7 +80,7 @@
     /**
      * Initialization
      */
-    function run() {        
+    function run() {
 		loadCategories();
 		vm.searchParams.search_text	= ($stateParams.searchText || '');
 		vm.searchParams.searchType	= _.isObject($stateParams.spotSearch) ? $stateParams.spotSearch.activeSpotType || 'event' : 'event';
@@ -206,13 +206,15 @@
 
       $timeout(function () {
         if ($rootScope.mapSortSpots.markers.length > 0) {
+          $rootScope.changeMapState('small', null, false);
           MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
           if (!$rootScope.isDrawArea) {
             MapService.FitBoundsByLayer($rootScope.sortLayer);
           }
         } else {
+          $rootScope.changeMapState('big');
           if ( !ignoreEmptyList ) {
-            toastr.info('0 spots found');
+            // toastr.info('0 spots found');
           }
           MapService.clearLayers();
         }

@@ -80,7 +80,8 @@
 
   <!-- <hints-popup></hints-popup> -->
 
-  <map-sort ng-if="['full-size', 'big'].indexOf(mapState) >= 0"></map-sort>
+  <!-- <map-sort ng-if="['full-size', 'big'].indexOf(mapState) >= 0"></map-sort> -->
+  <map-sort></map-sort>
 
   <!-- map container-->
   <div id="map" class="mapResize map {{mapState}}" ng-class="$root.$state.current.name != 'index' ? 'not-index' : ''"></div>
@@ -88,8 +89,8 @@
   <!-- content container-->
   <div ng-show="mapState != 'full-size'" ui-view ng-class="{'landing-wrapper': $state.includes('intro')}"></div>
 
-  <div ng-include="'/app/components/navigation/profile_menu/profile_links.html'" class="map-block" ng-if="mapState == 'full-size' && currentUser"></div>
-  <div ng-include="'/app/components/navigation/profile_menu/profile_links_unauthorized.html'" class="map-block" ng-show="mapState == 'full-size' && !currentUser"></div>
+  <div ng-include="'/app/components/navigation/profile_menu/profile_links.html'" class="map-block" ng-if="currentUser"></div>
+  <div ng-include="'/app/components/navigation/profile_menu/profile_links_unauthorized.html'" class="map-block" ng-show="!currentUser"></div>
 
 </div>
 

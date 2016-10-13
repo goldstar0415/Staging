@@ -41,45 +41,53 @@
 }
 
 .new-result > div {
-    width: 100%;
+    @media (max-width: 767px) {
+        width: 100vw;
+    }
     display: flex;
     flex-wrap: wrap;
     // margin: -5px;
     .new-spot {
         padding: 5px;
         width: 50%;
-        @media (max-width: 500px) {
-            // width: 100%;
+        @media (max-width: 767px) {
+            width: 100vw;
+            padding: 0;
+            height: 40vh;
+            position: relative;
         }
         .spot-img {
             position: relative;
             height: 150px;
-            .spot-img-top, .spot-img-bottom {
-                position: absolute;
-                left: 0;
-                right: 0;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0 10px;
-                height: 25px;
-                z-index: 0;
-                background-color: rgba(black, .5);
-                color: white;
-                p {
-                    margin: 0;
-                }
-                a {
-                    margin-top: -3px;
-                }
-
+            @media (max-width: 767px) {
+                height: 100%;
             }
-            .spot-img-top {
-                top: 0;
-            }
-            .spot-img-bottom {
-                bottom: 0;
-            }
+            // .spot-img-top, .spot-img-bottom {
+            //     position: absolute;
+            //     left: 0;
+            //     right: 0;
+            //     display: flex;
+            //     justify-content: space-between;
+            //     align-items: center;
+            //     padding: 0 10px;
+            //     height: 25px;
+            //     z-index: 0;
+            //     background-color: rgba(black, .5);
+            //     color: white;
+            //     p {
+            //         margin: 0;
+            //     }
+            //     a {
+            //         margin-top: -3px;
+            //     }
+            //
+            // }
+            // .spot-img-top {
+            //     top: 0;
+            // }
+            // .spot-img-bottom {
+            //     bottom: 0;
+            // }
             .img {
                 display: flex;
                 justify-content: center;
@@ -90,19 +98,47 @@
                 background-color: #DDDDDD;
                 img {
                     width: 100%;
+                    height: 100%;
+                    object-fit: cover;
                 }
             }
-        }
-        .spot-name {
-            margin: 5px 0 0;
-            font-weight: bold;
-        }
-        .spot-address {
-            margin: 0;
-            & + p {
-                font-size: 12px;
-                .glyphicon {
-                    color: #0DC8F4 !important;
+            .spot-img-bottom {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 30%;
+                background-color: rgba($dark_blue, .8);
+                color: white;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                flex-direction: column;
+                padding: 10px 20px;
+                & > div {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    p {
+                        margin: 0;
+                        font-weight: bold;
+                        width: 70%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    .spot-address {
+                        width: 70%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        font-size: 12px;
+                        font-weight: normal;
+                        .glyphicon {
+                            color: $light_blue_btn;
+                        }
+                    }
                 }
             }
         }

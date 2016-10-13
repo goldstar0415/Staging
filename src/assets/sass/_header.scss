@@ -7,8 +7,12 @@
 
 #body .mobile-hidden {
     @media (max-width: 767px) {
-        display: none;
+        display: none !important;
     }
+}
+
+#body .hidden {
+    display: none !important;
 }
 
 header {
@@ -174,6 +178,86 @@ header {
             .search-button {
                 img {
                     border: none;
+                }
+            }
+        }
+    }
+
+    .spots-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        .nav-dropdown {
+            max-width: 200px;
+            position: relative;
+            width: 50vw;
+            height: 200px;
+            display: flex;
+            justify-content: flex-start;
+            flex-direction: column;
+            // overflow: hidden;
+            .nav-dropdown-item {
+                width: 100%;
+                height: 50px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: white;
+                padding: 0 10px;
+                background-color: $dark_blue;
+                &:hover {
+                    background-color: $light_blue_btn;
+                }
+                img {
+                    height: 25px;
+                    width: 25px;
+                }
+                p {
+                    font-size: 16px;
+                    margin: 0 10px;
+                    text-align: left;
+                }
+                .glyphicon {
+                    opacity: 0;
+                }
+                &.selected {
+                    order: -1;
+                    .glyphicon {
+                        opacity: 1;
+                    }
+                }
+                @media (max-width: 500px) {
+                    width: calc(100vw - 150px);
+                }
+            }
+        }
+        .buttons-nav {
+            width: 50vw;
+            height: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            .save, .filter, .cancel {
+                // @include margin-side(20px);
+                width: 70px;
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                cursor: pointer;
+                @media (max-width: 500px) {
+                    width: 50px;
+                }
+                img {
+                    height: 20px;
+                }
+                span {
+                    color: white;
+                    font-size: 12px;
+                }
+                &:hover {
+                    background-color: $light_blue_btn;
                 }
             }
         }

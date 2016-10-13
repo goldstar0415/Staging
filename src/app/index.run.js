@@ -136,15 +136,17 @@
     $rootScope.changeMapState = function (mapState, urlState, isClearLayers) {
       MapService.ChangeState(mapState, isClearLayers);
 
-      if (urlState.name == 'index' && mapState == 'big') {
-        angular.element('.map-tools').show();
+    if (urlState) {
+        if (urlState.name == 'index' && mapState == 'big') {
+          angular.element('.map-tools').show();
 
-        if (!$state.params.spotSearch) {
-          MapService.FocusMapToCurrentLocation(12);
+          if (!$state.params.spotSearch) {
+            MapService.FocusMapToCurrentLocation(12);
+          }
+        } else if (!$state.params.spotSearch) {
+          $rootScope.showHintPopup = false;
         }
-      } else if (!$state.params.spotSearch) {
-        $rootScope.showHintPopup = false;
-      }
+    }
     };
 
     $rootScope.toggleMapState = function () {

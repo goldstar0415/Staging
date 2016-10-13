@@ -1,4 +1,6 @@
-//---<menu profile styles--->
+#body .main-nav.hide-nav {
+    display: none !important;
+}
 
 .menu-profile {
     max-height: 50px;
@@ -8,6 +10,12 @@
     z-index: 2;
     display: flex !important;
     justify-content: flex-end;
+
+    &.mobile-hidden {
+        @media (max-width: 767px) {
+            display: none !important;
+        }
+    }
 
     &.unauthorized-menu ul li a span {
         color: #ccc;
