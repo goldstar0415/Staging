@@ -145,7 +145,7 @@
       background-color: $navy_blue;
       width: 120px;
       height: 28px;
-      margin: 0 auto;
+      margin: 15px auto 10px;
       display: table;
       &:hover {
         background-color: $light_blue;
@@ -154,11 +154,11 @@
   }
 }
 
-.left-menu-snap {
+.right-menu-snap {
   left: 0 !important;
   ul {
     li {
-      height: 50px;
+    //   height: 50px;
       .favorites-link {
         background: url(../img/svg/menu/favorite_icon.svg) no-repeat;
         background-size: 20px;
@@ -206,7 +206,7 @@
     .sign-out {
       position: inherit;
       bottom: 0;
-      margin: 15px auto 0;
+      margin: auto 0;
     }
   }
 }

@@ -77,6 +77,20 @@
           return extp;
       }
 
+      function toggleFullScreen() {
+          var doc = window.document;
+          var docEl = doc.documentElement;
+
+          var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+          var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+          if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+              requestFullScreen.call(docEl);
+          } else {
+              cancelFullScreen.call(doc);
+          }
+      }
+
       L.HtmlIcon = L.Icon.extend({
       	options: {
       		/*
@@ -451,7 +465,7 @@
 
           this.link = L.DomUtil.create('div', 'show-info', container);
           var img = L.DomUtil.create('img', '', this.link);
-          img.src = "../../assets/img/svg/rounded-info-button.svg";
+          img.src = "../../assets/img/svg/fullscreen.svg";
           this.link.href = '#';
           this._map = map;
 
@@ -463,41 +477,43 @@
         //       screenfull.request();
         //   }
 
-          ClearSelections();
+        //   ClearSelections();
+          //
+        //   function getElemCoords(element) {
+        //       var top = 0,
+        //           left = 0;
+        //       do {
+        //           top += element.offsetTop || 0;
+        //           left += element.offsetLeft || 0;
+        //           element = element.offsetParent;
+        //       } while (element);
+          //
+        //       return {
+        //           top: top,
+        //           left: left
+        //       };
+        //   };
+          //
+        //   function hintPosition(el) {
+        //       var coords = getElemCoords(document.querySelector(el.dataset.elem));
+        //       el.style.top = coords.top + 15 + 'px';
+        //       el.style.left = coords.left + 60 + 'px';
+        //   }
+          //
+        //   var layout = document.querySelector('.info-layout');
+        //   layout.style.display = 'block';
+        //   layout.onclick = function() {
+        //       layout.style.display = 'none';
+        //   };
+        //   var hints = document.querySelectorAll('.info-layout > p');
+        //   for (var i = 0; i < hints.length; i++) {
+        //       hintPosition(hints[i]);
+        //   }
+        //   window.onresize = function(event) {
+        //     layout.style.display = 'none';
+        //   };
 
-          function getElemCoords(element) {
-              var top = 0,
-                  left = 0;
-              do {
-                  top += element.offsetTop || 0;
-                  left += element.offsetLeft || 0;
-                  element = element.offsetParent;
-              } while (element);
-
-              return {
-                  top: top,
-                  left: left
-              };
-          };
-
-          function hintPosition(el) {
-              var coords = getElemCoords(document.querySelector(el.dataset.elem));
-              el.style.top = coords.top + 15 + 'px';
-              el.style.left = coords.left + 60 + 'px';
-          }
-
-          var layout = document.querySelector('.info-layout');
-          layout.style.display = 'block';
-          layout.onclick = function() {
-              layout.style.display = 'none';
-          };
-          var hints = document.querySelectorAll('.info-layout > p');
-          for (var i = 0; i < hints.length; i++) {
-              hintPosition(hints[i]);
-          }
-          window.onresize = function(event) {
-            layout.style.display = 'none';
-          };
+        toggleFullScreen();
       }
 
     });
@@ -691,6 +707,7 @@
 
             $rootScope.mapState = "full-size";
             map.scrollWheelZoom.enable();
+
             break;
           case "small":
             if (clear) {
@@ -1905,8 +1922,16 @@
 
         if ((wp.length > 0 || drawLayerGeoJSON.features.length > 0)) {
           angular.element('.map-tools-top').removeClass('hide-tools');
+          angular.element('.main-nav').addClass('hidden');
+          angular.element('.spots-nav').removeClass('hidden');
+          angular.element('.leaflet-bottom').addClass('hide-tools');
+          angular.element('.sort-menu').removeClass('hidden');
         } else {
           angular.element('.map-tools-top').addClass('hide-tools');
+          angular.element('.main-nav').removeClass('hidden');
+          angular.element('.spots-nav').addClass('hidden');
+          angular.element('.leaflet-bottom').removeClass('hide-tools');
+          angular.element('.sort-menu').addClass('hidden');
         }
         return bboxes;
       }
@@ -2312,7 +2337,8 @@
         WeatherSelection: WeatherSelection,
 
         cancelHttpRequest: cancelHttpRequest,
-		hasLayer: hasLayer
+		hasLayer: hasLayer,
+        OpenSaveSelectionsPopup: OpenSaveSelectionsPopup
       };
     });
 
