@@ -147,7 +147,6 @@
 
     //callback from google contacts window
     window.modalContactsCallback = function (contacts) {
-      console.log(contacts);
 
       $modal.open({
         templateUrl: '/app/components/google_contacts/google_contacts.html',
@@ -165,7 +164,6 @@
     };
 
     vm.googleImport = function () {
-      console.log('googleImport');
       var width = angular.element(window).width() / 2,
         height = angular.element(window).height() / 1.5;
 		if($scope.$root.$$phase) {

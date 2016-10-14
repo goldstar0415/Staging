@@ -59,6 +59,11 @@
         url: API_URL + '/followings/:user_id',
         isArray: true
       },
+      importInfo: {
+        url: API_URL + '/users/usersImportInfo',
+        isArray: true,
+        method: 'POST'
+      },
       update: {
         method: 'PUT'
       },
@@ -72,6 +77,10 @@
       },
       setLocation: {
         url: API_URL + '/settings/location',
+        method: 'POST'
+      },
+      inviteEmail: {
+        url: API_URL + '/users/inviteEmail',
         method: 'POST'
       }
     });
