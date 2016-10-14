@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\ContactUs;
+use App\Events\UserInviteEvent;
 use App\Http\Requests\ContactUsRequest;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\UserListRequest;
@@ -20,7 +21,8 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-
+use Log;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
@@ -65,9 +67,11 @@ class UserController extends Controller
             'reviews',
             'contactUs',
             'changeEmail',
-            'unsubscribe'
+            'unsubscribe',
+            'usersImportInfo',
+            'inviteEmail'
         ]]);
-        $this->middleware('auth', ['only' => ['getMe', 'changeEmail', 'unsubscribe']]);
+        $this->middleware('auth', ['only' => ['getMe', 'changeEmail', 'unsubscribe', 'usersImportInfo', 'inviteEmail']]);
         $this->auth = $auth;
     }
 
@@ -429,5 +433,47 @@ class UserController extends Controller
             abort(401);
         }
         
+    }
+
+    /**
+     * Get information about people by email if someone is an existing user. If so is he/she a friend or follower of
+     * current logged user
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function usersImportInfo(Request $request) {
+        $usersOut = [];
+        $emailMap = [];
+        foreach ($request->get('emails') as $email) {
+            $usersOut[] = ['email' => $email, 'exists' => false, 'friends' => false];
+            $emailMap[$email] = count($usersOut) - 1;
+        }
+        $users = User::whereIn('email', $request->get('emails'))->get();
+        foreach ($users as $user) {
+            //Log::debug('found user by email '.$user->email.' with user id '.$user->id);
+            $usersOut[$emailMap[$user->email]]['exists']    = true;
+            $usersOut[$emailMap[$user->email]]['id']        = $user->id;
+            // if users A ($user) and B ($request->user()->id logged user)
+            $res = $request->user()->friendsReal()->where('friend_id', $user->id)->get();
+            //Log::debug(print_r($res, 1));
+            foreach ($res as $_u) {
+                $usersOut[$emailMap[$user->email]]['friends'] = true;
+                //Log::debug("    friend {$_u->id} of {$user->id}");
+            }
+        }
+
+        // search existing users
+        return response()->json($usersOut);
+    }
+
+    /**
+     * Invite humans to zoomtivity by sending emails
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function inviteEmail(Request $request) {
+        Log::debug("UserController inviteEmail");
+        event(new UserInviteEvent($request->user(), $request->email));
+        return response()->json(['email' => $request->email]);
     }
 }
