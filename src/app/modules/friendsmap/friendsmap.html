@@ -9,11 +9,11 @@
 </div>
 <div ng-repeat="item in Friendsmap.friends" class="col-xs-12 friends-block">
   <div class="friends-wrapper">
-    <div class="avatar-wrap" tooltip="Edit avatar">
-      <a class="review-img avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
+    <div class="avatar-wrap">
+      <div class="review-img avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
          ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="5MB">
         <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar">
-      </a>
+      </div>
     </div>
     <div class="text-block">
       <h3 class="feeds-title">
