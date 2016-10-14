@@ -41,8 +41,14 @@
 }
 
 .new-result > div {
-    @media (max-width: 767px) {
+    @media (max-width: 767px) and (orientation: portrait) {
         width: 100vw;
+    }
+    @media (max-width: 767px) and (orientation: landscape) {
+        width: 50vw;
+    }
+    @media (min-width: 768px) {
+        padding: 5px;
     }
     display: flex;
     flex-wrap: wrap;
@@ -50,10 +56,16 @@
     .new-spot {
         padding: 5px;
         width: 50%;
-        @media (max-width: 767px) {
+        @media (max-width: 767px) and (orientation: portrait) {
             width: 100vw;
             padding: 0;
             height: 40vh;
+            position: relative;
+        }
+        @media (max-width: 767px) and (orientation: landscape) {
+            width: 50vw;
+            padding: 0;
+            height: calc(100vh - 50px);
             position: relative;
         }
         .spot-img {
@@ -62,32 +74,49 @@
             @media (max-width: 767px) {
                 height: 100%;
             }
-            // .spot-img-top, .spot-img-bottom {
-            //     position: absolute;
-            //     left: 0;
-            //     right: 0;
-            //     display: flex;
-            //     justify-content: space-between;
-            //     align-items: center;
-            //     padding: 0 10px;
-            //     height: 25px;
-            //     z-index: 0;
-            //     background-color: rgba(black, .5);
-            //     color: white;
-            //     p {
-            //         margin: 0;
-            //     }
-            //     a {
-            //         margin-top: -3px;
-            //     }
-            //
-            // }
-            // .spot-img-top {
-            //     top: 0;
-            // }
-            // .spot-img-bottom {
-            //     bottom: 0;
-            // }
+            .spot-img-top, .spot-img-bottom {
+                position: absolute;
+                left: 0;
+                right: 0;
+                display: flex;
+                background-color: rgba($dark_blue, .8);
+                color: white;
+            }
+            .spot-img-top {
+                top: 0;
+                height: 30px;
+                justify-content: space-between;
+                flex-direction: row;
+                align-items: center;
+                padding: 0 10px;
+            }
+            .spot-img-bottom {
+                bottom: 0;
+                height: 60px;
+                justify-content: space-around;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 5px 10px;
+                p {
+                    margin: 0;
+                    font-weight: bold;
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                .spot-address {
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    font-size: 12px;
+                    font-weight: normal;
+                    .glyphicon {
+                        color: $light_blue_btn;
+                    }
+                }
+            }
             .img {
                 display: flex;
                 justify-content: center;
@@ -100,45 +129,6 @@
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
-                }
-            }
-            .spot-img-bottom {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                height: 30%;
-                background-color: rgba($dark_blue, .8);
-                color: white;
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                flex-direction: column;
-                padding: 10px 20px;
-                & > div {
-                    width: 100%;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    p {
-                        margin: 0;
-                        font-weight: bold;
-                        width: 70%;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                    }
-                    .spot-address {
-                        width: 70%;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        font-size: 12px;
-                        font-weight: normal;
-                        .glyphicon {
-                            color: $light_blue_btn;
-                        }
-                    }
                 }
             }
         }

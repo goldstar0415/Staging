@@ -24,7 +24,7 @@
     }
 
     /** @ngInject */
-    function HeaderController($state, BACKEND_URL, $rootScope, MapService, SignUpService) {
+    function HeaderController($state, $scope, BACKEND_URL, $rootScope, MapService, SignUpService) {
         var vm = this;
         vm.$state = $state;
         vm.BACKEND_URL = BACKEND_URL;
@@ -38,6 +38,12 @@
         vm.isSearchOpened = false;
         vm.isDropdownOpened = false;
         vm.searchValue = '';
+
+        $scope.$watch(function() {
+            return angular.element('.spots-nav').is(':visible')
+        }, function() {
+            vm.category = $rootScope.sortLayer;
+        });
 
         if (vm.options.snap.disable == "left") {
             vm.toggle = "right";
@@ -69,7 +75,7 @@
 
         function filterClick() {
             vm.isDropdownOpened = false;
-            console.log('Show filters');
+            console.log($rootScope.sortLayer);
         }
 
         function toggleDropdown() {

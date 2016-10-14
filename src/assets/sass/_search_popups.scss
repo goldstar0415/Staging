@@ -395,8 +395,8 @@
         display: none !important;
     }
     position: absolute;
-    top: 120px;
-    right: 0;
+    top: 50px;
+    right: 70px;
     bottom: 50px;
     z-index: 50;
     background: #fff;
@@ -404,13 +404,23 @@
     box-shadow: rgba(0, 0, 0, 0.2) -3px 0 13px 0;
     overflow: auto;
     @media(max-width: 767px) {
-        position: absolute;
-        top: 60vh;
+
+    }
+    @media(max-width: 767px) and (orientation: portrait) {
+        top: calc(60vh - 50px);
         left: 0;
         right: 0;
         bottom: 0;
         height: 40vh;
         width: 100%;
+    }
+    @media (max-width: 767px) and (orientation: landscape) {
+        top: 0;
+        left: 50vw;
+        right: 0;
+        bottom: 0;
+        height: calc(100vh - 50px);
+        width: 50vw;
     }
 
     .close-popup {
@@ -2136,7 +2146,6 @@
     right: 0;
     width: 70px;
     background-color: white;
-    opacity: 0.8;
     position: absolute;
     @media (min-width: 768px) {
         ul li img {
@@ -2176,41 +2185,42 @@
         width: 50px;
     }
 
-    &.new-sidebar-menu-opened {
-        right: 470px;
-        left: auto;
-        @media(max-width: 767px) {
-            bottom: auto;
-            // top: 80vh;
-            top: calc(100vh - 120px);
-            right: 0;
-            left: 0;
-            z-index: 99;
-
-            ul {
-                position: absolute;
-                height: 55px;
-                flex-direction: row;
-                width: 100vw;
-                //width: 100vw;
-                left: 0;
-                right: 0;
-            }
-        }
-        @media (min-width: 768px) {
-            bottom: auto;
-            top: 50px;
-            width: 470px;
-            height: 70px;
-            right: 0;
-            z-index: 10;
-
-            ul {
-                flex-direction: row;
-                height: 70px;
-            }
-        }
-    }
+    // &.new-sidebar-menu-opened {
+    //     right: 470px;
+    //     left: auto;
+    //     @media(max-width: 767px) {
+    //         display: none !important;
+    //         // bottom: auto;
+    //         // // top: 80vh;
+    //         // top: calc(100vh - 120px);
+    //         // right: 0;
+    //         // left: 0;
+    //         // // z-index: 99;
+    //         //
+    //         // ul {
+    //         //     position: absolute;
+    //         //     height: 55px;
+    //         //     flex-direction: row;
+    //         //     width: 100vw;
+    //         //     //width: 100vw;
+    //         //     left: 0;
+    //         //     right: 0;
+    //         // }
+    //     }
+    //     @media (min-width: 768px) {
+    //         bottom: auto;
+    //         top: 50px;
+    //         width: 470px;
+    //         height: 70px;
+    //         right: 0;
+    //         z-index: 10;
+    //
+    //         ul {
+    //             flex-direction: row;
+    //             height: 70px;
+    //         }
+    //     }
+    // }
 
     ul {
         overflow: auto;
