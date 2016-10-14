@@ -1588,3 +1588,34 @@ body .atlwdg-trigger.atlwdg-TOP {
 		}
 	}
 }
+
+.dialog-invite-friends-google {
+  .modal-body {
+    padding: 0 15px 0 15px;
+  }
+  .modal-footer {
+    margin-top: 15px;
+  }
+}
+
+.dialog-contacts-import {
+  .modal-body {
+    padding: 15px 15px 15px 15px;
+  }
+
+  .choose-friend {
+    width: 75%;
+  }
+}
+
+.dialog-invite-find-friends-fb {
+  .icon {
+    width: 70px; height: 70px; border-radius: 50px; display: inline-block;
+  }
+  .fb {
+    background: url(../img/svg/social/facebook_icon.svg) no-repeat;
+  }
+  .zoom {
+    background: #1a1c42 url("../img/banner-logo.png") no-repeat scroll center 20% / 80% 80%;
+  }
+}
