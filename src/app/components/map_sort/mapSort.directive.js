@@ -214,7 +214,7 @@
         } else {
           $rootScope.changeMapState('big');
           if ( !ignoreEmptyList ) {
-            // toastr.info('0 spots found');
+            toastr.info('0 spots found');
           }
           MapService.clearLayers();
         }

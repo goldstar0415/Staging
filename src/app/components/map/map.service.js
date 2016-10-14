@@ -353,7 +353,7 @@
           }
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools map-tools-top hide-tools');
+          var container = L.DomUtil.create('div', 'map-tools-top hidden');
 
           this.link = L.DomUtil.create('div', 'save-selection', container);
           var img = L.DomUtil.create('img', '', this.link);
@@ -389,7 +389,7 @@
           }
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools map-tools-top hide-tools');
+          var container = L.DomUtil.create('div', 'map-tools-top hidden');
 
           this.link = L.DomUtil.create('div', 'clear-selection', container);
           var img = L.DomUtil.create('img', '', this.link);
@@ -432,7 +432,7 @@
 		onAdd: function (map) {
 			var container = L.DomUtil.create('div', 'focus-geolocation-container');
 
-			this.link = L.DomUtil.create('div', 'focus-geolocation', container);
+			this.link = L.DomUtil.create('div', 'focus-geolocation map-tools', container);
             var img = L.DomUtil.create('img', '', this.link);
             img.src = "../../assets/img/svg/my-location.svg";
 			this.link.href = '#';
@@ -452,6 +452,7 @@
 		return new L.Control.saveSelection(options);
 	};
 
+//info
     L.Control.showInfo = L.Control.extend({
       options: {
         position: 'bottomleft',
@@ -512,13 +513,97 @@
         //   window.onresize = function(event) {
         //     layout.style.display = 'none';
         //   };
-
-        toggleFullScreen();
       }
-
     });
     L.Control.ShowInfo = function (options) {
       return new L.Control.showInfo(options);
+    };
+
+//fullScreen
+    L.Control.fullScreen = L.Control.extend({
+      options: {
+        position: 'bottomleft',
+        title: {
+          'false': 'Save selection',
+          'true': 'Save selection'
+        }
+      },
+      onAdd: function (map) {
+          var container = L.DomUtil.create('div', 'fullscreen-container');
+
+          this.link = L.DomUtil.create('div', 'show-info', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/fullscreen.svg";
+          this.link.href = '#';
+          this._map = map;
+
+          L.DomEvent.on(this.link, 'click', this._click, this);
+          return container;
+      },
+      _click: function (e) {
+        toggleFullScreen();
+      }
+    });
+    L.Control.FullScreen = function (options) {
+      return new L.Control.fullScreen(options);
+    };
+
+//filter
+    L.Control.filter = L.Control.extend({
+        options: {
+          position: 'topleft',
+          title: {
+            'false': 'Clear selection',
+            'true': 'Clear selection'
+          }
+        },
+      onAdd: function (map) {
+          var container = L.DomUtil.create('div', 'map-tools-top hidden');
+
+          this.link = L.DomUtil.create('div', 'save-selection', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/filter.svg";
+          this.link.href = '#';
+          this._map = map;
+
+          L.DomEvent.on(this.link, 'click', this._click, this);
+          return container;
+      },
+      _click: function (e) {
+        console.log('Show Filter');
+      }
+    });
+    L.Control.Filter = function (options) {
+      return new L.Control.filter(options);
+    };
+
+//back
+    L.Control.back = L.Control.extend({
+        options: {
+          position: 'topleft',
+          title: {
+            'false': 'Clear selection',
+            'true': 'Clear selection'
+          }
+        },
+      onAdd: function (map) {
+          var container = L.DomUtil.create('div', 'map-tools-top hidden');
+
+          this.link = L.DomUtil.create('div', 'save-selection', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/back.svg";
+          this.link.href = '#';
+          this._map = map;
+
+          L.DomEvent.on(this.link, 'click', this._click, this);
+          return container;
+      },
+      _click: function (e) {
+        console.log('Back');
+      }
+    });
+    L.Control.Back = function (options) {
+      return new L.Control.back(options);
     };
 
       //controls
@@ -527,8 +612,10 @@
       var pathControl = L.Control.Path();
       var clearSelectionControl = L.Control.ClearSelection();
       var saveSelectionControl = L.Control.SaveSelection();
+      var filter = new L.Control.filter();
 	  var focusGeolocation = new L.Control.focusGeolocation();
-      var showInfo = new L.Control.showInfo();
+      var fullScreen = new L.Control.fullScreen();
+      var back = new L.Control.back();
       //var shareSelectionControl = L.Control.ShareSelection();
 
 	  function clearPathFilter() {
@@ -1533,22 +1620,26 @@
         map.removeLayer(radiusControl);
         map.removeLayer(lassoControl);
         map.removeLayer(pathControl);
+        // map.removeLayer(back);
         //map.removeLayer(shareSelectionControl);
         map.removeLayer(saveSelectionControl);
         map.removeLayer(clearSelectionControl);
 		map.removeLayer(focusGeolocation);
-        map.removeLayer(showInfo);
+        map.removeLayer(fullScreen);
+        map.removeLayer(filter);
       }
 
       function AddControls() {
         focusGeolocation.addTo(map);
-        clearSelectionControl.addTo(map);
         saveSelectionControl.addTo(map);
+        filter.addTo(map);
+        clearSelectionControl.addTo(map);
         //shareSelectionControl.addTo(map);
         pathControl.addTo(map);
         lassoControl.addTo(map);
         radiusControl.addTo(map);
-        showInfo.addTo(map);
+        fullScreen.addTo(map);
+        // back.addTo(map);
       }
 
       //Makers
@@ -1921,17 +2012,21 @@
         drawLayerGeoJSON = GetDrawLayerGeoJSON();
 
         if ((wp.length > 0 || drawLayerGeoJSON.features.length > 0)) {
-          angular.element('.map-tools-top').removeClass('hide-tools');
-          angular.element('.main-nav').addClass('hidden');
+          angular.element('#map').addClass('active-search');
+          angular.element('.map-tools-top').removeClass('hidden');
+          angular.element('header').addClass('mobile-hidden');
           angular.element('.spots-nav').removeClass('hidden');
-          angular.element('.leaflet-bottom').addClass('hide-tools');
+          angular.element('.map-tools').addClass('hidden');
           angular.element('.sort-menu').removeClass('hidden');
+          angular.element('.new-sidebar-menu').addClass('new-sidebar-menu-opened');
         } else {
-          angular.element('.map-tools-top').addClass('hide-tools');
-          angular.element('.main-nav').removeClass('hidden');
+          angular.element('#map').removeClass('active-search');
+          angular.element('.map-tools-top').addClass('hidden');
+          angular.element('header').removeClass('mobile-hidden');
           angular.element('.spots-nav').addClass('hidden');
-          angular.element('.leaflet-bottom').removeClass('hide-tools');
+          angular.element('.map-tools').removeClass('hidden');
           angular.element('.sort-menu').addClass('hidden');
+          angular.element('.new-sidebar-menu').removeClass('new-sidebar-menu-opened');
         }
         return bboxes;
       }
