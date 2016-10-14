@@ -454,7 +454,7 @@ class UserController extends Controller
             $usersOut[$emailMap[$user->email]]['exists']    = true;
             $usersOut[$emailMap[$user->email]]['id']        = $user->id;
             // if users A ($user) and B ($request->user()->id logged user)
-            $res = $request->user()->friendsReal()->where('friend_id', $user->id)->get();
+            $res = $request->user()->friends()->where('friend_id', $user->id)->get();
             //Log::debug(print_r($res, 1));
             foreach ($res as $_u) {
                 $usersOut[$emailMap[$user->email]]['friends'] = true;

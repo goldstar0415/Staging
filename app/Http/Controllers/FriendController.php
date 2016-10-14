@@ -37,7 +37,7 @@ class FriendController extends Controller
     public function index(PaginateRequest $request)
     {
         // get friends ids
-        return $this->paginatealbe($request, $request->user()->friendsReal());
+        return $this->paginatealbe($request, $request->user()->friends());
     }
 
     /**
