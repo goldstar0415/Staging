@@ -21,7 +21,7 @@
 	var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
     var SPOT_LIST_URL = API_URL + '/map/spots/list';
-    var SPOTS_PER_PAGE = 10;
+    var SPOTS_PER_PAGE = 12;
     var restrictions = {
       tags: 7,
       locations: 20
@@ -268,6 +268,7 @@
      */
     function toggleLayer(layer, startSearch) {
 		$rootScope.sortLayer = layer;
+        vm.currentWeather = null;
 
 		if (layer == 'weather') {
 			MapService.showOtherLayers();
@@ -745,6 +746,8 @@
       vm.currentWeather.sunrise = moment(daily[0].sunriseTime * 1000).format(DATE_FORMAT.time);
       vm.currentWeather.sunset = moment(daily[0].sunsetTime * 1000).format(DATE_FORMAT.time);
       vm.currentWeather.temperature = Math.round((daily[0].temperatureMax + daily[0].temperatureMin) / 2);
+
+      $rootScope.toggleSidebar(true);
     }
 
 	/**

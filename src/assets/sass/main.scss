@@ -1783,3 +1783,8 @@ body .atlwdg-trigger.atlwdg-TOP {
 #body .hidden {
     display: none !important;
 }
+
+html {
+    margin-left: calc(100vw - 100%);
+    margin-right: 0;
+}

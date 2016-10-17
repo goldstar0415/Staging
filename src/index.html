@@ -84,7 +84,7 @@
   <map-sort></map-sort>
 
   <!-- map container-->
-  <div id="map" class="mapResize map {{mapState}}" ng-class="$root.$state.current.name != 'index' ? 'not-index' : ''"></div>
+  <div id="map" class="mapResize map {{mapState}}" ng-class="{ 'not-index': $root.$state.current.name != 'index', 'sidebar-opened': $root.isSidebarOpened }"></div>
 
   <!-- content container-->
   <div ng-show="mapState != 'full-size'" ui-view ng-class="{'landing-wrapper': $state.includes('intro')}"></div>

@@ -12,11 +12,34 @@
     $rootScope.isMobile = angular.element(window).width() <= 992;
     L.Icon.Default.imagePath = '/assets/libs/Leaflet/images';
     $rootScope.plannerIcon = '/assets/img/icons/planner_icon.png';
+    $rootScope.isSidebarOpened = false;
+    $rootScope.toggleSidebar = toggleSidebar;
 
     MapService.Init('map');
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     $rootScope.$on("$stateChangeError", onStateChangeError);
+
+    function toggleSidebar(isOpened) {
+        $rootScope.isSidebarOpened = isOpened;
+        if (isOpened) {
+            angular.element('.map-tools-top').removeClass('hidden');
+            angular.element('.map-tools').addClass('hidden');
+            if ($rootScope.sortLayer === 'weather') {
+                angular.element('.save-selection').parent().addClass('hidden');
+                angular.element('.filter-selection').parent().addClass('hidden');
+                $rootScope.mapState = "small-size";
+            } else {
+                angular.element('.save-selection').parent().removeClass('hidden');
+                angular.element('.filter-selection').parent().removeClass('hidden');
+                // $rootScope.mapState = "full-size";
+            }
+        } else {
+            angular.element('.map-tools-top').addClass('hidden');
+            angular.element('.map-tools').removeClass('hidden');
+            $rootScope.mapState = "full-size";
+        }
+    }
 
     function onStateChangeSuccess(event, current, toParams, fromState, fromParams) {
       snapRemote.getSnapper().then(function (snapper) {

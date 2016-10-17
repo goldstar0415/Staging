@@ -1,4 +1,4 @@
-<header>
+<header ng-class="{ 'mobile-hidden': $root.isSidebarOpened }">
     <nav class="main-nav">
         <a ui-sref="index" class="main-logo" ng-show="!Header.isSearchOpened">
             <img class="main-logo-big" src="assets/img/icons/logo.svg" alt="logo">
@@ -40,42 +40,4 @@
             </a>
         </div>
     </nav>
-    <!-- <nav class="spots-nav hidden" style="overflow: {{Header.isDropdownOpened ? 'visible' : 'hidden'}}">
-        <div class="nav-dropdown">
-            <div class="nav-dropdown-item {{Header.category == 'event' ? 'selected' : ''}}" ng-click="Header.changeCategory('event')">
-                <img src="../../assets/img/svg/Icon_Events.svg" alt="spot">
-                <p>Events</p>
-                <span class="glyphicon glyphicon-menu-down"></span>
-            </div>
-            <div class="nav-dropdown-item {{Header.category == 'todo' ? 'selected' : ''}}" ng-click="Header.changeCategory('todo')">
-                <img src="../../assets/img/svg/Icon_To_do.svg" alt="spot">
-                <p>To-Do</p>
-                <span class="glyphicon glyphicon-menu-down"></span>
-            </div>
-            <div class="nav-dropdown-item {{Header.category == 'food' ? 'selected' : ''}}" ng-click="Header.changeCategory('food')">
-                <img src="../../assets/img/svg/Icon_Grab_Grub.svg" alt="spot">
-                <p>Food</p>
-                <span class="glyphicon glyphicon-menu-down"></span>
-            </div>
-            <div class="nav-dropdown-item {{Header.category == 'shelter' ? 'selected' : ''}}" ng-click="Header.changeCategory('shelter')">
-                <img src="../../assets/img/svg/Icon_Get_a_room.svg" alt="spot">
-                <p>Shelter</p>
-                <span class="glyphicon glyphicon-menu-down"></span>
-            </div>
-        </div>
-        <div class="buttons-nav">
-            <div class="save" ng-click="Header.saveClick()">
-                <img src="../../assets/img/svg/floppy-disk-save-file-white.svg" alt="icon">
-                <span>Save</span>
-            </div>
-            <div class="filter" ng-click="Header.filterClick()">
-                <img src="../../assets/img/svg/filter.svg" alt="icon">
-                <span>Filter</span>
-            </div>
-            <div class="cancel" ng-click="Header.closeClick()">
-                <img src="../../assets/img/svg/cancel-button-white.svg" alt="icon">
-                <span>Cancel</span>
-            </div>
-        </div>
-    </nav> -->
 </header>

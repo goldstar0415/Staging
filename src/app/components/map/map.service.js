@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
+    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
 
       console.log('MapService');
 
@@ -411,6 +411,8 @@
           $rootScope.$apply();
 
           angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
+
+          $rootScope.toggleSidebar(false);
         }
 
       });
@@ -560,7 +562,7 @@
       onAdd: function (map) {
           var container = L.DomUtil.create('div', 'map-tools-top hidden');
 
-          this.link = L.DomUtil.create('div', 'save-selection', container);
+          this.link = L.DomUtil.create('div', 'filter-selection', container);
           var img = L.DomUtil.create('img', '', this.link);
           img.src = "../../assets/img/svg/filter.svg";
           this.link.href = '#';
@@ -587,7 +589,7 @@
           }
         },
       onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools-top hidden');
+          var container = L.DomUtil.create('div', 'map-tools-back');
 
           this.link = L.DomUtil.create('div', 'save-selection', container);
           var img = L.DomUtil.create('img', '', this.link);
@@ -599,7 +601,7 @@
           return container;
       },
       _click: function (e) {
-        console.log('Back');
+        $location.path('/');
       }
     });
     L.Control.Back = function (options) {
@@ -1620,7 +1622,7 @@
         map.removeLayer(radiusControl);
         map.removeLayer(lassoControl);
         map.removeLayer(pathControl);
-        // map.removeLayer(back);
+        map.removeLayer(back);
         //map.removeLayer(shareSelectionControl);
         map.removeLayer(saveSelectionControl);
         map.removeLayer(clearSelectionControl);
@@ -1639,7 +1641,7 @@
         lassoControl.addTo(map);
         radiusControl.addTo(map);
         fullScreen.addTo(map);
-        // back.addTo(map);
+        back.addTo(map);
       }
 
       //Makers
@@ -2012,21 +2014,9 @@
         drawLayerGeoJSON = GetDrawLayerGeoJSON();
 
         if ((wp.length > 0 || drawLayerGeoJSON.features.length > 0)) {
-          angular.element('#map').addClass('active-search');
-          angular.element('.map-tools-top').removeClass('hidden');
-          angular.element('header').addClass('mobile-hidden');
-          angular.element('.spots-nav').removeClass('hidden');
-          angular.element('.map-tools').addClass('hidden');
-          angular.element('.sort-menu').removeClass('hidden');
-          angular.element('.new-sidebar-menu').addClass('new-sidebar-menu-opened');
+            $rootScope.toggleSidebar(true);
         } else {
-          angular.element('#map').removeClass('active-search');
-          angular.element('.map-tools-top').addClass('hidden');
-          angular.element('header').removeClass('mobile-hidden');
-          angular.element('.spots-nav').addClass('hidden');
-          angular.element('.map-tools').removeClass('hidden');
-          angular.element('.sort-menu').addClass('hidden');
-          angular.element('.new-sidebar-menu').removeClass('new-sidebar-menu-opened');
+            $rootScope.toggleSidebar(false);
         }
         return bboxes;
       }

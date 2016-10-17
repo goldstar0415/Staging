@@ -54,6 +54,7 @@
         function searchClick() {
             vm.isSearchOpened = !vm.isSearchOpened;
             vm.searchValue = '';
+            console.log($rootScope.$state);
         }
 
         function closeClick() {
