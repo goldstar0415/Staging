@@ -36,7 +36,8 @@
     </div>
 </div>
 
-<div class="sort-menu hidden" ng-show="$root.mapSortSpots.data.length">
+<!-- <div class="sort-menu hidden" ng-show="$root.mapSortSpots.data.length || $root.sortLayer == 'weather'"> -->
+<div class="sort-menu" ng-show="$root.isSidebarOpened && ($root.mapSortSpots.sourceSpots.length || MapSort.currentWeather)">
 
 
 
@@ -260,7 +261,7 @@
                     0 spots found
                 </div> -->
                 <div class="new-result" ng-if="MapSort.openedItem == null">
-                    <div infinite-scroll="MapSort.loadNextSpots()" infinite-scroll-disabled="$root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length || MapSort.vertical" class="clearfix" infinite-scroll-distance="1" infinite-scroll-container='".search-filters"'>
+                    <div infinite-scroll="MapSort.loadNextSpots()" infinite-scroll-disabled="$root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length" class="clearfix" infinite-scroll-distance="1" infinite-scroll-container='".search-filters"'>
                         <div ng-repeat="item in $root.mapSortSpots.data" class="new-spot">
                             <div class="spot-img">
                                 <div class="img" ng-click="MapSort.setOpenedItem(item)">

@@ -37,7 +37,7 @@
     }
 }
 
-.map.small-size.active-search, .map.full-size.active-search {
+.map.small-size.sidebar-opened, .map.full-size.sidebar-opened {
     @media (max-width: 767px) {
         top: 0;
     }
@@ -46,6 +46,13 @@
 .map.small-size.not-index {
     height: calc(60vh - 50px);
     top: 50px;
+    width: 100%;
+}
+
+.map.full-size.not-index {
+    height: calc(100vh - 100px);
+    top: 50px;
+    width: 100%;
 }
 
 .map.hidden {
@@ -196,7 +203,7 @@
 
     .not-index {
         .leaflet-control-container {
-            display: none;
+            // display: none;
         }
     }
 
@@ -213,7 +220,7 @@
         flex-direction: column;
         border: none;
         height: calc(100vh - 120px);
-        max-width: 50px;
+        max-width: 40px;
         z-index: 999;
         opacity: 0.8;
     }
@@ -222,7 +229,7 @@
         top: 10px;
         left: 0;
         width: 100%;
-        height: 50px;
+        height: 40px;
         display: flex;
         justify-content: flex-end;
         align-items: center;
@@ -277,11 +284,13 @@
         .focus-geolocation,
         .map-tools,
         .map-tools-top,
+        .map-tools-back,
         .show-info {
             background-color: white;
             position: relative;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
             @media (max-height: 500px) {
                 width: 40px;
                 height: 40px;
@@ -290,7 +299,7 @@
             img {
                 width: 100%;
                 height: 100%;
-                padding: 7px;
+                padding: 4px;
             }
 
             &:hover {
@@ -304,9 +313,10 @@
             // display: block !important;
         }
 
-        .map-tools-top {
+        .map-tools-top, .map-tools-back {
             margin: 0;
             display: block;
+            top: 0px;
             @media (max-height: 400px) {
                 order: 1;
             }
@@ -339,4 +349,16 @@
         width: 100%;
         object-fit: cover;
     }
+}
+
+#body .map-tools-back {
+    display: none !important;
+}
+
+#body .not-index .map-tools-back {
+    display: block !important;
+}
+
+#body .not-index .map-tools-top {
+    display: none !important;
 }
