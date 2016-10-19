@@ -238,9 +238,9 @@
 
 
                 <!-- Opened item -->
-                <div ng-if="MapSort.openedItem != null">
+                <!-- <div ng-if="MapSort.openedItem != null">
                     <spot spot="MapSort.openedItem" small="true"></spot>
-                </div>
+                </div> -->
 
 
 
@@ -260,12 +260,12 @@
                 <!-- <div ng-if="!$root.mapSortSpots.data.length">
                     0 spots found
                 </div> -->
-                <div class="new-result" ng-if="MapSort.openedItem == null">
+                <div class="new-result">
                     <div infinite-scroll="MapSort.loadNextSpots()" infinite-scroll-disabled="$root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length" class="clearfix" infinite-scroll-distance="1" infinite-scroll-container='".search-filters"'>
                         <div ng-repeat="item in $root.mapSortSpots.data" class="new-spot">
                             <div class="spot-img">
-                                <div class="img" ng-click="MapSort.setOpenedItem(item)">
-                                    <img src="../../../assets/img/food.jpg" alt="spot_img">
+                                <div class="img" ng-click="$root.setOpenedSpot(item)">
+                                    <img src="{{MapSort.setImage(item)}}" alt="spot_img">
                                 </div>
                                 <div class="spot-img-top">
                                     <stars item="item"></stars>

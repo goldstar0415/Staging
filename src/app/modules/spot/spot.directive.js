@@ -12,7 +12,7 @@
       templateUrl: '/app/modules/spot/spot.html',
       scope: {
         spot: '=',
-        small: '='
+        modal: '='
       },
       controller: SpotController,
       controllerAs: 'Spot',
@@ -34,6 +34,7 @@
       vm.tab = 'overview';
       vm.chatterTab = 'zoomtivity';
       vm.scroll = 0;
+      vm.setImage = setImage;
 
       vm.postComment = postComment;
       vm.deleteComment = deleteComment;
@@ -51,7 +52,20 @@
       };
       vm.pagination = new ScrollService(SpotComment.query, vm.comments, params);
 
-      ShowMarkers([vm.spot]);
+    //   ShowMarkers([vm.spot]);
+
+    function setImage() {
+        if (vm.spot.category.type.name === 'food') {
+            if (false) {
+                return vm.spot.cover_url.original;
+            } else {
+                var imgnum = Math.floor(vm.spot.id % 33);
+                return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
+            }
+        } else {
+            return vm.spot.cover_url.original;
+        }
+    }
 
       $scope.$watch(function() { return angular.element('.opened-item').is(':visible') }, function() {
           var container = document.querySelector('.search-filters');

@@ -601,7 +601,20 @@
           return container;
       },
       _click: function (e) {
-        $location.path('/');
+          L.DomEvent.stopPropagation(e);
+          L.DomEvent.preventDefault(e);
+          ClearSelections();
+          map.closePopup();
+
+          cancelHttpRequest();
+          $rootScope.isDrawArea = false;
+          $rootScope.$apply();
+
+          angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
+
+          $rootScope.toggleSidebar(false);
+
+        $location.path('/');        
       }
     });
     L.Control.Back = function (options) {
@@ -1707,65 +1720,72 @@
 
       function BindSpotPopup(marker, spot) {
         var spot_id = spot.spot_id ? spot.spot_id : spot.spot.id;
-
-        if (angular.element(window).width() <= 992) {
-          marker.on('click', function () {
-            $modal.open({
-              templateUrl: 'SpotMapModal.html',
-              controller: 'SpotMapModalController',
-              controllerAs: 'SpotPopup',
-              modalClass: 'spot-mobile-modal',
-              resolve: {
-                spot: function () {
-                  return Spot.get({id: spot_id}).$promise;
-                },
-                marker: function () {
-                  return marker;
-                }
-              }
+        marker.on('click', function () {
+            console.log($rootScope.mapSortSpots.sourceSpots.length);
+            Spot.get({id: spot_id}).$promise.then(function(data) {
+                $rootScope.setOpenedSpot(data);
+                console.log($rootScope.mapSortSpots.sourceSpots.length);
             });
-          });
-        } else {
-          var scope = $rootScope.$new();
-          var offset = 75;
-          var options = {
-            keepInView: false,
-            autoPan: true,
-            closeButton: false,
-            className: 'popup',
-            autoPanPaddingTopLeft: L.point(offset, offset),
-            autoPanPaddingBottomRight: L.point(offset, offset)
-          };
-
-          if (spot.spot_id) {
-            delete spot.id;
-          }
-
-          scope.item = spot;
-          scope.marker = marker;
-
-		  marker.on('click', function () {
-			if (this.getPopup()) {
-				this.unbindPopup();
-			}
-			var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
-			var popup = L.popup(options).setContent(popupContent[0]);
-			this.bindPopup(popup).openPopup();
-
-            scope.item.$loading = true;
-
-            var syncSpot;
-            if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: spot_id}))) {
-              _loadSpotComments(scope, syncSpot);
-            } else {
-              Spot.get({id: spot_id}, function (fullSpot) {
-                //merge photos
-                fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
-                _loadSpotComments(scope, fullSpot);
-              });
-            }
-          });
-        }
+        });
+        //
+        // if (angular.element(window).width() <= 992) {
+        //   marker.on('click', function () {
+        //     $modal.open({
+        //       templateUrl: 'SpotMapModal.html',
+        //       controller: 'SpotMapModalController',
+        //       controllerAs: 'SpotPopup',
+        //       modalClass: 'spot-mobile-modal',
+        //       resolve: {
+        //         spot: function () {
+        //           return Spot.get({id: spot_id}).$promise;
+        //         },
+        //         marker: function () {
+        //           return marker;
+        //         }
+        //       }
+        //     });
+        //   });
+        // } else {
+        //   var scope = $rootScope.$new();
+        //   var offset = 75;
+        //   var options = {
+        //     keepInView: false,
+        //     autoPan: true,
+        //     closeButton: false,
+        //     className: 'popup',
+        //     autoPanPaddingTopLeft: L.point(offset, offset),
+        //     autoPanPaddingBottomRight: L.point(offset, offset)
+        //   };
+        //
+        //   if (spot.spot_id) {
+        //     delete spot.id;
+        //   }
+        //
+        //   scope.item = spot;
+        //   scope.marker = marker;
+        //
+		//   marker.on('click', function () {
+		// 	if (this.getPopup()) {
+		// 		this.unbindPopup();
+		// 	}
+		// 	var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
+		// 	var popup = L.popup(options).setContent(popupContent[0]);
+		// 	this.bindPopup(popup).openPopup();
+        //
+        //     scope.item.$loading = true;
+        //
+        //     var syncSpot;
+        //     if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: spot_id}))) {
+        //       _loadSpotComments(scope, syncSpot);
+        //     } else {
+        //       Spot.get({id: spot_id}, function (fullSpot) {
+        //         //merge photos
+        //         fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
+        //         _loadSpotComments(scope, fullSpot);
+        //       });
+        //     }
+        //   });
+        // }
       }
 
       function _loadSpotComments(scope, spot) {

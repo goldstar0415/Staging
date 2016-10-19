@@ -19,10 +19,11 @@
     vm.addToFavorite = SpotService.addToFavorite;
     vm.removeFromFavorite = SpotService.removeFromFavorite;
     vm.removeSpot = removeSpot;
+    vm.setImage = setImage;
 
     vm.postComment = postComment;
     vm.deleteComment = deleteComment;
-    
+
     $rootScope.syncSpots = {data: [vm.spot]};
     $rootScope.currentSpot = vm.spot;
 
@@ -36,6 +37,19 @@
     };
     vm.pagination = new ScrollService(SpotComment.query, vm.comments, params);
     ShowMarkers([vm.spot]);
+
+    function setImage() {
+        if (vm.spot.category.type.name === 'food') {
+            if (false) {
+                return vm.spot.cover_url.original;
+            } else {
+                var imgnum = Math.floor(vm.spot.id % 33);
+                return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
+            }
+        } else {
+            return vm.spot.cover_url.original;
+        }
+    }
 
     /*
      * Delete spot
@@ -71,7 +85,7 @@
           toastr.error('Send message failed');
         })
     }
-    
+
     //show markers on map
     function ShowMarkers(spots) {
       var spotsArray = _.map(spots, function (item) {
@@ -100,19 +114,19 @@
         });
       });
     }
-    
+
     vm.editReview = function(review) {
         review.oldVote = review.vote;
         review.oldMessage = review.message;
         review.edit = true;
     };
-    
+
     vm.cancelEditReview = function(review) {
         review.vote = review.oldVote;
         review.message = review.oldMessage;
         review.edit = false;
     };
-    
+
     vm.updateReview = function(review) {
       SpotReview.update({spot_id: review.spot_id, id: review.id},
         {
@@ -127,7 +141,7 @@
         }
       );
     };
-    
+
     vm.deleteReview = function(review, index) {
       dialogs.confirm('Confirmation', 'Are you sure you want to delete review?').result.then(function () {
         SpotReview.delete({spot_id: review.spot_id, id: review.id}, function success(result) {
@@ -138,6 +152,6 @@
         });
       });
     };
-    
+
   }
 })();
