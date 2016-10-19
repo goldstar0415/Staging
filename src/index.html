@@ -86,6 +86,11 @@
   <!-- map container-->
   <div id="map" class="mapResize map {{mapState}}" ng-class="{ 'not-index': $root.$state.current.name != 'index', 'sidebar-opened': $root.isSidebarOpened }"></div>
 
+  <!-- Opened spot -->
+  <div ng-if="$root.openedSpot != null">
+      <spot spot="$root.openedSpot" modal="true"></spot>
+  </div>
+
   <!-- content container-->
   <div ng-show="mapState != 'full-size'" ui-view ng-class="{'landing-wrapper': $state.includes('intro')}"></div>
 

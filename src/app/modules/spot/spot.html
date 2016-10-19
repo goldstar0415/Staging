@@ -1,6 +1,6 @@
-<div class="opened-item" ng-if="Spot.spot" ng-style="Spot.small ? {'padding':'0'} : {'padding':'15px'}">
-    <div class="opened-header" ng-if="Spot.small">
-        <a ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id})">
+<div class="opened-item" ng-class="{ 'item-modal' : Spot.modal }" ng-if="Spot.spot">
+    <div class="opened-header" ng-if="Spot.modal">
+        <a ng-click="Spot.close()" ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id})">
             <img src="../../../assets/img/svg/fullscreen.svg" alt="">
         </a>
         <img src="../../../assets/img/svg/Icon_Events.svg" alt="category" ng-if="Spot.spot.category.type.name == 'event'">
@@ -12,7 +12,7 @@
         </span>
     </div>
     <div class="opened-img">
-        <img src="{{Spot.spot.cover_url.original}}" alt="img">
+        <img src="{{Spot.setImage()}}" alt="img">
     </div>
     <a class="opened-name" ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id})">{{Spot.spot.title}}</a>
     <div class="opened-name-bottom">

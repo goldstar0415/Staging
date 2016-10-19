@@ -14,11 +14,18 @@
     $rootScope.plannerIcon = '/assets/img/icons/planner_icon.png';
     $rootScope.isSidebarOpened = false;
     $rootScope.toggleSidebar = toggleSidebar;
+    $rootScope.openedSpot = null;
+    $rootScope.setOpenedSpot = setOpenedSpot;
+    $rootScope.showMarkers = showMarkers;
 
     MapService.Init('map');
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     $rootScope.$on("$stateChangeError", onStateChangeError);
+
+    function setOpenedSpot(item) {
+        $rootScope.openedSpot = item;
+    }
 
     function toggleSidebar(isOpened) {
         $rootScope.isSidebarOpened = isOpened;

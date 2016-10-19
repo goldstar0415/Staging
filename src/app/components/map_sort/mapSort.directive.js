@@ -16,7 +16,7 @@
       }
     });
 
-  function mapSort($rootScope, $q, MapService, $http, $timeout, LocationService, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
+  function mapSort($rootScope, $scope, $q, MapService, $http, $timeout, LocationService, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
 
 	var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
@@ -51,6 +51,7 @@
     vm.openedItem = null;
     vm.setOpenedItem = setOpenedItem;
     vm.location = "Location";
+    vm.setImage = setImage;
 
     vm.searchParams = {
       typeahead: {
@@ -72,6 +73,24 @@
     $rootScope.$on('impossible-route', onImpossibleRoute);
 
     run();
+
+    // $scope.$watch(function() { return angular.element('.new-result').is(':visible') }, function() {
+    //     console.log('VISIBLE');
+    // });
+
+    function setImage(item) {
+        if (item.category.type.name == 'food') {
+            if (false) {
+                return item.cover_url.original;
+            } else {
+                var imgnum = Math.floor(item.id % 33);
+                return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
+                // return '../../../assets/img/placeholders/food/5.jpg';
+            }
+        } else {
+            return item.cover_url.original;
+        }
+    }
 
     function setOpenedItem(item) {
         vm.openedItem = item;
