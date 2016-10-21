@@ -575,7 +575,9 @@
           return container;
       },
       _click: function (e) {
-        console.log('Show Filter');
+          if ($rootScope.isSidebarOpened && $rootScope.mapSortSpots.sourceSpots.length) {
+            $rootScope.isFilterOpened = true;
+          }
       }
     });
     L.Control.Filter = function (options) {
@@ -1690,21 +1692,31 @@
         if (callback) callback();
       }
 
-      function CreateCustomIcon(iconUrl, className, iconSize, type) {
+      function CreateCustomIcon(iconUrl, className, iconSize, type, id) {
         var iconSize = iconSize || [50, 50];
         if (type === undefined && ($rootScope.$state.current.name === 'photos.list' || $rootScope.$state.current.name === 'photos.album')) {
             return new L.HtmlIcon({
                 html : "<div class='map-marker-icon map-marker-icon-photo'><img src='" + iconUrl + "' /></div>",
             });
-            // return new L.HtmlIcon({
-            //     html : "<div class='map-marker-icon' style='background:white;color:red;'>Hello, London</div>",
+        } else if ($rootScope.$state.current.name == 'index') {
+            // Spot.get({id: item.spot_id}).$promise.then(function(data) {
+            //     // console.log(data);
             // });
+            //var spot = $rootScope.mapSortSpots.data;
+            // console.log(id);
+            // console.log($rootScope.mapSortSpots.data[0]);
+            var spot = $.grep($rootScope.mapSortSpots.data, function(e){ return e.id == id; });
+            console.log(spot);
+            return new L.HtmlIcon({
+                html : "<div class='map-marker-icon' style='background:white;color:red;'>" + spot[0].rating + "</div>",
+            });
+        } else {
+            return L.icon({
+              iconSize: iconSize,
+              iconUrl: iconUrl,
+              className: className
+            });
         }
-        return L.icon({
-          iconSize: iconSize,
-          iconUrl: iconUrl,
-          className: className
-        });
       }
 
       function BindMarkerToInput(Marker, Callback) {
@@ -1724,10 +1736,8 @@
       function BindSpotPopup(marker, spot) {
         var spot_id = spot.spot_id ? spot.spot_id : spot.spot.id;
         marker.on('click', function () {
-            console.log($rootScope.mapSortSpots.sourceSpots.length);
             Spot.get({id: spot_id}).$promise.then(function(data) {
                 $rootScope.setOpenedSpot(data);
-                console.log($rootScope.mapSortSpots.sourceSpots.length);
             });
         });
         //
@@ -2187,7 +2197,7 @@
         }
         var markers = [];
         _.each(spots, function (item) {
-          var icon = CreateCustomIcon(item.spot.category.icon_url, 'custom-map-icons', [50, 50], type);
+          var icon = CreateCustomIcon(item.spot.category.icon_url, 'custom-map-icons', [50, 50], type, item);
           if (item.location) {
             var marker = L.marker(item.location, {icon: icon});
             item.marker = marker;
@@ -2241,7 +2251,7 @@
         }
         var markers = [];
         _.each(spots, function (item) {
-          var icon = CreateCustomIcon(item.category_icon_url, 'custom-map-icons', [50, 50], type);
+          var icon = CreateCustomIcon(item.category_icon_url, 'custom-map-icons', [50, 50], type, item.spot_id);
           if (item.location) {
             var marker = L.marker(item.location, {icon: icon});
             item.marker = marker;

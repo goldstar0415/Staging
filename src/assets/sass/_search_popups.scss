@@ -1970,11 +1970,31 @@
 .new-filter {
     background-color: rgb(245, 245, 247);
     padding: 5px 15px 15px;
-    min-height: 520px;
-    margin-bottom: 15px;
-    @media (max-width: 450px) {
-        // display: none;
+    position: absolute;
+    z-index: 999;
+    top: 50px;
+    left: auto;
+    right: 540px;
+    bottom: 50px;
+    overflow: auto;
+    @media (min-width: 768px) and (orientation: portrait) {
+        right: 70px;
+        bottom: 378px;
     }
+    @media (max-width: 767px) and (orientation: portrait) {
+        height: calc(60vh - 50px);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: auto;
+    }
+    @media (max-width: 767px) and (orientation: landscape) {
+        top: 0;
+        left: 0;
+        right: 50vw;
+        bottom: 50px;
+    }
+
 
     .filter-header {
         font-weight: bold;
@@ -1986,6 +2006,11 @@
 
         p {
             margin: 0;
+        }
+        img {
+            height: 20px;
+            width: 20px;
+            margin: 0 0 5px;
         }
     }
 
@@ -2003,6 +2028,11 @@
         &:last-child {
             margin-left: 1%;
         }
+    }
+
+    button {
+        border: none;
+        box-shadow: none;
     }
 
     .form-group {
@@ -2174,7 +2204,6 @@
             border: none;
         }
     }
-
     @media(max-width: 500px) {
         width: 50px;
     }

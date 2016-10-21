@@ -18,6 +18,7 @@
     $rootScope.setOpenedSpot = setOpenedSpot;
     $rootScope.showMarkers = showMarkers;
     $rootScope.isFullScreen = false;
+    $rootScope.isFilterOpened = false;
 
     MapService.Init('map');
 

@@ -21,7 +21,7 @@
 	var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
     var SPOT_LIST_URL = API_URL + '/map/spots/list';
-    var SPOTS_PER_PAGE = 12;
+    var SPOTS_PER_PAGE = 1000;
     var restrictions = {
       tags: 7,
       locations: 20
@@ -48,9 +48,6 @@
     vm.loadNextSpots = loadNextSpots;
     vm.typeaheadSearch = typeaheadSearch;
     vm.typeaheadSelectLocation = typeaheadSelectLocation;
-    vm.openedItem = null;
-    vm.setOpenedItem = setOpenedItem;
-    vm.location = "Location";
     vm.setImage = setImage;
 
     vm.searchParams = {
@@ -90,10 +87,6 @@
         } else {
             return item.cover_url.original;
         }
-    }
-
-    function setOpenedItem(item) {
-        vm.openedItem = item;
     }
 
     /**
@@ -223,24 +216,25 @@
         $rootScope.mapSortSpots.markers = mapSpots;
       }
 
-      $timeout(function () {
-        if ($rootScope.mapSortSpots.markers.length > 0) {
-          $rootScope.changeMapState('small', null, false);
-          MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
-          if (!$rootScope.isDrawArea) {
-            MapService.FitBoundsByLayer($rootScope.sortLayer);
-          }
-        } else {
-          $rootScope.changeMapState('big');
-          if ( !ignoreEmptyList ) {
-            toastr.info('0 spots found');
-          }
-          MapService.clearLayers();
-        }
-      });
-
       $rootScope.mapSortSpots.sourceSpots = _filterUniqueSpots($rootScope.mapSortSpots.markers);
-      loadNextSpots();
+      loadNextSpots(layer);
+
+      $timeout(function () {
+        // if ($rootScope.mapSortSpots.markers.length > 0) {
+        //   $rootScope.changeMapState('small', null, false);
+        //   console.log($rootScope.mapSortSpots.data);
+        //   MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
+        //   if (!$rootScope.isDrawArea) {
+        //     MapService.FitBoundsByLayer($rootScope.sortLayer);
+        //   }
+        // } else {
+        //   $rootScope.changeMapState('big');
+        //   if ( !ignoreEmptyList ) {
+        //     toastr.info('0 spots found');
+        //   }
+        //   MapService.clearLayers();
+        // }
+      });
     }
 
     function _filterUniqueSpots(array) {
@@ -252,7 +246,7 @@
     /**
      * Infinite scroll - ok
      */
-    function loadNextSpots() {
+    function loadNextSpots(layer) {
     //   console.log('loadNextSpots');
       if ($rootScope.mapSortSpots.sourceSpots && $rootScope.mapSortSpots.sourceSpots.length > 0) {
         var startIdx = $rootScope.mapSortSpots.page * SPOTS_PER_PAGE,
@@ -270,6 +264,21 @@
 
               $rootScope.mapSortSpots.data = _.union($rootScope.mapSortSpots.data, data);
               $rootScope.mapSortSpots.isLoading = false;
+              //////
+              if ($rootScope.mapSortSpots.markers.length > 0) {
+                $rootScope.changeMapState('small', null, false);
+                MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
+                if (!$rootScope.isDrawArea) {
+                  MapService.FitBoundsByLayer($rootScope.sortLayer);
+                }
+              } else {
+                $rootScope.changeMapState('big');
+                if ( !ignoreEmptyList ) {
+                  toastr.info('0 spots found');
+                }
+                MapService.clearLayers();
+              }
+              //////
             })
             .catch(function (resp) {
               $rootScope.mapSortSpots.isLoading = false;
@@ -506,7 +515,7 @@
 		$http.post(SEARCH_URL, data, {timeout: $rootScope.mapSortSpots.cancellerHttp.promise})
 			.success(function (spots) {
 				if (spots.length > 0) {
-				onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0, false);
+				    onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0, false);
 				} else {
 					onUpdateMapData(null, [], null, bbox_array.length > 0, false);
 				}
