@@ -403,8 +403,12 @@
     width: 470px;
     // box-shadow: rgba(0, 0, 0, 0.2) -3px 0 13px 0;
     overflow: auto;
-    @media(max-width: 767px) {
-
+    @media(min-width: 768px) and (orientation: portrait) {
+        top: calc(100vh - 378px);
+        left: 0;
+        right: 0;
+        bottom: 50px;
+        width: calc(100vw - 70px);
     }
     @media(max-width: 767px) and (orientation: portrait) {
         top: calc(60vh - 50px);

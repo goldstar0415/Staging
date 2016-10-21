@@ -43,6 +43,13 @@
     }
 }
 
+.map.small-size.sidebar-opened {
+    @media (min-width: 768px) and (orientation: portrait) {
+        height: calc(100vh - 428px);
+        width: calc(100vw - 70px);
+    }    
+}
+
 .map.small-size.not-index {
     height: calc(60vh - 50px);
     top: 50px;
