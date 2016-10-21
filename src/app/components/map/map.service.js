@@ -83,11 +83,13 @@
 
           var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
           var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-
+          var elem = document.querySelectorAll('.show-info > img')[0];
           if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
               requestFullScreen.call(docEl);
+              elem.src = '../../assets/img/svg/fullscreen2.svg';
           } else {
               cancelFullScreen.call(doc);
+              elem.src = '../../assets/img/svg/fullscreen.svg';
           }
       }
 
@@ -540,6 +542,7 @@
           this._map = map;
 
           L.DomEvent.on(this.link, 'click', this._click, this);
+
           return container;
       },
       _click: function (e) {
@@ -614,7 +617,7 @@
 
           $rootScope.toggleSidebar(false);
 
-        $location.path('/');        
+        $location.path('/');
       }
     });
     L.Control.Back = function (options) {

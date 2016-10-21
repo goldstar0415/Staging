@@ -17,11 +17,34 @@
     $rootScope.openedSpot = null;
     $rootScope.setOpenedSpot = setOpenedSpot;
     $rootScope.showMarkers = showMarkers;
+    $rootScope.isFullScreen = false;
 
     MapService.Init('map');
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     $rootScope.$on("$stateChangeError", onStateChangeError);
+
+    document.addEventListener("fullscreenchange", detectFullScreen);
+    document.addEventListener("webkitfullscreenchange", detectFullScreen);
+    document.addEventListener("mozfullscreenchange", detectFullScreen);
+    document.addEventListener("MSFullscreenChange", detectFullScreen);
+
+    function detectFullScreen() {
+        if (
+        	document.fullscreenElement ||
+        	document.webkitFullscreenElement ||
+        	document.mozFullScreenElement ||
+        	document.msFullscreenElement
+        ) {
+            $rootScope.isFullScreen = true;
+        } else {
+            $rootScope.isFullScreen = false;
+        }
+    }
+
+    detectFullScreen();
+
+    console.log($rootScope.isFullScreen);
 
     function setOpenedSpot(item) {
         $rootScope.openedSpot = item;

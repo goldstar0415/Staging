@@ -253,7 +253,7 @@
      * Infinite scroll - ok
      */
     function loadNextSpots() {
-      console.log('loadNextSpots');
+    //   console.log('loadNextSpots');
       if ($rootScope.mapSortSpots.sourceSpots && $rootScope.mapSortSpots.sourceSpots.length > 0) {
         var startIdx = $rootScope.mapSortSpots.page * SPOTS_PER_PAGE,
         endIdx = startIdx + SPOTS_PER_PAGE,
