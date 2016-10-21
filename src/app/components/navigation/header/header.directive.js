@@ -54,7 +54,6 @@
         function searchClick() {
             vm.isSearchOpened = !vm.isSearchOpened;
             vm.searchValue = '';
-            console.log($rootScope.$state);
         }
 
         function closeClick() {
@@ -76,7 +75,6 @@
 
         function filterClick() {
             vm.isDropdownOpened = false;
-            console.log($rootScope.sortLayer);
         }
 
         function toggleDropdown() {
@@ -86,7 +84,6 @@
         function changeCategory(category) {
             toggleDropdown();
             if ($rootScope.sortLayer != category) {
-                console.log('changed');
                 $rootScope.toggleLayer(category);
                 vm.category = category;
             }

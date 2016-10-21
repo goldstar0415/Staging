@@ -36,6 +36,70 @@
     </div>
 </div>
 
+<!--New filter-->
+<div class="new-filter" ng-show="$root.isFilterOpened">
+    <!-- <form action=""> -->
+    <div class="filter-header">
+        <p>Filters</p>
+        <span ng-click="$root.isFilterOpened = false">
+            <img src="../../../assets/img/svg/cancel.svg" alt="">
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="filterRating">Minimum Rating</label>
+        <div class="filter-group">
+            <select class="form-control" id="filterRating">
+                <option value="1">★</option>
+                <option value="2">★★</option>
+                <option value="3">★★★</option>
+                <option value="4">★★★★</option>
+                <option value="5">★★★★★</option>
+            </select>
+            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="filterCategory">Category</label>
+        <div class="filter-group">
+            <select class="form-control" id="filterCategory" placeholder="SELECT">
+                <option value="1">Any</option>
+                <!-- <option value="2">★★</option>
+                <option value="3">★★★</option>
+                <option value="4">★★★★</option>
+                <option value="5">★★★★★</option> -->
+            </select>
+            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="filterTags">By tags & Keywords</label>
+        <div class="filter-group">
+            <tags-input id="filterTags" ng-model="MapSort.searchParams.tags"></tags-input>
+            <!-- <input type="text" id="filterTags" value="tag,keyword" data-role="tagsinput"> -->
+            <!-- <input type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput"> -->
+            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>By dates</label>
+        <div class="filter-group">
+            <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea, applied: ($root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date)}">
+                <input ng-datepicker ng-model="MapSort.searchParams.start_date" class="date" placeholder="FROM DATE" type="text" ng-disabled="!MapSort.isShowFilter">
+                <input ng-datepicker ng-model="MapSort.searchParams.end_date" start-date="MapSort.searchParams.start_date" class="date" placeholder="TO DATE" type="text" ng-disabled="!MapSort.isShowFilter">
+            </div>
+            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="filter-group">
+            <input type="text" placeholder="HOTEL FEATURES">
+            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+    </div>
+    <button class="filter-apply">APPLY FILTER</button>
+    <!-- </form> -->
+</div>
+
 <!-- <div class="sort-menu hidden" ng-show="$root.mapSortSpots.data.length || $root.sortLayer == 'weather'"> -->
 <div class="sort-menu" ng-show="$root.isSidebarOpened && ($root.mapSortSpots.sourceSpots.length || MapSort.currentWeather)">
 
@@ -68,77 +132,6 @@
         <div>
             <div style="position:relative">
 
-
-
-
-
-
-
-
-
-
-
-                <!--New filter-->
-                <div class="new-filter" ng-show="MapSort.isShowFilter">
-                    <!-- <form action=""> -->
-                    <div class="filter-header">
-                        <p>Filters</p>
-                        <span class="glyphicon glyphicon-remove" ng-click="MapSort.isShowFilter = false"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="filterRating">Minimum Rating</label>
-                        <div class="filter-group">
-                            <select class="form-control" id="filterRating">
-                                <option value="1">★</option>
-                                <option value="2">★★</option>
-                                <option value="3">★★★</option>
-                                <option value="4">★★★★</option>
-                                <option value="5">★★★★★</option>
-                            </select>
-                            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="filterCategory">Category</label>
-                        <div class="filter-group">
-                            <select class="form-control" id="filterCategory" placeholder="SELECT">
-                                <option value="1">Any</option>
-                                <!-- <option value="2">★★</option>
-                                <option value="3">★★★</option>
-                                <option value="4">★★★★</option>
-                                <option value="5">★★★★★</option> -->
-                            </select>
-                            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="filterTags">By tags & Keywords</label>
-                        <div class="filter-group">
-                            <tags-input id="filterTags" ng-model="MapSort.searchParams.tags"></tags-input>
-                            <!-- <input type="text" id="filterTags" value="tag,keyword" data-role="tagsinput"> -->
-                            <!-- <input type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput"> -->
-                            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>By dates</label>
-                        <div class="filter-group">
-                            <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea, applied: ($root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date)}">
-                                <input ng-datepicker ng-model="MapSort.searchParams.start_date" class="date" placeholder="FROM DATE" type="text" ng-disabled="!MapSort.isShowFilter">
-                                <input ng-datepicker ng-model="MapSort.searchParams.end_date" start-date="MapSort.searchParams.start_date" class="date" placeholder="TO DATE" type="text" ng-disabled="!MapSort.isShowFilter">
-                            </div>
-                            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="filter-group">
-                            <input type="text" placeholder="HOTEL FEATURES">
-                            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
-                        </div>
-                    </div>
-                    <button class="filter-apply">APPLY FILTER</button>
-                    <!-- </form> -->
-                </div>
 
 
 
@@ -261,7 +254,8 @@
                     0 spots found
                 </div> -->
                 <div class="new-result">
-                    <div infinite-scroll="MapSort.loadNextSpots()" infinite-scroll-disabled="$root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length" class="clearfix" infinite-scroll-distance="1" infinite-scroll-container='".search-filters"'>
+                    <!-- <div infinite-scroll="MapSort.loadNextSpots()" infinite-scroll-disabled="$root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length" class="clearfix" infinite-scroll-distance="1" infinite-scroll-container='".search-filters"'> -->
+                    <div>
                         <div ng-repeat="item in $root.mapSortSpots.data" class="new-spot">
                             <div class="spot-img">
                                 <div class="img" ng-click="$root.setOpenedSpot(item)">
