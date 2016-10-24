@@ -52,6 +52,7 @@ class RouteServiceProvider extends ServiceProvider
             'albums' => '\d+',
             'photos' => '\d+',
             'spots' => '\d+',
+            'hotels' => '\d+',
             'friends' => '\d+',
             'message' => '\d+',
             'areas' => '\d+',
@@ -102,7 +103,7 @@ class RouteServiceProvider extends ServiceProvider
             
             $hotel = Spot::where('id', $value)
                     ->where('spot_type_category_id', $spotTypeCategory->id)
-                    ->with('remotePhotos', 'hotel', 'amenities')
+                    ->with('remotePhotos', 'hotel', 'amenities', 'votes')
                     ->first();
             if ($hotel === null) {
                 throw new NotFoundHttpException;

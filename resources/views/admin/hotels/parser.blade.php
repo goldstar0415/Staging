@@ -81,6 +81,8 @@ $(function(){
     var totalRows        = 0;
     var rowsParsed       = 0;
     var fileOffset       = 0;
+    var rowsAdded        = 0;
+    var rowsUpdated      = 0;
     var headers          = [];
     var token            = $('input[name="_token"]').val();
     var timerInterval    = null;
@@ -124,7 +126,6 @@ $(function(){
     // File upload handle
     $form.on('submit', function(e){
         e.preventDefault();
-        
         if( !$form.is('.loading'))
         {
             var formData = new FormData(this);
@@ -161,7 +162,7 @@ $(function(){
                         if($('input[name="auto-parse"]').is(':checked'))
                         {
                             $parseBtn.click();
-                        }    
+                        }
                     }
                     else
                     {
@@ -193,7 +194,6 @@ $(function(){
     $parseBtn.on('click', function(e) {
         e.preventDefault();
         startTimer();
-        
         if( !$form.is('.loading') )
         {
             if( !fileForParse )
@@ -237,6 +237,8 @@ $(function(){
                 {
                     rowsParsed = response.rows_parsed;
                     fileOffset = response.file_offset;
+                    rowsAdded   += response.rows_added;
+                    rowsUpdated +=  response.rows_updated;
                     if(response.headers)
                     {
                         headers = response.headers;
@@ -256,7 +258,10 @@ $(function(){
                     {
                         var percent = Math.round(rowsParsed * 100 / totalRows);
                         $progress.attr('aria-valuenow', percent).css('width', percent + '%');
-                        message('Rows parsed now: ' + rowsParsed);
+                        message('Rows parsed that step: ' + response.rows_parsed_now);
+                        message('Total rows added to base: ' + rowsAdded);
+                        message('Total rows updated: ' + rowsUpdated);
+                        message('Total parsed rows: ' + rowsParsed);
                         parseHandler();
                     }
                     if(response.messages && response.messages.length > 0)
@@ -298,10 +303,12 @@ $(function(){
     
     function startTimer() {
         timerInterval = setInterval(timerIntervalHandler, 1000);
+        $progress.addClass('active');
     }
     
     function stopTimer() {
         clearInterval(timerInterval);
+        $progress.removeClass('active');
     }
     
     function timerIntervalHandler() {

@@ -10,8 +10,16 @@ use Box\Spout\Common\Helper\EncodingHelper;
 class Reader extends ExtReader
 {
     public $offset;
+    
+    protected $fieldDelimiter = ',';
 
-    public function __construct() 
+    protected $fieldEnclosure = '"';
+
+    protected $encoding = EncodingHelper::ENCODING_UTF8;
+
+    protected $endOfLineCharacter = "\n";
+
+    public function __construct()
     {
         $this->setGlobalFunctionsHelper(new GlobalFunctionsHelper());
     }

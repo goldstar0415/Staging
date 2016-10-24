@@ -24,7 +24,10 @@
         "bosnadev/database": "0.12",
         "aws/aws-sdk-php": "<3.0.0",
         "guzzlehttp/guzzle": "6.*",
-        "box/spout": "^2.6"
+        "box/spout": "^2.6",
+        "doctrine/dbal": "^2.5",
+        "skagarwal/google-places-api": "^1.0",
+        "neitanod/forceutf8": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -32,8 +35,7 @@
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1",
         "laracasts/generators": "dev-master",
-        "barryvdh/laravel-ide-helper": "^2.0@dev",
-        "doctrine/dbal": "^2.6@dev"
+        "barryvdh/laravel-ide-helper": "^2.0@dev"
     },
     "autoload": {
         "classmap": [

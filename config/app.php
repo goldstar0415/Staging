@@ -164,7 +164,8 @@ return [
         ChrisKonnertz\OpenGraph\OpenGraphServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Yangqi\Htmldom\HtmldomServiceProvider::class,
-        Vinkla\Instagram\InstagramServiceProvider::class
+        Vinkla\Instagram\InstagramServiceProvider::class,
+        SKAgarwal\GoogleApi\ServiceProvider::class,
     ],
 
     /*
@@ -225,7 +226,8 @@ return [
         'OpenGraph' => ChrisKonnertz\OpenGraph\OpenGraph::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Htmldom' => Yangqi\Htmldom\Htmldom::class,
-        'Instagram' => Vinkla\Instagram\Facades\Instagram::class
+        'Instagram' => Vinkla\Instagram\Facades\Instagram::class,
+        'GooglePlaces' => SKAgarwal\GoogleApi\Facade::class,
     ],
 
 ];

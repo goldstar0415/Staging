@@ -12,13 +12,13 @@ use App\Services\Privacy;
 use App\Spot;
 use App\SpotHotel;
 use App\SpotAmenity;
+use App\SpotVote;
 use App\RemotePhoto;
 use App\SpotTypeCategory;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Client;
+use SKAgarwal\GoogleApi\PlacesApi;
 
 use App\Http\Requests;
 
@@ -35,7 +35,7 @@ class HotelController extends Controller
      * @var Guard
      */
     private $auth;
-    
+        
     /**
      * HotelController constructor.
      */
@@ -56,9 +56,9 @@ class HotelController extends Controller
 
         $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
             
-        $hotels = Spot::orderBy('id')
+        $hotels = Spot::orderBy('id', 'asc')
                     ->where('spot_type_category_id', $spotTypeCategory->id)
-                    ->with('remotePhotos', 'hotel', 'amenities'); //::query();
+                    ->with('remotePhotos', 'hotel', 'amenities'); 
 
         return $this->paginatealbe($request, $hotels, 15);
     }
@@ -89,13 +89,65 @@ class HotelController extends Controller
      */
     public function show($hotel)
     {
+        
+        $googlePlaceInfo = $this->getGooglePlaceInfo($hotel);
+        $hotel->google_response = $googlePlaceInfo;
+        
         $amenitiesArray = [];
+        if($hotel->hotel && !$hotel->hotel->is_booking_parsed && $this->checkUrl($hotel->hotel->booking_url))
+        {
+            $hotelInfo = $hotel->hotel;
+            $bookingUrl = $this->getBookingUrl($hotel->hotel->booking_url);
+            if($bookingUrl)
+            {
+                $bookingPageContent = $this->getPageContent($bookingUrl, [
+                    'headers' => $this->getBookingHeaders()
+                ]);
+                if($bookingPageContent)
+                {
+                    $remote_photos = false;
+                    if( $remote_photos = $this->saveBookingPhotos($bookingPageContent, $hotel) )
+                    {
+                        $hotel->remote_photos = $hotel->remotePhotos->merge($remote_photos);
+                    }
+                    $amenities = false;
+                    if( $amenities = $this->saveBookingAmenities($bookingPageContent, $hotel) )
+                    {
+                        $amenitiesArray = $amenities;
+                    }
+
+                    $reviewsUrl = $this->getReviewsUrl($hotel->hotel->booking_url);
+                    $reviews = false;
+                    if($reviewsUrl)
+                    {
+                        $reviewsPageContent = $this->getPageContent($reviewsUrl, [
+                            'headers' => $this->getBookingHeaders()
+                        ]);
+
+                        $reviews = $this->saveReviews($reviewsPageContent, $hotel);
+                    }
+                    if($googlePlaceInfo)
+                    {
+                        $googlePhotos = $this->saveGooglePlacePhotos($hotel, $googlePlaceInfo);
+                        $remote_photos = (!$remote_photos) ? $googlePhotos : $googlePhotos->merge($remote_photos);
+                        $googleReviews = $this->saveGooglePlaceReviews($hotel, $googlePlaceInfo);
+                        $reviews = (!$reviews) ? $googleReviews : $googleReviews->merge($reviews);
+                    }
+                    if($remote_photos || $amenities || $reviews)
+                    {
+                        $hotelInfo->is_booking_parsed = true;
+                        $hotelInfo->save();
+                        $hotel->hotel = $hotelInfo;
+                    }
+                }
+            }
+        }
+        
         foreach($hotel->amenities as $item)
         {
             $amenitiesArray[$item->title][] = $item->item;
         }
         $hotel->amenitiesArray = $amenitiesArray;
-        
         
         return $hotel;
     }
@@ -131,19 +183,64 @@ class HotelController extends Controller
     
     public function prices (Request $request, Spot $hotel)
     {
+        $result       = [];
+        $hotelInfo    = $hotel->hotel;
         $dates        = $request->all();
-        $from         = date_parse_from_format ( 'm.d.Y' , $dates['start_date'] );
-        $to           = date_parse_from_format ( 'm.d.Y' , $dates['end_date'] );
-        //$picsArr      = [];
-        $amenitiesArr = [];
+        $from         = date_parse_from_format( 'm.d.Y' , $dates['start_date'] );
+        $to           = date_parse_from_format( 'm.d.Y' , $dates['end_date'] );
+        
+        $result['dates'] = [
+            'from' => $from,
+            'to'   => $to,
+        ];
+        
+        $result['data']['amenitiesArray'] = [];
+        $result['data']['hotels'] = false;
+        $result['data']['booking'] = false;
         
         $fromString   = $from['year'] . '-' . (strlen($from['month']) == 1?'0':'') . $from['month'] . '-' . (strlen($from['day']) == 1?'0':'') . $from['day'];
         $toString     =   $to['year'] . '-' . (strlen(  $to['month']) == 1?'0':'') .   $to['month'] . '-' . (strlen(  $to['day']) == 1?'0':'') .   $to['day'];
-        $client       = new Client(['cookies' => true]); 
         
         
         // Hotels.com parser
-        $hotelsPrice = false;
+        
+        $result['data']['hotelsUrl'] = $this->getHotelsUrl($hotelInfo->hotelscom_url, $fromString, $toString);
+        
+        if($result['data']['hotelsUrl'])
+        {
+            $hotelsPageContent = $this->getPageContent($result['data']['hotelsUrl']);
+            
+            if($hotelsPageContent)
+            {
+                $result['data']['hotels'] = $this->getHotelsPrice($hotelsPageContent);
+            }
+        }
+        
+        //Booking.com parser
+        
+        $result['data']['bookingUrl'] = $this->getBookingUrl($hotelInfo->booking_url, $fromString, $toString, true);
+        if($result['data']['bookingUrl'])
+        {
+            $bookingPageContent = $this->getPageContent($result['data']['bookingUrl'], [
+                'headers' => $this->getBookingHeaders()
+            ]);
+            if($bookingPageContent)
+            {
+                $result['data']['booking'] = $this->getBookingPrice($bookingPageContent);
+            }
+        }
+
+        $result['result'] = $hotel;
+        return $result;
+    }
+    
+    protected function checkUrl($url)
+    {
+        return filter_var($url, FILTER_VALIDATE_URL);
+    }
+    
+    protected function getHotelsQuery($fromString, $toString)
+    {
         $hotelsQuery = [
             'pos' => 'HCOM_US',
             'locale' => 'en_US',
@@ -153,167 +250,402 @@ class HotelController extends Controller
             'q-room-0-children' => 0,
             'tab' => 'description'
         ];
-        $hotelsUrl = $hotel->hotel->hotelscom_url . '?' . http_build_query($hotelsQuery);
-        
-        try {
-            $hotelsContent = $client->get($hotelsUrl); 
-        }
-        catch(ConnectException $e)
+        return http_build_query($hotelsQuery);
+    }
+    
+    protected function getHotelsUrl($url, $fromString, $toString)
+    {
+        if($this->checkUrl($url))
         {
-            $hotelsContent = false;
+            return $url . '?' . $this->getHotelsQuery($fromString, $toString);
         }
-        
-        if($hotelsContent)
-        {
-            $hotelsRes = new \Htmldom($hotelsContent->getBody()->getContents());
+        return false;
+    }
+    
+    protected function getHotelsPrice($hotelsRes)
+    {
 
-            if( $hotelsPriceObj = $hotelsRes->find('span.current-price', 0))
-            {
-                $hotelsPrice = $hotelsPriceObj->innertext();
-            }
-            elseif( $hotelsPriceObj = $hotelsRes->find('meta[itemprop=priceRange]', 0) )
-            {
-                $hotelsPrice = explode(' ' , $hotelsPriceObj->getAttribute('content'));
-                $hotelsPrice = array_pop($hotelsPrice);
-            }
+        if( $hotelsPriceObj = $hotelsRes->find('span.current-price', 0))
+        {
+            return $hotelsPriceObj->innertext();
         }
-        else {
-            $hotelsPrice = false;
+        elseif( $hotelsPriceObj = $hotelsRes->find('meta[itemprop=priceRange]', 0) )
+        {
+            $hotelsPrice = explode(' ' , $hotelsPriceObj->getAttribute('content'));
+            return array_pop($hotelsPrice);
         }
+        return false;
         
-        
-        //Booking.com parser
-        $bookingPrice = false;
+    }
+    
+    protected function getBookingQuery($fromString = false, $toString = false, $withDates = false)
+    {
         $bookingQuery  = [
-            'checkin'           => $fromString, 
-            'checkout'          => $toString,
             'room1'             => 'A',
             'selected_currency' => 'USD',
             'changed_currency'  => 1,
             'top_currency'      => 1, 
             'lang'              => 'en-us'
         ];
-        $bookingUrl = preg_replace( '#\..?.?.?.?.?\.?html#' , '.html' , $hotel->hotel->booking_url) . '?' . http_build_query($bookingQuery);
-        try {
-            $bookingContent = $client->get($bookingUrl, [
-                //'debug' => true,
-                'headers' => [
-                    'Host' => 'www.booking.com',
-                    'Connection' => 'keep-alive',
-                    'Cache-Control' => 'max-age=0',
-                    'Upgrade-Insecure-Requests' => '1',
-                    'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
-                    'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                    'Accept-Encoding' => 'gzip, deflate, sdch',
-                    'Accept-Language' => 'ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4',
-                    'Cookie' => 'lastSeen=0',
-                ]
-            ]);
-        }
-        catch (ConnectException $e)
+        if($withDates)
         {
-            $bookingContent = false;
+            $bookingQuery['checkin'] = $fromString;
+            $bookingQuery['checkout'] = $toString;
         }
-        if($bookingContent)
+        return http_build_query($bookingQuery);
+    }
+    
+    protected function getBookingUrl($url, $fromString = false, $toString = false, $withDates = false)
+    {
+        if($this->checkUrl($url))
         {
-            $bookingContentString = $bookingContent->getBody()->getContents();
-            $bookingRes = new \Htmldom($bookingContentString);
-            $bookingPrice = false;
-            $price = false;
-            foreach($bookingRes->find('.rooms-table-room-price') as $bookingPriceObj)
-            {
-                $newPrice = trim(str_replace('US$', '', $bookingPriceObj->innertext()));
-                if( ($price && ( $newPrice < $price )) || !$price )
-                {
-                    $price = $newPrice;
-                }
-            }
-            $bookingPrice = $price;
-            if( $price )
-            {
-                $bookingPrice = '$' . $price;
-            }
-            if( empty($bookingPrice) && ($bookingPriceObj = $bookingRes->find('meta[itemprop=priceRange]', 0)) )
-            {
-                
-                $bookingPrice = explode(' ' , $bookingPriceObj->getAttribute('content'));
-                $bookingPrice = str_replace('US', '', array_pop($bookingPrice));
-            }
-            /*if( $bookingSlider = $bookingRes->find('.hp-gallery-slides', 0) )
-            {
-                foreach( $bookingSlider->find('img') as $picture )
-                {
-                    $url = $picture->getAttribute('src');
-                    if(empty($url))
-                    {
-                        $url = $picture->getAttribute('data-lazy');
-                    }
-                    if( !RemotePhoto::where('url', $url)->exists() )
-                    {
-                        $picsArr[] = new RemotePhoto([
-                            'url' => $url,
-                            'image_type' => 0,
-                            'size' => 'original',
-                        ]);
-                    }
-                }
-                $hotel->remotePhotos()->saveMany( $picsArr );
-            }
-            $hotelChanged = false;
-            if( ( $bookingDesc = $bookingRes->find('#summary', 0) ) && empty($hotel->description) )
-            {
-                $bookingDesc->find('.chain-content ', 0)->outertext = '';
-                
-                $hotel->description = $bookingDesc->innertext();
-                $hotelChanged = true;
-            }*/
-            if( ( $bookingAmenities = $bookingRes->find('div.facilitiesChecklist', 0) ) && $hotel->amenities()->count() == 0 )
-            {
-                foreach( $bookingAmenities->find('.facilitiesChecklistSection') as $facilitiesChecklistSection )
-                {
-                    $sectionTitle = trim($facilitiesChecklistSection->find('h5', 0)->innertext());
-                    foreach($facilitiesChecklistSection->find('li') as $sectionItem)
-                    {
-                        $body = trim($sectionItem->innertext());
-                        if( !SpotAmenity::where('spot_id', $hotel->id)
-                                         ->where('title', $sectionTitle)
-                                         ->where('item', $body)->exists() )
-                        $amenity = new SpotAmenity([
-                            'title' => $sectionTitle, 
-                            'item' => $body,
-                            'spot_id' => $hotel->id
-                        ]);
-                        $amenity->save();
-                        $amenitiesArr[$sectionTitle][] = $body;
-                    }
-                }
-            }
-            
-            /*if($hotelChanged)
-            {
-                $hotel->save();
-            }*/
-            
+            $query = '?' . $this->getBookingQuery($fromString, $toString, $withDates);
+            return preg_replace( '#\..?.?.?.?.?\.?html#' , '.html' , $url) . $query;
         }
-        else {
-            $bookingPrice = false;
-        }
-                
+        return false;
+    }
+    
+    protected function getBookingHeaders()
+    {
         return [
-            'result' => $hotel, 
-            'dates'  => [
-                'from' => $from, 
-                'to'   => $to
-            ],
-            'data'   => [
-                'hotels'            => $hotelsPrice, 
-                'booking'           => $bookingPrice,
-                'bookingUrl'        => $bookingUrl,
-                'hotelsUrl'         => $hotelsUrl,
-                //'remote_photos'     => $picsArr,      
-                'amenitiesArray'    => $amenitiesArr,
-            ] 
-        ]; 
+            'Host' => 'www.booking.com',
+            'Connection' => 'keep-alive',
+            'Cache-Control' => 'max-age=0',
+            'Upgrade-Insecure-Requests' => '1',
+            'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36',
+            'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Encoding' => 'gzip, deflate, sdch',
+            'Accept-Language' => 'ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4',
+            'Cookie' => 'lastSeen=0',
+        ];
+    }
+    
+    protected function getBookingPrice($bookingRes)
+    {
+        $price = false;
+        foreach($bookingRes->find('.rooms-table-room-price') as $bookingPriceObj)
+        {
+            $newPrice = trim(str_replace('US$', '', $bookingPriceObj->innertext()));
+            if( ($price && ( $newPrice < $price )) || !$price )
+            {
+                $price = $newPrice;
+            }
+        }
+        $result = $price;
+        if( $price )
+        {
+            $result = '$' . $price;
+        }
+        if( empty($result) && ($bookingPriceObj = $bookingRes->find('meta[itemprop=priceRange]', 0)) )
+        {
+            $result = explode(' ' , $bookingPriceObj->getAttribute('content'));
+            $result = str_replace('US', '', array_pop($result));
+        }
+        return $result;
+    }
+    
+    protected function saveBookingPhotos($bookingRes, $hotel)
+    {
+        $result = [];
+        if( $bookingSlider = $bookingRes->find('.hp-gallery-slides', 0) )
+        {
+            foreach( $bookingSlider->find('img') as $picture )
+            {
+                $url = $picture->getAttribute('src');
+                if(empty($url))
+                {
+                    $url = $picture->getAttribute('data-lazy');
+                }
+                if( !RemotePhoto::where('url', $url)->exists() )
+                {
+                    $result[] = new RemotePhoto([
+                        'url' => $url,
+                        'image_type' => 0,
+                        'size' => 'original',
+                    ]);
+                }
+            }
+            $hotel->remotePhotos()->saveMany( $result );
+        }
+        return collect($result);
+    }
+    
+    protected function saveBookingAmenities($bookingRes, $hotel)
+    {
+        $result = [];
+        if( ( $bookingAmenities = $bookingRes->find('div.facilitiesChecklist', 0) ) && $hotel->amenities()->count() == 0 )
+        {
+            foreach( $bookingAmenities->find('.facilitiesChecklistSection') as $facilitiesChecklistSection )
+            {
+                $sectionTitle = $facilitiesChecklistSection->find('h5', 0);
+                $facilityGroupIcon = $sectionTitle->find('.facilityGroupIcon', 0);
+                if($facilityGroupIcon)
+                {
+                $facilityGroupIcon->outertext = '';
+                }
+                $sectionTitle = trim($sectionTitle->innertext());
+                foreach($facilitiesChecklistSection->find('li') as $sectionItem)
+                {
+                    $body = trim($sectionItem->innertext());
+                    if( !SpotAmenity::where('spot_id', $hotel->id)
+                                     ->where('title', $sectionTitle)
+                                     ->where('item', $body)->exists() )
+                    $amenity = new SpotAmenity([
+                        'title' => $sectionTitle, 
+                        'item' => $body,
+                        'spot_id' => $hotel->id
+                    ]);
+                    $amenity->save();
+                    $result[$sectionTitle][] = $body;
+                }
+            }
+        }
+        return $result;
     }
 
+
+    protected function getReviewsUrl($booking_url)
+    {
+        if($this->checkUrl($booking_url))
+        {
+            $reviewsUrlArr  = explode( '/' , $booking_url);
+            $reviewsUrl     = end( $reviewsUrlArr );
+            $reviewsUrl     = preg_replace( '#\..?.?.?.?.?\.?html#' , '' , $reviewsUrl);
+            $cc1            = $reviewsUrlArr[count($reviewsUrlArr) - 2];
+            return 'http://www.booking.com/reviewlist.html?pagename=' . $reviewsUrl . ';cc1=' . $cc1;
+        }
+        return false;
+    }
+    
+    protected function saveReviews($reviewsContent, $hotel)
+    {
+        $result = [];
+        foreach( $reviewsContent->find('.review_item') as $reviewObj )
+        {
+            $reviewTextObj = $reviewObj->find('.review_pos', 0);
+            if(!$reviewTextObj)
+            {
+                continue;
+            }
+            $item = new SpotVote();
+            $idObj = $reviewObj->find('input[name=review_url]', 0);
+            $item->remote_id = 'bk_' . $idObj->getAttribute ( 'value' );
+            if( !SpotVote::where('remote_id', $item->remote_id)->exists())
+            {
+                $sign = $reviewTextObj->find('.review_item_icon', 0);
+                $sign->outertext = '';
+                $item->message = $reviewTextObj->innertext();
+                $scoreObj = $reviewObj->find('.review_item_review_score', 0);
+                $item->vote = round((float)$scoreObj->innertext()/2);
+                $hotel->votes()->save($item);
+                $result[] = $item;
+            }
+        }
+        return collect($result);
+    }
+    
+    protected function getPageContent($url, $options = [])
+    {
+        $client = new Client([
+            'cookies' => true, 
+            'http_errors' => false
+        ]);
+        
+        return $this->getResponse($client, $url, $options);
+    }
+    
+    public function getResponse($client, $url, $options)
+    {
+        try {
+            $content = $client->get($url, $options); 
+        }
+        catch(Exception $e)
+        {
+            $content = false;
+        }
+        if($content)
+        {
+            return new \Htmldom($content->getBody()->getContents());
+        }
+        return false;
+    }
+    
+    public function getGooglePlaceId(Spot $hotel)
+    {
+        $hotelInfo = $hotel->hotel;
+        if( $hotelInfo && !empty($hotelInfo->google_pid) )
+        {
+            return $hotelInfo->google_pid;
+        }
+        $address = $hotel->points()->first();
+        $google_pid = false;
+        if($address && $hotelInfo)
+        {
+            $hotel->query = implode(', ', [
+                $hotel->title,
+                $address->address,
+                $hotelInfo->city_hotel,
+                $this->getCountryNameByCode($hotel)
+            ]);
+            
+            $googlePlaces = new PlacesApi(config('google.places.key'));
+            try
+            {
+                $response = $googlePlaces->placeAutocomplete( $hotel->query);
+                
+                $hotel->google_response = $response;
+                
+                if( !empty($response['predictions']) )
+                {
+                    foreach($response['predictions'] as $resp)
+                    {
+                        if(isset($resp['description']) && strpos($resp['description'], $hotel->title) !== false)
+                        {
+                            $google_pid = $resp['place_id'];
+                        }
+                    }
+                }
+            }
+            catch(Exception $e)
+            {
+                $google_pid = false;
+            }
+            if( !$google_pid )
+            {
+                
+                $options = [
+                    'json'    => [
+                        'location' => [
+                            'lat' => $address->location->getLat(),
+                            'lng' => $address->location->getLng()
+                        ],
+                        'name' => $hotel->title,
+                        'address' => $hotel->query,
+                        'types' => ['establishment', 'lodging', 'point_of_interest'],
+                    ],
+                ];
+                
+                $response = $this->getGooglePlaceAddResponse($options);
+                
+                if($response)
+                {
+                    $hotel->google_place_add = true;
+                    $hotel->google_response = $response->getBody()->getContents();
+                    
+                    //TODO: save place_id => $HotelInfo->google_pid
+                }
+            }
+            return $google_pid;
+        }
+        return false;
+    }
+    
+    public function getGooglePlaceAddResponse($options)
+    {
+        $client = new Client([
+            'cookies' => true, 
+            'http_errors' => false,
+            'base_uri' => config('google.places.baseUri')
+        ]);
+        try {
+            $response = $client->request('POST', 'add/json?key=' . config('google.places.key'), $options);
+        }
+        catch(Exception $e)
+        {
+            $response = false;
+        }
+        return $response;
+    }
+    
+    public function getCountryNameByCode($hotel)
+    {
+        $hotelInfo = $hotel->hotel;
+        if($hotelInfo && !empty($hotelInfo->country_code))
+        {
+            return locale_get_display_region('-' . strtoupper($hotelInfo->country_code), 'en');
+        }
+        return '';
+    }
+    
+    public function getGooglePlaceInfo(Spot $hotel)
+    {
+        $hotelInfo = $hotel->hotel;
+        if($hotelInfo && !empty($hotelInfo->google_pid))
+        {
+            $googlePlaces = new PlacesApi(config('google.places.key'));
+            $response = false;
+            try
+            {
+                $response = $googlePlaces->placeDetails($hotelInfo->google_pid);
+            }
+            catch(Exception $e)
+            {
+                $response = false;
+            }
+            return $response;
+        }
+        return false;
+    }
+    
+    public function saveGooglePlaceReviews($hotel, $googlePlaceInfo)
+    {
+        $result = [];
+        if( isset($googlePlaceInfo['result']['reviews']) && !empty($googlePlaceInfo['result']['reviews']))
+        {
+            $googleReviews = $googlePlaceInfo['result']['reviews'];
+            foreach($googleReviews as $item)
+            {
+                $remote_id = $this->getHashForGoogle($item);
+                
+                if( !SpotVote::where('remote_id', $remote_id)->exists())
+                {
+                    $itemObj = new SpotVote();
+                    $itemObj->remote_id = $remote_id;
+                    $itemObj->message = $item['text'];
+                    $itemObj->vote = $item['rating'];
+                    $hotel->votes()->save($itemObj);
+                    $result[] = $itemObj;
+                }
+            }
+        }
+        return collect($result);
+    }
+    
+    public function saveGooglePlacePhotos($hotel, $googlePlaceInfo)
+    {
+        $result = [];
+        if( isset($googlePlaceInfo['result']['photos']) && !empty($googlePlaceInfo['result']['photos']))
+        {
+            $googlePhotos = $googlePlaceInfo['result']['photos'];
+            foreach($googlePhotos as $item)
+            {
+                $photoUrl = $this->getGooglePhotoUrl($item['photo_reference']);
+                
+                if( !RemotePhoto::where('url', $photoUrl)->exists() )
+                {
+                    $result[] = new RemotePhoto([
+                        'url' => $photoUrl,
+                        'image_type' => 0,
+                        'size' => 'original',
+                    ]);
+                }
+            }
+            $hotel->remotePhotos()->saveMany( $result );
+        }
+        return collect($result);
+    }
+    
+    public function getGooglePhotoUrl($photo_reference)
+    {
+        return config('google.places.baseUri') . 'photo'
+        . '?maxwidth=400'
+        . '&photoreference=' . $photo_reference
+        . '&key=' . config('google.places.key');
+    }
+
+    public function getHashForGoogle($item)
+    {
+        return 'gg_' . md5( $item['author_name'] . $item['rating'] . $item['text'] );
+    }
+    
 }

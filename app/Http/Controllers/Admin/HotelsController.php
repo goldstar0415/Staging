@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use ForceUTF8\Encoding;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\Admin\HotelFilterRequest;
 use App\SpotHotel;
@@ -171,6 +172,8 @@ class HotelsController extends Controller
         $total_rows         = $request->total_rows;
         $updateExisting     = (int)$request->update;
         $result['update']   = $updateExisting;
+        $result['rows_added'] = 0;
+        $result['rows_updated'] = 0;
         $rows_parsed_before = $request->rows_parsed;
         $file_offset        = $request->file_offset;
         $headers            = $request->input('headers', []);
@@ -187,6 +190,9 @@ class HotelsController extends Controller
         }
         else
         {
+            config([
+                'excel.cache.enable'  => false
+                ]);
             $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
             foreach ($reader->getSheetIterator() as $sheet) {
                 foreach ($sheet->getRowIterator() as $row) {
@@ -207,8 +213,20 @@ class HotelsController extends Controller
                     }
                     $item = [];
                     foreach($headers as $title => $index) {
-                        $item[$title] = mb_convert_encoding($row[$index], "UTF-8", "ISO-8859-16");
-                        //$item[$title] = $row[$index];
+                        $item[$title] = false;
+                        foreach(mb_detect_order() as $encoding)
+                        {
+                            $str = mb_convert_encoding($row[$index], "UTF-8", $encoding);
+                            if(stristr($str, '?') === FALSE) {
+                                $item[$title] = $str;
+                                break;
+                            }
+                        }
+                        if( !$item[$title] )
+                        {
+                            $item[$title] = mb_convert_encoding($row[$index], "UTF-8", "ISO-8859-16");
+                        }
+                        //$item[$title] = Encoding::toUTF8($row[$index]);
                     }
                     
                     
@@ -240,9 +258,9 @@ class HotelsController extends Controller
                                 {
                                     $hotel->$column = $item[$value];
                                 }
-
                             }
                             $hotel->save();
+                            $result['rows_updated']++;
                         }
                         elseif(!$spotExists)
                         {
@@ -255,6 +273,7 @@ class HotelsController extends Controller
                                 'is_private' => false,
                                 'remote_id' => isset($item['booking_id']) ? 'bk_' . $item['booking_id']: ''
                             ]);
+                            $result['rows_added']++;
                         }
                         
                         if($updateExisting || !$spotExists){
