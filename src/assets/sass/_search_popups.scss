@@ -390,6 +390,18 @@
     }
 }
 
+
+.new-result {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .message-loading {
+        font-size: 20px;
+        color: lightgrey;
+    }
+}
+
+
 #body .sort-menu {
     &.hidden {
         display: none !important;
@@ -401,6 +413,17 @@
     z-index: 50;
     background: #fff;
     width: 470px;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    .message-loading {
+        font-size: 30px;
+        color: lightgrey;
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+
+    }
     // box-shadow: rgba(0, 0, 0, 0.2) -3px 0 13px 0;
     overflow: auto;
     @media(min-width: 768px) and (orientation: portrait) {
@@ -1969,7 +1992,7 @@
 
 .new-filter {
     background-color: rgb(245, 245, 247);
-    padding: 5px 15px 15px;
+    padding: 5px 30px 15px;
     position: absolute;
     z-index: 999;
     top: 50px;
@@ -2022,11 +2045,11 @@
         border: 1px solid lightgrey;
 
         &:first-child {
-            margin-right: 1%;
+            // margin-right: 1%;
         }
 
         &:last-child {
-            margin-left: 1%;
+            // margin-left: 1%;
         }
     }
 
@@ -2039,29 +2062,56 @@
         label {
             color: rgb(180, 180, 180);
             padding: 10px 0;
-        }
-
-        .filter-group {
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
+            align-items: flex-end;
+            span {
+                font-weight: normal;
+            }
         }
 
         input,
         select {
             height: 3.5rem;
             min-height: 3.5rem;
-            width: 80%;
+            width: 100%;
         }
 
         .date-filters {
-            width: 80%;
+            width: 100%;
             position: relative;
             display: flex;
             // justify-content: space-between;
+            div {
+                height: 20px;
+                width: 2%;
+            }
             input {
                 width: 49%;
-                padding: 10px;
+                // padding: 10px;
+            }
+        }
+
+        #filterTags {
+            width: 100%;
+            margin-bottom: 50px;
+            .host {
+                margin: 0;
+                .tags {
+                    margin: 0;
+                    border: 1px solid #ccc !important;
+                    border-color: #ccc !important;
+                    background-color: white;
+                    input {
+                        width: 100% !important;
+                        margin: 0;
+                        height: 30px;
+                        min-height: 30px;
+                        padding: 0 0 0 10px;
+                        font-family: inherit;
+                        box-shadow: none;
+                    }
+                }
             }
         }
 

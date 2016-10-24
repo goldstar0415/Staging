@@ -39,7 +39,7 @@
         <div class="open-favorite" ng-if="$root.currentUser && $root.currentUser.id != Spot.spot.user_id">
             <a ng-if="!Spot.spot.is_favorite" class="glyphicon glyphicon-heart" ng-click="Spot.addToFavorite(Spot.spot)" style="color:lightgrey"></a>
             <a ng-if="Spot.spot.is_favorite" class="glyphicon glyphicon-heart" ng-click="Spot.removeFromFavorite(Spot.spot)" style="color:#EE4632"></a>
-            <p>Favourite</p>
+            <p>Favorite</p>
         </div>
         <share item="Spot.spot" type="spot"></share>
     </div>
