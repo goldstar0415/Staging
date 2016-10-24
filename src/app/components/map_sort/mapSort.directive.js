@@ -1,6 +1,24 @@
 (function () {
   'use strict';
 
+  angular.module('zoomtivity')
+      .filter('getById', function($rootScope) {
+          return function(input) {
+              if (input) {
+                  var arr = [];
+                  var i = 0,
+                      len = input.length;
+                  for (; i < len; i++) {
+                      if ($rootScope.visibleSpotsIds.indexOf(input[i].id) !== -1) {
+                          arr.push(input[i]);
+                      }
+                  }
+                  return arr;
+              }
+              return null;
+          }
+      });
+
   /*
    * Directive for spot control panel
    */
@@ -16,7 +34,7 @@
       }
     });
 
-  function mapSort($rootScope, $scope, $q, MapService, $http, $timeout, LocationService, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
+  function mapSort(getByIdFilter, $rootScope, $scope, $q, MapService, $http, $timeout, LocationService, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
 
 	var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
@@ -49,6 +67,14 @@
     vm.typeaheadSearch = typeaheadSearch;
     vm.typeaheadSelectLocation = typeaheadSelectLocation;
     vm.setImage = setImage;
+    // vm.isShowSpot = isShowSpot;
+    //
+    // function isShowSpot() {
+    //     // $rootScope.visibleSpotsIds.indexOf(item.id) != -1
+    //     console.log('ISSHOW');
+    //     return false;
+    // }
+
 
     vm.searchParams = {
       typeahead: {

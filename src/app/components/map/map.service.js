@@ -22,7 +22,9 @@
       var clusterOptions = {
         //disableClusteringAtZoom: 8,
 		//chunkedLoading: true,
-        spiderfyDistanceMultiplier: 3
+        spiderfyDistanceMultiplier: 3,
+        // disableClusteringAtZoom: 17,
+        //spiderfyOnMaxZoom: true,
       };
       //============================================
       var eventsLayer = new L.MarkerClusterGroup(clusterOptions);
@@ -91,6 +93,49 @@
           } else {
               cancelFullScreen.call(doc);
               elem.src = '../../assets/img/svg/fullscreen.svg';
+          }
+      }
+
+      function spotsOnScreen() {
+          if (!$rootScope.$$phase) {
+              var _borderMarkerLayer = undefined;
+              var layerGroup = null;
+              if (typeof _borderMarkerLayer === 'undefined') {
+                  _borderMarkerLayer = new L.LayerGroup();
+              }
+              _borderMarkerLayer.clearLayers();
+
+              var features = [];
+              if (layerGroup != null) {
+                  features = layerGroup.getLayers();
+              } else {
+                  features = map._getFeatures();
+              }
+
+              var mapPixelBounds = map.getSize();
+              $rootScope.visibleSpotsIds = [];
+              for (var i = 0; i < features.length; i++) {
+
+                  var currentMarkerPosition = map.latLngToContainerPoint(
+                      features[i].getLatLng());
+
+                  if (!(currentMarkerPosition.y < 0 ||
+                      currentMarkerPosition.y > mapPixelBounds.y ||
+                      currentMarkerPosition.x > mapPixelBounds.x ||
+                      currentMarkerPosition.x < 0)) {
+                          if ('_childClusters' in features[i]) {
+                              var mrkrs = features[i].getAllChildMarkers();
+                              for (var j = 0; j < mrkrs.length; j++) {
+                                  $rootScope.visibleSpotsIds.push(mrkrs[j].spot_id);
+                                  continue;
+                              }
+                          }
+                          if (!('_ctx' in features[i])) {
+                              $rootScope.visibleSpotsIds.push(features[i].spot_id);
+                          }
+                  }
+              }
+              $rootScope.$apply();
           }
       }
 
@@ -546,9 +591,9 @@
 
           return container;
       },
-      _click: function (e) {
-        toggleFullScreen();
-      }
+      _click: function(e) {
+                toggleFullScreen();
+          }
     });
     L.Control.FullScreen = function (options) {
       return new L.Control.fullScreen(options);
@@ -739,6 +784,23 @@
           maxZoom: 17,
           minZoom: 3
         });
+
+        L.extend(map, {
+            _getFeatures: function() {
+                var out = [];
+                for (var l in this._layers) {
+                    if (typeof this._layers[l].getLatLng !== 'undefined') {
+                        out.push(this._layers[l]);
+                    }
+                }
+                return out;
+            }
+        });
+
+        map.on('resize', spotsOnScreen, this);
+        map.on('zoomend', spotsOnScreen, this);
+        map.on('moveend', spotsOnScreen, this);
+        map.on('viewreset', spotsOnScreen, this);
 
         //add controls
         AddControls();
@@ -1696,7 +1758,7 @@
 
       function CreateCustomIcon(iconUrl, className, iconSize, type, id) {
         var iconSize = iconSize || [50, 50];
-        if (type === undefined && ($rootScope.$state.current.name === 'photos.list' || $rootScope.$state.current.name === 'photos.album')) {
+        if (type === undefined  && ($rootScope.$state.current.name === 'photos.list' || $rootScope.$state.current.name === 'photos.album')) {
             return new L.HtmlIcon({
                 html : "<div class='map-marker-icon map-marker-icon-photo'><img src='" + iconUrl + "' /></div>",
             });
@@ -1742,69 +1804,15 @@
       function BindSpotPopup(marker, spot) {
         var spot_id = spot.spot_id ? spot.spot_id : spot.spot.id;
         marker.on('click', function () {
-            Spot.get({id: spot_id}).$promise.then(function(data) {
-                $rootScope.setOpenedSpot(data);
-            });
+            if ($rootScope.$state.current.name == 'index') {
+                var spot = $.grep($rootScope.mapSortSpots.data, function(e){ return e.id == spot_id; });
+                $rootScope.setOpenedSpot(spot[0]);
+                $rootScope.$apply();
+            } else {
+                var user_id = spot.spot.user_id ? spot.spot.user_id : '';
+                $location.path(user_id + '/spot/' + spot_id);
+            }
         });
-        //
-        // if (angular.element(window).width() <= 992) {
-        //   marker.on('click', function () {
-        //     $modal.open({
-        //       templateUrl: 'SpotMapModal.html',
-        //       controller: 'SpotMapModalController',
-        //       controllerAs: 'SpotPopup',
-        //       modalClass: 'spot-mobile-modal',
-        //       resolve: {
-        //         spot: function () {
-        //           return Spot.get({id: spot_id}).$promise;
-        //         },
-        //         marker: function () {
-        //           return marker;
-        //         }
-        //       }
-        //     });
-        //   });
-        // } else {
-        //   var scope = $rootScope.$new();
-        //   var offset = 75;
-        //   var options = {
-        //     keepInView: false,
-        //     autoPan: true,
-        //     closeButton: false,
-        //     className: 'popup',
-        //     autoPanPaddingTopLeft: L.point(offset, offset),
-        //     autoPanPaddingBottomRight: L.point(offset, offset)
-        //   };
-        //
-        //   if (spot.spot_id) {
-        //     delete spot.id;
-        //   }
-        //
-        //   scope.item = spot;
-        //   scope.marker = marker;
-        //
-		//   marker.on('click', function () {
-		// 	if (this.getPopup()) {
-		// 		this.unbindPopup();
-		// 	}
-		// 	var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
-		// 	var popup = L.popup(options).setContent(popupContent[0]);
-		// 	this.bindPopup(popup).openPopup();
-        //
-        //     scope.item.$loading = true;
-        //
-        //     var syncSpot;
-        //     if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: spot_id}))) {
-        //       _loadSpotComments(scope, syncSpot);
-        //     } else {
-        //       Spot.get({id: spot_id}, function (fullSpot) {
-        //         //merge photos
-        //         fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
-        //         _loadSpotComments(scope, fullSpot);
-        //       });
-        //     }
-        //   });
-        // }
       }
 
       function _loadSpotComments(scope, spot) {
@@ -2202,6 +2210,7 @@
           GetCurrentLayer().clearLayers();
         }
         var markers = [];
+        console.log(type);
         _.each(spots, function (item) {
           var icon = CreateCustomIcon(item.spot.category.icon_url, 'custom-map-icons', [50, 50], type, item);
           if (item.location) {
@@ -2260,6 +2269,9 @@
           var icon = CreateCustomIcon(item.category_icon_url, 'custom-map-icons', [50, 50], type, item.spot_id);
           if (item.location) {
             var marker = L.marker(item.location, {icon: icon});
+            L.extend(marker, {
+                spot_id: item.spot_id
+            });
             item.marker = marker;
             BindSpotPopup(marker, item);
 

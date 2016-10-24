@@ -390,18 +390,6 @@
     }
 }
 
-
-.new-result {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .message-loading {
-        font-size: 20px;
-        color: lightgrey;
-    }
-}
-
-
 #body .sort-menu {
     &.hidden {
         display: none !important;
@@ -414,7 +402,6 @@
     background: #fff;
     width: 470px;
     // display: flex;
-    // justify-content: center;
     // align-items: center;
     .message-loading {
         font-size: 30px;
@@ -422,6 +409,7 @@
         width: 100%;
         text-align: center;
         margin-top: 30px;
+        padding: 20px;
 
     }
     // box-shadow: rgba(0, 0, 0, 0.2) -3px 0 13px 0;
@@ -2094,7 +2082,8 @@
 
         #filterTags {
             width: 100%;
-            margin-bottom: 50px;
+            max-width: 356px;
+            overflow: auto;
             .host {
                 margin: 0;
                 .tags {

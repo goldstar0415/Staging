@@ -19,6 +19,7 @@
     $rootScope.showMarkers = showMarkers;
     $rootScope.isFullScreen = false;
     $rootScope.isFilterOpened = false;
+    $rootScope.visibleSpotsIds = [];
 
     MapService.Init('map');
 

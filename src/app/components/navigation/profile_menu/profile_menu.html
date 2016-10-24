@@ -1,6 +1,6 @@
 <div class="col-xs-12 menu-profile menu-profile-opened">
-
-    <ul class="col-sm-offset-2 col-sm-10 col-md-offset-3 col-md-8 col-lg-offset-2 col-lg-8" ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
+<!-- ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id" -->
+    <ul class="col-sm-offset-2 col-sm-10 col-md-offset-3 col-md-8 col-lg-offset-2 col-lg-8">
         <li>
             <a class="nav-spots" ui-sref="spots({user_id: $root.currentUser.id})" ng-class="{active: $root.$state.current.name == 'spots' || $root.$state.current.name == 'spot'}">
                 <img src="assets/img/svg/new_icons/icon_main_menu/spot-white.svg" alt="icon" />
