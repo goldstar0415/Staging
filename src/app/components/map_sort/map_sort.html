@@ -74,9 +74,9 @@
     <div class="form-group">
         <label>By dates<span>clear</span></label>
         <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea, applied: ($root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date)}">
-            <input ng-datepicker ng-model="MapSort.searchParams.start_date" class="date" placeholder="FROM DATE" type="text" ng-disabled="!MapSort.isShowFilter">
+            <input ng-datepicker ng-model="MapSort.searchParams.start_date" class="date" placeholder="FROM" type="text" ng-disabled="!MapSort.isShowFilter">
             <div></div>
-            <input ng-datepicker ng-model="MapSort.searchParams.end_date" start-date="MapSort.searchParams.start_date" class="date" placeholder="TO DATE" type="text" ng-disabled="!MapSort.isShowFilter">
+            <input ng-datepicker ng-model="MapSort.searchParams.end_date" start-date="MapSort.searchParams.start_date" class="date" placeholder="TO" type="text" ng-disabled="!MapSort.isShowFilter">
         </div>
     </div>
     <div class="form-group">
@@ -90,13 +90,14 @@
 <!-- <div class="sort-menu hidden" ng-show="$root.mapSortSpots.data.length || $root.sortLayer == 'weather'"> -->
 <div class="sort-menu" ng-show="$root.isSidebarOpened && ($root.mapSortSpots.sourceSpots.length || MapSort.currentWeather)">
     <p ng-if="!$root.mapSortSpots.data.length" class="message-loading">Loading...</p>
+    <p ng-if="$root.mapSortSpots.data.length && !$root.visibleSpotsIds.length" class="message-loading">Can't find any spots in this area...</p>
 
 
 
 
 
     <!--Attention! HERE ADD CLASS "applied"-->
-    <div class="search-filters" ng-show="$root.sortLayer != 'weather'" ng-class="{'applied-filter': !MapSort.isShowFilter && !MapSort.isEmptyFilters()}">
+    <div class="search-filters" ng-show="$root.sortLayer != 'weather' && $root.visibleSpotsIds.length" ng-class="{'applied-filter': !MapSort.isShowFilter && !MapSort.isEmptyFilters()}">
         <!--ADD CLASS "applied" here and styles will change-->
         <div>
             <div class="new-search" ng-show="!MapSort.isShowFilter" ng-if="false">
@@ -243,7 +244,7 @@
                 <div class="new-result">
                     <!-- <div infinite-scroll="MapSort.loadNextSpots()" infinite-scroll-disabled="$root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length" class="clearfix" infinite-scroll-distance="1" infinite-scroll-container='".search-filters"'> -->
                     <div>
-                        <div ng-repeat="item in $root.mapSortSpots.data" class="new-spot">
+                        <div ng-repeat="item in $root.mapSortSpots.data | getById" class="new-spot">
                             <div class="spot-img">
                                 <div class="img" ng-click="$root.setOpenedSpot(item)">
                                     <img src="{{MapSort.setImage(item)}}" alt="spot_img">
