@@ -87,7 +87,7 @@
   <div id="map" class="mapResize map {{mapState}}" ng-class="{ 'not-index': $root.$state.current.name != 'index', 'sidebar-opened': $root.isSidebarOpened, 'filter-opened': $root.isFilterOpened }"></div>
 
   <!-- Opened spot -->
-  <div ng-if="$root.openedSpot != null">
+  <div ng-if="$root.openedSpot != null && $root.$state.current.name == 'index'">
       <spot spot="$root.openedSpot" modal="true"></spot>
   </div>
 

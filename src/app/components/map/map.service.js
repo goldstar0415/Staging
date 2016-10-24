@@ -21,7 +21,8 @@
       var controlGroup = L.featureGroup();
       var clusterOptions = {
         //disableClusteringAtZoom: 8,
-		//chunkedLoading: true
+		//chunkedLoading: true,
+        spiderfyDistanceMultiplier: 3
       };
       //============================================
       var eventsLayer = new L.MarkerClusterGroup(clusterOptions);
@@ -577,6 +578,7 @@
       _click: function (e) {
           if ($rootScope.isSidebarOpened && $rootScope.mapSortSpots.sourceSpots.length) {
             $rootScope.isFilterOpened = true;
+            $rootScope.$apply();
           }
       }
     });
@@ -1699,16 +1701,20 @@
                 html : "<div class='map-marker-icon map-marker-icon-photo'><img src='" + iconUrl + "' /></div>",
             });
         } else if ($rootScope.$state.current.name == 'index') {
-            // Spot.get({id: item.spot_id}).$promise.then(function(data) {
-            //     // console.log(data);
-            // });
-            //var spot = $rootScope.mapSortSpots.data;
-            // console.log(id);
-            // console.log($rootScope.mapSortSpots.data[0]);
             var spot = $.grep($rootScope.mapSortSpots.data, function(e){ return e.id == id; });
-            console.log(spot);
+            var image;
+            if (spot[0].spot_type_category_id == 2) {
+                image = '../../../assets/img/svg/Icon_Events.svg';
+            } else if (spot[0].spot_type_category_id == 3) {
+                image = '../../../assets/img/svg/Icon_Grab_Grub.svg';
+            } else if (spot[0].spot_type_category_id == 14) {
+                image = '../../../assets/img/svg/Icon_To_do.svg';
+            } else {
+                image = '../../../assets/img/svg/Icon_Get_a_room.svg';
+            }
+            //console.log(spot);
             return new L.HtmlIcon({
-                html : "<div class='map-marker-icon' style='background:white;color:red;'>" + spot[0].rating + "</div>",
+                html : "<div class='spot-icon'><span class='spot-icon-info'>no data</span><img src='" + image + "'><div class='spot-icon-stars" + spot[0].rating + "'><p class='s1'></p><p class='s2'></p><p class='s3'></p><p class='s4'></p><p class='s5'></p></div></div>",
             });
         } else {
             return L.icon({

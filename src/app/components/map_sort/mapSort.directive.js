@@ -295,6 +295,7 @@
      * @param {boolean} startSearch
      */
     function toggleLayer(layer, startSearch) {
+        $rootScope.toggleSidebar(false);
 		$rootScope.sortLayer = layer;
         vm.currentWeather = null;
 

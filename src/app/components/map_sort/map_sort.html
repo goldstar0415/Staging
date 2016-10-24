@@ -46,55 +46,42 @@
         </span>
     </div>
     <div class="form-group">
-        <label for="filterRating">Minimum Rating</label>
-        <div class="filter-group">
-            <select class="form-control" id="filterRating">
-                <option value="1">★</option>
-                <option value="2">★★</option>
-                <option value="3">★★★</option>
-                <option value="4">★★★★</option>
-                <option value="5">★★★★★</option>
-            </select>
-            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
+        <label for="filterRating">Minimum Rating<span>clear</span></label>
+        <select class="form-control" id="filterRating">
+            <option value="1">★</option>
+            <option value="2">★★</option>
+            <option value="3">★★★</option>
+            <option value="4">★★★★</option>
+            <option value="5">★★★★★</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="filterCategory">Category<span>clear</span></label>
+        <select class="form-control" id="filterCategory" placeholder="SELECT">
+            <option value="1">Any</option>
+            <!-- <option value="2">★★</option>
+            <option value="3">★★★</option>
+            <option value="4">★★★★</option>
+            <option value="5">★★★★★</option> -->
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="filterTags">By tags & Keywords<span>clear</span></label>
+        <tags-input id="filterTags" ng-model="MapSort.searchParams.tags"></tags-input>
+        <!-- <input type="text" id="filterTags" value="tag,keyword" data-role="tagsinput"> -->
+        <!-- <input type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput"> -->
+    </div>
+    <div class="form-group">
+        <label>By dates<span>clear</span></label>
+        <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea, applied: ($root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date)}">
+            <input ng-datepicker ng-model="MapSort.searchParams.start_date" class="date" placeholder="FROM DATE" type="text" ng-disabled="!MapSort.isShowFilter">
+            <div></div>
+            <input ng-datepicker ng-model="MapSort.searchParams.end_date" start-date="MapSort.searchParams.start_date" class="date" placeholder="TO DATE" type="text" ng-disabled="!MapSort.isShowFilter">
         </div>
     </div>
     <div class="form-group">
-        <label for="filterCategory">Category</label>
-        <div class="filter-group">
-            <select class="form-control" id="filterCategory" placeholder="SELECT">
-                <option value="1">Any</option>
-                <!-- <option value="2">★★</option>
-                <option value="3">★★★</option>
-                <option value="4">★★★★</option>
-                <option value="5">★★★★★</option> -->
-            </select>
-            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="filterTags">By tags & Keywords</label>
-        <div class="filter-group">
-            <tags-input id="filterTags" ng-model="MapSort.searchParams.tags"></tags-input>
-            <!-- <input type="text" id="filterTags" value="tag,keyword" data-role="tagsinput"> -->
-            <!-- <input type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput"> -->
-            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
-        </div>
-    </div>
-    <div class="form-group">
-        <label>By dates</label>
-        <div class="filter-group">
-            <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea, applied: ($root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date)}">
-                <input ng-datepicker ng-model="MapSort.searchParams.start_date" class="date" placeholder="FROM DATE" type="text" ng-disabled="!MapSort.isShowFilter">
-                <input ng-datepicker ng-model="MapSort.searchParams.end_date" start-date="MapSort.searchParams.start_date" class="date" placeholder="TO DATE" type="text" ng-disabled="!MapSort.isShowFilter">
-            </div>
-            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="filter-group">
-            <input type="text" placeholder="HOTEL FEATURES">
-            <button class="filter-clear"><p>Clear</p><span class="glyphicon glyphicon-remove"></span></button>
-        </div>
+        <label>Hotel features<span>clear</span></label>
+        <input type="text" placeholder="FEATURES">
     </div>
     <button class="filter-apply">APPLY FILTER</button>
     <!-- </form> -->
@@ -102,7 +89,7 @@
 
 <!-- <div class="sort-menu hidden" ng-show="$root.mapSortSpots.data.length || $root.sortLayer == 'weather'"> -->
 <div class="sort-menu" ng-show="$root.isSidebarOpened && ($root.mapSortSpots.sourceSpots.length || MapSort.currentWeather)">
-
+    <p ng-if="!$root.mapSortSpots.data.length" class="message-loading">Loading...</p>
 
 
 

@@ -1707,6 +1707,74 @@ body .atlwdg-trigger.atlwdg-TOP {
     overflow: hidden;
 }
 
+.spot-icon {
+    margin-left: -50px;
+    margin-top: -50px;
+    width: 100px;
+    height: 100px;
+    opacity: 1;
+    max-width: none !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    span {
+        margin: 0;
+        font-size: 10px;
+        border: 1px solid whitesmoke;
+        padding: 2px 5px;
+        background-color: white;
+    }
+    img {
+        width: 50%;
+        height: 50%;
+    }
+    .spot-icon-stars {
+        &0, &1, &2, &3, &4, &5 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .s1, .s2, .s3, .s4, .s5 {
+                font-family: 'Glyphicons Halflings';
+                color: white;
+                margin: 0;
+                &::before {
+                    content: "\e006";
+                }
+            }
+        }
+    }
+    .spot-icon-stars1 {
+        .s1 {
+            color: #00b7f3;
+        }
+    }
+    .spot-icon-stars2 {
+        .s1, .s2 {
+            color: #00b7f3;
+        }
+    }
+    .spot-icon-stars3 {
+        .s1, .s2, .s3 {
+            color: #00b7f3;
+        }
+    }
+    .spot-icon-stars4 {
+        .s1, .s2, .s3, .s4 {
+            color: #00b7f3;
+        }
+    }
+    .spot-icon-stars5 {
+        .s1, .s2, .s3, .s4, .s5 {
+            color: #00b7f3;
+        }
+    }
+}
+
 .pick-notification {
     visibility: hidden;
     opacity: 0;
@@ -1743,28 +1811,6 @@ body .atlwdg-trigger.atlwdg-TOP {
 .unauthorized-menu {
     @media (max-width: 767px) {
         display: none;
-    }
-}
-
-#filterTags {
-    width: 80%;
-    .host {
-        margin: 0;
-        .tags {
-            margin: 0;
-            border: 1px solid #ccc !important;
-            border-color: #ccc !important;
-            background-color: white;
-            input {
-                width: 100% !important;
-                margin: 0;
-                height: 30px;
-                min-height: 30px;
-                padding: 0 0 0 10px;
-                font-family: inherit;
-                box-shadow: none;
-            }
-        }
     }
 }
 
