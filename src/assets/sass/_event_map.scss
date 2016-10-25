@@ -40,6 +40,12 @@
     }
 }
 
+.new-result {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
 .new-result > div {
     @media (max-width: 767px) and (orientation: portrait) {
         width: 100vw;
@@ -49,13 +55,14 @@
     }
     @media (min-width: 768px) {
         padding: 5px;
+        width: 50%;
     }
     display: flex;
     flex-wrap: wrap;
     // margin: -5px;
     .new-spot {
-        padding: 5px;
-        width: 50%;
+        // padding: 5px;
+        width: 100%;
         @media (max-width: 767px) and (orientation: portrait) {
             width: 100vw;
             padding: 0;

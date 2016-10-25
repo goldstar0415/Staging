@@ -1,0 +1,19 @@
+<div class="new-spot">
+    <div class="spot-img">
+        <div class="img" ng-click="$root.setOpenedSpot(SpotCard.item)">
+            <img src="{{SpotCard.image}}" alt="spot_img">
+        </div>
+        <div class="spot-img-top">
+            <stars item="SpotCard.item"></stars>
+            <a ng-if="$root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.is_favorite" class="glyphicon glyphicon-heart" ng-click="SpotCard.addToFavorite(SpotCard.item)" style="color:white"></a>
+            <a ng-if="$root.currentUser && $root.currentUser.id != SpotCard.item.user_id && SpotCard.item.is_favorite" class="glyphicon glyphicon-heart" ng-click="SpotCard.removeFromFavorite(SpotCard.item)" style="color:#EE4632"></a>
+        </div>
+        <div class="spot-img-bottom">
+            <p class="spot-name">{{SpotCard.item.title}}</p>
+            <p class="spot-address">
+                <span class="glyphicon glyphicon-map-marker"></span>
+                <span>{{SpotCard.item.points[0].address}}</span>
+            </p>
+        </div>
+    </div>
+</div>

@@ -39,6 +39,9 @@
       vm.postComment = postComment;
       vm.deleteComment = deleteComment;
 
+    //   console.log(spot);
+    //   MapService.GetMap().panTo(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng));
+
       $rootScope.syncSpots = {
         data: [vm.spot]
       };
