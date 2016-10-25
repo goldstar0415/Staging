@@ -1756,33 +1756,31 @@
         if (callback) callback();
       }
 
-      function CreateCustomIcon(iconUrl, className, iconSize, type, id) {
-        var iconSize = iconSize || [50, 50];
-        if (type === undefined  && ($rootScope.$state.current.name === 'photos.list' || $rootScope.$state.current.name === 'photos.album')) {
+      function CreateCustomIcon(iconUrl, type, item) {
+          if (item) {
+              var spot = item.spot ? item.spot : item;
+              var image = '';
+              if (spot.category.type.name == 'event') {
+                  image = '../../../assets/img/svg/Icon_Events.svg';
+              } else if (spot.category.type.name == 'food') {
+                  image = '../../../assets/img/svg/Icon_Grab_Grub.svg';
+              } else if (spot.category.type.name == 'todo') {
+                  image = '../../../assets/img/svg/Icon_To_do.svg';
+              } else if (spot.category.type.name == 'shelter') {
+                  image = '../../../assets/img/svg/Icon_Get_a_room.svg';
+              }
+              return new L.HtmlIcon({
+                  html : "<div class='spot-icon'><span class='spot-icon-info'>no data</span><img src='" + image + "'><div class='spot-icon-stars" + spot.rating + "'><p class='s1'></p><p class='s2'></p><p class='s3'></p><p class='s4'></p><p class='s5'></p></div></div>",
+              });
+        } else if (type == 'album' || type == 'photomap') {
             return new L.HtmlIcon({
                 html : "<div class='map-marker-icon map-marker-icon-photo'><img src='" + iconUrl + "' /></div>",
             });
-        } else if ($rootScope.$state.current.name == 'index') {
-            var spot = $.grep($rootScope.mapSortSpots.data, function(e){ return e.id == id; });
-            var image;
-            if (spot[0].spot_type_category_id == 2) {
-                image = '../../../assets/img/svg/Icon_Events.svg';
-            } else if (spot[0].spot_type_category_id == 3) {
-                image = '../../../assets/img/svg/Icon_Grab_Grub.svg';
-            } else if (spot[0].spot_type_category_id == 14) {
-                image = '../../../assets/img/svg/Icon_To_do.svg';
-            } else {
-                image = '../../../assets/img/svg/Icon_Get_a_room.svg';
-            }
-            //console.log(spot);
-            return new L.HtmlIcon({
-                html : "<div class='spot-icon'><span class='spot-icon-info'>no data</span><img src='" + image + "'><div class='spot-icon-stars" + spot[0].rating + "'><p class='s1'></p><p class='s2'></p><p class='s3'></p><p class='s4'></p><p class='s5'></p></div></div>",
-            });
         } else {
             return L.icon({
-              iconSize: iconSize,
+              iconSize: [50, 50],
               iconUrl: iconUrl,
-              className: className
+              className: 'custom-map-icons'
             });
         }
       }
@@ -1802,14 +1800,13 @@
       }
 
       function BindSpotPopup(marker, spot) {
-        var spot_id = spot.spot_id ? spot.spot_id : spot.spot.id;
+        var spot_id = spot.id ? spot.id : spot.spot.id;
         marker.on('click', function () {
             if ($rootScope.$state.current.name == 'index') {
-                var spot = $.grep($rootScope.mapSortSpots.data, function(e){ return e.id == spot_id; });
-                $rootScope.setOpenedSpot(spot[0]);
+                $rootScope.setOpenedSpot(spot);
                 $rootScope.$apply();
             } else {
-                var user_id = spot.spot.user_id ? spot.spot.user_id : '';
+                var user_id = spot.user_id || spot.spot.user_id || 0;
                 $location.path(user_id + '/spot/' + spot_id);
             }
         });
@@ -2212,7 +2209,7 @@
         var markers = [];
         console.log(type);
         _.each(spots, function (item) {
-          var icon = CreateCustomIcon(item.spot.category.icon_url, 'custom-map-icons', [50, 50], type, item);
+          var icon = CreateCustomIcon(item.spot.category.icon_url, type, item);
           if (item.location) {
             var marker = L.marker(item.location, {icon: icon});
             item.marker = marker;
@@ -2266,11 +2263,11 @@
         }
         var markers = [];
         _.each(spots, function (item) {
-          var icon = CreateCustomIcon(item.category_icon_url, 'custom-map-icons', [50, 50], type, item.spot_id);
-          if (item.location) {
-            var marker = L.marker(item.location, {icon: icon});
+          var icon = CreateCustomIcon(item.category_icon_url, type, item);
+          if (item.points[0].location) {
+            var marker = L.marker(item.points[0].location, {icon: icon});
             L.extend(marker, {
-                spot_id: item.spot_id
+                spot_id: item.id
             });
             item.marker = marker;
             BindSpotPopup(marker, item);
@@ -2278,7 +2275,6 @@
             markers.push(marker);
           }
         });
-
         switch (type) {
           case 'food':
             foodLayer.addLayers(markers);

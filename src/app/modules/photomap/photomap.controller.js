@@ -57,7 +57,7 @@
 
     //create marker on map
     function createMarker(iconUrl, title, location, data) {
-      var icon = MapService.CreateCustomIcon(iconUrl, 'custom-map-icons');
+      var icon = MapService.CreateCustomIcon(iconUrl, 'photomap');
       var options = {};
 
       if (icon) options.icon = icon;
