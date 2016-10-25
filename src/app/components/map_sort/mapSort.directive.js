@@ -97,10 +97,6 @@
 
     run();
 
-    // $scope.$watch(function() { return angular.element('.new-result').is(':visible') }, function() {
-    //     console.log('VISIBLE');
-    // });
-
     function setImage(item) {
         if (item.category.type.name == 'food') {
             if (false) {
@@ -108,7 +104,6 @@
             } else {
                 var imgnum = Math.floor(item.id % 33);
                 return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
-                // return '../../../assets/img/placeholders/food/5.jpg';
             }
         } else {
             return item.cover_url.original;
@@ -293,7 +288,8 @@
               //////
               if ($rootScope.mapSortSpots.markers.length > 0) {
                 $rootScope.changeMapState('small', null, false);
-                MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
+                console.log(layer);
+                MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.data, layer, true);
                 if (!$rootScope.isDrawArea) {
                   MapService.FitBoundsByLayer($rootScope.sortLayer);
                 }

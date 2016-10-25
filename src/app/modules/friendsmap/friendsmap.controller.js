@@ -27,7 +27,7 @@
     }
 
     function createMarker(iconUrl, title, location, user_id) {
-      var icon = MapService.CreateCustomIcon(iconUrl, 'custom-map-icons');
+      var icon = MapService.CreateCustomIcon(iconUrl, 'friends');
       var options = {};
 
       if (icon) options.icon = icon;
@@ -106,7 +106,7 @@
               }
 
               if (marker) {
-                var icon = MapService.CreateCustomIcon(result, 'custom-map-icons');
+                var icon = MapService.CreateCustomIcon(result, 'friends');
                 marker.setIcon(icon);
               }
             });
