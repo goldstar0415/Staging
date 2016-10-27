@@ -67,6 +67,7 @@
     vm.typeaheadSearch = typeaheadSearch;
     vm.typeaheadSelectLocation = typeaheadSelectLocation;
     vm.windowWidth = getWindowSize();
+    vm.highlightSpotByHover = MapService.highlightSpotByHover;
 
     $window.onresize = getWindowSize;
     function getWindowSize(event) {
