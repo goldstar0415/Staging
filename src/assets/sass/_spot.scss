@@ -12,6 +12,13 @@
         bottom: 50px;
         width: 470px;
         overflow: auto;
+        @media (min-width: 768px) and (orientation: portrait) {
+            top: calc(100vh - 378px);
+            left: 0;
+            right: 0;
+            bottom: 50px;
+            width: calc(100vw - 70px);
+        }
         @media (max-width: 767px) {
             top: 10px;
             right: 10px;

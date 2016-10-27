@@ -5,7 +5,7 @@
     .module('zoomtivity', [
       'ngAnimate',
       'ngCookies',
-      //'ngTouch',
+      'ngTouch',
       'ngSanitize',
       'ngResource',
       'ngMessages',
@@ -22,6 +22,7 @@
       'ui.utils.masks',
       'infinite-scroll',
       'summernote',
+      'angular-carousel'
     ]);
 
 })();

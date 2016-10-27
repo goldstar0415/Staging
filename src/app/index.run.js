@@ -20,11 +20,17 @@
     $rootScope.isFullScreen = false;
     $rootScope.isFilterOpened = false;
     $rootScope.visibleSpotsIds = [];
+    $rootScope.spotsCarousel = {};
+    $rootScope.spotsCarousel.index = 0;
 
     MapService.Init('map');
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     $rootScope.$on("$stateChangeError", onStateChangeError);
+
+    $rootScope.$watch('$root.spotsCarousel.index', function() {
+        MapService.highlightSpot(false);
+    }, true);
 
     document.addEventListener("fullscreenchange", detectFullScreen);
     document.addEventListener("webkitfullscreenchange", detectFullScreen);
@@ -67,6 +73,7 @@
                 // $rootScope.mapState = "full-size";
             }
         } else {
+            MapService.removeHighlighting();
             angular.element('.map-tools-top').addClass('hidden');
             angular.element('.map-tools').removeClass('hidden');
             $rootScope.mapState = "full-size";

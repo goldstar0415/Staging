@@ -34,7 +34,7 @@
       }
     });
 
-  function mapSort(getByIdFilter, $rootScope, $scope, $q, MapService, $http, $timeout, LocationService, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
+  function mapSort(getByIdFilter, $rootScope, $scope, $q, MapService, $http, $timeout, $window, LocationService, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
 
 	var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
@@ -66,15 +66,14 @@
     vm.loadNextSpots = loadNextSpots;
     vm.typeaheadSearch = typeaheadSearch;
     vm.typeaheadSelectLocation = typeaheadSelectLocation;
-    vm.setImage = setImage;
-    // vm.isShowSpot = isShowSpot;
-    //
-    // function isShowSpot() {
-    //     // $rootScope.visibleSpotsIds.indexOf(item.id) != -1
-    //     console.log('ISSHOW');
-    //     return false;
-    // }
+    vm.windowWidth = getWindowSize();
 
+    $window.onresize = getWindowSize;
+    function getWindowSize(event) {
+        $timeout(function() {
+          $scope.windowWidth = $window.innerWidth;
+        });
+    }
 
     vm.searchParams = {
       typeahead: {
@@ -96,19 +95,6 @@
     $rootScope.$on('impossible-route', onImpossibleRoute);
 
     run();
-
-    function setImage(item) {
-        if (item.category.type.name == 'food') {
-            if (false) {
-                return item.cover_url.original;
-            } else {
-                var imgnum = Math.floor(item.id % 33);
-                return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
-            }
-        } else {
-            return item.cover_url.original;
-        }
-    }
 
     /**
      * Initialization
@@ -287,8 +273,8 @@
               $rootScope.mapSortSpots.isLoading = false;
               //////
               if ($rootScope.mapSortSpots.markers.length > 0) {
+                MapService.highlightSpot(true);
                 $rootScope.changeMapState('small', null, false);
-                console.log(layer);
                 MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.data, layer, true);
                 if (!$rootScope.isDrawArea) {
                   MapService.FitBoundsByLayer($rootScope.sortLayer);
