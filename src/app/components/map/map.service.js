@@ -40,6 +40,8 @@
 	  var pathRouter2		= L.Routing.mapbox(MAPBOX_API_KEY);
 	  var pathRouterFail	= 0;
 
+      var highlightMarker;
+
 		function getPathRouter() {
 			switch(pathRouterFail) {
 				case 0:
@@ -96,6 +98,32 @@
           }
       }
 
+      function removeHighlighting() {
+          if (highlightMarker) {
+              map.removeLayer(highlightMarker);
+          }
+      }
+
+      function highlightSpot(isFirst) {
+          var selectedId, selectedSpot;
+          if (!isFirst) {
+              selectedId = $rootScope.visibleSpotsIds[$rootScope.spotsCarousel.index];
+              if ($rootScope.mapSortSpots) {
+                  selectedSpot = $.grep($rootScope.mapSortSpots.data, function(s) {
+                      return s.id == selectedId;
+                  })[0];
+              }
+          } else {
+              selectedSpot = $rootScope.mapSortSpots.data[0];
+          }
+          if (selectedSpot) {
+              if (highlightMarker) {
+                  map.removeLayer(highlightMarker);
+              }
+              highlightMarker = L.marker(new L.LatLng(selectedSpot.points[0].location.lat, selectedSpot.points[0].location.lng)).addTo(map);
+          }
+      }
+
       function spotsOnScreen() {
           if (!$rootScope.$$phase) {
               var _borderMarkerLayer = undefined;
@@ -135,6 +163,7 @@
                           }
                   }
               }
+              $rootScope.spotsCarousel.index = 0;
               $rootScope.$apply();
           }
       }
@@ -459,6 +488,8 @@
           $rootScope.$apply();
 
           angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
+
+          map.removeLayer($rootScope.marker);
 
           $rootScope.toggleSidebar(false);
         }
@@ -2198,7 +2229,6 @@
             return result;
           });
         }
-
         return SortByRating(resultArray);
       }
 
@@ -2470,7 +2500,10 @@
 
         cancelHttpRequest: cancelHttpRequest,
 		hasLayer: hasLayer,
-        OpenSaveSelectionsPopup: OpenSaveSelectionsPopup
+        OpenSaveSelectionsPopup: OpenSaveSelectionsPopup,
+
+        highlightSpot: highlightSpot,
+        removeHighlighting: removeHighlighting
       };
     });
 

@@ -81,9 +81,15 @@
     <p ng-if="$root.mapSortSpots.data.length && !$root.visibleSpotsIds.length" class="message-loading">Can't find any spots in this area...</p>
 
     <div class="search-filters" ng-show="$root.sortLayer != 'weather' && $root.visibleSpotsIds.length" ng-class="{'applied-filter': !MapSort.isShowFilter && !MapSort.isEmptyFilters()}">
-        <div class="new-result">
-            <!-- <div infinite-scroll="MapSort.loadNextSpots()" infinite-scroll-disabled="$root.mapSortSpots.isLoading || !$root.mapSortSpots.data.length" class="clearfix" infinite-scroll-distance="1" infinite-scroll-container='".search-filters"'> -->
-            <div spotcard ng-repeat="item in $root.mapSortSpots.data | getById" item="item"></div>
+        <div class="new-result" data-xz="{{$root.spotsCarousel.index}}" ng-if="windowWidth < 768">
+            <ul rn-carousel rn-carousel-index="$root.spotsCarousel.index">
+                <li ng-repeat="item in $root.mapSortSpots.data | getById">
+                    <div class="new-result-card" spotcard item="item"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="new-result-container" ng-if="windowWidth >= 768">
+            <div class="new-result-card" spotcard ng-repeat="item in $root.mapSortSpots.data | getById" item="item"></div>
         </div>
     </div>
 
