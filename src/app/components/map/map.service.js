@@ -124,6 +124,15 @@
           }
       }
 
+      function highlightSpotByHover(spot) {
+          if (spot) {
+              if (highlightMarker) {
+                  map.removeLayer(highlightMarker);
+              }
+              highlightMarker = L.marker(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng)).addTo(map);
+          }
+      }
+
       function spotsOnScreen() {
           if (!$rootScope.$$phase) {
               var _borderMarkerLayer = undefined;
@@ -2503,7 +2512,8 @@
         OpenSaveSelectionsPopup: OpenSaveSelectionsPopup,
 
         highlightSpot: highlightSpot,
-        removeHighlighting: removeHighlighting
+        removeHighlighting: removeHighlighting,
+        highlightSpotByHover: highlightSpotByHover
       };
     });
 

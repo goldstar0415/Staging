@@ -89,7 +89,7 @@
             </ul>
         </div>
         <div class="new-result-container" ng-if="windowWidth >= 768">
-            <div class="new-result-card" spotcard ng-repeat="item in $root.mapSortSpots.data | getById" item="item"></div>
+            <div class="new-result-card" spotcard ng-repeat="item in $root.mapSortSpots.data | getById" item="item" ng-mouseover="MapSort.highlightSpotByHover(item)"></div>
         </div>
     </div>
 
