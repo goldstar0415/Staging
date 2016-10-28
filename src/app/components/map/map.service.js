@@ -22,8 +22,8 @@
       var clusterOptions = {
         //disableClusteringAtZoom: 8,
 		//chunkedLoading: true,
-        spiderfyDistanceMultiplier: 3,
-        // disableClusteringAtZoom: 17,
+        spiderfyDistanceMultiplier: 2,
+        // disableClusteringAtZoom: 1,
         //spiderfyOnMaxZoom: true,
       };
       //============================================
@@ -105,32 +105,124 @@
       }
 
       function highlightSpot(isFirst) {
-          var selectedId, selectedSpot;
-          if (!isFirst) {
-              selectedId = $rootScope.visibleSpotsIds[$rootScope.spotsCarousel.index];
-              if ($rootScope.mapSortSpots) {
-                  selectedSpot = $.grep($rootScope.mapSortSpots.data, function(s) {
-                      return s.id == selectedId;
-                  })[0];
+          var selectedId, marker, spot;
+          selectedId = $rootScope.visibleSpotsIds[$rootScope.spotsCarousel.index];
+          if ($rootScope.mapSortSpots) {
+              var features = [];
+              features = map._getFeatures();
+              marker = $.grep(features, function(s) {
+                  return s.spot_id === selectedId;
+              })[0];
+              spot = $.grep($rootScope.mapSortSpots.data, function(s) {
+                  return s.id === selectedId;
+              })[0];
+              if (spot && !marker) {
+                  var el = document.querySelectorAll('.marker-cluster').forEach(function(mc) {
+                      mc.classList.remove('active');
+                  });
+                  for (var i = 0; i < features.length; i++) {
+                      if ('_childClusters' in features[i]) {
+                          var mrkrs = features[i].getAllChildMarkers();
+                          marker = $.grep(mrkrs, function(m) {
+                              return m.spot_id === spot.id;
+                          })[0];
+                          if (marker) {
+                              features[i]._icon.classList.add('active');
+                              break;
+                          }
+                      }
+                  }
               }
-          } else {
-              selectedSpot = $rootScope.mapSortSpots.data[0];
+              if (highlightMarker && spot) {
+                  var oldIcon = CreateCustomIcon('', '', spot);
+                  highlightMarker.setIcon(oldIcon);
+              }
           }
-          if (selectedSpot) {
-              if (highlightMarker) {
-                  map.removeLayer(highlightMarker);
+          if (marker && spot) {
+              var image = '';
+              if (spot.category.type.name === 'event') {
+                  image = '../../../assets/img/markers/marker-event-highlighted.png';
+              } else if (spot.category.type.name === 'food') {
+                  image = '../../../assets/img/markers/marker-food-highlighted.png';
+              } else if (spot.category.type.name === 'todo') {
+                  image = '../../../assets/img/markers/marker-todo-highlighted.png';
+              } else if (spot.category.type.name === 'shelter') {
+                  image = '../../../assets/img/markers/marker-shelter-highlighted.png';
               }
-              highlightMarker = L.marker(new L.LatLng(selectedSpot.points[0].location.lat, selectedSpot.points[0].location.lng)).addTo(map);
+              var icon = L.icon({
+                  iconSize: [50, 50],
+                  iconUrl: image,
+                  className: 'spot-icon'
+              });
+              marker.setIcon(icon);
+              highlightMarker = marker;
           }
       }
 
+    //   function highlightSpot(isFirst) {
+    //       var selectedId, selectedSpot;
+    //       if (true) {
+    //           selectedId = $rootScope.visibleSpotsIds[$rootScope.spotsCarousel.index];
+    //           if ($rootScope.mapSortSpots) {
+    //               selectedSpot = $.grep($rootScope.mapSortSpots.data, function(s) {
+    //                   return s.id == selectedId;
+    //               })[0];
+    //           }
+    //       } else {
+    //           selectedSpot = $rootScope.mapSortSpots.data[0];
+    //       }
+    //       if (selectedSpot) {
+    //           if (highlightMarker) {
+    //               map.removeLayer(highlightMarker);
+    //           }
+    //           highlightMarker = L.marker(new L.LatLng(selectedSpot.points[0].location.lat, selectedSpot.points[0].location.lng)).addTo(map);
+    //       }
+    //   }
+
       function highlightSpotByHover(spot) {
-          if (spot) {
-              if (highlightMarker) {
-                  map.removeLayer(highlightMarker);
-              }
-              highlightMarker = L.marker(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng)).addTo(map);
+          if (highlightMarker) {
+              var oldIcon = CreateCustomIcon('', '', spot);
+              highlightMarker.setIcon(oldIcon);
           }
+          var features = [];
+          features = map._getFeatures();
+          var marker = $.grep(features, function(m) {
+              return m.spot_id === spot.id;
+          })[0];
+          if (!marker) {
+              var el = document.querySelectorAll('.marker-cluster').forEach(function(mc) {
+                  mc.classList.remove('active');
+              });
+              for (var i = 0; i < features.length; i++) {
+                  if ('_childClusters' in features[i]) {
+                      var mrkrs = features[i].getAllChildMarkers();
+                      marker = $.grep(mrkrs, function(m) {
+                          return m.spot_id === spot.id;
+                      })[0];
+                      if (marker) {
+                          features[i]._icon.classList.add('active');
+                          break;
+                      }
+                  }
+              }
+          }
+          var image = '';
+          if (spot.category.type.name === 'event') {
+              image = '../../../assets/img/markers/marker-event-highlighted.png';
+          } else if (spot.category.type.name === 'food') {
+              image = '../../../assets/img/markers/marker-food-highlighted.png';
+          } else if (spot.category.type.name === 'todo') {
+              image = '../../../assets/img/markers/marker-todo-highlighted.png';
+          } else if (spot.category.type.name === 'shelter') {
+              image = '../../../assets/img/markers/marker-shelter-highlighted.png';
+          }
+          var icon = L.icon({
+              iconSize: [50, 50],
+              iconUrl: image,
+              className: 'spot-icon'
+          });
+          marker.setIcon(icon);
+          highlightMarker = marker;
       }
 
       function spotsOnScreen() {
@@ -1800,18 +1892,32 @@
           if (item) {
               var spot = item.spot ? item.spot : item;
               var image = '';
-              if (spot.category.type.name == 'event') {
-                  image = '../../../assets/img/svg/Icon_Events.svg';
-              } else if (spot.category.type.name == 'food') {
-                  image = '../../../assets/img/svg/Icon_Grab_Grub.svg';
-              } else if (spot.category.type.name == 'todo') {
-                  image = '../../../assets/img/svg/Icon_To_do.svg';
-              } else if (spot.category.type.name == 'shelter') {
-                  image = '../../../assets/img/svg/Icon_Get_a_room.svg';
-              }
-              return new L.HtmlIcon({
-                  html : "<div class='spot-icon'><span class='spot-icon-info'>no data</span><img src='" + image + "'><div class='spot-icon-stars" + spot.rating + "'><p class='s1'></p><p class='s2'></p><p class='s3'></p><p class='s4'></p><p class='s5'></p></div></div>",
+            if (spot.category.type.name == 'event') {
+                image = '../../../assets/img/markers/marker-event.png';
+            } else if (spot.category.type.name == 'food') {
+                image = '../../../assets/img/markers/marker-food.png';
+            } else if (spot.category.type.name == 'todo') {
+                image = '../../../assets/img/markers/marker-todo.png';
+            } else if (spot.category.type.name == 'shelter') {
+                image = '../../../assets/img/markers/marker-shelter.png';
+            }
+              return L.icon({
+                iconSize: [50, 50],
+                iconUrl: image,
+                className: 'spot-icon'
               });
+              //   if (spot.category.type.name == 'event') {
+              //       image = '../../../assets/img/svg/Icon_Events.svg';
+              //   } else if (spot.category.type.name == 'food') {
+              //       image = '../../../assets/img/svg/Icon_Grab_Grub.svg';
+              //   } else if (spot.category.type.name == 'todo') {
+              //       image = '../../../assets/img/svg/Icon_To_do.svg';
+              //   } else if (spot.category.type.name == 'shelter') {
+              //       image = '../../../assets/img/svg/Icon_Get_a_room.svg';
+              //   }
+            //   return new L.HtmlIcon({
+            //       html : "<div class='spot-icon'><span class='spot-icon-info'>no data</span><img src='" + image + "'><div class='spot-icon-stars" + spot.rating + "'><p class='s1'></p><p class='s2'></p><p class='s3'></p><p class='s4'></p><p class='s5'></p></div></div>",
+            //   });
         } else if (type == 'album' || type == 'photomap') {
             return new L.HtmlIcon({
                 html : "<div class='map-marker-icon map-marker-icon-photo'><img src='" + iconUrl + "' /></div>",
