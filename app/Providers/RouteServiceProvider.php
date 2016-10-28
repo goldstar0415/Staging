@@ -99,13 +99,8 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('areas', Area::class);
         $router->model('comments', Comment::class);
         $router->bind('hotels', function($value) {
-            
-            $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
-            
-            $hotel = Spot::where('id', $value)
-                    ->where('spot_type_category_id', $spotTypeCategory->id)
-                    ->with('remotePhotos', 'hotel', 'amenities', 'votes')
-                    ->first();
+            $hotel = Spot::where('id', $value)->hotels()
+                    ->with('remotePhotos', 'hotel', 'amenities', 'votes')->first();
             if ($hotel === null) {
                 throw new NotFoundHttpException;
             }
@@ -113,18 +108,12 @@ class RouteServiceProvider extends ServiceProvider
             
         });
         $router->bind('restaurants', function($value) {
-            
-            $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
-            
-            $restaurant = Spot::where('id', $value)
-                    ->where('spot_type_category_id', $spotTypeCategory->id)
-                    ->with('remotePhotos', 'restaurant', 'amenities', 'votes')
-                    ->first();
+            $restaurant = Spot::where('id', $value)->restaurants()
+                    ->with('remotePhotos', 'restaurant', 'amenities', 'votes')->first();
             if ($restaurant === null) {
                 throw new NotFoundHttpException;
             }
             return $restaurant;
-            
         });
         $router->model('wall', Wall::class);
         $router->model('plans', Plan::class);

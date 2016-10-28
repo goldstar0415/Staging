@@ -62,8 +62,7 @@ class RestaurantsController extends Controller
      */
     public function index(PaginateRequest $request)
     {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
-        return view('admin.restaurants.index')->with('restaurants', $this->paginatealbe($request, Spot::where('spot_type_category_id', $spotTypeCategory->id),15));
+        return view('admin.restaurants.index')->with('restaurants', $this->paginatealbe($request, Spot::restaurants(),15));
     }
     
     /**
@@ -74,8 +73,7 @@ class RestaurantsController extends Controller
      */
     public function filter(RestaurantFilterRequest $request)
     {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
-        $query = $this->getFilterQuery($request, Spot::where('spot_type_category_id', $spotTypeCategory->id));
+        $query = $this->getFilterQuery($request, Spot::restaurants());
 
         return view('admin.restaurants.index')->with('restaurants', $this->paginatealbe($request, $query,15));
     }
@@ -369,8 +367,7 @@ class RestaurantsController extends Controller
     
     public function cleanDb(Request $request)
     {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
-        Spot::where('spot_type_category_id', $spotTypeCategory->id)->delete();
+        Spot::restaurants()->delete();
         return back();
     }
     

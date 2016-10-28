@@ -60,8 +60,7 @@ class HotelsController extends Controller
      */
     public function index(PaginateRequest $request)
     {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
-        return view('admin.hotels.index')->with('hotels', $this->paginatealbe($request, Spot::where('spot_type_category_id', $spotTypeCategory->id),15));
+        return view('admin.hotels.index')->with('hotels', $this->paginatealbe($request, Spot::hotels(),15));
     }
     
     /**
@@ -72,8 +71,7 @@ class HotelsController extends Controller
      */
     public function filter(HotelFilterRequest $request)
     {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
-        $query = $this->getFilterQuery($request, Spot::where('spot_type_category_id', $spotTypeCategory->id));
+        $query = $this->getFilterQuery($request, Spot::hotels());
 
         return view('admin.hotels.index')->with('hotels', $this->paginatealbe($request, $query,15));
     }
@@ -346,8 +344,7 @@ class HotelsController extends Controller
     
     public function cleanDb(Request $request)
     {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
-        Spot::where('spot_type_category_id', $spotTypeCategory->id)->delete();
+        Spot::hotels()->delete();
         return back();
     }
     

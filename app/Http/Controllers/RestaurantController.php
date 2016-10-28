@@ -42,11 +42,8 @@ class RestaurantController extends Controller
      */
     public function index(RestaurantIndexRequest $request, Privacy $privacy)
     {
-
-        $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
-            
         $restaurants = Spot::orderBy('id', 'asc')
-                    ->where('spot_type_category_id', $spotTypeCategory->id)
+                    ->restaurants()
                     ->with('remotePhotos', 'restaurant', 'amenities'); 
 
         return $this->paginatealbe($request, $restaurants, 15);
@@ -94,6 +91,7 @@ class RestaurantController extends Controller
                 $remote_photos = false; //$googlePhotos;
                 $googleReviews = $restaurant->saveGooglePlaceReviews($googlePlaceInfo);
                 $reviews = $googleReviews;
+                
                 $googleHours = $restaurant->saveGooglePlaceHours($googlePlaceInfo);
                 $hours = $googleHours;
             }
@@ -101,7 +99,7 @@ class RestaurantController extends Controller
             {
                 $restaurantInfo->is_parsed = true;
                 $restaurantInfo->save();
-
+                $restaurant->load(['votes']);
                 $restaurant->restaurant = $restaurantInfo;
             }
 

@@ -157,6 +157,13 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         return $this->hasOne(SpotHotel::class);
     }
     
+    public function scopeHotels($query)
+    {
+        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
+        
+        return $query->where('spot_type_category_id', $spotTypeCategory->id);
+    }
+    
     /**
      * Get restaurant spot info
      *
@@ -165,6 +172,13 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function restaurant()
     {
         return $this->hasOne(SpotRestaurant::class);
+    }
+    
+    public function scopeRestaurants($query)
+    {
+        $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
+        
+        return $query->where('spot_type_category_id', $spotTypeCategory->id);
     }
 
     /**
@@ -554,21 +568,37 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     /***** Google places methods *****/
     /*********************************/
     
+    public function getGooglePid()
+    {
+        $googlePid = false;
+        $spotInfo  = false;
+        if(!empty($this->hotel)) 
+        {
+            $spotInfo = $this->hotel;
+        }
+        if(!empty($this->restaurant)) 
+        {
+            $spotInfo = $this->restaurant;
+        }
+        if($spotInfo)
+        {
+            $googlePid = (!empty($spotInfo->google_pid)
+                    && $spotInfo->google_pid != 'null' 
+                    && $spotInfo->google_pid != '0')?$spotInfo->google_pid:false;
+        }
+        return $googlePid;
+    }
+    
     public function getGooglePlaceInfo()
     {
-        if(!empty($this->hotel)) $spotInfo = $this->hotel;
-        if(!empty($this->restaurant)) $spotInfo = $this->restaurant;
+        $googlePid = $this->getGooglePid();
         $response = false;
-        if($spotInfo 
-                && !empty($spotInfo->google_pid) 
-                && $spotInfo->google_pid != 'null'
-                && $spotInfo->google_pid != '0'
-                )
+        if($googlePid)
         {
             $googlePlaces = new PlacesApi(config('google.places.key'));
             try
             {
-                $response = $googlePlaces->placeDetails($spotInfo->google_pid);
+                $response = $googlePlaces->placeDetails($googlePid);
             }
             catch(Exception $e) {/* response already false */}
         }

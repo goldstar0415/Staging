@@ -11,7 +11,6 @@ use App\Spot;
 use App\SpotAmenity;
 use App\SpotVote;
 use App\RemotePhoto;
-use App\SpotTypeCategory;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use GuzzleHttp\Client;
@@ -48,11 +47,8 @@ class HotelController extends Controller
      */
     public function index(HotelIndexRequest $request, Privacy $privacy)
     {
-
-        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
-            
         $hotels = Spot::orderBy('id', 'asc')
-                    ->where('spot_type_category_id', $spotTypeCategory->id)
+                    ->hotels()
                     ->with('remotePhotos', 'hotel', 'amenities'); 
 
         return $this->paginatealbe($request, $hotels, 15);
@@ -124,15 +120,14 @@ class HotelController extends Controller
                     if($googlePlaceInfo)
                     {
                         $googlePhotos = $hotel->saveGooglePlacePhotos($googlePlaceInfo);
-                        $remote_photos = (!$remote_photos) ? $googlePhotos : $googlePhotos->merge($remote_photos);
                         $googleReviews = $hotel->saveGooglePlaceReviews($googlePlaceInfo);
-                        $reviews = (!$reviews) ? $googleReviews : $googleReviews->merge($reviews);
                     }
                     if($remote_photos || $amenities || $reviews)
                     {
                         $hotelInfo->is_booking_parsed = true;
                         $hotelInfo->save();
                         $hotel->hotel = $hotelInfo;
+                        $hotel->load(['remotePhotos', 'votes']);
                     }
                 }
             }
