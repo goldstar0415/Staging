@@ -53,6 +53,7 @@ class RouteServiceProvider extends ServiceProvider
             'photos' => '\d+',
             'spots' => '\d+',
             'hotels' => '\d+',
+            'restaurants' => '\d+',
             'friends' => '\d+',
             'message' => '\d+',
             'areas' => '\d+',
@@ -109,6 +110,20 @@ class RouteServiceProvider extends ServiceProvider
                 throw new NotFoundHttpException;
             }
             return $hotel;
+            
+        });
+        $router->bind('restaurants', function($value) {
+            
+            $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
+            
+            $restaurant = Spot::where('id', $value)
+                    ->where('spot_type_category_id', $spotTypeCategory->id)
+                    ->with('remotePhotos', 'restaurant', 'amenities', 'votes')
+                    ->first();
+            if ($restaurant === null) {
+                throw new NotFoundHttpException;
+            }
+            return $restaurant;
             
         });
         $router->model('wall', Wall::class);

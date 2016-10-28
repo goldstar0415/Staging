@@ -14,6 +14,7 @@ use Codesleeve\Stapler\ORM\StaplerableInterface;
 use DB;
 use Eluceo\iCal\Component\Event;
 use Eluceo\iCal\Property\Event\Organizer;
+use SKAgarwal\GoogleApi\PlacesApi;
 use Request;
 use Log;
 
@@ -147,13 +148,23 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     }
     
     /**
-     * Get spot amenities
+     * Get hotel spot info
      *
      * @return query
      */
     public function hotel()
     {
         return $this->hasOne(SpotHotel::class);
+    }
+    
+    /**
+     * Get restaurant spot info
+     *
+     * @return query
+     */
+    public function restaurant()
+    {
+        return $this->hasOne(SpotRestaurant::class);
     }
 
     /**
@@ -538,4 +549,105 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             'calendarUsers'
         ];
     }
+    
+    /*********************************/
+    /***** Google places methods *****/
+    /*********************************/
+    
+    public function getGooglePlaceInfo()
+    {
+        if(!empty($this->hotel)) $spotInfo = $this->hotel;
+        if(!empty($this->restaurant)) $spotInfo = $this->restaurant;
+        $response = false;
+        if($spotInfo 
+                && !empty($spotInfo->google_pid) 
+                && $spotInfo->google_pid != 'null'
+                && $spotInfo->google_pid != '0'
+                )
+        {
+            $googlePlaces = new PlacesApi(config('google.places.key'));
+            try
+            {
+                $response = $googlePlaces->placeDetails($spotInfo->google_pid);
+            }
+            catch(Exception $e) {/* response already false */}
+        }
+        return $response;
+    }
+    
+    public function saveGooglePlaceReviews($googlePlaceInfo)
+    {
+        $result = [];
+        if( isset($googlePlaceInfo['result']['reviews']) && !empty($googlePlaceInfo['result']['reviews']))
+        {
+            $googleReviews = $googlePlaceInfo['result']['reviews'];
+            foreach($googleReviews as $item)
+            {
+                $remote_id = $this->getHashForGoogle($item);
+                
+                if( !SpotVote::where('remote_id', $remote_id)->exists())
+                {
+                    $itemObj = new SpotVote();
+                    $itemObj->remote_id = $remote_id;
+                    $itemObj->message = $item['text'];
+                    $itemObj->vote = $item['rating'];
+                    $this->votes()->save($itemObj);
+                    $result[] = $itemObj;
+                }
+            }
+        }
+        return collect($result);
+    }
+    
+    public function saveGooglePlacePhotos($googlePlaceInfo)
+    {
+        $result = [];
+        if( isset($googlePlaceInfo['result']['photos']) && !empty($googlePlaceInfo['result']['photos']))
+        {
+            $googlePhotos = $googlePlaceInfo['result']['photos'];
+            foreach($googlePhotos as $item)
+            {
+                $photoUrl = $this->getGooglePhotoUrl($item['photo_reference']);
+                
+                if( !RemotePhoto::where('url', $photoUrl)->exists() )
+                {
+                    $result[] = new RemotePhoto([
+                        'url' => $photoUrl,
+                        'image_type' => 0,
+                        'size' => 'original',
+                    ]);
+                }
+            }
+            $this->remotePhotos()->saveMany( $result );
+        }
+        return collect($result);
+    }
+    
+    public function saveGooglePlaceHours($googlePlaceInfo)
+    {
+        $result = [];
+        if( isset($googlePlaceInfo['result']['opening_hours']) && !empty($googlePlaceInfo['result']['opening_hours']))
+        {
+            $openingHours = $googlePlaceInfo['result']['opening_hours'];
+            unset($openingHours['open_now']);
+            $this->restaurant->hours = $openingHours;
+            $this->restaurant->save();
+            $result = $openingHours;
+        }
+        return $result;
+    }
+    
+    protected function getGooglePhotoUrl($photo_reference)
+    {
+        return config('google.places.baseUri') . 'photo'
+        . '?maxwidth=400'
+        . '&photoreference=' . $photo_reference
+        . '&key=' . config('google.places.key');
+    }
+
+    protected function getHashForGoogle($item)
+    {
+        return 'gg_' . md5( $item['author_name'] . $item['rating'] . $item['text'] );
+    }
+    
 }

@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="editing col-xs-12">
-    <h2>Hotels</h2>
+    <h2>Restaurants</h2>
     <hr>
     <div class="row actions">
-        {!! Form::open(['method' => 'GET', 'route' => 'admin.hotels.filter', 'class' => 'form-inline']) !!}
+        {!! Form::open(['method' => 'GET', 'route' => 'admin.restaurants.filter', 'class' => 'form-inline']) !!}
         <div class="form-group">
             {!! Form::label('filter[title]', 'Title:') !!}
             {!! Form::text('filter[title]', old('filter.title'), ['class' => 'form-control']) !!}
@@ -21,7 +21,7 @@
         
         {!! Form::button('Filter', ['class' => 'btn btn-default', 'type' => 'submit']) !!}
         {!! Form::close() !!}
-        {!! Form::open(['method' => 'POST', 'route' => 'admin.hotels.clean-db', 'class' => 'form-for-trunkate']) !!}
+        {!! Form::open(['method' => 'POST', 'route' => 'admin.restaurants.clean-db', 'class' => 'form-for-trunkate']) !!}
         {!! Form::close() !!}
     </div>
     <table class="col-xs-12">
@@ -31,31 +31,19 @@
             <th class="col-sm-2">Title</th>
             <th class="col-sm-3">Description</th>
             <th class="col-sm-1">Create Date</th>
-            <th class="col-sm-2">Hotels.com URL</th>
-            <th class="col-sm-2">Booking.com URL</th>
             <th class="col-sm-1"></th>
         </tr>
         </thead>
         <tbody>
-        @foreach($hotels as $hotel)
+        @foreach($restaurants as $restaurant)
             <tr>
-                <td class="text-center">{!! Form::checkbox('hotels[]', $hotel->id, null, ['class' => 'row-select']) !!}</td>
-                <td>{!! link_to(frontend_url( 'hotel', $hotel->id), $hotel->title, ['target' => '_blank']) !!}</td>
-                <td>{{ $hotel->description }}</td>
-                <td>{{ $hotel->created_at->format('Y-m-d') }}</td>
+                <td class="text-center">{!! Form::checkbox('spots[]', $restaurant->id, null, ['class' => 'row-select']) !!}</td>
+                <td>{!! link_to(frontend_url( 'restaurant', $restaurant->id), $restaurant->title, ['target' => '_blank']) !!}</td>
+                <td>{{ $restaurant->description }}</td>
+                <td>{{ $restaurant->created_at->format('Y-m-d') }}</td>
                 <td>
-                    @if($hotel->hotel)
-                    <a href="{{ url($hotel->hotel->hotelscom_url) }}">hotels.com</a>
-                    @endif
-                </td>
-                <td>
-                    @if($hotel->hotel)
-                    <a href="{{ url($hotel->hotel->booking_url) }}">booking.com</a>
-                    @endif
-                </td>
-                <td>
-                    <a href="{!! route('admin.hotels.get-edit', [$hotel->id]) !!}" class="edit-spot"></a>
-                    {!! link_delete(route('admin.hotels.destroy', [$hotel->id]), '', ['class' => 'delete']) !!}
+                    <a href="{!! route('admin.restaurants.get-edit', [$restaurant->id]) !!}" class="edit-spot"></a>
+                    {!! link_delete(route('admin.restaurants.destroy', [$restaurant->id]), '', ['class' => 'delete']) !!}
                 </td>
             </tr>
         @endforeach
@@ -65,17 +53,17 @@
 <div class="clearfix"></div>
 <div class="row actions col-lg-12">
     <div class="form-group pull-left">
-        {!! link_to_route('admin.hotels.bulk-delete', 'Delete selected', [], ['id' => 'bulk-delete', 'class' => 'btn btn-danger']) !!}
+        {!! link_to_route('admin.restaurants.bulk-delete', 'Delete selected', [], ['id' => 'bulk-delete', 'class' => 'btn btn-danger']) !!}
     </div>
     <div class="form-group pull-left">
-        <a href="javascript:void(0);" class="clean-btn btn btn-danger">Clean Hotels Database</a>
+        <a href="javascript:void(0);" class="clean-btn btn btn-danger">Clean Restaurants Database</a>
     </div>
     <div class="form-group pull-right">
         {!! Form::label('limit', 'Items per page') !!}
         {!! Form::select('limit', [15 => '15', 50 => '50', 100 => '100'], Request::get('limit')) !!}
     </div>
 </div>
-@include('admin.pagination', ['paginatable' => $hotels])
+@include('admin.pagination', ['paginatable' => $restaurants])
 @endsection
 
 @section('scripts')
@@ -83,8 +71,7 @@
 $(function(){
     $('.clean-btn').on('click', function(e){
         e.preventDefault();
-        
-        if(confirm('Do you really want to clean hotels database?!'))
+        if(confirm('Do you really want to clean restaurants database?!'))
         {
             $('.form-for-trunkate').submit();
         }

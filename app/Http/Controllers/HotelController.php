@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\OnHotelCreate;
-use App\Events\OnHotelUpdate;
 use App\Http\Requests\Hotel\HotelDestroyRequest;
 use App\Http\Requests\Hotel\HotelIndexRequest;
 use App\Http\Requests\Hotel\HotelStoreRequest;
 use App\Http\Requests\Hotel\HotelUpdateRequest;
 use App\Services\Privacy;
 use App\Spot;
-use App\SpotHotel;
 use App\SpotAmenity;
 use App\SpotVote;
 use App\RemotePhoto;
@@ -18,9 +15,7 @@ use App\SpotTypeCategory;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use GuzzleHttp\Client;
-use SKAgarwal\GoogleApi\PlacesApi;
 
-use App\Http\Requests;
 
 /**
  * Class HotelController
@@ -90,7 +85,7 @@ class HotelController extends Controller
     public function show($hotel)
     {
         
-        $googlePlaceInfo = $this->getGooglePlaceInfo($hotel);
+        $googlePlaceInfo = $hotel->getGooglePlaceInfo();
         $hotel->google_response = $googlePlaceInfo;
         
         $amenitiesArray = [];
@@ -128,9 +123,9 @@ class HotelController extends Controller
                     }
                     if($googlePlaceInfo)
                     {
-                        $googlePhotos = $this->saveGooglePlacePhotos($hotel, $googlePlaceInfo);
+                        $googlePhotos = $hotel->saveGooglePlacePhotos($googlePlaceInfo);
                         $remote_photos = (!$remote_photos) ? $googlePhotos : $googlePhotos->merge($remote_photos);
-                        $googleReviews = $this->saveGooglePlaceReviews($hotel, $googlePlaceInfo);
+                        $googleReviews = $hotel->saveGooglePlaceReviews($googlePlaceInfo);
                         $reviews = (!$reviews) ? $googleReviews : $googleReviews->merge($reviews);
                     }
                     if($remote_photos || $amenities || $reviews)
@@ -468,184 +463,6 @@ class HotelController extends Controller
             return new \Htmldom($content->getBody()->getContents());
         }
         return false;
-    }
-    
-    public function getGooglePlaceId(Spot $hotel)
-    {
-        $hotelInfo = $hotel->hotel;
-        if( $hotelInfo && !empty($hotelInfo->google_pid) )
-        {
-            return $hotelInfo->google_pid;
-        }
-        $address = $hotel->points()->first();
-        $google_pid = false;
-        if($address && $hotelInfo)
-        {
-            $hotel->query = implode(', ', [
-                $hotel->title,
-                $address->address,
-                $hotelInfo->city_hotel,
-                $this->getCountryNameByCode($hotel)
-            ]);
-            
-            $googlePlaces = new PlacesApi(config('google.places.key'));
-            try
-            {
-                $response = $googlePlaces->placeAutocomplete( $hotel->query);
-                
-                $hotel->google_response = $response;
-                
-                if( !empty($response['predictions']) )
-                {
-                    foreach($response['predictions'] as $resp)
-                    {
-                        if(isset($resp['description']) && strpos($resp['description'], $hotel->title) !== false)
-                        {
-                            $google_pid = $resp['place_id'];
-                        }
-                    }
-                }
-            }
-            catch(Exception $e)
-            {
-                $google_pid = false;
-            }
-            if( !$google_pid )
-            {
-                
-                $options = [
-                    'json'    => [
-                        'location' => [
-                            'lat' => $address->location->getLat(),
-                            'lng' => $address->location->getLng()
-                        ],
-                        'name' => $hotel->title,
-                        'address' => $hotel->query,
-                        'types' => ['establishment', 'lodging', 'point_of_interest'],
-                    ],
-                ];
-                
-                $response = $this->getGooglePlaceAddResponse($options);
-                
-                if($response)
-                {
-                    $hotel->google_place_add = true;
-                    $hotel->google_response = $response->getBody()->getContents();
-                    
-                    //TODO: save place_id => $HotelInfo->google_pid
-                }
-            }
-            return $google_pid;
-        }
-        return false;
-    }
-    
-    public function getGooglePlaceAddResponse($options)
-    {
-        $client = new Client([
-            'cookies' => true, 
-            'http_errors' => false,
-            'base_uri' => config('google.places.baseUri')
-        ]);
-        try {
-            $response = $client->request('POST', 'add/json?key=' . config('google.places.key'), $options);
-        }
-        catch(Exception $e)
-        {
-            $response = false;
-        }
-        return $response;
-    }
-    
-    public function getCountryNameByCode($hotel)
-    {
-        $hotelInfo = $hotel->hotel;
-        if($hotelInfo && !empty($hotelInfo->country_code))
-        {
-            return locale_get_display_region('-' . strtoupper($hotelInfo->country_code), 'en');
-        }
-        return '';
-    }
-    
-    public function getGooglePlaceInfo(Spot $hotel)
-    {
-        $hotelInfo = $hotel->hotel;
-        if($hotelInfo && !empty($hotelInfo->google_pid))
-        {
-            $googlePlaces = new PlacesApi(config('google.places.key'));
-            $response = false;
-            try
-            {
-                $response = $googlePlaces->placeDetails($hotelInfo->google_pid);
-            }
-            catch(Exception $e)
-            {
-                $response = false;
-            }
-            return $response;
-        }
-        return false;
-    }
-    
-    public function saveGooglePlaceReviews($hotel, $googlePlaceInfo)
-    {
-        $result = [];
-        if( isset($googlePlaceInfo['result']['reviews']) && !empty($googlePlaceInfo['result']['reviews']))
-        {
-            $googleReviews = $googlePlaceInfo['result']['reviews'];
-            foreach($googleReviews as $item)
-            {
-                $remote_id = $this->getHashForGoogle($item);
-                
-                if( !SpotVote::where('remote_id', $remote_id)->exists())
-                {
-                    $itemObj = new SpotVote();
-                    $itemObj->remote_id = $remote_id;
-                    $itemObj->message = $item['text'];
-                    $itemObj->vote = $item['rating'];
-                    $hotel->votes()->save($itemObj);
-                    $result[] = $itemObj;
-                }
-            }
-        }
-        return collect($result);
-    }
-    
-    public function saveGooglePlacePhotos($hotel, $googlePlaceInfo)
-    {
-        $result = [];
-        if( isset($googlePlaceInfo['result']['photos']) && !empty($googlePlaceInfo['result']['photos']))
-        {
-            $googlePhotos = $googlePlaceInfo['result']['photos'];
-            foreach($googlePhotos as $item)
-            {
-                $photoUrl = $this->getGooglePhotoUrl($item['photo_reference']);
-                
-                if( !RemotePhoto::where('url', $photoUrl)->exists() )
-                {
-                    $result[] = new RemotePhoto([
-                        'url' => $photoUrl,
-                        'image_type' => 0,
-                        'size' => 'original',
-                    ]);
-                }
-            }
-            $hotel->remotePhotos()->saveMany( $result );
-        }
-        return collect($result);
-    }
-    
-    public function getGooglePhotoUrl($photo_reference)
-    {
-        return config('google.places.baseUri') . 'photo'
-        . '?maxwidth=400'
-        . '&photoreference=' . $photo_reference
-        . '&key=' . config('google.places.key');
-    }
-
-    public function getHashForGoogle($item)
-    {
-        return 'gg_' . md5( $item['author_name'] . $item['rating'] . $item['text'] );
     }
     
 }

@@ -1,0 +1,41 @@
+<div class="col col-sm-6">
+    <div class="input-group input-group-file">
+        <label class="input-group-btn ">
+            <span class="btn btn-primary btn-file">
+                Browse&hellip; {!! Form::file('csv') !!}
+            </span>
+        </label>
+        <input type="text" class="form-control" readonly>
+    </div>
+    <div>
+        <div class="checkbox">
+            <label><input name="auto-parse" type="checkbox" value="" checked>Automaticly start parsing</label>
+        </div>
+        <div class="checkbox">
+            <label><input name="update-existing" type="checkbox" value="">Update existing rows</label>
+        </div>
+
+    </div>
+</div>
+<div class="col col-sm-6">
+    <button class="btn btn-submit" type="submit">
+        <span class="btn-export">Upload</span>
+        <span class="btn-loaded">Loaded!</span>
+        <div class="prldr">
+            <div class="prldr-i prldr-1"></div>
+            <div class="prldr-i prldr-2"></div>
+            <div class="prldr-i prldr-3"></div>
+        </div>
+    </button>
+
+    <button class="btn btn-submit disabled" type="button">
+        <span class="btn-export">Start parse</span>
+        <span class="btn-loaded">Done!</span>
+        <div class="prldr">
+            <div class="prldr-i prldr-1"></div>
+            <div class="prldr-i prldr-2"></div>
+            <div class="prldr-i prldr-3"></div>
+        </div>
+    </button>
+</div>
+

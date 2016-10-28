@@ -92,6 +92,12 @@ Route::resource('hotels', 'HotelController', ['except' => ['create', 'edit', 'st
 Route::get('hotels/{hotels}/prices', 'HotelController@prices');
 
 /**
+ * Restaurant resource
+ */
+
+Route::resource('restaurants', 'RestaurantController', ['except' => ['create', 'edit', 'store', 'destroy']] );
+
+/**
  * Calendar controls
  */
 Route::get('calendar/export', 'CalendarController@export');

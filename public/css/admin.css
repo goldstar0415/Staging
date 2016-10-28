@@ -7961,7 +7961,7 @@ button.close {
   width: auto;
 }
 
-.hotels-parser-info {
+.spots-parser-info {
     height: 500px;
     margin: 10px 15px;
     padding: 5px 10px;
@@ -7971,10 +7971,10 @@ button.close {
     overflow-y: scroll;
 }
 
-.hotels-parser-info-console {
+.spots-parser-info-console {
     font-weight: bold;
 }
 
-.hotels-parser-progress {
+.spots-parser-progress {
     display: none;
 }

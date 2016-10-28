@@ -3,56 +3,58 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use ForceUTF8\Encoding;
 use App\Http\Requests\PaginateRequest;
-use App\Http\Requests\Admin\HotelFilterRequest;
+use App\Http\Requests\Admin\RestaurantFilterRequest;
 use App\Http\Requests\Admin\SpotsBulkDeleteRequest;
-use App\SpotHotel;
+use App\SpotRestaurant;
+use App\SpotAmenity;
 use App\SpotTypeCategory;
 use App\RemotePhoto;
 use App\SpotPoint;
 use App\Spot;
 
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Services\Csv\Reader;
 
-class HotelsController extends Controller
+class RestaurantsController extends Controller
 {
     
     private $stepCount = 1000;
     
     private $spotFields = [
-        'title' => 'hotel_name',
-        'description' => 'desc_en',
-        'web_sites' => 'homepage_url',
+        'title' => 'Restaurant name',
+        'description' => 'description',
+        'web_sites' => 'website',
     ];
     
-    private $hotelFields = [
-        'class',
-        'hotelscom_url',
-        'booking_url',
-        'booking_id',
-        'booking_num_reviews',
-        'booking_rating',
-        'booking_rating_10',
-        'hotelscom_num_reviews',
-        'hotelscom_rating',
-        'facebook_url',
-        'twitter_url',
-        'trip_advisor_url',
-        'google_pid',
-        'google_rating',
-        'maxrate',
-        'minrate',
-        'nr_rooms',
-        'continent_id',
-        'country_code',
-        'city_hotel',
-        'zip',
-        'currencycode'
+    private $restaurantFields = [
+        'Rest_id' => 'remote_id',
+        'trip_id' => 'tripadvisor_id',
+        'Tripadvisor url' => 'tripadvisor_url',
+        'Email' => 'email',
+        'Phone Number' => 'phone_number',
+        'Trip_Rating' => 'tripadvisor_rating',
+        'Price_level' => 'price_level',
+        'num_trip_reviews' => 'num_trip_reviews',
+        'Category' => 'category',
+        'meals_served' => 'meals_served',
+        'country' => 'country',
+        'city' => 'city',
+        'state' => 'state',
+        'Yelp' => 'yelp_url',
+        'yelp_rating' => 'yelp_rating',
+        'Zomato' => 'zomato_url',
+        'Zomato_id' => 'zomato_id',
+        'ZomatoRating' => 'zomato_rating',
+        'Facebook_URL' => 'facebook_url',
+        'Facebook_rating' => 'zomato_rating',
+        'OpenTableURL' => 'open_table_url',
+        'google_pid' => 'google_pid',
+        'google_rating' => 'google_rating',
     ];
     
-    
-
     /**
      * Display a listing of the resource.
      *
@@ -60,30 +62,30 @@ class HotelsController extends Controller
      */
     public function index(PaginateRequest $request)
     {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
-        return view('admin.hotels.index')->with('hotels', $this->paginatealbe($request, Spot::where('spot_type_category_id', $spotTypeCategory->id),15));
+        $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
+        return view('admin.restaurants.index')->with('restaurants', $this->paginatealbe($request, Spot::where('spot_type_category_id', $spotTypeCategory->id),15));
     }
     
     /**
      * Show the form for editing the specified resource.
      *
-     * @param HotelFilterRequest $request
+     * @param RestaurantFilterRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function filter(HotelFilterRequest $request)
+    public function filter(RestaurantFilterRequest $request)
     {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
+        $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
         $query = $this->getFilterQuery($request, Spot::where('spot_type_category_id', $spotTypeCategory->id));
 
-        return view('admin.hotels.index')->with('hotels', $this->paginatealbe($request, $query,15));
+        return view('admin.restaurants.index')->with('restaurants', $this->paginatealbe($request, $query,15));
     }
     
     /**
-     * @param HotelFilterRequest $request
+     * @param RestaurantFilterRequest $request
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function getFilterQuery(HotelFilterRequest $request, $query)
+    protected function getFilterQuery(RestaurantFilterRequest $request, $query)
     {
         if ($request->has('filter.title')) {
             $query->where('title', 'ilike', '%' . $request->filter['title'] . '%');
@@ -92,16 +94,16 @@ class HotelsController extends Controller
             $query->where('description', 'ilike', '%' . $request->filter['description'] . '%');
         }
         if ($request->has('filter.created_at')) {
-            $query->where(DB::raw('hotels.created_at::date'), $request->filter['created_at']);
+            $query->where(DB::raw('restaurants.created_at::date'), $request->filter['created_at']);
         }
         $request->flash();
 
         return $query;
     }
     
-    public function hotelsCsvParser()
+    public function restaurantsCsvParser()
     {
-        return view('admin.hotels.parser');
+        return view('admin.restaurants.parser');
     }
     
     public function exportUpload(Request $request)
@@ -119,7 +121,7 @@ class HotelsController extends Controller
             $result['success'] = false;
             $result['data']    = $validator->messages()->get('csv');
         }
-        else 
+        else
         {
             $filename =  $request->csv->getClientOriginalName();
             $path     = $request->csv->move(storage_path() . '/csvs/', $filename );
@@ -129,7 +131,7 @@ class HotelsController extends Controller
                 $result['success'] = false;
                 $result['data'][] = 'File should be .csv';
             }
-            else 
+            else
             {
                 $result['data']['path'] = $path->getPathName();
                 $result['data']['filename'] = $filename;
@@ -137,9 +139,6 @@ class HotelsController extends Controller
                     'excel.csv.delimiter' => ',',
                     'excel.cache.enable'  => false
                     ]);
-                $startRow = 1;
-                
-                $headers = [];
                 
                 $reader = new Reader();
                 $reader->open($result['data']['path']);
@@ -161,7 +160,6 @@ class HotelsController extends Controller
     
     public function export( Request $request ) 
     {    
-        
         $result             = ['success' => true, 'endOfParse' => false, 'messages' => [] ];
         $path               = $request->path;
         $stepCount          = $this->stepCount;
@@ -182,14 +180,14 @@ class HotelsController extends Controller
         $rows_parsed_now    = 0;
         if($total_rows == $rows_parsed_before)
         {
-            $result['endOfParse']       = true;
+            $result['endOfParse'] = true;
         }
         else
         {
             config([
                 'excel.cache.enable'  => false
                 ]);
-            $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
+            $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
             foreach ($reader->getSheetIterator() as $sheet) {
                 foreach ($sheet->getRowIterator() as $row) {
                     if($isFirstRow)
@@ -224,101 +222,126 @@ class HotelsController extends Controller
                         }
                     }
                     
-                    
-                    if(isset($item['latitude']) && isset($item['longitude']))
-                    $item['location'] = [
-                        'lat' => $item['latitude'],
-                        'lng' => $item['longitude']
-                    ];
-                    $picture = isset($item['photo_url'])?$item['photo_url']:null;
-                    unset($item['latitude'], $item['longitude'], $item['photo_url']);
-                    
-                    if(isset($item['booking_id']) && !empty($item['booking_id']) )
+                    if(isset($item['Latitude']) && isset($item['Longitude']))
                     {
-                        $spotExists = Spot::where('remote_id', 'bk_' . $item['booking_id'])->exists();
+                        $item['location'] = [
+                            'lat' => $item['Latitude'],
+                            'lng' => $item['Longitude']
+                        ];
+                    }
+                    $pictures = isset($item['all_images'])?$item['all_images']:null;
+                    unset($item['Latitude']);
+                    unset($item['Longitude']);
+                    unset($item['all_images']);
+                    
+                    if(isset($item['Rest_id']) && !empty($item['Rest_id']) )
+                    {
+                        $spotExists = Spot::where('remote_id', 'yp_' . $item['Rest_id'])->exists();
                         
                         if($spotExists && $updateExisting)
                         {
-                            $hotel = Spot::where('remote_id', 'bk_' . $item['booking_id'])->first();
-                            if(isset($item['homepage_url']) && !empty($item['homepage_url']))
+                            $restaurant = Spot::where('remote_id', 'yp_' . $item['Rest_id'])->first();
+                            if(isset($item['website']) && !empty($item['website']))
                             {
-                                $hotel->web_sites = [$item['homepage_url']];
+                                $restaurant->web_sites = [$item['website']];
                             }
-                            unset($item['homepage_url']);
+                            unset($item['website']);
                             foreach($this->spotFields as $column => $value)
                             {
                                 if(isset($item[$value]))
                                 {
-                                    $hotel->$column = $item[$value];
+                                    $restaurant->$column = $item[$value];
                                 }
                             }
-                            $hotel->save();
+                            $restaurant->save();
                             $result['rows_updated']++;
                         }
                         elseif(!$spotExists)
                         {
-                            $hotel = Spot::create([
+                            $restaurant = Spot::create([
                                 'spot_type_category_id' => $spotTypeCategory->id,
-                                'title' => isset($item['hotel_name']) ? $item['hotel_name']: '',
-                                'description' => isset($item['desc_en']) ? $item['desc_en']: '',
-                                'web_sites'	=> isset($item['homepage_url']) ? [$item['homepage_url']] : [],
+                                'title' => isset($item['Restaurant name']) ? $item['Restaurant name']: '',
+                                'web_sites'	=> isset($item['website']) ? [$item['website']] : [],
                                 'is_approved' => true,
                                 'is_private' => false,
-                                'remote_id' => isset($item['booking_id']) ? 'bk_' . $item['booking_id']: ''
+                                'remote_id' => isset($item['Rest_id']) ? 'yp_' . $item['Rest_id']: ''
                             ]);
                             $result['rows_added']++;
                         }
                         
                         if($updateExisting || !$spotExists){
-                            $hotelExists = SpotHotel::where('booking_id',  $item['booking_id'])->first();
+                            $restaurantExists = SpotRestaurant::where('remote_id',  $item['Rest_id'])->first();
 
-                            $hotelObj = ($hotelExists) ? $hotelExists: (new SpotHotel);
-                            foreach( $this->hotelFields as $field) {
-                                if(isset($item[$field]))
-                                    $hotelObj->$field = $item[$field];
+                            $restaurantObj = ($restaurantExists) ? $restaurantExists: (new SpotRestaurant);
+                            foreach( $this->restaurantFields as $name => $field) {
+                                if(isset($item[$name]))
+                                    $restaurantObj->$field = $item[$name];
                             }
-                            $hotelObj->spot_id = $hotel->id;
-                            $hotelObj->save();
+                            $restaurantObj->spot_id = $restaurant->id;
+                            $restaurantObj->save();
 
-                            if( isset($item['location']) && isset($item['address']) )
+                            if( isset($item['location']) && isset($item['Address']) )
                             {
-                                $locationExists = SpotPoint::where('spot_id', $hotel->id)->exists();
+                                $locationExists = SpotPoint::where('spot_id', $restaurant->id)->exists();
                                 if($locationExists)
                                 {
-                                    $hotel->points()->delete();
+                                    $restaurant->points()->delete();
                                 }
                                 $point = new SpotPoint();
                                 $point->location = $item['location'];
-                                $point->address = $item['address'];
-                                $hotel->points()->save($point);
+                                $point->address = $item['Address'];
+                                $restaurant->points()->save($point);
                             }
 
-                            if( !empty($picture) )
+                            if( !empty($pictures) )
                             {
-                                $pictureExists = RemotePhoto::where('associated_id', $hotel->id)->where('associated_type', Spot::class)->exists();
+                                
+                                $pictureExists = RemotePhoto::where('associated_id', $restaurant->id)->where('associated_type', Spot::class)->exists();
                                 if($pictureExists)
                                 {
-                                    $hotel->remotePhotos()->delete();
+                                    $restaurant->remotePhotos()->delete();
                                 }
-                                $pic = new RemotePhoto([
-                                    'url' => $picture,
-                                    'image_type' => 0,
-                                    'size' => 'original',
-                                ]);
-                                $hotel->remotePhotos()->save($pic);
+                                $pictuesObjects = [];
+                                $pictures = array_filter(explode(';', $pictures));
+                                foreach($pictures as $picture)
+                                {
+                                    $pictuesObjects[] = new RemotePhoto([
+                                        'url' => $picture,
+                                        'image_type' => 0,
+                                        'size' => 'original',
+                                    ]);
+                                }
+                                $restaurant->remotePhotos()->saveMany($pictuesObjects);
                             }
+                            if(isset($item['features']) && !empty($item['features']))
+                            {
+                                $features = array_filter(explode(',', $item['features']));
+                                foreach($features as $amenity)
+                                {
+                                    $body = trim($amenity);
+                                    if( !SpotAmenity::where('spot_id', $restaurant->id)
+                                                     ->where('item', $body)->exists() )
+                                    $amenityObject = new SpotAmenity([
+                                        'item' => $body,
+                                        'spot_id' => $restaurant->id
+                                    ]);
+                                    $amenityObject->save();
+                                }
+                                
+                            }
+                            
                         }
                         $rows[] = $item;
                     }
                     else {
-                        $result['messages'][] = 'Booking.com ID missed in string #' . ($rows_parsed_before + $rows_parsed_now + 1);
+                        $result['messages'][] = 'Restaurant ID missed in string #' . ($rows_parsed_before + $rows_parsed_now + 1);
                     }
                     $rows_parsed_now++;
                 }
             }
             if($rows_parsed_now == 0)
             {
-                $result['endOfParse']       = true;
+                $result['endOfParse'] = true;
             }
             $reader->close();
         }
@@ -335,18 +358,18 @@ class HotelsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Hotel  $hotel
+     * @param  \App\Spot  $restaurant
      * @return \Illuminate\Http\Response
      */
-    public function destroy($hotel)
+    public function destroy($restaurant)
     {
-        $hotel->delete();
+        $restaurant->delete();
         return back();
     }
     
     public function cleanDb(Request $request)
     {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
+        $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
         Spot::where('spot_type_category_id', $spotTypeCategory->id)->delete();
         return back();
     }
@@ -356,45 +379,46 @@ class HotelsController extends Controller
         return back();
     }
     
-    public function getEdit(Spot $hotel) {
+    public function getEdit(Spot $restaurant) {
         $spotFields = array_keys($this->spotFields);
-        $hotelFields = array_diff($this->hotelFields, ['booking_id']);
+        $restaurantFields = array_diff($this->restaurantFields, ['remote_id']);
         
-        return view('admin.hotels.item')->with([
-            'hotel' => $hotel,
+        return view('admin.restaurants.item')->with([
+            'restaurant' => $restaurant,
             'spotFields' => $spotFields,
-            'hotelFields' => $hotelFields,
+            'restaurantFields' => $restaurantFields,
         ]);
     }
     
-    public function postEdit(Request $request, Spot $hotel) {
+    public function postEdit(Request $request, Spot $restaurant) {
         
         $rules = [
             'title' => 'required|max:255',
-            'description' => 'required|max:2000',
             'web_sites' => 'sometimes|array',
             
-            'class' => 'max:50',
-            'hotelscom_url' => 'max:255',
-            'booking_url' => 'max:255',
-            'booking_num_reviews' => 'max:255',
-            'booking_rating' => 'max:255',
-            'booking_rating_10' => 'max:255',
-            'hotelscom_num_reviews' => 'max:255',
-            'hotelscom_rating' => 'max:255',
+            'remote_id',
+            'tripadvisor_id' => 'max:50',
+            'tripadvisor_url' => 'max:255',
+            'email' => 'max:50',
+            'phone_number' => 'max:50',
+            'tripadvisor_rating' => 'max:50',
+            'price_level' => 'max:50',
+            'num_trip_reviews' => 'max:50',
+            'category' => 'max:255',
+            'meals_served' => 'max:255',
+            'country' => 'max:255',
+            'city' => 'max:255',
+            'state' => 'max:255',
+            'yelp_url' => 'max:255',
+            'yelp_rating' => 'max:50',
+            'zomato_url' => 'max:255',
+            'zomato_id' => 'max:50',
+            'zomato_rating' => 'max:50',
             'facebook_url' => 'max:255',
-            'twitter_url' => 'max:255',
-            'trip_advisor_url' => 'max:255',
-            'google_pid' => 'max:255',
-            'google_rating' => 'max:20',
-            'maxrate' => 'max:20',
-            'minrate' => 'max:20',
-            'nr_rooms' => 'max:20',
-            'continent_id' => 'max:20',
-            'country_code' => 'max:20',
-            'city_hotel' => 'max:100',
-            'zip' => 'max:20',
-            'currencycode' => 'max:20'
+            'zomato_rating' => 'max:50',
+            'open_table_url' => 'max:255',
+            'google_pid' => 'max:50',
+            'google_rating' => 'max:50',
         ];
         
         
@@ -402,17 +426,17 @@ class HotelsController extends Controller
         $newValues = $request->all();
         foreach(array_keys($this->spotFields) as $field)
         {
-            if(isset($newValues[$field])) $hotel->$field = $newValues[$field];
+            if(isset($newValues[$field])) $restaurant->$field = $newValues[$field];
         }
-        $hotel->save();
-        $hotelAttrObj = $hotel->hotel;
-        if(!empty($hotelAttrObj))
+        $restaurant->save();
+        $restaurantAttrObj = $restaurant->restaurant;
+        if(!empty($restaurantAttrObj))
         {
-            foreach(array_diff($this->hotelFields, ['booking_id']) as $field)
+            foreach(array_diff($this->restaurantFields, ['remote_id']) as $field)
             {
-                if(isset($newValues[$field])) $hotelAttrObj->$field = $newValues[$field];
+                if(isset($newValues[$field])) $restaurantAttrObj->$field = $newValues[$field];
             }
-            $hotelAttrObj->save();
+            $restaurantAttrObj->save();
         }
         
         return back();

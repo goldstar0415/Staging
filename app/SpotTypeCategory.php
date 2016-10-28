@@ -23,7 +23,7 @@ class SpotTypeCategory extends BaseModel implements StaplerableInterface
 {
     use StaplerTrait;
 
-    protected $fillable = ['name', 'display_name', 'icon'];
+    protected $fillable = ['name', 'display_name', 'icon', 'spot_type_id'];
 
     protected $appends = ['icon_url'];
 
