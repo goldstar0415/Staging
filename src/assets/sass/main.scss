@@ -1461,6 +1461,14 @@ span.location-icon {
   white-space: pre-line;
 }
 
+.description li, .description .spot-amenities, .spot-hours * {
+  white-space: normal;
+}
+.description h3 {
+    color: black;
+    margin: 0;
+}
+
 .one-spot-section stars .outline-none {
   text-align: left;
 }
