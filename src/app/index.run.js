@@ -73,7 +73,7 @@
                 // $rootScope.mapState = "full-size";
             }
         } else {
-            MapService.removeHighlighting();
+            // MapService.removeHighlighting();
             angular.element('.map-tools-top').addClass('hidden');
             angular.element('.map-tools').removeClass('hidden');
             $rootScope.mapState = "full-size";

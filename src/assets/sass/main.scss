@@ -1709,7 +1709,7 @@ body .atlwdg-trigger.atlwdg-TOP {
 
 .spot-icon {
     margin-left: -50px;
-    margin-top: -50px;
+    margin-top: -50px !important;
     width: 100px;
     height: 100px;
     opacity: 1;
@@ -1832,4 +1832,27 @@ body .atlwdg-trigger.atlwdg-TOP {
 
 html {
     background-color: #f5f8fa;
+}
+
+#body .marker-cluster-medium, #body .marker-cluster-small, #body .marker-cluster-big {
+    background-color: $dark_blue;
+    div {
+        margin-left: 2px;
+        margin-top: 2px;
+        font-weight: bold;
+        background-color: white;
+        color: $dark_blue;
+        width: 36px;
+        height: 36px;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &.active {
+        background-color: $light_blue_btn;
+        div {
+            color: $light_blue_btn;
+        }
+    }
 }
