@@ -337,7 +337,32 @@
         edit: true
       })
 
-
+      //restaurants
+      .state('restaurants', {
+        url: '/restaurants',
+        templateUrl: '/app/modules/restaurant/restaurants/restaurants.html',
+        controller: 'RestaurantsController',
+        controllerAs: 'Restaurants',
+        parent: 'profile_menu',
+        locate: 'none',
+        mapState: 'small'
+      })
+      .state('restaurant', {
+        url: '/restaurant/:restaurant_id',
+        templateUrl: '/app/modules/restaurant/restaurant.html',
+        controller: 'RestaurantController',
+        controllerAs: 'Restaurant',
+        parent: 'profile_menu',
+        resolve: {
+          restaurant: function (Restaurant, $stateParams) {
+            return Restaurant.get({id: $stateParams.restaurant_id}).$promise;
+          }
+        },
+        require_auth: true,
+        mapState: 'small',
+        edit: true
+      })
+      
       //chat
       .state('chat', {
         url: '/chat',

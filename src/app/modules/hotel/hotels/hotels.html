@@ -11,7 +11,7 @@
             <a ui-sref="hotel({hotel_id: item.id})">{{ item.title }}</a>
         </div>
         <div class="location col-xs-6">
-            lat: {{ item.location.lat }} lon: {{ item.location.lng }}
+            lat: {{ item.points[0].location.lat }} lon: {{ item.points[0].location.lng }}
         </div>
     </section>
 </div>
