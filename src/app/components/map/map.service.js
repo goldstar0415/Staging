@@ -590,8 +590,6 @@
 
           angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
 
-          map.removeLayer($rootScope.marker);
-
           $rootScope.toggleSidebar(false);
         }
 

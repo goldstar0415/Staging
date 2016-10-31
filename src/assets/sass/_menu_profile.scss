@@ -193,20 +193,28 @@
 }
 
 .sidebar-row {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 
-    .col-sm-4 {
-        min-height: 8rem;
-
-        a {
-            white-space: nowrap;
-            display: block;
-            word-wrap: normal;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            -e-text-overflow: ellipsis;
-        }
+    &>div {
+        min-width: 75px;
+        margin: 5px;
     }
+
+    // .col-sm-4 {
+    //     min-height: 8rem;
+    //
+    //     a {
+    //         white-space: nowrap;
+    //         display: block;
+    //         word-wrap: normal;
+    //         overflow: hidden;
+    //         text-overflow: ellipsis;
+    //         -e-text-overflow: ellipsis;
+    //     }
+    // }
 }
 @media (max-width: 992px) {
     .menu-profile {
@@ -239,4 +247,12 @@
     .edit-delete {
         text-align: right;
     }
+}
+
+.profile-content {
+    background-color: white;
+    border: 1px solid #e9edf0;
+    width: 100%;
+    padding-top: 20px;
+    position: relative;
 }

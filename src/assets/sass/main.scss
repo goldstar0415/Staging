@@ -1321,45 +1321,6 @@ html {
   min-height: 3rem !important
 }
 
-.module-sidebar {
-  .row-min {
-    margin-left: -5px;
-    margin-right: -5px;
-    .pad-min {
-      padding-left: 5px;
-      padding-right: 5px;
-      margin-bottom: 1rem;
-      > a {
-        position: relative;
-        max-height: 8rem;
-        .sidebar-user-name {
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(26, 26, 47, 0.7);
-          position: absolute;
-          opacity: 0;
-          transition: .5s all;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: pre-line;
-        }
-        &:hover {
-          .sidebar-user-name {
-            opacity: 1;
-          }
-        }
-      }
-    }
-  }
-  .img-responsive {
-    max-height: 8rem;
-    overflow: hidden;
-    max-width: 100%;
-  }
-}
-
 .grey-bg {
   background-color: #f4f5f6;
 }
@@ -1842,7 +1803,7 @@ html {
     background-color: #f5f8fa;
 }
 
-#body .marker-cluster-medium, #body .marker-cluster-small, #body .marker-cluster-big {
+#body .marker-cluster-medium, #body .marker-cluster-small, #body .marker-cluster-large {
     background-color: $dark_blue;
     div {
         margin-left: 2px;

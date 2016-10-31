@@ -1,12 +1,35 @@
 ////information-profile//////
+.wrap {
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    //width: 1000px;
+    width: 100%;
+    @media(max-width: 992px) {
+        flex-wrap: wrap;
+    }
+}
 
 .information-profile {
-  padding: 25px 15px 20px;
-  padding-left: 0;
+  // padding: 25px 15px 20px;
+  // padding-left: 0;
+  max-width: 300px;
+  min-width: 300px;
+  padding: 25px 20px;
+  @media(max-width: 992px) {
+      max-width: 100%;
+      min-width: 100%;
+      .location {
+          justify-content: center;
+          border-bottom: 0px;
+      }
+  }
   .avatar-wrap {
     padding: 0;
     .avatar {
-      margin: -115px auto 0;
+      //margin: -115px auto 0;
+      margin: 0 auto 0;
       background-color: #fff;
       width: 12rem !important;
       height: 12rem !important;
