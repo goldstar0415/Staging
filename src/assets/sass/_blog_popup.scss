@@ -37,6 +37,10 @@
             }
             p {
                 margin: 8px 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: calc(100% - 50px);
                 span {
                     color: #01C9FA;
                 }
