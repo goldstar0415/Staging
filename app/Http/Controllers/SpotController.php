@@ -154,7 +154,8 @@ class SpotController extends Controller
             ->append(['count_members', 'members', 'comments_photos']);
         $res->load(['votes' => function($query) use ($auth) {
             if($auth->check()) {
-                $query->where('user_id', '!=', $auth->user()->id);
+                $query->where('user_id', '!=', $auth->user()->id)
+                        ->orWhereNull('user_id');
             }
             $query->with('user');
             $query->orderBy('created_at', 'DESC');

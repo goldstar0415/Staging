@@ -49,7 +49,7 @@ class RestaurantsController extends Controller
         'Zomato_id' => 'zomato_id',
         'ZomatoRating' => 'zomato_rating',
         'Facebook_URL' => 'facebook_url',
-        'Facebook_rating' => 'zomato_rating',
+        'facebook_rating' => 'facebook_rating',
         'OpenTableURL' => 'open_table_url',
         'google_pid' => 'google_pid',
         'google_rating' => 'google_rating',
