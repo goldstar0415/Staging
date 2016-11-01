@@ -1,11 +1,12 @@
 ////information-profile//////
-.wrap {
+.profile-wrap {
     max-width: 1000px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    //width: 1000px;
+    flex-direction: row;
     width: 100%;
+    margin: auto;
     @media(max-width: 992px) {
         flex-wrap: wrap;
     }

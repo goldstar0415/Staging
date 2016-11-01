@@ -104,7 +104,7 @@
           }
       }
 
-      function highlightSpot(isFirst) {
+      function highlightSpot() {
           var selectedId, marker, spot;
           selectedId = $rootScope.visibleSpotsIds[$rootScope.spotsCarousel.index];
           if ($rootScope.mapSortSpots) {
@@ -159,40 +159,29 @@
           }
       }
 
-    //   function highlightSpot(isFirst) {
-    //       var selectedId, selectedSpot;
-    //       if (true) {
-    //           selectedId = $rootScope.visibleSpotsIds[$rootScope.spotsCarousel.index];
-    //           if ($rootScope.mapSortSpots) {
-    //               selectedSpot = $.grep($rootScope.mapSortSpots.data, function(s) {
-    //                   return s.id == selectedId;
-    //               })[0];
-    //           }
-    //       } else {
-    //           selectedSpot = $rootScope.mapSortSpots.data[0];
-    //       }
-    //       if (selectedSpot) {
-    //           if (highlightMarker) {
-    //               map.removeLayer(highlightMarker);
-    //           }
-    //           highlightMarker = L.marker(new L.LatLng(selectedSpot.points[0].location.lat, selectedSpot.points[0].location.lng)).addTo(map);
-    //       }
-    //   }
-
-      function highlightSpotByHover(spot) {
+      function clearSpotHighlighting(spot) {
+          var el = document.querySelectorAll('.marker-cluster').forEach(function(mc) {
+              mc.classList.remove('active');
+          });
           if (highlightMarker) {
               var oldIcon = CreateCustomIcon('', '', spot);
               highlightMarker.setIcon(oldIcon);
+              highlightMarker = null;
           }
+          $rootScope.highlightedSpotId = null;
+          $rootScope.$apply();
+      }
+
+      function highlightSpotByHover(spot) {
+          var el = document.querySelectorAll('.marker-cluster').forEach(function(mc) {
+              mc.classList.remove('active');
+          });
           var features = [];
           features = map._getFeatures();
           var marker = $.grep(features, function(m) {
               return m.spot_id === spot.id;
           })[0];
           if (!marker) {
-              var el = document.querySelectorAll('.marker-cluster').forEach(function(mc) {
-                  mc.classList.remove('active');
-              });
               for (var i = 0; i < features.length; i++) {
                   if ('_childClusters' in features[i]) {
                       var mrkrs = features[i].getAllChildMarkers();
@@ -223,6 +212,25 @@
           });
           marker.setIcon(icon);
           highlightMarker = marker;
+          if ($rootScope.$state.current.name == 'index') {
+              $rootScope.highlightedSpotId = spot.id || spot.spot.id || 0;
+              $rootScope.$apply();
+          }
+      }
+
+      function detectHover(marker, spot) {
+          marker.on('mouseover', function () {
+              if ($rootScope.$state.current.name == 'index') {
+                  $rootScope.highlightedSpotId = spot.id || spot.spot.id || 0;
+                  $rootScope.$apply();
+                  highlightSpotByHover(spot);
+              }
+          });
+          marker.on('mouseout', function () {
+              $rootScope.highlightedSpotId = null;
+              $rootScope.$apply();
+              clearSpotHighlighting(spot);
+          });
       }
 
       function spotsOnScreen() {
@@ -341,17 +349,6 @@
                 fill: false
               }).addTo(drawLayer);
 
-            //var popup = RemoveMarkerPopup(
-            //  function () {
-            //    drawLayer.removeLayer(poly);
-            //    var bboxes = GetDrawLayerBBoxes();
-            //    GetDataByBBox(bboxes);
-            //  },
-            //  function () {
-            //    poly.closePopup();
-            //  });
-            //
-            //poly.bindPopup(popup);
             snapRemote.enable();
 
             var bboxes = GetDrawLayerBBoxes();
@@ -405,18 +402,6 @@
               opacity: 0.0,
               fill: false,
             });
-
-            //var popup = RemoveMarkerPopup(
-            //  function () {
-            //    drawLayer.removeLayer(circle);
-            //    var bboxes = GetDrawLayerBBoxes();
-            //    GetDataByBBox(bboxes);
-            //  },
-            //  function () {
-            //    circle.closePopup();
-            //  });
-            //
-            //circle.bindPopup(popup);
 
             circle.addTo(drawLayer);
 
@@ -1321,22 +1306,6 @@
             markers.push(marker);
           }
 
-          //var popup = RemoveMarkerPopup(
-          //  function () {
-          //    for (var k in markers) {
-          //      if (markers[k]._leaflet_id == marker._leaflet_id) {
-          //        markersLayer.removeLayer(marker);
-          //        markers.splice(k, 1);
-          //        RecalculateRoute();
-          //      }
-          //    }
-          //  },
-          //  function () {
-          //    marker.closePopup();
-          //  });
-          //
-          //marker.bindPopup(popup);
-
           if ( !e.latlng.ignoreMarkerEvents  ) {
             marker.on('dragend', function () {
               // ignore empty originalEvent
@@ -1754,19 +1723,6 @@
                   fillColor: '#0C2638',
                   fillOpacity: 0.4
               }).addTo(bgLayer);
-
-                //var popup = RemoveMarkerPopup(
-                //  function () {
-                //    drawLayer.removeLayer(circle);
-                //    var bboxes = GetDrawLayerBBoxes();
-                //    GetDataByBBox(bboxes);
-                //  },
-                //  function () {
-                //    circle.closePopup();
-                //  });
-                //
-                //circle.bindPopup(popup);
-
                 circle.addTo(drawLayer);
               } else {
                 _.each(feature.geometry.coordinates, function (coords) {
@@ -1785,17 +1741,6 @@
                     fill: false
                   }).addTo(drawLayer);
 
-                  //var popup = RemoveMarkerPopup(
-                  //  function () {
-                  //    drawLayer.removeLayer(poly);
-                  //    var bboxes = GetDrawLayerBBoxes();
-                  //    GetDataByBBox(bboxes);
-                  //  },
-                  //  function () {
-                  //    poly.closePopup();
-                  //  });
-                  //
-                  //poly.bindPopup(popup);
                 });
               }
             }
@@ -1890,19 +1835,19 @@
           if (item) {
               var spot = item.spot ? item.spot : item;
               var image = '';
-            if (spot.category.type.name == 'event') {
-                image = '../../../assets/img/markers/marker-event.png';
-            } else if (spot.category.type.name == 'food') {
-                image = '../../../assets/img/markers/marker-food.png';
-            } else if (spot.category.type.name == 'todo') {
-                image = '../../../assets/img/markers/marker-todo.png';
-            } else if (spot.category.type.name == 'shelter') {
-                image = '../../../assets/img/markers/marker-shelter.png';
-            }
+              if (spot.category.type.name == 'event') {
+                  image = '../../../assets/img/markers/marker-event.png';
+              } else if (spot.category.type.name == 'food') {
+                  image = '../../../assets/img/markers/marker-food.png';
+              } else if (spot.category.type.name == 'todo') {
+                  image = '../../../assets/img/markers/marker-todo.png';
+              } else if (spot.category.type.name == 'shelter') {
+                  image = '../../../assets/img/markers/marker-shelter.png';
+              }
               return L.icon({
-                iconSize: [50, 50],
-                iconUrl: image,
-                className: 'spot-icon'
+                  iconSize: [50, 50],
+                  iconUrl: image,
+                  className: 'spot-icon'
               });
               //   if (spot.category.type.name == 'event') {
               //       image = '../../../assets/img/svg/Icon_Events.svg';
@@ -1913,20 +1858,24 @@
               //   } else if (spot.category.type.name == 'shelter') {
               //       image = '../../../assets/img/svg/Icon_Get_a_room.svg';
               //   }
-            //   return new L.HtmlIcon({
-            //       html : "<div class='spot-icon'><span class='spot-icon-info'>no data</span><img src='" + image + "'><div class='spot-icon-stars" + spot.rating + "'><p class='s1'></p><p class='s2'></p><p class='s3'></p><p class='s4'></p><p class='s5'></p></div></div>",
-            //   });
-        } else if (type == 'album' || type == 'photomap') {
-            return new L.HtmlIcon({
-                html : "<div class='map-marker-icon map-marker-icon-photo'><img src='" + iconUrl + "' /></div>",
-            });
-        } else {
-            return L.icon({
-              iconSize: [50, 50],
-              iconUrl: iconUrl,
-              className: 'custom-map-icons'
-            });
-        }
+              //   return new L.HtmlIcon({
+              //       html : "<div class='spot-icon'><span class='spot-icon-info'>no data</span><img src='" + image + "'><div class='spot-icon-stars" + spot.rating + "'><p class='s1'></p><p class='s2'></p><p class='s3'></p><p class='s4'></p><p class='s5'></p></div></div>",
+              //   });
+          } else if (type == 'album' || type == 'photomap') {
+              return new L.HtmlIcon({
+                  html: "<div class='map-marker-icon map-marker-icon-photo'><img src='" + iconUrl + "' /></div>",
+              });
+          } else if (type == 'friends') {
+              return new L.HtmlIcon({
+                  html: "<div class='map-marker-icon map-marker-icon-friend'><img src='" + iconUrl + "' /></div>",
+              });
+          } else {
+              return L.icon({
+                  iconSize: [50, 50],
+                  iconUrl: iconUrl,
+                  className: 'custom-map-icons'
+              });
+          }
       }
 
       function BindMarkerToInput(Marker, Callback) {
@@ -1995,26 +1944,6 @@
         var popup = L.popup(options).setContent(popupContent[0]);
         marker.bindPopup(popup);
       }
-
-      //function RemoveMarkerPopup(remove, cancel, addmarker, location) {
-      //  var scope = $rootScope.$new();
-      //  scope.remove = remove;
-      //  scope.cancel = cancel;
-      //  scope.addmarker = addmarker;
-      //
-      //  scope.popup = L.popup({
-      //    keepInView: false,
-      //    autoPan: true,
-      //    offset: L.point(-40, 0),
-      //    closeButton: false,
-      //    className: 'remove-popup clearfix'
-      //  }).setLatLng(location);
-      //  var popupContent = $compile('<confirm-popup></confirm-popup>')(scope);
-      //  scope.popup.setContent(popupContent[0]);
-      //
-      //
-      //  return scope.popup;
-      //}
 
       //Processing functions
       //Return concave hull from points array
@@ -2414,7 +2343,7 @@
             });
             item.marker = marker;
             BindSpotPopup(marker, item);
-
+            detectHover(marker, item);
             markers.push(marker);
           }
         });
@@ -2439,14 +2368,12 @@
       }
 
       function drawBlogMarkers(posts, clear) {
-        //currentLayer = 'other';
         if (clear) {
           GetCurrentLayer().clearLayers();
         }
 
         var markers = [];
         _.each(posts, function (item) {
-          //var icon = CreateCustomIcon(item.cover_url.thumb, 'custom-map-icons', [50, 50]);
           if (item.location) {
 
             var marker = L.marker(item.location);
@@ -2484,40 +2411,6 @@
 
               scope.item.$loading = true;
 
-            //   var syncSpot;
-            //   if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: spot_id}))) {
-            //     _loadSpotComments(scope, syncSpot);
-            //   } else {
-            //     Spot.get({id: spot_id}, function (fullSpot) {
-            //       //merge photos
-            //       fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
-            //       _loadSpotComments(scope, fullSpot);
-            //     });
-            //   }
-            });
-
-
-
-
-
-
-
-
-
-
-
-
-            // var popupContent = $compile('<blogpopup></blogpopup>')(scope);
-            // marker.bindPopup(popupContent);
-            // marker.openPopup();
-            // marker.on('click', function () {
-            //     console.log(marker);
-            //     // this.link = L.DomUtil.create('div', 'clear-selection', container);
-            //     // this.link.href = '#';
-            //     // this._map = map;
-            //     // console.log(item);
-            // //   $state.go('blog.article', {slug: item.slug});
-            // });
             item.marker = marker;
 
             markers.push(marker);
@@ -2617,7 +2510,8 @@
 
         highlightSpot: highlightSpot,
         removeHighlighting: removeHighlighting,
-        highlightSpotByHover: highlightSpotByHover
+        highlightSpotByHover: highlightSpotByHover,
+        clearSpotHighlighting: clearSpotHighlighting
       };
     });
 

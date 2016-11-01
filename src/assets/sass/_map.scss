@@ -210,7 +210,7 @@
 
     .filter-opened {
         .leaflet-control-container {
-            display: none !important;    
+            display: none !important;
         }
     }
 
@@ -355,6 +355,22 @@
         height: 100%;
         width: 100%;
         object-fit: cover;
+    }
+}
+
+.map-marker-icon-friend {
+    background-image: url('\\assets\\img\\markers\\marker-empty.png');
+    padding: 2px 7px;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        height: 36px;
+        width: 36px;
+        object-fit: cover;
+        border-radius: 100%;
     }
 }
 

@@ -74,6 +74,11 @@
     }
     display: flex;
     flex-wrap: wrap;
+    &.active {
+        .spot-img-top, .spot-img-bottom {
+            background-color: rgba($light_blue_btn, .8) !important;
+        }
+    }
     // margin: -5px;
     .new-spot {
         // padding: 5px;

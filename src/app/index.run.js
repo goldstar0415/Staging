@@ -22,6 +22,7 @@
     $rootScope.visibleSpotsIds = [];
     $rootScope.spotsCarousel = {};
     $rootScope.spotsCarousel.index = 0;
+    $rootScope.highlightedSpotId = null;
 
     MapService.Init('map');
 
@@ -29,7 +30,7 @@
     $rootScope.$on("$stateChangeError", onStateChangeError);
 
     $rootScope.$watch('$root.spotsCarousel.index', function() {
-        MapService.highlightSpot(false);
+        MapService.highlightSpot();
     }, true);
 
     document.addEventListener("fullscreenchange", detectFullScreen);
