@@ -68,6 +68,7 @@
     vm.typeaheadSelectLocation = typeaheadSelectLocation;
     vm.windowWidth = getWindowSize();
     vm.highlightSpotByHover = MapService.highlightSpotByHover;
+    vm.clearSpotHighlighting = MapService.clearSpotHighlighting;
 
     $window.onresize = getWindowSize;
     function getWindowSize(event) {
@@ -274,7 +275,7 @@
               $rootScope.mapSortSpots.isLoading = false;
               //////
               if ($rootScope.mapSortSpots.markers.length > 0) {
-                MapService.highlightSpot(true);
+                MapService.highlightSpot();
                 $rootScope.changeMapState('small', null, false);
                 MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.data, layer, true);
                 if (!$rootScope.isDrawArea) {
