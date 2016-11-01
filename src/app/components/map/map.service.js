@@ -2021,6 +2021,10 @@
         map.fitBounds(bounds);
       }
 
+      function FitBoundsByCoordinates(coordinates) {
+          map.fitBounds(coordinates);
+      }
+
       function FitBoundsOfCurrentLayer() {
         var layer = GetCurrentLayer();
         if (layer) {
@@ -2450,6 +2454,7 @@
         FitBoundsByLayer: FitBoundsByLayer,
         FitBoundsOfCurrentLayer: FitBoundsOfCurrentLayer,
         FitBoundsOfDrawLayer: FitBoundsOfDrawLayer,
+        FitBoundsByCoordinates: FitBoundsByCoordinates,
         //get bounds based on a point
         GetBoundsByCircle: GetBoundsByCircle,
         //sorting
