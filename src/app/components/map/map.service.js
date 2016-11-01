@@ -349,6 +349,17 @@
                 fill: false
               }).addTo(drawLayer);
 
+            //var popup = RemoveMarkerPopup(
+            //  function () {
+            //    drawLayer.removeLayer(poly);
+            //    var bboxes = GetDrawLayerBBoxes();
+            //    GetDataByBBox(bboxes);
+            //  },
+            //  function () {
+            //    poly.closePopup();
+            //  });
+            //
+            //poly.bindPopup(popup);
             snapRemote.enable();
 
             var bboxes = GetDrawLayerBBoxes();
@@ -402,6 +413,18 @@
               opacity: 0.0,
               fill: false,
             });
+
+            //var popup = RemoveMarkerPopup(
+            //  function () {
+            //    drawLayer.removeLayer(circle);
+            //    var bboxes = GetDrawLayerBBoxes();
+            //    GetDataByBBox(bboxes);
+            //  },
+            //  function () {
+            //    circle.closePopup();
+            //  });
+            //
+            //circle.bindPopup(popup);
 
             circle.addTo(drawLayer);
 
@@ -1306,6 +1329,22 @@
             markers.push(marker);
           }
 
+          //var popup = RemoveMarkerPopup(
+          //  function () {
+          //    for (var k in markers) {
+          //      if (markers[k]._leaflet_id == marker._leaflet_id) {
+          //        markersLayer.removeLayer(marker);
+          //        markers.splice(k, 1);
+          //        RecalculateRoute();
+          //      }
+          //    }
+          //  },
+          //  function () {
+          //    marker.closePopup();
+          //  });
+          //
+          //marker.bindPopup(popup);
+
           if ( !e.latlng.ignoreMarkerEvents  ) {
             marker.on('dragend', function () {
               // ignore empty originalEvent
@@ -1723,6 +1762,19 @@
                   fillColor: '#0C2638',
                   fillOpacity: 0.4
               }).addTo(bgLayer);
+
+                //var popup = RemoveMarkerPopup(
+                //  function () {
+                //    drawLayer.removeLayer(circle);
+                //    var bboxes = GetDrawLayerBBoxes();
+                //    GetDataByBBox(bboxes);
+                //  },
+                //  function () {
+                //    circle.closePopup();
+                //  });
+                //
+                //circle.bindPopup(popup);
+
                 circle.addTo(drawLayer);
               } else {
                 _.each(feature.geometry.coordinates, function (coords) {
@@ -1741,6 +1793,17 @@
                     fill: false
                   }).addTo(drawLayer);
 
+                  //var popup = RemoveMarkerPopup(
+                  //  function () {
+                  //    drawLayer.removeLayer(poly);
+                  //    var bboxes = GetDrawLayerBBoxes();
+                  //    GetDataByBBox(bboxes);
+                  //  },
+                  //  function () {
+                  //    poly.closePopup();
+                  //  });
+                  //
+                  //poly.bindPopup(popup);
                 });
               }
             }
@@ -1944,6 +2007,26 @@
         var popup = L.popup(options).setContent(popupContent[0]);
         marker.bindPopup(popup);
       }
+
+      //function RemoveMarkerPopup(remove, cancel, addmarker, location) {
+      //  var scope = $rootScope.$new();
+      //  scope.remove = remove;
+      //  scope.cancel = cancel;
+      //  scope.addmarker = addmarker;
+      //
+      //  scope.popup = L.popup({
+      //    keepInView: false,
+      //    autoPan: true,
+      //    offset: L.point(-40, 0),
+      //    closeButton: false,
+      //    className: 'remove-popup clearfix'
+      //  }).setLatLng(location);
+      //  var popupContent = $compile('<confirm-popup></confirm-popup>')(scope);
+      //  scope.popup.setContent(popupContent[0]);
+      //
+      //
+      //  return scope.popup;
+      //}
 
       //Processing functions
       //Return concave hull from points array
@@ -2368,12 +2451,14 @@
       }
 
       function drawBlogMarkers(posts, clear) {
+        //currentLayer = 'other';
         if (clear) {
           GetCurrentLayer().clearLayers();
         }
 
         var markers = [];
         _.each(posts, function (item) {
+          //var icon = CreateCustomIcon(item.cover_url.thumb, 'custom-map-icons', [50, 50]);
           if (item.location) {
 
             var marker = L.marker(item.location);
@@ -2411,6 +2496,40 @@
 
               scope.item.$loading = true;
 
+            //   var syncSpot;
+            //   if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: spot_id}))) {
+            //     _loadSpotComments(scope, syncSpot);
+            //   } else {
+            //     Spot.get({id: spot_id}, function (fullSpot) {
+            //       //merge photos
+            //       fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
+            //       _loadSpotComments(scope, fullSpot);
+            //     });
+            //   }
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+            // var popupContent = $compile('<blogpopup></blogpopup>')(scope);
+            // marker.bindPopup(popupContent);
+            // marker.openPopup();
+            // marker.on('click', function () {
+            //     console.log(marker);
+            //     // this.link = L.DomUtil.create('div', 'clear-selection', container);
+            //     // this.link.href = '#';
+            //     // this._map = map;
+            //     // console.log(item);
+            // //   $state.go('blog.article', {slug: item.slug});
+            // });
             item.marker = marker;
 
             markers.push(marker);
