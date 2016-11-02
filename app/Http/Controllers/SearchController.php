@@ -21,8 +21,9 @@ class SearchController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function search(Request $request) {
-        $query = $request->has('query') ? $request->get('query') : null;
-
+        $query  = $request->has('query') ? $request->get('query') : null;
+        $lat    = $request->has('lat') ? $request->get('lat') : null;
+        $lng    = $request->has('lng') ? $request->get('lng') : null;
         $q = (object)[];
         $q->minimumSimilarity = 0.0;
         $q->words = explode(" ", $query);
@@ -40,13 +41,25 @@ class SearchController extends Controller
 
         $debug = [$q->weightQueryArr];
 
-        $spots = SpotView::select(
+        $selectArr = [
             'mv_spots_spot_points.id',
             'spots.title as value',
             DB::raw("ts_rank_cd(mv_spots_spot_points.fts, to_tsquery('{$q->toTsQuery}'), 32) as rank ")
-        );
+        ];
+
+        if ($lat && $lng) {
+            $selectArr[] = DB::raw("ST_Distance(
+                ST_GeogFromText('SRID=4326;POINT({$lng} {$lat})'),
+                mv_spots_spot_points.location) as dist");
+        }
+
+        $spots = SpotView::select($selectArr);
+
         $spots->whereRaw("mv_spots_spot_points.fts @@ to_tsquery('{$q->toTsQuery}')");
         $spots->orderBy('rank', 'desc');
+        if ($lat && $lng) {
+            $spots->orderBy('dist', 'asc');
+        }
         $spots->join('spots', function ($join) {
            $join->on('mv_spots_spot_points.id', '=', 'spots.id');
         });
@@ -65,7 +78,7 @@ class SearchController extends Controller
         ]);
 
         $data = json_decode((string)$response->getBody(), true);
-        $locationSuggestions = ['value' => 'locations:'];
+        $locationSuggestions = [];
         if ($data && array_key_exists("predictions", $data) && is_array($data['predictions'])) {
             $first = true;
             foreach ($data['predictions'] as $p) {
@@ -79,7 +92,6 @@ class SearchController extends Controller
             }
         }
 
-        Log::debug(print_r($data, 1));
         //
         // suggestions
         //
@@ -139,7 +151,8 @@ class SearchController extends Controller
                 'value'     => $s->value,
                 'type'      => 'spot',
                 'first'     => $first,
-                'spotId'    => $s->id
+                'spotId'    => $s->id,
+                'dist'      => ($lat && $lng) ? (double)$s->dist : 0
             ];
             $first = false;
             $maxSpotsNumber--;
