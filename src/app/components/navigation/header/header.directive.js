@@ -32,7 +32,7 @@
     }
 
     /** @ngInject */
-    function HeaderController($state, $scope, BACKEND_URL, $rootScope, MapService, SignUpService, $http, $q, GOOGLE_API_KEY, GoogleMapsPlacesService) {
+    function HeaderController($state, $scope, BACKEND_URL, $rootScope, MapService, SignUpService, GoogleMapsPlacesService) {
         var vm = this;
         vm.$state = $state;
         vm.BACKEND_URL = BACKEND_URL;
@@ -100,45 +100,6 @@
                 vm.category = category;
             }
         }
-        var inRequest = false;
-        function searchChanged() {
-            inRequest = true;
-            return $http.get(BACKEND_URL + '/search/spots', {params: {query: vm.searchValue}}).then(function (d) {
-                console.log(d);
-                var suggestions = [];
-                suggestions.push({formatted_suggestion: 'suggestions: '});
-                if (!d.data) {
-                    return [];
-                }
-                // anything you want can go here and will safely be run on the next digest.
-                if (Array.isArray(d.data.suggestions)) {
-                    console.log(d.data.suggestions);
-                    d.data.suggestions.forEach(function (e) {
-                        suggestions.push({
-                            formatted_suggestion: e
-                        });
-                    });
-                }
-                suggestions.push({formatted_suggestion: ' '});
-                suggestions.push({formatted_suggestion: 'spots: '});
-                if (Array.isArray(d.data.spots)) {
-                    console.log(d.data.spots);
-                    d.data.spots.forEach(function (e) {
-                        suggestions.push({
-                            formatted_suggestion: e.title
-                        });
-                    });
-                }
-                return suggestions;
-            }).finally(function () {
-                inRequest = false;
-            });
-        }
-
-        this.selectSuggestion = function($item, $model, $label, $event) {
-            console.log('selectSuggestion', $item);
-            return $item;
-        };
 
         $scope.$on('typeahead:selected', function (event, data) {
             if (data.type === 'location') {
@@ -149,9 +110,7 @@
                         lat: data.geometry.location.lat(),
                         lng: data.geometry.location.lng()
                     }};
-                    if ($rootScope.$state.current.name == 'index') {
-                    } else {
-                        console.log('state params', params);
+                    if ($rootScope.$state.current.name !== 'index') {
                         $state.go('index', params);
                     }
                     if (data.geometry.viewport === undefined ) {
