@@ -20,7 +20,7 @@
         width: 100%;
         min-height: 100%;
         cursor: pointer;
-
+        object-fit: cover;
       }
     }
     .album-tools-wrap {
@@ -97,4 +97,3 @@
 .edit-album-photo {
   margin: 1rem auto 2rem;
 }
-
