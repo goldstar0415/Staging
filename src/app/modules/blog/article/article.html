@@ -1,10 +1,10 @@
 <div class="main-container">
 
-  <div class="container wrap mgt25">
+  <div>
     <div class="main-blog-article-content">
 
       <!-- block with article -->
-      <div class="blog-content col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12">
+      <div class="blog-content">
         <div class="clearfix btn-back-wrapper">
           <a ng-click="Article.back()" class="btn-back back btn-back-planner" title="back"></a>
         </div>
@@ -60,7 +60,7 @@
       <!-- end block with article -->
 
       <!--block with comets  -->
-      <section class="col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12 comments-section">
+      <section class="comments-section">
         <div class="comments-content ng-scope">
           <ng-input message="Article.message" attachments="Article.attachments" on-submit="Article.sendComment()"
                     maxlength="5000" mobile="true"></ng-input>

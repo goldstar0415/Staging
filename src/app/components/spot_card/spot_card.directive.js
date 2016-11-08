@@ -11,7 +11,8 @@
             restrict: 'A',
             templateUrl: '/app/components/spot_card/spot_card.html',
             scope: {
-                item: '='
+                item: '=',
+                index: '='
             },
             controller: SpotCardController,
             controllerAs: 'SpotCard',
@@ -24,6 +25,17 @@
             vm.addToFavorite = SpotService.addToFavorite;
             vm.removeFromFavorite = SpotService.removeFromFavorite;
             vm.image = setImage(vm.item);
+            vm.isMenuOpened = false;
+            vm.toggleMenu = toggleMenu;
+            vm.closeMenu = closeMenu;
+
+            function toggleMenu() {
+                vm.isMenuOpened = !vm.isMenuOpened;
+            }
+
+            function closeMenu() {
+                vm.isMenuOpened = false;
+            }
 
             function setImage(item) {
                 if (item.category.type.name === 'food') {

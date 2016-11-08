@@ -116,9 +116,42 @@
                 flex-direction: row;
                 align-items: center;
                 padding: 0 10px;
+                // position: relative;
                 @media (max-width: 767px) {
                     height: 40px;
                     font-size: 20px;
+                }
+                .glyphicon-option-vertical.active {
+                    color: rgb(2, 200, 246);
+                }
+                .spot-card-dropdown {
+                    position: absolute;
+                    top: 30px;
+                    font-size: 14px;
+                    z-index: 100;
+                    right: 0;
+                    left: 0;
+                    text-align: right;
+                    background-color: white;
+                    color: $dark_blue;
+                    box-shadow: 2px 3px 5px 1px rgba(0,0,0,0.5);
+                    padding: 0;
+                    li {
+                        padding: 10px 10px;
+                        width: 100%;
+                        cursor: pointer;
+                        span {
+                            padding-left: 10px;
+                        }
+                        &:hover {
+                            background-color: rgb(2, 200, 246);
+                            color: white;
+                        }
+                    }
+                    @media (max-width: 767px) {
+                        top: 40px;
+                        font-size: 20px;
+                    }
                 }
             }
             .spot-img-bottom {
@@ -162,6 +195,26 @@
                     object-fit: cover;
                 }
             }
+        }
+    }
+}
+
+.profile-spots {
+    display: flex;
+    flex-wrap: wrap;
+    .new-result-card {
+        padding: 5px;
+        @media (min-width: 768px) {
+            width: calc(100% / 3);
+        }
+        @media (max-width: 767px) {
+            width: calc(100% / 2);
+            .new-spot {
+                height: 200px;
+            }
+        }
+        @media (max-width: 400px) {
+            width: calc(100% / 1);
         }
     }
 }
