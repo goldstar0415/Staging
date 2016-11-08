@@ -169,7 +169,7 @@
               highlightMarker = null;
           }
           $rootScope.highlightedSpotId = null;
-          $rootScope.$apply();
+          //$rootScope.$apply();
       }
 
       function highlightSpotByHover(spot) {
@@ -214,7 +214,7 @@
           highlightMarker = marker;
           if ($rootScope.$state.current.name == 'index') {
               $rootScope.highlightedSpotId = spot.id || spot.spot.id || 0;
-              $rootScope.$apply();
+            //   $rootScope.$apply();
           }
       }
 

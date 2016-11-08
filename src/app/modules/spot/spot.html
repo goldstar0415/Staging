@@ -57,10 +57,10 @@
             <div class="tab" ng-class="OpenedItem.tab == 'chatter' ? 'active' : ''" ng-click="OpenedItem.tab = 'chatter'">Chatter</div>
         </div>
         <div class="tab-content-overview" ng-if="OpenedItem.tab == 'overview' || OpenedItem.tab == null">
-            <div class="slider">
+            <!-- <div class="slider">
                 <img src="{{Spot.spot.cover_url.original}}" alt="img">
-            </div>
-            <div class="overview about">
+            </div> -->
+            <div class="overview about" ng-if="Spot.spot.description">
                 <h1>About:</h1>
                 <div ng-bind-html="Spot.spot.description"></div>
             </div>
