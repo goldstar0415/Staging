@@ -26,7 +26,7 @@
       var $date = moment(date);
       return $date.format('DD') + '<br/>' + $date.format('MMM');
     }
-    
+
     function back() {
         $window.history.back();
     }

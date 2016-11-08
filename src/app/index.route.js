@@ -200,21 +200,6 @@
         require_auth: true,
         locate: 'none'
       })
-      //Show blog location on map and show pop-up
-      .state('blog.article', {
-        url: '/article/:slug',
-        templateUrl: '/app/modules/blog/article/article.html',
-        controller: 'ArticleController',
-        controllerAs: 'Article',
-        mapState: 'hidden',
-        parent: 'main',
-        resolve: {
-          article: function (Post, $stateParams) {
-            return Post.get({id: $stateParams.slug}).$promise;
-          }
-        },
-        locate: 'none'
-      })
       .state('spot_create', {
         url: '/spot/create',
         templateUrl: '/app/modules/spot/spot_create/spot_create.html',
@@ -310,7 +295,7 @@
         require_auth: true,
         mapState: 'small'
       })
-      
+
       //hotels
       .state('hotels', {
         url: '/hotels',
@@ -362,7 +347,7 @@
         mapState: 'small',
         edit: true
       })
-      
+
       //chat
       .state('chat', {
         url: '/chat',
@@ -641,6 +626,21 @@
             return Post.query({user_id: $stateParams.user_id}).$promise;
           }
         }
+      })
+      //Show blog location on map and show pop-up
+      .state('blog.article', {
+        url: '/article/:slug',
+        templateUrl: '/app/modules/blog/article/article.html',
+        controller: 'ArticleController',
+        controllerAs: 'Article',
+        mapState: 'small',
+        parent: 'profile',
+        resolve: {
+          article: function (Post, $stateParams) {
+            return Post.get({id: $stateParams.slug}).$promise;
+          }
+        },
+        locate: 'none'
       })
       .state('spots', {
         url: '/spots',

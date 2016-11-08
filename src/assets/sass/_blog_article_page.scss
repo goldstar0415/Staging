@@ -1,5 +1,12 @@
 /*     my spot   */
+.article {
+    position: relative;
+    z-index: 1;
+}
 .main-blog-article-content {
+    .comments-section {
+        padding: 0rem 3rem;
+    }
   .caret {
     transform: rotate(90deg);
   }
@@ -165,6 +172,7 @@
 }
 .post {
   padding: 15px 10px;
+  // padding: 4rem 8rem;
   border-top: 1px solid #e9edf0;
 }
 .time {

@@ -24,7 +24,7 @@
 
     var params = {
       page: 0,
-      limit: 5,
+      limit: 9,
       user_id: $rootScope.profileUser.id
     };
     vm.pagination = new ScrollService(Spot.favorites, vm.spots, params);
