@@ -7,7 +7,7 @@
 <facebook-events ng-if="currentUser.id == profileUser.id" spots="Spots.spots"></facebook-events>
 
 <div infinite-scroll="Spots.pagination.nextPage()" infinite-scroll-disabled="Spots.pagination.busy" class="profile-spots clearfix" infinite-scroll-distance="1">
-    <div spotcard class="new-result-card" ng-repeat="item in Spots.spots.data" item="item"></div>
+    <div spotcard class="new-result-card" ng-repeat="item in Spots.spots.data" item="item" index="$index"></div>
     <!-- <section class="my-spots-section" ng-repeat="item in Spots.spots.data">
 
     <div class="event">

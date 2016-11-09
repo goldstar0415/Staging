@@ -1829,3 +1829,15 @@ html {
         }
     }
 }
+
+.share-modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 20px;
+    img {
+        width: 100px;
+        height: 100px;
+        padding: 10px;
+    }
+}

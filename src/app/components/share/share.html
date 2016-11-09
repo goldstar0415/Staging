@@ -1,19 +1,14 @@
-<div class="wrap-from-share">
-  <a ng-click="isOpen = !isOpen" ng-class="{share: share.onlyIcon, 'share-btn': !share.onlyIcon}" title="Share">
-    <span ng-if="!share.onlyIcon">Share</span>
-  </a>
-
-  <div class="share-wrap" ng-show="isOpen">
-    <ul class="share-buttons clearfix">
-      <li>
-        <a ng-click="share.facebook()" class="facebook">facebook</a>
-      </li>
-      <li>
-        <a ng-click="share.google()" class="google">google</a>
-      </li>
-      <li>
-        <a ng-click="share.twitter()" class="twitter">twitter</a>
-      </li>
-    </ul>
-  </div>
+<div class="modal-header">
+  <h3 class="margin-none">Choose social network
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="modal.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </h3>
+</div>
+<div class="modal-body clearfix no-pad-left-right no-pad-bottom">
+    <div class="share-modal">
+        <img src="../../../assets/img/social/facebook.png" alt="facebook" ng-click="modal.facebook()">
+        <img src="../../../assets/img/social/twitter.png" alt="twitter" ng-click="modal.twitter()">
+        <img src="../../../assets/img/social/google.png" alt="google" ng-click="modal.google()">
+    </div>
 </div>
