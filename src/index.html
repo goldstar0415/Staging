@@ -86,7 +86,7 @@
   <map-sort></map-sort>
 
   <!-- map container-->
-  <div id="map" class="mapResize map {{mapState}}" ng-class="{ 'not-index': $root.$state.current.name != 'index', 'sidebar-opened': $root.isSidebarOpened, 'filter-opened': $root.isFilterOpened }"></div>
+  <div id="map" class="mapResize map {{mapState}}" ng-class="{ 'not-index': $root.$state.current.name != 'index' && $root.$state.current.name != 'areas.preview', 'sidebar-opened': $root.isSidebarOpened, 'filter-opened': $root.isFilterOpened }"></div>
 
   <!-- Opened spot -->
   <div ng-if="$root.openedSpot != null && $root.$state.current.name == 'index'">

@@ -273,12 +273,12 @@
 }
 
 .invite-friend {
-  background-image: url('../img/svg/invite_icon.svg');
+  // background-image: url('../img/svg/invite_icon.svg');
   background-size: 18px;
   color: #889197;
   background-repeat: no-repeat;
   &:hover, &:active, &:focus {
-    background-image: url('../img/svg/invite_icon_hover.svg');
+    // background-image: url('../img/svg/invite_icon_hover.svg');
     color: $blue;
   }
 }
@@ -366,7 +366,7 @@
       margin-top: 1rem;
       border-radius: 0 !important;
       border: 1px solid #dee5ea;
-      
+
     }
   }
 }
