@@ -212,7 +212,7 @@
           });
           marker.setIcon(icon);
           highlightMarker = marker;
-          if ($rootScope.$state.current.name == 'index') {
+          if ($rootScope.isMapState()) {
               $rootScope.highlightedSpotId = spot.id || spot.spot.id || 0;
             //   $rootScope.$apply();
           }
@@ -220,7 +220,7 @@
 
       function detectHover(marker, spot) {
           marker.on('mouseover', function () {
-              if ($rootScope.$state.current.name == 'index') {
+              if ($rootScope.isMapState()) {
                   $rootScope.highlightedSpotId = spot.id || spot.spot.id || 0;
                   $rootScope.$apply();
                   highlightSpotByHover(spot);
@@ -587,18 +587,23 @@
           return container;
         },
         _click: function (e) {
-          L.DomEvent.stopPropagation(e);
-          L.DomEvent.preventDefault(e);
-          ClearSelections();
-          map.closePopup();
+            if ($rootScope.$state.current.name === 'areas.preview') {
+                $location.path('/areas');
+                $rootScope.mapState = "full-size";
+            } else {
+                L.DomEvent.stopPropagation(e);
+                L.DomEvent.preventDefault(e);
+                ClearSelections();
+                map.closePopup();
 
-          cancelHttpRequest();
-          $rootScope.isDrawArea = false;
-          $rootScope.$apply();
+                cancelHttpRequest();
+                $rootScope.isDrawArea = false;
+                $rootScope.$apply();
 
-          angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
+                angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
 
-          $rootScope.toggleSidebar(false);
+                $rootScope.toggleSidebar(false);
+            }
         }
 
       });
@@ -763,6 +768,8 @@
             $rootScope.isFilterOpened = true;
             $rootScope.$apply();
           }
+          debugger;
+          $rootScope.getCategoryData();
       }
     });
     L.Control.Filter = function (options) {
@@ -939,6 +946,8 @@
         map.on('zoomend', spotsOnScreen, this);
         map.on('moveend', spotsOnScreen, this);
         map.on('viewreset', spotsOnScreen, this);
+        map.on('layeradd', spotsOnScreen, this);
+        map.on('layerremove', spotsOnScreen, this);
 
         //add controls
         AddControls();
@@ -1780,7 +1789,7 @@
                 _.each(feature.geometry.coordinates, function (coords) {
                   var points = L.GeoJSON.coordsToLatLngs(coords);
                   //[[[90, 180],[90, -180],[-90, -180],[-90, 180]], polyLatlngs]
-                  var poly = L.polygon([[[90, 180],[90, -180],[-90, -180],[-90, 180]], points], {
+                  var poly = L.polygon([[[90, -180],[90, 180],[-90, -180],[-90, 180]], points], {
                     weight: 3,
                     color: '#00CFFF',
                     opacity: 0.9,
@@ -1958,7 +1967,7 @@
       function BindSpotPopup(marker, spot) {
         var spot_id = spot.id ? spot.id : spot.spot.id;
         marker.on('click', function () {
-            if ($rootScope.$state.current.name == 'index') {
+            if ($rootScope.isMapState()) {
                 $rootScope.setOpenedSpot(spot);
                 $rootScope.$apply();
             } else {

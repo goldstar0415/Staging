@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, SpotService, SignInService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
+  function runBlock($log, $http, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, API_URL, UploaderService, SpotService, SignInService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
     $rootScope.$state = $state;
     $rootScope.checkPermission = PermissionService.checkPermission;
     $rootScope.isMobile = angular.element(window).width() <= 992;
@@ -23,6 +23,44 @@
     $rootScope.spotsCarousel = {};
     $rootScope.spotsCarousel.index = 0;
     $rootScope.highlightedSpotId = null;
+    $rootScope.isMapState = isMapState;
+    $rootScope.filterOptions = {
+        name: '',
+        location: '',
+        isFavorited: false,
+        minRating: 0,
+        categories: [],
+        tags: [],
+        dateFrom: '',
+        dateTo: ''
+    };
+
+    $rootScope.categoryData = [];
+    $rootScope.getCategoryData = function() {
+        $rootScope.categoryData = [];
+        if ($rootScope.mapSortSpots && $rootScope.mapSortSpots.data) {
+            $rootScope.mapSortSpots.data.forEach(function(element){
+                if ($rootScope.categoryData.indexOf(element.category.name) === -1) {
+                    $rootScope.categoryData.push({id: element.category.name, label: element.category.name});
+                }
+            })
+        }
+    }
+
+    $rootScope.getCategoryData();
+
+    // $rootScope.categoryData = function() {
+    //     var spots = $rootScope.spotCategories;
+    //     debugger;
+    //     var names = [];
+    //     spots.forEach(function(element){
+    //         if (names.indexOf(element.name) === -1) {
+    //             names.push({id: element.name, label: element.name});
+    //         }
+    //     })
+    //     return names;
+    // };
+    $rootScope.example1model = [];
 
     MapService.Init('map');
 
@@ -32,6 +70,10 @@
     $rootScope.$watch('$root.spotsCarousel.index', function() {
         MapService.highlightSpot();
     }, true);
+
+    function isMapState() {
+        return $rootScope.$state.current.name === 'index' || $rootScope.$state.current.name === 'areas.preview';
+    }
 
     document.addEventListener("fullscreenchange", detectFullScreen);
     document.addEventListener("webkitfullscreenchange", detectFullScreen);
@@ -64,7 +106,7 @@
         if (isOpened) {
             angular.element('.map-tools-top').removeClass('hidden');
             angular.element('.map-tools').addClass('hidden');
-            if ($rootScope.sortLayer === 'weather') {
+            if ($rootScope.sortLayer === 'weather' || $rootScope.$state.current.name === 'areas.preview') {
                 angular.element('.save-selection').parent().addClass('hidden');
                 angular.element('.filter-selection').parent().addClass('hidden');
                 $rootScope.mapState = "small-size";

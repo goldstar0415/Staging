@@ -107,9 +107,6 @@
     //         }
     //     }
     // }
-    .opened-first-buttons {
-        flex-wrap: wrap;
-    }
     .opened-second-buttons, .opened-first-buttons {
         display: flex;
         justify-content: space-between;
@@ -118,7 +115,6 @@
         button {
             color: white;
             text-transform: uppercase;
-            width: 100%;
             padding: 5px;
             border: none;
             height: 50px;
@@ -133,6 +129,9 @@
             align-items: center;
             padding: 0;
             margin: 5px 0;
+            &:first-of-type {
+                margin-right: 20px;
+            }
             span {
                 margin: 0 0 0 15px;
             }
@@ -140,13 +139,19 @@
         }
         .button-order {
             background-color: rgb(237, 69, 52);
+            width: 100%;
         }
         .button-table {
             background-color: rgb(2, 200, 246);
+            width: 100%;
         }
         .button-deals {
             background-color: rgb(152, 195, 82);
+            width: 100%;
         }
+    }
+    .opened-first-buttons {
+        justify-content: flex-start;
     }
     .opened-tabs {
         // max-width: 450px;

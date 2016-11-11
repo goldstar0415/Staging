@@ -19,6 +19,26 @@
           }
       });
 
+      angular.module('zoomtivity')
+          .filter('spotsFilter', function($rootScope) {
+              return function(input) {
+                  if (input) {
+                      var arr = [];
+                      var i = 0;
+                      var len = input.length;
+                      var options = $rootScope.filterOptions;
+                      for (; i < len; i++) {
+                          if (input[i].rating >= options.minRating) {
+                            //   console.log(input[i])
+                              arr.push(input[i]);
+                          }
+                      }
+                      return arr;
+                  }
+                  return null;
+              }
+          });
+
   /*
    * Directive for spot control panel
    */

@@ -43,6 +43,7 @@
                 for (var i = 0; i < (final_count - card_count); i++) {
                     dummy_element = document.createElement('div');
                     dummy_element.style.width = '240px';
+                    dummy_element.style.height = '1px';
                     // dummy_element.className = 'item-fake';
                     container.appendChild(dummy_element);
                 }

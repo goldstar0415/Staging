@@ -1,14 +1,14 @@
 <div class="new-spot" ng-mouseleave="SpotCard.closeMenu()">
     <div class="spot-img">
-        <div ng-if="$root.$state.current.name == 'index'" class="img" ng-click="$root.setOpenedSpot(SpotCard.item)">
+        <div ng-if="$root.isMapState()" class="img" ng-click="$root.setOpenedSpot(SpotCard.item)">
             <img src="{{SpotCard.image}}" alt="spot_img">
         </div>
-        <div ng-if="$root.$state.current.name != 'index'" class="img" ui-sref="spot({user_id: SpotCard.item.user_id || 0, spot_id: SpotCard.item.id})">
+        <div ng-if="!$root.isMapState()" class="img" ui-sref="spot({user_id: SpotCard.item.user_id || 0, spot_id: SpotCard.item.id})">
             <img src="{{SpotCard.image}}" alt="spot_img">
         </div>
         <div class="spot-img-top">
             <stars item="SpotCard.item"></stars>
-            <div ng-if="$root.$state.current.name == 'index'">
+            <div ng-if="$root.isMapState()">
                 <a ng-if="$root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.is_favorite" class="glyphicon glyphicon-heart" ng-click="SpotCard.addToFavorite(SpotCard.item)" style="color:white"></a>
                 <a ng-if="$root.currentUser && $root.currentUser.id != SpotCard.item.user_id && SpotCard.item.is_favorite" class="glyphicon glyphicon-heart" ng-click="SpotCard.removeFromFavorite(SpotCard.item)" style="color:#EE4632"></a>
             </div>
