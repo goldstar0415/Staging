@@ -22,7 +22,8 @@
       'ui.utils.masks',
       'infinite-scroll',
       'summernote',
-      'angular-carousel'
+      'angular-carousel',
+      'angularjs-dropdown-multiselect'
     ]);
 
 })();

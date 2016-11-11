@@ -1,7 +1,7 @@
 <user-hints></user-hints>
 
-<div class="new-sidebar-menu" ng-show="$root.$state.current.name == 'index' || $root.$state.current.name == 'areas.preview'">
-    <div class="sidebar-menu-vertical" ng-class="$root.$state.current.name == 'index' ? 'sidebar-menu-vertical-bottom' : ''">
+<div class="new-sidebar-menu" ng-show="$root.isMapState()">
+    <div class="sidebar-menu-vertical" ng-class="$root.isMapState() ? 'sidebar-menu-vertical-bottom' : ''">
         <ul>
             <li ng-click="$root.toggleLayer('event')" ng-class="{'active': $root.sortLayer == 'event'}" class="event-sidebar">
                 <img src="../../../assets/img/svg/Icon_Events.svg" alt="img">
@@ -38,7 +38,8 @@
     </div>
     <div class="form-group">
         <label for="filterRating">Minimum Rating<span>clear</span></label>
-        <select class="form-control" id="filterRating">
+        <select class="form-control" id="filterRating" ng-model="$root.filterOptions.minRating">
+            <option selected value="0">Any</option>
             <option value="1">★</option>
             <option value="2">★★</option>
             <option value="3">★★★</option>
@@ -48,13 +49,15 @@
     </div>
     <div class="form-group">
         <label for="filterCategory">Category<span>clear</span></label>
-        <select class="form-control" id="filterCategory" placeholder="SELECT">
-            <option value="1">Any</option>
-            <!-- <option value="2">★★</option>
+        <div class="form-control" id="filterCategory" ng-dropdown-multiselect="" options="$root.categoryData" selected-model="$root.filterOptions.categories"></div>
+        <!-- <select class="form-control" id="filterCategory" placeholder="SELECT" multiple>
+            <option value="0">Any</option>
+            <option value="1">★</option>
+            <option value="2">★★</option>
             <option value="3">★★★</option>
             <option value="4">★★★★</option>
-            <option value="5">★★★★★</option> -->
-        </select>
+            <option value="5">★★★★★</option>
+        </select> -->
     </div>
     <div class="form-group">
         <label for="filterTags">By tags & Keywords<span>clear</span></label>
@@ -63,12 +66,12 @@
     <div class="form-group">
         <label>By dates<span>clear</span></label>
         <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea, applied: ($root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date)}">
-            <input ng-datepicker ng-model="MapSort.searchParams.start_date" class="date" placeholder="FROM" type="text" ng-disabled="!MapSort.isShowFilter">
+            <input ng-datepicker ng-model="MapSort.searchParams.start_date" class="date" placeholder="FROM" type="text">
             <div></div>
-            <input ng-datepicker ng-model="MapSort.searchParams.end_date" start-date="MapSort.searchParams.start_date" class="date" placeholder="TO" type="text" ng-disabled="!MapSort.isShowFilter">
+            <input ng-datepicker ng-model="MapSort.searchParams.end_date" start-date="MapSort.searchParams.start_date" class="date" placeholder="TO" type="text">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" hidden>
         <label>Hotel features<span>clear</span></label>
         <input type="text" placeholder="FEATURES">
     </div>
@@ -83,13 +86,13 @@
     <div class="search-filters" ng-show="$root.sortLayer != 'weather' && $root.visibleSpotsIds.length" ng-class="{'applied-filter': !MapSort.isShowFilter && !MapSort.isEmptyFilters()}">
         <div class="new-result" ng-if="windowWidth < 768">
             <ul rn-carousel rn-carousel-index="$root.spotsCarousel.index">
-                <li ng-repeat="item in $root.mapSortSpots.data | getById">
+                <li ng-repeat="item in $root.mapSortSpots.data | getById | spotsFilter">
                     <div class="new-result-card" spotcard item="item"></div>
                 </li>
             </ul>
         </div>
         <div class="new-result-container" ng-if="windowWidth >= 768">
-            <div class="new-result-card" spotcard ng-repeat="item in $root.mapSortSpots.data | getById" item="item" ng-mouseenter="MapSort.highlightSpotByHover(item)" ng-mouseleave="MapSort.clearSpotHighlighting(item)" ng-class="{ 'active' : item.id == $root.highlightedSpotId }"></div>
+            <div class="new-result-card" spotcard ng-repeat="item in $root.mapSortSpots.data | getById | spotsFilter" item="item" ng-mouseenter="MapSort.highlightSpotByHover(item)" ng-mouseleave="MapSort.clearSpotHighlighting(item)" ng-class="{ 'active' : item.id == $root.highlightedSpotId }"></div>
         </div>
     </div>
 
