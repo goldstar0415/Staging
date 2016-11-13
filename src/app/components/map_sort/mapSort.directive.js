@@ -2,6 +2,24 @@
   'use strict';
 
   angular.module('zoomtivity')
+      .filter('unique', function($rootScope) {
+          return function(input) {
+              if (input) {
+                  var arr = [];
+                  var i = 0;
+                  var len = input.length;
+                  for (; i < len; i++) {
+                      if (arr.indexOf(input[i].category.name) === -1) {
+                          arr.push(input[i].category.name);
+                      }
+                  }
+                  return arr;
+              }
+              return null;
+          }
+      });
+
+  angular.module('zoomtivity')
       .filter('getById', function($rootScope) {
           return function(input) {
               if (input) {
@@ -19,25 +37,39 @@
           }
       });
 
-      angular.module('zoomtivity')
-          .filter('spotsFilter', function($rootScope) {
-              return function(input) {
-                  if (input) {
-                      var arr = [];
-                      var i = 0;
-                      var len = input.length;
-                      var options = $rootScope.filterOptions;
-                      for (; i < len; i++) {
-                          if (input[i].rating >= options.minRating) {
-                            //   console.log(input[i])
-                              arr.push(input[i]);
+  angular.module('zoomtivity')
+      .filter('spotsFilter', function($rootScope) {
+          return function(input) {
+              if (input) {
+                  var arr = [];
+                  var i = 0;
+                  var len = input.length;
+                  var options = $rootScope.filterOptions;
+                  for (; i < len; i++) {
+                      if (input[i].rating < options.minRating) {
+                          continue;
+                      }
+                      if (options.category.length) {
+                          if (input[i].category.name !== options.category) {
+                              continue;
                           }
                       }
-                      return arr;
+                      if (input[i].category.type.name === 'event' && options.dateFrom.length && options.dateTo.length) {
+                          var filterDateFrom = new Date(options.dateFrom);
+                          var filterDateTo = new Date(options.dateTo);
+                          var spotDateFrom = new Date(input[i].start_date);
+                          var spotDateTo = new Date(input[i].end_date);
+                          if (!(spotDateFrom >= filterDateFrom) || !(spotDateTo <= filterDateTo)) {
+                              continue;
+                          }
+                      }
+                      arr.push(input[i]);
                   }
-                  return null;
+                  return arr;
               }
-          });
+              return null;
+          }
+      });
 
   /*
    * Directive for spot control panel
@@ -89,6 +121,7 @@
     vm.windowWidth = getWindowSize();
     vm.highlightSpotByHover = MapService.highlightSpotByHover;
     vm.clearSpotHighlighting = MapService.clearSpotHighlighting;
+    vm.clearFilter = clearFilter;
 
     $window.onresize = getWindowSize;
     function getWindowSize(event) {
@@ -103,6 +136,20 @@
       },
       locations: [],
       tags: []
+    };
+
+    function clearFilter() {
+        //console.log($rootScope.filterOptions);
+        $rootScope.filterOptions = {
+            name: '',
+            location: '',
+            isFavorited: false,
+            minRating: "0",
+            category: '',
+            tags: [],
+            dateFrom: '',
+            dateTo: ''
+        };
     };
 
     $rootScope.doSearchMap = search;

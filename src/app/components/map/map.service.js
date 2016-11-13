@@ -768,8 +768,8 @@
             $rootScope.isFilterOpened = true;
             $rootScope.$apply();
           }
-          debugger;
-          $rootScope.getCategoryData();
+        //   debugger;
+        //   $rootScope.getCategoryData();
       }
     });
     L.Control.Filter = function (options) {
