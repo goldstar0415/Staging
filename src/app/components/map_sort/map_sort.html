@@ -37,7 +37,7 @@
         </span>
     </div>
     <div class="form-group">
-        <label for="filterRating">Minimum Rating<span>clear</span></label>
+        <label for="filterRating">Minimum Rating<span hidden>clear</span></label>
         <select class="form-control" id="filterRating" ng-model="$root.filterOptions.minRating">
             <option selected value="0">Any</option>
             <option value="1">★</option>
@@ -48,34 +48,30 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="filterCategory">Category<span>clear</span></label>
-        <div class="form-control" id="filterCategory" ng-dropdown-multiselect="" options="$root.categoryData" selected-model="$root.filterOptions.categories"></div>
-        <!-- <select class="form-control" id="filterCategory" placeholder="SELECT" multiple>
-            <option value="0">Any</option>
-            <option value="1">★</option>
-            <option value="2">★★</option>
-            <option value="3">★★★</option>
-            <option value="4">★★★★</option>
-            <option value="5">★★★★★</option>
-        </select> -->
+        <label for="filterCategory">Category<span hidden>clear</span></label>
+        <!-- <div class="form-control" id="filterCategory" ng-dropdown-multiselect="" options="$root.categoryData" selected-model="$root.filterOptions.categories"></div> -->
+        <select class="form-control" id="filterCategory" ng-model="$root.filterOptions.category">
+            <option selected value="">Any</option>
+            <option ng-repeat="item in $root.mapSortSpots.data | unique" value="{{item}}">{{item}}</option>
+        </select>
     </div>
     <div class="form-group">
-        <label for="filterTags">By tags & Keywords<span>clear</span></label>
-        <tags-input id="filterTags" ng-model="MapSort.searchParams.tags"></tags-input>
+        <label for="filterTags">By tags & Keywords<span hidden>clear</span></label>
+        <tags-input id="filterTags" ng-model="$root.filterOptions.tags"></tags-input>
     </div>
     <div class="form-group">
-        <label>By dates<span>clear</span></label>
+        <label>By dates<span hidden>clear</span></label>
         <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea, applied: ($root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date)}">
-            <input ng-datepicker ng-model="MapSort.searchParams.start_date" class="date" placeholder="FROM" type="text">
+            <input ng-datepicker ng-model="$root.filterOptions.dateFrom" class="date" placeholder="FROM" type="text">
             <div></div>
-            <input ng-datepicker ng-model="MapSort.searchParams.end_date" start-date="MapSort.searchParams.start_date" class="date" placeholder="TO" type="text">
+            <input ng-datepicker ng-model="$root.filterOptions.dateTo" start-date="MapSort.searchParams.start_date" class="date" placeholder="TO" type="text">
         </div>
     </div>
     <div class="form-group" hidden>
-        <label>Hotel features<span>clear</span></label>
+        <label>Hotel features<span hidden>clear</span></label>
         <input type="text" placeholder="FEATURES">
     </div>
-    <button class="filter-apply">APPLY FILTER</button>
+    <button class="filter-apply" ng-click="MapSort.clearFilter()">CLEAR FILTER</button>
     <!-- </form> -->
 </div>
 

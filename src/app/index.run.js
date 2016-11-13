@@ -28,8 +28,8 @@
         name: '',
         location: '',
         isFavorited: false,
-        minRating: 0,
-        categories: [],
+        minRating: "0",
+        category: '',
         tags: [],
         dateFrom: '',
         dateTo: ''
