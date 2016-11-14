@@ -149,25 +149,71 @@ class SpotController extends Controller
     public function show($spot)
     {
         $auth = $this->auth;
-        $res = $spot
-            ->load(['photos', 'user', 'tags', 'comments', 'remotePhotos'])
-            ->append(['count_members', 'members', 'comments_photos']);
-        $res->load(['votes' => function($query) use ($auth) {
-            if($auth->check()) {
-                $query->where('user_id', '!=', $auth->user()->id)
-                        ->orWhereNull('user_id');
+        $spotInfo = $spot->getSpotExtension();
+        
+        $spot->reviews_total = $spot->getReviewsTotal();
+        
+        $amenitiesArray = [];
+        if($spotInfo && !$spotInfo->is_parsed)
+        {
+            $remote_photos = false;
+            $amenities = false;
+            $hours = false;
+            $bookingUrl = $spot->getBookingUrl($spotInfo->booking_url);
+            if(
+                isset($spotInfo) && 
+                $spot->checkUrl($spotInfo->booking_url) && 
+                $bookingUrl &&
+                $bookingPageContent = $spot->getPageContent($bookingUrl, [
+                    'headers' => $spot->getBookingHeaders()
+                ])
+            )
+            {
+                $remote_photos = $spot->saveBookingPhotos($bookingPageContent);
+                if( $amenities = $spot->saveBookingAmenities($bookingPageContent) )
+                {
+                    $amenitiesArray = $amenities;
+                    $spot->load(['amenities']);
+                }
+                
             }
-            $query->with('user');
-            $query->orderBy('created_at', 'DESC');
-        }]);
-        $res->auth_rate = ($auth->check())?$res->votes()->where('user_id', $auth->user()->id)->with('user')->first():false;
+            
+            if( isset($spot->google) && !empty($spot->google) )
+            {
+                $hours = $spot->saveGooglePlaceHours($spot->google);
+            }
+            
+            if( $remote_photos || $amenities || $hours )
+            {
+                $spotInfo->is_parsed = true;
+                $spotInfo->save();
+            }
+            
+        }
+        $res = $spot
+            ->load([
+                'photos',
+                'user',
+                'tags',
+                'comments',
+                'remotePhotos',
+                'restaurant',
+                'hotel'
+                ])
+            ->append([
+                'count_members',
+                'members',
+                'comments_photos',
+                'auth_rate'
+                ]);
+        
         if (isset($res->remotePhotos)) {
             foreach($res->remotePhotos as $p) {
                 if (isset($p->url)) {
                     $p->photo_url = [
-                            'original'	=> $p->url,
-                            'medium'	=> $p->url,
-                            'thumb'		=> $p->url
+                            'original'  => $p->url,
+                            'medium'    => $p->url,
+                            'thumb'     => $p->url
                     ];
                     $res->photos->push($p);
                 }
@@ -299,7 +345,7 @@ class SpotController extends Controller
      * @param \App\Spot $spot
      * @return SpotVote
      */
-    public function reviews(SpotReviewRequest $request, $spot)
+    public function saveReview(SpotReviewRequest $request, $spot)
     {
         $vote = new SpotVote($request->all());
         $vote->user()->associate($request->user());
@@ -468,5 +514,60 @@ class SpotController extends Controller
         $report->save();
 
         return $report;
+    }
+    
+    /**
+     * Get booking.com and hotels.com prices
+     *
+     * @param Request $request
+     * @param \App\Spot $spot
+     * @return array
+     */
+    
+    public function prices (Request $request, Spot $spot)
+    {
+        $result       = [];
+        $spotInfo    = $spot->getSpotExtension();
+        $dates        = $request->all();
+        $from         = date_parse_from_format( 'm.d.Y' , $dates['start_date'] );
+        $to           = date_parse_from_format( 'm.d.Y' , $dates['end_date'] );
+        
+        $result['dates'] = [
+            'from' => $from,
+            'to'   => $to,
+        ];
+        
+        $result['data']['hotels'] = false;
+        $result['data']['booking'] = false;
+        
+        $fromString   = $from['year'] . '-' . (strlen($from['month']) == 1?'0':'') . $from['month'] . '-' . (strlen($from['day']) == 1?'0':'') . $from['day'];
+        $toString     =   $to['year'] . '-' . (strlen(  $to['month']) == 1?'0':'') .   $to['month'] . '-' . (strlen(  $to['day']) == 1?'0':'') .   $to['day'];
+        
+        $result['data']['hotelsUrl'] = $spot->getHotelsUrl($spotInfo->hotelscom_url, $fromString, $toString);
+        
+        if($result['data']['hotelsUrl'])
+        {
+            $hotelsPageContent = $spot->getPageContent($result['data']['hotelsUrl']);
+            
+            if($hotelsPageContent)
+            {
+                $result['data']['hotels'] = $spot->getHotelsPrice($hotelsPageContent);
+            }
+        }
+        
+        $result['data']['bookingUrl'] = $spot->getBookingUrl($spotInfo->booking_url, $fromString, $toString, true);
+        if($result['data']['bookingUrl'])
+        {
+            $bookingPageContent = $spot->getPageContent($result['data']['bookingUrl'], [
+                'headers' => $spot->getBookingHeaders()
+            ]);
+            if($bookingPageContent)
+            {
+                $result['data']['booking'] = $spot->getBookingPrice($bookingPageContent);
+            }
+        }
+
+        $result['result'] = $spot;
+        return $result;
     }
 }

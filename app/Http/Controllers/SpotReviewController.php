@@ -40,10 +40,17 @@ class SpotReviewController extends Controller
      */
     public function index(PaginateReviewRequest $request, $spot)
     {
-        $reviews = SpotVote::with('user')
-            ->where('spot_id', $spot->id);
-
-        return $this->paginatealbe($request, $reviews);
+        $auth = auth();
+        $query = $spot->votes();
+        if($auth->check()) {
+            $query->where(function($query) use($auth){
+                    $query->where('user_id', '!=', $auth->user()->id)
+                    ->orWhereNull('user_id');
+            });
+        }
+        $query->with('user');
+        $query->orderBy('created_at', 'DESC');
+        return $this->paginatealbe($request, $query);
     }
 
     /**

@@ -166,6 +166,8 @@ return [
         Yangqi\Htmldom\HtmldomServiceProvider::class,
         Vinkla\Instagram\InstagramServiceProvider::class,
         SKAgarwal\GoogleApi\ServiceProvider::class,
+        SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
+
     ],
 
     /*
@@ -228,6 +230,7 @@ return [
         'Htmldom' => Yangqi\Htmldom\Htmldom::class,
         'Instagram' => Vinkla\Instagram\Facades\Instagram::class,
         'GooglePlaces' => SKAgarwal\GoogleApi\Facade::class,
+        'Facebook' => SammyK\LaravelFacebookSdk\FacebookFacade::class,
     ],
 
 ];

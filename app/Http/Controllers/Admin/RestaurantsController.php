@@ -37,7 +37,7 @@ class RestaurantsController extends Controller
         'Phone Number' => 'phone_number',
         'Trip_Rating' => 'tripadvisor_rating',
         'Price_level' => 'price_level',
-        'num_trip_reviews' => 'num_trip_reviews',
+        'num_trip_reviews' => 'tripadvisor_reviews_count',
         'Category' => 'category',
         'meals_served' => 'meals_served',
         'country' => 'country',

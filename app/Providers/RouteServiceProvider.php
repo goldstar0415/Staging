@@ -52,8 +52,6 @@ class RouteServiceProvider extends ServiceProvider
             'albums' => '\d+',
             'photos' => '\d+',
             'spots' => '\d+',
-            'hotels' => '\d+',
-            'restaurants' => '\d+',
             'friends' => '\d+',
             'message' => '\d+',
             'areas' => '\d+',
@@ -98,23 +96,6 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('message', ChatMessage::class);
         $router->model('areas', Area::class);
         $router->model('comments', Comment::class);
-        $router->bind('hotels', function($value) {
-            $hotel = Spot::where('id', $value)->hotels()
-                    ->with('remotePhotos', 'hotel', 'amenities', 'votes')->first();
-            if ($hotel === null) {
-                throw new NotFoundHttpException;
-            }
-            return $hotel;
-            
-        });
-        $router->bind('restaurants', function($value) {
-            $restaurant = Spot::where('id', $value)->restaurants()
-                    ->with('remotePhotos', 'restaurant', 'amenities', 'votes')->first();
-            if ($restaurant === null) {
-                throw new NotFoundHttpException;
-            }
-            return $restaurant;
-        });
         $router->model('wall', Wall::class);
         $router->model('plans', Plan::class);
         $router->bind('posts', function ($value) {
