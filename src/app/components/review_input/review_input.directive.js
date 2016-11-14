@@ -2,7 +2,7 @@
     'use strict';
 
     /*
-     * Directive to send message
+     * Directive to send reviews
      */
     angular
         .module('zoomtivity')
@@ -53,10 +53,7 @@
                     else {
                         vm.updateReview();
                     }
-                    
                     form.$submitted = false;
-
-
                 }
             };
 
@@ -115,7 +112,9 @@
              */
             vm.deleteReview = function(review) {
                 dialogs.confirm('Confirmation', 'Are you sure you want to delete review?').result.then(function () {
+                    console.log('Deletion confirmed...');
                     SpotReview.delete({spot_id: vm.item.id, id: review.id}, function success(result) {
+                        
                         vm.item.rating = result.spot_rating;
                         delete result.spot_rating;
                         vm.item.auth_rate = false;
