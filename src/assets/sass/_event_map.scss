@@ -140,12 +140,19 @@
                         padding: 10px 10px;
                         width: 100%;
                         cursor: pointer;
+                        a {
+                            color: $dark_blue;
+                            transition: none;
+                        }
                         span {
                             padding-left: 10px;
                         }
                         &:hover {
                             background-color: rgb(2, 200, 246);
                             color: white;
+                            a {
+                                color: white;
+                            }
                         }
                     }
                     @media (max-width: 767px) {
@@ -215,6 +222,26 @@
         }
         @media (max-width: 400px) {
             width: calc(100% / 1);
+        }
+    }
+}
+
+.opened-item {
+    .new-result-card {
+        padding: 0;
+        @media (min-width: 768px) {
+            margin: 0 -30px;
+            width: calc(100% + 60px);
+            .spot-img {
+                height: 250px;
+                .spot-img-top, .spot-img-bottom {
+                    padding: 10px 30px;
+                }
+            }
+        }
+        @media (max-width: 767px) {
+            margin: 0 -10px;
+            width: calc(100% + 20px);
         }
     }
 }

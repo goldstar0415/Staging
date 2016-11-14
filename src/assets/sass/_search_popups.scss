@@ -2063,6 +2063,10 @@
             height: 3.5rem;
             min-height: 3.5rem;
             width: 100%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #b4b4b4;
         }
 
         .date-filters {
@@ -2077,6 +2081,44 @@
             input {
                 width: 49%;
                 // padding: 10px;
+            }
+        }
+
+        #filterCategory {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #b4b4b4;
+            height: 3.5rem;
+            min-height: 3.5rem;
+            width: 100%;
+            position: relative;
+            & > div {
+                width: 100%;
+                height: 100%;
+                button {
+                    color: #b4b4b4 !important;
+                    font-weight: bold;
+                    position: absolute;
+                    top: -6px;
+                    left: -12px;
+                    width: calc(100% + 24px);
+                    text-align: left;
+                    height: calc(100% + 12px);
+                    span {
+                        display: none;
+                    }
+                }
+                ul {
+                    overflow: auto !important;
+                    width: calc(100% + 26px);
+                    position: absolute;
+                    left: -13px;
+                    top: 25px;
+                    border-radius: 0px;
+                    display: block;
+                    height: auto;
+                }
             }
         }
 

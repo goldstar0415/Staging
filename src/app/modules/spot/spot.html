@@ -11,37 +11,22 @@
             <img src="../../../assets/img/svg/cancel.svg" alt="">
         </span>
     </div>
-    <div class="opened-img">
-        <img src="{{Spot.setImage()}}" alt="img">
-    </div>
-    <a class="opened-name" ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id})">{{Spot.spot.title}}</a>
+    <div spotcard class="new-result-card" item="Spot.spot"></div>
     <div class="opened-name-bottom">
-        <div class="opened-stars">
-            <stars item="Spot.spot"></stars>
-        </div>
         <p class="opened-info">
             {{Spot.spot.reviews_total.total.rating}} stars based on {{Spot.spot.reviews_total.total.reviews_count}} combined reviews
         </p>
     </div>
-    <p class="opened-address">
-        <p>
-            <span class="glyphicon glyphicon-map-marker"></span>
-            <span>{{::Spot.spot.points[0].address}}</span>
-        </p>
-    </p>
     <div class="event-info" ng-if="Spot.spot.category.type.name == 'event'">
         <span class="glyphicon glyphicon-calendar"></span>
         <span ng-if="Spot.spot.start_date == Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}}</span>
         <span ng-if="Spot.spot.start_date != Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}} - {{Spot.spot.end_date | date:'medium'}}</span>
     </div>
     <div class="opened-first-buttons">
-        <invite-friends item="Spot.spot"></invite-friends>
-        <div class="open-favorite" ng-if="$root.currentUser && $root.currentUser.id != Spot.spot.user_id">
-            <a ng-if="!Spot.spot.is_favorite" class="glyphicon glyphicon-heart" ng-click="Spot.addToFavorite(Spot.spot)" style="color:lightgrey"></a>
-            <a ng-if="Spot.spot.is_favorite" class="glyphicon glyphicon-heart" ng-click="Spot.removeFromFavorite(Spot.spot)" style="color:#EE4632"></a>
-            <p>Favorite</p>
-        </div>
-        <share item="Spot.spot" type="spot"></share>
+        <button class="button-invite" ng-click="Spot.invite(Spot.spot)">Invite <span class="glyphicon glyphicon-user"></span></button>
+        <button class="button-share" ng-click="Spot.share(Spot.spot, 'spot')">Share <span class="glyphicon glyphicon-share"></span></button>
+        <!-- <invite-friends item="Spot.spot"></invite-friends> -->
+        <!-- <share item="Spot.spot" type="spot"></share> -->
     </div>
     <div class="opened-second-buttons">
         <button class="button-order">Order</button>

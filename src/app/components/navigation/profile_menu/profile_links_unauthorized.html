@@ -1,4 +1,4 @@
-<div class="col-xs-12 menu-profile unauthorized-menu" ng-class="$root.$state.current.name == 'index' ? 'mobile-hidden' : ''" ng-click="$root.showMessage('info', 'Please Log In to Use These Features')">
+<div class="col-xs-12 menu-profile unauthorized-menu" ng-class="$root.isMapState() ? 'mobile-hidden' : ''" ng-click="$root.showMessage('info', 'Please Log In to Use These Features')">
 
     <ul class="menu-ul">
         <li>

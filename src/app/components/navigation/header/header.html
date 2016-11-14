@@ -1,4 +1,4 @@
-<header ng-class="{ 'mobile-hidden': $root.isSidebarOpened && $root.$state.current.name == 'index' }">
+<header ng-class="{ 'mobile-hidden': $root.isSidebarOpened && $root.isMapState() }">
     <nav class="main-nav">
         <a ui-sref="index" class="main-logo" ng-show="!Header.isSearchOpened">
             <img class="main-logo-big" src="assets/img/icons/logo.svg" alt="logo">
