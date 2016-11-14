@@ -6,7 +6,7 @@
     .controller('SpotController', SpotController);
 
   /** @ngInject */
-  function SpotController(spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, dialogs, API_URL) {
+  function SpotController(spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, dialogs, API_URL, InviteFriends, Share) {
 
     console.log('Spot Init');
 
@@ -20,6 +20,16 @@
     vm.removeFromFavorite = SpotService.removeFromFavorite;
     vm.removeSpot = removeSpot;
     vm.setImage = setImage;
+    vm.invite = openInviteModal;
+    vm.share = openShareModal;
+
+    function openInviteModal(item) {
+        InviteFriends.openModal(item);
+    }
+
+    function openShareModal(item, type) {
+        Share.openModal(item, type);
+    }
 
     vm.postComment = postComment;
     vm.deleteComment = deleteComment;

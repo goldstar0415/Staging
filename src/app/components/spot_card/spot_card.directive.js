@@ -20,14 +20,27 @@
         };
 
         /** @ngInject */
-        function SpotCardController($rootScope, SpotService) {
+        function SpotCardController($rootScope, $scope, SpotService, MapService, API_URL, InviteFriends, Share) {
             var vm = this;
+            vm.saveToCalendar = SpotService.saveToCalendar;
+            vm.removeFromCalendar = SpotService.removeFromCalendar;
             vm.addToFavorite = SpotService.addToFavorite;
             vm.removeFromFavorite = SpotService.removeFromFavorite;
+            vm.unFavorite = unFavorite;
             vm.image = setImage(vm.item);
             vm.isMenuOpened = false;
             vm.toggleMenu = toggleMenu;
             vm.closeMenu = closeMenu;
+            vm.openInviteModal = openInviteModal;
+            vm.openShareModal = openShareModal;
+
+            function openInviteModal(item) {
+                InviteFriends.openModal(item);
+            }
+
+            function openShareModal(item, type) {
+                Share.openModal(item, type);
+            }
 
             function toggleMenu() {
                 vm.isMenuOpened = !vm.isMenuOpened;
@@ -48,6 +61,19 @@
                 } else {
                     return item.cover_url.original;
                 }
+            }
+
+            function unFavorite(spot, idx) {
+              SpotService.removeFromFavorite(spot, function () {
+                if ($rootScope.currentUser.id === $rootScope.profileUser.id) {
+                  $scope.$parent.$parent.Favorite.spots.data.splice(idx, 1);
+                  if ($scope.$parent.$parent.Favorite.markersSpots[idx].marker) {
+                    MapService.GetCurrentLayer().removeLayer($scope.$parent.$parent.Favorite.markersSpots[idx].marker);
+                  } else {
+                    MapService.GetCurrentLayer().removeLayers($scope.$parent.$parent.Favorite.markersSpots[idx].markers)
+                  }
+                }
+              })
             }
         }
     }

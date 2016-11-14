@@ -20,7 +20,7 @@
     };
 
     /** @ngInject */
-    function SpotController($scope, SpotService, ScrollService, SpotComment, $state, MapService, $rootScope, dialogs, API_URL) {
+    function SpotController($scope, SpotService, ScrollService, SpotComment, $state, MapService, $rootScope, dialogs, API_URL, InviteFriends, Share) {
       var vm = this;
       var spot = vm.spot;
       vm.API_URL = API_URL;
@@ -35,6 +35,16 @@
       vm.chatterTab = 'zoomtivity';
       vm.scroll = 0;
       vm.setImage = setImage;
+      vm.invite = openInviteModal;
+      vm.share = openShareModal;
+
+      function openInviteModal(item) {
+          InviteFriends.openModal(item);
+      }
+
+      function openShareModal(item, type) {
+          Share.openModal(item, type);
+      }
 
       vm.postComment = postComment;
       vm.deleteComment = deleteComment;

@@ -12,7 +12,21 @@
         vm.categories = categories;
         vm.images = UploaderService.images;
         vm.options = {
-            height: 200
+            height: 200,
+            toolbar: [
+                ['edit',['undo','redo']],
+                ['headline', ['style']],
+                ['style', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
+                // ['fontface', ['fontname']],
+                // ['textsize', ['fontsize']],
+                // ['fontclr', ['color']],
+                ['alignment', ['ul', 'ol', 'paragraph', 'lineheight']],
+                // ['height', ['height']],
+                // ['table', ['table']],
+                ['insert', ['link','picture','video','hr']],
+                ['view', ['fullscreen']],
+                ['help', ['help']]
+            ]
         };
 
         vm.save = save;
@@ -30,7 +44,7 @@
                 delete data.categories;
                 delete data.images;
                 delete data.options;
-                
+
                 //get wysiwyg content
                 //var editor = ContentTools.EditorApp.get();
                 //editor.save();
@@ -56,15 +70,15 @@
                     });
             }
         }
-        
+
         $scope.imageUpload = function(files) {
-            
+
             console.log(this);
             var url = API_URL + '/posts/upload';
             var req = {
                 image: files[0]
             };
-            
+
             UploaderService
                 .upload(url, req, 'cover')
                 .then(function (resp) {
@@ -86,7 +100,7 @@
                     });
                     //editor.start();
                 });
-            
+
             console.log('image upload:', files);
             console.log('image upload\'s editable:', $scope.editable);
         }

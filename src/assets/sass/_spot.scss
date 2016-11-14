@@ -20,12 +20,12 @@
             width: calc(100vw - 70px);
         }
         @media (max-width: 767px) {
-            top: 10px;
-            right: 10px;
-            left: 10px;
-            bottom: 60px;
+            top: 0px;
+            right: 0px;
+            left: 0px;
+            bottom: 0px;
             width: auto;
-            border: 1px solid lightgrey;
+            // border: 1px solid lightgrey;
         }
     }
     .opened-header {
@@ -74,7 +74,7 @@
             width: 80px;
         }
         p {
-            margin: 0 10px 0;
+            margin: 10px 0 0;
             color: rgb(2, 200, 246);
         }
     }
@@ -89,45 +89,69 @@
             }
         }
     }
-    .opened-first-buttons {
+    // .opened-first-buttons {
+    //     display: flex;
+    //     justify-content: space-between;
+    //     align-items: center;
+    //     margin: 15px 0;
+    //     // display: block;
+    //     max-width: 450px;
+    //     .invite-friend {
+    //         padding-left: 20px;
+    //     }
+    //     .open-favorite {
+    //         display: flex;
+    //         align-items: center;
+    //         p {
+    //             margin: 0 5px 0;
+    //         }
+    //     }
+    // }
+    .opened-second-buttons, .opened-first-buttons {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        margin: 15px 0;
-        // display: block;
-        max-width: 450px;
-        .invite-friend {
-            padding-left: 20px;
-        }
-        .open-favorite {
-            display: flex;
-            align-items: center;
-            p {
-                margin: 0 5px 0;
-            }
-        }
-    }
-    .opened-second-buttons {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-        max-width: 450px;
+        // max-width: 450px;
+        margin: 10px -2px;
         button {
             color: white;
             text-transform: uppercase;
-            width: 30%;
             padding: 5px;
             border: none;
+            height: 50px;
+            margin: 2px;
+        }
+        .button-invite, .button-share {
+            color: rgb(2, 200, 246);
+            background-color: white;
+            height: 35px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0;
+            margin: 5px 0;
+            &:first-of-type {
+                margin-right: 20px;
+            }
+            span {
+                margin: 0 0 0 15px;
+            }
+            // padding: 0 10px;
         }
         .button-order {
             background-color: rgb(237, 69, 52);
+            width: 100%;
         }
         .button-table {
             background-color: rgb(2, 200, 246);
+            width: 100%;
         }
         .button-deals {
             background-color: rgb(152, 195, 82);
+            width: 100%;
         }
+    }
+    .opened-first-buttons {
+        justify-content: flex-start;
     }
     .opened-tabs {
         // max-width: 450px;
