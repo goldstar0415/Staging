@@ -14,7 +14,6 @@ use Codesleeve\Stapler\ORM\StaplerableInterface;
 use DB;
 use Eluceo\iCal\Component\Event;
 use Eluceo\iCal\Property\Event\Organizer;
-use SKAgarwal\GoogleApi\PlacesApi;
 use Request;
 use Log;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
@@ -894,10 +893,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $googlePid = $this->getGooglePid();
         if($googlePid)
         {
-            $googlePlaces = new PlacesApi(config('google.places.key'));
             try
             {
-                $response = $googlePlaces->placeDetails($googlePid);
+                $url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' . $googlePid . '&key=' . config('google.places.key');
+                $response = $this->getPageContent($url, [], true);
                 if($response['status'] == "OK")
                 {
                     $this->googlePlacesInfo = $response['result'];
@@ -1373,8 +1372,13 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $reviewsCount = 0;
         if( !empty($result['info']) )
         {
-            foreach($result['info'] as $service)
+            foreach($result['info'] as $index => $service)
             {
+                if(empty($service))
+                {
+                    unset($result['info'][$index]);
+                    continue;
+                }
                 $starsSumm += $service['rating'];
                 $reviewsCount += $service['reviews_count'];
             }
@@ -1409,7 +1413,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         return $this->spotExtension;
     }
     
-    public function getResponse($client, $url, $options)
+    public function getResponse($client, $url, $options, $json = false)
     {
         try {
             $content = $client->get($url, $options); 
@@ -1420,6 +1424,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         }
         if($content)
         {
+            if($json)
+            {
+                return json_decode($content->getBody()->getContents(), true);
+            }
             return new \Htmldom($content->getBody()->getContents());
         }
         return false;
@@ -1434,14 +1442,14 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         return false;
     }
     
-    public function getPageContent($url, $options = [])
+    public function getPageContent($url, $options = [], $json = false)
     {
         $client = new Client([
             'cookies' => true, 
             'http_errors' => false
         ]);
         
-        return $this->getResponse($client, $url, $options);
+        return $this->getResponse($client, $url, $options, $json);
     }
     
     

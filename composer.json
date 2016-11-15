@@ -23,10 +23,8 @@
         "vinkla/instagram": "^3.2",
         "bosnadev/database": "0.12",
         "aws/aws-sdk-php": "<3.0.0",
-        "guzzlehttp/guzzle": "6.*",
         "box/spout": "^2.6",
         "doctrine/dbal": "^2.5",
-        "skagarwal/google-places-api": "^1.0",
         "neitanod/forceutf8": "dev-master",
         "sammyk/laravel-facebook-sdk": "^3.0"
     },
