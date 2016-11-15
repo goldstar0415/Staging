@@ -22,7 +22,7 @@
                 </span>
                 <span class="time">{{Review.review.created_at| fromNow}}</span>
             </div>
-            <p  ng-if="!Review.edit" ng-bind-template="{{Review.review.message | linky:'_blank'}}"></p>
+            <p  ng-if="!Review.edit" ng-bind-html="Review.review.message | linky:'_blank' | toTrustedHtml"></p>
             <textarea name="review" ng-model="Review.review.message" placeholder="Start typing..."
                 ng-if="Review.edit && $root.isRole($root.currentUser, 'admin')"
                 ctrl-enter="Review.submit(reviewForm)" ng-maxlength="5000"
