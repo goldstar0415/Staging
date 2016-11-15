@@ -95,6 +95,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     protected $googlePlacesInfo = null;
     protected $yelpInfo = null;
     protected $yelpToken = null;
+    protected $bookingPage = null;
 
     /**
      * {@inheritdoc}
@@ -700,6 +701,30 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         return $result;
     }
     
+    public function getBookingPage()
+    {
+        if(!empty($this->bookingPage))
+        {
+            return $this->bookingPage;
+        }
+        $spotInfo = $this->getSpotExtension();
+        if(!empty($spotInfo->booking_url))
+        {
+            $url = $this->getBookingUrl($spotInfo->booking_url);
+            if($url)
+            {
+                $bookingPageContent = $this->getPageContent($url, [
+                    'headers' => $this->getBookingHeaders()
+                ]);
+                if($bookingPageContent)
+                {
+                    $this->bookingPage = $bookingPageContent;
+                }
+            }
+        }
+        return $this->bookingPage;
+    }
+    
     public function saveBookingPhotos($bookingRes)
     {
         $result = [];
@@ -774,9 +799,32 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             $cc1            = $reviewsUrlArr[count($reviewsUrlArr) - 2];
             $url = 'http://www.booking.com/reviewlist.html?pagename=' . $reviewsUrl . ';cc1=' . $cc1 . '&;rows=100';
             $this->booking_reviews_url = $url;
-            return $url;
+            return $this->booking_reviews_url;
         }
         return false;
+    }
+    
+    public function getBookingTotals()
+    {
+        $result = null;
+        $pageContent = $this->getBookingPage();
+        if($pageContent)
+        {
+            $ratingObj = $pageContent->find('#review_list_main_score', 0);
+            if(!empty($ratingObj))
+            {
+                $value = trim($ratingObj->innertext());
+                $value = round(((float) str_replace(',', '.', $value))/2, 1);
+                $result['rating'] = $value;
+            }
+            $countObj = $pageContent->find('#review_list_score_count strong', 0);
+            if(!empty($countObj))
+            {
+                $countValue = intval($countObj->innertext());
+                $result['reviews_count'] = $countValue;
+            }
+        }
+        return $result;
     }
     
     public function getBookingReviews($reviewsContent, $save = false)
@@ -1263,7 +1311,6 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     
     /*
      * Reviews totals
-     * common methods
      */
     
     public function getReviewsTotal()
@@ -1288,12 +1335,19 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $spotInfo = $this->getSpotExtension();
         if(!empty($spotInfo->booking_url))
         {
+            $this->getBookingTotals();
+            
             $reviewsUrl = $this->getBookingReviewsUrl($spotInfo->booking_url);
             if($reviewsUrl && $reviewsPageContent = $this->getPageContent($reviewsUrl, [
                 'headers' => $this->getBookingHeaders()
             ]))
             {
                 $this->getBookingReviews($reviewsPageContent, true); // true to save
+            }
+            $bookingTotals = $this->getBookingTotals();
+            if(!empty($bookingTotals))
+            {
+                $result['info']['booking'] = $bookingTotals;
             }
         }
         if(!empty($spotInfo->tripadvisor_rating) && !empty($spotInfo->tripadvisor_reviews_count))
@@ -1317,7 +1371,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         
         $starsSumm = 0;
         $reviewsCount = 0;
-        if(count($result['info']))
+        if( !empty($result['info']) )
         {
             foreach($result['info'] as $service)
             {
