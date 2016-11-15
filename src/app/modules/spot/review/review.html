@@ -18,7 +18,7 @@
                         ></rating>
                 </div>
                 <span class="name">
-                    &nbsp; by <a ui-sref="profile.main({user_id: Review.review.user.alias || Review.review.user.id})">{{Review.review.user.first_name || Review.review.remote_user_name}} {{Review.review.user.last_name}}</a>
+                    &nbsp; by <a ui-sref="profile.main({user_id: Review.review.user.alias || Review.review.user.id})">{{Review.review.user.first_name || Review.review.remote_user_name || "anonym"}} {{Review.review.user.last_name}}</a>
                 </span>
                 <span class="time">{{Review.review.created_at| fromNow}}</span>
             </div>

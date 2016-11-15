@@ -13,6 +13,7 @@
     var vm = this;
     vm.API_URL = API_URL;
     vm.spot = SpotService.formatSpot(spot);
+    vm.spot.rating = vm.spot.reviews_total.total.rating;
     vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
