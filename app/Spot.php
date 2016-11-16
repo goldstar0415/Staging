@@ -19,6 +19,7 @@ use Log;
 use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 use Facebook\Exceptions\FacebookSDKException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Post\PostBody;
 
 /**
  * Class Spot
@@ -1079,23 +1080,17 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             return $this->yelpToken;
         }
         $client = new Client();
-        $options = [
-            'multipart' => [
-                [
-                    'name'     => 'client_id',
-                    'contents' => config('yelp-api.client_id')
-                ],[
-                    'name'     => 'client_secret',
-                    'contents' => config('yelp-api.client_secret')
-                ],[
-                    'name'     => 'grant_type',
-                    'contents' => 'client_credentials'
-                ],
-            ]
-        ];
+        $body = new PostBody();
+        $body->forceMultipartUpload(true);
+        $body->replaceFields([
+                    'client_id' => config('yelp-api.client_id'),
+                    'client_secret' => config('yelp-api.client_secret'),
+                    'grant_type' => 'client_credentials'
+                ]);
+        $options = ['body' => $body];
         try
         {
-            $response = $client->request('POST', 'https://api.yelp.com/oauth2/token', $options);
+            $response = $client->post('https://api.yelp.com/oauth2/token', $options);
             $this->yelpToken =  json_decode($response->getBody()->getContents(), true)['access_token'];
         }
         catch(Exception $e) { }
@@ -1129,7 +1124,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $url = 'https://api.yelp.com/v3/businesses/' . $id;
                 try
                 {
-                    $response = $client->request('GET', $url , [
+                    $response = $client->get($url , [
                         'headers' => $headers
                     ]);
                     $responseArray = json_decode($response->getBody()->getContents(), true);
@@ -1160,7 +1155,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $url = 'https://api.yelp.com/v3/businesses/' . $id;
                 try
                 {
-                    $response = $client->request('GET', $url , [
+                    $response = $client->get($url , [
                         'headers' => $headers
                     ]);
                     $responseArray = json_decode($response->getBody()->getContents(), true);
@@ -1194,7 +1189,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $url = 'https://api.yelp.com/v3/businesses/' . $id;
                 try
                 {
-                    $response = $client->request('GET', $url . '/reviews', [
+                    $response = $client->get($url . '/reviews', [
                         'headers' => $headers
                     ]);
                     $yelp_reviews = json_decode($response->getBody()->getContents(), true);
@@ -1239,7 +1234,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             $client = new Client();
             try
             {
-                $response = $client->request('GET', $url . '/review_feed/', [
+                $response = $client->get($url . '/review_feed/', [
                     'headers' => $headers
                 ]);
                 $responseBody = json_decode($response->getBody()->getContents(), true);
