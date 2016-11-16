@@ -797,7 +797,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             $reviewsUrl     = end( $reviewsUrlArr );
             $reviewsUrl     = preg_replace( '#\..?.?.?.?.?\.?html#' , '' , $reviewsUrl);
             $cc1            = $reviewsUrlArr[count($reviewsUrlArr) - 2];
-            $url = 'http://www.booking.com/reviewlist.html?pagename=' . $reviewsUrl . ';cc1=' . $cc1 . '&;rows=100';
+            $url = 'http://www.booking.com/reviewlist.html?pagename=' . $reviewsUrl . '&cc1=' . $cc1 . '&rows=100';
             $this->booking_reviews_url = $url;
             return $this->booking_reviews_url;
         }
