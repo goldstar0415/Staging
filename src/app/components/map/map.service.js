@@ -726,7 +726,11 @@
 
           this.link = L.DomUtil.create('div', 'show-info', container);
           var img = L.DomUtil.create('img', '', this.link);
-          img.src = "../../assets/img/svg/fullscreen.svg";
+          if ($rootScope.isFullScreen) {
+              img.src = "../../assets/img/svg/fullscreen2.svg";
+          } else {
+              img.src = "../../assets/img/svg/fullscreen.svg";
+          }
           this.link.href = '#';
           this._map = map;
 

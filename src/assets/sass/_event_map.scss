@@ -163,7 +163,7 @@
             }
             .spot-img-bottom {
                 bottom: 0;
-                height: 60px;
+                height: 40px;
                 justify-content: space-around;
                 flex-direction: column;
                 align-items: flex-start;
@@ -175,13 +175,14 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
+                    font-size: 12px;
                 }
                 .spot-address {
                     width: 100%;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
-                    font-size: 12px;
+                    font-size: 10px;
                     font-weight: normal;
                     .glyphicon {
                         color: $light_blue_btn;
@@ -230,12 +231,30 @@
     .new-result-card {
         padding: 0;
         @media (min-width: 768px) {
-            margin: 0 -30px;
+            margin: 0 -30px 80px -30px;
             width: calc(100% + 60px);
             .spot-img {
                 height: 250px;
                 .spot-img-top, .spot-img-bottom {
-                    padding: 10px 30px;
+                    padding: 0px 30px;
+                }
+                .spot-img-bottom {
+                    height: 60px;
+                    bottom: -80px;
+                    background-color: white;
+                    p {
+                        font-size: 16px;
+                        color: black;
+                    }
+                    .spot-address {
+                        font-size: 14px;
+                        color: black;
+                    }
+                }
+                .spot-img-top {
+                    bottom: -115px;
+                    top: auto;
+                    background-color: white;
                 }
             }
         }
