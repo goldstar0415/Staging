@@ -81,6 +81,7 @@
     document.addEventListener("MSFullscreenChange", detectFullScreen);
 
     function detectFullScreen() {
+        var bt = document.querySelector('.fullscreen-container img');
         if (
         	document.fullscreenElement ||
         	document.webkitFullscreenElement ||
@@ -88,14 +89,18 @@
         	document.msFullscreenElement
         ) {
             $rootScope.isFullScreen = true;
+            if (bt) {
+                bt.src = "../../assets/img/svg/fullscreen2.svg"
+            }
         } else {
             $rootScope.isFullScreen = false;
+            if (bt) {
+                bt.src = "../../assets/img/svg/fullscreen.svg"
+            }
         }
     }
 
     detectFullScreen();
-
-    console.log($rootScope.isFullScreen);
 
     function setOpenedSpot(item) {
         $rootScope.openedSpot = item;
