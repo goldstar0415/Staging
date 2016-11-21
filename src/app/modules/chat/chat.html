@@ -1,6 +1,6 @@
 <div class="messages">
     <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
-    <div ng-repeat="dialog in Chat.dialogs" class="wall-item wall-item-messages" ui-sref="chatRoom({user_id: dialog.user.id})">
+    <div ng-repeat="dialog in Chat.dialogs" class="wall-item" ui-sref="chatRoom({user_id: dialog.user.id})">
         <div class="wall-user">
             <a ui-sref="profile.main({user_id: dialog.user.alias || dialog.user.id})" class="wall-avatar">
                 <img ng-src="{{dialog.user.avatar_url.thumb}}">
@@ -16,6 +16,9 @@
             <div class="wall-message">
                 <p ng-if="dialog.last_message.message != ''" ng-bind-html="dialog.last_message.message | linky:'_blank'" class="color-link"></p>
                 <p ng-if="dialog.last_message.message == ''" ng-bind-html="'[Attachment]' | linky:'_blank'" class="color-link"></p>
+            </div>
+            <div class="wall-buttons">
+                Go to dialog...
             </div>
         </div>
     </div>
