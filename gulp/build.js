@@ -78,7 +78,7 @@ gulp.task('fonts', function () {
 });
 gulp.task('service-worker', function () {
   return gulp.src([
-    path.join(conf.paths.src, '/service-worker.js')
+    path.join(conf.paths.src, '/service-worker.js'),
   ])
     .pipe(gulp.dest(conf.paths.dist));
 });
