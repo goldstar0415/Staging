@@ -1011,7 +1011,18 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
 
     protected function getHashForGoogle($item)
     {
-        $userAlias = str_replace('/', '', parse_url($item['author_url'], PHP_URL_PATH));
+        
+        $url_path = parse_url($item['author_url'], PHP_URL_PATH);
+        $url_path_arr = array_filter(explode('/', $url_path));
+        $userAlias = '';
+        foreach ($url_path_arr as $elem)
+        {
+            if (is_numeric($elem))
+            {
+                $userAlias = $elem;
+                break;
+            }
+        }
         
         return 'gg_' . $userAlias . $item['time'];
     }
@@ -1198,9 +1209,9 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                         $result = [];
                         foreach($yelp_reviews['reviews'] as $review)
                         {
-                            $url_parts = parse_url($review['url']);
-                            parse_str($url_parts['query'], $url_query);
-                            $remote_id = 'yp_' . $url_query['hrid'];
+                            $url_query = parse_url($review['url'], PHP_URL_QUERY);
+                            parse_str($url_query, $url_query_parsed);
+                            $remote_id = 'yp_' . $url_query_parsed['hrid'];
                             $item = new SpotVote();
                             $item->vote = $review['rating'];
                             $item->created_at = $review['time_created'];
