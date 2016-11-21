@@ -15,25 +15,15 @@
   <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
 
   <link rel="manifest" href="/manifest.json">
-  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
-  <link href="../bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
-  <link href="../bower_components/angular-carousel/dist/angular-carousel.min.css" rel="stylesheet">
-
-
-  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
-  <!-- build:css({.tmp/serve,src}) assets/css/vendor.css -->
-  <!-- bower:css -->
-  <!-- run `gulp inject` to automatically populate bower styles dependencies -->
-  <!-- endbower -->
-  <!-- endbuild -->
-
-  <!-- build:css({.tmp/serve,src}) assets/css/app.css -->
-  <!-- inject:css -->
-  <!-- css files will be automatically insert here -->
+  
+  <!-- build:css({.tmp/serve,src}) assets/css/head.css -->
+  <!-- inject:head:css -->
+  <!-- head css files will be automatically insert here -->
   <!-- endinject -->
   <!-- endbuild -->
+  
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
 </head>
 <body autoscroll="true" id="body">
 <!--[if lt IE 10]>
@@ -111,6 +101,19 @@
 
 <new-message></new-message>
 
+<div class="pick-notification">
+    <img src='assets/img/Pick_a_tool.png'></img>
+</div>
+
+<div class="info-layout">
+    <p class="lay-info" data-elem=".leaflet-control .show-info">Show / Hide Info</p>
+    <p class="lay-radius" data-elem=".leaflet-control .radius-selection">Search By Radius</p>
+    <p class="lay-lasso" data-elem=".leaflet-control .lasso-selection">Draw Area</p>
+    <p class="lay-path" data-elem=".leaflet-control .path-selection">Search By Road Trip</p>
+    <p class="lay-location" data-elem=".leaflet-control .focus-geolocation">Show Your Location</p>
+    <!-- <p class="lay-category" data-elem=".todo-sidebar">Select Spot Category</p>
+    <p class="lay-weather" data-elem=".weather-sidebar">Show Weather</p> -->
+</div>
 
 <script>
   L_PREFER_CANVAS = true;  //fix leaflet screenshot
@@ -133,20 +136,6 @@
 <!-- angular templates will be automatically converted in js and inserted here -->
 <!-- endinject -->
 <!-- endbuild -->
-
-<div class="pick-notification">
-    <img src='assets/img/Pick_a_tool.png'></img>
-</div>
-
-<div class="info-layout">
-    <p class="lay-info" data-elem=".leaflet-control .show-info">Show / Hide Info</p>
-    <p class="lay-radius" data-elem=".leaflet-control .radius-selection">Search By Radius</p>
-    <p class="lay-lasso" data-elem=".leaflet-control .lasso-selection">Draw Area</p>
-    <p class="lay-path" data-elem=".leaflet-control .path-selection">Search By Road Trip</p>
-    <p class="lay-location" data-elem=".leaflet-control .focus-geolocation">Show Your Location</p>
-    <!-- <p class="lay-category" data-elem=".todo-sidebar">Select Spot Category</p>
-    <p class="lay-weather" data-elem=".weather-sidebar">Show Weather</p> -->
-</div>
 
 <script>
 if ('serviceWorker' in navigator) {
@@ -185,3 +174,18 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+<!-- build:css({.tmp/serve,src}) assets/css/vendor.css -->
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
+  <link href="../bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+  <link href="../bower_components/angular-carousel/dist/angular-carousel.min.css" rel="stylesheet">
+  <!-- bower:css -->
+  <!-- run `gulp inject` to automatically populate bower styles dependencies -->
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:css({.tmp/serve,src}) assets/css/app.css -->
+  <!-- inject:css -->
+  <!-- css files will be automatically insert here -->
+  <!-- endinject -->
+  <!-- endbuild -->
