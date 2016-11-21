@@ -14,7 +14,7 @@
     <div spotcard class="new-result-card" item="Spot.spot"></div>
     <div class="opened-name-bottom">
         <p class="opened-info">
-            0 Combined reviews
+            {{Spot.spot.reviews_total.total.rating}} stars based on {{Spot.spot.reviews_total.total.reviews_count}} combined reviews
         </p>
     </div>
     <div class="event-info" ng-if="Spot.spot.category.type.name == 'event'">
@@ -97,7 +97,61 @@
             </ul>
         </div>
         <div class="tab-content-reviews" ng-if="OpenedItem.tab == 'reviews'">
-            <h1>Reviews</h1>
+            <section class="review-section clearfix">
+                <div class="review-info">
+                    <h4>Reviews:</h4>
+                    <div class="opened-name-bottom">
+                        <div class="opened-stars">
+                            <stars item="Spot.spot"></stars>
+                        </div>
+                        <p class="opened-info">
+                            {{Spot.spot.reviews_total.total.rating}} stars based on {{Spot.spot.reviews_total.total.reviews_count}} combined reviews
+                        </p>
+                    </div>
+                </div>
+                <div class="review-types">
+                    <div class="review-type" ng-repeat="(serviceName, serviceInfo) in Spot.spot.reviews_total.info">
+                        <div class="review-type-icon {{serviceName}}"></div>
+                        <div class="clearfix"></div>
+                        <div class="pull-left with-margin">{{serviceInfo.rating}}</div>
+                        <div class="pull-left outline-none review-type-stars readonly">
+                            <rating
+                                ng-model="1"
+                                max="1"
+                                readonly="true"
+                                state-on="'glyphicon glyphicon-star star-active'"
+                                state-off="'glyphicon glyphicon-star star-default'"
+                                ></rating>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="review-type-count pull-left with-margin">
+                            {{serviceInfo.reviews_count}} review{{ (serviceInfo.reviews_count!=1)?'s':'' }}
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                
+                <div class="review-content clearfix">
+                    <review-input 
+                        ng-if="ReviewInput.item.auth_rate.user_id != $root.currentUser.id"
+                        review="Spot.review" vote="Spot.vote" item="Spot.spot"
+                                  maxlength="255"></review-input>
+                </div>
+                <div ng-if="Spot.votes.data.length" class="new-review col-xs-12">
+                    <h3 class="col-xs-12">Recent</h3>
+                </div>
+                <div class="clearfix"></div>
+                <div infinite-scroll="Spot.reviewsPagination.nextPage()" infinite-scroll-disabled="Spot.reviewsPagination.busy"
+                     class="clearfix" infinite-scroll-distance="1">
+                    <div class="review post clearfix" ng-repeat="item in Spot.votes.data">
+                        <review review="item" spot="Spot.spot"></review>
+                    </div>
+                    <preloader ng-show="Spot.reviewsPagination.busy"></preloader>
+                </div>
+                <div class="spot-post empty" ng-if="Spot.votes.data.length == 0 && !Spot.pagination.busy">
+                    <p class="review-text">There are no reviews.</p>
+                </div>
+            </section>
         </div>
         <div class="tab-content-photos" ng-if="OpenedItem.tab == 'photos'">
             <ng-carousel images="Spot.spot.photos"></ng-carousel>

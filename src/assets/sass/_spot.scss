@@ -71,7 +71,7 @@
         // display: block;
         max-width: 450px;
         .opened-stars {
-            width: 70px;
+            width: 80px;
         }
         p {
             margin: 10px 0 0;
@@ -260,6 +260,85 @@
         max-width: 100px;
     }
     .comment-content {
+        width: 100%;
+        margin-left: 20px;
+        .name {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+    }
+}
+
+.review-types {
+    margin: 20px 0;
+    .review-type {
+        width: 110px;
+        display: inline-block;
+    }
+    .with-margin {
+        margin-right: 5px;
+    }
+    .review-type-icon {
+        width: 45px;
+        height: 45px;
+        display: inline-block;
+        margin-bottom: 15px;
+        &.zoomtivity {
+            background: #072a3d url(../img/icons/zoomtivity-30x30.png) center center no-repeat;
+        }
+        &.google {
+            background: #d12320 url(../img/icons/google-30x30.png) center center no-repeat;
+        }
+        &.booking {
+            background: #003580 url(../img/icons/booking-30x30.png) center center no-repeat;
+        }
+        &.yelp {
+            background: #b3232e url(../img/icons/yelp-30x30.png) center center no-repeat;
+        }
+        &.facebook {
+            background: #375794 url(../img/icons/facebook-30x30.png) center center no-repeat;
+        }
+        &.tripadvisor {
+            background: #579442 url(../img/icons/tripadvisor-30x30.png) center center no-repeat;
+        }
+    }
+}
+
+.review-top {
+    display: flex;
+    .review-avatar {
+        width: 33%;
+        max-width: 100px;
+        a {
+            position: relative;
+            display: inline-block;
+            &:after {
+                content:'';
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 35px;
+                height: 35px;
+            }
+            &.zoomtivity:after {
+                background: #072a3d url(../img/icons/zoomtivity-25x25.png) center center no-repeat;
+            }
+            &.google:after {
+                background: #d12320 url(../img/icons/google-25x25.png) center center no-repeat;
+            }
+            &.booking:after {
+                background: #003580 url(../img/icons/booking-25x25.png) center center no-repeat;
+            }
+            &.yelp:after {
+                background: #b3232e url(../img/icons/yelp-25x25.png) center center no-repeat;
+            }
+            &.facebook:after {
+                background: #375794 url(../img/icons/facebook-25x25.png) center center no-repeat;
+            }
+        }
+        
+    }
+    .review-content {
         width: 100%;
         margin-left: 20px;
         .name {

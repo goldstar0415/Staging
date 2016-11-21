@@ -13,6 +13,7 @@
     var vm = this;
     vm.API_URL = API_URL;
     vm.spot = SpotService.formatSpot(spot);
+    vm.spot.rating = vm.spot.reviews_total.total.rating;
     vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
@@ -33,7 +34,7 @@
 
     vm.postComment = postComment;
     vm.deleteComment = deleteComment;
-
+    
     $rootScope.syncSpots = {data: [vm.spot]};
     $rootScope.currentSpot = vm.spot;
 
@@ -46,6 +47,7 @@
       spot_id: spot.id
     };
     vm.pagination = new ScrollService(SpotComment.query, vm.comments, params);
+    vm.reviewsPagination = new ScrollService(SpotReview.query, vm.votes, params);
     ShowMarkers([vm.spot]);
 
     function setImage() {
@@ -124,44 +126,5 @@
         });
       });
     }
-
-    vm.editReview = function(review) {
-        review.oldVote = review.vote;
-        review.oldMessage = review.message;
-        review.edit = true;
-    };
-
-    vm.cancelEditReview = function(review) {
-        review.vote = review.oldVote;
-        review.message = review.oldMessage;
-        review.edit = false;
-    };
-
-    vm.updateReview = function(review) {
-      SpotReview.update({spot_id: review.spot_id, id: review.id},
-        {
-          message: review.message || '',
-          vote: review.vote || ''
-        }, function success(newReview) {
-          vm.spot.rating = newReview.spot_rating;
-          review.edit = false;
-        }, function error(resp) {
-          console.warn(resp);
-          toastr.error('Edit review failed');
-        }
-      );
-    };
-
-    vm.deleteReview = function(review, index) {
-      dialogs.confirm('Confirmation', 'Are you sure you want to delete review?').result.then(function () {
-        SpotReview.delete({spot_id: review.spot_id, id: review.id}, function success(result) {
-          vm.spot.rating = result.spot_rating;
-          delete result.spot_rating;
-          vm.spot.votes.splice(index, 1);
-          toastr.info('Review successfully deleted');
-        });
-      });
-    };
-
   }
 })();

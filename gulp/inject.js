@@ -13,8 +13,13 @@ gulp.task('inject', ['scripts', 'styles'], function () {
   var injectStyles = gulp.src([
     path.join(conf.paths.tmp, '/serve/assets/**/*.css'),
     path.join(conf.paths.src, '/assets/**/*.css'),
+    path.join('!' + conf.paths.src, '/assets/sass/_preloader.css'),
     path.join('!' + conf.paths.src, '/assets/libs/contenttools/*.css'),
     path.join('!' + conf.paths.tmp, '/serve/app/vendor.css')
+  ], { read: false });
+  
+  var injectPreloader = gulp.src([
+    path.join( conf.paths.src, '/assets/sass/_preloader.css')
   ], { read: false });
 
   var injectScripts = gulp.src([
@@ -31,9 +36,16 @@ gulp.task('inject', ['scripts', 'styles'], function () {
     ignorePath: [conf.paths.src, path.join(conf.paths.tmp, '/serve')],
     addRootSlash: false
   };
+  
+  var injectPreloaderOptions = {
+    starttag: '<!-- inject:head:{{ext}} -->', 
+    ignorePath: [conf.paths.src, path.join(conf.paths.tmp, '/serve')],
+    addRootSlash: false
+  };
 
   return gulp.src(path.join(conf.paths.src, '/*.html'))
     .pipe($.inject(injectStyles, injectOptions))
+    .pipe($.inject(injectPreloader, injectPreloaderOptions))
     .pipe($.inject(injectScripts, injectOptions))
     .pipe(wiredep(_.extend({}, conf.wiredep)))
     .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve')));
