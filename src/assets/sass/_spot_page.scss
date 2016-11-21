@@ -552,6 +552,7 @@
   background: url(../img/svg/new_icons/like_icon.svg) center center no-repeat;
   min-height: 2rem;
   margin-right: 1rem;
+  background-size: 17px;
   &:hover, .clicked {
     background-position: 0 -18px;
     color: $blue_btn;
