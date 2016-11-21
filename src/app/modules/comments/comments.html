@@ -2,11 +2,30 @@
 
 <div infinite-scroll="Comment.pagination.nextPage()" infinite-scroll-disabled="Comment.pagination.busy"
      class="clearfix" infinite-scroll-distance="1">
-  <div class="reviews col-xs-12" ng-repeat="item in Comment.comments.data">
+  <div ng-repeat="item in Comment.comments.data">
 
     <div ng-switch="item.commentable_type">
       <div ng-switch-when="App\Plan">
-        <a class="review-img" ui-sref="planner.view({user_id: item.commentable.user_id, plan_id: item.commentable.id})">
+          <div class="wall-item wall-item-messages">
+              <div class="wall-user">
+                  <a ui-sref="planner.view({user_id: item.commentable.user_id, plan_id: item.commentable.id})" class="wall-avatar">
+                      <img src="assets/img/missing_thumb.png">
+                  </a>
+                  <div class="wall-user-info">
+                      <a ui-sref="planner.view({user_id: item.commentable.user_id, plan_id: item.commentable.id})">
+                          <span>{{item.commentable.title}}</span>
+                      </a>
+                      <p>{{item.created_at | toTimezone}}</p>
+                  </div>
+              </div>
+              <div class="wall-content">
+                  <div class="wall-message">
+                      <p ng-bind-html="item.body | linky:'_blank'" class="color-link"></p>
+                      <attachments items="item.attachments"></attachments>
+                  </div>
+              </div>
+          </div>
+        <!-- <a class="review-img" ui-sref="planner.view({user_id: item.commentable.user_id, plan_id: item.commentable.id})">
           <img class="media-object fav-avatar-icon feeds-img" src="assets/img/missing_thumb.png">
         </a>
 
@@ -20,20 +39,38 @@
             {{item.sender.first_name}}
             {{item.sender.last_name}}
           </a>
-          <!--at-->
           <p class="time">{{item.created_at | toTimezone}}</p>
 
           <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
           <attachments items="item.attachments"></attachments>
 
 
-        </div>
+        </div> -->
       </div>
 
       <div ng-switch-when="App\Spot">
-        <!--<stars item="item" class="rating-stars"></stars>-->
 
-        <a class="review-img" ui-sref="spot({user_id: item.commentable.user_id || 0, spot_id: item.commentable.id})">
+          <div class="wall-item wall-item-messages">
+              <div class="wall-user">
+                  <a ui-sref="spot({user_id: item.commentable.user_id || 0, spot_id: item.commentable.id})" class="wall-avatar">
+                      <img ng-src="{{item.commentable.cover_url.medium}}">
+                  </a>
+                  <div class="wall-user-info">
+                      <a ui-sref="spot({user_id: item.commentable.user_id || 0, spot_id: item.commentable.id})">
+                          <span>{{item.commentable.title}}</span>
+                      </a>
+                      <p>{{item.created_at | toTimezone}}</p>
+                  </div>
+              </div>
+              <div class="wall-content">
+                  <div class="wall-message">
+                      <p ng-bind-html="item.body | linky:'_blank'" class="color-link"></p>
+                      <attachments items="item.attachments"></attachments>
+                  </div>
+              </div>
+          </div>
+
+        <!-- <a class="review-img" ui-sref="spot({user_id: item.commentable.user_id || 0, spot_id: item.commentable.id})">
           <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.cover_url.medium}}">
         </a>
 
@@ -47,16 +84,35 @@
           </a>
 
           <p class="time">{{item.created_at | toTimezone}}</p>
-          <!--at-->
           <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
           <attachments items="item.attachments"></attachments>
 
-
-        </div>
+        </div> -->
       </div>
 
       <div ng-switch-when="App\AlbumPhoto">
-        <a class="review-img" photo-viewer items="[item.commentable]" index="0">
+
+          <div class="wall-item wall-item-messages">
+              <div class="wall-user">
+                  <a photo-viewer items="[item.commentable]" index="0" class="wall-avatar">
+                      <img ng-src="{{item.commentable.photo_url.medium}}">
+                  </a>
+                  <div class="wall-user-info">
+                      <a ui-sref="spot({user_id: item.commentable.user_id || 0, spot_id: item.commentable.id})">
+                          <span>{{item.commentable.title}}</span>
+                      </a>
+                      <p>{{item.created_at | toTimezone}}</p>
+                  </div>
+              </div>
+              <div class="wall-content">
+                  <div class="wall-message">
+                      <p ng-bind-html="item.body | linky:'_blank'" class="color-link"></p>
+                      <attachments items="item.attachments"></attachments>
+                  </div>
+              </div>
+          </div>
+
+        <!-- <a class="review-img" photo-viewer items="[item.commentable]" index="0">
           <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.photo_url.medium}}">
         </a>
 
@@ -70,11 +126,32 @@
           <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
 
 
-        </div>
+        </div> -->
       </div>
 
       <div ng-switch-when="App\SpotPhoto">
-        <a class="review-img" photo-viewer items="[item.commentable]" index="0">
+
+          <div class="wall-item wall-item-messages">
+              <div class="wall-user">
+                  <a photo-viewer items="[item.commentable]" index="0" class="wall-avatar">
+                      <img ng-src="{{item.commentable.photo_url.medium}}">
+                  </a>
+                  <div class="wall-user-info">
+                      <a ui-sref="spot({user_id: item.commentable.user_id || 0, spot_id: item.commentable.id})">
+                          <span>{{item.commentable.title}}</span>
+                      </a>
+                      <p>{{item.created_at | toTimezone}}</p>
+                  </div>
+              </div>
+              <div class="wall-content">
+                  <div class="wall-message">
+                      <p ng-bind-html="item.body | linky:'_blank'" class="color-link"></p>
+                      <attachments items="item.attachments"></attachments>
+                  </div>
+              </div>
+          </div>
+
+        <!-- <a class="review-img" photo-viewer items="[item.commentable]" index="0">
           <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.commentable.photo_url.medium}}">
         </a>
 
@@ -88,7 +165,7 @@
           <p class="description" ng-bind-html="item.body | linky:'_blank'"></p>
 
 
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
