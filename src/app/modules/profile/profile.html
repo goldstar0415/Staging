@@ -6,22 +6,17 @@
     <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()" maxlength="5000"></ng-input>
 
     <div infinite-scroll="Profile.pagination.nextPage()" infinite-scroll-disabled="Profile.pagination.busy" class="clearfix" infinite-scroll-distance="1">
-        <div ng-repeat="post in Profile.wall.data" class="wall">
+        <div ng-repeat="post in Profile.wall.data" class="wall-item">
             <div class="wall-user">
                 <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})" class="wall-avatar">
                     <img ng-src="{{post.sender.avatar_url.thumb}}">
                 </a>
                 <div class="wall-user-info">
                     <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">
-                        <span>{{post.sender.first_name}}</span>
-                        <br>
-                        <span>{{post.sender.last_name}}</span>
+                        <span>{{post.sender.first_name}} {{post.sender.last_name}}</span>
                     </a>
                     <p>{{post.created_at | fromNow}}</p>
                 </div>
-            </div>
-            <div class="wall-line wall-line-left">
-                <span></span>
             </div>
             <div class="wall-content">
                 <div class="wall-message">

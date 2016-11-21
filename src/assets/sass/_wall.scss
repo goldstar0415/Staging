@@ -1,4 +1,4 @@
-.wall {
+.wall-item {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,15 +6,34 @@
     min-height: 120px;
     width: 100%;
     border-top: 1px solid #e9edf0;
-    padding: 10px 20px;
+    border-bottom: 1px solid #e9edf0;
+    // padding: 10px 20px;
+    @media(max-width: 767px) {
+        flex-direction: column;
+    }
     .wall-user {
-        flex: 3 0 0;
         height: 100%;
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        img {
-            border-radius: 100%;
+        padding: 10px 20px;
+        @media(min-width: 768px) {
+            flex: 3 0 0;
+        }
+        @media(max-width: 767px) {
+            align-self: flex-start;
+            width: 100%;
+            height: 50px;
+            margin: 10px 0;
+        }
+        & > a {
+            @media(max-width: 767px) {
+                height: 50px;
+            }
+            img {
+                border-radius: 100%;
+                height: 100%;
+            }
         }
         .wall-user-info {
             display: flex;
@@ -26,6 +45,11 @@
                 font-weight: bold;
                 color: $dark_blue;
                 font-size: 18px;
+                span {
+                    @media(min-width: 768px) {
+                        word-spacing: 1000px;
+                    }
+                }
             }
             p {
                 margin: 0;
@@ -34,43 +58,123 @@
             }
         }
     }
-    .wall-line {
-        flex: 30px 0 0;
-        align-self: stretch;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-right: 20px;
-        span {
-            align-self: stretch;
-            width: 1px;
-            border-left: 1px solid #e9edf0;
-            &:after {
-                content: "";
-                position: absolute;
-                width: 20px;
-                height: 20px;
-                border-left: 1px solid #e9edf0;
-                border-bottom: 1px solid #e9edf0;
-                background-color: white;
-                transform: rotate(45deg);
-                top: calc(50% - 28.8px / 2);
-                left: 15%;
-            }
-        }
-    }
+    // .wall-line {
+    //     align-self: stretch;
+    //     position: relative;
+    //     display: flex;
+    //     justify-content: center;
+    //     align-items: center;
+    //     margin-right: 20px;
+    //     @media(min-width: 768px) {
+    //         flex: 30px 0 0;
+    //     }
+    //     span {
+    //         align-self: stretch;
+    //         width: 1px;
+    //         border-left: 1px solid #e9edf0;
+    //         &:after {
+    //             content: "";
+    //             position: absolute;
+    //             width: 20px;
+    //             height: 20px;
+    //             border-left: 1px solid #e9edf0;
+    //             border-bottom: 1px solid #e9edf0;
+    //             background-color: white;
+    //             transform: rotate(45deg);
+    //             top: calc(50% - 28.8px / 2);
+    //             left: 15%;
+    //         }
+    //     }
+    //     @media(max-width: 767px) {
+    //         margin-right: 0;
+    //         margin: 20px 0;
+    //         span {
+    //             width: 100%;
+    //             height: 1px;
+    //             border-left: none;
+    //             border-top: 1px solid #e9edf0;
+    //             &:after {
+    //                 border-right: 1px solid #e9edf0;
+    //                 border-left: none;
+    //                 bottom: 0px;
+    //                 top: -10px;
+    //                 left: calc(50% - 28.8px / 2);
+    //             }
+    //         }
+    //     }
+    // }
     .wall-content {
-        flex: 5 0 0;
         align-self: stretch;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-items: flex-start;
+        background-color: whitesmoke;
+        padding: 10px 20px;
+        position: relative;
+        &:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: whitesmoke;
+            transform: rotate(45deg);
+            top: calc(50% - 10px);
+            left: -10px;
+            @media(max-width: 767px) {
+                border-right: 1px solid #e9edf0;
+                border-left: none;
+                bottom: 0px;
+                top: -10px;
+                left: calc(50% - 10px);
+            }
+        }
+        @media(min-width: 768px) {
+            flex: 5 0 0;
+        }
         .wall-buttons {
             align-self: flex-end;
             .like {
                 padding-left: 4rem;
+            }
+        }
+    }
+}
+
+.wall-item-messages {
+    .wall-content {
+        justify-content: center;
+    }
+}
+
+.wall-item-chat {
+    .wall-buttons {
+        visibility: hidden;
+    }
+    &:hover {
+        .wall-buttons {
+            visibility: visible;
+        }
+    }
+}
+
+.wall-item-right {
+    flex-direction: row-reverse;
+    @media(max-width: 767px) {
+        flex-direction: column;
+        .wall-user {
+            flex-direction: row-reverse;
+            .wall-user-info {
+                margin: 0 20px 0 0;
+                text-align: right;
+            }
+        }
+    }
+    @media(min-width: 768px) {
+        .wall-content {
+            &:after {
+                left: auto;
+                right: -10px;
             }
         }
     }
