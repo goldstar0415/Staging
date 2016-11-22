@@ -542,7 +542,6 @@
         abstract: true,
         resolve: {
           user: function ($rootScope, User, currentUser, $stateParams, UserService) {
-            console.log($stateParams);
             if (currentUser && (currentUser.id == $stateParams.user_id || currentUser.alias == $stateParams.user_id)) {
               return User.currentUser({}, function (user) {
                 $rootScope.currentUser = user;

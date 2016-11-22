@@ -41,8 +41,38 @@ header {
             width: 100%;
             position: relative;
 
-            .nav-search {
+            .twitter-typeahead {
                 width: 100%;
+                .nav-search {
+                    width: 100% !important;
+                    background-color: #fff;
+                }
+                .tt-menu {
+                    background-color: #fff;
+                    border: 1px solid rgba(0, 0, 0, 0.2);
+                    border-radius: 8px;
+                    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                    margin: 12px 0;
+                    padding: 8px 0;
+                    width: 100%;
+                    .tt-suggestion {
+                        font-size: 18px;
+                        line-height: 24px;
+                        padding: 3px 20px;
+                        &:hover {
+                            background-color: #0097cf;
+                            color: #fff;
+                            cursor: pointer;
+                        }
+                        &.tt-cursor {
+                            background-color: #0097cf;
+                            color: #fff;
+                        }
+                        .group-title {
+                            float: right;
+                        }
+                    }
+                }
             }
 
             button {
