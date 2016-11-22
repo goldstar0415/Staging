@@ -95,7 +95,7 @@ class SearchController extends Controller
         //
         // suggestions
         //
-        $suggestionCount = 10;
+        /*$suggestionCount = 10;
         $q->similar = [];
         $allFound = true;
         foreach ($q->words as $wordNum => $w) {
@@ -142,7 +142,7 @@ class SearchController extends Controller
                 //$q->similar[$index] = $q->similar[$index] . " {$word}({$weight})";
                 $q->similar[$index] = $q->similar[$index] . " {$word}";
             }
-        }
+        }/**/
         $maxSpotsNumber = count($locationSuggestions) >= 5 ? 5 : 10 - count($locationSuggestions);
         $spotsAr = [];
         $first = true;
@@ -160,10 +160,12 @@ class SearchController extends Controller
                 break;
             }
         }
-
-        $suggestions = $allFound ? [] : $q->similar;
+        // siggestions are not being used for now, could be used when no spots found
+        // when needed the migration has to be applied
+        // CREATE MATERIALIZED VIEW mv_spots_unique_title as
+        //     select word from ts_stat('select to_tsvector(''simple'', title) from spots');
+        //$suggestions = $allFound ? [] : $q->similar;
         $out = array_merge($spotsAr, $locationSuggestions);
         return response()->json($out);
-        //return response()->json(['query' => $query, 'debug' => $debug, 'spots' => $spotsFound, 'suggestions' => $suggestions]);
     }
 }
