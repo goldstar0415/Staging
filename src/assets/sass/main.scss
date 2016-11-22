@@ -1842,3 +1842,56 @@ html {
         padding: 10px;
     }
 }
+
+.map-marker-plate {
+    pointer-events: none;
+    background-color: rgba($dark_blue, 0.9);
+    height: 64px;
+    width: 200px;
+    top: -90px;
+    position: relative;
+    .leaflet-popup-content-wrapper {
+        height: 100%;
+        padding: 7px;
+        background: none;
+        box-shadow: none;
+        .leaflet-popup-content {
+            margin: 0;
+            height: 100%;
+            // display: flex;
+            // justify-content: center;
+            // flex-wrap: wrap;
+        }
+    }
+    img {
+        position: absolute;
+        left: calc(50% - 25px);
+        top: 40px;
+    }
+    .plate-name, .plate-info {
+        color: white;
+    }
+    .plate-name {
+        font-weight: bold;
+        position: absolute;
+        top: -10px;
+        left: 10px;
+        right: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .plate-stars {
+        position: absolute;
+        top: 20px;
+        left: -20px;
+        right: 50%;
+    }
+    .plate-info {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        right: 10px;
+        text-align: right;
+    }
+}

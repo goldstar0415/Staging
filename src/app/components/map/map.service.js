@@ -156,6 +156,7 @@
               });
               marker.setIcon(icon);
               highlightMarker = marker;
+              marker.openPopup();
           }
       }
 
@@ -169,7 +170,7 @@
               highlightMarker = null;
           }
           $rootScope.highlightedSpotId = null;
-          //$rootScope.$apply();
+          spot.marker.closePopup();
       }
 
       function highlightSpotByHover(spot) {
@@ -205,31 +206,34 @@
           } else if (spot.category.type.name === 'shelter') {
               image = '../../../assets/img/markers/marker-shelter-highlighted.png';
           }
-          var icon = L.icon({
-              iconSize: [50, 50],
-              iconUrl: image,
-              className: 'spot-icon'
-          });
+            var icon = L.icon({
+                iconSize: [50, 50],
+                iconUrl: image,
+                className: 'spot-icon'
+            });
+        //   var icon = new L.HtmlIcon({
+        //       html: "<div class='map-marker-plate'><img src='" + image + "' /></div>",
+        //   });
           marker.setIcon(icon);
           highlightMarker = marker;
           if ($rootScope.isMapState()) {
               $rootScope.highlightedSpotId = spot.id || spot.spot.id || 0;
-            //   $rootScope.$apply();
           }
+          spot.marker.openPopup();
       }
 
       function detectHover(marker, spot) {
-          marker.on('mouseover', function () {
+          marker.on('mouseover', function() {
               if ($rootScope.isMapState()) {
                   $rootScope.highlightedSpotId = spot.id || spot.spot.id || 0;
                   $rootScope.$apply();
-                  highlightSpotByHover(spot);
+                  highlightSpotByHover(spot, marker);
               }
           });
-          marker.on('mouseout', function () {
+          marker.on('mouseout', function() {
               $rootScope.highlightedSpotId = null;
               $rootScope.$apply();
-              clearSpotHighlighting(spot);
+              clearSpotHighlighting(spot, marker);
           });
       }
 
@@ -257,19 +261,19 @@
                       features[i].getLatLng());
 
                   if (!(currentMarkerPosition.y < 0 ||
-                      currentMarkerPosition.y > mapPixelBounds.y ||
-                      currentMarkerPosition.x > mapPixelBounds.x ||
-                      currentMarkerPosition.x < 0)) {
-                          if ('_childClusters' in features[i]) {
-                              var mrkrs = features[i].getAllChildMarkers();
-                              for (var j = 0; j < mrkrs.length; j++) {
-                                  $rootScope.visibleSpotsIds.push(mrkrs[j].spot_id);
-                                  continue;
-                              }
+                          currentMarkerPosition.y > mapPixelBounds.y ||
+                          currentMarkerPosition.x > mapPixelBounds.x ||
+                          currentMarkerPosition.x < 0)) {
+                      if ('_childClusters' in features[i]) {
+                          var mrkrs = features[i].getAllChildMarkers();
+                          for (var j = 0; j < mrkrs.length; j++) {
+                              $rootScope.visibleSpotsIds.push(mrkrs[j].spot_id);
+                              continue;
                           }
-                          if (!('_ctx' in features[i])) {
-                              $rootScope.visibleSpotsIds.push(features[i].spot_id);
-                          }
+                      }
+                      if (!('_ctx' in features[i])) {
+                          $rootScope.visibleSpotsIds.push(features[i].spot_id);
+                      }
                   }
               }
               $rootScope.spotsCarousel.index = 0;
@@ -278,27 +282,27 @@
       }
 
       L.HtmlIcon = L.Icon.extend({
-      	options: {
-      		/*
-      		html: (String) (required)
-      		iconAnchor: (Point)
-      		popupAnchor: (Point)
-      		*/
-      	},
+          options: {
+              /*
+              html: (String) (required)
+              iconAnchor: (Point)
+              popupAnchor: (Point)
+              */
+          },
 
-      	initialize: function (options) {
-      		L.Util.setOptions(this, options);
-      	},
+          initialize: function(options) {
+              L.Util.setOptions(this, options);
+          },
 
-      	createIcon: function () {
-      		var div = document.createElement('div');
-      		div.innerHTML = this.options.html;
-      		return div;
-      	},
+          createIcon: function() {
+              var div = document.createElement('div');
+              div.innerHTML = this.options.html;
+              return div;
+          },
 
-      	createShadow: function () {
-      		return null;
-      	}
+          createShadow: function() {
+              return null;
+          }
       });
 
       //MAP CONTROLS
@@ -1979,6 +1983,29 @@
                 $location.path(user_id + '/spot/' + spot_id);
             }
         });
+        var scope = $rootScope.$new();
+        scope.item = spot;
+        scope.marker = marker;
+        var options = {
+          keepInView: false,
+          autoPan: true,
+          closeButton: false,
+          className: 'map-marker-plate'
+        };
+        var image = '';
+        if (spot.category.type.name === 'event') {
+            image = '../../../assets/img/markers/marker-event-highlighted.png';
+        } else if (spot.category.type.name === 'food') {
+            image = '../../../assets/img/markers/marker-food-highlighted.png';
+        } else if (spot.category.type.name === 'todo') {
+            image = '../../../assets/img/markers/marker-todo-highlighted.png';
+        } else if (spot.category.type.name === 'shelter') {
+            image = '../../../assets/img/markers/marker-shelter-highlighted.png';
+        }
+
+        var popupContent = $compile('<div><p class="plate-name">' + spot.title + '</p><p class="plate-stars"><stars item="item"></stars></p><p class="plate-info">' + spot.category.display_name + '</p><img width="50" height="50" src=' + image + ' /></div>')(scope);
+        var popup = L.popup(options).setContent(popupContent[0]);
+        marker.bindPopup(popup);
       }
 
       function _loadSpotComments(scope, spot) {
@@ -2009,7 +2036,6 @@
           closeButton: false,
           className: 'popup post-popup'
         };
-
 
         if (!$rootScope.isMobile) {
           var offset = 75;
