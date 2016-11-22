@@ -9,6 +9,7 @@ use App\Events\OnSpotRemind;
 use App\Events\OnWallMessage;
 use App\Events\UserFollowEvent;
 use App\Events\UserUnfollowEvent;
+use App\Events\UserInviteEvent;
 use App\User;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Database\Eloquent\Collection;
@@ -78,6 +79,14 @@ class MailNotifier
                 if ($following->notification_follow) {
                     $this->send($following, 'unfollow-you', [ 'sender' => $sender], $subject);
                 }
+                break;
+            case $event instanceof UserInviteEvent:
+                $sender = $event->getFeedSender();
+                $subject = 'Invitation to Zoomtivity';
+                $newUser = new User();
+                $newUser->email = $event->getEmail();
+                $_username = $sender->first_name && $sender->last_name ? "{$sender->first_name} {$sender->last_name} ({$sender->email})" : "{$sender->email}";
+                $this->send($newUser, 'invite', ['sender' => $sender, 'text' => "User {$_username} wants to invite you to Zoomtivity"], $subject);
                 break;
             case $event instanceof OnWallMessage:
                 if (!$event->isSelf()) {

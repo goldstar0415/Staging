@@ -32,7 +32,8 @@ Route::get('account/{social}', 'SocialAuthController@getAccount');
 Route::delete('account/{social}', 'SocialAuthController@deleteAccount');
 
 Route::get('unsubscribe', 'UserController@unsubscribe');
-
+Route::post('users/usersImportInfo', 'UserController@usersImportInfo');
+Route::post('users/inviteEmail', 'UserController@inviteEmail');
 /**
  * User albums
  */
@@ -52,6 +53,7 @@ Route::get('follow/{users}', 'FollowController@getFollow');
 Route::get('unfollow/{users}', 'FollowController@getUnfollow');
 Route::get('followers/{users}', 'FollowController@getFollowers');
 Route::get('followings/{users}', 'FollowController@getFollowings');
+Route::post('followings/{users}/followFacebook', 'FollowController@followFacebook');
 /**
  * Friends resource
  */

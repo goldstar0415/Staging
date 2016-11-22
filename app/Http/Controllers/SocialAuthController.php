@@ -42,6 +42,9 @@ class SocialAuthController extends Controller
     public function getAccount(Request $request, $social)
     {
         $provider = Socialite::with($social->name);
+        if ($social->name === 'facebook') {
+            $provider->scopes(['email', 'user_friends']);
+        }
 
         if ($this->isConfirmed($request)) {
             if ($error = $this->checkError($request)) {

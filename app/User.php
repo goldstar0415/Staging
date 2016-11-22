@@ -538,9 +538,8 @@ class User extends BaseModel implements
     /**
      * Get friends of the user
      */
-    public function friends()
-    {
-        return $this->hasMany(Friend::class);
+    public function friends() {
+        return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id')->withTimestamps();;
     }
 
     /*
