@@ -1,0 +1,55 @@
+<!doctype html><html ng-app="zoomtivity" ng-jq="jQuery"><head><meta charset="utf-8"><title>Zoomtivity</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta property="og:title" content="Zoomtivity"><meta property="og:image" content="/assets/img/icons/logo.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"><base href="/"><link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon"><link rel="manifest" href="/manifest.json"></head><body autoscroll="true" id="body"><!--[if lt IE 10]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+ your browser</a> to improve your experience.</p>
+<![endif]--><div class="preloader" ng-if="!pageLoaded"><div class="ferris_wheel"><div class="wheel_wrap"><div class="wheel"><span></span> <span></span> <span></span></div></div><div class="buckets"><div><span></span></div><div><span></span></div><div><span></span></div><div><span></span></div><div><span></span></div><div><span></span></div><div><span></span></div><div><span></span></div></div><div class="stand"><span></span></div></div></div><div snap-drawers=""><div snap-drawer=""><zm-side-menu side="left" ng-if="options.snap.disable == 'right'"></zm-side-menu></div><div snap-drawer="right"><zm-side-menu side="right" ng-if="options.snap.disable == 'left'"></zm-side-menu></div></div><div snap-content="" snap-options="options.snap"><zm-header options="options" ng-class="{'landing-menu-wrapper': $state.includes('intro')}"></zm-header><map-sort></map-sort><div id="map" class="mapResize map {{mapState}}" ng-class="{ 'not-index': !$root.isMapState(), 'sidebar-opened': $root.isSidebarOpened, 'filter-opened': $root.isFilterOpened }"></div><div ng-if="$root.openedSpot != null && $root.isMapState()"><spot spot="$root.openedSpot" modal="true"></spot></div><div ng-show="mapState != 'full-size'" ui-view="" ng-class="{'landing-wrapper': $state.includes('intro')}"></div><div ng-include="'/app/components/navigation/profile_menu/profile_links.html'" class="map-block" ng-if="mapState == 'full-size' || $root.isMapState()"></div></div><ng-include src="'/app/modules/intro/intro_footer.html'"></ng-include><ng-include src="'/app/components/map_partials/unregistered_banner.html'"></ng-include><ng-include src="'/app/components/ng_message_templates/error_templates.html'"></ng-include><ng-include src="'/app/components/password_reset/password_reset.html'"></ng-include><ng-include src="'/app/components/photoviewer/photoviewer.html'"></ng-include><ng-include src="'/app/components/users_modal/users_modal.html'"></ng-include><ng-include src="'/app/components/map_popups/spot_map_modal/spot_map_modal.html'"></ng-include><new-message></new-message><div class="pick-notification"><img src="assets/img/Pick_a_tool.png"></div><div class="info-layout"><p class="lay-info" data-elem=".leaflet-control .show-info">Show / Hide Info</p><p class="lay-radius" data-elem=".leaflet-control .radius-selection">Search By Radius</p><p class="lay-lasso" data-elem=".leaflet-control .lasso-selection">Draw Area</p><p class="lay-path" data-elem=".leaflet-control .path-selection">Search By Road Trip</p><p class="lay-location" data-elem=".leaflet-control .focus-geolocation">Show Your Location</p></div><script>
+  L_PREFER_CANVAS = true;  //fix leaflet screenshot
+</script><script src="scripts/app.js"></script><script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+    // Registration was successful
+    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+  }).catch(function(err) {
+    // registration failed :(
+    console.log('ServiceWorker registration failed: ', err);
+  });
+}
+</script><script>
+  //facebook
+  window.fbAsyncInit = function () {
+    FB.init({
+      appId: '742305589231590',
+      xfbml: true,
+      version: 'v2.4'
+    });
+  };
+
+  (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+      return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+</script>
+    <noscript id="deferred-styles">
+      <link rel="stylesheet" type="text/css" href="assets/css/app.css"/>
+    </noscript>
+    <script>
+      var loadDeferredStyles = function() {
+        var addStylesNode = document.getElementById("deferred-styles");
+        var replacement = document.createElement("div");
+        replacement.innerHTML = addStylesNode.textContent;
+        document.body.appendChild(replacement)
+        addStylesNode.parentElement.removeChild(addStylesNode);
+      };
+      var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+          webkitRequestAnimationFrame || msRequestAnimationFrame;
+      if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+      else window.addEventListener('load', loadDeferredStyles);
+    </script>
+</body>
+</html>
