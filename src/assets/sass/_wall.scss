@@ -90,6 +90,9 @@
                 left: calc(50% - 10px);
             }
         }
+        .wall-message {
+            width: 100%;
+        }
         @media(min-width: 768px) {
             flex: 5 0 0;
         }
