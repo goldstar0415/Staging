@@ -109,7 +109,7 @@ class BlogController extends Controller
                 'required',
                 'alpha_dash',
                 'max:255',
-                'unique:blogs,slug,' .$blog->user_id . ',user_id'
+                'unique:blogs,slug,' .$blog->id
             ]
         ]);
         if (!$validator->fails() && !is_numeric($slug)) {
