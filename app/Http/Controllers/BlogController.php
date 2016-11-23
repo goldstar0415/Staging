@@ -105,7 +105,13 @@ class BlogController extends Controller
         $blog->fill($request->only(['blog_category_id', 'title', 'body']));
 
         $slug = str_slug($blog->title);
-        $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|max:255|unique:blogs']);
+        $validator = \Validator::make(compact('slug'), ['slug' => [
+                'required',
+                'alpha_dash',
+                'max:255',
+                'unique:blogs,slug,' .$blog->user_id . ',user_id'
+            ]
+        ]);
         if (!$validator->fails() && !is_numeric($slug)) {
             $blog->slug = $slug;
         }
@@ -123,7 +129,6 @@ class BlogController extends Controller
         }
 
         $blog->save();
-
         return $blog;
     }
 
