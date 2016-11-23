@@ -35,7 +35,7 @@
                         <div class="wall-content">
                             <div class="wall-message">
                                 <p ng-bind-html="message.body | linky:'_blank'" class="color-link"></p>
-                                <attachments items="post.attachments"></attachments>
+                                <attachments items="message.attachments"></attachments>
                             </div>
                             <div class="wall-buttons">
                                 <a ng-click="ChatRoom.deleteMessage(message.id)" class="delete"></a>

@@ -1975,6 +1975,7 @@
 
       function BindSpotPopup(marker, spot) {
         var spot_id = spot.id ? spot.id : spot.spot.id;
+        var spot = spot.spot ? spot.spot : spot;
         marker.on('click', function () {
             if ($rootScope.isMapState()) {
                 $rootScope.setOpenedSpot(spot);
@@ -1993,6 +1994,7 @@
           closeButton: false,
           className: 'map-marker-plate'
         };
+
         var image = '';
         if (spot.category.type.name === 'event') {
             image = '../../../assets/img/markers/marker-event-highlighted.png';
