@@ -218,7 +218,7 @@ class BlogController extends Controller
         $sizes = getimagesize($image->move(public_path($path), $name));
 
         return [
-            'image_url' => frontend_url('api/'. $path, $name),
+            'image_url' => url($path, $name),
             'image_size'=> [
                 'width' => $sizes[0],
                 'height' => $sizes[1]
