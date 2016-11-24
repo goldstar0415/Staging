@@ -13,29 +13,9 @@ if ('serviceWorker' in navigator) {
     console.log('ServiceWorker registration failed: ', err);
   });
 }
-</script><script>
-  //facebook
-  window.fbAsyncInit = function () {
-    FB.init({
-      appId: '742305589231590',
-      xfbml: true,
-      version: 'v2.4'
-    });
-  };
-
-  (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {
-      return;
-    }
-    js = d.createElement(s);
-    js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-
 </script><script async type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAytote4odQOn_IpNkj207MXG2bF1uM2Zs"></script>
     <script>
+	window.onload = function() {
 		if (document.createStyleSheet) document.createStyleSheet('assets/css/app.css');
 		else {
 			var stylesheet = document.createElement('link');
@@ -44,6 +24,7 @@ if ('serviceWorker' in navigator) {
 			stylesheet.type = 'text/css';
 			document.getElementsByTagName('head')[0].appendChild(stylesheet);
 		}
+	}
     </script>
 </body>
 </html>
