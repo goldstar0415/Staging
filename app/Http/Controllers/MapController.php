@@ -65,31 +65,31 @@ class MapController extends Controller {
                         'spots.title',
                         DB::raw('AVG(spot_votes.vote) AS rating'),
                         'spot_points.address'
-                )->where('is_private', false)->where('is_approved', true);
+                )->where('mv_spots_spot_points.is_private', false)->where('is_approved', true);
 
         if ($request->has('search_text')) {
-            $spots->where('title_address', 'ilike', "%$request->search_text%");
+            $spots->where('mv_spots_spot_points.title_address', 'ilike', "%$request->search_text%");
         }
 
         if ($request->has('filter.category_ids')) {
-            $spots->whereIn('spot_type_category_id', $request->filter['category_ids']);
+            $spots->whereIn('mv_spots_spot_points.spot_type_category_id', $request->filter['category_ids']);
         }
 
         if ($request->has('type')) {
-            $spots->whereRaw("spot_type_category_id in (
+            $spots->whereRaw("mv_spots_spot_points.spot_type_category_id in (
 				select id from spot_type_categories where spot_type_id in (select id from spot_types WHERE name = '{$request->type}'))");
         }
 
         if ($request->has('filter.start_date')) {
-            $spots->where('start_date', '>=', $request->filter['start_date']);
+            $spots->where('mv_spots_spot_points.start_date', '>=', $request->filter['start_date']);
         } else {
             if ($request->has('type') && in_array($request->type, ['event']) and ! $request->has('filter.end_date')) {
-                $spots->where('end_date', '>', Carbon::now()->format('Y-m-d'));
+                $spots->where('mv_spots_spot_points.end_date', '>', Carbon::now()->format('Y-m-d'));
             }
         }
 
         if ($request->has('filter.end_date')) {
-            $spots->where('end_date', '<=', $request->filter['end_date'] . ' 23:59:59');
+            $spots->where('mv_spots_spot_points.end_date', '<=', $request->filter['end_date'] . ' 23:59:59');
         }
 
         if ($request->has('filter.tags') && !empty($request->filter['tags'])) {
