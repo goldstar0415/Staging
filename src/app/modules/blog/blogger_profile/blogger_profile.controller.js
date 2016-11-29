@@ -22,7 +22,7 @@
          */
         function removePost(post, idx) {
             dialogs.confirm('Confirmation', 'Are you sure you want to delete post?').result.then(function () {
-                Post.delete({id: post.slug},
+                Post.delete({id: post.slug || post.id},
                     function () {
                         toastr.info('Spot successfully deleted');
                         vm.posts.splice(idx, 1);

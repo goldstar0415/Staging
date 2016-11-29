@@ -1,174 +1,387 @@
 //map styles
+
 .map {
-  position: relative;
-  top: 70px;
-  z-index: 0;
-  width: 100%;
+    position: relative;
+    top: 70px;
+    z-index: 0;
+    width: 100%;
 }
 
 .map.full-size {
-  position: absolute;
-  height: calc(100% - 130px);
+    position: absolute;
+    height: calc(100vh - 100px);
+    top: 50px;
+    width: calc(100vw - 70px);
+    @media (max-width: 767px) {
+        height: calc(100vh - 50px);
+        top: 50px;
+        width: 100vw;
+    }
 }
 
 .hide-tools {
-  display: none!important;
+    display: none !important;
 }
 
 .map.small-size {
-  height: 400px;
-  top: 0;
+    height: calc(100vh - 100px);
+    top: 50px;
+    width: calc(100vw - 540px);
+    @media (max-width: 767px) and (orientation: portrait) {
+        height: calc(60vh - 50px);
+        width: 100vw;
+    }
+    @media (max-width: 767px) and (orientation: landscape) {
+        height: calc(100vh - 50px);
+        width: 50vw;
+    }
+}
+
+.map.small-size.sidebar-opened, .map.full-size.sidebar-opened {
+    @media (max-width: 767px) {
+        top: 0;
+    }
+}
+
+.map.small-size.sidebar-opened {
+    @media (min-width: 768px) and (orientation: portrait) {
+        height: calc(100vh - 428px);
+        width: calc(100vw - 70px);
+    }
+}
+
+.map.small-size.not-index {
+    height: calc(60vh - 50px);
+    top: 50px;
+    width: 100%;
+}
+
+.map.full-size.not-index {
+    height: calc(100vh - 100px);
+    top: 50px;
+    width: 100%;
 }
 
 .map.hidden {
-  height: 0;
+    height: 0;
 }
 
 .map-tools {
-  height: 50px;
-  width: 50px;
-  div {
-    height: 100%;
-    width: 100%;
-    border-radius: 0;
-    cursor: pointer;
-    @include transition_bg_color;
-    &:hover {
-      @include transition_bg_color;
-    }
-  }
+    width: 50px;
 
-  .radius-selection {
-    background-image: url(../img/svg/Radius.svg);
-    background-repeat: no-repeat;
-    background-size: 40px;
-    background-position: 6px 3px;
-    background-color: $white;
-    border-bottom: 1px solid #eee;
-    &:hover, &.active {
-      background-color: rgba(0, 207, 255, .8);
-      background-image: url(../img/svg/Radius_mouseover.svg);
+    div {
+        height: 100%;
+        // height: 100%;
+        width: 100%;
+        border-radius: 0;
+        cursor: pointer;
+        @include transition_bg_color;
+
+        &:hover {
+            @include transition_bg_color;
+        }
     }
-  }
-  .lasso-selection {
-    background: url(../img/svg/Lasso.svg) ;
-    background-repeat: no-repeat;
-    background-size: 40px;
-    background-position: 6px 3px;
-    background-color: $white;
-    border-bottom: 1px solid #eee;
-    &:hover, &.active {
-      background-color: rgba(0, 207, 255, .8);
-      background-image: url(../img/svg/Lasso_mouseover.svg);
+
+    .radius-selection {
+        // background-image: url(../img/svg/Radius.svg);
+        background-repeat: no-repeat;
+        background-size: 40px;
+        background-position: 6px 3px;
+        background-color: $white;
+        // border-bottom: 1px solid #eee;
+        &.active,
+        &:hover {
+            background-color: rgba(0, 207, 255, .8);
+            //   background-image: url(../img/svg/Radius_mouseover.svg);
+        }
     }
-  }
-  .path-selection {
-    background-image: url(../img/svg/Road_icon.svg);
-    background-repeat: no-repeat;
-    background-size: 40px;
-    background-position: 6px 3px;
-    background-color: $white;
-    &:hover, &.active {
-      background-color: rgba(0, 207, 255, .8);
-      background-image: url(../img/svg/Road_icon_mouseover.svg);
+
+    .lasso-selection {
+        // background: url(../img/svg/Lasso.svg) ;
+        background-repeat: no-repeat;
+        background-size: 40px;
+        background-position: 6px 3px;
+        background-color: $white;
+        // border-bottom: 1px solid #eee;
+        &.active,
+        &:hover {
+            background-color: rgba(0, 207, 255, .8);
+            //   background-image: url(../img/svg/Lasso_mouseover.svg);
+        }
     }
-  }
-  .save-selection {
-    background: url(../img/svg/new_icons/icon_main_menu/save-selection.svg) center center no-repeat rgba(159, 173, 173, .8);
-    background-size: 24px;
-    transform: rotate(-90deg);
-    border-right: 1px solid rgba(255,255,255,0.8);
-    &:hover {
-      background-color: rgba(0, 207, 255, .8);
+
+    .path-selection {
+        // background-image: url(../img/svg/Road_icon.svg);
+        background-repeat: no-repeat;
+        background-size: 40px;
+        background-position: 6px 3px;
+        background-color: $white;
+
+        &.active,
+        &:hover {
+            background-color: rgba(0, 207, 255, .8);
+            //   background-image: url(../img/svg/Road_icon_mouseover.svg);
+        }
     }
-  }
-  .clear-selection {
-    background: url(../img/icons/sprite-top-map.png) -73px 5px no-repeat rgba(159, 173, 173, .8);
-    transform: rotate(-90deg);
-    &:hover {
-      background-color: rgba(0, 207, 255, .8);
+    // .save-selection {
+    //   background: url(../img/svg/new_icons/icon_main_menu/save-selection.svg) center center no-repeat rgba(159, 173, 173, .8);
+    //   background-size: 24px;
+    //   transform: rotate(-90deg);
+    //   border-right: 1px solid rgba(255,255,255,0.8);
+    //   &:hover {
+    //     background-color: rgba(0, 207, 255, .8);
+    //   }
+    // }
+    // .clear-selection {
+    //   background: url(../img/icons/sprite-top-map.png) -73px 5px no-repeat rgba(159, 173, 173, .8);
+    //   transform: rotate(-90deg);
+    //   &:hover {
+    //     background-color: rgba(0, 207, 255, .8);
+    //   }
+    // }
+    .share-selection {
+        background: url("../img/icons/sprite-top-map.png") 0 5px no-repeat rgba(159, 173, 173, .8);
+        transform: rotate(-90deg);
+        // border-right: 1px solid rgba(255,255,255,0.8);
+        &:hover {
+            background-color: rgba(0, 207, 255, .8);
+        }
     }
-  }
-  .share-selection {
-    background: url(../img/icons/sprite-top-map.png) 0 5px no-repeat rgba(159, 173, 173, .8);
-    transform: rotate(-90deg);
-    border-right: 1px solid rgba(255,255,255,0.8);
-    &:hover {
-      background-color: rgba(0, 207, 255, .8);
-    }
-  }
 }
 
 .leaflet-top.leaflet-right {
-  transform: rotate(90deg);
-  right: 50%;
+    // transform: rotate(90deg);
+    // right: 50%;
 }
 
 .remove-popup {
-  .leaflet-popup-content {
-    width: auto !important;
-  }
+    .leaflet-popup-content {
+        width: auto !important;
+    }
 }
+
 .leaflet-control-container {
-	.leaflet-control-zoom {
-		&.leaflet-bar a {
-			float: none !important;
-		}
-	}
-	.focus-geolocation {
-		div {
-			margin-top: 5px;
-			background-color: rgba(159, 173, 173, .8);
-			border-radius: 0;
-			color: #fff;
-			height: 40px;
-			width: 40px;
-			line-height: 40px;
-			border: 0;
-			font-weight: 100;
-			font-size: 30px;
-			text-align: center;
-			&:hover {
-				background-color: rgba(0, 207, 255, .8);
-				
-			}
-		}
-	}
+    .leaflet-control-zoom {
+        &.leaflet-bar a {
+            float: none !important;
+        }
+    }
 }
+
 .custom-map-icons {
-  // border-radius: 50%;
-  display: block;
-  overflow: hidden;
-  // background: #fff;
-  //border: 2px solid #fff;
-  //box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.35);
+    // border-radius: 50%;
+    display: block;
+    overflow: hidden;
+    // background: #fff;
+    //border: 2px solid #fff;
+    //box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.35);
 }
 
 .tools-container {
-  z-index: 10 !important;
+    z-index: 10 !important;
 }
 
-.leaflet
-&-bottom &-control {
-  margin-bottom: 0 !important;
+.leaflet &-bottom &-control {
+    margin-bottom: 0 !important;
 }
 
 .leaflet-right .map-tools-top:last-child {
-  margin-top: 0;
+    margin-top: 0;
 }
-
 
 .map-block .menu-profile {
-  position: absolute;
-  bottom: 0;
+    position: absolute;
+    bottom: 0;
 
-  .menu-offset {
-    margin-left: 8.33333%;
-  }
+    .menu-offset {
+        margin-left: 8.33333%;
+    }
+}
+// @media (max-width: 991px) {
+//   .map.small-size {
+//     height: 40%;
+//   }
+// }
+
+#body {
+    .leaflet-bottom.hide-tools {
+        // display: none !important;
+    }
+
+    .filter-opened {
+        .leaflet-control-container {
+            display: none !important;
+        }
+    }
+
+    .leaflet-control {
+        border: none;
+    }
+
+    .leaflet-left.leaflet-bottom {
+        bottom: 10px;
+        top: 10px;
+        left: 1rem !important;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        border: none;
+        height: calc(100vh - 120px);
+        max-width: 40px;
+        z-index: 999;
+        opacity: 0.8;
+    }
+
+    .leaflet-left.leaflet-top {
+        top: 10px;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        z-index: 999;
+        opacity: 0.8;
+        padding: 0 10px;
+        // display: none !important;
+        // @media (max-width: 767px) {
+        //     display: none !important;
+        // }
+        @media (max-height: 500px) {
+            top: 10px;
+            height: 40px;
+        }
+        @media (max-width: 500px) {
+            top: 10px;
+        }
+
+        .map-tools-top {
+            top: 0;
+
+            & > div {
+                @media (max-height: 500px) {
+                    height: 40px;
+                }
+            }
+            // display: flex;
+            // justify-content: center;
+            // align-items: center;
+        }
+    }
+
+    .leaflet-left.leaflet-bottom,
+    .leaflet-left.leaflet-top {
+        .focus-geolocation-container,
+        .fullscreen-container {
+            display: flex;
+            height: 100%;
+            // min-height: 50px;
+            flex-direction: column;
+            justify-content: flex-end;
+            margin: 0;
+            @media (max-height: 400px) {
+                height: calc((100vh - 220px) / 2);
+            }
+        }
+
+        .fullscreen-container {
+            justify-content: flex-start;
+        }
+
+        .focus-geolocation,
+        .map-tools,
+        .map-tools-top,
+        .map-tools-back,
+        .show-info {
+            background-color: white;
+            position: relative;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            @media (max-height: 500px) {
+                width: 40px;
+                height: 40px;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                padding: 4px;
+            }
+
+            &:hover {
+                background-color: $light_blue_btn !important;
+            }
+        }
+
+        .map-tools {
+            margin: 0;
+            background-color: white;
+            // display: block !important;
+        }
+
+        .map-tools-top, .map-tools-back {
+            margin: 0;
+            display: block;
+            top: 0px;
+            @media (max-height: 400px) {
+                order: 1;
+            }
+
+            // &.hide-tools {
+            //     display: none !important;
+            // }
+        }
+    }
+
+    .leaflet-control-zoom {
+        margin: 0;
+        display: none;
+    }
 }
 
-@media (max-width: 991px) {
-  .map.small-size {
-    height: 40%;
-  }
+.sidebar-menu-vertical.sidebar-menu-vertical-bottom {
+    // @media(max-width: 767px) {
+    //     height: 50px;
+    // }
+}
+
+.map-marker-icon-photo {
+    background-image: url('\\assets\\img\\photostack.png');
+    padding: 6px;
+    background-size: cover;
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+.map-marker-icon-friend {
+    background-image: url('\\assets\\img\\markers\\marker-empty.png');
+    padding: 2px 7px;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        height: 37px;
+        width: 36px;
+        object-fit: cover;
+        border-radius: 100%;
+    }
+}
+
+#body .map-tools-back {
+    display: none !important;
+}
+
+#body .not-index .map-tools-back {
+    display: block !important;
+}
+
+#body .not-index .map-tools-top {
+    display: none !important;
 }

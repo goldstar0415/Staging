@@ -1,6 +1,76 @@
 (function () {
   'use strict';
 
+  angular.module('zoomtivity')
+      .filter('unique', function($rootScope) {
+          return function(input) {
+              if (input) {
+                  var arr = [];
+                  var i = 0;
+                  var len = input.length;
+                  for (; i < len; i++) {
+                      if (arr.indexOf(input[i].category.name) === -1) {
+                          arr.push(input[i].category.name);
+                      }
+                  }
+                  return arr;
+              }
+              return null;
+          }
+      });
+
+  angular.module('zoomtivity')
+      .filter('getById', function($rootScope) {
+          return function(input) {
+              if (input) {
+                  var arr = [];
+                  var i = 0,
+                      len = input.length;
+                  for (; i < len; i++) {
+                      if ($rootScope.visibleSpotsIds.indexOf(input[i].id) !== -1) {
+                          arr.push(input[i]);
+                      }
+                  }
+                  return arr;
+              }
+              return null;
+          }
+      });
+
+  angular.module('zoomtivity')
+      .filter('spotsFilter', function($rootScope) {
+          return function(input) {
+              if (input) {
+                  var arr = [];
+                  var i = 0;
+                  var len = input.length;
+                  var options = $rootScope.filterOptions;
+                  for (; i < len; i++) {
+                      if (input[i].rating < options.minRating) {
+                          continue;
+                      }
+                      if (options.category.length) {
+                          if (input[i].category.name !== options.category) {
+                              continue;
+                          }
+                      }
+                      if (input[i].category.type.name === 'event' && options.dateFrom.length && options.dateTo.length) {
+                          var filterDateFrom = new Date(options.dateFrom);
+                          var filterDateTo = new Date(options.dateTo);
+                          var spotDateFrom = new Date(input[i].start_date);
+                          var spotDateTo = new Date(input[i].end_date);
+                          if (!(spotDateFrom >= filterDateFrom) || !(spotDateTo <= filterDateTo)) {
+                              continue;
+                          }
+                      }
+                      arr.push(input[i]);
+                  }
+                  return arr;
+              }
+              return null;
+          }
+      });
+
   /*
    * Directive for spot control panel
    */
@@ -16,12 +86,12 @@
       }
     });
 
-  function mapSort($rootScope, $q, MapService, $http, $timeout, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
+  function mapSort(getByIdFilter, $rootScope, $scope, $q, MapService, $http, $timeout, $window, LocationService, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
 
 	var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
     var SPOT_LIST_URL = API_URL + '/map/spots/list';
-    var SPOTS_PER_PAGE = 10;
+    var SPOTS_PER_PAGE = 1000;
     var restrictions = {
       tags: 7,
       locations: 20
@@ -48,6 +118,17 @@
     vm.loadNextSpots = loadNextSpots;
     vm.typeaheadSearch = typeaheadSearch;
     vm.typeaheadSelectLocation = typeaheadSelectLocation;
+    vm.windowWidth = getWindowSize();
+    vm.highlightSpotByHover = MapService.highlightSpotByHover;
+    vm.clearSpotHighlighting = MapService.clearSpotHighlighting;
+    vm.clearFilter = clearFilter;
+
+    $window.onresize = getWindowSize;
+    function getWindowSize(event) {
+        $timeout(function() {
+          $scope.windowWidth = $window.innerWidth;
+        });
+    }
 
     vm.searchParams = {
       typeahead: {
@@ -57,11 +138,26 @@
       tags: []
     };
 
+    function clearFilter() {
+        //console.log($rootScope.filterOptions);
+        $rootScope.filterOptions = {
+            name: '',
+            location: '',
+            isFavorited: false,
+            minRating: "0",
+            category: '',
+            tags: [],
+            dateFrom: '',
+            dateTo: ''
+        };
+    };
+
     $rootScope.doSearchMap = search;
     $rootScope.sortLayer = $rootScope.sortLayer || 'event';
     $rootScope.isDrawArea = false;
     $rootScope.mapSortFilters = $rootScope.mapSortFilters || {};
     $rootScope.toggleLayer = toggleLayer;
+    $rootScope.showMessage = showMessage;
 
     $rootScope.$on('update-map-data', onUpdateMapData);
     $rootScope.$on('clear-map-selection', onRemoveSelection);
@@ -77,7 +173,7 @@
 		vm.searchParams.search_text	= ($stateParams.searchText || '');
 		vm.searchParams.searchType	= _.isObject($stateParams.spotSearch) ? $stateParams.spotSearch.activeSpotType || 'event' : 'event';
 		vm.searchParams.rating		= _.isObject($stateParams.filter) ? $stateParams.filter.rating || null : null;
-	  
+
 		if (_.isObject($stateParams.filter)) {
 			if ($stateParams.filter.start_date) {
 				vm.searchParams.start_date = moment($stateParams.filter.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
@@ -91,7 +187,7 @@
 				});
 			}
         }
-		
+
 		if (_.isObject($stateParams.spotLocation) && $stateParams.spotLocation.lat !== undefined && $stateParams.spotLocation.lat) { // from 'intro'
 			vm.vertical = false;
 			toggleLayer(vm.searchParams.searchType, false);
@@ -118,6 +214,10 @@
 		}
 
 	}
+
+    function showMessage(type, text) {
+        toastr[type](text);
+    }
 
     /**
      * Search locations when typing - ok
@@ -192,22 +292,25 @@
         $rootScope.mapSortSpots.markers = mapSpots;
       }
 
-      $timeout(function () {
-        if ($rootScope.mapSortSpots.markers.length > 0) {
-          MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
-          if (!$rootScope.isDrawArea) {
-            MapService.FitBoundsByLayer($rootScope.sortLayer);
-          }
-        } else {
-          if ( !ignoreEmptyList ) {
-            toastr.info('0 spots found');
-          }
-          MapService.clearLayers();
-        }
-      });
-
       $rootScope.mapSortSpots.sourceSpots = _filterUniqueSpots($rootScope.mapSortSpots.markers);
-      loadNextSpots();
+      loadNextSpots(layer);
+
+      $timeout(function () {
+        // if ($rootScope.mapSortSpots.markers.length > 0) {
+        //   $rootScope.changeMapState('small', null, false);
+        //   console.log($rootScope.mapSortSpots.data);
+        //   MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
+        //   if (!$rootScope.isDrawArea) {
+        //     MapService.FitBoundsByLayer($rootScope.sortLayer);
+        //   }
+        // } else {
+        //   $rootScope.changeMapState('big');
+        //   if ( !ignoreEmptyList ) {
+        //     toastr.info('0 spots found');
+        //   }
+        //   MapService.clearLayers();
+        // }
+      });
     }
 
     function _filterUniqueSpots(array) {
@@ -219,8 +322,8 @@
     /**
      * Infinite scroll - ok
      */
-    function loadNextSpots() {
-      console.log('loadNextSpots');
+    function loadNextSpots(layer) {
+    //   console.log('loadNextSpots');
       if ($rootScope.mapSortSpots.sourceSpots && $rootScope.mapSortSpots.sourceSpots.length > 0) {
         var startIdx = $rootScope.mapSortSpots.page * SPOTS_PER_PAGE,
         endIdx = startIdx + SPOTS_PER_PAGE,
@@ -237,6 +340,22 @@
 
               $rootScope.mapSortSpots.data = _.union($rootScope.mapSortSpots.data, data);
               $rootScope.mapSortSpots.isLoading = false;
+              //////
+              if ($rootScope.mapSortSpots.markers.length > 0) {
+                MapService.highlightSpot();
+                $rootScope.changeMapState('small', null, false);
+                MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.data, layer, true);
+                if (!$rootScope.isDrawArea) {
+                  MapService.FitBoundsByLayer($rootScope.sortLayer);
+                }
+              } else {
+                $rootScope.changeMapState('big');
+                if ( !ignoreEmptyList ) {
+                  toastr.info('0 spots found');
+                }
+                MapService.clearLayers();
+              }
+              //////
             })
             .catch(function (resp) {
               $rootScope.mapSortSpots.isLoading = false;
@@ -253,7 +372,11 @@
      * @param {boolean} startSearch
      */
     function toggleLayer(layer, startSearch) {
+        $rootScope.isFilterOpened = false;
+        vm.clearFilter();
+        $rootScope.toggleSidebar(false);
 		$rootScope.sortLayer = layer;
+        vm.currentWeather = null;
 
 		if (layer == 'weather') {
 			MapService.showOtherLayers();
@@ -420,7 +543,7 @@
 				data.filter.start_date = vm.searchParams.start_date;
 			}
 		}
-	  
+
 		if (vm.searchParams.end_date) {
 			if (vm.searchParams.end_date.match(/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/)) {
 				data.filter.end_date = moment(vm.searchParams.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
@@ -428,7 +551,7 @@
 				data.filter.end_date = vm.searchParams.end_date;
 			}
 		}
-		
+
 		var categories = _.where(vm.spotCategories[$rootScope.sortLayer], {selected: true});
 		if (categories.length > 0) {
 			data.filter.category_ids = _.pluck(categories, 'id');
@@ -442,9 +565,19 @@
 			data.filter.b_boxes = bbox_array;
 			data.search_text = '';
 		}
-	  
+
 		if (bbox_array.length == 0 && !vm.searchParams.search_text) {
-			toastr.error('Enter location or draw the area');
+		    // toastr.error('Enter location or draw the area');
+            var pn = document.querySelector('.pick-notification');
+            pn.style.visibility = 'visible';
+            pn.style.opacity = '1';
+            pn.style.zIndex = '9999';
+            pn.onclick = function() {
+                var el = document.querySelector('.pick-notification');
+                pn.style = '';
+            }
+            var container = document.querySelector('.leaflet-bottom.leaflet-left');
+
 			$rootScope.mapSortFilters = {};
 			return;
 		}
@@ -462,7 +595,7 @@
 		$http.post(SEARCH_URL, data, {timeout: $rootScope.mapSortSpots.cancellerHttp.promise})
 			.success(function (spots) {
 				if (spots.length > 0) {
-				onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0, false);
+				    onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0, false);
 				} else {
 					onUpdateMapData(null, [], null, bbox_array.length > 0, false);
 				}
@@ -721,8 +854,10 @@
       vm.currentWeather.sunrise = moment(daily[0].sunriseTime * 1000).format(DATE_FORMAT.time);
       vm.currentWeather.sunset = moment(daily[0].sunsetTime * 1000).format(DATE_FORMAT.time);
       vm.currentWeather.temperature = Math.round((daily[0].temperatureMax + daily[0].temperatureMin) / 2);
+
+      $rootScope.toggleSidebar(true);
     }
-	
+
 	/**
 	 * Detect City in the Weather Panel
 	 */

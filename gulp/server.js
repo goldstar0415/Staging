@@ -41,8 +41,16 @@ function browserSyncInit(baseDir, browser) {
     //reloadOnRestart: true,
     //ghostMode: false,
     //notify: false,
-    debugInfo: false,
-    browser: browser
+    debugInfo: true,
+    browser: browser,
+    snippetOptions: {
+      rule: {
+        match: /<\/head>/i,
+        fn: function (snippet, match) {
+          return snippet + match;
+        }
+      }
+    }
   });
 }
 

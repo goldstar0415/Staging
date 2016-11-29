@@ -6,27 +6,52 @@
    */
   angular
     .module('zoomtivity')
-    .directive('share', share);
+    .factory('Share', ShareController);
 
-  /** @ngInject */
-  function share() {
-    return {
-      restrict: 'E',
-      templateUrl: '/app/components/share/share.html',
-      scope: {
-        item: '=',
-        onlyIcon: '=',
-        type: '@'
-      },
-      controller: ShareController,
-      controllerAs: 'share',
-      bindToController: true
-    };
+// /app/components/share/share.html
 
-    function ShareController($state, $location, $window) {
-      var vm = this;
-      var logo = $location.origin + '/assets/img/missing_social.png';
+    /** @ngInject */
+    function ShareController($modal, $rootScope, SignUpService, $state, $location, $window) {
+        var vm = this;
+        vm.item = null;
+        vm.type = null;
 
+        vm.openModal = openModal;
+
+        function openModal(item, type) {
+            vm.item = item;
+            vm.type = type;
+            if (!$rootScope.currentUser) {
+                SignUpService.openModal('SignUpModal.html');
+                return;
+            }
+
+            $modal.open({
+                templateUrl: '/app/components/share/share.html',
+                controller: ShareModalController,
+                controllerAs: 'modal',
+                modalClass: 'authentication',
+                resolve: {
+                    type: function() {
+                        return vm.type;
+                    },
+                    item: function() {
+                        return vm.item;
+                    }
+                }
+            });
+        };
+
+        return {
+            openModal: openModal
+        }
+    }
+
+    function ShareModalController(item, type, $modalInstance, $state, $location, $window) {
+        var vm = this;
+        vm.item = item;
+        vm.type = type;
+        //   debugger;
       switch (vm.type) {
         case 'spot':
           vm.text = vm.item.title;
@@ -45,6 +70,10 @@
           vm.picture = vm.item.cover_url.medium;
           break;
       }
+
+      vm.close = function () {
+        $modalInstance.close();
+      };
 
       //share facebook
       vm.facebook = function () {
@@ -87,6 +116,4 @@
         $window.open(urlString, 'sharer', 'toolbar=0,status=0,width=900,height=650');
       }
     }
-
-  }
 })();

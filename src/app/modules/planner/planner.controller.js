@@ -126,7 +126,7 @@
     //create marker on map
     function CreateMarker(iconUrl, title, plan_id, location) {
 
-      var icon = MapService.CreateCustomIcon(iconUrl, 'planner-icon');
+      var icon = MapService.CreateCustomIcon(iconUrl, 'planner');
       var options = {};
 
       if (icon) options.icon = icon;

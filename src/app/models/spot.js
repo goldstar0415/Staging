@@ -48,6 +48,11 @@
         method: 'POST',
         ignoreLoadingBar: true
       },
+      reviews: {
+        url: API_URL + '/spots/:id/reviews',
+        method: 'POST',
+        ignoreLoadingBar: true
+      },
       report: {
         url: API_URL + '/spots/:id/report',
         method: 'POST'

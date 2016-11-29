@@ -1,19 +1,19 @@
 <div class="main-container">
 
-  <div class="container wrap mgt25">
+  <div>
     <div class="main-blog-article-content">
 
       <!-- block with article -->
-      <div class="blog-content col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12">
+      <div class="blog-content">
         <div class="clearfix btn-back-wrapper">
-          <a ui-sref="blog" class="btn-back back btn-back-planner" title="back"></a>
+          <a ng-click="Article.back()" class="btn-back back btn-back-planner" title="back"></a>
         </div>
 
         <div class="article">
           <div class="article-wrapper">
             <div class="image-wrapper clearfix">
               <img ng-if="Article.cover_url" ng-src="{{Article.cover_url.original}}" class="article-img">
-              <span class="date-sm hidden-xs" ng-bind-html="Article.getDate(Article.created_at)"></span>
+              <span class="date-sm" ng-bind-html="Article.getDate(Article.created_at)"></span>
             </div>
             <div class="row">
               <h2 class="title-blog row">
@@ -21,37 +21,37 @@
                 {{Article.title}}
               </span>
 
-              <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right"
-                    ng-bind-html="Article.getDate(Article.created_at)"></span>
-
                 <div class="clearfix"></div>
               </h2>
             </div>
-            <div class="location-link col-xs-12">
-              <a ui-sref="index.post({slug: Article.slug})">{{Article.address}}</a>
+            <div class="location-link">
+              <a ui-sref="index.post({slug: Article.slug || article.id})">{{Article.address}}</a>
             </div>
+            <div class="clearfix"></div>
 
 
             <p class="article-description" ng-bind-html="Article.body | toTrustedHtml"></p>
 
-            <div class="row">
-              <div class="article-info col-xs-12">
-                <!-- <p class="date col-xs-12 col-sm-2">{{Article.created_at | toTimezone:'MM.DD.YYYY'}}</p> -->
+            <div class="blog-bottom-row">
 
-                <p class="col-xs-12 col-sm-4 author">Author:
-                  <a ui-sref="profile.main({user_id: Article.user.alias || Article.user.id})">
-                    {{Article.user.first_name}} {{Article.user.last_name}}
-                  </a>
-                </p>
+              <p class="author">Author:
+                <a ui-sref="profile.main({user_id: post.user.alias || post.user.id})">
+                  {{Article.user.first_name}} {{Article.user.last_name}}
+                </a>
+              </p>
 
-                <p class="col-xs-12  col-sm-4 category">Category:
-                  <a>{{Article.category.display_name}}</a>
-                </p>
+              <p class="category">Category:
+                <a>{{Article.category.display_name}}</a>
+              </p>
 
-                <p class="col-xs-12 col-sm-3 views">Views: {{Article.count_views}}</p>
-              </div>
+              <p class="views">Views: {{Article.count_views}}</p>
+
+              <p class="views">Comments: {{Article.count_comments}}</p>
+                <div>
+                    <share item="Article" class="pull-right" type="post" only-icon="true"></share>
+                </div>
+
             </div>
-            <share item="Article" type="post" only-icon="true"></share>
 
           </div>
 
@@ -60,7 +60,7 @@
       <!-- end block with article -->
 
       <!--block with comets  -->
-      <section class="col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12 comments-section">
+      <section class="comments-section">
         <div class="comments-content ng-scope">
           <ng-input message="Article.message" attachments="Article.attachments" on-submit="Article.sendComment()"
                     maxlength="5000" mobile="true"></ng-input>

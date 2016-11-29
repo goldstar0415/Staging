@@ -47,6 +47,7 @@
   -moz-border-radius: 8px;
   border-radius: 8px;
   position: relative;
+  z-index: 999;
 }
 
 .my-bloggers-profile-title {
@@ -82,11 +83,15 @@
 .article {
 
   .article-img {
-    display: block;
-    max-width: 100%;
-    max-height: 400px;
-    background-size: contain;
-    margin: 0 auto 20px;
+      display: block;
+      //float: left;
+      height: 400px;
+      min-height: 400px;
+      width: 100%;
+      border-radius:0;
+      margin-bottom: 0;
+      object-fit: cover;
+      font-family: 'object-fit: cover;';
   }
 }
 

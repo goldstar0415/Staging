@@ -200,21 +200,6 @@
         require_auth: true,
         locate: 'none'
       })
-      //Show blog location on map and show pop-up
-      .state('blog.article', {
-        url: '/article/:slug',
-        templateUrl: '/app/modules/blog/article/article.html',
-        controller: 'ArticleController',
-        controllerAs: 'Article',
-        mapState: 'hidden',
-        parent: 'main',
-        resolve: {
-          article: function (Post, $stateParams) {
-            return Post.get({id: $stateParams.slug}).$promise;
-          }
-        },
-        locate: 'none'
-      })
       .state('spot_create', {
         url: '/spot/create',
         templateUrl: '/app/modules/spot/spot_create/spot_create.html',
@@ -311,7 +296,6 @@
         mapState: 'small'
       })
 
-
       //chat
       .state('chat', {
         url: '/chat',
@@ -358,6 +342,16 @@
         require_auth: true,
         mapState: 'small'
       })
+      .state('comments', {
+        url: '/comments',
+        templateUrl: '/app/modules/comments/comments.html',
+        controller: 'CommentsController',
+        controllerAs: 'Comment',
+        parent: 'profile_menu',
+        locate: 'none',
+        require_auth: true,
+        mapState: 'small'
+      })
       .state('reviews', {
         url: '/reviews',
         templateUrl: '/app/modules/reviews/reviews.html',
@@ -368,7 +362,6 @@
         require_auth: true,
         mapState: 'small'
       })
-
 
       .state('areas', {
         url: '/areas',
@@ -549,7 +542,6 @@
         abstract: true,
         resolve: {
           user: function ($rootScope, User, currentUser, $stateParams, UserService) {
-            console.log($stateParams);
             if (currentUser && (currentUser.id == $stateParams.user_id || currentUser.alias == $stateParams.user_id)) {
               return User.currentUser({}, function (user) {
                 $rootScope.currentUser = user;
@@ -581,6 +573,21 @@
             return Post.query({user_id: $stateParams.user_id}).$promise;
           }
         }
+      })
+      //Show blog location on map and show pop-up
+      .state('blog.article', {
+        url: '/article/:slug',
+        templateUrl: '/app/modules/blog/article/article.html',
+        controller: 'ArticleController',
+        controllerAs: 'Article',
+        mapState: 'small',
+        parent: 'profile',
+        resolve: {
+          article: function (Post, $stateParams) {
+            return Post.get({id: $stateParams.slug}).$promise;
+          }
+        },
+        locate: 'none'
       })
       .state('spots', {
         url: '/spots',
