@@ -63,7 +63,7 @@ class MapController extends Controller {
                         DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 2)::float AS lat"), 
                         DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 1)::float AS lng"),
                         'spots.title',
-                        'AVG(spot_votes.vote) AS rating',
+                        DB::raw('AVG(spot_votes.vote) AS rating'),
                         'spot_points.address'
                 )->where('is_private', false)->where('is_approved', true);
 
@@ -150,9 +150,11 @@ class MapController extends Controller {
                     'lat' => $spot->lat,
                     'lng' => $spot->lng
                 ],
+                'rating' => $spot->rating,
+                'title' => $spot->title,
+                'address' => $spot->address,
                 'category_icon_url' => $iconsCache[$spot->spot_type_category_id],
                 'category_name' => $typesCache[$spot->spot_type_category_id],
-                ''
             ];
         }
         return $points;
