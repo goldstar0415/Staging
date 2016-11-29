@@ -34,7 +34,7 @@
 
     vm.postComment = postComment;
     vm.deleteComment = deleteComment;
-    
+
     $rootScope.syncSpots = {data: [vm.spot]};
     $rootScope.currentSpot = vm.spot;
 

@@ -60,7 +60,7 @@
 @import "photo_stack";
 @import "blog_popup";
 @import "media.scss";
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+@import "_fonts";
 
 @font-face {
   font-family: 'ralewaybold';
@@ -1894,4 +1894,8 @@ html {
         right: 10px;
         text-align: right;
     }
+}
+
+.comments-section .error-message div {
+    margin-top: 0;
 }
