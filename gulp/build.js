@@ -4,6 +4,7 @@ var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
 var clean = require('gulp-clean');
+var replace = require('gulp-replace');
 
 var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
@@ -64,6 +65,7 @@ gulp.task('html', ['inject', 'partials'], function () {
       conditionals: true
     }))
     .pipe(htmlFilter.restore())
+    .pipe(replace(/<script src=/g, '<script defer src='))
     .pipe(gulp.dest(path.join(conf.paths.dist, '/')))
     .pipe($.size({title: path.join(conf.paths.dist, '/'), showFiles: true}));
 });

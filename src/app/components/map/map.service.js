@@ -8,7 +8,7 @@
       console.log('MapService');
 
       var map = null;
-      var DEFAULT_MAP_LOCATION = [60.1708, 24.9375]; //Helsinki
+      var DEFAULT_MAP_LOCATION = [37.405075073242188, -96.416015625000000];
       var tilesUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
       var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-900913/{z}/{x}/{y}.png?' + (new Date()).getTime();
 
@@ -23,7 +23,8 @@
         //disableClusteringAtZoom: 8,
 		//chunkedLoading: true,
         spiderfyDistanceMultiplier: 2,
-        // disableClusteringAtZoom: 1,
+        maxClusterRadius: 8,
+        // disableClusteringAtZoom: 12,
         //spiderfyOnMaxZoom: true,
       };
       //============================================
@@ -965,7 +966,7 @@
         map.addLayer(markersLayer);
         ChangeState('big');
 
-        map.setView(DEFAULT_MAP_LOCATION, 3);
+        map.setView(DEFAULT_MAP_LOCATION, 5);
         FocusMapToCurrentLocation(12);
 
         window.map = map;
@@ -1974,6 +1975,7 @@
 
       function BindSpotPopup(marker, spot) {
         var spot_id = spot.id ? spot.id : spot.spot.id;
+        var spot = spot.spot ? spot.spot : spot;
         marker.on('click', function () {
             if ($rootScope.isMapState()) {
                 $rootScope.setOpenedSpot(spot);
@@ -1992,6 +1994,7 @@
           closeButton: false,
           className: 'map-marker-plate'
         };
+
         var image = '';
         if (spot.category.type.name === 'event') {
             image = '../../../assets/img/markers/marker-event-highlighted.png';
