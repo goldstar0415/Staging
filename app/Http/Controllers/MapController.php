@@ -119,7 +119,7 @@ class MapController extends Controller {
             }
         }
         
-        $spots->join('spot', 'spot.id', '=', 'mv_spots_spot_points.id');
+        $spots->join('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
         $spots->join('spot_votes', 'spot_votes.spot_id', '=', 'mv_spots_spot_points.id');
         $spots->join('spot_points', 'spot_points.spot_id', '=', 'mv_spots_spot_points.id');
 
