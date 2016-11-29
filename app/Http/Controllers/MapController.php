@@ -63,7 +63,7 @@ class MapController extends Controller {
                         DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 2)::float AS lat"), 
                         DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 1)::float AS lng"),
                         'spots.title',
-                        DB::raw('AVG(spot_votes.vote) AS rating'),
+                        DB::raw('votes.rate as rating'),
                         'spot_points.address'
                 )
                 ->where('mv_spots_spot_points.is_private', false)
@@ -122,7 +122,10 @@ class MapController extends Controller {
         }
         
         $spots->join('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
-        $spots->join('spot_votes', 'spot_votes.spot_id', '=', 'mv_spots_spot_points.id');
+        $spots->join(DB::raw('( select AVG(spot_votes.vote) as rate, spot_votes.spot_id as id FROM spot_votes GROUP BY id) AS votes') , function($join)
+        {
+            $join->on('votes.id', '=', 'mv_spots_spot_points.id');
+        });
         $spots->join('spot_points', 'spot_points.spot_id', '=', 'mv_spots_spot_points.id');
 
         if ($request->has('filter.path')) {
