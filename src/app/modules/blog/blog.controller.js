@@ -1,6 +1,14 @@
 (function () {
   'use strict';
 
+  angular.module('zoomtivity.filters', []).
+  filter('htmlToPlaintext', function() {
+    return function(text) {
+      return  text ? String(text).replace(/<[^>]+>/gm, '') : '';
+    };
+  }
+);
+
   angular
     .module('zoomtivity')
     .controller('BlogController', BlogController);
@@ -25,6 +33,5 @@
       var $date = moment(date);
       return $date.format('DD') + '<br/>' + $date.format('MMM');
     }
-
   }
 })();

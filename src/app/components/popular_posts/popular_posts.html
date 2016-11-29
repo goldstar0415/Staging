@@ -19,7 +19,7 @@
 
         <figcaption class="info-post col-xs-12 col-sm-8">
           <h4>
-            <a ui-sref="blog.article({slug: post.slug})">{{post.title}}</a>
+            <a ui-sref="blog.article({slug: post.slug || post.id})">{{post.title}}</a>
           </h4>
 
           <p class="description" ng-bind-html="(post.body | htmlToPlaintext:100) +  '...'"></p>

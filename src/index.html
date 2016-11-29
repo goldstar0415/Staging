@@ -13,7 +13,7 @@
   <base href="/">
 
   <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
-  
+
   <link rel="manifest" href="/manifest.json">
 
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -30,7 +30,7 @@
   <!-- endinject -->
   <!-- endbuild -->
 </head>
-<body autoscroll="true">
+<body autoscroll="true" id="body">
 <!--[if lt IE 10]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
   your browser</a> to improve your experience.</p>
@@ -75,18 +75,24 @@
   <!-- include header-->
   <zm-header options="options" ng-class="{'landing-menu-wrapper': $state.includes('intro')}"></zm-header>
 
-  <hints-popup></hints-popup>
+  <!-- <hints-popup></hints-popup> -->
 
-  <map-sort ng-if="['full-size', 'big'].indexOf(mapState) >= 0"></map-sort>
+  <!-- <map-sort ng-if="['full-size', 'big'].indexOf(mapState) >= 0"></map-sort> -->
+  <map-sort></map-sort>
 
   <!-- map container-->
-  <div id="map" class="mapResize map {{mapState}}"></div>
+  <div id="map" class="mapResize map {{mapState}}" ng-class="{ 'not-index': !$root.isMapState(), 'sidebar-opened': $root.isSidebarOpened, 'filter-opened': $root.isFilterOpened }"></div>
+
+  <!-- Opened spot -->
+  <div ng-if="$root.openedSpot != null && $root.isMapState()">
+      <spot spot="$root.openedSpot" modal="true"></spot>
+  </div>
 
   <!-- content container-->
   <div ng-show="mapState != 'full-size'" ui-view ng-class="{'landing-wrapper': $state.includes('intro')}"></div>
 
-  <div ng-include="'/app/components/navigation/profile_menu/profile_links.html'" class="map-block" ng-if="mapState == 'full-size' && currentUser"></div>
-  <div ng-include="'/app/components/navigation/profile_menu/profile_links_unauthorized.html'" class="map-block" ng-show="mapState == 'full-size' && !currentUser"></div>
+  <div ng-include="'/app/components/navigation/profile_menu/profile_links.html'" class="map-block" ng-if="mapState == 'full-size' || $root.isMapState()"></div>
+  <!-- <div ng-include="'/app/components/navigation/profile_menu/profile_links_unauthorized.html'" class="map-block" ng-if="(mapState == 'full-size' && !currentUser) || ($root.isMapState() && !currentUser)"></div> -->
 
 </div>
 
@@ -100,6 +106,19 @@
 
 <new-message></new-message>
 
+<div class="pick-notification">
+    <img src='assets/img/Pick_a_tool.png'></img>
+</div>
+
+<div class="info-layout">
+    <p class="lay-info" data-elem=".leaflet-control .show-info">Show / Hide Info</p>
+    <p class="lay-radius" data-elem=".leaflet-control .radius-selection">Search By Radius</p>
+    <p class="lay-lasso" data-elem=".leaflet-control .lasso-selection">Draw Area</p>
+    <p class="lay-path" data-elem=".leaflet-control .path-selection">Search By Road Trip</p>
+    <p class="lay-location" data-elem=".leaflet-control .focus-geolocation">Show Your Location</p>
+    <!-- <p class="lay-category" data-elem=".todo-sidebar">Select Spot Category</p>
+    <p class="lay-weather" data-elem=".weather-sidebar">Show Weather</p> -->
+</div>
 
 <script>
   L_PREFER_CANVAS = true;  //fix leaflet screenshot
@@ -110,6 +129,7 @@
 <!-- run `gulp inject` to automatically populate bower script dependencies -->
 <!-- endbower -->
 <script src="/assets/libs/jbox/jbox.min.js"></script>
+<script src="/assets/libs/screenfull/screenfull.min.js"></script>
 <!-- endbuild -->
 
 <!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->

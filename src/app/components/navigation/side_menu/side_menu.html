@@ -1,23 +1,23 @@
 <div class="{{SideMenu.side}}-menu-snap">
-  <ul ng-if="SideMenu.side == 'left'">
-    <li ng-if="SideMenu.$state.current.name != 'index'" class="map-profile side">
+  <ul>
+    <li ng-if="!$root.isMapState()" class="map-profile side">
       <a ui-sref="index" ui-sref-active="active"><span>Map</span><span class="map-icon"></span></a>
     </li>
-    <li ng-if="$root.currentUser && SideMenu.$state.current.name == 'index'" class="map-profile side">
+    <!-- <li ng-if="$root.currentUser && SideMenu.$state.current.name == 'index'" class="map-profile side">
       <a ui-sref="profile.main({user_id: $root.profileUser.alias || $root.currentUser.id})" class="user-name"><span>{{$root.currentUser.first_name}}</span>
         <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
       </a>
-    </li>
+    </li> -->
     <li ng-if="!$root.currentUser">
       <sign-in title="Sign in"></sign-in>
     </li>
-    <li class="hidden-xs hidden-sm">|</li>
+    <!-- <li class="hidden-xs hidden-sm">|</li> -->
     <li ng-if="!$root.currentUser">
       <sign-up></sign-up>
     </li>
   </ul>
 
-  <ul ng-if="$root.currentUser && SideMenu.side == 'left' && SideMenu.$state.current.name != 'index'">
+  <ul ng-if="$root.currentUser">
     <li><a ui-sref="spots({user_id: $root.currentUser.id})" ui-sref-active="active" class="spots-link">My spots</a></li>
     <li ng-if="$root.isRole($root.currentUser, 'blogger')">
       <a ui-sref="profile_blog({user_id: $root.currentUser.id})" ui-sref-active="active" class="blog-link">My blog</a>

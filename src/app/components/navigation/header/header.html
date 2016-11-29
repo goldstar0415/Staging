@@ -1,58 +1,48 @@
-<header>
-  <nav class="hidden-md hidden-lg nav-mobile">
-    <ul>
-      <li class="">
-        <a class="menu-btn pull-left" snap-toggle="left">
-          <span class="menu-icon "></span>
+<header ng-class="{ 'mobile-hidden': $root.isSidebarOpened && $root.isMapState() }">
+    <nav class="main-nav">
+        <a ui-sref="index" class="main-logo" ng-show="!Header.isSearchOpened">
+            <img class="main-logo-big" src="assets/img/icons/logo.svg" alt="logo">
+            <!-- <img class="main-logo-small" src="assets/img/svg/logo.svg" alt="logo"> -->
         </a>
-      </li>
-      <li class="logo-mini">
-        <a ui-sref="index">
-          <img src="assets/img/svg/logo.svg" alt="logo">
-        </a>
-      </li>
-      <li class="map-profile pull-right"> <!-- ng-if="Header.$state.current.name == 'index'" -->
-        <a ui-sref="index" ui-sref-active="active" class="pull-right">
-          <span class="map-icon"></span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-
-  <div class="logo hidden-sm hidden-xs">
-    <a ui-sref="index"><img src="assets/img/icons/logo.svg" alt="logo"></a>
-  </div>
-
-  <nav class="hidden-sm hidden-xs">
-    <ul>
-
-      <li class="map-profile separator-bg">
-        <a ui-sref="index" ui-sref-active="active">
-          <span class="map-icon"></span>
-        </a>
-      </li>
-      <li class="separator-bg map-profile" ng-if="$root.isRole($root.currentUser, 'admin')">
-        <a ng-href="{{Header.BACKEND_URL}}/admin" target="_blank">
-          <span>Admin</span>
-          <span class="admin-icon"></span>
-        </a>
-      </li>
-      <li ng-if="!$root.currentUser" class="separator-bg authorisation">
-        <sign-in title="Sign in"></sign-in>
-      </li>
-      <li ng-if="!$root.currentUser" class="sep">|</li>
-      <li ng-if="!$root.currentUser" class="authorisation">
-        <sign-up></sign-up>
-      </li>
-      <li ng-if="$root.currentUser" class="map-profile separator-bg">
-        <a ui-sref="profile.main({user_id: $root.currentUser.alias || $root.currentUser.id})" ui-sref-active="active" class="user-name">
-          <span>{{ $root.currentUser.first_name }}</span>
-          <span><img ng-src="{{$root.currentUser.avatar_url.thumb}}"></span>
-        </a>
-      </li>
-    </ul>
-    <a class="menu-btn" snap-toggle="right">
-      <span class="menu-icon"></span>
-    </a>
-  </nav>
+        <div class="search" ng-show="Header.isSearchOpened">
+            <input
+                    type="text"
+                    class="nav-search"
+                    name="search"
+                    placeholder="Search by location or keyword..."
+                    ng-model="Header.searchValue"
+                    ng-init="Header.initSearch()"
+                    bloodhound-remote bloodhound-remote-options="{ url: 'dsfsdf'}"
+            >
+        </div>
+        <div class="nav-right">
+            <div class="user-avatar">
+                <a class="search-button">
+                    <!-- <span>{{Header.isSearchOpened ? 'Close' : 'Search' }}</span> -->
+                    <img src="assets/img/svg/new_icons/Search.svg" alt="search" ng-click="Header.searchClick()" ng-show="!Header.isSearchOpened">
+                    <img src="assets/img/svg/cancel-button-white.svg" alt="search" ng-click="Header.searchClick()" ng-show="Header.isSearchOpened">
+                </a>
+                <a ng-href="{{Header.BACKEND_URL}}/admin" target="_blank" ng-if="$root.isRole($root.currentUser, 'admin')" class="nav-admin" ng-if="$root.currentUser" ng-class="Header.isSearchOpened ? 'mobile-hidden' : ''">
+                    <span>Admin</span>
+                    <img src="../../../../assets/img/header/admin-icon.png">
+                </a>
+                <a ui-sref="profile.main({user_id: $root.currentUser.alias || $root.currentUser.id})" ui-sref-active="active" class="user-name" ng-if="$root.currentUser" ng-class="Header.isSearchOpened ? 'mobile-hidden' : ''">
+                    <span>{{ $root.currentUser.first_name }}</span>
+                    <img ng-src="{{$root.currentUser.avatar_url.thumb}}">
+                </a>
+            </div>
+            <div class="sign-up-in" ng-if="!$root.currentUser" ng-class="Header.isSearchOpened ? 'mobile-hidden' : ''">
+                <div>
+                    <sign-up></sign-up>
+                </div>
+                <p>|</p>
+                <div>
+                    <sign-in title="Sign in"></sign-in>
+                </div>
+            </div>
+            <a class="menu-btn big-menu" snap-toggle="right" ng-class="Header.isSearchOpened ? 'mobile-hidden' : ''">
+                <span class="menu-icon "></span>
+            </a>
+        </div>
+    </nav>
 </header>

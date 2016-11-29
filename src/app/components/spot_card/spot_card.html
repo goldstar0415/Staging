@@ -1,0 +1,62 @@
+<div class="new-spot" ng-mouseleave="SpotCard.closeMenu()">
+    <div class="spot-img">
+        <div ng-if="$root.isMapState()" class="img" ng-click="$root.setOpenedSpot(SpotCard.item)">
+            <img src="{{SpotCard.image}}" alt="spot_img">
+        </div>
+        <div ng-if="!$root.isMapState()" class="img" ui-sref="spot({user_id: SpotCard.item.user_id || 0, spot_id: SpotCard.item.id})">
+            <img src="{{SpotCard.image}}" alt="spot_img">
+        </div>
+        <div class="spot-img-top">
+            <stars item="SpotCard.item"></stars>
+            <div ng-if="$root.isMapState()">
+                <a ng-if="$root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.is_favorite" class="glyphicon glyphicon-heart" ng-click="SpotCard.addToFavorite(SpotCard.item)" style="color:white"></a>
+                <a ng-if="$root.currentUser && $root.currentUser.id != SpotCard.item.user_id && SpotCard.item.is_favorite" class="glyphicon glyphicon-heart" ng-click="SpotCard.removeFromFavorite(SpotCard.item)" style="color:#EE4632"></a>
+            </div>
+            <div ng-if="SpotCard.index >= 0">
+                <span class="glyphicon glyphicon-option-vertical" ng-class="{'active' : SpotCard.isMenuOpened}" ng-click="SpotCard.toggleMenu()"></span>
+                <ul class="spot-card-dropdown" ng-show="SpotCard.isMenuOpened" ng-click="SpotCard.closeMenu()">
+                    <li ng-if="$root.currentUser.id != SpotCard.item.user_id && SpotCard.item.is_favorite" ng-click="SpotCard.unFavorite(SpotCard.item, SpotCard.index)">
+                        Unfavorite <span class="glyphicon glyphicon-heart-empty"></span>
+                    </li>
+                    <li ng-if="$root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.is_favorite" ng-click="SpotCard.addToFavorite(SpotCard.item)">
+                        Favorite <span class="glyphicon glyphicon-heart"></span>
+                    </li>
+                    <li ng-if="$root.currentUser.id == SpotCard.item.user_id || $root.isRole(currentUser, 'admin')" ui-sref="spot_edit({spot_id: SpotCard.item.id})">
+                        Edit <span class="glyphicon glyphicon-pencil"></span>
+                    </li>
+                    <li ng-if="$root.currentUser.id == SpotCard.item.user_id || $root.isRole(currentUser, 'admin')" ng-click="Spots.removeSpot(SpotCard.item, SpotCard.index);">
+                        Delete <span class="glyphicon glyphicon-trash"></span>
+                    </li>
+                    <li ng-if="!SpotCard.item.is_saved && SpotCard.item.type == 'Event'" ng-click="SpotCard.saveToCalendar(SpotCard.item)">
+                        Save <span class="glyphicon glyphicon-calendar"></span>
+                    </li>
+                    <li ng-if="SpotCard.item.is_saved && SpotCard.item.type == 'Event'" ng-click="SpotCard.removeFromCalendar(SpotCard.item)">
+                        Remove <span class="glyphicon glyphicon-calendar"></span>
+                    </li>
+                    <li ng-click="SpotCard.openShareModal(SpotCard.item, 'spot')">
+                        Share <span class="glyphicon glyphicon-share"></span>
+                    </li>
+                    <li ng-if="SpotCard.item.is_approved" ng-click="SpotCard.openInviteModal(SpotCard.item)">
+                        Invite <span class="glyphicon glyphicon-user"></span>
+                    </li>
+                    <li ng-if="SpotCard.item.type == 'Event'">
+                        <a ng-href="{{SpotCard.API_URL + '/spots/' + SpotCard.item.id + '/export'}}" target="_blank">Export to ICS</a> <span class="glyphicon glyphicon-save-file"></span>
+                    </li>
+                    <li ng-if="!SpotCard.item.user_id && !SpotCard.item.isClaimed" claim-spot="SpotCard.item">
+                        Claim listing <span class="glyphicon glyphicon-envelope"></span>
+                    </li>
+                    <li ng-if="$root.currentUser && $root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.isReported" report-spot="SpotCard.item">
+                        Report <span class="glyphicon glyphicon-exclamation-sign"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="spot-img-bottom">
+            <p class="spot-name">{{SpotCard.item.title}}</p>
+            <p class="spot-address">
+                <span class="glyphicon glyphicon-map-marker"></span>
+                <span>{{SpotCard.item.points[0].address}}</span>
+            </p>
+        </div>
+    </div>
+</div>

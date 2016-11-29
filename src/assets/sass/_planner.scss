@@ -135,3 +135,10 @@
 .comments-section .spot-post.empty {
   padding: 30px;
 }
+
+.planner-page section {
+    border: none;
+    &:first-child {
+        padding-top: 0;
+    }
+}

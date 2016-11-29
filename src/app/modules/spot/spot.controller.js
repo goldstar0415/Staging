@@ -6,25 +6,39 @@
     .controller('SpotController', SpotController);
 
   /** @ngInject */
-  function SpotController(spot, SpotService, ScrollService, SpotComment, $state, MapService, $rootScope, dialogs, API_URL) {
+  function SpotController(spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, dialogs, API_URL, InviteFriends, Share) {
 
     console.log('Spot Init');
 
     var vm = this;
     vm.API_URL = API_URL;
     vm.spot = SpotService.formatSpot(spot);
+    vm.spot.rating = vm.spot.reviews_total.total.rating;
     vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
     vm.removeFromFavorite = SpotService.removeFromFavorite;
     vm.removeSpot = removeSpot;
+    vm.setImage = setImage;
+    vm.invite = openInviteModal;
+    vm.share = openShareModal;
+
+    function openInviteModal(item) {
+        InviteFriends.openModal(item);
+    }
+
+    function openShareModal(item, type) {
+        Share.openModal(item, type);
+    }
 
     vm.postComment = postComment;
     vm.deleteComment = deleteComment;
-
+    
     $rootScope.syncSpots = {data: [vm.spot]};
     $rootScope.currentSpot = vm.spot;
+
+    vm.votes = {};
 
     vm.comments = {};
     var params = {
@@ -33,8 +47,21 @@
       spot_id: spot.id
     };
     vm.pagination = new ScrollService(SpotComment.query, vm.comments, params);
-
+    vm.reviewsPagination = new ScrollService(SpotReview.query, vm.votes, params);
     ShowMarkers([vm.spot]);
+
+    function setImage() {
+        if (vm.spot.category.type.name === 'food') {
+            if (false) {
+                return vm.spot.cover_url.original;
+            } else {
+                var imgnum = Math.floor(vm.spot.id % 33);
+                return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
+            }
+        } else {
+            return vm.spot.cover_url.original;
+        }
+    }
 
     /*
      * Delete spot

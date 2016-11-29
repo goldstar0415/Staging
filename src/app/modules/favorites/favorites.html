@@ -1,18 +1,18 @@
 <div class="text-center">
-  <h2 class="title-name nav-red">
+    <h2 class="title-name nav-red">
     {{currentUser.id == profileUser.id ? 'Favorites' : profileUser.first_name + "'s favorites"}}
   </h2>
 </div>
 
-<div infinite-scroll="Favorite.pagination.nextPage()" infinite-scroll-disabled="Favorite.pagination.busy"
-     class="clearfix" infinite-scroll-distance="1">
-  <section ng-repeat="item in Favorite.spots.data" class="border-bottom favorites-section">
+<div infinite-scroll="Favorite.pagination.nextPage()" infinite-scroll-disabled="Favorite.pagination.busy" class="profile-spots clearfix" infinite-scroll-distance="1">
+    <div spotcard class="new-result-card" ng-repeat="item in Favorite.spots.data" item="item" index="$index"></div>
+    <!-- <section ng-repeat="item in Favorite.spots.data" class="border-bottom favorites-section">
     <div class="event">
       <div class="row">
         <div class="col-md-2 col-xs-3 col-sm-4 spot-thumb">
           <figure>
             <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}"
-                 ui-sref="spot({user_id: item.user_id, spot_id: item.id})" class="img-size">
+                 ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})" class="img-size">
             <spot-type type="item.type"></spot-type>
           </figure>
 
@@ -34,7 +34,7 @@
             </ul>
           </div>
           <h2>
-            <a ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{item.title}}</a>
+            <a ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})">{{item.title}}</a>
           </h2>
 
 
@@ -48,10 +48,9 @@
 
           <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">
             <li ng-repeat="tag in item.tags"><a
-              ui-sref="spot({user_id: item.user_id, spot_id: item.id})">{{tag.name}}</a>
+              ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})">{{tag.name}}</a>
             </li>
           </ul>
-          <!--  tags -->
 
           <ul class="tools">
             <li
@@ -94,12 +93,12 @@
       </div>
 
     </div>
-  </section>
+  </section> -->
 </div>
 
 
 <preloader ng-show="Favorite.pagination.busy"></preloader>
 
 <div class="col-xs-12" ng-if="Favorite.spots.data.length == 0 && !Favorite.pagination.busy">
-  <h4 class="text-center description">No favorites yet.</h4>
+    <h4 class="text-center description">No favorites yet.</h4>
 </div>

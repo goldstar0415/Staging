@@ -6,34 +6,23 @@
    */
   angular
     .module('zoomtivity')
-    .directive('inviteFriends', inviteFriends);
-
-  /** @ngInject */
-  function inviteFriends() {
-    return {
-      restrict: 'E',
-      templateUrl: '/app/components/invite_friends/invite_friends.html',
-      scope: {
-        item: '=',
-        type: '@'
-      },
-      controller: InviteFriendsController,
-      controllerAs: 'InviteFriends',
-      bindToController: true
-    };
+    .factory('InviteFriends', InviteFriendsController);
 
     /** @ngInject */
     function InviteFriendsController($modal, $rootScope, SignUpService) {
       var vm = this;
+      vm.item = null;
+      vm.openModal = openModal;
 
-      vm.openModal = function () {
+      function openModal(item) {
+          vm.item = item;
         if (!$rootScope.currentUser) {
           SignUpService.openModal('SignUpModal.html');
           return;
         }
 
         $modal.open({
-          templateUrl: 'InviteFriendsModal.html',
+          templateUrl: '/app/components/invite_friends/invite_friends.html',
           controller: InviteFriendsModalController,
           controllerAs: 'modal',
           modalClass: 'authentication',
@@ -50,6 +39,10 @@
           }
         });
       };
+
+      return {
+          openModal: openModal
+      }
 
     }
 
@@ -96,7 +89,6 @@
         });
       }
     }
-  }
 
 })
 ();

@@ -16,12 +16,12 @@
 
     $scope.API_URL = API_URL;
     $scope.view = 'about';
-    $scope.reviewIndex = 0;
+    $scope.commentIndex = 0;
     $scope.saveToCalendar = SpotService.saveToCalendar;
     $scope.removeFromCalendar = SpotService.removeFromCalendar;
     $scope.addToFavorite = SpotService.addToFavorite;
     $scope.removeFromFavorite = SpotService.removeFromFavorite;
-    $scope.changeReview = changeReview;
+    $scope.changeComment = changeComment;
     $scope.changePhoto = changePhoto;
     $scope.isEmptyAttachments = isEmptyAttachments;
 
@@ -48,10 +48,10 @@
       });
     }
 
-    function changeReview(step) {
-      var nextIndex = $scope.reviewIndex + step;
+    function changeComment(step) {
+      var nextIndex = $scope.commentIndex + step;
       if (nextIndex >= 0 && nextIndex < $scope.data.spot.comments.length) {
-        $scope.reviewIndex = nextIndex;
+        $scope.commentIndex = nextIndex;
       }
     }
 
@@ -63,9 +63,9 @@
     }
 
     function isEmptyAttachments() {
-      var review = $scope.data.spot.comments[$scope.reviewIndex].attachments;
-      if (review) {
-        return review.spots.length == 0 && review.album_photos.length == 0 && review.areas.length == 0 && review.links.length == 0;
+      var commemnt = $scope.data.spot.comments[$scope.commentIndex].attachments;
+      if (commemnt) {
+        return commemnt.spots.length == 0 && commemnt.album_photos.length == 0 && commemnt.areas.length == 0 && commemnt.links.length == 0;
       }
     }
 

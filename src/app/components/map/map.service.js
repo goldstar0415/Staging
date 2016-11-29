@@ -3,8 +3,8 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
-		
+    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
+
       console.log('MapService');
 
       var map = null;
@@ -15,12 +15,16 @@
       var radiusSelectionLimit = 500000; // in meters
       var markersLayer = L.featureGroup();
       var drawLayer = L.featureGroup();
+      var bgLayer = L.featureGroup();
       var draggableMarkerLayer = L.featureGroup();
       var drawLayerGeoJSON;
       var controlGroup = L.featureGroup();
       var clusterOptions = {
         //disableClusteringAtZoom: 8,
-		//chunkedLoading: true
+		//chunkedLoading: true,
+        spiderfyDistanceMultiplier: 2,
+        // disableClusteringAtZoom: 1,
+        //spiderfyOnMaxZoom: true,
       };
       //============================================
       var eventsLayer = new L.MarkerClusterGroup(clusterOptions);
@@ -35,7 +39,9 @@
       var pathRouter		= L.Routing.osrmv1({geometryOnly: true});
 	  var pathRouter2		= L.Routing.mapbox(MAPBOX_API_KEY);
 	  var pathRouterFail	= 0;
-	  
+
+      var highlightMarker;
+
 		function getPathRouter() {
 			switch(pathRouterFail) {
 				case 0:
@@ -46,16 +52,258 @@
 					return pathRouter;
 			}
 		}
-		
+
 		function pathRouterFailed() {
 			pathRouterFail++;
 		}
-	  
+
       var pathSelectionStarted = false;
 
       //GEOCODING
       var GeocodingSearchUrl = '//open.mapquestapi.com/nominatim/v1/search.php?format=json&key=' + GEOCODING_KEY + '&addressdetails=1&limit=3&q=';
       var GeocodingReverseUrl = '//open.mapquestapi.com/nominatim/v1/reverse.php?format=json&key=' + GEOCODING_KEY;
+
+      function plygonFromCircle(lat, lng, radius) {
+          var d2r = Math.PI / 180; // degrees to radians
+          var r2d = 180 / Math.PI; // radians to degrees
+          var earthsradius = 60;
+          var points = 32;
+          // find the radius in lat/lon
+          var rlat = (radius / earthsradius) * r2d;
+          var rlng = rlat / Math.cos(lat * d2r);
+          var extp = [];
+          for (var i = 0; i < points + 1; i++) // one extra here makes sure we connect the
+          {
+              var theta = Math.PI * (i / (points / 2));
+              var ex = lng + (rlng * Math.cos(theta)); // center a + radius x * cos(theta)
+              var ey = lat + (rlat * Math.sin(theta)); // center b + radius y * sin(theta)
+              extp.push(new L.LatLng(ey, ex));
+          }
+          return extp;
+      }
+
+      function toggleFullScreen() {
+          var doc = window.document;
+          var docEl = doc.documentElement;
+
+          var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+          var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+          var elem = document.querySelectorAll('.show-info > img')[0];
+          if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+              requestFullScreen.call(docEl);
+              elem.src = '../../assets/img/svg/fullscreen2.svg';
+          } else {
+              cancelFullScreen.call(doc);
+              elem.src = '../../assets/img/svg/fullscreen.svg';
+          }
+      }
+
+      function removeHighlighting() {
+          if (highlightMarker) {
+              map.removeLayer(highlightMarker);
+          }
+      }
+
+      function highlightSpot() {
+          var selectedId, marker, spot;
+          selectedId = $rootScope.visibleSpotsIds[$rootScope.spotsCarousel.index];
+          if ($rootScope.mapSortSpots) {
+              var features = [];
+              features = map._getFeatures();
+              marker = $.grep(features, function(s) {
+                  return s.spot_id === selectedId;
+              })[0];
+              spot = $.grep($rootScope.mapSortSpots.data, function(s) {
+                  return s.id === selectedId;
+              })[0];
+              if (spot && !marker) {
+                  var el = document.querySelectorAll('.marker-cluster').forEach(function(mc) {
+                      mc.classList.remove('active');
+                  });
+                  for (var i = 0; i < features.length; i++) {
+                      if ('_childClusters' in features[i]) {
+                          var mrkrs = features[i].getAllChildMarkers();
+                          marker = $.grep(mrkrs, function(m) {
+                              return m.spot_id === spot.id;
+                          })[0];
+                          if (marker) {
+                              features[i]._icon.classList.add('active');
+                              break;
+                          }
+                      }
+                  }
+              }
+              if (highlightMarker && spot) {
+                  var oldIcon = CreateCustomIcon('', '', spot);
+                  highlightMarker.setIcon(oldIcon);
+              }
+          }
+          if (marker && spot) {
+              var image = '';
+              if (spot.category.type.name === 'event') {
+                  image = '../../../assets/img/markers/marker-event-highlighted.png';
+              } else if (spot.category.type.name === 'food') {
+                  image = '../../../assets/img/markers/marker-food-highlighted.png';
+              } else if (spot.category.type.name === 'todo') {
+                  image = '../../../assets/img/markers/marker-todo-highlighted.png';
+              } else if (spot.category.type.name === 'shelter') {
+                  image = '../../../assets/img/markers/marker-shelter-highlighted.png';
+              }
+              var icon = L.icon({
+                  iconSize: [50, 50],
+                  iconUrl: image,
+                  className: 'spot-icon'
+              });
+              marker.setIcon(icon);
+              highlightMarker = marker;
+              marker.openPopup();
+          }
+      }
+
+      function clearSpotHighlighting(spot) {
+          var el = document.querySelectorAll('.marker-cluster').forEach(function(mc) {
+              mc.classList.remove('active');
+          });
+          if (highlightMarker) {
+              var oldIcon = CreateCustomIcon('', '', spot);
+              highlightMarker.setIcon(oldIcon);
+              highlightMarker = null;
+          }
+          $rootScope.highlightedSpotId = null;
+          spot.marker.closePopup();
+      }
+
+      function highlightSpotByHover(spot) {
+          var el = document.querySelectorAll('.marker-cluster').forEach(function(mc) {
+              mc.classList.remove('active');
+          });
+          var features = [];
+          features = map._getFeatures();
+          var marker = $.grep(features, function(m) {
+              return m.spot_id === spot.id;
+          })[0];
+          if (!marker) {
+              for (var i = 0; i < features.length; i++) {
+                  if ('_childClusters' in features[i]) {
+                      var mrkrs = features[i].getAllChildMarkers();
+                      marker = $.grep(mrkrs, function(m) {
+                          return m.spot_id === spot.id;
+                      })[0];
+                      if (marker) {
+                          features[i]._icon.classList.add('active');
+                          break;
+                      }
+                  }
+              }
+          }
+          var image = '';
+          if (spot.category.type.name === 'event') {
+              image = '../../../assets/img/markers/marker-event-highlighted.png';
+          } else if (spot.category.type.name === 'food') {
+              image = '../../../assets/img/markers/marker-food-highlighted.png';
+          } else if (spot.category.type.name === 'todo') {
+              image = '../../../assets/img/markers/marker-todo-highlighted.png';
+          } else if (spot.category.type.name === 'shelter') {
+              image = '../../../assets/img/markers/marker-shelter-highlighted.png';
+          }
+            var icon = L.icon({
+                iconSize: [50, 50],
+                iconUrl: image,
+                className: 'spot-icon'
+            });
+        //   var icon = new L.HtmlIcon({
+        //       html: "<div class='map-marker-plate'><img src='" + image + "' /></div>",
+        //   });
+          marker.setIcon(icon);
+          highlightMarker = marker;
+          if ($rootScope.isMapState()) {
+              $rootScope.highlightedSpotId = spot.id || spot.spot.id || 0;
+          }
+          spot.marker.openPopup();
+      }
+
+      function detectHover(marker, spot) {
+          marker.on('mouseover', function() {
+              if ($rootScope.isMapState()) {
+                  $rootScope.highlightedSpotId = spot.id || spot.spot.id || 0;
+                  $rootScope.$apply();
+                  highlightSpotByHover(spot, marker);
+              }
+          });
+          marker.on('mouseout', function() {
+              $rootScope.highlightedSpotId = null;
+              $rootScope.$apply();
+              clearSpotHighlighting(spot, marker);
+          });
+      }
+
+      function spotsOnScreen() {
+          if (!$rootScope.$$phase) {
+              var _borderMarkerLayer = undefined;
+              var layerGroup = null;
+              if (typeof _borderMarkerLayer === 'undefined') {
+                  _borderMarkerLayer = new L.LayerGroup();
+              }
+              _borderMarkerLayer.clearLayers();
+
+              var features = [];
+              if (layerGroup != null) {
+                  features = layerGroup.getLayers();
+              } else {
+                  features = map._getFeatures();
+              }
+
+              var mapPixelBounds = map.getSize();
+              $rootScope.visibleSpotsIds = [];
+              for (var i = 0; i < features.length; i++) {
+
+                  var currentMarkerPosition = map.latLngToContainerPoint(
+                      features[i].getLatLng());
+
+                  if (!(currentMarkerPosition.y < 0 ||
+                          currentMarkerPosition.y > mapPixelBounds.y ||
+                          currentMarkerPosition.x > mapPixelBounds.x ||
+                          currentMarkerPosition.x < 0)) {
+                      if ('_childClusters' in features[i]) {
+                          var mrkrs = features[i].getAllChildMarkers();
+                          for (var j = 0; j < mrkrs.length; j++) {
+                              $rootScope.visibleSpotsIds.push(mrkrs[j].spot_id);
+                              continue;
+                          }
+                      }
+                      if (!('_ctx' in features[i])) {
+                          $rootScope.visibleSpotsIds.push(features[i].spot_id);
+                      }
+                  }
+              }
+              $rootScope.spotsCarousel.index = 0;
+              $rootScope.$apply();
+          }
+      }
+
+      L.HtmlIcon = L.Icon.extend({
+          options: {
+              /*
+              html: (String) (required)
+              iconAnchor: (Point)
+              popupAnchor: (Point)
+              */
+          },
+
+          initialize: function(options) {
+              L.Util.setOptions(this, options);
+          },
+
+          createIcon: function() {
+              var div = document.createElement('div');
+              div.innerHTML = this.options.html;
+              return div;
+          },
+
+          createShadow: function() {
+              return null;
+          }
+      });
 
       //MAP CONTROLS
       // Lasso controls
@@ -68,16 +316,21 @@
           }
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools');
+            var container = L.DomUtil.create('div', 'map-tools');
 
-          this.link = L.DomUtil.create('div', 'lasso-selection', container);
-          this.link.href = '#';
-          this._map = map;
+            this.link = L.DomUtil.create('div', 'lasso-selection', container);
+            var img = L.DomUtil.create('img', '', this.link);
+            img.src = "../../assets/img/svg/Lasso.svg";
+            this.link.href = '#';
+            this._map = map;
 
-          L.DomEvent.on(this.link, 'click', this._click, this);
-          return container;
+            L.DomEvent.on(this.link, 'click', this._click, this);
+            return container;
         },
+
         _click: function (e) {
+            var el = document.querySelector('.pick-notification');
+            el.style = '';
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -87,13 +340,18 @@
           L.DomEvent.stopPropagation(e);
           L.DomEvent.preventDefault(e);
           LassoSelection(function LassoCallback(points, b_box) {
-            var poly = L.polygon(points, {
-              weight: 3,
-              color: '#00CFFF',
-              opacity: 0.9,
-              fillColor: '#0C2638',
-              fillOpacity: 0.4
-            }).addTo(drawLayer);
+              L.polygon([points,[[90, -180],[90, 180],[-90, 180],[-90, -180]]], {
+                  weight: 3,
+                  color: '#00CFFF',
+                  opacity: 0.9,
+                  fillColor: '#0C2638',
+                  fillOpacity: 0.4,
+                }).addTo(bgLayer);
+
+              L.polygon(points, {
+                opacity: 0.0,
+                fill: false
+              }).addTo(drawLayer);
 
             //var popup = RemoveMarkerPopup(
             //  function () {
@@ -130,16 +388,20 @@
           }
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools');
+            var container = L.DomUtil.create('div', 'map-tools');
 
-          this.link = L.DomUtil.create('div', 'radius-selection', container);
-          this.link.href = '#';
-          this._map = map;
+            this.link = L.DomUtil.create('div', 'radius-selection', container);
+            var img = L.DomUtil.create('img', '', this.link);
+            img.src = "../../assets/img/svg/Radius.svg";
+            this.link.href = '#';
+            this._map = map;
 
-          L.DomEvent.on(this.link, 'click', this._click, this);
-          return container;
+            L.DomEvent.on(this.link, 'click', this._click, this);
+            return container;
         },
         _click: function (e) {
+            var el = document.querySelector('.pick-notification');
+            el.style = '';
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -152,11 +414,8 @@
             snapRemote.enable();
 
             var circle = L.circle(startPoing, radius, {
-              weight: 3,
-              color: '#00CFFF',
-              opacity: 0.9,
-              fillColor: '#0C2638',
-              fillOpacity: 0.4
+              opacity: 0.0,
+              fill: false,
             });
 
             //var popup = RemoveMarkerPopup(
@@ -171,14 +430,25 @@
             //
             //circle.bindPopup(popup);
 
-
             circle.addTo(drawLayer);
 
             var bboxes = GetDrawLayerBBoxes();
+
+            var rds = (bboxes[0].getNorthWest().lat - bboxes[0].getSouthWest().lat) / 2;
+            var polyCrcl = plygonFromCircle(startPoing.lat, startPoing.lng, rds)
+
+            L.polygon([polyCrcl, [[90, -180],[90, 180],[-90, 180],[-90, -180]]], {
+              weight: 3,
+              color: '#00CFFF',
+              opacity: 0.9,
+              fillColor: '#0C2638',
+              fillOpacity: 0.4
+          }).addTo(bgLayer);
+
             GetDataByBBox(bboxes);
             _activateControl(false);
           });
-		  
+
           _activateControl('.radius-selection');
         }
 
@@ -196,16 +466,20 @@
           }
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools');
+            var container = L.DomUtil.create('div', 'map-tools');
 
-          this.link = L.DomUtil.create('div', 'path-selection', container);
-          this.link.href = '#';
-          this._map = map;
+            this.link = L.DomUtil.create('div', 'path-selection', container);
+            var img = L.DomUtil.create('img', '', this.link);
+            img.src = "../../assets/img/svg/Road_icon.svg";
+            this.link.href = '#';
+            this._map = map;
 
-          L.DomEvent.on(this.link, 'click', this._click, this);
-          return container;
+            L.DomEvent.on(this.link, 'click', this._click, this);
+            return container;
         },
         _click: function (e) {
+            var el = document.querySelector('.pick-notification');
+            el.style = '';
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -262,16 +536,18 @@
       // Save selection
       L.Control.saveSelection = L.Control.extend({
         options: {
-          position: 'topright',
+          position: 'topleft',
           title: {
             'false': 'Save selection',
             'true': 'Save selection'
           }
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools map-tools-top hide-tools');
+          var container = L.DomUtil.create('div', 'map-tools-top hidden');
 
           this.link = L.DomUtil.create('div', 'save-selection', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/floppy-disk-save-file.svg";
           this.link.href = '#';
           this._map = map;
 
@@ -296,16 +572,18 @@
       // Clean selection
       L.Control.clearSelection = L.Control.extend({
         options: {
-          position: 'topright',
+          position: 'topleft',
           title: {
             'false': 'Clear selection',
             'true': 'Clear selection'
           }
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools map-tools-top hide-tools');
+          var container = L.DomUtil.create('div', 'map-tools-top hidden');
 
           this.link = L.DomUtil.create('div', 'clear-selection', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/cancel-button.svg";
           this.link.href = '#';
           this._map = map;
 
@@ -313,16 +591,23 @@
           return container;
         },
         _click: function (e) {
-          L.DomEvent.stopPropagation(e);
-          L.DomEvent.preventDefault(e);
-          ClearSelections();
-          map.closePopup();
+            if ($rootScope.$state.current.name === 'areas.preview') {
+                $location.path('/areas');
+                $rootScope.mapState = "full-size";
+            } else {
+                L.DomEvent.stopPropagation(e);
+                L.DomEvent.preventDefault(e);
+                ClearSelections();
+                map.closePopup();
 
-          cancelHttpRequest();
-          $rootScope.isDrawArea = false;
-          $rootScope.$apply();
+                cancelHttpRequest();
+                $rootScope.isDrawArea = false;
+                $rootScope.$apply();
 
-          angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
+                angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
+
+                $rootScope.toggleSidebar(false);
+            }
         }
 
       });
@@ -335,16 +620,18 @@
 	 */
 	L.Control.focusGeolocation = L.Control.extend({
 		options: {
-			position: 'topleft',
+			position: 'bottomleft',
 			title: {
 				'false': 'Save selection',
 				'true': 'Save selection'
 			}
 		},
 		onAdd: function (map) {
-			var container = L.DomUtil.create('div', 'focus-geolocation');
+			var container = L.DomUtil.create('div', 'focus-geolocation-container');
 
-			this.link = L.DomUtil.create('div', 'ion-android-locate', container);
+			this.link = L.DomUtil.create('div', 'focus-geolocation map-tools', container);
+            var img = L.DomUtil.create('img', '', this.link);
+            img.src = "../../assets/img/svg/my-location.svg";
 			this.link.href = '#';
 			this._map = map;
 
@@ -362,6 +649,182 @@
 		return new L.Control.saveSelection(options);
 	};
 
+//info
+    L.Control.showInfo = L.Control.extend({
+      options: {
+        position: 'bottomleft',
+        title: {
+          'false': 'Save selection',
+          'true': 'Save selection'
+        }
+      },
+      onAdd: function (map) {
+          var container = L.DomUtil.create('div', 'show-info-container');
+
+          this.link = L.DomUtil.create('div', 'show-info', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/fullscreen.svg";
+          this.link.href = '#';
+          this._map = map;
+
+          L.DomEvent.on(this.link, 'click', this._click, this);
+          return container;
+      },
+      _click: function (e) {
+        //   if (screenfull.enabled) {
+        //       screenfull.request();
+        //   }
+
+        //   ClearSelections();
+          //
+        //   function getElemCoords(element) {
+        //       var top = 0,
+        //           left = 0;
+        //       do {
+        //           top += element.offsetTop || 0;
+        //           left += element.offsetLeft || 0;
+        //           element = element.offsetParent;
+        //       } while (element);
+          //
+        //       return {
+        //           top: top,
+        //           left: left
+        //       };
+        //   };
+          //
+        //   function hintPosition(el) {
+        //       var coords = getElemCoords(document.querySelector(el.dataset.elem));
+        //       el.style.top = coords.top + 15 + 'px';
+        //       el.style.left = coords.left + 60 + 'px';
+        //   }
+          //
+        //   var layout = document.querySelector('.info-layout');
+        //   layout.style.display = 'block';
+        //   layout.onclick = function() {
+        //       layout.style.display = 'none';
+        //   };
+        //   var hints = document.querySelectorAll('.info-layout > p');
+        //   for (var i = 0; i < hints.length; i++) {
+        //       hintPosition(hints[i]);
+        //   }
+        //   window.onresize = function(event) {
+        //     layout.style.display = 'none';
+        //   };
+      }
+    });
+    L.Control.ShowInfo = function (options) {
+      return new L.Control.showInfo(options);
+    };
+
+//fullScreen
+    L.Control.fullScreen = L.Control.extend({
+      options: {
+        position: 'bottomleft',
+        title: {
+          'false': 'Save selection',
+          'true': 'Save selection'
+        }
+      },
+      onAdd: function (map) {
+          var container = L.DomUtil.create('div', 'fullscreen-container');
+
+          this.link = L.DomUtil.create('div', 'show-info', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          if ($rootScope.isFullScreen) {
+              img.src = "../../assets/img/svg/fullscreen2.svg";
+          } else {
+              img.src = "../../assets/img/svg/fullscreen.svg";
+          }
+          this.link.href = '#';
+          this._map = map;
+
+          L.DomEvent.on(this.link, 'click', this._click, this);
+
+          return container;
+      },
+      _click: function(e) {
+                toggleFullScreen();
+          }
+    });
+    L.Control.FullScreen = function (options) {
+      return new L.Control.fullScreen(options);
+    };
+
+//filter
+    L.Control.filter = L.Control.extend({
+        options: {
+          position: 'topleft',
+          title: {
+            'false': 'Clear selection',
+            'true': 'Clear selection'
+          }
+        },
+      onAdd: function (map) {
+          var container = L.DomUtil.create('div', 'map-tools-top hidden');
+
+          this.link = L.DomUtil.create('div', 'filter-selection', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/filter.svg";
+          this.link.href = '#';
+          this._map = map;
+
+          L.DomEvent.on(this.link, 'click', this._click, this);
+          return container;
+      },
+      _click: function (e) {
+          if ($rootScope.isSidebarOpened && $rootScope.mapSortSpots.sourceSpots.length) {
+            $rootScope.isFilterOpened = true;
+            $rootScope.$apply();
+          }
+        //   debugger;
+        //   $rootScope.getCategoryData();
+      }
+    });
+    L.Control.Filter = function (options) {
+      return new L.Control.filter(options);
+    };
+
+//back
+    L.Control.back = L.Control.extend({
+        options: {
+          position: 'topleft',
+          title: {
+            'false': 'Clear selection',
+            'true': 'Clear selection'
+          }
+        },
+      onAdd: function (map) {
+          var container = L.DomUtil.create('div', 'map-tools-back');
+
+          this.link = L.DomUtil.create('div', 'save-selection', container);
+          var img = L.DomUtil.create('img', '', this.link);
+          img.src = "../../assets/img/svg/back.svg";
+          this.link.href = '#';
+          this._map = map;
+
+          L.DomEvent.on(this.link, 'click', this._click, this);
+          return container;
+      },
+      _click: function (e) {
+          L.DomEvent.stopPropagation(e);
+          L.DomEvent.preventDefault(e);
+          ClearSelections();
+          map.closePopup();
+
+          cancelHttpRequest();
+          $rootScope.isDrawArea = false;
+          $rootScope.$apply();
+
+          angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
+
+          $rootScope.toggleSidebar(false);
+
+        $location.path('/');
+      }
+    });
+    L.Control.Back = function (options) {
+      return new L.Control.back(options);
+    };
 
       //controls
       var lassoControl = L.Control.Lasso();
@@ -369,7 +832,10 @@
       var pathControl = L.Control.Path();
       var clearSelectionControl = L.Control.ClearSelection();
       var saveSelectionControl = L.Control.SaveSelection();
+      var filter = new L.Control.filter();
 	  var focusGeolocation = new L.Control.focusGeolocation();
+      var fullScreen = new L.Control.fullScreen();
+      var back = new L.Control.back();
       //var shareSelectionControl = L.Control.ShareSelection();
 
 	  function clearPathFilter() {
@@ -472,8 +938,28 @@
           minZoom: 3
         });
 
+        L.extend(map, {
+            _getFeatures: function() {
+                var out = [];
+                for (var l in this._layers) {
+                    if (typeof this._layers[l].getLatLng !== 'undefined') {
+                        out.push(this._layers[l]);
+                    }
+                }
+                return out;
+            }
+        });
+
+        map.on('resize', spotsOnScreen, this);
+        map.on('zoomend', spotsOnScreen, this);
+        map.on('moveend', spotsOnScreen, this);
+        map.on('viewreset', spotsOnScreen, this);
+        map.on('layeradd', spotsOnScreen, this);
+        map.on('layerremove', spotsOnScreen, this);
+
         //add controls
         AddControls();
+        map.addLayer(bgLayer);
         map.addLayer(draggableMarkerLayer);
         map.addLayer(drawLayer);
         map.addLayer(markersLayer);
@@ -547,6 +1033,7 @@
 
             $rootScope.mapState = "full-size";
             map.scrollWheelZoom.enable();
+
             break;
           case "small":
             if (clear) {
@@ -554,7 +1041,7 @@
             }
 
             $rootScope.mapState = "small-size";
-            map.scrollWheelZoom.disable();
+            // map.scrollWheelZoom.disable();
             break;
           case "hidden":
             $rootScope.mapState = "hidden";
@@ -567,6 +1054,7 @@
           markersLayer.clearLayers();
           draggableMarkerLayer.clearLayers();
           drawLayer.clearLayers();
+          bgLayer.clearLayers();
         }
 
         $timeout(function () {
@@ -626,7 +1114,7 @@
         map.removeLayer(otherLayer);
         currentLayer = "food";
       }
-		
+
 		/**
 		 * If Map has the layer
 		 * @param {string} layer
@@ -653,7 +1141,7 @@
 				return false;
 			}
 		}
-		
+
       //show shelter layer on map
       function showShelterLayer(clearLayers, keepListeners) {
         if (keepListeners !== true) {
@@ -759,6 +1247,7 @@
             points.push(points[0]);
             var b_box = polyline.getBounds();
             drawLayer.removeLayer(polyline);
+            bgLayer.removeLayer(polyline);
             callback(GetConcaveHull(points), b_box);
           }
         }
@@ -810,6 +1299,7 @@
             started = false;
             var b_box = circle.getBounds();
             drawLayer.removeLayer(circle);
+            bgLayer.removeLayer(circle);
             callback(startPoint, radius, b_box);
           }
         }
@@ -822,11 +1312,12 @@
         cancelPopup;
         var showCancelPopup = true;
         var lineOptions = {};
-        lineOptions.styles = [{type: 'polygon', color: 'blue', opacity: 0.6, weight: 3, fillOpacity: 0.2}, {
-          color: 'red',
-          opacity: 1,
-          weight: 3
-        }];
+        // lineOptions.styles = [{type: 'polygon', color: 'red', opacity: 0.6, weight: 10, fillOpacity: 0.2}, {
+        //   color: 'red',
+        //   opacity: 1,
+        //   weight: 3
+        // }];
+        lineOptions.styles = [{type: 'polygon', weight: 3, color: '#00CFFF', opacity: 0.9, fillColor: '#0C2638', fillOpacity: 0.4}, {color: 'red', opacity: 1, weight: 3}];
         ClearSelectionListeners();
 
         pathSelectionStarted = true;
@@ -928,6 +1419,7 @@
 
 					if (line) {
 						drawLayer.removeLayer(line);
+                        bgLayer.removeLayer(line);
 						line.off('linetouched');
 					}
 					if (err) {
@@ -945,8 +1437,32 @@
 						simplified.geometry.coordinates.forEach(function(e) {
 							$rootScope.routeInterpolated.push({latLng: {lat: e[1], lng: e[0]}});
 						});
-				  
-						line = L.Routing.line(routes[0], lineOptions).addTo(drawLayer);
+
+						line = L.Routing.line(routes[0], lineOptions);
+                        var lastKey = line._layers[Object.keys(line._layers)[Object.keys(line._layers).length - 1]];
+                        var tmp = line._layers[Object.keys(line._layers)[Object.keys(line._layers).length - 2]];
+                        var almostLastKey = tmp._layers[Object.keys(tmp._layers)[Object.keys(tmp._layers).length - 1]];
+                        var lineLatlngs = lastKey._latlngs;
+                        var polyLatlngs = almostLastKey._latlngs;
+                        drawLayer.clearLayers();
+                        bgLayer.clearLayers();
+                        L.polygon([[[90, 180],[90, -180],[-90, -180],[-90, 180]], polyLatlngs], {
+                            weight: 3,
+                            color: '#00CFFF',
+                            opacity: 0.9,
+                            fillColor: '#0C2638',
+                            fillOpacity: 0.4,
+                        }).addTo(bgLayer);
+
+                        L.polyline(lineLatlngs, {color: 'red', smoothFactor: 1}).addTo(bgLayer);
+
+                        L.polygon(polyLatlngs, {
+                          opacity: 0.0,
+                          fill: false
+                        }).addTo(drawLayer);
+
+                        // line.addTo(drawLayer);
+
 						line.on('linetouched', function (e) {
 							function remove() {
 								for (var k in markers) {
@@ -955,6 +1471,7 @@
 									GetDataByBBox(bboxes);
 								}
 								drawLayer.removeLayer(line);
+                                bgLayer.removeLayer(line);
 								map.closePopup();
 								ClearSelectionListeners();
 							}
@@ -987,6 +1504,7 @@
 				}
 				if (line) {
 					drawLayer.removeLayer(line);
+                    bgLayer.removeLayer(line);
 					line.off('linetouched');
 				}
 			}
@@ -1026,7 +1544,7 @@
 					}
 				});
         });
-		
+
       }
 
       //remove all selection listeners
@@ -1234,13 +1752,33 @@
                 var startPoint = L.GeoJSON.coordsToLatLng(feature.geometry.coordinates);
                 var radius = feature.properties.radius;
 
+                // var circle = L.circle(startPoint, radius, {
+                //   weight: 3,
+                //   color: '#00CFFF',
+                //   opacity: 0.9,
+                //   fillColor: '#0C2638',
+                //   fillOpacity: 0.4
+                // });
+
                 var circle = L.circle(startPoint, radius, {
+                  opacity: 0.0,
+                  fill: false,
+                });
+
+                circle.addTo(drawLayer);
+
+                var bboxes = GetDrawLayerBBoxes();
+
+                var rds = (bboxes[0].getNorthWest().lat - bboxes[0].getSouthWest().lat) / 2;
+                var polyCrcl = plygonFromCircle(startPoint.lat, startPoint.lng, rds)
+
+                L.polygon([polyCrcl, [[90, -180],[90, 180],[-90, 180],[-90, -180]]], {
                   weight: 3,
                   color: '#00CFFF',
                   opacity: 0.9,
                   fillColor: '#0C2638',
                   fillOpacity: 0.4
-                });
+              }).addTo(bgLayer);
 
                 //var popup = RemoveMarkerPopup(
                 //  function () {
@@ -1258,13 +1796,18 @@
               } else {
                 _.each(feature.geometry.coordinates, function (coords) {
                   var points = L.GeoJSON.coordsToLatLngs(coords);
-
-                  var poly = L.polygon(points, {
+                  //[[[90, 180],[90, -180],[-90, -180],[-90, 180]], polyLatlngs]
+                  var poly = L.polygon([[[90, -180],[90, 180],[-90, -180],[-90, 180]], points], {
                     weight: 3,
                     color: '#00CFFF',
                     opacity: 0.9,
                     fillColor: '#0C2638',
                     fillOpacity: 0.4
+                }).addTo(bgLayer);
+
+                  var poly = L.polygon(points, {
+                    opacity: 0.0,
+                    fill: false
                   }).addTo(drawLayer);
 
                   //var popup = RemoveMarkerPopup(
@@ -1292,6 +1835,7 @@
         markersLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
+        bgLayer.clearLayers();
         eventsLayer.clearLayers();
         foodLayer.clearLayers();
         shelterLayer.clearLayers();
@@ -1315,20 +1859,26 @@
         map.removeLayer(radiusControl);
         map.removeLayer(lassoControl);
         map.removeLayer(pathControl);
+        map.removeLayer(back);
         //map.removeLayer(shareSelectionControl);
         map.removeLayer(saveSelectionControl);
         map.removeLayer(clearSelectionControl);
 		map.removeLayer(focusGeolocation);
+        map.removeLayer(fullScreen);
+        map.removeLayer(filter);
       }
 
       function AddControls() {
-        clearSelectionControl.addTo(map);
+        focusGeolocation.addTo(map);
         saveSelectionControl.addTo(map);
+        filter.addTo(map);
+        clearSelectionControl.addTo(map);
         //shareSelectionControl.addTo(map);
         pathControl.addTo(map);
         lassoControl.addTo(map);
         radiusControl.addTo(map);
-		focusGeolocation.addTo(map);
+        fullScreen.addTo(map);
+        back.addTo(map);
       }
 
       //Makers
@@ -1361,13 +1911,51 @@
         if (callback) callback();
       }
 
-      function CreateCustomIcon(iconUrl, className, iconSize) {
-        var iconSize = iconSize || [50, 50];
-        return L.icon({
-          iconSize: iconSize,
-          iconUrl: iconUrl,
-          className: className
-        });
+      function CreateCustomIcon(iconUrl, type, item) {
+          if (item) {
+              var spot = item.spot ? item.spot : item;
+              var image = '';
+              if (spot.category.type.name == 'event') {
+                  image = '../../../assets/img/markers/marker-event.png';
+              } else if (spot.category.type.name == 'food') {
+                  image = '../../../assets/img/markers/marker-food.png';
+              } else if (spot.category.type.name == 'todo') {
+                  image = '../../../assets/img/markers/marker-todo.png';
+              } else if (spot.category.type.name == 'shelter') {
+                  image = '../../../assets/img/markers/marker-shelter.png';
+              }
+              return L.icon({
+                  iconSize: [50, 50],
+                  iconUrl: image,
+                  className: 'spot-icon'
+              });
+              //   if (spot.category.type.name == 'event') {
+              //       image = '../../../assets/img/svg/Icon_Events.svg';
+              //   } else if (spot.category.type.name == 'food') {
+              //       image = '../../../assets/img/svg/Icon_Grab_Grub.svg';
+              //   } else if (spot.category.type.name == 'todo') {
+              //       image = '../../../assets/img/svg/Icon_To_do.svg';
+              //   } else if (spot.category.type.name == 'shelter') {
+              //       image = '../../../assets/img/svg/Icon_Get_a_room.svg';
+              //   }
+              //   return new L.HtmlIcon({
+              //       html : "<div class='spot-icon'><span class='spot-icon-info'>no data</span><img src='" + image + "'><div class='spot-icon-stars" + spot.rating + "'><p class='s1'></p><p class='s2'></p><p class='s3'></p><p class='s4'></p><p class='s5'></p></div></div>",
+              //   });
+          } else if (type == 'album' || type == 'photomap') {
+              return new L.HtmlIcon({
+                  html: "<div class='map-marker-icon map-marker-icon-photo'><img src='" + iconUrl + "' /></div>",
+              });
+          } else if (type == 'friends') {
+              return new L.HtmlIcon({
+                  html: "<div class='map-marker-icon map-marker-icon-friend'><img src='" + iconUrl + "' /></div>",
+              });
+          } else {
+              return L.icon({
+                  iconSize: [50, 50],
+                  iconUrl: iconUrl,
+                  className: 'custom-map-icons'
+              });
+          }
       }
 
       function BindMarkerToInput(Marker, Callback) {
@@ -1385,66 +1973,39 @@
       }
 
       function BindSpotPopup(marker, spot) {
-        var spot_id = spot.spot_id ? spot.spot_id : spot.spot.id;
-
-        if (angular.element(window).width() <= 992) {
-          marker.on('click', function () {
-            $modal.open({
-              templateUrl: 'SpotMapModal.html',
-              controller: 'SpotMapModalController',
-              controllerAs: 'SpotPopup',
-              modalClass: 'spot-mobile-modal',
-              resolve: {
-                spot: function () {
-                  return Spot.get({id: spot_id}).$promise;
-                },
-                marker: function () {
-                  return marker;
-                }
-              }
-            });
-          });
-        } else {
-          var scope = $rootScope.$new();
-          var offset = 75;
-          var options = {
-            keepInView: false,
-            autoPan: true,
-            closeButton: false,
-            className: 'popup',
-            autoPanPaddingTopLeft: L.point(offset, offset),
-            autoPanPaddingBottomRight: L.point(offset, offset)
-          };
-
-          if (spot.spot_id) {
-            delete spot.id;
-          }
-
-          scope.item = spot;
-          scope.marker = marker;
-
-		  marker.on('click', function () {
-			if (this.getPopup()) {
-				this.unbindPopup();
-			}
-			var popupContent = $compile('<spot-popup spot="item" marker="marker"></spot-popup>')(scope);
-			var popup = L.popup(options).setContent(popupContent[0]);
-			this.bindPopup(popup).openPopup();
-			  
-            scope.item.$loading = true;
-
-            var syncSpot;
-            if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: spot_id}))) {
-              _loadSpotComments(scope, syncSpot);
+        var spot_id = spot.id ? spot.id : spot.spot.id;
+        marker.on('click', function () {
+            if ($rootScope.isMapState()) {
+                $rootScope.setOpenedSpot(spot);
+                $rootScope.$apply();
             } else {
-              Spot.get({id: spot_id}, function (fullSpot) {
-                //merge photos
-                fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
-                _loadSpotComments(scope, fullSpot);
-              });
+                var user_id = spot.user_id || spot.spot.user_id || 0;
+                $location.path(user_id + '/spot/' + spot_id);
             }
-          });
+        });
+        var scope = $rootScope.$new();
+        scope.item = spot;
+        scope.marker = marker;
+        var options = {
+          keepInView: false,
+          autoPan: true,
+          closeButton: false,
+          className: 'map-marker-plate'
+        };
+        var image = '';
+        if (spot.category.type.name === 'event') {
+            image = '../../../assets/img/markers/marker-event-highlighted.png';
+        } else if (spot.category.type.name === 'food') {
+            image = '../../../assets/img/markers/marker-food-highlighted.png';
+        } else if (spot.category.type.name === 'todo') {
+            image = '../../../assets/img/markers/marker-todo-highlighted.png';
+        } else if (spot.category.type.name === 'shelter') {
+            image = '../../../assets/img/markers/marker-shelter-highlighted.png';
         }
+
+        var popupContent = $compile('<div><p class="plate-name">' + spot.title + '</p><p class="plate-stars"><stars item="item"></stars></p><p class="plate-info">' + spot.category.display_name + '</p><img width="50" height="50" src=' + image + ' /></div>')(scope);
+        var popup = L.popup(options).setContent(popupContent[0]);
+        marker.bindPopup(popup);
       }
 
       function _loadSpotComments(scope, spot) {
@@ -1475,7 +2036,6 @@
           closeButton: false,
           className: 'popup post-popup'
         };
-
 
         if (!$rootScope.isMobile) {
           var offset = 75;
@@ -1656,6 +2216,10 @@
         map.fitBounds(bounds);
       }
 
+      function FitBoundsByCoordinates(coordinates) {
+          map.fitBounds(coordinates);
+      }
+
       function FitBoundsOfCurrentLayer() {
         var layer = GetCurrentLayer();
         if (layer) {
@@ -1693,9 +2257,9 @@
         drawLayerGeoJSON = GetDrawLayerGeoJSON();
 
         if ((wp.length > 0 || drawLayerGeoJSON.features.length > 0)) {
-          angular.element('.map-tools-top').removeClass('hide-tools');
+            $rootScope.toggleSidebar(true);
         } else {
-          angular.element('.map-tools-top').addClass('hide-tools');
+            $rootScope.toggleSidebar(false);
         }
         return bboxes;
       }
@@ -1833,7 +2397,6 @@
             return result;
           });
         }
-
         return SortByRating(resultArray);
       }
 
@@ -1842,8 +2405,9 @@
           GetCurrentLayer().clearLayers();
         }
         var markers = [];
+        console.log(type);
         _.each(spots, function (item) {
-          var icon = CreateCustomIcon(item.spot.category.icon_url, 'custom-map-icons', [50, 50]);
+          var icon = CreateCustomIcon(item.spot.category.icon_url, type, item);
           if (item.location) {
             var marker = L.marker(item.location, {icon: icon});
             item.marker = marker;
@@ -1897,16 +2461,18 @@
         }
         var markers = [];
         _.each(spots, function (item) {
-          var icon = CreateCustomIcon(item.category_icon_url, 'custom-map-icons', [50, 50]);
-          if (item.location) {
-            var marker = L.marker(item.location, {icon: icon});
+          var icon = CreateCustomIcon(item.category_icon_url, type, item);
+          if (item.points[0].location) {
+            var marker = L.marker(item.points[0].location, {icon: icon});
+            L.extend(marker, {
+                spot_id: item.id
+            });
             item.marker = marker;
             BindSpotPopup(marker, item);
-
+            detectHover(marker, item);
             markers.push(marker);
           }
         });
-
         switch (type) {
           case 'food':
             foodLayer.addLayers(markers);
@@ -1939,9 +2505,74 @@
           if (item.location) {
 
             var marker = L.marker(item.location);
+
+            var scope = $rootScope.$new();
+            var offset = 75;
+            var options = {
+              keepInView: false,
+              autoPan: true,
+              closeButton: false,
+              className: 'popup blogpopup',
+              autoPanPaddingTopLeft: L.point(offset, offset),
+              autoPanPaddingBottomRight: L.point(offset, offset)
+            };
+
+            var post = {};
+            post.img = item.cover_url.medium;
+            post.title = item.title;
+            post.address = item.address;
+            post.date = item.created_at;
+            post.category = item.category.display_name;
+            post.author = item.user.first_name + ' ' + item.user.last_name;
+            post.slug = item.slug;
+
+            scope.item = post;
+            scope.marker = marker;
+
             marker.on('click', function () {
-              $state.go('blog.article', {slug: item.slug});
+              if (this.getPopup()) {
+                  this.unbindPopup();
+              }
+              var popupContent = $compile('<blogpopup post="item"></blogpopup>')(scope);
+              var popup = L.popup(options).setContent(popupContent[0]);
+              this.bindPopup(popup).openPopup();
+
+              scope.item.$loading = true;
+
+            //   var syncSpot;
+            //   if ($rootScope.syncSpots && $rootScope.syncSpots.data && (syncSpot = _.findWhere($rootScope.syncSpots.data, {id: spot_id}))) {
+            //     _loadSpotComments(scope, syncSpot);
+            //   } else {
+            //     Spot.get({id: spot_id}, function (fullSpot) {
+            //       //merge photos
+            //       fullSpot.photos = _.union(fullSpot.photos, fullSpot.comments_photos);
+            //       _loadSpotComments(scope, fullSpot);
+            //     });
+            //   }
             });
+
+
+
+
+
+
+
+
+
+
+
+
+            // var popupContent = $compile('<blogpopup></blogpopup>')(scope);
+            // marker.bindPopup(popupContent);
+            // marker.openPopup();
+            // marker.on('click', function () {
+            //     console.log(marker);
+            //     // this.link = L.DomUtil.create('div', 'clear-selection', container);
+            //     // this.link.href = '#';
+            //     // this._map = map;
+            //     // console.log(item);
+            // //   $state.go('blog.article', {slug: item.slug});
+            // });
             item.marker = marker;
 
             markers.push(marker);
@@ -1972,7 +2603,7 @@
         if (!show && hasWeather)
             map.removeLayer(map.weatherLayer);
       }
-	  
+
       return {
         Init: InitMap,
         GetMap: GetMap,
@@ -2017,6 +2648,7 @@
         FitBoundsByLayer: FitBoundsByLayer,
         FitBoundsOfCurrentLayer: FitBoundsOfCurrentLayer,
         FitBoundsOfDrawLayer: FitBoundsOfDrawLayer,
+        FitBoundsByCoordinates: FitBoundsByCoordinates,
         //get bounds based on a point
         GetBoundsByCircle: GetBoundsByCircle,
         //sorting
@@ -2036,7 +2668,13 @@
         WeatherSelection: WeatherSelection,
 
         cancelHttpRequest: cancelHttpRequest,
-		hasLayer: hasLayer
+		hasLayer: hasLayer,
+        OpenSaveSelectionsPopup: OpenSaveSelectionsPopup,
+
+        highlightSpot: highlightSpot,
+        removeHighlighting: removeHighlighting,
+        highlightSpotByHover: highlightSpotByHover,
+        clearSpotHighlighting: clearSpotHighlighting
       };
     });
 

@@ -1,3 +1,271 @@
+.location {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid lightgrey;
+    font-size: 16px;
+    @media(max-width: 450px) {
+        justify-content: center;
+    }
+    p {
+        margin: 0 10px;
+    }
+}
+
+.mobile-view {
+    display: block;
+    position: relative;
+    margin: 10px 0;
+    @media(max-width: 450px) {
+        display: block;
+    }
+    .mobile-spots {
+        display: block;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+    .mobile-filter {
+        display: block;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+    .mobile-line {
+        border-bottom: 2px solid  rgb(2, 200, 246);
+        width: 100px;
+        margin: auto;
+    }
+}
+
+.search-filters {
+    position: relative;
+    height: 100%;
+}
+
+.new-result {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    height: 100%;
+    ul {
+        width: 100%;
+        margin-bottom: 0;
+    }
+}
+
+.new-result-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.new-result-card {
+    @media (max-width: 767px) and (orientation: portrait) {
+        width: 100vw;
+    }
+    @media (max-width: 767px) and (orientation: landscape) {
+        width: 50vw;
+    }
+    @media (min-width: 768px) {
+        padding: 5px;
+        width: 50%;
+    }
+    display: flex;
+    flex-wrap: wrap;
+    &.active {
+        .spot-img-top, .spot-img-bottom {
+            background-color: rgba($light_blue_btn, .8) !important;
+        }
+    }
+    // margin: -5px;
+    .new-spot {
+        // padding: 5px;
+        width: 100%;
+        @media (max-width: 767px) and (orientation: portrait) {
+            width: 100vw;
+            padding: 0;
+            height: 40vh;
+            position: relative;
+        }
+        @media (max-width: 767px) and (orientation: landscape) {
+            width: 50vw;
+            padding: 0;
+            height: calc(100vh - 50px);
+            position: relative;
+        }
+        .spot-img {
+            position: relative;
+            height: 150px;
+            @media (max-width: 767px) {
+                height: 100%;
+            }
+            .spot-img-top, .spot-img-bottom {
+                position: absolute;
+                left: 0;
+                right: 0;
+                display: flex;
+                background-color: rgba($dark_blue, .8);
+                color: white;
+            }
+            .spot-img-top {
+                top: 0;
+                height: 30px;
+                justify-content: space-between;
+                flex-direction: row;
+                align-items: center;
+                padding: 0 10px;
+                // position: relative;
+                @media (max-width: 767px) {
+                    height: 40px;
+                    font-size: 20px;
+                }
+                .glyphicon-option-vertical.active {
+                    color: rgb(2, 200, 246);
+                }
+                .spot-card-dropdown {
+                    position: absolute;
+                    top: 30px;
+                    font-size: 14px;
+                    z-index: 100;
+                    right: 0;
+                    left: 0;
+                    text-align: right;
+                    background-color: white;
+                    color: $dark_blue;
+                    box-shadow: 2px 3px 5px 1px rgba(0,0,0,0.5);
+                    padding: 0;
+                    li {
+                        padding: 10px 10px;
+                        width: 100%;
+                        cursor: pointer;
+                        a {
+                            color: $dark_blue;
+                            transition: none;
+                        }
+                        span {
+                            padding-left: 10px;
+                        }
+                        &:hover {
+                            background-color: rgb(2, 200, 246);
+                            color: white;
+                            a {
+                                color: white;
+                            }
+                        }
+                    }
+                    @media (max-width: 767px) {
+                        top: 40px;
+                        font-size: 20px;
+                    }
+                }
+            }
+            .spot-img-bottom {
+                bottom: 0;
+                height: 40px;
+                justify-content: space-around;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 5px 10px;
+                p {
+                    margin: 0;
+                    font-weight: bold;
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    font-size: 12px;
+                }
+                .spot-address {
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    font-size: 10px;
+                    font-weight: normal;
+                    .glyphicon {
+                        color: $light_blue_btn;
+                    }
+                }
+            }
+            .img {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                position: relative;
+                height: 100%;
+                background-color: #DDDDDD;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+}
+
+.profile-spots {
+    display: flex;
+    flex-wrap: wrap;
+    .new-result-card {
+        padding: 5px;
+        @media (min-width: 768px) {
+            width: calc(100% / 3);
+        }
+        @media (max-width: 767px) {
+            width: calc(100% / 2);
+            .new-spot {
+                height: 200px;
+            }
+        }
+        @media (max-width: 400px) {
+            width: calc(100% / 1);
+        }
+    }
+}
+
+.opened-item {
+    .new-result-card {
+        padding: 0;
+        @media (min-width: 768px) {
+            margin: 0 -30px 80px -30px;
+            width: calc(100% + 60px);
+            .spot-img {
+                height: 250px;
+                .spot-img-top, .spot-img-bottom {
+                    padding: 0px 30px;
+                }
+                .spot-img-bottom {
+                    height: 60px;
+                    bottom: -80px;
+                    background-color: white;
+                    p {
+                        font-size: 16px;
+                        color: black;
+                    }
+                    .spot-address {
+                        font-size: 14px;
+                        color: black;
+                    }
+                }
+                .spot-img-top {
+                    bottom: -115px;
+                    top: auto;
+                    background-color: white;
+                }
+            }
+        }
+        @media (max-width: 767px) {
+            margin: 0 -10px;
+            width: calc(100% + 20px);
+        }
+    }
+}
+
+
 .event-result {
     padding: 15px;
     background: rgba(239, 243, 241, 0.5);
@@ -14,6 +282,7 @@
             height: 42px;
             border: 3px solid $white;
             border-radius: 30px;
+            object-fit: cover;
         }
     }
     .date {

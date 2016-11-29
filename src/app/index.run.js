@@ -6,17 +6,127 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, UploaderService, SpotService, SignInService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
+  function runBlock($log, $http, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, API_URL, UploaderService, SpotService, SignInService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
     $rootScope.$state = $state;
     $rootScope.checkPermission = PermissionService.checkPermission;
     $rootScope.isMobile = angular.element(window).width() <= 992;
     L.Icon.Default.imagePath = '/assets/libs/Leaflet/images';
     $rootScope.plannerIcon = '/assets/img/icons/planner_icon.png';
+    $rootScope.isSidebarOpened = false;
+    $rootScope.toggleSidebar = toggleSidebar;
+    $rootScope.openedSpot = null;
+    $rootScope.setOpenedSpot = setOpenedSpot;
+    $rootScope.showMarkers = showMarkers;
+    $rootScope.isFullScreen = false;
+    $rootScope.isFilterOpened = false;
+    $rootScope.visibleSpotsIds = [];
+    $rootScope.spotsCarousel = {};
+    $rootScope.spotsCarousel.index = 0;
+    $rootScope.highlightedSpotId = null;
+    $rootScope.isMapState = isMapState;
+    $rootScope.filterOptions = {
+        name: '',
+        location: '',
+        isFavorited: false,
+        minRating: "0",
+        category: '',
+        tags: [],
+        dateFrom: '',
+        dateTo: ''
+    };
+
+    $rootScope.categoryData = [];
+    $rootScope.getCategoryData = function() {
+        $rootScope.categoryData = [];
+        if ($rootScope.mapSortSpots && $rootScope.mapSortSpots.data) {
+            $rootScope.mapSortSpots.data.forEach(function(element){
+                if ($rootScope.categoryData.indexOf(element.category.name) === -1) {
+                    $rootScope.categoryData.push({id: element.category.name, label: element.category.name});
+                }
+            })
+        }
+    }
+
+    $rootScope.getCategoryData();
+
+    // $rootScope.categoryData = function() {
+    //     var spots = $rootScope.spotCategories;
+    //     debugger;
+    //     var names = [];
+    //     spots.forEach(function(element){
+    //         if (names.indexOf(element.name) === -1) {
+    //             names.push({id: element.name, label: element.name});
+    //         }
+    //     })
+    //     return names;
+    // };
+    $rootScope.example1model = [];
 
     MapService.Init('map');
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     $rootScope.$on("$stateChangeError", onStateChangeError);
+
+    $rootScope.$watch('$root.spotsCarousel.index', function() {
+        MapService.highlightSpot();
+    }, true);
+
+    function isMapState() {
+        return $rootScope.$state.current.name === 'index' || $rootScope.$state.current.name === 'areas.preview';
+    }
+
+    document.addEventListener("fullscreenchange", detectFullScreen);
+    document.addEventListener("webkitfullscreenchange", detectFullScreen);
+    document.addEventListener("mozfullscreenchange", detectFullScreen);
+    document.addEventListener("MSFullscreenChange", detectFullScreen);
+
+    function detectFullScreen() {
+        var bt = document.querySelector('.fullscreen-container img');
+        if (
+        	document.fullscreenElement ||
+        	document.webkitFullscreenElement ||
+        	document.mozFullScreenElement ||
+        	document.msFullscreenElement
+        ) {
+            $rootScope.isFullScreen = true;
+            if (bt) {
+                bt.src = "../../assets/img/svg/fullscreen2.svg"
+            }
+        } else {
+            $rootScope.isFullScreen = false;
+            if (bt) {
+                bt.src = "../../assets/img/svg/fullscreen.svg"
+            }
+        }
+    }
+
+    detectFullScreen();
+
+    function setOpenedSpot(item) {
+        $rootScope.openedSpot = item;
+    }
+
+    function toggleSidebar(isOpened) {
+        $rootScope.isSidebarOpened = isOpened;
+        if (isOpened) {
+            angular.element('.map-tools-top').removeClass('hidden');
+            angular.element('.map-tools').addClass('hidden');
+            if ($rootScope.sortLayer === 'weather' || $rootScope.$state.current.name === 'areas.preview') {
+                angular.element('.save-selection').parent().addClass('hidden');
+                angular.element('.filter-selection').parent().addClass('hidden');
+                $rootScope.mapState = "small-size";
+            } else {
+                angular.element('.save-selection').parent().removeClass('hidden');
+                angular.element('.filter-selection').parent().removeClass('hidden');
+                // $rootScope.mapState = "full-size";
+            }
+        } else {
+            // MapService.removeHighlighting();
+            angular.element('.map-tools-top').addClass('hidden');
+            angular.element('.map-tools').removeClass('hidden');
+            $rootScope.mapState = "full-size";
+        }
+    }
 
     function onStateChangeSuccess(event, current, toParams, fromState, fromParams) {
       snapRemote.getSnapper().then(function (snapper) {
@@ -82,15 +192,11 @@
 
     //make menu on left sid when small screen
     $rootScope.windowWidth = $(window).width();
+    $rootScope.options.snap.disable = "left";
     $(window).resize(_.throttle(onWindowResize, 100));
     function onWindowResize() {
       $rootScope.windowWidth = $(window).width();
       MapService.InvalidateMapSize();
-      if ($rootScope.windowWidth < 992) {
-        $rootScope.options.snap.disable = "right";
-      } else {
-        $rootScope.options.snap.disable = "left";
-      }
 	  if(!$rootScope.$$phase) {
 		$rootScope.$apply();
 	  }
@@ -140,14 +246,16 @@
     $rootScope.changeMapState = function (mapState, urlState, isClearLayers) {
       MapService.ChangeState(mapState, isClearLayers);
 
-      if (urlState.name == 'index' && mapState == 'big') {
-        angular.element('.map-tools').show();
+      if (urlState) {
+          if (urlState.name == 'index' && mapState == 'big') {
+            angular.element('.map-tools').show();
 
-        if (!$state.params.spotSearch) {
-          MapService.FocusMapToCurrentLocation(12);
-        }
-      } else if (!$state.params.spotSearch) {
-        $rootScope.showHintPopup = false;
+            if (!$state.params.spotSearch && !$state.params.spotLocation) {
+              MapService.FocusMapToCurrentLocation(12);
+            }
+          } else if (!$state.params.spotSearch) {
+            $rootScope.showHintPopup = false;
+          }
       }
     };
 
