@@ -65,7 +65,9 @@ class MapController extends Controller {
                         'spots.title',
                         DB::raw('AVG(spot_votes.vote) AS rating'),
                         'spot_points.address'
-                )->where('mv_spots_spot_points.is_private', false)->where('is_approved', true);
+                )
+                ->where('mv_spots_spot_points.is_private', false)
+                ->where('mv_spots_spot_points.is_approved', true);
 
         if ($request->has('search_text')) {
             $spots->where('mv_spots_spot_points.title_address', 'ilike', "%$request->search_text%");
