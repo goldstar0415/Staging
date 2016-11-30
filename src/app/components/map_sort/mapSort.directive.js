@@ -292,25 +292,26 @@
         $rootScope.mapSortSpots.markers = mapSpots;
       }
 
+      $timeout(function () {
+        if ($rootScope.mapSortSpots.markers.length > 0) {
+          $rootScope.changeMapState('small', null, false);
+          console.log($rootScope.mapSortSpots.data);
+          MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
+          if (!$rootScope.isDrawArea) {
+            MapService.FitBoundsByLayer($rootScope.sortLayer);
+          }
+        } else {
+          $rootScope.changeMapState('big');
+          if ( !ignoreEmptyList ) {
+            toastr.info('0 spots found');
+          }
+          MapService.clearLayers();
+        }
+      });
+
       $rootScope.mapSortSpots.sourceSpots = _filterUniqueSpots($rootScope.mapSortSpots.markers);
       loadNextSpots(layer);
 
-      $timeout(function () {
-        // if ($rootScope.mapSortSpots.markers.length > 0) {
-        //   $rootScope.changeMapState('small', null, false);
-        //   console.log($rootScope.mapSortSpots.data);
-        //   MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
-        //   if (!$rootScope.isDrawArea) {
-        //     MapService.FitBoundsByLayer($rootScope.sortLayer);
-        //   }
-        // } else {
-        //   $rootScope.changeMapState('big');
-        //   if ( !ignoreEmptyList ) {
-        //     toastr.info('0 spots found');
-        //   }
-        //   MapService.clearLayers();
-        // }
-      });
     }
 
     function _filterUniqueSpots(array) {
@@ -340,22 +341,6 @@
 
               $rootScope.mapSortSpots.data = _.union($rootScope.mapSortSpots.data, data);
               $rootScope.mapSortSpots.isLoading = false;
-              //////
-              if ($rootScope.mapSortSpots.markers.length > 0) {
-                MapService.highlightSpot();
-                $rootScope.changeMapState('small', null, false);
-                MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.data, layer, true);
-                if (!$rootScope.isDrawArea) {
-                  MapService.FitBoundsByLayer($rootScope.sortLayer);
-                }
-              } else {
-                $rootScope.changeMapState('big');
-                if ( !ignoreEmptyList ) {
-                  toastr.info('0 spots found');
-                }
-                MapService.clearLayers();
-              }
-              //////
             })
             .catch(function (resp) {
               $rootScope.mapSortSpots.isLoading = false;
