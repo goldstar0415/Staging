@@ -138,12 +138,14 @@ class MapController extends Controller {
         // search spots
         $spotsArr = $spots->skip(0)->take(1000)->get();
         // cache cetegory icon URLs
-        $cats = SpotTypeCategory::select("spot_type_categories.id")->with('type')->get();
+        $cats = SpotTypeCategory::select("spot_type_categories.id", "spot_types.display_name")
+                ->join('spot_types', 'spot_type_categories.spot_type_id', '=', 'spot_types.id')
+                ->get();
         $iconsCache = [];
         $typesCache = [];
         foreach ($cats as $c) {
             $iconsCache[$c->id] = $c->icon_url;
-            $typesCache[$c->id] = ($c->type)?$c->type->display_name:null;
+            $typesCache[$c->id] = ($c->display_name)?$c->display_name:null;
         }
         $points = [];
         // fill spots
