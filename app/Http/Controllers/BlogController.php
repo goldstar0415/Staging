@@ -105,7 +105,13 @@ class BlogController extends Controller
         $blog->fill($request->only(['blog_category_id', 'title', 'body']));
 
         $slug = str_slug($blog->title);
-        $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|max:255|unique:blogs']);
+        $validator = \Validator::make(compact('slug'), ['slug' => [
+                'required',
+                'alpha_dash',
+                'max:255',
+                'unique:blogs,slug,' .$blog->id
+            ]
+        ]);
         if (!$validator->fails() && !is_numeric($slug)) {
             $blog->slug = $slug;
         }
@@ -123,7 +129,6 @@ class BlogController extends Controller
         }
 
         $blog->save();
-
         return $blog;
     }
 
@@ -218,7 +223,7 @@ class BlogController extends Controller
         $sizes = getimagesize($image->move(public_path($path), $name));
 
         return [
-            'image_url' => frontend_url('api/'. $path, $name),
+            'image_url' => url($path, $name),
             'image_size'=> [
                 'width' => $sizes[0],
                 'height' => $sizes[1]

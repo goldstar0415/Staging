@@ -3969,6 +3969,33 @@ a.btn.disabled, fieldset[disabled] a.btn {
   margin-top: 5px;
 }
 
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.input-group-file .form-control {
+  height: 34px!important;
+  border-bottom-left-radius: 0!important;
+  border-top-left-radius: 0!important;
+}
+
 input[type="submit"].btn-block,
 input[type="reset"].btn-block,
 input[type="button"].btn-block {
@@ -4357,6 +4384,8 @@ tbody.collapse.in {
   left: auto;
 }
 
+.btn-loaded { display: none; }
+
 [data-toggle="buttons"] > .btn input[type="radio"],
 [data-toggle="buttons"] > .btn input[type="checkbox"],
 [data-toggle="buttons"] > .btn-group > .btn input[type="radio"],
@@ -4594,6 +4623,123 @@ tbody.collapse.in {
   top: auto;
   left: auto;
 }
+
+.prldr{
+    height: 7px;
+    padding: 0px 7px 20px 1px;
+    margin: auto;
+    display:none;
+}
+
+.prldr-i{
+    background-color:rgba(255,255,255,0);
+    display: inline-block;
+    height:7px;
+    margin-left:4px;
+    width:7px;
+    animation-name:bounce_circleG;
+            -o-animation-name:bounce_circleG;
+            -ms-animation-name:bounce_circleG;
+            -webkit-animation-name:bounce_circleG;
+            -moz-animation-name:bounce_circleG;
+    animation-duration:2.24s;
+            -o-animation-duration:2.24s;
+            -ms-animation-duration:2.24s;
+            -webkit-animation-duration:2.24s;
+            -moz-animation-duration:2.24s;
+    animation-iteration-count:infinite;
+            -o-animation-iteration-count:infinite;
+            -ms-animation-iteration-count:infinite;
+            -webkit-animation-iteration-count:infinite;
+            -moz-animation-iteration-count:infinite;
+    animation-direction:normal;
+            -o-animation-direction:normal;
+            -ms-animation-direction:normal;
+            -webkit-animation-direction:normal;
+            -moz-animation-direction:normal;
+    border-radius:5px;
+            -o-border-radius:5px;
+            -ms-border-radius:5px;
+            -webkit-border-radius:5px;
+            -moz-border-radius:5px;
+}
+
+.prldr-1{
+    animation-delay:0.45s;
+            -o-animation-delay:0.45s;
+            -ms-animation-delay:0.45s;
+            -webkit-animation-delay:0.45s;
+            -moz-animation-delay:0.45s;
+}
+
+.prldr-2{
+    animation-delay:1.05s;
+            -o-animation-delay:1.05s;
+            -ms-animation-delay:1.05s;
+            -webkit-animation-delay:1.05s;
+            -moz-animation-delay:1.05s;
+}
+
+.prldr-3{
+    animation-delay:1.35s;
+            -o-animation-delay:1.35s;
+            -ms-animation-delay:1.35s;
+            -webkit-animation-delay:1.35s;
+            -moz-animation-delay:1.35s;
+}
+
+
+
+@keyframes bounce_circleG{
+    0%{}
+
+    50%{
+            background-color:#000000;
+    }
+
+    100%{}
+}
+
+@-o-keyframes bounce_circleG{
+    0%{}
+
+    50%{
+            background-color:#000000;
+    }
+
+    100%{}
+}
+
+@-ms-keyframes bounce_circleG{
+    0%{}
+
+    50%{
+            background-color:#000000;
+    }
+
+    100%{}
+}
+
+@-webkit-keyframes bounce_circleG{
+    0%{}
+
+    50%{
+            background-color:#000000;
+    }
+
+    100%{}
+}
+
+@-moz-keyframes bounce_circleG{
+    0%{}
+
+    50%{
+            background-color:#000000;
+    }
+
+    100%{}
+}
+
 @media (min-width: 768px) {
   .nav-justified > li, .nav-tabs.nav-justified > li {
     display: table-cell;
@@ -7806,7 +7952,29 @@ button.close {
   border-radius: 5px 5px 0 0;
 }
 
+.export-form .col {
+    margin: 10px 0;
+}
+
 .editing .columns-import .ins-photos label {
   margin-left: 20px;
   width: auto;
+}
+
+.spots-parser-info {
+    height: 500px;
+    margin: 10px 15px;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    background: lightgray;
+    box-sizing: content-box;
+    overflow-y: scroll;
+}
+
+.spots-parser-info-console {
+    font-weight: bold;
+}
+
+.spots-parser-progress {
+    display: none;
 }

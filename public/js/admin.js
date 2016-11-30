@@ -140,7 +140,8 @@
             if (location.search == "") {
                 search = '?limit=' + val;
             } else {
-                search = location.search.replace(/(&|\?)?limit=\d+/, '').replace(/(&|\?)?page=\d+/) + '&limit=' + val;
+                search = location.search.replace(/(&|\?)?limit=\d+/, '').replace(/(&|\?)?page=\d+/);
+                search = (search == "") ? '?limit=' + val : search + '&limit=' + val;
             }
             location.href = location.origin + location.pathname + search;
         });

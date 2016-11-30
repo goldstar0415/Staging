@@ -18,7 +18,21 @@ namespace App;
  */
 class SpotVote extends BaseModel
 {
-    protected $fillable = ['vote', 'message'];
+    
+    const TYPE_BOOKING  = 1;
+    const TYPE_GOOGLE   = 2;
+    const TYPE_FACEBOOK = 3;
+    const TYPE_YELP     = 4;
+    
+    protected $fillable = [
+        'vote', 
+        'message', 
+        'created_at',
+        'remote_id',
+        'remote_type',
+        'remote_user_name',
+        'remote_user_avatar',
+        ];
 
     /**
      * Get the spot that belongs to the vote

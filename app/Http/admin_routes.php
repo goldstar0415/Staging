@@ -21,6 +21,26 @@ get('spot-owner', 'SpotOwnerController@index')->name('admin.spot-owner.index');
 get('spot-owner/{owner_request}/accept', 'SpotOwnerController@accept')->name('admin.spot-owner.accept');
 get('spot-owner/{owner_request}/reject', 'SpotOwnerController@reject')->name('admin.spot-owner.reject');
 
+post('hotels/cleanDb', 'HotelsController@cleanDb')->name('admin.hotels.clean-db');
+get('hotels/bulk-delete', 'HotelsController@bulkDestroy')->name('admin.hotels.bulk-delete');
+get('hotels/filter', 'HotelsController@filter')->name('admin.hotels.filter');
+get('hotels/hotels_parser', 'HotelsController@hotelsCsvParser')->name('admin.hotels.parser');
+post('hotels/export', 'HotelsController@export')->name('admin.hotels.export');
+post('hotels/exportUpload', 'HotelsController@exportUpload')->name('admin.hotels.export-upload');
+get('hotels/{hotels}/edit', 'HotelsController@getEdit')->name('admin.hotels.get-edit');
+post('hotels/{hotels}/edit', 'HotelsController@postEdit')->name('admin.hotels.post-edit');
+resource('hotels', 'HotelsController', ['only' => ['index', 'destroy']]);
+
+post('restaurants/cleanDb', 'RestaurantsController@cleanDb')->name('admin.restaurants.clean-db');
+get('restaurants/bulk-delete', 'RestaurantsController@bulkDestroy')->name('admin.restaurants.bulk-delete');
+get('restaurants/filter', 'RestaurantsController@filter')->name('admin.restaurants.filter');
+get('restaurants/restaurants_parser', 'RestaurantsController@restaurantsCsvParser')->name('admin.restaurants.parser');
+post('restaurants/export', 'RestaurantsController@export')->name('admin.restaurants.export');
+post('restaurants/exportUpload', 'RestaurantsController@exportUpload')->name('admin.restaurants.export-upload');
+get('restaurants/{restaurants}/edit', 'RestaurantsController@getEdit')->name('admin.restaurants.get-edit');
+post('restaurants/{restaurants}/edit', 'RestaurantsController@postEdit')->name('admin.restaurants.post-edit');
+resource('restaurants', 'RestaurantsController', ['only' => ['index', 'destroy']]);
+
 resource('posts', 'BlogController', ['except' => 'show']);
 get('posts/search', 'BlogController@search')->name('admin.posts.search');
 

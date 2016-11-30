@@ -97,10 +97,6 @@ class AppServiceProvider extends ServiceProvider
             event(new OnComment($comment));
         });
 
-        Spot::deleting(function (Spot $spot) {
-            $spot->comments()->delete();
-        });
-
         User::creating(function (User $user) {
             $user->alias = str_slug($user->full_name);
             $pattern = "^{$user->alias}([0-9]*)?$";
@@ -131,6 +127,14 @@ class AppServiceProvider extends ServiceProvider
             $link->cleanAttached();
         });
         Spot::deleting(function (Spot $spot) {
+            $spot->comments()->delete();
+            $spot->amenities()->delete();
+            $spot->remotePhotos()->delete();
+            $spot->restaurant()->delete();
+            $spot->votes()->delete();
+            $spot->hotel()->delete();
+            $spot->points()->delete();
+            $spot->photos()->delete();
             $spot->cleanAttached();
         });
         Plan::deleting(function (Plan $plan) {

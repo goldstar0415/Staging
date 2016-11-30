@@ -68,7 +68,7 @@ SELECT DISTINCT ON(cm.sender_id+cm.receiver_id) cm.*, m.*
 FROM "chat_messages" m
 inner join "chat_message_user" cm on m."id" = cm."chat_message_id"
 WHERE cm.receiver_id = $user_id AND cm."receiver_deleted_at" is null
-OR cm.sender_id = $user_id AND cm."sender_deleted_at" is null
+/* OR cm.sender_id = $user_id AND cm."sender_deleted_at" is null */
 order by cm.sender_id+cm.receiver_id, m.created_at desc
 QUERY
         ));
