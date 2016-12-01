@@ -121,12 +121,12 @@ class MapController extends Controller {
             }
         }
         
-        $spots->join('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
-        $spots->join(DB::raw('( select AVG(spot_votes.vote) as rate, spot_votes.spot_id as id FROM spot_votes GROUP BY id) AS votes') , function($join)
+        $spots->leftJoin('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
+        $spots->leftJoin(DB::raw('( select distinct AVG(spot_votes.vote) as rate, spot_votes.spot_id as id FROM spot_votes GROUP BY id) AS votes') , function($join)
         {
             $join->on('votes.id', '=', 'mv_spots_spot_points.id');
         });
-        $spots->join('spot_points', 'spot_points.spot_id', '=', 'mv_spots_spot_points.id');
+        $spots->leftJoin('spot_points', 'spot_points.spot_id', '=', 'mv_spots_spot_points.id');
 
         if ($request->has('filter.path')) {
             $path = [];
