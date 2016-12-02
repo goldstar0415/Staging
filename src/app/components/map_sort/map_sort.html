@@ -79,7 +79,9 @@
     <p ng-if="!$root.mapSortSpots.data.length" class="message-loading">Loading...</p>
     <p ng-if="$root.mapSortSpots.data.length && !$root.visibleSpotsIds.length" class="message-loading">Can't find any spots in this area...</p>
 
-    <div class="search-filters" ng-show="$root.sortLayer != 'weather' && $root.visibleSpotsIds.length" ng-class="{'applied-filter': !MapSort.isShowFilter && !MapSort.isEmptyFilters()}">
+    <div class="search-filters"
+         ng-show="$root.sortLayer != 'weather' && $root.visibleSpotsIds.length"
+         ng-class="{'applied-filter': !MapSort.isShowFilter && !MapSort.isEmptyFilters()}">
         <div class="new-result" ng-if="windowWidth < 768">
             <ul rn-carousel rn-carousel-index="$root.spotsCarousel.index">
                 <li ng-repeat="item in $root.mapSortSpots.data | getById | spotsFilter">
@@ -87,8 +89,13 @@
                 </li>
             </ul>
         </div>
-        <div class="new-result-container" ng-if="windowWidth >= 768">
-            <div class="new-result-card" spotcard ng-repeat="item in $root.mapSortSpots.data | spotsFilter" item="item" ng-mouseenter="MapSort.highlightSpotByHover(item)" ng-mouseleave="MapSort.clearSpotHighlighting(item)" ng-class="{ 'active' : item.id == $root.highlightedSpotId }"></div>
+        <div class="new-result-container"
+             ng-if="windowWidth >= 768"
+             infinite-scroll="MapSort.loadNextSpotss()"
+             infinite-scroll-distance="0"
+             infinite-scroll-disabled="!$root.mapSortSpots.data.length"
+             infinite-scroll-container='".search-filters"'>
+            <div class="new-result-card" spotcard ng-repeat="item in $root.mapSortSpots.data | getById | limitTo:$root.searchLimit track by item.id" item="item" ng-mouseenter="MapSort.highlightSpotByHover(item)" ng-mouseleave="MapSort.clearSpotHighlighting(item)" ng-class="{ 'active' : item.id == $root.highlightedSpotId }"></div>
         </div>
     </div>
 

@@ -51,7 +51,7 @@
             }
 
             function setImage(item) {
-                if (item.category.type.name === 'food') {
+                if (item.category_name === 'Food') {
                     if (false) {
                         return item.cover_url.original;
                     } else {
@@ -59,7 +59,8 @@
                         return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
                     }
                 } else {
-                    return item.cover_url.original;
+                    // return item.cover_url.original;
+                    return '../../../assets/img/placeholders/food/1.jpg';
                 }
             }
 

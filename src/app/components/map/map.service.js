@@ -64,6 +64,22 @@
       var GeocodingSearchUrl = '//open.mapquestapi.com/nominatim/v1/search.php?format=json&key=' + GEOCODING_KEY + '&addressdetails=1&limit=3&q=';
       var GeocodingReverseUrl = '//open.mapquestapi.com/nominatim/v1/reverse.php?format=json&key=' + GEOCODING_KEY;
 
+      function setMarkerIcon(spot) {
+          var image = '';
+          if (spot) {
+              if (spot.category_name === 'Event') {
+                  image = '../../../assets/img/markers/marker-event-highlighted.png';
+              } else if (spot.category_name === 'Food') {
+                  image = '../../../assets/img/markers/marker-food-highlighted.png';
+              } else if (spot.category_name === 'Todo') {
+                  image = '../../../assets/img/markers/marker-todo-highlighted.png';
+              } else if (spot.category_name === 'Shelter') {
+                  image = '../../../assets/img/markers/marker-shelter-highlighted.png';
+              }
+          }
+          return image;
+      }
+
       function plygonFromCircle(lat, lng, radius) {
           var d2r = Math.PI / 180; // degrees to radians
           var r2d = 180 / Math.PI; // radians to degrees
@@ -140,16 +156,7 @@
               }
           }
           if (marker && spot) {
-              var image = '';
-              if (spot.category_name === 'Event') {
-                  image = '../../../assets/img/markers/marker-event-highlighted.png';
-              } else if (spot.category_name === 'Food') {
-                  image = '../../../assets/img/markers/marker-food-highlighted.png';
-              } else if (spot.category_name === 'Todo') {
-                  image = '../../../assets/img/markers/marker-todo-highlighted.png';
-              } else if (spot.category_name === 'Shelter') {
-                  image = '../../../assets/img/markers/marker-shelter-highlighted.png';
-              }
+              var image = setMarkerIcon(spot);
               var icon = L.icon({
                   iconSize: [50, 50],
                   iconUrl: image,
@@ -175,8 +182,6 @@
       }
 
       function highlightSpotByHover(spot) {
-          console.log($rootScope.mapSortSpots.data);
-          console.log($rootScope.visibleSpotsIds);
           var el = document.querySelectorAll('.marker-cluster').forEach(function(mc) {
               mc.classList.remove('active');
           });
@@ -199,16 +204,7 @@
                   }
               }
           }
-          var image = '';
-          if (spot.category_name === 'Event') {
-              image = '../../../assets/img/markers/marker-event-highlighted.png';
-          } else if (spot.category_name === 'Food') {
-              image = '../../../assets/img/markers/marker-food-highlighted.png';
-          } else if (spot.category_name === 'Todo') {
-              image = '../../../assets/img/markers/marker-todo-highlighted.png';
-          } else if (spot.category_name === 'Shelter') {
-              image = '../../../assets/img/markers/marker-shelter-highlighted.png';
-          }
+          var image = setMarkerIcon(spot);
             var icon = L.icon({
                 iconSize: [50, 50],
                 iconUrl: image,
@@ -242,6 +238,7 @@
 
       function spotsOnScreen() {
           if (!$rootScope.$$phase) {
+              $rootScope.searchLimit = 20;
               var _borderMarkerLayer = undefined;
               var layerGroup = null;
               if (typeof _borderMarkerLayer === 'undefined') {
@@ -281,7 +278,6 @@
               }
               $rootScope.spotsCarousel.index = 0;
               $rootScope.$apply();
-              console.log($rootScope.visibleSpotsIds);
           }
       }
 
@@ -954,12 +950,12 @@
             }
         });
 
-        map.on('resize', spotsOnScreen, this);
-        map.on('zoomend', spotsOnScreen, this);
+        // map.on('resize', spotsOnScreen, this);
+        // map.on('zoomend', spotsOnScreen, this);
         map.on('moveend', spotsOnScreen, this);
-        map.on('viewreset', spotsOnScreen, this);
-        map.on('layeradd', spotsOnScreen, this);
-        map.on('layerremove', spotsOnScreen, this);
+        // map.on('viewreset', spotsOnScreen, this);
+        // map.on('layeradd', spotsOnScreen, this);
+        // map.on('layerremove', spotsOnScreen, this);
 
         //add controls
         AddControls();
@@ -1918,16 +1914,7 @@
       function CreateCustomIcon(iconUrl, type, item) {
           if (item) {
               var spot = item.spot ? item.spot : item;
-              var image = '';
-              if (spot.category_name == 'Event') {
-                  image = '../../../assets/img/markers/marker-event.png';
-              } else if (spot.category_name == 'Food') {
-                  image = '../../../assets/img/markers/marker-food.png';
-              } else if (spot.category_name == 'Todo') {
-                  image = '../../../assets/img/markers/marker-todo.png';
-              } else if (spot.category_name == 'Shelter') {
-                  image = '../../../assets/img/markers/marker-shelter.png';
-              }
+              var image = setMarkerIcon(spot);
               return L.icon({
                   iconSize: [50, 50],
                   iconUrl: image,
@@ -1986,16 +1973,7 @@
           className: 'map-marker-plate'
         };
 
-        var image = '';
-        if (spot.ccategory_name === 'Event') {
-            image = '../../../assets/img/markers/marker-event-highlighted.png';
-        } else if (spot.category_name === 'Food') {
-            image = '../../../assets/img/markers/marker-food-highlighted.png';
-        } else if (spot.category_name === 'Todo') {
-            image = '../../../assets/img/markers/marker-todo-highlighted.png';
-        } else if (spot.category_name === 'Shelter') {
-            image = '../../../assets/img/markers/marker-shelter-highlighted.png';
-        }
+        var image = setMarkerIcon(spot);
 
         var popupContent = $compile('<div><p class="plate-name">' + spot.title + '</p><p class="plate-stars"><stars item="item"></stars></p><p class="plate-info">' + spot.category_name + '</p><img width="50" height="50" src=' + image + ' /></div>')(scope);
         var popup = L.popup(options).setContent(popupContent[0]);

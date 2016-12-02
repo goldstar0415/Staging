@@ -24,6 +24,7 @@
     $rootScope.spotsCarousel.index = 0;
     $rootScope.highlightedSpotId = null;
     $rootScope.isMapState = isMapState;
+    $rootScope.searchLimit = 20;
     $rootScope.filterOptions = {
         name: '',
         location: '',
