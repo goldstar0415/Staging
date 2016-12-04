@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Jobs\CrawlerRun;
 use App\Jobs\ParseEvents;
 use App\Jobs\TicketMasterEvents;
+use App\Jobs\SpotsDownloadJson;
 use App\Services\AppSettings;
 use Illuminate\Http\Request;
 
@@ -88,4 +89,12 @@ class SettingsController extends Controller
 
         return back()->with('run', true);
     }
+    
+    public function heyeventRun()
+    {
+        $this->dispatch(new SpotsDownloadJson);
+
+        return back()->with('run', true);
+    }
+    
 }
