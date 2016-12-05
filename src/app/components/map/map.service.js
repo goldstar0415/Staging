@@ -1956,8 +1956,13 @@
         var spot = spot.spot ? spot.spot : spot;
         marker.on('click', function () {
             if ($rootScope.isMapState()) {
-                $rootScope.setOpenedSpot(spot);
-                $rootScope.$apply();
+                // $rootScope.setOpenedSpot(spot);
+                // $rootScope.$apply();
+                $http.get('https://testback.zoomtivity.com/map/spots/list?ids%5B%5D=' + spot_id)
+                    .success(function success(data) {
+                        $rootScope.setOpenedSpot(data[0]);
+                        // $rootScope.$apply();
+                    });
             } else {
                 var user_id = spot.user_id || spot.spot.user_id || 0;
                 $location.path(user_id + '/spot/' + spot_id);

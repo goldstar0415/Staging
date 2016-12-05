@@ -122,7 +122,7 @@
     vm.highlightSpotByHover = MapService.highlightSpotByHover;
     vm.clearSpotHighlighting = MapService.clearSpotHighlighting;
     vm.clearFilter = clearFilter;
-    vm.loadNextSpotss = loadNextSpotss;
+    vm.nextPage = nextPage;
 
     $window.onresize = getWindowSize;
     function getWindowSize(event) {
@@ -324,8 +324,7 @@
     /**
      * Infinite scroll - ok
      */
-    function loadNextSpotss() {
-        console.log("SCROLL");
+    function nextPage() {
         $rootScope.searchLimit += 20;
     }
 
