@@ -36,10 +36,11 @@
             vm.openSpot = openSpot;
 
             function openSpot(spotId) {
-                // $http.get('https://testback.zoomtivity.com/spots/' + spotId)
-                $http.get('https://testback.zoomtivity.com/map/spots/list?ids%5B%5D=' + spotId)
+
+                // $http.get('https://testback.zoomtivity.com/map/spots/list?ids%5B%5D=' + spotId)
+                $http.get('https://testback.zoomtivity.com/spots/' + spotId)
                     .success(function success(data) {
-                        $rootScope.setOpenedSpot(data[0]);
+                        $rootScope.setOpenedSpot(data);
                     });
             }
 
@@ -68,8 +69,11 @@
                         return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
                     }
                 } else {
-                    // return item.cover_url.original;
-                    return '../../../assets/img/placeholders/food/18.jpg';
+                    if (item.cover_url) {
+                        return item.cover_url.original;
+                    } else {
+                        return "https://testback.zoomtivity.com/uploads/missings/covers/original/missing.png";
+                    }
                 }
             }
 

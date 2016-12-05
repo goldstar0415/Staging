@@ -296,7 +296,7 @@
       $timeout(function () {
         if ($rootScope.mapSortSpots.markers.length > 0) {
           $rootScope.changeMapState('small', null, false);
-          console.log($rootScope.mapSortSpots.data);
+        //   console.log($rootScope.mapSortSpots.data);
           MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
           if (!$rootScope.isDrawArea) {
             MapService.FitBoundsByLayer($rootScope.sortLayer);

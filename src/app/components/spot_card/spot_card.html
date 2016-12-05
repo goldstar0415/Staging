@@ -55,7 +55,7 @@
             <p class="spot-name">{{SpotCard.item.title}}</p>
             <p class="spot-address">
                 <span class="glyphicon glyphicon-map-marker"></span>
-                <span>{{SpotCard.item.address}}</span>
+                <span>{{SpotCard.item.address || SpotCard.item.points[0].address}}</span>
             </p>
         </div>
     </div>

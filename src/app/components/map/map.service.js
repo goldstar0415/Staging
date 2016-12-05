@@ -64,17 +64,17 @@
       var GeocodingSearchUrl = '//open.mapquestapi.com/nominatim/v1/search.php?format=json&key=' + GEOCODING_KEY + '&addressdetails=1&limit=3&q=';
       var GeocodingReverseUrl = '//open.mapquestapi.com/nominatim/v1/reverse.php?format=json&key=' + GEOCODING_KEY;
 
-      function setMarkerIcon(spot) {
+      function setMarkerIcon(spot, isHighlighted) {
           var image = '';
           if (spot) {
-              if (spot.category_name === 'Event') {
-                  image = '../../../assets/img/markers/marker-event-highlighted.png';
-              } else if (spot.category_name === 'Food') {
-                  image = '../../../assets/img/markers/marker-food-highlighted.png';
-              } else if (spot.category_name === 'Todo') {
-                  image = '../../../assets/img/markers/marker-todo-highlighted.png';
-              } else if (spot.category_name === 'Shelter') {
-                  image = '../../../assets/img/markers/marker-shelter-highlighted.png';
+              if (spot.category_name === 'Event' || (spot.type && spot.type === 'Event')) {
+                  image = '../../../assets/img/markers/marker-event' + (isHighlighted ? '-highlighted.png' : '.png');
+              } else if (spot.category_name === 'Food' || (spot.type && spot.type === 'Food')) {
+                  image = '../../../assets/img/markers/marker-food' + (isHighlighted ? '-highlighted.png' : '.png');
+              } else if (spot.category_name === 'Todo' || (spot.type && spot.type === 'Todo')) {
+                  image = '../../../assets/img/markers/marker-todo' + (isHighlighted ? '-highlighted.png' : '.png');
+              } else if (spot.category_name === 'Shelter' || (spot.type && spot.type === 'Shelter')) {
+                  image = '../../../assets/img/markers/marker-shelter' + (isHighlighted ? '-highlighted.png' : '.png');
               }
           }
           return image;
@@ -1912,6 +1912,7 @@
       }
 
       function CreateCustomIcon(iconUrl, type, item) {
+        //   debugger;
           if (item) {
               var spot = item.spot ? item.spot : item;
               var image = setMarkerIcon(spot);
@@ -1978,7 +1979,7 @@
           className: 'map-marker-plate'
         };
 
-        var image = setMarkerIcon(spot);
+        var image = setMarkerIcon(spot, true);
 
         var popupContent = $compile('<div><p class="plate-name">' + spot.title + '</p><p class="plate-stars"><stars item="item"></stars></p><p class="plate-info">' + spot.category_name + '</p><img width="50" height="50" src=' + image + ' /></div>')(scope);
         var popup = L.popup(options).setContent(popupContent[0]);

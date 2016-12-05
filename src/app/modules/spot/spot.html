@@ -98,17 +98,6 @@
         </div>
         <div class="tab-content-reviews" ng-if="OpenedItem.tab == 'reviews'">
             <section class="review-section clearfix">
-                <div class="review-info">
-                    <h4>Reviews:</h4>
-                    <div class="opened-name-bottom">
-                        <div class="opened-stars">
-                            <stars item="Spot.spot"></stars>
-                        </div>
-                        <p class="opened-info">
-                            {{Spot.spot.reviews_total.total.rating}} stars based on {{Spot.spot.reviews_total.total.reviews_count}} combined reviews
-                        </p>
-                    </div>
-                </div>
                 <div class="review-types">
                     <div class="review-type" ng-repeat="(serviceName, serviceInfo) in Spot.spot.reviews_total.info">
                         <div class="review-type-icon {{serviceName}}"></div>
@@ -116,7 +105,7 @@
                         <div class="pull-left with-margin">{{serviceInfo.rating}}</div>
                         <div class="pull-left outline-none review-type-stars readonly">
                             <rating
-                                ng-model="1"
+                                ng-model="OpenedItem.spot"
                                 max="1"
                                 readonly="true"
                                 state-on="'glyphicon glyphicon-star star-active'"
@@ -130,9 +119,9 @@
                         <div class="clearfix"></div>
                     </div>
                 </div>
-                
+
                 <div class="review-content clearfix">
-                    <review-input 
+                    <review-input
                         ng-if="ReviewInput.item.auth_rate.user_id != $root.currentUser.id"
                         review="Spot.review" vote="Spot.vote" item="Spot.spot"
                                   maxlength="255"></review-input>
@@ -154,7 +143,13 @@
             </section>
         </div>
         <div class="tab-content-photos" ng-if="OpenedItem.tab == 'photos'">
-            <ng-carousel images="Spot.spot.photos"></ng-carousel>
+            <!-- <ng-carousel images="Spot.spot.photos"></ng-carousel> -->
+            <ul rn-carousel rn-carousel-controls rn-carousel-controls-allow-loop rn-carousel-index="OpenedItem.photoIndex">
+                <li ng-repeat="photo in Spot.spot.photos">
+                    <img src="{{photo.url}}" alt="photo">
+                </li>
+            </ul>
+            <div rn-carousel-indicators ng-if="Spot.spot.photos.length > 1" slides="Spot.spot.photos" rn-carousel-index="OpenedItem.photoIndex"></div>
         </div>
         <div class="tab-content-menu" ng-if="OpenedItem.tab == 'menu'">
             <h1>Menu</h1>

@@ -19,7 +19,7 @@
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
   <style>
-  .map { width: 100vw; height: 100vh }
+  .map { width: calc(100vw - 70px); height: calc(100vh - 100px) }
   .content-hidden { overflow: hidden; height: 100vh; width: 100vw; } .preloader { position: fixed; left: 0; right: 0; top: 0; bottom: 0; overflow: hidden; background: #00CFFF; z-index: 999999; } .preloader *, .preloader *:after, .preloader *:before { box-sizing:
 content-box; } .preloader .ferris_wheel { position: fixed; top: 50%; left: 50%; margin-top: -100px; margin-left: -75px; } .preloader .ferris_wheel, .preloader .wheel { border: 6px solid #0B2639; width: 150px; height: 150px; border-radius: 50%; } .preloader
 .ferris_wheel { border: 0; position: absolute; } .preloader .wheel_wrap { position: absolute; -webkit-animation: wheel_rotate 40s infinite linear; animation: wheel_rotate 40s infinite linear; } .preloader .wheel:before { content: ""; height: 50px; width:
@@ -171,7 +171,6 @@ if ('serviceWorker' in navigator) {
   }(document, 'script', 'facebook-jssdk'));
 
 </script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAytote4odQOn_IpNkj207MXG2bF1uM2Zs"></script>
 
 <!-- bower:js -->
 <!-- run `gulp inject` to automatically populate bower script dependencies -->
@@ -188,19 +187,6 @@ if ('serviceWorker' in navigator) {
 <!-- angular templates will be automatically converted in js and inserted here -->
 <!-- endinject -->
 
-<script>
-    window.onload = function() {
-        var addStylesNode = document.getElementById("deferred-styles");
-        var replacement = document.createElement("div");
-        replacement.innerHTML = addStylesNode.textContent;
-        document.body.appendChild(replacement)
-        addStylesNode.parentElement.removeChild(addStylesNode);
-        var pl = document.querySelector("#preloader");
-        pl.parentNode.removeChild(pl);
-        body.classList.remove("content-hidden");
-    }
-</script>
-
 <!-- endbuild -->
 
 <noscript id="deferred-styles">
@@ -216,5 +202,20 @@ if ('serviceWorker' in navigator) {
 
     <!-- endbuild -->
 </noscript>
+<script>
+    window.onload = function() {
+        var addStylesNode = document.getElementById("deferred-styles");
+        var replacement = document.createElement("div");
+        replacement.innerHTML = addStylesNode.textContent;
+        document.body.appendChild(replacement)
+        addStylesNode.parentElement.removeChild(addStylesNode);
+        var pl = document.querySelector("#preloader");
+        pl.parentNode.removeChild(pl);
+        body.classList.remove("content-hidden");
+    }
+</script>
+
+<script async type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAytote4odQOn_IpNkj207MXG2bF1uM2Zs"></script>
+
 </body>
 </html>
