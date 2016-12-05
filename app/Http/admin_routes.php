@@ -78,3 +78,4 @@ get('settings/parse-run', 'SettingsController@parserRun')->name('admin.parser.ru
 get('settings/crawler-run', 'SettingsController@crawlerRun')->name('admin.crawler.run');
 get('settings/ticketmaster-run', 'SettingsController@ticketMasterRun')->name('admin.ticket-master.run');
 get('settings/heyevent-run', 'SettingsController@heyeventRun')->name('admin.heyevent.run');
+get('settings/heyeventimport-run', 'SettingsController@heyeventImportRun')->name('admin.heyeventimport.run');
