@@ -571,7 +571,7 @@ class SpotController extends Controller
     
     public function getRatingInfo($spot)
     {
-        
+        return $spot->getReviewsTotal();
     }
     
     public function getCover($spot)
