@@ -91,11 +91,15 @@
         </div>
         <div class="new-result-container"
              ng-if="windowWidth >= 768"
-             infinite-scroll="MapSort.loadNextSpotss()"
+             infinite-scroll="MapSort.nextPage()"
              infinite-scroll-distance="0"
              infinite-scroll-disabled="!$root.mapSortSpots.data.length"
              infinite-scroll-container='".search-filters"'>
-            <div class="new-result-card" spotcard ng-repeat="item in $root.mapSortSpots.data | getById | limitTo:$root.searchLimit track by item.id" item="item" ng-mouseenter="MapSort.highlightSpotByHover(item)" ng-mouseleave="MapSort.clearSpotHighlighting(item)" ng-class="{ 'active' : item.id == $root.highlightedSpotId }"></div>
+            <div class="new-result-card"
+                 spotcard ng-repeat="item in $root.mapSortSpots.data | getById | limitTo:$root.searchLimit track by item.id"
+                 item="item" ng-mouseenter="MapSort.highlightSpotByHover(item)"
+                 ng-mouseleave="MapSort.clearSpotHighlighting(item)"
+                 ng-class="{ 'active' : item.id == $root.highlightedSpotId }"></div>
         </div>
     </div>
 
