@@ -148,7 +148,6 @@ class SpotController extends Controller
      */
     public function show($spot)
     {
-        $auth = $this->auth;
         $spotInfo = $spot->getSpotExtension();
         
         $spot->reviews_total = $spot->getReviewsTotal();
@@ -161,7 +160,7 @@ class SpotController extends Controller
             $hours = false;
             $bookingUrl = $spot->getBookingUrl($spotInfo->booking_url);
             if(
-                isset($spotInfo) && 
+                isset($spotInfo->booking_url) && 
                 $spot->checkUrl($spotInfo->booking_url) && 
                 $bookingUrl &&
                 $bookingPageContent = $spot->getPageContent($bookingUrl, [
@@ -175,7 +174,6 @@ class SpotController extends Controller
                     $amenitiesArray = $amenities;
                     $spot->load(['amenities']);
                 }
-                
             }
             
             if( isset($spot->google) && !empty($spot->google) )
@@ -568,6 +566,30 @@ class SpotController extends Controller
         }
 
         $result['result'] = $spot;
+        return $result;
+    }
+    
+    public function getRatingInfo($spot)
+    {
+        
+    }
+    
+    public function getCover($spot)
+    {
+        $spotInfo = $spot->getSpotExtension();
+        $bookingUrl = $spot->getBookingUrl($spotInfo->booking_url);
+        $result = ['cover_url' => null];
+        if(
+            isset($spotInfo->booking_url) && 
+            $spot->checkUrl($spotInfo->booking_url) && 
+            $bookingUrl &&
+            $bookingPageContent = $spot->getPageContent($bookingUrl, [
+                'headers' => $spot->getBookingHeaders()
+            ])
+        )
+        {
+            $result['cover_url'] = $spot->getBookingCover($bookingPageContent);
+        }
         return $result;
     }
 }

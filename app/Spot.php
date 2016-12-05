@@ -868,6 +868,40 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         return $result;
     }
     
+    public function getBookingCover($bookingRes)
+    {
+        $result = null;
+        if( $bookingSlider = $bookingRes->find('.hp-gallery-slides', 0) )
+        {
+            if($picture = $bookingSlider->find('img', 0))
+            {
+                $url = $picture->getAttribute('src');
+                if(empty($url))
+                {
+                    $url = $picture->getAttribute('data-lazy');
+                }
+                $query = RemotePhoto::where('url', $url)
+                        ->where('associated_type', Spot::class)
+                        ->where('associated_id', $this->id)
+                        ->where('image_type', 1);
+                if( !$query->exists() )
+                {
+                    $result = new RemotePhoto([
+                        'url' => $url,
+                        'image_type' => 1,
+                        'size' => 'original',
+                    ]);
+                    $this->remotePhotos()->save( $result );
+                }
+                else
+                {
+                    $result = $query->first();
+                }
+            }
+        }
+        return $result;
+    }
+    
     /*
      * Google places methods 
      */
@@ -1320,7 +1354,6 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     
     public function getReviewsTotal()
     {
-        $auth = auth();
         $result = [];
         if( $facebookRating = $this->getFacebookRating())
         {
@@ -1339,9 +1372,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         }
         $spotInfo = $this->getSpotExtension();
         if(!empty($spotInfo->booking_url))
-        {
-            $this->getBookingTotals();
-            
+        {            
             $reviewsUrl = $this->getBookingReviewsUrl($spotInfo->booking_url);
             if($reviewsUrl && $reviewsPageContent = $this->getPageContent($reviewsUrl, [
                 'headers' => $this->getBookingHeaders()

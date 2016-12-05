@@ -75,6 +75,7 @@ Route::get('spots/{spots}/unfavorite', 'SpotController@unfavorite');
 Route::get('spots/{spots}/members', 'SpotController@members');
 Route::get('spots/{spots}/preview', 'SpotController@preview');
 Route::get('spots/{spots}/export', 'SpotController@export');
+Route::get('spots/{spots}/cover', 'SpotController@getCover');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 Route::resource('spots.comments', 'SpotCommentController', ['except' => ['create', 'edit']]);
 Route::resource('spots.reviews', 'SpotReviewController', ['except' => ['create', 'edit']]);
