@@ -1959,10 +1959,9 @@
             if ($rootScope.isMapState()) {
                 // $rootScope.setOpenedSpot(spot);
                 // $rootScope.$apply();
-                $http.get('https://testback.zoomtivity.com/map/spots/list?ids%5B%5D=' + spot_id)
+                $http.get('https://testback.zoomtivity.com/spots/' + spot.spot_id)
                     .success(function success(data) {
-                        $rootScope.setOpenedSpot(data[0]);
-                        // $rootScope.$apply();
+                        $rootScope.setOpenedSpot(data);
                     });
             } else {
                 var user_id = spot.user_id || spot.spot.user_id || 0;
