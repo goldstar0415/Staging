@@ -7,10 +7,8 @@
 
   /** @ngInject */
   function SpotController(spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, dialogs, API_URL, InviteFriends, Share) {
-
-    console.log('Spot Init');
-
     var vm = this;
+    var spot = vm.spot;
     vm.API_URL = API_URL;
     vm.spot = SpotService.formatSpot(spot);
     vm.spot.rating = vm.spot.reviews_total.total.rating;

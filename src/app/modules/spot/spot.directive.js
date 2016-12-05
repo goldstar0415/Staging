@@ -20,7 +20,7 @@
     };
 
     /** @ngInject */
-    function SpotController($scope, SpotService, ScrollService, SpotComment, $state, MapService, $rootScope, dialogs, API_URL, InviteFriends, Share) {
+    function SpotController($scope, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, dialogs, API_URL, InviteFriends, Share) {
       var vm = this;
       var spot = vm.spot;
       vm.API_URL = API_URL;
@@ -37,6 +37,7 @@
       vm.setImage = setImage;
       vm.invite = openInviteModal;
       vm.share = openShareModal;
+      vm.photoIndex = 0;
 
       function openInviteModal(item) {
           InviteFriends.openModal(item);
@@ -52,10 +53,10 @@
       //MapService.GetMap().panTo(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng));
       MapService.GetMap().setView(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng), 17);
 
-      $rootScope.syncSpots = {
-        data: [vm.spot]
-      };
+      $rootScope.syncSpots = {data: [vm.spot]};
       $rootScope.currentSpot = vm.spot;
+
+      vm.votes = {};
 
       vm.comments = {};
       var params = {
@@ -64,8 +65,7 @@
         spot_id: spot.id
       };
       vm.pagination = new ScrollService(SpotComment.query, vm.comments, params);
-
-    //   ShowMarkers([vm.spot]);
+      vm.reviewsPagination = new ScrollService(SpotReview.query, vm.votes, params);
 
     function setImage() {
         if (vm.spot.category.type.name === 'food') {
