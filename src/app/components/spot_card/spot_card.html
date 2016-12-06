@@ -1,6 +1,6 @@
 <div class="new-spot" ng-mouseleave="SpotCard.closeMenu()">
     <div class="spot-img">
-        <div ng-if="$root.isMapState()" class="img" ng-click="$root.setOpenedSpot(SpotCard.item)">
+        <div ng-if="$root.isMapState()" class="img" ng-click="SpotCard.openSpot(SpotCard.item.spot_id)">
             <img src="{{SpotCard.image}}" alt="spot_img">
         </div>
         <div ng-if="!$root.isMapState()" class="img" ui-sref="spot({user_id: SpotCard.item.user_id || 0, spot_id: SpotCard.item.id})">
@@ -55,7 +55,7 @@
             <p class="spot-name">{{SpotCard.item.title}}</p>
             <p class="spot-address">
                 <span class="glyphicon glyphicon-map-marker"></span>
-                <span>{{SpotCard.item.points[0].address}}</span>
+                <span>{{SpotCard.item.address || SpotCard.item.points[0].address}}</span>
             </p>
         </div>
     </div>

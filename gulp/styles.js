@@ -29,7 +29,7 @@ gulp.task('styles', function () {
     starttag: '// injector',
     endtag: '// endinjector',
     addRootSlash: false
-  };
+  }; 
 
 
   return gulp.src([

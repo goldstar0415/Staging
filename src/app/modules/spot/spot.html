@@ -25,30 +25,81 @@
     <div class="opened-first-buttons">
         <button class="button-invite" ng-click="Spot.invite(Spot.spot)">Invite <span class="glyphicon glyphicon-user"></span></button>
         <button class="button-share" ng-click="Spot.share(Spot.spot, 'spot')">Share <span class="glyphicon glyphicon-share"></span></button>
-        <!-- <invite-friends item="Spot.spot"></invite-friends> -->
-        <!-- <share item="Spot.spot" type="spot"></share> -->
     </div>
-    <div class="opened-second-buttons">
+    <div class="opened-second-buttons" ng-if="Spot.spot.restaurant">
         <button class="button-order">Order</button>
         <button class="button-table">Book table</button>
         <button class="button-deals">Deals</button>
+    </div>
+    <div class="opened-thrid-buttons" ng-if="Spot.spot.hotel">
+        <div class="price-dates">
+            <input ng-datepicker ng-model="Spot.priceDate.start_date" class="date" placeholder="FROM" type="text">
+            <input ng-datepicker ng-model="Spot.priceDate.end_date" class="date" placeholder="TO" type="text">
+            <button ng-click="Spot.getPrice()">Get prices</button>
+        </div>
+        <div class="prices-results" ng-if="Spot.prices">
+            <div class="booking">
+                Booking.com: <a href="{{Spot.prices.bookingUrl}}">{{Spot.prices.booking ? Spot.prices.booking : 'no price' }}</a>
+            </div>
+            <div class="hotels">
+                Hotels.com: <a href="{{Spot.prices.hotelsUrl}}">{{Spot.prices.hotels ? Spot.prices.hotels : 'no price' }}</a>
+            </div>
+        </div>
     </div>
     <div class="opened-tabs">
         <div class="tabs-list">
             <div class="tab" ng-class="OpenedItem.tab == 'overview' || OpenedItem.tab == null ? 'active' : ''" ng-click="OpenedItem.tab = 'overview'">Overview</div>
             <div class="tab" ng-class="OpenedItem.tab == 'reviews' ? 'active' : ''" ng-click="OpenedItem.tab = 'reviews'">Reviews</div>
             <div class="tab" ng-class="OpenedItem.tab == 'photos' ? 'active' : ''" ng-click="OpenedItem.tab = 'photos'">Photos</div>
-            <div class="tab" ng-class="OpenedItem.tab == 'menu' ? 'active' : ''" ng-click="OpenedItem.tab = 'menu'" ng-if="Spot.spot.category.type.name == 'food'">Menu</div>
+            <div class="tab" ng-class="OpenedItem.tab == 'menu' ? 'active' : ''" ng-click="OpenedItem.tab = 'menu'" ng-if="Spot.spot.restaurant && Spot.spot.restaurant.menu">Menu</div>
             <div class="tab" ng-class="OpenedItem.tab == 'chatter' ? 'active' : ''" ng-click="OpenedItem.tab = 'chatter'">Chatter</div>
         </div>
         <div class="tab-content-overview" ng-if="OpenedItem.tab == 'overview' || OpenedItem.tab == null">
-            <!-- <div class="slider">
-                <img src="{{Spot.spot.cover_url.original}}" alt="img">
-            </div> -->
             <div class="overview about" ng-if="Spot.spot.description">
                 <h1>About:</h1>
                 <div ng-bind-html="Spot.spot.description"></div>
             </div>
+            <div class="overview cuisine" ng-if="Spot.spot.restaurant && Spot.spot.restaurant.category">
+                <h1>Cuisine:</h1>
+                <p>{{Spot.spot.restaurant.category}}</p>
+            </div>
+            <div class="overview meals" ng-if="Spot.spot.restaurant && Spot.spot.restaurant.meals_served">
+                <h1>Meals:</h1>
+                <p>{{Spot.spot.restaurant.meals_served}}</p>
+            </div>
+            <div class="overview cost" ng-if="Spot.spot.restaurant && Spot.spot.restaurant.price_level">
+                <h1>Cost:</h1>
+                <p><b>{{Spot.spot.restaurant.price_level}}</b><span>{{'$$$$'.slice(0, Spot.spot.restaurant.price_level.length)}}</span></p>
+            </div>
+            <div class="overview hours" ng-if="Spot.spot.restaurant && Spot.spot.restaurant.hours.weekday_text">
+                <h1>Hours:</h1>
+                <p ng-repeat="date in Spot.spot.restaurant.hours.weekday_text">
+                    {{date}}
+                </p>
+            </div>
+            <div class="overview phone" ng-if="Spot.spot.restaurant && Spot.spot.restaurant.phone_number">
+                <h1>Phone number:</h1>
+                <p>{{Spot.spot.restaurant.phone_number}}</p>
+            </div>
+            <div class="overview email" ng-if="Spot.spot.restaurant && Spot.spot.restaurant.email">
+                <h1>E-mail:</h1>
+                <p>{{Spot.spot.restaurant.email}}</p>
+            </div>
+            <div class="overview website" ng-if="Spot.spot.web_sites[0].length">
+                <h1>Websites:</h1>
+                <a ng-repeat="url in Spot.spot.web_sites" href="{{url}}">
+                    {{url}}
+                </a>
+            </div>
+            <div class="overview tags" ng-if="Spot.spot.tags.length > 0">
+                <h1>Tags:</h1>
+                <p ng-repeat="tag in Spot.spot.tags">{{tag.name}}</p>
+            </div>
+            <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
+              <li ng-repeat="link in Spot.spot.videos track by $index" class="video-size">
+                <youtube-player src="link"></youtube-player>
+              </li>
+            </ul>
             <div class="overview connect">
                 <h1>Connect:</h1>
                 <div class="tab-social-buttons">
@@ -72,43 +123,9 @@
                     </a>
                 </div>
             </div>
-            <!-- <div class="overview cuisine">
-                <h1>Cuisine:</h1>
-                <p>American | Irish</p>
-            </div> -->
-            <!-- <div class="overview cost">
-                <h1>Cost:</h1>
-                <p>$$$$</p>
-            </div> -->
-            <!-- <div class="overview hours">
-                <p>
-                    Monday: 4PM - 11PM<br>
-                    Tuesday: 4PM - 12PM<br>
-                </p>
-            </div> -->
-            <div class="overview tags" ng-if="Spot.spot.tags.length > 0">
-                <h1>Tags:</h1>
-                <p ng-repeat="tag in Spot.spot.tags">{{tag.name}}</p>
-            </div>
-            <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
-              <li ng-repeat="link in Spot.spot.videos track by $index" class="video-size">
-                <youtube-player src="link"></youtube-player>
-              </li>
-            </ul>
         </div>
         <div class="tab-content-reviews" ng-if="OpenedItem.tab == 'reviews'">
             <section class="review-section clearfix">
-                <div class="review-info">
-                    <h4>Reviews:</h4>
-                    <div class="opened-name-bottom">
-                        <div class="opened-stars">
-                            <stars item="Spot.spot"></stars>
-                        </div>
-                        <p class="opened-info">
-                            {{Spot.spot.reviews_total.total.rating}} stars based on {{Spot.spot.reviews_total.total.reviews_count}} combined reviews
-                        </p>
-                    </div>
-                </div>
                 <div class="review-types">
                     <div class="review-type" ng-repeat="(serviceName, serviceInfo) in Spot.spot.reviews_total.info">
                         <div class="review-type-icon {{serviceName}}"></div>
@@ -130,9 +147,9 @@
                         <div class="clearfix"></div>
                     </div>
                 </div>
-                
+
                 <div class="review-content clearfix">
-                    <review-input 
+                    <review-input
                         ng-if="ReviewInput.item.auth_rate.user_id != $root.currentUser.id"
                         review="Spot.review" vote="Spot.vote" item="Spot.spot"
                                   maxlength="255"></review-input>
@@ -154,7 +171,13 @@
             </section>
         </div>
         <div class="tab-content-photos" ng-if="OpenedItem.tab == 'photos'">
-            <ng-carousel images="Spot.spot.photos"></ng-carousel>
+            <!-- <ng-carousel images="Spot.spot.photos"></ng-carousel> -->
+            <ul rn-carousel rn-carousel-controls rn-carousel-controls-allow-loop rn-carousel-index="OpenedItem.photoIndex">
+                <li ng-repeat="photo in Spot.spot.photos">
+                    <img src="{{photo.url}}" alt="photo">
+                </li>
+            </ul>
+            <div rn-carousel-indicators ng-if="Spot.spot.photos.length > 1" slides="Spot.spot.photos" rn-carousel-index="OpenedItem.photoIndex"></div>
         </div>
         <div class="tab-content-menu" ng-if="OpenedItem.tab == 'menu'">
             <h1>Menu</h1>

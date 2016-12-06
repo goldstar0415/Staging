@@ -20,7 +20,7 @@
         };
 
         /** @ngInject */
-        function SpotCardController($rootScope, $scope, SpotService, MapService, API_URL, InviteFriends, Share) {
+        function SpotCardController($rootScope, $http, $scope, SpotService, MapService, API_URL, InviteFriends, Share) {
             var vm = this;
             vm.saveToCalendar = SpotService.saveToCalendar;
             vm.removeFromCalendar = SpotService.removeFromCalendar;
@@ -33,6 +33,16 @@
             vm.closeMenu = closeMenu;
             vm.openInviteModal = openInviteModal;
             vm.openShareModal = openShareModal;
+            vm.openSpot = openSpot;
+
+            function openSpot(spotId) {
+
+                // $http.get('https://testback.zoomtivity.com/map/spots/list?ids%5B%5D=' + spotId)
+                $http.get(API_URL + '/spots/' + spotId)
+                    .success(function success(data) {
+                        $rootScope.setOpenedSpot(data);
+                    });
+            }
 
             function openInviteModal(item) {
                 InviteFriends.openModal(item);
@@ -51,7 +61,7 @@
             }
 
             function setImage(item) {
-                if (item.category.type.name === 'food') {
+                if (item.category_name === 'Food') {
                     if (false) {
                         return item.cover_url.original;
                     } else {
@@ -59,7 +69,11 @@
                         return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
                     }
                 } else {
-                    return item.cover_url.original;
+                    if (item.cover_url) {
+                        return item.cover_url.original;
+                    } else {
+                        return "https://testback.zoomtivity.com/uploads/missings/covers/original/missing.png";
+                    }
                 }
             }
 
