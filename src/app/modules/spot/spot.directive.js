@@ -39,6 +39,21 @@
       vm.share = openShareModal;
       vm.photoIndex = 0;
 
+      //MapService.GetMap().panTo(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng));
+      MapService.GetMap().setView(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng), 17);
+
+      $scope.$watch(function() { return angular.element('.opened-item').is(':visible') }, function() {
+          var container = document.querySelector('.search-filters');
+          vm.scroll = container.scrollTop;
+          container.scrollTop = 0;
+      });
+
+      function close() {
+          vm.spot = null;
+          var container = document.querySelector('.search-filters');
+          // container.scrollTop = vm.scroll;
+      }
+
       function openInviteModal(item) {
           InviteFriends.openModal(item);
       }
@@ -49,9 +64,6 @@
 
       vm.postComment = postComment;
       vm.deleteComment = deleteComment;
-
-      //MapService.GetMap().panTo(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng));
-      MapService.GetMap().setView(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng), 17);
 
       $rootScope.syncSpots = {data: [vm.spot]};
       $rootScope.currentSpot = vm.spot;
@@ -79,18 +91,6 @@
             return vm.spot.cover_url.original;
         }
     }
-
-      $scope.$watch(function() { return angular.element('.opened-item').is(':visible') }, function() {
-          var container = document.querySelector('.search-filters');
-          vm.scroll = container.scrollTop;
-          container.scrollTop = 0;
-      });
-
-      function close() {
-          vm.spot = null;
-          var container = document.querySelector('.search-filters');
-          // container.scrollTop = vm.scroll;
-      }
 
       /*
        * Delete spot
