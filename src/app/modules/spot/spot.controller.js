@@ -6,7 +6,7 @@
     .controller('SpotController', SpotController);
 
   /** @ngInject */
-  function SpotController(spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, dialogs, API_URL, InviteFriends, Share) {
+  function SpotController(spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share) {
     var vm = this;
     vm.API_URL = API_URL;
     vm.spot = SpotService.formatSpot(spot);
@@ -20,6 +20,19 @@
     vm.setImage = setImage;
     vm.invite = openInviteModal;
     vm.share = openShareModal;
+    vm.getPrice = getPrice;
+    vm.priceDate = {
+        start_date: null,
+        end_date: null
+    };
+    vm.prices = null;
+
+    function getPrice() {
+        $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
+            .success(function success(data) {
+                vm.prices = data.data;
+            });
+    }
 
     function openInviteModal(item) {
         InviteFriends.openModal(item);

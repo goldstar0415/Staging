@@ -84,7 +84,7 @@
          ng-class="{'applied-filter': !MapSort.isShowFilter && !MapSort.isEmptyFilters()}">
         <div class="new-result" ng-if="windowWidth < 768">
             <ul rn-carousel rn-carousel-index="$root.spotsCarousel.index">
-                <li ng-repeat="item in $root.mapSortSpots.data | getById | spotsFilter">
+                <li ng-repeat="item in $root.mapSortSpots.data | getById | limitTo:$root.searchLimit track by item.id">
                     <div class="new-result-card" spotcard item="item"></div>
                 </li>
             </ul>

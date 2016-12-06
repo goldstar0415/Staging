@@ -1959,7 +1959,7 @@
             if ($rootScope.isMapState()) {
                 // $rootScope.setOpenedSpot(spot);
                 // $rootScope.$apply();
-                $http.get('https://testback.zoomtivity.com/spots/' + spot.spot_id)
+                $http.get(API_URL + '/spots/' + spot.spot_id)
                     .success(function success(data) {
                         $rootScope.setOpenedSpot(data);
                     });

@@ -38,7 +38,7 @@
             function openSpot(spotId) {
 
                 // $http.get('https://testback.zoomtivity.com/map/spots/list?ids%5B%5D=' + spotId)
-                $http.get('https://testback.zoomtivity.com/spots/' + spotId)
+                $http.get(API_URL + '/spots/' + spotId)
                     .success(function success(data) {
                         $rootScope.setOpenedSpot(data);
                     });
