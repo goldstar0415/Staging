@@ -153,6 +153,38 @@
     .opened-first-buttons {
         justify-content: flex-start;
     }
+    .opened-thrid-buttons {
+        margin: 10px -2px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        .price-dates {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            input, button {
+                width: 30%;
+                height: 30px;
+                margin: 0;
+            }
+            button {
+                background-color: rgb(2, 200, 246);
+                color: white;
+                text-transform: uppercase;
+                padding: 5px;
+                border: none;
+                margin: 2px;
+            }
+        }
+        .prices-results {
+            padding: 10px 0;
+            div {
+                font-weight: bold;
+                padding: 5px 0;
+            }
+        }
+    }
     .opened-tabs {
         // max-width: 450px;
         .tabs-list {
