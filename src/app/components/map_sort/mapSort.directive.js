@@ -9,8 +9,8 @@
                   var i = 0;
                   var len = input.length;
                   for (; i < len; i++) {
-                      if (arr.indexOf(input[i].category.name) === -1) {
-                          arr.push(input[i].category.name);
+                      if (arr.indexOf(input[i].category_name) === -1) {
+                          arr.push(input[i].category_name);
                       }
                   }
                   return arr;
@@ -37,39 +37,39 @@
           }
       });
 
-  angular.module('zoomtivity')
-      .filter('spotsFilter', function($rootScope) {
-          return function(input) {
-              if (input) {
-                  var arr = [];
-                  var i = 0;
-                  var len = input.length;
-                  var options = $rootScope.filterOptions;
-                  for (; i < len; i++) {
-                      if (input[i].rating < options.minRating) {
-                          continue;
-                      }
-                      if (options.category.length) {
-                          if (input[i].category.name !== options.category) {
-                              continue;
-                          }
-                      }
-                      if (input[i].category.type.name === 'event' && options.dateFrom.length && options.dateTo.length) {
-                          var filterDateFrom = new Date(options.dateFrom);
-                          var filterDateTo = new Date(options.dateTo);
-                          var spotDateFrom = new Date(input[i].start_date);
-                          var spotDateTo = new Date(input[i].end_date);
-                          if (!(spotDateFrom >= filterDateFrom) || !(spotDateTo <= filterDateTo)) {
-                              continue;
-                          }
-                      }
-                      arr.push(input[i]);
-                  }
-                  return arr;
-              }
-              return null;
-          }
-      });
+  // angular.module('zoomtivity')
+  //     .filter('spotsFilter', function($rootScope) {
+  //         return function(input) {
+  //             if (input) {
+  //                 var arr = [];
+  //                 var i = 0;
+  //                 var len = input.length;
+  //                 var options = $rootScope.filterOptions;
+  //                 for (; i < len; i++) {
+  //                     if (input[i].rating < options.minRating) {
+  //                         continue;
+  //                     }
+  //                     if (options.category.length) {
+  //                         if (input[i].category.name !== options.category) {
+  //                             continue;
+  //                         }
+  //                     }
+  //                     if (input[i].category.type.name === 'event' && options.dateFrom.length && options.dateTo.length) {
+  //                         var filterDateFrom = new Date(options.dateFrom);
+  //                         var filterDateTo = new Date(options.dateTo);
+  //                         var spotDateFrom = new Date(input[i].start_date);
+  //                         var spotDateTo = new Date(input[i].end_date);
+  //                         if (!(spotDateFrom >= filterDateFrom) || !(spotDateTo <= filterDateTo)) {
+  //                             continue;
+  //                         }
+  //                     }
+  //                     arr.push(input[i]);
+  //                 }
+  //                 return arr;
+  //             }
+  //             return null;
+  //         }
+  //     });
 
   /*
    * Directive for spot control panel
@@ -122,6 +122,7 @@
     vm.highlightSpotByHover = MapService.highlightSpotByHover;
     vm.clearSpotHighlighting = MapService.clearSpotHighlighting;
     vm.clearFilter = clearFilter;
+    vm.nextPage = nextPage;
 
     $window.onresize = getWindowSize;
     function getWindowSize(event) {
@@ -292,25 +293,26 @@
         $rootScope.mapSortSpots.markers = mapSpots;
       }
 
+      $timeout(function () {
+        if ($rootScope.mapSortSpots.markers.length > 0) {
+          $rootScope.changeMapState('small', null, false);
+        //   console.log($rootScope.mapSortSpots.data);
+          MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
+          if (!$rootScope.isDrawArea) {
+            MapService.FitBoundsByLayer($rootScope.sortLayer);
+          }
+        } else {
+          $rootScope.changeMapState('big');
+          if ( !ignoreEmptyList ) {
+            toastr.info('0 spots found');
+          }
+          MapService.clearLayers();
+        }
+      });
+
       $rootScope.mapSortSpots.sourceSpots = _filterUniqueSpots($rootScope.mapSortSpots.markers);
       loadNextSpots(layer);
 
-      $timeout(function () {
-        // if ($rootScope.mapSortSpots.markers.length > 0) {
-        //   $rootScope.changeMapState('small', null, false);
-        //   console.log($rootScope.mapSortSpots.data);
-        //   MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
-        //   if (!$rootScope.isDrawArea) {
-        //     MapService.FitBoundsByLayer($rootScope.sortLayer);
-        //   }
-        // } else {
-        //   $rootScope.changeMapState('big');
-        //   if ( !ignoreEmptyList ) {
-        //     toastr.info('0 spots found');
-        //   }
-        //   MapService.clearLayers();
-        // }
-      });
     }
 
     function _filterUniqueSpots(array) {
@@ -322,47 +324,35 @@
     /**
      * Infinite scroll - ok
      */
+    function nextPage() {
+        $rootScope.searchLimit += 20;
+    }
+
     function loadNextSpots(layer) {
-    //   console.log('loadNextSpots');
       if ($rootScope.mapSortSpots.sourceSpots && $rootScope.mapSortSpots.sourceSpots.length > 0) {
-        var startIdx = $rootScope.mapSortSpots.page * SPOTS_PER_PAGE,
-        endIdx = startIdx + SPOTS_PER_PAGE,
-        spots = $rootScope.mapSortSpots.sourceSpots.slice(startIdx, endIdx),
-        ids = _.pluck(spots, 'spot_id');
-
-        if (ids.length > 0) {
-          $rootScope.mapSortSpots.isLoading = true;
-          $http.get(SPOT_LIST_URL + '?' + jQuery.param({ids: ids}))
-            .success(function success(data) {
-              if ($rootScope.sortLayer == 'event') {
-                data = SpotService.formatSpot(data);
-              }
-
-              $rootScope.mapSortSpots.data = _.union($rootScope.mapSortSpots.data, data);
-              $rootScope.mapSortSpots.isLoading = false;
-              //////
-              if ($rootScope.mapSortSpots.markers.length > 0) {
-                MapService.highlightSpot();
-                $rootScope.changeMapState('small', null, false);
-                MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.data, layer, true);
-                if (!$rootScope.isDrawArea) {
-                  MapService.FitBoundsByLayer($rootScope.sortLayer);
-                }
-              } else {
-                $rootScope.changeMapState('big');
-                if ( !ignoreEmptyList ) {
-                  toastr.info('0 spots found');
-                }
-                MapService.clearLayers();
-              }
-              //////
-            })
-            .catch(function (resp) {
-              $rootScope.mapSortSpots.isLoading = false;
-            });
-
-          $rootScope.mapSortSpots.page++;
-        }
+           $rootScope.mapSortSpots.data = $rootScope.mapSortSpots.sourceSpots;
+        // var startIdx = $rootScope.mapSortSpots.page * SPOTS_PER_PAGE,
+        // endIdx = startIdx + SPOTS_PER_PAGE,
+        // spots = $rootScope.mapSortSpots.sourceSpots.slice(startIdx, endIdx),
+        // ids = _.pluck(spots, 'spot_id');
+        //
+        // if (ids.length > 0) {
+        //   $rootScope.mapSortSpots.isLoading = true;
+        //   $http.get(SPOT_LIST_URL + '?' + jQuery.param({ids: ids}))
+        //     .success(function success(data) {
+        //       if ($rootScope.sortLayer == 'event') {
+        //         data = SpotService.formatSpot(data);
+        //       }
+        //
+        //       $rootScope.mapSortSpots.data = _.union($rootScope.mapSortSpots.data, data);
+        //       $rootScope.mapSortSpots.isLoading = false;
+        //     })
+        //     .catch(function (resp) {
+        //       $rootScope.mapSortSpots.isLoading = false;
+        //     });
+        //
+        //   $rootScope.mapSortSpots.page++;
+        // }
       }
     }
 

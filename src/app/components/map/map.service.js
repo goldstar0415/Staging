@@ -64,6 +64,22 @@
       var GeocodingSearchUrl = '//open.mapquestapi.com/nominatim/v1/search.php?format=json&key=' + GEOCODING_KEY + '&addressdetails=1&limit=3&q=';
       var GeocodingReverseUrl = '//open.mapquestapi.com/nominatim/v1/reverse.php?format=json&key=' + GEOCODING_KEY;
 
+      function setMarkerIcon(spot, isHighlighted) {
+          var image = '';
+          if (spot) {
+              if (spot.category_name === 'Event' || (spot.type && spot.type === 'Event')) {
+                  image = '../../../assets/img/markers/marker-event' + (isHighlighted ? '-highlighted.png' : '.png');
+              } else if (spot.category_name === 'Food' || (spot.type && spot.type === 'Food')) {
+                  image = '../../../assets/img/markers/marker-food' + (isHighlighted ? '-highlighted.png' : '.png');
+              } else if (spot.category_name === 'Todo' || (spot.type && spot.type === 'Todo')) {
+                  image = '../../../assets/img/markers/marker-todo' + (isHighlighted ? '-highlighted.png' : '.png');
+              } else if (spot.category_name === 'Shelter' || (spot.type && spot.type === 'Shelter')) {
+                  image = '../../../assets/img/markers/marker-shelter' + (isHighlighted ? '-highlighted.png' : '.png');
+              }
+          }
+          return image;
+      }
+
       function plygonFromCircle(lat, lng, radius) {
           var d2r = Math.PI / 180; // degrees to radians
           var r2d = 180 / Math.PI; // radians to degrees
@@ -140,16 +156,7 @@
               }
           }
           if (marker && spot) {
-              var image = '';
-              if (spot.category.type.name === 'event') {
-                  image = '../../../assets/img/markers/marker-event-highlighted.png';
-              } else if (spot.category.type.name === 'food') {
-                  image = '../../../assets/img/markers/marker-food-highlighted.png';
-              } else if (spot.category.type.name === 'todo') {
-                  image = '../../../assets/img/markers/marker-todo-highlighted.png';
-              } else if (spot.category.type.name === 'shelter') {
-                  image = '../../../assets/img/markers/marker-shelter-highlighted.png';
-              }
+              var image = setMarkerIcon(spot);
               var icon = L.icon({
                   iconSize: [50, 50],
                   iconUrl: image,
@@ -197,16 +204,7 @@
                   }
               }
           }
-          var image = '';
-          if (spot.category.type.name === 'event') {
-              image = '../../../assets/img/markers/marker-event-highlighted.png';
-          } else if (spot.category.type.name === 'food') {
-              image = '../../../assets/img/markers/marker-food-highlighted.png';
-          } else if (spot.category.type.name === 'todo') {
-              image = '../../../assets/img/markers/marker-todo-highlighted.png';
-          } else if (spot.category.type.name === 'shelter') {
-              image = '../../../assets/img/markers/marker-shelter-highlighted.png';
-          }
+          var image = setMarkerIcon(spot);
             var icon = L.icon({
                 iconSize: [50, 50],
                 iconUrl: image,
@@ -240,6 +238,7 @@
 
       function spotsOnScreen() {
           if (!$rootScope.$$phase) {
+              $rootScope.searchLimit = 20;
               var _borderMarkerLayer = undefined;
               var layerGroup = null;
               if (typeof _borderMarkerLayer === 'undefined') {
@@ -951,12 +950,12 @@
             }
         });
 
-        map.on('resize', spotsOnScreen, this);
-        map.on('zoomend', spotsOnScreen, this);
+        // map.on('resize', spotsOnScreen, this);
+        // map.on('zoomend', spotsOnScreen, this);
         map.on('moveend', spotsOnScreen, this);
-        map.on('viewreset', spotsOnScreen, this);
-        map.on('layeradd', spotsOnScreen, this);
-        map.on('layerremove', spotsOnScreen, this);
+        // map.on('viewreset', spotsOnScreen, this);
+        // map.on('layeradd', spotsOnScreen, this);
+        // map.on('layerremove', spotsOnScreen, this);
 
         //add controls
         AddControls();
@@ -1913,35 +1912,15 @@
       }
 
       function CreateCustomIcon(iconUrl, type, item) {
+        //   debugger;
           if (item) {
               var spot = item.spot ? item.spot : item;
-              var image = '';
-              if (spot.category.type.name == 'event') {
-                  image = '../../../assets/img/markers/marker-event.png';
-              } else if (spot.category.type.name == 'food') {
-                  image = '../../../assets/img/markers/marker-food.png';
-              } else if (spot.category.type.name == 'todo') {
-                  image = '../../../assets/img/markers/marker-todo.png';
-              } else if (spot.category.type.name == 'shelter') {
-                  image = '../../../assets/img/markers/marker-shelter.png';
-              }
+              var image = setMarkerIcon(spot);
               return L.icon({
                   iconSize: [50, 50],
                   iconUrl: image,
                   className: 'spot-icon'
               });
-              //   if (spot.category.type.name == 'event') {
-              //       image = '../../../assets/img/svg/Icon_Events.svg';
-              //   } else if (spot.category.type.name == 'food') {
-              //       image = '../../../assets/img/svg/Icon_Grab_Grub.svg';
-              //   } else if (spot.category.type.name == 'todo') {
-              //       image = '../../../assets/img/svg/Icon_To_do.svg';
-              //   } else if (spot.category.type.name == 'shelter') {
-              //       image = '../../../assets/img/svg/Icon_Get_a_room.svg';
-              //   }
-              //   return new L.HtmlIcon({
-              //       html : "<div class='spot-icon'><span class='spot-icon-info'>no data</span><img src='" + image + "'><div class='spot-icon-stars" + spot.rating + "'><p class='s1'></p><p class='s2'></p><p class='s3'></p><p class='s4'></p><p class='s5'></p></div></div>",
-              //   });
           } else if (type == 'album' || type == 'photomap') {
               return new L.HtmlIcon({
                   html: "<div class='map-marker-icon map-marker-icon-photo'><img src='" + iconUrl + "' /></div>",
@@ -1978,8 +1957,12 @@
         var spot = spot.spot ? spot.spot : spot;
         marker.on('click', function () {
             if ($rootScope.isMapState()) {
-                $rootScope.setOpenedSpot(spot);
-                $rootScope.$apply();
+                // $rootScope.setOpenedSpot(spot);
+                // $rootScope.$apply();
+                $http.get(API_URL + '/spots/' + spot.spot_id)
+                    .success(function success(data) {
+                        $rootScope.setOpenedSpot(data);
+                    });
             } else {
                 var user_id = spot.user_id || spot.spot.user_id || 0;
                 $location.path(user_id + '/spot/' + spot_id);
@@ -1995,18 +1978,9 @@
           className: 'map-marker-plate'
         };
 
-        var image = '';
-        if (spot.category.type.name === 'event') {
-            image = '../../../assets/img/markers/marker-event-highlighted.png';
-        } else if (spot.category.type.name === 'food') {
-            image = '../../../assets/img/markers/marker-food-highlighted.png';
-        } else if (spot.category.type.name === 'todo') {
-            image = '../../../assets/img/markers/marker-todo-highlighted.png';
-        } else if (spot.category.type.name === 'shelter') {
-            image = '../../../assets/img/markers/marker-shelter-highlighted.png';
-        }
+        var image = setMarkerIcon(spot, true);
 
-        var popupContent = $compile('<div><p class="plate-name">' + spot.title + '</p><p class="plate-stars"><stars item="item"></stars></p><p class="plate-info">' + spot.category.display_name + '</p><img width="50" height="50" src=' + image + ' /></div>')(scope);
+        var popupContent = $compile('<div><p class="plate-name">' + spot.title + '</p><p class="plate-stars"><stars item="item"></stars></p><p class="plate-info">' + spot.category_name + '</p><img width="50" height="50" src=' + image + ' /></div>')(scope);
         var popup = L.popup(options).setContent(popupContent[0]);
         marker.bindPopup(popup);
       }
@@ -2465,8 +2439,8 @@
         var markers = [];
         _.each(spots, function (item) {
           var icon = CreateCustomIcon(item.category_icon_url, type, item);
-          if (item.points[0].location) {
-            var marker = L.marker(item.points[0].location, {icon: icon});
+          if (item.location) {
+            var marker = L.marker(item.location, {icon: icon});
             L.extend(marker, {
                 spot_id: item.id
             });
