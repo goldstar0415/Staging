@@ -765,7 +765,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $facilityGroupIcon = $sectionTitle->find('.facilityGroupIcon', 0);
                 if($facilityGroupIcon)
                 {
-                $facilityGroupIcon->outertext = '';
+                    $facilityGroupIcon->outertext = '';
                 }
                 $sectionTitle = trim($sectionTitle->innertext());
                 foreach($facilitiesChecklistSection->find('li') as $sectionItem)
@@ -975,7 +975,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $itemObj->remote_type = SpotVote::TYPE_GOOGLE;
                 $itemObj->remote_user_name = $item['author_name'];
                 $itemObj->remote_user_avatar = (!empty($item['profile_photo_url']))?$item['profile_photo_url']:'';
-                if( $save && !SpotVote::where('remote_id', $remote_id)->exists())
+                if( $save && !SpotVote::where('remote_id', $remote_id)->where('spot_id', $this->id)->exists())
                 {
                     $this->votes()->save($itemObj);
                 }
@@ -1045,19 +1045,20 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
 
     protected function getHashForGoogle($item)
     {
-        
-        $url_path = parse_url($item['author_url'], PHP_URL_PATH);
-        $url_path_arr = array_filter(explode('/', $url_path));
         $userAlias = '';
-        foreach ($url_path_arr as $elem)
+        if(isset($item['author_url']))
         {
-            if (is_numeric($elem))
+            $url_path = parse_url($item['author_url'], PHP_URL_PATH);
+            $url_path_arr = array_filter(explode('/', $url_path));
+            foreach ($url_path_arr as $elem)
             {
-                $userAlias = $elem;
-                break;
+                if (is_numeric($elem))
+                {
+                    $userAlias = $elem;
+                    break;
+                }
             }
         }
-        
         return 'gg_' . $userAlias . $item['time'];
     }
     
@@ -1352,7 +1353,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      * Reviews totals
      */
     
-    public function getReviewsTotal()
+    public function getReviewsTotal($saveReviews = true)
     {
         $result = [];
         if( $facebookRating = $this->getFacebookRating())
@@ -1361,24 +1362,24 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         }
         if(!empty($this->getGooglePlaceInfo()))
         {
-            $this->getGoogleReviews(true); // true to save
+            $this->getGoogleReviews($saveReviews);
             $result['info']['google'] = $this->getGoogleReviewsInfo();
         }
         $yelpInfo = $this->getYelpBizInfo();
         if( !empty($yelpInfo) )
         {
-            $this->getYelpReviewsFromPage(true); // true to save
+            $this->getYelpReviewsFromPage($saveReviews);
             $result['info']['yelp'] = $yelpInfo;
         }
         $spotInfo = $this->getSpotExtension();
         if(!empty($spotInfo->booking_url))
-        {            
+        {
             $reviewsUrl = $this->getBookingReviewsUrl($spotInfo->booking_url);
             if($reviewsUrl && $reviewsPageContent = $this->getPageContent($reviewsUrl, [
                 'headers' => $this->getBookingHeaders()
             ]))
             {
-                $this->getBookingReviews($reviewsPageContent, true); // true to save
+                $this->getBookingReviews($reviewsPageContent, $saveReviews);
             }
             $bookingTotals = $this->getBookingTotals();
             if(!empty($bookingTotals))
