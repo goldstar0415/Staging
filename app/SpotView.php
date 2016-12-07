@@ -58,9 +58,7 @@ use Log;
 class SpotView extends BaseModel
 {
     protected $table = 'mv_spots_spot_points';
-    protected $appends = [
-        //'rating',
-    ];
+
     public $timestamps = false;
     /**
      * Get the points for the spot

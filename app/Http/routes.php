@@ -77,6 +77,8 @@ Route::get('spots/{spots}/preview', 'SpotController@preview');
 Route::get('spots/{spots}/export', 'SpotController@export');
 Route::get('spots/{spots}/cover', 'SpotController@getCover');
 Route::get('spots/{spots}/ratings', 'SpotController@getRatingInfo');
+Route::get('spots/{spots}/hours', 'SpotController@getHours');
+Route::get('spots/{spots}/info', 'SpotController@getBookingInfo');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 Route::resource('spots.comments', 'SpotCommentController', ['except' => ['create', 'edit']]);
 Route::resource('spots.reviews', 'SpotReviewController', ['except' => ['create', 'edit']]);

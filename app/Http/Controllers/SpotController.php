@@ -148,46 +148,6 @@ class SpotController extends Controller
      */
     public function show($spot)
     {
-        $spotInfo = $spot->getSpotExtension();
-        
-        $spot->reviews_total = $spot->getReviewsTotal();
-        
-        $amenitiesArray = [];
-        if($spotInfo && !$spotInfo->is_parsed)
-        {
-            $remote_photos = false;
-            $amenities = false;
-            $hours = false;
-            $bookingUrl = $spot->getBookingUrl($spotInfo->booking_url);
-            if(
-                isset($spotInfo->booking_url) && 
-                $spot->checkUrl($spotInfo->booking_url) && 
-                $bookingUrl &&
-                $bookingPageContent = $spot->getPageContent($bookingUrl, [
-                    'headers' => $spot->getBookingHeaders()
-                ])
-            )
-            {
-                $remote_photos = $spot->saveBookingPhotos($bookingPageContent);
-                if( $amenities = $spot->saveBookingAmenities($bookingPageContent) )
-                {
-                    $amenitiesArray = $amenities;
-                    $spot->load(['amenities']);
-                }
-            }
-            
-            if( isset($spot->google) && !empty($spot->google) )
-            {
-                $hours = $spot->saveGooglePlaceHours($spot->google);
-            }
-            
-            if( $remote_photos || $amenities || $hours )
-            {
-                $spotInfo->is_parsed = true;
-                $spotInfo->save();
-            }
-            
-        }
         $res = $spot
             ->load([
                 'photos',
@@ -525,7 +485,7 @@ class SpotController extends Controller
     public function prices (Request $request, Spot $spot)
     {
         $result       = [];
-        $spotInfo    = $spot->getSpotExtension();
+        $spotInfo     = $spot->getSpotExtension();
         $dates        = $request->all();
         $from         = date_parse_from_format( 'm.d.Y' , $dates['start_date'] );
         $to           = date_parse_from_format( 'm.d.Y' , $dates['end_date'] );
@@ -572,6 +532,50 @@ class SpotController extends Controller
     public function getRatingInfo($spot)
     {
         return $spot->getReviewsTotal();
+    }
+    
+    public function getHours($spot)
+    {
+        $result = [];
+        $spotInfo = $spot->getSpotExtension();
+        if( empty($spotInfo->hours) )
+        {
+            $googlePlaceInfo = $spot->getGooglePlaceInfo();
+            if(!empty($googlePlaceInfo))
+            $result = $spot->saveGooglePlaceHours($googlePlaceInfo);
+        }
+        elseif(isset($spotInfo->hours) && !empty($spotInfo->hours))
+        {
+            $result = $spotInfo->hours;
+        }
+        return $result;
+    }
+    
+    public function getBookingInfo($spot)
+    {
+        $result = [ 'photos' => [], 'amenities' => [] ];
+        $spotInfo = $spot->getSpotExtension();
+        $remote_photos = false;
+        $amenities = false;
+        $bookingUrl = $spot->getBookingUrl($spotInfo->booking_url);
+        if(
+            isset($spotInfo->booking_url) && 
+            $spot->checkUrl($spotInfo->booking_url) && 
+            $bookingUrl &&
+            $bookingPageContent = $spot->getPageContent($bookingUrl, [
+                'headers' => $spot->getBookingHeaders()
+            ])
+        )
+        {
+            $result['photos'] = $spot->saveBookingPhotos($bookingPageContent);
+            if( $amenities = $spot->saveBookingAmenities($bookingPageContent) )
+            {
+                $amenitiesArray = $amenities;
+                $spot->load(['amenities']);
+                $result['amenities'] = $spot->amenities;
+            }
+        }
+        return $result;
     }
     
     public function getCover($spot)
