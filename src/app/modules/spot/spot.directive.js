@@ -20,7 +20,7 @@
     };
 
     /** @ngInject */
-    function SpotController($scope, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, dialogs, API_URL, InviteFriends, Share) {
+    function SpotController($scope, SpotService, ScrollService, SpotReview, SpotComment, $state, $http, MapService, $rootScope, dialogs, API_URL, InviteFriends, Share) {
       var vm = this;
       var spot = vm.spot;
       vm.API_URL = API_URL;
@@ -38,6 +38,19 @@
       vm.invite = openInviteModal;
       vm.share = openShareModal;
       vm.photoIndex = 0;
+      vm.getPrice = getPrice;
+      vm.priceDate = {
+          start_date: null,
+          end_date: null
+      };
+      vm.prices = null;
+
+      function getPrice() {
+          $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
+              .success(function success(data) {
+                  vm.prices = data.data;
+              });
+      }
 
       //MapService.GetMap().panTo(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng));
       MapService.GetMap().setView(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng), 17);

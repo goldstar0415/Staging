@@ -1957,6 +1957,7 @@
         var spot = spot.spot ? spot.spot : spot;
         marker.on('click', function () {
             if ($rootScope.isMapState()) {
+                $rootScope.setOpenedSpot(null);
                 // $rootScope.setOpenedSpot(spot);
                 // $rootScope.$apply();
                 $http.get(API_URL + '/spots/' + spot.spot_id)

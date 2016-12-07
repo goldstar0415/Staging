@@ -1,7 +1,7 @@
 .opened-item {
-    padding: 10px 30px;
+    margin: -20px 30px;
     @media (max-width: 767px) {
-        padding: 10px 10px;
+        margin: -20px 10px;
     }
     &.item-modal {
         position: absolute;
@@ -12,6 +12,11 @@
         bottom: 50px;
         width: 470px;
         overflow: auto;
+        margin: 0;
+        padding: 10px 30px;
+        @media (max-width: 767px) {
+            padding: 10px 10px;
+        }
         @media (min-width: 768px) and (orientation: portrait) {
             top: calc(100vh - 378px);
             left: 0;
@@ -29,7 +34,7 @@
         }
     }
     .opened-header {
-        border-bottom: 1px solid lightgrey;
+        // border-bottom: 1px solid lightgrey;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -73,9 +78,17 @@
         .opened-stars {
             width: 80px;
         }
+        @media (max-width: 767px) {
+            margin: 20px 0 15px;
+        }
         p {
-            margin: 10px 0 0;
+            margin: -25px 0 0 80px;
             color: rgb(2, 200, 246);
+            z-index: 10;
+            position: relative;
+            @media (max-width: 767px) {
+                margin: 0;
+            }
         }
     }
     .opened-address {
@@ -415,6 +428,21 @@
         }
         span.active {
             color: $light_blue_btn;
+        }
+    }
+}
+
+@media (max-width: 767px) and (orientation: landscape) {
+    .opened-container {
+        display: flex;
+        margin: 0 -10px 15px;
+        .new-result-card {
+            width: 50%;
+            margin: 0;
+        }
+        .opened-main {
+            width: 50%;
+            margin: -10px 20px;
         }
     }
 }
