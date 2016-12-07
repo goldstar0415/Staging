@@ -20,6 +20,7 @@
     vm.setImage = setImage;
     vm.invite = openInviteModal;
     vm.share = openShareModal;
+    vm.photoIndex = 0;
     vm.getPrice = getPrice;
     vm.priceDate = {
         start_date: null,
