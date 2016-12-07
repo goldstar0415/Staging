@@ -27,6 +27,7 @@
             vm.addToFavorite = SpotService.addToFavorite;
             vm.removeFromFavorite = SpotService.removeFromFavorite;
             vm.unFavorite = unFavorite;
+            vm.getImg = getImg;
             vm.image = setImage(vm.item);
             vm.isMenuOpened = false;
             vm.toggleMenu = toggleMenu;
@@ -35,9 +36,16 @@
             vm.openShareModal = openShareModal;
             vm.openSpot = openSpot;
 
-            function openSpot(spotId) {
+            function getImg() {
+                $http.get(API_URL + '/spots/' + vm.item.id + '/cover')
+                    .success(function success(data) {
+                        if (data.cover_url) {
+                            vm.image = data.cover_url.url;
+                        }
+                    });
+            }
 
-                // $http.get('https://testback.zoomtivity.com/map/spots/list?ids%5B%5D=' + spotId)
+            function openSpot(spotId) {
                 $http.get(API_URL + '/spots/' + spotId)
                     .success(function success(data) {
                         $rootScope.setOpenedSpot(data);
@@ -69,9 +77,10 @@
                         return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
                     }
                 } else {
-                    if (item.cover_url) {
+                    if (item.cover_url && item.cover_url.original !== "https://testback.zoomtivity.com/uploads/missings/covers/original/missing.png") {
                         return item.cover_url.original;
                     } else {
+                        vm.getImg();
                         return "https://testback.zoomtivity.com/uploads/missings/covers/original/missing.png";
                     }
                 }
