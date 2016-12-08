@@ -192,10 +192,10 @@
 
               if (vm.type != 'event') {
                 $timeout(function () {
-                  $state.go('spots', {user_id: resp.data.user_id});
+                  $state.go('spots', {user_id: resp.data.user_id || 0});
                 }, 3000);
               } else {
-                $state.go('spot', {spot_id: resp.data.id, user_id: resp.data.user_id});
+                $state.go('spot', {spot_id: resp.data.id, user_id: resp.data.user_id || 0});
               }
             })
             .catch(function (resp) {
