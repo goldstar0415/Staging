@@ -1,6 +1,6 @@
 <div class="opened-item" ng-class="{ 'item-modal' : Spot.modal }" ng-if="Spot.spot">
     <div class="opened-header" ng-if="Spot.modal">
-        <a ng-click="Spot.close()" ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id})">
+        <a ng-click="Spot.close()" ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id || 0})">
             <img src="../../../assets/img/svg/fullscreen.svg" alt="">
         </a>
         <img src="../../../assets/img/svg/Icon_Events.svg" alt="category" ng-if="Spot.spot.category.type.name == 'event'">
