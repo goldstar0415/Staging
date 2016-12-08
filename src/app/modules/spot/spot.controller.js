@@ -103,6 +103,10 @@
           vm.attachments.spots = [];
           vm.attachments.areas = [];
           vm.attachments.links = [];
+          if(message.attachments.album_photos)
+          {
+            vm.spot.photos = _.union(vm.spot.photos, message.attachments.album_photos);
+          }
         }, function error(resp) {
           console.warn(resp);
           toastr.error('Send message failed');
