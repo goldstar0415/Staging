@@ -557,22 +557,25 @@ class SpotController extends Controller
         $spotInfo = $spot->getSpotExtension();
         $remote_photos = false;
         $amenities = false;
-        $bookingUrl = $spot->getBookingUrl($spotInfo->booking_url);
-        if(
-            isset($spotInfo->booking_url) && 
-            $spot->checkUrl($spotInfo->booking_url) && 
-            $bookingUrl &&
-            $bookingPageContent = $spot->getPageContent($bookingUrl, [
-                'headers' => $spot->getBookingHeaders()
-            ])
-        )
+        if($spotInfo)
         {
-            $result['photos'] = $spot->saveBookingPhotos($bookingPageContent);
-            if( $amenities = $spot->saveBookingAmenities($bookingPageContent) )
+            $bookingUrl = $spot->getBookingUrl($spotInfo->booking_url);
+            if(
+                isset($spotInfo->booking_url) && 
+                $spot->checkUrl($spotInfo->booking_url) && 
+                $bookingUrl &&
+                $bookingPageContent = $spot->getPageContent($bookingUrl, [
+                    'headers' => $spot->getBookingHeaders()
+                ])
+            )
             {
-                $amenitiesArray = $amenities;
-                $spot->load(['amenities']);
-                $result['amenities'] = $spot->amenities;
+                $result['photos'] = $spot->saveBookingPhotos($bookingPageContent);
+                if( $amenities = $spot->saveBookingAmenities($bookingPageContent) )
+                {
+                    $amenitiesArray = $amenities;
+                    $spot->load(['amenities']);
+                    $result['amenities'] = $spot->amenities;
+                }
             }
         }
         return $result;
