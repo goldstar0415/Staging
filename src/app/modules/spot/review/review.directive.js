@@ -32,6 +32,12 @@
             elem.innerHTML = vm.review.message;
             var decoded = elem.value;
             vm.review.message = $('<div>').html(decoded).text();
+            vm.fullReview = false;
+
+            vm.more = function() {
+                vm.fullReview = true;
+            }
+
             vm.getServiceName = function(serviceNum)
             {
                 if(serviceNum)
@@ -55,7 +61,7 @@
                 }
                 return result;
             }
-            
+
             vm.editReview = function(review) {
                 vm.review.oldVote = review.vote;
                 vm.review.oldMessage = review.message;
@@ -93,7 +99,7 @@
                 });
               });
             };
-            
+
         }
     }
 

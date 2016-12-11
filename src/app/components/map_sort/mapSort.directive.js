@@ -325,7 +325,7 @@
      * Infinite scroll - ok
      */
     function nextPage() {
-        $rootScope.searchLimit += 20;
+        $rootScope.searchLimit += 12;
     }
 
     function loadNextSpots(layer) {

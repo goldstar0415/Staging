@@ -24,10 +24,10 @@
                 <span ng-if="Spot.spot.start_date == Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}}</span>
                 <span ng-if="Spot.spot.start_date != Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}} - {{Spot.spot.end_date | date:'medium'}}</span>
             </div>
-            <div class="opened-first-buttons">
+            <!-- <div class="opened-first-buttons">
                 <button class="button-invite" ng-click="Spot.invite(Spot.spot)">Invite <span class="glyphicon glyphicon-user"></span></button>
                 <button class="button-share" ng-click="Spot.share(Spot.spot, 'spot')">Share <span class="glyphicon glyphicon-share"></span></button>
-            </div>
+            </div> -->
             <div class="opened-second-buttons" ng-if="Spot.spot.restaurant">
                 <button class="button-order">Order</button>
                 <button class="button-table">Book table</button>
@@ -37,7 +37,7 @@
                 <div class="price-dates">
                     <input ng-datepicker ng-model="Spot.priceDate.start_date" class="date" placeholder="FROM" type="text">
                     <input ng-datepicker ng-model="Spot.priceDate.end_date" class="date" placeholder="TO" type="text">
-                    <button ng-click="Spot.getPrice()">Get prices</button>
+                    <button ng-click="Spot.getPrice()">Availability</button>
                 </div>
                 <div class="prices-results" ng-if="Spot.prices">
                     <div class="booking">

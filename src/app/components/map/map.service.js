@@ -2324,7 +2324,7 @@
             return !(byStart || byEnd);
           });
           return SortByDate(newArray);
-        }
+        }                           
 
         if (startDate && !endDate) {
           var start = moment(startDate, 'MM.DD.YYYY');
