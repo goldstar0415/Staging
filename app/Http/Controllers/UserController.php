@@ -279,7 +279,7 @@ class UserController extends Controller
     public function reviews(PaginateRequest $request)
     {
         $reviews = SpotVote::with('user','spot')
-            ->where('user_id', $request->user()->id);
+            ->where('user_id', $request->user()->id)->orderBy('created_at', 'desc');
         return $this->paginatealbe($request, $reviews);
     }
 
