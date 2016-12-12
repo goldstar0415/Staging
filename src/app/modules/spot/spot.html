@@ -158,8 +158,8 @@
                         review="Spot.review" vote="Spot.vote" item="Spot.spot"
                                   maxlength="255"></review-input>
                 </div>
-                <div ng-if="Spot.votes.data.length" class="new-review col-xs-12">
-                    <h3 class="col-xs-12">Recent</h3>
+                <div ng-if="Spot.votes.data.length" class="new-review">
+                    <h3>Recent</h3>
                 </div>
                 <div class="clearfix"></div>
                 <div infinite-scroll="Spot.reviewsPagination.nextPage()" infinite-scroll-disabled="Spot.reviewsPagination.busy"

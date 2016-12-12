@@ -438,47 +438,58 @@
     }
 }
 
-@media (max-width: 767px) and (orientation: landscape) {
-    .opened-container {
-        display: flex;
-        margin: 0 -10px 15px;
-        .new-result-card {
-            width: 50%;
-            margin: 0;
-        }
-        .opened-main {
-            width: 50%;
-            margin: -10px 20px;
-        }
-    }
+// @media (max-width: 767px) and (orientation: landscape) {
+//     .opened-container {
+//         display: flex;
+//         margin: 0 -10px 15px;
+//         .new-result-card {
+//             width: 50%;
+//             margin: 0;
+//         }
+//         .opened-main {
+//             width: 50%;
+//             margin: -10px 20px;
+//         }
+//     }
+// }
+.spot-img-full {
+    display: none;
 }
 
-.spot-img-full {
-    padding: 0 25px;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    height: 35px;
-    display: flex;
-    background-color: rgba(#0B253A, 0.5);
-    &>button, a {
+.opened-container {
+    .spot-img-full {
+        padding: 0 25px;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        height: 35px;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 14px;
-        border: none;
-        background: none;
-        color: white;
+        background-color: rgba(#0B253A, 0.8);
+        &>button, a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            border: none;
+            background: none;
+            color: white;
+        }
+        a {
+            margin-left: auto;
+            width: 35px;
+        }
+        button {
+            align-items: flex-start;
+            span {
+                margin-right: 5px;
+            }
+        }
     }
-    a {
-        margin-left: auto;
-        width: 35px;
-    }
-    button {
-        align-items: flex-start;
-        span {
-            margin-right: 5px;
+
+    .spot-img-top {
+        a {
+            display: none;
         }
     }
 }
@@ -493,4 +504,35 @@
         color: #00C9F8;
         display: block;
     }
+}
+
+.review-top {
+    .avatar {
+        width: 7rem;
+        height: 7rem;
+    }
+    .review-avatar a:after {
+        width: 30px;
+        height: 30px;
+    }
+    .review-content {
+        .name {
+            font-size: 1.5rem;
+        }
+        p {
+            font-size: 13px;
+        }
+    }
+}
+
+div.review.post {
+    padding: 15px 0;
+}
+
+.new-review h3{
+    margin: 0 auto 25px;
+}
+
+.review-section.comments-section.post {
+    padding: 0;
 }
