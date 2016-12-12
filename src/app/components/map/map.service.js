@@ -179,11 +179,7 @@
               highlightMarker = null;
           }
           $rootScope.highlightedSpotId = null;
-          if ($(window).width() > 767) {
-              spot.marker.closePopup();
-          } else {
-
-          }
+          spot.marker.closePopup();
       }
 
       function highlightSpotByHover(spot) {
