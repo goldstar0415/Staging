@@ -555,7 +555,6 @@ class SpotController extends Controller
     {
         $result = [ 'photos' => [], 'amenities' => [] ];
         $spotInfo = $spot->getSpotExtension();
-        $remote_photos = false;
         $amenities = false;
         if($spotInfo)
         {
@@ -572,9 +571,8 @@ class SpotController extends Controller
                 $result['photos'] = $spot->saveBookingPhotos($bookingPageContent);
                 if( $amenities = $spot->saveBookingAmenities($bookingPageContent) )
                 {
-                    $amenitiesArray = $amenities;
                     $spot->load(['amenities']);
-                    $result['amenities'] = $spot->amenities;
+                    $result['amenities'] = $amenities;
                 }
             }
         }
