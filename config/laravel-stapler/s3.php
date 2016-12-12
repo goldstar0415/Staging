@@ -13,15 +13,15 @@ return [
     |
     */
     's3_client_config' => [
-	    'credentials' => [
-            'key'		=> env('S3_KEY', ''),
-            'secret'	=> env('S3_SECRET', ''),
-		],
-	    'key'		=> env('S3_KEY', ''),
-	    'secret'	=> env('S3_SECRET', ''),
+	'credentials'   => [
+            'key'       => env('S3_KEY', ''),
+            'secret'    => env('S3_SECRET', ''),
+        ],
+        'key'           => env('S3_KEY', ''),
+        'secret'	=> env('S3_SECRET', ''),
         'region'	=> env('S3_REGION', ''),
         'scheme'	=> env('S3_SCHEME', ''),
-	    'version'	=> env('S3_VERSION', ''),
+        'version'	=> env('S3_VERSION', ''),
     ],
     
     /*

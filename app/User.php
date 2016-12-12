@@ -17,7 +17,7 @@ use Phaza\LaravelPostgis\Geometries\Point;
 use Request;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
-use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
+use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use App\SpotVote;
 
 /**

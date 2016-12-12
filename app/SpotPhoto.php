@@ -4,7 +4,7 @@ namespace App;
 
 use App\Contracts\Commentable;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
-use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
+use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 
 /**
  * Class AlbumPhoto

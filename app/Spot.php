@@ -9,7 +9,7 @@ use App\Extensions\StartEndDatesTrait;
 use App\Scopes\ApprovedScopeTrait;
 use App\Scopes\NewestScopeTrait;
 use App\Services\SocialSharing;
-use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
+use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use DB;
 use Eluceo\iCal\Component\Event;

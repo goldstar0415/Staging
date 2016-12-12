@@ -5,7 +5,7 @@ namespace App;
 use App\Extensions\Attachable;
 use App\Services\SocialSharing;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
-use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
+use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 
 /**
  * Model Area

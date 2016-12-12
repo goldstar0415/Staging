@@ -8,7 +8,7 @@ use App\Scopes\NewestScopeTrait;
 use App\Services\SocialSharing;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
-use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
+use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
 
 /**
