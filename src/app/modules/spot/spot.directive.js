@@ -53,7 +53,7 @@
       }
 
       //MapService.GetMap().panTo(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng));
-      MapService.GetMap().setView(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng), 17);
+      MapService.GetMap().setView(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng));
 
       $scope.$watch(function() { return angular.element('.opened-item').is(':visible') }, function() {
           var container = document.querySelector('.search-filters');
