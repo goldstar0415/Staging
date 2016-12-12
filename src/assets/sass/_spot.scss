@@ -358,7 +358,7 @@
 .review-top {
     display: flex;
     .review-avatar {
-        width: 33%;
+        // width: 33%;
         max-width: 100px;
         a {
             position: relative;
@@ -368,23 +368,29 @@
                 position: absolute;
                 bottom: 0;
                 right: 0;
-                width: 35px;
-                height: 35px;
+                width: 25px;
+                height: 25px;
+                background-size: 17px;
             }
             &.zoomtivity:after {
                 background: #072a3d url(../img/icons/zoomtivity-25x25.png) center center no-repeat;
+                background-size: 17px;
             }
             &.google:after {
                 background: #d12320 url(../img/icons/google-25x25.png) center center no-repeat;
+                background-size: 17px;
             }
             &.booking:after {
                 background: #003580 url(../img/icons/booking-25x25.png) center center no-repeat;
+                background-size: 17px;
             }
             &.yelp:after {
                 background: #b3232e url(../img/icons/yelp-25x25.png) center center no-repeat;
+                background-size: 17px;
             }
             &.facebook:after {
                 background: #375794 url(../img/icons/facebook-25x25.png) center center no-repeat;
+                background-size: 17px;
             }
         }
 
@@ -510,10 +516,6 @@
     .avatar {
         width: 7rem;
         height: 7rem;
-    }
-    .review-avatar a:after {
-        width: 30px;
-        height: 30px;
     }
     .review-content {
         .name {
