@@ -6,11 +6,10 @@
     .controller('SpotController', SpotController);
 
   /** @ngInject */
-  function SpotController(spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share) {
+  function SpotController(spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share, AsyncLoaderService) {
     var vm = this;
     vm.API_URL = API_URL;
     vm.spot = SpotService.formatSpot(spot);
-    //vm.spot.rating = vm.spot.reviews_total.total.rating;
     vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
@@ -22,11 +21,25 @@
     vm.share = openShareModal;
     vm.photoIndex = 0;
     vm.getPrice = getPrice;
+    vm.amenitiesCount = Object.keys(vm.spot.amenities).length;
     vm.priceDate = {
         start_date: null,
         end_date: null
     };
     vm.prices = null;
+    AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/info').then(function(data) {
+        if(vm.amenitiesCount == 0)
+        {
+            vm.spot.amenities = data.amenities;
+            vm.amenitiesCount = Object.keys(vm.spot.amenities).length;
+        }
+        vm.spot.photos = _.union(vm.spot.photos, data.photos);
+    });
+    AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/ratings').then(function(data) {
+        vm.reviews_total = data;
+        vm.spot.rating = data.total.rating;
+        syncSpots(spot.id, {is_saved: true});
+    });
 
     function getPrice() {
         $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
