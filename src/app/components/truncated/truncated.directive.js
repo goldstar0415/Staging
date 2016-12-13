@@ -14,6 +14,9 @@
                     scope.$watch(attributes.dotdotdot, function() {
                         $timeout(function() {
                             element.dotdotdot();
+                            if (element.height() == 90) {
+                                element.addClass('review-more');
+                            }
                             $(window).resize(function() {
                                 element.context.innerText = scope.text;
                                 element.dotdotdot();

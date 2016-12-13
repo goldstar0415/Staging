@@ -42,6 +42,7 @@
 	  var pathRouterFail	= 0;
 
       var highlightMarker;
+      var mobileMarker;
 
 		function getPathRouter() {
 			switch(pathRouterFail) {
@@ -591,6 +592,7 @@
           return container;
         },
         _click: function (e) {
+            $rootScope.sidebarMessage = "Loading...";
             if ($rootScope.$state.current.name === 'areas.preview') {
                 $location.path('/areas');
                 $rootScope.mapState = "full-size";
@@ -1955,20 +1957,6 @@
       function BindSpotPopup(marker, spot) {
         var spot_id = spot.id ? spot.id : spot.spot.id;
         var spot = spot.spot ? spot.spot : spot;
-        marker.on('click', function () {
-            if ($rootScope.isMapState()) {
-                $rootScope.setOpenedSpot(null);
-                // $rootScope.setOpenedSpot(spot);
-                // $rootScope.$apply();
-                $http.get(API_URL + '/spots/' + spot.spot_id)
-                    .success(function success(data) {
-                        $rootScope.setOpenedSpot(data);
-                    });
-            } else {
-                var user_id = spot.user_id || spot.spot.user_id || 0;
-                $location.path(user_id + '/spot/' + spot_id);
-            }
-        });
         var scope = $rootScope.$new();
         scope.item = spot;
         scope.marker = marker;
@@ -1984,6 +1972,36 @@
         var popupContent = $compile('<div><p class="plate-name">' + spot.title + '</p><p class="plate-stars"><stars item="item"></stars></p><p class="plate-info">' + spot.category_name + '</p><img width="50" height="50" src=' + image + ' /></div>')(scope);
         var popup = L.popup(options).setContent(popupContent[0]);
         marker.bindPopup(popup);
+        marker.on('click', function () {
+            if ($(window).width() > 767) {
+                if ($rootScope.isMapState()) {
+                    $rootScope.setOpenedSpot(null);
+                    $http.get(API_URL + '/spots/' + spot.spot_id)
+                        .success(function success(data) {
+                            $rootScope.setOpenedSpot(data);
+                        });
+                } else {
+                    var user_id = spot.user_id || spot.spot.user_id || 0;
+                    $location.path(user_id + '/spot/' + spot_id);
+                }
+            } else {
+                if(marker.isHighlighted) {
+                    marker.isHighlighted = false;
+                    $rootScope.setOpenedSpot(null);
+                    $http.get(API_URL + '/spots/' + spot.spot_id)
+                        .success(function success(data) {
+                            $rootScope.setOpenedSpot(data);
+                        });
+                } else {
+                    if (mobileMarker) {
+                        mobileMarker.isHighlighted = false;
+                    }
+                    marker.openPopup();
+                    marker.isHighlighted = true;
+                    mobileMarker = marker;
+                }
+            }
+        });
       }
 
       function _loadSpotComments(scope, spot) {
