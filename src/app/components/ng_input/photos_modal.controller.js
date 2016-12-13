@@ -9,11 +9,12 @@
 			.controller('PhotosModalController', PhotosModalController);
 
 	/** @ngInject */
-	function PhotosModalController(Album, albums, attachments, $modalInstance, UploaderService, API_URL) {
+	function PhotosModalController(Album, albums, attachments, url, $modalInstance, UploaderService, API_URL) {
 		var vm = this;
 		vm.inRequestUpload = false;
 		vm.albums = albums;
 		vm.attachments = attachments;
+		vm.url = url;
 		vm.selectedUpload = false;
 		vm.images = UploaderService.images;
 		/*
@@ -67,12 +68,12 @@
 				return;
 			}
 			var uploadsAlbum = _.find(albums, function (el) { return el.title === 'Uploads'; });
-			
+
 			if (uploadsAlbum.id === undefined) {
 				toastr.error('No Uploads album found');
 				return;
 			}
-			
+
 			var request = {
 				_method:	'PUT',
 				title:		uploadsAlbum.title,
@@ -80,7 +81,7 @@
 				address:	uploadsAlbum.address,
 				is_private: +uploadsAlbum.is_private
 			};
-			var url = API_URL + '/albums/' + uploadsAlbum.id;
+			var url = vm.url || API_URL + '/albums/' + uploadsAlbum.id;
 			vm.inRequestUpload = true;
 			UploaderService
 				.upload(url, request)
@@ -102,7 +103,7 @@
 					vm.inRequestUpload = false;
 				});
 		};
-		
+
 		vm.isUploadDisabled = function() {
 			return !vm.images.files || vm.images.files.length === 0 || vm.inRequestUpload;
 		};

@@ -176,6 +176,21 @@
         </div>
         <div class="tab-content-photos" ng-if="OpenedItem.tab == 'photos'">
             <!-- <ng-carousel images="Spot.spot.photos"></ng-carousel> -->
+            <div class="add-photo" ng-click="Spot.openPhotosModal()">
+                <p class="add-photo">ADD PHOTO</p><div></div>
+            </div>
+            <div class="upload-photos clearfix" ng-if="NgInput.attachments.photos.length > 0">
+              <div class="photos">
+                <div class="add-img"
+                     ng-repeat="photo in NgInput.attachments.photos"
+                     ng-mouseenter="showDelete = true" ng-mouseleave="showDelete = false">
+                  <img ng-src="{{photo.photo_url.medium}}">
+                  <a class="close-img" ng-show="showDelete" ng-click="NgInput.deletePhoto($index)" data-toggle="tooltip"
+                     data-placement="top" title="Delete">
+                  </a>
+                </div>
+              </div>
+            </div>
             <ul rn-carousel rn-carousel-controls rn-carousel-controls-allow-loop rn-carousel-index="OpenedItem.photoIndex">
                 <li ng-repeat="photo in Spot.spot.photos">
                     <img src="{{photo.url}}" alt="photo">
