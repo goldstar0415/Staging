@@ -27,6 +27,34 @@
         end_date: null
     };
     vm.prices = null;
+    vm.attachments = {
+        photos: [],
+        spots: [],
+        areas: [],
+        links: []
+    };
+
+    vm.openPhotosModal = function() {
+        $modal.open({
+            templateUrl: '/app/components/ng_input/photos_modal.html',
+            controller: 'PhotosModalController',
+            controllerAs: 'modal',
+            modalContentClass: 'clearfix',
+            resolve: {
+                url: function() {
+                    return API_URL + '/spots/' + spot.id + '/photos/';
+                },
+                albums: function(Album) {
+                    return Album.query({
+                        user_id: $rootScope.currentUser.id
+                    }).$promise;
+                },
+                attachments: function() {
+                    return vm.attachments;
+                }
+            }
+        });
+    };
 
     function getPrice() {
         $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))

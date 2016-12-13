@@ -50,23 +50,7 @@
                 areas: [],
                 links: []
             };
-            //
-            //   vm.deletePhoto = function (idx) {
-            //     vm.attachments.photos.splice(idx, 1);
-            //   };
-            //
-            //   vm.getAttachmentsCount = function () {
-            //     return vm.attachments.links.length + vm.attachments.spots.length + vm.attachments.areas.length;
-            //   };
-            //
-            //   vm.clearAttachments = function () {
-            //     vm.attachments.photos = [];
-            //     vm.attachments.spots = [];
-            //     vm.attachments.areas = [];
-            //     vm.attachments.links = [];
-            //   };
 
-            //Open modal with user photos
             vm.openPhotosModal = function() {
                 $modal.open({
                     templateUrl: '/app/components/ng_input/photos_modal.html',
