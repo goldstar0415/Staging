@@ -16,7 +16,7 @@
         <div class="opened-main">
             <div class="opened-name-bottom">
                 <p class="opened-info">
-                    {{Spot.spot.reviews_total.total.rating}} stars based on {{Spot.spot.reviews_total.total.reviews_count}} combined reviews
+                    {{Spot.reviews_total.total.rating}} stars based on {{Spot.reviews_total.total.reviews_count}} combined reviews
                 </p>
             </div>
             <div class="event-info" ng-if="Spot.spot.category.type.name == 'event'">
@@ -81,6 +81,16 @@
                     {{date}}
                 </p>
             </div>
+            <div class="overview amenities" ng-show="Spot.amenitiesCount != 0">
+                <h1>Amenities:</h1>
+                <div ng-repeat=" (amTitle, amItems) in Spot.spot.amenities">
+                    <div><b>{{amTitle | toTrustedHtml}}</b></div>
+                    <div ng-repeat="amItem in amItems">
+                        <div ng-bind-html="amItem | toTrustedHtml"></div>
+                    </div>
+                    <br />
+                </div>
+            </div>
             <div class="overview phone" ng-if="Spot.spot.restaurant && Spot.spot.restaurant.phone_number">
                 <h1>Phone number:</h1>
                 <p>{{Spot.spot.restaurant.phone_number}}</p>
@@ -131,7 +141,7 @@
         <div class="tab-content-reviews" ng-if="OpenedItem.tab == 'reviews'">
             <section class="review-section clearfix">
                 <div class="review-types">
-                    <div class="review-type" ng-repeat="(serviceName, serviceInfo) in Spot.spot.reviews_total.info">
+                    <div class="review-type" ng-repeat="(serviceName, serviceInfo) in Spot.reviews_total.info">
                         <div class="review-type-icon {{serviceName}}"></div>
                         <div class="clearfix"></div>
                         <div class="pull-left with-margin">{{serviceInfo.rating}}</div>
