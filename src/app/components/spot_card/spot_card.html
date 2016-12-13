@@ -7,8 +7,8 @@
             <img src="{{SpotCard.image}}" alt="spot_img">
         </div>
         <div class="spot-img-full">
-            <button class="button-invite" ng-click="Spot.invite(Spot.spot)"><span class="glyphicon glyphicon-user"></span> Invite</button>
-            <button class="button-share" ng-click="Spot.share(Spot.spot, 'spot')"><span class="glyphicon glyphicon-share"></span> Share</button>
+            <button class="button-invite" ng-click="SpotCard.openInviteModal(SpotCard.item)"><span class="glyphicon glyphicon-user"></span> Invite</button>
+            <button class="button-share" ng-click="SpotCard.openShareModal(SpotCard.item, 'spot')"><span class="glyphicon glyphicon-share"></span> Share</button>
             <a ng-if="$root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.is_favorite" class="glyphicon glyphicon-heart" ng-click="SpotCard.addToFavorite(SpotCard.item)" style="color:white"></a>
             <a ng-if="$root.currentUser && $root.currentUser.id != SpotCard.item.user_id && SpotCard.item.is_favorite" class="glyphicon glyphicon-heart" ng-click="SpotCard.removeFromFavorite(SpotCard.item)" style="color:#EE4632"></a>
         </div>
