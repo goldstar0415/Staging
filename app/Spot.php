@@ -163,9 +163,24 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      *
      * @return query
      */
-    public function amenities()
+    public function amenities_objects()
     {
         return $this->hasMany(SpotAmenity::class);
+    }
+    
+    public function getAmenitiesAttribute() 
+    {
+        $amenitiescCollection = $this->amenities_objects()->get();
+        $array = [];
+        if(!empty($amenitiescCollection))
+        {
+            foreach($amenitiescCollection as $a)
+            {
+                
+                $array[$a->title][] = strip_tags($a->item, '<strong>');
+            }
+        }
+        return $array;
     }
     
     /**
@@ -809,7 +824,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function saveBookingAmenities($bookingRes)
     {
         $result = [];
-        if( ( $bookingAmenities = $bookingRes->find('div.facilitiesChecklist', 0) ) && $this->amenities()->count() == 0 )
+        if( ( $bookingAmenities = $bookingRes->find('div.facilitiesChecklist', 0) ) && $this->amenities_objects()->count() == 0 )
         {
             foreach( $bookingAmenities->find('.facilitiesChecklistSection') as $facilitiesChecklistSection )
             {
@@ -831,7 +846,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                             'title' => $sectionTitle, 
                             'item' => $body,
                         ]);
-                        $this->amenities()->save($amenity);
+                        $this->amenities_objects()->save($amenity);
                     }
                     $result[$sectionTitle][] = $body;
                 }
@@ -1568,9 +1583,5 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         
         return $this->getResponse($client, $url, $options, $json);
     }
-    
-    
-    
-    
     
 }

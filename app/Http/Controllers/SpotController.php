@@ -162,7 +162,8 @@ class SpotController extends Controller
                 'count_members',
                 'members',
                 'comments_photos',
-                'auth_rate'
+                'auth_rate',
+                'amenities'
                 ]);
         
         if (isset($res->remotePhotos)) {
@@ -571,7 +572,6 @@ class SpotController extends Controller
                 $result['photos'] = $spot->saveBookingPhotos($bookingPageContent);
                 if( $amenities = $spot->saveBookingAmenities($bookingPageContent) )
                 {
-                    $spot->load(['amenities']);
                     $result['amenities'] = $amenities;
                 }
             }
