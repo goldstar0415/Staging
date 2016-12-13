@@ -23,8 +23,9 @@
     $rootScope.spotsCarousel = {};
     $rootScope.spotsCarousel.index = 0;
     $rootScope.highlightedSpotId = null;
+    $rootScope.sidebarMessage = "Loading..."
     $rootScope.isMapState = isMapState;
-    $rootScope.searchLimit = 20;
+    $rootScope.searchLimit = 12;
     $rootScope.filterOptions = {
         name: '',
         location: '',

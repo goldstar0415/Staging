@@ -77,8 +77,7 @@
 
 <div class="sort-menu" ng-show="$root.isSidebarOpened && ($root.mapSortSpots.sourceSpots.length || MapSort.currentWeather)">
     <p ng-if="!$root.mapSortSpots.data.length" class="message-loading">Loading...</p>
-    <p ng-if="$root.mapSortSpots.data.length && !$root.visibleSpotsIds.length" class="message-loading">Can't find any spots in this area...</p>
-
+    <p ng-if="$root.mapSortSpots.data.length && !$root.visibleSpotsIds.length" class="message-loading">{{$root.sidebarMessage}}</p>
     <div class="search-filters"
          ng-show="$root.sortLayer != 'weather' && $root.visibleSpotsIds.length"
          ng-class="{'applied-filter': !MapSort.isShowFilter && !MapSort.isEmptyFilters()}">

@@ -297,6 +297,7 @@
         if ($rootScope.mapSortSpots.markers.length > 0) {
           $rootScope.changeMapState('small', null, false);
         //   console.log($rootScope.mapSortSpots.data);
+          $rootScope.sidebarMessage = "Can't find any spots in this area...";
           MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
           if (!$rootScope.isDrawArea) {
             MapService.FitBoundsByLayer($rootScope.sortLayer);
@@ -325,7 +326,7 @@
      * Infinite scroll - ok
      */
     function nextPage() {
-        $rootScope.searchLimit += 20;
+        $rootScope.searchLimit += 12;
     }
 
     function loadNextSpots(layer) {
@@ -362,6 +363,7 @@
      * @param {boolean} startSearch
      */
     function toggleLayer(layer, startSearch) {
+        $rootScope.sidebarMessage = "Loading...";
         $rootScope.isFilterOpened = false;
         vm.clearFilter();
         $rootScope.toggleSidebar(false);
