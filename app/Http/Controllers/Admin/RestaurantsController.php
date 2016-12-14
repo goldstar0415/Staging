@@ -326,11 +326,13 @@ class RestaurantsController extends Controller
                                     $body = trim($amenity);
                                     if( !SpotAmenity::where('spot_id', $restaurant->id)
                                                      ->where('item', $body)->exists() )
-                                    $amenityObject = new SpotAmenity([
-                                        'item' => $body,
-                                        'spot_id' => $restaurant->id
-                                    ]);
-                                    $amenityObject->save();
+                                    {
+                                        $amenityObject = new SpotAmenity([
+                                            'item' => $body,
+                                            'spot_id' => $restaurant->id
+                                        ]);
+                                        $amenityObject->save();
+                                    }
                                 }
                                 
                             }
