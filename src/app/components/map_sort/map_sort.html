@@ -103,8 +103,8 @@
     </div>
 
     <div class="footer-search" ng-class="{'active-weather': $root.sortLayer == 'weather'}" ng-show="$root.sortLayer == 'weather'">
-
-        <div ng-show="$root.sortLayer == 'weather'">
+        <weather></weather>
+        <!-- <div ng-show="$root.sortLayer == 'weather'">
             <div ng-show="MapSort.currentWeather" class="weather-wrap">
                 <div class="firstBlock-wrapper col-xs-12">
                     <p class="right-now">Currently in {{ MapSort.currentWeatherLocation.placeName }}</p>
@@ -179,7 +179,7 @@
             <div ng-show="!MapSort.currentWeather" class="col-xs-12 weather-info">
                 <p>Click on map to check weather in this area</p>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 

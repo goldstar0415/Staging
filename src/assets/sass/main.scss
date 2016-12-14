@@ -59,8 +59,9 @@
 @import "_wall";
 @import "photo_stack";
 @import "blog_popup";
-@import "media.scss";
 @import "_fonts";
+@import "_weather";
+@import "media.scss";
 
 .snap-content, .main-container {
   background: #f5f8fa;
@@ -1909,6 +1910,9 @@ html {
         font-family: 'GelPenUpright';
         padding: 0;
         width: 500px;
+        @media(max-width: 767px) {
+            width: calc(100% - 20px) !important;
+        }
         // background-color: transparent !important;
         // color: #414042;
         &:hover {
