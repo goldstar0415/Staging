@@ -35,9 +35,8 @@
             vm.openInviteModal = openInviteModal;
             vm.openShareModal = openShareModal;
             vm.openSpot = openSpot;
-
             function getImg() {
-                $http.get(API_URL + '/spots/' + vm.item.id + '/cover')
+                $http.get(API_URL + '/spots/' + vm.item.spot_id + '/cover')
                     .success(function success(data) {
                         if (data.cover_url) {
                             vm.image = data.cover_url.url;
