@@ -300,7 +300,7 @@ class HotelsController extends Controller
                                 }
                                 $pic = new RemotePhoto([
                                     'url' => $picture,
-                                    'image_type' => 0,
+                                    'image_type' => 1,
                                     'size' => 'original',
                                 ]);
                                 $hotel->remotePhotos()->save($pic);

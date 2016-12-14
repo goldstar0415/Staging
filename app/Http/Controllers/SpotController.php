@@ -26,6 +26,7 @@ use App\SpotType;
 use App\SpotTypeCategory;
 use App\SpotVote;
 use App\User;
+use App\RemotePhoto;
 use App\SpotOwnerRequest as SpotOwnerRequestModel;
 use ChrisKonnertz\OpenGraph\OpenGraph;
 use Illuminate\Http\Request;
@@ -581,19 +582,32 @@ class SpotController extends Controller
     
     public function getCover($spot)
     {
-        $spotInfo = $spot->getSpotExtension();
-        $bookingUrl = $spot->getBookingUrl($spotInfo->booking_url);
-        $result = ['cover_url' => null];
-        if(
-            isset($spotInfo->booking_url) && 
-            $spot->checkUrl($spotInfo->booking_url) && 
-            $bookingUrl &&
-            $bookingPageContent = $spot->getPageContent($bookingUrl, [
-                'headers' => $spot->getBookingHeaders()
-            ])
-        )
+        $result = [
+            'cover_url' => null, 
+            ];
+        
+        $query = RemotePhoto::where('associated_type', Spot::class)
+                ->where('associated_id', $spot->id)
+                ->where('image_type', 1);
+        if( $query->exists() )
         {
-            $result['cover_url'] = $spot->getBookingCover($bookingPageContent);
+            $result['cover_url'] = $query->first();
+        }
+        else
+        {
+            $spotInfo = $spot->getSpotExtension();
+            $bookingUrl = $spot->getBookingUrl($spotInfo->booking_url);
+            if(
+                isset($spotInfo->booking_url) && 
+                $spot->checkUrl($spotInfo->booking_url) && 
+                $bookingUrl &&
+                $bookingPageContent = $spot->getPageContent($bookingUrl, [
+                    'headers' => $spot->getBookingHeaders()
+                ])
+            )
+            {
+                $result['cover_url'] = $spot->getBookingCover($bookingPageContent);
+            }
         }
         return $result;
     }

@@ -120,22 +120,20 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      */
     public function getCoverUrlAttribute()
     {
-		$covers = [];
-		foreach ( $this->remotePhotos()->get() as $rph ) {
-			if ( $rph->image_type == 1 ) {
-				$url = $rph->url;
-				$covers = [
-					"original" => $url,
-    				"medium" => $url,
-    				"thumb" => $url
-				];
-			}
-		}
-		if ( !$covers ) {
-			$covers = $this->getPictureUrls('cover');
-		}
-
-		return $covers;
+        $covers = [];
+        if($rph = $this->remotePhotos()->where('image_type', 1)->first())
+        {
+            $url = $rph->url;
+            $covers = [
+                "original" => $url,
+                "medium" => $url,
+                "thumb" => $url
+            ];
+        }
+        if ( !$covers ) {
+                $covers = $this->getPictureUrls('cover');
+        }
+        return $covers;
     }
 
     /**
@@ -455,7 +453,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      */
     public function photos()
     {
-        return $this->hasMany(SpotPhoto::class);
+        return $this->hasMany(SpotPhoto::class)->orderBy('created_at');
     }
 
     /**
@@ -463,7 +461,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      */
     public function remotePhotos()
     {
-        return $this->morphMany(RemotePhoto::class, 'associated');
+        return $this->morphMany(RemotePhoto::class, 'associated')->orderBy('created_at');
     }
 
     /**
@@ -807,7 +805,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             $this->remotePhotos()->saveMany( $result );
         }
-        return collect($result);
+        return collect($result)->sortBy('created_at');
     }
     public function getFilenameFromUrl($url)
     {
@@ -919,18 +917,21 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             }
             $item = new SpotVote();
             $idObj = $reviewObj->find('input[name=review_url]', 0);
-            $item->remote_id = 'bk_' . $idObj->getAttribute( 'value' );
-            $item->message = html_entity_decode($message);
-            $scoreObj = $reviewObj->find('.review_item_review_score', 0);
-            $item->vote = round((float)$scoreObj->innertext()/2);
-            $item->remote_user_name = trim($reviewObj->find('h4', 0)->innertext);
-            $item->remote_user_avatar = str_replace('height=64&width=64', 'height=300&width=300', $reviewObj->find('.avatar-mask', 0)->getAttribute('src'));
-            $item->remote_type = SpotVote::TYPE_BOOKING;
-            if( $save && !SpotVote::where('remote_id', $item->remote_id)->exists())
+            if($idObj)
             {
-                $this->votes()->save($item);
+                $item->remote_id = 'bk_' . $idObj->getAttribute( 'value' );
+                $item->message = html_entity_decode($message);
+                $scoreObj = $reviewObj->find('.review_item_review_score', 0);
+                $item->vote = round((float)$scoreObj->innertext()/2);
+                $item->remote_user_name = trim($reviewObj->find('h4', 0)->innertext);
+                $item->remote_user_avatar = str_replace('height=64&width=64', 'height=300&width=300', $reviewObj->find('.avatar-mask', 0)->getAttribute('src'));
+                $item->remote_type = SpotVote::TYPE_BOOKING;
+                if( $save && !SpotVote::where('remote_id', $item->remote_id)->exists())
+                {
+                    $this->votes()->save($item);
+                }
+                $result[] = $item;
             }
-            $result[] = $item;
         }
         return $result;
     }
@@ -938,61 +939,53 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getBookingCover($bookingRes)
     {
         $result = null;
-        
-        $query = RemotePhoto::where('associated_type', Spot::class)
-                ->where('associated_id', $this->id)
-                ->where('image_type', 1);
-        if( $query->exists() )
+        $resultUrl = null;
+        if( $bookingSlider = $bookingRes->find('.hp-gallery-slides', 0) )
         {
-            $result = $query->first();
-        }
-        else
-        {
-            if( $bookingSlider = $bookingRes->find('.hp-gallery-slides', 0) )
+            foreach( $bookingSlider->find('img') as $picture )
             {
-                if($picture = $bookingSlider->find('img', 0))
+                $url = $picture->getAttribute('src');
+                if(empty($url))
                 {
-                    $url = $picture->getAttribute('src');
-                    if(empty($url))
-                    {
-                        $url = $picture->getAttribute('data-lazy');
-                    }
-                    $filename = $this->getFilenameFromUrl($url);
-                    if(!RemotePhoto::where('url', 'like' , "%$filename%")
-                        ->where('associated_type', Spot::class)
-                        ->where('associated_id', $this->id)
-                        ->exists())
-                    {
-                        $result = new RemotePhoto([
-                            'url' => $url,
-                            'image_type' => 1,
-                            'size' => 'original',
-                        ]);
-                        $this->remotePhotos()->save( $result );
-                    }
+                    $url = $picture->getAttribute('data-lazy');
                 }
-            }
-            elseif( $bookingSlider = $bookingRes->find('.bh-photo-grid', 0) )
-            {
-                if($picture = $bookingSlider->find('a.active-image', 0))
-                {
-                    $url = $picture->getAttribute('href');
-                    $filename = $this->getFilenameFromUrl($url);
-                    if( $filename && !RemotePhoto::where('url', 'like' , "%$filename%")
+                $filename = $this->getFilenameFromUrl($url);
+                if( $filename && !RemotePhoto::where('url', 'like' , "%$filename%")
                         ->where('associated_type', Spot::class)
                         ->where('associated_id', $this->id)
                         ->exists() )
-                    {
-                        $result = new RemotePhoto([
-                            'url' => $url,
-                            'image_type' => 1,
-                            'size' => 'original',
-                        ]);
-                        $this->remotePhotos()->save( $result );
-                    }
+                {
+                    $resultUrl = $url;
+                    break;
                 }
             }
         }
+        if( empty($resultUrl) && $bookingSlider = $bookingRes->find('.bh-photo-grid', 0) )
+        {
+            foreach( $bookingSlider->find('a.active-image') as $picture )
+            {
+                $url = $picture->getAttribute('href');
+                $filename = $this->getFilenameFromUrl($url);
+                if( $filename && !RemotePhoto::where('url', 'like' , "%$filename%")
+                        ->where('associated_type', Spot::class)
+                        ->where('associated_id', $this->id)
+                        ->exists() )
+                {
+                    $resultUrl = $url;
+                    break;
+                }
+            }
+        }
+        if(!empty($resultUrl))
+        {
+            $result = new RemotePhoto([
+                'url' => $resultUrl,
+                'image_type' => 1,
+                'size' => 'original',
+            ]);
+            $this->remotePhotos()->save( $result );
+        }
+
         return $result;
     }
     

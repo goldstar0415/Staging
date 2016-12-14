@@ -301,11 +301,18 @@ class RestaurantsController extends Controller
                                 }
                                 $pictuesObjects = [];
                                 $pictures = array_filter(explode(';', $pictures));
+                                $needCover = true;
                                 foreach($pictures as $picture)
                                 {
+                                    $image_type = 0;
+                                    if($needCover)
+                                    {
+                                        $image_type = 1;
+                                        $needCover = false;
+                                    }
                                     $pictuesObjects[] = new RemotePhoto([
                                         'url' => $picture,
-                                        'image_type' => 0,
+                                        'image_type' => $image_type,
                                         'size' => 'original',
                                     ]);
                                 }
