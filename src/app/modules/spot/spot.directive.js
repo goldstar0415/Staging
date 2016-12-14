@@ -20,11 +20,10 @@
         };
 
         /** @ngInject */
-        function SpotController($modal, $scope, SpotService, ScrollService, SpotReview, SpotComment, $state, $http, MapService, $rootScope, dialogs, API_URL, InviteFriends, Share) {
+        function SpotController($modal, $scope, SpotService, ScrollService, SpotReview, SpotComment, $state, $http, MapService, $rootScope, dialogs, API_URL, InviteFriends, Share, AsyncLoaderService) {
             var vm = this;
             var spot = vm.spot;
             vm.API_URL = API_URL;
-            vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
             vm.saveToCalendar = SpotService.saveToCalendar;
             vm.removeFromCalendar = SpotService.removeFromCalendar;
             vm.addToFavorite = SpotService.addToFavorite;
@@ -39,6 +38,7 @@
             vm.share = openShareModal;
             vm.photoIndex = 0;
             vm.getPrice = getPrice;
+            vm.amenitiesCount = Object.keys(vm.spot.amenities).length;
             vm.priceDate = {
                 start_date: null,
                 end_date: null
@@ -50,6 +50,34 @@
                 areas: [],
                 links: []
             };
+            
+            if( vm.spot.hotel )
+            {
+                AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/info').then(function(data) {
+                    if(vm.amenitiesCount == 0)
+                    {
+                        vm.spot.amenities = data.amenities;
+                        vm.amenitiesCount = Object.keys(vm.spot.amenities).length;
+                    }
+                    vm.mergeByProperty(vm.spot.photos, data.photos, 'id');
+                    vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
+                });
+            }
+            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/ratings').then(function(data) {
+                vm.reviews_total = data;
+                vm.spot.rating = data.total.rating;
+                syncSpots(spot.id, {is_saved: true});
+            });
+            
+            vm.mergeByProperty = function(arr1, arr2, prop) {
+                _.each(arr2, function(arr2obj) {
+                    var arr1obj = _.find(arr1, function(arr1obj) {
+                        return arr1obj[prop] === arr2obj[prop];
+                    });
+
+                    arr1obj ? _.extend(arr1obj, arr2obj) : arr1.push(arr2obj);
+                });
+            }
 
             vm.openPhotosModal = function() {
                 $modal.open({

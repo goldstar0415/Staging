@@ -10,7 +10,6 @@
     var vm = this;
     vm.API_URL = API_URL;
     vm.spot = SpotService.formatSpot(spot);
-    vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
     vm.saveToCalendar = SpotService.saveToCalendar;
     vm.removeFromCalendar = SpotService.removeFromCalendar;
     vm.addToFavorite = SpotService.addToFavorite;
@@ -28,19 +27,32 @@
     };
     vm.prices = null;
     
-    AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/info').then(function(data) {
-        if(vm.amenitiesCount == 0)
-        {
-            vm.spot.amenities = data.amenities;
-            vm.amenitiesCount = Object.keys(vm.spot.amenities).length;
-        }
-        vm.spot.photos = _.union(vm.spot.photos, data.photos);
-    });
+    if( vm.spot.hotel )
+    {
+        AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/info').then(function(data) {
+            if(vm.amenitiesCount == 0)
+            {
+                vm.spot.amenities = data.amenities;
+                vm.amenitiesCount = Object.keys(vm.spot.amenities).length;
+            }
+            vm.mergeByProperty(vm.spot.photos, data.photos, 'id');
+            vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
+        });
+    }
     AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/ratings').then(function(data) {
         vm.reviews_total = data;
         vm.spot.rating = data.total.rating;
-        syncSpots(spot.id, {is_saved: true});
     });
+    
+    vm.mergeByProperty = function(arr1, arr2, prop) {
+        _.each(arr2, function(arr2obj) {
+            var arr1obj = _.find(arr1, function(arr1obj) {
+                return arr1obj[prop] === arr2obj[prop];
+            });
+
+            arr1obj ? _.extend(arr1obj, arr2obj) : arr1.push(arr2obj);
+        });
+    }
 
     vm.attachments = {
         photos: [],
@@ -48,7 +60,6 @@
         areas: [],
         links: []
     };
-
     vm.openPhotosModal = function() {
         $modal.open({
             templateUrl: '/app/components/ng_input/photos_modal.html',
