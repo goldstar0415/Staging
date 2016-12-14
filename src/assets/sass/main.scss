@@ -62,40 +62,6 @@
 @import "media.scss";
 @import "_fonts";
 
-@font-face {
-  font-family: 'ralewaybold';
-  src: url('../css/fonts/raleway-black-webfont.eot');
-  src: url('../css/fonts/raleway-black-webfont.eot?#iefix') format('embedded-opentype'),
-  url('../css/fonts/raleway-black-webfont.woff2') format('woff2'),
-  url('../css/fonts/raleway-black-webfont.woff') format('woff'),
-  url('../css/fonts/raleway-black-webfont.ttf') format('truetype');
-
-}
-
-@font-face {
-  font-family: 'ralewayblack';
-  src: url('../css/fonts/raleway-bold-webfont.eot');
-  src: url('../css/fonts/raleway-bold-webfont.eot?#iefix') format('embedded-opentype'),
-  url('../css/fonts/raleway-bold-webfont.woff2') format('woff2'),
-  url('../css/fonts/raleway-bold-webfont.woff') format('woff'),
-  url('../css/fonts/raleway-bold-webfont.ttf') format('truetype');
-
-}
-
-@font-face {
-  font-family: 'ralewayregular';
-  src: url('../css/fonts/raleway-regular-webfont.eot');
-  src: url('../css/fonts/raleway-regular-webfont.eot?#iefix') format('embedded-opentype'),
-  url('../css/fonts/raleway-regular-webfont.woff2') format('woff2'),
-  url('../css/fonts/raleway-regular-webfont.woff') format('woff'),
-  url('../css/fonts/raleway-regular-webfont.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'GelPenUprightLight';
-  src: url('../css/fonts/GelPenUprightLight.ttf');
-}
-
 .snap-content, .main-container {
   background: #f5f8fa;
 }
@@ -1940,7 +1906,7 @@ html {
         background-image: none !important;
         text-align: center;
         font-size: 20px;
-        font-family: 'GelPenUprightLight';
+        font-family: 'GelPenUpright';
         padding: 0;
         width: 500px;
         // background-color: transparent !important;
