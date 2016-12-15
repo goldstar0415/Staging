@@ -6,7 +6,7 @@
     .controller('SpotController', SpotController);
 
   /** @ngInject */
-  function SpotController(spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share, AsyncLoaderService) {
+  function SpotController($modal, spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share, AsyncLoaderService) {
     var vm = this;
     vm.API_URL = API_URL;
     vm.spot = SpotService.formatSpot(spot);
@@ -68,7 +68,7 @@
             modalContentClass: 'clearfix',
             resolve: {
                 url: function() {
-                    return API_URL + '/spots/' + spot.id + '/photos/';
+                    return API_URL + '/spots/' + spot.id + '/photos';
                 },
                 albums: function(Album) {
                     return Album.query({
