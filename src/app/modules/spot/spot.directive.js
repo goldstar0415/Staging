@@ -87,7 +87,7 @@
                     modalContentClass: 'clearfix',
                     resolve: {
                         url: function() {
-                            return API_URL + '/spots/' + spot.id + '/photos/';
+                            return API_URL + '/spots/' + spot.id + '/photos';
                         },
                         albums: function(Album) {
                             return Album.query({
