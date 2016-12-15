@@ -9,6 +9,9 @@
         color: $dark_blue;
         text-transform: uppercase;
         font-size: 30px;
+        @media (max-width: 767px) {
+            font-size: 18px;
+        }
     }
     .weather-tabs {
         display: flex;
@@ -40,6 +43,16 @@
                 }
             }
         }
+        @media (orientation: landscape) and (max-width: 600px) {
+            .tab {
+                p {
+                    font-size: 18px;
+                }
+                span {
+                    display: none;
+                }
+            }
+        }
     }
     .weather-main {
         display: flex;
@@ -50,8 +63,9 @@
             width: 33.3%;
         }
         .icon {
-            height: 150px;
-            // background-color: $light_blue_btn;
+            canvas {
+                width: 100%;
+            }
         }
         .degrees {
             p {
@@ -61,6 +75,9 @@
                 font-weight: 900;
                 margin: 0 0 -5px;
                 text-align: center;
+                span {
+                    font-size: 40px;
+                }
             }
             span {
                 font-size: 13px;
@@ -89,6 +106,37 @@
                 }
             }
         }
+        @media (max-width: 400px), (orientation: landscape) and (max-width: 767px) {
+            flex-wrap: wrap;
+            & > div {
+                width: 50%;
+            }
+            .info {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                div {
+                    width: 33.3%;
+                    p, span {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+        @media (orientation: landscape) and (max-width: 600px) {
+            .info {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                display: none;
+                div {
+                    width: 50%;
+                    p, span {
+                        text-align: left;
+                    }
+                }
+            }
+        }
     }
     .weather-description {
         font-size: 16px;
@@ -97,7 +145,7 @@
     }
     .weather-hourly {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         flex-wrap: wrap;
         margin: 0 -10px;
@@ -106,6 +154,12 @@
             padding: 10px;
             width: calc(25% - 10px);
             margin: 5px;
+            @media (max-width: 400px), (orientation: landscape) and (max-width: 767px) {
+                width: calc(33.3% - 10px);
+            }
+            @media (orientation: landscape) and (max-width: 600px) {
+                width: calc(50% - 10px);
+            }
             .time {
                 color: grey;
             }
@@ -114,9 +168,9 @@
                 justify-content: center;
                 align-items: center;
                 .icon {
-                    width: 50%;
-                    height: 30px;
-                    // background-color: $light_blue_btn;
+                    canvas {
+                        width: 100%;
+                    }
                 }
                 .small-degrees {
                     display: flex;

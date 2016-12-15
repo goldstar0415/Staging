@@ -23,7 +23,8 @@
       'infinite-scroll',
       'summernote',
       'angular-carousel',
-      'angularjs-dropdown-multiselect'
+      'angularjs-dropdown-multiselect',
+      'angular-skycons'
     ]);
 
 })();
