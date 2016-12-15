@@ -75,9 +75,8 @@
     <!-- </form> -->
 </div>
 
-<div class="sort-menu" ng-show="$root.isSidebarOpened && ($root.mapSortSpots.sourceSpots.length || MapSort.currentWeather)">
-    <p ng-if="!$root.mapSortSpots.data.length" class="message-loading">Loading...</p>
-    <p ng-if="$root.mapSortSpots.data.length && !$root.visibleSpotsIds.length" class="message-loading">{{$root.sidebarMessage}}</p>
+<div class="sort-menu" ng-show="$root.isSidebarOpened && ($root.mapSortSpots.sourceSpots.length || $root.sortLayer == 'weather')" ng-class="{'weather-opened': $root.sortLayer == 'weather'}">
+    <p ng-if="$root.mapSortSpots.data.length && !$root.visibleSpotsIds.length && $root.sortLayer != 'weather'" class="message-loading">{{$root.sidebarMessage}}</p>
     <div class="search-filters"
          ng-show="$root.sortLayer != 'weather' && $root.visibleSpotsIds.length"
          ng-class="{'applied-filter': !MapSort.isShowFilter && !MapSort.isEmptyFilters()}">
@@ -101,9 +100,11 @@
                  ng-class="{ 'active' : item.id == $root.highlightedSpotId }"></div>
         </div>
     </div>
+    <weather ng-show="$root.sortLayer == 'weather'" lat="MapSort.weatherLocation.lat" lng="MapSort.weatherLocation.lng"></weather>
+</div>
 
-    <div class="footer-search" ng-class="{'active-weather': $root.sortLayer == 'weather'}" ng-show="$root.sortLayer == 'weather'">
-        <weather></weather>
+    <!-- <div class="footer-search" ng-class="{'active-weather': $root.sortLayer == 'weather'}" ng-show="$root.sortLayer == 'weather'"> -->
+
         <!-- <div ng-show="$root.sortLayer == 'weather'">
             <div ng-show="MapSort.currentWeather" class="weather-wrap">
                 <div class="firstBlock-wrapper col-xs-12">
@@ -180,8 +181,7 @@
                 <p>Click on map to check weather in this area</p>
             </div>
         </div> -->
-    </div>
-</div>
+    <!-- </div> -->
 
 
 <!--Filter-->

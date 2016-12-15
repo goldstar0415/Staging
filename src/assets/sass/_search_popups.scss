@@ -437,6 +437,23 @@
         height: calc(100vh - 50px);
         width: 50vw;
     }
+    &.weather-opened {
+        @media(min-width: 768px) and (orientation: portrait) {
+            top: calc(100vh - 767px);
+            left: 0;
+            right: 0;
+            bottom: 50px;
+            width: calc(100vw - 70px);
+        }
+        @media(max-width: 767px) and (orientation: portrait) {
+            top: calc(30vh - 50px);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 70vh;
+            width: 100%;
+        }
+    }
 
     .close-popup {
         height: 3rem;
@@ -2304,6 +2321,7 @@
             flex-direction: row;
             width: 100vw;
             border-left: none;
+            border-top: 3px solid whitesmoke;
         }
 
         li {

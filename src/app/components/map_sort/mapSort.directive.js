@@ -123,6 +123,11 @@
     vm.clearSpotHighlighting = MapService.clearSpotHighlighting;
     vm.clearFilter = clearFilter;
     vm.nextPage = nextPage;
+    vm.setWeatherLatLng = setWeatherLatLng;
+    vm.weatherLocation = {
+        lat: null,
+        lng: null
+    };
 
     $window.onresize = getWindowSize;
     function getWindowSize(event) {
@@ -357,6 +362,12 @@
       }
     }
 
+    function setWeatherLatLng(lat, lng) {
+        $rootScope.toggleSidebar(true);
+        vm.weatherLocation.lat = lat;
+        vm.weatherLocation.lng = lng;
+    }
+
     /**
      * Switch a layer and apply UI changes
      * @param {string} layer
@@ -380,7 +391,8 @@
 				console.log('Current country: ', $rootScope.currentCountryCode);
 			}
 
-			MapService.WeatherSelection(weather, geocodeCallback);
+			//MapService.WeatherSelection(weather, geocodeCallback);
+            MapService.getWeatherLatLng(setWeatherLatLng);
 
 			if (!vm.currentWeather) {
 				toastr.info('Click on map to check weather in this area');

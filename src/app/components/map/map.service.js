@@ -1549,6 +1549,16 @@
 
       }
 
+      function getWeatherLatLng(setWeatherLatLng) {
+          map.on('click', function(e) {
+              var lng = e.latlng.lng;
+              if (Math.abs(lng) > 180) {
+                  lng = lng > 0 ? lng -= 360 : lng += 360;
+              }
+              setWeatherLatLng(e.latlng.lat, lng);
+          });
+      }
+
       //remove all selection listeners
       function ClearSelectionListeners() {
         map.off('mousedown');
@@ -2665,7 +2675,9 @@
         highlightSpot: highlightSpot,
         removeHighlighting: removeHighlighting,
         highlightSpotByHover: highlightSpotByHover,
-        clearSpotHighlighting: clearSpotHighlighting
+        clearSpotHighlighting: clearSpotHighlighting,
+
+        getWeatherLatLng: getWeatherLatLng
       };
     });
 

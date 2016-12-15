@@ -1,71 +1,47 @@
 <div class="new-weather-container">
-    <h1 class="weather-city-name">Rostov-on-Don</h1>
+    <h1 class="weather-city-name">{{Weather.location}}</h1>
     <div class="weather-tabs">
-        <div class="tab active">
-            <p>We</p>
-            <span>Today</span>
-        </div>
-        <div class="tab">
-            <p>Th</p>
-            <span>15/12</span>
-        </div>
-        <div class="tab">
-            <p>Fr</p>
-            <span>16/12</span>
-        </div>
-        <div class="tab">
-            <p>Sa</p>
-            <span>17/12</span>
-        </div>
-        <div class="tab">
-            <p>Su</p>
-            <span>18/12</span>
-        </div>
-        <div class="tab">
-            <p>Mo</p>
-            <span>19/12</span>
-        </div>
-        <div class="tab">
-            <p>Tu</p>
-            <span>20/12</span>
+        <div class="tab" ng-repeat="day in Weather.data.daily.data" ng-class="{'active' : Weather.tab == $index}" ng-click="Weather.changeTab($index)">
+            <p>{{day.time | dateLetters}}</p>
+            <span>{{day.time | dateSmall}}</span>
         </div>
     </div>
     <div class="weather-main">
         <div class="icon">
-            <canvas id="weather-main-icon" width="150" height="150"></canvas>
+            <skycon icon="Weather.selected.icon" size="150" color="Weather.color"></skycon>
         </div>
         <div class="degrees">
-            <p>-6 °C</p>
-            <span>Feels like -9 °C</span>
+            <p>{{(Weather.selected.temperatureMax || Weather.selected.temperature) | number:0}}° <span ng-if="Weather.selected.temperatureMin">{{Weather.selected.temperatureMin | number:0}}°</span></p>
+            <span ng-if="Weather.selected.apparentTemperature">Feels like {{Weather.selected.apparentTemperature | number:0}}°</span>
         </div>
         <div class="info">
             <div class="wind">
                 <p>wind</p>
-                <span>NE 2.07 m/s</span>
+                <span>{{Weather.selected.windBearing | windDirection}} {{Weather.selected.windSpeed | number:1}} m/s</span>
             </div>
             <div class="humidity">
                 <p>humidity</p>
-                <span>73 %</span>
+                <span>{{(Weather.selected.humidity * 100) | number:0}} %</span>
             </div>
             <div class="pressure">
                 <p>pressure</p>
-                <span>1025 hPa</span>
+                <span>{{Weather.selected.pressure | number:0}} hPa</span>
             </div>
         </div>
     </div>
     <p class="weather-description">
-        Partly cloudy until tomorrow afternoon.
+        {{Weather.data.daily.data[Weather.tab].summary}}
     </p>
     <div flexitems class="weather-hourly">
         <div class="hour">
             <p class="time">13:00</p>
             <div>
                 <div class="icon">
-                    <canvas width="50" height="50"></canvas>
+                    <skycon icon="'partly-cloudy-night'" size="50" color="Weather.color"></skycon>
                 </div>
                 <div class="small-degrees">
-                    <p>-7 °C</p>
-                    <span>-10 °C</span>
+                    <p>-22 °C</p>
+                    <span>-22 °C</span>
                 </div>
             </div>
         </div>
@@ -73,11 +49,11 @@
             <p class="time">14:00</p>
             <div>
                 <div class="icon">
-                    <canvas width="50" height="50"></canvas>
+                    <skycon icon="'partly-cloudy-night'" size="50" color="Weather.color"></skycon>
                 </div>
                 <div class="small-degrees">
-                    <p>-8 °C</p>
-                    <span>-10 °C</span>
+                    <p>-22 °C</p>
+                    <span>-22 °C</span>
                 </div>
             </div>
         </div>
@@ -85,11 +61,11 @@
             <p class="time">15:00</p>
             <div>
                 <div class="icon">
-                    <canvas width="50" height="50"></canvas>
+                    <skycon icon="'partly-cloudy-night'" size="50" color="Weather.color"></skycon>
                 </div>
                 <div class="small-degrees">
-                    <p>-11 °C</p>
-                    <span>-12 °C</span>
+                    <p>-22 °C</p>
+                    <span>-22 °C</span>
                 </div>
             </div>
         </div>
@@ -97,11 +73,11 @@
             <p class="time">16:00</p>
             <div>
                 <div class="icon">
-                    <canvas width="50" height="50"></canvas>
+                    <skycon icon="'partly-cloudy-night'" size="50" color="Weather.color"></skycon>
                 </div>
                 <div class="small-degrees">
-                    <p>-11 °C</p>
-                    <span>-13 °C</span>
+                    <p>-22 °C</p>
+                    <span>-22 °C</span>
                 </div>
             </div>
         </div>
@@ -109,11 +85,11 @@
             <p class="time">17:00</p>
             <div>
                 <div class="icon">
-                    <canvas width="50" height="50"></canvas>
+                    <skycon icon="'partly-cloudy-night'" size="50" color="Weather.color"></skycon>
                 </div>
                 <div class="small-degrees">
-                    <p>-11 °C</p>
-                    <span>-13 °C</span>
+                    <p>-22 °C</p>
+                    <span>-22 °C</span>
                 </div>
             </div>
         </div>
@@ -121,11 +97,11 @@
             <p class="time">18:00</p>
             <div>
                 <div class="icon">
-                    <canvas width="50" height="50"></canvas>
+                    <skycon icon="'partly-cloudy-night'" size="50" color="Weather.color"></skycon>
                 </div>
                 <div class="small-degrees">
-                    <p>-12 °C</p>
-                    <span>-14 °C</span>
+                    <p>-22 °C</p>
+                    <span>-22 °C</span>
                 </div>
             </div>
         </div>
