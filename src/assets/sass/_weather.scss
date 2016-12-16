@@ -2,15 +2,39 @@
     background-color: white;
     padding: 20px;
     overflow: auto;
-    .weather-city-name {
+    .weather-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         margin: 0 0 20px;
-        font-family: 'Open Sans';
-        font-weight: bold;
-        color: $dark_blue;
-        text-transform: uppercase;
-        font-size: 30px;
-        @media (max-width: 767px) {
-            font-size: 18px;
+        .weather-city-name {
+            width: 80%;
+            margin: 0;
+            padding-right: 20px;
+            font-family: 'Open Sans';
+            font-weight: bold;
+            color: $dark_blue;
+            text-transform: uppercase;
+            font-size: 30px;
+            @media (max-width: 767px) {
+                font-size: 18px;
+            }
+        }
+        .weather-units{
+            width: 20%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            // height: 33px;
+            span {
+                font-family: 'Open Sans';
+                font-weight: bold;
+                color: lightgrey;
+                font-size: 30px;
+                @media (max-width: 767px) {
+                    font-size: 18px;
+                }
+            }
         }
     }
     .weather-tabs {
