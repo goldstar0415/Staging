@@ -32,76 +32,16 @@
     <p class="weather-description">
         {{Weather.data.daily.data[Weather.tab].summary}}
     </p>
-    <div flexitems class="weather-hourly">
-        <div class="hour">
-            <p class="time">13:00</p>
+    <div class="weather-hourly">
+        <div class="hour" ng-repeat="hour in Weather.data.hourly.data | weatherByDay : Weather.selected.time">
+            <p class="time">{{hour.time * 1000 | date : 'HH:mm'}}</p>
             <div>
                 <div class="icon">
-                    <skycon icon="'partly-cloudy-night'" size="50" color="Weather.color"></skycon>
+                    <skycon icon="hour.icon" size="50" color="Weather.color"></skycon>
                 </div>
                 <div class="small-degrees">
-                    <p>-22 °C</p>
-                    <span>-22 °C</span>
-                </div>
-            </div>
-        </div>
-        <div class="hour">
-            <p class="time">14:00</p>
-            <div>
-                <div class="icon">
-                    <skycon icon="'partly-cloudy-night'" size="50" color="Weather.color"></skycon>
-                </div>
-                <div class="small-degrees">
-                    <p>-22 °C</p>
-                    <span>-22 °C</span>
-                </div>
-            </div>
-        </div>
-        <div class="hour">
-            <p class="time">15:00</p>
-            <div>
-                <div class="icon">
-                    <skycon icon="'partly-cloudy-night'" size="50" color="Weather.color"></skycon>
-                </div>
-                <div class="small-degrees">
-                    <p>-22 °C</p>
-                    <span>-22 °C</span>
-                </div>
-            </div>
-        </div>
-        <div class="hour">
-            <p class="time">16:00</p>
-            <div>
-                <div class="icon">
-                    <skycon icon="'partly-cloudy-night'" size="50" color="Weather.color"></skycon>
-                </div>
-                <div class="small-degrees">
-                    <p>-22 °C</p>
-                    <span>-22 °C</span>
-                </div>
-            </div>
-        </div>
-        <div class="hour">
-            <p class="time">17:00</p>
-            <div>
-                <div class="icon">
-                    <skycon icon="'partly-cloudy-night'" size="50" color="Weather.color"></skycon>
-                </div>
-                <div class="small-degrees">
-                    <p>-22 °C</p>
-                    <span>-22 °C</span>
-                </div>
-            </div>
-        </div>
-        <div class="hour">
-            <p class="time">18:00</p>
-            <div>
-                <div class="icon">
-                    <skycon icon="'partly-cloudy-night'" size="50" color="Weather.color"></skycon>
-                </div>
-                <div class="small-degrees">
-                    <p>-22 °C</p>
-                    <span>-22 °C</span>
+                    <p>{{hour.temperature | number:0}}°</p>
+                    <span>{{hour.apparentTemperature | number:0}}°</span>
                 </div>
             </div>
         </div>
