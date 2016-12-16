@@ -134,6 +134,7 @@
                     })
                     .then(function(resp) {
                         if (resp.status === 200) {
+                            resp.data.daily.data.pop();
                             vm.data = resp.data;
                             vm.selected = vm.data.currently;
                             console.log(resp.data);
