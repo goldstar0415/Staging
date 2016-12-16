@@ -131,9 +131,15 @@
                             lang: 'en',
                             units: 'si'
                         },
+                        headers: {
+                            'Access-Control-Allow-Origin': '*',
+                            'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+                            'Access-Control-Allow-Headers' : 'Origin, Content-Type, X-Auth-Token'
+                        }
                     })
                     .then(function(resp) {
                         if (resp.status === 200) {
+                            vm.tab = 0;
                             resp.data.daily.data.pop();
                             vm.data = resp.data;
                             vm.selected = vm.data.currently;
