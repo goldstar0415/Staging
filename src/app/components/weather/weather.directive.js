@@ -37,6 +37,29 @@
                 }
                 return null;
             }
+        })
+        .filter('weatherByDay', function() {
+            return function(inp, param) {
+                if (inp) {
+                    var selectedDate = new Date(param * 1000);
+                    var maxDate = new Date(Date.now());
+                    maxDate.setDate(selectedDate.getDate());
+                    maxDate.setHours(23);
+                    maxDate.setMinutes(0);
+                    var arr = [];
+                    var i = 0;
+                    var len = inp.length;
+                    var itemDate;
+                    for (; i < len; i++) {
+                        itemDate = new Date(inp[i].time * 1000);
+                        if (itemDate >= selectedDate && itemDate < maxDate) {
+                            arr.push(inp[i]);
+                        }
+                    }
+                    return arr;
+                }
+                return null;
+            }
         });
 
     angular
