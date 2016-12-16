@@ -33,7 +33,7 @@
         {{Weather.data.daily.data[Weather.tab].summary}}
     </p>
     <div class="weather-hourly">
-        <div class="hour" ng-repeat="hour in Weather.data.hourly.data | weatherByDay : Weather.selected.time">
+        <div class="hour" ng-repeat="hour in Weather.data.hourly.data | weatherByDay : Weather.selected.time : Weather.data.offset">
             <p class="time">{{hour.time * 1000 | date : 'HH:mm'}}</p>
             <div>
                 <div class="icon">

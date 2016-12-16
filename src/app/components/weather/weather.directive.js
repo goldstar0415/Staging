@@ -39,13 +39,19 @@
             }
         })
         .filter('weatherByDay', function() {
-            return function(inp, param) {
+            return function(inp, time, offset) {
                 if (inp) {
-                    var selectedDate = new Date(param * 1000);
-                    var maxDate = new Date(Date.now());
+                    var timeOffset = new Date(Date.now()).getTimezoneOffset() * -1 / 60;
+                    timeOffset -= offset;
+                    console.log(timeOffset);
+                    var selectedDate = new Date(time * 1000);
+                    selectedDate.setHours(selectedDate.getHours() - timeOffset);
+                    var maxDate = new Date(selectedDate);
                     maxDate.setDate(selectedDate.getDate());
-                    maxDate.setHours(23);
+                    maxDate.setHours(24);
                     maxDate.setMinutes(0);
+                    // console.log(selectedDate.getTimezoneOffset());
+                    // console.log(maxDate);
                     var arr = [];
                     var i = 0;
                     var len = inp.length;
