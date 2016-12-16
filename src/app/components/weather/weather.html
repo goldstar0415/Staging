@@ -1,5 +1,10 @@
 <div class="new-weather-container">
-    <h1 class="weather-city-name">{{Weather.location}}</h1>
+    <div class="weather-header">
+        <h1 class="weather-city-name">{{Weather.location}}</h1>
+        <div class="weather-units">
+            <span ng-click="Weather.toggleUnits()">°{{Weather.unitsObj[Weather.units].temperature}}</span>
+        </div>
+    </div>
     <div class="weather-tabs">
         <div class="tab" ng-repeat="day in Weather.data.daily.data" ng-class="{'active' : Weather.tab == $index}" ng-click="Weather.changeTab($index)">
             <p>{{day.time | dateLetters}}</p>
@@ -11,13 +16,13 @@
             <skycon icon="Weather.selected.icon" size="150" color="Weather.color"></skycon>
         </div>
         <div class="degrees">
-            <p>{{(Weather.selected.temperatureMax || Weather.selected.temperature) | number:0}}° <span ng-if="Weather.selected.temperatureMin">{{Weather.selected.temperatureMin | number:0}}°</span></p>
-            <span ng-if="Weather.selected.apparentTemperature">Feels like {{Weather.selected.apparentTemperature | number:0}}°</span>
+            <p>{{(Weather.selected.temperatureMax || Weather.selected.temperature) | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}<span ng-if="Weather.selected.temperatureMin">{{Weather.selected.temperatureMin | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}</span></p>
+            <span ng-if="Weather.selected.apparentTemperature">Feels like {{Weather.selected.apparentTemperature | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}</span>
         </div>
         <div class="info">
             <div class="wind">
                 <p>wind</p>
-                <span>{{Weather.selected.windBearing | windDirection}} {{Weather.selected.windSpeed | number:1}} m/s</span>
+                <span>{{Weather.selected.windBearing | windDirection}} {{Weather.selected.windSpeed | number:1}} {{Weather.unitsObj[Weather.units].speed}}</span>
             </div>
             <div class="humidity">
                 <p>humidity</p>
@@ -40,8 +45,8 @@
                     <skycon icon="hour.icon" size="50" color="Weather.color"></skycon>
                 </div>
                 <div class="small-degrees">
-                    <p>{{hour.temperature | number:0}}°</p>
-                    <span>{{hour.apparentTemperature | number:0}}°</span>
+                    <p>{{hour.temperature | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}</p>
+                    <span>{{hour.apparentTemperature | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}</span>
                 </div>
             </div>
         </div>

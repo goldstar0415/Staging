@@ -96,12 +96,32 @@
             vm.data = {};
             vm.tab = 0;
             vm.selected = {};
+            vm.units = 'us';
+            vm.unitsObj = {
+                'si': {
+                    temperature: 'C',
+                    speed: 'm/s',
+                },
+                'us': {
+                    temperature: 'F',
+                    speed: 'mph',
+                }
+            }
 
             $scope.$watch(function() {
                 return (vm.lat);
             }, function() {
                 vm.init();
             });
+
+            vm.toggleUnits = function() {
+                if (vm.units === 'si') {
+                    vm.units = 'us';
+                } else {
+                    vm.units = 'si';
+                }
+                vm.init();
+            }
 
             vm.changeTab = function(index) {
                 vm.tab = index;
@@ -131,16 +151,13 @@
                             }
                         }
                     });
-                $http.get('https://api.darksky.net/forecast/' + DARK_SKY_API_KEY + '/' + vm.lat + ',' + vm.lng, {
+                $http.jsonp('https://api.darksky.net/forecast/' + DARK_SKY_API_KEY + '/' + vm.lat + ',' + vm.lng, {
                         params: {
                             extend: 'hourly',
                             lang: 'en',
-                            units: 'si'
-                        },
-                        headers: {
-                            'Access-Control-Allow-Origin': '*',
-                            'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-                            'Access-Control-Allow-Headers' : 'Origin, Content-Type, X-Auth-Token'
+                            units: vm.units,
+                            format: 'json',
+                            callback: 'JSON_CALLBACK'
                         }
                     })
                     .then(function(resp) {
@@ -149,7 +166,6 @@
                             resp.data.daily.data.pop();
                             vm.data = resp.data;
                             vm.selected = vm.data.currently;
-                            console.log(resp.data);
                         }
                     });
             }
