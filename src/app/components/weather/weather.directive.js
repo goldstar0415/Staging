@@ -43,7 +43,7 @@
                 if (inp) {
                     var timeOffset = new Date(Date.now()).getTimezoneOffset() * -1 / 60;
                     timeOffset -= offset;
-                    console.log(timeOffset);
+                    // console.log(timeOffset);
                     var selectedDate = new Date(time * 1000);
                     selectedDate.setHours(selectedDate.getHours() - timeOffset);
                     var maxDate = new Date(selectedDate);
