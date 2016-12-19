@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
+    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService, $ocLazyLoad) {
 
       console.log('MapService');
 
@@ -53,6 +53,18 @@
 					return pathRouter;
 			}
 		}
+
+		function lazyRouter(waypoints, cb) {
+      if ($ocLazyLoad.isLoaded('turf')) {
+        exec();
+      } else {
+        $ocLazyLoad.load('turf').then(exec);
+      }
+
+      function exec() {
+        getPathRouter().route(waypoints, cb);
+      }
+    }
 
 		function pathRouterFailed() {
 			pathRouterFail++;
@@ -1415,7 +1427,7 @@
 					return {latLng: m.getLatLng()};
 				});
 
-				getPathRouter().route(waypoints, function (err, routes) {
+				lazyRouter(waypoints, function (err, routes) {
 
 					if (line) {
 						drawLayer.removeLayer(line);
@@ -1434,6 +1446,7 @@
 					} else {
 						$rootScope.routeInterpolated = [];
 						var simplified = turf.simplify(L.polyline(routes[0].coordinates).toGeoJSON(), 0.02, false);
+            // console.debug('simplify', simplified);
 						simplified.geometry.coordinates.forEach(function(e) {
 							$rootScope.routeInterpolated.push({latLng: {lat: e[1], lng: e[0]}});
 						});
