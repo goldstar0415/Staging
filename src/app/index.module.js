@@ -24,6 +24,7 @@
       'summernote',
       'angular-carousel',
       'angularjs-dropdown-multiselect'
-    ]);
+    ])
+      .config([]);
 
 })();
