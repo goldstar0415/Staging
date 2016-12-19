@@ -23,8 +23,17 @@
       'infinite-scroll',
       'summernote',
       'angular-carousel',
-      'angularjs-dropdown-multiselect'
+      'angularjs-dropdown-multiselect',
+	    'oc.lazyLoad'
     ])
-      .config([]);
+    .config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
+      $ocLazyLoadProvider.config({
+        debug: true,
+        modules: [
+          {name: 'turf', files: ['assets/libs/turf/turf.min.js']}
+        ]
+      });
+    }]);
+
 
 })();
