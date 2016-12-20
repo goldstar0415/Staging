@@ -1,7 +1,9 @@
 {
   "name": "zoomtivity",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "ng-webworker": "^0.2.3"
+  },
   "scripts": {
     "test": "gulp test"
   },

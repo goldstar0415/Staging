@@ -10,7 +10,9 @@
       var map = null;
       var DEFAULT_MAP_LOCATION = [37.405075073242188, -96.416015625000000];
       var tilesUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
-      var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-900913/{z}/{x}/{y}.png?' + (new Date()).getTime();
+    //   var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-900913/{z}/{x}/{y}.png?' + (new Date()).getTime();
+      var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-{timestamp}/{z}/{x}/{y}.png?' + (new Date()).getTime();
+      var timestamps = ['900913-m50m', '900913-m45m', '900913-m40m', '900913-m35m', '900913-m30m', '900913-m25m', '900913-m20m', '900913-m15m', '900913-m10m', '900913-m05m', '900913'];
 
       var radiusSelectionLimit = 500000; // in meters
       var markersLayer = L.featureGroup();
@@ -72,7 +74,7 @@
                   image = '../../../assets/img/markers/marker-event' + (isHighlighted ? '-highlighted.png' : '.png');
               } else if (spot.category_name === 'Food' || (spot.type && spot.type === 'Food')) {
                   image = '../../../assets/img/markers/marker-food' + (isHighlighted ? '-highlighted.png' : '.png');
-              } else if (spot.category_name === 'Todo' || (spot.type && spot.type === 'Todo')) {
+              } else if (spot.category_name === 'To-Do' || (spot.type && spot.type === 'To-Do')) {
                   image = '../../../assets/img/markers/marker-todo' + (isHighlighted ? '-highlighted.png' : '.png');
               } else if (spot.category_name === 'Shelter' || (spot.type && spot.type === 'Shelter')) {
                   image = '../../../assets/img/markers/marker-shelter' + (isHighlighted ? '-highlighted.png' : '.png');
@@ -934,11 +936,6 @@
           maxZoom: 17,
           minZoom: 3
         }).addTo(map);
-
-        map.weatherLayer = L.tileLayer(tilesWeatherUrl, {
-          maxZoom: 17,
-          minZoom: 3
-        });
 
         L.extend(map, {
             _getFeatures: function() {
@@ -2598,12 +2595,59 @@
         }
       }
 
+      var interval;
       function toggleWeatherLayer(show) {
         var hasWeather = map.hasLayer(map.weatherLayer);
         if (show && !hasWeather)
+        {
+            var frame = 0;
+
+            map.weatherLayer = new L.TileLayer.WMS("http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi", {
+                layers: 'nexrad-n0r-' + timestamps[0],
+                format: 'image/png',
+                transparent: true,
+                attribution: "Weather data &copy; 2011 IEM Nexrad",
+                opacity: 0.8
+            });
+            //
+            // map.weatherLayer.on('load', function() {
+            //     console.log('loaded ' + ++frame % 11);
+            //     map.weatherLayer.setParams({
+            //         layers: 'nexrad-n0r-' + timestamps[Math.floor(frame % 11)]
+            //     });
+            // });
+
             map.addLayer(map.weatherLayer);
+            // for (var i = 0; i < timestamps.length; i++) {
+            //
+            // }
+            // clearInterval(interval);
+            // var frame = 0;
+            // interval = setInterval(function() {
+            //     map.weatherLayer.setParams({
+            //         layers: 'nexrad-n0r-' + timestamps[Math.floor(++frame % 11)]
+            //     });
+            //     // map.removeLayer(map.weatherLayer);
+            //     // map.weatherLayer = L.tileLayer(tilesWeatherUrl, {
+            //     //   maxZoom: 17,
+            //     //   minZoom: 3,
+            //     //   timestamp: timestamps[Math.floor(++frame % 11)]
+            //     // });
+            //     // map.addLayer(map.weatherLayer);
+            // }, 1000);
+        }
         if (!show && hasWeather)
+        {
             map.removeLayer(map.weatherLayer);
+            clearInterval(interval)
+        }
+        // map.weatherLayer = L.tileLayer(tilesWeatherUrl, {
+        //   maxZoom: 17,
+        //   minZoom: 3,
+        //   timestamp: timestamps[0]
+        // });
+
+
       }
 
       return {
