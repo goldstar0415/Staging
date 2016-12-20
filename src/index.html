@@ -1,113 +1,116 @@
 <!doctype html>
 <html ng-app="zoomtivity" ng-jq="jQuery">
 <head>
-  <meta charset="utf-8">
-  <title>Zoomtivity</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta property="og:title" content="Zoomtivity"/>
-  <meta property="og:image" content="/assets/img/icons/logo.svg"/>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-  <base href="/">
+	<meta charset="utf-8">
+	<title>Zoomtivity</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta property="og:title" content="Zoomtivity"/>
+	<meta property="og:image" content="/assets/img/icons/logo.svg"/>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+	<base href="/">
 
-  <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
 
-  <link rel="manifest" href="/manifest.json">
+	<link rel="manifest" href="/manifest.json">
 
-  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.8.0/loading-bar.min.js">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.min.css">
+	<link rel="stylesheet" type="text/css" href="">
 
-  <style>
-  .map { width: calc(100vw - 70px); height: calc(100vh - 100px) }
-  .content-hidden { overflow: hidden; height: 100vh; width: 100vw; } .preloader { position: fixed; left: 0; right: 0; top: 0; bottom: 0; overflow: hidden; background: #00CFFF; z-index: 999999; } .preloader *, .preloader *:after, .preloader *:before { box-sizing:
-content-box; } .preloader .ferris_wheel { position: fixed; top: 50%; left: 50%; margin-top: -100px; margin-left: -75px; } .preloader .ferris_wheel, .preloader .wheel { border: 6px solid #0B2639; width: 150px; height: 150px; border-radius: 50%; } .preloader
-.ferris_wheel { border: 0; position: absolute; } .preloader .wheel_wrap { position: absolute; -webkit-animation: wheel_rotate 40s infinite linear; animation: wheel_rotate 40s infinite linear; } .preloader .wheel:before { content: ""; height: 50px; width:
-50px; background: #0B2639; position: absolute; border-radius: 50%; left: 50%; top: 50%; margin-left: -25px; margin-top: -25px; z-index: 1; } .preloader .wheel:after { content: ""; width: 16px; height: 16px; background: #683C10; position: absolute; top:
-50%; left: 50%; margin-top: -12px; margin-left: -12px; border-radius: 50%; border: 4px solid #000; z-index: 1; } .preloader .wheel span:nth-child(1):before { content: ""; border-bottom: 2px solid #000; position: absolute; top: 0; left: 0; width: 150px;
-top: 50%; left: 6px; } .preloader .wheel span:nth-child(1):after { content: ""; border-right: 2px solid #000; position: absolute; top: 0; left: 0; height: 150px; top: 6px; left: 50%; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform:
-rotate(45deg); } .preloader .wheel span:nth-child(2):before { content: ""; border-right: 2px solid #000; position: absolute; top: 0; left: 0; height: 150px; top: 5px; left: 50%; -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); transform:
-rotate(-45deg); } .preloader .wheel span:nth-child(2):after { content: ""; border-right: 2px solid #000; position: absolute; top: 0; left: 0; height: 150px; top: 6px; left: 50%; } .preloader div.stand:after, .preloader div.stand:before { content: "";
-position: absolute; border-right: 4px solid #683C10; height: 120px; -webkit-transform: rotate(15deg); -ms-transform: rotate(15deg); transform: rotate(15deg); top: 88px; left: 50%; margin-left: -15px; } .preloader div.stand:after { -webkit-transform: rotate(-15deg);
--ms-transform: rotate(-15deg); transform: rotate(-15deg); margin-left: 23px; } .preloader .stand span { position: absolute; height: 10px; background: #0B2639; width: 100px; bottom: -60px; left: 50%; margin-left: -44px; z-index: 1; } @-webkit-keyframes
-wheel_rotate { 0% { -webkit-transform: rotate(0); transform: rotate(0); } 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } } @keyframes wheel_rotate { 0% { -webkit-transform: rotate(0); transform: rotate(0); } 100% { -webkit-transform:
-rotate(360deg); transform: rotate(360deg); } } .preloader .buckets { position: absolute; border: 6px solid #0B2639; width: 150px; height: 150px; border-radius: 50%; } .preloader .buckets div { position: absolute; -webkit-animation: bucket_rotate 40s infinite
-linear; animation: bucket_rotate 40s infinite linear; top: 50%; left: 50%; margin-top: 11px; margin-left: -13px; } .preloader .buckets div:before { content: ""; height: 13px; left: 9px; border-right: 1px solid #888; position: absolute; top: -12px; -webkit-transform:
-rotate(30deg); -ms-transform: rotate(30deg); transform: rotate(30deg); } .preloader .buckets div:after { content: ""; height: 13px; border-right: 1px solid #888; position: absolute; right: 10px; -webkit-transform: rotate(-30deg); -ms-transform: rotate(-30deg);
-transform: rotate(-30deg); top: -12px; } .preloader .buckets span { display: inline-block; border-top: 15px solid #E84735; border-left: 3px solid transparent; border-right: 3px solid transparent; height: 0; width: 20px; position: relative; } .preloader
-.buckets span:before { content: ""; position: absolute; top: -15px; height: 3px; width: 25px; left: -2px; background: #0B2639; } .preloader .buckets span:after { content: ""; height: 5px; left: -2px; background: -webkit-linear-gradient(left, #97cde6 0%,
-#97cde6 35%, #fff 35%, #fff 66%, #97cde6 66%, #97cde6 100%); background: linear-gradient(to right, #97cde6 0%, #97cde6 35%, #fff 35%, #fff 66%, #97cde6 66%, #97cde6 100%); width: 25px; position: absolute; top: -12px; } @-webkit-keyframes bucket_rotate
-{ 0% { -webkit-transform: rotate(0) translateX(75px) rotate(0); transform: rotate(0) translateX(75px) rotate(0); } 100% { -webkit-transform: rotate(360deg) translateX(75px) rotate(-360deg); transform: rotate(360deg) translateX(75px) rotate(-360deg); }
-} @keyframes bucket_rotate { 0% { -webkit-transform: rotate(0) translateX(75px) rotate(0); transform: rotate(0) translateX(75px) rotate(0); } 100% { -webkit-transform: rotate(360deg) translateX(75px) rotate(-360deg); transform: rotate(360deg) translateX(75px)
-rotate(-360deg); } } .preloader .buckets div:nth-child(2) { -webkit-animation-delay: -4.8s; animation-delay: -4.8s; } .preloader .buckets div:nth-child(3) { -webkit-animation-delay: -9.9s; animation-delay: -9.9s; } .preloader .buckets div:nth-child(4)
-{ -webkit-animation-delay: -15s; animation-delay: -15s; } .preloader .buckets div:nth-child(5) { -webkit-animation-delay: -20s; animation-delay: -20s; } .preloader .buckets div:nth-child(6) { -webkit-animation-delay: -25s; animation-delay: -25s; } .preloader
-.buckets div:nth-child(7) { -webkit-animation-delay: -30s; animation-delay: -30s; } .preloader .buckets div:nth-child(8) { -webkit-animation-delay: -35s; animation-delay: -35s; }
-  </style>
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+	<style>
+		.map { width: calc(100vw - 70px); height: calc(100vh - 100px) }
+		.content-hidden { overflow: hidden; height: 100vh; width: 100vw; } .preloader { position: fixed; left: 0; right: 0; top: 0; bottom: 0; overflow: hidden; background: #00CFFF; z-index: 999999; } .preloader *, .preloader *:after, .preloader *:before { box-sizing:
+				content-box; } .preloader .ferris_wheel { position: fixed; top: 50%; left: 50%; margin-top: -100px; margin-left: -75px; } .preloader .ferris_wheel, .preloader .wheel { border: 6px solid #0B2639; width: 150px; height: 150px; border-radius: 50%; } .preloader
+				                                                                                                                                                                                                                                                      .ferris_wheel { border: 0; position: absolute; } .preloader .wheel_wrap { position: absolute; -webkit-animation: wheel_rotate 40s infinite linear; animation: wheel_rotate 40s infinite linear; } .preloader .wheel:before { content: ""; height: 50px; width:
+				50px; background: #0B2639; position: absolute; border-radius: 50%; left: 50%; top: 50%; margin-left: -25px; margin-top: -25px; z-index: 1; } .preloader .wheel:after { content: ""; width: 16px; height: 16px; background: #683C10; position: absolute; top:
+				50%; left: 50%; margin-top: -12px; margin-left: -12px; border-radius: 50%; border: 4px solid #000; z-index: 1; } .preloader .wheel span:nth-child(1):before { content: ""; border-bottom: 2px solid #000; position: absolute; top: 0; left: 0; width: 150px;
+					                                                                                                                 top: 50%; left: 6px; } .preloader .wheel span:nth-child(1):after { content: ""; border-right: 2px solid #000; position: absolute; top: 0; left: 0; height: 150px; top: 6px; left: 50%; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform:
+				rotate(45deg); } .preloader .wheel span:nth-child(2):before { content: ""; border-right: 2px solid #000; position: absolute; top: 0; left: 0; height: 150px; top: 5px; left: 50%; -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); transform:
+				rotate(-45deg); } .preloader .wheel span:nth-child(2):after { content: ""; border-right: 2px solid #000; position: absolute; top: 0; left: 0; height: 150px; top: 6px; left: 50%; } .preloader div.stand:after, .preloader div.stand:before { content: "";
+					                                                                                                                                                                                    position: absolute; border-right: 4px solid #683C10; height: 120px; -webkit-transform: rotate(15deg); -ms-transform: rotate(15deg); transform: rotate(15deg); top: 88px; left: 50%; margin-left: -15px; } .preloader div.stand:after { -webkit-transform: rotate(-15deg);
+						                                                                                                                                                                                                                                                                                                                                                                                              -ms-transform: rotate(-15deg); transform: rotate(-15deg); margin-left: 23px; } .preloader .stand span { position: absolute; height: 10px; background: #0B2639; width: 100px; bottom: -60px; left: 50%; margin-left: -44px; z-index: 1; } @-webkit-keyframes
+						                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       wheel_rotate { 0% { -webkit-transform: rotate(0); transform: rotate(0); } 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } } @keyframes wheel_rotate { 0% { -webkit-transform: rotate(0); transform: rotate(0); } 100% { -webkit-transform:
+				rotate(360deg); transform: rotate(360deg); } } .preloader .buckets { position: absolute; border: 6px solid #0B2639; width: 150px; height: 150px; border-radius: 50%; } .preloader .buckets div { position: absolute; -webkit-animation: bucket_rotate 40s infinite
+		linear; animation: bucket_rotate 40s infinite linear; top: 50%; left: 50%; margin-top: 11px; margin-left: -13px; } .preloader .buckets div:before { content: ""; height: 13px; left: 9px; border-right: 1px solid #888; position: absolute; top: -12px; -webkit-transform:
+				rotate(30deg); -ms-transform: rotate(30deg); transform: rotate(30deg); } .preloader .buckets div:after { content: ""; height: 13px; border-right: 1px solid #888; position: absolute; right: 10px; -webkit-transform: rotate(-30deg); -ms-transform: rotate(-30deg);
+					                                                                         transform: rotate(-30deg); top: -12px; } .preloader .buckets span { display: inline-block; border-top: 15px solid #E84735; border-left: 3px solid transparent; border-right: 3px solid transparent; height: 0; width: 20px; position: relative; } .preloader
+					                                                                                                                                                                                                                                                                                                                           .buckets span:before { content: ""; position: absolute; top: -15px; height: 3px; width: 25px; left: -2px; background: #0B2639; } .preloader .buckets span:after { content: ""; height: 5px; left: -2px; background: -webkit-linear-gradient(left, #97cde6 0%,
+		#97cde6 35%, #fff 35%, #fff 66%, #97cde6 66%, #97cde6 100%); background: linear-gradient(to right, #97cde6 0%, #97cde6 35%, #fff 35%, #fff 66%, #97cde6 66%, #97cde6 100%); width: 25px; position: absolute; top: -12px; } @-webkit-keyframes bucket_rotate
+		                                                                                                                                                                                                                           { 0% { -webkit-transform: rotate(0) translateX(75px) rotate(0); transform: rotate(0) translateX(75px) rotate(0); } 100% { -webkit-transform: rotate(360deg) translateX(75px) rotate(-360deg); transform: rotate(360deg) translateX(75px) rotate(-360deg); }
+		                                                                                                                                                                                                                           } @keyframes bucket_rotate { 0% { -webkit-transform: rotate(0) translateX(75px) rotate(0); transform: rotate(0) translateX(75px) rotate(0); } 100% { -webkit-transform: rotate(360deg) translateX(75px) rotate(-360deg); transform: rotate(360deg) translateX(75px)
+		rotate(-360deg); } } .preloader .buckets div:nth-child(2) { -webkit-animation-delay: -4.8s; animation-delay: -4.8s; } .preloader .buckets div:nth-child(3) { -webkit-animation-delay: -9.9s; animation-delay: -9.9s; } .preloader .buckets div:nth-child(4)
+		                                                                                                                                                                                                                       { -webkit-animation-delay: -15s; animation-delay: -15s; } .preloader .buckets div:nth-child(5) { -webkit-animation-delay: -20s; animation-delay: -20s; } .preloader .buckets div:nth-child(6) { -webkit-animation-delay: -25s; animation-delay: -25s; } .preloader
+		                                                                                                                                                                                                                                                                                                                                                                                                                                                                               .buckets div:nth-child(7) { -webkit-animation-delay: -30s; animation-delay: -30s; } .preloader .buckets div:nth-child(8) { -webkit-animation-delay: -35s; animation-delay: -35s; }
+	</style>
 
 </head>
 <body autoscroll="true" id="body" class="content-hidden">
 <!--[if lt IE 10]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-  your browser</a> to improve your experience.</p>
+	your browser</a> to improve your experience.</p>
 <![endif]-->
 
 <!--Preloader-->
 <div class="preloader" id="preloader">
-  <div class="ferris_wheel">
-    <div class="wheel_wrap">
-      <div class="wheel">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-    <div class="buckets">
-      <div><span></span></div>
-      <div><span></span></div>
-      <div><span></span></div>
-      <div><span></span></div>
-      <div><span></span></div>
-      <div><span></span></div>
-      <div><span></span></div>
-      <div><span></span></div>
-    </div>
-    <div class="stand"><span></span></div>
-  </div>
+	<div class="ferris_wheel">
+		<div class="wheel_wrap">
+			<div class="wheel">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<div class="buckets">
+			<div><span></span></div>
+			<div><span></span></div>
+			<div><span></span></div>
+			<div><span></span></div>
+			<div><span></span></div>
+			<div><span></span></div>
+			<div><span></span></div>
+			<div><span></span></div>
+		</div>
+		<div class="stand"><span></span></div>
+	</div>
 </div>
 <!-- /Preloader-->
 
 
 <div snap-drawers>
-  <div snap-drawer>
-    <zm-side-menu side="left" ng-if="options.snap.disable == 'right'"></zm-side-menu>
-  </div>
-  <div snap-drawer="right">
-    <zm-side-menu side="right" ng-if="options.snap.disable == 'left'"></zm-side-menu>
-  </div>
+	<div snap-drawer>
+		<zm-side-menu side="left" ng-if="options.snap.disable == 'right'"></zm-side-menu>
+	</div>
+	<div snap-drawer="right">
+		<zm-side-menu side="right" ng-if="options.snap.disable == 'left'"></zm-side-menu>
+	</div>
 </div>
 
 <div snap-content snap-options="options.snap">
-  <!-- include header-->
-  <zm-header options="options" ng-class="{'landing-menu-wrapper': $state.includes('intro')}"></zm-header>
+	<!-- include header-->
+	<zm-header options="options" ng-class="{'landing-menu-wrapper': $state.includes('intro')}"></zm-header>
 
-  <!-- <hints-popup></hints-popup> -->
+	<!-- <hints-popup></hints-popup> -->
 
-  <!-- <map-sort ng-if="['full-size', 'big'].indexOf(mapState) >= 0"></map-sort> -->
-  <map-sort></map-sort>
+	<!-- <map-sort ng-if="['full-size', 'big'].indexOf(mapState) >= 0"></map-sort> -->
+	<map-sort></map-sort>
 
-  <!-- map container-->
-  <div id="map" class="mapResize map {{mapState}}" ng-class="{ 'not-index': !$root.isMapState(), 'sidebar-opened': $root.isSidebarOpened, 'filter-opened': $root.isFilterOpened }"></div>
+	<!-- map container-->
+	<div id="map" class="mapResize map {{mapState}}" ng-class="{ 'not-index': !$root.isMapState(), 'sidebar-opened': $root.isSidebarOpened, 'filter-opened': $root.isFilterOpened }"></div>
 
-  <!-- Opened spot -->
-  <div ng-if="$root.openedSpot != null && $root.isMapState()">
-      <spot spot="$root.openedSpot" modal="true"></spot>
-  </div>
+	<!-- Opened spot -->
+	<div ng-if="$root.openedSpot != null && $root.isMapState()">
+		<spot spot="$root.openedSpot" modal="true"></spot>
+	</div>
 
-  <!-- content container-->
-  <div ng-show="mapState != 'full-size'" ui-view ng-class="{'landing-wrapper': $state.includes('intro')}"></div>
+	<!-- content container-->
+	<div ng-show="mapState != 'full-size'" ui-view ng-class="{'landing-wrapper': $state.includes('intro')}"></div>
 
-  <div ng-include="'/app/components/navigation/profile_menu/profile_links.html'" class="map-block" ng-if="mapState == 'full-size' || $root.isMapState()"></div>
-  <!-- <div ng-include="'/app/components/navigation/profile_menu/profile_links_unauthorized.html'" class="map-block" ng-if="(mapState == 'full-size' && !currentUser) || ($root.isMapState() && !currentUser)"></div> -->
+	<div ng-include="'/app/components/navigation/profile_menu/profile_links.html'" class="map-block" ng-if="mapState == 'full-size' || $root.isMapState()"></div>
+	<!-- <div ng-include="'/app/components/navigation/profile_menu/profile_links_unauthorized.html'" class="map-block" ng-if="(mapState == 'full-size' && !currentUser) || ($root.isMapState() && !currentUser)"></div> -->
 
 </div>
 
@@ -122,7 +125,7 @@ rotate(-360deg); } } .preloader .buckets div:nth-child(2) { -webkit-animation-de
 <new-message></new-message>
 
 <div class="pick-notification">
-    <img src='assets/img/Pick_a_tool.png'>
+	<img src='assets/img/Pick_a_tool.png'>
 </div>
 
 <!-- <div class="info-layout">
@@ -139,49 +142,301 @@ rotate(-360deg); } } .preloader .buckets div:nth-child(2) { -webkit-animation-de
 
 <script> L_PREFER_CANVAS = true; </script>
 <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-    // Registration was successful
-    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-  }).catch(function(err) {
-    // registration failed :(
-    console.log('ServiceWorker registration failed: ', err);
-  });
-}
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+			// Registration was successful
+			console.log('ServiceWorker registration successful with scope: ', registration.scope);
+		}).catch(function(err) {
+			// registration failed :(
+			console.log('ServiceWorker registration failed: ', err);
+		});
+	}
 </script>
 <script>
-  //facebook
-  window.fbAsyncInit = function () {
-    FB.init({
-      appId: '742305589231590',
-      xfbml: true,
-      version: 'v2.4'
-    });
-  };
+	//facebook
+	window.fbAsyncInit = function () {
+		FB.init({
+			appId: '742305589231590',
+			xfbml: true,
+			version: 'v2.4'
+		});
+	};
 
-  (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {
-      return;
-    }
-    js = d.createElement(s);
-    js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+	(function (d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {
+			return;
+		}
+		js = d.createElement(s);
+		js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
 
 </script>
 
-<!-- bower:js -->
-<!-- run `gulp inject` to automatically populate bower script dependencies -->
-<!-- endbower -->
+<!-- scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.4.14/angular-resource.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/oclazyload/1.0.9/ocLazyLoad.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.8.0/loading-bar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.min.js"></script>
+<script src=""></script>
+
+<!--<script src="../bower_components/jquery/dist/jquery.js"></script>-->
+<!--<script src="../bower_components/angular/angular.js"></script>-->
+<script src="../bower_components/angular-animate/angular-animate.js"></script>
+<script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="../bower_components/angular-translate/angular-translate.js"></script>
+<script src="../bower_components/angular-dialog-service/dist/dialogs.min.js"></script>
+<script src="../bower_components/angular-dialog-service/dist/dialogs-default-translations.min.js"></script>
+<script src="../bower_components/br-validations/releases/br-validations.js"></script>
+<script src="../bower_components/string-mask/src/string-mask.js"></script>
+<script src="../bower_components/angular-input-masks/angular-input-masks-standalone.min.js"></script>
+<!--<script src="../bower_components/angular-loading-bar/build/loading-bar.js"></script>-->
+<script src="../bower_components/angular-messages/angular-messages.js"></script>
+<!--<script src="../bower_components/angular-resource/angular-resource.js"></script>-->
+<script src="../bower_components/angular-scroll-glue/src/scrollglue.js"></script>
+<script src="../bower_components/snapjs/snap.js"></script>
+<script src="../bower_components/angular-snap/angular-snap.js"></script>
+<!--<script src="../bower_components/moment/moment.js"></script>-->
+<!--<script src="../bower_components/fullcalendar/dist/fullcalendar.js"></script>-->
+<!--<script src="../bower_components/angular-ui-calendar/src/calendar.js"></script>-->
+<!--<script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>-->
+<script src="../bower_components/angular-ui-select/dist/select.js"></script>
+<script src="../bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="../bower_components/cropper/dist/cropper.js"></script>
+<script src="../bower_components/Justified-Gallery/dist/js/jquery.justifiedGallery.js"></script>
+<script src="../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+<script src="../bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+<script src="../bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+<!--<script src="../bower_components/toastr/toastr.js"></script>-->
+<!--<script src="../bower_components/underscore/underscore.js"></script>-->
+<script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="../bower_components/jQuery.dotdotdot/src/jquery.dotdotdot.min.umd.js"></script>
+<script src="../bower_components/jquery-ui/jquery-ui.js"></script>
+<script src="../bower_components/bootstrap-modal/js/bootstrap-modal.js"></script>
+<script src="../bower_components/bootstrap-modal/js/bootstrap-modalmanager.js"></script>
+<script src="../bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="../bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
+<script src="../bower_components/angular-touch/angular-touch.js"></script>
+<script src="../bower_components/angular-carousel/dist/angular-carousel.js"></script>
+<script src="../bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
 
 <script src="/assets/libs/jbox/jbox.min.js"></script>
 <script src="/assets/libs/screenfull/screenfull.min.js"></script>
 
-<!-- inject:js -->
-<!-- js files will be automatically insert here -->
-<!-- endinject -->
+<script src="/assets/libs/Leaflet/leaflet.js"></script>
+<script src="/assets/libs/leaflet.pip/leaflet-pip.min.js"></script>
+<script src="/assets/libs/LeafletMarkerCluster/leaflet.markercluster.js"></script>
+<script src="/assets/libs/LeafletRoutingMachine/leaflet-routing-machine.js"></script>
+
+<script src="/assets/libs/angular-bootstrap.iml/ui-bootstrap-tpls.js"></script>
+<script src="/assets/libs/angularjs-dropdown-multiselect/angularjs-dropdown-multiselect.min.js"></script>
+<script src="/assets/libs/concave_hull/concavehull.min.js"></script>
+<script src="/assets/libs/datetimepicker/jquery.datetimepicker.js"></script>
+<script src="/assets/libs/bootstrap-tooltip/bootstrap-tooltip.js"></script>
+
+<script src="/assets/libs/html2canvas/html2canvas.js"></script>
+<script src="/assets/libs/html2canvas/html2canvas.svg.min.js"></script>
+
+
+<script src="/assets/libs/ng-file-upload/ng-file-upload.min.js"></script>
+<script src="/assets/libs/screenfull/screenfull.min.js"></script>
+
+<!--<script src="/assets/libs/socket.io/socket.io.js"></script>-->
+
+<!--<script src="assets/libs/turf/turf.min.js"></script>-->
+
+<!--<script src="assets/libs/summernote/summernote.js"></script>-->
+<!--<script src="assets/libs/summernote/plugin/specialchars/summernote-ext-specialchars.js"></script>-->
+<!--<script src="assets/libs/summernote/plugin/specialchars/summernote-ext-specialchars.min.js"></script>-->
+<!--<script src="assets/libs/summernote/plugin/databasic/summernote-ext-databasic.js"></script>-->
+<!--<script src="assets/libs/summernote/plugin/databasic/summernote-ext-databasic.min.js"></script>-->
+<!--<script src="assets/libs/summernote/plugin/hello/summernote-ext-hello.js"></script>-->
+<!--<script src="assets/libs/summernote/plugin/hello/summernote-ext-hello.min.js"></script>-->
+
+<script src="app/index.module.js"></script>
+<script src="app/index.config.js"></script>
+<script src="app/index.constants.js"></script>
+<script src="app/index.route.js"></script>
+<script src="app/index.run.js"></script>
+
+<script src="app/models/album.js"></script>
+<script src="app/models/area.js"></script>
+<script src="app/models/feed.js"></script>
+<script src="app/models/firends.js"></script>
+<script src="app/models/message.js"></script>
+<script src="app/models/photo.js"></script>
+<script src="app/models/photo_comment.js"></script>
+<script src="app/models/plan.js"></script>
+<script src="app/models/plan_comment.js"></script>
+<script src="app/models/post.js"></script>
+<script src="app/models/post_comment.js"></script>
+<script src="app/models/spot.js"></script>
+<script src="app/models/spot_comment.js"></script>
+<script src="app/models/spot_photo_comment.js"></script>
+<script src="app/models/spot_review.js"></script>
+<script src="app/models/staticPage.js"></script>
+<script src="app/models/user.js"></script>
+<script src="app/models/wall.js"></script>
+
+<script src="app/components/blogger_request/blogger_request.directive.js"></script>
+<script src="app/components/claim_spot/claim_spot.directive.js"></script>
+<script src="app/components/contacts_import/contacts_import.directive.js"></script>
+<script src="app/components/crop/crop.service.js"></script>
+<script src="app/components/crop/ngCropper.js"></script>
+<script src="app/components/date_range/date_range.directive.js"></script>
+<script src="app/components/attachments/attachments.directive.js"></script>
+<script src="app/components/facebook_events/facebook_events.directive.js"></script>
+<script src="app/components/directives/contenttools.js"></script>
+<script src="app/components/directives/ctrlEnter.js"></script>
+<script src="app/components/directives/datetimepicker.js"></script>
+<script src="app/components/directives/eye_password.js"></script>
+<script src="app/components/directives/justified_gallery.js"></script>
+<script src="app/components/directives/link_checker.js"></script>
+<script src="app/components/directives/ng_match.js"></script>
+<script src="app/components/directives/repeat_done.js"></script>
+<script src="app/components/directives/spotType.js"></script>
+<script src="app/components/directives/youtube_player.js"></script>
+<script src="app/components/facebook_friends/facebook_friends.directive.js"></script>
+<script src="app/components/filters/absoluteLink.js"></script>
+<script src="app/components/filters/age.js"></script>
+<script src="app/components/filters/from_now.js"></script>
+<script src="app/components/filters/htmlLinky.js"></script>
+<script src="app/components/filters/htmlToPlaintext.js"></script>
+<script src="app/components/filters/short_link.js"></script>
+<script src="app/components/filters/toTrustedHtml.js"></script>
+<script src="app/components/filters/to_paragraphs.js"></script>
+<script src="app/components/filters/to_timezone.js"></script>
+<script src="app/components/geolocation_ip/ip-api.js"></script>
+<script src="app/components/google_contacts/google_contacts.controller.js"></script>
+<script src="app/components/invite_friends/invite_friends.directive.js"></script>
+<script src="app/components/google_maps_api/places_service.js"></script>
+<script src="app/components/location/location_service.js"></script>
+<script src="app/components/location_autocomplete/autocomplete.directive.js"></script>
+<script src="app/components/flex_items/flex_items.directive.js"></script>
+<script src="app/components/map_sort/mapSort.directive.js"></script>
+<script src="app/components/map/map.service.js"></script>
+<script src="app/components/new_message/new_message.directive.js"></script>
+<script src="app/components/new_message/new_message.service.js"></script>
+<script src="app/components/ng_carousel/ng_carousel.directive.js"></script>
+<script src="app/components/ng_input/activity_modal.controller.js"></script>
+<script src="app/components/ng_input/ng_input.directive.js"></script>
+<script src="app/components/ng_input/photos_modal.controller.js"></script>
+<script src="app/components/photoviewer/photoviewer.directive.js"></script>
+<script src="app/components/password_recovery/password_recovery.directive.js"></script>
+<script src="app/components/password_recovery/password_recovery.service.js"></script>
+<script src="app/components/permission_service/permission_service.js"></script>
+<script src="app/components/popular_posts/popular_posts.directive.js"></script>
+<script src="app/components/report_spot/report_spot.directive.js"></script>
+<script src="app/components/preloader/preloader.directive.js"></script>
+<script src="app/components/password_reset/password_reset.controller.js"></script>
+<script src="app/components/review_input/review_input.directive.js"></script>
+<script src="app/components/scroll_service/scroll_service.js"></script>
+<script src="app/components/share/share.js"></script>
+<script src="app/components/send_message/send_message.directive.js"></script>
+<script src="app/components/sign_in/sign_in.directive.js"></script>
+<script src="app/components/sign_in/sign_in.service.js"></script>
+<script src="app/components/sign_up/sign_up.directive.js"></script>
+<script src="app/components/sign_up/sign_up.service.js"></script>
+<script src="app/components/spot_card/spot_card.directive.js"></script>
+<script src="app/components/socket/socket.service.js"></script>
+<script src="app/components/spot_service/spot.service.js"></script>
+<script src="app/components/spots_modal/spots_modal.directive.js"></script>
+<script src="app/components/upload_modal/upload_modal.directive.js"></script>
+<script src="app/components/stars/stars.directive.js"></script>
+<script src="app/components/uploader/uploader.directive.js"></script>
+<script src="app/components/uploader/uploader.service.js"></script>
+<script src="app/components/user_hints/user_hints.directives.js"></script>
+<script src="app/components/users_modal/users_modal.directive.js"></script>
+<script src="app/components/truncated/truncated.directive.js"></script>
+<script src="app/components/user_service/user.service.js"></script>
+
+<script src="app/components/map_partials/hints/hints.directive.js"></script>
+<script src="app/components/map_partials/saveSelection/save_selection.controller.js"></script>
+
+<script src="app/components/map_popups/blog_popup/blog_popup.directive.js"></script>
+<script src="app/components/map_popups/confirm_box/confirm.js"></script>
+<script src="app/components/map_popups/post_popup/post_popup.js"></script>
+<script src="app/components/map_popups/spot_map_modal/spot_map_modal.controller.js"></script>
+<script src="app/components/map_popups/spot_popup/spot_popup.controller.js"></script>
+<script src="app/components/map_popups/spot_popup/spot_popup.js"></script>
+
+<!--<script src="app/components/navigation/header/bloodhound-search.directive.js"></script>-->
+<script src="app/components/navigation/header/header.directive.js"></script>
+<script src="app/components/navigation/profile_menu/profileMenu.controller.js"></script>
+<script src="app/components/navigation/side_menu/side_menu.directive.js"></script>
+
+
+
+<script src="app/modules/chat/chat.controller.js"></script>
+<script src="app/modules/chat/chat.service.js"></script>
+<script src="app/modules/chat/chat_room/chat_room.controller.js"></script>
+
+<script src="app/modules/comments/comments.controller.js"></script>
+
+<script src="app/modules/areas/areas.controller.js"></script>
+
+<!--<script src="app/modules/favorites/favorites.controller.js"></script>-->
+
+<script src="app/modules/contact_us/contact_us.controller.js"></script>
+
+<!--<script src="app/modules/followers/followers.controller.js"></script>-->
+
+<script src="app/modules/feed/feed.controller.js"></script>
+
+<!--<script src="app/modules/blog/blog.controller.js"></script>-->
+<!--<script src="app/modules/map/map_post.controller.js"></script>-->
+
+<script src="app/modules/intro/index.controller.js"></script>
+<script src="app/modules/intro/intro.controller.js"></script>
+
+<script src="app/modules/planner/planner.controller.js"></script>
+
+<script src="app/modules/friendsmap/friendsmap.controller.js"></script>
+<script src="app/modules/friendsmap/create/createFriend.controller.js"></script>
+
+<!--<script src="app/modules/profile/profile.controller.js"></script>-->
+
+<script src="app/modules/reviews/reviews.controller.js"></script>
+
+<!--<script src="app/modules/spot/spot.controller.js"></script>-->
+<script src="app/modules/spot/spot.directive.js"></script>
+
+<!--<script src="app/modules/summernote/summernote.js"></script>-->
+
+<script src="app/modules/settings/settings.controller.js"></script>
+
+<script src="app/modules/terms/terms.controller.js"></script>
+
+<script src="app/modules/zoomers/zoomers.controller.js"></script>
+
+<script src="app/modules/areas/preview/areasPreview.controller.js"></script>
+
+<!--<script src="app/modules/blog/article_create/articleCreate.controller.js"></script>-->
+<script src="app/modules/blog/article/article.controller.js"></script>
+<script src="app/modules/blog/blogger_profile/blogger_profile.controller.js"></script>
+
+<script src="app/modules/planner/plan_create/planCreate.controller.js"></script>
+<!--<script src="app/modules/planner/plan/plan.controller.js"></script>-->
+
+
+<!--<script src="app/modules/photomap/album/album.controller.js"></script>-->
+<!--<script src="app/modules/photomap/create_album/createAlbum.controller.js"></script>-->
+<!--<script src="app/modules/photomap/edit_photo/edit_photo.controller.js"></script>-->
+<!--<script src="app/modules/photomap/photomap.controller.js"></script>-->
+
+<script src="app/modules/spot/review/review.directive.js"></script>
+<script src="app/modules/spot/spots/spots.controller.js"></script>
+<script src="app/modules/spot/spot_create/spotCreate.controller.js"></script>
+
+
 
 <!-- inject:partials -->
 <!-- angular templates will be automatically converted in js and inserted here -->
@@ -190,32 +445,66 @@ if ('serviceWorker' in navigator) {
 <!-- endbuild -->
 
 <noscript id="deferred-styles">
-    <!-- build:css({.tmp/serve,src}) assets/css/app.css -->
 
-    <!-- bower:css -->
-    <!-- run `gulp inject` to automatically populate bower styles dependencies -->
-    <!-- endbower -->
+	<link rel="stylesheet" href="../bower_components/angular-dialog-service/dist/dialogs.min.css" />
+	<link rel="stylesheet" href="../bower_components/angular-loading-bar/build/loading-bar.css" />
+	<link rel="stylesheet" href="../bower_components/angular-snap/angular-snap.css" />
+	<link rel="stylesheet" href="../bower_components/fullcalendar/dist/fullcalendar.css" />
+	<link rel="stylesheet" href="../bower_components/angular-ui-select/dist/select.css" />
+	<link rel="stylesheet" href="../bower_components/animate.css/animate.css" />
+	<link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" />
+	<link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+	<link rel="stylesheet" href="../bower_components/cropper/dist/cropper.css" />
+	<link rel="stylesheet" href="../bower_components/Justified-Gallery/dist/css/justifiedGallery.css" />
+	<link rel="stylesheet" href="../bower_components/ng-tags-input/ng-tags-input.min.css" />
+	<link rel="stylesheet" href="../bower_components/toastr/toastr.css" />
+	<link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.css" />
+	<link rel="stylesheet" href="../bower_components/bootstrap-modal/css/bootstrap-modal.css" />
+	<link rel="stylesheet" href="../bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" />
+	<link rel="stylesheet" href="../bower_components/angular-carousel/dist/angular-carousel.css" />
 
-    <!-- inject:css -->
-    <!-- css files will be automatically insert here -->
-    <!-- endinject -->
+	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="assets/libs/Leaflet/leaflet.css">
+	<link rel="stylesheet" href="assets/libs/LeafletRoutingMachine/leaflet-routing-machine.css">
+	<link rel="stylesheet" href="assets/libs/LeafletMarkerCluster/MarkerCluster.Default.css">
+	<link rel="stylesheet" href="assets/libs/LeafletMarkerCluster/MarkerCluster.css">
+	<link rel="stylesheet" href="assets/libs/bootstrap-tooltip/bootstrap-tooltip.css">
+	<link rel="stylesheet" href="assets/libs/datetimepicker/jquery.datetimepicker.css">
+	<link rel="stylesheet" href="assets/libs/jcarousel/jcarousel.css">
+	<link rel="stylesheet" href="assets/libs/jbox/jBox.css">
+	<link rel="stylesheet" href="assets/libs/summernote/summernote.css">
+	<link rel="stylesheet" href="assets/libs/summernote/plugin/databasic/summernote-ext-databasic.css">
+	<link rel="stylesheet" href="assets/libs/summernote/plugin/databasic/summernote-ext-databasic.min.css">
+	<link rel="stylesheet" href="assets/css/bootstrap-select.min.css">
+	<link rel="stylesheet" href="assets/sass/_media.css">
+	<link rel="stylesheet" href="assets/sass/main.css">
 
-    <!-- endbuild -->
+	<!-- b-uild:css({.tmp/serve,src}) assets/css/app.css -->
+
+	<!-- b-ower:css -->
+	<!-- run `gulp inject` to automatically populate bower styles dependencies -->
+	<!-- e-ndbower -->
+
+	<!-- i-nject:css -->
+	<!-- css files will be automatically insert here -->
+	<!-- e-ndinject -->
+
+	<!-- e-ndbuild -->
 </noscript>
 <script>
-    window.onload = function() {
-        var addStylesNode = document.getElementById("deferred-styles");
-        var replacement = document.createElement("div");
-        replacement.innerHTML = addStylesNode.textContent;
-        document.body.appendChild(replacement)
-        addStylesNode.parentElement.removeChild(addStylesNode);
-        var pl = document.querySelector("#preloader");
-        pl.parentNode.removeChild(pl);
-        body.classList.remove("content-hidden");
-    }
+	window.onload = function() {
+		var addStylesNode = document.getElementById("deferred-styles");
+		var replacement = document.createElement("div");
+		replacement.innerHTML = addStylesNode.textContent;
+		document.body.appendChild(replacement);
+		addStylesNode.parentElement.removeChild(addStylesNode);
+		var pl = document.querySelector("#preloader");
+		pl.parentNode.removeChild(pl);
+		body.classList.remove("content-hidden");
+	}
 </script>
 
-<script async type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAytote4odQOn_IpNkj207MXG2bF1uM2Zs"></script>
+<!--<script async type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAytote4odQOn_IpNkj207MXG2bF1uM2Zs"></script>-->
 
 </body>
 </html>
