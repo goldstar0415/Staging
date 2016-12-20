@@ -6,7 +6,7 @@
    */
   angular
     .module('zoomtivity')
-    .factory('socket', function ($rootScope, SOCKET_URL, ChatService) {
+    .factory('socket', function ($rootScope, SOCKET_URL, ChatService, $ocLazyLoad) {
       var socket;
       return {
         connect: connect,
@@ -20,18 +20,24 @@
        */
       function connect(socket_id) {
 
-        socket = io.connect(SOCKET_URL);
+        if ($ocLazyLoad.isLoaded('socket.io')) {
+          _connect();
+        } else {
+          $ocLazyLoad.load('socket.io').then(_connect);
+        }
 
-        //socket.on('connect', function () {
-        //  console.log('Socket connected');
-        //});
-
-        socket.on('user.' + socket_id + ':App\\Events\\OnMessage', function (data) {
-          ChatService.onNewMessage(data);
-        });
-        socket.on('user.' + socket_id + ':App\\Events\\OnMessageRead', function (data) {
-          ChatService.onReadMessage(data);
-        });
+        function _connect() {
+          socket = io.connect(SOCKET_URL);
+          //socket.on('connect', function () {
+          //  console.log('Socket connected');
+          //});
+          socket.on('user.' + socket_id + ':App\\Events\\OnMessage', function (data) {
+            ChatService.onNewMessage(data);
+          });
+          socket.on('user.' + socket_id + ':App\\Events\\OnMessageRead', function (data) {
+            ChatService.onReadMessage(data);
+          });
+        }
       }
 
       //disconnect socket

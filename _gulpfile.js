@@ -1,0 +1,258 @@
+
+const gulp = require('gulp');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const argv = require('yargs').argv;
+
+const SRC = './src';
+const BOWER = './bower_components';
+const DEST = './dist';
+
+gulp.task('_bower', buildBower);
+gulp.task('_app', buildApp);
+gulp.task('_assets', buildAssets);
+
+gulp.task('build', ['_bower', '_app', '_assets']);
+
+function buildApp() {
+    return gulp
+        .src([
+            `${SRC}/app/index.module.js`,
+            `${SRC}/app/index.constants.js`,
+            `${SRC}/app/index.config.js`,
+            `${SRC}/app/index.route.js`,
+            `${SRC}/app/index.run.js`,
+            `${SRC}app/models/album.js`,
+            `${SRC}app/models/area.js`,
+            `${SRC}app/models/feed.js`,
+            `${SRC}app/models/firends.js`,
+            `${SRC}app/models/message.js`,
+            `${SRC}app/models/photo.js`,
+            `${SRC}app/models/photo_comment.js`,
+            `${SRC}app/models/plan.js`,
+            `${SRC}app/models/plan_comment.js`,
+            `${SRC}app/models/post.js`,
+            `${SRC}app/models/post_comment.js`,
+            `${SRC}app/models/spot.js`,
+            `${SRC}app/models/spot_comment.js`,
+            `${SRC}app/models/spot_photo_comment.js`,
+            `${SRC}app/models/spot_review.js`,
+            `${SRC}app/models/staticPage.js`,
+            `${SRC}app/models/user.js`,
+            `${SRC}app/models/wall.js`,
+            `${SRC}app/components/attachments/attachments.directive.js`,
+            `${SRC}app/components/blogger_request/blogger_request.directive.js`,
+            `${SRC}app/components/claim_spot/claim_spot.directive.js`,
+            `${SRC}app/components/contacts_import/contacts_import.directive.js`,
+            `${SRC}app/components/crop/crop.service.js`,
+            `${SRC}app/components/crop/ngCropper.js`,
+            `${SRC}app/components/date_range/date_range.directive.js`,
+            `${SRC}app/components/directives/contenttools.js`,
+            `${SRC}app/components/directives/ctrlEnter.js`,
+            `${SRC}app/components/directives/datetimepicker.js`,
+            `${SRC}app/components/directives/eye_password.js`,
+            `${SRC}app/components/directives/justified_gallery.js`,
+            `${SRC}app/components/directives/link_checker.js`,
+            `${SRC}app/components/directives/ng_match.js`,
+            `${SRC}app/components/directives/repeat_done.js`,
+            `${SRC}app/components/directives/spotType.js`,
+            `${SRC}app/components/directives/youtube_player.js`,
+            `${SRC}app/components/facebook_events/facebook_events.directive.js`,
+            `${SRC}app/components/facebook_friends/facebook_friends.directive.js`,
+            `${SRC}app/components/filters/absoluteLink.js`,
+            `${SRC}app/components/filters/age.js`,
+            `${SRC}app/components/filters/from_now.js`,
+            `${SRC}app/components/filters/htmlLinky.js`,
+            `${SRC}app/components/filters/htmlToPlaintext.js`,
+            `${SRC}app/components/filters/short_link.js`,
+            `${SRC}app/components/filters/toTrustedHtml.js`,
+            `${SRC}app/components/filters/to_paragraphs.js`,
+            `${SRC}app/components/filters/to_timezone.js`,
+            `${SRC}app/components/flex_items/flex_items.directive.js`,
+            `${SRC}app/components/geolocation_ip/ip-api.js`,
+            `${SRC}app/components/google_contacts/google_contacts.controller.js`,
+            `${SRC}app/components/google_maps_api/places_service.js`,
+            `${SRC}app/components/invite_friends/invite_friends.directive.js`,
+            `${SRC}app/components/location/location_service.js`,
+            `${SRC}app/components/location_autocomplete/autocomplete.directive.js`,
+            `${SRC}app/components/map/map.service.js`,
+            `${SRC}app/components/map_sort/mapSort.directive.js`,
+            `${SRC}app/components/new_message/new_message.directive.js`,
+            `${SRC}app/components/new_message/new_message.service.js`,
+            `${SRC}app/components/ng_carousel/ng_carousel.directive.js`,
+            `${SRC}app/components/ng_input/activity_modal.controller.js`,
+            `${SRC}app/components/ng_input/ng_input.directive.js`,
+            `${SRC}app/components/ng_input/photos_modal.controller.js`,
+            `${SRC}app/components/password_recovery/password_recovery.directive.js`,
+            `${SRC}app/components/password_recovery/password_recovery.service.js`,
+            `${SRC}app/components/password_reset/password_reset.controller.js`,
+            `${SRC}app/components/permission_service/permission_service.js`,
+            `${SRC}app/components/photoviewer/photoviewer.directive.js`,
+            `${SRC}app/components/popular_posts/popular_posts.directive.js`,
+            `${SRC}app/components/preloader/preloader.directive.js`,
+            `${SRC}app/components/report_spot/report_spot.directive.js`,
+            `${SRC}app/components/review_input/review_input.directive.js`,
+            `${SRC}app/components/scroll_service/scroll_service.js`,
+            `${SRC}app/components/send_message/send_message.directive.js`,
+            `${SRC}app/components/share/share.js`,
+            `${SRC}app/components/sign_in/sign_in.directive.js`,
+            `${SRC}app/components/sign_in/sign_in.service.js`,
+            `${SRC}app/components/sign_up/sign_up.directive.js`,
+            `${SRC}app/components/sign_up/sign_up.service.js`,
+            `${SRC}app/components/socket/socket.service.js`,
+            `${SRC}app/components/spot_card/spot_card.directive.js`,
+            `${SRC}app/components/spots_modal/spots_modal.directive.js`,
+            `${SRC}app/components/spot_service/spot.service.js`,
+            `${SRC}app/components/stars/stars.directive.js`,
+            `${SRC}app/components/truncated/truncated.directive.js`,
+            `${SRC}app/components/upload_modal/upload_modal.directive.js`,
+            `${SRC}app/components/uploader/uploader.directive.js`,
+            `${SRC}app/components/uploader/uploader.service.js`,
+            `${SRC}app/components/user_hints/user_hints.directives.js`,
+            `${SRC}app/components/user_service/user.service.js`,
+            `${SRC}app/components/users_modal/users_modal.directive.js`,
+            `${SRC}app/modules/areas/areas.controller.js`,
+            `${SRC}app/modules/blog/blog.controller.js`,
+            `${SRC}app/modules/chat/chat.controller.js`,
+            `${SRC}app/modules/chat/chat.service.js`,
+            `${SRC}app/modules/comments/comments.controller.js`,
+            `${SRC}app/modules/contact_us/contact_us.controller.js`,
+            `${SRC}app/modules/favorites/favorites.controller.js`,
+            `${SRC}app/modules/friendsmap/friendsmap.controller.js`,
+            `${SRC}app/modules/followers/followers.controller.js`,
+            `${SRC}app/modules/feed/feed.controller.js`,
+            `${SRC}app/modules/intro/index.controller.js`,
+            `${SRC}app/modules/intro/intro.controller.js`,
+            `${SRC}app/modules/map/map_post.controller.js`,
+            `${SRC}app/modules/photomap/photomap.controller.js`,
+            `${SRC}app/modules/planner/planner.controller.js`,
+            `${SRC}app/modules/reviews/reviews.controller.js`,
+            `${SRC}app/modules/profile/profile.controller.js`,
+            `${SRC}app/modules/settings/settings.controller.js`,
+            `${SRC}app/modules/spot/spot.controller.js`,
+            `${SRC}app/modules/spot/spot.directive.js`,
+            `${SRC}app/modules/summernote/summernote.js`,
+            `${SRC}app/modules/terms/terms.controller.js`,
+            `${SRC}app/modules/zoomers/zoomers.controller.js`,
+            `${SRC}app/components/map_partials/hints/hints.directive.js`,
+            `${SRC}app/components/map_partials/saveSelection/save_selection.controller.js`,
+            `${SRC}app/components/map_popups/blog_popup/blog_popup.directive.js`,
+            `${SRC}app/components/map_popups/confirm_box/confirm.js`,
+            `${SRC}app/components/map_popups/spot_map_modal/spot_map_modal.controller.js`,
+            `${SRC}app/components/map_popups/post_popup/post_popup.js`,
+            `${SRC}app/components/map_popups/spot_popup/spot_popup.controller.js`,
+            `${SRC}app/components/map_popups/spot_popup/spot_popup.js`,
+            `${SRC}app/components/navigation/header/bloodhound-search.directive.js`,
+            `${SRC}app/components/navigation/header/header.directive.js`,
+            `${SRC}app/components/navigation/profile_menu/profileMenu.controller.js`,
+            `${SRC}app/components/navigation/side_menu/side_menu.directive.js`,
+            `${SRC}app/modules/areas/preview/areasPreview.controller.js`,
+            `${SRC}app/modules/blog/article/article.controller.js`,
+            `${SRC}app/modules/blog/article_create/articleCreate.controller.js`,
+            `${SRC}app/modules/blog/blogger_profile/blogger_profile.controller.js`,
+            `${SRC}app/modules/chat/chat_room/chat_room.controller.js`,
+            `${SRC}app/modules/friendsmap/create/createFriend.controller.js`,
+            `${SRC}app/modules/photomap/album/album.controller.js`,
+            `${SRC}app/modules/photomap/create_album/createAlbum.controller.js`,
+            `${SRC}app/modules/photomap/edit_photo/edit_photo.controller.js`,
+            `${SRC}app/modules/planner/plan/plan.controller.js`,
+            `${SRC}app/modules/planner/plan_create/planCreate.controller.js`,
+            `${SRC}app/modules/spot/review/review.directive.js`,
+            `${SRC}app/modules/spot/spot_create/spotCreate.controller.js`,
+            `${SRC}app/modules/spot/spots/spots.controller.js`,
+        ])
+        .pipe(concat('app.build.js'))
+        .pipe(gulp.dest(`${DEST}/scripts`));
+}
+
+function buildAssets() {
+    return gulp
+        .src([
+            `${SRC}/assets/libs/jbox/jbox.min.js`,
+            `${SRC}/assets/libs/screenfull/screenfull.min.js`,
+            `${SRC}/assets/libs/Leaflet/leaflet.js`,
+            `${SRC}/assets/libs/LeafletMarkerCluster/leaflet.markercluster.js`,
+            `${SRC}/assets/libs/LeafletRoutingMachine/leaflet-routing-machine.js`,
+            `${SRC}/assets/libs/angular-bootstrap.iml/ui-bootstrap-tpls.js`,
+            `${SRC}/assets/libs/angularjs-dropdown-multiselect/angularjs-dropdown-multiselect.min.js`,
+            `${SRC}/assets/libs/bootstrap-tooltip/bootstrap-tooltip.js`,
+            `${SRC}/assets/libs/concave_hull/concavehull.min.js`,
+            `${SRC}/assets/libs/datetimepicker/jquery.datetimepicker.js`,
+            `${SRC}/assets/libs/html2canvas/html2canvas.js`,
+            `${SRC}/assets/libs/html2canvas/html2canvas.svg.min.js`,
+            `${SRC}/assets/libs/leaflet.pip/leaflet-pip.min.js`,
+            `${SRC}/assets/libs/ng-file-upload/ng-file-upload.min.js`,
+            `${SRC}/assets/libs/screenfull/screenfull.min.js`,
+            `${SRC}/assets/libs/summernote/summernote.js`,
+            `${SRC}/assets/libs/socket.io/socket.io.js`,
+            `${SRC}/assets/libs/turf/turf.min.js`,
+            `${SRC}/assets/libs/summernote/plugin/databasic/summernote-ext-databasic.js`,
+            `${SRC}/assets/libs/summernote/plugin/databasic/summernote-ext-databasic.min.js`,
+            `${SRC}/assets/libs/summernote/plugin/hello/summernote-ext-hello.js`,
+            `${SRC}/assets/libs/summernote/plugin/hello/summernote-ext-hello.min.js`,
+            `${SRC}/assets/libs/summernote/plugin/specialchars/summernote-ext-specialchars.js`,
+            `${SRC}/assets/libs/summernote/plugin/specialchars/summernote-ext-specialchars.min.js`,
+        ])
+        .pipe(concat('assets.build.js'))
+        .pipe(gulp.dest(`${DEST}/scripts`));
+}
+
+function buildBower() {
+    return gulp
+        .src([
+            `${BOWER}/jquery/dist/jquery.js`,
+            `${BOWER}/angular/angular.js`,
+            `${BOWER}/angular-animate/angular-animate.js`,
+            `${BOWER}/angular-sanitize/angular-sanitize.js`,
+            `${BOWER}/angular-bootstrap/ui-bootstrap-tpls.js`,
+            `${BOWER}/angular-translate/angular-translate.js`,
+            `${BOWER}/angular-dialog-service/dist/dialogs.min.js`,
+            `${BOWER}/angular-dialog-service/dist/dialogs-default-translations.min.js`,
+            `${BOWER}/br-validations/releases/br-validations.js`,
+            `${BOWER}/string-mask/src/string-mask.js`,
+            `${BOWER}/angular-input-masks/angular-input-masks-standalone.min.js`,
+            `${BOWER}/angular-loading-bar/build/loading-bar.js`,
+            `${BOWER}/angular-messages/angular-messages.js`,
+            `${BOWER}/angular-resource/angular-resource.js`,
+            `${BOWER}/angular-scroll-glue/src/scrollglue.js`,
+            `${BOWER}/snapjs/snap.js`,
+            `${BOWER}/angular-snap/angular-snap.js`,
+            `${BOWER}/moment/moment.js`,
+            `${BOWER}/fullcalendar/dist/fullcalendar.js`,
+            `${BOWER}/angular-ui-calendar/src/calendar.js`,
+            `${BOWER}/angular-ui-router/release/angular-ui-router.js`,
+            `${BOWER}/angular-ui-select/dist/select.js`,
+            `${BOWER}/bootstrap-datepicker/js/bootstrap-datepicker.js`,
+            `${BOWER}/cropper/dist/cropper.js`,
+            `${BOWER}/Justified-Gallery/dist/js/jquery.justifiedGallery.js`,
+            `${BOWER}/moment-timezone/builds/moment-timezone-with-data-2010-2020.js`,
+            `${BOWER}/ng-tags-input/ng-tags-input.min.js`,
+            `${BOWER}/ngInfiniteScroll/build/ng-infinite-scroll.js`,
+            `${BOWER}/toastr/toastr.js`,
+            `${BOWER}/underscore/underscore.js`,
+            `${BOWER}/angular-cookies/angular-cookies.js`,
+            `${BOWER}/jQuery.dotdotdot/src/jquery.dotdotdot.min.umd.js`,
+            `${BOWER}/jquery-ui/jquery-ui.js`,
+            `${BOWER}/bootstrap-modal/js/bootstrap-modal.js`,
+            `${BOWER}/bootstrap-modal/js/bootstrap-modalmanager.js`,
+            `${BOWER}/jquery-mousewheel/jquery.mousewheel.js`,
+            `${BOWER}/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js`,
+            `${BOWER}/angular-touch/angular-touch.js`,
+            `${BOWER}/angular-carousel/dist/angular-carousel.js`,
+            `${BOWER}/typeahead.js/dist/typeahead.bundle.js`,
+            `${BOWER}/oclazyload/dist/ocLazyLoad.js`,
+        ])
+        .pipe(concat('vendor.build.js'))
+        .pipe(gulp.dest(`${DEST}/scripts`));
+}
+
+function buildCss() {
+    return gulp.src([
+
+    ])
+        .pipe()
+        .pipe()
+
+
+}
+

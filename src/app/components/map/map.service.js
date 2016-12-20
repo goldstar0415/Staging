@@ -1876,7 +1876,7 @@
         //map.removeLayer(shareSelectionControl);
         map.removeLayer(saveSelectionControl);
         map.removeLayer(clearSelectionControl);
-		map.removeLayer(focusGeolocation);
+		    map.removeLayer(focusGeolocation);
         map.removeLayer(fullScreen);
         map.removeLayer(filter);
       }

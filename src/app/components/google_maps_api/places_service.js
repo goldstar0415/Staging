@@ -4,7 +4,7 @@
         .service('GoogleMapsPlacesService', GoogleMapsPlacesService);
 
     /** @ngInject */
-    function GoogleMapsPlacesService($document, $q) {
+    function GoogleMapsPlacesService($document, $q, $ocLazyLoad) {
 
         this.getDetails = function (request) {
             var deferred = $q.defer();
@@ -24,7 +24,10 @@
             $document.find('body').eq(0).append(angular.element("<div id='google-map-subst'></div>"));
             googleService = new google.maps.places.PlacesService(document.getElementById('google-map-subst'));
         };
-
-        init();
+        if ($ocLazyLoad.isLoaded('gmaps')) {
+            init();
+        } else {
+            $ocLazyLoad.load('gmaps').then(init);
+        }
     }
 })();
