@@ -596,7 +596,7 @@ class SpotController extends Controller
         else
         {
             $spotInfo = $spot->getSpotExtension();
-            $bookingUrl = $spot->getBookingUrl($spotInfo->booking_url);
+            $bookingUrl = (isset($spotInfo->booking_url))?$spot->getBookingUrl($spotInfo->booking_url):false;
             if(
                 isset($spotInfo->booking_url) && 
                 $spot->checkUrl($spotInfo->booking_url) && 

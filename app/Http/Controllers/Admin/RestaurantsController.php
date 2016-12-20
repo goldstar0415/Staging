@@ -17,6 +17,7 @@ use App\Spot;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Services\Csv\Reader;
+use App\Services\Csv\Helper;
 
 class RestaurantsController extends Controller
 {
@@ -106,54 +107,7 @@ class RestaurantsController extends Controller
     
     public function exportUpload(Request $request)
     {
-        $rules = ['csv' => 'required']; //|mimetypes:text/csv|mimes:csv
-        $result = ['success' => true];
-        $messages = [
-            'csv.required'  => 'CSV file required',
-            'csv.mimetypes' => 'File should be of text/csv mime type'
-        ];
-        
-        $validator = \Validator::make($request->all(), $rules, $messages);
-        if ($validator->fails()) 
-        {
-            $result['success'] = false;
-            $result['data']    = $validator->messages()->get('csv');
-        }
-        else
-        {
-            $filename =  $request->csv->getClientOriginalName();
-            $path     = $request->csv->move(storage_path() . '/csvs/', $filename );
-            if( $request->csv->getClientOriginalExtension() != 'csv' )
-            {
-                unlink($path->getPathName());
-                $result['success'] = false;
-                $result['data'][] = 'File should be .csv';
-            }
-            else
-            {
-                $result['data']['path'] = $path->getPathName();
-                $result['data']['filename'] = $filename;
-                config([
-                    'excel.csv.delimiter' => ',',
-                    'excel.cache.enable'  => false
-                    ]);
-                
-                $reader = new Reader();
-                $reader->open($result['data']['path']);
-                $count = 0;
-                foreach ($reader->getSheetIterator() as $sheet) {
-                    foreach ($sheet->getRowIterator() as $row) {
-                        $count++;
-                    }
-                }
-                $reader->close();
-                    
-                $result['data']['count'] = $count;
-            }
-        }
-        
-        return json_encode($result);
-        
+        return Helper::uploadCsv($request);
     }
     
     public function export( Request $request ) 
@@ -302,7 +256,7 @@ class RestaurantsController extends Controller
                                 $pictuesObjects = [];
                                 $pictures = array_filter(explode(';', $pictures));
                                 $needCover = true;
-                                foreach($pictures as $picture)
+                                foreach($pictures as $picture) 
                                 {
                                     $image_type = 0;
                                     if($needCover)
@@ -334,9 +288,7 @@ class RestaurantsController extends Controller
                                         $amenityObject->save();
                                     }
                                 }
-                                
                             }
-                            
                         }
                         $rows[] = $item;
                     }

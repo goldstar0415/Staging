@@ -214,6 +214,23 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         
         return $query->where('spot_type_category_id', $spotTypeCategory->id);
     }
+    
+    /**
+     * Get todo spot info
+     *
+     * @return query
+     */
+    public function todo()
+    {
+        return $this->hasOne(SpotRestaurant::class);
+    }
+    
+    public function scopeTodoes($query)
+    {
+        $spotTypeCategory = SpotTypeCategory::where('name', 'todo')->first();
+        
+        return $query->where('spot_type_category_id', $spotTypeCategory->id);
+    }
 
     /**
      * Check is spot favorite for authenticated user

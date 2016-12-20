@@ -41,6 +41,16 @@ get('restaurants/{restaurants}/edit', 'RestaurantsController@getEdit')->name('ad
 post('restaurants/{restaurants}/edit', 'RestaurantsController@postEdit')->name('admin.restaurants.post-edit');
 resource('restaurants', 'RestaurantsController', ['only' => ['index', 'destroy']]);
 
+post('todo/cleanDb', 'ToDoController@cleanDb')->name('admin.todo.clean-db');
+get('todo/bulk-delete', 'ToDoController@bulkDestroy')->name('admin.todo.bulk-delete');
+get('todo/filter', 'ToDoController@filter')->name('admin.todo.filter');
+get('todo/parser', 'ToDoController@csvParser')->name('admin.todo.parser');
+post('todo/export', 'ToDoController@export')->name('admin.todo.export');
+post('todo/exportUpload', 'ToDoController@exportUpload')->name('admin.todo.export-upload');
+get('todo/{todo}/edit', 'ToDoController@getEdit')->name('admin.todo.get-edit');
+post('todo/{todo}/edit', 'ToDoController@postEdit')->name('admin.todo.post-edit');
+resource('todoes', 'ToDoController', ['only' => ['index', 'destroy']]);
+
 resource('posts', 'BlogController', ['except' => 'show']);
 get('posts/search', 'BlogController@search')->name('admin.posts.search');
 
