@@ -385,11 +385,12 @@
 			MapService.showOtherLayers();
 
 			// show weather radar data for US users
-			if ($rootScope.currentCountryCode === 'us') {
-				MapService.toggleWeatherLayer(true);
-			} else {
-				console.log('Current country: ', $rootScope.currentCountryCode);
-			}
+			// if ($rootScope.currentCountryCode === 'us') {
+			// 	MapService.toggleWeatherLayer(true);
+			// } else {
+			// 	console.log('Current country: ', $rootScope.currentCountryCode);
+			// }
+            MapService.toggleWeatherLayer(true);
 
 			//MapService.WeatherSelection(weather, geocodeCallback);
             MapService.getWeatherLatLng(setWeatherLatLng);
