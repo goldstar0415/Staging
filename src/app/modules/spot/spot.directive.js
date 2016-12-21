@@ -50,7 +50,8 @@
                 areas: [],
                 links: []
             };
-            
+            vm.photoModal;
+
             if( vm.spot.hotel )
             {
                 AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/info').then(function(data) {
@@ -68,7 +69,7 @@
                 vm.spot.rating = data.total.rating;
                 syncSpots(spot.id, {is_saved: true});
             });
-            
+
             vm.mergeByProperty = function(arr1, arr2, prop) {
                 _.each(arr2, function(arr2obj) {
                     var arr1obj = _.find(arr1, function(arr1obj) {
@@ -80,7 +81,7 @@
             }
 
             vm.openPhotosModal = function() {
-                $modal.open({
+                vm.photoModal = $modal.open({
                     templateUrl: '/app/components/ng_input/photos_modal.html',
                     controller: 'PhotosModalController',
                     controllerAs: 'modal',
@@ -98,6 +99,13 @@
                             return vm.attachments;
                         }
                     }
+                });
+                vm.photoModal.result.then(function() {
+                    // $rootScope.setOpenedSpot(null);
+                    $http.get(API_URL + '/spots/' + vm.spot.id)
+                        .success(function success(data) {
+                            vm.spot = data;
+                        });
                 });
             };
 
