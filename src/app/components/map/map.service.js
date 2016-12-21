@@ -21,7 +21,7 @@
       var controlGroup = L.featureGroup();
       var clusterOptions = {
         //disableClusteringAtZoom: 8,
-		//chunkedLoading: true,
+		    //chunkedLoading: true,
         spiderfyDistanceMultiplier: 2,
         maxClusterRadius: 8,
         // disableClusteringAtZoom: 12,
@@ -37,9 +37,9 @@
       var currentLayer = "";
 
       // Path variables
-      var pathRouter		= L.Routing.osrmv1({geometryOnly: true});
-	  var pathRouter2		= L.Routing.mapbox(MAPBOX_API_KEY);
-	  var pathRouterFail	= 0;
+      var pathRouter = L.Routing.osrmv1({geometryOnly: true});
+      var pathRouter2 = L.Routing.mapbox(MAPBOX_API_KEY);
+      var pathRouterFail = 0;
 
       var highlightMarker;
 
@@ -1622,8 +1622,18 @@
         });
       }
 
-
       function getScreenshot(callback) {
+        if ($ocLazyLoad.isLoaded('html2canvas')) {
+          exec();
+        } else {
+          $ocLazyLoad.load('html2canvas').then(exec);
+        }
+        function exec() {
+          lazyGetScreenshot(callback);
+        }
+      }
+
+      function lazyGetScreenshot(callback) {
         var controls = $('.leaflet-control-container, .sidebar-menu-wrap');
         var mapPane = $(".leaflet-map-pane")[0];
 
@@ -2658,7 +2668,7 @@
         WeatherSelection: WeatherSelection,
 
         cancelHttpRequest: cancelHttpRequest,
-		hasLayer: hasLayer,
+		    hasLayer: hasLayer,
         OpenSaveSelectionsPopup: OpenSaveSelectionsPopup,
 
         highlightSpot: highlightSpot,

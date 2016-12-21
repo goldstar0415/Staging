@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, $http, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, API_URL, UploaderService, SpotService, SignInService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
+  function runBlock($log, $http, MapService, UserService, $rootScope, snapRemote, $state, toastr, DEBUG, API_URL, SpotService, SignInService, PermissionService, $modalStack, USER_ONLINE_MINUTE) {
     $rootScope.$state = $state;
     $rootScope.checkPermission = PermissionService.checkPermission;
     $rootScope.isMobile = angular.element(window).width() <= 992;
@@ -133,7 +133,6 @@
       snapRemote.getSnapper().then(function (snapper) {
         snapper.close();
       });
-      UploaderService.images.files = [];
 
       $rootScope.previous = {
         state: fromState,

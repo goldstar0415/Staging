@@ -6,7 +6,7 @@
     .directive('userHints', userHintsDirective);
 
   /** @ngInject */
-  function userHintsDirective($rootScope, $timeout, dialogs) {
+  function userHintsDirective($rootScope, $timeout, dialogs, $ocLazyLoad) {
     return {
       restrict: 'EA',
       link: function () {
@@ -101,7 +101,16 @@
       };
 
       angular.extend(defaultOptions, options);
-      tooltip = new jBox('Tooltip', defaultOptions);
+
+      if ($ocLazyLoad.isLoaded('jbox')) {
+        _tooltip();
+      } else {
+        $ocLazyLoad.load('jbox').then(_tooltip);
+      }
+
+      function _tootip() {
+        tooltip = new jBox('Tooltip', defaultOptions);
+      }
     }
 
     function disableHints() {
