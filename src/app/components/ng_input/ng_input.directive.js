@@ -27,7 +27,7 @@
     };
 
     /** @ngInject */
-    function NgInputController($modal, $scope, $rootScope, toastr, $http, API_URL) {
+    function NgInputController($modal, $scope, $rootScope, toastr, $http, API_URL, $ocLazyLoad) {
       var vm = this;
       var LINKS_PATERN = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/=]*)/gi;
       var blackListLinks = [];
@@ -146,7 +146,13 @@
             },
             attachments: function () {
               return vm.attachments;
-            }
+            },
+            uploader: ['$ocLazyLoad', function($ocLazyLoad) {
+              return $ocLazyLoad.load([
+                'cropper',
+                'uploader',
+              ]);
+            }],
           }
         });
       };

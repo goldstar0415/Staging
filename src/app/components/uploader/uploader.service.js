@@ -6,8 +6,12 @@
     .factory('UploaderService', UploaderService);
 
   /** @ngInject */
-  function UploaderService(Upload, $q, $timeout, toastr) {
+  function UploaderService(Upload, $q, $timeout, toastr, $rootScope) {
     var images = {files: []};
+
+    $rootScope.$on('$stateChangeSuccess', function(){
+      images.files = [];
+    });
 
     return {
       images: images,
