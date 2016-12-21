@@ -3,15 +3,15 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
+    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, Webworker, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
 
       console.log('MapService');
 
       var map = null;
       var DEFAULT_MAP_LOCATION = [37.405075073242188, -96.416015625000000];
       var tilesUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
-    //   var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-900913/{z}/{x}/{y}.png?' + (new Date()).getTime();
-      var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-{timestamp}/{z}/{x}/{y}.png?' + (new Date()).getTime();
+    //   var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-{timestamp}/{z}/{x}/{y}.png?' + (new Date()).getTime();
+      var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-{timestamp}/{z}/{x}/{y}.png';
       var timestamps = ['900913-m50m', '900913-m45m', '900913-m40m', '900913-m35m', '900913-m30m', '900913-m25m', '900913-m20m', '900913-m15m', '900913-m10m', '900913-m05m', '900913'];
 
       var radiusSelectionLimit = 500000; // in meters
@@ -45,6 +45,8 @@
 
       var highlightMarker;
       var mobileMarker;
+
+      var isRadarShown = false;
 
 		function getPathRouter() {
 			switch(pathRouterFail) {
@@ -653,71 +655,26 @@
 		return new L.Control.saveSelection(options);
 	};
 
-//info
-    L.Control.showInfo = L.Control.extend({
+//weather
+    L.Control.radar = L.Control.extend({
       options: {
-        position: 'bottomleft',
-        title: {
-          'false': 'Save selection',
-          'true': 'Save selection'
-        }
+        position: 'topleft'
       },
       onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'show-info-container');
-
-          this.link = L.DomUtil.create('div', 'show-info', container);
-          var img = L.DomUtil.create('img', '', this.link);
-          img.src = "../../assets/img/svg/fullscreen.svg";
-          this.link.href = '#';
+          var scope = $rootScope.$new();
+          var btn = $compile('<div ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="show-info-container"><div class="show-info"><img src="../../assets/img/svg/radar.svg"/></div></div>')(scope);
           this._map = map;
-
-          L.DomEvent.on(this.link, 'click', this._click, this);
-          return container;
+          L.DomEvent.on(btn[0], 'click', this._click, this);
+          return btn[0];
       },
       _click: function (e) {
-        //   if (screenfull.enabled) {
-        //       screenfull.request();
-        //   }
-
-        //   ClearSelections();
-          //
-        //   function getElemCoords(element) {
-        //       var top = 0,
-        //           left = 0;
-        //       do {
-        //           top += element.offsetTop || 0;
-        //           left += element.offsetLeft || 0;
-        //           element = element.offsetParent;
-        //       } while (element);
-          //
-        //       return {
-        //           top: top,
-        //           left: left
-        //       };
-        //   };
-          //
-        //   function hintPosition(el) {
-        //       var coords = getElemCoords(document.querySelector(el.dataset.elem));
-        //       el.style.top = coords.top + 15 + 'px';
-        //       el.style.left = coords.left + 60 + 'px';
-        //   }
-          //
-        //   var layout = document.querySelector('.info-layout');
-        //   layout.style.display = 'block';
-        //   layout.onclick = function() {
-        //       layout.style.display = 'none';
-        //   };
-        //   var hints = document.querySelectorAll('.info-layout > p');
-        //   for (var i = 0; i < hints.length; i++) {
-        //       hintPosition(hints[i]);
-        //   }
-        //   window.onresize = function(event) {
-        //     layout.style.display = 'none';
-        //   };
+          e.stopPropagation();
+          isRadarShown = !isRadarShown;
+          toggleWeatherLayer(isRadarShown);
       }
     });
     L.Control.ShowInfo = function (options) {
-      return new L.Control.showInfo(options);
+      return new L.Control.radar(options);
     };
 
 //fullScreen
@@ -840,6 +797,7 @@
 	  var focusGeolocation = new L.Control.focusGeolocation();
       var fullScreen = new L.Control.fullScreen();
       var back = new L.Control.back();
+      var radar = new L.Control.radar();
       //var shareSelectionControl = L.Control.ShareSelection();
 
 	  function clearPathFilter() {
@@ -1875,6 +1833,7 @@
 		map.removeLayer(focusGeolocation);
         map.removeLayer(fullScreen);
         map.removeLayer(filter);
+        map.removeLayer(radar);
       }
 
       function AddControls() {
@@ -1888,6 +1847,7 @@
         radiusControl.addTo(map);
         fullScreen.addTo(map);
         back.addTo(map);
+        radar.addTo(map);
       }
 
       //Makers
@@ -2595,59 +2555,58 @@
         }
       }
 
+      function loadWeatherTiles(index) {
+          map['weatherLayer' + index] = new L.TileLayer.WMS("http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi", {
+              layers: 'nexrad-n0r-' + timestamps[index],
+              format: 'image/png',
+              transparent: true,
+              attribution: "Weather data &copy; 2011 IEM Nexrad",
+              opacity: 0
+          });
+          map['weatherLayer' + index].on('load', function() {
+              if (index == 10) {
+                  weatherAnimation(true);
+              }
+          });
+          map.addLayer(map['weatherLayer' + index]);
+          map['weatherLayer' + index].setOpacity(0);
+      }
+
       var interval;
+      var frame = 0;
+      function weatherAnimation(start) {
+          toastr.clear();
+          if (start) {
+              clearInterval(interval);
+              interval = setInterval(function() {
+                 var idx = Math.floor(++frame % 11);
+                 map['weatherLayer' + idx].setOpacity(1);
+                 if (idx == 0)
+                     idx = 11;
+                 map['weatherLayer' + (idx - 1)].setOpacity(0);
+              }, 1000);
+          } else {
+              clearInterval(interval);
+              if (map.hasLayer(map.weatherLayer0)) {
+                  for (var i = 0; i < timestamps.length; i++) {
+                      map.removeLayer(map['weatherLayer' + i]);
+                  }
+              }
+          }
+      }
+
       function toggleWeatherLayer(show) {
-        var hasWeather = map.hasLayer(map.weatherLayer);
-        if (show && !hasWeather)
-        {
-            var frame = 0;
-
-            map.weatherLayer = new L.TileLayer.WMS("http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi", {
-                layers: 'nexrad-n0r-' + timestamps[0],
-                format: 'image/png',
-                transparent: true,
-                attribution: "Weather data &copy; 2011 IEM Nexrad",
-                opacity: 0.8
-            });
-            //
-            // map.weatherLayer.on('load', function() {
-            //     console.log('loaded ' + ++frame % 11);
-            //     map.weatherLayer.setParams({
-            //         layers: 'nexrad-n0r-' + timestamps[Math.floor(frame % 11)]
-            //     });
-            // });
-
-            map.addLayer(map.weatherLayer);
-            // for (var i = 0; i < timestamps.length; i++) {
-            //
-            // }
-            // clearInterval(interval);
-            // var frame = 0;
-            // interval = setInterval(function() {
-            //     map.weatherLayer.setParams({
-            //         layers: 'nexrad-n0r-' + timestamps[Math.floor(++frame % 11)]
-            //     });
-            //     // map.removeLayer(map.weatherLayer);
-            //     // map.weatherLayer = L.tileLayer(tilesWeatherUrl, {
-            //     //   maxZoom: 17,
-            //     //   minZoom: 3,
-            //     //   timestamp: timestamps[Math.floor(++frame % 11)]
-            //     // });
-            //     // map.addLayer(map.weatherLayer);
-            // }, 1000);
+        if (show) {
+            console.log('on');
+            toastr.clear();
+            toastr.success('Loading...', '', {timeOut: 50000});
+            for (var i = 0; i < timestamps.length; i++) {
+                loadWeatherTiles(i);
+            }
+        } else {
+            console.log('off');
+            weatherAnimation(false);
         }
-        if (!show && hasWeather)
-        {
-            map.removeLayer(map.weatherLayer);
-            clearInterval(interval)
-        }
-        // map.weatherLayer = L.tileLayer(tilesWeatherUrl, {
-        //   maxZoom: 17,
-        //   minZoom: 3,
-        //   timestamp: timestamps[0]
-        // });
-
-
       }
 
       return {
