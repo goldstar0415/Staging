@@ -310,7 +310,7 @@
                 padding: 4px;
             }
 
-            &:hover {
+            &:hover, &.active {
                 background-color: $light_blue_btn !important;
             }
         }

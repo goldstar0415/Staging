@@ -46,8 +46,6 @@
       var highlightMarker;
       var mobileMarker;
 
-      var isRadarShown = false;
-
 		function getPathRouter() {
 			switch(pathRouterFail) {
 				case 0:
@@ -662,15 +660,15 @@
       },
       onAdd: function (map) {
           var scope = $rootScope.$new();
-          var btn = $compile('<div ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="show-info-container"><div class="show-info"><img src="../../assets/img/svg/radar.svg"/></div></div>')(scope);
+          var btn = $compile('<div ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="show-info-container"><div class="focus-geolocation" ng-class="{\'active\': $root.isRadarShown}"><img src="../../assets/img/svg/radar.svg"/></div></div>')(scope);
           this._map = map;
           L.DomEvent.on(btn[0], 'click', this._click, this);
           return btn[0];
       },
       _click: function (e) {
           e.stopPropagation();
-          isRadarShown = !isRadarShown;
-          toggleWeatherLayer(isRadarShown);
+          $rootScope.isRadarShown = !$rootScope.isRadarShown;
+          toggleWeatherLayer($rootScope.isRadarShown);
       }
     });
     L.Control.ShowInfo = function (options) {
@@ -1823,6 +1821,7 @@
 
       //Controls
       function RemoveControls() {
+        map.removeLayer(radar);
         map.removeLayer(radiusControl);
         map.removeLayer(lassoControl);
         map.removeLayer(pathControl);
@@ -1833,10 +1832,10 @@
 		map.removeLayer(focusGeolocation);
         map.removeLayer(fullScreen);
         map.removeLayer(filter);
-        map.removeLayer(radar);
       }
 
       function AddControls() {
+        radar.addTo(map);
         focusGeolocation.addTo(map);
         saveSelectionControl.addTo(map);
         filter.addTo(map);
@@ -1847,7 +1846,6 @@
         radiusControl.addTo(map);
         fullScreen.addTo(map);
         back.addTo(map);
-        radar.addTo(map);
       }
 
       //Makers

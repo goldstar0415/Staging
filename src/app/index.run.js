@@ -36,6 +36,7 @@
         dateFrom: '',
         dateTo: ''
     };
+    $rootScope.isRadarShown = false;
 
     $rootScope.categoryData = [];
     $rootScope.getCategoryData = function() {
