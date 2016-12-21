@@ -24,7 +24,8 @@
       'summernote',
       'angular-carousel',
       'angularjs-dropdown-multiselect',
-      'angular-skycons'
+      'angular-skycons',
+      'ngWebworker'
     ]);
 
 })();

@@ -390,7 +390,7 @@
 			// } else {
 			// 	console.log('Current country: ', $rootScope.currentCountryCode);
 			// }
-            MapService.toggleWeatherLayer(true);
+            // MapService.toggleWeatherLayer(true);
 
 			//MapService.WeatherSelection(weather, geocodeCallback);
             MapService.getWeatherLatLng(setWeatherLatLng);
