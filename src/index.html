@@ -513,17 +513,24 @@
 	<!-- e-ndbuild -->
 <!--</noscript>-->
 <script>
-	window.onload = function() {
+
+	window.hidePreloader = function() {
+		var pl = document.querySelector("#preloader");
+		pl.parentNode.removeChild(pl);
+		body.classList.remove("content-hidden");
+	};
+
+//	window.onload = function() {
 //		var addStylesNode = document.getElementById("deferred-styles");
 //		var replacement = document.createElement("div");
 //		replacement.innerHTML = addStylesNode.textContent;
 //		document.body.appendChild(replacement);
 //		addStylesNode.parentElement.removeChild(addStylesNode);
-		var pl = document.querySelector("#preloader");
+//		var pl = document.querySelector("#preloader");
 //		console.debug('>>> hide preloader');
-		pl.parentNode.removeChild(pl);
-		body.classList.remove("content-hidden");
-	}
+//		pl.parentNode.removeChild(pl);
+//		body.classList.remove("content-hidden");
+//	}
 </script>
 
 <!--<script async type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAytote4odQOn_IpNkj207MXG2bF1uM2Zs"></script>-->
