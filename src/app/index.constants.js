@@ -18,6 +18,7 @@
     .constant('GEOCODING_KEY', 'peVrdYeAJADUMTIMKXuK4j9G52cnsY8p')
 	.constant('MAPBOX_API_KEY', 'pk.eyJ1IjoiaW5ndmFyIiwiYSI6ImNpcWwwOTFsbjAwMm9pd20yYmhlMDloc3gifQ.hEl195NS4jCsaDxSq2rEyA')
     .constant('DARK_SKY_API_KEY', '352d0c0f2cb9acffa91f6a593772ea0f')
+    .constant('OPENWEATHERMAP_API_KEY', '835492c0eab300994ec658dfb16ad305')
     .constant('toastr', toastr)
     .constant('moment', moment)
     .constant('USER_ONLINE_MINUTE', -5)

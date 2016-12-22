@@ -359,7 +359,7 @@
     }
 }
 
-.map-marker-icon-friend {
+.map-marker-icon-friend, .map-marker-icon-weather {
     background-image: url('\\assets\\img\\markers\\marker-empty.png');
     padding: 2px 7px;
     background-size: cover;
@@ -372,6 +372,44 @@
         width: 36px;
         object-fit: cover;
         border-radius: 100%;
+    }
+}
+
+.map-marker-icon-weather {
+    span {
+        font-family: 'Open Sans';
+        color: $dark_blue;
+        font-size: 14px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 100px;
+        height: 37px;
+        width: 36px;
+        border: 2px solid;
+
+        &.hot {
+            // background: radial-gradient(white, rgba(#FF4B2C, 1));
+            border-color: rgba(#FF4B2C, 0.5);
+        }
+        &.warm {
+            // background: radial-gradient(white, rgba(#FFC239, 1));
+            border-color: rgba(#FFC239, 0.5);
+        }
+        &.normal {
+            // background: radial-gradient(white, rgba(#C9C4C9, 1));
+            border-color: rgba(#C9C4C9, 0.5);
+        }
+        &.cool {
+            // background: radial-gradient(white, rgba(#5396BA, 1));
+            border-color: rgba(#5396BA, 0.5);
+        }
+        &.cold {
+            // background: radial-gradient(white, rgba(#593EFF, 1));
+            border-color: rgba(#593EFF, 0.5);
+        }
     }
 }
 

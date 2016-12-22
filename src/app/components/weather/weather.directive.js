@@ -90,8 +90,6 @@
         function WeatherController($scope, $rootScope, $http, DARK_SKY_API_KEY) {
             var vm = this;
             vm.color = '#0b2639';
-            vm.lat = vm.lat;
-            vm.lng = vm.lng;
             vm.location = 'N/A';
             vm.data = {};
             vm.tab = 0;
