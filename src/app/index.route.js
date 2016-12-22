@@ -590,6 +590,8 @@
           },
           loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
+              'cropper',
+              'uploader',
               '/app/modules/friendsmap/friendsmap.controller.js',
             ]);
           }]
@@ -947,6 +949,8 @@
           },
           loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
+              'cropper',
+              'uploader',
               '/app/modules/photomap/album/album.controller.js',
             ]);
           }]

@@ -29,7 +29,7 @@
     .config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
 
       $ocLazyLoadProvider.config({
-        debug: true,
+        // debug: true,
         modules: [
           {name: 'turf', files: [
             '/assets/libs/turf/turf.min.js',
