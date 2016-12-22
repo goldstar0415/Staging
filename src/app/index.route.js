@@ -20,7 +20,6 @@
             }
           },
           loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-            // window.hidePreloader();
             return $ocLazyLoad
               .load([
                 '/app/components/navigation/header/bloodhound-search.directive.js',
