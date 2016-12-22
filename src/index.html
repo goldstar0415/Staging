@@ -17,7 +17,6 @@
 
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.8.0/loading-bar.min.css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.min.css">
-	<link rel="stylesheet" type="text/css" href="">
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
@@ -138,7 +137,7 @@
     <p class="lay-weather" data-elem=".weather-sidebar">Show Weather</p>
 </div> -->
 
-<!-- build:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+<!-- b-uild:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
 
 <script> L_PREFER_CANVAS = true; </script>
 <script>
@@ -175,7 +174,7 @@
 
 </script>
 
-<!-- scripts -->
+<!-- inject:cdn -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.4.14/angular-resource.min.js"></script>
@@ -191,117 +190,66 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.4.14/angular-sanitize.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-touch/1.4.14/angular-touch.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.14/angular-cookies.min.js"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.js"></script>-->
-<script src=""></script>
+<!-- endinject -->
 
-<!--<script src="../bower_components/jquery/dist/jquery.js"></script>-->
-<!--<script src="../bower_components/angular/angular.js"></script>-->
-<script src="../bower_components/angular-animate/angular-animate.js"></script>
-<!--<script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>-->
-<!--<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>-->
-<script src="../bower_components/angular-translate/angular-translate.js"></script>
-<script src="../bower_components/angular-dialog-service/dist/dialogs.min.js"></script>
-<script src="../bower_components/angular-dialog-service/dist/dialogs-default-translations.min.js"></script>
-<script src="../bower_components/br-validations/releases/br-validations.js"></script>
-<script src="../bower_components/string-mask/src/string-mask.js"></script>
-<script src="../bower_components/angular-input-masks/angular-input-masks-standalone.min.js"></script>
-<!--<script src="../bower_components/angular-loading-bar/build/loading-bar.js"></script>-->
-<script src="../bower_components/angular-messages/angular-messages.js"></script>
-<!--<script src="../bower_components/angular-resource/angular-resource.js"></script>-->
-<script src="../bower_components/angular-scroll-glue/src/scrollglue.js"></script>
-<script src="../bower_components/snapjs/snap.js"></script>
-<script src="../bower_components/angular-snap/angular-snap.js"></script>
-<!--<script src="../bower_components/moment/moment.js"></script>-->
-<!--<script src="../bower_components/fullcalendar/dist/fullcalendar.js"></script>-->
-<!--<script src="../bower_components/angular-ui-calendar/src/calendar.js"></script>-->
-<!--<script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>-->
-<script src="../bower_components/angular-ui-select/dist/select.js"></script>
-<script src="../bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<!--<script src="../bower_components/cropper/dist/cropper.js"></script>-->
-
-<!--<script src="../bower_components/Justified-Gallery/dist/js/jquery.justifiedGallery.js"></script>-->
-
-<script src="../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
-<script src="../bower_components/ng-tags-input/ng-tags-input.min.js"></script>
-<script src="../bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
-<!--<script src="../bower_components/toastr/toastr.js"></script>-->
-<!--<script src="../bower_components/underscore/underscore.js"></script>-->
-<!--<script src="../bower_components/angular-cookies/angular-cookies.js"></script>-->
-<script src="../bower_components/jQuery.dotdotdot/src/jquery.dotdotdot.min.umd.js"></script>
-<!--<script src="../bower_components/jquery-ui/jquery-ui.js"></script>-->
-<script src="../bower_components/bootstrap-modal/js/bootstrap-modal.js"></script>
-<script src="../bower_components/bootstrap-modal/js/bootstrap-modalmanager.js"></script>
-<script src="../bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
-<script src="../bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
-<!--<script src="../bower_components/angular-touch/angular-touch.js"></script>-->
-
-<script src="../bower_components/angular-carousel/dist/angular-carousel.js"></script>
-<!--<script src="../bower_components/typeahead.js/dist/typeahead.bundle.js"></script>-->
-
-<!--<script src="/assets/libs/jbox/jbox.min.js"></script>-->
+<!-- inject:vendor -->
+<script src="/bower_components/angular-animate/angular-animate.js"></script>
+<script src="/bower_components/angular-translate/angular-translate.js"></script>
+<script src="/bower_components/angular-dialog-service/dist/dialogs.min.js"></script>
+<script src="/bower_components/angular-dialog-service/dist/dialogs-default-translations.min.js"></script>
+<script src="/bower_components/br-validations/releases/br-validations.js"></script>
+<script src="/bower_components/string-mask/src/string-mask.js"></script>
+<script src="/bower_components/angular-input-masks/angular-input-masks-standalone.min.js"></script>
+<script src="/bower_components/angular-messages/angular-messages.js"></script>
+<script src="/bower_components/angular-scroll-glue/src/scrollglue.js"></script>
+<script src="/bower_components/snapjs/snap.js"></script>
+<script src="/bower_components/angular-snap/angular-snap.js"></script>
+<script src="/bower_components/angular-ui-select/dist/select.js"></script>
+<script src="/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+<script src="/bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+<script src="/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+<script src="/bower_components/jQuery.dotdotdot/src/jquery.dotdotdot.min.umd.js"></script>
+<script src="/bower_components/bootstrap-modal/js/bootstrap-modal.js"></script>
+<script src="/bower_components/bootstrap-modal/js/bootstrap-modalmanager.js"></script>
+<script src="/bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
+<script src="/bower_components/angular-carousel/dist/angular-carousel.js"></script>
 <script src="/assets/libs/screenfull/screenfull.min.js"></script>
-
 <script src="/assets/libs/Leaflet/leaflet.js"></script>
 <script src="/assets/libs/leaflet.pip/leaflet-pip.min.js"></script>
 <script src="/assets/libs/LeafletMarkerCluster/leaflet.markercluster.js"></script>
 <script src="/assets/libs/LeafletRoutingMachine/leaflet-routing-machine.js"></script>
-
 <script src="/assets/libs/angular-bootstrap.iml/ui-bootstrap-tpls.js"></script>
 <script src="/assets/libs/angularjs-dropdown-multiselect/angularjs-dropdown-multiselect.min.js"></script>
 <script src="/assets/libs/concave_hull/concavehull.min.js"></script>
 <script src="/assets/libs/datetimepicker/jquery.datetimepicker.js"></script>
 <script src="/assets/libs/bootstrap-tooltip/bootstrap-tooltip.js"></script>
-
-<!--<script src="/assets/libs/html2canvas/html2canvas.js"></script>-->
-<!--<script src="/assets/libs/html2canvas/html2canvas.svg.min.js"></script>-->
-
-
-<!--<script src="/assets/libs/ng-file-upload/ng-file-upload.min.js"></script>-->
-
 <script src="/assets/libs/screenfull/screenfull.min.js"></script>
+<!-- endinject -->
 
-<!--<script src="/assets/libs/socket.io/socket.io.js"></script>-->
-
-<!--<script src="assets/libs/turf/turf.min.js"></script>-->
-
-<!--<script src="assets/libs/summernote/summernote.js"></script>-->
-<!--<script src="assets/libs/summernote/plugin/specialchars/summernote-ext-specialchars.js"></script>-->
-<!--<script src="assets/libs/summernote/plugin/specialchars/summernote-ext-specialchars.min.js"></script>-->
-<!--<script src="assets/libs/summernote/plugin/databasic/summernote-ext-databasic.js"></script>-->
-<!--<script src="assets/libs/summernote/plugin/databasic/summernote-ext-databasic.min.js"></script>-->
-<!--<script src="assets/libs/summernote/plugin/hello/summernote-ext-hello.js"></script>-->
-<!--<script src="assets/libs/summernote/plugin/hello/summernote-ext-hello.min.js"></script>-->
-
+<!-- inject:app -->
 <script src="app/index.module.js"></script>
 <script src="app/index.config.js"></script>
 <script src="app/index.constants.js"></script>
 <script src="app/index.route.js"></script>
 <script src="app/index.run.js"></script>
-
 <script src="app/models/album.js"></script>
 <script src="app/models/area.js"></script>
-<!--<script src="app/models/feed.js"></script>-->
 <script src="app/models/firends.js"></script>
 <script src="app/models/message.js"></script>
 <script src="app/models/photo.js"></script>
 <script src="app/models/photo_comment.js"></script>
 <script src="app/models/plan.js"></script>
-<!--<script src="app/models/plan_comment.js"></script>-->
 <script src="app/models/post.js"></script>
-<!--<script src="app/models/post_comment.js"></script>-->
 <script src="app/models/spot.js"></script>
 <script src="app/models/spot_comment.js"></script>
 <script src="app/models/spot_photo_comment.js"></script>
 <script src="app/models/spot_review.js"></script>
-<!--<script src="app/models/staticPage.js"></script>-->
 <script src="app/models/user.js"></script>
-<!--<script src="app/models/wall.js"></script>-->
-
 <script src="app/components/blogger_request/blogger_request.directive.js"></script>
 <script src="app/components/claim_spot/claim_spot.directive.js"></script>
 <script src="app/components/contacts_import/contacts_import.directive.js"></script>
-<!--<script src="app/components/crop/crop.service.js"></script>-->
-<!--<script src="app/components/crop/ngCropper.js"></script>-->
 <script src="app/components/date_range/date_range.directive.js"></script>
 <script src="app/components/attachments/attachments.directive.js"></script>
 <script src="app/components/facebook_events/facebook_events.directive.js"></script>
@@ -360,158 +308,61 @@
 <script src="app/components/socket/socket.service.js"></script>
 <script src="app/components/spot_service/spot.service.js"></script>
 <script src="app/components/spots_modal/spots_modal.directive.js"></script>
-
-<!--<script src="app/components/upload_modal/upload_modal.directive.js"></script>-->
-
 <script src="app/components/stars/stars.directive.js"></script>
-
-<!--<script src="app/components/uploader/uploader.directive.js"></script>-->
-<!--<script src="app/components/uploader/uploader.service.js"></script>-->
-
 <script src="app/components/user_hints/user_hints.directives.js"></script>
 <script src="app/components/users_modal/users_modal.directive.js"></script>
 <script src="app/components/truncated/truncated.directive.js"></script>
 <script src="app/components/user_service/user.service.js"></script>
-
 <script src="app/components/map_partials/hints/hints.directive.js"></script>
 <script src="app/components/map_partials/saveSelection/save_selection.controller.js"></script>
-
 <script src="app/components/map_popups/blog_popup/blog_popup.directive.js"></script>
 <script src="app/components/map_popups/confirm_box/confirm.js"></script>
 <script src="app/components/map_popups/post_popup/post_popup.js"></script>
 <script src="app/components/map_popups/spot_map_modal/spot_map_modal.controller.js"></script>
 <script src="app/components/map_popups/spot_popup/spot_popup.controller.js"></script>
 <script src="app/components/map_popups/spot_popup/spot_popup.js"></script>
-
-<!--<script src="app/components/navigation/header/bloodhound-search.directive.js"></script>-->
 <script src="app/components/navigation/header/header.directive.js"></script>
-<!--<script src="app/components/navigation/profile_menu/profileMenu.controller.js"></script>-->
 <script src="app/components/navigation/side_menu/side_menu.directive.js"></script>
-
-
-
-<!--<script src="app/modules/chat/chat.controller.js"></script>-->
 <script src="app/modules/chat/chat.service.js"></script>
-<!--<script src="app/modules/chat/chat_room/chat_room.controller.js"></script>-->
-
-<!--<script src="app/modules/comments/comments.controller.js"></script>-->
-
-<!--<script src="app/modules/areas/areas.controller.js"></script>-->
-
-<!--<script src="app/modules/favorites/favorites.controller.js"></script>-->
-
-<!--<script src="app/modules/contact_us/contact_us.controller.js"></script>-->
-
-<!--<script src="app/modules/followers/followers.controller.js"></script>-->
-
-<!--<script src="app/modules/feed/feed.controller.js"></script>-->
-
-<!--<script src="app/modules/blog/blog.controller.js"></script>-->
-<!--<script src="app/modules/map/map_post.controller.js"></script>-->
-
-<!--<script src="app/modules/intro/index.controller.js"></script>-->
-<!--<script src="app/modules/intro/intro.controller.js"></script>-->
-
-<!--<script src="app/modules/planner/planner.controller.js"></script>-->
-
-<!--<script src="app/modules/friendsmap/friendsmap.controller.js"></script>-->
-<!--<script src="app/modules/friendsmap/create/createFriend.controller.js"></script>-->
-
-<!--<script src="app/modules/profile/profile.controller.js"></script>-->
-
-<!--<script src="app/modules/reviews/reviews.controller.js"></script>-->
-
-<!--<script src="app/modules/spot/spot.controller.js"></script>-->
 <script src="app/modules/spot/spot.directive.js"></script>
-
-<!--<script src="app/modules/summernote/summernote.js"></script>-->
-
-<!--<script src="app/modules/settings/settings.controller.js"></script>-->
-
-<!--<script src="app/modules/terms/terms.controller.js"></script>-->
-
-<!--<script src="app/modules/zoomers/zoomers.controller.js"></script>-->
-
-<!--<script src="app/modules/areas/preview/areasPreview.controller.js"></script>-->
-
-<!--<script src="app/modules/blog/article_create/articleCreate.controller.js"></script>-->
-<!--<script src="app/modules/blog/article/article.controller.js"></script>-->
-<!--<script src="app/modules/blog/blogger_profile/blogger_profile.controller.js"></script>-->
-
-<!--<script src="app/modules/planner/plan_create/planCreate.controller.js"></script>-->
-<!--<script src="app/modules/planner/plan/plan.controller.js"></script>-->
-
-
-<!--<script src="app/modules/photomap/album/album.controller.js"></script>-->
-<!--<script src="app/modules/photomap/create_album/createAlbum.controller.js"></script>-->
-<!--<script src="app/modules/photomap/edit_photo/edit_photo.controller.js"></script>-->
-<!--<script src="app/modules/photomap/photomap.controller.js"></script>-->
-
 <script src="app/modules/spot/review/review.directive.js"></script>
-<!--<script src="app/modules/spot/spots/spots.controller.js"></script>-->
-<!--<script src="app/modules/spot/spot_create/spotCreate.controller.js"></script>-->
-
+<!-- endinject -->
 
 
 <!-- inject:partials -->
 <!-- angular templates will be automatically converted in js and inserted here -->
 <!-- endinject -->
 
-<!-- endbuild -->
+<!-- e-ndbuild -->
 
-<!--<noscript id="deferred-styles">-->
+<link rel="stylesheet" href="../bower_components/angular-dialog-service/dist/dialogs.min.css" />
+<link rel="stylesheet" href="../bower_components/angular-snap/angular-snap.css" />
+<link rel="stylesheet" href="../bower_components/angular-ui-select/dist/select.css" />
+<link rel="stylesheet" href="../bower_components/animate.css/animate.css" />
+<link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" />
+<link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+<link rel="stylesheet" href="../bower_components/ng-tags-input/ng-tags-input.min.css" />
+<link rel="stylesheet" href="../bower_components/toastr/toastr.css" />
+<link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.css" />
+<link rel="stylesheet" href="../bower_components/bootstrap-modal/css/bootstrap-modal.css" />
+<link rel="stylesheet" href="../bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" />
+<link rel="stylesheet" href="../bower_components/angular-carousel/dist/angular-carousel.css" />
 
-	<link rel="stylesheet" href="../bower_components/angular-dialog-service/dist/dialogs.min.css" />
-	<!--<link rel="stylesheet" href="../bower_components/angular-loading-bar/build/loading-bar.css" />-->
-	<link rel="stylesheet" href="../bower_components/angular-snap/angular-snap.css" />
-	<!--<link rel="stylesheet" href="../bower_components/fullcalendar/dist/fullcalendar.css" />-->
-	<link rel="stylesheet" href="../bower_components/angular-ui-select/dist/select.css" />
-	<link rel="stylesheet" href="../bower_components/animate.css/animate.css" />
-	<link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" />
-	<link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
-	<!--<link rel="stylesheet" href="../bower_components/cropper/dist/cropper.css" />-->
+<link rel="stylesheet" href="assets/css/main.css">
 
-	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css">-->
+<link rel="stylesheet" href="assets/libs/Leaflet/leaflet.css">
+<link rel="stylesheet" href="assets/libs/LeafletRoutingMachine/leaflet-routing-machine.css">
+<link rel="stylesheet" href="assets/libs/LeafletMarkerCluster/MarkerCluster.Default.css">
+<link rel="stylesheet" href="assets/libs/LeafletMarkerCluster/MarkerCluster.css">
 
-	<!--<link rel="stylesheet" href="../bower_components/Justified-Gallery/dist/css/justifiedGallery.css" />-->
-	<link rel="stylesheet" href="../bower_components/ng-tags-input/ng-tags-input.min.css" />
-	<link rel="stylesheet" href="../bower_components/toastr/toastr.css" />
-	<link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.css" />
-	<link rel="stylesheet" href="../bower_components/bootstrap-modal/css/bootstrap-modal.css" />
-	<link rel="stylesheet" href="../bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" />
-	<link rel="stylesheet" href="../bower_components/angular-carousel/dist/angular-carousel.css" />
+<link rel="stylesheet" href="assets/libs/bootstrap-tooltip/bootstrap-tooltip.css">
+<link rel="stylesheet" href="assets/libs/datetimepicker/jquery.datetimepicker.css">
+<link rel="stylesheet" href="assets/libs/jcarousel/jcarousel.css">
+<link rel="stylesheet" href="assets/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="assets/sass/_media.css">
+<link rel="stylesheet" href="assets/sass/main.css">
 
 
-	<link rel="stylesheet" href="assets/css/main.css">
-
-	<link rel="stylesheet" href="assets/libs/Leaflet/leaflet.css">
-	<link rel="stylesheet" href="assets/libs/LeafletRoutingMachine/leaflet-routing-machine.css">
-	<link rel="stylesheet" href="assets/libs/LeafletMarkerCluster/MarkerCluster.Default.css">
-	<link rel="stylesheet" href="assets/libs/LeafletMarkerCluster/MarkerCluster.css">
-
-	<link rel="stylesheet" href="assets/libs/bootstrap-tooltip/bootstrap-tooltip.css">
-	<link rel="stylesheet" href="assets/libs/datetimepicker/jquery.datetimepicker.css">
-	<link rel="stylesheet" href="assets/libs/jcarousel/jcarousel.css">
-	<!--<link rel="stylesheet" href="assets/libs/jbox/jBox.css">-->
-	<!--<link rel="stylesheet" href="assets/libs/summernote/summernote.css">-->
-	<!--<link rel="stylesheet" href="assets/libs/summernote/plugin/databasic/summernote-ext-databasic.css">-->
-	<!--<link rel="stylesheet" href="assets/libs/summernote/plugin/databasic/summernote-ext-databasic.min.css">-->
-	<link rel="stylesheet" href="assets/css/bootstrap-select.min.css">
-	<link rel="stylesheet" href="assets/sass/_media.css">
-	<link rel="stylesheet" href="assets/sass/main.css">
-
-	<!-- b-uild:css({.tmp/serve,src}) assets/css/app.css -->
-
-	<!-- b-ower:css -->
-	<!-- run `gulp inject` to automatically populate bower styles dependencies -->
-	<!-- e-ndbower -->
-
-	<!-- i-nject:css -->
-	<!-- css files will be automatically insert here -->
-	<!-- e-ndinject -->
-
-	<!-- e-ndbuild -->
-<!--</noscript>-->
 <script>
 
 	window.hidePreloader = function() {
