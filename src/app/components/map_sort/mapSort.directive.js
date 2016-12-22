@@ -394,6 +394,7 @@
 
 			//MapService.WeatherSelection(weather, geocodeCallback);
             MapService.getWeatherLatLng(setWeatherLatLng);
+            MapService.showWeatherMarkers();
 
 			if (!vm.currentWeather) {
 				toastr.info('Click on map to check weather in this area');

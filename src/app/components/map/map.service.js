@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, Webworker, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
+    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, Webworker, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService, OPENWEATHERMAP_API_KEY) {
 
       console.log('MapService');
 
@@ -240,6 +240,9 @@
       }
 
       function spotsOnScreen() {
+          if ($rootScope.sortLayer === 'weather') {
+              showWeatherMarkers();
+          }
           if (!$rootScope.$$phase) {
               $rootScope.searchLimit = 20;
               var _borderMarkerLayer = undefined;
@@ -1879,8 +1882,7 @@
       }
 
       function CreateCustomIcon(iconUrl, type, item) {
-        //   debugger;
-          if (item) {
+          if (item && type != 'weather') {
               var spot = item.spot ? item.spot : item;
               var image = setMarkerIcon(spot);
               return L.icon({
@@ -1895,6 +1897,22 @@
           } else if (type == 'friends') {
               return new L.HtmlIcon({
                   html: "<div class='map-marker-icon map-marker-icon-friend'><img src='" + iconUrl + "' /></div>",
+              });
+          } else if(type == 'weather') {
+              var temp = Math.floor(item.main.temp);
+              var color;
+              if (temp > 30)
+                  color = 'hot';
+              else if (temp > 10)
+                  color = 'warm';
+              else if (temp < -30)
+                  color = 'cold'
+              else if (temp < -10)
+                  color = 'cool';
+              else
+                color = 'normal';
+              return new L.HtmlIcon({
+                  html: "<div class='map-marker-icon map-marker-icon-weather'><span class='" + color + "'>" + temp + "°</span></div>",
               });
           } else {
               return L.icon({
@@ -2572,16 +2590,17 @@
 
       var interval;
       var frame = 0;
+
       function weatherAnimation(start) {
           toastr.clear();
           if (start) {
               clearInterval(interval);
               interval = setInterval(function() {
-                 var idx = Math.floor(++frame % 11);
-                 map['weatherLayer' + idx].setOpacity(1);
-                 if (idx == 0)
-                     idx = 11;
-                 map['weatherLayer' + (idx - 1)].setOpacity(0);
+                  var idx = Math.floor(++frame % 11);
+                  map['weatherLayer' + idx].setOpacity(1);
+                  if (idx == 0)
+                      idx = 11;
+                  map['weatherLayer' + (idx - 1)].setOpacity(0);
               }, 1000);
           } else {
               clearInterval(interval);
@@ -2594,17 +2613,58 @@
       }
 
       function toggleWeatherLayer(show) {
-        if (show) {
-            console.log('on');
-            toastr.clear();
-            toastr.success('Loading...', '', {timeOut: 50000});
-            for (var i = 0; i < timestamps.length; i++) {
-                loadWeatherTiles(i);
-            }
-        } else {
-            console.log('off');
-            weatherAnimation(false);
-        }
+          if (show) {
+              console.log('on');
+              toastr.clear();
+              toastr.success('Loading...', '', {
+                  timeOut: 50000
+              });
+              for (var i = 0; i < timestamps.length; i++) {
+                  loadWeatherTiles(i);
+              }
+          } else {
+              console.log('off');
+              weatherAnimation(false);
+          }
+      }
+
+      function showWeatherMarkers() {
+          var bounds = map.getBounds();
+          var mapBox = [];
+          mapBox.push(bounds._southWest.lng);
+          mapBox.push(bounds._southWest.lat);
+          mapBox.push(bounds._northEast.lng);
+          mapBox.push(bounds._northEast.lat);
+          mapBox.push(map.getZoom());
+          $http.jsonp('http://api.openweathermap.org/data/2.5/box/city', {
+                  params: {
+                      bbox: mapBox.toString(),
+                      cluster: 'yes',
+                      APPID: OPENWEATHERMAP_API_KEY,
+                      callback: 'JSON_CALLBACK'
+                  }
+              })
+              .then(function(resp) {
+                  if (resp.status === 200) {
+                      drawWeatherMarkers(resp.data)
+                  }
+              });
+      }
+
+      function drawWeatherMarkers(data) {
+          showOtherLayers();
+          var markers = [];
+          _.each(data.list, function(item) {
+              var icon = CreateCustomIcon('', 'weather', item);
+              var marker = L.marker([item.coord.lat, item.coord.lon], {
+                  icon: icon
+              });
+              item.marker = marker;
+            //   BindSpotPopup(marker, item);
+            //   detectHover(marker, item);
+              markers.push(marker);
+          });
+          otherLayer.addLayers(markers);
       }
 
       return {
@@ -2678,7 +2738,8 @@
         highlightSpotByHover: highlightSpotByHover,
         clearSpotHighlighting: clearSpotHighlighting,
 
-        getWeatherLatLng: getWeatherLatLng
+        getWeatherLatLng: getWeatherLatLng,
+        showWeatherMarkers: showWeatherMarkers
       };
     });
 
