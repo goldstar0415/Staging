@@ -37,6 +37,11 @@
         dateTo: ''
     };
     $rootScope.isRadarShown = false;
+    $rootScope.weatherUnits = 'us';
+    $rootScope.weatherLocation = {
+        lat: null,
+        lng: null
+    };
 
     $rootScope.categoryData = [];
     $rootScope.getCategoryData = function() {

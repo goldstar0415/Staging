@@ -1868,6 +1868,44 @@ html {
     }
 }
 
+.map-marker-weather-plate {
+    top: -65px;
+    canvas {
+        position: absolute;
+        right: 10px;
+    }
+    span {
+        font-family: 'Open Sans';
+        color: $dark_blue;
+        font-size: 14px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 100px;
+        height: 37px;
+        width: 36px;
+        position: absolute;
+        left: calc(50% - 18px);
+        top: 42px;
+    }
+    .plate-name {
+        width: 60%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .plate-desc {
+        color: white;
+        font-size: 10px;
+        // background-color: black;
+        left: 10px;
+        width: 35%;
+        position: absolute;
+    }
+}
+
 .comments-section .error-message div {
     margin-top: 0;
 }
