@@ -53,7 +53,7 @@ class SpotController extends Controller
      */
     public function __construct(Guard $auth)
     {
-        $this->middleware('auth', ['except' => ['index', 'show', 'categories', 'favorites', 'preview', 'export']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'categories', 'favorites', 'preview', 'export', 'getCover', 'getBookingInfo']]);
         $this->middleware('base64upload:cover', ['only' => ['store', 'update']]);
         $this->middleware('privacy', ['except' => ['store', 'update', 'destroy']]);
         $this->auth = $auth;
@@ -157,7 +157,8 @@ class SpotController extends Controller
                 'comments',
                 'remotePhotos',
                 'restaurant',
-                'hotel'
+                'hotel',
+                'todo'
                 ])
             ->append([
                 'count_members',

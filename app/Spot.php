@@ -20,6 +20,7 @@ use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 use Facebook\Exceptions\FacebookSDKException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Post\PostBody;
+use GuzzleHttp\Exception\RequestException;
 
 /**
  * Class Spot
@@ -222,7 +223,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      */
     public function todo()
     {
-        return $this->hasOne(SpotRestaurant::class);
+        return $this->hasOne(SpotToDo::class);
     }
     
     public function scopeTodoes($query)

@@ -13,12 +13,16 @@ use App\SpotTypeCategory;
 use App\RemotePhoto;
 use App\SpotPoint;
 use App\SpotToDo;
+use DB;
 
 class ToDoController extends Controller 
 {
-    
     private $stepCount = 1000;
-    private $remote_id_prefix = 'td_';
+    private $prefix = 'td_';
+    
+    private $categoryName = 'todo';
+    private $categoryId = null;
+    private $updateExisting = false;
     
     private $spotFields = [
         'title' => 'todo_name',
@@ -34,16 +38,16 @@ class ToDoController extends Controller
         'trip_url' => 'tripadvisor_url',
         'trip_rating' => 'tripadvisor_rating',
         'trip_no_reviews' => 'tripadvisor_reviews_count',
-        //'' => 'street_address',
-        //'' => 'latitude',
-        //'' => 'longitude',
         'city' => 'city',
         'country' => 'country',
         'google_id' => 'google_pid',
         'facebook_url' => 'facebook_url',
         'yelp_id' => 'yelp_id',
-        //'' => 'images',
-        //'' => 'tags',
+    ];
+    
+    private $massFields = [
+        'images',
+        'tags'
     ];
     
     private $updateRules = [
@@ -71,7 +75,6 @@ class ToDoController extends Controller
     public function filter(ToDoFilterRequest $request)
     {
         $query = $this->getFilterQuery($request, Spot::todoes());
-
         return view('admin.todo.index')->with('todoes', $this->paginatealbe($request, $query,15));
     }
     
@@ -87,7 +90,6 @@ class ToDoController extends Controller
             $query->where(DB::raw('created_at::date'), $request->filter['created_at']);
         }
         $request->flash();
-
         return $query;
     }
     
@@ -103,12 +105,14 @@ class ToDoController extends Controller
         return back();
     }
     
-    public function bulkDestroy(SpotsBulkDeleteRequest $request) {
+    public function bulkDestroy(SpotsBulkDeleteRequest $request) 
+    {
         $spots = Spot::whereIn('id', $request->spots)->delete();
         return back();
     }
     
-    public function getEdit(Spot $spot) {
+    public function getEdit(Spot $spot) 
+    {
         $spotFields = array_keys($this->spotFields);
         $todoFields = array_diff($this->todoFields, ['remote_id']);
         
@@ -121,9 +125,7 @@ class ToDoController extends Controller
     
     public function postEdit(Request $request, Spot $spot) 
     {
-        
         $rules = $this->updateRules;
-        
         $this->validate($request, $rules);
         $newValues = $request->all();
         foreach(array_keys($this->spotFields) as $field)
@@ -140,13 +142,22 @@ class ToDoController extends Controller
             }
             $todoAttrObj->save();
         }
-        
         return back();
     }
     
     public function csvParser()
     {
-        return view('admin.todo.parser');
+        $fieldsArr = array_merge( 
+                array_keys($this->spotFields),
+                array_diff(array_values($this->todoFields), ['remote_id']),
+                $this->massFields
+                );
+        $fields = [];
+        foreach($fieldsArr as $value)
+        {
+            $fields[$value] = $value;
+        }
+        return view('admin.todo.parser', ['fields' => $fields]);
     }
     
     public function exportUpload(Request $request)
@@ -156,19 +167,23 @@ class ToDoController extends Controller
     
     public function export( Request $request ) 
     {   
-        $pref               = $this->remote_id_prefix;
-        $result             = ['success' => true, 'endOfParse' => false, 'messages' => [] ];
+        $pref               = $this->prefix;
         $path               = $request->path;
         $stepCount          = $this->stepCount;
         $total_rows         = $request->total_rows;
-        $updateExisting     = (int)$request->update;
-        $result['update']   = $updateExisting;
-        $result['rows_added'] = 0;
-        $result['rows_updated'] = 0;
+        $updateExisting     = $this->updateExisting = (int)$request->update;
         $rows_parsed_before = $request->rows_parsed;
         $file_offset        = $request->file_offset;
         $headers            = $request->input('headers', []);
-        $result['old_offset'] = $file_offset;
+        $result             = [
+            'success'       => true, 
+            'endOfParse'    => false, 
+            'messages'      => [],
+            'update'        => $updateExisting,
+            'rows_added'    => 0,
+            'rows_updated'  => 0,
+            'old_offset'    => $file_offset
+        ];
         $reader             = new Reader();
         $reader->setOffset($file_offset);
         $reader->open($path);
@@ -205,39 +220,22 @@ class ToDoController extends Controller
                     $item = $this->convertColumns($headers, $row);
                     if( !empty($item['todo_id']) )
                     {
-                        $query = Spot::where('remote_id', $pref . $item['todo_id']);
-                        $spotExists = $query->exists();
-                        if( $spotExists && $updateExisting)
-                        {
-                            $spot = $query->first();
-                            if(isset($item['website']) && !empty($item['website']))
-                            {
-                                $spot->web_sites = [$item['website']];
-                            }
-                            unset($item['website']);
-                            foreach($this->spotFields as $column => $value)
-                            {
-                                if(isset($item[$value]))
-                                {
-                                    $spot->$column = $item[$value];
-                                }
-                            }
-                            $spot->save();
-                            $result['rows_updated']++;
-                        }
-                        elseif(!$spotExists)
-                        {
-                            $spot = $this->createSpot($item, $pref);
-                            $result['rows_added']++;
-                        }
+                        $spot = DB::table('spots')
+                                ->select('id')
+                                ->where('remote_id', $pref . $item['todo_id'])
+                                ->first();
+                        $spotExists = !empty($spot->id);
+                        $spot_id = $spotExists?$spot->id:null;
+                        $saveSpot = $this->saveSpot($spot_id, $spotExists, $item, $result);
+                        $spot_id = ($saveSpot)?$saveSpot:$spot_id;
+                        
                         if($updateExisting || !$spotExists)
                         {
-                            $this->saveToDoObject($spot, $item);
-                            $this->saveLocation($spot, $item);
-                            $this->savePhotos($spot, $item);
-                            $this->saveTags($spot, $item);
+                            $this->saveToDoObject($spot_id, $item);
+                            $this->saveLocation($spot_id, $item);
+                            $this->savePhotos($spot_id, $item);
+                            $this->saveTags($spot_id, $item);
                         }
-                        
                         $rows[] = $item;
                     }
                     else {
@@ -250,13 +248,138 @@ class ToDoController extends Controller
         $result['rows']                 = $rows;
         $result['rows_parsed']          = $rows_parsed_before + $rows_parsed_now;
         $result['rows_parsed_now']      = $rows_parsed_now;
-                
         header('Content-Type: text/html;charset=utf-8');
         $result = json_encode($result);
         return $result;
     }
     
-    protected function saveLocation($spot, $item)
+    public function updateField( Request $request)
+    {
+        $pref               = $this->prefix;
+        $stepCount          = $this->stepCount;
+        $updateExisting     = (int)$request->update;
+        $file_offset        = $request->file_offset;
+        $path               = $request->path;
+        $total_rows         = $request->total_rows;
+        $rows_parsed_before = $request->rows_parsed;
+        $field              = $request->field;
+        $result             = [
+            'success'       => true, 
+            'endOfParse'    => false, 
+            'messages'      => [],
+            'update'        => $updateExisting,
+            'rows_added'    => 0,
+            'rows_updated'  => 0,
+            'old_offset'    => $file_offset
+        ];
+        $reader             = new Reader();
+        $reader->setOffset($file_offset);
+        $reader->open($path);
+        $rows               = [];
+        $rows_parsed_now    = 0;
+        if($total_rows == $rows_parsed_before)
+        {
+            $result['endOfParse'] = true;
+        }
+        else
+        {
+            config([
+                'excel.cache.enable'  => false
+                ]);
+            foreach ($reader->getSheetIterator() as $sheet)
+            {
+                foreach ($sheet->getRowIterator() as $row) 
+                {
+                    if($rows_parsed_now < $stepCount)
+                    {
+                        $result['file_offset'] = $reader->getFilePointerOffset();
+                    }
+                    if($rows_parsed_now >= $stepCount)
+                    {
+                        break;
+                    }
+                    list($remote_id, $value) = $row;
+                    if(in_array($field, array_keys($this->spotFields)))
+                    {
+                        $query = Spot::where('remote_id', $pref . $remote_id);
+                        if($field == 'web_sites')
+                        {
+                            $query->update([$field => "[\"$value\"]"]);
+                        }
+                        else
+                        {
+                            $query->update([$field => $value]);
+                        }
+                    }
+                    elseif(in_array($field, array_diff(array_values($this->todoFields), ['remote_id'])))
+                    {
+                        SpotToDo::where('remote_id', $remote_id)->update([$field => $value]);
+                    }
+                    elseif(in_array($field, $this->massFields))
+                    {
+                        $spot = Spot::where('remote_id', $pref . $remote_id)->first();
+                        if($field == 'tags'){
+                            $this->saveTags($spot->id, [$field => $value]);
+                        }
+                        else
+                        {
+                            $this->savePhotos($spot->id, [$field => $value]);
+                        }
+                    }
+                    $rows_parsed_now++;
+                }
+            }
+        }
+        $result['rows']                 = $rows;
+        $result['rows_parsed']          = $rows_parsed_before + $rows_parsed_now;
+        $result['rows_parsed_now']      = $rows_parsed_now;
+        header('Content-Type: text/html;charset=utf-8');
+        $result = json_encode($result);
+        return $result;
+    }
+    
+    protected function saveSpot($spot_id, $spotExists, $item, $result)
+    {
+        $attrArr = [];
+        $category_id = $this->getCategoryId();
+        foreach($this->spotFields as $column => $value)
+        {
+            if( !empty($item[$value]))
+            {
+                if( $column == 'web_sites')
+                {
+                    $attrArr[$column] = json_encode([$item[$value]]);
+                }
+                else 
+                {
+                    $attrArr[$column] = $item[$value];
+                }
+            }
+        }
+        if($spotExists && $this->updateExisting)
+        {
+            DB::table('spots')
+                    ->where('remote_id', $this->prefix . $item['todo_id'])
+                    ->update($attrArr);
+            $result['rows_updated']++;
+            return $spot_id;
+        }
+        elseif(!$spotExists)
+        {
+            $date = date('Y-m-d H:i:s');
+            $attrArr['is_approved'] = true;
+            $attrArr['is_private'] = false;
+            $attrArr['spot_type_category_id'] = $this->getCategoryId();
+            $attrArr['created_at'] = $date;
+            $attrArr['updated_at'] = $date;
+            $attrArr['remote_id'] = $this->prefix . $item['todo_id'];
+            $result['rows_added']++;
+            return DB::table('spots')
+                    ->insertGetId($attrArr);
+        }
+    }
+    
+    protected function saveLocation($spot_id, $item)
     {
         if(isset($item['latitude']) && isset($item['longitude']))
         {
@@ -269,33 +392,29 @@ class ToDoController extends Controller
         unset($item['longitude']);
         if( isset($item['location']) && isset($item['street_address']) )
         {
-            $locationExists = SpotPoint::where('spot_id', $spot->id)->exists();
-            if($locationExists)
-            {
-                $spot->points()->delete();
-            }
+            SpotPoint::where('spot_id', $spot_id)->delete();
             $point = new SpotPoint();
             $point->location = $item['location'];
             $point->address = $item['street_address'];
-            $spot->points()->save($point);
+            $point->spot_id = $spot_id;
+            $point->save();
         }
     }
     
-    protected function savePhotos($spot, $item)
+    protected function savePhotos($spot_id, $item)
     {
         $pictures = isset($item['images'])?$item['images']:null;
         unset($item['images']);
-        if( !empty($pictures) )
+        if( !empty($pictures) && $spot_id )
         {
-
-            $pictureExists = $spot->remotePhotos()->exists();
-            if($pictureExists)
-            {
-                $spot->remotePhotos()->delete();
-            }
-            $pictuesObjects = [];
+            DB::table('remote_photos')
+                    ->where('associated_type', Spot::class)
+                    ->where('associated_id', $spot_id)
+                    ->delete();
+            $pictuesArr = [];
             $pictures = array_filter(explode(';', $pictures));
             $needCover = true;
+            $date = date('Y-m-d H:i:s');
             foreach($pictures as $picture)
             {
                 $image_type = 0;
@@ -304,21 +423,46 @@ class ToDoController extends Controller
                     $image_type = 1;
                     $needCover = false;
                 }
-                $pictuesObjects[] = new RemotePhoto([
+                $pictuesArr[] = [
                     'url' => $picture,
                     'image_type' => $image_type,
                     'size' => 'original',
-                ]);
+                    'associated_type' => Spot::class,
+                    'associated_id' => $spot_id,
+                    'created_at' => $date,
+                    'updated_at' => $date
+                ];
             }
-            $spot->remotePhotos()->saveMany($pictuesObjects);
+            DB::table('remote_photos')
+                    ->insert($pictuesArr);
         }
     }
     
-    protected function saveTags($spot, $item)
+    protected function saveTags($spot_id, $item)
     {
-        if( $item['tags'] )
+        if( !empty($item['tags']) && $spot_id)
         {
-            $spot->tags = explode(';', $item['tags']);
+            DB::table('spot_tag')->where('spot_id', $spot_id)->delete();
+            $tags = explode(';', $item['tags']);
+            $idsArr = [];
+            $result = [];
+            $existingTags = [];
+            $tagsCollection = DB::table('tags')->whereIn('name', $tags)->get();
+            foreach($tagsCollection as $tagObj)
+            {
+                $idsArr[] = $tagObj->id;
+                $existingTags[] = $tagObj->name;
+            }
+            $tags = array_diff($tags, $existingTags);
+            foreach($tags as $tag)
+            {
+                $idsArr[] = DB::table('tags')->insertGetId(['name' => $tag]);
+            }
+            foreach($idsArr as $id)
+            {
+                $result[] = ['spot_id' => $spot_id, 'tag_id' => $id];
+            }
+            DB::table('spot_tag')->insert($result);
         }
     }
     
@@ -343,30 +487,44 @@ class ToDoController extends Controller
         return $item;
     }
     
-    protected function createSpot($item, $pref)
+    protected function saveToDoObject($spot_id, $item)
     {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'todo')->first();
-        return Spot::create([
-            'spot_type_category_id' => $spotTypeCategory->id,
-            'title' => isset($item['todo_name']) ? $item['todo_name']: '',
-            'web_sites'	=> isset($item['website']) ? [$item['website']] : [],
-            'is_approved' => true,
-            'is_private' => false,
-            'remote_id' => isset($item['todo_id']) ? $pref . $item['todo_id']: ''
-        ]);
-    }
-    
-    protected function saveToDoObject($spot, $item)
-    {
-        $todoExists = SpotToDo::where('remote_id',  $item['todo_id'])->first();
-        $todoObj = ($todoExists) ? $todoExists: (new SpotToDo);
+        $todoObj = DB::table('spot_todoes')
+                                ->select('id')
+                                ->where('remote_id', $item['todo_id'])
+                                ->first();
+        $attrArr = [];
         foreach( $this->todoFields as $name => $field) {
             if(isset($item[$name]))
-                $todoObj->$field = $item[$name];
+            {
+                $attrArr[$field] = $item[$name];
+            }
         }
-        $todoObj->spot_id = $spot->id;
-        $todoObj->save();    
-        
-        return $todoObj;
+        if(!empty($todoObj->id))
+        {
+            DB::table('spot_todoes')
+                    ->where('remote_id', $item['todo_id'])
+                    ->update($attrArr);
+        }
+        else 
+        {
+            $attrArr['remote_id'] = $item['todo_id'];
+            $attrArr['spot_id'] = $spot_id;
+            DB::table('spot_todoes')
+                    ->insert($attrArr);
+        }
+    }
+    
+    private function getCategoryId()
+    {
+        if(!empty($this->categoryId))
+        {
+            return $this->categoryId;
+        }
+        $category = DB::table('spot_type_categories')
+                ->select('id')
+                ->where('name', $this->categoryName)
+                ->first();
+        return $this->categoryId = (!empty($category->id))?$category->id:null;
     }
 }

@@ -29,7 +29,11 @@ $(function(){
     var $parsePreloader  = $parseBtn.find('.prldr');
     var $parseDone       = $parseBtn.find('.btn-loaded');
     var $parseText       = $parseBtn.find('.btn-export');
+    var $updateExisting  = $inputs.filter('[name="update-existing"]');
+    var $fieldSelect     = $form.find('select.field-select');
+    var $mode            = $form.find('input[name="mode"]');
     
+    var mode             = $mode.filter(':checked').val();
     // File inputs handle
     $(document).on('change', 'input[type="file"]', function() {
         var input = $(this),
@@ -85,7 +89,7 @@ $(function(){
                         $uploadDone.show();
                         
                         fileForParse = response.data.path;
-                        totalRows = response.data.count - 1;
+                        totalRows = (mode == 'parsing') ? (response.data.count - 1) : response.data.count;
                         message('File uploaded: ' + response.data.filename + ';<br />' + 'Total rows: ' + totalRows);
                         $form.removeClass('loading');
                         stopTimer();
@@ -109,6 +113,20 @@ $(function(){
                 
             });
         }  
+    });
+    
+    $mode.on('change', function(){
+        mode = $mode.filter(':checked').val();
+        switch(mode) {
+            case 'parsing':
+                $updateExisting.parents('.checkbox').slideDown();
+                $fieldSelect.parents('.select').slideUp();
+                break;
+            case 'update':
+                $updateExisting.parents('.checkbox').slideUp();
+                $fieldSelect.parents('.select').slideDown();
+                break;
+        }
     });
     
     $parseBtn.on('click', function(e) {
@@ -137,21 +155,22 @@ $(function(){
     
     var parseHandler = function() {
         message('Parsing step ' + (step) + ' started');
+        var url = (mode == 'parsing')?'{{ route($uploadRoute) }}':'{{ route($updateRoute) }}';
         $.ajax({
-            url: '{{ route($uploadRoute) }}',
+            url: url,
             data: {
                 path: fileForParse,
                 total_rows: totalRows,
                 rows_parsed: rowsParsed,
                 file_offset: fileOffset,
                 headers: headers,
+                field: $fieldSelect.val(),
                 update: $('input[name="update-existing"]').is(':checked')?1:0,
                 _token: token
             },
             type: 'POST',
             dataType: 'json',
             success: function(response){
-                console.log(response);
                 step++;
                 if(response.success)
                 {

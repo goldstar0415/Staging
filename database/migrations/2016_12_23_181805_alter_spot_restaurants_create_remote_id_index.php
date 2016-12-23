@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterSpotsCreateRemoteIdIndex extends Migration
+class AlterSpotRestaurantsCreateRemoteIdIndex extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class AlterSpotsCreateRemoteIdIndex extends Migration
      */
     public function up()
     {
-        Schema::table('spots', function (Blueprint $table) {
+        Schema::table('spot_restaurants', function (Blueprint $table) {
             $table->index('remote_id');
         });
     }
@@ -24,7 +24,7 @@ class AlterSpotsCreateRemoteIdIndex extends Migration
      */
     public function down()
     {
-        Schema::table('spots', function (Blueprint $table) {
+        Schema::table('spot_restaurants', function (Blueprint $table) {
             $table->dropIndex('remote_id');
         });
     }
