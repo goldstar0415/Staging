@@ -9,11 +9,16 @@ Run
 
 `bower install`
 
-#Live preview in browser
+#Build development version and start a server
+
 Run `gulp serve`
+ENV: `PORT` (8081 by default)
 
 #Build production version
-Run `gulp build` and see `dist/` folder
+
+Run `gulp deploy` and see `dist/` folder
+Run `gulp ensure` in order to run the production version
+ENV: `ENSURE_PORT`  (8082 by default)
 
 # Develop through Continuous Integration
 

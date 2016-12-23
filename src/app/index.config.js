@@ -14,6 +14,19 @@
 
     $httpProvider.defaults.withCredentials = true;
 
+    // don't cache 'lazy' templates
+    $httpProvider.interceptors.push(function($q) {
+      return {
+        'request': function (config) {
+          var rgx = /^\/app\/\S+\.html$/i;
+          if (window.GIT_REVISION != '__GULP_GIT_REVISION__' && _.isObject(config) && config.url && rgx.test(config.url + '')) {
+            config.url = config.url + '?' + window.GIT_REVISION;
+          }
+          return config || $q.when(config);
+        }
+      };
+    });
+
     dialogsProvider.setSize('sm');
 
     // toastr
