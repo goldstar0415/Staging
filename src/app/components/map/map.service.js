@@ -2631,20 +2631,33 @@
           mapBox.push(bounds._northEast.lng);
           mapBox.push(bounds._northEast.lat);
           mapBox.push(map.getZoom());
-          $http.jsonp('http://api.openweathermap.org/data/2.5/box/city', {
-                  params: {
-                      bbox: mapBox.toString(),
-                      cluster: 'yes',
-                      APPID: OPENWEATHERMAP_API_KEY,
-                      units: $rootScope.weatherUnits == 'us' ? 'imperial' : 'metric',
-                      callback: 'JSON_CALLBACK'
-                  }
+          var params = {
+              bbox: mapBox.toString(),
+              cluster: 'yes',
+              APPID: OPENWEATHERMAP_API_KEY,
+              units: $rootScope.weatherUnits == 'us' ? 'imperial' : 'metric',
+              // callback: 'JSON_CALLBACK'
+          };
+          var q = $.param(params);
+          q = 'http://api.openweathermap.org/data/2.5/box/city?' + q;
+          $http.get(API_URL + '/weather?q=' + encodeURIComponent(q))
+              .success(function(data) {
+                  drawWeatherMarkers(data);
               })
-              .then(function(resp) {
-                  if (resp.status === 200) {
-                      drawWeatherMarkers(resp.data);
-                  }
-              });
+          //   $http.jsonp('http://api.openweathermap.org/data/2.5/box/city', {
+          //           params: {
+          //               bbox: mapBox.toString(),
+          //               cluster: 'yes',
+          //               APPID: OPENWEATHERMAP_API_KEY,
+          //               units: $rootScope.weatherUnits == 'us' ? 'imperial' : 'metric',
+          //               callback: 'JSON_CALLBACK'
+          //           }
+          //       })
+          //       .then(function(resp) {
+          //           if (resp.status === 200) {
+          //               drawWeatherMarkers(resp.data);
+          //           }
+          //       });
       }
 
       function setSkycon(icon) {
