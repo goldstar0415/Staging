@@ -17,6 +17,8 @@ use Log;
 use DB;
 use App\Http\Controllers\Event;
 use App\Http\Requests;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 /**
  * Class MapController
@@ -44,8 +46,21 @@ class MapController extends Controller {
      * @param Forecast $forecast
      * @return array
      */
-    public function getWeather(WeatherRequest $request, Forecast $forecast) {
-        return $forecast->get($request->get('lat'), $request->get('lng'));
+    public function getWeather( Request $request) {
+        $url = $request->get('q', null);
+        if(!empty($url) && filter_var($url, FILTER_VALIDATE_URL))
+        {
+            $client = new Client();
+            try
+            {
+                $response = $client->get($url);
+                $responseArray = json_decode($response->getBody()->getContents(), true);
+                return $responseArray;
+            }
+            catch(RequestException $e) {}
+        }
+        return [];
+        
     }
 
     /**
