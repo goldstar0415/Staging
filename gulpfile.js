@@ -11,9 +11,9 @@ requireAll({
   recursive: false,
 });
 
-// gulp.task('serve', ['build:dev'], () => {
-//   gulp.start('run');
-// });
-//
-// gulp.task('deploy', ['build:prod']);
+gulp.task('serve', ['build:dev'], () => {
+  gulp.start('run');
+});
+
+gulp.task('deploy', ['build:prod']);
 
