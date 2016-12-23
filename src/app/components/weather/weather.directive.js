@@ -87,7 +87,7 @@
         };
 
         /** @ngInject */
-        function WeatherController($scope, $rootScope, $http, DARK_SKY_API_KEY) {
+        function WeatherController($scope, $rootScope, $http, DARK_SKY_API_KEY, MapService) {
             var vm = this;
             vm.color = '#0b2639';
             vm.location = 'N/A';
@@ -115,9 +115,12 @@
             vm.toggleUnits = function() {
                 if (vm.units === 'si') {
                     vm.units = 'us';
+                    $rootScope.weatherUnits = 'us';
                 } else {
                     vm.units = 'si';
+                    $rootScope.weatherUnits = 'si';
                 }
+                MapService.showWeatherMarkers();
                 vm.init();
             }
 

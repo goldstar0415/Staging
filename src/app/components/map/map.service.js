@@ -79,6 +79,8 @@
               } else if (spot.category_name === 'Shelter' || (spot.type && spot.type === 'Shelter')) {
                   image = '../../../assets/img/markers/marker-shelter' + (isHighlighted ? '-highlighted.png' : '.png');
               }
+          } else {
+             image = '../../../assets/img/markers/marker-empty' + (isHighlighted ? '-highlighted.png' : '.png');
           }
           return image;
       }
@@ -908,12 +910,7 @@
             }
         });
 
-        // map.on('resize', spotsOnScreen, this);
-        // map.on('zoomend', spotsOnScreen, this);
         map.on('moveend', spotsOnScreen, this);
-        // map.on('viewreset', spotsOnScreen, this);
-        // map.on('layeradd', spotsOnScreen, this);
-        // map.on('layerremove', spotsOnScreen, this);
 
         //add controls
         AddControls();
@@ -1483,25 +1480,25 @@
 
       //weather selection
 	function WeatherSelection(callback, geocodeCallback) {
-		map.on('click', function (e) {
-			var lng = e.latlng.lng;
-			if (Math.abs(lng) > 180) {
-				lng = lng > 0 ? lng -= 360 : lng += 360;
-			}
-			$http.get(API_URL + '/weather?lat=' + e.latlng.lat + '&lng=' + lng)
-            .success(function (data) {
-				callback(data);
-            })
-            .error(function (data) {
-				callback(null);
-            });
-			$http.jsonp('https://nominatim.openstreetmap.org/reverse', {params: {lat: e.latlng.lat, lon: lng, "accept-language": 'en', format: 'json', json_callback: 'JSON_CALLBACK'}})
-				.then(function(resp) {
-					if (resp.status === 200 && geocodeCallback && typeof geocodeCallback === 'function') {
-						geocodeCallback(resp.data);
-					}
-				});
-        });
+		// map.on('click', function (e) {
+		// 	var lng = e.latlng.lng;
+		// 	if (Math.abs(lng) > 180) {
+		// 		lng = lng > 0 ? lng -= 360 : lng += 360;
+		// 	}
+		// 	$http.get(API_URL + '/weather?lat=' + e.latlng.lat + '&lng=' + lng)
+        //     .success(function (data) {
+		// 		callback(data);
+        //     })
+        //     .error(function (data) {
+		// 		callback(null);
+        //     });
+		// 	$http.jsonp('https://nominatim.openstreetmap.org/reverse', {params: {lat: e.latlng.lat, lon: lng, "accept-language": 'en', format: 'json', json_callback: 'JSON_CALLBACK'}})
+		// 		.then(function(resp) {
+		// 			if (resp.status === 200 && geocodeCallback && typeof geocodeCallback === 'function') {
+		// 				geocodeCallback(resp.data);
+		// 			}
+		// 		});
+        // });
 
       }
 
@@ -1899,7 +1896,7 @@
                   html: "<div class='map-marker-icon map-marker-icon-friend'><img src='" + iconUrl + "' /></div>",
               });
           } else if(type == 'weather') {
-              var temp = Math.floor(item.main.temp);
+              var temp = +(item.main.temp).toFixed(0);
               var color;
               if (temp > 30)
                   color = 'hot';
@@ -2614,7 +2611,6 @@
 
       function toggleWeatherLayer(show) {
           if (show) {
-              console.log('on');
               toastr.clear();
               toastr.success('Loading...', '', {
                   timeOut: 50000
@@ -2623,7 +2619,6 @@
                   loadWeatherTiles(i);
               }
           } else {
-              console.log('off');
               weatherAnimation(false);
           }
       }
@@ -2641,18 +2636,41 @@
                       bbox: mapBox.toString(),
                       cluster: 'yes',
                       APPID: OPENWEATHERMAP_API_KEY,
+                      units: $rootScope.weatherUnits == 'us' ? 'imperial' : 'metric',
                       callback: 'JSON_CALLBACK'
                   }
               })
               .then(function(resp) {
                   if (resp.status === 200) {
-                      drawWeatherMarkers(resp.data)
+                      drawWeatherMarkers(resp.data);
                   }
               });
       }
 
+      function setSkycon(icon) {
+          var i = '';
+          if (icon === '01d') {
+              i = 'clear-day';
+          } else if (icon === '01n') {
+              i = 'clear-night';
+          } else if (icon === '02d') {
+              i = 'partly-cloudy-day';
+          } else if (icon === '02n') {
+              i = 'partly-cloudy-night';
+          } else if (icon === '03d' || icon === '03n' || icon === '04d' || icon === '04n') {
+              i = 'cloudy';
+          } else if (icon === '09d' || icon === '10d' || icon === '11d' || icon === '09n' || icon === '10n' || icon === '11n') {
+              i = 'rain';
+          } else if (icon === '13d' || icon === '13n') {
+              i = 'snow';
+          } else if (icon === '50d' || icon === '50n') {
+              i = 'fog';
+          }
+          return i;
+      }
+
       function drawWeatherMarkers(data) {
-          showOtherLayers();
+          otherLayer.clearLayers();
           var markers = [];
           _.each(data.list, function(item) {
               var icon = CreateCustomIcon('', 'weather', item);
@@ -2660,7 +2678,78 @@
                   icon: icon
               });
               item.marker = marker;
-            //   BindSpotPopup(marker, item);
+              var options = {
+                keepInView: false,
+                autoPan: true,
+                closeButton: false,
+                className: 'map-marker-plate map-marker-weather-plate'
+              };
+              item.weather[0].icon = setSkycon(item.weather[0].icon);
+              var scope = $rootScope.$new();
+              scope.item = item;
+              scope.image = setMarkerIcon(null, true);
+              var popupContent = $compile('<div>\
+                                             <p class="plate-name">{{item.name}}</p>\
+                                             <p class="plate-desc">{{item.weather[0].main}}</p>\
+                                             <skycon icon="item.weather[0].icon" size="50" color="\'#FFFFFF\'"></skycon>\
+                                             <span>{{item.main.temp | number:0}}°</span>\
+                                             <img width="50" height="50" src="{{image}}" />\
+                                           </div>')(scope);
+              var popup = L.popup(options).setContent(popupContent[0]);
+              marker.bindPopup(popup);
+              marker.on('click', function () {
+                  if ($(window).width() > 767) {
+                      $rootScope.weatherLocation.lat = item.coord.lat;
+                      $rootScope.weatherLocation.lng = item.coord.lon;
+                      $rootScope.toggleSidebar(true);
+                  } else {
+                      if(marker.isHighlighted) {
+                          marker.closePopup();
+                          marker.isHighlighted = false;
+                      } else {
+                          marker.openPopup();
+                          marker.isHighlighted = true;
+                      }
+                  }
+              });
+            //   marker.on('click', function () {
+            //       if ($(window).width() > 767) {
+            //           if ($rootScope.isMapState()) {
+            //               $rootScope.setOpenedSpot(null);
+            //               $http.get(API_URL + '/spots/' + spot.spot_id)
+            //                   .success(function success(data) {
+            //                       $rootScope.setOpenedSpot(data);
+            //                   });
+            //           } else {
+            //               var user_id = spot.user_id || spot.spot.user_id || 0;
+            //               $location.path(user_id + '/spot/' + spot_id);
+            //           }
+            //       } else {
+            //           if(marker.isHighlighted) {
+            //               marker.isHighlighted = false;
+            //               $rootScope.setOpenedSpot(null);
+            //               $http.get(API_URL + '/spots/' + spot.spot_id)
+            //                   .success(function success(data) {
+            //                       $rootScope.setOpenedSpot(data);
+            //                   });
+            //           } else {
+            //               if (mobileMarker) {
+            //                   mobileMarker.isHighlighted = false;
+            //               }
+            //               marker.openPopup();
+            //               marker.isHighlighted = true;
+            //               mobileMarker = marker;
+            //           }
+            //       }
+            //   });
+              marker.on('mouseover', function () {
+                  marker.openPopup();
+                  marker.isHighlighted = false;
+              });
+              marker.on('mouseout', function () {
+                  marker.closePopup();
+                  marker.isHighlighted = true;
+              });
             //   detectHover(marker, item);
               markers.push(marker);
           });
