@@ -446,12 +446,13 @@
             width: calc(100vw - 70px);
         }
         @media(max-width: 767px) and (orientation: portrait) {
-            top: calc(30vh - 50px);
+            top: calc(50vh - 50px);
             left: 0;
             right: 0;
             bottom: 0;
-            height: 70vh;
+            height: 50vh;
             width: 100%;
+            border-top: 2px solid lightgrey;
         }
     }
 
