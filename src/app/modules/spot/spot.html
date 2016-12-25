@@ -15,19 +15,21 @@
         <div spotcard class="new-result-card" item="Spot.spot"></div>
         <div class="opened-main">
             <div class="opened-name-bottom">
-                <p class="opened-info">
-                    {{Spot.reviews_total.total.rating}} stars based on {{Spot.reviews_total.total.reviews_count}} combined reviews
+                <p class="spot-name">{{Spot.spot.title}}</p>
+                <p class="spot-address">
+                    <span class="glyphicon glyphicon-map-marker"></span>
+                    <span>{{Spot.spot.address || Spot.spot.points[0].address}}</span>
                 </p>
+                <div class="opened-info">
+                    <span class="opened-info-stars"><stars item="Spot.spot"></stars></span>
+                    <span>{{Spot.reviews_total.total.rating}} stars based on {{Spot.reviews_total.total.reviews_count}} combined reviews</span>
+                </div>
             </div>
             <div class="event-info" ng-if="Spot.spot.category.type.name == 'event'">
                 <span class="glyphicon glyphicon-calendar"></span>
                 <span ng-if="Spot.spot.start_date == Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}}</span>
                 <span ng-if="Spot.spot.start_date != Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}} - {{Spot.spot.end_date | date:'medium'}}</span>
             </div>
-            <!-- <div class="opened-first-buttons">
-                <button class="button-invite" ng-click="Spot.invite(Spot.spot)">Invite <span class="glyphicon glyphicon-user"></span></button>
-                <button class="button-share" ng-click="Spot.share(Spot.spot, 'spot')">Share <span class="glyphicon glyphicon-share"></span></button>
-            </div> -->
             <div class="opened-second-buttons" ng-if="Spot.spot.restaurant">
                 <button class="button-order">Order</button>
                 <button class="button-table">Book table</button>
@@ -185,28 +187,15 @@
             </section>
         </div>
         <div class="tab-content-photos" ng-if="OpenedItem.tab == 'photos'">
-            <!-- <ng-carousel images="Spot.spot.photos"></ng-carousel> -->
-            <div class="add-photo" ng-click="Spot.openPhotosModal()">
-                <p class="add-photo">ADD PHOTO</p><div></div>
-            </div>
-            <div class="upload-photos clearfix" ng-if="NgInput.attachments.photos.length > 0">
-              <div class="photos">
-                <div class="add-img"
-                     ng-repeat="photo in NgInput.attachments.photos"
-                     ng-mouseenter="showDelete = true" ng-mouseleave="showDelete = false">
-                  <img ng-src="{{photo.photo_url.medium}}">
-                  <a class="close-img" ng-show="showDelete" ng-click="NgInput.deletePhoto($index)" data-toggle="tooltip"
-                     data-placement="top" title="Delete">
-                  </a>
-                </div>
-              </div>
-            </div>
             <ul rn-carousel rn-carousel-controls rn-carousel-controls-allow-loop rn-carousel-index="OpenedItem.photoIndex">
                 <li ng-repeat="photo in Spot.spot.photos">
                     <img src="{{photo.url}}" alt="photo">
                 </li>
             </ul>
             <div rn-carousel-indicators ng-if="Spot.spot.photos.length > 1" slides="Spot.spot.photos" rn-carousel-index="OpenedItem.photoIndex"></div>
+            <div class="add-photo" ng-click="Spot.openPhotosModal()">
+                <p class="add-photo">ADD PHOTO</p><div></div>
+            </div>
         </div>
         <div class="tab-content-menu" ng-if="OpenedItem.tab == 'menu'">
             <h1>Menu</h1>

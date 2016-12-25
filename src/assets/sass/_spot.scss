@@ -1,7 +1,8 @@
 .opened-item {
-    margin: -20px 30px;
+    margin: -20px 30px 50px;
     @media (max-width: 767px) {
-        margin: -20px 10px;
+        // margin: -20px 10px;
+        margin: -20px 10px 50px;
     }
     &.item-modal {
         position: absolute;
@@ -82,7 +83,8 @@
             margin: 20px 0 15px;
         }
         p {
-            margin: -25px 0 0 80px;
+            // margin: -25px 0 0 80px;
+            margin: 0;
             color: rgb(2, 200, 246);
             z-index: 10;
             position: relative;
@@ -422,7 +424,7 @@
     .rn-carousel-controls {
         height: 200px;
         position: relative;
-        margin-top: -230px;
+        margin-top: -250px;
         color: white;
         font-weight: bold;
         pointer-events: none;
@@ -464,9 +466,9 @@
 
 .opened-container {
     .spot-img-full {
-        padding: 0 25px;
+        padding: 0px 10px 0 20px;
         position: absolute;
-        bottom: 0px;
+        top: 0px;
         left: 0px;
         right: 0px;
         height: 35px;
@@ -537,4 +539,28 @@ div.review.post {
 
 .review-section.comments-section.post {
     padding: 0;
+}
+
+.tab-content-reviews {
+    margin-top: -20px;
+}
+
+.rn-carousel-indicator {
+    margin: -10px 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+        font-size: 0;
+        width: 100%;
+        height: 10px;
+        background-color: lightgrey;
+        &.active {
+            background-color: $light_blue_btn;
+        }
+    }
+}
+
+.event-info {
+    margin-bottom: 10px;
 }

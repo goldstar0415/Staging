@@ -90,7 +90,7 @@
             position: relative;
         }
         @media (max-width: 767px) and (orientation: landscape) {
-            width: 50vw;
+            width: 100%;
             padding: 0;
             height: calc(100vh - 50px);
             position: relative;
@@ -228,53 +228,108 @@
 }
 
 .opened-item {
-    @media (max-width: 767px) {
-        .opened-info {
-            margin: -2px 0px 0px 110px !important;
-        }
-    }
     .new-result-card {
-        padding: 0;
-        margin: 0 -30px 80px -30px;
-        width: calc(100% + 60px);
-        .spot-img {
+        margin: 0 -10px;
+        @media (min-width: 768px) {
+            width: calc(100% + 60px) !important;
             height: 250px;
-            .spot-img-top, .spot-img-bottom {
-                padding: 0px 30px;
-            }
-            .spot-img-bottom {
-                height: 60px;
-                bottom: -80px;
-                background-color: white;
-                p {
-                    font-size: 16px;
-                    color: black;
-                }
-                .spot-address {
-                    font-size: 14px;
-                    color: black;
-                }
-            }
-            .spot-img-top {
-                bottom: -115px;
-                top: auto;
-                background-color: white;
-            }
-            @media (max-width: 767px) {
-                .opened-info {
-                    margin: -2px 0px 0px 110px;
-                }
-                .spot-img-bottom, .spot-img-top {
-                    padding: 0 10px;
-                }
+            margin: 0 -30px;
+            padding: 0;
+            .spot-img {
+                height: 100%;
             }
         }
         @media (max-width: 767px) {
-            margin: 0 -10px;
-            width: calc(100% + 20px);
+            width: 100vw !important;
+        }
+        .spot-img-top, .spot-img-bottom {
+            display: none !important;
+        }
+    }
+    .opened-name-bottom {
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0 15px !important;
+        .spot-name {
+            font-size: 18px;
+            color: #000;
+            font-weight: bold;
+        }
+        .spot-address {
+            margin: 0px -2px 10px;
+            color: #000;
+            .glyphicon-map-marker {
+                color: $light_blue_btn;
+            }
+        }
+        .opened-info {
+            display: flex;
+            align-items: center;
+            .opened-info-stars {
+                @media (min-width: 768px) {
+                    font-size: 14px;
+                    width: 80px;
+                }
+                @media (max-width: 767px) {
+                    font-size: 20px;
+                    width: 110px;
+                }
+            }
+            .opened-info-stars + span {
+                color: $light_blue_btn;
+            }
         }
     }
 }
+
+// .opened-item {
+//     @media (max-width: 767px) {
+//         .opened-info {
+//             margin: -2px 0px 0px 110px !important;
+//         }
+//     }
+//     .new-result-card {
+//         padding: 0;
+//         margin: 0 -30px 80px -30px;
+//         width: calc(100% + 60px);
+//         .spot-img {
+//             height: 250px;
+//             .spot-img-top, .spot-img-bottom {
+//                 padding: 0px 30px;
+//             }
+//             .spot-img-bottom {
+//                 height: 60px;
+//                 bottom: -80px;
+//                 background-color: white;
+//                 p {
+//                     font-size: 16px;
+//                     color: black;
+//                 }
+//                 .spot-address {
+//                     font-size: 14px;
+//                     color: black;
+//                 }
+//             }
+//             .spot-img-top {
+//                 bottom: -115px;
+//                 top: auto;
+//                 background-color: white;
+//             }
+//             @media (max-width: 767px) {
+//                 .opened-info {
+//                     margin: -2px 0px 0px 110px;
+//                 }
+//                 .spot-img-bottom, .spot-img-top {
+//                     padding: 0 10px;
+//                 }
+//             }
+//         }
+//         @media (max-width: 767px) {
+//             margin: 0 -10px;
+//             width: calc(100% + 20px);
+//         }
+//     }
+// }
 
 .event-result {
     padding: 15px;

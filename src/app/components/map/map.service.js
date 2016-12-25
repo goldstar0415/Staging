@@ -2635,8 +2635,7 @@
               bbox: mapBox.toString(),
               cluster: 'yes',
               APPID: OPENWEATHERMAP_API_KEY,
-              units: $rootScope.weatherUnits == 'us' ? 'imperial' : 'metric',
-              // callback: 'JSON_CALLBACK'
+              units: $rootScope.weatherUnits == 'us' ? 'imperial' : 'metric'
           };
           var q = $.param(params);
           q = 'http://api.openweathermap.org/data/2.5/box/city?' + q;
@@ -2644,20 +2643,6 @@
               .success(function(data) {
                   drawWeatherMarkers(data);
               })
-          //   $http.jsonp('http://api.openweathermap.org/data/2.5/box/city', {
-          //           params: {
-          //               bbox: mapBox.toString(),
-          //               cluster: 'yes',
-          //               APPID: OPENWEATHERMAP_API_KEY,
-          //               units: $rootScope.weatherUnits == 'us' ? 'imperial' : 'metric',
-          //               callback: 'JSON_CALLBACK'
-          //           }
-          //       })
-          //       .then(function(resp) {
-          //           if (resp.status === 200) {
-          //               drawWeatherMarkers(resp.data);
-          //           }
-          //       });
       }
 
       function setSkycon(icon) {
@@ -2719,42 +2704,15 @@
                       if(marker.isHighlighted) {
                           marker.closePopup();
                           marker.isHighlighted = false;
+                          $rootScope.weatherLocation.lat = item.coord.lat;
+                          $rootScope.weatherLocation.lng = item.coord.lon;
+                          $rootScope.toggleSidebar(true);
                       } else {
                           marker.openPopup();
                           marker.isHighlighted = true;
                       }
                   }
               });
-            //   marker.on('click', function () {
-            //       if ($(window).width() > 767) {
-            //           if ($rootScope.isMapState()) {
-            //               $rootScope.setOpenedSpot(null);
-            //               $http.get(API_URL + '/spots/' + spot.spot_id)
-            //                   .success(function success(data) {
-            //                       $rootScope.setOpenedSpot(data);
-            //                   });
-            //           } else {
-            //               var user_id = spot.user_id || spot.spot.user_id || 0;
-            //               $location.path(user_id + '/spot/' + spot_id);
-            //           }
-            //       } else {
-            //           if(marker.isHighlighted) {
-            //               marker.isHighlighted = false;
-            //               $rootScope.setOpenedSpot(null);
-            //               $http.get(API_URL + '/spots/' + spot.spot_id)
-            //                   .success(function success(data) {
-            //                       $rootScope.setOpenedSpot(data);
-            //                   });
-            //           } else {
-            //               if (mobileMarker) {
-            //                   mobileMarker.isHighlighted = false;
-            //               }
-            //               marker.openPopup();
-            //               marker.isHighlighted = true;
-            //               mobileMarker = marker;
-            //           }
-            //       }
-            //   });
               marker.on('mouseover', function () {
                   marker.openPopup();
                   marker.isHighlighted = false;
@@ -2763,7 +2721,6 @@
                   marker.closePopup();
                   marker.isHighlighted = true;
               });
-            //   detectHover(marker, item);
               markers.push(marker);
           });
           otherLayer.addLayers(markers);
