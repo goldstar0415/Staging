@@ -861,10 +861,6 @@
         mapState: 'small',
         resolve: {
           loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-            console.log('>>> test versionize', versionize([
-              '/app/modules/profile/profile.controller.js',
-              '/app/models/wall.js',
-            ]));
             return $ocLazyLoad.load(versionize([
               '/app/modules/profile/profile.controller.js',
               '/app/models/wall.js',

@@ -2,6 +2,7 @@
 
 const gulp = require('gulp');
 const path = require('path');
+const sequence = require('run-sequence').use(gulp);
 const requireAll = require('require-all');
 const config = require('./gulp/config');
 
@@ -15,5 +16,7 @@ gulp.task('serve', ['build:dev'], () => {
   gulp.start('run');
 });
 
-gulp.task('deploy', ['build:prod']);
+gulp.task('deploy', (cb) => {
+  sequence('mirror', 'build:prod', cb);
+});
 
