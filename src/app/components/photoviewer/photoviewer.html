@@ -1,4 +1,4 @@
-<script type="text/ng-template" id="photoViewer.html">
+<!-- <script type="text/ng-template" id="photoViewer.html">
   <div class="fixed visible-xs photo-preview">
     <form name="form" ng-submit="PV.sendComment(form)" class="new-post">
       <ul class="list-inline">
@@ -20,7 +20,7 @@
       <p class="location visible-xs" ng-if="PV.currentPhoto.address">{{PV.currentPhoto.address}}</p>
 
       <div class="image"
-           ng-class="{'col-xs-8': !PV.hideComments && $root.currentUser, 'col-xs-12': PV.hideComments || !$root.currentUser}">
+           ng-class="{'col-xs-8': !PV.nocoments && $root.currentUser, 'col-xs-12': PV.nocoments || !$root.currentUser}">
         <button type="button" class="close hidden-lg visible-sm hidden-md visible-xs" ng-click="PV.close()"
                 ng-class="{'with-location': PV.currentPhoto.address}" aria-label="Close">
           <span aria-hidden="true"></span>
@@ -30,7 +30,7 @@
         <a ng-click="PV.previousPhoto($event)" ng-if="PV.countPhotos > 1" class="previous"></a>
         <a ng-click="PV.nextPhoto($event)" ng-if="PV.countPhotos > 1" class="next"></a>
       </div>
-      <div class="photo-comments col-xs-4" ng-if="!PV.hideComments && $root.currentUser">
+      <div class="photo-comments col-xs-4" ng-if="!PV.nocoments && $root.currentUser">
         <button type="button" class="close hidden-sm hidden-xs"
                 ng-click="PV.close()">
           <span aria-hidden="true"></span>
@@ -76,5 +76,18 @@
     </div>
   </div>
 
-</script>
+</script> -->
 
+<script type="text/ng-template" id="photoViewer.html">
+    <div class="new-photo-viewer">
+        <div class="photos">
+            <ul rn-carousel rn-carousel-controls rn-carousel-controls-allow-loop rn-carousel-index="PV.index">
+                <li ng-repeat="photo in PV.items">
+                    <img ng-src="{{photo.url}}" alt="photo">
+                </li>
+            </ul>
+            <div rn-carousel-indicators ng-if="PV.items > 1" slides="PV.items" rn-carousel-index="PV.index"></div>
+        </div>
+        <div class="comments" ng-if="!PV.nocoments && $root.currentUser"></div>
+    </div>
+</script>
