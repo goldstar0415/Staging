@@ -5,7 +5,7 @@
 <hr class="col-xs-12" />
 <div class="clearfix"></div>
 <div class="row actions">
-    {!! Form::open(['method' => 'POST', 'route' => ['admin.doto.post-edit', $todo->id], 'class' => 'edit-form']) !!}
+    {!! Form::open(['method' => 'POST', 'route' => ['admin.todo.post-edit', $todo->id], 'class' => 'edit-form']) !!}
     
     <fieldset class="row col-xs-12">
         <legend>Spot attributes</legend>
