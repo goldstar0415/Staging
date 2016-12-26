@@ -125,7 +125,8 @@
     <p class="lay-weather" data-elem=".weather-sidebar">Show Weather</p>
 </div> -->
 
-<!-- b-uild:js({.tmp/serve,.tmp/partials,src}) scripts/app.js -->
+<!-- fixme: merge conflict -->
+<script src="/assets/libs/googleapi/googleapi.js"></script>
 
 <script> L_PREFER_CANVAS = true; </script>
 <script>
@@ -214,6 +215,10 @@
 <script src="/assets/libs/datetimepicker/jquery.datetimepicker.js"></script>
 <script src="/assets/libs/bootstrap-tooltip/bootstrap-tooltip.js"></script>
 <script src="/assets/libs/screenfull/screenfull.min.js"></script>
+<!-- fixme -->
+<script src="/assets/libs/angular-skycons/angular-skycons.min.js"></script>
+<script src="/assets/libs/ng-webworker/ng-webworker.min.js"></script>
+<!-- /fixme -->
 <!-- endinject -->
 
 <!-- inject:app:js -->
@@ -359,6 +364,9 @@ window.hidePreloader = function() {
 	body.classList.remove("content-hidden");
 };
 </script>
+
+<!-- fixme: conflict -->
+<!-- <script async type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAytote4odQOn_IpNkj207MXG2bF1uM2Zs"></script> -->
 
 </body>
 </html>

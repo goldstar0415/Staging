@@ -320,7 +320,7 @@
   .new-post, .new-post-spot {
     background: #fff;
     padding-bottom: 1.5rem;
-    padding: 1.5rem;
+    // padding: 1.5rem;
     textarea {
       resize: none;
       margin-bottom: 0;
@@ -765,4 +765,29 @@
       }
     }
   }
+}
+
+.tab-content-photos .add-photo {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0 0 10px;
+    cursor: pointer;
+    div {
+        display: block;
+        width: 3.3rem;
+        height: 3.3rem;
+        border-radius: 0;
+        margin-left: 5px;
+        top: 50px;
+        right: 20px;
+        background: url(../img/svg/add_icon.svg) no-repeat;
+        background-position: center;
+        background-color: #00b7f3;
+        -webkit-transition: background .3s;
+        transition: background .3s;
+    }
+    p {
+        margin: 0;
+    }
 }

@@ -25,6 +25,8 @@
       'angular-carousel',
       'angularjs-dropdown-multiselect',
 	    'oc.lazyLoad',
+      'angular-skycons',
+      'ngWebworker',
     ])
     .config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
 
