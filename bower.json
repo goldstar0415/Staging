@@ -36,6 +36,10 @@
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "angular-carousel": "^1.0.1",
     "typeahead.js": "^0.11.1",
+    "angular-carousel": "^1.0.1",
+    "skycons-html5": "*",
+    "angular-skycons": "^2.0.2",
+    "typeahead.js": "^0.11.1",
     "oclazyload": "^1.0.9"
   },
   "devDependencies": {

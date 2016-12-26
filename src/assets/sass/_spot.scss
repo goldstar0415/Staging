@@ -1,7 +1,8 @@
 .opened-item {
-    padding: 10px 30px;
+    margin: -20px 30px 50px;
     @media (max-width: 767px) {
-        padding: 10px 10px;
+        // margin: -20px 10px;
+        margin: -20px 10px 50px;
     }
     &.item-modal {
         position: absolute;
@@ -12,6 +13,11 @@
         bottom: 50px;
         width: 470px;
         overflow: auto;
+        margin: 0;
+        padding: 10px 30px;
+        @media (max-width: 767px) {
+            padding: 10px 10px;
+        }
         @media (min-width: 768px) and (orientation: portrait) {
             top: calc(100vh - 378px);
             left: 0;
@@ -29,7 +35,7 @@
         }
     }
     .opened-header {
-        border-bottom: 1px solid lightgrey;
+        // border-bottom: 1px solid lightgrey;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -73,9 +79,18 @@
         .opened-stars {
             width: 80px;
         }
+        @media (max-width: 767px) {
+            margin: 20px 0 15px;
+        }
         p {
-            margin: 10px 0 0;
+            // margin: -25px 0 0 80px;
+            margin: 0;
             color: rgb(2, 200, 246);
+            z-index: 10;
+            position: relative;
+            @media (max-width: 767px) {
+                margin: 0;
+            }
         }
     }
     .opened-address {
@@ -176,6 +191,12 @@
                 border: none;
                 margin: 2px;
             }
+            input {
+                padding-left: 30px;
+                background: url(../img/svg/calendar.svg) no-repeat;
+                background-size: 15px 15px;
+                background-position: 6px 6px;
+            }
         }
         .prices-results {
             padding: 10px 0;
@@ -192,11 +213,11 @@
             justify-content: space-between;
             margin-bottom: 20px;
             .tab {
-                font-size: 12px;
+                font-size: 15px;
                 user-select: none;
                 width: 100%;
-                border-bottom: 2px solid lightgrey;
-                color: lightgrey;
+                border-bottom: 2px solid darken(lightgrey, 10%);
+                color: darken(lightgrey, 10%);
                 // font-weight: bold;
                 text-transform: uppercase;
                 text-align: center;
@@ -339,7 +360,7 @@
 .review-top {
     display: flex;
     .review-avatar {
-        width: 33%;
+        // width: 33%;
         max-width: 100px;
         a {
             position: relative;
@@ -349,23 +370,29 @@
                 position: absolute;
                 bottom: 0;
                 right: 0;
-                width: 35px;
-                height: 35px;
+                width: 25px;
+                height: 25px;
+                background-size: 17px;
             }
             &.zoomtivity:after {
                 background: #072a3d url(../img/icons/zoomtivity-25x25.png) center center no-repeat;
+                background-size: 17px;
             }
             &.google:after {
                 background: #d12320 url(../img/icons/google-25x25.png) center center no-repeat;
+                background-size: 17px;
             }
             &.booking:after {
                 background: #003580 url(../img/icons/booking-25x25.png) center center no-repeat;
+                background-size: 17px;
             }
             &.yelp:after {
                 background: #b3232e url(../img/icons/yelp-25x25.png) center center no-repeat;
+                background-size: 17px;
             }
             &.facebook:after {
                 background: #375794 url(../img/icons/facebook-25x25.png) center center no-repeat;
+                background-size: 17px;
             }
         }
 
@@ -397,7 +424,7 @@
     .rn-carousel-controls {
         height: 200px;
         position: relative;
-        margin-top: -230px;
+        margin-top: -250px;
         color: white;
         font-weight: bold;
         pointer-events: none;
@@ -417,4 +444,123 @@
             color: $light_blue_btn;
         }
     }
+}
+
+// @media (max-width: 767px) and (orientation: landscape) {
+//     .opened-container {
+//         display: flex;
+//         margin: 0 -10px 15px;
+//         .new-result-card {
+//             width: 50%;
+//             margin: 0;
+//         }
+//         .opened-main {
+//             width: 50%;
+//             margin: -10px 20px;
+//         }
+//     }
+// }
+.spot-img-full {
+    display: none;
+}
+
+.opened-container {
+    .spot-img-full {
+        padding: 0px 10px 0 20px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        height: 35px;
+        display: flex;
+        background-color: rgba(#0B253A, 0.8);
+        &>button, a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            border: none;
+            background: none;
+            color: white;
+        }
+        a {
+            margin-left: auto;
+            width: 35px;
+        }
+        button {
+            align-items: flex-start;
+            span {
+                margin-right: 5px;
+            }
+        }
+    }
+
+    .spot-img-top {
+        a {
+            display: none;
+        }
+    }
+}
+
+.review-small {
+    max-height: 100px;
+}
+
+.review-more {
+    &:after {
+        content: 'show more...';
+        color: #00C9F8;
+        display: block;
+    }
+}
+
+.review-top {
+    .avatar {
+        width: 7rem;
+        height: 7rem;
+    }
+    .review-content {
+        .name {
+            font-size: 1.5rem;
+        }
+        p {
+            font-size: 13px;
+        }
+    }
+}
+
+div.review.post {
+    padding: 15px 0;
+}
+
+.new-review h3{
+    margin: 0 auto 25px;
+}
+
+.review-section.comments-section.post {
+    padding: 0;
+}
+
+.tab-content-reviews {
+    margin-top: -20px;
+}
+
+.rn-carousel-indicator {
+    margin: -10px 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+        font-size: 0;
+        width: 100%;
+        height: 10px;
+        background-color: lightgrey;
+        &.active {
+            background-color: $light_blue_btn;
+        }
+    }
+}
+
+.event-info {
+    margin-bottom: 10px;
 }

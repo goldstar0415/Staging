@@ -32,8 +32,8 @@
     // toastr
     toastr.options.timeOut = 2000;
     toastr.options.extendedTimeOut = 0;
-    toastr.options.positionClass = 'toast-top-right';
-    toastr.options.preventDuplicates = true;
+    toastr.options.positionClass = 'toast-top-center';
+    toastr.options.preventDuplicates = false;
     toastr.options.progressBar = true;
     toastr.options.onShown = function () {
       //TODO: make smart margin of top

@@ -6,7 +6,7 @@
     .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, DEBUG, toastr) {
+  function routeConfig($stateProvider, $urlRouterProvider, $locationProvider, DEBUG, toastr, API_URL) {
     $stateProvider
       .state('main', {
         abstract: true,
@@ -53,7 +53,12 @@
           spotSearch: null,
           spotLocation: null,
           searchText: '',
-		      filter: {}
+		      filter: {},
+          resolve: {
+            spot: ['$rootScope', function ($rootScope) {
+              $rootScope.setOpenedSpot(null);
+            }]
+          },
         }
       })
       .state('index.post', {
@@ -818,15 +823,24 @@
         controllerAs: 'Spot',
         parent: 'profile',
         resolve: {
-          spot: function (Spot, $stateParams) {
-            return Spot.get({id: $stateParams.spot_id}).$promise;
-          },
+          spot: ['$http','$rootScope', 'Spot', '$stateParams', function ($http, $rootScope, Spot, $stateParams) {
+            return $http.get(API_URL + '/spots/' + $stateParams.spot_id)
+              .success(function success(data) {
+                $rootScope.setOpenedSpot(data);
+                //   return Spot.get({id: $stateParams.spot_id}).$promise;
+              });
+          }],
           loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load(versionize([
               '/app/modules/spot/spot.controller.js',
             ]));
           }]
         },
+        // resolve: {
+        //   spot: function (Spot, $stateParams) {
+        //     return Spot.get({id: $stateParams.spot_id}).$promise;
+        //   }
+        // },
         locate: 'none',
         mapState: 'small'
       })
