@@ -11,7 +11,7 @@ const serverConfig = {
   },
 };
 
-gulp.task('ensure', ['build:prod'], () => {
+gulp.task('ensure', ['deploy'], () => {
   console.log('Starting a server for a production version...');
   const server = serverFactory.create(serverConfig);
   server.start();

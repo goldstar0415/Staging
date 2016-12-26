@@ -3,32 +3,59 @@
 const path = require('path');
 const gulp = require('gulp');
 const config = require('./config');
-const $ = require('gulp-load-plugins')();
 const gitRevSync = require('git-rev-sync');
 const injectString = require('gulp-inject-string');
 const injectFile = require('gulp-inject-file');
+const $ = require('gulp-load-plugins')({ pattern: ['gulp-*', 'main-bower-files'] });
 
-gulp.task('_pre_build_prod', ['boot', 'vendor', 'app'], () => {
-  return gulp.start('mirror');
+gulp.task('build:prod:fonts', function () {
+  return gulp.src($.mainBowerFiles())
+    .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
+    .pipe($.flatten())
+    .pipe(gulp.dest(path.join(config.paths.dist, '/fonts/')));
 });
 
-gulp.task('build:prod', ['_pre_build_prod'], () => {
+gulp.task('build:prod:service-worker', function () {
+  return gulp.src([
+      path.join(config.paths.src, '/service-worker.js'),
+    ])
+    .pipe(gulp.dest(config.paths.dist));
+});
 
+gulp.task('build:prod:other', function () {
+  const fileFilter = $.filter(function (file) {
+    return file.stat.isFile();
+  });
+
+  return gulp.src([
+      path.join(config.paths.src, '/**/*'),
+      path.join('!' + config.paths.src, '/**/*.{html,css,js,scss}')
+    ])
+    .pipe(fileFilter)
+    .pipe(gulp.dest(path.join(config.paths.dist, '/')));
+});
+
+gulp.task('build:prod:pre-build', ['build:prod:fonts', 'build:prod:service-worker', 'build:prod:other']);
+
+gulp.task('build:prod', ['vendor', 'app', 'css', 'build:prod:pre-build'], () => {
   const rev = gitRevSync.short();
 
   return gulp.src( path.join(config.paths.src, '/index.html') )
+    .pipe( setRevision() )
+    .pipe( boot() )
     .pipe( injectJs('/scripts/vendor.build.js') )
     .pipe( injectJs('/scripts/app.build.js') )
-    .pipe( injectString.replace('__GULP_GIT_REVISION__', rev) )
-    .pipe( injectFile({pattern: '<!--\\s*inject:<filename>-->.+<!--\\s*\\/injectfile\\s*-->'}) )
     .pipe( injectCss() )
-    // .pipe( $.minifyHtml({
-    //     empty: true,
-    //     spare: true,
-    //     quotes: true,
-    //     // collapseWhitespace: true
-    //   }) )
+    // .pipe( minify() ) // fixme: uncomment me
     .pipe( gulp.dest(config.paths.dist) );
+
+  function setRevision() {
+    return injectString.replace('__GULP_GIT_REVISION__', rev);
+  }
+
+  function boot() {
+    return injectFile({pattern: '<!--\\s*inject:<filename>-->.+<!--\\s*\\/injectfile\\s*-->'});
+  }
 
   function injectJs(srcPath) {
     return $.inject(
@@ -37,10 +64,10 @@ gulp.task('build:prod', ['_pre_build_prod'], () => {
     );
   }
 
-  function injectCss() { //fixme
+  function injectCss() {
     return $.inject(
-      gulp.src([ path.join(config.paths.dist, '/assets/css/styles.build.*') ], {read: false})
-      // {starttag: `<!-- inject:{{ext}} -->`, /*transform: transformJs*/}
+      gulp.src([ path.join(config.paths.dist, '/assets/css/styles.build.*') ], {read: false}),
+      {starttag: `<!-- inject:{{ext}} -->`, transform: transformCss}
     );
   }
 
@@ -49,4 +76,18 @@ gulp.task('build:prod', ['_pre_build_prod'], () => {
     return `<script src="${url}?${rev}"></script>`;
   }
 
+  function transformCss(filePath) {
+    const url = filePath.replace(path.sep, '/').replace('/dist', '');
+    return `<link rel="stylesheet" type="text/css" href="${url}?${rev}">`;
+  }
+
+  function minify() {
+    return $.minifyHtml({
+      empty: true,
+      spare: true,
+      quotes: true,
+    });
+  }
+
 });
+
