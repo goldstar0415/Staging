@@ -832,15 +832,11 @@
           }],
           loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load(versionize([
+              '/app/components/async_loader_service/async_loader.service.js',
               '/app/modules/spot/spot.controller.js',
             ]));
           }]
         },
-        // resolve: {
-        //   spot: function (Spot, $stateParams) {
-        //     return Spot.get({id: $stateParams.spot_id}).$promise;
-        //   }
-        // },
         locate: 'none',
         mapState: 'small'
       })

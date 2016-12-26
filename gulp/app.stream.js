@@ -11,7 +11,7 @@ module.exports = [
 
   `${SRC}/app/models/album.js`,
   `${SRC}/app/models/area.js`,
-  `${SRC}/app/models/firends.js`, // todo: fix this file name
+  `${SRC}/app/models/friends.js`,
   `${SRC}/app/models/message.js`,
   `${SRC}/app/models/photo.js`,
   `${SRC}/app/models/photo_comment.js`,
@@ -100,6 +100,5 @@ module.exports = [
   `${SRC}/app/components/navigation/header/header.directive.js`,
   `${SRC}/app/components/navigation/side_menu/side_menu.directive.js`,
   `${SRC}/app/modules/chat/chat.service.js`,
-  `${SRC}/app/modules/spot/spot.directive.js`,
   `${SRC}/app/modules/spot/review/review.directive.js`,
 ];

@@ -125,9 +125,6 @@
     <p class="lay-weather" data-elem=".weather-sidebar">Show Weather</p>
 </div> -->
 
-<!-- fixme: merge conflict -->
-<script src="/assets/libs/googleapi/googleapi.js"></script>
-
 <script> L_PREFER_CANVAS = true; </script>
 <script>
 	if ('serviceWorker' in navigator) {
@@ -204,6 +201,9 @@
 <script src="/bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
 <script src="/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
 <script src="/bower_components/angular-carousel/dist/angular-carousel.js"></script>
+<script src="/bower_components/skycons/skycons.js"></script>
+<script src="/bower_components/angular-skycons/angular-skycons.min.js"></script>
+<script src="/bower_components/ng-webworker/src/ng-webworker.min.js"></script>
 <script src="/assets/libs/screenfull/screenfull.min.js"></script>
 <script src="/assets/libs/Leaflet/leaflet.js"></script>
 <script src="/assets/libs/leaflet.pip/leaflet-pip.min.js"></script>
@@ -215,10 +215,6 @@
 <script src="/assets/libs/datetimepicker/jquery.datetimepicker.js"></script>
 <script src="/assets/libs/bootstrap-tooltip/bootstrap-tooltip.js"></script>
 <script src="/assets/libs/screenfull/screenfull.min.js"></script>
-<!-- fixme -->
-<script src="/assets/libs/angular-skycons/angular-skycons.min.js"></script>
-<script src="/assets/libs/ng-webworker/ng-webworker.min.js"></script>
-<!-- /fixme -->
 <!-- endinject -->
 
 <!-- inject:app:js -->
@@ -229,7 +225,7 @@
 <script src="app/index.run.js"></script>
 <script src="app/models/album.js"></script>
 <script src="app/models/area.js"></script>
-<script src="app/models/firends.js"></script>
+<script src="app/models/friends.js"></script>
 <script src="app/models/message.js"></script>
 <script src="app/models/photo.js"></script>
 <script src="app/models/photo_comment.js"></script>
@@ -317,7 +313,6 @@
 <script src="app/components/navigation/header/header.directive.js"></script>
 <script src="app/components/navigation/side_menu/side_menu.directive.js"></script>
 <script src="app/modules/chat/chat.service.js"></script>
-<script src="app/modules/spot/spot.directive.js"></script>
 <script src="app/modules/spot/review/review.directive.js"></script>
 <!-- endinject -->
 
@@ -364,9 +359,6 @@ window.hidePreloader = function() {
 	body.classList.remove("content-hidden");
 };
 </script>
-
-<!-- fixme: conflict -->
-<!-- <script async type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAytote4odQOn_IpNkj207MXG2bF1uM2Zs"></script> -->
 
 </body>
 </html>
