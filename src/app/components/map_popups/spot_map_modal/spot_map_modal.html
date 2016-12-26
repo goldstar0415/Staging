@@ -74,7 +74,7 @@
           <div class="col-xs-9 mobile-popup-content">
             <div class="popup-header">
               <a class="title"
-                 ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})">{{data.spot.title}}</a>
+                 ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id || 0})">{{data.spot.title}}</a>
 
               <p class="location-event">{{data.address}}</p>
 
@@ -204,7 +204,7 @@
 
     <!--<div class="col-xs-12 no-pad">-->
     <!--<h3 class="col-xs-12 no-pad">-->
-    <!--<a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})"-->
+    <!--<a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id || 0})"-->
     <!--{{data.spot.title}}</a>-->
     <!--</h3>-->
 

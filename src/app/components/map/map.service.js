@@ -3,14 +3,16 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService) {
+    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, Webworker, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService, OPENWEATHERMAP_API_KEY) {
 
       console.log('MapService');
 
       var map = null;
       var DEFAULT_MAP_LOCATION = [37.405075073242188, -96.416015625000000];
       var tilesUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
-      var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-900913/{z}/{x}/{y}.png?' + (new Date()).getTime();
+    //   var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-{timestamp}/{z}/{x}/{y}.png?' + (new Date()).getTime();
+      var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-{timestamp}/{z}/{x}/{y}.png';
+      var timestamps = ['900913-m50m', '900913-m45m', '900913-m40m', '900913-m35m', '900913-m30m', '900913-m25m', '900913-m20m', '900913-m15m', '900913-m10m', '900913-m05m', '900913'];
 
       var radiusSelectionLimit = 500000; // in meters
       var markersLayer = L.featureGroup();
@@ -42,6 +44,7 @@
 	  var pathRouterFail	= 0;
 
       var highlightMarker;
+      var mobileMarker;
 
 		function getPathRouter() {
 			switch(pathRouterFail) {
@@ -71,11 +74,13 @@
                   image = '../../../assets/img/markers/marker-event' + (isHighlighted ? '-highlighted.png' : '.png');
               } else if (spot.category_name === 'Food' || (spot.type && spot.type === 'Food')) {
                   image = '../../../assets/img/markers/marker-food' + (isHighlighted ? '-highlighted.png' : '.png');
-              } else if (spot.category_name === 'Todo' || (spot.type && spot.type === 'Todo')) {
+              } else if (spot.category_name === 'To-Do' || (spot.type && spot.type === 'To-Do')) {
                   image = '../../../assets/img/markers/marker-todo' + (isHighlighted ? '-highlighted.png' : '.png');
               } else if (spot.category_name === 'Shelter' || (spot.type && spot.type === 'Shelter')) {
                   image = '../../../assets/img/markers/marker-shelter' + (isHighlighted ? '-highlighted.png' : '.png');
               }
+          } else {
+             image = '../../../assets/img/markers/marker-empty' + (isHighlighted ? '-highlighted.png' : '.png');
           }
           return image;
       }
@@ -237,6 +242,9 @@
       }
 
       function spotsOnScreen() {
+          if ($rootScope.sortLayer === 'weather') {
+              showWeatherMarkers();
+          }
           if (!$rootScope.$$phase) {
               $rootScope.searchLimit = 20;
               var _borderMarkerLayer = undefined;
@@ -591,6 +599,7 @@
           return container;
         },
         _click: function (e) {
+            $rootScope.sidebarMessage = "Loading...";
             if ($rootScope.$state.current.name === 'areas.preview') {
                 $location.path('/areas');
                 $rootScope.mapState = "full-size";
@@ -649,71 +658,26 @@
 		return new L.Control.saveSelection(options);
 	};
 
-//info
-    L.Control.showInfo = L.Control.extend({
+//weather
+    L.Control.radar = L.Control.extend({
       options: {
-        position: 'bottomleft',
-        title: {
-          'false': 'Save selection',
-          'true': 'Save selection'
-        }
+        position: 'topleft'
       },
       onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'show-info-container');
-
-          this.link = L.DomUtil.create('div', 'show-info', container);
-          var img = L.DomUtil.create('img', '', this.link);
-          img.src = "../../assets/img/svg/fullscreen.svg";
-          this.link.href = '#';
+          var scope = $rootScope.$new();
+          var btn = $compile('<div ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="show-info-container"><div class="focus-geolocation" ng-class="{\'active\': $root.isRadarShown}"><img src="../../assets/img/svg/radar.svg"/></div></div>')(scope);
           this._map = map;
-
-          L.DomEvent.on(this.link, 'click', this._click, this);
-          return container;
+          L.DomEvent.on(btn[0], 'click', this._click, this);
+          return btn[0];
       },
       _click: function (e) {
-        //   if (screenfull.enabled) {
-        //       screenfull.request();
-        //   }
-
-        //   ClearSelections();
-          //
-        //   function getElemCoords(element) {
-        //       var top = 0,
-        //           left = 0;
-        //       do {
-        //           top += element.offsetTop || 0;
-        //           left += element.offsetLeft || 0;
-        //           element = element.offsetParent;
-        //       } while (element);
-          //
-        //       return {
-        //           top: top,
-        //           left: left
-        //       };
-        //   };
-          //
-        //   function hintPosition(el) {
-        //       var coords = getElemCoords(document.querySelector(el.dataset.elem));
-        //       el.style.top = coords.top + 15 + 'px';
-        //       el.style.left = coords.left + 60 + 'px';
-        //   }
-          //
-        //   var layout = document.querySelector('.info-layout');
-        //   layout.style.display = 'block';
-        //   layout.onclick = function() {
-        //       layout.style.display = 'none';
-        //   };
-        //   var hints = document.querySelectorAll('.info-layout > p');
-        //   for (var i = 0; i < hints.length; i++) {
-        //       hintPosition(hints[i]);
-        //   }
-        //   window.onresize = function(event) {
-        //     layout.style.display = 'none';
-        //   };
+          e.stopPropagation();
+          $rootScope.isRadarShown = !$rootScope.isRadarShown;
+          toggleWeatherLayer($rootScope.isRadarShown);
       }
     });
     L.Control.ShowInfo = function (options) {
-      return new L.Control.showInfo(options);
+      return new L.Control.radar(options);
     };
 
 //fullScreen
@@ -836,6 +800,7 @@
 	  var focusGeolocation = new L.Control.focusGeolocation();
       var fullScreen = new L.Control.fullScreen();
       var back = new L.Control.back();
+      var radar = new L.Control.radar();
       //var shareSelectionControl = L.Control.ShareSelection();
 
 	  function clearPathFilter() {
@@ -933,11 +898,6 @@
           minZoom: 3
         }).addTo(map);
 
-        map.weatherLayer = L.tileLayer(tilesWeatherUrl, {
-          maxZoom: 17,
-          minZoom: 3
-        });
-
         L.extend(map, {
             _getFeatures: function() {
                 var out = [];
@@ -950,12 +910,7 @@
             }
         });
 
-        // map.on('resize', spotsOnScreen, this);
-        // map.on('zoomend', spotsOnScreen, this);
         map.on('moveend', spotsOnScreen, this);
-        // map.on('viewreset', spotsOnScreen, this);
-        // map.on('layeradd', spotsOnScreen, this);
-        // map.on('layerremove', spotsOnScreen, this);
 
         //add controls
         AddControls();
@@ -1525,26 +1480,36 @@
 
       //weather selection
 	function WeatherSelection(callback, geocodeCallback) {
-		map.on('click', function (e) {
-			var lng = e.latlng.lng;
-			if (Math.abs(lng) > 180) {
-				lng = lng > 0 ? lng -= 360 : lng += 360;
-			}
-			$http.get(API_URL + '/weather?lat=' + e.latlng.lat + '&lng=' + lng)
-            .success(function (data) {
-				callback(data);
-            })
-            .error(function (data) {
-				callback(null);
-            });
-			$http.jsonp('https://nominatim.openstreetmap.org/reverse', {params: {lat: e.latlng.lat, lon: lng, "accept-language": 'en', format: 'json', json_callback: 'JSON_CALLBACK'}})
-				.then(function(resp) {
-					if (resp.status === 200 && geocodeCallback && typeof geocodeCallback === 'function') {
-						geocodeCallback(resp.data);
-					}
-				});
-        });
+		// map.on('click', function (e) {
+		// 	var lng = e.latlng.lng;
+		// 	if (Math.abs(lng) > 180) {
+		// 		lng = lng > 0 ? lng -= 360 : lng += 360;
+		// 	}
+		// 	$http.get(API_URL + '/weather?lat=' + e.latlng.lat + '&lng=' + lng)
+        //     .success(function (data) {
+		// 		callback(data);
+        //     })
+        //     .error(function (data) {
+		// 		callback(null);
+        //     });
+		// 	$http.jsonp('https://nominatim.openstreetmap.org/reverse', {params: {lat: e.latlng.lat, lon: lng, "accept-language": 'en', format: 'json', json_callback: 'JSON_CALLBACK'}})
+		// 		.then(function(resp) {
+		// 			if (resp.status === 200 && geocodeCallback && typeof geocodeCallback === 'function') {
+		// 				geocodeCallback(resp.data);
+		// 			}
+		// 		});
+        // });
 
+      }
+
+      function getWeatherLatLng(setWeatherLatLng) {
+          map.on('click', function(e) {
+              var lng = e.latlng.lng;
+              if (Math.abs(lng) > 180) {
+                  lng = lng > 0 ? lng -= 360 : lng += 360;
+              }
+              setWeatherLatLng(e.latlng.lat, lng);
+          });
       }
 
       //remove all selection listeners
@@ -1856,6 +1821,7 @@
 
       //Controls
       function RemoveControls() {
+        map.removeLayer(radar);
         map.removeLayer(radiusControl);
         map.removeLayer(lassoControl);
         map.removeLayer(pathControl);
@@ -1869,6 +1835,7 @@
       }
 
       function AddControls() {
+        radar.addTo(map);
         focusGeolocation.addTo(map);
         saveSelectionControl.addTo(map);
         filter.addTo(map);
@@ -1912,8 +1879,7 @@
       }
 
       function CreateCustomIcon(iconUrl, type, item) {
-        //   debugger;
-          if (item) {
+          if (item && type != 'weather') {
               var spot = item.spot ? item.spot : item;
               var image = setMarkerIcon(spot);
               return L.icon({
@@ -1928,6 +1894,22 @@
           } else if (type == 'friends') {
               return new L.HtmlIcon({
                   html: "<div class='map-marker-icon map-marker-icon-friend'><img src='" + iconUrl + "' /></div>",
+              });
+          } else if(type == 'weather') {
+              var temp = +(item.main.temp).toFixed(0);
+              var color;
+              if (temp > 30)
+                  color = 'hot';
+              else if (temp > 10)
+                  color = 'warm';
+              else if (temp < -30)
+                  color = 'cold'
+              else if (temp < -10)
+                  color = 'cool';
+              else
+                color = 'normal';
+              return new L.HtmlIcon({
+                  html: "<div class='map-marker-icon map-marker-icon-weather'><span class='" + color + "'>" + temp + "°</span></div>",
               });
           } else {
               return L.icon({
@@ -1955,19 +1937,6 @@
       function BindSpotPopup(marker, spot) {
         var spot_id = spot.id ? spot.id : spot.spot.id;
         var spot = spot.spot ? spot.spot : spot;
-        marker.on('click', function () {
-            if ($rootScope.isMapState()) {
-                // $rootScope.setOpenedSpot(spot);
-                // $rootScope.$apply();
-                $http.get(API_URL + '/spots/' + spot.spot_id)
-                    .success(function success(data) {
-                        $rootScope.setOpenedSpot(data);
-                    });
-            } else {
-                var user_id = spot.user_id || spot.spot.user_id || 0;
-                $location.path(user_id + '/spot/' + spot_id);
-            }
-        });
         var scope = $rootScope.$new();
         scope.item = spot;
         scope.marker = marker;
@@ -1983,6 +1952,36 @@
         var popupContent = $compile('<div><p class="plate-name">' + spot.title + '</p><p class="plate-stars"><stars item="item"></stars></p><p class="plate-info">' + spot.category_name + '</p><img width="50" height="50" src=' + image + ' /></div>')(scope);
         var popup = L.popup(options).setContent(popupContent[0]);
         marker.bindPopup(popup);
+        marker.on('click', function () {
+            if ($(window).width() > 767) {
+                if ($rootScope.isMapState()) {
+                    $rootScope.setOpenedSpot(null);
+                    $http.get(API_URL + '/spots/' + spot.spot_id)
+                        .success(function success(data) {
+                            $rootScope.setOpenedSpot(data);
+                        });
+                } else {
+                    var user_id = spot.user_id || spot.spot.user_id || 0;
+                    $location.path(user_id + '/spot/' + spot_id);
+                }
+            } else {
+                if(marker.isHighlighted) {
+                    marker.isHighlighted = false;
+                    $rootScope.setOpenedSpot(null);
+                    $http.get(API_URL + '/spots/' + spot.spot_id)
+                        .success(function success(data) {
+                            $rootScope.setOpenedSpot(data);
+                        });
+                } else {
+                    if (mobileMarker) {
+                        mobileMarker.isHighlighted = false;
+                    }
+                    marker.openPopup();
+                    marker.isHighlighted = true;
+                    mobileMarker = marker;
+                }
+            }
+        });
       }
 
       function _loadSpotComments(scope, spot) {
@@ -2573,12 +2572,162 @@
         }
       }
 
+      function loadWeatherTiles(index) {
+          map['weatherLayer' + index] = new L.TileLayer.WMS("http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi", {
+              layers: 'nexrad-n0r-' + timestamps[index],
+              format: 'image/png',
+              transparent: true,
+              attribution: "Weather data &copy; 2011 IEM Nexrad",
+              opacity: 0
+          });
+          map['weatherLayer' + index].on('load', function() {
+              if (index == 10) {
+                  weatherAnimation(true);
+              }
+          });
+          map.addLayer(map['weatherLayer' + index]);
+          map['weatherLayer' + index].setOpacity(0);
+      }
+
+      var interval;
+      var frame = 0;
+
+      function weatherAnimation(start) {
+          toastr.clear();
+          if (start) {
+              clearInterval(interval);
+              interval = setInterval(function() {
+                  var idx = Math.floor(++frame % 11);
+                  map['weatherLayer' + idx].setOpacity(1);
+                  if (idx == 0)
+                      idx = 11;
+                  map['weatherLayer' + (idx - 1)].setOpacity(0);
+              }, 1000);
+          } else {
+              clearInterval(interval);
+              if (map.hasLayer(map.weatherLayer0)) {
+                  for (var i = 0; i < timestamps.length; i++) {
+                      map.removeLayer(map['weatherLayer' + i]);
+                  }
+              }
+          }
+      }
+
       function toggleWeatherLayer(show) {
-        var hasWeather = map.hasLayer(map.weatherLayer);
-        if (show && !hasWeather)
-            map.addLayer(map.weatherLayer);
-        if (!show && hasWeather)
-            map.removeLayer(map.weatherLayer);
+          if (show) {
+              toastr.clear();
+              toastr.success('Loading...', '', {
+                  timeOut: 50000
+              });
+              for (var i = 0; i < timestamps.length; i++) {
+                  loadWeatherTiles(i);
+              }
+          } else {
+              weatherAnimation(false);
+          }
+      }
+
+      function showWeatherMarkers() {
+          var bounds = map.getBounds();
+          var mapBox = [];
+          mapBox.push(bounds._southWest.lng);
+          mapBox.push(bounds._southWest.lat);
+          mapBox.push(bounds._northEast.lng);
+          mapBox.push(bounds._northEast.lat);
+          mapBox.push(map.getZoom());
+          var params = {
+              bbox: mapBox.toString(),
+              cluster: 'yes',
+              APPID: OPENWEATHERMAP_API_KEY,
+              units: $rootScope.weatherUnits == 'us' ? 'imperial' : 'metric'
+          };
+          var q = $.param(params);
+          q = 'http://api.openweathermap.org/data/2.5/box/city?' + q;
+          $http.get(API_URL + '/weather?q=' + encodeURIComponent(q))
+              .success(function(data) {
+                  drawWeatherMarkers(data);
+              })
+      }
+
+      function setSkycon(icon) {
+          var i = '';
+          if (icon === '01d') {
+              i = 'clear-day';
+          } else if (icon === '01n') {
+              i = 'clear-night';
+          } else if (icon === '02d') {
+              i = 'partly-cloudy-day';
+          } else if (icon === '02n') {
+              i = 'partly-cloudy-night';
+          } else if (icon === '03d' || icon === '03n' || icon === '04d' || icon === '04n') {
+              i = 'cloudy';
+          } else if (icon === '09d' || icon === '10d' || icon === '11d' || icon === '09n' || icon === '10n' || icon === '11n') {
+              i = 'rain';
+          } else if (icon === '13d' || icon === '13n') {
+              i = 'snow';
+          } else if (icon === '50d' || icon === '50n') {
+              i = 'fog';
+          }
+          return i;
+      }
+
+      function drawWeatherMarkers(data) {
+          otherLayer.clearLayers();
+          var markers = [];
+          _.each(data.list, function(item) {
+              var icon = CreateCustomIcon('', 'weather', item);
+              var marker = L.marker([item.coord.lat, item.coord.lon], {
+                  icon: icon
+              });
+              item.marker = marker;
+              var options = {
+                keepInView: false,
+                autoPan: true,
+                closeButton: false,
+                className: 'map-marker-plate map-marker-weather-plate'
+              };
+              item.weather[0].icon = setSkycon(item.weather[0].icon);
+              var scope = $rootScope.$new();
+              scope.item = item;
+              scope.image = setMarkerIcon(null, true);
+              var popupContent = $compile('<div>\
+                                             <p class="plate-name">{{item.name}}</p>\
+                                             <p class="plate-desc">{{item.weather[0].main}}</p>\
+                                             <skycon icon="item.weather[0].icon" size="50" color="\'#FFFFFF\'"></skycon>\
+                                             <span>{{item.main.temp | number:0}}°</span>\
+                                             <img width="50" height="50" src="{{image}}" />\
+                                           </div>')(scope);
+              var popup = L.popup(options).setContent(popupContent[0]);
+              marker.bindPopup(popup);
+              marker.on('click', function () {
+                  if ($(window).width() > 767) {
+                      $rootScope.weatherLocation.lat = item.coord.lat;
+                      $rootScope.weatherLocation.lng = item.coord.lon;
+                      $rootScope.toggleSidebar(true);
+                  } else {
+                      if(marker.isHighlighted) {
+                          marker.closePopup();
+                          marker.isHighlighted = false;
+                          $rootScope.weatherLocation.lat = item.coord.lat;
+                          $rootScope.weatherLocation.lng = item.coord.lon;
+                          $rootScope.toggleSidebar(true);
+                      } else {
+                          marker.openPopup();
+                          marker.isHighlighted = true;
+                      }
+                  }
+              });
+              marker.on('mouseover', function () {
+                  marker.openPopup();
+                  marker.isHighlighted = false;
+              });
+              marker.on('mouseout', function () {
+                  marker.closePopup();
+                  marker.isHighlighted = true;
+              });
+              markers.push(marker);
+          });
+          otherLayer.addLayers(markers);
       }
 
       return {
@@ -2651,7 +2800,10 @@
         highlightSpot: highlightSpot,
         removeHighlighting: removeHighlighting,
         highlightSpotByHover: highlightSpotByHover,
-        clearSpotHighlighting: clearSpotHighlighting
+        clearSpotHighlighting: clearSpotHighlighting,
+
+        getWeatherLatLng: getWeatherLatLng,
+        showWeatherMarkers: showWeatherMarkers
       };
     });
 

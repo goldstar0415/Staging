@@ -13,7 +13,7 @@
   </div>
   <div class="col-xs-8 popup-main" ng-hide="data.$loading">
     <div class="popup-header">
-      <a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id})">{{data.spot.title}}</a>
+      <a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id || 0})">{{data.spot.title}}</a>
 
       <p class="star-event-mobile">
         <stars item="data.spot"></stars>

@@ -55,7 +55,7 @@
                             <a ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">
                       {{item.sender.first_name}} {{item.sender.last_name}}
                     </a> commented your
-                            <a ui-sref="spot({user_id: (item.sender.alias || item.sender.id), spot_id: item.feedable.commentable_id})">spot</a>
+                            <a ui-sref="spot({user_id: (item.sender.alias || item.sender.id) || 0, spot_id: item.feedable.commentable_id})">spot</a>
                         </div>
 
                         <div ng-switch-when="OnAddToCalendar" class="mgb10">
@@ -136,7 +136,7 @@
                   {{item.sender.first_name}} {{item.sender.last_name}}
                 </a>
                 commented your
-                <a ui-sref="spot({user_id: (item.sender.alias || item.sender.id), spot_id: item.feedable.commentable_id})">spot</a>
+                <a ui-sref="spot({user_id: (item.sender.alias || item.sender.id) || 0, spot_id: item.feedable.commentable_id})">spot</a>
               </div>
 
               <div ng-switch-when="OnAddToCalendar" class="mgb10">
