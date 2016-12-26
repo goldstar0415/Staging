@@ -9,7 +9,7 @@ use App\Extensions\StartEndDatesTrait;
 use App\Scopes\ApprovedScopeTrait;
 use App\Scopes\NewestScopeTrait;
 use App\Services\SocialSharing;
-use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
+use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use DB;
 use Eluceo\iCal\Component\Event;
@@ -20,6 +20,7 @@ use SammyK\LaravelFacebookSdk\LaravelFacebookSdk;
 use Facebook\Exceptions\FacebookSDKException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Post\PostBody;
+use GuzzleHttp\Exception\RequestException;
 
 /**
  * Class Spot
@@ -120,22 +121,20 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      */
     public function getCoverUrlAttribute()
     {
-		$covers = [];
-		foreach ( $this->remotePhotos()->get() as $rph ) {
-			if ( $rph->image_type == 1 ) {
-				$url = $rph->url;
-				$covers = [
-					"original" => $url,
-    				"medium" => $url,
-    				"thumb" => $url
-				];
-			}
-		}
-		if ( !$covers ) {
-			$covers = $this->getPictureUrls('cover');
-		}
-
-		return $covers;
+        $covers = [];
+        if($rph = $this->remotePhotos()->where('image_type', 1)->first())
+        {
+            $url = $rph->url;
+            $covers = [
+                "original" => $url,
+                "medium" => $url,
+                "thumb" => $url
+            ];
+        }
+        if ( !$covers ) {
+                $covers = $this->getPictureUrls('cover');
+        }
+        return $covers;
     }
 
     /**
@@ -163,9 +162,24 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      *
      * @return query
      */
-    public function amenities()
+    public function amenities_objects()
     {
         return $this->hasMany(SpotAmenity::class);
+    }
+    
+    public function getAmenitiesAttribute() 
+    {
+        $amenitiescCollection = $this->amenities_objects()->get();
+        $array = [];
+        if(!empty($amenitiescCollection))
+        {
+            foreach($amenitiescCollection as $a)
+            {
+                
+                $array[$a->title][] = strip_tags($a->item, '<strong>');
+            }
+        }
+        return $array;
     }
     
     /**
@@ -198,6 +212,23 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function scopeRestaurants($query)
     {
         $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
+        
+        return $query->where('spot_type_category_id', $spotTypeCategory->id);
+    }
+    
+    /**
+     * Get todo spot info
+     *
+     * @return query
+     */
+    public function todo()
+    {
+        return $this->hasOne(SpotToDo::class);
+    }
+    
+    public function scopeTodoes($query)
+    {
+        $spotTypeCategory = SpotTypeCategory::where('name', 'todo')->first();
         
         return $query->where('spot_type_category_id', $spotTypeCategory->id);
     }
@@ -440,7 +471,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      */
     public function photos()
     {
-        return $this->hasMany(SpotPhoto::class);
+        return $this->hasMany(SpotPhoto::class)->orderBy('created_at');
     }
 
     /**
@@ -448,7 +479,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      */
     public function remotePhotos()
     {
-        return $this->morphMany(RemotePhoto::class, 'associated');
+        return $this->morphMany(RemotePhoto::class, 'associated')->orderBy('created_at');
     }
 
     /**
@@ -728,6 +759,15 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function saveBookingPhotos($bookingRes)
     {
         $result = [];
+        $needCover = true;
+        if(RemotePhoto::where('associated_type', Spot::class)
+                        ->where('associated_id', $this->id)
+                        ->where('image_type', 1)
+                        ->exists())
+        {
+            $needCover = false;
+        }
+        $urlsArr = [];
         if( $bookingSlider = $bookingRes->find('.hp-gallery-slides', 0) )
         {
             foreach( $bookingSlider->find('img') as $picture )
@@ -737,27 +777,70 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 {
                     $url = $picture->getAttribute('data-lazy');
                 }
-                if( !RemotePhoto::where('url', $url)
+                $filename = $this->getFilenameFromUrl($url);
+                if( $filename && !RemotePhoto::where('url', 'like' , "%$filename%")
                         ->where('associated_type', Spot::class)
                         ->where('associated_id', $this->id)
                         ->exists() )
                 {
-                    $result[] = new RemotePhoto([
-                        'url' => $url,
-                        'image_type' => 0,
-                        'size' => 'original',
-                    ]);
+                    $urlsArr[] = $url;
                 }
             }
+        }
+        if( $bookingSlider = $bookingRes->find('.bh-photo-grid', 0) )
+        {
+            foreach( $bookingSlider->find('a.active-image') as $picture )
+            {
+                $url = $picture->getAttribute('href');
+                $filename = $this->getFilenameFromUrl($url);
+                if( $filename && !RemotePhoto::where('url', 'like' , "%$filename%")
+                        ->where('associated_type', Spot::class)
+                        ->where('associated_id', $this->id)
+                        ->exists() )
+                {
+                    $urlsArr[] = $url;
+                }
+            }
+        }
+        if(!empty($urlsArr))
+        {
+            foreach($urlsArr as $url)
+            {
+                $imageType = 0;
+                if($needCover)
+                {
+                    $imageType = 1;
+                    $needCover = false;
+                }
+                $result[] = new RemotePhoto([
+                    'url' => $url,
+                    'image_type' => $imageType,
+                    'size' => 'original',
+                ]);
+            }
+        }
+        if(!empty($result))
+        {
             $this->remotePhotos()->saveMany( $result );
         }
-        return collect($result);
+        return collect($result)->sortBy('created_at');
+    }
+    public function getFilenameFromUrl($url)
+    {
+        if($this->checkUrl($url))
+        {
+            $path = parse_url($url, PHP_URL_PATH);
+            $pathArr = explode('/', $path);
+            $filename = array_pop($pathArr);
+            return $filename;
+        }
+        return false;
     }
     
     public function saveBookingAmenities($bookingRes)
     {
         $result = [];
-        if( ( $bookingAmenities = $bookingRes->find('div.facilitiesChecklist', 0) ) && $this->amenities()->count() == 0 )
+        if( ( $bookingAmenities = $bookingRes->find('div.facilitiesChecklist', 0) ) && $this->amenities_objects()->count() == 0 )
         {
             foreach( $bookingAmenities->find('.facilitiesChecklistSection') as $facilitiesChecklistSection )
             {
@@ -765,7 +848,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $facilityGroupIcon = $sectionTitle->find('.facilityGroupIcon', 0);
                 if($facilityGroupIcon)
                 {
-                $facilityGroupIcon->outertext = '';
+                    $facilityGroupIcon->outertext = '';
                 }
                 $sectionTitle = trim($sectionTitle->innertext());
                 foreach($facilitiesChecklistSection->find('li') as $sectionItem)
@@ -779,7 +862,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                             'title' => $sectionTitle, 
                             'item' => $body,
                         ]);
-                        $this->amenities()->save($amenity);
+                        $this->amenities_objects()->save($amenity);
                     }
                     $result[$sectionTitle][] = $body;
                 }
@@ -852,19 +935,75 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             }
             $item = new SpotVote();
             $idObj = $reviewObj->find('input[name=review_url]', 0);
-            $item->remote_id = 'bk_' . $idObj->getAttribute( 'value' );
-            $item->message = html_entity_decode($message);
-            $scoreObj = $reviewObj->find('.review_item_review_score', 0);
-            $item->vote = round((float)$scoreObj->innertext()/2);
-            $item->remote_user_name = trim($reviewObj->find('h4', 0)->innertext);
-            $item->remote_user_avatar = str_replace('height=64&width=64', 'height=300&width=300', $reviewObj->find('.avatar-mask', 0)->getAttribute('src'));
-            $item->remote_type = SpotVote::TYPE_BOOKING;
-            if( $save && !SpotVote::where('remote_id', $item->remote_id)->exists())
+            if($idObj)
             {
-                $this->votes()->save($item);
+                $item->remote_id = 'bk_' . $idObj->getAttribute( 'value' );
+                $item->message = html_entity_decode($message);
+                $scoreObj = $reviewObj->find('.review_item_review_score', 0);
+                $item->vote = round((float)$scoreObj->innertext()/2);
+                $item->remote_user_name = trim($reviewObj->find('h4', 0)->innertext);
+                $item->remote_user_avatar = str_replace('height=64&width=64', 'height=300&width=300', $reviewObj->find('.avatar-mask', 0)->getAttribute('src'));
+                $item->remote_type = SpotVote::TYPE_BOOKING;
+                if( $save && !SpotVote::where('remote_id', $item->remote_id)->exists())
+                {
+                    $this->votes()->save($item);
+                }
+                $result[] = $item;
             }
-            $result[] = $item;
         }
+        return $result;
+    }
+    
+    public function getBookingCover($bookingRes)
+    {
+        $result = null;
+        $resultUrl = null;
+        if( $bookingSlider = $bookingRes->find('.hp-gallery-slides', 0) )
+        {
+            foreach( $bookingSlider->find('img') as $picture )
+            {
+                $url = $picture->getAttribute('src');
+                if(empty($url))
+                {
+                    $url = $picture->getAttribute('data-lazy');
+                }
+                $filename = $this->getFilenameFromUrl($url);
+                if( $filename && !RemotePhoto::where('url', 'like' , "%$filename%")
+                        ->where('associated_type', Spot::class)
+                        ->where('associated_id', $this->id)
+                        ->exists() )
+                {
+                    $resultUrl = $url;
+                    break;
+                }
+            }
+        }
+        if( empty($resultUrl) && $bookingSlider = $bookingRes->find('.bh-photo-grid', 0) )
+        {
+            foreach( $bookingSlider->find('a.active-image') as $picture )
+            {
+                $url = $picture->getAttribute('href');
+                $filename = $this->getFilenameFromUrl($url);
+                if( $filename && !RemotePhoto::where('url', 'like' , "%$filename%")
+                        ->where('associated_type', Spot::class)
+                        ->where('associated_id', $this->id)
+                        ->exists() )
+                {
+                    $resultUrl = $url;
+                    break;
+                }
+            }
+        }
+        if(!empty($resultUrl))
+        {
+            $result = new RemotePhoto([
+                'url' => $resultUrl,
+                'image_type' => 1,
+                'size' => 'original',
+            ]);
+            $this->remotePhotos()->save( $result );
+        }
+
         return $result;
     }
     
@@ -941,7 +1080,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $itemObj->remote_type = SpotVote::TYPE_GOOGLE;
                 $itemObj->remote_user_name = $item['author_name'];
                 $itemObj->remote_user_avatar = (!empty($item['profile_photo_url']))?$item['profile_photo_url']:'';
-                if( $save && !SpotVote::where('remote_id', $remote_id)->exists())
+                if( $save && !SpotVote::where('remote_id', $remote_id)->where('spot_id', $this->id)->exists())
                 {
                     $this->votes()->save($itemObj);
                 }
@@ -1011,19 +1150,20 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
 
     protected function getHashForGoogle($item)
     {
-        
-        $url_path = parse_url($item['author_url'], PHP_URL_PATH);
-        $url_path_arr = array_filter(explode('/', $url_path));
         $userAlias = '';
-        foreach ($url_path_arr as $elem)
+        if(isset($item['author_url']))
         {
-            if (is_numeric($elem))
+            $url_path = parse_url($item['author_url'], PHP_URL_PATH);
+            $url_path_arr = array_filter(explode('/', $url_path));
+            foreach ($url_path_arr as $elem)
             {
-                $userAlias = $elem;
-                break;
+                if (is_numeric($elem))
+                {
+                    $userAlias = $elem;
+                    break;
+                }
             }
         }
-        
         return 'gg_' . $userAlias . $item['time'];
     }
     
@@ -1318,9 +1458,8 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      * Reviews totals
      */
     
-    public function getReviewsTotal()
+    public function getReviewsTotal($saveReviews = true)
     {
-        $auth = auth();
         $result = [];
         if( $facebookRating = $this->getFacebookRating())
         {
@@ -1328,26 +1467,24 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         }
         if(!empty($this->getGooglePlaceInfo()))
         {
-            $this->getGoogleReviews(true); // true to save
+            $this->getGoogleReviews($saveReviews);
             $result['info']['google'] = $this->getGoogleReviewsInfo();
         }
         $yelpInfo = $this->getYelpBizInfo();
         if( !empty($yelpInfo) )
         {
-            $this->getYelpReviewsFromPage(true); // true to save
+            $this->getYelpReviewsFromPage($saveReviews);
             $result['info']['yelp'] = $yelpInfo;
         }
         $spotInfo = $this->getSpotExtension();
         if(!empty($spotInfo->booking_url))
         {
-            $this->getBookingTotals();
-            
             $reviewsUrl = $this->getBookingReviewsUrl($spotInfo->booking_url);
             if($reviewsUrl && $reviewsPageContent = $this->getPageContent($reviewsUrl, [
                 'headers' => $this->getBookingHeaders()
             ]))
             {
-                $this->getBookingReviews($reviewsPageContent, true); // true to save
+                $this->getBookingReviews($reviewsPageContent, $saveReviews);
             }
             $bookingTotals = $this->getBookingTotals();
             if(!empty($bookingTotals))
@@ -1457,9 +1594,5 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         
         return $this->getResponse($client, $url, $options, $json);
     }
-    
-    
-    
-    
     
 }

@@ -22,7 +22,7 @@ class HotelsRestructure extends Migration
         Schema::create('spot_hotels', function(Blueprint $table) {
             
             $table->increments('id');
-            $table->string('spot_id', 255);
+            $table->integer('spot_id')->unsigned();
             $table->string('class', 50)->nullable();
             $table->string('hotelscom_url', 256)->nullable();
             $table->string('booking_url', 256)->nullable();

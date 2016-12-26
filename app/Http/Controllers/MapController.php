@@ -17,6 +17,8 @@ use Log;
 use DB;
 use App\Http\Controllers\Event;
 use App\Http\Requests;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 /**
  * Class MapController
@@ -44,8 +46,21 @@ class MapController extends Controller {
      * @param Forecast $forecast
      * @return array
      */
-    public function getWeather(WeatherRequest $request, Forecast $forecast) {
-        return $forecast->get($request->get('lat'), $request->get('lng'));
+    public function getWeather( Request $request) {
+        $url = $request->get('q', null);
+        if(!empty($url) && filter_var($url, FILTER_VALIDATE_URL))
+        {
+            $client = new Client();
+            try
+            {
+                $response = $client->get($url);
+                $responseArray = json_decode($response->getBody()->getContents(), true);
+                return $responseArray;
+            }
+            catch(RequestException $e) {}
+        }
+        return [];
+        
     }
 
     /**
@@ -63,7 +78,6 @@ class MapController extends Controller {
                         DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 2)::float AS lat"), 
                         DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 1)::float AS lng"),
                         'spots.title',
-                        DB::raw('votes.rate as rating'),
                         'spot_points.address'
                 )
                 ->where('mv_spots_spot_points.is_private', false)
@@ -121,13 +135,10 @@ class MapController extends Controller {
             }
         }
         
-        $spots->join('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
-        $spots->join(DB::raw('( select AVG(spot_votes.vote) as rate, spot_votes.spot_id as id FROM spot_votes GROUP BY id) AS votes') , function($join)
-        {
-            $join->on('votes.id', '=', 'mv_spots_spot_points.id');
-        });
-        $spots->join('spot_points', 'spot_points.spot_id', '=', 'mv_spots_spot_points.id');
-
+        $spots->leftJoin('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
+        $spots->leftJoin('spot_points', 'spot_points.spot_id', '=', 'mv_spots_spot_points.id');
+        $spots->with('rating');
+        
         if ($request->has('filter.path')) {
             $path = [];
             foreach ($request->filter['path'] as $p) {
@@ -138,7 +149,7 @@ class MapController extends Controller {
         // search spots
         $spotsArr = $spots->skip(0)->take(1000)->get();
         // cache cetegory icon URLs
-        $cats = SpotTypeCategory::select("spot_type_categories.id")->with('type')->get();
+        $cats = SpotTypeCategory::select("spot_type_categories.id", "spot_type_categories.spot_type_id")->get();
         $iconsCache = [];
         $typesCache = [];
         foreach ($cats as $c) {
@@ -155,7 +166,7 @@ class MapController extends Controller {
                     'lat' => $spot->lat,
                     'lng' => $spot->lng
                 ],
-                'rating' => $spot->rating,
+                'rating' => (isset($spot->rating[0])) ? (float)$spot->rating[0]->rating : 0,
                 'title' => $spot->title,
                 'address' => $spot->address,
                 'category_icon_url' => $iconsCache[$spot->spot_type_category_id],

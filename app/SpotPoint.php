@@ -22,7 +22,7 @@ class SpotPoint extends BaseModel
 {
     use PostgisTrait, GeoTrait;
 
-    protected $fillable = ['location', 'address'];
+    protected $fillable = ['location', 'address', 'spot_id'];
 
     protected $postgisFields = [
         'location' => Point::class,

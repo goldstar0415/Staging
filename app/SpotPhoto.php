@@ -4,7 +4,7 @@ namespace App;
 
 use App\Contracts\Commentable;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
-use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
+use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 
 /**
  * Class AlbumPhoto
@@ -27,7 +27,7 @@ class SpotPhoto extends BaseModel implements StaplerableInterface, Commentable
 
     protected $fillable = ['photo'];
 
-    protected $appends = ['photo_url'];
+    protected $appends = ['photo_url', 'url'];
 
     /**
      * {@inheritDoc}
@@ -54,6 +54,16 @@ class SpotPhoto extends BaseModel implements StaplerableInterface, Commentable
     public function getPhotoUrlAttribute()
     {
         return $this->getPictureUrls('photo');
+    }
+    
+    /**
+     * Get url of the photo
+     *
+     * @return array
+     */
+    public function getUrlAttribute()
+    {
+        return (isset($this->photo_url['original']))?$this->photo_url['original']:null;
     }
 
     /**

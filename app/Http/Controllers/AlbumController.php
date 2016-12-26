@@ -144,7 +144,7 @@ class AlbumController extends Controller
     public function update(PhotoUpdateRequest $request, $albums)
     {
 		$photos = [];
-        $albums->update($request->only(['title', 'is_private']));
+        $albums->update($request->only(['title', 'is_private','location', 'address']));
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 $f = $albums->photos()->create([

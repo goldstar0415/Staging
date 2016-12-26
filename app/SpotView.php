@@ -9,7 +9,8 @@ use App\Extensions\StartEndDatesTrait;
 use App\Scopes\ApprovedScopeTrait;
 use App\Scopes\NewestScopeTrait;
 use App\Services\SocialSharing;
-use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
+use App\SpotVote;
+use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use DB;
 use Eluceo\iCal\Component\Event;
@@ -56,13 +57,26 @@ use Log;
  */
 class SpotView extends BaseModel
 {
-	protected $table = 'mv_spots_spot_points';
-	public $timestamps = false;
-	/**
+    protected $table = 'mv_spots_spot_points';
+
+    public $timestamps = false;
+    /**
      * Get the points for the spot
      */
     public function points()
     {
         return $this->hasMany(SpotPoint::class, 'spot_id');
+    }
+    
+    public function votes()
+    {
+        return $this->hasMany(SpotVote::class, 'spot_id');
+    }
+    
+    public function rating()
+    {
+        return $this->votes()
+            ->selectRaw('avg(vote) as rating, spot_id')
+            ->groupBy('spot_id');
     }
 }

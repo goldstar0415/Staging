@@ -17,5 +17,5 @@
 
 @endsection
 @section('scripts')
-    @include('admin.parser.scripts', ['uploadRoute' => 'admin.restaurants.export'])
+    @include('admin.parser.scripts', ['uploadRoute' => 'admin.restaurants.export', 'updateRoute' => 'admin.restaurants.update_field'])
 @endsection

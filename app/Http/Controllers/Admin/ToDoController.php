@@ -2,69 +2,52 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use ForceUTF8\Encoding;
+use App\Services\Csv\Reader;
+use App\Services\Csv\Helper;
 use App\Http\Requests\PaginateRequest;
-use App\Http\Requests\Admin\RestaurantFilterRequest;
-use App\Http\Requests\Admin\SpotsBulkDeleteRequest;
-use App\SpotRestaurant;
-use App\SpotAmenity;
+use App\Spot;
+use App\Http\Requests\Admin\ToDoFilterRequest;
 use App\SpotTypeCategory;
 use App\RemotePhoto;
 use App\SpotPoint;
-use App\Spot;
+use App\SpotToDo;
+use DB;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Services\Csv\Reader;
-use App\Services\Csv\Helper;
-
-class RestaurantsController extends Controller
+class ToDoController extends Controller 
 {
-    
     private $stepCount = 1000;
-    private $prefix = 'yp_';
+    private $prefix = 'td_';
     
-    private $categoryName = 'restaurants';
+    private $categoryName = 'todo';
     private $categoryId = null;
     private $updateExisting = false;
     
     private $spotFields = [
-        'title' => 'Restaurant name',
+        'title' => 'todo_name',
         'description' => 'description',
         'web_sites' => 'website',
     ];
     
-    private $restaurantFields = [
-        'Rest_id' => 'remote_id',
-        'trip_id' => 'tripadvisor_id',
-        'Tripadvisor url' => 'tripadvisor_url',
-        'Email' => 'email',
-        'Phone Number' => 'phone_number',
-        'Trip_Rating' => 'tripadvisor_rating',
-        'Price_level' => 'price_level',
-        'num_trip_reviews' => 'tripadvisor_reviews_count',
-        'Category' => 'category',
-        'meals_served' => 'meals_served',
-        'country' => 'country',
+    private $todoFields = [
+        
+        'todo_id' => 'remote_id',
+        'email' => 'email',
+        'phone' => 'phone_number',
+        'trip_url' => 'tripadvisor_url',
+        'trip_rating' => 'tripadvisor_rating',
+        'trip_no_reviews' => 'tripadvisor_reviews_count',
         'city' => 'city',
-        'state' => 'state',
-        'Yelp' => 'yelp_url',
-        'yelp_rating' => 'yelp_rating',
-        'Zomato' => 'zomato_url',
-        'Zomato_id' => 'zomato_id',
-        'ZomatoRating' => 'zomato_rating',
-        'Facebook_URL' => 'facebook_url',
-        'facebook_rating' => 'facebook_rating',
-        'OpenTableURL' => 'open_table_url',
-        'google_pid' => 'google_pid',
-        'google_rating' => 'google_rating',
+        'country' => 'country',
+        'google_id' => 'google_pid',
+        'facebook_url' => 'facebook_url',
+        'yelp_id' => 'yelp_id',
     ];
     
     private $massFields = [
-        'tags',
-        'all_images',
-        'features'
+        'images',
+        'tags'
     ];
     
     private $updateRules = [
@@ -72,58 +55,30 @@ class RestaurantsController extends Controller
         'web_sites' => 'sometimes|array',
 
         'remote_id',
-        'tripadvisor_id' => 'max:50',
-        'tripadvisor_url' => 'max:255',
         'email' => 'max:50',
         'phone_number' => 'max:50',
+        'tripadvisor_url' => 'max:255',
         'tripadvisor_rating' => 'max:50',
-        'price_level' => 'max:50',
-        'num_trip_reviews' => 'max:50',
-        'category' => 'max:255',
-        'meals_served' => 'max:255',
+        'tripadvisor_reviews_count' => 'max:50',
         'country' => 'max:255',
         'city' => 'max:255',
-        'state' => 'max:255',
-        'yelp_url' => 'max:255',
-        'yelp_rating' => 'max:50',
-        'zomato_url' => 'max:255',
-        'zomato_id' => 'max:50',
-        'zomato_rating' => 'max:50',
+        'yelp_id' => 'max:255',
         'facebook_url' => 'max:255',
-        'zomato_rating' => 'max:50',
-        'open_table_url' => 'max:255',
         'google_pid' => 'max:50',
-        'google_rating' => 'max:50',
     ];
     
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(PaginateRequest $request)
     {
-        return view('admin.restaurants.index')->with('restaurants', $this->paginatealbe($request, Spot::restaurants(),15));
+        return view('admin.todo.index')->with('todoes', $this->paginatealbe($request, Spot::todoes(),15));
     }
     
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param RestaurantFilterRequest $request
-     * @return \Illuminate\Http\Response
-     */
-    public function filter(RestaurantFilterRequest $request)
+    public function filter(ToDoFilterRequest $request)
     {
-        $query = $this->getFilterQuery($request, Spot::restaurants());
-        return view('admin.restaurants.index')->with('restaurants', $this->paginatealbe($request, $query,15));
+        $query = $this->getFilterQuery($request, Spot::todoes());
+        return view('admin.todo.index')->with('todoes', $this->paginatealbe($request, $query,15));
     }
     
-    /**
-     * @param RestaurantFilterRequest $request
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    protected function getFilterQuery(RestaurantFilterRequest $request, $query)
+    protected function getFilterQuery(ToDoFilterRequest $request, $query)
     {
         if ($request->has('filter.title')) {
             $query->where('title', 'ilike', '%' . $request->filter['title'] . '%');
@@ -132,27 +87,21 @@ class RestaurantsController extends Controller
             $query->where('description', 'ilike', '%' . $request->filter['description'] . '%');
         }
         if ($request->has('filter.created_at')) {
-            $query->where(DB::raw('restaurants.created_at::date'), $request->filter['created_at']);
+            $query->where(DB::raw('created_at::date'), $request->filter['created_at']);
         }
         $request->flash();
         return $query;
     }
     
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Spot  $restaurant
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($restaurant)
+    public function destroy($todo)
     {
-        $restaurant->delete();
+        $todo->delete();
         return back();
     }
     
     public function cleanDb(Request $request)
     {
-        Spot::restaurants()->delete();
+        Spot::todoes()->delete();
         return back();
     }
     
@@ -162,44 +111,45 @@ class RestaurantsController extends Controller
         return back();
     }
     
-    public function getEdit(Spot $restaurant) 
+    public function getEdit(Spot $spot) 
     {
         $spotFields = array_keys($this->spotFields);
-        $restaurantFields = array_diff($this->restaurantFields, ['remote_id']);
-        return view('admin.restaurants.item')->with([
-            'restaurant' => $restaurant,
+        $todoFields = array_diff($this->todoFields, ['remote_id']);
+        
+        return view('admin.todo.item')->with([
+            'todo' => $spot,
             'spotFields' => $spotFields,
-            'restaurantFields' => $restaurantFields,
+            'todoFields' => $todoFields,
         ]);
     }
     
-    public function postEdit(Request $request, Spot $restaurant) 
+    public function postEdit(Request $request, Spot $spot) 
     {
         $rules = $this->updateRules;
         $this->validate($request, $rules);
         $newValues = $request->all();
         foreach(array_keys($this->spotFields) as $field)
         {
-            if(isset($newValues[$field])) $restaurant->$field = $newValues[$field];
+            if(isset($newValues[$field])) $spot->$field = $newValues[$field];
         }
-        $restaurant->save();
-        $restaurantAttrObj = $restaurant->restaurant;
-        if(!empty($restaurantAttrObj))
+        $spot->save();
+        $todoAttrObj = $spot->todo;
+        if(!empty($todoAttrObj))
         {
-            foreach(array_diff($this->restaurantFields, ['remote_id']) as $field)
+            foreach(array_diff($this->todoFields, ['remote_id']) as $field)
             {
-                if(isset($newValues[$field])) $restaurantAttrObj->$field = $newValues[$field];
+                if(isset($newValues[$field])) $todoAttrObj->$field = $newValues[$field];
             }
-            $restaurantAttrObj->save();
+            $todoAttrObj->save();
         }
         return back();
     }
     
-    public function restaurantsCsvParser()
+    public function csvParser()
     {
         $fieldsArr = array_merge( 
                 array_keys($this->spotFields),
-                array_diff(array_values($this->restaurantFields), ['remote_id']),
+                array_diff(array_values($this->todoFields), ['remote_id']),
                 $this->massFields
                 );
         $fields = [];
@@ -207,7 +157,7 @@ class RestaurantsController extends Controller
         {
             $fields[$value] = $value;
         }
-        return view('admin.restaurants.parser', ['fields' => $fields]);
+        return view('admin.todo.parser', ['fields' => $fields]);
     }
     
     public function exportUpload(Request $request)
@@ -216,7 +166,7 @@ class RestaurantsController extends Controller
     }
     
     public function export( Request $request ) 
-    {    
+    {   
         $pref               = $this->prefix;
         $path               = $request->path;
         $stepCount          = $this->stepCount;
@@ -249,7 +199,8 @@ class RestaurantsController extends Controller
             config([
                 'excel.cache.enable'  => false
                 ]);
-            foreach ($reader->getSheetIterator() as $sheet) {
+            foreach ($reader->getSheetIterator() as $sheet)
+            {
                 foreach ($sheet->getRowIterator() as $row) {
                     if($isFirstRow)
                     {
@@ -267,11 +218,11 @@ class RestaurantsController extends Controller
                         break;
                     }
                     $item = $this->convertColumns($headers, $row);
-                    if( !empty($item['Rest_id']) )
+                    if( !empty($item['todo_id']) )
                     {
                         $spot = DB::table('spots')
                                 ->select('id')
-                                ->where('remote_id', $pref . $item['Rest_id'])
+                                ->where('remote_id', $pref . $item['todo_id'])
                                 ->first();
                         $spotExists = !empty($spot->id);
                         $spot_id = $spotExists?$spot->id:null;
@@ -280,26 +231,20 @@ class RestaurantsController extends Controller
                         
                         if($updateExisting || !$spotExists)
                         {
-                            $this->saveRestaurantObject($spot_id, $item);
+                            $this->saveToDoObject($spot_id, $item);
                             $this->saveLocation($spot_id, $item);
-                            $this->savePhoto($spot_id, $item);
+                            $this->savePhotos($spot_id, $item);
                             $this->saveTags($spot_id, $item);
                         }
                         $rows[] = $item;
                     }
                     else {
-                        $result['messages'][] = 'Restaurant ID missed in string #' . ($rows_parsed_before + $rows_parsed_now + 1);
+                        $result['messages'][] = 'ToDo ID missed in string #' . ($rows_parsed_before + $rows_parsed_now + 1);
                     }
                     $rows_parsed_now++;
                 }
             }
-            if($rows_parsed_now == 0)
-            {
-                $result['endOfParse'] = true;
-            }
-            $reader->close();
         }
-        
         $result['rows']                 = $rows;
         $result['rows_parsed']          = $rows_parsed_before + $rows_parsed_now;
         $result['rows_parsed_now']      = $rows_parsed_now;
@@ -366,24 +311,19 @@ class RestaurantsController extends Controller
                             $query->update([$field => $value]);
                         }
                     }
-                    elseif(in_array($field, array_diff(array_values($this->restaurantFields), ['remote_id'])))
+                    elseif(in_array($field, array_diff(array_values($this->todoFields), ['remote_id'])))
                     {
                         SpotToDo::where('remote_id', $remote_id)->update([$field => $value]);
                     }
                     elseif(in_array($field, $this->massFields))
                     {
                         $spot = Spot::where('remote_id', $pref . $remote_id)->first();
-                        switch($field)
+                        if($field == 'tags'){
+                            $this->saveTags($spot->id, [$field => $value]);
+                        }
+                        else
                         {
-                            case 'tags':
-                                $this->saveTags($spot->id, [$field => $value]);
-                                break;
-                            case 'all_images':
-                                $this->savePhoto($spot->id, [$field => $value]);
-                                break;
-                            case 'features':
-                                $this->saveFeatures($spot->id, [$field => $value]);
-                                break;
+                            $this->savePhotos($spot->id, [$field => $value]);
                         }
                     }
                     $rows_parsed_now++;
@@ -410,7 +350,7 @@ class RestaurantsController extends Controller
                 {
                     $attrArr[$column] = json_encode([$item[$value]]);
                 }
-                else
+                else 
                 {
                     $attrArr[$column] = $item[$value];
                 }
@@ -419,7 +359,7 @@ class RestaurantsController extends Controller
         if($spotExists && $this->updateExisting)
         {
             DB::table('spots')
-                    ->where('remote_id', $this->prefix . $item['Rest_id'])
+                    ->where('remote_id', $this->prefix . $item['todo_id'])
                     ->update($attrArr);
             $result['rows_updated']++;
             return $spot_id;
@@ -432,7 +372,7 @@ class RestaurantsController extends Controller
             $attrArr['spot_type_category_id'] = $this->getCategoryId();
             $attrArr['created_at'] = $date;
             $attrArr['updated_at'] = $date;
-            $attrArr['remote_id'] = $this->prefix . $item['Rest_id'];
+            $attrArr['remote_id'] = $this->prefix . $item['todo_id'];
             $result['rows_added']++;
             return DB::table('spots')
                     ->insertGetId($attrArr);
@@ -441,21 +381,21 @@ class RestaurantsController extends Controller
     
     protected function saveLocation($spot_id, $item)
     {
-        if(isset($item['Latitude']) && isset($item['Longitude']))
+        if(isset($item['latitude']) && isset($item['longitude']))
         {
             $item['location'] = [
-                'lat' => $item['Latitude'],
-                'lng' => $item['Longitude'],
+                'lat' => $item['latitude'],
+                'lng' => $item['longitude'],
             ];
         }
-        unset($item['Latitude']);
-        unset($item['Longitude']);
-        if( isset($item['location']) && isset($item['Address']) )
+        unset($item['latitude']);
+        unset($item['longitude']);
+        if( isset($item['location']) && isset($item['street_address']) )
         {
             SpotPoint::where('spot_id', $spot_id)->delete();
             $point = new SpotPoint();
             $point->location = $item['location'];
-            $point->address = $item['Address'];
+            $point->address = $item['street_address'];
             $point->spot_id = $spot_id;
             $point->save();
         }
@@ -463,15 +403,14 @@ class RestaurantsController extends Controller
     
     protected function savePhotos($spot_id, $item)
     {
-        $pictures = isset($item['all_images'])?$item['all_images']:null;
-        unset($item['all_images']);
+        $pictures = isset($item['images'])?$item['images']:null;
+        unset($item['images']);
         if( !empty($pictures) && $spot_id )
         {
             DB::table('remote_photos')
                     ->where('associated_type', Spot::class)
                     ->where('associated_id', $spot_id)
                     ->delete();
-            $pictuesObjects = [];
             $pictuesArr = [];
             $pictures = array_filter(explode(';', $pictures));
             $needCover = true;
@@ -527,26 +466,6 @@ class RestaurantsController extends Controller
         }
     }
     
-    protected function saveFeatures($spot_id, $item)
-    {
-        if(!empty($item['features']))
-        {
-            $features = array_filter(explode(',', $item['features']));
-            foreach($features as $amenity)
-            {
-                $body = trim($amenity);
-                if( !SpotAmenity::where('spot_id', $spot_id)
-                                 ->where('item', $body)->exists() )
-                {
-                    SpotAmenity::insert([
-                        'item' => $body,
-                        'spot_id' => $spot_id
-                    ]);
-                }
-            }
-        }
-    }
-    
     protected function convertColumns($headers, $row)
     {
         $item = [];
@@ -568,30 +487,30 @@ class RestaurantsController extends Controller
         return $item;
     }
     
-    protected function saveRestaurantObject($spot_id, $item)
+    protected function saveToDoObject($spot_id, $item)
     {
-        $obj = DB::table('spot_restaurants')
+        $todoObj = DB::table('spot_todoes')
                                 ->select('id')
-                                ->where('remote_id', $item['Rest_id'])
+                                ->where('remote_id', $item['todo_id'])
                                 ->first();
         $attrArr = [];
-        foreach( $this->restaurantFields as $name => $field) {
+        foreach( $this->todoFields as $name => $field) {
             if(isset($item[$name]))
             {
                 $attrArr[$field] = $item[$name];
             }
         }
-        if(!empty($obj->id))
+        if(!empty($todoObj->id))
         {
-            DB::table('spot_restaurants')
-                    ->where('remote_id', $item['Rest_id'])
+            DB::table('spot_todoes')
+                    ->where('remote_id', $item['todo_id'])
                     ->update($attrArr);
         }
         else 
         {
-            $attrArr['remote_id'] = $item['Rest_id'];
+            $attrArr['remote_id'] = $item['todo_id'];
             $attrArr['spot_id'] = $spot_id;
-            DB::table('spot_restaurants')
+            DB::table('spot_todoes')
                     ->insert($attrArr);
         }
     }
@@ -608,5 +527,4 @@ class RestaurantsController extends Controller
                 ->first();
         return $this->categoryId = (!empty($category->id))?$category->id:null;
     }
-    
 }

@@ -8,7 +8,7 @@ use App\Extensions\GeoTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
-use Codesleeve\Stapler\ORM\EloquentTrait as StaplerTrait;
+use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 
 /**
  * Model AlbumPhoto
@@ -39,7 +39,7 @@ class AlbumPhoto extends BaseModel implements StaplerableInterface, Commentable
 
     protected $with = ['album'];
 
-    protected $appends = ['photo_url'];
+    protected $appends = ['photo_url', 'url'];
 
     protected $fillable = ['photo', 'location', 'address'];
 
@@ -65,6 +65,16 @@ class AlbumPhoto extends BaseModel implements StaplerableInterface, Commentable
     public function getPhotoUrlAttribute()
     {
         return $this->getPictureUrls('photo');
+    }
+    
+    /**
+     * Get url of original photo
+     *
+     * @return string
+     */
+    public function getUrlAttribute()
+    {
+        return (isset($this->photo_url['original']))?$this->photo_url['original']:null;
     }
 
     /**

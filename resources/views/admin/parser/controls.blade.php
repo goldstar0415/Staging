@@ -8,13 +8,27 @@
         <input type="text" class="form-control" readonly>
     </div>
     <div>
+        <div class="radio">
+            <label><input name="mode" type="radio" value="parsing" checked>Parsing mode</label>
+        </div>
+        <div class="radio">
+            <label><input name="mode" type="radio" value="update">Update mode</label>
+        </div>
         <div class="checkbox">
             <label><input name="auto-parse" type="checkbox" value="" checked>Automaticly start parsing</label>
         </div>
         <div class="checkbox">
             <label><input name="update-existing" type="checkbox" value="">Update existing rows</label>
         </div>
-
+        <div class="select" hidden>
+            <label for="field-select">Choose field for updating:</label>
+            {!! Form::select(
+                'field',
+                $fields,
+                null,
+                ['class' => 'field-select form-control', 'id' => 'field-select']
+            ) !!}
+        </div>
     </div>
 </div>
 <div class="col col-sm-6">
