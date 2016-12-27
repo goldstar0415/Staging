@@ -5,8 +5,6 @@
     position: relative;
     min-height: 120px;
     width: 100%;
-    // border-top: 1px solid #e9edf0;
-    // border-bottom: 1px solid #e9edf0;
     padding: 10px;
     @media(max-width: 767px) {
         flex-direction: column;
@@ -141,6 +139,33 @@
                 left: auto;
                 right: -10px;
             }
+        }
+    }
+}
+
+.wall-item-min {
+    flex-direction: column;
+    .wall-user {
+        align-self: flex-start;
+        width: 100%;
+        height: auto;
+        margin: 10px 0;
+        flex: initial;
+        & > a {
+            height: 50px;
+            img {
+                height: 50px;
+                width: 50px;
+            }
+        }
+    }
+    .wall-content {
+        flex: initial;
+        &:after {
+            border-left: none;
+            bottom: 0px;
+            top: -10px;
+            left: calc(50% - 10px);
         }
     }
 }
