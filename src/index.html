@@ -111,7 +111,8 @@
 
 <new-message></new-message>
 
-<div class="pick-notification">
+<!-- don't show it before preloader -->
+<div class="pick-notification" style="display: none;">
 	<img src='assets/img/Pick_a_tool.png'>
 </div>
 
@@ -358,6 +359,7 @@
 
 <script>
 window.hidePreloader = function() {
+	$('.pick-notification').css('display', 'inherit');
 	var pl = document.querySelector("#preloader");
 	pl.parentNode.removeChild(pl);
 	body.classList.remove("content-hidden");
