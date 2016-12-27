@@ -677,7 +677,13 @@
       },
       onAdd: function (map) {
           var scope = $rootScope.$new();
-          var btn = $compile('<div ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="show-info-container"><div class="focus-geolocation" ng-class="{\'active\': $root.isRadarShown}"><img src="../../assets/img/svg/radar.svg"/></div></div>')(scope);
+          var btn = $compile('<div ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="show-weather-container" ng-class="{\'active\': $root.isRadarShown}">\
+                                  <div>on</div>\
+                                  <div class="show-weather">\
+                                      <img src="../../assets/img/svg/radar.svg"/>\
+                                  </div>\
+                                  <div>off</div>\
+                              </div>')(scope);
           this._map = map;
           L.DomEvent.on(btn[0], 'click', this._click, this);
           return btn[0];

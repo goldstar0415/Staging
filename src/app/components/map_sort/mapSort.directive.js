@@ -17,10 +17,7 @@
               }
               return null;
           }
-      });
-
-  angular.module('zoomtivity')
-      .filter('getById', function($rootScope) {
+      }).filter('getById', function($rootScope) {
           return function(input) {
               if (input) {
                   var arr = [];
@@ -35,41 +32,38 @@
               }
               return null;
           }
+      }).filter('spotsFilter', function($rootScope) {
+          return function(input) {
+              if (input) {
+                  var arr = [];
+                  var i = 0;
+                  var len = input.length;
+                  var options = $rootScope.filterOptions;
+                  for (; i < len; i++) {
+                      if (input[i].rating < options.minRating) {
+                          continue;
+                      }
+                      if (options.category.length) {
+                          if (input[i].category.name !== options.category) {
+                              continue;
+                          }
+                      }
+                      if (input[i].category.type.name === 'event' && options.dateFrom.length && options.dateTo.length) {
+                          var filterDateFrom = new Date(options.dateFrom);
+                          var filterDateTo = new Date(options.dateTo);
+                          var spotDateFrom = new Date(input[i].start_date);
+                          var spotDateTo = new Date(input[i].end_date);
+                          if (!(spotDateFrom >= filterDateFrom) || !(spotDateTo <= filterDateTo)) {
+                              continue;
+                          }
+                      }
+                      arr.push(input[i]);
+                  }
+                  return arr;
+              }
+              return null;
+          }
       });
-
-  // angular.module('zoomtivity')
-  //     .filter('spotsFilter', function($rootScope) {
-  //         return function(input) {
-  //             if (input) {
-  //                 var arr = [];
-  //                 var i = 0;
-  //                 var len = input.length;
-  //                 var options = $rootScope.filterOptions;
-  //                 for (; i < len; i++) {
-  //                     if (input[i].rating < options.minRating) {
-  //                         continue;
-  //                     }
-  //                     if (options.category.length) {
-  //                         if (input[i].category.name !== options.category) {
-  //                             continue;
-  //                         }
-  //                     }
-  //                     if (input[i].category.type.name === 'event' && options.dateFrom.length && options.dateTo.length) {
-  //                         var filterDateFrom = new Date(options.dateFrom);
-  //                         var filterDateTo = new Date(options.dateTo);
-  //                         var spotDateFrom = new Date(input[i].start_date);
-  //                         var spotDateTo = new Date(input[i].end_date);
-  //                         if (!(spotDateFrom >= filterDateFrom) || !(spotDateTo <= filterDateTo)) {
-  //                             continue;
-  //                         }
-  //                     }
-  //                     arr.push(input[i]);
-  //                 }
-  //                 return arr;
-  //             }
-  //             return null;
-  //         }
-  //     });
 
   /*
    * Directive for spot control panel

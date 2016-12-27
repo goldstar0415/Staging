@@ -15,13 +15,14 @@
       scope: {
         items: '=',
         index: '=',
-        hideComments: '@'
+        nocoments: '='
       },
       link: PhotoViewerLink
     };
 
     function PhotoViewerLink(s, e, a) {
       $(e).on('click', function () {
+        //   debugger;
         $modal.open({
           animation: true,
           templateUrl: 'photoViewer.html',
@@ -35,8 +36,8 @@
             index: function () {
               return s.index;
             },
-            hideComments: function () {
-              return !!s.hideComments;
+            nocoments: function () {
+              return !!s.nocoments;
             }
           }
         });
@@ -44,10 +45,12 @@
     }
 
     /** @ngInject */
-    function PhotoViewerController($modalInstance, items, index, hideComments, PhotoComment, SpotPhotoComments) {
+    function PhotoViewerController($modalInstance, items, index, nocoments, PhotoComment, SpotPhotoComments) {
       var vm = this;
+      vm.items = items;
+      vm.index = index;
+      vm.nocoments = nocoments;
       vm.countPhotos = items.length;
-      vm.hideComments = hideComments;
       setPhoto(index);
 
       //show next photo
@@ -132,7 +135,7 @@
        * @param item {Photo}
        */
       function getComments(item) {
-        if (_.isUndefined(hideComments) || !hideComments) {
+        if (_.isUndefined(nocoments) || !nocoments) {
           return item.album_id ?
             PhotoComment.query({photo_id: item.id}) :
             SpotPhotoComments.query({photo_id: item.id, spot_id: item.spot_id})

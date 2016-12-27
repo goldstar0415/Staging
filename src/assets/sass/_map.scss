@@ -293,7 +293,8 @@
         .map-tools,
         .map-tools-top,
         .map-tools-back,
-        .show-info {
+        .show-info,
+        .show-weather {
             background-color: white;
             position: relative;
             width: 40px;
@@ -314,6 +315,48 @@
                 background-color: $light_blue_btn !important;
             }
         }
+
+        .show-weather-container {
+            width: 80px;
+            margin-left: 0;
+            display: flex;
+            justify-content: flex-start;
+            div:last-of-type, div:first-of-type {
+                width: 40px;
+                height: 40px;
+                font-weight: bold;
+                color: #414042;
+                background-color: rgba(white, 0.7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 15px;
+                cursor: pointer;
+            }
+            div:last-of-type {
+                display: none;
+            }
+            &.active {
+                div:last-of-type {
+                    display: flex;
+                }
+                div:first-of-type {
+                    display: none;
+                }
+            }
+            &:hover {
+                div:last-of-type, div:first-of-type {
+                    color: $light_blue_btn;
+                }
+                .show-weather {
+                    background-color: $light_blue_btn;
+                }
+            }
+        }
+
+        // .sidebar-opened .show-weather-container {
+        //     margin-right: 10px;
+        // }
 
         .map-tools {
             margin: 0;
