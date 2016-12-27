@@ -45,23 +45,23 @@
     }
 
     /** @ngInject */
-    function PhotoViewerController($modalInstance, items, index, nocoments, PhotoComment, SpotPhotoComments) {
+    function PhotoViewerController($scope, $document, $modalInstance, items, index, nocoments, PhotoComment, SpotPhotoComments) {
       var vm = this;
       vm.items = items;
-      vm.index = index;
+      $scope.index = index;
       vm.nocoments = nocoments;
       vm.countPhotos = items.length;
+      vm.displayComments = true;
       setPhoto(index);
+      $document.find('html').addClass('modal-opened');
 
-      //show next photo
-      vm.nextPhoto = function nextPhoto() {
-        setPhoto(vm.currentIndex + 1);
-      };
+      vm.toggleComments = function() {
+          vm.displayComments = !vm.displayComments;
+      }
 
-      //show previous photo
-      vm.previousPhoto = function () {
-        setPhoto(vm.currentIndex - 1);
-      };
+      $scope.$watch('index', function() {
+          setPhoto($scope.index);
+      });
 
       /*
        * Send comment to photo
@@ -106,6 +106,7 @@
 
       //close modal
       vm.close = function () {
+        $document.find('html').removeClass('modal-opened');
         $modalInstance.close();
       };
 
