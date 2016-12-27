@@ -1,3 +1,5 @@
+'use strict';
+
 const gulp = require('gulp');
 const serverFactory = require('spa-server');
 const config = require('./config');

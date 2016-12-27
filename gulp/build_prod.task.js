@@ -22,8 +22,8 @@ gulp.task('build:prod:service-worker', function () {
     .pipe(gulp.dest(config.paths.dist));
 });
 
-gulp.task('build:prod:other', function () {
-  const fileFilter = $.filter(function (file) {
+gulp.task('build:prod:other', () => {
+  const fileFilter = $.filter((file) => {
     return file.stat.isFile();
   });
 
@@ -46,7 +46,7 @@ gulp.task('build:prod', ['vendor', 'app', 'css', 'build:prod:pre-build'], () => 
     .pipe( injectJs('/scripts/vendor.build.js') )
     .pipe( injectJs('/scripts/app.build.js') )
     .pipe( injectCss() )
-    // .pipe( minify() ) // fixme: uncomment me
+    .pipe( minify() )
     .pipe( gulp.dest(config.paths.dist) );
 
   function setRevision() {
