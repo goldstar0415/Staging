@@ -99,6 +99,7 @@ module.exports = [
   `${SRC}/app/components/map_popups/spot_popup/spot_popup.js`,
   `${SRC}/app/components/navigation/header/header.directive.js`,
   `${SRC}/app/components/navigation/side_menu/side_menu.directive.js`,
+  `${SRC}/app/components/navigation/header/bloodhound-search.directive.js`,
   `${SRC}/app/modules/chat/chat.service.js`,
   `${SRC}/app/modules/spot/review/review.directive.js`,
 ];
