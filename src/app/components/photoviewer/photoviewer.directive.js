@@ -52,6 +52,9 @@
       vm.nocoments = nocoments;
       vm.countPhotos = items.length;
       vm.displayComments = true;
+      if (nocoments) {
+          vm.displayComments = false;
+      }
       setPhoto(index);
       $document.find('html').addClass('modal-opened');
 

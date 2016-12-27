@@ -241,10 +241,10 @@
         align-items: flex-start;
         &.with-comments {
             height: calc(100vh - 50px);
+            margin-bottom: 50px;
         }
         .photos, .comments {
             height: 100%;
-            margin-bottom: 50px;
         }
     }
 }
