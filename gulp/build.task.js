@@ -7,22 +7,23 @@ const gitRevSync = require('git-rev-sync');
 const injectString = require('gulp-inject-string');
 const injectFile = require('gulp-inject-file');
 const $ = require('gulp-load-plugins')({ pattern: ['gulp-*', 'main-bower-files'] });
+const sequence = require('run-sequence').use(gulp);
 
-gulp.task('build:prod:fonts', function () {
+gulp.task('build:fonts', function () {
   return gulp.src($.mainBowerFiles())
     .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
     .pipe($.flatten())
     .pipe(gulp.dest(path.join(config.paths.dist, '/fonts/')));
 });
 
-gulp.task('build:prod:service-worker', function () {
+gulp.task('build:service-worker', function () {
   return gulp.src([
       path.join(config.paths.src, '/service-worker.js'),
     ])
     .pipe(gulp.dest(config.paths.dist));
 });
 
-gulp.task('build:prod:other', () => {
+gulp.task('build:other', () => {
   const fileFilter = $.filter((file) => {
     return file.stat.isFile();
   });
@@ -35,9 +36,9 @@ gulp.task('build:prod:other', () => {
     .pipe(gulp.dest(path.join(config.paths.dist, '/')));
 });
 
-gulp.task('build:prod:pre-build', ['build:prod:fonts', 'build:prod:service-worker', 'build:prod:other']);
+gulp.task('build:pre-build', ['build:fonts', 'build:service-worker', 'build:other']);
 
-gulp.task('build:prod', ['vendor', 'app', 'css', 'build:prod:pre-build'], () => {
+gulp.task('build:main', ['vendor', 'app', 'css', 'build:pre-build'], () => {
   const rev = gitRevSync.short();
 
   return gulp.src( path.join(config.paths.src, '/index.html') )
@@ -91,3 +92,6 @@ gulp.task('build:prod', ['vendor', 'app', 'css', 'build:prod:pre-build'], () => 
 
 });
 
+gulp.task('build', (cb) => {
+  sequence('mirror', 'build:main', cb);
+});
