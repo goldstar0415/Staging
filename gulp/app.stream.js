@@ -102,4 +102,6 @@ module.exports = [
   `${SRC}/app/components/navigation/header/bloodhound-search.directive.js`,
   `${SRC}/app/modules/chat/chat.service.js`,
   `${SRC}/app/modules/spot/review/review.directive.js`,
+  `${SRC}/app/components/async_loader_service/async_loader.service.js`,
+  `${SRC}/app/modules/spot/spot.controller.js`, // fixme: use lazy-load
 ];
