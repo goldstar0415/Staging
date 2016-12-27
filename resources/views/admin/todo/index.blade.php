@@ -38,7 +38,7 @@
         @foreach($todoes as $todo)
             <tr>
                 <td class="text-center">{!! Form::checkbox('todoes[]', $todo->id, null, ['class' => 'row-select']) !!}</td>
-                <td>{!! link_to(frontend_url( 'todo', $todo->id), $todo->title, ['target' => '_blank']) !!}</td>
+                <td>{!! link_to(frontend_url( !empty($todo->user) ? $todo->user->id: 0, 'spot', $todo->id), $todo->title, ['target' => '_blank']) !!}</td>
                 <td>{{ $todo->description }}</td>
                 <td>{{ $todo->created_at->format('Y-m-d') }}</td>
                 <td>

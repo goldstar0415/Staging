@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\SpotsBulkUpdateRequest;
 use App\Http\Requests\PaginateRequest;
 use App\Spot;
 use App\User;
+use App\SpotTypeCategory;
 use DB;
 use Illuminate\Http\Request;
 
@@ -82,18 +83,20 @@ class SpotController extends Controller
 
     public function bulkUpdate(SpotsBulkUpdateRequest $request)
     {
-        Spot::whereIn('id', $request->spots)->get()->each(function (Spot $spot) use ($request) {
+        $category = SpotTypeCategory::find($request->get('category', 0));
+        $user = User::find($request->get('users', 0));
+        Spot::whereIn('id', $request->spots)->get()->each(function (Spot $spot) use ($request, $category, $user) {
             if ($request->has('start_date')) {
                 $spot->start_date = $request->start_date . ' ' . $spot->start_date->format('H:i:s');
             }
             if ($request->has('end_date')) {
                 $spot->end_date = $request->end_date . ' ' . $spot->end_date->format('H:i:s');
             }
-            if ($request->has('users')) {
-                $spot->user()->associate($request->users);
+            if ($request->has('users') && !empty($user)) {
+                $spot->user()->associate($user);
             }
-            if ($request->has('category')) {
-                $spot->category()->associate($request->category);
+            if ( $request->has('category') && !empty($category)) {
+                $spot->category()->associate($category);
             }
             $spot->save();
         });

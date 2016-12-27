@@ -72,7 +72,8 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         'is_favorite',
         'is_saved',
         'is_rated',
-        'share_links'
+        'share_links',
+        'slug'
     ];
 
     protected $with = ['category.type', 'points'];
@@ -245,6 +246,16 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         }
 
         return false;
+    }
+    
+    /**
+     * Get spot slug from title 
+     *
+     * @return string
+     */
+    public function getSlugAttribute()
+    {
+        return str_slug($this->title, "-");
     }
 
     /**

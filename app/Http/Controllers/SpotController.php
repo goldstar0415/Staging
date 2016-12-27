@@ -165,7 +165,8 @@ class SpotController extends Controller
                 'members',
                 'comments_photos',
                 'auth_rate',
-                'amenities'
+                'amenities',
+                'slug'
                 ]);
         
         if (isset($res->remotePhotos)) {
