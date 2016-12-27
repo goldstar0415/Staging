@@ -6,7 +6,7 @@ const $ = require('gulp-load-plugins')();
 const config = require('./config');
 const stream = require('./boot.stream');
 
-gulp.task('_boot_css', () => {
+gulp.task('boot:css', () => {
   return gulp.src(stream)
     .pipe($.concat('boot.css.tmp'))
     .pipe($.csso())
@@ -14,4 +14,4 @@ gulp.task('_boot_css', () => {
     .pipe(gulp.dest(path.join(config.paths.tmp, '/boot')));
 });
 
-gulp.task('boot', ['_boot_css']);
+gulp.task('boot', ['boot:css']);
