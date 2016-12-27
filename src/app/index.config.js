@@ -7,12 +7,17 @@
     .animation('.mapResize', mapResizeAnimation);
 
   /** @ngInject */
-  function config($logProvider, dialogsProvider, toastr, $httpProvider, cfpLoadingBarProvider, snapRemoteProvider, $locationProvider, DEBUG, JS_CONSOLE_KEY, $translateProvider) {
+  function config($logProvider, dialogsProvider, toastr, $httpProvider, cfpLoadingBarProvider, snapRemoteProvider, $locationProvider, DEBUG, JS_CONSOLE_KEY, $translateProvider, $ocLazyLoadProvider) {
     // Enable log
     $logProvider.debugEnabled(DEBUG);
     $locationProvider.html5Mode({enabled: true, requireBase: false});
 
     $httpProvider.defaults.withCredentials = true;
+
+    // ocLazyLoad config
+    $ocLazyLoadProvider.config({
+      debug: DEBUG,
+    });
 
     // don't cache 'lazy' templates
     $httpProvider.interceptors.push(function($q) {
