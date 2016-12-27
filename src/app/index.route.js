@@ -19,13 +19,14 @@
               return UserService.getCurrentUserPromise();
             }
           },
-          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
-            return $ocLazyLoad
-              .load(versionize([
-                '/app/components/navigation/header/bloodhound-search.directive.js',
-              ]))
-              .then(window.hidePreloader);
-          }]
+          hidePreloader: function($q, $timeout) {
+            var deferred = $q.defer();
+            $timeout(function() {
+              window.hidePreloader();
+              deferred.resolve(true);
+            }, 200);
+            return deferred.promise;
+          }
         }
       })
       //Abstract state for profile menu
