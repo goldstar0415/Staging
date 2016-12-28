@@ -8,9 +8,10 @@ const path = require('path');
 const cssStream = require('./css.stream');
 const $ = require('gulp-load-plugins')();
 const _ = require('lodash');
+const clean = require('gulp-clean');
 
-let sassScope = _.filter(cssStream, (path) => {
-  return /\S+\.scss/i.test(path);
+let sassScope = _.filter(cssStream, (p) => {
+  return /\S+\.scss/i.test(p);
 });
 
 gulp.task('serve:watch', () => {
@@ -20,7 +21,13 @@ gulp.task('serve:watch', () => {
     verbose: true,
   };
 
-  gulp.watch(sassScope, options, () => {
+  const watchScope = _.map(sassScope, (p) => {
+    return `${path.dirname(p)}/*.scss`;
+  });
+
+  console.log('Watch scope: ', watchScope);
+
+  gulp.watch(watchScope, options, () => {
     gulp.start('serve:sass');
   });
 
@@ -37,7 +44,12 @@ gulp.task('serve:sass', () => {
     .pipe( gulp.dest(path.join(config.paths.tmp, '/serve/assets/css')) );
 });
 
-gulp.task('serve', ['serve:sass', 'serve:watch'], () => {
+gulp.task('serve:clean', () => {
+  return gulp.src(path.join(config.paths.tmp, '/serve/index.html'), {read: false})
+    .pipe(clean());
+});
+
+gulp.task('serve:main', ['serve:sass', 'serve:watch'], () => {
 
   const serverConfig = {
     path: path.join(config.paths.src),
@@ -52,4 +64,8 @@ gulp.task('serve', ['serve:sass', 'serve:watch'], () => {
 
   const server = serverFactory.create(serverConfig);
   server.start();
+});
+
+gulp.task('serve', ['serve:clean'], () => {
+  gulp.start('serve:main');
 });
