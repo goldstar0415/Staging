@@ -24,7 +24,7 @@
     }
 
     /** @ngInject */
-    function SpotController($modal, $stateParams, Spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share, AsyncLoaderService) {
+    function SpotController($location, $modal, $stateParams, Spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share, AsyncLoaderService) {
         var vm = this;
         var spot = null;
         if ($rootScope.openedSpot) {
@@ -52,7 +52,12 @@
         vm.prices = null;
 
         if($rootScope.$state.params.spot_slug !== vm.spot.slug) {
-            console.log('TEST');
+            console.log($rootScope.$state.params);
+            var user_id = $rootScope.$state.params.user_id;
+            var spot_id = $rootScope.$state.params.spot_id;
+            $location.path(user_id + '/spot/' + spot_id + '/' + vm.spot.slug);
+            // $rootScope.$state.params.spot_slug = 'tatata';
+            // // $routeParams.updateParams({id:"2"});
         }
 
         if ($stateParams.spot_id) {
