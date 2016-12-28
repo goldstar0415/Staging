@@ -51,8 +51,7 @@
         };
         vm.prices = null;
 
-        if($rootScope.$state.params.spot_slug !== vm.spot.slug) {
-            console.log($rootScope.$state.params);
+        if($rootScope.$state.params.spot_slug && $rootScope.$state.params.spot_slug !== vm.spot.slug) {
             var user_id = $rootScope.$state.params.user_id;
             var spot_id = $rootScope.$state.params.spot_id;
             $location.path(user_id + '/spot/' + spot_id + '/' + vm.spot.slug);
