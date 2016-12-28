@@ -6,11 +6,24 @@
     .controller('FriendsmapController', FriendsmapController);
 
   /** @ngInject */
-  function FriendsmapController(friends, MapService, Friends, CropService, $state, $modal, $scope, $timeout, API_URL) {
+  function FriendsmapController(friends, MapService, Friends, CropService, $state, $modal, $scope, $timeout, API_URL, $rootScope) {
     var vm = this;
     var markers = [];
     vm.friends = format(friends);
     initMap();
+
+    var callbackKey = 'FriendsmapController_friendsMap.refresh.friends.list';
+    $rootScope.clearEventListenerCallbacks = $rootScope.clearEventListenerCallbacks || {};
+    if (callbackKey in $rootScope.clearEventListenerCallbacks) {
+      // don't want to have multiple callbacks per one event call. clear previous handler
+      $rootScope.clearEventListenerCallbacks[callbackKey]();
+    }
+    $rootScope.clearEventListenerCallbacks[callbackKey] =
+      $rootScope.$on('friendsMap.refresh.friends.list', function () {
+      Friends.query().$promise.then(function (friends) {
+        vm.friends = format(friends);
+      });
+    });
 
     function format(friends) {
       return _.each(friends, function (friend) {
@@ -134,7 +147,6 @@
 
     //callback from google contacts window
     window.modalContactsCallback = function (contacts) {
-      console.log(contacts);
 
       $modal.open({
         templateUrl: '/app/components/google_contacts/google_contacts.html',

@@ -19,12 +19,20 @@
             },
             controller: HeaderController,
             controllerAs: 'Header',
-            bindToController: true
+            bindToController: true,
+            link: function (scope, elem, attrs) {
+                elem.bind("keydown keypress", function (event) {
+                    if (event.key === 'Escape') {
+                        scope.clearInput();
+                        event.preventDefault();
+                    }
+                });
+            }
         };
     }
 
     /** @ngInject */
-    function HeaderController($state, $scope, BACKEND_URL, $rootScope, MapService, SignUpService) {
+    function HeaderController($state, $scope, BACKEND_URL, $rootScope, MapService, SignUpService, GoogleMapsPlacesService) {
         var vm = this;
         vm.$state = $state;
         vm.BACKEND_URL = BACKEND_URL;
@@ -44,6 +52,10 @@
         }, function() {
             vm.category = $rootScope.sortLayer;
         });
+
+        $scope.clearInput = function () {
+            vm.searchValue = '';
+        };
 
         if (vm.options.snap.disable == "left") {
             vm.toggle = "right";
@@ -88,6 +100,38 @@
                 vm.category = category;
             }
         }
+
+        $scope.$on('typeahead:selected', function (event, data) {
+            if (data.type === 'location') {
+                GoogleMapsPlacesService.getDetails({placeId: data.place_id}).then(function (data) {
+                    console.log(data.geometry.viewport);
+
+                    var params = {spotLocation: {
+                        lat: data.geometry.location.lat(),
+                        lng: data.geometry.location.lng()
+                    }};
+                    if ($rootScope.$state.current.name !== 'index') {
+                        $state.go('index', params);
+                    }
+                    if (data.geometry.viewport === undefined ) {
+                        MapService.FocusMapToGivenLocation(params.spotLocation);
+                    } else {
+                        MapService.FitBoundsByCoordinates([
+                            [
+                                data.geometry.viewport.getSouthWest().lat(),
+                                data.geometry.viewport.getSouthWest().lng()
+                            ],
+                            [
+                                data.geometry.viewport.getNorthEast().lat(),
+                                data.geometry.viewport.getNorthEast().lng()
+                            ]
+                        ]);
+                    }
+                });
+            } else if (data.type === 'spot') {
+                $state.go('spot', {spot_id: data.spotId});
+            }
+        });
     }
 
 })();

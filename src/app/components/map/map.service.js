@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, Webworker, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService, OPENWEATHERMAP_API_KEY) {
+    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService, $ocLazyLoad, OPENWEATHERMAP_API_KEY) {
 
       console.log('MapService');
 
@@ -23,7 +23,7 @@
       var controlGroup = L.featureGroup();
       var clusterOptions = {
         //disableClusteringAtZoom: 8,
-		//chunkedLoading: true,
+		    //chunkedLoading: true,
         spiderfyDistanceMultiplier: 2,
         maxClusterRadius: 8,
         // disableClusteringAtZoom: 12,
@@ -39,9 +39,9 @@
       var currentLayer = "";
 
       // Path variables
-      var pathRouter		= L.Routing.osrmv1({geometryOnly: true});
-	  var pathRouter2		= L.Routing.mapbox(MAPBOX_API_KEY);
-	  var pathRouterFail	= 0;
+      var pathRouter = L.Routing.osrmv1({geometryOnly: true});
+      var pathRouter2 = L.Routing.mapbox(MAPBOX_API_KEY);
+      var pathRouterFail = 0;
 
       var highlightMarker;
       var mobileMarker;
@@ -56,6 +56,18 @@
 					return pathRouter;
 			}
 		}
+
+		function lazyRouter(waypoints, cb) {
+      if ($ocLazyLoad.isLoaded('turf')) {
+        exec();
+      } else {
+        $ocLazyLoad.load('turf').then(exec);
+      }
+
+      function exec() {
+        getPathRouter().route(waypoints, cb);
+      }
+    }
 
 		function pathRouterFailed() {
 			pathRouterFail++;
@@ -1376,7 +1388,7 @@
 					return {latLng: m.getLatLng()};
 				});
 
-				getPathRouter().route(waypoints, function (err, routes) {
+				lazyRouter(waypoints, function (err, routes) {
 
 					if (line) {
 						drawLayer.removeLayer(line);
@@ -1395,6 +1407,7 @@
 					} else {
 						$rootScope.routeInterpolated = [];
 						var simplified = turf.simplify(L.polyline(routes[0].coordinates).toGeoJSON(), 0.02, false);
+            // console.debug('simplify', simplified);
 						simplified.geometry.coordinates.forEach(function(e) {
 							$rootScope.routeInterpolated.push({latLng: {lat: e[1], lng: e[0]}});
 						});
@@ -1580,8 +1593,18 @@
         });
       }
 
-
       function getScreenshot(callback) {
+        if ($ocLazyLoad.isLoaded('html2canvas')) {
+          exec();
+        } else {
+          $ocLazyLoad.load('html2canvas').then(exec);
+        }
+        function exec() {
+          lazyGetScreenshot(callback);
+        }
+      }
+
+      function lazyGetScreenshot(callback) {
         var controls = $('.leaflet-control-container, .sidebar-menu-wrap');
         var mapPane = $(".leaflet-map-pane")[0];
 
@@ -1835,7 +1858,7 @@
         //map.removeLayer(shareSelectionControl);
         map.removeLayer(saveSelectionControl);
         map.removeLayer(clearSelectionControl);
-		map.removeLayer(focusGeolocation);
+		    map.removeLayer(focusGeolocation);
         map.removeLayer(fullScreen);
         map.removeLayer(filter);
       }
@@ -2196,6 +2219,10 @@
         //currentLayer = layer;
         var bounds = GetCurrentLayer().getBounds();
         map.fitBounds(bounds);
+      }
+
+      function FitBoundsByCoordinates(coordinates) {
+          map.fitBounds(coordinates);
       }
 
       function FitBoundsOfCurrentLayer() {
@@ -2776,6 +2803,7 @@
         FitBoundsByLayer: FitBoundsByLayer,
         FitBoundsOfCurrentLayer: FitBoundsOfCurrentLayer,
         FitBoundsOfDrawLayer: FitBoundsOfDrawLayer,
+        FitBoundsByCoordinates: FitBoundsByCoordinates,
         //get bounds based on a point
         GetBoundsByCircle: GetBoundsByCircle,
         //sorting
@@ -2795,7 +2823,7 @@
         WeatherSelection: WeatherSelection,
 
         cancelHttpRequest: cancelHttpRequest,
-		hasLayer: hasLayer,
+		    hasLayer: hasLayer,
         OpenSaveSelectionsPopup: OpenSaveSelectionsPopup,
 
         highlightSpot: highlightSpot,

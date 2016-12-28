@@ -6,45 +6,15 @@
     .controller('GoogleContactsController', GoogleContactsController);
 
   /** @ngInject */
-  function GoogleContactsController(contacts, friends, $modalInstance, API_URL, Friends) {
+  function GoogleContactsController(contacts, friends, $modalInstance, API_URL, Friends, $rootScope) {
     var vm = this;
     vm.API_URL = API_URL;
     vm.users = contacts;
 
     vm.save = function () {
-      var isClose = false;
-
-      _.each(vm.users, function (user) {
-        if (user.selected) {
-          isClose = true;
-
-          var photo = user.photo,
-            user_name = (user.first_name || user.last_name || user.email || user.phone);
-
-          Friends.save({
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email,
-            phone: user.phone
-          }, function (friend) {
-            if (photo) {
-              Friends.setAvatar({id: friend.id}, {avatar: photo}, function (friendPhoto) {
-                friends.push(friendPhoto);
-              });
-            } else {
-              friends.push(friend);
-            }
-
-            toastr.success(user_name + ' successfully imported')
-          }, function () {
-            toastr.error(user_name + ' import failed')
-          });
-        }
-      });
-
-      if (isClose) {
-        $modalInstance.close();
-      }
+      vm.close();
+      // open another modal with following and invitation options, pass selected users
+      $rootScope.$broadcast('contacts.import.after', _.filter(vm.users, function(u) { return u.selected; }));
     };
 
     vm.isAnySelected = function () {
@@ -55,5 +25,55 @@
     vm.close = function () {
       $modalInstance.close();
     };
+
+    vm.isDisabled = function(who) {
+      who = who || "unknownElementCameIn";
+      switch(who) {
+        case 'selectAll':
+          if (vm.inRequest) {
+            return true;
+          }
+          // if some is not checked selectAll is enabled
+          for (var id in vm.users) {
+            if (!vm.users[id].selected) {
+              // enable button
+              return false;
+            }
+          }
+          // all are enabled - cant press selectAll
+          return true;
+        case 'add':
+        case 'selectNone':
+          if (vm.inRequest) {
+            return true;
+          }
+          // if someone is checked selectNone is enabled
+          for (var id in vm.users) {
+            if (vm.users[id].selected) {
+              // enable button
+              return false;
+            }
+          }
+          // all are enabled - cant press selectNone
+          return true;
+        default:
+          // disable by default
+          return true;
+      }
+    };
+
+    vm.selectNone = function() {
+      selectMultiple(false);
+    };
+
+    vm.selectAll = function() {
+      selectMultiple(true);
+    };
+
+    function selectMultiple (boolS) {
+      for (var id in vm.users) {
+        vm.users[id].selected = boolS;
+      }
+    }
   }
 })();
