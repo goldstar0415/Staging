@@ -51,6 +51,10 @@
         };
         vm.prices = null;
 
+        if($rootScope.$state.params.spot_slug !== vm.spot.slug) {
+            console.log('TEST');
+        }
+
         if ($stateParams.spot_id) {
             ShowMarkers([vm.spot]);
         }
