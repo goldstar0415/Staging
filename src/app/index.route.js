@@ -818,7 +818,7 @@
         }
       })
       .state('spot', {
-        url: '/spot/:spot_id',
+        url: '/spot/:spot_id/:spot_slug',
         templateUrl: '/app/modules/spot/spot.html',
         controller: 'SpotController',
         controllerAs: 'Spot',
