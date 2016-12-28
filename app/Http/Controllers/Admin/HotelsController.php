@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\HotelFilterRequest;
 use App\Http\Requests\Admin\SpotsBulkDeleteRequest;
 use App\SpotHotel;
 use App\SpotTypeCategory;
+use App\SpotType;
 use App\RemotePhoto;
 use App\SpotPoint;
 use App\Spot;
@@ -148,7 +149,7 @@ class HotelsController extends Controller
         {
             $fields[$value] = $value;
         }
-        return view('admin.hotels.parser', ['fields' => $fields]);
+        return view('admin.hotels.parser', ['fields' => $fields, 'categories' => SpotType::categoriesList('shelter')]);
     }
     
     /**
@@ -224,6 +225,7 @@ class HotelsController extends Controller
         $rows_parsed_before = $request->rows_parsed;
         $file_offset        = $request->file_offset;
         $headers            = $request->input('headers', []);
+        $this->categoryId   = $request->input('category', null);
         $result             = [
             'success'       => true, 
             'endOfParse'    => false, 

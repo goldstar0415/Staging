@@ -29,6 +29,15 @@
                 ['class' => 'field-select form-control', 'id' => 'field-select']
             ) !!}
         </div>
+        <div class="select">
+            <label for="field-select">Choose category:</label>
+            {!! Form::select(
+                'category',
+                $categories,
+                null,
+                ['class' => 'field-category form-control', 'id' => 'field-category']
+            ) !!}
+        </div>
     </div>
 </div>
 <div class="col col-sm-6">

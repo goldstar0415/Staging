@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\SpotsBulkDeleteRequest;
 use App\SpotRestaurant;
 use App\SpotAmenity;
 use App\SpotTypeCategory;
+use App\SpotType;
 use App\RemotePhoto;
 use App\SpotPoint;
 use App\Spot;
@@ -207,7 +208,7 @@ class RestaurantsController extends Controller
         {
             $fields[$value] = $value;
         }
-        return view('admin.restaurants.parser', ['fields' => $fields]);
+        return view('admin.restaurants.parser', ['fields' => $fields, 'categories' => SpotType::categoriesList('food')]);
     }
     
     public function exportUpload(Request $request)
@@ -225,6 +226,7 @@ class RestaurantsController extends Controller
         $rows_parsed_before = $request->rows_parsed;
         $file_offset        = $request->file_offset;
         $headers            = $request->input('headers', []);
+        $this->categoryId   = $request->input('category', null);
         $result             = [
             'success'       => true, 
             'endOfParse'    => false, 

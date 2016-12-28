@@ -31,6 +31,7 @@ $(function(){
     var $parseText       = $parseBtn.find('.btn-export');
     var $updateExisting  = $inputs.filter('[name="update-existing"]');
     var $fieldSelect     = $form.find('select.field-select');
+    var $fieldCategory   = $form.find('select.field-category');
     var $mode            = $form.find('input[name="mode"]');
     
     var mode             = $mode.filter(':checked').val();
@@ -121,10 +122,12 @@ $(function(){
             case 'parsing':
                 $updateExisting.parents('.checkbox').slideDown();
                 $fieldSelect.parents('.select').slideUp();
+                $fieldCategory.parents('.select').slideDown();
                 break;
             case 'update':
                 $updateExisting.parents('.checkbox').slideUp();
                 $fieldSelect.parents('.select').slideDown();
+                $fieldCategory.parents('.select').slideUp();
                 break;
         }
     });
@@ -154,6 +157,7 @@ $(function(){
     });
     
     var parseHandler = function() {
+        $form.find('select').attr('disabled', 'disabled');
         message('Parsing step ' + (step) + ' started');
         var url = (mode == 'parsing')?'{{ route($uploadRoute) }}':'{{ route($updateRoute) }}';
         $.ajax({
@@ -164,6 +168,7 @@ $(function(){
                 rows_parsed: rowsParsed,
                 file_offset: fileOffset,
                 headers: headers,
+                category: $fieldCategory.val(),
                 field: $fieldSelect.val(),
                 update: $('input[name="update-existing"]').is(':checked')?1:0,
                 _token: token

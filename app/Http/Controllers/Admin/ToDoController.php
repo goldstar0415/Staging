@@ -10,6 +10,7 @@ use App\Http\Requests\PaginateRequest;
 use App\Spot;
 use App\Http\Requests\Admin\ToDoFilterRequest;
 use App\SpotTypeCategory;
+use App\SpotType;
 use App\RemotePhoto;
 use App\SpotPoint;
 use App\SpotToDo;
@@ -157,7 +158,7 @@ class ToDoController extends Controller
         {
             $fields[$value] = $value;
         }
-        return view('admin.todo.parser', ['fields' => $fields]);
+        return view('admin.todo.parser', ['fields' => $fields, 'categories' => SpotType::categoriesList('todo')]);
     }
     
     public function exportUpload(Request $request)
@@ -175,6 +176,7 @@ class ToDoController extends Controller
         $rows_parsed_before = $request->rows_parsed;
         $file_offset        = $request->file_offset;
         $headers            = $request->input('headers', []);
+        $this->categoryId   = $request->input('category', null);
         $result             = [
             'success'       => true, 
             'endOfParse'    => false, 

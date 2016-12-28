@@ -613,4 +613,9 @@ class SpotController extends Controller
         }
         return $result;
     }
+    
+    public function getCategoriesList() 
+    {
+        return SpotType::categoriesList();
+    }
 }

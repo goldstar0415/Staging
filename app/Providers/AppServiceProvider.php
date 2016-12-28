@@ -47,10 +47,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         view()->composer('admin.spots.index', function ($view) {
-            $categories = [];
-            SpotType::with('categories')->get()->each(function (\App\SpotType $type) use (&$categories) {
-                $categories[$type->display_name] = $type->categories->pluck('display_name', 'id')->toArray();
-            });
+            $categories = SpotType::categoriesList();
             $view->with('spot_categories', $categories);
         });
     }
