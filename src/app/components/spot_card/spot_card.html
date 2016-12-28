@@ -3,7 +3,7 @@
         <div ng-if="$root.isMapState()" class="img" ng-click="SpotCard.openSpot(SpotCard.item.spot_id)">
             <img src="{{SpotCard.image}}" alt="spot_img">
         </div>
-        <div ng-if="!$root.isMapState()" class="img" ui-sref="spot({user_id: SpotCard.item.user_id || 0, spot_id: SpotCard.item.id})">
+        <div ng-if="!$root.isMapState()" class="img" ui-sref="spot({user_id: SpotCard.item.user_id || 0, spot_id: SpotCard.item.id, spot_slug: SpotCard.item.slug})">
             <img src="{{SpotCard.image}}" alt="spot_img">
         </div>
         <div class="spot-img-full">

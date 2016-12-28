@@ -1199,6 +1199,9 @@ sign-in, sign-up {
 
 html {
   overflow-y: auto;
+  &.modal-opened {
+      overflow-y: hidden;
+  }
 }
 
 .leaflet-popup-content {
