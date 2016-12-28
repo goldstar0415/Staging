@@ -207,7 +207,7 @@
             <h1>Menu</h1>
         </div>
         <div class="tab-content-chatter" ng-if="OpenedItem.tab == 'chatter'">
-            <div class="chatter-social-buttons">
+            <!-- <div class="chatter-social-buttons">
                 <div class="chatter-social zoomtivity" ng-click="OpenedItem.chatterTab = 'zoomtivity'">
                     <img src="../../../assets/img/logo.png" alt="zoomtivity">
                     <p>Zoomtivity</p>
@@ -220,7 +220,7 @@
                     <img src="../../../assets/img/svg/social/twitter_icon.svg" alt="twitter">
                     <p>Twitter</p>
                 </div>
-            </div>
+            </div> -->
             <!-- section with comment -->
             <section class="comments-section" ng-show="OpenedItem.chatterTab == 'zoomtivity' || OpenedItem.chatterTab == null">
               <div class="comments-content clearfix">
@@ -266,12 +266,12 @@
               </div>
             </section>
             <!-- end section with comment -->
-            <div ng-show="OpenedItem.chatterTab == 'facebook'" style="padding-top:20px;">
+            <!-- <div ng-show="OpenedItem.chatterTab == 'facebook'" style="padding-top:20px;">
                 <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook&tabs=timeline&height=800&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="100%" height="500" style="border:none;overflow:hidden;width:100%" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
             </div>
             <div ng-show="OpenedItem.chatterTab == 'twitter'">
                 <a class="twitter-timeline" href="https://twitter.com/McGuiresPub">Tweets by McGuiresPub</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
