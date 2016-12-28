@@ -1,10 +1,14 @@
 <div ng-if="!Review.deleted">
     <div class="review-top">
         <div class="review-avatar">
-            <a ui-sref="profile.main({user_id: Review.review.user.alias || Review.review.user.id})"
-               class="{{Review.getServiceName(Review.review.remote_type)}}">
+            <a ng-if="$root.currentUser && Review.review.user" ui-sref="profile.main({user_id: Review.review.user.alias || Review.review.user.id})"
+                class="{{Review.getServiceName(Review.review.remote_type)}}">
                 <img ng-src="{{Review.review.user.avatar_url.thumb || Review.review.remote_user_avatar}}" class="avatar">
             </a>
+            <span ng-if="!$root.currentUser || !Review.review.user" 
+                class="{{Review.getServiceName(Review.review.remote_type)}}">
+                <img ng-src="{{Review.review.user.avatar_url.thumb || Review.review.remote_user_avatar}}" class="avatar">
+            </span>
         </div>
         <div class="review-content">
             <div>
@@ -18,7 +22,15 @@
                         ></rating>
                 </div>
                 <span class="name">
-                    &nbsp; by <a ui-sref="profile.main({user_id: Review.review.user.alias || Review.review.user.id})">{{Review.review.user.first_name || Review.review.remote_user_name || "anonym"}} {{Review.review.user.last_name}}</a>
+                    &nbsp; by 
+                    <a ng-if="$root.currentUser && Review.review.user" ui-sref="profile.main({user_id: Review.review.user.alias || Review.review.user.id})">
+                        {{Review.review.user.first_name || Review.review.remote_user_name || "anonym"}} 
+                        {{Review.review.user.last_name}}
+                    </a>
+                    <span ng-if="!$root.currentUser || !Review.review.user">
+                        {{Review.review.user.first_name || Review.review.remote_user_name || "anonym"}} 
+                        {{Review.review.user.last_name}}
+                    </span>
                 </span>
                 <!-- <span class="time">{{Review.review.created_at| fromNow}}</span> -->
             </div>
