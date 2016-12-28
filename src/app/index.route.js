@@ -18,6 +18,14 @@
             } else if (!$rootScope.currentUserFailed) {
               return UserService.getCurrentUserPromise();
             }
+          },
+          hidePreloader: function($q, $timeout) {
+            var deferred = $q.defer();
+            $timeout(function() {
+              window.hidePreloader();
+              deferred.resolve(true);
+            }, 200);
+            return deferred.promise;
           }
         }
       })
@@ -27,7 +35,14 @@
         parent: 'main',
         templateUrl: '/app/components/navigation/profile_menu/profile_menu.html',
         controller: 'ProfileMenuController',
-        controllerAs: 'Profile'
+        controllerAs: 'Profile',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/components/navigation/profile_menu/profileMenu.controller.js'
+            ]));
+          }]
+        }
       })
 
       //Main map page
@@ -39,13 +54,13 @@
           spotSearch: null,
           spotLocation: null,
           searchText: '',
-		  filter: {}
-        },
-        resolve: {
+		      filter: {},
+          resolve: {
             spot: ['$rootScope', function ($rootScope) {
-                $rootScope.setOpenedSpot(null);
+              $rootScope.setOpenedSpot(null);
             }]
-        },
+          },
+        }
       })
       .state('index.post', {
         url: '/map/post/:slug',
@@ -53,7 +68,12 @@
         resolve: {
           post: function (Post, $stateParams) {
             return Post.get({id: $stateParams.slug}).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/map/map_post.controller.js'
+            ]));
+          }]
         },
         parent: 'main',
         mapState: 'big'
@@ -62,7 +82,14 @@
         url: '/password/recovery/:token',
         controller: 'ResetPasswordController',
         parent: 'main',
-        mapState: 'big'
+        mapState: 'big',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/components/password_reset/password_reset.controller.js'
+            ]));
+          }]
+        }
       })
       .state('index.email_verified', {
         url: '/email-verified',
@@ -107,7 +134,14 @@
         controller: 'IntroController',
         controllerAs: 'Intro',
         parent: 'main',
-        mapState: 'hidden'
+        mapState: 'hidden',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/intro/intro.controller.js',
+            ]));
+          }]
+        }
       })
       .state('intro.events', {
         url: '/events',
@@ -165,7 +199,14 @@
         controller: 'BlogController',
         controllerAs: 'Blog',
         parent: 'main',
-        mapState: 'hidden'
+        mapState: 'hidden',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/blog/blog.controller.js'
+            ]));
+          }]
+        }
       })
 
       //Blog article creation page
@@ -182,7 +223,15 @@
           },
           article: function (Post) {
             return new Post();
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'summernote',
+              'cropper',
+              'uploader',
+              '/app/modules/blog/article_create/articleCreate.controller.js',
+            ]));
+          }]
         },
         require_auth: true,
         locate: 'none'
@@ -200,7 +249,15 @@
           },
           article: function (Post, $stateParams) {
             return Post.get({id: $stateParams.slug}).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'summernote',
+              'cropper',
+              'uploader',
+              '/app/modules/blog/article_create/articleCreate.controller.js',
+            ]));
+          }]
         },
         require_auth: true,
         locate: 'none'
@@ -218,7 +275,14 @@
           },
           categories: function ($http, API_URL) {
             return $http.get(API_URL + '/spots/categories')
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'cropper',
+              'uploader',
+              '/app/modules/spot/spot_create/spotCreate.controller.js'
+            ]));
+          }]
         },
         require_auth: true,
         mapState: 'small',
@@ -237,7 +301,14 @@
           },
           categories: function ($http, API_URL) {
             return $http.get(API_URL + '/spots/categories')
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'cropper',
+              'uploader',
+              '/app/modules/spot/spot_create/spotCreate.controller.js'
+            ]));
+          }]
         },
         require_auth: true,
         mapState: 'small',
@@ -261,7 +332,13 @@
         resolve: {
           all_plans: function (Plan) {
             return Plan.query().$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'calendar',
+              '/app/modules/planner/planner.controller.js'
+            ]));
+          }]
         }
       })
       .state('planner.create', {
@@ -275,7 +352,12 @@
           },
           categories: function (Plan) {
             return Plan.activityCategories().$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/planner/plan_create/planCreate.controller.js'
+            ]));
+          }]
         },
         parent: 'planner',
         locate: 'none',
@@ -295,7 +377,12 @@
           },
           categories: function (Plan) {
             return Plan.activityCategories().$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/planner/plan_create/planCreate.controller.js'
+            ]));
+          }]
         },
         require_auth: true,
         mapState: 'small'
@@ -312,7 +399,12 @@
         resolve: {
           messages: function (Message) {
             return Message.dialogs().$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              '/app/modules/chat/chat.controller.js'
+            ]);
+          }]
         },
         require_auth: true,
         mapState: 'small'
@@ -330,7 +422,12 @@
             return Message.query({
               user_id: $stateParams.user_id
             }).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/chat/chat_room/chat_room.controller.js'
+            ]));
+          }]
         },
         parent: 'profile_menu',
         locate: 'none',
@@ -345,7 +442,15 @@
         parent: 'profile_menu',
         locate: 'none',
         require_auth: true,
-        mapState: 'small'
+        mapState: 'small',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/feed/feed.controller.js',
+              '/app/models/feed.js',
+            ]));
+          }]
+        }
       })
       .state('comments', {
         url: '/comments',
@@ -355,7 +460,15 @@
         parent: 'profile_menu',
         locate: 'none',
         require_auth: true,
-        mapState: 'small'
+        mapState: 'small',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/comments/comments.controller.js',
+              '/app/models/feed.js',
+            ]));
+          }]
+        }
       })
       .state('reviews', {
         url: '/reviews',
@@ -365,7 +478,15 @@
         parent: 'profile_menu',
         locate: 'none',
         require_auth: true,
-        mapState: 'small'
+        mapState: 'small',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/reviews/reviews.controller.js',
+              '/app/models/feed.js',
+            ]));
+          }]
+        }
       })
 
       .state('areas', {
@@ -376,7 +497,12 @@
         resolve: {
           areas: function (Area) {
             return Area.query().$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/areas/areas.controller.js'
+            ]));
+          }]
         },
         parent: 'profile_menu',
         locate: 'none',
@@ -393,7 +519,12 @@
             return Area.get({
               area_id: $stateParams.area_id
             }).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/areas/preview/areasPreview.controller.js'
+            ]));
+          }]
         },
         parent: 'main',
         locate: 'none',
@@ -416,7 +547,14 @@
               location: null,
               is_private: 0
             };
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'cropper',
+              'uploader',
+              '/app/modules/photomap/create_album/createAlbum.controller.js'
+            ]));
+          }]
         },
         require_auth: true
       })
@@ -429,7 +567,14 @@
         resolve: {
           album: function (Album, $stateParams) {
             return Album.get({id: $stateParams.album_id}).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'cropper',
+              'uploader',
+              '/app/modules/photomap/create_album/createAlbum.controller.js'
+            ]));
+          }]
         },
         mapState: 'small',
         parent: 'profile_menu',
@@ -447,7 +592,14 @@
         resolve: {
           friends: function (Friends) {
             return Friends.query().$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'cropper',
+              'uploader',
+              '/app/modules/friendsmap/friendsmap.controller.js',
+            ]));
+          }]
         },
         mapState: 'small',
         parent: 'profile_menu',
@@ -463,7 +615,14 @@
         resolve: {
           friend: function (Friends) {
             return new Friends();
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'cropper',
+              'uploader',
+              '/app/modules/friendsmap/create/createFriend.controller.js',
+            ]));
+          }]
         },
         mapState: 'small',
         parent: 'profile_menu',
@@ -479,7 +638,14 @@
         resolve: {
           friend: function (Friends, $stateParams) {
             return Friends.getFriend({id: $stateParams.id}).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'cropper',
+              'uploader',
+              '/app/modules/friendsmap/create/createFriend.controller.js',
+            ]));
+          }]
         },
         mapState: 'small',
         edit: true,
@@ -502,7 +668,15 @@
         controller: 'ContactUsController',
         controllerAs: 'ContactUs',
         parent: 'main',
-        mapState: 'hidden'
+        mapState: 'hidden',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              '/app/modules/contact_us/contact_us.controller.js',
+              '/app/models/staticPage.js',
+            ]);
+          }]
+        }
       })
       //Terms page
       .state('terms', {
@@ -511,7 +685,15 @@
         controller: 'TermsController',
         controllerAs: 'Term',
         parent: 'main',
-        mapState: 'hidden'
+        mapState: 'hidden',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/terms/terms.controller.js',
+              '/app/models/staticPage.js',
+            ]));
+          }]
+        }
       })
 
       //Zoomers page
@@ -521,7 +703,14 @@
         controller: 'ZoomersController',
         controllerAs: 'Zoomers',
         parent: 'main',
-        mapState: 'hidden'
+        mapState: 'hidden',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              '/app/modules/zoomers/zoomers.controller.js',
+            ]);
+          }]
+        }
       })
 
       //Settings state
@@ -533,7 +722,14 @@
         resolve: {
           currentUser: function (User) {
             return User.currentUser().$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'cropper',
+              'uploader',
+              '/app/modules/settings/settings.controller.js',
+            ]));
+          }]
         },
         mapState: 'hidden',
         require_auth: true,
@@ -547,7 +743,6 @@
         abstract: true,
         resolve: {
           user: function ($rootScope, User, currentUser, $stateParams, UserService) {
-            console.log($stateParams);
             if (currentUser && (currentUser.id == $stateParams.user_id || currentUser.alias == $stateParams.user_id)) {
               return User.currentUser({}, function (user) {
                 $rootScope.currentUser = user;
@@ -577,7 +772,12 @@
         resolve: {
           posts: function (Post, $stateParams) {
             return Post.query({user_id: $stateParams.user_id}).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/blog/blogger_profile/blogger_profile.controller.js',
+            ]));
+          }]
         }
       })
       //Show blog location on map and show pop-up
@@ -591,7 +791,13 @@
         resolve: {
           article: function (Post, $stateParams) {
             return Post.get({id: $stateParams.slug}).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/blog/article/article.controller.js',
+              '/app/models/post_comment.js',
+            ]));
+          }]
         },
         locate: 'none'
       })
@@ -602,7 +808,14 @@
         controllerAs: 'Spots',
         parent: 'profile',
         locate: 'none',
-        mapState: 'small'
+        mapState: 'small',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/spot/spots/spots.controller.js',
+            ]));
+          }]
+        }
       })
       .state('spot', {
         url: '/spot/:spot_id/:spot_slug',
@@ -611,19 +824,14 @@
         controllerAs: 'Spot',
         parent: 'profile',
         resolve: {
-            spot: ['$http','$rootScope', 'Spot', '$stateParams', function ($http, $rootScope, Spot, $stateParams) {
-              return $http.get(API_URL + '/spots/' + $stateParams.spot_id)
-                  .success(function success(data) {
-                      $rootScope.setOpenedSpot(data);
-                    //   return Spot.get({id: $stateParams.spot_id}).$promise;
-                  });
-                }],
+          spot: ['$http','$rootScope', 'Spot', '$stateParams', function ($http, $rootScope, Spot, $stateParams) {
+            return $http.get(API_URL + '/spots/' + $stateParams.spot_id)
+              .success(function success(data) {
+                $rootScope.setOpenedSpot(data);
+                //   return Spot.get({id: $stateParams.spot_id}).$promise;
+              });
+          }],
         },
-        // resolve: {
-        //   spot: function (Spot, $stateParams) {
-        //     return Spot.get({id: $stateParams.spot_id}).$promise;
-        //   }
-        // },
         locate: 'none',
         mapState: 'small'
       })
@@ -636,7 +844,13 @@
         resolve: {
           plan: function (Plan, $stateParams) {
             return Plan.get({id: $stateParams.plan_id}).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/planner/plan/plan.controller.js',
+              '/app/models/plan_comment.js',
+            ]));
+          }]
         },
         require_auth: true,
         locate: 'none',
@@ -649,7 +863,15 @@
         controller: 'ProfileController',
         controllerAs: 'Profile',
         parent: 'profile',
-        mapState: 'small'
+        mapState: 'small',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/profile/profile.controller.js',
+              '/app/models/wall.js',
+            ]));
+          }]
+        }
       })
       .state('favorites', {
         url: '/favorites',
@@ -658,7 +880,14 @@
         controllerAs: 'Favorite',
         parent: 'profile',
         locate: 'none',
-        mapState: 'small'
+        mapState: 'small',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/favorites/favorites.controller.js',
+            ]));
+          }],
+        }
       })
       //Photomap view state
       .state('photos', {
@@ -675,7 +904,13 @@
         resolve: {
           albums: function (Album, $stateParams) {
             return Album.query({user_id: $stateParams.user_id}).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              // '/app/models/album.js',
+              '/app/modules/photomap/photomap.controller.js',
+            ]));
+          }],
         },
         mapState: 'small',
         locate: 'none'
@@ -692,7 +927,12 @@
           },
           user_id: function ($stateParams) {
             return $stateParams.user_id;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/photomap/edit_photo/edit_photo.controller.js',
+            ]));
+          }]
         },
         mapState: 'small',
         parent: 'profile',
@@ -710,7 +950,14 @@
           },
           photos: function (Album, $stateParams) {
             return Album.photos({album_id: $stateParams.album_id}).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'cropper',
+              'uploader',
+              '/app/modules/photomap/album/album.controller.js',
+            ]));
+          }]
         },
         mapState: 'small',
         parent: 'profile',
@@ -728,7 +975,12 @@
         resolve: {
           users: function (User, $stateParams, user) {
             return User.followers({user_id: user.id}).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/followers/followers.controller.js',
+            ]));
+          }]
         }
       })
       .state('followings', {
@@ -742,7 +994,12 @@
         resolve: {
           users: function (User, user) {
             return User.followings({user_id: user.id}).$promise;
-          }
+          },
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/followers/followers.controller.js',
+            ]));
+          }]
         }
       })
 

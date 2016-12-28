@@ -1,0 +1,35 @@
+<div class='dialog-find-friends-fb'>
+	<div class="modal-header">
+		<h3 class="margin-none">Find Your Facebook Friends on Zoomtivity
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="modal.close(false)">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="search-block">
+					<input type="text" name="search" ng-model="search" class="search-friends" placeholder="Start typing...">
+					<input type="button" class="search-icon">
+				</div>
+			</div>
+
+			<div class="col-sm-12 no-pad choose-friend-block">
+				<div class="choose-friend"
+					 ng-class="{choose: friend.selected}"
+					 ng-click="modal.toggleSelected(friend)"
+					 ng-repeat="friend in modal.friends">
+					<img class="friend-avatar" ng-src="{{ friend.picture.data.url }}">
+					<h4 class="name-friend">{{ friend.first_name }} {{ friend.last_name }}</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button class="btn btn-success pull-right col-md-2 col-sm-4 col-xs-5" ng-click="modal.add()" ng-disabled="modal.isDisabled('add')">Add</button>
+		<span class="pull-right">&nbsp;</span><button class="btn btn-default pull-right col-md-3 col-sm-4 col-xs-5" ng-click="modal.selectNone()" ng-disabled="modal.isDisabled('selectNone')">Select None</button>
+		<span class="pull-right">&nbsp;</span><button class="btn btn-default pull-right col-md-3 col-sm-4 col-xs-5" ng-click="modal.selectAll()" ng-disabled="modal.isDisabled('selectAll')">Select All</button>
+	</div>
+</div>
