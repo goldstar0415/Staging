@@ -362,7 +362,7 @@
     .review-avatar {
         // width: 33%;
         max-width: 100px;
-        a {
+        a, span {
             position: relative;
             display: inline-block;
             &:after {
