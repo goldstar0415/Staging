@@ -80,7 +80,7 @@
       }
     });
 
-  function mapSort(getByIdFilter, $rootScope, $scope, $q, MapService, $http, $timeout, $window, LocationService, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams) {
+  function mapSort(getByIdFilter, $rootScope, $scope, $q, MapService, $http, $timeout, $window, LocationService, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams, $ocLazyLoad) {
 
 	var vm = this;
     var SEARCH_URL = API_URL + '/map/spots';
@@ -91,7 +91,7 @@
       locations: 20
     };
     var isSelectedAll = false;
-    var geocoder = new google.maps.Geocoder();
+    var geocoder = null;
 
     vm.vertical = true;
     vm.weatherForecast = [];
@@ -219,15 +219,37 @@
      * Search locations when typing - ok
      */
     function typeaheadSearch() {
+
       if ( !_.isEmpty(vm.searchParams.search_text) ) {
-		if (vm.searchParams.typeahead === undefined) {
-			vm.searchParams.typeahead = {};
-		}
+        if (vm.searchParams.typeahead === undefined) {
+          vm.searchParams.typeahead = {};
+        }
         vm.searchParams.typeahead.list = [];
-        geocoder.geocode({address: vm.searchParams.search_text}, function (results) {
+        lazyGeocode({address: vm.searchParams.search_text}, function (results) {
           vm.searchParams.typeahead.list = results;
           console.log('Geocoded address', results);
         });
+      }
+
+      function lazyGeocode(params, cb) {
+        if (!geocoder) {
+          if ($ocLazyLoad.isLoaded('gmaps')) {
+            _instantiate();
+          } else {
+            $ocLazyLoad.load('gmaps').then(function() {
+              _instantiate();
+              _geocode();
+            });
+          }
+        } else {
+          _geocode();
+        }
+        function _instantiate() {
+          geocoder = new google.maps.Geocoder();
+        }
+        function _geocode() {
+          geocoder.geocode(params, cb);
+        }
       }
     }
 

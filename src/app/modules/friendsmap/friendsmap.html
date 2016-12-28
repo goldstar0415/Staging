@@ -2,17 +2,18 @@
   <div class="text-center"><h2 class="title-name nav-blue">Friends map</h2></div>
 
   <div class="album-tools">
+    <contacts-import></contacts-import>
+	<facebook-friends class="fb-open"></facebook-friends>
     <a title="Add People from Google Contacts" ng-click="Friendsmap.googleImport()" class="import-friendmap google-plus-friendmap"></a>
-    <a title="Add New Friend" ui-sref="friendsmap_create" class="add-page nav-bg-blue"></a>
   </div>
 </div>
 <div ng-repeat="item in Friendsmap.friends" class="col-xs-12 friends-block">
   <div class="friends-wrapper">
-    <div class="avatar-wrap" tooltip="Edit avatar">
-      <a class="review-img avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
+    <div class="avatar-wrap">
+      <div class="review-img avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
          ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="5MB">
         <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar">
-      </a>
+      </div>
     </div>
     <div class="text-block">
       <h3 class="feeds-title">
@@ -56,7 +57,7 @@
         </p>
 
         <div class="col-xs-12 edit-delete text-left hidden-xs">
-          <a class="edit edit-friendmap" ui-sref="friendsmap_edit({id: item.id})">Edit</a>
+          <!--<a class="edit edit-friendmap" ui-sref="friendsmap_edit({id: item.id})">Edit</a>-->
           <a class="delete" ng-click="Friendsmap.removeFriend(item.id, $index)">Delete</a>
         </div>
       </div>

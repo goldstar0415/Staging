@@ -5,10 +5,15 @@
             <!-- <img class="main-logo-small" src="assets/img/svg/logo.svg" alt="logo"> -->
         </a>
         <div class="search" ng-show="Header.isSearchOpened">
-            <input type="text"  class="nav-search"  name="search" placeholder="Search by location or keyword..." value="{{Header.searchValue}}">
-            <!-- <button type="button" name="button">
-                <span class="glyphicon glyphicon-search"></span>
-            </button> -->
+            <input
+                    type="text"
+                    class="nav-search"
+                    name="search"
+                    placeholder="Search by location or keyword..."
+                    ng-model="Header.searchValue"
+                    ng-init="Header.initSearch()"
+                    bloodhound-remote bloodhound-remote-options="{ url: 'dsfsdf'}"
+            >
         </div>
         <div class="nav-right">
             <div class="user-avatar">
