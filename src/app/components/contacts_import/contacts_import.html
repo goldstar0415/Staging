@@ -1,0 +1,46 @@
+<div class='dialog-contacts-import'>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="modal.close()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<h3 class="margin-none">Friends</h3>
+	</div>
+	<div class="modal-body">
+		<div class="no-pad choose-friend-block">
+			<div ng-repeat="user in modal.users" class="col-xs-12">
+				<div class='row'>
+					<div class="choose-friend col-xs-9">
+						<img class="friend-avatar"
+						     ng-src="{{user.photo || modal.API_URL + '/uploads/missings/covers/thumb/missing.png'}}">
+						<h4 class="name-friend">
+							<span>{{::user.first_name}} {{::user.last_name}}</span>
+							<span ng-if="(user.first_name || user.last_name) && user.email">, </span>
+							<span>{{ ::user.email }}</span>
+							<div>{{ ::user.phone }}</div>
+						</h4>
+					</div>
+					<div class="col-xs-3">
+						<div ng-if="!user.$exists">
+							<button class="btn btn-success pull-right" ng-click="modal.invite(user)" ng-disabled="user.$disabled || !user.email">
+								<span ng-hide="user.$success">Invite</span><span ng-show="user.$success">Invited <i class="ion-checkmark"></i></span>
+							</button>
+						</div>
+						<div ng-if="user.$exists && !user.$friends">
+							<button class="btn btn-info pull-right" ng-disabled="user.$disabled" ng-click="modal.follow(user)">
+								<span ng-hide="user.$success">Follow</span><span ng-show="user.$success">Followed <i class="ion-checkmark"></i></span>
+							</button>
+						</div>
+						<div ng-if="user.$exists && user.$friends">
+							Existing Friend
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--<div class="modal-footer">-->
+		<!--<button class="btn btn-success pull-right col-md-2 col-sm-4 col-xs-5" ng-click="modal.add()" ng-disabled="modal.isDisabled('add')">Add</button>-->
+		<!--<span class="pull-right">&nbsp;</span><button class="btn btn-default pull-right col-md-3 col-sm-4 col-xs-5" ng-click="modal.selectNone()" ng-disabled="modal.isDisabled('selectNone')">Select None</button>-->
+		<!--<span class="pull-right">&nbsp;</span><button class="btn btn-default pull-right col-md-3 col-sm-4 col-xs-5" ng-click="modal.selectAll()" ng-disabled="modal.isDisabled('selectAll')">Select All</button>-->
+	<!--</div>-->
+</div>
