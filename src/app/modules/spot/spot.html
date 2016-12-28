@@ -15,15 +15,18 @@
         <div spotcard class="new-result-card" item="Spot.spot"></div>
         <div class="opened-main">
             <div class="opened-name-bottom">
-                <p class="spot-name">{{Spot.spot.title}}</p>
-                <p class="spot-address">
-                    <span class="glyphicon glyphicon-map-marker"></span>
-                    <span>{{Spot.spot.address || Spot.spot.points[0].address}}</span>
-                </p>
-                <div class="opened-info">
-                    <span class="opened-info-stars"><stars item="Spot.spot"></stars></span>
-                    <span>{{Spot.reviews_total.total.reviews_count}} reviews</span>
-                    <!-- <span>{{Spot.reviews_total.total.rating}} stars based on {{Spot.reviews_total.total.reviews_count}} reviews</span> -->
+                <div class="left">
+                    <p class="spot-name">{{Spot.spot.title}}</p>
+                    <p class="spot-address">
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                        <span>{{Spot.spot.address || Spot.spot.points[0].address}}</span>
+                    </p>
+                </div>
+                <div class="right">
+                    <div class="opened-info">
+                        <span class="opened-info-stars"><stars item="Spot.spot"></stars></span>
+                        <span>{{Spot.reviews_total.total.reviews_count}} reviews</span>
+                    </div>
                 </div>
             </div>
             <div class="event-info" ng-if="Spot.spot.category.type.name == 'event'">
@@ -38,9 +41,10 @@
             </div>
             <div class="opened-thrid-buttons" ng-if="Spot.spot.hotel">
                 <div class="price-dates">
-                    <input ng-datepicker ng-model="Spot.priceDate.start_date" class="date" placeholder="FROM" type="text">
-                    <input ng-datepicker ng-model="Spot.priceDate.end_date" class="date" placeholder="TO" type="text">
-                    <button ng-click="Spot.getPrice()">Availability</button>
+                    <p>Find the lowest prices:</p>
+                    <input ng-datepicker ng-model="Spot.priceDate.start_date" class="date" placeholder="CHECK IN" type="text">
+                    <input ng-datepicker ng-model="Spot.priceDate.end_date" class="date" placeholder="CHECK OUT" type="text">
+                    <button ng-click="Spot.getPrice()">Search</button>
                 </div>
                 <div class="prices-results" ng-if="Spot.prices">
                     <div class="booking">
@@ -49,6 +53,7 @@
                     <div class="hotels">
                         Hotels.com: <a href="{{Spot.prices.hotelsUrl}}">{{Spot.prices.hotels ? Spot.prices.hotels : 'no price' }}</a>
                     </div>
+                    <div></div>
                 </div>
             </div>
         </div>
