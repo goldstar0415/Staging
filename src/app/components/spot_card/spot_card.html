@@ -6,11 +6,11 @@
         <div ng-if="!$root.isMapState()" class="img" ui-sref="spot({user_id: SpotCard.item.user_id || 0, spot_id: SpotCard.item.id, spot_slug: SpotCard.item.slug})">
             <img src="{{SpotCard.image}}" alt="spot_img">
         </div>
-        <div class="spot-img-full">
-            <button class="button-invite" ng-click="SpotCard.openInviteModal(SpotCard.item)"><span class="glyphicon glyphicon-user"></span> Invite</button>
-            <button class="button-share" ng-click="SpotCard.openShareModal(SpotCard.item, 'spot')"><span class="glyphicon glyphicon-share"></span> Share</button>
-            <a ng-if="$root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.is_favorite" class="glyphicon glyphicon-heart" ng-click="SpotCard.addToFavorite(SpotCard.item)" style="color:white"></a>
-            <a ng-if="$root.currentUser && $root.currentUser.id != SpotCard.item.user_id && SpotCard.item.is_favorite" class="glyphicon glyphicon-heart" ng-click="SpotCard.removeFromFavorite(SpotCard.item)" style="color:#EE4632"></a>
+        <div class="spot-img-full" ng-if="$root.currentUser.id">
+            <a class="img-icon-invite" ng-click="SpotCard.openInviteModal(SpotCard.item)">Invite</a>
+            <a class="img-icon-share" ng-click="SpotCard.openShareModal(SpotCard.item)">Share</a>
+            <a ng-if="$root.currentUser.id != SpotCard.item.user_id && SpotCard.item.is_favorite" class="img-icon-like liked" ng-click="SpotCard.removeFromFavorite(SpotCard.item)">Like</a>
+            <a ng-if="$root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.is_favorite" class="img-icon-like" ng-click="SpotCard.addToFavorite(SpotCard.item)">Like</a>
         </div>
         <div class="spot-img-top">
             <stars item="SpotCard.item"></stars>

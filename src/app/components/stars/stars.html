@@ -1,24 +1,16 @@
 <div class="outline-none text-center readonly stars-control">
     <div class="stars-bottom">
-        <span class="glyphicon glyphicon-star star-default"></span>
-        <span class="glyphicon glyphicon-star star-default"></span>
-        <span class="glyphicon glyphicon-star star-default"></span>
-        <span class="glyphicon glyphicon-star star-default"></span>
-        <span class="glyphicon glyphicon-star star-default"></span>
+        <span class="rating-star star-default"></span>
+        <span class="rating-star star-default"></span>
+        <span class="rating-star star-default"></span>
+        <span class="rating-star star-default"></span>
+        <span class="rating-star star-default"></span>
     </div>
     <div class="stars-top">
-        <span class="glyphicon glyphicon-star star-active" ng-if="Stars.item.rating > 0" ng-class="{'star-half': Stars.item.rating < 1}"></span>
-        <span class="glyphicon glyphicon-star star-active" ng-if="Stars.item.rating > 1" ng-class="{'star-half': Stars.item.rating < 2}"></span>
-        <span class="glyphicon glyphicon-star star-active" ng-if="Stars.item.rating > 2" ng-class="{'star-half': Stars.item.rating < 3}"></span>
-        <span class="glyphicon glyphicon-star star-active" ng-if="Stars.item.rating > 3" ng-class="{'star-half': Stars.item.rating < 4}"></span>
-        <span class="glyphicon glyphicon-star star-active" ng-if="Stars.item.rating > 4" ng-class="{'star-half': Stars.item.rating < 5}"></span>
-        <!-- <span class="glyphicon glyphicon-star star-active star-half"></span> -->
+        <span class="rating-star star-active" ng-if="Stars.item.rating > 0" ng-class="{'star-half': Stars.item.rating < 1}"></span>
+        <span class="rating-star star-active" ng-if="Stars.item.rating > 1" ng-class="{'star-half': Stars.item.rating < 2}"></span>
+        <span class="rating-star star-active" ng-if="Stars.item.rating > 2" ng-class="{'star-half': Stars.item.rating < 3}"></span>
+        <span class="rating-star star-active" ng-if="Stars.item.rating > 3" ng-class="{'star-half': Stars.item.rating < 4}"></span>
+        <span class="rating-star star-active" ng-if="Stars.item.rating > 4" ng-class="{'star-half': Stars.item.rating < 5}"></span>
     </div>
-  <!-- <rating
-    ng-model="Stars.item.rating"
-    readonly="true"
-    max="5"
-    state-on="'glyphicon glyphicon-star star-active'"
-    state-off="'glyphicon glyphicon-star star-default'"
-    ></rating> -->
 </div>

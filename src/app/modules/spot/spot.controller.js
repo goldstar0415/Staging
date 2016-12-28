@@ -55,8 +55,6 @@
             var user_id = $rootScope.$state.params.user_id;
             var spot_id = $rootScope.$state.params.spot_id;
             $location.path(user_id + '/spot/' + spot_id + '/' + vm.spot.slug);
-            // $rootScope.$state.params.spot_slug = 'tatata';
-            // // $routeParams.updateParams({id:"2"});
         }
 
         if ($stateParams.spot_id) {
