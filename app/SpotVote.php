@@ -49,4 +49,13 @@ class SpotVote extends BaseModel
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function getRemoteUserAvatarAttribute($value)
+    {
+        if(empty($value))
+        {
+            return url('uploads/missings/avatars/thumb/missing.png');
+        }
+        return $value;
+    }
 }
