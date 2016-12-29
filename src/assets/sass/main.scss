@@ -1871,11 +1871,11 @@ html {
         top: 20px;
         left: 10px;
         // right: 50%;
-        .stars-control {
-            .star-half {
-                width: 5px;
-            }
-        }
+        // .stars-control {
+        //     .star-half {
+        //         width: 15px;
+        //     }
+        // }
     }
     .plate-info {
         position: absolute;
@@ -1934,7 +1934,6 @@ html {
     .stars-top {
         display: flex;
         width: 75px;
-
     }
     .stars-bottom {
         display: flex;
@@ -1942,9 +1941,9 @@ html {
         width: 75px;
     }
     .star-half {
-        height: 14px;
-        width: 6.5px;
-        overflow: hidden;
+        width: 8px !important;
+        margin-right: 7px;
+        background-position: initial !important;
         // @media(max-width: 767px) {
         //     height: 21px;
         //     width: 9.5px;
@@ -1971,7 +1970,7 @@ html {
         justify-content: center;
         align-items: center;
         min-height: 40px;
-        margin: 110px auto -100px;
+        margin: 110px auto -100px !important;
         border-radius: 0;
         box-shadow: none;
         background-image: none !important;
