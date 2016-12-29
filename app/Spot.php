@@ -661,14 +661,15 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     
     public function getHotelsPrice($hotelsRes)
     {
+        $regexp = '/[^\-\d]*(\-?\d*).*/';
         if( $hotelsPriceObj = $hotelsRes->find('span.current-price', 0))
         {
-            return $hotelsPriceObj->innertext();
+            return (int)preg_replace($regexp,'$1',($hotelsPriceObj->innertext()));
         }
         elseif( $hotelsPriceObj = $hotelsRes->find('meta[itemprop=priceRange]', 0) )
         {
             $hotelsPrice = explode(' ' , $hotelsPriceObj->getAttribute('content'));
-            return array_pop($hotelsPrice);
+            return (int)preg_replace($regexp,'$1', (array_pop($hotelsPrice)));
         }
         return false;
     }
@@ -733,14 +734,14 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $result = $price;
         if( $price )
         {
-            $result = '$' . $price;
+            $result = $price;
         }
         if( empty($result) && ($bookingPriceObj = $bookingRes->find('meta[itemprop=priceRange]', 0)) )
         {
             $result = explode(' ' , $bookingPriceObj->getAttribute('content'));
             $result = str_replace('US', '', array_pop($result));
         }
-        return $result;
+        return (int)preg_replace('/[^\-\d]*(\-?\d*).*/','$1',($result));
     }
     
     public function getBookingPage()
@@ -1563,6 +1564,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         if(!empty($this->restaurant))
         {
             $this->spotExtension = $this->restaurant;
+        }
+        if(!empty($this->todo))
+        {
+            $this->spotExtension = $this->todo;
         }
         return $this->spotExtension;
     }

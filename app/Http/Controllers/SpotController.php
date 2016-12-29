@@ -31,6 +31,7 @@ use App\SpotOwnerRequest as SpotOwnerRequestModel;
 use ChrisKonnertz\OpenGraph\OpenGraph;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
+use Carbon\Carbon;
 
 use App\Http\Requests;
 
@@ -503,7 +504,9 @@ class SpotController extends Controller
         $result['data']['booking'] = false;
         
         $fromString   = $from['year'] . '-' . (strlen($from['month']) == 1?'0':'') . $from['month'] . '-' . (strlen($from['day']) == 1?'0':'') . $from['day'];
+        $startDate    = Carbon::create($from['year'], $from['month'], $from['day'], 0);
         $toString     =   $to['year'] . '-' . (strlen(  $to['month']) == 1?'0':'') .   $to['month'] . '-' . (strlen(  $to['day']) == 1?'0':'') .   $to['day'];
+        $endDate      = Carbon::create($to['year'], $to['month'], $to['day'], 0);
         
         $result['data']['hotelsUrl'] = $spot->getHotelsUrl($spotInfo->hotelscom_url, $fromString, $toString);
         
@@ -513,7 +516,9 @@ class SpotController extends Controller
             
             if($hotelsPageContent)
             {
-                $result['data']['hotels'] = $spot->getHotelsPrice($hotelsPageContent);
+                $hotelPrice = $spot->getHotelsPrice($hotelsPageContent);
+                $result['diff'] = $startDate->diffInDays($endDate);
+                $result['data']['hotels'] = (!empty($hotelPrice))? '$'.($hotelPrice * $result['diff']):false;
             }
         }
         
@@ -525,7 +530,7 @@ class SpotController extends Controller
             ]);
             if($bookingPageContent)
             {
-                $result['data']['booking'] = $spot->getBookingPrice($bookingPageContent);
+                $result['data']['booking'] = '$' . ($spot->getBookingPrice($bookingPageContent));
             }
         }
 
