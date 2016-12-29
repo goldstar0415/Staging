@@ -1,5 +1,6 @@
 .opened-item {
     margin: -20px 30px 50px;
+    // font-family: 'Roboto';
     @media (max-width: 767px) {
         // margin: -20px 10px;
         margin: -20px 10px 50px;
@@ -68,14 +69,17 @@
         }
     }
     .opened-name {
-        font-weight: bold;
+        font-weight: normal;
+        font-size: 20px;
     }
     .opened-name-bottom {
         display: flex;
         justify-content: flex-start;
-        margin: 115px 0 15px;
-        // display: block;
-        max-width: 450px;
+        .spot-name {
+            font-weight: normal;
+            font-size: 28px;
+            color: $dark_blue;
+        }
         .opened-stars {
             width: 80px;
         }
@@ -85,7 +89,7 @@
         p {
             // margin: -25px 0 0 80px;
             margin: 0;
-            color: rgb(2, 200, 246);
+            color: $dark_blue;
             z-index: 10;
             position: relative;
             @media (max-width: 767px) {
@@ -178,31 +182,62 @@
             width: 100%;
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 20px 0 0;
+            p {
+                width: 100%;
+                text-transform: uppercase;
+                font-size: 15px;
+                font-weight: bold;
+                color: $dark_blue;
+                margin-bottom: 12px;
+            }
             input, button {
-                width: 30%;
+                width: 32%;
                 height: 30px;
                 margin: 0;
             }
             button {
-                background-color: rgb(2, 200, 246);
+                background-color: $dark_blue;
                 color: white;
                 text-transform: uppercase;
                 padding: 5px;
                 border: none;
-                margin: 2px;
+                &:hover {
+                    background-color: $light_blue_btn;
+                }
             }
             input {
                 padding-left: 30px;
-                background: url(../img/svg/calendar.svg) no-repeat;
+                background-image: url(../img/svg/new-calendar.svg);
+                background-repeat: no-repeat;
                 background-size: 15px 15px;
                 background-position: 6px 6px;
+                border: 1px solid $dark_blue;
+                &:hover {
+                    border: 1px solid $light_blue_btn;
+                    box-shadow: none;
+                    background-image: url(../img/svg/new-calendar-hover.svg);
+                }
             }
         }
         .prices-results {
-            padding: 10px 0;
+            width: 100%;
+            padding: 10px 0 20px;
+            text-transform: uppercase;
+            font-size: 15px;
+            font-weight: bold;
+            color: $dark_blue;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             div {
+                width: 32%;
                 font-weight: bold;
                 padding: 5px 0;
+                a {
+                    color: $light_blue_btn;
+                }
             }
         }
     }
@@ -216,8 +251,8 @@
                 font-size: 15px;
                 user-select: none;
                 width: 100%;
-                border-bottom: 2px solid darken(lightgrey, 10%);
-                color: darken(lightgrey, 10%);
+                border-bottom: 2px solid $dark_blue;
+                color: $dark_blue;
                 // font-weight: bold;
                 text-transform: uppercase;
                 text-align: center;
@@ -242,8 +277,14 @@
         .overview {
             width: 100%;
             h1 {
-                font-size: 14px;
+                text-transform: uppercase;
+                font-size: 15px;
                 font-weight: bold;
+                color: $dark_blue;
+                margin: 15px 0;
+            }
+            &.about div {
+                margin-bottom: 45px;
             }
             .tab-social-buttons {
                 img {
@@ -362,7 +403,7 @@
     .review-avatar {
         // width: 33%;
         max-width: 100px;
-        a {
+        a, span {
             position: relative;
             display: inline-block;
             &:after {
@@ -427,32 +468,46 @@
 
 .opened-container {
     .spot-img-full {
-        padding: 0px 10px 0 20px;
+        // padding: 0px 10px 0 20px;
         position: absolute;
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        height: 35px;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        height: 45px;
         display: flex;
-        background-color: rgba(#0B253A, 0.8);
-        &>button, a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            border: none;
-            background: none;
-            color: white;
-        }
+        // background-color: rgba(#0B253A, 0.8);
         a {
             margin-left: auto;
-            width: 35px;
-        }
-        button {
-            align-items: flex-start;
-            span {
-                margin-right: 5px;
+            width: 50px;
+            background-size: 30px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            margin: 0;
+            opacity: 0.8;
+            color: white;
+            font-size: 0px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            &:hover {
+                opacity: 1;
             }
+        }
+        .img-icon-invite {
+            background-image: url(../img/svg/new-invite.svg);
+        }
+        .img-icon-share {
+            background-image: url(../img/svg/new-share.svg);
+        }
+        .img-icon-like {
+            margin-left: auto;
+            background-image: url(../img/svg/new-like.svg);
+        }
+        .img-icon-like.liked {
+            margin-left: auto;
+            background-image: url(../img/svg/new-liked.svg);
+            color: #EE4632;
         }
     }
 
