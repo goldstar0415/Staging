@@ -1930,24 +1930,38 @@ html {
 
 .stars-control {
     display: flex;
-    width: 70px;
+    width: 75px;
     .stars-top {
         display: flex;
-        width: 70px;
+        width: 75px;
+
     }
     .stars-bottom {
         display: flex;
-        margin-right: -70px;
-        width: 70px;
+        margin-right: -75px;
+        width: 75px;
     }
     .star-half {
         height: 14px;
         width: 6.5px;
         overflow: hidden;
-        @media(max-width: 767px) {
-            height: 21px;
-            width: 9.5px;
-        }
+        // @media(max-width: 767px) {
+        //     height: 21px;
+        //     width: 9.5px;
+        // }
+    }
+    .rating-star {
+        width: 15px;
+        height: 15px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 15px;
+    }
+    .star-default {
+        background-image: url(../img/svg/new-star-grey.svg);
+    }
+    .star-active {
+        background-image: url(../img/svg/new-star-blue.svg);
     }
 }
 
