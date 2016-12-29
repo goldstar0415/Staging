@@ -9,7 +9,7 @@
         .directive('bloodhoundRemote', BloodhoundRemoteSearch);
 
     /** @ngInject */
-    function BloodhoundRemoteSearch(BACKEND_URL) {
+    function BloodhoundRemoteSearch(API_URL) {
         return {
             restrict: 'A',
             scope: {
@@ -29,9 +29,9 @@
                 var bestPictures = new Bloodhound({
                     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
-                    prefetch: '../data/films/post_1960.json',
+                    // prefetch: '../data/films/post_1960.json',
                     remote: {
-                        url: BACKEND_URL + '/search/spots?query=%QUERY',
+                        url: API_URL + '/search/spots?query=%QUERY',
                         wildcard: '%QUERY',
                         prepare: function(query, settings) {
                             settings.url += '&lat='+scope.location.lat+'&lng='+scope.location.lng;
@@ -71,7 +71,13 @@
                             return template;
                         }
                     }
-                });
+                })
+                  .on('typeahead:asyncrequest', function() {
+                      $('.tt-menu').addClass('is-loading');
+                  })
+                  .on('typeahead:asynccancel typeahead:asyncreceive', function() {
+                      $('.tt-menu').removeClass('is-loading');
+                  });
                 elem.bind('typeahead:selected', function(obj, datum, name) {
                     scope.$emit('typeahead:selected', datum);
                 });
