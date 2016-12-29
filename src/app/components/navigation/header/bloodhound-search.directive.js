@@ -9,7 +9,7 @@
         .directive('bloodhoundRemote', BloodhoundRemoteSearch);
 
     /** @ngInject */
-    function BloodhoundRemoteSearch(BACKEND_URL) {
+    function BloodhoundRemoteSearch(API_URL) {
         return {
             restrict: 'A',
             scope: {
@@ -31,7 +31,7 @@
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
                     // prefetch: '../data/films/post_1960.json',
                     remote: {
-                        url: BACKEND_URL + '/search/spots?query=%QUERY',
+                        url: API_URL + '/search/spots?query=%QUERY',
                         wildcard: '%QUERY',
                         prepare: function(query, settings) {
                             settings.url += '&lat='+scope.location.lat+'&lng='+scope.location.lng;
