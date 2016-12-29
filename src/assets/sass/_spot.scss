@@ -79,6 +79,9 @@
             font-weight: normal;
             font-size: 28px;
             color: $dark_blue;
+            @media (max-width: 767px) {
+                font-size: 22px;
+            }
         }
         .opened-stars {
             width: 80px;
@@ -173,7 +176,9 @@
         justify-content: flex-start;
     }
     .opened-thrid-buttons {
-        margin: 10px -2px;
+        background-color: whitesmoke;
+        margin: 10px -30px;
+        padding: 0px 30px 20px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -220,10 +225,17 @@
                     background-image: url(../img/svg/new-calendar-hover.svg);
                 }
             }
+            @media (max-width: 767px) {
+                input, button {
+                    width: 100%;
+                    margin-top: 5px;
+                    height: 40px;
+                }
+            }
         }
         .prices-results {
             width: 100%;
-            padding: 10px 0 20px;
+            padding: 10px 0 0;
             text-transform: uppercase;
             font-size: 15px;
             font-weight: bold;
@@ -231,18 +243,74 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            div {
-                width: 32%;
-                font-weight: bold;
+            flex-direction: column;
+            &>div {
                 padding: 5px 0;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                &:last-of-type {
+                    padding: 5px 0 0;
+                }
+                .logo {
+                    width: 32%;
+                    position: relative;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    height: 25px;
+                    background-repeat: no-repeat;
+                    background-position: left center;
+                    background-size: auto 100%;
+                }
+                &.booking .logo {
+                    background-image: url(../img/booking.png);
+                }
+                &.hotels .logo {
+                    background-image: url(../img/hotels.png);
+                }
+                .price {
+                    width: 32%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    p {
+                        font-size: 16px;
+                        margin-bottom: 0;
+                    }
+                    span {
+                        display: block;
+                        font-size: 10px;
+                    }
+                }
                 a {
-                    color: $light_blue_btn;
+                    width: 32%;
+                    color: $dark_blue;
+                    text-align: right;
+                    display: block;
+                    &:hover {
+                        color: $light_blue_btn;
+                    }
+                }
+            }
+            @media (max-width: 500px) {
+                .booking .logo {
+                    background-image: url(../img/booking-min.png) !important;
+                }
+                .hotels .logo {
+                    background-image: url(../img/hotels-min.png) !important;
+                }
+                a {
+                    font-size: 14px;
                 }
             }
         }
     }
     .opened-tabs {
         // max-width: 450px;
+        margin-top: 30px;
         .tabs-list {
             display: flex;
             justify-content: space-between;

@@ -125,6 +125,7 @@
             $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
                 .success(function success(data) {
                     vm.prices = data.data;
+                    vm.prices.diff = data.diff;
                 });
         }
 

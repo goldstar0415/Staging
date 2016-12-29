@@ -117,6 +117,23 @@
                 align-items: center;
                 padding: 0 10px;
                 // position: relative;
+                .img-icon-like, .liked {
+                    font-size: 0px;
+                    min-height: 15px;
+                    min-width: 15px;
+                    display: block;
+                    background-position: center;
+                    background-size: 15px;
+                }
+                .img-icon-like {
+                    margin-left: auto;
+                    background-image: url(../img/svg/new-like.svg);
+                }
+                .img-icon-like.liked {
+                    margin-left: auto;
+                    background-image: url(../img/svg/new-liked.svg);
+                    color: #EE4632;
+                }
                 @media (max-width: 767px) {
                     height: 40px;
                     font-size: 20px;
@@ -346,12 +363,12 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        margin: 0 -30px;
-        padding: 25px 30px 20px;
-        background-color: #fafafa;
+        padding: 25px 0 10px;
+        // background-color: #fafafa;
         // margin: 10px 0 15px !important;
         .left {
             width: 70%;
+            padding-right: 10px;
         }
         .right {
             width: 30%;
@@ -384,14 +401,8 @@
             display: flex;
             align-items: center;
             .opened-info-stars {
-                @media (min-width: 768px) {
-                    font-size: 14px;
-                    width: 75px;
-                }
-                @media (max-width: 767px) {
-                    font-size: 20px;
-                    width: 110px;
-                }
+                font-size: 14px;
+                width: 75px;
             }
             .opened-info-stars + span {
                 color: grey;

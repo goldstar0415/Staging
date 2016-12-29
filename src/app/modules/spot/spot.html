@@ -48,12 +48,23 @@
                 </div>
                 <div class="prices-results" ng-if="Spot.prices">
                     <div class="booking">
-                        Booking.com: <a href="{{Spot.prices.bookingUrl}}">{{Spot.prices.booking ? Spot.prices.booking : 'no price' }}</a>
+                        <div class="logo">
+                        </div>
+                        <div class="price">
+                            <p>{{Spot.prices.booking ? Spot.prices.booking : 'no price' }}</p>
+                            <span>For {{Spot.prices.diff}} night(s)</span>
+                        </div>
+                        <a href="{{Spot.prices.bookingUrl}}" target="_blank">VIEW DEAL</a>
                     </div>
                     <div class="hotels">
-                        Hotels.com: <a href="{{Spot.prices.hotelsUrl}}">{{Spot.prices.hotels ? Spot.prices.hotels : 'no price' }}</a>
+                        <div class="logo">
+                        </div>
+                        <div class="price">
+                            <p>{{Spot.prices.hotels ? Spot.prices.hotels : 'no price' }}</p>
+                            <span>For {{Spot.prices.diff}} night(s)</span>
+                        </div>
+                        <a href="{{Spot.prices.hotelsUrl}}" target="_blank">VIEW DEAL</a>
                     </div>
-                    <div></div>
                 </div>
             </div>
         </div>
