@@ -42,8 +42,8 @@
             <div class="opened-thrid-buttons" ng-if="Spot.spot.hotel">
                 <div class="price-dates">
                     <p>Find the lowest prices:</p>
-                    <input ng-datepicker ng-model="Spot.priceDate.start_date" class="date" placeholder="CHECK IN" type="text">
-                    <input ng-datepicker ng-model="Spot.priceDate.end_date" class="date" placeholder="CHECK OUT" type="text">
+                    <input ng-datepicker ng-model="Spot.priceDate.start_date" start-date="Spot.inputDate.start_date" class="date" placeholder="CHECK IN" type="text" ng-change="Spot.startDateChanged()" ng-click="Spot.initDates()">
+                    <input ng-datepicker ng-model="Spot.priceDate.end_date" start-date="Spot.inputDate.end_date" class="date" placeholder="CHECK OUT" type="text" ng-click="Spot.initDates()">
                     <button ng-click="Spot.getPrice()">Search</button>
                 </div>
                 <div class="prices-results" ng-if="Spot.prices">
