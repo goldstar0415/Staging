@@ -726,7 +726,8 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         foreach($bookingRes->find('.rooms-table-room-price') as $bookingPriceObj)
         {
             $newPrice = trim(str_replace('US$', '', $bookingPriceObj->innertext()));
-            if( ($price && ( $newPrice < $price )) || !$price )
+            $newPrice = str_replace(',', '', $newPrice);
+            if( ($price && ( (int)$newPrice < (int)$price )) || !$price )
             {
                 $price = $newPrice;
             }
