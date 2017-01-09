@@ -31,6 +31,7 @@ module.exports = [
   `${BOWER}/skycons/skycons.js`,
   `${BOWER}/angular-skycons/angular-skycons.min.js`,
   `${BOWER}/ng-webworker/src/ng-webworker.min.js`,
+  `${BOWER}/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js`,
   `${SRC}/assets/libs/screenfull/screenfull.min.js`,
   `${SRC}/assets/libs/Leaflet/leaflet.js`,
   `${SRC}/assets/libs/leaflet.pip/leaflet-pip.min.js`,
