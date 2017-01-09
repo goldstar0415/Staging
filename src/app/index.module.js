@@ -27,6 +27,7 @@
 	    'oc.lazyLoad',
       'angular-skycons',
       'ngWebworker',
+      'ui.checkbox',
     ])
     .config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
 

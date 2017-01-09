@@ -696,6 +696,24 @@
         }
       })
 
+      //Privacy Policy page
+      .state('privacy_policy', {
+        url: "/privacy-policy",
+        templateUrl: '/app/modules/privacy_policy/privacy_policy.html',
+        controller: 'PrivacyPolicyController',
+        controllerAs: 'PrivacyPolicy',
+        parent: 'main',
+        mapState: 'hidden',
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              '/app/modules/privacy_policy/privacy_policy.controller.js',
+              '/app/models/staticPage.js',
+            ]));
+          }]
+        }
+      })
+
       //Zoomers page
       .state('zoomers', {
         url: '/zoomers',
