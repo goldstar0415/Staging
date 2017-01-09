@@ -78,7 +78,9 @@ class MapController extends Controller {
                         DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 2)::float AS lat"), 
                         DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 1)::float AS lng"),
                         'spots.title',
-                        'spot_points.address'
+                        'spot_points.address',
+                        'spot_hotels.minrate',
+                        'spot_hotels.maxrate'
                 )
                 ->where('mv_spots_spot_points.is_private', false)
                 ->where('mv_spots_spot_points.is_approved', true);
@@ -137,6 +139,7 @@ class MapController extends Controller {
         
         $spots->leftJoin('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
         $spots->leftJoin('spot_points', 'spot_points.spot_id', '=', 'mv_spots_spot_points.id');
+        $spots->leftJoin('spot_hotels', 'spot_hotels.spot_id', '=', 'mv_spots_spot_points.id');
         $spots->with('rating');
         
         if ($request->has('filter.path')) {
@@ -171,6 +174,8 @@ class MapController extends Controller {
                 'address' => $spot->address,
                 'category_icon_url' => $iconsCache[$spot->spot_type_category_id],
                 'category_name' => $typesCache[$spot->spot_type_category_id],
+                'minrate' => $spot->minrate,
+                'maxrate' => $spot->maxrate
             ];
         }
         return $points;
