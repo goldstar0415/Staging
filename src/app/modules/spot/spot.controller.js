@@ -24,7 +24,7 @@
     }
 
     /** @ngInject */
-    function SpotController($location, $modal, $stateParams, Spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share, AsyncLoaderService) {
+    function SpotController($location, $modal, $stateParams, Spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share, AsyncLoaderService, toastr) {
         var vm = this;
         var spot = null;
         if ($rootScope.openedSpot) {
@@ -86,7 +86,7 @@
             vm.inputDate.start_date = (now.getMonth() + 1) + "." + now.getDate() + "." + now.getFullYear();
             now.setDate(now.getDate() + 1);
             if (!vm.inputDate.end_date) {
-                vm.inputDate.end_date = (now.getMonth() + 1) + "." + now.getDate() + "." + now.getFullYear();    
+                vm.inputDate.end_date = (now.getMonth() + 1) + "." + now.getDate() + "." + now.getFullYear();
             }
         };
 
@@ -144,11 +144,15 @@
         };
 
         function getPrice() {
-            $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
-                .success(function success(data) {
-                    vm.prices = data.data;
-                    vm.prices.diff = data.diff;
-                });
+            if (!vm.priceDate.start_date || !vm.priceDate.end_date) {
+                toastr.error('Please select your dates.')
+            } else {
+                $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
+                    .success(function success(data) {
+                        vm.prices = data.data;
+                        vm.prices.diff = data.diff;
+                    });
+            }
         }
 
         //MapService.GetMap().panTo(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng));

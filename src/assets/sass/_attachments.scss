@@ -1,0 +1,26 @@
+.new-attachments {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+    // border: 1px solid lightgrey;
+    background-color: white;
+    margin-bottom: 10px;
+
+    h3 {
+        margin: 10px 0;
+    }
+
+    .image {
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            img {
+                height: 100px;
+            }
+        }
+    }
+}

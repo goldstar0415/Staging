@@ -10,7 +10,6 @@
       var map = null;
       var DEFAULT_MAP_LOCATION = [37.405075073242188, -96.416015625000000];
       var tilesUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
-    //   var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-{timestamp}/{z}/{x}/{y}.png?' + (new Date()).getTime();
       var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-{timestamp}/{z}/{x}/{y}.png';
       var timestamps = ['900913-m50m', '900913-m45m', '900913-m40m', '900913-m35m', '900913-m30m', '900913-m25m', '900913-m20m', '900913-m15m', '900913-m10m', '900913-m05m', '900913'];
 
@@ -1977,8 +1976,16 @@
         };
 
         var image = setMarkerIcon(spot, true);
-
-        var popupContent = $compile('<div><p class="plate-name">' + spot.title + '</p><p class="plate-stars"><stars item="item"></stars></p><p class="plate-info">' + spot.category_name + '</p><img width="50" height="50" src=' + image + ' /></div>')(scope);
+        var template = '<div>\
+                            <p class="plate-name">' + spot.title + '</p>\
+                            <p class="plate-stars"><stars item="item"></stars></p>\
+                            <p class="plate-info price" ng-if="item.minrate">$' + spot.minrate + '<span>avg/nt</span></p>\
+                            <p class="plate-info" ng-if="!item.minrate">' + spot.category_name + '</p>\
+                            <img width="50" height="50" src=' + image + ' />\
+                        </div>';
+                        // Math.floor(fx(2200).from("RUB").to("USD"))
+                                                // <p class="plate-info price" ng-if="item.minrate">$' + spot.minrate + '<span>avg/nt</span></p>\
+        var popupContent = $compile(template)(scope);
         var popup = L.popup(options).setContent(popupContent[0]);
         marker.bindPopup(popup);
         marker.on('click', function () {
