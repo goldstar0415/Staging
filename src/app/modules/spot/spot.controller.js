@@ -45,6 +45,10 @@
         vm.photoIndex = 0;
         vm.getPrice = getPrice;
         vm.amenitiesCount = Object.keys(vm.spot.amenities).length;
+        vm.inputDate = {
+            start_date: null,
+            end_date: null
+        }
         vm.priceDate = {
             start_date: null,
             end_date: null
@@ -75,6 +79,24 @@
             vm.reviews_total = data;
             vm.spot.rating = data.total.rating;
         });
+
+
+        vm.initDates = function() {
+            var now = new Date(Date.now());
+            vm.inputDate.start_date = (now.getMonth() + 1) + "." + now.getDate() + "." + now.getFullYear();
+            now.setDate(now.getDate() + 1);
+            if (!vm.inputDate.end_date) {
+                vm.inputDate.end_date = (now.getMonth() + 1) + "." + now.getDate() + "." + now.getFullYear();    
+            }
+        };
+
+        vm.startDateChanged = function() {
+            var newDate = new Date(vm.priceDate.start_date);
+            newDate.setDate(newDate.getDate() + 1);
+            vm.priceDate.end_date = (newDate.getMonth() + 1) + "." + newDate.getDate() + "." + newDate.getFullYear();
+            vm.inputDate.start_date = new Date(Date.now());
+            vm.inputDate.end_date = vm.priceDate.end_date;
+        }
 
         vm.mergeByProperty = function(arr1, arr2, prop) {
             _.each(arr2, function(arr2obj) {
