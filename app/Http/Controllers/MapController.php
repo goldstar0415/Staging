@@ -80,7 +80,8 @@ class MapController extends Controller {
                         'spots.title',
                         'spot_points.address',
                         'spot_hotels.minrate',
-                        'spot_hotels.maxrate'
+                        'spot_hotels.maxrate',
+                        'spot_hotels.currencycode'
                 )
                 ->where('mv_spots_spot_points.is_private', false)
                 ->where('mv_spots_spot_points.is_approved', true);
@@ -175,7 +176,8 @@ class MapController extends Controller {
                 'category_icon_url' => $iconsCache[$spot->spot_type_category_id],
                 'category_name' => $typesCache[$spot->spot_type_category_id],
                 'minrate' => $spot->minrate,
-                'maxrate' => $spot->maxrate
+                'maxrate' => $spot->maxrate,
+                'currencycode' => $spot->currencycode
             ];
         }
         return $points;
