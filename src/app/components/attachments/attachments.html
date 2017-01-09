@@ -1,11 +1,10 @@
-<div class="attachments-preview"
+<!-- <div class="attachments-preview"
      ng-if="!_.isEmpty(Attachments.items.areas) || !_.isEmpty(Attachments.items.spots) || !_.isEmpty(Attachments.items.album_photos) || !_.isEmpty(Attachments.items.links)">
   <div class="links">
     <div class="media media-visible padding-bottom add-location clearfix" ng-repeat="area in Attachments.items.areas">
       <a ui-sref="areas.preview({area_id: area.id})" class="img-selection">{{area.title}}</a>
 
       <div class="media-body">
-        <!--<p class="place">London</p>-->
 
         <p class="date">{{ area.created_at | toTimezone:'MM.DD.YYYY' }}</p>
 
@@ -13,10 +12,10 @@
       </div>
     </div>
     <div class="clearfix"></div>
-    <div ng-repeat="spot in Attachments.items.spots" class="media media-visible padding-bottom add-event row">
+    <div ng-repeat="spot in Attachments.items.spots" class="media media-visible add-event">
       <div class="spot-thumb">
         <figure>
-          <a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})" class="pull-left wrap-img-event nopad">
+          <a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})" class="wrap-img-event">
             <img class="media-object attachment-link" ng-src="{{spot.cover_url.medium}}">
             <spot-type type="spot.category.type.display_name"></spot-type>
           </a>
@@ -71,15 +70,44 @@
       </div>
     </div>
   </div>
-  <div class="" justified-gallery ng-if="Attachments.items.album_photos.length > 0">
-    <div class="col-sm-4 no-pad"
-         ng-repeat="photo in Attachments.items.album_photos"
-         photo-viewer
-         index="$index"
-         hide-comments="1"
-         items="Attachments.items.album_photos"
-         repeat-done>
-      <img ng-src="{{photo.photo_url.medium}}" class="img-responsive"/>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+<div class="new-attachments" ng-if="!_.isEmpty(Attachments.items.areas) || !_.isEmpty(Attachments.items.spots) || !_.isEmpty(Attachments.items.album_photos) || !_.isEmpty(Attachments.items.links)">
+    <div class="attachment-item" ng-repeat="spot in Attachments.items.spots">
+        <div class="image">
+            <a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})">
+                <img ng-src="{{spot.cover_url.medium}}">
+                <spot-type type="spot.category.type.display_name"></spot-type>
+                <stars item="spot"></stars>
+            </a>
+        </div>
+        <div class="info">
+            <h3 ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})">{{spot.title}}</h3>
+            <p class="place">{{spot.address}}</p>
+            <p class="date">
+              <date-range item="spot" class="ng-isolate-scope"></date-range>
+            </p>
+            <div class="description">{{spot.description}}</div>
+        </div>
     </div>
-  </div>
+    <div class="" justified-gallery ng-if="Attachments.items.album_photos.length > 0">
+      <div class="col-sm-4 no-pad"
+           ng-repeat="photo in Attachments.items.album_photos"
+           photo-viewer
+           index="$index"
+           hide-comments="1"
+           items="Attachments.items.album_photos"
+           repeat-done>
+        <img ng-src="{{photo.photo_url.medium}}" class="img-responsive"/>
+      </div>
+    </div>
 </div>
