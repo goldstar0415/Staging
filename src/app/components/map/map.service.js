@@ -46,7 +46,7 @@
       var mobileMarker;
 
       if (_.isEmpty(fx.rates)) {
-          $http.jsonp('http://api.fixer.io/latest', { params: { base: 'USD', callback: 'JSON_CALLBACK' } })
+          $http.jsonp('https://api.fixer.io/latest', { params: { base: 'USD', callback: 'JSON_CALLBACK' } })
               .then(function(resp) {
                   if (resp.status === 200) {
                     fx.base = resp.data.base;
