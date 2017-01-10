@@ -13,7 +13,7 @@
     top: 50px;
     width: calc(100vw - 70px);
     @media (max-width: 767px) {
-        height: calc(100vh - 50px);
+        height: calc(100vh - 100px);
         top: 50px;
         width: 100vw;
     }
@@ -28,7 +28,7 @@
     top: 50px;
     width: calc(100vw - 540px);
     @media (max-width: 767px) and (orientation: portrait) {
-        height: calc(60vh - 50px);
+        height: calc(60vh - 100px);
         width: 100vw;
     }
     @media (max-width: 767px) and (orientation: landscape) {
@@ -270,7 +270,14 @@
         }
     }
 
+    .leaflet-right.leaflet-bottom {
+        bottom: 10px;
+        right: 10px;
+        top: auto !important;
+    }
+
     .leaflet-left.leaflet-bottom,
+    .leaflet-right.leaflet-bottom,
     .leaflet-left.leaflet-top {
         .focus-geolocation-container,
         .fullscreen-container {
@@ -294,6 +301,7 @@
         .map-tools-top,
         .map-tools-back,
         .show-info,
+        .fullscreen,
         .show-weather {
             background-color: white;
             position: relative;
@@ -316,11 +324,31 @@
             }
         }
 
-        .show-weather-container {
+        .fullscreen, .focus-geolocation {
+            img {
+                padding: 7px;
+            }
+        }
+
+        .toggle-button {
             width: 80px;
-            margin-left: 0;
+            margin: 10px 0 0;
             display: flex;
             justify-content: flex-start;
+            .show-weather {
+                background-color: rgba(255, 255, 255, 0.7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img {
+                    background-color: white;
+                    width: 32px;
+                    height: 32px;
+                }
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.7) !important;
+                }
+            }
             div:last-of-type, div:first-of-type {
                 width: 40px;
                 height: 40px;
@@ -332,23 +360,29 @@
                 align-items: center;
                 font-size: 15px;
                 cursor: pointer;
+                transition: 0.5s;
             }
             div:last-of-type {
-                display: none;
+                // display: none;
+                margin-left: -40px;
             }
             &.active {
                 div:last-of-type {
-                    display: flex;
+                    // display: flex;
+                    margin-left: 0px;
+                    transition: 0.5s;
                 }
                 div:first-of-type {
-                    display: none;
+                    // display: none;
+                    margin-right: -40px;
+                    transition: 0.5s;
                 }
             }
             &:hover {
                 div:last-of-type, div:first-of-type {
                     color: $light_blue_btn;
                 }
-                .show-weather {
+                .show-weather img {
                     background-color: $light_blue_btn;
                 }
             }
