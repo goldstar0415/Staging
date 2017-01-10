@@ -1977,7 +1977,9 @@
         var spot_id = spot.id ? spot.id : spot.spot.id;
         var spot = spot.spot ? spot.spot : spot;
         var scope = $rootScope.$new();
-        spot.price = Math.round(fx(spot.minrate).from(spot.currencycode).to("USD"));
+        if (spot.minrate) {
+            spot.price = Math.round(fx(spot.minrate).from(spot.currencycode).to("USD"));
+        }
         scope.item = spot;
         scope.marker = marker;
         var options = {
