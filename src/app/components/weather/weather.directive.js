@@ -79,7 +79,8 @@
             templateUrl: '/app/components/weather/weather.html',
             scope: {
                 lat: '=',
-                lng: '='
+                lng: '=',
+                units: '='
             },
             controller: WeatherController,
             controllerAs: 'Weather',
@@ -94,7 +95,6 @@
             vm.data = {};
             vm.tab = 0;
             vm.selected = {};
-            vm.units = 'us';
             vm.unitsObj = {
                 'si': {
                     temperature: 'C',
@@ -108,6 +108,12 @@
 
             $scope.$watch(function() {
                 return (vm.lat);
+            }, function() {
+                vm.init();
+            });
+
+            $scope.$watch(function() {
+                return (vm.units);
             }, function() {
                 vm.init();
             });

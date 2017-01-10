@@ -662,7 +662,7 @@
 
 			this.link = L.DomUtil.create('div', 'focus-geolocation map-tools', container);
             var img = L.DomUtil.create('img', '', this.link);
-            img.src = "../../assets/img/svg/my-location.svg";
+            img.src = "../../assets/img/center.png";
 			this.link.href = '#';
 			this._map = map;
 
@@ -683,16 +683,16 @@
 //weather
     L.Control.radar = L.Control.extend({
       options: {
-        position: 'topleft'
+        position: 'bottomright'
       },
       onAdd: function (map) {
           var scope = $rootScope.$new();
-          var btn = $compile('<div ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="show-weather-container" ng-class="{\'active\': $root.isRadarShown}">\
-                                  <div>on</div>\
+          var btn = $compile('<div tooltip="Toggle radar" tooltip-placement="left" ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="toggle-button" ng-class="{\'active\': $root.isRadarShown}">\
+                                  <div>off</div>\
                                   <div class="show-weather">\
                                       <img src="../../assets/img/svg/radar.svg"/>\
                                   </div>\
-                                  <div>off</div>\
+                                  <div>on</div>\
                               </div>')(scope);
           this._map = map;
           L.DomEvent.on(btn[0], 'click', this._click, this);
@@ -704,8 +704,40 @@
           toggleWeatherLayer($rootScope.isRadarShown);
       }
     });
-    L.Control.ShowInfo = function (options) {
+    L.Control.Weather = function (options) {
       return new L.Control.radar(options);
+    };
+
+//temperature
+    L.Control.temperature = L.Control.extend({
+      options: {
+        position: 'bottomright'
+      },
+      onAdd: function (map) {
+          var scope = $rootScope.$new();
+          var btn = $compile('<div tooltip="Toggle units" tooltip-placement="left" ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="toggle-button" ng-class="{\'active\': $root.weatherUnits === \'si\'}">\
+                                  <div>°C</div>\
+                                  <div class="show-weather">\
+                                      <img src="../../assets/img/svg/temperature.svg"/>\
+                                  </div>\
+                                  <div>°F</div>\
+                              </div>')(scope);
+          this._map = map;
+          L.DomEvent.on(btn[0], 'click', this._click, this);
+          return btn[0];
+      },
+      _click: function (e) {
+          e.stopPropagation();
+          if ($rootScope.weatherUnits === 'si') {
+              $rootScope.weatherUnits = 'us';
+          } else {
+              $rootScope.weatherUnits = 'si';
+          }
+          showWeatherMarkers();
+      }
+    });
+    L.Control.Temperature = function (options) {
+      return new L.Control.temperature(options);
     };
 
 //fullScreen
@@ -720,7 +752,7 @@
       onAdd: function (map) {
           var container = L.DomUtil.create('div', 'fullscreen-container');
 
-          this.link = L.DomUtil.create('div', 'show-info', container);
+          this.link = L.DomUtil.create('div', 'fullscreen', container);
           var img = L.DomUtil.create('img', '', this.link);
           if ($rootScope.isFullScreen) {
               img.src = "../../assets/img/svg/fullscreen2.svg";
@@ -829,6 +861,7 @@
       var fullScreen = new L.Control.fullScreen();
       var back = new L.Control.back();
       var radar = new L.Control.radar();
+      var temperature = new L.Control.temperature();
       //var shareSelectionControl = L.Control.ShareSelection();
 
 	  function clearPathFilter() {
@@ -1860,6 +1893,7 @@
 
       //Controls
       function RemoveControls() {
+        map.removeLayer(temperature);
         map.removeLayer(radar);
         map.removeLayer(radiusControl);
         map.removeLayer(lassoControl);
@@ -1874,6 +1908,7 @@
       }
 
       function AddControls() {
+        temperature.addTo(map);
         radar.addTo(map);
         focusGeolocation.addTo(map);
         saveSelectionControl.addTo(map);
@@ -2679,6 +2714,7 @@
 
       function showWeatherMarkers() {
           var bounds = map.getBounds();
+          var center = map.getCenter();
           var mapBox = [];
           mapBox.push(bounds._southWest.lng);
           mapBox.push(bounds._southWest.lat);
@@ -2686,10 +2722,13 @@
           mapBox.push(bounds._northEast.lat);
           mapBox.push(map.getZoom());
           var params = {
+              //lat: center.lat,
+              //lon: center.lng,
               bbox: mapBox.toString(),
               cluster: 'yes',
               APPID: OPENWEATHERMAP_API_KEY,
-              units: $rootScope.weatherUnits == 'us' ? 'imperial' : 'metric'
+              units: $rootScope.weatherUnits == 'us' ? 'imperial' : 'metric',
+              cnt: 10
           };
           var q = $.param(params);
           q = 'http://api.openweathermap.org/data/2.5/box/city?' + q;
