@@ -178,6 +178,7 @@ abstract class SpotsImport extends Job implements SelfHandling
             if ( !empty($imported_spot->tags)) 
             {
                 $tags = explode(';', $imported_spot->tags);
+                $tags = array_map('trim', $tags);
                 $idsArr = [];
                 $tagsRes = [];
                 $existingTags = [];
