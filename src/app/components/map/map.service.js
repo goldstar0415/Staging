@@ -1966,6 +1966,7 @@
         var spot_id = spot.id ? spot.id : spot.spot.id;
         var spot = spot.spot ? spot.spot : spot;
         var scope = $rootScope.$new();
+        spot.minrate = Math.round(spot.minrate);
         scope.item = spot;
         scope.marker = marker;
         var options = {
@@ -1975,16 +1976,16 @@
           className: 'map-marker-plate'
         };
 
-        var image = setMarkerIcon(spot, true);
+        scope.image = setMarkerIcon(spot, true);
         var template = '<div>\
-                            <p class="plate-name">' + spot.title + '</p>\
+                            <p class="plate-name">{{item.title}}</p>\
                             <p class="plate-stars"><stars item="item"></stars></p>\
-                            <p class="plate-info price" ng-if="item.minrate">$' + spot.minrate + '<span>avg/nt</span></p>\
-                            <p class="plate-info" ng-if="!item.minrate">' + spot.category_name + '</p>\
-                            <img width="50" height="50" src=' + image + ' />\
+                            <p class="plate-info price" ng-if="item.minrate">{{item.minrate}} {{item.currencycode}}<span>avg/nt</span></p>\
+                            <p class="plate-info" ng-if="!item.minrate">{{item.category.name}}</p>\
+                            <img width="50" height="50" src="{{image}}" />\
                         </div>';
                         // Math.floor(fx(2200).from("RUB").to("USD"))
-                                                // <p class="plate-info price" ng-if="item.minrate">$' + spot.minrate + '<span>avg/nt</span></p>\
+                        // <p class="plate-info price" ng-if="item.minrate">$' + spot.minrate + '<span>avg/nt</span></p>\
         var popupContent = $compile(template)(scope);
         var popup = L.popup(options).setContent(popupContent[0]);
         marker.bindPopup(popup);

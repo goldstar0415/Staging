@@ -104,4 +104,5 @@ module.exports = [
   `${SRC}/app/modules/spot/review/review.directive.js`,
   `${SRC}/app/components/async_loader_service/async_loader.service.js`,
   `${SRC}/app/modules/spot/spot.controller.js`, // fixme: use lazy-load
+  `${SRC}/app/components/weather/weather.directive.js`,
 ];
