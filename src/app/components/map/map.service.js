@@ -45,6 +45,17 @@
       var highlightMarker;
       var mobileMarker;
 
+      if (_.isEmpty(fx.rates)) {
+          $http.jsonp('http://api.fixer.io/latest', { params: { base: 'USD', callback: 'JSON_CALLBACK' } })
+              .then(function(resp) {
+                  if (resp.status === 200) {
+                    fx.base = resp.data.base;
+                    fx.rates = resp.data.rates;
+                    fx.rates.USD = 1;
+                  }
+              });
+      }
+
 		function getPathRouter() {
 			switch(pathRouterFail) {
 				case 0:
@@ -1966,7 +1977,7 @@
         var spot_id = spot.id ? spot.id : spot.spot.id;
         var spot = spot.spot ? spot.spot : spot;
         var scope = $rootScope.$new();
-        spot.minrate = Math.round(spot.minrate);
+        spot.price = Math.round(fx(spot.minrate).from(spot.currencycode).to("USD"));
         scope.item = spot;
         scope.marker = marker;
         var options = {
@@ -1980,7 +1991,7 @@
         var template = '<div>\
                             <p class="plate-name">{{item.title}}</p>\
                             <p class="plate-stars"><stars item="item"></stars></p>\
-                            <p class="plate-info price" ng-if="item.minrate">{{item.minrate}} {{item.currencycode}}<span>avg/nt</span></p>\
+                            <p class="plate-info price" ng-if="item.minrate">${{item.price}}<span>avg/nt</span></p>\
                             <p class="plate-info" ng-if="!item.minrate">{{item.category.name}}</p>\
                             <img width="50" height="50" src="{{image}}" />\
                         </div>';
