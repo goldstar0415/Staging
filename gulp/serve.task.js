@@ -9,9 +9,52 @@ const cssStream = require('./css.stream');
 const $ = require('gulp-load-plugins')();
 const _ = require('lodash');
 const clean = require('gulp-clean');
+const bs = require('browser-sync');
+const bsSpa = require('browser-sync-spa');
+const proxy = require('http-proxy-middleware');
+const sequence = require('run-sequence');
 
-let sassScope = _.filter(cssStream, (p) => {
-  return /\S+\.scss/i.test(p);
+let sassScope = _.filter(cssStream, p => /\S+\.scss/i.test(p));
+let cssScope = _.filter(cssStream, p => /\S+\.css/i.test(p));
+
+const APP_SERVE_PORT =  process.env.SERVE_PORT || 18081;
+const SYNC_PROXY_PORT = process.env.PORT || 8081;
+
+gulp.task('serve:sync', () => {
+  bs.init({
+    startPath: '/',
+    debugInfo: true,
+    open: true,
+    port: SYNC_PROXY_PORT,
+    // watchOptions: {
+    //   ignoreInitial: true,
+    // },
+    // proxy: {
+    //   target: `localhost:${APP_SERVE_PORT}`,
+    //   ws: true,
+    // },
+    snippetOptions: {
+      rule: {
+        match: /<\/head>/i,
+        fn: (snippet, match) => `${snippet}${match}`
+      }
+    },
+    // server: {
+    //   baseDir: config.paths.src,
+    //   // middleware: [
+    //   //   proxy('/', {
+    //   //     target: `http://localhost:${APP_SERVE_PORT}`,
+    //   //     changeOrigin: true,
+    //   //   })
+    //   // ]
+    // },
+    ui: false,
+  });
+});
+
+gulp.task('serve:sync:reload', () => {
+  console.log('reload()');
+  bs.reload({});
 });
 
 gulp.task('serve:watch', () => {
@@ -28,7 +71,7 @@ gulp.task('serve:watch', () => {
   console.log('Watch scope: ', watchScope);
 
   gulp.watch(watchScope, options, () => {
-    gulp.start('serve:sass');
+    sequence('serve:sass', 'serve:sync:reload');
   });
 
 });
@@ -41,7 +84,10 @@ gulp.task('serve:sass', () => {
     .pipe( $.autoprefixer()).on('error', config.errorHandler('Autoprefixer') )
     .pipe( $.sourcemaps.write() )
     .pipe( $.concat('main.css') )
-    .pipe( gulp.dest(path.join(config.paths.tmp, '/serve/assets/css')) );
+    .pipe( gulp.dest(path.join(config.paths.tmp, '/serve/assets/css')) )
+    // .pipe( bs.stream(path.join(config.paths.tmp, '/serve/assets/css', '/main.css')) )
+    .pipe( bs.stream() )
+    ;
 });
 
 gulp.task('serve:clean', () => {
@@ -51,19 +97,56 @@ gulp.task('serve:clean', () => {
 
 gulp.task('serve:main', ['serve:sass', 'serve:watch'], () => {
 
-  const serverConfig = {
-    path: path.join(config.paths.src),
-    port: process.env.PORT || 8081,
-    fallback: {'text/html' : '/index.html'},
-    serveStaticConfig: {},
-    middleware: [
-      serveStatic('.'),
-      serveStatic( path.join(config.paths.tmp, 'serve') ),
-    ]
-  };
+  bs.use(bsSpa({selector: '[ng-app]'}));
 
-  const server = serverFactory.create(serverConfig);
-  server.start();
+  // const serverConfig = {
+  //   path: path.join(config.paths.src),
+  //   port: APP_SERVE_PORT,
+  //   fallback: {'text/html' : '/index.html'},
+  //   serveStaticConfig: {},
+  //   middleware: [
+  //     serveStatic('.'),
+  //     serveStatic( path.join(config.paths.tmp, 'serve') ),
+  //   ]
+  // };
+  //
+  // const server = serverFactory.create(serverConfig);
+  // server.start();
+
+   bs.instance = bs({
+     files: [path.join(config.paths.src, '/index.html')],
+    startPath: '/',
+    debugInfo: true,
+    open: false,
+    port: SYNC_PROXY_PORT,
+    watchOptions: {
+      ignoreInitial: false,
+    },
+    // proxy: {
+    //   target: `localhost:${APP_SERVE_PORT}`,
+    //   ws: true,
+    // },
+    snippetOptions: {
+      rule: {
+        match: /<\/head>/i,
+        fn: function (snippet, match) {
+          console.log('>>> Snippet');
+          return snippet + match;
+        }
+      }
+    },
+    server: {
+      baseDir: [config.paths.src, '.', path.join(config.paths.tmp, 'serve')],
+      // middleware: [
+      //   proxy('/', {
+      //     target: `http://localhost:${APP_SERVE_PORT}`,
+      //     changeOrigin: true,
+      //   })
+      // ]
+    },
+    ui: false,
+  });
+
 });
 
 gulp.task('serve', ['serve:clean'], () => {
