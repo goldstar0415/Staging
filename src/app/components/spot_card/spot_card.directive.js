@@ -44,11 +44,14 @@
                     });
             }
 
-            function openSpot(spotId) {
-                $http.get(API_URL + '/spots/' + spotId)
-                    .success(function success(data) {
-                        $rootScope.setOpenedSpot(data);
-                    });
+            function openSpot(spotId, event) {
+                if (!$rootScope.openedSpot) {
+                    event.stopPropagation();
+                    $http.get(API_URL + '/spots/' + spotId)
+                        .success(function success(data) {
+                            $rootScope.setOpenedSpot(data);
+                        });
+                }
             }
 
             function openInviteModal(item) {
@@ -68,7 +71,7 @@
             }
 
             function setImage(item) {
-                if (item.category_name === 'Food') {
+                if (item.category_name === 'Food' || (item.category && item.category.type.display_name == 'Food')) {
                     if (false) {
                         return item.cover_url.original;
                     } else {

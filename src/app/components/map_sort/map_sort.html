@@ -75,7 +75,7 @@
     <!-- </form> -->
 </div>
 
-<div class="sort-menu" ng-show="$root.isSidebarOpened && ($root.mapSortSpots.sourceSpots.length || $root.sortLayer == 'weather')" ng-class="{'weather-opened': $root.sortLayer == 'weather'}">
+<div class="sort-menu" ng-show="$root.isSidebarOpened && $root.isMapState() && (($root.mapSortSpots.sourceSpots.length && $root.isDrawArea) || $root.sortLayer == 'weather')" ng-class="{'weather-opened': $root.sortLayer == 'weather'}">
     <p ng-if="$root.mapSortSpots.data.length && !$root.visibleSpotsIds.length && $root.sortLayer != 'weather'" class="message-loading">{{$root.sidebarMessage}}</p>
     <div class="search-filters"
          ng-show="$root.sortLayer != 'weather' && $root.visibleSpotsIds.length"

@@ -1,6 +1,7 @@
 <div class="new-weather-container">
     <div class="weather-header">
         <h1 class="weather-city-name">{{Weather.location}}</h1>
+        <div class="weather-close" ng-click="$root.toggleSidebar(false)"></div>
         <!-- <div class="weather-units">
             <span ng-click="Weather.toggleUnits()">°{{Weather.unitsObj[Weather.units].temperature}}</span>
         </div> -->
