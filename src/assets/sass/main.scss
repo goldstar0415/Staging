@@ -2051,4 +2051,11 @@ html {
 
 .tooltip {
     box-shadow: none;
+    .tooltip-arrow {
+        opacity: 0;
+    }
+    .tooltip-inner {
+        background-color: $dark_blue !important;
+        border-radius: 0;
+    }
 }
