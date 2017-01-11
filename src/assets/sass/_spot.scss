@@ -15,9 +15,9 @@
         width: 470px;
         overflow: auto;
         margin: 0;
-        padding: 10px 30px;
+        padding: 0 30px 10px;
         @media (max-width: 767px) {
-            padding: 10px 10px;
+            padding: 0px 10px 10px;
         }
         @media (min-width: 768px) and (orientation: portrait) {
             top: calc(100vh - 378px);
@@ -558,24 +558,36 @@
             display: flex;
             justify-content: center;
             align-items: flex-end;
+            filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.5));
             &:hover {
                 opacity: 1;
             }
         }
         .img-icon-invite {
             background-image: url(../img/svg/new-invite.svg);
+            &:hover {
+                background-image: url(../img/svg/new-invite-hover.svg);
+            }
         }
         .img-icon-share {
             background-image: url(../img/svg/new-share.svg);
+            &:hover {
+                background-image: url(../img/svg/new-share-hover.svg);
+            }
         }
         .img-icon-like {
             margin-left: auto;
             background-image: url(../img/svg/new-like.svg);
+            &:hover {
+                background-image: url(../img/svg/new-liked.svg);
+            }
         }
         .img-icon-like.liked {
             margin-left: auto;
             background-image: url(../img/svg/new-liked.svg);
-            color: #EE4632;
+            &:hover {
+                background-image: url(../img/svg/new-like.svg);
+            }
         }
     }
 

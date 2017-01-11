@@ -1,5 +1,5 @@
 <div class="opened-item" ng-class="{ 'item-modal' : Spot.modal }" ng-if="Spot.spot">
-    <div class="opened-header" ng-if="Spot.modal">
+    <!-- <div class="opened-header" ng-if="Spot.modal">
         <a ng-click="Spot.close()" ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id || 0})">
             <img src="../../../assets/img/svg/fullscreen.svg" alt="">
         </a>
@@ -10,7 +10,7 @@
         <span ng-click="Spot.close()">
             <img src="../../../assets/img/svg/cancel.svg" alt="">
         </span>
-    </div>
+    </div> -->
     <div class="opened-container">
         <div spotcard class="new-result-card" item="Spot.spot"></div>
         <div class="opened-main">
