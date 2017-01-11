@@ -89,6 +89,18 @@
       var GeocodingSearchUrl = '//open.mapquestapi.com/nominatim/v1/search.php?format=json&key=' + GEOCODING_KEY + '&addressdetails=1&limit=3&q=';
       var GeocodingReverseUrl = '//open.mapquestapi.com/nominatim/v1/reverse.php?format=json&key=' + GEOCODING_KEY;
 
+      function closeAll() {
+        //   L.DomEvent.stopPropagation(e);
+        //   L.DomEvent.preventDefault(e);
+          ClearSelections();
+          map.closePopup();
+          cancelHttpRequest();
+          $rootScope.isDrawArea = false;
+          angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
+          $rootScope.toggleSidebar(false);
+          $rootScope.setOpenedSpot(null);
+      }
+
       function setMarkerIcon(spot, isHighlighted) {
           var image = '';
           if (spot) {
@@ -532,7 +544,7 @@
         },
         onAdd: function (map) {
             var scope = $rootScope.$new();
-            var template = '    <div tooltip="Clean Selection" tooltip-placement="bottom" class="map-tools-top hidden">\
+            var template = '    <div tooltip="Clean Selection" tooltip-placement="bottom" ng-show="$root.sortLayer != \'weather\'" class="map-tools-top hidden">\
                                     <div class="clear-selection">\
                                         <img src="../../assets/img/svg/cancel-button.svg"/>\
                                     </div>\
@@ -590,7 +602,7 @@
 		_click: function (e) {
 			LocationService.getUserLocation().then(function(location) {
 				$rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
-				FocusMapToGivenLocation($rootScope.currentLocation, 16);
+				FocusMapToGivenLocation($rootScope.currentLocation, 14);
 			});
 		}
 	});
@@ -635,11 +647,11 @@
       onAdd: function (map) {
           var scope = $rootScope.$new();
           var template = '  <div tooltip="Toggle Units" tooltip-placement="left" ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="toggle-button" ng-class="{\'active\': $root.weatherUnits === \'si\'}">\
-                                <div>°C</div>\
+                                <div>°F</div>\
                                 <div class="show-weather">\
                                     <img src="../../assets/img/svg/temperature.svg"/>\
                                 </div>\
-                                <div>°F</div>\
+                                <div>°C</div>\
                             </div>';
           var btn = $compile(template)(scope);
           this._map = map;
@@ -2113,7 +2125,7 @@
 			LocationService.getUserLocation().then(function(location) {
 				$rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
 				$rootScope.currentCountryCode = location.countryCode ? location.countryCode : 'N/A';
-				FocusMapToGivenLocation($rootScope.currentLocation, 16, true);
+				FocusMapToGivenLocation($rootScope.currentLocation, 14, true);
 			});
 		}
 
@@ -2793,7 +2805,9 @@
         clearSpotHighlighting: clearSpotHighlighting,
 
         getWeatherLatLng: getWeatherLatLng,
-        showWeatherMarkers: showWeatherMarkers
+        showWeatherMarkers: showWeatherMarkers,
+
+        closeAll: closeAll
       };
     });
 

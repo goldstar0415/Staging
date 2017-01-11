@@ -3,11 +3,26 @@
 
     angular
         .module('zoomtivity')
-        .controller('SpotController', SpotController);
+        .controller('SpotController', SpotController)
+        .directive('spot', SpotDirective)
+        .filter('seatgeek', function() {
+            return function(inp) {
+                if (inp) {
+                    var arr = [];
+                    for (var i = 0; i < inp.length; i++) {
+                        if (inp[i].indexOf('https://seatgeek.com') !== 0) {
+                            arr.push(inp[i]);
+                        }
+                    }
+                    return arr;
+                }
+                return null;
+            }
+        });
 
     angular
         .module('zoomtivity')
-        .directive('spot', SpotDirective);
+
 
     function SpotDirective() {
         return {
@@ -54,6 +69,20 @@
             end_date: null
         };
         vm.prices = null;
+
+        if (!$rootScope.isMapState()) {
+            $rootScope.isDrawArea = false;
+        }
+
+        if (vm.spot.web_sites[0].length) {
+            for (var i = 0; i < vm.spot.web_sites.length; i++) {
+                if (vm.spot.web_sites[i].indexOf('https://seatgeek.com/venues') === 0) {
+                    spot.venues = vm.spot.web_sites[i];
+                } else if (vm.spot.web_sites[i].indexOf('https://seatgeek.com') === 0) {
+                    spot.tickets = vm.spot.web_sites[i];
+                }
+            }
+        }
 
         if($rootScope.$state.params.spot_slug && $rootScope.$state.params.spot_slug !== vm.spot.slug) {
             var user_id = $rootScope.$state.params.user_id;
