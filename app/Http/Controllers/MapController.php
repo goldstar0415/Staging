@@ -177,7 +177,8 @@ class MapController extends Controller {
                 'category_name' => $typesCache[$spot->spot_type_category_id],
                 'minrate' => $spot->minrate,
                 'maxrate' => $spot->maxrate,
-                'currencycode' => $spot->currencycode
+                'currencycode' => $spot->currencycode,
+                'cover_url'    => $spot->cover
             ];
         }
         return $points;

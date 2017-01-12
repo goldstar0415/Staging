@@ -9,7 +9,9 @@ use App\Extensions\StartEndDatesTrait;
 use App\Scopes\ApprovedScopeTrait;
 use App\Scopes\NewestScopeTrait;
 use App\Services\SocialSharing;
+use App\Spot;
 use App\SpotVote;
+use App\RemotePhoto;
 use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use DB;
@@ -59,6 +61,7 @@ class SpotView extends BaseModel
 {
     protected $table = 'mv_spots_spot_points';
 
+    protected $appnds = ['cover'];
     public $timestamps = false;
     /**
      * Get the points for the spot
@@ -79,4 +82,47 @@ class SpotView extends BaseModel
             ->selectRaw('avg(vote) as rating, spot_id')
             ->groupBy('spot_id');
     }
+    
+    public function getCoverAttribute()
+    {
+        $cover_url = null;
+        $rph = RemotePhoto::where('associated_type', Spot::class)
+                ->where('associated_id', $this->id)
+                ->orderBy('image_type', 'desc')
+                ->orderBy('created_at', 'asc')
+                ->first();
+        if( $rph )
+        {
+            $cover_url = $rph->url;
+        }
+        if( !$cover_url )
+        {
+            $spot = new Spot();
+            $spot->id = $this->id;
+            $spotInfo = $spot->getSpotExtension();
+            $bookingUrl = (isset($spotInfo->booking_url))?$spot->getBookingUrl($spotInfo->booking_url):false;
+            if(
+                isset($spotInfo->booking_url) && 
+                $spot->checkUrl($spotInfo->booking_url) && 
+                $bookingUrl &&
+                $bookingPageContent = $spot->getPageContent($bookingUrl, [
+                    'headers' => $spot->getBookingHeaders()
+                ])
+            )
+            {
+                $cover_url = $result['cover_url'] = $spot->getBookingCover($bookingPageContent);
+            }
+        }
+        
+        if ( !$cover_url ) {
+            $spot = Spot::where('id', $this->id)->first();
+            if($spot)
+            {
+                $cover_url = $spot->getPictureUrls('cover');
+            }
+        }
+        return $cover_url;
+    }
+        
+        
 }

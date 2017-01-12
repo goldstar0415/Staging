@@ -123,7 +123,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getCoverUrlAttribute()
     {
         $covers = [];
-        if($rph = $this->remotePhotos()->where('image_type', 1)->first())
+        if($rph = $this->remotePhotos()->orderBy('image_type', 'desc')->first())
         {
             $url = $rph->url;
             $covers = [

@@ -135,7 +135,7 @@ abstract class SpotsImport extends Job implements SelfHandling
             {
                 $spot->description = $imported_spot->description;
             }
-            if (!empty($imported_spot->website)) 
+            if (!empty($imported_spot->website))
             {
                 $spot->web_sites = [$imported_spot->website];
             }
@@ -154,7 +154,7 @@ abstract class SpotsImport extends Job implements SelfHandling
             if (!is_null($owner)) 
             {
                 $owner->spots()->save($spot);
-            } 
+            }
             else 
             {
                 $spot->save();
@@ -174,7 +174,6 @@ abstract class SpotsImport extends Job implements SelfHandling
                     ]);
                 }
             }
-            
             if ( !empty($imported_spot->tags)) 
             {
                 $tags = explode(';', $imported_spot->tags);

@@ -595,7 +595,8 @@ class SpotController extends Controller
         
         $query = RemotePhoto::where('associated_type', Spot::class)
                 ->where('associated_id', $spot->id)
-                ->where('image_type', 1);
+                ->orderBy('image_type', 'desc')
+                ->orderBy('created_at', 'asc');
         if( $query->exists() )
         {
             $result['cover_url'] = $query->first();
