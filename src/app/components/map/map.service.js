@@ -1926,7 +1926,11 @@
         var spot = spot.spot ? spot.spot : spot;
         var scope = $rootScope.$new();
         if (spot.minrate) {
-            spot.price = Math.round(fx(spot.minrate).from(spot.currencycode).to("USD"));
+            if (!_.isEmpty(fx.rates)) {
+                spot.price = '$' + Math.round(fx(spot.minrate).from(spot.currencycode).to("USD"));
+            } else {
+                spot.price = Math.round(spot.minrate) + ' ' + spot.currencycode;
+            }
         }
         scope.item = spot;
         scope.marker = marker;
@@ -1941,12 +1945,10 @@
         var template = '<div>\
                             <p class="plate-name">{{item.title}}</p>\
                             <p class="plate-stars"><stars item="item"></stars></p>\
-                            <p class="plate-info price" ng-if="item.minrate">${{item.price}}<span>avg/nt</span></p>\
+                            <p class="plate-info price" ng-if="item.minrate">{{item.price}}<span>avg/nt</span></p>\
                             <p class="plate-info" ng-if="!item.minrate">{{item.category.name}}</p>\
                             <img width="50" height="50" src="{{image}}" />\
                         </div>';
-                        // Math.floor(fx(2200).from("RUB").to("USD"))
-                        // <p class="plate-info price" ng-if="item.minrate">$' + spot.minrate + '<span>avg/nt</span></p>\
         var popupContent = $compile(template)(scope);
         var popup = L.popup(options).setContent(popupContent[0]);
         marker.bindPopup(popup);
