@@ -35,6 +35,15 @@
             vm.openInviteModal = openInviteModal;
             vm.openShareModal = openShareModal;
             vm.openSpot = openSpot;
+
+            if (vm.item.minrate) {
+                if (!_.isEmpty(fx.rates)) {
+                    vm.item.price = '$' + Math.round(fx(vm.item.minrate).from(vm.item.currencycode).to("USD"));
+                } else {
+                    vm.item.price = Math.round(vm.item.minrate) + ' ' + vm.item.currencycode;
+                }
+            }
+
             function getImg() {
                 $http.get(API_URL + '/spots/' + vm.item.spot_id + '/cover')
                     .success(function success(data) {

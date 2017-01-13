@@ -132,7 +132,9 @@
             </div>
             <div class="overview tags" ng-if="Spot.spot.tags.length > 0">
                 <h1>Tags:</h1>
-                <p ng-repeat="tag in Spot.spot.tags">{{tag.name}}</p>
+                <div>
+                    <p ng-repeat="tag in Spot.spot.tags" class="spot-tag">{{tag.name}}</p>
+                </div>
             </div>
             <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
               <li ng-repeat="link in Spot.spot.videos track by $index" class="video-size">

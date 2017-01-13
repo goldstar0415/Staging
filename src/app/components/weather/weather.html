@@ -40,14 +40,14 @@
     </p>
     <div class="weather-hourly">
         <div class="hour" ng-repeat="hour in Weather.data.hourly.data | weatherByDay : Weather.selected.time : Weather.data.offset">
-            <p class="time">{{hour.time * 1000 | date : 'HH:mm'}}</p>
+            <p class="time">{{hour.time * 1000 | date : 'hh:mm a'}}</p>
             <div>
                 <div class="icon">
-                    <skycon icon="hour.icon" size="50" color="Weather.color"></skycon>
+                    <skycon icon="hour.icon" size="40" color="Weather.color"></skycon>
                 </div>
                 <div class="small-degrees">
                     <p>{{hour.temperature | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}</p>
-                    <span>{{hour.apparentTemperature | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}</span>
+                    <!-- <span>{{hour.apparentTemperature | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}</span> -->
                 </div>
             </div>
         </div>
