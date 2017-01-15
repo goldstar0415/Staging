@@ -39,7 +39,7 @@
     }
 
     /** @ngInject */
-    function SpotController($location, $modal, $stateParams, Spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share, AsyncLoaderService, toastr) {
+    function SpotController($location, $modal, $stateParams, Spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share, AsyncLoaderService, toastr, S3_URL) {
         var vm = this;
         var spot = null;
         if ($rootScope.openedSpot) {
@@ -221,18 +221,34 @@
         vm.pagination = new ScrollService(SpotComment.query, vm.comments, params);
         vm.reviewsPagination = new ScrollService(SpotReview.query, vm.votes, params);
         // ShowMarkers([vm.spot]);
+        
+        function getRandomInt(min, max)
+        {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
 
         function setImage() {
-            if (vm.spot.category.type.name === 'food') {
-                if (false) {
+            var category = vm.category;
+            var type = (category)?vm.spot.category.type.name:null;
+            if ( category &&
+                (type === 'food' || 
+                 type === 'shelter')) 
+            {
+                if (false) 
+                {
                     return vm.spot.cover_url.original;
-                } else {
-                    var imgnum = Math.floor(vm.spot.id % 33);
-                    return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
+                } 
+                else 
+                {   var max = (type === 'food')?32:84;
+                    var imgnum = getRandomInt(0, max);
+                    return S3_URL + '/assets/img/placeholders/' + type + '/' + imgnum + '.jpg';
                 }
-            } else {
+            }
+            else
+            {
                 return vm.spot.cover_url.original;
             }
+            
         }
 
         /*
