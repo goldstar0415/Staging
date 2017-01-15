@@ -86,6 +86,7 @@ class SpotView extends BaseModel
     public function getCoverAttribute()
     {
         $cover_url = null;
+        // Cover from remote service
         $rph = RemotePhoto::where('associated_type', Spot::class)
                 ->where('associated_id', $this->id)
                 ->orderBy('image_type', 'desc')
@@ -95,7 +96,8 @@ class SpotView extends BaseModel
         {
             $cover_url = $rph->url;
         }
-        if( !$cover_url )
+        // Cover from booking (disabled)
+        /*if( !$cover_url )
         {
             $spot = new Spot();
             $spot->id = $this->id;
@@ -112,8 +114,8 @@ class SpotView extends BaseModel
             {
                 $cover_url = $result['cover_url'] = $spot->getBookingCover($bookingPageContent);
             }
-        }
-        
+        }*/
+        // Cover from spot
         if ( !$cover_url ) {
             $spot = Spot::where('id', $this->id)->first();
             if($spot)

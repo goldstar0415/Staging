@@ -1488,7 +1488,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             $this->getYelpReviewsFromPage($saveReviews);
             $result['info']['yelp'] = $yelpInfo;
-        }
+        } 
         $spotInfo = $this->getSpotExtension();
         if(!empty($spotInfo->booking_url))
         {
