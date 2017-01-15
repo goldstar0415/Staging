@@ -20,7 +20,7 @@
         };
 
         /** @ngInject */
-        function SpotCardController($rootScope, $http, $scope, SpotService, MapService, API_URL, InviteFriends, Share) {
+        function SpotCardController($rootScope, $http, $scope, SpotService, MapService, API_URL, InviteFriends, Share, S3_URL) {
             var vm = this;
             vm.saveToCalendar = SpotService.saveToCalendar;
             vm.removeFromCalendar = SpotService.removeFromCalendar;
@@ -42,6 +42,11 @@
                 } else {
                     vm.item.price = Math.round(vm.item.minrate) + ' ' + vm.item.currencycode;
                 }
+            }
+            
+            function getRandomInt(min, max)
+            {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
             }
 
             function getImg() {
@@ -80,12 +85,15 @@
             }
 
             function setImage(item) {
-                if (item.category_name === 'Food' || (item.category && item.category.type.display_name == 'Food')) {
+                var category = item.category;
+                var type = (category)?vm.spot.category.type.name:null;
+                if (item.category_name === 'Food' || (category && (type == 'food' || type== 'shelter'))) {
                     if (false) {
                         return item.cover_url.original;
                     } else {
-                        var imgnum = Math.floor(item.id % 33);
-                        return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
+                        var max = (type === 'food')?32:84;
+                        var imgnum = getRandomInt(0, max);
+                        return S3_URL + '/assets/img/placeholders/' + type + '/' + imgnum + '.jpg';
                     }
                 } else {
                     if (item.cover_url && item.cover_url.original !== "https://testback.zoomtivity.com/uploads/missings/covers/original/missing.png") {
