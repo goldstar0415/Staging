@@ -89,6 +89,18 @@
       var GeocodingSearchUrl = '//open.mapquestapi.com/nominatim/v1/search.php?format=json&key=' + GEOCODING_KEY + '&addressdetails=1&limit=3&q=';
       var GeocodingReverseUrl = '//open.mapquestapi.com/nominatim/v1/reverse.php?format=json&key=' + GEOCODING_KEY;
 
+      function closeAll() {
+        //   L.DomEvent.stopPropagation(e);
+        //   L.DomEvent.preventDefault(e);
+          ClearSelections();
+          map.closePopup();
+          cancelHttpRequest();
+          $rootScope.isDrawArea = false;
+          angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
+          $rootScope.toggleSidebar(false);
+          $rootScope.setOpenedSpot(null);
+      }
+
       function setMarkerIcon(spot, isHighlighted) {
           var image = '';
           if (spot) {
@@ -132,13 +144,10 @@
 
           var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
           var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-          var elem = document.querySelectorAll('.show-info > img')[0];
           if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
               requestFullScreen.call(docEl);
-              elem.src = '../../assets/img/svg/fullscreen2.svg';
           } else {
               cancelFullScreen.call(doc);
-              elem.src = '../../assets/img/svg/fullscreen.svg';
           }
       }
 
@@ -339,23 +348,19 @@
       // Lasso controls
       L.Control.lasso = L.Control.extend({
         options: {
-          position: 'bottomleft',
-          title: {
-            'false': 'Lasso selection',
-            'true': 'Lasso selection'
-          }
+          position: 'bottomleft'
         },
         onAdd: function (map) {
-            var container = L.DomUtil.create('div', 'map-tools');
-
-            this.link = L.DomUtil.create('div', 'lasso-selection', container);
-            var img = L.DomUtil.create('img', '', this.link);
-            img.src = "../../assets/img/svg/Lasso.svg";
-            this.link.href = '#';
+            var scope = $rootScope.$new();
+            var template = '    <div tooltip="Lasso Selection" tooltip-placement="right" class="map-tools">\
+                                    <div class="lasso-selection">\
+                                        <img src="../../assets/img/svg/Lasso.svg"/>\
+                                    </div>\
+                                </div>';
+            var btn = $compile(template)(scope);
             this._map = map;
-
-            L.DomEvent.on(this.link, 'click', this._click, this);
-            return container;
+            L.DomEvent.on(btn[0], 'click', this._click, this);
+            return btn[0];
         },
 
         _click: function (e) {
@@ -383,17 +388,6 @@
                 fill: false
               }).addTo(drawLayer);
 
-            //var popup = RemoveMarkerPopup(
-            //  function () {
-            //    drawLayer.removeLayer(poly);
-            //    var bboxes = GetDrawLayerBBoxes();
-            //    GetDataByBBox(bboxes);
-            //  },
-            //  function () {
-            //    poly.closePopup();
-            //  });
-            //
-            //poly.bindPopup(popup);
             snapRemote.enable();
 
             var bboxes = GetDrawLayerBBoxes();
@@ -411,23 +405,19 @@
       // Radius controls
       L.Control.radius = L.Control.extend({
         options: {
-          position: 'bottomleft',
-          title: {
-            'false': 'Radius selection',
-            'true': 'Radius selection'
-          }
+          position: 'bottomleft'
         },
         onAdd: function (map) {
-            var container = L.DomUtil.create('div', 'map-tools');
-
-            this.link = L.DomUtil.create('div', 'radius-selection', container);
-            var img = L.DomUtil.create('img', '', this.link);
-            img.src = "../../assets/img/svg/Radius.svg";
-            this.link.href = '#';
+            var scope = $rootScope.$new();
+            var template = '    <div tooltip="Radius Selection" tooltip-placement="right" class="map-tools">\
+                                    <div class="radius-selection">\
+                                        <img src="../../assets/img/svg/Radius.svg"/>\
+                                    </div>\
+                                </div>';
+            var btn = $compile(template)(scope);
             this._map = map;
-
-            L.DomEvent.on(this.link, 'click', this._click, this);
-            return container;
+            L.DomEvent.on(btn[0], 'click', this._click, this);
+            return btn[0];
         },
         _click: function (e) {
             var el = document.querySelector('.pick-notification');
@@ -447,18 +437,6 @@
               opacity: 0.0,
               fill: false,
             });
-
-            //var popup = RemoveMarkerPopup(
-            //  function () {
-            //    drawLayer.removeLayer(circle);
-            //    var bboxes = GetDrawLayerBBoxes();
-            //    GetDataByBBox(bboxes);
-            //  },
-            //  function () {
-            //    circle.closePopup();
-            //  });
-            //
-            //circle.bindPopup(popup);
 
             circle.addTo(drawLayer);
 
@@ -489,23 +467,19 @@
       // Path controls
       L.Control.path = L.Control.extend({
         options: {
-          position: 'bottomleft',
-          title: {
-            'false': 'Path selection',
-            'true': 'Path selection'
-          }
+          position: 'bottomleft'
         },
         onAdd: function (map) {
-            var container = L.DomUtil.create('div', 'map-tools');
-
-            this.link = L.DomUtil.create('div', 'path-selection', container);
-            var img = L.DomUtil.create('img', '', this.link);
-            img.src = "../../assets/img/svg/Road_icon.svg";
-            this.link.href = '#';
+            var scope = $rootScope.$new();
+            var template = '    <div tooltip="Path Selection" tooltip-placement="right" class="map-tools">\
+                                    <div class="path-selection">\
+                                        <img src="../../assets/img/svg/Road_icon.svg"/>\
+                                    </div>\
+                                </div>';
+            var btn = $compile(template)(scope);
             this._map = map;
-
-            L.DomEvent.on(this.link, 'click', this._click, this);
-            return container;
+            L.DomEvent.on(btn[0], 'click', this._click, this);
+            return btn[0];
         },
         _click: function (e) {
             var el = document.querySelector('.pick-notification');
@@ -530,59 +504,22 @@
         return new L.Control.path(options);
       };
 
-      // Share selection
-      //L.Control.shareSelection = L.Control.extend({
-      //  options: {
-      //    position: 'topright',
-      //    title: {
-      //      'false': 'Share selection',
-      //      'true': 'Share selection'
-      //    }
-      //  },
-      //  onAdd: function (map) {
-      //    var container = L.DomUtil.create('div', 'map-tools map-tools-top hide-tools');
-      //
-      //    this.link = L.DomUtil.create('div', 'share-selection', container);
-      //    this.link.href = '#';
-      //    this._map = map;
-      //
-      //    L.DomEvent.on(this.link, 'click', this._click, this);
-      //    return container;
-      //  },
-      //  _click: function (e) {
-      //    if ($rootScope.currentUser) {
-      //      L.DomEvent.stopPropagation(e);
-      //      L.DomEvent.preventDefault(e);
-      //      OpenSaveSelectionsPopup(true);
-      //    } else {
-      //      SignUpService.openModal('SignUpModal.html');
-      //    }
-      //  }
-      //});
-      //L.Control.ShareSelection = function (options) {
-      //  return new L.Control.shareSelection(options);
-      //};
-
       // Save selection
       L.Control.saveSelection = L.Control.extend({
         options: {
-          position: 'topleft',
-          title: {
-            'false': 'Save selection',
-            'true': 'Save selection'
-          }
+          position: 'topleft'
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools-top hidden');
-
-          this.link = L.DomUtil.create('div', 'save-selection', container);
-          var img = L.DomUtil.create('img', '', this.link);
-          img.src = "../../assets/img/svg/floppy-disk-save-file.svg";
-          this.link.href = '#';
+          var scope = $rootScope.$new();
+          var template = '    <div tooltip="Save Selection" tooltip-placement="bottom" class="map-tools-top hidden">\
+                                  <div class="save-selection">\
+                                      <img src="../../assets/img/svg/floppy-disk-save-file.svg"/>\
+                                  </div>\
+                              </div>';
+          var btn = $compile(template)(scope);
           this._map = map;
-
-          L.DomEvent.on(this.link, 'click', this._click, this);
-          return container;
+          L.DomEvent.on(btn[0], 'click', this._click, this);
+          return btn[0];
         },
         _click: function (e) {
           if ($rootScope.currentUser) {
@@ -599,26 +536,23 @@
       L.Control.SaveSelection = function (options) {
         return new L.Control.saveSelection(options);
       };
+
       // Clean selection
       L.Control.clearSelection = L.Control.extend({
         options: {
-          position: 'topleft',
-          title: {
-            'false': 'Clear selection',
-            'true': 'Clear selection'
-          }
+          position: 'topleft'
         },
         onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools-top hidden');
-
-          this.link = L.DomUtil.create('div', 'clear-selection', container);
-          var img = L.DomUtil.create('img', '', this.link);
-          img.src = "../../assets/img/svg/cancel-button.svg";
-          this.link.href = '#';
-          this._map = map;
-
-          L.DomEvent.on(this.link, 'click', this._click, this);
-          return container;
+            var scope = $rootScope.$new();
+            var template = '    <div tooltip="Clean Selection" tooltip-placement="bottom" ng-show="$root.sortLayer != \'weather\'" class="map-tools-top hidden">\
+                                    <div class="clear-selection">\
+                                        <img src="../../assets/img/svg/cancel-button.svg"/>\
+                                    </div>\
+                                </div>';
+            var btn = $compile(template)(scope);
+            this._map = map;
+            L.DomEvent.on(btn[0], 'click', this._click, this);
+            return btn[0];
         },
         _click: function (e) {
             $rootScope.sidebarMessage = "Loading...";
@@ -651,28 +585,24 @@
 	 */
 	L.Control.focusGeolocation = L.Control.extend({
 		options: {
-			position: 'bottomleft',
-			title: {
-				'false': 'Save selection',
-				'true': 'Save selection'
-			}
+			position: 'bottomleft'
 		},
 		onAdd: function (map) {
-			var container = L.DomUtil.create('div', 'focus-geolocation-container');
-
-			this.link = L.DomUtil.create('div', 'focus-geolocation map-tools', container);
-            var img = L.DomUtil.create('img', '', this.link);
-            img.src = "../../assets/img/center.png";
-			this.link.href = '#';
-			this._map = map;
-
-			L.DomEvent.on(this.link, 'click', this._click, this);
-			return container;
+            var scope = $rootScope.$new();
+            var template = '    <div tooltip="Focus Geolocation" tooltip-placement="right" class="focus-geolocation-container">\
+                                    <div class="focus-geolocation map-tools">\
+                                        <img src="../../assets/img/center.png"/>\
+                                    </div>\
+                                </div>';
+            var btn = $compile(template)(scope);
+            this._map = map;
+            L.DomEvent.on(btn[0], 'click', this._click, this);
+            return btn[0];
 		},
 		_click: function (e) {
 			LocationService.getUserLocation().then(function(location) {
 				$rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
-				FocusMapToGivenLocation($rootScope.currentLocation, 16);
+				FocusMapToGivenLocation($rootScope.currentLocation, 14);
 			});
 		}
 	});
@@ -687,13 +617,14 @@
       },
       onAdd: function (map) {
           var scope = $rootScope.$new();
-          var btn = $compile('<div tooltip="Toggle radar" tooltip-placement="left" ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="toggle-button" ng-class="{\'active\': $root.isRadarShown}">\
-                                  <div>off</div>\
-                                  <div class="show-weather">\
-                                      <img src="../../assets/img/svg/radar.svg"/>\
-                                  </div>\
-                                  <div>on</div>\
-                              </div>')(scope);
+          var template = '  <div tooltip="Toggle Radar" tooltip-placement="left" ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="toggle-button" ng-class="{\'active\': $root.isRadarShown}">\
+                                <div>off</div>\
+                                <div class="show-weather">\
+                                    <img src="../../assets/img/svg/radar.svg"/>\
+                                </div>\
+                                <div>on</div>\
+                            </div>';
+          var btn = $compile(template)(scope);
           this._map = map;
           L.DomEvent.on(btn[0], 'click', this._click, this);
           return btn[0];
@@ -715,13 +646,14 @@
       },
       onAdd: function (map) {
           var scope = $rootScope.$new();
-          var btn = $compile('<div tooltip="Toggle units" tooltip-placement="left" ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="toggle-button" ng-class="{\'active\': $root.weatherUnits === \'si\'}">\
-                                  <div>°C</div>\
-                                  <div class="show-weather">\
-                                      <img src="../../assets/img/svg/temperature.svg"/>\
-                                  </div>\
-                                  <div>°F</div>\
-                              </div>')(scope);
+          var template = '  <div tooltip="Toggle Units" tooltip-placement="left" ng-show="$root.sortLayer == \'weather\' && $root.isMapState()" class="toggle-button" ng-class="{\'active\': $root.weatherUnits === \'si\'}">\
+                                <div>°F</div>\
+                                <div class="show-weather">\
+                                    <img src="../../assets/img/svg/temperature.svg"/>\
+                                </div>\
+                                <div>°C</div>\
+                            </div>';
+          var btn = $compile(template)(scope);
           this._map = map;
           L.DomEvent.on(btn[0], 'click', this._click, this);
           return btn[0];
@@ -743,32 +675,23 @@
 //fullScreen
     L.Control.fullScreen = L.Control.extend({
       options: {
-        position: 'bottomleft',
-        title: {
-          'false': 'Save selection',
-          'true': 'Save selection'
-        }
+        position: 'bottomleft'
       },
       onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'fullscreen-container');
-
-          this.link = L.DomUtil.create('div', 'fullscreen', container);
-          var img = L.DomUtil.create('img', '', this.link);
-          if ($rootScope.isFullScreen) {
-              img.src = "../../assets/img/svg/fullscreen2.svg";
-          } else {
-              img.src = "../../assets/img/svg/fullscreen.svg";
-          }
-          this.link.href = '#';
+          var scope = $rootScope.$new();
+          var template = '    <div tooltip="Toggle Fullscreen" tooltip-placement="right" class="fullscreen-container">\
+                                  <div class="fullscreen">\
+                                      <img ng-src="../../assets/img/svg/fullscreen{{!$root.isFullScreen ? \'\' : \'2\' }}.svg"/>\
+                                  </div>\
+                              </div>';
+          var btn = $compile(template)(scope);
           this._map = map;
-
-          L.DomEvent.on(this.link, 'click', this._click, this);
-
-          return container;
+          L.DomEvent.on(btn[0], 'click', this._click, this);
+          return btn[0];
       },
       _click: function(e) {
                 toggleFullScreen();
-          }
+      }
     });
     L.Control.FullScreen = function (options) {
       return new L.Control.fullScreen(options);
@@ -777,31 +700,25 @@
 //filter
     L.Control.filter = L.Control.extend({
         options: {
-          position: 'topleft',
-          title: {
-            'false': 'Clear selection',
-            'true': 'Clear selection'
-          }
+          position: 'topleft'
         },
       onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools-top hidden');
-
-          this.link = L.DomUtil.create('div', 'filter-selection', container);
-          var img = L.DomUtil.create('img', '', this.link);
-          img.src = "../../assets/img/svg/filter.svg";
-          this.link.href = '#';
-          this._map = map;
-
-          L.DomEvent.on(this.link, 'click', this._click, this);
-          return container;
+        var scope = $rootScope.$new();
+        var template = '    <div tooltip="Show Filter" tooltip-placement="bottom" class="map-tools-top hidden">\
+                                <div class="filter-selection">\
+                                    <img src="../../assets/img/svg/filter.svg"/>\
+                                </div>\
+                            </div>';
+        var btn = $compile(template)(scope);
+        this._map = map;
+        L.DomEvent.on(btn[0], 'click', this._click, this);
+        return btn[0];
       },
       _click: function (e) {
           if ($rootScope.isSidebarOpened && $rootScope.mapSortSpots.sourceSpots.length) {
             $rootScope.isFilterOpened = true;
             $rootScope.$apply();
           }
-        //   debugger;
-        //   $rootScope.getCategoryData();
       }
     });
     L.Control.Filter = function (options) {
@@ -811,23 +728,19 @@
 //back
     L.Control.back = L.Control.extend({
         options: {
-          position: 'topleft',
-          title: {
-            'false': 'Clear selection',
-            'true': 'Clear selection'
-          }
+          position: 'topleft'
         },
       onAdd: function (map) {
-          var container = L.DomUtil.create('div', 'map-tools-back');
-
-          this.link = L.DomUtil.create('div', 'save-selection', container);
-          var img = L.DomUtil.create('img', '', this.link);
-          img.src = "../../assets/img/svg/back.svg";
-          this.link.href = '#';
+          var scope = $rootScope.$new();
+          var template = '    <div tooltip="Back to Map" tooltip-placement="bottom" class="map-tools-back">\
+                                  <div class="save-selection">\
+                                      <img src="../../assets/img/svg/back.svg"/>\
+                                  </div>\
+                              </div>';
+          var btn = $compile(template)(scope);
           this._map = map;
-
-          L.DomEvent.on(this.link, 'click', this._click, this);
-          return container;
+          L.DomEvent.on(btn[0], 'click', this._click, this);
+          return btn[0];
       },
       _click: function (e) {
           L.DomEvent.stopPropagation(e);
@@ -2013,7 +1926,11 @@
         var spot = spot.spot ? spot.spot : spot;
         var scope = $rootScope.$new();
         if (spot.minrate) {
-            spot.price = Math.round(fx(spot.minrate).from(spot.currencycode).to("USD"));
+            if (!_.isEmpty(fx.rates)) {
+                spot.price = '$' + Math.round(fx(spot.minrate).from(spot.currencycode).to("USD"));
+            } else {
+                spot.price = Math.round(spot.minrate) + ' ' + spot.currencycode;
+            }
         }
         scope.item = spot;
         scope.marker = marker;
@@ -2028,12 +1945,10 @@
         var template = '<div>\
                             <p class="plate-name">{{item.title}}</p>\
                             <p class="plate-stars"><stars item="item"></stars></p>\
-                            <p class="plate-info price" ng-if="item.minrate">${{item.price}}<span>avg/nt</span></p>\
+                            <p class="plate-info price" ng-if="item.minrate">{{item.price}}<span>avg/nt</span></p>\
                             <p class="plate-info" ng-if="!item.minrate">{{item.category.name}}</p>\
                             <img width="50" height="50" src="{{image}}" />\
                         </div>';
-                        // Math.floor(fx(2200).from("RUB").to("USD"))
-                        // <p class="plate-info price" ng-if="item.minrate">$' + spot.minrate + '<span>avg/nt</span></p>\
         var popupContent = $compile(template)(scope);
         var popup = L.popup(options).setContent(popupContent[0]);
         marker.bindPopup(popup);
@@ -2212,7 +2127,7 @@
 			LocationService.getUserLocation().then(function(location) {
 				$rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
 				$rootScope.currentCountryCode = location.countryCode ? location.countryCode : 'N/A';
-				FocusMapToGivenLocation($rootScope.currentLocation, 16, true);
+				FocusMapToGivenLocation($rootScope.currentLocation, 14, true);
 			});
 		}
 
@@ -2892,7 +2807,9 @@
         clearSpotHighlighting: clearSpotHighlighting,
 
         getWeatherLatLng: getWeatherLatLng,
-        showWeatherMarkers: showWeatherMarkers
+        showWeatherMarkers: showWeatherMarkers,
+
+        closeAll: closeAll
       };
     });
 
