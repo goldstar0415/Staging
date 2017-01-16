@@ -50,7 +50,7 @@
             }
 
             function getImg() {
-                $http.get(API_URL + '/spots/' + vm.item.spot_id + '/cover')
+                $http.get(API_URL + '/spots/' + vm.item.id + '/cover')
                     .success(function success(data) {
                         if (data.cover_url) {
                             vm.image = data.cover_url.url;
@@ -83,25 +83,42 @@
             function closeMenu() {
                 vm.isMenuOpened = false;
             }
-
+            
             function setImage(item) {
-                var category = item.category;
-                var type = (category)?vm.spot.category.type.name:null;
-                if (item.category_name === 'Food' || (category && (type == 'food' || type== 'shelter'))) {
-                    if (false) {
-                        return item.cover_url.original;
-                    } else {
-                        var max = (type === 'food')?32:84;
-                        var imgnum = getRandomInt(0, max);
-                        return S3_URL + '/assets/img/placeholders/' + type + '/' + imgnum + '.jpg';
+                if(item.type)
+                {
+                    var type = item.type;
+                    var url = item.cover_url;
+                }
+                if(item.category)
+                {
+                    var type = item.category.type.name;
+                    var url = item.cover_url.original;
+                }
+                
+                var hc = false;
+                if(url.length)
+                {
+                    var urlAttr = url.split('/');
+                    var lastAttr = urlAttr[urlAttr.length - 1];
+                    if(lastAttr != 'missing.png')
+                    {
+                        hc = true;
                     }
+                }
+                if (hc)
+                {
+                        return url;
+                }
+                if (type == 'food' || type== 'shelter') {
+                    var max = (type === 'food')?32:84;
+                    var imgnum = getRandomInt(0, max);
+                    return S3_URL + '/assets/img/placeholders/' + type + '/' + imgnum + '.jpg';
                 } else {
-                    if (item.cover_url && item.cover_url.original !== "https://testback.zoomtivity.com/uploads/missings/covers/original/missing.png") {
-                        return item.cover_url.original;
-                    } else {
-                        vm.getImg();
-                        return "https://testback.zoomtivity.com/uploads/missings/covers/original/missing.png";
-                    }
+                    console.log(item);
+                    vm.getImg();
+                    return "https://testback.zoomtivity.com/uploads/missings/covers/original/missing.png";
+
                 }
             }
 

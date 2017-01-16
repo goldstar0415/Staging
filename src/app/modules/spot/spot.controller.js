@@ -74,7 +74,7 @@
             $rootScope.isDrawArea = false;
         }
 
-        if (vm.spot.web_sites[0].length) {
+        if (vm.spot.web_sites && vm.spot.web_sites[0].length) {
             for (var i = 0; i < vm.spot.web_sites.length; i++) {
                 if (vm.spot.web_sites[i].indexOf('https://seatgeek.com/venues') === 0) {
                     spot.venues = vm.spot.web_sites[i];
@@ -104,11 +104,19 @@
                 vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
             });
         }
-        AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/ratings').then(function(data) {
-            vm.reviews_total = data;
-            vm.spot.rating = data.total.rating;
-        });
-
+        
+        if(vm.spot.reviews_total)
+        {
+            vm.reviews_total = vm.spot.reviews_total;
+            vm.spot.rating = vm.spot.reviews_total.total.rating;
+        }
+        else
+        {
+            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/ratings').then(function(data) {
+                vm.reviews_total = data;
+                vm.spot.rating = data.total.rating;
+            });
+        }
 
         vm.initDates = function() {
             var now = new Date(Date.now());
