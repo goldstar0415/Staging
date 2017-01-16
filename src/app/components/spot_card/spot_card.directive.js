@@ -97,7 +97,7 @@
                 }
                 
                 var hc = false;
-                if(url.length)
+                if(typeof url == 'string' && url.length)
                 {
                     var urlAttr = url.split('/');
                     var lastAttr = urlAttr[urlAttr.length - 1];
