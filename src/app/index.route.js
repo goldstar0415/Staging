@@ -280,7 +280,8 @@
             return $ocLazyLoad.load(versionize([
               'cropper',
               'uploader',
-              '/app/modules/spot/spot_create/spotCreate.controller.js'
+              'location-bloodhound',
+              '/app/modules/spot/spot_create/spotCreate.controller.js',
             ]));
           }]
         },

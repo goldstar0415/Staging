@@ -1,0 +1,54 @@
+.twitter-typeahead {
+	width: 100%;
+	input {
+		min-height: 5rem;
+		padding: 1.5rem;
+	}
+	.nav-search {
+		width: 100% !important;
+		background-color: #fff;
+	}
+	.tt-menu {
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		border-radius: 8px;
+		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+		margin: 12px 0;
+		padding: 8px 0;
+		width: 100%;
+		background: #fff;
+		.tt-suggestion {
+			font-size: 14px;
+			@media all and (max-width: 959px) and (min-width: 600px) {
+				font-size: 3vw;
+			}
+			@media all and (max-width: 599px) and (min-width: 50px) {
+				font-size: 2.4vw;
+			}
+			line-height: 24px;
+			padding: 3px 20px;
+			&:hover {
+				background-color: #0097cf;
+				color: #fff;
+				cursor: pointer;
+			}
+			&.tt-cursor {
+				background-color: #0097cf;
+				color: #fff;
+			}
+			.group-title {
+				float: right;
+			}
+		}
+		&.is-loading {
+			background: #fff url(../img/spinner.gif) center no-repeat;
+			min-height: 60px;
+			display: block !important;
+			@media all and (min-width : 768px) {
+				min-height: 200px;
+			}
+			.tt-suggestion {
+				visibility: hidden;
+			}
+		}
+	}
+}
