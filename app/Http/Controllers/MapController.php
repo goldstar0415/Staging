@@ -9,12 +9,14 @@ use App\Http\Requests\WeatherRequest;
 use App\Spot;
 use App\SpotView;
 use App\SpotPoint;
+use App\SpotType;
 use App\SpotTypeCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Nwidart\ForecastPhp\Forecast;
 use Log;
 use DB;
+use Cache;
 use App\Http\Controllers\Event;
 use App\Http\Requests;
 use GuzzleHttp\Client;
@@ -154,15 +156,28 @@ class MapController extends Controller {
         $spotsArr = $spots->skip(0)->take(1000)->get();
         // cache cetegory icon URLs
         $cats = SpotTypeCategory::select("spot_type_categories.id", "spot_type_categories.spot_type_id")->get();
+        //$types = SpotType::get();
+        //
+        //fore
+        //dd($cats);
         $iconsCache = [];
         $typesCache = [];
         foreach ($cats as $c) {
             $iconsCache[$c->id] = $c->icon_url;
-            $typesCache[$c->id] = ($c->type)?$c->type->display_name:null;
+            $typesCache[$c->id]['display_name'] = ($c->type)?$c->type->display_name:null;
+            $typesCache[$c->id]['name'] = ($c->type)?$c->type->name:null;
         }
         $points = [];
         // fill spots
         foreach ($spotsArr as $spot) {
+            
+            $rating = (isset($spot->rating[0])) ? (float)$spot->rating[0]->rating : 0;
+            if(empty($rating) && Cache::has('spot-ratings-' . $spot->id))
+            {
+                $ratingsArr = Cache::get('spot-ratings-' . $spot->id);
+                $rating = $ratingsArr['total']['rating'];
+            }
+            
             $points[] = [
                 'id' => $spot->spot_point_id,
                 'spot_id' => $spot->id,
@@ -174,7 +189,8 @@ class MapController extends Controller {
                 'title' => $spot->title,
                 'address' => $spot->address,
                 'category_icon_url' => $iconsCache[$spot->spot_type_category_id],
-                'category_name' => $typesCache[$spot->spot_type_category_id],
+                'category_name' => $typesCache[$spot->spot_type_category_id]['display_name'],
+                'type' => $typesCache[$spot->spot_type_category_id]['name'],
                 'minrate' => $spot->minrate,
                 'maxrate' => $spot->maxrate,
                 'currencycode' => $spot->currencycode,

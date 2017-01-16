@@ -11,7 +11,9 @@ use App\Scopes\NewestScopeTrait;
 use App\Services\SocialSharing;
 use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
+use Carbon\Carbon;
 use DB;
+use Cache;
 use Eluceo\iCal\Component\Event;
 use Eluceo\iCal\Property\Event\Organizer;
 use Request;
@@ -1474,6 +1476,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getReviewsTotal($saveReviews = true)
     {
         $result = [];
+        if( Cache::has('spot-ratings-' . $this->id))
+        {
+            return Cache::get('spot-ratings-' . $this->id);
+        }
         if( $facebookRating = $this->getFacebookRating())
         {
             $result['info']['facebook'] = $facebookRating;
@@ -1543,6 +1549,9 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $result['total']['rating'] = round((float)$starsSumm, 1);
         $result['total']['reviews_count'] = $reviewsCount;
         
+        $expiresAt = Carbon::now()->addMinutes(60);
+        
+        Cache::put('spot-ratings-' . $this->id, $result, $expiresAt);
         
         return $result;
     }

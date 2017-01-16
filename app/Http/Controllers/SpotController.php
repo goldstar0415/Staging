@@ -32,6 +32,7 @@ use ChrisKonnertz\OpenGraph\OpenGraph;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Carbon\Carbon;
+use Cache;
 
 use App\Http\Requests;
 
@@ -169,7 +170,10 @@ class SpotController extends Controller
                 'amenities',
                 'slug'
                 ]);
-        
+        if(empty($spot->rating))
+        {
+            $spot->reviews_total = Cache::get('spot-ratings-' . $spot->id);
+        }
         if (isset($res->remotePhotos)) {
             foreach($res->remotePhotos as $p) {
                 if (isset($p->url)) {

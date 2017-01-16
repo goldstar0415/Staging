@@ -116,11 +116,12 @@ class SpotView extends BaseModel
             }
         }*/
         // Cover from spot
-        if ( !$cover_url ) {
+        if ( empty($cover_url) ) {
             $spot = Spot::where('id', $this->id)->first();
             if($spot)
             {
-                $cover_url = $spot->getPictureUrls('cover');
+                $cover = $spot->cover_url;
+                $cover_url = $cover['thumb'];
             }
         }
         return $cover_url;
