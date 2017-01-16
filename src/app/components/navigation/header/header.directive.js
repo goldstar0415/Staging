@@ -47,6 +47,10 @@
         vm.isDropdownOpened = false;
         vm.searchValue = '';
 
+        vm.back = function() {
+            MapService.closeAll();
+        }
+
         $scope.$watch(function() {
             return angular.element('.spots-nav').is(':visible')
         }, function() {

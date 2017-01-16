@@ -8,7 +8,7 @@
                 if (inp) {
                     inp *= 1000;
                     var date = new Date(inp);
-                    var dateString = date.getMonth() + '/' + date.getDate();
+                    var dateString = (date.getMonth() + 1) + '/' + date.getDate();
                     if (date.getDate() === new Date(Date.now()).getDate()) {
                         return 'Today';
                     }
