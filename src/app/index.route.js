@@ -229,6 +229,7 @@
               'summernote',
               'cropper',
               'uploader',
+              'location-bloodhound',
               '/app/modules/blog/article_create/articleCreate.controller.js',
             ]));
           }]
@@ -255,6 +256,7 @@
               'summernote',
               'cropper',
               'uploader',
+              'location-bloodhound',
               '/app/modules/blog/article_create/articleCreate.controller.js',
             ]));
           }]
@@ -307,6 +309,7 @@
             return $ocLazyLoad.load(versionize([
               'cropper',
               'uploader',
+              'location-bloodhound',
               '/app/modules/spot/spot_create/spotCreate.controller.js'
             ]));
           }]
@@ -356,6 +359,7 @@
           },
           loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load(versionize([
+              'location-bloodhound',
               '/app/modules/planner/plan_create/planCreate.controller.js'
             ]));
           }]
@@ -381,6 +385,7 @@
           },
           loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load(versionize([
+              'location-bloodhound',
               '/app/modules/planner/plan_create/planCreate.controller.js'
             ]));
           }]
@@ -553,6 +558,7 @@
             return $ocLazyLoad.load(versionize([
               'cropper',
               'uploader',
+              'location-bloodhound',
               '/app/modules/photomap/create_album/createAlbum.controller.js'
             ]));
           }]
@@ -573,6 +579,7 @@
             return $ocLazyLoad.load(versionize([
               'cropper',
               'uploader',
+              'location-bloodhound',
               '/app/modules/photomap/create_album/createAlbum.controller.js'
             ]));
           }]

@@ -26,21 +26,24 @@
 
       var vm = $scope;
       vm.location = {lat: '', lng: ''};
-
-      vm.$on('typeahead:selected', onTypeaheadSelect);
-      vm.$watch('location', watchLocation);
+      var provider = vm.provider || 'google';
 
       (function() {
-        var stop = $interval(function() {
+        var waitForElement = $interval(function() {
           if (vm.$$input) {
             vm.$$input.$element.on('focusin', onFocusin);
-            $interval.cancel(stop);
+            $interval.cancel(waitForElement);
           }
         }, 100);
       })();
 
+      vm.$on('typeahead:selected', onTypeaheadSelect);
+      vm.$on('typeahead:change', onChange);
+      vm.$watch('location', watchLocation);
+
+      vm.setCurrentLocation = setCurrentLocation;
+
       function onTypeaheadSelect($event, $model) {
-        console.log('Ctrl typeahead selected', $event, $model);
         var viewAddress;
         if (provider == 'google') {
           vm.location = {lat: $model.geometry.location.lat, lng: $model.geometry.location.lng};
@@ -57,15 +60,13 @@
       }
 
       function onFocusin() {
-        console.log('onFocusin location', vm.location);
-        if (!validateLocation(vm.location)) {
-          console.log('Click me pls', vm.location);
+        if (!validateLocation(vm.location) || vm.$$input.$getModelValue() == '') {
           MapService.GetMap().on('click', onMapClick);
         }
       }
 
       function onMapClick(event) {
-        if (!validateLocation(vm.location)) {
+        if (!validateLocation(vm.location) || vm.$$input.$getModelValue() == '') {
           vm.location = event.latlng;
 
           moveOrCreateMarker(event.latlng);
@@ -86,7 +87,7 @@
         display(vm.address);
       }
 
-      function setCurrentLocation() { // todo
+      function setCurrentLocation() {
         if (!$rootScope.currentLocation) {
           toastr.error('Geolocation error!');
         } else {
@@ -99,12 +100,12 @@
         }
       }
 
-      function moveOrCreateMarker(latlng) {
+      function moveOrCreateMarker(latLng) {
         if (vm.bindMarker) {
           if (vm.marker) {
-            vm.marker.setLatLng(latlng);
+            vm.marker.setLatLng(latLng);
           } else {
-            createMarker(latlng);
+            createMarker(latLng);
           }
           MapService.GetMap().setView(vm.marker.getLatLng());
         }
@@ -119,7 +120,7 @@
         });
       }
 
-      function removeMarker() { // todo
+      function removeMarker() {
         if (vm.marker) {
           MapService.RemoveMarker(vm.marker);
           vm.marker = null;
@@ -136,19 +137,13 @@
         return location && location.lat && (location.lat+'').trim() != '' && location.lng && (location.lng+'').trim() != '';
       }
 
-      // function onChange() { // todo
-      //   if (!s.viewAddress) {
-      //     removeMarker();
-      //     s.location = null;
-      //     s.address = '';
-      //     s.onEmpty();
-      //   } else {
-      //     s.address = s.viewAddress;
-      //     if (s.addClassOnchange) {
-      //       s.className = className;
-      //     }
-      //   }
-      // }
+      function onChange($event, newValue) {
+        if (!newValue || (newValue+'').trim() == '') {
+          removeMarker();
+          vm.location = null;
+          vm.address = '';
+        }
+      }
 
     }
 
@@ -176,10 +171,12 @@
 
       var suggestionTemplate = "<div><span class='title'>%VALUE%</span></div>";
       var showPreloader = true;
+      var widgetName = 'bloodhound-typeahead-' + Math.floor(Math.random()*1e12); // a random name
+      var suggestionsElementCache = null;
 
       elem
         .typeahead(null, {
-          name: 'bloodhound-typeahead',
+          name: widgetName,
           display: 'value',
           source: bhSource,
           limit: limit,
@@ -198,17 +195,28 @@
         })
         .on('typeahead:asyncrequest', function() {
           if (showPreloader) {
-            $('.tt-menu').addClass('is-loading');
+            getSuggestionsElement().addClass('is-loading');
           }
         })
         .on('typeahead:asynccancel typeahead:asyncreceive', function() {
-          $('.tt-menu').removeClass('is-loading');
+          getSuggestionsElement().removeClass('is-loading');
+        })
+        .on('typeahead:change', function(event, newValue) {
+          scope.$emit('typeahead:change', newValue);
         });
 
       scope.$$input = {
         $element: elem,
         $setModelValue: setModelValue,
+        $getModelValue: getModelValue,
       };
+
+      function getSuggestionsElement() {
+        if (!suggestionsElementCache) {
+          suggestionsElementCache = $('.tt-menu:has(.tt-dataset-'+widgetName+')');
+        }
+        return suggestionsElementCache;
+      }
 
       function compileSuggestionTemplate(context) {
         return suggestionTemplate.replace(/%VALUE%/, getSuggestionName(context));
@@ -245,6 +253,11 @@
 
       function setModelValue(val) {
         elem.typeahead('val', val);
+      }
+
+      function getModelValue() {
+        var val = elem.typeahead('val');
+        return val ? (val+'').trim() : '';
       }
 
     }
