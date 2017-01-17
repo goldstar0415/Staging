@@ -25,13 +25,12 @@
     function controller($scope, toastr, $rootScope, MapService, $interval) {
 
       var vm = $scope;
-      vm.location = {lat: '', lng: ''};
       var provider = vm.provider || 'google';
 
       (function() {
         var waitForElement = $interval(function() {
           if (vm.$$input) {
-            vm.$$input.$element.on('focusin', onFocusin);
+            init();
             $interval.cancel(waitForElement);
           }
         }, 100);
@@ -42,6 +41,16 @@
       vm.$watch('location', watchLocation);
 
       vm.setCurrentLocation = setCurrentLocation;
+
+      function init() {
+        vm.location = vm.location || {lat: '', lng: ''};
+        vm.$$input.$element.on('focusin', onFocusin);
+        if (vm.address && validateLocation(vm.location)) {
+          display(vm.address);
+          moveOrCreateMarker(vm.location);
+          MapService.GetMap().setView(vm.location, 12);
+        }
+      }
 
       function onTypeaheadSelect($event, $model) {
         var viewAddress;
