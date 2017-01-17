@@ -100,6 +100,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     protected $yelpInfo = null;
     protected $yelpToken = null;
     protected $bookingPage = null;
+    protected $booking_reviews_url = null;
 
     /**
      * {@inheritdoc}
@@ -1033,7 +1034,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         if($spotInfo)
         {
             $googlePid = (!empty($spotInfo->google_pid)
-                    && $spotInfo->google_pid != 'null' 
+                    && $spotInfo->google_pid != 'null'
                     && $spotInfo->google_pid != '0')?$spotInfo->google_pid:false;
         }
         return $googlePid;
@@ -1476,10 +1477,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getReviewsTotal($saveReviews = true)
     {
         $result = [];
-        if( Cache::has('spot-ratings-' . $this->id))
-        {
-            return Cache::get('spot-ratings-' . $this->id);
-        }
+        //if( Cache::has('spot-ratings-' . $this->id))
+        //{
+        //    return Cache::get('spot-ratings-' . $this->id);
+        //}
         if( $facebookRating = $this->getFacebookRating())
         {
             $result['info']['facebook'] = $facebookRating;
@@ -1549,9 +1550,24 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $result['total']['rating'] = round((float)$starsSumm, 1);
         $result['total']['reviews_count'] = $reviewsCount;
         
-        $expiresAt = Carbon::now()->addMinutes(60);
+        $saveSpot = false;
+        if(!empty($result['total']['rating']))
+        {
+            $this->avg_rating = $result['total']['rating'];
+            $saveSpot = true;
+        }
+        if(!empty($result['total']['reviews_count']))
+        {
+            $this->total_reviews = $result['total']['reviews_count'];
+            $saveSpot = true;
+        }
+        if($saveSpot)
+        {
+            $this->save();
+        }
         
-        Cache::put('spot-ratings-' . $this->id, $result, $expiresAt);
+        //$expiresAt = Carbon::now()->addMinutes(60);
+        //Cache::put('spot-ratings-' . $this->id, $result, $expiresAt);
         
         return $result;
     }

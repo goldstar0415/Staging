@@ -29,6 +29,8 @@ class ToDoController extends Controller
         'title' => 'todo_name',
         'description' => 'description',
         'web_sites' => 'website',
+        'avg_rating' => 'avg_rating',
+        'total_reviews' => 'total_reviews'
     ];
     
     private $todoFields = [

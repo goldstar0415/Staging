@@ -170,10 +170,10 @@ class SpotController extends Controller
                 'amenities',
                 'slug'
                 ]);
-        if(empty($spot->rating))
-        {
-            $spot->reviews_total = Cache::get('spot-ratings-' . $spot->id);
-        }
+        //if(empty($spot->rating))
+        //{
+        //    $spot->reviews_total = Cache::get('spot-ratings-' . $spot->id);
+        //}
         if (isset($res->remotePhotos)) {
             foreach($res->remotePhotos as $p) {
                 if (isset($p->url)) {
@@ -594,7 +594,7 @@ class SpotController extends Controller
     public function getCover($spot)
     {
         $result = [
-            'cover_url' => null, 
+            'cover_url' => null,
             ];
         
         $query = RemotePhoto::where('associated_type', Spot::class)

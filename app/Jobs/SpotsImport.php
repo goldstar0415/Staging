@@ -144,6 +144,14 @@ abstract class SpotsImport extends Job implements SelfHandling
                 $spot->start_date = Carbon::createFromFormat($this->date_format, $imported_spot->start_date);
                 $spot->end_date = Carbon::createFromFormat($this->date_format, $imported_spot->end_date);
             }
+            if (!empty($imported_spot->total_reviews))
+            {
+                $spot->total_reviews = $imported_spot->total_reviews;
+            }
+            if (!empty($imported_spot->avg_rating))
+            {
+                $spot->avg_rating = $imported_spot->avg_rating;
+            }
             $spot->is_approved = true;
             $spot->is_private = false;
             $owner = null;

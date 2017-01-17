@@ -80,6 +80,7 @@ class MapController extends Controller {
                         DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 2)::float AS lat"), 
                         DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 1)::float AS lng"),
                         'spots.title',
+                        'spots.avg_rating',
                         'spot_points.address',
                         'spot_hotels.minrate',
                         'spot_hotels.maxrate',
@@ -156,10 +157,6 @@ class MapController extends Controller {
         $spotsArr = $spots->skip(0)->take(1000)->get();
         // cache cetegory icon URLs
         $cats = SpotTypeCategory::select("spot_type_categories.id", "spot_type_categories.spot_type_id")->get();
-        //$types = SpotType::get();
-        //
-        //fore
-        //dd($cats);
         $iconsCache = [];
         $typesCache = [];
         foreach ($cats as $c) {
@@ -171,13 +168,12 @@ class MapController extends Controller {
         // fill spots
         foreach ($spotsArr as $spot) {
             
-            $rating = (isset($spot->rating[0])) ? (float)$spot->rating[0]->rating : 0;
-            if(empty($rating) && Cache::has('spot-ratings-' . $spot->id))
-            {
-                $ratingsArr = Cache::get('spot-ratings-' . $spot->id);
-                $rating = $ratingsArr['total']['rating'];
-            }
-            
+            //$rating = (isset($spot->rating[0])) ? (float)$spot->rating[0]->rating : 0;
+            //if(empty($rating) && Cache::has('spot-ratings-' . $spot->id))
+            //{
+            //    $ratingsArr = Cache::get('spot-ratings-' . $spot->id);
+            //    $rating = $ratingsArr['total']['rating'];
+            //}
             $points[] = [
                 'id' => $spot->spot_point_id,
                 'spot_id' => $spot->id,
@@ -185,7 +181,7 @@ class MapController extends Controller {
                     'lat' => $spot->lat,
                     'lng' => $spot->lng
                 ],
-                'rating' => (isset($spot->rating[0])) ? (float)$spot->rating[0]->rating : 0,
+                'rating' => ($spot->avg_rating) ? $spot->avg_rating : 0,
                 'title' => $spot->title,
                 'address' => $spot->address,
                 'category_icon_url' => $iconsCache[$spot->spot_type_category_id],

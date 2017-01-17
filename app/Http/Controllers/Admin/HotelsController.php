@@ -31,6 +31,8 @@ class HotelsController extends Controller
         'title' => 'hotel_name',
         'description' => 'desc_en',
         'web_sites' => 'homepage_url',
+        'avg_rating' => 'avg_rating',
+        'total_reviews' => 'total_reviews'
     ];
     
     private $hotelFields = [
