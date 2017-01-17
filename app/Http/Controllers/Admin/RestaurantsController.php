@@ -593,8 +593,11 @@ class RestaurantsController extends Controller
         }
         else 
         {
+            $date = date('Y-m-d H:i:s');
             $attrArr['remote_id'] = $item['Rest_id'];
             $attrArr['spot_id'] = $spot_id;
+            $attrArr['created_at'] = $date;
+            $attrArr['updated_at'] = $date;
             DB::table('spot_restaurants')
                     ->insert($attrArr);
         }

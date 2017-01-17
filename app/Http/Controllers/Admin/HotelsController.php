@@ -546,6 +546,7 @@ class HotelsController extends Controller
                 $attrArr[$field] = $item[$field];
             }
         }
+        
         if(!empty($obj->id))
         {
             DB::table('spot_hotels')
@@ -554,7 +555,11 @@ class HotelsController extends Controller
         }
         else 
         {
-            $attrArr['booking_id'] = $spot_id;
+            $date = date('Y-m-d H:i:s');
+            $attrArr['booking_id'] = $item['booking_id'];
+            $attrArr['spot_id'] = $spot_id;
+            $attrArr['created_at'] = $date;
+            $attrArr['updated_at'] = $date;
             DB::table('spot_hotels')
                     ->insert($attrArr);
         }
