@@ -40,7 +40,7 @@
         @foreach($hotels as $hotel)
             <tr>
                 <td class="text-center">{!! Form::checkbox('hotels[]', $hotel->id, null, ['class' => 'row-select']) !!}</td>
-                <td>{!! link_to(frontend_url( !empty($hotel->user) ? $hotel->user->id: 0, 'spot', $hotel->id), $hotel->title, ['target' => '_blank']) !!}</td>
+                <td>{!! link_to(frontend_url( !empty($hotel->user) ? $hotel->user->id: 0, 'spot', $hotel->id, $hotel->slug), $hotel->title, ['target' => '_blank']) !!}</td>
                 <td>{{ $hotel->description }}</td>
                 <td>{{ $hotel->created_at->format('Y-m-d') }}</td>
                 <td>

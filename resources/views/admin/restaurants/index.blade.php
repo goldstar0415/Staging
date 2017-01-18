@@ -38,7 +38,7 @@
         @foreach($restaurants as $restaurant)
             <tr>
                 <td class="text-center">{!! Form::checkbox('spots[]', $restaurant->id, null, ['class' => 'row-select']) !!}</td>
-                <td>{!! link_to(frontend_url( !empty($restaurant->user) ? $restaurant->user->id: 0, 'spot', $restaurant->id), $restaurant->title, ['target' => '_blank']) !!}</td>
+                <td>{!! link_to(frontend_url( !empty($restaurant->user) ? $restaurant->user->id: 0, 'spot', $restaurant->id, $restaurant->slug), $restaurant->title, ['target' => '_blank']) !!}</td>
                 <td>{{ $restaurant->description }}</td>
                 <td>{{ $restaurant->created_at->format('Y-m-d') }}</td>
                 <td>
