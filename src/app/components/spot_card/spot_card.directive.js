@@ -20,7 +20,7 @@
         };
 
         /** @ngInject */
-        function SpotCardController($rootScope, $http, $scope, SpotService, MapService, API_URL, InviteFriends, Share) {
+        function SpotCardController($rootScope, $http, $scope, SpotService, MapService, API_URL, InviteFriends, Share, S3_URL) {
             var vm = this;
             vm.saveToCalendar = SpotService.saveToCalendar;
             vm.removeFromCalendar = SpotService.removeFromCalendar;
@@ -35,8 +35,22 @@
             vm.openInviteModal = openInviteModal;
             vm.openShareModal = openShareModal;
             vm.openSpot = openSpot;
+
+            if (vm.item.minrate) {
+                if (!_.isEmpty(fx.rates)) {
+                    vm.item.price = '$' + Math.round(fx(vm.item.minrate).from(vm.item.currencycode).to("USD"));
+                } else {
+                    vm.item.price = Math.round(vm.item.minrate) + ' ' + vm.item.currencycode;
+                }
+            }
+            
+            function getRandomInt(min, max)
+            {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
             function getImg() {
-                $http.get(API_URL + '/spots/' + vm.item.spot_id + '/cover')
+                $http.get(API_URL + '/spots/' + vm.item.id + '/cover')
                     .success(function success(data) {
                         if (data.cover_url) {
                             vm.image = data.cover_url.url;
@@ -44,11 +58,14 @@
                     });
             }
 
-            function openSpot(spotId) {
-                $http.get(API_URL + '/spots/' + spotId)
-                    .success(function success(data) {
-                        $rootScope.setOpenedSpot(data);
-                    });
+            function openSpot(spotId, event) {
+                if (!$rootScope.openedSpot) {
+                    event.stopPropagation();
+                    $http.get(API_URL + '/spots/' + spotId)
+                        .success(function success(data) {
+                            $rootScope.setOpenedSpot(data);
+                        });
+                }
             }
 
             function openInviteModal(item) {
@@ -66,22 +83,42 @@
             function closeMenu() {
                 vm.isMenuOpened = false;
             }
-
+            
             function setImage(item) {
-                if (item.category_name === 'Food') {
-                    if (false) {
-                        return item.cover_url.original;
-                    } else {
-                        var imgnum = Math.floor(item.id % 33);
-                        return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
+                if(item.type)
+                {
+                    var type = item.type;
+                    var url = item.cover_url;
+                }
+                if(item.category)
+                {
+                    var type = item.category.type.name;
+                    var url = item.cover_url.original;
+                }
+                
+                var hc = false;
+                if(typeof url == 'string' && url.length)
+                {
+                    var urlAttr = url.split('/');
+                    var lastAttr = urlAttr[urlAttr.length - 1];
+                    if(lastAttr != 'missing.png')
+                    {
+                        hc = true;
                     }
+                }
+                if (hc)
+                {
+                        return url;
+                }
+                if (type == 'food' || type== 'shelter') {
+                    var max = (type === 'food')?32:84;
+                    var imgnum = getRandomInt(0, max);
+                    return S3_URL + '/assets/img/placeholders/' + type + '/' + imgnum + '.jpg';
                 } else {
-                    if (item.cover_url && item.cover_url.original !== "https://testback.zoomtivity.com/uploads/missings/covers/original/missing.png") {
-                        return item.cover_url.original;
-                    } else {
-                        vm.getImg();
-                        return "https://testback.zoomtivity.com/uploads/missings/covers/original/missing.png";
-                    }
+                    console.log(item);
+                    vm.getImg();
+                    return "https://testback.zoomtivity.com/uploads/missings/covers/original/missing.png";
+
                 }
             }
 

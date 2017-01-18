@@ -1,5 +1,5 @@
 <div class="opened-item" ng-class="{ 'item-modal' : Spot.modal }" ng-if="Spot.spot">
-    <div class="opened-header" ng-if="Spot.modal">
+    <!-- <div class="opened-header" ng-if="Spot.modal">
         <a ng-click="Spot.close()" ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id || 0})">
             <img src="../../../assets/img/svg/fullscreen.svg" alt="">
         </a>
@@ -10,7 +10,7 @@
         <span ng-click="Spot.close()">
             <img src="../../../assets/img/svg/cancel.svg" alt="">
         </span>
-    </div>
+    </div> -->
     <div class="opened-container">
         <div spotcard class="new-result-card" item="Spot.spot"></div>
         <div class="opened-main">
@@ -29,41 +29,47 @@
                     </div>
                 </div>
             </div>
-            <div class="event-info" ng-if="Spot.spot.category.type.name == 'event'">
-                <span class="glyphicon glyphicon-calendar"></span>
-                <span ng-if="Spot.spot.start_date == Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}}</span>
-                <span ng-if="Spot.spot.start_date != Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}} - {{Spot.spot.end_date | date:'medium'}}</span>
-            </div>
             <div class="opened-second-buttons" ng-if="Spot.spot.restaurant">
                 <button class="button-order">Order</button>
                 <button class="button-table">Book table</button>
                 <button class="button-deals">Deals</button>
             </div>
-            <div class="opened-thrid-buttons" ng-if="Spot.spot.hotel">
-                <div class="price-dates">
-                    <p>Find the lowest prices:</p>
-                    <input ng-datepicker ng-model="Spot.priceDate.start_date" start-date="Spot.inputDate.start_date" class="date" placeholder="CHECK IN" type="text" ng-change="Spot.startDateChanged()" ng-click="Spot.initDates()">
-                    <input ng-datepicker ng-model="Spot.priceDate.end_date" start-date="Spot.inputDate.end_date" class="date" placeholder="CHECK OUT" type="text" ng-click="Spot.initDates()">
-                    <button ng-click="Spot.getPrice()">Search</button>
-                </div>
-                <div class="prices-results" ng-if="Spot.prices">
-                    <div class="booking">
-                        <div class="logo">
-                        </div>
-                        <div class="price">
-                            <p>{{Spot.prices.booking ? Spot.prices.booking : 'no price' }}</p>
-                            <span>For {{Spot.prices.diff}} night(s)</span>
-                        </div>
-                        <a href="{{Spot.prices.bookingUrl}}" target="_blank">VIEW DEAL</a>
+            <div class="opened-thrid-buttons" ng-if="Spot.spot.hotel || Spot.spot.category.type.name == 'event'">
+                <div class="event-info" ng-if="Spot.spot.category.type.name == 'event'">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    <span ng-if="Spot.spot.start_date == Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}}</span>
+                    <span ng-if="Spot.spot.start_date != Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}} - {{Spot.spot.end_date | date:'medium'}}</span>
+                    <div class="buttons">
+                        <a ng-if="Spot.spot.tickets" href="{{Spot.spot.tickets}}" target="_blank">Tickets</a>
+                        <a ng-if="Spot.spot.venues" href="{{Spot.spot.venues}}" target="_blank">Venues</a>
                     </div>
-                    <div class="hotels">
-                        <div class="logo">
+                </div>
+                <div ng-if="Spot.spot.hotel">
+                    <div class="price-dates">
+                        <p>Find the lowest prices:</p>
+                        <input ng-datepicker ng-model="Spot.priceDate.start_date" start-date="Spot.inputDate.start_date" class="date" placeholder="CHECK IN" type="text" ng-change="Spot.startDateChanged()" ng-click="Spot.initDates()">
+                        <input ng-datepicker ng-model="Spot.priceDate.end_date" start-date="Spot.inputDate.end_date" class="date" placeholder="CHECK OUT" type="text" ng-click="Spot.initDates()">
+                        <button ng-click="Spot.getPrice()">Search</button>
+                    </div>
+                    <div class="prices-results" ng-if="Spot.prices">
+                        <div class="booking" ng-if="Spot.prices.bookingUrl">
+                            <div class="logo">
+                            </div>
+                            <div class="price">
+                                <p>{{Spot.prices.booking ? Spot.prices.booking : 'no price' }}</p>
+                                <span>For {{Spot.prices.diff}} night(s)</span>
+                            </div>
+                            <a href="{{Spot.prices.bookingUrl}}" target="_blank">VIEW DEAL</a>
                         </div>
-                        <div class="price">
-                            <p>{{Spot.prices.hotels ? Spot.prices.hotels : 'no price' }}</p>
-                            <span>For {{Spot.prices.diff}} night(s)</span>
+                        <div class="hotels" ng-if="Spot.prices.hotelsUrl">
+                            <div class="logo">
+                            </div>
+                            <div class="price">
+                                <p>{{Spot.prices.hotels ? Spot.prices.hotels : 'no price' }}</p>
+                                <span>For {{Spot.prices.diff}} night(s)</span>
+                            </div>
+                            <a href="{{Spot.prices.hotelsUrl}}" target="_blank">VIEW DEAL</a>
                         </div>
-                        <a href="{{Spot.prices.hotelsUrl}}" target="_blank">VIEW DEAL</a>
                     </div>
                 </div>
             </div>
@@ -118,15 +124,17 @@
                 <h1>E-mail:</h1>
                 <p>{{Spot.spot.restaurant.email}}</p>
             </div>
-            <div class="overview website" ng-if="Spot.spot.web_sites[0].length">
+            <div class="overview website" ng-if="(Spot.spot.web_sites | seatgeek).length">
                 <h1>Websites:</h1>
-                <a ng-repeat="url in Spot.spot.web_sites" href="{{url}}">
+                <a ng-repeat="url in Spot.spot.web_sites | seatgeek" href="{{url}}">
                     {{url}}
                 </a>
             </div>
             <div class="overview tags" ng-if="Spot.spot.tags.length > 0">
                 <h1>Tags:</h1>
-                <p ng-repeat="tag in Spot.spot.tags">{{tag.name}}</p>
+                <div>
+                    <p ng-repeat="tag in Spot.spot.tags" class="spot-tag">{{tag.name}}</p>
+                </div>
             </div>
             <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
               <li ng-repeat="link in Spot.spot.videos track by $index" class="video-size">
@@ -136,22 +144,22 @@
             <div class="overview connect">
                 <h1>Connect:</h1>
                 <div class="tab-social-buttons">
-                    <a href="#">
+                    <a ng-href="Spot.spot.hotel.google_url || Spot.spot.restaurant.google_url" ng-if="Spot.spot.hotel.google_url || Spot.spot.restaurant.google_url">
                         <img src="../../../assets/img/svg/social/google_icon.svg" alt="google" />
                     </a>
-                    <a href="#">
+                    <a ng-href="Spot.spot.hotel.facebook_url || Spot.spot.restaurant.facebook_url" ng-if="Spot.spot.hotel.facebook_url || Spot.spot.restaurant.facebook_url">
                         <img src="../../../assets/img/svg/social/facebook_icon.svg" alt="facebook" />
                     </a>
-                    <a href="#">
+                    <a ng-href="Spot.spot.hotel.instagram_url || Spot.spot.restaurant.instagram_url" ng-if="Spot.spot.hotel.instagram_url || Spot.spot.restaurant.instagram_url">
                         <img src="../../../assets/img/svg/social/instagram_icon.svg" alt="instagram" />
                     </a>
-                    <a href="#">
+                    <a ng-href="Spot.spot.hotel.tumbler_url || Spot.spot.restaurant.tumbler_url" ng-if="Spot.spot.hotel.tumbler_url || Spot.spot.restaurant.tumbler_url">
                         <img src="../../../assets/img/svg/social/tumbler_icon.svg" alt="tumbler" />
                     </a>
-                    <a href="#">
+                    <a ng-href="Spot.spot.hotel.twitter_url || Spot.spot.restaurant.twitter_url" ng-if="Spot.spot.hotel.twitter_url || Spot.spot.restaurant.twitter_url">
                         <img src="../../../assets/img/svg/social/twitter_icon.svg" alt="twitter" />
                     </a>
-                    <a href="#">
+                    <a ng-href="Spot.spot.hotel.vk_url || Spot.spot.restaurant.vk_url" ng-if="Spot.spot.hotel.vk_url || Spot.spot.restaurant.vk_url">
                         <img src="../../../assets/img/svg/social/vk_icon.svg" alt="vk" />
                     </a>
                 </div>

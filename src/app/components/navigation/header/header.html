@@ -1,6 +1,6 @@
 <header ng-class="{ 'mobile-hidden': $root.isSidebarOpened && $root.isMapState() }">
     <nav class="main-nav">
-        <a ui-sref="index" class="main-logo" ng-show="!Header.isSearchOpened">
+        <a ng-click="Header.back()" ui-sref="index" class="main-logo" ng-show="!Header.isSearchOpened">
             <img class="main-logo-big" src="assets/img/icons/logo.svg" alt="logo">
             <!-- <img class="main-logo-small" src="assets/img/svg/logo.svg" alt="logo"> -->
         </a>
