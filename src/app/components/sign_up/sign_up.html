@@ -64,6 +64,19 @@
 
       </div>
 
+      <div class="terms-and-conditions-block">
+        <div class="checkbox-terms-and-conditions-hidden">
+          <input type="checkbox" ng-model="modal.$$checkbox_terms_and_conditions" name="$$checkbox_terms_and_conditions" required>
+        </div>
+        <checkbox ng-model="modal.$$checkbox_terms_and_conditions"></checkbox>
+        <span>I have read and understood the <a href="/terms" target="_blank">terms and conditions</a></span>
+
+        <div ng-messages="form.$$checkbox_terms_and_conditions.$error" ng-if="form.$submitted" class="error-message">
+          <div ng-message="required" class="ng-scope">is required</div>
+        </div>
+
+      </div>
+
       <p>All fields are required</p>
       <input type="submit" value="Zoom">
     </form>

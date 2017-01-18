@@ -140,6 +140,11 @@
       background-size: 19px;
       background-position: 13px 8px;
     }
+    .privacy-policy-link {
+      background: url(../img/svg/new_icons/Terms_Conditions.svg) no-repeat;
+      background-size: 19px;
+      background-position: 13px 8px;
+    }
     .sign-btn {
       @include button;
       background-color: $navy_blue;
