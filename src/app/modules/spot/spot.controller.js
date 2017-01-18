@@ -3,11 +3,26 @@
 
     angular
         .module('zoomtivity')
-        .controller('SpotController', SpotController);
+        .controller('SpotController', SpotController)
+        .directive('spot', SpotDirective)
+        .filter('seatgeek', function() {
+            return function(inp) {
+                if (inp) {
+                    var arr = [];
+                    for (var i = 0; i < inp.length; i++) {
+                        if (inp[i].indexOf('https://seatgeek.com') !== 0) {
+                            arr.push(inp[i]);
+                        }
+                    }
+                    return arr;
+                }
+                return null;
+            }
+        });
 
     angular
         .module('zoomtivity')
-        .directive('spot', SpotDirective);
+
 
     function SpotDirective() {
         return {
@@ -24,7 +39,7 @@
     }
 
     /** @ngInject */
-    function SpotController($location, $modal, $stateParams, Spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share, AsyncLoaderService, toastr) {
+    function SpotController($location, $modal, $stateParams, Spot, SpotService, ScrollService, SpotReview, SpotComment, $state, MapService, $rootScope, $http, dialogs, API_URL, InviteFriends, Share, AsyncLoaderService, toastr, S3_URL) {
         var vm = this;
         var spot = null;
         if ($rootScope.openedSpot) {
@@ -55,6 +70,20 @@
         };
         vm.prices = null;
 
+        if (!$rootScope.isMapState()) {
+            $rootScope.isDrawArea = false;
+        }
+
+        if (vm.spot.web_sites && vm.spot.web_sites[0].length) {
+            for (var i = 0; i < vm.spot.web_sites.length; i++) {
+                if (vm.spot.web_sites[i].indexOf('https://seatgeek.com/venues') === 0) {
+                    spot.venues = vm.spot.web_sites[i];
+                } else if (vm.spot.web_sites[i].indexOf('https://seatgeek.com') === 0) {
+                    spot.tickets = vm.spot.web_sites[i];
+                }
+            }
+        }
+
         if($rootScope.$state.params.spot_slug && $rootScope.$state.params.spot_slug !== vm.spot.slug) {
             var user_id = $rootScope.$state.params.user_id;
             var spot_id = $rootScope.$state.params.spot_id;
@@ -75,11 +104,14 @@
                 vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
             });
         }
+        
+        vm.reviews_total = vm.spot.total_reviews;
+        vm.spot.rating = vm.spot.avg_rating;
+        
         AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/ratings').then(function(data) {
             vm.reviews_total = data;
             vm.spot.rating = data.total.rating;
         });
-
 
         vm.initDates = function() {
             var now = new Date(Date.now());
@@ -148,9 +180,11 @@
                 toastr.error('Please select your dates.')
             } else {
                 $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
-                    .success(function success(data) {
-                        vm.prices = data.data;
-                        vm.prices.diff = data.diff;
+                    .then(function(response){
+                        vm.prices = response.data.data;
+                        vm.prices.diff = response.data.diff;
+                    },function(response){
+                        toastr.error('No response. Please try again later.');
                     });
             }
         }
@@ -192,16 +226,31 @@
         vm.pagination = new ScrollService(SpotComment.query, vm.comments, params);
         vm.reviewsPagination = new ScrollService(SpotReview.query, vm.votes, params);
         // ShowMarkers([vm.spot]);
+        
+        function getRandomInt(min, max)
+        {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
 
         function setImage() {
-            if (vm.spot.category.type.name === 'food') {
-                if (false) {
+            var category = vm.category;
+            var type = (category)?vm.spot.category.type.name:null;
+            if ( category &&
+                (type === 'food' || 
+                 type === 'shelter')) 
+            {
+                if (false) 
+                {
                     return vm.spot.cover_url.original;
-                } else {
-                    var imgnum = Math.floor(vm.spot.id % 33);
-                    return '../../../assets/img/placeholders/food/' + imgnum + '.jpg';
+                } 
+                else 
+                {   var max = (type === 'food')?32:84;
+                    var imgnum = getRandomInt(0, max);
+                    return S3_URL + '/assets/img/placeholders/' + type + '/' + imgnum + '.jpg';
                 }
-            } else {
+            }
+            else
+            {
                 return vm.spot.cover_url.original;
             }
         }

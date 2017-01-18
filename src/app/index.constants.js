@@ -12,6 +12,7 @@
     .constant('BACKEND_URL', 'https://testback.zoomtivity.com')
     .constant('API_URL', 'https://testback.zoomtivity.com')
     .constant('SOCKET_URL', 'https://testback.zoomtivity.com:8080')
+    .constant('S3_URL', 'https://files.zoomtivity.com')
     .constant('GOOGLE_API_KEY', 'AIzaSyBbBdjAuH8wCJsLBThDXYRBYX9e45Dyf_8')
     .constant('GOOGLE_CLIENT_ID', '499164554835-tnvq6glehrsnf73he3u353jaqn5ikpc8.apps.googleusercontent.com')
     .constant('JS_CONSOLE_KEY', 'FASSX1CD-12A0-4SD3-AE36-757BVB26SBEZX')
