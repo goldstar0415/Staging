@@ -27,6 +27,7 @@
 	    'oc.lazyLoad',
       'angular-skycons',
       'ngWebworker',
+      'ui.checkbox',
     ])
     .config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
 
@@ -79,7 +80,11 @@
           {name: 'jbox', files: [
             '/assets/libs/jbox/jbox.min.js',
             '/assets/libs/jbox/jBox.css',
-          ]}
+          ]},
+          {name: 'location-bloodhound', files: versionize([
+            // todo: load `src/assets/sass/_location_bloodhound.scss` here
+            '/app/components/location_bloodhound/location-bloodhound.directive.js',
+          ])}
 
           // {name: 'leaflet', files: [
           //   '/assets/libs/Leaflet/leaflet.js',
