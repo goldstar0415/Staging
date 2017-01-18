@@ -74,7 +74,7 @@
             $rootScope.isDrawArea = false;
         }
 
-        if (vm.spot.web_sites[0].length) {
+        if (vm.spot.web_sites && vm.spot.web_sites[0].length) {
             for (var i = 0; i < vm.spot.web_sites.length; i++) {
                 if (vm.spot.web_sites[i].indexOf('https://seatgeek.com/venues') === 0) {
                     spot.venues = vm.spot.web_sites[i];
@@ -104,11 +104,14 @@
                 vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
             });
         }
+        
+        vm.reviews_total = vm.spot.total_reviews;
+        vm.spot.rating = vm.spot.avg_rating;
+        
         AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/ratings').then(function(data) {
             vm.reviews_total = data;
             vm.spot.rating = data.total.rating;
         });
-
 
         vm.initDates = function() {
             var now = new Date(Date.now());
@@ -177,9 +180,11 @@
                 toastr.error('Please select your dates.')
             } else {
                 $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
-                    .success(function success(data) {
-                        vm.prices = data.data;
-                        vm.prices.diff = data.diff;
+                    .then(function(response){
+                        vm.prices = response.data.data;
+                        vm.prices.diff = response.data.diff;
+                    },function(response){
+                        toastr.error('No response. Please try again later.');
                     });
             }
         }
@@ -248,7 +253,6 @@
             {
                 return vm.spot.cover_url.original;
             }
-            
         }
 
         /*
