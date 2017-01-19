@@ -24,6 +24,22 @@
     /** @ngInject */
     function AttachmentsController() {
       var vm = this;
+
+      vm.hasAnyAttachments = hasAnyAttachments;
+
+      function hasAnyAttachments() {
+        var result = false;
+        if (!_.isObject(vm.items)) {
+          return result;
+        }
+        ['album_photos', 'areas', 'links', 'plans', 'spots'].forEach(function(prop) {
+          if (_.isArray(vm.items[prop]) && vm.items[prop].length > 0) {
+            result = true;
+          }
+        });
+        return result;
+      }
+
     }
 
   }
