@@ -81,7 +81,7 @@
 
 
 
-<div class="new-attachments" ng-if="!_.isEmpty(Attachments.items.areas) || !_.isEmpty(Attachments.items.spots) || !_.isEmpty(Attachments.items.album_photos) || !_.isEmpty(Attachments.items.links)">
+<div class="new-attachments" ng-if="Attachments.hasAnyAttachments()">
     <div class="attachment-item" ng-repeat="spot in Attachments.items.spots">
         <div class="image">
             <a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})">
