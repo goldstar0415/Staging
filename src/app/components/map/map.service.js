@@ -352,7 +352,7 @@
         },
         onAdd: function (map) {
             var scope = $rootScope.$new();
-            var template = '    <div tooltip="Lasso Selection" tooltip-placement="right" class="map-tools">\
+            var template = '    <div tooltip="Lasso Selection" tooltip-placement="right" class="map-tools map-tools-selection">\
                                     <div class="lasso-selection">\
                                         <img src="../../assets/img/svg/Lasso.svg"/>\
                                     </div>\
@@ -409,7 +409,7 @@
         },
         onAdd: function (map) {
             var scope = $rootScope.$new();
-            var template = '    <div tooltip="Radius Selection" tooltip-placement="right" class="map-tools">\
+            var template = '    <div tooltip="Radius Selection" tooltip-placement="right" class="map-tools map-tools-selection">\
                                     <div class="radius-selection">\
                                         <img src="../../assets/img/svg/Radius.svg"/>\
                                     </div>\
@@ -471,7 +471,7 @@
         },
         onAdd: function (map) {
             var scope = $rootScope.$new();
-            var template = '    <div tooltip="Path Selection" tooltip-placement="right" class="map-tools">\
+            var template = '    <div tooltip="Path Selection" tooltip-placement="right" class="map-tools map-tools-selection">\
                                     <div class="path-selection">\
                                         <img src="../../assets/img/svg/Road_icon.svg"/>\
                                     </div>\
@@ -1780,8 +1780,8 @@
         GetDataByBBox(bboxes, true);
       }
 
-      function ClearSelections(mapOnly) {
-		clearPathFilter();
+      function ClearSelections(mapOnly, ignoreBBoxes) {
+		    clearPathFilter();
         markersLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
@@ -1797,8 +1797,13 @@
           CancelPathSelection();
         }
 
-        GetDrawLayerBBoxes();
-        GetDataByBBox([]);
+        if (!ignoreBBoxes) {
+          GetDrawLayerBBoxes();
+          GetDataByBBox([]);
+        } {
+          _activateControl(false);
+        }
+
         if (!mapOnly) {
           $rootScope.$broadcast('clear-map-selection');
         }
@@ -1818,6 +1823,14 @@
 		    map.removeLayer(focusGeolocation);
         map.removeLayer(fullScreen);
         map.removeLayer(filter);
+      }
+
+      function ToggleSelectionControls(show) {
+        if (show) {
+          $('.map-tools.map-tools-selection').removeClass('hidden');
+        } else {
+          $('.map-tools.map-tools-selection').addClass('hidden');
+        }
       }
 
       function AddControls() {
@@ -2761,6 +2774,7 @@
         //Controls
         AddControls: AddControls,
         RemoveControls: RemoveControls,
+        ToggleSelectionControls: ToggleSelectionControls,
         //Makers
         CreateMarker: CreateMarker,
         RemoveMarker: RemoveMarker,
