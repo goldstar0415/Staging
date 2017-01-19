@@ -384,55 +384,67 @@
      * Switch a layer and apply UI changes
      * @param {string} layer
      * @param {boolean} startSearch
+     * @param {string} src
      */
-    function toggleLayer(layer, startSearch) {
-        $rootScope.sidebarMessage = "Loading...";
-        $rootScope.isFilterOpened = false;
-        vm.clearFilter();
-        $rootScope.toggleSidebar(false);
-		$rootScope.sortLayer = layer;
-        vm.currentWeather = null;
+    function toggleLayer(layer, startSearch, src) {
+      $rootScope.sidebarMessage = "Loading...";
+      $rootScope.isFilterOpened = false;
+      vm.clearFilter();
+      $rootScope.toggleSidebar(false);
+      $rootScope.sortLayer = layer;
+      vm.currentWeather = null;
 
-		if (layer == 'weather') {
-			MapService.showOtherLayers();
+      if (layer == 'weather') {
+        // hide selection tools
+        MapService.ToggleSelectionControls(false);
+        // clear existing selections, but prevent an infinite loop using the second arg
+        if (src == 'sidebar') {
+          MapService.clearSelections(false, true);
+        }
+        MapService.showOtherLayers();
 
-			// show weather radar data for US users
-			// if ($rootScope.currentCountryCode === 'us') {
-			// 	MapService.toggleWeatherLayer(true);
-			// } else {
-			// 	console.log('Current country: ', $rootScope.currentCountryCode);
-			// }
-            // MapService.toggleWeatherLayer(true);
+        // hide a pick notification
+        var pn = document.querySelector('.pick-notification');
+        pn.style = '';
 
-			//MapService.WeatherSelection(weather, geocodeCallback);
-            MapService.showWeatherMarkers();
-            MapService.getWeatherLatLng(setWeatherLatLng);
+        // show weather radar data for US users
+        // if ($rootScope.currentCountryCode === 'us') {
+        // 	MapService.toggleWeatherLayer(true);
+        // } else {
+        // 	console.log('Current country: ', $rootScope.currentCountryCode);
+        // }
+        // MapService.toggleWeatherLayer(true);
 
-			if (!vm.currentWeather) {
-				toastr.info('Click on map to check weather in this area');
-			}
-		} else {
-			MapService.toggleWeatherLayer(false);
-			if (layer != 'event') {
-				$rootScope.mapSortFilters.filter = $rootScope.mapSortFilters.filter || {};
-				$rootScope.mapSortFilters.filter.start_date = $rootScope.mapSortFilters.filter.end_date = '';
-				vm.searchParams.start_date = vm.searchParams.end_date = '';
-			}
+        //MapService.WeatherSelection(weather, geocodeCallback);
+        MapService.showWeatherMarkers();
+        MapService.getWeatherLatLng(setWeatherLatLng);
 
-			if (startSearch !== false) {
-				search();
-				MapService.showLayer(layer);
-			} else {
-				// show a layer, but keep existing event listeners, for ex. if path selection has started
-				MapService.showLayer(layer, true);
-			}
-			var wp = MapService.GetPathWaypoints();
-			var geoJson = MapService.GetGeoJSON();
+        if (!vm.currentWeather) {
+          toastr.info('Click on map to check weather in this area');
+        }
+      } else {
+        MapService.ToggleSelectionControls(true);
+        MapService.toggleWeatherLayer(false);
+        if (layer != 'event') {
+          $rootScope.mapSortFilters.filter = $rootScope.mapSortFilters.filter || {};
+          $rootScope.mapSortFilters.filter.start_date = $rootScope.mapSortFilters.filter.end_date = '';
+          vm.searchParams.start_date = vm.searchParams.end_date = '';
+        }
 
-			if ($rootScope.isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1) {
-				toastr.info('Draw the search area');
-			}
-		}
+        if (startSearch !== false) {
+          search();
+          MapService.showLayer(layer);
+        } else {
+          // show a layer, but keep existing event listeners, for ex. if path selection has started
+          MapService.showLayer(layer, true);
+        }
+        var wp = MapService.GetPathWaypoints();
+        var geoJson = MapService.GetGeoJSON();
+
+        if ($rootScope.isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1) {
+          toastr.info('Draw the search area');
+        }
+      }
     }
 
     function onTagsAdd(q, w, e) {
