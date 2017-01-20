@@ -28,7 +28,7 @@
         return {
             restrict: 'E',
             templateUrl: '/app/modules/spot/spot.html',
-            scope: {
+            scope: { 
                 spot: '=',
                 modal: '='
             },
@@ -181,8 +181,16 @@
             } else {
                 $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
                     .then(function(response){
-                        vm.prices = response.data.data;
-                        vm.prices.diff = response.data.diff;
+                        
+                        if ( (response.data.data.booking == false) && (response.data.data.hotels == false))
+                        {
+                            toastr.info('No prices detected. Please try another dates.');
+                        }
+                        else
+                        {
+                            vm.prices = response.data.data;
+                            vm.prices.diff = response.data.diff;
+                        }
                     },function(response){
                         toastr.error('No response. Please try again later.');
                     });
@@ -242,7 +250,7 @@
                 if (false) 
                 {
                     return vm.spot.cover_url.original;
-                } 
+                }
                 else 
                 {   var max = (type === 'food')?32:84;
                     var imgnum = getRandomInt(0, max);
