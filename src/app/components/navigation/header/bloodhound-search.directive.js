@@ -40,9 +40,11 @@
                         }
                     }
                 });
+                var widgetName = 'bloodhound-typeahead-' + Math.floor(Math.random()*1e12); // a random name
+                var suggestionsElementCache = null;
 
                 elem.typeahead(null, {
-                    name: 'best-pictures',
+                    name: widgetName,
                     display: 'value',
                     source: bestPictures,
                     limit: Infinity,
@@ -73,14 +75,21 @@
                     }
                 })
                   .on('typeahead:asyncrequest', function() {
-                      $('.tt-menu').addClass('is-loading');
+                      getSuggestionsElement().addClass('is-loading');
                   })
                   .on('typeahead:asynccancel typeahead:asyncreceive', function() {
-                      $('.tt-menu').removeClass('is-loading');
-                  });
-                elem.bind('typeahead:selected', function(obj, datum, name) {
+                      getSuggestionsElement().removeClass('is-loading');
+                  })
+                  .bind('typeahead:selected', function(obj, datum, name) {
                     scope.$emit('typeahead:selected', datum);
-                });
+                  });
+
+                function getSuggestionsElement() {
+                    if (!suggestionsElementCache) {
+                        suggestionsElementCache = $('.tt-menu:has(.tt-dataset-'+widgetName+')');
+                    }
+                    return suggestionsElementCache;
+                }
             }
         };
     }
