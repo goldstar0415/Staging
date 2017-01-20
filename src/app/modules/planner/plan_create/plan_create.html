@@ -38,8 +38,20 @@
       <label class="col-sm-2 control-label">Location</label>
 
       <div class="col-sm-10">
-        <location address="Plan.address" location="Plan.location" limit="15" bind-marker="true"></location>
-
+        <input
+                location-bloodhound
+                address="Plan.address"
+                location="Plan.location"
+                ng-model-options="{ debounce: 200 }"
+                popover="Type address or click on the map to set location(s)"
+                popover-trigger="focus"
+                placeholder="Type location or click on map..."
+                type="text"
+                autocomplete="off"
+                bind-marker="true"
+                limit="15"
+                name="bh-plan-create"
+        >
         <div ng-if="form.$submitted && !Plan.address" class="error-message-inline">
           <div>is required</div>
         </div>
@@ -174,8 +186,20 @@
         <label class="col-sm-2 control-label">Location</label>
 
         <div class="col-sm-10">
-          <location address="attachment.data.address" location="attachment.data.location" limit="15"
-                    bind-marker="true"></location>
+          <input
+                  location-bloodhound
+                  address="attachment.data.address"
+                  location="attachment.data.location"
+                  ng-model-options="{ debounce: 200 }"
+                  popover="Type address or click on the map to set location(s)"
+                  popover-trigger="focus"
+                  placeholder="Type location or click on map..."
+                  type="text"
+                  autocomplete="off"
+                  bind-marker="true"
+                  limit="15"
+                  name="bh-plan-create-location"
+          >
           <a ng-click="PlanCreate.addLocation(PlanCreate.newLocation)" class="btn-add compass" type="button"></a>
 
           <div ng-if="form.$submitted && attachment.isSubmitted && !attachment.data.address "

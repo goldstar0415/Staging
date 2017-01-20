@@ -71,8 +71,19 @@
       <label class="col-sm-3 col-xs-12 control-label">Location </label>
 
       <div class="col-sm-9 col-xs-12">
-        <location address="Article.address" location="Article.location" limit="15" bind-marker="true"></location>
-
+        <input
+                location-bloodhound
+                address="Article.address"
+                location="Article.location"
+                ng-model-options="{ debounce: 200 }"
+                popover="Type address or click on the map to set location(s)"
+                popover-trigger="focus"
+                placeholder="Type location or click on map..."
+                type="text"
+                autocomplete="off"
+                bind-marker="true"
+                limit="15"
+        >
       </div>
     </div>
 

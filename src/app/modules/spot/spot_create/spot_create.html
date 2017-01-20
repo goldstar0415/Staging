@@ -203,9 +203,20 @@
 
           <div class="col-md-9 col-sm-12 col-xs-12 ">
             <div ng-if="SpotCreate.locations.length < SpotCreate.restrictions.locations">
-              <location address="SpotCreate.newLocation.address" location="SpotCreate.newLocation.location"
-                        bind-marker="true" limit="15"></location>
 
+              <input
+                      location-bloodhound
+                      address="SpotCreate.newLocation.address"
+                      location="SpotCreate.newLocation.location"
+                      ng-model-options="{ debounce: 200 }"
+                      popover="Type address or click on the map to set location(s)"
+                      popover-trigger="focus"
+                      placeholder="Type location or click on map..."
+                      type="text"
+                      autocomplete="off"
+                      bind-marker="true"
+                      limit="15"
+              >
               <a ng-click="SpotCreate.addLocation(SpotCreate.newLocation)" class="btn-add compass" type="button"></a>
 
             </div>

@@ -111,6 +111,17 @@
         right: 0;
       }
     }
+    .terms-and-conditions-block {
+      .checkbox-terms-and-conditions-hidden {
+        visibility: hidden;
+        height: 0;
+      }
+      .error-message {
+        &>div {
+          margin-top:0 !important;
+        }
+      }
+    }
   }
 }
 
