@@ -1541,6 +1541,8 @@
             cover: image
           };
 
+          req.data.searchLayer = $rootScope.sortLayer;
+
           Area.save(req, function (data) {
             toastr.success('Selection saved!');
           }, function (data) {
@@ -1581,7 +1583,7 @@
             tilesLeft.push(parseFloat(css.left));
             tilesTop.push(parseFloat(css.top));
             tileMethod[i] = "left";
-          } else if (tcss.transform != "") {
+          } else if (css.transform != "") {
             var tileTransform = css.transform.split(",");
             tilesLeft[i] = parseFloat(tileTransform[0].split("(")[1]);
             tilesTop[i] = parseFloat(tileTransform[1]);
@@ -1680,8 +1682,11 @@
         };
       }
 
-      //load selection from server
+      /**
+       * Load selection from server
+       */
       function LoadSelections(selection) {
+        var searchLayer = null;
         if (selection.zoom) {
           map.setZoom(selection.zoom);
         }
@@ -1696,6 +1701,9 @@
         }
 
         if (selection.data) {
+          if (selection.data.searchLayer) {
+              $rootScope.toggleLayer(selection.data.searchLayer);
+          }
           L.geoJson(selection.data, {
             onEachFeature: function (feature) {
               if (feature.geometry.type = 'Point' && feature.properties.radius) {
