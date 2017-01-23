@@ -125,7 +125,7 @@
                 <p>{{Spot.spot.restaurant.email}}</p>
             </div>
             <div class="overview website" ng-if="(Spot.spot.web_sites | seatgeek).length">
-                <h1>Websites:</h1>
+                <h1>Website:</h1>
                 <a ng-repeat="url in Spot.spot.web_sites | seatgeek" href="{{url}}">
                     {{url}}
                 </a>
@@ -135,7 +135,7 @@
                 <youtube-player src="link"></youtube-player>
               </li>
             </ul>
-            <div class="overview connect">
+            <div class="overview connect" ng-if="Spot.spot.hotel.google_url || Spot.spot.restaurant.google_url || Spot.spot.hotel.facebook_url || Spot.spot.restaurant.facebook_url || Spot.spot.hotel.instagram_url || Spot.spot.restaurant.instagram_url || Spot.spot.hotel.tumbler_url || Spot.spot.restaurant.tumbler_url || Spot.spot.hotel.twitter_url || Spot.spot.restaurant.twitter_url || Spot.spot.hotel.vk_url || Spot.spot.restaurant.vk_url">
                 <h1>Connect:</h1>
                 <div class="tab-social-buttons">
                     <a ng-href="Spot.spot.hotel.google_url || Spot.spot.restaurant.google_url" ng-if="Spot.spot.hotel.google_url || Spot.spot.restaurant.google_url">
