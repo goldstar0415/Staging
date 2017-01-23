@@ -377,17 +377,20 @@ class RestaurantsController extends Controller
                     elseif(in_array($field, $this->massFields))
                     {
                         $spot = Spot::where('remote_id', $pref . $remote_id)->first();
-                        switch($field)
+                        if($spot)
                         {
-                            case 'tags':
-                                $this->saveTags($spot->id, [$field => $value]);
-                                break;
-                            case 'all_images':
-                                $this->savePhoto($spot->id, [$field => $value]);
-                                break;
-                            case 'features':
-                                $this->saveFeatures($spot->id, [$field => $value]);
-                                break;
+                            switch($field)
+                            {
+                                case 'tags':
+                                    $this->saveTags($spot->id, [$field => $value]);
+                                    break;
+                                case 'all_images':
+                                    $this->savePhoto($spot->id, [$field => $value]);
+                                    break;
+                                case 'features':
+                                    $this->saveFeatures($spot->id, [$field => $value]);
+                                    break;
+                            }
                         }
                     }
                     $rows_parsed_now++;

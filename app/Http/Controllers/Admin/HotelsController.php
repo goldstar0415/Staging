@@ -375,12 +375,15 @@ class HotelsController extends Controller
                     elseif(in_array($field, $this->massFields))
                     {
                         $spot = Spot::where('remote_id', $pref . $remote_id)->first();
-                        if($field == 'tags'){
-                            $this->saveTags($spot->id, [$field => $value]);
-                        }
-                        else
+                        if($spot)
                         {
-                            $this->savePhoto($spot->id, [$field => $value]);
+                            if($field == 'tags'){
+                                $this->saveTags($spot->id, [$field => $value]);
+                            }
+                            elseif($field == 'photo_url')
+                            {
+                                $this->savePhoto($spot->id, [$field => $value]);
+                            }
                         }
                     }
                     $rows_parsed_now++;

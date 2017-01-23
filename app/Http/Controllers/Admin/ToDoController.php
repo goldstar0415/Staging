@@ -322,12 +322,15 @@ class ToDoController extends Controller
                     elseif(in_array($field, $this->massFields))
                     {
                         $spot = Spot::where('remote_id', $pref . $remote_id)->first();
-                        if($field == 'tags'){
-                            $this->saveTags($spot->id, [$field => $value]);
-                        }
-                        else
+                        if($spot)
                         {
-                            $this->savePhotos($spot->id, [$field => $value]);
+                            if($field == 'tags'){
+                                $this->saveTags($spot->id, [$field => $value]);
+                            }
+                            else
+                            {
+                                $this->savePhotos($spot->id, [$field => $value]);
+                            }
                         }
                     }
                     $rows_parsed_now++;
