@@ -130,12 +130,6 @@
                     {{url}}
                 </a>
             </div>
-            <div class="overview tags" ng-if="Spot.spot.tags.length > 0">
-                <h1>Tags:</h1>
-                <div>
-                    <p ng-repeat="tag in Spot.spot.tags" class="spot-tag">{{tag.name}}</p>
-                </div>
-            </div>
             <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
               <li ng-repeat="link in Spot.spot.videos track by $index" class="video-size">
                 <youtube-player src="link"></youtube-player>
@@ -162,6 +156,12 @@
                     <a ng-href="Spot.spot.hotel.vk_url || Spot.spot.restaurant.vk_url" ng-if="Spot.spot.hotel.vk_url || Spot.spot.restaurant.vk_url">
                         <img src="../../../assets/img/svg/social/vk_icon.svg" alt="vk" />
                     </a>
+                </div>
+            </div>
+            <div class="overview tags" ng-if="Spot.spot.tags.length > 0">
+                <h1>Tags:</h1>
+                <div>
+                    <p ng-repeat="tag in Spot.spot.tags" class="spot-tag">{{tag.name}}</p>
                 </div>
             </div>
         </div>
