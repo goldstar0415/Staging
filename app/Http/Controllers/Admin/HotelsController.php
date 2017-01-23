@@ -370,7 +370,7 @@ class HotelsController extends Controller
                     }
                     elseif(in_array($field, array_diff($this->hotelFields, ['remote_id'])))
                     {
-                        SpotToDo::where('remote_id', $remote_id)->update([$field => $value]);
+                        SpotHotel::where('booking_id', $remote_id)->update([$field => $value]);
                     }
                     elseif(in_array($field, $this->massFields))
                     {

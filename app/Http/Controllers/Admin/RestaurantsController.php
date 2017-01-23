@@ -372,7 +372,7 @@ class RestaurantsController extends Controller
                     }
                     elseif(in_array($field, array_diff(array_values($this->restaurantFields), ['remote_id'])))
                     {
-                        SpotToDo::where('remote_id', $remote_id)->update([$field => $value]);
+                        SpotRestaurant::where('remote_id', $remote_id)->update([$field => $value]);
                     }
                     elseif(in_array($field, $this->massFields))
                     {
