@@ -628,6 +628,10 @@
         }
         .img-icon-close {
             background-image: url(../img/svg/new-cancel.svg);
+            position: absolute;
+            height: 50px;
+            right: 0px;
+            top: -5px;
             &:hover {
                 background-image: url(../img/svg/new-cancel-hover.svg);
             }
