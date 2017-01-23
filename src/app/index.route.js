@@ -59,8 +59,14 @@
             spot: ['$rootScope', function ($rootScope) {
               $rootScope.setOpenedSpot(null);
             }]
-          },
-        }
+          }
+        },
+        resolve: {
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+              'uploader'
+            ]));
+          }]}
       })
       .state('index.post', {
         url: '/map/post/:slug',
@@ -857,6 +863,11 @@
                 //   return Spot.get({id: $stateParams.spot_id}).$promise;
               });
           }],
+          loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load(versionize([
+                'uploader'
+            ]));
+          }]
         },
         locate: 'none',
         mapState: 'small'
