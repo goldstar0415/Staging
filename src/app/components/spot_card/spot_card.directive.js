@@ -115,10 +115,8 @@
                     var imgnum = getRandomInt(0, max);
                     return S3_URL + '/assets/img/placeholders/' + type + '/' + imgnum + '.jpg';
                 } else {
-                    console.log(item);
                     vm.getImg();
-                    return "https://testback.zoomtivity.com/uploads/missings/covers/original/missing.png";
-
+                    return API_URL + "/uploads/missings/covers/original/missing.png";
                 }
             }
 
