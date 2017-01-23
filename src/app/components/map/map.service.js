@@ -1686,10 +1686,6 @@
        * Load selection from server
        */
       function LoadSelections(selection) {
-        var searchLayer = null;
-        if (selection.zoom) {
-          map.setZoom(selection.zoom);
-        }
 
         if (selection.waypoints && selection.waypoints.length > 0) {
           _.each(selection.waypoints, function (array) {
@@ -1702,7 +1698,7 @@
 
         if (selection.data) {
           if (selection.data.searchLayer) {
-              $rootScope.toggleLayer(selection.data.searchLayer);
+            $rootScope.toggleLayer(selection.data.searchLayer, true);
           }
           L.geoJson(selection.data, {
             onEachFeature: function (feature) {
@@ -1785,7 +1781,14 @@
           });
         }
         var bboxes = GetDrawLayerBBoxes();
-        GetDataByBBox(bboxes, true);
+        $timeout(function() {
+          GetDataByBBox(bboxes, true);
+          // $timeout(function(){ // enable selection-based zoom if needed
+          //   if (selection.zoom) {
+          //     map.setZoom(selection.zoom);
+          //   }
+          // }, 10);
+        }, 100);
       }
 
       function ClearSelections(mapOnly) {
@@ -2766,6 +2769,7 @@
         RadiusSelection: RadiusSelection,
         SaveSelections: SaveSelections,
         LoadSelections: LoadSelections,
+        spotsOnScreen: spotsOnScreen,
         //Controls
         AddControls: AddControls,
         RemoveControls: RemoveControls,
