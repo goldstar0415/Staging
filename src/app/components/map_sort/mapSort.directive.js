@@ -444,10 +444,11 @@
         var wp = MapService.GetPathWaypoints();
         var geoJson = MapService.GetGeoJSON();
 
-			if ($rootScope.isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1 && $rootScope.$state.current.name != 'areas.preview') {
-				toastr.info('Draw the search area');
-			}
-		}
+        if ($rootScope.isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1 && $rootScope.$state.current.name != 'areas.preview') {
+          toastr.info('Draw the search area');
+        }
+      }
+    }
 
     function onTagsAdd(q, w, e) {
       console.log('add tags');
