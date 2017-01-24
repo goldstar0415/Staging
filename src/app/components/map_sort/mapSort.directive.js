@@ -312,7 +312,7 @@
       }
 
       $timeout(function () {
-        if ($rootScope.mapSortSpots.markers.length > 0) {
+        if ($rootScope.mapSortSpots.markers && $rootScope.mapSortSpots.markers.length > 0) {
           $rootScope.changeMapState('small', null, false);
         //   console.log($rootScope.mapSortSpots.data);
           $rootScope.sidebarMessage = "Can't find any spots in this area...";
