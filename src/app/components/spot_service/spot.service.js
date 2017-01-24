@@ -128,6 +128,8 @@
           }
         });
       });
+      var validWebsites = _.filter(spot.web_sites, function(ws){ return _.isString(ws) && ws.trim().length > 0; });
+      spot.web_sites = validWebsites.length > 0 ? validWebsites : null;
       if (_.isArray(spot.web_sites) && spot.web_sites.length > 0) {
         spot.web_sites.forEach(function(ws, i){
           spot.web_sites[i] = prefixUrl(ws);
