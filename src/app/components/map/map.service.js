@@ -352,7 +352,7 @@
         },
         onAdd: function (map) {
             var scope = $rootScope.$new();
-            var template = '    <div tooltip="Lasso Selection" tooltip-placement="right" class="map-tools">\
+            var template = '    <div tooltip="Lasso Selection" tooltip-placement="right" class="map-tools map-tools-selection">\
                                     <div class="lasso-selection">\
                                         <img src="../../assets/img/svg/Lasso.svg"/>\
                                     </div>\
@@ -409,7 +409,7 @@
         },
         onAdd: function (map) {
             var scope = $rootScope.$new();
-            var template = '    <div tooltip="Radius Selection" tooltip-placement="right" class="map-tools">\
+            var template = '    <div tooltip="Radius Selection" tooltip-placement="right" class="map-tools map-tools-selection">\
                                     <div class="radius-selection">\
                                         <img src="../../assets/img/svg/Radius.svg"/>\
                                     </div>\
@@ -471,7 +471,7 @@
         },
         onAdd: function (map) {
             var scope = $rootScope.$new();
-            var template = '    <div tooltip="Path Selection" tooltip-placement="right" class="map-tools">\
+            var template = '    <div tooltip="Path Selection" tooltip-placement="right" class="map-tools map-tools-selection">\
                                     <div class="path-selection">\
                                         <img src="../../assets/img/svg/Road_icon.svg"/>\
                                     </div>\
@@ -1541,6 +1541,8 @@
             cover: image
           };
 
+          req.data.searchLayer = $rootScope.sortLayer;
+
           Area.save(req, function (data) {
             toastr.success('Selection saved!');
           }, function (data) {
@@ -1581,7 +1583,7 @@
             tilesLeft.push(parseFloat(css.left));
             tilesTop.push(parseFloat(css.top));
             tileMethod[i] = "left";
-          } else if (tcss.transform != "") {
+          } else if (css.transform != "") {
             var tileTransform = css.transform.split(",");
             tilesLeft[i] = parseFloat(tileTransform[0].split("(")[1]);
             tilesTop[i] = parseFloat(tileTransform[1]);
@@ -1680,11 +1682,10 @@
         };
       }
 
-      //load selection from server
+      /**
+       * Load selection from server
+       */
       function LoadSelections(selection) {
-        if (selection.zoom) {
-          map.setZoom(selection.zoom);
-        }
 
         if (selection.waypoints && selection.waypoints.length > 0) {
           _.each(selection.waypoints, function (array) {
@@ -1696,6 +1697,9 @@
         }
 
         if (selection.data) {
+          if (selection.data.searchLayer) {
+            $rootScope.toggleLayer(selection.data.searchLayer, true);
+          }
           L.geoJson(selection.data, {
             onEachFeature: function (feature) {
               if (feature.geometry.type = 'Point' && feature.properties.radius) {
@@ -1777,11 +1781,18 @@
           });
         }
         var bboxes = GetDrawLayerBBoxes();
-        GetDataByBBox(bboxes, true);
+        $timeout(function() {
+          GetDataByBBox(bboxes, true);
+          // $timeout(function(){ // enable selection-based zoom if needed
+          //   if (selection.zoom) {
+          //     map.setZoom(selection.zoom);
+          //   }
+          // }, 10);
+        }, 100);
       }
 
-      function ClearSelections(mapOnly) {
-		clearPathFilter();
+      function ClearSelections(mapOnly, ignoreBBoxes) {
+		    clearPathFilter();
         markersLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
@@ -1797,8 +1808,13 @@
           CancelPathSelection();
         }
 
-        GetDrawLayerBBoxes();
-        GetDataByBBox([]);
+        if (!ignoreBBoxes) {
+          GetDrawLayerBBoxes();
+          GetDataByBBox([]);
+        } {
+          _activateControl(false);
+        }
+
         if (!mapOnly) {
           $rootScope.$broadcast('clear-map-selection');
         }
@@ -1818,6 +1834,14 @@
 		    map.removeLayer(focusGeolocation);
         map.removeLayer(fullScreen);
         map.removeLayer(filter);
+      }
+
+      function ToggleSelectionControls(show) {
+        if (show) {
+          $('.map-tools.map-tools-selection').removeClass('hidden');
+        } else {
+          $('.map-tools.map-tools-selection').addClass('hidden');
+        }
       }
 
       function AddControls() {
@@ -2758,9 +2782,11 @@
         RadiusSelection: RadiusSelection,
         SaveSelections: SaveSelections,
         LoadSelections: LoadSelections,
+        spotsOnScreen: spotsOnScreen,
         //Controls
         AddControls: AddControls,
         RemoveControls: RemoveControls,
+        ToggleSelectionControls: ToggleSelectionControls,
         //Makers
         CreateMarker: CreateMarker,
         RemoveMarker: RemoveMarker,

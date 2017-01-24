@@ -120,8 +120,25 @@
         spot.start_date = moment(spot.start_date).format('YYYY-MM-DD');
         spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
       }
+      // fix URLs
+      ['restaurant', 'hotel'].forEach(function(t) {
+        ['google_url', 'facebook_url', 'instagram_url', 'tumbler_url', 'twitter_url', 'vk_url'].forEach(function(n) {
+          if (spot[t] && spot[t][n]) {
+            spot[t][n] = prefixUrl(spot[t][n]);
+          }
+        });
+      });
+      if (_.isArray(spot.web_sites) && spot.web_sites.length > 0) {
+        spot.web_sites.forEach(function(ws, i){
+          spot.web_sites[i] = prefixUrl(ws);
+        });
+      }
 
       return spot;
+    }
+
+    function prefixUrl(url, https) {
+      return /:\/\//i.test(url) ? url : ((https ? 'https' : 'http') + url);
     }
 
     //open sign up modal if user not authorized

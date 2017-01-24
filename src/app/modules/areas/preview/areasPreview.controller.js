@@ -9,7 +9,7 @@
     .controller('AreasPreviewController', AreasPreviewController);
 
   /** @ngInject */
-  function AreasPreviewController(selection, $rootScope, MapService, $timeout) {
+  function AreasPreviewController(selection, $rootScope, MapService) {
     $rootScope.hideHints = true;
     MapService.LoadSelections(selection);
   }
