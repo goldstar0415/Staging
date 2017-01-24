@@ -92,6 +92,7 @@
     };
     var isSelectedAll = false;
     var geocoder = null;
+    var categoriesPromise = null;
 
     vm.vertical = true;
     vm.weatherForecast = [];
@@ -146,7 +147,7 @@
             dateFrom: '',
             dateTo: ''
         };
-    };
+    }
 
     $rootScope.doSearchMap = search;
     $rootScope.sortLayer = $rootScope.sortLayer || 'event';
@@ -348,7 +349,9 @@
 
     function loadNextSpots(layer) {
       if ($rootScope.mapSortSpots.sourceSpots && $rootScope.mapSortSpots.sourceSpots.length > 0) {
-           $rootScope.mapSortSpots.data = $rootScope.mapSortSpots.sourceSpots;
+        $rootScope.mapSortSpots.data = $rootScope.mapSortSpots.sourceSpots;
+        $timeout(MapService.spotsOnScreen, 200);
+
         // var startIdx = $rootScope.mapSortSpots.page * SPOTS_PER_PAGE,
         // endIdx = startIdx + SPOTS_PER_PAGE,
         // spots = $rootScope.mapSortSpots.sourceSpots.slice(startIdx, endIdx),
@@ -384,55 +387,67 @@
      * Switch a layer and apply UI changes
      * @param {string} layer
      * @param {boolean} startSearch
+     * @param {string} src
      */
-    function toggleLayer(layer, startSearch) {
-        $rootScope.sidebarMessage = "Loading...";
-        $rootScope.isFilterOpened = false;
-        vm.clearFilter();
-        $rootScope.toggleSidebar(false);
-		$rootScope.sortLayer = layer;
-        vm.currentWeather = null;
+    function toggleLayer(layer, startSearch, src) {
+      $rootScope.sidebarMessage = "Loading...";
+      $rootScope.isFilterOpened = false;
+      vm.clearFilter();
+      $rootScope.toggleSidebar(false);
+      $rootScope.sortLayer = layer;
+      vm.currentWeather = null;
 
-		if (layer == 'weather') {
-			MapService.showOtherLayers();
+      if (layer == 'weather') {
+        // hide selection tools
+        MapService.ToggleSelectionControls(false);
+        // clear existing selections, but prevent an infinite loop using the second arg
+        if (src == 'sidebar') {
+          MapService.clearSelections(false, true);
+        }
+        MapService.showOtherLayers();
 
-			// show weather radar data for US users
-			// if ($rootScope.currentCountryCode === 'us') {
-			// 	MapService.toggleWeatherLayer(true);
-			// } else {
-			// 	console.log('Current country: ', $rootScope.currentCountryCode);
-			// }
-            // MapService.toggleWeatherLayer(true);
+        // hide a pick notification
+        var pn = document.querySelector('.pick-notification');
+        pn.style = '';
 
-			//MapService.WeatherSelection(weather, geocodeCallback);
-            MapService.showWeatherMarkers();
-            MapService.getWeatherLatLng(setWeatherLatLng);
+        // show weather radar data for US users
+        // if ($rootScope.currentCountryCode === 'us') {
+        // 	MapService.toggleWeatherLayer(true);
+        // } else {
+        // 	console.log('Current country: ', $rootScope.currentCountryCode);
+        // }
+        // MapService.toggleWeatherLayer(true);
 
-			if (!vm.currentWeather) {
-				toastr.info('Click on map to check weather in this area');
-			}
-		} else {
-			MapService.toggleWeatherLayer(false);
-			if (layer != 'event') {
-				$rootScope.mapSortFilters.filter = $rootScope.mapSortFilters.filter || {};
-				$rootScope.mapSortFilters.filter.start_date = $rootScope.mapSortFilters.filter.end_date = '';
-				vm.searchParams.start_date = vm.searchParams.end_date = '';
-			}
+        //MapService.WeatherSelection(weather, geocodeCallback);
+        MapService.showWeatherMarkers();
+        MapService.getWeatherLatLng(setWeatherLatLng);
 
-			if (startSearch !== false) {
-				search();
-				MapService.showLayer(layer);
-			} else {
-				// show a layer, but keep existing event listeners, for ex. if path selection has started
-				MapService.showLayer(layer, true);
-			}
-			var wp = MapService.GetPathWaypoints();
-			var geoJson = MapService.GetGeoJSON();
+        if (!vm.currentWeather) {
+          toastr.info('Click on map to check weather in this area');
+        }
+      } else {
+        MapService.ToggleSelectionControls(true);
+        MapService.toggleWeatherLayer(false);
+        if (layer != 'event') {
+          $rootScope.mapSortFilters.filter = $rootScope.mapSortFilters.filter || {};
+          $rootScope.mapSortFilters.filter.start_date = $rootScope.mapSortFilters.filter.end_date = '';
+          vm.searchParams.start_date = vm.searchParams.end_date = '';
+        }
 
-			if ($rootScope.isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1) {
-				toastr.info('Draw the search area');
-			}
-		}
+        if (startSearch !== false) {
+          search();
+          MapService.showLayer(layer);
+        } else {
+          // show a layer, but keep existing event listeners, for ex. if path selection has started
+          MapService.showLayer(layer, true);
+        }
+        var wp = MapService.GetPathWaypoints();
+        var geoJson = MapService.GetGeoJSON();
+
+        if ($rootScope.isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1 && $rootScope.$state.current.name != 'areas.preview') {
+          toastr.info('Draw the search area');
+        }
+      }
     }
 
     function onTagsAdd(q, w, e) {
@@ -455,24 +470,35 @@
 
     /**
      * API-request or get from $rootScope
+     * @return {Promise}
      */
     function loadCategories() {
-      if (!$rootScope.spotCategories) {
-        $http.get(API_URL + '/spots/categories')
-          .success(function (data) {
-            $rootScope.spotCategories = data;
-            _loadCategories(data)
-          });
-      } else {
-        _loadCategories($rootScope.spotCategories);
+      if (!categoriesPromise) {
+        categoriesPromise = $q.defer();
+        if (!$rootScope.spotCategories) {
+          $http.get(API_URL + '/spots/categories')
+            .success(function (data) {
+              $rootScope.spotCategories = data;
+              _loadCategories(data);
+              categoriesPromise.resolve($rootScope.spotCategories);
+            })
+            .error(function (r) {
+              console.error("Couldn't load spot categories", r);
+              categoriesPromise.reject();
+            });
+        } else {
+          _loadCategories($rootScope.spotCategories);
+          categoriesPromise.resolve($rootScope.spotCategories);
+        }
       }
+      return categoriesPromise.promise;
     }
 
     function _loadCategories(data) {
-		vm.spotCategories = {};
-		_.each(data, function (item) {
-			vm.spotCategories[item.name] = item.categories;
-		});
+      vm.spotCategories = {};
+      _.each(data, function (item) {
+        vm.spotCategories[item.name] = item.categories;
+      });
     }
 
 
@@ -537,10 +563,15 @@
       }
     }
 
+    function doSearch(isIntermediateSearch) {
+      loadCategories().then(function(){
+        _doSearch(isIntermediateSearch);
+      });
+    }
     /**
      * API-request - apply a custom filter and update the map
      */
-	function doSearch(isIntermediateSearch) {
+	function _doSearch(isIntermediateSearch) {
 		var data = {
 			search_text: vm.searchParams.search_text,
 			filter: {}
@@ -593,7 +624,7 @@
             pn.onclick = function() {
                 var el = document.querySelector('.pick-notification');
                 pn.style = '';
-            }
+            };
             var container = document.querySelector('.leaflet-bottom.leaflet-left');
 
 			$rootScope.mapSortFilters = {};
