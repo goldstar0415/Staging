@@ -1,23 +1,78 @@
 'use strict';
 
-var CACHE_VERSION = 1;
+// this is a gulp inject token
+var APP_REVISION = '__GULP_GIT_REVISION__';
+var CACHE_VERSION = APP_REVISION == '__GULP_GIT_REV'+'ISION__' ? 'dev' : APP_REVISION;
 var CURRENT_CACHES = {
-    offline: 'offline-v' + CACHE_VERSION,
-    online: 'online-v' + CACHE_VERSION,
+    offline: 'offline-' + CACHE_VERSION,
+    online: 'online-' + CACHE_VERSION,
 };
 var OFFLINE_URL = 'assets/offline.html';
 
+// -- fast config --
+var verbose = false; // display console output
+var disableCacheInDebugMode = true; // don't cache any files if APP_REVISION == 'dev'
+// -----------------
+
+var cachePolicyConfig = {
+    cacheableRemote: [
+      {match: /cdnjs\.cloudflare\.com/i, opaque: true},
+      // {match: /https*:\/\/connect\.facebook\.net\/[^\/]+\/sdk\.js/i, opaque: true}, // fixme: doesn't work (?)
+      /fonts\.gstatic\.com/i,
+    ],
+    cacheableLocal: [
+      /^\/bower_components\/.+/i,
+      /^\/assets\/.+/i,
+      /^\/app\/.+/i,
+      /^\/scripts\/.+/i,
+      /^\/fonts\/.+/i,
+      // '/',
+      '/favicon.ico',
+    ],
+};
+
 function cachePolicy(req) {
-    return (
-      // Cloudflare CDN files
-      ( /cdnjs\.cloudflare\.com.+\.(js|css)$/i.test(req.url) ) ||
-      // Google Maps files
-      // ( /maps\.googleapis\.com\/maps\/api\/js/i.test(req.url) && req.url.indexOf('AuthenticationService.Authenticate') == -1 ) ||
-      // application files
-      ( 0 === req.url.indexOf(req.referrer) ) ||
-      // facebook SDK
-      ( req.url == 'https://connect.facebook.net/en_US/sdk.js' )
-    );
+    var localOrigin = getLocalOrigin();
+    var isLocalRequest = localOrigin && -1 !== req.url.toLowerCase().indexOf(localOrigin);
+    var rules = isLocalRequest ? cachePolicyConfig.cacheableLocal : cachePolicyConfig.cacheableRemote;
+    var result = {
+        opaque: false,
+        allow: false,
+    };
+    rules.forEach(function(rule){
+        if (!result.allow) {
+            rule = parsePolicyRule(rule); // todo: cache the parsed rule
+            var src = isLocalRequest ? req.url.substr(localOrigin.length - 1) : req.url;
+            if (verbose) console.log('>>> Src: ', src);
+            if ((rule.type == 'string' && -1 !== src.toLowerCase().indexOf(rule.match)) || (rule.type == 'regexp' && rule.match.test(src))) {
+                result.allow = true;
+                result.opaque = rule.opaque;
+            }
+
+        }
+    });
+    return result;
+}
+
+function getLocalOrigin() {
+    return self.registration && self.registration.scope ? self.registration.scope.toLowerCase() : null;
+}
+
+function parsePolicyRule(rule) {
+    var type = 'string', match, opaque = false;
+    if (typeof rule === 'string') {
+        match = rule.toLowerCase();
+    } else if (typeof rule === 'object') {
+        if (rule.test) {
+            type = 'regexp';
+            match = rule;
+        } else {
+            type = typeof rule.match === 'string' ? 'string' : 'regexp';
+            match = type == 'string' ? rule.match.toLowerCase() : rule.match;
+            opaque = rule.opaque;
+        }
+    }
+    return {type: type, match: match, opaque: opaque};
 }
 
 function createCacheBustedRequest(url) {
@@ -54,6 +109,7 @@ self.addEventListener('activate', function (event) {
     }));
 });
 
+// todo: check it out
 self.addEventListener('fetch', function (event) {
   if (event.request.mode === 'navigate' || event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html')) {
     console.log('Handling fetch event for', event.request.url);
@@ -65,31 +121,50 @@ self.addEventListener('fetch', function (event) {
 });
 
 self.addEventListener('fetch', function(event) {
+
+    if (CACHE_VERSION == 'dev' && disableCacheInDebugMode) {
+        return;
+    }
+
     if (event.request.mode === 'navigate' || event.request.method === 'GET' && cachePolicy(event.request)) {
         event.respondWith(
           caches.match(event.request)
             .then(function (response) {
-
                 if (response) {
-                    console.debug('>>> Hit: ', event.request.url);
+                    if (verbose) console.debug('>>> Hit: ', event.request.url);
                     return response;
                 }
+                if (verbose) console.debug('>>> Miss: ' + event.request.url);
+                var req = event.request.clone();
+                var policyResult = cachePolicy(req);
+                if (verbose) console.log('* Policy Result: ', event.request.url, policyResult);
+                var fetchRequest;
+                if (policyResult.opaque) {
+                    fetchRequest = new Request(req.url, {
+                        mode: 'cors',
+                        referrer: req.referrer,
+                        referrerPolicy: "no-referrer-when-downgrade",
+                        credentials: 'omit',
+                    });
+                } else {
+                    fetchRequest = req;
+                }
 
-                var fetchRequest = event.request.clone();
-                console.debug('>>> Requesting: ' + event.request.url);
+                if (verbose) console.debug('>> fetchRequest', fetchRequest);
+
                 return fetch(fetchRequest).then(
                   function (response) {
-                      if (!response || response.status !== 200 || ['basic', 'opaque'].indexOf(response.type) == -1) {
-                          console.warn('>>> Do not cache: ' + event.request.url, response);
+                      if (response && response.status === 200 && policyResult.allow && ( (policyResult.opaque && response.type == 'cors') || (!policyResult.opaque && response.type == 'basic'))) {
+                          var responseToCache = response.clone();
+                          caches.open(CURRENT_CACHES.online)
+                            .then(function (cache) {
+                                cache.put(event.request, responseToCache);
+                            });
+                          return response;
+                      } else {
+                          if (verbose) console.warn('>>> Do not cache: ' + event.request.url, response, policyResult, event.request);
                           return response;
                       }
-                      var responseToCache = response.clone();
-                      caches.open(CURRENT_CACHES.online)
-                        .then(function (cache) {
-                            cache.put(event.request, responseToCache);
-                        });
-
-                      return response;
                   }
                 );
             })

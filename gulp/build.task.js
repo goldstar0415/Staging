@@ -17,9 +17,11 @@ gulp.task('build:fonts', function () {
 });
 
 gulp.task('build:service-worker', function () {
+  const rev = gitRevSync.short();
   return gulp.src([
       path.join(config.paths.src, '/service-worker.js'),
     ])
+    .pipe(injectString.replace('__GULP_GIT_REVISION__', rev))
     .pipe(gulp.dest(config.paths.dist));
 });
 
