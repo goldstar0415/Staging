@@ -18,7 +18,7 @@ var cachePolicyConfig = {
     cacheableRemote: [
       {match: /cdnjs\.cloudflare\.com/i, opaque: true},
       // {match: /https*:\/\/connect\.facebook\.net\/[^\/]+\/sdk\.js/i, opaque: true}, // fixme: doesn't work (?)
-      /fonts\.gstatic\.com/i,
+      {match: /fonts\.gstatic\.com/i, opaque: true},
     ],
     cacheableLocal: [
       /^\/bower_components\/.+/i,
@@ -121,53 +121,54 @@ self.addEventListener('fetch', function (event) {
 });
 
 self.addEventListener('fetch', function(event) {
-
     if (CACHE_VERSION == 'dev' && disableCacheInDebugMode) {
         return;
     }
+    if (event.request.method === 'GET') {
+        var policyResult = cachePolicy(event.request);
 
-    if (event.request.mode === 'navigate' || event.request.method === 'GET' && cachePolicy(event.request)) {
-        event.respondWith(
-          caches.match(event.request)
-            .then(function (response) {
-                if (response) {
-                    if (verbose) console.debug('>>> Hit: ', event.request.url);
-                    return response;
-                }
-                if (verbose) console.debug('>>> Miss: ' + event.request.url);
-                var req = event.request.clone();
-                var policyResult = cachePolicy(req);
-                if (verbose) console.log('* Policy Result: ', event.request.url, policyResult);
-                var fetchRequest;
-                if (policyResult.opaque) {
-                    fetchRequest = new Request(req.url, {
-                        mode: 'cors',
-                        referrer: req.referrer,
-                        referrerPolicy: "no-referrer-when-downgrade",
-                        credentials: 'omit',
-                    });
-                } else {
-                    fetchRequest = req;
-                }
+        if (policyResult.allow) {
+            var req = event.request.clone();
+            event.respondWith(
+              caches.match(event.request)
+                .then(function (response) {
+                    if (response) {
+                        if (verbose) console.debug('>>> Hit: ', event.request.url);
+                        return response;
+                    }
+                    if (verbose) console.debug('>>> Miss: ' + event.request.url);
+                    if (verbose) console.log('* Policy Result: ', event.request.url, policyResult);
+                    var fetchRequest;
+                    if (policyResult.opaque) {
+                        fetchRequest = new Request(req.url, {
+                            mode: 'cors',
+                            referrer: req.referrer,
+                            referrerPolicy: "no-referrer-when-downgrade",
+                            credentials: 'omit',
+                        });
+                    } else {
+                        fetchRequest = req;
+                    }
 
-                if (verbose) console.debug('>> fetchRequest', fetchRequest);
+                    if (verbose) console.debug('>> fetchRequest', fetchRequest);
 
-                return fetch(fetchRequest).then(
-                  function (response) {
-                      if (response && response.status === 200 && policyResult.allow && ( (policyResult.opaque && response.type == 'cors') || (!policyResult.opaque && response.type == 'basic'))) {
-                          var responseToCache = response.clone();
-                          caches.open(CURRENT_CACHES.online)
-                            .then(function (cache) {
-                                cache.put(event.request, responseToCache);
-                            });
-                          return response;
-                      } else {
-                          if (verbose) console.warn('>>> Do not cache: ' + event.request.url, response, policyResult, event.request);
-                          return response;
+                    return fetch(fetchRequest).then(
+                      function (response) {
+                          if (response && response.status === 200 && ( (policyResult.opaque && response.type == 'cors') || (!policyResult.opaque && response.type == 'basic'))) {
+                              var responseToCache = response.clone();
+                              caches.open(CURRENT_CACHES.online)
+                                .then(function (cache) {
+                                    cache.put(event.request, responseToCache);
+                                });
+                              return response;
+                          } else {
+                              if (verbose) console.warn('>>> Do not cache: ' + event.request.url, response, policyResult, event.request);
+                              return response;
+                          }
                       }
-                  }
-                );
-            })
-        );
+                    );
+                })
+            );
+        }
     }
 });
