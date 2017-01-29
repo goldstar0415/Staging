@@ -127,9 +127,7 @@ class AppServiceProvider extends ServiceProvider
             $spot->comments()->delete();
             $spot->amenities()->delete();
             $spot->remotePhotos()->delete();
-            $spot->restaurant()->delete();
             $spot->votes()->delete();
-            $spot->hotel()->delete();
             $spot->points()->delete();
             $spot->photos()->delete();
             $spot->cleanAttached();

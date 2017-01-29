@@ -82,9 +82,9 @@ class MapController extends Controller {
                         'spots.title',
                         'spots.avg_rating',
                         'spot_points.address',
-                        'spot_hotels.minrate',
-                        'spot_hotels.maxrate',
-                        'spot_hotels.currencycode'
+                        'spots.minrate',
+                        'spots.maxrate',
+                        'spots.currencycode'
                 )
                 ->where('mv_spots_spot_points.is_private', false)
                 ->where('mv_spots_spot_points.is_approved', true);
@@ -143,7 +143,6 @@ class MapController extends Controller {
         
         $spots->leftJoin('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
         $spots->leftJoin('spot_points', 'spot_points.spot_id', '=', 'mv_spots_spot_points.id');
-        $spots->leftJoin('spot_hotels', 'spot_hotels.spot_id', '=', 'mv_spots_spot_points.id');
         $spots->with('rating');
         
         if ($request->has('filter.path')) {
@@ -209,8 +208,6 @@ class MapController extends Controller {
                             'tags',
                             'comments',
                             'remotePhotos',
-                            'restaurant',
-                            'hotel'
                         ])
                         ->get();
     }

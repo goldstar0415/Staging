@@ -171,9 +171,6 @@ class SpotController extends Controller
                 'tags',
                 'comments',
                 'remotePhotos',
-                'restaurant',
-                'hotel',
-                'todo'
                 ])
             ->append([
                 'count_members',
@@ -507,7 +504,6 @@ class SpotController extends Controller
     public function prices (Request $request, Spot $spot)
     {
         $result       = [];
-        $spotInfo     = $spot->getSpotExtension();
         $dates        = $request->all();
         $from         = date_parse_from_format( 'm.d.Y' , $dates['start_date'] );
         $to           = date_parse_from_format( 'm.d.Y' , $dates['end_date'] );
@@ -525,7 +521,7 @@ class SpotController extends Controller
         $toString     =   $to['year'] . '-' . (strlen(  $to['month']) == 1?'0':'') .   $to['month'] . '-' . (strlen(  $to['day']) == 1?'0':'') .   $to['day'];
         $endDate      = Carbon::create($to['year'], $to['month'], $to['day'], 0);
         
-        $result['data']['hotelsUrl'] = $spot->getHotelsUrl($spotInfo->hotelscom_url, $fromString, $toString);
+        $result['data']['hotelsUrl'] = $spot->getHotelsUrl($spot->hotelscom_url, $fromString, $toString);
         
         if($result['data']['hotelsUrl'])
         {
@@ -539,7 +535,7 @@ class SpotController extends Controller
             }
         }
         
-        $result['data']['bookingUrl'] = $spot->getBookingUrl($spotInfo->booking_url, $fromString, $toString, true);
+        $result['data']['bookingUrl'] = $spot->getBookingUrl($spot->booking_url, $fromString, $toString, true);
         if($result['data']['bookingUrl'])
         {
             $bookingPageContent = $spot->getPageContent($result['data']['bookingUrl'], [
@@ -563,16 +559,15 @@ class SpotController extends Controller
     public function getHours($spot)
     {
         $result = [];
-        $spotInfo = $spot->getSpotExtension();
-        if( empty($spotInfo->hours) )
+        if( empty($spot->hours) )
         {
             $googlePlaceInfo = $spot->getGooglePlaceInfo();
             if(!empty($googlePlaceInfo))
             $result = $spot->saveGooglePlaceHours($googlePlaceInfo);
         }
-        elseif(isset($spotInfo->hours) && !empty($spotInfo->hours))
+        else
         {
-            $result = $spotInfo->hours;
+            $result = $spot->hours;
         }
         return $result;
     }
@@ -580,25 +575,21 @@ class SpotController extends Controller
     public function getBookingInfo($spot)
     {
         $result = [ 'photos' => [], 'amenities' => [] ];
-        $spotInfo = $spot->getSpotExtension();
         $amenities = false;
-        if($spotInfo)
+        $bookingUrl = $spot->getBookingUrl($spot->booking_url);
+        if(
+            !empty($spot->booking_url) && 
+            $spot->checkUrl($spot->booking_url) && 
+            $bookingUrl &&
+            $bookingPageContent = $spot->getPageContent($bookingUrl, [
+                'headers' => $spot->getBookingHeaders()
+            ])
+        )
         {
-            $bookingUrl = $spot->getBookingUrl($spotInfo->booking_url);
-            if(
-                isset($spotInfo->booking_url) && 
-                $spot->checkUrl($spotInfo->booking_url) && 
-                $bookingUrl &&
-                $bookingPageContent = $spot->getPageContent($bookingUrl, [
-                    'headers' => $spot->getBookingHeaders()
-                ])
-            )
+            $result['photos'] = $spot->saveBookingPhotos($bookingPageContent);
+            if( $amenities = $spot->saveBookingAmenities($bookingPageContent) )
             {
-                $result['photos'] = $spot->saveBookingPhotos($bookingPageContent);
-                if( $amenities = $spot->saveBookingAmenities($bookingPageContent) )
-                {
-                    $result['amenities'] = $amenities;
-                }
+                $result['amenities'] = $amenities;
             }
         }
         return $result;
@@ -620,11 +611,10 @@ class SpotController extends Controller
         }
         else
         {
-            $spotInfo = $spot->getSpotExtension();
-            $bookingUrl = (isset($spotInfo->booking_url))?$spot->getBookingUrl($spotInfo->booking_url):false;
+            $bookingUrl = (!empty($spot->booking_url))?$spot->getBookingUrl($spot->booking_url):false;
             if(
-                isset($spotInfo->booking_url) && 
-                $spot->checkUrl($spotInfo->booking_url) && 
+                isset($spot->booking_url) && 
+                $spot->checkUrl($spot->booking_url) && 
                 $bookingUrl &&
                 $bookingPageContent = $spot->getPageContent($bookingUrl, [
                     'headers' => $spot->getBookingHeaders()

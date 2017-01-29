@@ -84,7 +84,8 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
 
     protected $casts = [
         'web_sites' => 'array',
-        'videos' => 'array'
+        'videos' => 'array',
+        'hours' => 'array',
     ];
 
     protected $dates = ['start_date', 'end_date'];
@@ -95,7 +96,6 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         'is_rated'
     ];
     
-    protected $spotExtension = null;
     protected $googlePlacesInfo = null;
     protected $yelpInfo = null;
     protected $yelpToken = null;
@@ -187,57 +187,6 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     }
     
     /**
-     * Get hotel spot info
-     *
-     * @return query
-     */
-    public function hotel()
-    {
-        return $this->hasOne(SpotHotel::class);
-    }
-    
-    public function scopeHotels($query)
-    {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
-        
-        return $query->where('spot_type_category_id', $spotTypeCategory->id);
-    }
-    
-    /**
-     * Get restaurant spot info
-     *
-     * @return query
-     */
-    public function restaurant()
-    {
-        return $this->hasOne(SpotRestaurant::class);
-    }
-    
-    public function scopeRestaurants($query)
-    {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
-        
-        return $query->where('spot_type_category_id', $spotTypeCategory->id);
-    }
-    
-    /**
-     * Get todo spot info
-     *
-     * @return query
-     */
-    public function todo()
-    {
-        return $this->hasOne(SpotToDo::class);
-    }
-    
-    public function scopeTodoes($query)
-    {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'todo')->first();
-        
-        return $query->where('spot_type_category_id', $spotTypeCategory->id);
-    }
-
-    /**
      * Check is spot favorite for authenticated user
      *
      * @return bool
@@ -302,6 +251,16 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function setWebSitesAttribute(array $value)
     {
         $this->attributes['web_sites'] = json_encode($value);
+    }
+    
+    /**
+     * Set hours attribute
+     *
+     * @param array $value
+     */
+    public function setHoursAttribute(array $value)
+    {
+        $this->attributes['hours'] = json_encode($value);
     }
 
     /**
@@ -754,10 +713,9 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             return $this->bookingPage;
         }
-        $spotInfo = $this->getSpotExtension();
-        if(!empty($spotInfo->booking_url))
+        if(!empty($this->booking_url))
         {
-            $url = $this->getBookingUrl($spotInfo->booking_url);
+            $url = $this->getBookingUrl($this->booking_url);
             if($url)
             {
                 $bookingPageContent = $this->getPageContent($url, [
@@ -1029,14 +987,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     
     public function getGooglePid()
     {
-        $googlePid = false;
-        $spotInfo  = $this->getSpotExtension();
-        if($spotInfo)
-        {
-            $googlePid = (!empty($spotInfo->google_pid)
-                    && $spotInfo->google_pid != 'null'
-                    && $spotInfo->google_pid != '0')?$spotInfo->google_pid:false;
-        }
+        $googlePid = (!empty($this->google_id)
+                && $this->google_id != 'null'
+                && $this->google_id != '0')?$this->google_id:false;
+        
         return $googlePid;
     }
     
@@ -1145,7 +1099,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     {
         $result = [];
         $googlePlaceInfo = $this->getGooglePlaceInfo();
-        if( !empty($googlePlaceInfo['opening_hours']))
+        if( !empty($googlePlaceInfo['opening_hours']) && !empty($this->restaurant))
         {
             $openingHours = $googlePlaceInfo['opening_hours'];
             unset($openingHours['open_now']);
@@ -1214,10 +1168,9 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getFacebookRating()
     {
         $fb = app(LaravelFacebookSdk::class);
-        $spotExtention = $this->getSpotExtension();
-        if($spotExtention && $this->checkUrl($spotExtention->facebook_url))
+        if( $this->checkUrl($this->facebook_url))
         {
-            $id = $this->getFacebookIdFromUrl($spotExtention->facebook_url);
+            $id = $this->getFacebookIdFromUrl($this->facebook_url);
             if($id)
             {
                 try
@@ -1279,11 +1232,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             return $this->yelpInfo;
         }
-        $spotInfo = $this->getSpotExtension();
-        if($spotInfo && !empty($spotInfo->yelp_url))
+        if(!empty($this->yelp_url))
         {
             $token = $this->getYelpToken();
-            $id    = $this->getYelpIdFromUrl($spotInfo->yelp_url);
+            $id    = $this->getYelpIdFromUrl($this->yelp_url);
             if($token && $id)
             {
                 $client = new Client();
@@ -1310,11 +1262,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getYelpBizInfo()
     {
         $result = null;
-        $spotInfo = $this->getSpotExtension();
-        if($spotInfo && !empty($spotInfo->yelp_url))
+        if(!empty($this->yelp_url))
         {
             $token = $this->getYelpToken();
-            $id    = $this->getYelpIdFromUrl($spotInfo->yelp_url);
+            $id    = $this->getYelpIdFromUrl($this->yelp_url);
             if($token && $id)
             {
                 $client = new Client();
@@ -1344,11 +1295,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getYelpReviewsFromApi($save = false)
     {
         $result = null;
-        $spotInfo = $this->getSpotExtension();
-        if($spotInfo && !empty($spotInfo->yelp_url))
+        if(!empty($this->yelp_url))
         {
             $token = $this->getYelpToken();
-            $id    = $this->getYelpIdFromUrl($spotInfo->yelp_url);
+            $id    = $this->getYelpIdFromUrl($this->yelp_url);
             if($token && $id)
             {
                 $client = new Client();
@@ -1393,10 +1343,9 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getYelpReviewsFromPage($save = false)
     {
         $result = null;
-        $spotInfo = $this->getSpotExtension();
-        if($spotInfo && $this->checkUrl($spotInfo->yelp_url))
+        if($this->checkUrl($this->yelp_url))
         {
-            $url = $spotInfo->yelp_url;
+            $url = $this->yelp_url;
             $headers = $this->getYelpHeaders($url);
             $client = new Client();
             try
@@ -1496,10 +1445,9 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             $this->getYelpReviewsFromPage($saveReviews);
             $result['info']['yelp'] = $yelpInfo;
         } 
-        $spotInfo = $this->getSpotExtension();
-        if(!empty($spotInfo->booking_url))
+        if(!empty($this->booking_url))
         {
-            $reviewsUrl = $this->getBookingReviewsUrl($spotInfo->booking_url);
+            $reviewsUrl = $this->getBookingReviewsUrl($this->booking_url);
             if($reviewsUrl && $reviewsPageContent = $this->getPageContent($reviewsUrl, [
                 'headers' => $this->getBookingHeaders()
             ]))
@@ -1512,11 +1460,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $result['info']['booking'] = $bookingTotals;
             }
         }
-        if(!empty($spotInfo->tripadvisor_rating) && !empty($spotInfo->tripadvisor_reviews_count))
+        if(!empty($this->tripadvisor_rating) && !empty($this->tripadvisor_reviews_count))
         {
             $result['info']['tripadvisor'] = [
-                'rating' => (float)$spotInfo->tripadvisor_rating,
-                'reviews_count' => (int)$spotInfo->tripadvisor_reviews_count
+                'rating' => (float)$this->tripadvisor_rating,
+                'reviews_count' => (int)$this->tripadvisor_reviews_count
             ];
         }
         
@@ -1533,6 +1481,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         
         $starsSumm = 0;
         $reviewsCount = 0;
+        $weightedAvg = 0;
         if( !empty($result['info']) )
         {
             foreach($result['info'] as $index => $service)
@@ -1542,12 +1491,13 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     unset($result['info'][$index]);
                     continue;
                 }
+                $weightedAvg += $service['rating'] * $service['reviews_count'];
                 $starsSumm += $service['rating'];
                 $reviewsCount += $service['reviews_count'];
             }
             $starsSumm = $starsSumm/count($result['info']);
         }
-        $result['total']['rating'] = round((float)$starsSumm, 1);
+        $result['total']['rating'] = round((float)$weightedAvg/$reviewsCount, 1);
         $result['total']['reviews_count'] = $reviewsCount;
         
         $saveSpot = false;
@@ -1576,27 +1526,6 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      * API's and parser's 
      * common methods
      */
-    
-    public function getSpotExtension()
-    {
-        if($this->spotExtension)
-        {
-            return $this->spotExtension;
-        }
-        if(!empty($this->hotel))
-        {
-            $this->spotExtension = $this->hotel;
-        }
-        if(!empty($this->restaurant))
-        {
-            $this->spotExtension = $this->restaurant;
-        }
-        if(!empty($this->todo))
-        {
-            $this->spotExtension = $this->todo;
-        }
-        return $this->spotExtension;
-    }
     
     public function getResponse($client, $url, $options, $json = false)
     {

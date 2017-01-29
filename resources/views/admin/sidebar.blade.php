@@ -3,12 +3,7 @@
         <li>{!! link_to_route('admin.posts.index', 'Blog') !!}</li>
         <li>{!! link_to_route('admin.users.index', 'Users') !!}</li>
         <li>{!! link_to_route('admin.spots.index', 'Spots') !!}</li>
-        <li>{!! link_to_route('admin.hotels.index', 'Hotels') !!}</li>
-        <li>{!! link_to_route('admin.hotels.parser', 'Hotels parser') !!}</li>
-        <li>{!! link_to_route('admin.restaurants.index', 'Restaurants') !!}</li>
-        <li>{!! link_to_route('admin.restaurants.parser', 'Restaurants parser') !!}</li>
-        <li>{!! link_to_route('admin.todoes.index', 'ToDo') !!}</li>
-        <li>{!! link_to_route('admin.todo.parser', 'ToDo parser') !!}</li>
+        <li>{!! link_to_route('admin.csv-parser.index', 'CSV Parser') !!}</li>
         <li>{!! link_to_route('admin.spot-owner.index', 'Spot owner requests') !!}</li>
         <li>{!! link_to_route('admin.spot-categories.index', 'Spot Categories') !!}</li>
         <li>{!! link_to_route('admin.activity-categories.index', 'Activity categories') !!}</li>

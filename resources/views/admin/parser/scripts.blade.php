@@ -58,6 +58,37 @@ $(function(){
         });
     });
     
+    $fieldCategory.on('change', function() {
+        var selectedField = $fieldCategory.find(':selected');
+        var selectedType = selectedField.parent().attr('label');
+        if(selectedType == 'Event')
+        {
+            $mode.filter('[value="update"]').prop('checked', false).prop('disabled', true).addClass('disabled');
+            $mode.filter('[value="parsing"]').prop('checked', true);
+            $updateExisting.parents('.checkbox').slideUp();
+            $fieldSelect.parents('.select').slideUp();
+        }
+        else
+        {
+            $mode.filter('[value="update"]').removeClass('disabled').prop('disabled', false);
+            handleMode();
+            var catId = selectedField.val();
+            //console.log(catId);
+            $fieldSelect.find('option').remove();
+            $.ajax({
+                url: '/admin/csv-parser/get-fields/' + catId,
+                data: {'category_id': catId},
+                type: 'POST',
+                dataType: 'json',
+                success: function(data) {
+                    $.each( data.fields, function(index, value) {
+                        $fieldSelect.append($('<option>').val(index).html(value));
+                    });
+                }
+            });
+        }
+    });
+    
     // File upload handle
     $form.on('submit', function(e){
         e.preventDefault();
@@ -117,19 +148,7 @@ $(function(){
     });
     
     $mode.on('change', function(){
-        mode = $mode.filter(':checked').val();
-        switch(mode) {
-            case 'parsing':
-                $updateExisting.parents('.checkbox').slideDown();
-                $fieldSelect.parents('.select').slideUp();
-                $fieldCategory.parents('.select').slideDown();
-                break;
-            case 'update':
-                $updateExisting.parents('.checkbox').slideUp();
-                $fieldSelect.parents('.select').slideDown();
-                $fieldCategory.parents('.select').slideUp();
-                break;
-        }
+        handleMode();
     });
     
     $parseBtn.on('click', function(e) {
@@ -226,6 +245,22 @@ $(function(){
                 sendParseError();
             }
         });
+    }
+    
+    function handleMode() {
+        mode = $mode.filter(':checked').val();
+        switch(mode) {
+            case 'parsing':
+                $updateExisting.parents('.checkbox').slideDown();
+                $fieldSelect.parents('.select').slideUp();
+                //$fieldCategory.parents('.select').slideDown();
+                break;
+            case 'update':
+                $updateExisting.parents('.checkbox').slideUp();
+                $fieldSelect.parents('.select').slideDown();
+                //$fieldCategory.parents('.select').slideUp();
+                break;
+        }
     }
     
     function message(mes) {

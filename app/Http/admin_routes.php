@@ -21,38 +21,11 @@ get('spot-owner', 'SpotOwnerController@index')->name('admin.spot-owner.index');
 get('spot-owner/{owner_request}/accept', 'SpotOwnerController@accept')->name('admin.spot-owner.accept');
 get('spot-owner/{owner_request}/reject', 'SpotOwnerController@reject')->name('admin.spot-owner.reject');
 
-post('hotels/cleanDb', 'HotelsController@cleanDb')->name('admin.hotels.clean-db');
-get('hotels/bulk-delete', 'HotelsController@bulkDestroy')->name('admin.hotels.bulk-delete');
-get('hotels/filter', 'HotelsController@filter')->name('admin.hotels.filter');
-get('hotels/hotels_parser', 'HotelsController@hotelsCsvParser')->name('admin.hotels.parser');
-post('hotels/export', 'HotelsController@export')->name('admin.hotels.export');
-post('hotels/exportUpload', 'HotelsController@exportUpload')->name('admin.hotels.export-upload');
-get('hotels/{spots}/edit', 'HotelsController@getEdit')->name('admin.hotels.get-edit');
-post('hotels/{spots}/edit', 'HotelsController@postEdit')->name('admin.hotels.post-edit');
-post('hotels/update-field', 'HotelsController@updateField')->name('admin.hotels.update_field');
-resource('hotels', 'HotelsController', ['only' => ['index', 'destroy']]);
-
-post('restaurants/cleanDb', 'RestaurantsController@cleanDb')->name('admin.restaurants.clean-db');
-get('restaurants/bulk-delete', 'RestaurantsController@bulkDestroy')->name('admin.restaurants.bulk-delete');
-get('restaurants/filter', 'RestaurantsController@filter')->name('admin.restaurants.filter');
-get('restaurants/restaurants_parser', 'RestaurantsController@restaurantsCsvParser')->name('admin.restaurants.parser');
-post('restaurants/export', 'RestaurantsController@export')->name('admin.restaurants.export');
-post('restaurants/exportUpload', 'RestaurantsController@exportUpload')->name('admin.restaurants.export-upload');
-get('restaurants/{spots}/edit', 'RestaurantsController@getEdit')->name('admin.restaurants.get-edit');
-post('restaurants/{spots}/edit', 'RestaurantsController@postEdit')->name('admin.restaurants.post-edit');
-post('restaurants/update-field', 'RestaurantsController@updateField')->name('admin.restaurants.update_field');
-resource('restaurants', 'RestaurantsController', ['only' => ['index', 'destroy']]);
-
-post('todo/cleanDb', 'ToDoController@cleanDb')->name('admin.todo.clean-db');
-get('todo/bulk-delete', 'ToDoController@bulkDestroy')->name('admin.todo.bulk-delete');
-get('todo/filter', 'ToDoController@filter')->name('admin.todo.filter');
-get('todo/parser', 'ToDoController@csvParser')->name('admin.todo.parser');
-post('todo/export', 'ToDoController@export')->name('admin.todo.export');
-post('todo/exportUpload', 'ToDoController@exportUpload')->name('admin.todo.export-upload');
-get('todo/{spots}/edit', 'ToDoController@getEdit')->name('admin.todo.get-edit');
-post('todo/{spots}/edit', 'ToDoController@postEdit')->name('admin.todo.post-edit');
-post('todo/update-field', 'ToDoController@updateField')->name('admin.todo.update_field');
-resource('todoes', 'ToDoController', ['only' => ['index', 'destroy']]);
+post('csv-parser/export', 'CsvParserController@export')->name('admin.csv-parser.export');
+post('csv-parser/exportUpload', 'CsvParserController@exportUpload')->name('admin.csv-parser.export-upload');
+post('csv-parser/update-field', 'CsvParserController@updateField')->name('admin.csv-parser.update-field');
+post('csv-parser/get-fields/{catId}', 'CsvParserController@getFields')->name('admin.csv-parser.get-fields');
+resource('csv-parser', 'CsvParserController', ['only' => ['index']]);
 
 resource('posts', 'BlogController', ['except' => 'show']);
 get('posts/search', 'BlogController@search')->name('admin.posts.search');
