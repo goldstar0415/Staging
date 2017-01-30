@@ -36,8 +36,8 @@
                         "@type": "Event",
                         name: scope.spot.title,
                         description: scope.spot.description,
-                        startDate: formatDate(scope.spot.start_date),
-                        endDate: formatDate(scope.spot.end_date),
+                        startDate: scope.spot.$start_date,
+                        endDate: scope.spot.$end_date,
                         url: $location.absUrl(),
                     };
                     var geoPoint = scope.spot.points && scope.spot.points[0] ? scope.spot.points[0] : null;
@@ -67,10 +67,6 @@
                 }
             }
         };
-    }
-
-    function formatDate(date) {
-        return _.isEmpty(date) ? null : date.substr(0, 12);
     }
 
     function SpotDirective() {
