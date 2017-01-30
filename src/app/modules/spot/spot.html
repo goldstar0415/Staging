@@ -40,8 +40,16 @@
             <div class="opened-thrid-buttons" ng-if="Spot.spot.category.type.name == 'shelter' || Spot.spot.category.type.name == 'event'">
                 <div class="event-info" ng-if="Spot.spot.category.type.name == 'event'">
                     <span class="glyphicon glyphicon-calendar"></span>
-                    <span ng-if="Spot.spot.start_date == Spot.spot.end_date">{{Spot.spot.start_date | date:'MMM d, y'}}</span>
-                    <span ng-if="Spot.spot.start_date != Spot.spot.end_date">{{Spot.spot.start_date | date:'MMM d, y'}} - {{Spot.spot.end_date | date:'MMM d, y'}}</span>
+                    <span ng-if="Spot.spot.start_date == Spot.spot.end_date">
+	                    {{Spot.spot.start_date | date:'MMM d, y'}}
+	                    <span ng-if="Spot.spot.start_time && Spot.spot.end_time">{{Spot.spot.start_time}}
+		                    <span ng-if="Spot.spot.end_time != '11:59 pm'">- {{Spot.spot.end_time}}</span>
+	                    </span>
+                    </span>
+                    <span ng-if="Spot.spot.start_date != Spot.spot.end_date">
+	                    {{Spot.spot.start_date | date:'MMM d, y'}} <span ng-if="Spot.spot.start_time">{{Spot.spot.start_time}}</span> -
+	                    {{Spot.spot.end_date | date:'MMM d, y'}} <span ng-if="Spot.spot.end_time && Spot.spot.end_time != '11:59 pm'">{{Spot.spot.end_time}}</span>
+                    </span>
                     <div class="buttons">
                         <a ng-if="Spot.spot.tickets" href="{{Spot.spot.tickets}}" target="_blank">Tickets</a>
                         <a ng-if="Spot.spot.venues" href="{{Spot.spot.venues}}" target="_blank">Venues</a>
