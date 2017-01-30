@@ -143,7 +143,7 @@
             ShowMarkers([vm.spot]);
         }
 
-        if (vm.spot.hotel) {
+        if (vm.spot.booking_url) {
             AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/info').then(function(data) {
                 if (vm.amenitiesCount == 0) {
                     vm.spot.amenities = data.amenities;
@@ -160,6 +160,10 @@
         AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/ratings').then(function(data) {
             vm.reviews_total = data;
             vm.spot.rating = data.total.rating;
+        });
+        
+        AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/hours').then(function(data) {
+            vm.spot.hours = data;
         });
 
         vm.initDates = function() {
