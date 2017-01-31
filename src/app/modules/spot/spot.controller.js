@@ -5,6 +5,7 @@
         .module('zoomtivity')
         .controller('SpotController', SpotController)
         .directive('spot', SpotDirective)
+        .directive('spotJsonld', SpotJsonld)
         .filter('seatgeek', function() {
             return function(inp) {
                 if (inp) {
@@ -20,9 +21,53 @@
             }
         });
 
-    angular
-        .module('zoomtivity')
-
+    function SpotJsonld($filter, $sce, $location) {
+        return {
+            restrict: 'E',
+            scope: {
+                spot: '='
+            },
+            replace: true,
+            template: '<script type="application/ld+json" ng-bind-html="onGetJson()"></script>',
+            link: function(scope, element, attrs) {
+                scope.onGetJson = function() {
+                    var event = {
+                        "@context": "http://schema.org/",
+                        "@type": "Event",
+                        name: scope.spot.title,
+                        description: scope.spot.description,
+                        startDate: scope.spot.$start_date,
+                        endDate: scope.spot.$end_date,
+                        url: $location.absUrl(),
+                    };
+                    var geoPoint = scope.spot.points && scope.spot.points[0] ? scope.spot.points[0] : null;
+                    if (geoPoint) {
+                        event.location = {
+                            "@type": "Place",
+                            address: geoPoint.address,
+                            name: geoPoint.address
+                        };
+                        if (geoPoint.location) {
+                            event.location.geo = {
+                                '@type': 'GeoCoordinates',
+                                latitude: geoPoint.location.lat,
+                                longitude: geoPoint.location.lng
+                            }
+                        }
+                    }
+                    if (scope.spot.cover_url) {
+                        event.image = scope.spot.cover_url.thumb || scope.spot.cover_url.medium || scope.spot.cover_url.original;
+                    }
+                    if (scope.spot.rating) {
+                        event.aggregateRating = {
+                            ratingCount: scope.spot.rating
+                        };
+                    }
+                    return $sce.trustAsHtml($filter('json')(event));
+                }
+            }
+        };
+    }
 
     function SpotDirective() {
         return {
