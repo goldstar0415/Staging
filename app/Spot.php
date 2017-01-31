@@ -1442,7 +1442,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $yelpInfo = $this->getYelpBizInfo();
         if( !empty($yelpInfo) )
         {
-            $this->getYelpReviewsFromPage($saveReviews);
+            $this->getYelpReviewsFromApi($saveReviews);
             $result['info']['yelp'] = $yelpInfo;
         } 
         if(!empty($this->booking_url))
@@ -1486,7 +1486,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             foreach($result['info'] as $index => $service)
             {
-                if(empty($service))
+                if(empty($service) || empty($service['rating']))
                 {
                     unset($result['info'][$index]);
                     continue;
@@ -1497,7 +1497,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             }
             $starsSumm = $starsSumm/count($result['info']);
         }
-        $result['total']['rating'] = round((float)$weightedAvg/$reviewsCount, 1);
+        $result['total']['rating'] = 0;
+        if(!empty($reviewsCount))
+        {
+            $result['total']['rating'] = round((float)$weightedAvg/$reviewsCount, 1);
+        }
         $result['total']['reviews_count'] = $reviewsCount;
         
         $saveSpot = false;

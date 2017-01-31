@@ -125,7 +125,7 @@ class AppServiceProvider extends ServiceProvider
         });
         Spot::deleting(function (Spot $spot) {
             $spot->comments()->delete();
-            $spot->amenities()->delete();
+            $spot->amenities_objects()->delete();
             $spot->remotePhotos()->delete();
             $spot->votes()->delete();
             $spot->points()->delete();
