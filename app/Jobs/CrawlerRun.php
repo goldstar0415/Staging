@@ -13,7 +13,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use MongoClient;
+use MongoDB\Driver\Manager as MongoClient;
+use MongoDB\Driver\Query;
 use MongoCollection;
 use Validator;
 
@@ -47,9 +48,11 @@ class CrawlerRun extends Job implements SelfHandling, ShouldQueue
         $skip = isset($crawler->last_imported_row) ? $crawler->last_imported_row : 0;
 
         $mongo = new MongoClient('mongodb://54.174.50.110:27017');
-        $db = $mongo->selectDB('airbnb');
-        $coll = new MongoCollection($db, 'apartments');
-        $cursor = $coll->find();
+        $query = new Query([]);
+        $cursor = $mongo->executeQuery('airbnb.apartments', $query);
+        //$db = $mongo->selectDB('airbnb');
+        //$coll = new MongoCollection($db, 'apartments');
+        //$cursor = $coll->find();
         if ($skip !== 0) {
             $cursor = $cursor->skip($skip);
         }
