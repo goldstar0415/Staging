@@ -11,6 +11,9 @@
             <img src="../../../assets/img/svg/cancel.svg" alt="">
         </span>
     </div> -->
+
+	<spot-jsonld ng-if="Spot.spot.category.type.name == 'event'" spot="Spot.spot"></spot-jsonld>
+
     <div class="opened-container">
         <div spotcard class="new-result-card" item="Spot.spot"></div>
         <div class="opened-main">
@@ -37,8 +40,16 @@
             <div class="opened-thrid-buttons" ng-if="Spot.spot.category.type.name == 'shelter' || Spot.spot.category.type.name == 'event'">
                 <div class="event-info" ng-if="Spot.spot.category.type.name == 'event'">
                     <span class="glyphicon glyphicon-calendar"></span>
-                    <span ng-if="Spot.spot.start_date == Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}}</span>
-                    <span ng-if="Spot.spot.start_date != Spot.spot.end_date">{{Spot.spot.start_date | date:'medium'}} - {{Spot.spot.end_date | date:'medium'}}</span>
+                    <span ng-if="Spot.spot.start_date == Spot.spot.end_date">
+	                    {{Spot.spot.start_date | date:'MMM d, y'}}
+	                    <span ng-if="Spot.spot.start_time && Spot.spot.end_time">{{Spot.spot.start_time}}
+		                    <span ng-if="Spot.spot.end_time != '11:59 pm'">- {{Spot.spot.end_time}}</span>
+	                    </span>
+                    </span>
+                    <span ng-if="Spot.spot.start_date != Spot.spot.end_date">
+	                    {{Spot.spot.start_date | date:'MMM d, y'}} <span ng-if="Spot.spot.start_time">{{Spot.spot.start_time}}</span> -
+	                    {{Spot.spot.end_date | date:'MMM d, y'}} <span ng-if="Spot.spot.end_time && Spot.spot.end_time != '11:59 pm'">{{Spot.spot.end_time}}</span>
+                    </span>
                     <div class="buttons">
                         <a ng-if="Spot.spot.tickets" href="{{Spot.spot.tickets}}" target="_blank">Tickets</a>
                         <a ng-if="Spot.spot.venues" href="{{Spot.spot.venues}}" target="_blank">Venues</a>
@@ -126,7 +137,7 @@
             </div>
             <div class="overview website" ng-if="(Spot.spot.web_sites | seatgeek).length">
                 <h1>Website:</h1>
-                <a ng-repeat="url in Spot.spot.web_sites | seatgeek" href="{{url}}">
+                <a ng-repeat="url in Spot.spot.web_sites | seatgeek" href="{{url}}" target="_blank">
                     {{url}}
                 </a>
             </div>
@@ -138,22 +149,22 @@
             <div class="overview connect" ng-if="Spot.spot.google_url || Spot.spot.facebook_url || Spot.spot.instagram_url || Spot.spot.tumbler_url || Spot.spot.twitter_url || Spot.spot.vk_url">
                 <h1>Connect:</h1>
                 <div class="tab-social-buttons">
-                    <a ng-href="{{Spot.spot.google_url}}" ng-if="Spot.spot.google_url">
+                    <a target="_blank" ng-href="{{Spot.spot.google_url}}" ng-if="Spot.spot.google_url">
                         <img src="../../../assets/img/svg/social/google_icon.svg" alt="google" />
                     </a>
-                    <a ng-href="{{Spot.spot.facebook_url}}" ng-if="Spot.spot.facebook_url">
+                    <a target="_blank" ng-href="{{Spot.spot.facebook_url}}" ng-if="Spot.spot.facebook_url">
                         <img src="../../../assets/img/svg/social/facebook_icon.svg" alt="facebook" />
                     </a>
-                    <a ng-href="{{Spot.spot.instagram_url}}" ng-if="Spot.spot.instagram_url">
+                    <a target="_blank" ng-href="{{Spot.spot.instagram_url}}" ng-if="Spot.spot.instagram_url">
                         <img src="../../../assets/img/svg/social/instagram_icon.svg" alt="instagram" />
                     </a>
-                    <a ng-href="{{Spot.spot.tumbler_url}}" ng-if="Spot.spot.tumbler_url">
+                    <a target="_blank" ng-href="{{Spot.spot.tumbler_url}}" ng-if="Spot.spot.tumbler_url">
                         <img src="../../../assets/img/svg/social/tumbler_icon.svg" alt="tumbler" />
                     </a>
-                    <a ng-href="{{Spot.spot.twitter_url}}" ng-if="Spot.spot.twitter_url">
+                    <a target="_blank" ng-href="{{Spot.spot.twitter_url}}" ng-if="Spot.spot.twitter_url">
                         <img src="../../../assets/img/svg/social/twitter_icon.svg" alt="twitter" />
                     </a>
-                    <a ng-href="{{Spot.spot.vk_url}}" ng-if="Spot.spot.vk_url">
+                    <a target="_blank" ng-href="{{Spot.spot.vk_url}}" ng-if="Spot.spot.vk_url">
                         <img src="../../../assets/img/svg/social/vk_icon.svg" alt="vk" />
                     </a>
                 </div>

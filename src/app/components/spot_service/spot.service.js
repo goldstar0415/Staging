@@ -115,8 +115,15 @@
     function _formatSpot(spot) {
       spot.type = spot.category.type.display_name;
       if (spot.start_date && spot.end_date) {
-        spot.start_time = moment(spot.start_date).format(DATE_FORMAT.time);
-        spot.end_time = moment(spot.end_date).format(DATE_FORMAT.time);
+        var isStartTimeExact = isTimeExact(spot.start_date, spot);
+        var isEndTimeExact = isTimeExact(spot.end_date, spot);
+        // create a JSON-LD-schema-compatible fields
+        spot.$start_date = isStartTimeExact ? spot.start_date : moment(spot.start_date).format('YYYY-MM-DD');
+        spot.$end_date = isEndTimeExact ? spot.end_date : moment(spot.end_date).format('YYYY-MM-DD');
+        // ignore non-exact time
+        spot.start_time = isStartTimeExact ? moment(spot.start_date).format(DATE_FORMAT.time) : null;
+        spot.end_time = isEndTimeExact ? moment(spot.end_date).format(DATE_FORMAT.time) : null;
+        
         spot.start_date = moment(spot.start_date).format('YYYY-MM-DD');
         spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
       }
@@ -137,6 +144,16 @@
       }
 
       return spot;
+    }
+  
+    function isTimeExact(date, spot) {
+      if (_.isEmpty(date))
+        return false;
+      var dateDateAndTime = date.split(' ');
+      if (_.isEmpty(dateDateAndTime[1]) || dateDateAndTime[1] == '00:00:00')
+        return false;
+      var createdAtDateAndTime = spot.created_at.split(' ');
+      return dateDateAndTime[1] != createdAtDateAndTime[1];
     }
 
     function prefixUrl(url, https) {
