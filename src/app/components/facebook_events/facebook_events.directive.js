@@ -12,7 +12,7 @@
   function FacebookEventsDirective() {
     return {
       restrict: 'EA',
-      template: '<a ng-click="FB.import()" class="import-friendmap"></a>',
+      template: '<a ng-click="FB.import()" tooltip="Import event from Facebook" class="import-friendmap"></a>',
       controller: FacebookEventsCtrl,
       controllerAs: 'FB',
       bindToController: true,
