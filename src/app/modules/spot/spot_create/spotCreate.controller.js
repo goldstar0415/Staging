@@ -57,6 +57,11 @@
       value: 'shelter'
     }];
 
+    if(!vm.meals_served)
+    {
+        vm.meals_served = [];
+    }
+
     $scope.$watch('SpotCreate.images.files.length', function () {
       vm.checkFilesRestrictions();
     });
@@ -126,6 +131,29 @@
         request.description = vm.description;
         request.spot_type_category_id = vm.category_id;
         request.is_private = vm.is_private;
+        
+        request.email           = vm.email;
+        request.phone_number    = vm.phone_number;
+        request.facebook_url    = vm.facebook_url;
+        request.twitter_url     = vm.twitter_url;
+        request.yelp_url        = vm.yelp_url;
+        request.tripadvisor_url = vm.tripadvisor_url;
+        request.zomato_url      = vm.zomato_url;
+        request.opentable_url   = vm.opentable_url;
+        request.grubhub_url     = vm.grubhub_url;
+        request.menu_url        = vm.menu_url;
+        
+        request.price_level     = vm.price_level;
+        if(vm.meals_served)
+        {
+            var mealsArr = vm.meals_served;
+            var mealsArrCalc = [];
+            _.each(mealsArr, function(value){
+                mealsArrCalc.push((value.text).trim());
+            });
+            request.meals_served = mealsArrCalc.join(', ');
+        }
+        
 
         if (vm.cover && isChangedCover) {
           request.cover = vm.cover;
@@ -377,13 +405,35 @@
       var data = spot;
       vm.type = data.category.type.name.toLowerCase();
       vm.title = data.title;
-      vm.description = data.description;
+      vm.description = (data.description).replace(/<br \/>/g, "");
       vm.links = data.web_sites || [];
       vm.youtube_links = data.videos || [];
       vm.category_id = data.spot_type_category_id;
       vm.tags = data.tags || [];
       vm.cover = data.cover_url.original;
       vm.locations = data.points;
+      vm.price_level = data.price_level;
+      console.log(data);
+      vm.email           = data.email;
+      vm.phone_number    = data.phone_number;
+      vm.facebook_url    = data.facebook_url;
+      vm.twitter_url     = data.twitter_url;
+      vm.yelp_url        = data.yelp_url;
+      vm.tripadvisor_url = data.tripadvisor_url;
+      vm.zomato_url      = data.zomato_url;
+      vm.opentable_url   = data.opentable_url;
+      vm.grubhub_url     = data.grubhub_url;
+      vm.menu_url        = data.menu_url;
+      
+      if (data.meals_served)
+      {
+          var meals = data.meals_served;
+          var mealsArr = meals.split(',');
+          vm.meals_served = [];
+          _.each(mealsArr, function(value) {
+              vm.meals_served.push({text: value.trim()});
+          });
+      }
       if (data.photos) {
         for (var k in data.photos) {
           vm.images.files.push(data.photos[k]);
@@ -401,6 +451,18 @@
 
       _setCover(data.cover_url.original, data.id);
     };
+    
+    vm.getMeals = function($query) {
+        return [
+            {text: 'Breakfast'},
+            {text: 'Brunch'},
+            {text: 'Lunch'},
+            {text: 'Dinner'},
+            {text: 'Drinks'},
+            {text: 'After-hours'},
+            {text: 'Late Night'}
+        ];
+    }
 
 
     if (vm.edit) {

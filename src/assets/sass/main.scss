@@ -325,6 +325,12 @@ facebook-events a {
     background: url(../img/svg/button_import.svg) no-repeat;
     @include transition_bg;
   }
+  + .tooltip {
+      left: auto !important;
+      right: 20px !important;
+      top:15px !important;
+  }
+  
 }
 
 .import-friendmap {
