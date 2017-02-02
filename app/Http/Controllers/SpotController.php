@@ -111,6 +111,7 @@ class SpotController extends Controller
      */
     public function store(SpotStoreRequest $request)
     {
+        
         $spot = new Spot($request->except([
             'locations',
             'tags',
@@ -132,7 +133,8 @@ class SpotController extends Controller
             $spot->category()->associate(SpotTypeCategory::whereName('FaceBook')->first());
         }
         if ($request->has('description')) {
-            $spot->description = e($request->description);
+            $description = nl2br(e($request->description));
+            $spot->description = $description;
         }
 
         $request->user()->spots()->save($spot);
@@ -223,9 +225,12 @@ class SpotController extends Controller
             $cover = $request->file('cover');
             $spot->cover = $cover->getRealPath();
         }
-
-        $spot->description = $request->has('description') ? e($request->description) : '';
-
+        
+        if($request->has('description'))
+        {
+            $description = nl2br(e($request->description));
+            $spot->description = $description;
+        }
         if ($request->has('tags')) {
             $spot->tags = $request->input('tags');
         }
