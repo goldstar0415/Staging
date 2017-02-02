@@ -24,7 +24,6 @@ get('spot-owner/{owner_request}/reject', 'SpotOwnerController@reject')->name('ad
 post('csv-parser/export', 'CsvParserController@export')->name('admin.csv-parser.export');
 post('csv-parser/exportUpload', 'CsvParserController@exportUpload')->name('admin.csv-parser.export-upload');
 post('csv-parser/update-field', 'CsvParserController@updateField')->name('admin.csv-parser.update-field');
-post('csv-parser/get-fields/{catId}', 'CsvParserController@getFields')->name('admin.csv-parser.get-fields');
 resource('csv-parser', 'CsvParserController', ['only' => ['index']]);
 
 resource('posts', 'BlogController', ['except' => 'show']);

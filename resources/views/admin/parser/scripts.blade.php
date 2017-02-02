@@ -73,19 +73,6 @@ $(function(){
             $mode.filter('[value="update"]').removeClass('disabled').prop('disabled', false);
             handleMode();
             var catId = selectedField.val();
-            //console.log(catId);
-            $fieldSelect.find('option').remove();
-            $.ajax({
-                url: '/admin/csv-parser/get-fields/' + catId,
-                data: {'category_id': catId},
-                type: 'POST',
-                dataType: 'json',
-                success: function(data) {
-                    $.each( data.fields, function(index, value) {
-                        $fieldSelect.append($('<option>').val(index).html(value));
-                    });
-                }
-            });
         }
     });
     

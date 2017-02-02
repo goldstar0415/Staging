@@ -30,10 +30,7 @@ class CsvParserController extends Controller
      */
     public function index()
     {
-        $types = SpotType::get();
-        $firstType = $types->first();
-        $typeName = $firstType->name;
-        $fieldsArr = $this->getFieldsForFront($typeName);
+        $fieldsArr = $this->getFieldsForFront();
         return view('admin.parser.index', ['fields' => $fieldsArr, 'categories' => SpotType::categoriesList()]);
     }
     
@@ -200,10 +197,7 @@ class CsvParserController extends Controller
                         break;
                     }
                     list($remote_id, $value) = $row;
-                    $massName = $this->typeName . 'Mass';
-                    $fields = Fields::$$this->typeName;
-                    $fieldsMass = Fields::$$massName;
-                    if(in_array($field, array_values($fields)))
+                    if(in_array($field, Fields::$spot))
                     {
                         $query = Spot::where('remote_id', $pref . $remote_id);
                         if($field == 'web_sites')
@@ -215,7 +209,7 @@ class CsvParserController extends Controller
                             $query->update([$field => $value]);
                         }
                     }
-                    elseif(in_array($field, array_values($fieldsMass)))
+                    elseif(in_array($field, Fields::$mass))
                     {
                         $spot = Spot::where('remote_id', $pref . $remote_id)->first();
                         if($spot)
@@ -249,12 +243,9 @@ class CsvParserController extends Controller
     protected function saveSpot($spot_id, $spotExists, $item, &$result, $remote_id)
     {
         $attrArr = [];
-        $category_id = $this->getCategoryId();
-        $typeName = $this->typeName;
-        $spotFields = array_values(Fields::$$typeName);
         foreach($item as $column => $value)
         {
-            if( in_array($column, $spotFields) && !empty($value))
+            if( in_array($column, Fields::$spot) && !empty($value))
             {
                 if( $column == 'web_sites')
                 {
@@ -262,7 +253,7 @@ class CsvParserController extends Controller
                 }
                 elseif($column == 'start_date' || $column == 'end_date')
                 {
-                    $attrArr[$column] = Carbon::createFromFormat('m/d/Y', $value);
+                    $attrArr[$column] = Carbon::createFromFormat('m/d/Y', trim($value));
                 }
                 else
                 {
@@ -403,38 +394,34 @@ class CsvParserController extends Controller
         $item = [];
         $availableFields = $this->getAvailableFields();
         foreach($headers as $title => $index) {
-            if(!empty($availableFields[$title]))
+            if(in_array($title, $availableFields))
             {
-                $normalTitle = $availableFields[$title];
-                $item[$normalTitle] = null;
+                $item[$title] = null;
                 foreach(mb_detect_order() as $encoding)
                 {
                     $str = mb_convert_encoding($row[$index], "UTF-8", $encoding);
                     if(stristr($str, '?') === FALSE) {
-                        $item[$normalTitle] = $str;
+                        $item[$title] = $str;
                         break;
                     }
                 }
-                if( !$item[$normalTitle] )
+                if( !$item[$title] )
                 {
-                    $item[$normalTitle] = mb_convert_encoding($row[$index], "UTF-8", "ISO-8859-16");
+                    $item[$title] = mb_convert_encoding($row[$index], "UTF-8", "ISO-8859-16");
                 }
             }
         }
         return $item;
     }
     
-    protected function getAvailableFields() {
-        
-        $typeName = $this->typeName;
-        $mass = $typeName . 'Mass';
-        $location = $typeName . 'Location';
+    protected function getAvailableFields() 
+    {
         return array_merge(
-            Fields::$$typeName,
-            Fields::$$mass,
-            Fields::$$location
+            Fields::$spot,
+            Fields::$mass,
+            Fields::$location
         );
-    }
+    } 
     
     protected function setTypeName() 
     {
@@ -455,32 +442,12 @@ class CsvParserController extends Controller
         return $this->categoryId = (!empty($category->id))?$category->id:null;
     }
     
-    public function getFields($categoryId)
+    protected function getFieldsForFront() 
     {
-        $category = SpotTypeCategory::find($categoryId);
-        $result = [
-            'success' => false, 
-            'fields' => []
-        ];
-        if($category)
-        {
-            $typeName = $category->type->name;
-            $result['fields'] = $this->getFieldsForFront($typeName);
-            $result['success'] = true;
-        }
-        return json_encode($result);
-    }
-    
-    protected function getFieldsForFront($typeName) 
-    {
-        $mass     = $typeName . 'Mass';
-        $location = $typeName . 'Location';
-        
         $fieldsArr = array_merge(
-                array_keys(Fields::$$typeName),
-                array_keys(Fields::$$location),
-                array_keys(Fields::$$mass)
-                );
+                Fields::$spot,
+                Fields::$mass
+        );
         $fields = [];
         foreach($fieldsArr as $value)
         {
