@@ -26,6 +26,7 @@
             vm.removeFromCalendar = SpotService.removeFromCalendar;
             vm.addToFavorite = SpotService.addToFavorite;
             vm.removeFromFavorite = SpotService.removeFromFavorite;
+            vm.removeSpot = SpotService.removeSpot;
             vm.unFavorite = unFavorite;
             vm.getImg = getImg;
             vm.image = setImage(vm.item);

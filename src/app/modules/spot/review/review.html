@@ -34,8 +34,8 @@
                 </span>
                 <!-- <span class="time">{{Review.review.created_at| fromNow}}</span> -->
             </div>
-            <p  ng-if="!Review.edit && !Review.fullReview" ng-bind-html="Review.review.message | linky:'_blank' | toTrustedHtml" truncated class="review-small" ng-click="Review.more()"></p>
-            <p  ng-if="!Review.edit && Review.fullReview" ng-bind-html="Review.review.message | linky:'_blank' | toTrustedHtml"></p>
+            <p  ng-if="!Review.edit && !Review.fullReview" ng-bind-html="Review.review.message | linky:'_blank' | toTrustedHtml" text="Review.review.message" truncated class="review-small" ng-click="Review.more()"></p>
+            <p  ng-if="!Review.edit && Review.fullReview" ng-bind-html="Review.review.message | linky:'_blank' | toTrustedHtml" text="Review.review.message"></p>
             <textarea name="review" ng-model="Review.review.message" placeholder="Start typing..."
                 ng-if="Review.edit && $root.isRole($root.currentUser, 'admin')"
                 ctrl-enter="Review.submit(reviewForm)" ng-maxlength="5000"

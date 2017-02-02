@@ -134,13 +134,16 @@
         justify-content: space-between;
         // max-width: 450px;
         margin: 10px -2px;
-        button {
+        button, a {
             color: white;
             text-transform: uppercase;
             padding: 5px;
             border: none;
             height: 50px;
+            line-height: 40px;
             margin: 2px;
+            text-align: center;
+            vertical-align: middle;
         }
         .button-invite, .button-share {
             color: rgb(2, 200, 246);
