@@ -33,9 +33,9 @@
                 </div>
             </div>
             <div class="opened-second-buttons">
-                <a class="button-order" ng-if="Spot.spot.order_url" ng-href="{{ Spot.spot.order_url }}">Order</a>
-                <a class="button-table" ng-if="Spot.spot.opentable_url" ng-href="{{ Spot.spot.opentable_url }}">Book table</a>
-                <a class="button-deals" ng-if="Spot.spot.deal_url" ng-href="{{ Spot.spot.deal_url }}">Deals</a>
+                <a class="button-order" target="_blank" ng-if="Spot.spot.order_url" ng-href="{{ Spot.spot.order_url }}">Order</a>
+                <a class="button-table" target="_blank" ng-if="Spot.spot.opentable_url" ng-href="{{ Spot.spot.opentable_url }}">Book table</a>
+                <a class="button-deals" target="_blank" ng-if="Spot.spot.deal_url" ng-href="{{ Spot.spot.deal_url }}">Deals</a>
             </div>
             <div class="opened-thrid-buttons" ng-if="Spot.spot.category.type.name == 'shelter' || Spot.spot.category.type.name == 'event'">
                 <div class="event-info" ng-if="Spot.spot.category.type.name == 'event'">

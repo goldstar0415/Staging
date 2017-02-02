@@ -9,17 +9,30 @@
                     text: '='
                 },
                 link: function(scope, element, attributes) {
-                    //console.log(scope);
-                    //console.log(element);
                     scope.$watch(attributes.dotdotdot, function() {
                         $timeout(function() {
-                            element.dotdotdot();
-                            if (element.height() == 90) {
-                                element.addClass('review-more');
-                            }
+                            element.dotdotdot({
+                                callback	: function( isTruncated, orgContent ) {
+                                    if(isTruncated)
+                                    {
+                                        element.addClass('review-more');
+                                    }
+                                }
+                            });
                             $(window).resize(function() {
                                 element.context.innerText = scope.text;
-                                element.dotdotdot();
+                                element.dotdotdot({
+                                    callback	: function( isTruncated, orgContent ) {
+                                        if(isTruncated)
+                                        {
+                                            element.addClass('review-more');
+                                        }
+                                        else
+                                        {
+                                            element.removeClass('review-more');
+                                        }
+                                    }
+                                });
                             });
                         }, 400);
                     });
