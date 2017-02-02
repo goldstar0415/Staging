@@ -600,7 +600,7 @@
             return btn[0];
 		},
 		_click: function (e) {
-			LocationService.getUserLocation().then(function(location) {
+			LocationService.getUserLocation(true).then(function(location) {
 				$rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
 				FocusMapToGivenLocation($rootScope.currentLocation, 14);
 			});
