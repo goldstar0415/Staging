@@ -17,7 +17,7 @@
     return {
       restrict: 'A',
       scope: {
-        item: '=',
+        item: '='
       },
       link: function(scope, element, attrs) {
             element.bind('error', function(){
