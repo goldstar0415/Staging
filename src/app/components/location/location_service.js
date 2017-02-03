@@ -69,11 +69,12 @@
 		
 		/**
 		 * @type {Object} Location
+		 * @param {boolean} force Force get location
 		 * @property {number} latitude latitude
 		 * @property {number} longitude longitude
 		 * @returns {Location}
 		 */
-		this.getUserLocation = function() {
+		this.getUserLocation = function(force) {
 			var deferred = $q.defer();
 			checkPermissions();
 			
@@ -87,7 +88,7 @@
 				deferred.resolve(storage);
 			} else {
 				// try to get from navigator
-				if (permissionsGranted || canAskGeolocation()) {
+				if (permissionsGranted || canAskGeolocation() || force) {
 					if (!permissionsGranted) {
 						saveAskGeolocation();
 					}
