@@ -600,10 +600,14 @@
             return btn[0];
 		},
 		_click: function (e) {
-			LocationService.getUserLocation(true).then(function(location) {
-				$rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
-				FocusMapToGivenLocation($rootScope.currentLocation, 14);
-			});
+			LocationService.getUserLocation(true)
+                .then(function(location) {
+                    $rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
+                    FocusMapToGivenLocation($rootScope.currentLocation, 14);
+                })
+                .catch(function(err){
+                    console.warn('Focus Geolocation error: ', err);
+                });``
 		}
 	});
 	L.Control.SaveSelection = function (options) {
