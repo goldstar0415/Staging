@@ -36,6 +36,7 @@ module.exports = [
   `${SRC}/app/components/directives/justified_gallery.js`,
   `${SRC}/app/components/directives/link_checker.js`,
   `${SRC}/app/components/directives/ng_match.js`,
+  `${SRC}/app/components/directives/onimageload.js`,
   `${SRC}/app/components/directives/repeat_done.js`,
   `${SRC}/app/components/directives/spotType.js`,
   `${SRC}/app/components/directives/youtube_player.js`,
