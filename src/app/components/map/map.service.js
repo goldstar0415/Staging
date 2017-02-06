@@ -607,7 +607,7 @@
                 })
                 .catch(function(err){
                     console.warn('Focus Geolocation error: ', err);
-                });``
+                });
 		}
 	});
 	L.Control.SaveSelection = function (options) {
