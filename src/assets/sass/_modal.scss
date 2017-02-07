@@ -25,6 +25,9 @@
   .modal-dialog {
     width: 340px;
     margin: 30px auto;
+    .modal-content {
+      width: 100%;
+    }
   }
   .modal-header {
     border-bottom: none;
