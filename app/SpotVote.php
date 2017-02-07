@@ -19,10 +19,12 @@ namespace App;
 class SpotVote extends BaseModel
 {
     
-    const TYPE_BOOKING  = 1;
-    const TYPE_GOOGLE   = 2;
-    const TYPE_FACEBOOK = 3;
-    const TYPE_YELP     = 4;
+    const TYPE_BOOKING     = 1;
+    const TYPE_GOOGLE      = 2;
+    const TYPE_FACEBOOK    = 3;
+    const TYPE_YELP        = 4;
+    const TYPE_HOTELS      = 5;
+    const TYPE_TRIPADVISOR = 6;
     
     protected $fillable = [
         'vote', 

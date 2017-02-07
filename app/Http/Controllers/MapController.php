@@ -84,7 +84,9 @@ class MapController extends Controller {
                         'spot_points.address',
                         'spots.minrate',
                         'spots.maxrate',
-                        'spots.currencycode'
+                        'spots.currencycode',
+                        'spots.avg_rating',
+                        'spots.total_reviews'
                 )
                 ->where('mv_spots_spot_points.is_private', false)
                 ->where('mv_spots_spot_points.is_approved', true);
@@ -180,7 +182,7 @@ class MapController extends Controller {
                     'lat' => $spot->lat,
                     'lng' => $spot->lng
                 ],
-                'rating' => ($spot->avg_rating) ? $spot->avg_rating : 0,
+                'rating' => $spot->rating,
                 'title' => $spot->title,
                 'address' => $spot->address,
                 'category_icon_url' => $iconsCache[$spot->spot_type_category_id],
@@ -189,7 +191,9 @@ class MapController extends Controller {
                 'minrate' => $spot->minrate,
                 'maxrate' => $spot->maxrate,
                 'currencycode' => $spot->currencycode,
-                'cover_url'    => $spot->cover
+                'cover_url'    => $spot->cover,
+                'avg_rating' => $spot->avg_rating, 
+                'total_reviews' => $spot->total_reviews,
             ];
         }
         return $points;

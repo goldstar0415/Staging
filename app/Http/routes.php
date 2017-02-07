@@ -78,7 +78,6 @@ Route::get('spots/{spots}/export', 'SpotController@export');
 Route::get('spots/{spots}/cover', 'SpotController@getCover');
 Route::get('spots/{spots}/ratings', 'SpotController@getRatingInfo');
 Route::get('spots/{spots}/hours', 'SpotController@getHours');
-Route::get('spots/{spots}/info', 'SpotController@getBookingInfo');
 Route::put('spots/{spots}/photos', 'SpotPhotoController@store');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
 Route::resource('spots.comments', 'SpotCommentController', ['except' => ['create', 'edit']]);
@@ -90,6 +89,16 @@ Route::resource(
     ['only' => ['index', 'store', 'destroy', 'update']]
 );
 Route::get('spots/{spots}/prices', 'SpotController@prices');
+Route::get('spots/{spots}/info', 'SpotController@getBookingInfo');
+
+Route::get('spots/{spots}/booking-rating', 'SpotController@getBookingRating');
+Route::get('spots/{spots}/hotelscom-rating', 'SpotController@getHotelsRating');
+Route::get('spots/{spots}/yelp-rating', 'SpotController@getYelpRating');
+Route::get('spots/{spots}/tripadvisor-rating', 'SpotController@getTripadvisorRating');
+Route::get('spots/{spots}/google-rating', 'SpotController@getGoogleRating');
+Route::get('spots/{spots}/facebook-rating', 'SpotController@getFacebookRating');
+
+Route::post('spots/{spots}/save-rating', 'SpotController@saveRating');
 
 /**
  * Calendar controls
