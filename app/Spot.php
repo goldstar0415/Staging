@@ -696,7 +696,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     'message' => $message,
                     'remote_id' => $remote_id,
                     'remote_type' => SpotVote::TYPE_HOTELS,
-                    'remote_user_name' => trim($remote_user->innertext()),
+                    'remote_user_name' => SpotVote::remoteReviewerNameCheck(trim($remote_user->innertext())),
                     'created_at' => $date,
                     'updated_at' => $date,
                     'spot_id' => $this->id,
@@ -1028,7 +1028,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $item->message = html_entity_decode($message);
                 $scoreObj = $reviewObj->find('.review_item_review_score', 0);
                 $item->vote = round((float)$scoreObj->innertext()/2);
-                $item->remote_user_name = trim($reviewObj->find('h4', 0)->innertext);
+                $item->remote_user_name = SpotVote::remoteReviewerNameCheck(trim($reviewObj->find('h4', 0)->innertext));
                 $item->remote_user_avatar = str_replace('height=64&width=64', 'height=300&width=300', $reviewObj->find('.avatar-mask', 0)->getAttribute('src'));
                 $item->remote_type = SpotVote::TYPE_BOOKING;
                 if( $save && !SpotVote::where('remote_id', $item->remote_id)->exists())
@@ -1161,7 +1161,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $itemObj->vote = $item['rating'];
                 $itemObj->created_at = date("Y-m-d H:i:s", $item['time']);
                 $itemObj->remote_type = SpotVote::TYPE_GOOGLE;
-                $itemObj->remote_user_name = $item['author_name'];
+                $itemObj->remote_user_name = SpotVote::remoteReviewerNameCheck($item['author_name']);
                 $itemObj->remote_user_avatar = (!empty($item['profile_photo_url']))?$item['profile_photo_url']:'';
                 if( $save && !SpotVote::where('remote_id', $remote_id)->where('spot_id', $this->id)->exists())
                 {
@@ -1437,7 +1437,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                             $item->message = html_entity_decode($review['text']);
                             $item->remote_id = $remote_id;
                             $item->remote_type = SpotVote::TYPE_YELP;
-                            $item->remote_user_name = $review['user']['name'];
+                            $item->remote_user_name = SpotVote::remoteReviewerNameCheck($review['user']['name']);
                             $item->remote_user_avatar = $review['user']['image_url'];
                             if( $save && !SpotVote::where('remote_id', $remote_id)->exists())
                             {
@@ -1500,7 +1500,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                         $item->message = html_entity_decode($content->find('p', 0)->innertext);
                         $item->remote_id = $remoteId;
                         $item->remote_type = SpotVote::TYPE_YELP;
-                        $item->remote_user_name = $sidebar->find('.user-display-name', 0)->innertext;
+                        $item->remote_user_name = SpotVote::remoteReviewerNameCheck(trim($sidebar->find('.user-display-name', 0)->innertext));
                         $item->remote_user_avatar = str_replace('60s.', '300s.', $sidebar->find('.photo-box img', 0)->src);
                         if( $save && !SpotVote::where('remote_id', $remoteId)->exists())
                         {
@@ -1595,7 +1595,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     'message' => $message->innertext(),
                     'remote_id' => $remote_id,
                     'remote_type' => SpotVote::TYPE_TRIPADVISOR,
-                    'remote_user_name' => trim($remote_user->innertext()),
+                    'remote_user_name' => SpotVote::remoteReviewerNameCheck(trim($remote_user->innertext())),
                     //'remote_user_avatar' => $reviewObj->find('.avatar img', 0) ? $reviewObj->find('.avatar img', 0)->getAttribute('src') : null,
                     'created_at' => $date,
                     'updated_at' => $date,

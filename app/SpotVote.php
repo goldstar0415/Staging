@@ -52,11 +52,32 @@ class SpotVote extends BaseModel
         return $this->belongsTo(User::class);
     }
     
+    public function getRemoteUserNameAttribute($value)
+    {
+        return self::remoteReviewerNameCheck($value);
+    }
+    
     public function getRemoteUserAvatarAttribute($value)
     {
         if(empty($value))
         {
             return url('uploads/missings/avatars/thumb/missing.png');
+        }
+        return $value;
+    }
+    
+    public static function remoteReviewerNameCheck($value)
+    {
+        $depricatedNames = [
+            'A Google User',
+            'A TripAdvisor Member',
+            'Путешественник',
+            'Аноним',
+        ];
+        
+        if(in_array($value, $depricatedNames))
+        {
+            return 'Anonymous';
         }
         return $value;
     }
