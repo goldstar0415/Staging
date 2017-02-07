@@ -487,6 +487,7 @@
     .review-type {
         width: 24%;
         display: inline-block;
+        margin-bottom: 15px;
     }
     .with-margin {
         margin-right: 5px;
@@ -495,7 +496,7 @@
         width: 45px;
         height: 45px;
         display: inline-block;
-        margin-bottom: 15px;
+        margin-bottom: 2px;
         &.zoomtivity {
             background: #072a3d url(../img/icons/zoomtivity-30x30.png) center center no-repeat;
         }
