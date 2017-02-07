@@ -405,7 +405,12 @@
                     avg_rating: vm.spot.avg_rating,
                     total_reviews: vm.spot.total_reviews
                 }, {});
-                console.log('reviews enabled');
+                /*vm.votes = {};
+                vm.reviewsPagination = new ScrollService(SpotReview.query, vm.votes, {
+                    page: 0,
+                    limit: 10,
+                    spot_id: spot.id
+                });*/
             }
         }
         

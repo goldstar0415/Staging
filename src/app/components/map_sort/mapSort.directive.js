@@ -294,9 +294,12 @@
       $rootScope.mapSortSpots = {
         markers: [],
         data: [],
-        page: 0,
-        cancellerHttp: $rootScope.mapSortSpots.cancellerHttp
+        page: 0
       };
+      if($rootScope.mapSortSpots && $rootScope.mapSortSpots.cancellerHttp)
+      {
+          $rootScope.mapSortSpots.push({cancellerHttp: $rootScope.mapSortSpots.cancellerHttp});
+      }
 
 	  if (!MapService.hasLayer(layer)) {
 		  toggleLayer(layer, false);
