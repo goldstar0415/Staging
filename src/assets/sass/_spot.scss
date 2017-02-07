@@ -512,7 +512,13 @@
             background: #375794 url(../img/icons/facebook-30x30.png) center center no-repeat;
         }
         &.tripadvisor {
-            background: #579442 url(../img/icons/tripadvisor-30x30.png) center center no-repeat;
+            background: #589442 url(../img/icons/tripadvisor-30x30.png) center center no-repeat;
+        }
+        &.hotelscom {
+            background: #d41200 url(../img/icons/hotels-30x30.png) center center no-repeat;
+        }
+        &.zomato {
+            background: #cb202d url(../img/icons/zomato-30x30.png) center center no-repeat;
         }
     }
 }
@@ -552,6 +558,14 @@
             }
             &.facebook:after {
                 background: #375794 url(../img/icons/facebook-25x25.png) center center no-repeat;
+                background-size: 17px;
+            }
+            &.hotels:after {
+                background: #d41200 url(../img/icons/hotels-25x25.png) center center no-repeat;
+                background-size: 17px;
+            }
+            &.tripadvisor:after {
+                background: #589442 url(../img/icons/tripadvisor-25x25.png) center center no-repeat;
                 background-size: 17px;
             }
         }

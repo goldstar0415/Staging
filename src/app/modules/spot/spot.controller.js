@@ -102,6 +102,9 @@
         vm.setImage = setImage;
         vm.invite = openInviteModal;
         vm.share = openShareModal;
+        vm.reviewsEnabled = true;
+        vm.ratingsRefreshing = [];
+        vm.rating = vm.spot.avg_rating;
         vm.photoIndex = 0;
         vm.getPrice = getPrice;
         vm.amenitiesCount = Object.keys(vm.spot.amenities).length;
@@ -150,13 +153,161 @@
             });
         }
         
-        vm.reviews_total = vm.spot.total_reviews;
-        vm.spot.rating = vm.spot.avg_rating;
+        vm.reviews_total = {
+            zoomtivity: {
+                rating: parseFloat(vm.spot.rating),
+                reviews_count: parseInt(vm.spot.reviews_count)
+            },
+            booking: {
+                rating: parseFloat(vm.spot.booking_rating),
+                reviews_count: parseInt(vm.spot.booking_reviews_count)
+            },
+            hotelscom: {
+                rating: parseFloat(vm.spot.hotelscom_rating),
+                reviews_count: parseInt(vm.spot.hotelscom_reviews_count)
+            },
+            yelp: {
+                rating: parseFloat(vm.spot.yelp_rating),
+                reviews_count: parseInt(vm.spot.yelp_reviews_count)
+            },
+            facebook: {
+                rating: parseFloat(vm.spot.facebook_rating),
+                reviews_count: parseInt(vm.spot.facebook_reviews_count)
+            },
+            tripadvisor: {
+                rating: parseFloat(vm.spot.tripadvisor_rating),
+                reviews_count: parseInt(vm.spot.tripadvisor_reviews_count)
+            },
+            google: {
+                rating: parseFloat(vm.spot.google_rating),
+                reviews_count: parseInt(vm.spot.google_reviews_count)
+            },
+            zomato: {
+                rating: parseFloat(vm.spot.zomato_rating),
+                reviews_count: parseInt(vm.spot.zomato_reviews_count)
+            }
+        };
+        calcRatings();
+        //vm.spot.rating = vm.spot.avg_rating;
+        //vm.spot.rating = vm.spot.avg_rating;
         
-        AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/ratings').then(function(data) {
+        
+        
+        
+        
+        if (vm.spot.booking_url) {
+            vm.reviewsEnabled = false;
+            refreshRating('booking');
+            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/booking-rating').then(function(data) {
+                if(data.booking)
+                {
+                    vm.reviews_total['booking'] = data.booking;
+                }
+                ratingRefreshed('booking');
+                calcRatings();
+                enableReviews();
+            });
+        }
+        
+        if (vm.spot.hotelscom_url) {
+            vm.reviewsEnabled = false;
+            refreshRating('hotelscom');
+            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/hotelscom-rating').then(function(data) {
+                if(data.hotels)
+                {
+                    vm.reviews_total['hotelscom'] = data.hotelscom;
+                }
+                ratingRefreshed('hotelscom');
+                calcRatings();
+                enableReviews();
+            });
+        }
+        
+        if (vm.spot.yelp_url || vm.spot.yelp_id) {
+            vm.reviewsEnabled = false;
+            refreshRating('yelp');
+            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/yelp-rating').then(function(data) {
+                if(data.yelp)
+                {
+                    vm.reviews_total['yelp'] = data.yelp;
+                }
+                ratingRefreshed('yelp');
+                calcRatings();
+                enableReviews();
+            });
+        }
+        
+        if (vm.spot.tripadvisor_url) {
+            vm.reviewsEnabled = false;
+            refreshRating('tripadvisor');
+            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/tripadvisor-rating').then(function(data) {
+                if(data.tripadvisor)
+                {
+                    vm.reviews_total['tripadvisor'] = data.tripadvisor;
+                }
+                ratingRefreshed('tripadvisor');
+                calcRatings();
+                enableReviews();
+            });
+        }
+        
+        if (vm.spot.facebook_url) {
+            vm.reviewsEnabled = false;
+            refreshRating('facebook');
+            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/facebook-rating').then(function(data) {
+                if(data.facebook)
+                {
+                    vm.reviews_total['facebook'] = data.facebook;
+                }
+                ratingRefreshed('facebook');
+                calcRatings();
+                enableReviews();
+            });
+        }
+        
+        if (vm.spot.google_id) {
+            vm.reviewsEnabled = false;
+            refreshRating('google');
+            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/google-rating').then(function(data) {
+                if(data.google)
+                {
+                    vm.reviews_total['google'] = data.google;
+                }
+                ratingRefreshed('google');
+                calcRatings();
+                enableReviews();
+            });
+        }
+        
+        function calcRatings()
+        {
+            var $starsSumm = 0;
+            var $reviewsCount = 0;
+            var $weightedAvg = 0;
+            _.each(vm.reviews_total, function(value, key) {
+                if(value.rating && value.reviews_count && !isNaN(value.rating) && !isNaN(value.reviews_count))
+                {
+                    $weightedAvg += value.rating * value.reviews_count;
+                    $starsSumm += value.rating;
+                    $reviewsCount += value.reviews_count;
+                }
+                
+            });
+            
+            var rating = 0;
+            if($reviewsCount != 0)
+            {
+                rating = Math.round(parseFloat($weightedAvg/$reviewsCount)*10)/10;
+            }
+            vm.spot.avg_rating = rating;
+            vm.spot.total_reviews = $reviewsCount;
+            vm.rating = vm.spot.avg_rating;
+        }
+        
+        /*AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/ratings').then(function(data) {
             vm.reviews_total = data;
             vm.spot.rating = data.total.rating;
-        });
+        });*/
         
         AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/hours').then(function(data) {
             vm.spot.hours = data;
@@ -223,7 +374,7 @@
                     });
             });
         };
-
+        
         function getPrice() {
             if (!vm.priceDate.start_date || !vm.priceDate.end_date) {
                 toastr.error('Please select your dates.')
@@ -244,6 +395,27 @@
                         toastr.error('No response. Please try again later.');
                     });
             }
+        }
+        
+        function enableReviews() {
+            if(vm.ratingsRefreshing.length === 0)
+            {
+                vm.reviewsEnabled = true;
+                $http.post(API_URL + '/spots/' + spot.id + '/save-rating', {
+                    avg_rating: vm.spot.avg_rating,
+                    total_reviews: vm.spot.total_reviews
+                }, {});
+                console.log('reviews enabled');
+            }
+        }
+        
+        function refreshRating(serviceName) {
+            vm.ratingsRefreshing.push(serviceName);
+        }
+        
+        function ratingRefreshed(serviceName) {
+            var index = vm.ratingsRefreshing.indexOf(serviceName);
+            vm.ratingsRefreshing.splice(index, 1);
         }
 
         //MapService.GetMap().panTo(new L.LatLng(spot.points[0].location.lat, spot.points[0].location.lng));

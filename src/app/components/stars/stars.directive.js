@@ -24,14 +24,11 @@
     /** @ngInject */
     function StarsController($scope, Spot, $rootScope) {
       var vm = this;
-      
-      /*$scope.$watch('Stars.item.rating', function (value, old) {
-        if (!_.isUndefined(old) && value > 0 && value != old && $rootScope.currentUser && !vm.item.is_rated) {
-          var vote = Spot.rate({id: vm.item.id}, {vote: parseInt(value)});
-          vm.item.auth_rate = vote;
-          vm.item.is_rated = true;
-        }
-      });*/
+      vm.avg_rating = (vm.item.avg_rating) ? vm.item.avg_rating : vm.item.rating;
+      console.log(vm.avg_rating);
+      $scope.$watch('Stars.item.avg_rating', function (value, old) {
+        vm.avg_rating = value;
+      });
     }
   }
 })();
