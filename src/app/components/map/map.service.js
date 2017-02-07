@@ -364,8 +364,9 @@
         },
 
         _click: function (e) {
-            var el = document.querySelector('.pick-notification');
-            el.style = '';
+          toastr.info('Draw Search Area');
+          var el = document.querySelector('.pick-notification');
+          el.style = '';
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -420,8 +421,9 @@
             return btn[0];
         },
         _click: function (e) {
-            var el = document.querySelector('.pick-notification');
-            el.style = '';
+          toastr.info('Drag Radius');
+          var el = document.querySelector('.pick-notification');
+          el.style = '';
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -482,8 +484,9 @@
             return btn[0];
         },
         _click: function (e) {
-            var el = document.querySelector('.pick-notification');
-            el.style = '';
+          toastr.info('Place Pin at Start');
+          var el = document.querySelector('.pick-notification');
+          el.style = '';
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -1264,6 +1267,7 @@
         }
 
         function onMapClick(e, idx, dontBuildPath) {
+          toastr.info('Place Pin at Destination(s)');
           // ignore empty originalEvent
           if (e && e.originalEvent !== undefined) {
             e.originalEvent.preventDefault();
