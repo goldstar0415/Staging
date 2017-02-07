@@ -364,8 +364,9 @@
         },
 
         _click: function (e) {
-            var el = document.querySelector('.pick-notification');
-            el.style = '';
+          toastr.info('Draw Search Area');
+          var el = document.querySelector('.pick-notification');
+          el.style = '';
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -420,8 +421,9 @@
             return btn[0];
         },
         _click: function (e) {
-            var el = document.querySelector('.pick-notification');
-            el.style = '';
+          toastr.info('Drag Radius');
+          var el = document.querySelector('.pick-notification');
+          el.style = '';
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -482,8 +484,9 @@
             return btn[0];
         },
         _click: function (e) {
-            var el = document.querySelector('.pick-notification');
-            el.style = '';
+          toastr.info('Place Pin at Start');
+          var el = document.querySelector('.pick-notification');
+          el.style = '';
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -600,10 +603,14 @@
             return btn[0];
 		},
 		_click: function (e) {
-			LocationService.getUserLocation(true).then(function(location) {
-				$rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
-				FocusMapToGivenLocation($rootScope.currentLocation, 14);
-			});
+			LocationService.getUserLocation(true)
+                .then(function(location) {
+                    $rootScope.currentLocation = {lat: location.latitude, lng: location.longitude};
+                    FocusMapToGivenLocation($rootScope.currentLocation, 14);
+                })
+                .catch(function(err){
+                    console.warn('Focus Geolocation error: ', err);
+                });
 		}
 	});
 	L.Control.SaveSelection = function (options) {
@@ -1236,10 +1243,7 @@
 
       //Path selection
       function PathSelection(wpArray, callback) {
-        var markers = [],
-        line,
-        cancelPopup;
-        var showCancelPopup = true;
+        var markers = [], line;
         var lineOptions = {};
         // lineOptions.styles = [{type: 'polygon', color: 'red', opacity: 0.6, weight: 10, fillOpacity: 0.2}, {
         //   color: 'red',
@@ -1251,7 +1255,6 @@
 
         pathSelectionStarted = true;
         if (wpArray) {
-          showCancelPopup = false;
           for (var k in wpArray) {
             onMapClick({
               latlng: wpArray[k],
@@ -1264,6 +1267,7 @@
         }
 
         function onMapClick(e, idx, dontBuildPath) {
+          toastr.info('Place Pin at Destination(s)');
           // ignore empty originalEvent
           if (e && e.originalEvent !== undefined) {
             e.originalEvent.preventDefault();
@@ -1297,12 +1301,6 @@
               if (e && e.originalEvent !== undefined) {
                 e.originalEvent.preventDefault();
               }
-              if (cancelPopup && pathSelectionStarted) {
-                cancelPopup
-                    .setLatLng(marker.getLatLng())
-                    .openOn(map);
-              }
-
               angular.element('.cancel-selection').on('click', function () {
                 ClearSelectionListeners();
                 map.closePopup();
@@ -1312,28 +1310,6 @@
           }
 
           if (!dontBuildPath) {
-            if (markers.length > 1 && showCancelPopup) {
-              if (!cancelPopup) {
-                cancelPopup = L.popup({
-                  offset: L.point(0, -15),
-                  closeButton: false,
-                  keepInView: false
-                })
-                  .setLatLng(marker.getLatLng())
-                  .setContent('<button class="btn btn-block btn-success cancel-selection">Finish selection</button>')
-                  .openOn(map);
-              } else {
-                cancelPopup
-                  .setLatLng(marker.getLatLng())
-                  .openOn(map);
-              }
-
-              angular.element('.cancel-selection').on('click', function () {
-                ClearSelectionListeners();
-                map.closePopup();
-                _activateControl(false);
-              });
-            }
             RecalculateRoute();
           }
         }

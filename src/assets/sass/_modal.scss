@@ -25,6 +25,9 @@
   .modal-dialog {
     width: 340px;
     margin: 30px auto;
+    .modal-content {
+      width: 100%;
+    }
   }
   .modal-header {
     border-bottom: none;
@@ -62,9 +65,10 @@
     @include button;
     width: 100%;
     border: none;
-    background-color: $green;
+    background-color: $dark_blue;
     &:hover {
-      background-color: $light_green;
+      background-color: $dark_blue_hover;
+      @include box_shadow_none;
     }
   }
 
@@ -86,6 +90,7 @@
       width: 100%;
       display: block;
       @include button;
+      border-radius: 0;
       &:nth-child(1) {
         background-color: #3C599B;
         margin-bottom: 10px;

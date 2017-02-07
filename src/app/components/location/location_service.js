@@ -4,7 +4,7 @@
 		.service('LocationService', LocationService);
 
 	/** @ngInject */
-	function LocationService(ip_api, $cookies, $q) {
+	function LocationService(ip_api, $cookies, $q, toastr) {
 		var watchId							= null;
 		var permissionsGranted				= false;
 		var ipApiLocation					= null;
@@ -92,14 +92,22 @@
 					if (!permissionsGranted) {
 						saveAskGeolocation();
 					}
-					getUserLocationNavigator().then(function(l) {
-						deferred.resolve(l);
-					}).
-					catch(function() {
-						storageOrApi ? deferred.resolve(storageOrApi) : deferred.reject("Couldn't locate user");
-					});
+					getUserLocationNavigator()
+						.then(function(l) {
+							deferred.resolve(l);
+						})
+						.catch(function() {
+							if (storageOrApi) {
+								deferred.resolve(storageOrApi)
+							} else {
+								if (force) {
+									toastr.error('Geolocation Failed, Please Check Settings');
+								}
+								deferred.reject("Couldn't locate user (1)");
+							}
+						});
 				} else {
-					storageOrApi ? deferred.resolve(storageOrApi) : deferred.reject("Couldn't locate user");
+					storageOrApi ? deferred.resolve(storageOrApi) : deferred.reject("Couldn't locate user (2)");
 				}
 			}
 			return deferred.promise;
@@ -147,8 +155,12 @@
 			// read storage
 			try {
 				// get last position from cookies if any
-				storage = JSON.parse($cookies.get('browserGeolocation'));
-				if (storage) {
+				var cookieLocation = $cookies.get('browserGeolocation');
+				if (cookieLocation) {
+					storage = JSON.parse(cookieLocation);
+					if (!storage) {
+						storage = {};
+					}
 				} else {
 					storage = {};
 				}
@@ -158,10 +170,16 @@
 			}
 			checkPermissions();
 			// we always need country code
-			getUserLocationIpApi().then(function(l) {
-				ipApiLocation = l;
-				storage.countryCode = l.countryCode;
-			});
+			getUserLocationIpApi()
+				.then(function(l) {
+					console.debug('IP API Location', l);
+					ipApiLocation = l;
+					storage.countryCode = l.countryCode;
+				})
+				.catch(function(err){
+					// the geo ip api has been temporary disabled
+					// console.warn('ip api err: ', err);
+				});
 		};
 		
 		init();
