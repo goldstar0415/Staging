@@ -1240,10 +1240,7 @@
 
       //Path selection
       function PathSelection(wpArray, callback) {
-        var markers = [],
-        line,
-        cancelPopup;
-        var showCancelPopup = true;
+        var markers = [], line;
         var lineOptions = {};
         // lineOptions.styles = [{type: 'polygon', color: 'red', opacity: 0.6, weight: 10, fillOpacity: 0.2}, {
         //   color: 'red',
@@ -1255,7 +1252,6 @@
 
         pathSelectionStarted = true;
         if (wpArray) {
-          showCancelPopup = false;
           for (var k in wpArray) {
             onMapClick({
               latlng: wpArray[k],
@@ -1301,12 +1297,6 @@
               if (e && e.originalEvent !== undefined) {
                 e.originalEvent.preventDefault();
               }
-              if (cancelPopup && pathSelectionStarted) {
-                cancelPopup
-                    .setLatLng(marker.getLatLng())
-                    .openOn(map);
-              }
-
               angular.element('.cancel-selection').on('click', function () {
                 ClearSelectionListeners();
                 map.closePopup();
@@ -1316,28 +1306,6 @@
           }
 
           if (!dontBuildPath) {
-            if (markers.length > 1 && showCancelPopup) {
-              if (!cancelPopup) {
-                cancelPopup = L.popup({
-                  offset: L.point(0, -15),
-                  closeButton: false,
-                  keepInView: false
-                })
-                  .setLatLng(marker.getLatLng())
-                  .setContent('<button class="btn btn-block btn-success cancel-selection">Finish selection</button>')
-                  .openOn(map);
-              } else {
-                cancelPopup
-                  .setLatLng(marker.getLatLng())
-                  .openOn(map);
-              }
-
-              angular.element('.cancel-selection').on('click', function () {
-                ClearSelectionListeners();
-                map.closePopup();
-                _activateControl(false);
-              });
-            }
             RecalculateRoute();
           }
         }
