@@ -2567,7 +2567,7 @@
       }
 
       function cancelHttpRequest() {
-        if ($rootScope.mapSortSpots.cancellerHttp) {
+        if ($rootScope.mapSortSpots && $rootScope.mapSortSpots.cancellerHttp) {
           $rootScope.mapSortSpots.cancellerHttp.resolve();
         }
       }
