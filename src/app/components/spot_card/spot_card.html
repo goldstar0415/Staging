@@ -1,18 +1,18 @@
 <div class="new-spot" ng-mouseleave="SpotCard.closeMenu()">
     <div class="spot-img">
-        <div class="spot-dropdown-menu">
-            <span class="toggle-dropdown" ng-class="{'active' : SpotCard.isMenuOpened}" ng-click="SpotCard.toggleMenu()"></span>
-            <ul class="spot-card-dropdown" ng-show="SpotCard.isMenuOpened" ng-click="SpotCard.closeMenu()">
-                <li ng-if="$root.currentUser.id == SpotCard.item.user_id || $root.isRole($root.currentUser, 'admin')" ui-sref="spot_edit({spot_id: SpotCard.item.id})">
-                    Edit
-                </li>
-                <li ng-if="$root.currentUser.id == SpotCard.item.user_id || $root.isRole($root.currentUser, 'admin')" ng-click="SpotCard.removeSpot(SpotCard.item, SpotCard.index);">
-                    Delete
-                </li>
-                <li ng-if="!SpotCard.item.user_id && !SpotCard.item.isClaimed" claim-spot="SpotCard.item">Claim listing</li>
-                <li ng-if="$root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.isReported" report-spot="SpotCard.item">Report</li>
-            </ul>
-        </div>
+        <!--<div class="spot-dropdown-menu">-->
+            <!--<span class="toggle-dropdown" ng-class="{'active' : SpotCard.isMenuOpened}" ng-click="SpotCard.toggleMenu()"></span>-->
+            <!--<ul class="spot-card-dropdown" ng-show="SpotCard.isMenuOpened" ng-click="SpotCard.closeMenu()">-->
+                <!--<li ng-if="$root.currentUser.id == SpotCard.item.user_id || $root.isRole($root.currentUser, 'admin')" ui-sref="spot_edit({spot_id: SpotCard.item.id})">-->
+                    <!--Edit-->
+                <!--</li>-->
+                <!--<li ng-if="$root.currentUser.id == SpotCard.item.user_id || $root.isRole($root.currentUser, 'admin')" ng-click="SpotCard.removeSpot(SpotCard.item, SpotCard.index);">-->
+                    <!--Delete-->
+                <!--</li>-->
+                <!--<li ng-if="!SpotCard.item.user_id && !SpotCard.item.isClaimed" claim-spot="SpotCard.item">Claim listing</li>-->
+                <!--<li ng-if="$root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.isReported" report-spot="SpotCard.item">Report</li>-->
+            <!--</ul>-->
+        <!--</div>-->
         <div ng-if="$root.isMapState()" class="img" ui-sref="spot({user_id: SpotCard.item.user_id || 0, spot_id: SpotCard.item.id, spot_slug: SpotCard.item.slug})">
             <img onimageload src="{{SpotCard.image}}" item="SpotCard" alt="spot_img" ng-click="SpotCard.openSpot(SpotCard.item.spot_id, $event)">
         </div>
@@ -21,6 +21,7 @@
         </div>
         <div class="spot-img-price"  ng-if="SpotCard.item.price">
             {{SpotCard.item.price}}
+            <div class="price-title">avg/nt</div>
         </div>
         <div class="spot-img-header">
             <a ng-click="$root.setOpenedSpot(null)" ui-sref="spot({spot_id: SpotCard.item.id, user_id: SpotCard.item.user_id || 0, spot_slug: SpotCard.item.slug})" class="img-icon-details" ng-click="SpotCard.openInviteModal(SpotCard.item)" tooltip="Details" tooltip-placement="bottom">Details</a>
@@ -29,6 +30,21 @@
         <div class="spot-img-full" ng-if="$root.currentUser.id">
             <a class="img-icon-invite" ng-click="SpotCard.openInviteModal(SpotCard.item)" tooltip="Invite" tooltip-placement="top">Invite</a>
             <a class="img-icon-share" ng-click="SpotCard.openShareModal(SpotCard.item)"  tooltip="Share" tooltip-placement="top">Share</a>
+            <!-- todo -->
+            <div class="spot-dropdown-menu" >
+                <span class="toggle-dropdown" ng-class="{'active' : SpotCard.isMenuOpened}" ng-click="SpotCard.toggleMenu()"></span>
+                <ul class="spot-card-dropdown" ng-show="SpotCard.isMenuOpened" ng-click="SpotCard.closeMenu()">
+                    <li ng-if="$root.currentUser.id == SpotCard.item.user_id || $root.isRole($root.currentUser, 'admin')" ui-sref="spot_edit({spot_id: SpotCard.item.id})">
+                        Edit
+                    </li>
+                    <li ng-if="$root.currentUser.id == SpotCard.item.user_id || $root.isRole($root.currentUser, 'admin')" ng-click="SpotCard.removeSpot(SpotCard.item, SpotCard.index);">
+                        Delete
+                    </li>
+                    <li ng-if="!SpotCard.item.user_id && !SpotCard.item.isClaimed" claim-spot="SpotCard.item">Claim listing</li>
+                    <li ng-if="$root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.isReported" report-spot="SpotCard.item">Report</li>
+                </ul>
+            </div>
+
             <a ng-if="$root.currentUser.id != SpotCard.item.user_id && SpotCard.item.is_favorite" class="img-icon-like liked" ng-click="SpotCard.removeFromFavorite(SpotCard.item)"  tooltip="Dislike" tooltip-placement="top">Dislike</a>
             <a ng-if="$root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.is_favorite" class="img-icon-like" ng-click="SpotCard.addToFavorite(SpotCard.item)" tooltip="Like" tooltip-placement="top">Like</a>
         </div>
