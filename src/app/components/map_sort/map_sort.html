@@ -31,8 +31,8 @@
 <div class="new-filter" ng-show="$root.isFilterOpened && $root.isMapState()">
     <!-- <form action=""> -->
     <div class="filter-header">
-        <p>Filters</p>
-        <span ng-click="$root.isFilterOpened = false">
+        <p>{{ $root.sortLayer.charAt(0).toUpperCase() + $root.sortLayer.slice(1) }} Filters</p>
+        <span ng-click="MapSort.closeFilter()">
             <img src="../../../assets/img/svg/cancel.svg" alt="">
         </span>
     </div>
@@ -47,6 +47,17 @@
             <option value="5">★★★★★</option>
         </select>
     </div>
+    <div class="form-group" ng-if="$root.sortLayer == 'shelter'">
+        <label for="filterPriceRange">Price Range<span hidden>clear</span></label>
+        <select class="form-control" id="filterPriceRange" ng-model="$root.filterOptions.maxPrice">
+            <option selected value="">Any</option>
+            <option value="200">Less than $200</option>
+            <option value="150">Less than $150</option>
+            <option value="100">Less than $100</option>
+            <option value="75">Less than $75</option>
+            <option value="50">Less than $50</option>
+        </select>
+    </div>
     <div class="form-group">
         <label for="filterCategory">Category<span hidden>clear</span></label>
         <!-- <div class="form-control" id="filterCategory" ng-dropdown-multiselect="" options="$root.categoryData" selected-model="$root.filterOptions.categories"></div> -->
@@ -59,7 +70,7 @@
         <label for="filterTags">By tags & Keywords<span hidden>clear</span></label>
         <tags-input id="filterTags" ng-model="$root.filterOptions.tags"></tags-input>
     </div>
-    <div class="form-group">
+    <div class="form-group"  ng-if="$root.sortLayer == 'event'">
         <label>By dates<span hidden>clear</span></label>
         <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea, applied: ($root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date)}">
             <input ng-datepicker ng-model="$root.filterOptions.dateFrom" class="date" placeholder="FROM" type="text">
@@ -71,7 +82,8 @@
         <label>Hotel features<span hidden>clear</span></label>
         <input type="text" placeholder="FEATURES">
     </div>
-    <button class="filter-apply" ng-click="MapSort.clearFilter()">CLEAR FILTER</button>
+    <button class="filter-apply pull-right" ng-click="MapSort.clearFilter()">CLEAR FILTER</button>
+    <button class="filter-apply" ng-click="MapSort.applyFilter()">APPLY FILTER</button>
     <!-- </form> -->
 </div>
 

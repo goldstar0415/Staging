@@ -722,7 +722,7 @@
         return btn[0];
       },
       _click: function (e) {
-          if ($rootScope.isSidebarOpened && $rootScope.mapSortSpots.sourceSpots.length) {
+          if ($rootScope.isSidebarOpened) { //&& $rootScope.mapSortSpots.sourceSpots.length
             $rootScope.isFilterOpened = true;
             $rootScope.$apply();
           }
