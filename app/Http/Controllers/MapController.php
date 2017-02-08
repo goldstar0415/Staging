@@ -124,7 +124,12 @@ class MapController extends Controller {
         }
 
         if ($request->has('filter.rating')) {
-            $spots->whereRaw("mv_spots_spot_points.id in (select qRating.spot_id from (select spot_votes.spot_id, avg(spot_votes.vote) OVER (PARTITION BY spot_id) as ratingAvg from spot_votes) qRating where ratingAvg > ?)", [$request->filter['rating']]);
+            //$spots->whereRaw("mv_spots_spot_points.id in (select qRating.spot_id from (select spot_votes.spot_id, avg(spot_votes.vote) OVER (PARTITION BY spot_id) as ratingAvg from spot_votes) qRating where ratingAvg > ?)", [$request->filter['rating']]);
+            $spots->where('spots.avg_rating', '>=', $request->filter['rating']);
+        }
+        
+        if ($request->has('filter.price')) {
+            $spots->where('spots.minrate', '<=', $request->filter['price']);
         }
 
         if ($request->has('filter.b_boxes')) {
