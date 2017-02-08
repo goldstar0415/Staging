@@ -13,6 +13,11 @@
     var commentIndex;
     var $scope;
 
+    var tsPatterns = [
+      /\d{4}-\d{2}-\d{2}[\sT]+\d{2}:\d{2}:\d{2}/i,
+      /\d{4}-\d{2}-\d{2}[\sT]+\d{2}:\d{2}:\d{2}\s*[ap]+m/i
+    ];
+
     return {
       setScope: setScope,
       removeSpot: removeSpot,
@@ -123,7 +128,7 @@
         // ignore non-exact time
         spot.start_time = isStartTimeExact ? moment(spot.start_date).format(DATE_FORMAT.time) : null;
         spot.end_time = isEndTimeExact ? moment(spot.end_date).format(DATE_FORMAT.time) : null;
-        
+
         spot.start_date = moment(spot.start_date).format('YYYY-MM-DD');
         spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
       }
@@ -135,6 +140,9 @@
           }
         });
       });
+      // remove timestamps from description
+      spot.description = removeTimestamps(spot.description);
+
       var validWebsites = _.filter(spot.web_sites, function(ws){ return _.isString(ws) && ws.trim().length > 0; });
       spot.web_sites = validWebsites.length > 0 ? validWebsites : null;
       if (_.isArray(spot.web_sites) && spot.web_sites.length > 0) {
@@ -145,7 +153,17 @@
 
       return spot;
     }
-  
+
+    function removeTimestamps(str) {
+        if (!str) {
+            return str;
+        }
+        tsPatterns.forEach(function(rgx) {
+            str = str.replace(rgx, '');
+        });
+        return str;
+    }
+
     function isTimeExact(date, spot) {
       if (_.isEmpty(date))
         return false;
