@@ -28,7 +28,7 @@
                 <div class="right">
                     <div class="opened-info">
                         <span class="opened-info-stars"><stars item="Spot.spot"></stars></span>
-                        <span>{{Spot.reviews_total.total.reviews_count}} reviews</span>
+                        <span>{{Spot.spot.total_reviews}} reviews</span>
                     </div>
                 </div>
             </div>
@@ -179,10 +179,10 @@
         <div class="tab-content-reviews" ng-if="OpenedItem.tab == 'reviews'">
             <section class="review-section clearfix">
                 <div class="review-types">
-                    <div class="review-type" ng-repeat="(serviceName, serviceInfo) in Spot.reviews_total.info">
+                    <div ng-repeat="(serviceName, serviceInfo) in Spot.reviews_total" ng-if="serviceInfo.rating && serviceInfo.reviews_count && !isNaN(serviceInfo.rating) && !isNaN(serviceInfo.reviews_count)" class="review-type">
                         <div class="review-type-icon {{serviceName}}"></div>
                         <div class="clearfix"></div>
-                        <div class="pull-left with-margin">{{serviceInfo.rating}}</div>
+                        <div class="pull-left with-margin">{{serviceInfo.rating|number:1}}</div>
                         <div class="pull-left outline-none review-type-stars readonly">
                             <rating
                                 ng-model="1"

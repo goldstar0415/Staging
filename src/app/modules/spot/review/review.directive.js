@@ -52,8 +52,14 @@
                         case 3:
                           result = 'facebook';
                           break;
-                          case 4:
+                        case 4:
                           result = 'yelp';
+                          break;
+                        case 5:
+                          result = 'hotels';
+                          break;
+                        case 6:
+                          result = 'tripadvisor';
                           break;
                         default:
                           result = '';
