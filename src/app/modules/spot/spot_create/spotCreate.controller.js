@@ -163,9 +163,9 @@
             vm.links = [];
           }
           if (vm.newLink) {
-            vm.links.push(vm.newLink);  //TODO: add validations
+            vm.links.push({link: vm.newLink});  //TODO: add validations
           }
-          request.web_sites = vm.links;
+          request.web_sites = _.pluck(vm.links, 'link');
         }
         if (vm.newYoutubeLink || (vm.youtube_links && vm.youtube_links.length > 0)) {
           if (!vm.youtube_links) {
@@ -263,8 +263,7 @@
         return;
       }
       if (validLink && vm.newLink) {
-        vm.links.unshift(vm.newLink);
-        console.log(vm.links);
+        vm.links.unshift({ link: vm.newLink });
         vm.newLink = null;
       } else {
         toastr.error('Link is not valid');
@@ -405,15 +404,20 @@
       var data = spot;
       vm.type = data.category.type.name.toLowerCase();
       vm.title = data.title;
-      vm.description = (data.description).replace(/<br \/>/g, "");
-      vm.links = data.web_sites || [];
+      vm.description = (data.description)?(data.description).replace(/<br \/>/g, ""):data.description;
+      vm.links = [];
+      if(data.web_sites && data.web_sites.length > 0)
+      {
+          _.each(data.web_sites, function(value, index){
+              vm.links.push({link: value});
+          });
+      }
       vm.youtube_links = data.videos || [];
       vm.category_id = data.spot_type_category_id;
       vm.tags = data.tags || [];
       vm.cover = data.cover_url.original;
       vm.locations = data.points;
       vm.price_level = data.price_level;
-      console.log(data);
       vm.email           = data.email;
       vm.phone_number    = data.phone_number;
       vm.facebook_url    = data.facebook_url;

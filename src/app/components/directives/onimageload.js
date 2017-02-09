@@ -10,10 +10,6 @@
 
   /** @ngInject */
   function onImageLoad(API_URL, S3_URL) {
-    function getRandomInt(min, max)
-    {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
     return {
       restrict: 'A',
       scope: {
@@ -22,10 +18,10 @@
       link: function(scope, element, attrs) {
             element.bind('error', function(){
                 var type = scope.item.item.type;
+                var id = (scope.item.item.spot_id) ? scope.item.item.spot_id : scope.item.item.id;
                 if (type == 'food' || type== 'shelter') {
                     var max = (type === 'food')?32:84;
-                    var imgnum = getRandomInt(0, max);
-                    scope.item.image = S3_URL + '/assets/img/placeholders/' + type + '/' + imgnum + '.jpg';
+                    scope.item.image = S3_URL + '/assets/img/placeholders/' + type + '/' + (id % max) + '.jpg';
                 } else {
                     scope.item.image = API_URL + "/uploads/missings/covers/original/missing.png";
                 }

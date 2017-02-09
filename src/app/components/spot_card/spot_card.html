@@ -17,7 +17,7 @@
             <img onimageload src="{{SpotCard.image}}" item="SpotCard" alt="spot_img" ng-click="SpotCard.openSpot(SpotCard.item.spot_id, $event)">
         </div>
         <div ng-if="!$root.isMapState()" class="img" ui-sref="spot({user_id: SpotCard.item.user_id || 0, spot_id: SpotCard.item.id, spot_slug: SpotCard.item.slug})">
-            <img src="{{SpotCard.image}}" alt="spot_img">
+            <img onimageload src="{{SpotCard.image}}" alt="spot_img">
         </div>
         <div class="spot-img-price"  ng-if="SpotCard.item.price">
             {{SpotCard.item.price}}
