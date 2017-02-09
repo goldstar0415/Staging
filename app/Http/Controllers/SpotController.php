@@ -228,7 +228,6 @@ class SpotController extends Controller
             '_method',
             'is_private'
         ]));
-
         if ($request->hasFile('cover')) {
             $cover = $request->file('cover');
             $spot->cover = $cover->getRealPath();
@@ -608,20 +607,13 @@ class SpotController extends Controller
         $result = [
             'cover_url' => null,
             ];
-            
-        $query = RemotePhoto::where('associated_type', Spot::class)
-                ->where('associated_id', $spot->id)
-                ->orderBy('image_type', 'desc')
-                ->orderBy('created_at', 'asc');
-        if( $query->exists() )
+        if (!empty($spot->cover_url))
         {
-            $result['cover_url'] = $query->first();
-            $result['db_cover'] = true;
+            $result['cover_url'] = $spot->cover_url;
         }
         else
         {
             $bookingUrl = (!empty($spot->booking_url))?$spot->getBookingUrl($spot->booking_url):false;
-            $result['booking_url'] = $bookingUrl;
             if(
                 isset($spot->booking_url) && 
                 $spot->checkUrl($spot->booking_url) && 
@@ -631,8 +623,16 @@ class SpotController extends Controller
                 ])
             )
             {
-                $result['cover_url'] = $spot->getBookingCover($bookingPageContent);
-                $result['booking_cover'] = true;
+                $bookingCoverObj = $spot->getBookingCover($bookingPageContent);
+                if($bookingCoverObj)
+                {
+                    $url = $bookingCoverObj->url;
+                    $result['cover_url'] = [
+                        "original" => $url,
+                        "medium" => $url,
+                        "thumb" => $url
+                    ];
+                }
             }
         }
         return $result;
