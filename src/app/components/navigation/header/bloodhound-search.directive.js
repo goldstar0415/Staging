@@ -43,7 +43,9 @@
                 var widgetName = 'bloodhound-typeahead-' + Math.floor(Math.random()*1e12); // a random name
                 var suggestionsElementCache = null;
 
-                elem.typeahead(null, {
+                elem.typeahead({
+                    minLength: 3,
+                }, {
                     name: widgetName,
                     display: 'value',
                     source: bestPictures,
