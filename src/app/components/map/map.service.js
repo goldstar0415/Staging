@@ -1252,7 +1252,7 @@
         // }];
         lineOptions.styles = [{type: 'polygon', weight: 3, color: '#00CFFF', opacity: 0.9, fillColor: '#0C2638', fillOpacity: 0.4}, {color: 'red', opacity: 1, weight: 3}];
         ClearSelectionListeners();
-
+        var showNotification = true;
         pathSelectionStarted = true;
         if (wpArray) {
           for (var k in wpArray) {
@@ -1267,7 +1267,10 @@
         }
 
         function onMapClick(e, idx, dontBuildPath) {
-          toastr.info('Place Pin at Destination(s)');
+          if (showNotification) {
+            showNotification = false;
+            toastr.info('Place Pin at Destination(s)');
+          }
           // ignore empty originalEvent
           if (e && e.originalEvent !== undefined) {
             e.originalEvent.preventDefault();
@@ -1945,7 +1948,7 @@
         var template = '<div>\
                             <p class="plate-name">{{item.title}}</p>\
                             <p class="plate-stars"><stars item="item"></stars></p>\
-                            <p class="plate-info price" ng-if="item.minrate">{{item.price}}<span>avg/nt</span></p>\
+                            <p class="plate-info price" ng-if="item.minrate">{{item.price}}</p>\
                             <p class="plate-info" ng-if="!item.minrate">{{item.category.name}}</p>\
                             <img width="50" height="50" src="{{image}}" />\
                         </div>';
