@@ -135,9 +135,9 @@
                 <h1>E-mail:</h1>
                 <p>{{Spot.spot.email}}</p>
             </div>
-            <div class="overview website" ng-if="(Spot.spot.web_sites | seatgeek).length">
+            <div class="overview website" ng-if="(Spot.spot.web_sites | seatgeek | ticketmaster).length">
                 <h1>Website:</h1>
-                <a ng-repeat="url in Spot.spot.web_sites | seatgeek" href="{{url}}" target="_blank">
+                <a ng-repeat="url in Spot.spot.web_sites | seatgeek | ticketmaster" href="{{url}}" target="_blank">
                     {{url}}
                 </a>
             </div>

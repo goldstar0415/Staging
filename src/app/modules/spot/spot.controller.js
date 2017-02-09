@@ -19,6 +19,20 @@
                 }
                 return null;
             }
+        })
+        .filter('ticketmaster', function() {
+            return function(inp) {
+                if (inp) {
+                    var arr = [];
+                    for (var i = 0; i < inp.length; i++) {
+                        if (inp[i].indexOf('ticketmaster.com/') === -1) {
+                            arr.push(inp[i]);
+                        }
+                    }
+                    return arr;
+                }
+                return null;
+            }
         });
 
     function SpotJsonld($filter, $sce, $location) {
@@ -73,7 +87,7 @@
         return {
             restrict: 'E',
             templateUrl: '/app/modules/spot/spot.html',
-            scope: { 
+            scope: {
                 spot: '=',
                 modal: '='
             },
@@ -124,9 +138,9 @@
 
         if (vm.spot.web_sites && vm.spot.web_sites[0].length) {
             for (var i = 0; i < vm.spot.web_sites.length; i++) {
-                if (vm.spot.web_sites[i].indexOf('https://seatgeek.com/venues') === 0) {
+                if ( vm.spot.web_sites[i].indexOf('https://seatgeek.com/venues') === 0 || /ticketmaster\.com\/venue/i.test(vm.spot.web_sites[i]) ) {
                     spot.venues = vm.spot.web_sites[i];
-                } else if (vm.spot.web_sites[i].indexOf('https://seatgeek.com') === 0) {
+                } else if ( vm.spot.web_sites[i].indexOf('https://seatgeek.com') === 0 || /ticketmaster\.com\/event/i.test(vm.spot.web_sites[i]) ) {
                     spot.tickets = vm.spot.web_sites[i];
                 }
             }
@@ -470,14 +484,14 @@
             var category = vm.category;
             var type = (category)?vm.spot.category.type.name:null;
             if ( category &&
-                (type === 'food' || 
-                 type === 'shelter')) 
+                (type === 'food' ||
+                 type === 'shelter'))
             {
-                if (false) 
+                if (false)
                 {
                     return vm.spot.cover_url.original;
                 }
-                else 
+                else
                 {   var max = (type === 'food')?32:84;
                     var imgnum = getRandomInt(0, max);
                     return S3_URL + '/assets/img/placeholders/' + type + '/' + imgnum + '.jpg';
