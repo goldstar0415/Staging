@@ -86,7 +86,8 @@ class MapController extends Controller {
                         'spots.maxrate',
                         'spots.currencycode',
                         'spots.avg_rating',
-                        'spots.total_reviews'
+                        'spots.total_reviews',
+                        'spots.start_date'
                 )
                 ->where('mv_spots_spot_points.is_private', false)
                 ->where('mv_spots_spot_points.is_approved', true);
@@ -199,6 +200,7 @@ class MapController extends Controller {
                 'cover_url'    => $spot->cover,
                 'avg_rating' => $spot->avg_rating, 
                 'total_reviews' => $spot->total_reviews,
+                'start_date' => $spot->start_date,
             ];
         }
         return $points;
