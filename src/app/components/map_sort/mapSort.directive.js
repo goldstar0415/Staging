@@ -225,6 +225,85 @@
             }
 
         }
+        
+        /**
+         * Render map data
+         * @param event
+         * @param {array} mapSpots
+         * @param {string} layer
+         * @param {boolean} isDrawArea
+         * @param {boolean} ignoreEmptyList
+         */
+        function onUpdateMapData(event, mapSpots, layer, isDrawArea, ignoreEmptyList) {
+            console.log('update map');
+
+            ignoreEmptyList = ignoreEmptyList === undefined || ignoreEmptyList === true;
+
+            layer = layer || $rootScope.sortLayer;
+            $rootScope.sortLayer = layer;
+            if (angular.isDefined(isDrawArea)) {
+              $rootScope.isDrawArea = isDrawArea;
+            }
+
+            $rootScope.mapSortSpots = {
+              markers: [],
+              data: [],
+              page: 0
+            };
+            if($rootScope.mapSortSpots && $rootScope.mapSortSpots.cancellerHttp)
+            {
+                $rootScope.mapSortSpots.push({cancellerHttp: $rootScope.mapSortSpots.cancellerHttp});
+            }
+
+                if (!MapService.hasLayer(layer)) {
+                        toggleLayer(layer, false);
+                }
+            if ($rootScope.isDrawArea) {
+              _.each(mapSpots, function (item) {
+                if (MapService.PointInPolygon(item.location)) {
+                  $rootScope.mapSortSpots.markers.push(item);
+                }
+              });
+            } else {
+                $rootScope.mapSortSpots.markers = mapSpots;
+            }
+
+            $timeout(function () {
+              if ($rootScope.mapSortSpots.markers && $rootScope.mapSortSpots.markers.length > 0) {
+                $rootScope.changeMapState('small', null, false);
+                //   console.log($rootScope.mapSortSpots.data);
+                $rootScope.sidebarMessage = "Can't find any spots in this area...";
+                MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
+                if (!$rootScope.isDrawArea) {
+                    MapService.FitBoundsByLayer($rootScope.sortLayer);
+                }
+                } else {
+                    $rootScope.changeMapState('big');
+                    if ( !ignoreEmptyList ) {
+                      toastr.info('0 spots found');
+                    }
+                    MapService.clearLayers();
+                }
+            });
+
+            $rootScope.mapSortSpots.sourceSpots = _filterUniqueSpots($rootScope.mapSortSpots.markers);
+            if (_.isArray($rootScope.mapSortSpots.sourceSpots)) {
+                $rootScope.mapSortSpots.sourceSpots.forEach(function(spot){
+                    formatDates(spot);
+                });
+            }
+            loadNextSpots(layer);
+
+        }
+
+        function formatDates(spot) {
+            if (spot.start_date) {
+                spot.start_date = moment(spot.start_date).format('YYYY-MM-DD');
+            }
+            if (spot.end_date) {
+                spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
+            }
+        }
 
         function showMessage(type, text) {
             toastr[type](text);
@@ -284,71 +363,6 @@
         function getCircleBounds(bounds) {
             console.log('Circle Bounds', bounds);
             search();
-        }
-
-        /**
-         * Render map data
-         * @param event
-         * @param {array} mapSpots
-         * @param {string} layer
-         * @param {boolean} isDrawArea
-         * @param {boolean} ignoreEmptyList
-         */
-        function onUpdateMapData(event, mapSpots, layer, isDrawArea, ignoreEmptyList) {
-            console.log('update map');
-
-            ignoreEmptyList = ignoreEmptyList === undefined || ignoreEmptyList === true;
-
-            layer = layer || $rootScope.sortLayer;
-            $rootScope.sortLayer = layer;
-            if (angular.isDefined(isDrawArea)) {
-                $rootScope.isDrawArea = isDrawArea;
-            }
-
-            $rootScope.mapSortSpots = {
-                markers: [],
-                data: [],
-                page: 0
-            };
-            if ($rootScope.mapSortSpots && $rootScope.mapSortSpots.cancellerHttp)
-            {
-                $rootScope.mapSortSpots.push({cancellerHttp: $rootScope.mapSortSpots.cancellerHttp});
-            }
-
-            if (!MapService.hasLayer(layer)) {
-                toggleLayer(layer, false);
-            }
-            if ($rootScope.isDrawArea) {
-                _.each(mapSpots, function (item) {
-                    if (MapService.PointInPolygon(item.location)) {
-                        $rootScope.mapSortSpots.markers.push(item);
-                    }
-                });
-            } else {
-                $rootScope.mapSortSpots.markers = mapSpots;
-            }
-
-            $timeout(function () {
-                if ($rootScope.mapSortSpots.markers && $rootScope.mapSortSpots.markers.length > 0) {
-                    $rootScope.changeMapState('small', null, false);
-                    //   console.log($rootScope.mapSortSpots.data);
-                    $rootScope.sidebarMessage = "Can't find any spots in this area...";
-                    MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
-                    if (!$rootScope.isDrawArea) {
-                        MapService.FitBoundsByLayer($rootScope.sortLayer);
-                    }
-                } else {
-                    $rootScope.changeMapState('big');
-                    if (!ignoreEmptyList) {
-                        toastr.info('0 spots found');
-                    }
-                    MapService.clearLayers();
-                }
-            });
-
-            $rootScope.mapSortSpots.sourceSpots = _filterUniqueSpots($rootScope.mapSortSpots.markers);
-            loadNextSpots(layer);
-
         }
 
         function _filterUniqueSpots(array) {
