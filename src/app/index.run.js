@@ -250,7 +250,7 @@
           if (urlState.name == 'index' && mapState == 'big') {
             angular.element('.map-tools').show();
 
-            if (!$state.params.spotSearch && !$state.params.spotLocation) {
+            if (!$state.params.spotSearch && !$state.params.spotLocation && !$rootScope.openedSpot) {
               MapService.FocusMapToCurrentLocation(12);
             }
           } else if (!$state.params.spotSearch) {
