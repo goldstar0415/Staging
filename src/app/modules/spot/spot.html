@@ -52,7 +52,7 @@
                     </span>
                     <div class="buttons">
                         <a ng-if="Spot.spot.tickets" href="{{Spot.spot.tickets}}" target="_blank">Tickets</a>
-                        <a ng-if="Spot.spot.venues" href="{{Spot.spot.venues}}" target="_blank">Venues</a>
+                        <a ng-if="Spot.spot.venues" href="{{Spot.spot.venues}}" target="_blank">Venue</a>
                     </div>
                 </div>
                 <div ng-if="Spot.spot.category.type.name == 'shelter'">
@@ -182,7 +182,7 @@
                     <div ng-repeat="(serviceName, serviceInfo) in Spot.reviews_total" ng-if="serviceInfo.rating && serviceInfo.reviews_count && !isNaN(serviceInfo.rating) && !isNaN(serviceInfo.reviews_count)" class="review-type">
                         <div class="review-type-icon {{serviceName}}"></div>
                         <div class="clearfix"></div>
-                        <div class="pull-left with-margin">{{serviceInfo.rating}}</div>
+                        <div class="pull-left with-margin">{{serviceInfo.rating|number:1}}</div>
                         <div class="pull-left outline-none review-type-stars readonly">
                             <rating
                                 ng-model="1"
