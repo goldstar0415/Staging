@@ -1,11 +1,11 @@
 @extends('admin.main')
 
 @section('content')
-<h2 class="col-xs-12">Hotels Parser</h2>
+<h2 class="col-xs-12">Parser</h2>
 <hr class="col-xs-12" />
 <div class="clearfix"></div>
 <div class="row actions">
-    {!! Form::open(['method' => 'POST', 'route' => 'admin.hotels.export-upload', 'class' => 'export-form', 'files' => true]) !!}
+    {!! Form::open(['method' => 'POST', 'route' => 'admin.csv-parser.export-upload', 'class' => 'export-form', 'files' => true]) !!}
     @include('admin.parser.controls')
     {!! Form::close() !!}
     <div class="clearfix"></div>
@@ -17,5 +17,5 @@
 
 @endsection
 @section('scripts')
-    @include('admin.parser.scripts', ['uploadRoute' => 'admin.hotels.export', 'updateRoute' => 'admin.hotels.update_field'])
+    @include('admin.parser.scripts', ['uploadRoute' => 'admin.csv-parser.export', 'updateRoute' => 'admin.csv-parser.update-field'])
 @endsection

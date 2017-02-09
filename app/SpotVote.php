@@ -19,10 +19,12 @@ namespace App;
 class SpotVote extends BaseModel
 {
     
-    const TYPE_BOOKING  = 1;
-    const TYPE_GOOGLE   = 2;
-    const TYPE_FACEBOOK = 3;
-    const TYPE_YELP     = 4;
+    const TYPE_BOOKING     = 1;
+    const TYPE_GOOGLE      = 2;
+    const TYPE_FACEBOOK    = 3;
+    const TYPE_YELP        = 4;
+    const TYPE_HOTELS      = 5;
+    const TYPE_TRIPADVISOR = 6;
     
     protected $fillable = [
         'vote', 
@@ -48,5 +50,35 @@ class SpotVote extends BaseModel
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    
+    public function getRemoteUserNameAttribute($value)
+    {
+        return self::remoteReviewerNameCheck($value);
+    }
+    
+    public function getRemoteUserAvatarAttribute($value)
+    {
+        if(empty($value))
+        {
+            return url('uploads/missings/avatars/thumb/missing.png');
+        }
+        return $value;
+    }
+    
+    public static function remoteReviewerNameCheck($value)
+    {
+        $depricatedNames = [
+            'A Google User',
+            'A TripAdvisor Member',
+            'Путешественник',
+            'Аноним',
+        ];
+        
+        if(in_array($value, $depricatedNames))
+        {
+            return 'Anonymous';
+        }
+        return $value;
     }
 }

@@ -91,12 +91,12 @@ class Feeder implements ShouldQueue
                 $this->addFeed($event, $event->wall->sender);
                 break;
             case $event instanceof OnSpotCreate:
-                if ($event->spot->user->privacy_events !== Privacy::NOBODY) {
+                if (!empty($event->spot) && !empty($event->spot->user) && $event->spot->user->privacy_events !== Privacy::NOBODY) {
                     $this->addFeed($event, $event->spot->user->followers);
                 }
                 break;
             case $event instanceof OnSpotUpdate:
-                if ($event->spot->user->privacy_events !== Privacy::NOBODY) {
+                if (!empty($event->spot) && !empty($event->spot->user) && $event->spot->user->privacy_events !== Privacy::NOBODY) {
                     $this->addFeed($event, $event->spot->user->followers);
                 }
                 break;

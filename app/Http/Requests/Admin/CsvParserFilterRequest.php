@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class HotelFilterRequest extends Request
+class CsvParserFilterRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -19,22 +19,16 @@ class SpotType extends BaseModel
 
     public $timestamps = false;
 
-	static function getTypeId($stringTypeName) {
-		switch($stringTypeName) {
-			case 'shelter':
-				return 1;
-			case 'event':
-				return 2;
-			case 'todo':
-				return 3;
-			case 'food':
-				return 4;
-			case 'shelter':
-				return 5;
-			default:
-				throw new \Exception("Unknown spot type {$stringTypeName}");
-		}
-	}
+    protected $ids = [];
+        
+    static function getTypeId($stringTypeName) 
+    {
+        if($type = SpotType::where('name', $stringTypeName)->first())
+        {
+            return $type->id;
+        }
+        throw new \Exception("Unknown spot type {$stringTypeName}");
+    }
 	
     /**
      * Get the category for the spot type
@@ -50,5 +44,22 @@ class SpotType extends BaseModel
     public function spots()
     {
         return $this->hasManyThrough(Spot::class, SpotTypeCategory::class);
+    }
+    
+    /**
+     * Get list of categories with spot type
+     */
+    public static function categoriesList($typeName = null)
+    {
+        $categories = [];
+        $query = self::with('categories');
+        if($typeName)
+        {
+            $query->where('name', $typeName);
+        }
+        $query->get()->each(function (\App\SpotType $type) use (&$categories, $typeName) {
+            $categories[$type->display_name] = $type->categories->pluck('display_name', 'id')->toArray();
+        });
+        return $categories;
     }
 }

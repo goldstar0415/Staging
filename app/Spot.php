@@ -11,7 +11,9 @@ use App\Scopes\NewestScopeTrait;
 use App\Services\SocialSharing;
 use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
+use Carbon\Carbon;
 use DB;
+use Cache;
 use Eluceo\iCal\Component\Event;
 use Eluceo\iCal\Property\Event\Organizer;
 use Request;
@@ -72,7 +74,8 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         'is_favorite',
         'is_saved',
         'is_rated',
-        'share_links'
+        'share_links',
+        'slug'
     ];
 
     protected $with = ['category.type', 'points'];
@@ -81,7 +84,8 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
 
     protected $casts = [
         'web_sites' => 'array',
-        'videos' => 'array'
+        'videos' => 'array',
+        'hours' => 'array',
     ];
 
     protected $dates = ['start_date', 'end_date'];
@@ -92,11 +96,13 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         'is_rated'
     ];
     
-    protected $spotExtension = null;
     protected $googlePlacesInfo = null;
     protected $yelpInfo = null;
     protected $yelpToken = null;
     protected $bookingPage = null;
+    protected $booking_reviews_url = null;
+    protected $hotelsReviewsPage = null;
+    protected $tripadvisorReviewsPage = null;
 
     /**
      * {@inheritdoc}
@@ -122,7 +128,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getCoverUrlAttribute()
     {
         $covers = [];
-        if($rph = $this->remotePhotos()->where('image_type', 1)->first())
+        if($rph = $this->remotePhotos()->orderBy('image_type', 'desc')->first())
         {
             $url = $rph->url;
             $covers = [
@@ -144,7 +150,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      */
     public function getRatingAttribute()
     {
-        return (float)$this->votes()->avg('vote');
+        return round((float)$this->votes()->whereNull('remote_id')->avg('vote'), 1);
     }
     
     /**
@@ -183,57 +189,6 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     }
     
     /**
-     * Get hotel spot info
-     *
-     * @return query
-     */
-    public function hotel()
-    {
-        return $this->hasOne(SpotHotel::class);
-    }
-    
-    public function scopeHotels($query)
-    {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'hotels')->first();
-        
-        return $query->where('spot_type_category_id', $spotTypeCategory->id);
-    }
-    
-    /**
-     * Get restaurant spot info
-     *
-     * @return query
-     */
-    public function restaurant()
-    {
-        return $this->hasOne(SpotRestaurant::class);
-    }
-    
-    public function scopeRestaurants($query)
-    {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'restaurants')->first();
-        
-        return $query->where('spot_type_category_id', $spotTypeCategory->id);
-    }
-    
-    /**
-     * Get todo spot info
-     *
-     * @return query
-     */
-    public function todo()
-    {
-        return $this->hasOne(SpotToDo::class);
-    }
-    
-    public function scopeTodoes($query)
-    {
-        $spotTypeCategory = SpotTypeCategory::where('name', 'todo')->first();
-        
-        return $query->where('spot_type_category_id', $spotTypeCategory->id);
-    }
-
-    /**
      * Check is spot favorite for authenticated user
      *
      * @return bool
@@ -245,6 +200,16 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         }
 
         return false;
+    }
+    
+    /**
+     * Get spot slug from title 
+     *
+     * @return string
+     */
+    public function getSlugAttribute()
+    {
+        return str_slug($this->title, "-");
     }
 
     /**
@@ -289,6 +254,16 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     {
         $this->attributes['web_sites'] = json_encode($value);
     }
+    
+    /**
+     * Set hours attribute
+     *
+     * @param array $value
+     */
+    public function setHoursAttribute(array $value)
+    {
+        $this->attributes['hours'] = json_encode($value);
+    }
 
     /**
      * Set the spot videos
@@ -331,6 +306,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             $tags_ids[] = Tag::firstOrCreate(['name' => $tag])->id;
         }
         $this->tags()->sync($tags_ids);
+    }
+    
+    public function getReviewsCountAttribute()
+    {
+        return $this->votes()->whereNull('remote_id')->count();
     }
 
     /**
@@ -650,16 +630,123 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     
     public function getHotelsPrice($hotelsRes)
     {
+        $regexp = '/[^\-\d]*(\-?\d*).*/';
         if( $hotelsPriceObj = $hotelsRes->find('span.current-price', 0))
         {
-            return $hotelsPriceObj->innertext();
+            return (int)preg_replace($regexp,'$1',($hotelsPriceObj->innertext()));
         }
         elseif( $hotelsPriceObj = $hotelsRes->find('meta[itemprop=priceRange]', 0) )
         {
             $hotelsPrice = explode(' ' , $hotelsPriceObj->getAttribute('content'));
-            return array_pop($hotelsPrice);
+            return (int)preg_replace($regexp,'$1', (array_pop($hotelsPrice)));
         }
         return false;
+    }
+    
+    public function getHotelsReviewsPage() 
+    {
+        if(!empty($this->hotelsReviewsPage))
+        {
+            return $this->hotelsReviewsPage;
+        }
+        else 
+        {
+            $url = $this->getHotelsReviewsUrl();
+            if($url)
+            {
+                $hotelsPageContent = $this->getPageContent($url, []);
+                if($hotelsPageContent)
+                {
+                    return $this->hotelsReviewsPage = $hotelsPageContent;
+                }
+            }
+        }
+        return null;
+    }
+    
+    public function saveHotelsReviews()
+    {
+        $result = null;
+        $page = $this->getHotelsReviewsPage();
+        if($page)
+        {
+            $reviews = [];
+            foreach( $page->find('.review-card') as $reviewObj )
+            {
+                $message = $reviewObj->find('.review-content .expandable-content', 0)->innertext();
+                if(empty($message))
+                {
+                    continue;
+                }
+                $rating = $reviewObj->find('.rating strong', 0)->innertext();
+                if(empty($rating))
+                {
+                    continue;
+                }
+                $remote_id = 'hc_' . md5($message);
+                if($this->votes()->where('remote_id', $remote_id)->exists())
+                {
+                    continue;
+                }
+                $remote_user = $reviewObj->find('.review-card-meta-reviewer', 0);
+                $remote_user->find('.reviewer-data',0)->outertext = "";
+                $date = Carbon::createFromTimestamp(round($reviewObj->getAttribute('data-review-date')/1000))->toDateTimeString();
+                $reviews[] = [
+                    'vote' => (int)$rating,
+                    'message' => $message,
+                    'remote_id' => $remote_id,
+                    'remote_type' => SpotVote::TYPE_HOTELS,
+                    'remote_user_name' => SpotVote::remoteReviewerNameCheck(trim($remote_user->innertext())),
+                    'created_at' => $date,
+                    'updated_at' => $date,
+                    'spot_id' => $this->id,
+                ];
+            }
+            $this->votes()->insert($reviews);
+            $result = $reviews;
+        }
+        return $result;
+    }
+    
+    public function getHotelsReviewsUrl()
+    {
+        if(!empty($this->hotelscom_url) && $this->checkUrl($this->hotelscom_url))
+        {
+            $urlParts = explode('/', $this->hotelscom_url);
+            $urlParts[3] = $urlParts[3] . '-tr';
+            return implode('/', $urlParts);
+        }
+        return null;
+    }
+    
+    public function getHotelsReviewsCount()
+    {
+        $result = null;
+        $page = $this->getHotelsReviewsPage();
+        if($page)
+        {
+            $element = $page->find('.filters .tt-all span', 0);
+            if($element)
+            {
+                $result = intval(str_replace(['(', ')'], [''], trim($element->innertext())));
+            }
+        }
+        return $result;
+    }
+    
+    public function getHotelsRating() 
+    {
+        $result = null;
+        $page = $this->getHotelsReviewsPage();
+        if($page)
+        {
+            $element = $page->find('.overall strong', 0);
+            if($element)
+            {
+                $result = floatval(str_replace(',','.', trim($element->innertext())));
+            }
+        }
+        return $result;
     }
     
     /*
@@ -714,7 +801,8 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         foreach($bookingRes->find('.rooms-table-room-price') as $bookingPriceObj)
         {
             $newPrice = trim(str_replace('US$', '', $bookingPriceObj->innertext()));
-            if( ($price && ( $newPrice < $price )) || !$price )
+            $newPrice = str_replace(',', '', $newPrice);
+            if( ($price && ( (int)$newPrice < (int)$price )) || !$price )
             {
                 $price = $newPrice;
             }
@@ -722,14 +810,14 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $result = $price;
         if( $price )
         {
-            $result = '$' . $price;
+            $result = $price;
         }
         if( empty($result) && ($bookingPriceObj = $bookingRes->find('meta[itemprop=priceRange]', 0)) )
         {
             $result = explode(' ' , $bookingPriceObj->getAttribute('content'));
             $result = str_replace('US', '', array_pop($result));
         }
-        return $result;
+        return (int)preg_replace('/[^\-\d]*(\-?\d*).*/','$1',($result));
     }
     
     public function getBookingPage()
@@ -738,10 +826,9 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             return $this->bookingPage;
         }
-        $spotInfo = $this->getSpotExtension();
-        if(!empty($spotInfo->booking_url))
+        if(!empty($this->booking_url))
         {
-            $url = $this->getBookingUrl($spotInfo->booking_url);
+            $url = $this->getBookingUrl($this->booking_url);
             if($url)
             {
                 $bookingPageContent = $this->getPageContent($url, [
@@ -941,7 +1028,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $item->message = html_entity_decode($message);
                 $scoreObj = $reviewObj->find('.review_item_review_score', 0);
                 $item->vote = round((float)$scoreObj->innertext()/2);
-                $item->remote_user_name = trim($reviewObj->find('h4', 0)->innertext);
+                $item->remote_user_name = SpotVote::remoteReviewerNameCheck(trim($reviewObj->find('h4', 0)->innertext));
                 $item->remote_user_avatar = str_replace('height=64&width=64', 'height=300&width=300', $reviewObj->find('.avatar-mask', 0)->getAttribute('src'));
                 $item->remote_type = SpotVote::TYPE_BOOKING;
                 if( $save && !SpotVote::where('remote_id', $item->remote_id)->exists())
@@ -1013,14 +1100,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     
     public function getGooglePid()
     {
-        $googlePid = false;
-        $spotInfo  = $this->getSpotExtension();
-        if($spotInfo)
-        {
-            $googlePid = (!empty($spotInfo->google_pid)
-                    && $spotInfo->google_pid != 'null' 
-                    && $spotInfo->google_pid != '0')?$spotInfo->google_pid:false;
-        }
+        $googlePid = (!empty($this->google_id)
+                && $this->google_id != 'null'
+                && $this->google_id != '0')?$this->google_id:false;
+        
         return $googlePid;
     }
     
@@ -1078,7 +1161,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $itemObj->vote = $item['rating'];
                 $itemObj->created_at = date("Y-m-d H:i:s", $item['time']);
                 $itemObj->remote_type = SpotVote::TYPE_GOOGLE;
-                $itemObj->remote_user_name = $item['author_name'];
+                $itemObj->remote_user_name = SpotVote::remoteReviewerNameCheck($item['author_name']);
                 $itemObj->remote_user_avatar = (!empty($item['profile_photo_url']))?$item['profile_photo_url']:'';
                 if( $save && !SpotVote::where('remote_id', $remote_id)->where('spot_id', $this->id)->exists())
                 {
@@ -1129,7 +1212,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     {
         $result = [];
         $googlePlaceInfo = $this->getGooglePlaceInfo();
-        if( !empty($googlePlaceInfo['opening_hours']))
+        if( !empty($googlePlaceInfo['opening_hours']) && !empty($this->restaurant))
         {
             $openingHours = $googlePlaceInfo['opening_hours'];
             unset($openingHours['open_now']);
@@ -1198,10 +1281,9 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getFacebookRating()
     {
         $fb = app(LaravelFacebookSdk::class);
-        $spotExtention = $this->getSpotExtension();
-        if($spotExtention && $this->checkUrl($spotExtention->facebook_url))
+        if( $this->checkUrl($this->facebook_url))
         {
-            $id = $this->getFacebookIdFromUrl($spotExtention->facebook_url);
+            $id = $this->getFacebookIdFromUrl($this->facebook_url);
             if($id)
             {
                 try
@@ -1263,11 +1345,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             return $this->yelpInfo;
         }
-        $spotInfo = $this->getSpotExtension();
-        if($spotInfo && !empty($spotInfo->yelp_url))
+        if(!empty($this->yelp_url))
         {
             $token = $this->getYelpToken();
-            $id    = $this->getYelpIdFromUrl($spotInfo->yelp_url);
+            $id    = $this->getYelpIdFromUrl($this->yelp_url);
             if($token && $id)
             {
                 $client = new Client();
@@ -1294,11 +1375,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getYelpBizInfo()
     {
         $result = null;
-        $spotInfo = $this->getSpotExtension();
-        if($spotInfo && !empty($spotInfo->yelp_url))
+        if(!empty($this->yelp_url) || !empty($this->yelp_id))
         {
             $token = $this->getYelpToken();
-            $id    = $this->getYelpIdFromUrl($spotInfo->yelp_url);
+            $id    = (!empty($this->yelp_id)) ? $this->yelp_id : $this->getYelpIdFromUrl($this->yelp_url);
             if($token && $id)
             {
                 $client = new Client();
@@ -1328,11 +1408,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getYelpReviewsFromApi($save = false)
     {
         $result = null;
-        $spotInfo = $this->getSpotExtension();
-        if($spotInfo && !empty($spotInfo->yelp_url))
+        if(!empty($this->yelp_url))
         {
             $token = $this->getYelpToken();
-            $id    = $this->getYelpIdFromUrl($spotInfo->yelp_url);
+            $id    = $this->getYelpIdFromUrl($this->yelp_url);
             if($token && $id)
             {
                 $client = new Client();
@@ -1358,7 +1437,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                             $item->message = html_entity_decode($review['text']);
                             $item->remote_id = $remote_id;
                             $item->remote_type = SpotVote::TYPE_YELP;
-                            $item->remote_user_name = $review['user']['name'];
+                            $item->remote_user_name = SpotVote::remoteReviewerNameCheck($review['user']['name']);
                             $item->remote_user_avatar = $review['user']['image_url'];
                             if( $save && !SpotVote::where('remote_id', $remote_id)->exists())
                             {
@@ -1377,10 +1456,9 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getYelpReviewsFromPage($save = false)
     {
         $result = null;
-        $spotInfo = $this->getSpotExtension();
-        if($spotInfo && $this->checkUrl($spotInfo->yelp_url))
+        if($this->checkUrl($this->yelp_url))
         {
-            $url = $spotInfo->yelp_url;
+            $url = $this->yelp_url;
             $headers = $this->getYelpHeaders($url);
             $client = new Client();
             try
@@ -1422,7 +1500,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                         $item->message = html_entity_decode($content->find('p', 0)->innertext);
                         $item->remote_id = $remoteId;
                         $item->remote_type = SpotVote::TYPE_YELP;
-                        $item->remote_user_name = $sidebar->find('.user-display-name', 0)->innertext;
+                        $item->remote_user_name = SpotVote::remoteReviewerNameCheck(trim($sidebar->find('.user-display-name', 0)->innertext));
                         $item->remote_user_avatar = str_replace('60s.', '300s.', $sidebar->find('.photo-box img', 0)->src);
                         if( $save && !SpotVote::where('remote_id', $remoteId)->exists())
                         {
@@ -1455,12 +1533,122 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     }
     
     /*
+     * Tripadvisor handle
+     */
+    
+    public function getTripadvisorReviewsPage() 
+    {
+        if(!empty($this->tripadvisorReviewsPage))
+        {
+            return $this->tripadvisorReviewsPage;
+        }
+        else 
+        {
+            if($this->tripadvisor_url && $this->checkUrl($this->tripadvisor_url))
+            {
+                $tripadvisorPageContent = $this->getPageContent($this->tripadvisor_url, []);
+                if($tripadvisorPageContent)
+                {
+                    return $this->tripadvisorReviewsPage = $tripadvisorPageContent;
+                }
+            }
+        }
+        return null;
+    }
+    
+    public function saveTripadvisorReviews()
+    {
+        $result = null;
+        $page = $this->getTripadvisorReviewsPage();
+        if($page)
+        {
+            $reviews = [];
+            foreach( $page->find('.basic_review') as $reviewObj )
+            {
+                $message = $reviewObj->find('.partial_entry', 0);
+                if(empty($message) || empty($message->innertext()))
+                {
+                    continue;
+                }
+                $rating = $reviewObj->find('.rating_s_fill', 0);
+                if(empty($rating) || empty($rating->getAttribute('alt')))
+                {
+                    continue;
+                }
+                $remote_id = 'ta_' . md5($message);
+                if($this->votes()->where('remote_id', $remote_id)->exists())
+                {
+                    continue;
+                }
+                $remote_user_container = $reviewObj->find('.username', 0);
+                if($remote_user_container->find('span', 0))
+                {
+                    $remote_user = $remote_user_container->find('span', 0);
+                }
+                else
+                {
+                    $remote_user = $remote_user_container;
+                }
+                $date = (new Carbon($reviewObj->find('.ratingDate', 0)->getAttribute('title')))->toDateTimeString();
+                $reviews[] = [
+                    'vote' => (int)(str_replace(' of 5 bubbles', '', $rating->getAttribute('alt'))),
+                    'message' => $message->innertext(),
+                    'remote_id' => $remote_id,
+                    'remote_type' => SpotVote::TYPE_TRIPADVISOR,
+                    'remote_user_name' => SpotVote::remoteReviewerNameCheck(trim($remote_user->innertext())),
+                    //'remote_user_avatar' => $reviewObj->find('.avatar img', 0) ? $reviewObj->find('.avatar img', 0)->getAttribute('src') : null,
+                    'created_at' => $date,
+                    'updated_at' => $date,
+                    'spot_id' => $this->id,
+                ];
+            }
+            $this->votes()->insert($reviews);
+            $result = $reviews;
+        }
+        return $result;
+    }
+    
+    public function getTripadvisorReviewsCount()
+    {
+        $result = null;
+        $page = $this->getTripadvisorReviewsPage();
+        if($page)
+        {
+            $element = $page->find('.rating .more', 0);
+            if($element)
+            {
+                $result = intval($element->getAttribute('content'));
+            }
+        }
+        return $result;
+    }
+    
+    public function getTripadvisorRating() 
+    {
+        $result = null;
+        $page = $this->getTripadvisorReviewsPage();
+        if($page)
+        {
+            $element = $page->find('.rating .rating_rr_fill', 0);
+            if($element)
+            {
+                $result = floatval($element->getAttribute('content'));
+            }
+        }
+        return $result;
+    }
+    
+    /*
      * Reviews totals
      */
     
     public function getReviewsTotal($saveReviews = true)
     {
         $result = [];
+        //if( Cache::has('spot-ratings-' . $this->id))
+        //{
+        //    return Cache::get('spot-ratings-' . $this->id);
+        //}
         if( $facebookRating = $this->getFacebookRating())
         {
             $result['info']['facebook'] = $facebookRating;
@@ -1473,13 +1661,12 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $yelpInfo = $this->getYelpBizInfo();
         if( !empty($yelpInfo) )
         {
-            $this->getYelpReviewsFromPage($saveReviews);
+            $this->getYelpReviewsFromApi($saveReviews);
             $result['info']['yelp'] = $yelpInfo;
         }
-        $spotInfo = $this->getSpotExtension();
-        if(!empty($spotInfo->booking_url))
+        if(!empty($this->booking_url))
         {
-            $reviewsUrl = $this->getBookingReviewsUrl($spotInfo->booking_url);
+            $reviewsUrl = $this->getBookingReviewsUrl($this->booking_url);
             if($reviewsUrl && $reviewsPageContent = $this->getPageContent($reviewsUrl, [
                 'headers' => $this->getBookingHeaders()
             ]))
@@ -1492,11 +1679,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $result['info']['booking'] = $bookingTotals;
             }
         }
-        if(!empty($spotInfo->tripadvisor_rating) && !empty($spotInfo->tripadvisor_reviews_count))
+        if(!empty($this->tripadvisor_rating) && !empty($this->tripadvisor_reviews_count))
         {
             $result['info']['tripadvisor'] = [
-                'rating' => (float)$spotInfo->tripadvisor_rating,
-                'reviews_count' => (int)$spotInfo->tripadvisor_reviews_count
+                'rating' => (float)$this->tripadvisor_rating,
+                'reviews_count' => (int)$this->tripadvisor_reviews_count
             ];
         }
         
@@ -1511,25 +1698,46 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             ];
         }
         
-        $starsSumm = 0;
         $reviewsCount = 0;
+        $weightedAvg = 0;
         if( !empty($result['info']) )
         {
             foreach($result['info'] as $index => $service)
             {
-                if(empty($service))
+                if(empty($service) || empty($service['rating']))
                 {
                     unset($result['info'][$index]);
                     continue;
                 }
-                $starsSumm += $service['rating'];
+                $weightedAvg += $service['rating'] * $service['reviews_count'];
                 $reviewsCount += $service['reviews_count'];
             }
-            $starsSumm = $starsSumm/count($result['info']);
         }
-        $result['total']['rating'] = round((float)$starsSumm, 1);
+        $result['total']['rating'] = 0;
+        if(!empty($reviewsCount))
+        {
+            $result['total']['rating'] = round((float)$weightedAvg/$reviewsCount, 1);
+        }
         $result['total']['reviews_count'] = $reviewsCount;
         
+        $saveSpot = false;
+        if(!empty($result['total']['rating']))
+        {
+            $this->avg_rating = $result['total']['rating'];
+            $saveSpot = true;
+        }
+        if(!empty($result['total']['reviews_count']))
+        {
+            $this->total_reviews = $result['total']['reviews_count'];
+            $saveSpot = true;
+        }
+        if($saveSpot)
+        {
+            $this->save();
+        }
+        
+        //$expiresAt = Carbon::now()->addMinutes(60);
+        //Cache::put('spot-ratings-' . $this->id, $result, $expiresAt);
         
         return $result;
     }
@@ -1538,23 +1746,6 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      * API's and parser's 
      * common methods
      */
-    
-    public function getSpotExtension()
-    {
-        if($this->spotExtension)
-        {
-            return $this->spotExtension;
-        }
-        if(!empty($this->hotel))
-        {
-            $this->spotExtension = $this->hotel;
-        }
-        if(!empty($this->restaurant))
-        {
-            $this->spotExtension = $this->restaurant;
-        }
-        return $this->spotExtension;
-    }
     
     public function getResponse($client, $url, $options, $json = false)
     {
@@ -1594,5 +1785,4 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         
         return $this->getResponse($client, $url, $options, $json);
     }
-    
 }

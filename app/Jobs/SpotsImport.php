@@ -22,6 +22,7 @@ use Validator;
 use Vinkla\Instagram\InstagramManager;
 use App\Role;
 use Cache;
+use DB;
 
 abstract class SpotsImport extends Job implements SelfHandling
 {
@@ -66,23 +67,22 @@ abstract class SpotsImport extends Job implements SelfHandling
 
     protected function import($imported_spot)
     {
-		if (!empty($imported_spot->website)) {
-			$imported_spot->put('website', trim($imported_spot->website));
-		}
-        if ($imported_spot->image_links) {
-            $imported_spot->put('image_links', explode(',', $imported_spot->image_links));
+        
+        if (!empty($imported_spot->website)) 
+        {
+                $imported_spot->put('website', trim($imported_spot->website));
         }
-
         if (isset($this->data['get_address']) and
             $this->data['get_address'] and
-            !$imported_spot->address and
+            !$imported_spot->full_address and
             $imported_spot->latitude and
-            $imported_spot->longitude) {
+            $imported_spot->longitude) 
+        {
             /**
              * @var GoogleAddress $google_address
              */
             $google_address = app(GoogleAddress::class);
-            $imported_spot->put('address', $google_address->get($imported_spot->latitude, $imported_spot->longitude));
+            $imported_spot->put('full_address', $google_address->get($imported_spot->latitude, $imported_spot->longitude));
         }
 
         /**
@@ -94,96 +94,117 @@ abstract class SpotsImport extends Job implements SelfHandling
             'website' => 'url',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'address' => 'required|string|max:255',
-            'rating' => 'integer'
+            'full_address' => 'required|string|max:255',
         ];
 
-        if (isset($imported_spot->email) and !empty($imported_spot->email)) {
-            $rules['email'] = 'required|email';
+        if (!empty($imported_spot->e_mail)) 
+        {
+            $rules['e_mail'] = 'required|email';
         }
 
-        if ($this->type === self::EVENT) {
+        if ($this->type === self::EVENT) 
+        {
             $rules['start_date'] = 'required|date_format:' . $this->date_format;
             $rules['end_date'] = 'required|date_format:' . $this->date_format;
         }
 
-        if ($imported_spot->image_links) {
-            for ($i = 0; $i < count($imported_spot->image_links); ++$i) {
-                $rules['image_links.' . $i] = 'url';
-            }
+        if (!empty($imported_spot->picture)) 
+        {
+            $rules['picture']= 'sometimes|url';
         }
-
         $validator = Validator::make($imported_spot->all(), $rules);
-
-        if (!$validator->fails()) {
-            if ($imported_spot->image_links) {
-                $imported_spot->put('image_links', array_values(array_filter($imported_spot->image_links, function ($value) {
-                    return !Validator::make(['photo' => $value], ['photo' => 'remote_image'])->fails();
-                })));
+        if (!$validator->fails())
+        {
+            if(!empty($imported_spot->picture))
+            {
+                $imported_spot->put('picture', [trim($imported_spot->picture)]);
             }
             $spot = new Spot;
             $spot->category()->associate($this->data['spot_category']);
-            if (!$imported_spot->image_links and
-                isset($this->data['instagram_photos']) and
-                $this->data['instagram_photos']) {
+            if (empty($imported_spot->picture) and
+                !empty($this->data['instagram_photos'])) 
+            {
                 $instagram = app(InstagramManager::class);
-                $imported_spot->put('image_links', $this->instagramPhotos($instagram->searchMedia(
+                $imported_spot->put('picture', $this->instagramPhotos($instagram->searchMedia(
                     $imported_spot->latitude,
                     $imported_spot->longitude
                 )->data));
             }
-            if (isset($imported_spot->image_links[0])) {
-                $options = [
-                    'styles' => [
-                        'thumb' => [
-                            'dimensions' => '70x70#',
-                            'convert_options' => ['quality' => 100]
-                        ],
-                        'medium' => '160x160',
-                        'original' => '633x242#'
-                    ]
-                ];
-                $config = Stapler::getConfigInstance();
-                $defaultOptions = $config->get('stapler');
-                $options = array_merge($defaultOptions, (array) $options);
-                $storage = $options['storage'];
-                $options = array_replace_recursive($config->get($storage), $options);
-                $options['styles'] = array_merge((array) $options['styles']);
-                $spot->cover->setConfig(new AttachmentConfig('cover', $options));
-                $spot->cover = $imported_spot->image_links[0];
-            }
             $spot->title = $imported_spot->title;
-            if (!empty($imported_spot->description)) {
+            if (!empty($imported_spot->description)) 
+            {
                 $spot->description = $imported_spot->description;
             }
-            if (!empty($imported_spot->website)) {
+            if (!empty($imported_spot->website))
+            {
                 $spot->web_sites = [$imported_spot->website];
             }
-            if ($this->type === self::EVENT) {
+            if ($this->type === self::EVENT) 
+            {
                 $spot->start_date = Carbon::createFromFormat($this->date_format, $imported_spot->start_date);
                 $spot->end_date = Carbon::createFromFormat($this->date_format, $imported_spot->end_date);
             }
-            $spot->is_approved = true;
-            $owner = null;
-            if (isset($imported_spot->email) and !empty($imported_spot->email)) {
-                $owner = $this->generateUser($imported_spot->title, $imported_spot->email);
+            if (!empty($imported_spot->total_reviews))
+            {
+                $spot->total_reviews = $imported_spot->total_reviews;
             }
-            if (!is_null($owner)) {
+            if (!empty($imported_spot->avg_rating))
+            {
+                $spot->avg_rating = $imported_spot->avg_rating;
+            }
+            $spot->is_approved = true;
+            $spot->is_private = false;
+            $owner = null;
+            if ( !empty($imported_spot->e_mail) ) 
+            {
+                $owner = $this->generateUser($imported_spot->title, $imported_spot->e_mail);
+            }
+            if (!is_null($owner)) 
+            {
                 $owner->spots()->save($spot);
-            } else {
+            }
+            else 
+            {
                 $spot->save();
             }
-            if ($imported_spot->rating) {
-                $vote = new SpotVote(['vote' => $imported_spot->rating]);
-                $vote->user()->associate(Role::take('admin')->users()->first());
-                $spot->votes()->save($vote);
-            }
-            if ($imported_spot->image_links) {
-                foreach ($imported_spot->image_links as $photo) {
-                    $spot->photos()->create([
-                        'photo' => $photo
+            if ($imported_spot->picture) 
+            {
+                $needCover = true;
+                foreach ($imported_spot->picture as $photo) {
+                    $cover = $needCover?1:0;
+                    if($needCover)
+                    {
+                        $needCover = false;
+                    }
+                    $spot->remotePhotos()->create([
+                        'image_type' => $cover,
+                        'url' => $photo
                     ]);
                 }
+            }
+            if ( !empty($imported_spot->tags)) 
+            {
+                $tags = explode(';', $imported_spot->tags);
+                $tags = array_map('trim', $tags);
+                $idsArr = [];
+                $tagsRes = [];
+                $existingTags = [];
+                $tagsCollection = DB::table('tags')->whereIn('name', $tags)->get();
+                foreach($tagsCollection as $tagObj)
+                {
+                    $idsArr[] = $tagObj->id;
+                    $existingTags[] = $tagObj->name;
+                }
+                $tags = array_diff($tags, $existingTags);
+                foreach($tags as $tag)
+                {
+                    $idsArr[] = DB::table('tags')->insertGetId(['name' => $tag]);
+                }
+                foreach($idsArr as $id)
+                {
+                    $tagsRes[] = ['spot_id' => $spot->id, 'tag_id' => $id];
+                }
+                DB::table('spot_tag')->insert($tagsRes);
             }
 
             $spot->locations = [
@@ -192,7 +213,7 @@ abstract class SpotsImport extends Job implements SelfHandling
                         'lat' => $imported_spot->latitude,
                         'lng' => $imported_spot->longitude
                     ],
-                    'address' => $imported_spot->address
+                    'address' => $imported_spot->full_address
                 ]
             ];
 
@@ -210,31 +231,32 @@ abstract class SpotsImport extends Job implements SelfHandling
      */
     public function handle(AppMailer $mailer)
     {
-        $this->mailer	= $mailer;
-		$jobId			= $this->job->getJobId();
-		$cacheKey		= "spot-import-{$jobId}-".env('QUEUE_WORK_NAME', 'default');
-
-		if (Cache::has($cacheKey)) {
-			return true;
-		} else {
-			Cache::put($cacheKey, $jobId, 10);
-		}
-
-        foreach ($this->getSpots() as $spot) {
+        $this->mailer   = $mailer;
+        $jobId          = $this->job->getJobId();
+        $cacheKey       = "spot-import-{$jobId}-".env('QUEUE_WORK_NAME', 'default');
+        if (Cache::has($cacheKey)) 
+        {
+            return true;
+        }
+        else 
+        {
+            Cache::put($cacheKey, $jobId, 10);
+        }
+        foreach ($this->getSpots() as $spot) 
+        {
             $this->import($spot);
         }
-		
-        if (isset($this->data['document'])) {
+        if (isset($this->data['document'])) 
+        {
             File::delete($this->data['document']);
         }
-		Cache::forget($cacheKey);
+        Cache::forget($cacheKey);
         return true;
     }
 
     protected function instagramPhotos($data)
     {
         $data = collect($data);
-
         return $data->reject(function ($value) {
             return $value->type === 'video';
         })->sortBy(function ($media) {

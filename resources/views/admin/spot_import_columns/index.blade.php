@@ -29,7 +29,7 @@
             {!! Form::textarea('description', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('websites') !!}
+            {!! Form::label('website') !!}
             {!! Form::textarea('websites', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
         </div>
         <div class="form-group">
@@ -41,20 +41,16 @@
             {!! Form::textarea('longitude', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('address') !!}
+            {!! Form::label('full_address') !!}
             {!! Form::textarea('address', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('image_links') !!}
-            {!! Form::textarea('image_links', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
-        </div>
-        <div class="form-group">
-            {!! Form::label('rating') !!}
-            {!! Form::textarea('rating', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
+            {!! Form::label('Picture') !!}
+            {!! Form::textarea('picture', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
         </div>
         <div class="form-group">
             {!! Form::label('email') !!}
-            {!! Form::textarea('email', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
+            {!! Form::textarea('e_mail', null, ['class' => 'form-control', 'cols' => 10, 'rows' => 20]) !!}
         </div>
         <div class="form-group event-only">
             {!! Form::label('start_date') !!}
