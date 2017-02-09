@@ -105,7 +105,7 @@
                 @if (Request::has('filter.user_email'))
                 <td>{!! $spot->user_id ? link_to_route('admin.users.show', $spot->user->email, [$spot->user->id]) : 'No owner' !!}</td>
                 @endif
-                <td>{!! link_to(frontend_url($spot->user_id ?: Request::user()->id, 'spot', $spot->id), $spot->title) !!}</td>
+                <td>{!! link_to(frontend_url($spot->user_id ?: Request::user()->id, 'spot', $spot->id, $spot->slug), $spot->title) !!}</td>
                 @if (Request::has('filter.description'))
                 <td>{{ $spot->description }}</td>
                 <td>{{ $spot->tags->implode('name', ', ') }}</td>

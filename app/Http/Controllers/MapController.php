@@ -9,12 +9,14 @@ use App\Http\Requests\WeatherRequest;
 use App\Spot;
 use App\SpotView;
 use App\SpotPoint;
+use App\SpotType;
 use App\SpotTypeCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Nwidart\ForecastPhp\Forecast;
 use Log;
 use DB;
+use Cache;
 use App\Http\Controllers\Event;
 use App\Http\Requests;
 use GuzzleHttp\Client;
@@ -78,7 +80,13 @@ class MapController extends Controller {
                         DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 2)::float AS lat"), 
                         DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 1)::float AS lng"),
                         'spots.title',
-                        'spot_points.address'
+                        'spots.avg_rating',
+                        'spot_points.address',
+                        'spots.minrate',
+                        'spots.maxrate',
+                        'spots.currencycode',
+                        'spots.avg_rating',
+                        'spots.total_reviews'
                 )
                 ->where('mv_spots_spot_points.is_private', false)
                 ->where('mv_spots_spot_points.is_approved', true);
@@ -116,7 +124,12 @@ class MapController extends Controller {
         }
 
         if ($request->has('filter.rating')) {
-            $spots->whereRaw("mv_spots_spot_points.id in (select qRating.spot_id from (select spot_votes.spot_id, avg(spot_votes.vote) OVER (PARTITION BY spot_id) as ratingAvg from spot_votes) qRating where ratingAvg > ?)", [$request->filter['rating']]);
+            //$spots->whereRaw("mv_spots_spot_points.id in (select qRating.spot_id from (select spot_votes.spot_id, avg(spot_votes.vote) OVER (PARTITION BY spot_id) as ratingAvg from spot_votes) qRating where ratingAvg > ?)", [$request->filter['rating']]);
+            $spots->where('spots.avg_rating', '>=', $request->filter['rating']);
+        }
+        
+        if ($request->has('filter.price')) {
+            $spots->where('spots.minrate', '<=', $request->filter['price']);
         }
 
         if ($request->has('filter.b_boxes')) {
@@ -154,11 +167,19 @@ class MapController extends Controller {
         $typesCache = [];
         foreach ($cats as $c) {
             $iconsCache[$c->id] = $c->icon_url;
-            $typesCache[$c->id] = ($c->type)?$c->type->display_name:null;
+            $typesCache[$c->id]['display_name'] = ($c->type)?$c->type->display_name:null;
+            $typesCache[$c->id]['name'] = ($c->type)?$c->type->name:null;
         }
         $points = [];
         // fill spots
         foreach ($spotsArr as $spot) {
+            
+            //$rating = (isset($spot->rating[0])) ? (float)$spot->rating[0]->rating : 0;
+            //if(empty($rating) && Cache::has('spot-ratings-' . $spot->id))
+            //{
+            //    $ratingsArr = Cache::get('spot-ratings-' . $spot->id);
+            //    $rating = $ratingsArr['total']['rating'];
+            //}
             $points[] = [
                 'id' => $spot->spot_point_id,
                 'spot_id' => $spot->id,
@@ -166,11 +187,18 @@ class MapController extends Controller {
                     'lat' => $spot->lat,
                     'lng' => $spot->lng
                 ],
-                'rating' => (isset($spot->rating[0])) ? (float)$spot->rating[0]->rating : 0,
+                'rating' => $spot->rating,
                 'title' => $spot->title,
                 'address' => $spot->address,
                 'category_icon_url' => $iconsCache[$spot->spot_type_category_id],
-                'category_name' => $typesCache[$spot->spot_type_category_id],
+                'category_name' => $typesCache[$spot->spot_type_category_id]['display_name'],
+                'type' => $typesCache[$spot->spot_type_category_id]['name'],
+                'minrate' => $spot->minrate,
+                'maxrate' => $spot->maxrate,
+                'currencycode' => $spot->currencycode,
+                'cover_url'    => $spot->cover,
+                'avg_rating' => $spot->avg_rating, 
+                'total_reviews' => $spot->total_reviews,
             ];
         }
         return $points;
@@ -189,8 +217,6 @@ class MapController extends Controller {
                             'tags',
                             'comments',
                             'remotePhotos',
-                            'restaurant',
-                            'hotel'
                         ])
                         ->get();
     }

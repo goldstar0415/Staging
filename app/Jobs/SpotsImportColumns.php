@@ -20,12 +20,11 @@ class SpotsImportColumns extends SpotsImport
         'websites',
         'latitude',
         'longitude',
-        'address',
-        'image_links',
-        'rating',
+        'full_address',
+        'picture',
         'start_date',
         'end_date',
-        'email'
+        'e_mail'
     ];
 
     public function __construct(array $spots, array $data, $type)

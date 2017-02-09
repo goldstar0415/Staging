@@ -102,9 +102,12 @@ class MailNotifier
                 break;
             case $event instanceof OnSpotCreate:
                 $sender = $event->getFeedSender();
-                $this->send($sender->followers->filter(function ($follower) {
-                    return $follower->notification_new_spot;
-                }), 'spot', ['sender' => $sender, 'spot' => $event->spot, 'user' => $follower], 'New event');
+                if(!empty($sender) && !empty($sender->followers))
+                {
+                    $this->send($sender->followers->filter(function ($follower) {
+                        return $follower->notification_new_spot;
+                    }), 'spot', ['sender' => $sender, 'spot' => $event->spot, 'user' => $follower], 'New event');
+                }
                 break;
             case $event instanceof OnSpotRemind:
                 $sender = $event->getFeedSender();

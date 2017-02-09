@@ -67,6 +67,7 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
         $nextPage = $data['page']['number']+1;
         //Log::info('nextPage = ' . $nextPage);
         $events = collect($data['_embedded']['events']);
+        //dd(json_encode($events));
         $this->importEvents($events);
         
         // comment it if you want to do all job in one queue
@@ -95,15 +96,14 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
         $default_category = SpotTypeCategory::whereName('ticketmaster')->first();
 
         foreach ($events as $event) {
-            
-            if(Spot::where('spot_type_category_id', $default_category->id)->where('remote_id', $event['id'])->exists())
+            if(empty($event['id']) || empty($event['name']) ||  Spot::where('spot_type_category_id', $default_category->id)->where('remote_id', $event['id'])->exists())
             {
                 continue;
             }
-
             $import_event = new Spot();
             $import_event->category()->associate($default_category);
-            $import_event->title = $event['name'];
+            $import_event->title = (!empty($event['name']))?$event['name']:null;
+            
             $import_event->remote_id = $event['id'];
             
             $time = !empty( $event['dates']['start']['localTime'])?$event['dates']['start']['localTime']:'08:00:00';
@@ -131,6 +131,7 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
             
             $import_event->web_sites = $this->getWebSites($event);
             $import_event->is_approved = true;
+            $import_event->is_private = false;
             $import_event->save();
             
             // Address generation
@@ -195,25 +196,6 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
         }
 
         return $sites ?: null;
-    }
-
-    /**
-     * Get photos from imported event
-     *
-     * @param $event
-     * @return array
-	 * @deprecated
-     */
-    protected function getPhotos($event)
-    {
-        $photos = [];
-        foreach ($event['performers'] as $performer) {
-            if ($performer['image']) {
-                $photos[] = new SpotPhoto(['photo' => $performer['image']]);
-            }
-        }
-
-        return $photos;
     }
 
 	/**
