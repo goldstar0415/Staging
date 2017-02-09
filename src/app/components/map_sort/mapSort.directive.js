@@ -333,8 +333,22 @@
       });
 
       $rootScope.mapSortSpots.sourceSpots = _filterUniqueSpots($rootScope.mapSortSpots.markers);
+      if (_.isArray($rootScope.mapSortSpots.sourceSpots)) {
+          $rootScope.mapSortSpots.sourceSpots.forEach(function(spot){
+              formatDates(spot);
+          });
+      }
       loadNextSpots(layer);
 
+    }
+    
+    function formatDates(spot) {
+        if (spot.start_date) {
+            spot.start_date = moment(spot.start_date).format('YYYY-MM-DD');
+        }
+        if (spot.end_date) {
+            spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
+        }
     }
 
     function _filterUniqueSpots(array) {

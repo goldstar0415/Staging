@@ -1949,6 +1949,7 @@
                             <p class="plate-name">{{item.title}}</p>\
                             <p class="plate-stars"><stars item="item"></stars></p>\
                             <p class="plate-info price" ng-if="item.minrate">{{item.price}}</p>\
+                            <p class="plate-info start-date" ng-if="item.start_date">{{item.start_date | date:\'MMM d\'}}</p>\
                             <p class="plate-info" ng-if="!item.minrate">{{item.category.name}}</p>\
                             <img width="50" height="50" src="{{image}}" />\
                         </div>';

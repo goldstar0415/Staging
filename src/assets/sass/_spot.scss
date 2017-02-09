@@ -857,3 +857,19 @@ div.review.post {
         font-size: 24px;
     }
 }
+
+.spot-img-start-date {
+    position: absolute;
+    right: 14px;
+    top: 36px;
+    font-size: 20px;
+    height: 25px;
+    color: white;
+    filter: drop-shadow(0px 0px 2px black);
+    text-align: right;
+}
+.opened-container {
+    .spot-img-start-date {
+        display: none; // fixme if needed
+    }
+}
