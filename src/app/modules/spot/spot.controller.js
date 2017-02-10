@@ -395,7 +395,7 @@
             } else {
                 $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
                     .then(function(response){
-                        
+                        console.log(response);
                         if ( (response.data.data.booking == false) && (response.data.data.hotels == false))
                         {
                             toastr.info('No prices detected. Please try another dates.');
@@ -474,15 +474,11 @@
         vm.pagination = new ScrollService(SpotComment.query, vm.comments, params);
         vm.reviewsPagination = new ScrollService(SpotReview.query, vm.votes, params);
         // ShowMarkers([vm.spot]);
-        
-        function getRandomInt(min, max)
-        {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
 
         function setImage() {
             var category = vm.category;
             var type = (category)?vm.spot.category.type.name:null;
+            var id = (vm.spot.spot_id) ? vm.spot.spot_id : vm.spot.id;
             if ( category &&
                 (type === 'food' ||
                  type === 'shelter'))
@@ -493,8 +489,7 @@
                 }
                 else
                 {   var max = (type === 'food')?32:84;
-                    var imgnum = getRandomInt(0, max);
-                    return S3_URL + '/assets/img/placeholders/' + type + '/' + imgnum + '.jpg';
+                    return S3_URL + '/assets/img/placeholders/' + type + '/' + (id % max) + '.jpg';
                 }
             }
             else
