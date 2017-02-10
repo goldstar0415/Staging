@@ -534,7 +534,7 @@ class SpotController extends Controller
         $endDate      = Carbon::create($to['year'], $to['month'], $to['day'], 0);
         
         $result['data']['hotelsUrl'] = $spot->getHotelsUrl($spot->hotelscom_url, $fromString, $toString);
-        
+        $result['diff'] = $startDate->diffInDays($endDate);
         if($result['data']['hotelsUrl'])
         {
             $hotelsPageContent = $spot->getPageContent($result['data']['hotelsUrl']);
@@ -542,7 +542,6 @@ class SpotController extends Controller
             if($hotelsPageContent)
             {
                 $hotelPrice = $spot->getHotelsPrice($hotelsPageContent);
-                $result['diff'] = $startDate->diffInDays($endDate);
                 $result['data']['hotels'] = (!empty($hotelPrice))? '$'.($hotelPrice * $result['diff']):false;
             }
         }
@@ -555,7 +554,8 @@ class SpotController extends Controller
             ]);
             if($bookingPageContent)
             {
-                $result['data']['booking'] = '$' . ($spot->getBookingPrice($bookingPageContent));
+                $bookingPrice = $spot->getBookingPrice($bookingPageContent);
+                $result['data']['booking'] = (!empty($bookingPrice))? '$'.$bookingPrice: false;
             }
         }
 

@@ -97,7 +97,7 @@ class MailNotifier
                 {
                     $this->send($sender->followers->filter(function ($follower) {
                         return $follower->notification_new_spot;
-                    }), 'spot', ['sender' => $sender, 'spot' => $event->spot, 'user' => $follower], 'New event');
+                    }), 'spot', ['sender' => $sender, 'spot' => $event->spot], 'New event');
                 }
                 break;
             case $event instanceof OnSpotRemind:
