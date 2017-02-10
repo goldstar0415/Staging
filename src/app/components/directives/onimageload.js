@@ -17,7 +17,7 @@
       },
       link: function(scope, element, attrs) {
             element.bind('error', function(){
-                var type = scope.item.item.type;
+                var type = (scope.item.item.type).toLowerCase();
                 var id = (scope.item.item.spot_id) ? scope.item.item.spot_id : scope.item.item.id;
                 if (type == 'food' || type== 'shelter') {
                     var max = (type === 'food')?32:84;
