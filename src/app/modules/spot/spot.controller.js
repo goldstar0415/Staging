@@ -395,16 +395,8 @@
             } else {
                 $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
                     .then(function(response){
-                        console.log(response);
-                        if ( (response.data.data.booking == false) && (response.data.data.hotels == false))
-                        {
-                            toastr.info('No prices detected. Please try another dates.');
-                        }
-                        else
-                        {
-                            vm.prices = response.data.data;
-                            vm.prices.diff = response.data.diff;
-                        }
+                        vm.prices = response.data.data;
+                        vm.prices.diff = response.data.diff;
                     },function(response){
                         toastr.error('No response. Please try again later.');
                     });
