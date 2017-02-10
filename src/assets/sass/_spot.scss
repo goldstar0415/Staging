@@ -842,27 +842,40 @@ div.review.post {
 
 .spot-img-price {
     position: absolute;
-    right: 112px;
-    top: 20px;
-    font-size: 42px;
-    height: 80px;
-    color: white;
-    filter: drop-shadow(0px 0px 2px black);
+    right: 3%;
+    top: 35%;
+    font-size: 24px;
+    font-size: 1.9vw;
+    height: 85px;
+    color: #fff;
+    filter: drop-shadow(0 0 2px #000);
     text-align: right;
     .price-title {
         position: absolute;
         width: 100%;
         bottom: 0;
-        height: 36px;
-        font-size: 24px;
+        height: 72%;
+        font-size: 10px;
+    }
+}
+.opened-container {
+    .spot-img-price {
+        right: 112px;
+        top: 20px;
+        font-size: 42px;
+        height: 80px;
+        .price-title {
+            height: 36px;
+            font-size: 24px;
+        }
     }
 }
 
 .spot-img-start-date {
     position: absolute;
-    right: 14px;
-    top: 36px;
-    font-size: 20px;
+    right: 1%;
+    top: 40%;
+    font-size: 18px;
     height: 25px;
     color: white;
     filter: drop-shadow(0px 0px 2px black);
