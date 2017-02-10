@@ -128,7 +128,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getCoverUrlAttribute()
     {
         $covers = [];
-        if($rph = $this->remotePhotos()->orderBy('image_type', 'desc')->first())
+        if( $this->cover->originalFilename())
+        {
+            $covers = $this->getPictureUrls('cover');
+        }
+        if ( !$covers && $rph = $this->remotePhotos()->orderBy('image_type', 'desc')->first() ) 
         {
             $url = $rph->url;
             $covers = [
@@ -137,9 +141,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 "thumb" => $url
             ];
         }
-        if ( !$covers ) {
-                $covers = $this->getPictureUrls('cover');
+        if(!$covers)
+        {
+            $covers = $this->getPictureUrls('cover');
         }
+        //dd($covers);
         return $covers;
     }
 
@@ -1614,7 +1620,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $page = $this->getTripadvisorReviewsPage();
         if($page)
         {
-            $element = $page->find('.rating .more', 0);
+            $element = $page->find('.heading_ratings .more', 0);
+            if(!$element)
+            {
+                $element = $page->find('.rating .more', 0);
+            }
             if($element)
             {
                 $result = intval($element->getAttribute('content'));
@@ -1629,10 +1639,14 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $page = $this->getTripadvisorReviewsPage();
         if($page)
         {
-            $element = $page->find('.rating .rating_rr_fill', 0);
+            $element = $page->find('.heading_ratings .ui_bubble_rating', 0);
+            if(!$element)
+            {
+                $element = $page->find('.rating .rating_rr_fill', 0);
+            }
             if($element)
             {
-                $result = floatval($element->getAttribute('content'));
+                $result = floatval(str_replace(',', '.', $element->getAttribute('content')));
             }
         }
         return $result;
