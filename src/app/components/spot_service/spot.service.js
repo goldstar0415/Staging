@@ -63,9 +63,10 @@
      */
     function addToFavorite(spot) {
       if (checkUser()) {
-        Spot.favorite({id: spot.id}, function () {
+        var id = (spot.spot_id)?spot.spot_id:spot.id;
+        Spot.favorite({id: id}, function () {
           spot.is_favorite = true;
-          syncSpots(spot.id, {is_favorite: true});
+          syncSpots(id, {is_favorite: true});
         });
       }
     }
@@ -76,9 +77,10 @@
      * @param callback {Function}
      */
     function removeFromFavorite(spot, callback) {
-      Spot.unfavorite({id: spot.id}, function () {
+      var id = (spot.spot_id)?spot.spot_id:spot.id;
+      Spot.unfavorite({id: id}, function () {
         spot.is_favorite = false;
-        syncSpots(spot.id, {is_favorite: false});
+        syncSpots(id, {is_favorite: false});
 
         if (callback) {
           callback();
