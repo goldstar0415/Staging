@@ -67,19 +67,21 @@
                             <div class="logo">
                             </div>
                             <div class="price">
-                                <p>{{Spot.prices.booking ? Spot.prices.booking : 'no price' }}</p>
-                                <span>For {{Spot.prices.diff}} night(s)</span>
+                                <p>{{ Spot.prices.booking ? Spot.prices.booking : 'Not available' }}</p>
+                                <span ng-if="Spot.prices.booking">For {{Spot.prices.diff}} night(s)</span>
+                                <span ng-if="!Spot.prices.booking">Try other dates</span>
                             </div>
-                            <a href="{{Spot.prices.bookingUrl}}" target="_blank">VIEW DEAL</a>
+                            <a href="{{Spot.prices.bookingUrl}}" target="_blank">{{ Spot.prices.booking ? 'VIEW DEAL' : 'MORE OPTIONS' }}</a>
                         </div>
                         <div class="hotels" ng-if="Spot.prices.hotelsUrl">
                             <div class="logo">
                             </div>
                             <div class="price">
-                                <p>{{Spot.prices.hotels ? Spot.prices.hotels : 'no price' }}</p>
-                                <span>For {{Spot.prices.diff}} night(s)</span>
+                                <p>{{ Spot.prices.hotels ? Spot.prices.hotels : 'Not available' }}</p>
+                                <span ng-if="Spot.prices.hotels">For {{Spot.prices.diff}} night(s)</span>
+                                <span ng-if="!Spot.prices.hotels">Try other dates</span>
                             </div>
-                            <a href="{{Spot.prices.hotelsUrl}}" target="_blank">VIEW DEAL</a>
+                            <a href="{{Spot.prices.hotelsUrl}}" target="_blank">{{ Spot.prices.hotels ? 'VIEW DEAL' : 'MORE OPTIONS' }}</a>
                         </div>
                     </div>
                 </div>
