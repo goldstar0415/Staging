@@ -365,8 +365,10 @@
 <!-- endinject -->
 
 <script>
+$(document).on('click', function() {
+	$('.pick-notification').hide();
+});
 window.hidePreloader = function() {
-	$('.pick-notification').css('display', 'inherit');
 	var pl = document.querySelector("#preloader");
 	if (pl) {
 		pl.parentNode.removeChild(pl);
