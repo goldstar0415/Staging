@@ -3,23 +3,23 @@
 <div class="new-sidebar-menu" ng-show="$root.isMapState()">
     <div class="sidebar-menu-vertical" ng-class="$root.isMapState() ? 'sidebar-menu-vertical-bottom' : ''">
         <ul>
-            <li ng-click="$root.toggleLayer('event')" ng-class="{'active': $root.sortLayer == 'event'}" class="event-sidebar">
+            <li ng-click="$root.toggleLayer('event', true, 'sidebar', $event)" ng-class="{'active': $root.sortLayer == 'event'}" class="event-sidebar">
                 <img src="../../../assets/img/svg/Icon_Events.svg" alt="img">
                 <p>Events</p>
             </li>
-            <li ng-click="$root.toggleLayer('todo')" ng-class="{'active': $root.sortLayer == 'todo'}" class="todo-sidebar">
+            <li ng-click="$root.toggleLayer('todo', true, 'sidebar', $event)" ng-class="{'active': $root.sortLayer == 'todo'}" class="todo-sidebar">
                 <img src="../../../assets/img/svg/Icon_To_do.svg" alt="img">
                 <p>To-Do</p>
             </li>
-            <li ng-click="$root.toggleLayer('food')" ng-class="{'active': $root.sortLayer == 'food'}" class="food-sidebar">
+            <li ng-click="$root.toggleLayer('food', true, 'sidebar', $event)" ng-class="{'active': $root.sortLayer == 'food'}" class="food-sidebar">
                 <img src="../../../assets/img/svg/Icon_Grab_Grub.svg" alt="img">
                 <p>Food</p>
             </li>
-            <li ng-click="$root.toggleLayer('shelter')" ng-class="{'active': $root.sortLayer == 'shelter'}" class="shelter-sidebar">
+            <li ng-click="$root.toggleLayer('shelter', true, 'sidebar', $event)" ng-class="{'active': $root.sortLayer == 'shelter'}" class="shelter-sidebar">
                 <img src="../../../assets/img/svg/Icon_Get_a_room.svg" alt="img">
                 <p>Shelter</p>
             </li>
-            <li ng-click="$root.toggleLayer('weather', null, 'sidebar')" ng-class="{'active': $root.sortLayer == 'weather'}" class="weather-sidebar">
+            <li ng-click="$root.toggleLayer('weather', null, 'sidebar', $event)" ng-class="{'active': $root.sortLayer == 'weather'}" class="weather-sidebar">
                 <img src="../../../assets/img/svg/Icon_Weather.svg" alt="img">
                 <p>Weather</p>
             </li>
