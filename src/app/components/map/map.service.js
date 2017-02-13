@@ -44,7 +44,17 @@
 
       var highlightMarker;
       var mobileMarker;
-
+    
+      var PickNotification = $('.pick-notification');
+      
+      function pickNotificationFadeOut() {
+          PickNotification.css('opacity', 0);
+          $timeout(function() {
+              PickNotification.hide();
+              PickNotification.css('opacity', 1);
+          }, 600);
+      }
+        
       if (_.isEmpty(fx.rates)) {
           $http.jsonp('https://api.fixer.io/latest', { params: { base: 'USD', callback: 'JSON_CALLBACK' } })
               .then(function(resp) {
@@ -365,8 +375,7 @@
 
         _click: function (e) {
           toastr.info('Draw Search Area');
-          var el = document.querySelector('.pick-notification');
-          el.style = '';
+          pickNotificationFadeOut();
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -422,8 +431,7 @@
         },
         _click: function (e) {
           toastr.info('Drag Radius');
-          var el = document.querySelector('.pick-notification');
-          el.style = '';
+          pickNotificationFadeOut();
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {
@@ -485,8 +493,7 @@
         },
         _click: function (e) {
           toastr.info('Place Pin at Start');
-          var el = document.querySelector('.pick-notification');
-          el.style = '';
+          pickNotificationFadeOut();
           ClearSelections();
           $rootScope.hideHints = true;
           $timeout(function () {

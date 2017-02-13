@@ -93,7 +93,8 @@
         var isSelectedAll = false;
         var geocoder = null;
         var categoriesPromise = null;
-
+        var PickNotification = $('.pick-notification');
+        
         vm.vertical = true;
         vm.weatherForecast = [];
         vm.saveToCalendar = SpotService.saveToCalendar;
@@ -121,7 +122,17 @@
         vm.nextPage = nextPage;
         vm.closeFilter = closeFilter;
         vm.setWeatherLatLng = setWeatherLatLng;
-
+    
+        function pickNotificationFadeIn() {
+            if (PickNotification.css('display') == 'none') {
+                PickNotification.css('opacity', 0);
+                PickNotification.show();
+                $timeout(function() {
+                    PickNotification.css('opacity', 1);
+                }, 600);
+            }
+        }
+        
         $window.onresize = getWindowSize;
         function getWindowSize(event) {
             $timeout(function () {
@@ -419,8 +430,9 @@
          * @param {string} layer
          * @param {boolean} startSearch
          * @param {string} src
+         * @param {Object} $event A 'click' event
          */
-        function toggleLayer(layer, startSearch, src) {
+        function toggleLayer(layer, startSearch, src, $event) {
             $rootScope.sidebarMessage = "Loading...";
             $rootScope.isFilterOpened = false;
             vm.clearFilter();
@@ -436,10 +448,8 @@
                     MapService.clearSelections(false, true);
                 }
                 MapService.showOtherLayers();
-
-                // hide a pick notification
-                var pn = document.querySelector('.pick-notification');
-                pn.style = '';
+                
+                PickNotification.hide();
 
                 // show weather radar data for US users
                 // if ($rootScope.currentCountryCode === 'us') {
@@ -477,6 +487,12 @@
 
                 if ($rootScope.isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1 && $rootScope.$state.current.name != 'areas.preview') {
                     toastr.info('Draw the search area');
+                }
+                
+                // Show a pick notification if needed
+                if (!$rootScope.isDrawArea && MapService.GetBBoxes().length == 0 && !vm.searchParams.search_text && $event && $event.originalEvent) {
+                    $event.originalEvent.stopPropagation();
+                    pickNotificationFadeIn();
                 }
             }
         }
@@ -667,17 +683,7 @@
             }
 
             if (bbox_array.length == 0 && !vm.searchParams.search_text) {
-                // toastr.error('Enter location or draw the area');
-                var pn = document.querySelector('.pick-notification');
-                pn.style.visibility = 'visible';
-                pn.style.opacity = '1';
-                pn.style.zIndex = '9999';
-                pn.onclick = function () {
-                    var el = document.querySelector('.pick-notification');
-                    pn.style = '';
-                };
                 var container = document.querySelector('.leaflet-bottom.leaflet-left');
-
                 $rootScope.mapSortFilters = {};
                 return;
             }

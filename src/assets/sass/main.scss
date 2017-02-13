@@ -1745,11 +1745,10 @@ body .atlwdg-trigger.atlwdg-TOP {
 }
 
 .pick-notification {
-    visibility: hidden;
-    opacity: 0;
+    display: none;
     transition: visibility 0s, opacity 0.5s linear;
     position: absolute;
-    z-index: 0;
+    z-index: 9999;
     top: calc(50vh - 50px);
     left: 70px;
     max-height: 100px;
