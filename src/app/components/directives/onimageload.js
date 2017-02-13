@@ -2,7 +2,7 @@
   'use strict';
 
   /*
-   * Password Recovery Modal
+   * Pictures dummies on load
    */
   angular
     .module('zoomtivity')
