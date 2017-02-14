@@ -135,16 +135,18 @@
         spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
       }
       // fix URLs
-      ['restaurant', 'hotel'].forEach(function(t) {
-        ['google_url', 'facebook_url', 'instagram_url', 'tumbler_url', 'twitter_url', 'vk_url'].forEach(function(n) {
-          if (spot[t] && spot[t][n]) {
-            spot[t][n] = prefixUrl(spot[t][n]);
-          }
-        });
+      ['google_url', 'facebook_url', 'instagram_url', 'tumbler_url', 'twitter_url', 'vk_url'].forEach(function(n) {
+        if ( spot[n] ) {
+          spot[n] = prefixUrl(spot[n]);
+        }
       });
       // remove timestamps from description
       spot.description = removeTimestamps(spot.description);
 
+      if(spot.web_sites && typeof (spot.web_sites) === "string")
+      {
+          spot.web_sites = [spot.web_sites];
+      }
       var validWebsites = _.filter(spot.web_sites, function(ws){ return _.isString(ws) && ws.trim().length > 0; });
       spot.web_sites = validWebsites.length > 0 ? validWebsites : null;
       if (_.isArray(spot.web_sites) && spot.web_sites.length > 0) {
@@ -152,7 +154,6 @@
           spot.web_sites[i] = prefixUrl(ws);
         });
       }
-
       return spot;
     }
 

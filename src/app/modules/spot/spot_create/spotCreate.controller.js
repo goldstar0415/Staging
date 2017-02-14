@@ -406,6 +406,10 @@
       vm.title = data.title;
       vm.description = (data.description)?(data.description).replace(/<br \/>/g, ""):data.description;
       vm.links = [];
+      if(data.web_sites && typeof (data.web_sites) === "string")
+      {
+          data.web_sites = [data.web_sites];
+      }
       if(data.web_sites && data.web_sites.length > 0)
       {
           _.each(data.web_sites, function(value, index){
