@@ -47,6 +47,27 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
      * @var integer
      */
     public $page;
+    
+    /**
+     * @var string
+     */
+    public $imageUrlPattern = '/^(https?:\/\/(s1\.ticketm\.net\/)(dam|dbimages)\/)([^\.][\w\/\-]+)?\.(jpg|png)?$/';
+    
+    public $picKeyReplacements = [
+        '_TABLET',
+        '_LANDSCAPE',
+        '_RECOMENDATION',
+        '_RETINA',
+        '_CUSTOM',
+        '_RETINA',
+        '_PORTRAIT',
+        '_LARGE',
+        '_ARTIST_PAGE',
+        '_EVENT_DETAIL_PAGE',
+        '_3_2',
+        '_16_9',
+        '_4_3',
+    ];
 
     /**
      * Execute the job.
@@ -94,7 +115,6 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
     public function importEvents(Collection $events)
     {
         $default_category = SpotTypeCategory::whereName('ticketmaster')->first();
-
         foreach ($events as $event) {
             if(empty($event['id']) || empty($event['name']) ||  Spot::where('spot_type_category_id', $default_category->id)->where('remote_id', $event['id'])->exists())
             {
@@ -208,30 +228,47 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
         $remotePhotos = [];
         $needCover = true;
         $images = $event['images'];
-        $cover = array_values(array_filter($images, function($imageArray) {
-            return strpos($imageArray['url'], 'http://s1.ticketm.net/dbimages/')!== false?true:false ;
-        }));
-        if( !empty($cover) )
+        
+        $imagesArr = [];
+        
+        foreach($images as $image)
         {
-            $remotePhotos[] = new RemotePhoto([
-                'url' => $cover[0]['url'],
-                'image_type' => $needCover ? 1 : 0, // 1 - cover, 0 - regular
-                'size' => 'original',
-            ]);
-            $needCover = false;
+            preg_match($this->imageUrlPattern, $image['url'], $matchArr);
+            if( !isset($matchArr[3]))
+            {
+                $imagesArr[] = [
+                    'url' => $image['url'],
+                    'width' => isset($image['width'])?$image['width']:0,
+                ];
+            }
+            else 
+            {
+                $key = ($matchArr[3] == 'dam')?str_replace($this->picKeyReplacements, '', $matchArr[4]):$matchArr[4];
+                if( !isset($imagesArr[$key]) || (isset($imagesArr[$key]) && $image['width'] > $imagesArr[$key]['width']))
+                {
+                    $imagesArr[$key] = [
+                        'url' => $image['url'],
+                        'width' => isset($image['width'])?$image['width']:0,
+                    ];
+                }
+            }
         }
-        $photos = array_values(array_filter($images, function($imageArray) {
-            return ((strpos( $imageArray['url'], 'http://s1.ticketm.net/dam/' )!== false?true:false) 
-                      && ( $imageArray['width'] < 350 )
-                      && ( $imageArray['ratio'] == '4_3' ));
-        }));
-        if( !empty($photos) )
+        if(!empty($imagesArr))
         {
-            $remotePhotos[] = new RemotePhoto([
-                'url' => $photos[0]['url'],
-                'image_type' => $needCover ? 1 : 0, // 1 - cover, 0 - regular
-                'size' => 'original',
-            ]);
+            foreach($imagesArr as $imageArr)
+            {
+                $isCover = 0;
+                if($needCover)
+                {
+                    $isCover = 1;
+                    $needCover = false;
+                }
+                $remotePhotos[] = new RemotePhoto([
+                    'url' => $imageArr['url'],
+                    'image_type' => $isCover, // 1 - cover, 0 - regular
+                    'size' => 'original',
+                ]);
+            }
         }
         return $remotePhotos;
     }
