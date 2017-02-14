@@ -36,6 +36,7 @@ module.exports = [
   `${SRC}/assets/libs/screenfull/screenfull.min.js`,
   `${SRC}/assets/libs/Leaflet/leaflet.js`,
   `${SRC}/assets/libs/leaflet.pip/leaflet-pip.min.js`,
+  `${SRC}/assets/libs/skobbler/skobbler-2.0.min.js`,
   `${SRC}/assets/libs/LeafletMarkerCluster/leaflet.markercluster.js`,
   `${SRC}/assets/libs/LeafletRoutingMachine/leaflet-routing-machine.js`,
   `${SRC}/assets/libs/angular-bootstrap.iml/ui-bootstrap-tpls.js`,

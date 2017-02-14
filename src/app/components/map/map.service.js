@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService, $ocLazyLoad, OPENWEATHERMAP_API_KEY) {
+    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService, $ocLazyLoad, OPENWEATHERMAP_API_KEY, SKOBBLER_API_KEY) {
 
       console.log('MapService');
 
@@ -876,15 +876,36 @@
         });
 
         //map init
-        map = L.map(mapDOMElement, {
-          attributionControl: false,
-          zoomControl: true,
-		  worldCopyJump: true
-        });
-        L.tileLayer(tilesUrl, {
-          maxZoom: 17,
-          minZoom: 3
-        }).addTo(map);
+          
+        // the Skobbler map
+          
+        map = L.skobbler.map(mapDOMElement,{
+              apiKey: SKOBBLER_API_KEY,
+              mapStyle: 'night',
+              bicycleLanes: false,
+              onewayArrows: true,
+              pois: '2',
+              primaryLanguage: 'en',
+              fallbackLanguage: 'de',
+              mapLabels: 'localNaming',
+              retinaDisplay: 'yes',
+              zoomControl: true,
+              zoomControlPosition: 'top-left',
+              center: [37.405075073242188, -96.416015625000000],
+              zoom: 5
+          });
+          
+        // the Leaflet map (old)
+          
+        // map = L.map(mapDOMElement, {
+        //   attributionControl: false,
+        //   zoomControl: true,
+		 //  worldCopyJump: true
+        // });
+        // L.tileLayer(tilesUrl, {
+        //   maxZoom: 17,
+        //   minZoom: 3
+        // }).addTo(map);
 
         L.extend(map, {
             _getFeatures: function() {
