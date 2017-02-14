@@ -172,7 +172,7 @@ class SearchController extends Controller
         //$suggestions = $allFound ? [] : $q->similar;
         $out = array_merge($spotsAr, $locationSuggestions);
 
-        Cache::put($cacheKey, $out, Carbon::now()->addHours(1));
+        Cache::put($cacheKey, $out, Carbon::now()->addDays(2));
         return response()->json($out);
     }
 
