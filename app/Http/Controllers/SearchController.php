@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use App\SpotView;
 use DB;
 use Log;
+use Cache;
+use Carbon\Carbon;
 
 class SearchController extends Controller
 {
@@ -24,6 +26,11 @@ class SearchController extends Controller
         $query  = $request->has('query') ? $request->get('query') : null;
         $lat    = $request->has('lat') ? $request->get('lat') : null;
         $lng    = $request->has('lng') ? $request->get('lng') : null;
+
+        $cacheKey = self::getCacheKey($query, $lat, $lng);
+        if (Cache::has($cacheKey)) {
+            return response()->json(Cache::get($cacheKey));
+        }
         $q = (object)[];
         $q->minimumSimilarity = 0.0;
         $q->words = explode(" ", $query);
@@ -64,8 +71,6 @@ class SearchController extends Controller
            $join->on('mv_spots_spot_points.id', '=', 'spots.id');
         });
         $spotsFound = $spots->skip(0)->take(20)->get();
-
-        Log::debug("spotsFound: ".get_class($spotsFound));
 
         $this->http = new \GuzzleHttp\Client;
 
@@ -166,6 +171,28 @@ class SearchController extends Controller
         //     select word from ts_stat('select to_tsvector(''simple'', title) from spots');
         //$suggestions = $allFound ? [] : $q->similar;
         $out = array_merge($spotsAr, $locationSuggestions);
+
+        Cache::put($cacheKey, $out, Carbon::now()->addHours(1));
         return response()->json($out);
     }
+
+    /**
+     * Get a cache kay
+     * @param $query
+     * @param $lat
+     * @param $lng
+     * @return string
+     */
+    protected static function getCacheKey($query, $lat, $lng)
+    {
+        $query = mb_strtolower( preg_replace('/\s{2,}/', ' ', trim($query)) );
+        $queryHash = md5($query);
+        if ($lat && $lng) {
+            $distanceHash = sprintf('_%s', ( (round(floatval($lat), 3))+90 )*180 + round(floatval($lng), 3) );
+        } else {
+            $distanceHash = '';
+        }
+        return sprintf('%s%s', $queryHash, $distanceHash);
+    }
+
 }
