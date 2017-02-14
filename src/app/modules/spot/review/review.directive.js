@@ -31,8 +31,9 @@
             var elem = document.createElement('textarea');
             elem.innerHTML = vm.review.message;
             var decoded = elem.value;
-            vm.review.message = $('<div>').html(decoded).text();
+            vm.review.message = ($('<div>').html(decoded).text()).replace(/(\[\/?strong\])/g, '');
             vm.fullReview = false;
+            
 
             vm.more = function() {
                 vm.fullReview = true;

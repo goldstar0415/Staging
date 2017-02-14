@@ -21,6 +21,13 @@
     };
 
     function PhotoViewerLink(s, e, a) {
+      if(e[0].classList.contains('spot-album-photo'))
+      {
+        e.bind('error', function(){
+            $(e).parent().remove();
+        });
+      }
+      
       $(e).on('click', function () {
         //   debugger;
         $modal.open({
