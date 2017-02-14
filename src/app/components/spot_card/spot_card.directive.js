@@ -81,33 +81,34 @@
             }
             
             function setImage(item) {
-                if(item.type)
-                {
-                    var type = item.type;
-                    var url = item.cover_url;
+                var type, url;
+                if (item.type) {
+                    type = item.type;
+                    url = item.cover_url;
                 }
-                if(item.category)
-                {
-                    var type = item.category.type.name;
-                    var url = item.cover_url.original;
+                if (item.category) {
+                    type = item.category.type.name;
+                    url = item.cover_url.original;
                 }
                 var id = (item.spot_id) ? item.spot_id : item.id;
                 var hc = false;
-                if(typeof url == 'string' && url.length)
-                {
+                if (typeof url == 'string' && url.length) {
                     var urlAttr = url.split('/');
                     var lastAttr = urlAttr[urlAttr.length - 1];
-                    if(lastAttr != 'missing.png')
-                    {
+                    if (lastAttr != 'missing.png') {
                         hc = true;
                     }
                 }
-                if (hc)
-                {
-                        return url;
+                if (hc) {
+                    return url;
                 }
-                if (type == 'food' || type== 'shelter') {
-                    var max = (type === 'food')?32:84;
+                if (['food', 'shelter', 'event'].indexOf(type) != -1) {
+                    var max;
+                    if (type == 'food' || type== 'shelter') {
+                        max = (type === 'food') ? 32 : 84;
+                    } else {
+                        max = 129;
+                    }
                     return S3_URL + '/assets/img/placeholders/' + type + '/' + (id % max) + '.jpg';
                 } else {
                     vm.getImg();
