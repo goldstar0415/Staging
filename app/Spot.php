@@ -973,7 +973,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             $reviewsUrl     = end( $reviewsUrlArr );
             $reviewsUrl     = preg_replace( '#\..?.?.?.?.?\.?html#' , '' , $reviewsUrl);
             $cc1            = $reviewsUrlArr[count($reviewsUrlArr) - 2];
-            $url = 'http://www.booking.com/reviewlist.html?pagename=' . $reviewsUrl . '&cc1=' . $cc1 . '&rows=100';
+            $url = 'http://www.booking.com/reviewlist.html?pagename=' . $reviewsUrl . '&cc1=' . $cc1 . '&rows=100&lang=en';
             $this->booking_reviews_url = $url;
             return $this->booking_reviews_url;
         }
@@ -1021,11 +1021,30 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             {
                 $noCommentsObj->outertext = "";
             }
-            $message = trim($reviewTextObj->innertext());
-            if(empty($message))
+            $messArr = [];
+            if(empty(trim($reviewTextObj->innertext())))
             {
                 continue;
             }
+            if($neg = $reviewTextObj->find('.review_neg', 0))
+            {
+                $messArr['neg'] = preg_replace('/(\[\/?strong\])/', '',trim($neg->innertext()));
+            }
+            if($pos = $reviewTextObj->find('.review_pos', 0))
+            {
+                $messArr['pos'] = preg_replace('/(\[\/?strong\])/', '',trim($pos->innertext()));
+            }
+            if(empty($messArr))
+            {
+                $message = preg_replace('/(\[\/?strong\])/', '',$reviewTextObj->innertext());
+            }
+            else
+            {
+                $message =  ( isset($messArr['pos'])?'Positive: ' . (preg_replace('/\.$/', '', $messArr['pos']))  . '. ' : ''  ) .
+                            ( isset($messArr['neg'])?'Negative: ' . $messArr['neg'] : '' );
+            }
+            $dateObj = $reviewObj->find('.review_item_date', 0);
+            $date = ($dateObj) ? (new Carbon(trim($dateObj->innertext())))->toDateTimeString() : date("Y-m-d H:i:s");
             $item = new SpotVote();
             $idObj = $reviewObj->find('input[name=review_url]', 0);
             if($idObj)
@@ -1036,6 +1055,8 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $item->vote = round((float)$scoreObj->innertext()/2);
                 $item->remote_user_name = SpotVote::remoteReviewerNameCheck(trim($reviewObj->find('h4', 0)->innertext));
                 $item->remote_user_avatar = str_replace('height=64&width=64', 'height=300&width=300', $reviewObj->find('.avatar-mask', 0)->getAttribute('src'));
+                $item->created_at = $date;
+                $item->updated_at = $date;
                 $item->remote_type = SpotVote::TYPE_BOOKING;
                 if( $save && !SpotVote::where('remote_id', $item->remote_id)->exists())
                 {
@@ -1564,52 +1585,60 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     
     public function saveTripadvisorReviews()
     {
+        $count = $this->votes()->where('remote_type', SpotVote::TYPE_TRIPADVISOR)->count();
         $result = null;
-        $page = $this->getTripadvisorReviewsPage();
-        if($page)
+        if($count >= 5)
         {
-            $reviews = [];
-            foreach( $page->find('.basic_review') as $reviewObj )
+            $page = $this->getTripadvisorReviewsPage();
+            if($page)
             {
-                $message = $reviewObj->find('.partial_entry', 0);
-                if(empty($message) || empty($message->innertext()))
+                $reviews = [];
+                foreach( $page->find('.basic_review') as $reviewObj )
                 {
-                    continue;
+                    if($this->votes()->where('remote_type', SpotVote::TYPE_TRIPADVISOR)->count() >= 5)
+                    {
+                        break;
+                    }
+                    $message = $reviewObj->find('.partial_entry', 0);
+                    if(empty($message) || empty($message->innertext()))
+                    {
+                        continue;
+                    }
+                    $rating = $reviewObj->find('.rating_s_fill', 0);
+                    if(empty($rating) || empty($rating->getAttribute('alt')))
+                    {
+                        continue;
+                    }
+                    $remote_id = 'ta_' . md5($message);
+                    if($this->votes()->where('remote_id', $remote_id)->exists())
+                    {
+                        continue;
+                    }
+                    $remote_user_container = $reviewObj->find('.username', 0);
+                    if($remote_user_container->find('span', 0))
+                    {
+                        $remote_user = $remote_user_container->find('span', 0);
+                    }
+                    else
+                    {
+                        $remote_user = $remote_user_container;
+                    }
+                    $date = (new Carbon($reviewObj->find('.ratingDate', 0)->getAttribute('title')))->toDateTimeString();
+                    $reviews[] = [
+                        'vote' => (int)(str_replace(' of 5 bubbles', '', $rating->getAttribute('alt'))),
+                        'message' => $message->innertext(),
+                        'remote_id' => $remote_id,
+                        'remote_type' => SpotVote::TYPE_TRIPADVISOR,
+                        'remote_user_name' => SpotVote::remoteReviewerNameCheck(trim($remote_user->innertext())),
+                        //'remote_user_avatar' => $reviewObj->find('.avatar img', 0) ? $reviewObj->find('.avatar img', 0)->getAttribute('src') : null,
+                        'created_at' => $date,
+                        'updated_at' => $date,
+                        'spot_id' => $this->id,
+                    ];
                 }
-                $rating = $reviewObj->find('.rating_s_fill', 0);
-                if(empty($rating) || empty($rating->getAttribute('alt')))
-                {
-                    continue;
-                }
-                $remote_id = 'ta_' . md5($message);
-                if($this->votes()->where('remote_id', $remote_id)->exists())
-                {
-                    continue;
-                }
-                $remote_user_container = $reviewObj->find('.username', 0);
-                if($remote_user_container->find('span', 0))
-                {
-                    $remote_user = $remote_user_container->find('span', 0);
-                }
-                else
-                {
-                    $remote_user = $remote_user_container;
-                }
-                $date = (new Carbon($reviewObj->find('.ratingDate', 0)->getAttribute('title')))->toDateTimeString();
-                $reviews[] = [
-                    'vote' => (int)(str_replace(' of 5 bubbles', '', $rating->getAttribute('alt'))),
-                    'message' => $message->innertext(),
-                    'remote_id' => $remote_id,
-                    'remote_type' => SpotVote::TYPE_TRIPADVISOR,
-                    'remote_user_name' => SpotVote::remoteReviewerNameCheck(trim($remote_user->innertext())),
-                    //'remote_user_avatar' => $reviewObj->find('.avatar img', 0) ? $reviewObj->find('.avatar img', 0)->getAttribute('src') : null,
-                    'created_at' => $date,
-                    'updated_at' => $date,
-                    'spot_id' => $this->id,
-                ];
+                $this->votes()->insert($reviews);
+                $result = $reviews;
             }
-            $this->votes()->insert($reviews);
-            $result = $reviews;
         }
         return $result;
     }
