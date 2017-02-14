@@ -249,7 +249,7 @@ class CsvParserController extends Controller
             {
                 if( $column == 'web_sites')
                 {
-                    $attrArr[$column] = json_encode(trim($value));
+                    $attrArr[$column] = json_encode([trim($value)]);
                 }
                 elseif($column == 'start_date' || $column == 'end_date')
                 {
