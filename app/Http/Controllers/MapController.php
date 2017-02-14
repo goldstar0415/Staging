@@ -30,6 +30,8 @@ use GuzzleHttp\Exception\RequestException;
  */
 class MapController extends Controller {
 
+    public $rates_api_key = 'e13e6e6d8012ba2865114e215896980b';
+    public $rates = null;
     /**
      * Get spots in bounding box
      *
@@ -130,9 +132,33 @@ class MapController extends Controller {
                 $spots->where('spots.avg_rating', '>=', $request->filter['rating']);
             }
         }
-        
-        if ($request->has('filter.price')) {
-            $spots->where('spots.minrate', '<=', $request->filter['price']);
+        $calc_cur = [];
+        if ($request->has('filter.price')) 
+        {
+            $price = $request->filter['price'];
+            $this->getRates();
+            $rates = $this->rates;
+            if(empty($rates))
+            {
+                $spots->where('spots.minrate', '<=', $price)->where('spots.currencycode', 'USD');
+            }
+            else
+            {
+                $spots->where(function($query) use ($price, $rates, &$calc_cur){
+                    $query->where(function($subquery) use ($price, &$calc_cur)
+                    {
+                        $calc_cur['USD'] = $price;
+                        $subquery->whereRaw('CAST (spots.minrate AS FLOAT) <= ?', [(float)$price])->where('spots.currencycode', 'USD');
+                    });
+                    foreach($rates as $cc => $cr)
+                    {
+                        $query->orWhere(function($subquery) use ($price, $cc, $cr, &$calc_cur){
+                            $calc_cur[$cc] = $price * $cr;
+                            $subquery->whereRaw('CAST (spots.minrate AS FLOAT) <= ?', [$price * $cr])->where('spots.currencycode', $cc);
+                        });
+                    }
+                });
+            }
         }
 
         if ($request->has('filter.b_boxes')) {
@@ -163,6 +189,8 @@ class MapController extends Controller {
             $spots->whereRaw("ST_Distance(ST_GeogFromText('LINESTRING(" . implode(",", $path) . ")'),mv_spots_spot_points.location::geography) < ?", [6000]);
         }
         // search spots
+        //var_dump($spots->toSql());
+        //dd($spots->getBindings());
         $spotsArr = $spots->skip(0)->take(1000)->get();
         // cache cetegory icon URLs
         $cats = SpotTypeCategory::select("spot_type_categories.id", "spot_type_categories.spot_type_id")->get();
@@ -205,6 +233,46 @@ class MapController extends Controller {
             ];
         }
         return $points;
+    }
+    
+    public function getRates()
+    {
+        $rates = Cache::get('currency_rates');
+        if(empty($rates))
+        {
+            $client = new Client();
+            try
+            {
+                $response = $client->get('http://www.apilayer.net/api/live?access_key=' . $this->rates_api_key);
+                $rates =  json_decode($response->getBody()->getContents(), true);
+                if(isset($rates['quotes']))
+                {
+                    $calcRates = $this->calcRates($rates['quotes']);
+                    Cache::put('currency_rates', $calcRates , Carbon::now()->addDay());
+                    $this->rates = $calcRates;
+                }
+            }
+            catch (Exception $e){  }
+        }
+        else
+        {
+            $this->rates = $rates;
+        }
+        return $this->rates;
+    }
+    
+    public function calcRates($arr)
+    {
+        $calcRates = [];
+        foreach($arr as $cur => $rate)
+        {
+            $subCur = substr($cur, -3);
+            if($subCur != 'USD')
+            {
+                $calcRates[$subCur] = $rate;
+            }
+        }
+        return $calcRates;
     }
 
     /**
