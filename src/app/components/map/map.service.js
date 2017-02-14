@@ -56,11 +56,11 @@
       }
         
       if (_.isEmpty(fx.rates)) {
-          $http.jsonp('https://api.fixer.io/latest', { params: { base: 'USD', callback: 'JSON_CALLBACK' } })
+          $http.get(API_URL + '/rates')
               .then(function(resp) {
                   if (resp.status === 200) {
-                    fx.base = resp.data.base;
-                    fx.rates = resp.data.rates;
+                    fx.base = 'USD';
+                    fx.rates = resp.data;
                     fx.rates.USD = 1;
                   }
               });
