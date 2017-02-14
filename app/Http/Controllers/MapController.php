@@ -92,7 +92,7 @@ class MapController extends Controller {
                 )
                 ->where('mv_spots_spot_points.is_private', false)
                 ->where('mv_spots_spot_points.is_approved', true);
-
+        $spots->leftJoin('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
         if ($request->has('search_text')) {
             $spots->where('mv_spots_spot_points.title_address', 'ilike', "%$request->search_text%");
         }
@@ -119,10 +119,20 @@ class MapController extends Controller {
         }
 
         if ($request->has('filter.tags') && !empty($request->filter['tags'])) {
-            $spots->joinWhere('tags', 'tags.name', 'in', $request->filter['tags']);
-            $spots->join('spot_tag', function ($join) {
-                $join->on('spot_tag.spot_id', '=', 'mv_spots_spot_points.id')->on('spot_tag.tag_id', '=', 'tags.id');
+            
+            $tags = $request->filter['tags'];
+            $spots->join('tags', function($query) use ($tags){
+                $query->where('tags.name', 'in', $tags);
+                foreach($tags as $tag)
+                {
+                    $query->orWhere('spots.title', 'ilike', DB::raw('%'.$tag.'%'));
+                }
             });
+            $spots->join('spot_tag', function ($join) {
+                $join->on('spot_tag.spot_id', '=', 'mv_spots_spot_points.id')
+                     ->on('spot_tag.tag_id', '=', 'tags.id');
+            });
+            
         }
 
         if ($request->has('filter.rating')) {
@@ -177,7 +187,6 @@ class MapController extends Controller {
             }
         }
         
-        $spots->leftJoin('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
         $spots->leftJoin('spot_points', 'spot_points.spot_id', '=', 'mv_spots_spot_points.id');
         $spots->with('rating');
         
