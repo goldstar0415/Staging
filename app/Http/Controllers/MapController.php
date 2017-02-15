@@ -90,6 +90,7 @@ class MapController extends Controller {
                         'spots.avg_rating',
                         'spots.total_reviews'
                 )
+                ->distinct()
                 ->where('mv_spots_spot_points.is_private', false)
                 ->where('mv_spots_spot_points.is_approved', true);
         $spots->leftJoin('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
