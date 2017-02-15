@@ -704,7 +704,8 @@
           return btn[0];
       },
       _click: function(e) {
-                toggleFullScreen();
+          e.stopPropagation();
+          toggleFullScreen();
       }
     });
     L.Control.FullScreen = function (options) {
@@ -729,6 +730,7 @@
         return btn[0];
       },
       _click: function (e) {
+          e.stopPropagation();
           if ($rootScope.isSidebarOpened) { //&& $rootScope.mapSortSpots.sourceSpots.length
             $rootScope.isFilterOpened = true;
             $rootScope.$apply();
