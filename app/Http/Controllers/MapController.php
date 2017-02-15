@@ -122,18 +122,21 @@ class MapController extends Controller {
         if ($request->has('filter.tags') && !empty($request->filter['tags'])) {
             
             $tags = $request->filter['tags'];
-            $spots->join('tags', function($query) use ($tags){
-                $query->where('tags.name', 'in', $tags);
-                foreach($tags as $tag)
-                {
-                    $query->orWhere('spots.title', 'ilike', DB::raw('%'.$tag.'%'));
-                }
+            
+            $spots->leftJoin('spot_tag', function ($join) {
+                $join->on('spot_tag.spot_id', '=', 'mv_spots_spot_points.id');
             });
-            $spots->join('spot_tag', function ($join) {
-                $join->on('spot_tag.spot_id', '=', 'mv_spots_spot_points.id')
-                     ->on('spot_tag.tag_id', '=', 'tags.id');
+            $spots->leftJoin('tags', function($join) {
+                $join->on('spot_tag.tag_id', '=', 'tags.id');
             });
             
+            $spots->where(function($query) use ($tags){
+                $query->whereIn('tags.name', $tags);
+                foreach($tags as $tag)
+                {
+                    $query->orWhere('spots.title', 'ilike', '%'.DB::raw($tag).'%');
+                }
+            });
         }
 
         if ($request->has('filter.rating')) {
