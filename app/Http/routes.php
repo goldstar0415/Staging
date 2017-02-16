@@ -135,6 +135,7 @@ Route::get('map/spots/list', 'MapController@getList');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
 Route::get('areas/{areas}/preview', 'AreaController@preview');
 Route::get('weather', 'MapController@getWeather');
+Route::get('rates', 'MapController@getRates');
 /**
  * Wall Controls
  */
