@@ -244,7 +244,7 @@ class SpotController extends Controller
         $spot->locations = $request->input('locations');
 
         if (!$spot->is_private) {
-            $spot->is_approved = false;
+            $spot->is_approved = ($spot->user_id != null)?false:true;
         }
 
         $spot->save();
