@@ -879,9 +879,9 @@
           
         // the Skobbler map
           
-        map = L.skobbler.map(mapDOMElement,{
+        map = L.skobbler.map(mapDOMElement, {
               apiKey: SKOBBLER_API_KEY,
-              mapStyle: 'night',
+              mapStyle: 'outdoor',
               bicycleLanes: false,
               onewayArrows: true,
               pois: '2',
