@@ -40,17 +40,22 @@ header {
             display: flex;
             width: 100%;
             position: relative;
+            justify-content: center;
 
             .twitter-typeahead {
                 width: 100%;
+                @media all and (min-width : 768px) {
+                    width: 420px !important;
+                }
                 .nav-search {
-                    width: 100% !important;
-                    background-color: #fff;
+                    width: 100%;
+                    background-color: transparent;
+                    border-radius: 8px;
                 }
                 .tt-menu {
                     border: 1px solid rgba(0, 0, 0, 0.2);
-                    border-radius: 8px;
-                    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+                    @include border-radius(8px);
+                    @include box-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
                     margin: 12px 0;
                     padding: 8px 0;
                     width: 100%;
@@ -90,14 +95,25 @@ header {
                         }
                     }
                 }
-            }
-
-            button {
-                width: 50px;
-                box-shadow: none;
-                background-color: $light_blue_btn;
-                color: white;
-                border: none;
+                input {
+                    background: url(../img/svg/new_icons/Search.svg) no-repeat 2px 8px;
+                    background-color: transparent !important;
+                    background-size: 20px;
+                    min-height: inherit !important;
+                    height: auto !important;
+                    border: solid 1px #dbdbdb;
+                    color: #dbdbdb;
+                    padding: 8px 8px 8px 32px;
+                    @include border-radius(12px !important);
+                    @include box_shadow_none();
+                    @include transition(border-color 0.5s);
+                    &:hover, &:active {
+                        border-color: #fff;
+                    }
+                    &.tt-input {
+                        color: #fff;
+                    }
+                }
             }
         }
 
@@ -138,18 +154,18 @@ header {
             .main-logo-big {
                 width: 150px;
                 @include margin-side(20px);
-                // @media(max-width: 767px) {
-                //     display: none;
-                // }
+                @media(max-width: 767px) {
+                    display: none;
+                }
             }
-            // .main-logo-small {
-            //     width: 32px;
-            //     display: none;
-            //     @include margin-side(20px);
-            //     @media(max-width: 767px) {
-            //         display: block;
-            //     }
-            // }
+            .main-logo-small {
+                width: 32px;
+                display: none;
+                @include margin-side(20px);
+                @media(max-width: 767px) {
+                    display: block;
+                }
+            }
         }
 
         .sign-up-in {
@@ -220,12 +236,6 @@ header {
                 border: 2px solid #fff;
                 border-radius: 50%;
                 box-shadow: inset 0 0 15px 3px #0c2638;
-            }
-
-            .search-button {
-                img {
-                    border: none;
-                }
             }
         }
     }
