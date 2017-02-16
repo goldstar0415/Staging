@@ -2006,6 +2006,7 @@
     right: 540px;
     bottom: 50px;
     overflow: auto;
+    min-width: 416px;
     @media (min-width: 768px) and (orientation: portrait) {
         right: 70px;
         bottom: 378px;
@@ -2016,12 +2017,14 @@
         left: 0;
         right: 0;
         bottom: auto;
+        min-width: inherit;
     }
     @media (max-width: 767px) and (orientation: landscape) {
         top: 0;
         left: 0;
         right: 50vw;
         bottom: 50px;
+        min-width: inherit;
     }
 
 
@@ -2066,7 +2069,7 @@
 
     .form-group {
         label {
-            color: rgb(180, 180, 180);
+            color: #555555;
             padding: 10px 0;
             display: flex;
             justify-content: space-between;
@@ -2201,9 +2204,11 @@
         // padding: 10px;
         height: 3.5rem;
         font-weight: bold;
-        background-color: #01CFFF;
-
+        background-color: #2c4456;
         &:hover {}
+        &.pull-right {
+            margin-left: 15px;
+        }
     }
 }
 
