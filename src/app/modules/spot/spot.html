@@ -113,11 +113,11 @@
                 <h1>Cost:</h1>
                 <p><span>{{Spot.spot.price_level}}</span></p>
             </div>
-            <div class="overview hours" ng-if="Spot.spot.weekday_text">
+            <div class="overview hours" ng-if="Spot.spot.hours.weekday_text">
                 <h1>Hours:</h1>
-                <p ng-repeat="date in Spot.spot.weekday_text">
+                <div ng-repeat="date in Spot.spot.hours.weekday_text">
                     {{date}}
-                </p>
+                </div>
             </div>
             <div class="overview amenities" ng-show="Spot.amenitiesCount != 0">
                 <h1>Amenities:</h1>
