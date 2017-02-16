@@ -6,14 +6,19 @@
     z-index: 0;
     width: 100%;
     background-color: #ede3c9;
-    .leaflet-control {
-        &.leaflet-control-attribution {
-            position: absolute;
-            top: auto !important;
-            bottom: 0;
-            right: 0;
-            width: 160px;
-            height: 18px;
+    .leaflet-control-attribution {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 160px;
+        height: 18px;
+        @media (max-width: 767px) {
+            bottom: 50px;
+        }
+    }
+    &.small-size {
+        .leaflet-control-attribution {
+            bottom: 50px;
         }
     }
 }
