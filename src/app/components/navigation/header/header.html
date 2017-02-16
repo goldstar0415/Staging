@@ -1,37 +1,33 @@
 <header ng-class="{ 'mobile-hidden': $root.isSidebarOpened && $root.isMapState() }">
     <nav class="main-nav">
-        <a ng-click="Header.back()" ui-sref="index" class="main-logo" ng-show="!Header.isSearchOpened">
-            <img class="main-logo-big" src="assets/img/icons/logo.svg" alt="logo">
-            <!-- <img class="main-logo-small" src="assets/img/svg/logo.svg" alt="logo"> -->
+        <a ng-click="Header.back()" ui-sref="index" class="main-logo">
+            <img class="main-logo-big mobile-hidden" src="assets/img/icons/logo.svg" alt="logo">
+             <img class="main-logo-small" src="assets/img/svg/logo.svg" alt="logo">
         </a>
-        <div class="search" ng-show="Header.isSearchOpened">
+        <div class="search">
             <input
                     type="text"
                     class="nav-search"
                     name="search"
-                    placeholder="Search by location or keyword..."
+                    placeholder="Search"
                     ng-model="Header.searchValue"
                     ng-init="Header.initSearch()"
-                    bloodhound-remote bloodhound-remote-options="{ url: 'dsfsdf'}"
+                    bloodhound-remote
+                    bloodhound-remote-options="{ url: 'dsfsdf'}"
             >
         </div>
         <div class="nav-right">
             <div class="user-avatar">
-                <a class="search-button">
-                    <!-- <span>{{Header.isSearchOpened ? 'Close' : 'Search' }}</span> -->
-                    <img src="assets/img/svg/new_icons/Search.svg" alt="search" ng-click="Header.searchClick()" ng-show="!Header.isSearchOpened">
-                    <img src="assets/img/svg/cancel-button-white.svg" alt="search" ng-click="Header.searchClick()" ng-show="Header.isSearchOpened">
-                </a>
-                <a ng-href="{{Header.BACKEND_URL}}/admin" target="_blank" ng-if="$root.isRole($root.currentUser, 'admin')" class="nav-admin" ng-if="$root.currentUser" ng-class="Header.isSearchOpened ? 'mobile-hidden' : ''">
+                <a ng-href="{{Header.BACKEND_URL}}/admin" target="_blank" ng-if="$root.isRole($root.currentUser, 'admin')" class="nav-admin" ng-if="$root.currentUser">
                     <span>Admin</span>
                     <img src="../../../../assets/img/header/admin-icon.png">
                 </a>
-                <a ui-sref="profile.main({user_id: $root.currentUser.alias || $root.currentUser.id})" ui-sref-active="active" class="user-name" ng-if="$root.currentUser" ng-class="Header.isSearchOpened ? 'mobile-hidden' : ''">
+                <a ui-sref="profile.main({user_id: $root.currentUser.alias || $root.currentUser.id})" ui-sref-active="active" class="user-name" ng-if="$root.currentUser">
                     <span>{{ $root.currentUser.first_name }}</span>
                     <img ng-src="{{$root.currentUser.avatar_url.thumb}}">
                 </a>
             </div>
-            <div class="sign-up-in" ng-if="!$root.currentUser" ng-class="Header.isSearchOpened ? 'mobile-hidden' : ''">
+            <div class="sign-up-in" ng-if="!$root.currentUser">
                 <div>
                     <sign-up></sign-up>
                 </div>
@@ -40,7 +36,7 @@
                     <sign-in title="Sign in"></sign-in>
                 </div>
             </div>
-            <a class="menu-btn big-menu" snap-toggle="right" ng-class="Header.isSearchOpened ? 'mobile-hidden' : ''">
+            <a class="menu-btn big-menu" snap-toggle="right">
                 <span class="menu-icon "></span>
             </a>
         </div>
