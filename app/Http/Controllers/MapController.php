@@ -30,6 +30,8 @@ use GuzzleHttp\Exception\RequestException;
  */
 class MapController extends Controller {
 
+    public $rates_api_key = 'e13e6e6d8012ba2865114e215896980b';
+    public $rates = null;
     /**
      * Get spots in bounding box
      *
@@ -89,9 +91,10 @@ class MapController extends Controller {
                         'spots.total_reviews',
                         'spots.start_date'
                 )
+                ->distinct()
                 ->where('mv_spots_spot_points.is_private', false)
                 ->where('mv_spots_spot_points.is_approved', true);
-
+        $spots->leftJoin('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
         if ($request->has('search_text')) {
             $spots->where('mv_spots_spot_points.title_address', 'ilike', "%$request->search_text%");
         }
@@ -118,9 +121,22 @@ class MapController extends Controller {
         }
 
         if ($request->has('filter.tags') && !empty($request->filter['tags'])) {
-            $spots->joinWhere('tags', 'tags.name', 'in', $request->filter['tags']);
-            $spots->join('spot_tag', function ($join) {
-                $join->on('spot_tag.spot_id', '=', 'mv_spots_spot_points.id')->on('spot_tag.tag_id', '=', 'tags.id');
+            
+            $tags = $request->filter['tags'];
+            
+            $spots->leftJoin('spot_tag', function ($join) {
+                $join->on('spot_tag.spot_id', '=', 'mv_spots_spot_points.id');
+            });
+            $spots->leftJoin('tags', function($join) {
+                $join->on('spot_tag.tag_id', '=', 'tags.id');
+            });
+            
+            $spots->where(function($query) use ($tags){
+                $query->whereIn('tags.name', $tags);
+                foreach($tags as $tag)
+                {
+                    $query->orWhere('spots.title', 'ilike', '%'.DB::raw($tag).'%');
+                }
             });
         }
 
@@ -131,9 +147,33 @@ class MapController extends Controller {
                 $spots->where('spots.avg_rating', '>=', $request->filter['rating']);
             }
         }
-        
-        if ($request->has('filter.price')) {
-            $spots->where('spots.minrate', '<=', $request->filter['price']);
+        $calc_cur = [];
+        if ($request->has('filter.price')) 
+        {
+            $price = $request->filter['price'];
+            $this->getRates();
+            $rates = $this->rates;
+            if(empty($rates))
+            {
+                $spots->where('spots.minrate', '<=', $price)->where('spots.currencycode', 'USD');
+            }
+            else
+            {
+                $spots->where(function($query) use ($price, $rates, &$calc_cur){
+                    $query->where(function($subquery) use ($price, &$calc_cur)
+                    {
+                        $calc_cur['USD'] = $price;
+                        $subquery->whereRaw('CAST (spots.minrate AS FLOAT) <= ?', [(float)$price])->where('spots.currencycode', 'USD');
+                    });
+                    foreach($rates as $cc => $cr)
+                    {
+                        $query->orWhere(function($subquery) use ($price, $cc, $cr, &$calc_cur){
+                            $calc_cur[$cc] = $price * $cr;
+                            $subquery->whereRaw('CAST (spots.minrate AS FLOAT) <= ?', [$price * $cr])->where('spots.currencycode', $cc);
+                        });
+                    }
+                });
+            }
         }
 
         if ($request->has('filter.b_boxes')) {
@@ -152,7 +192,6 @@ class MapController extends Controller {
             }
         }
         
-        $spots->leftJoin('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
         $spots->leftJoin('spot_points', 'spot_points.spot_id', '=', 'mv_spots_spot_points.id');
         $spots->with('rating');
         
@@ -164,6 +203,8 @@ class MapController extends Controller {
             $spots->whereRaw("ST_Distance(ST_GeogFromText('LINESTRING(" . implode(",", $path) . ")'),mv_spots_spot_points.location::geography) < ?", [6000]);
         }
         // search spots
+        //var_dump($spots->toSql());
+        //dd($spots->getBindings());
         $spotsArr = $spots->skip(0)->take(1000)->get();
         // cache cetegory icon URLs
         $cats = SpotTypeCategory::select("spot_type_categories.id", "spot_type_categories.spot_type_id")->get();
@@ -207,6 +248,46 @@ class MapController extends Controller {
             ];
         }
         return $points;
+    }
+    
+    public function getRates()
+    {
+        $rates = Cache::get('currency_rates');
+        if(empty($rates))
+        {
+            $client = new Client();
+            try
+            {
+                $response = $client->get('http://www.apilayer.net/api/live?access_key=' . $this->rates_api_key);
+                $rates =  json_decode($response->getBody()->getContents(), true);
+                if(isset($rates['quotes']))
+                {
+                    $calcRates = $this->calcRates($rates['quotes']);
+                    Cache::put('currency_rates', $calcRates , Carbon::now()->addDay());
+                    $this->rates = $calcRates;
+                }
+            }
+            catch (Exception $e){  }
+        }
+        else
+        {
+            $this->rates = $rates;
+        }
+        return $this->rates;
+    }
+    
+    public function calcRates($arr)
+    {
+        $calcRates = [];
+        foreach($arr as $cur => $rate)
+        {
+            $subCur = substr($cur, -3);
+            if($subCur != 'USD')
+            {
+                $calcRates[$subCur] = $rate;
+            }
+        }
+        return $calcRates;
     }
 
     /**
