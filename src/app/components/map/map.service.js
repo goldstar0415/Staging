@@ -895,6 +895,11 @@
               zoom: 5
           });
           
+          // fix the attribution control
+          map.removeControl(map.attributionControl);
+          var attribution = '<div class="leaflet-control-attribution"><a href="http://developer.skobbler.com/" target="_blank">Scout</a>, <a href="http://www.leafletjs.com" target="_blank">Leaflet</a>, <a href="http://www.openstreetmap.org" target="_blank">OpenStreetMap</a></div>';
+          $('.map').append(attribution);
+          
         // the Leaflet map (old)
           
         // map = L.map(mapDOMElement, {
