@@ -73,6 +73,7 @@ class SpotVote extends BaseModel
             'A TripAdvisor Member',
             'Путешественник',
             'Аноним',
+            'A Traveler',
         ];
         
         if(in_array($value, $depricatedNames))

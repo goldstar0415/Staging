@@ -103,6 +103,8 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     protected $booking_reviews_url = null;
     protected $hotelsReviewsPage = null;
     protected $tripadvisorReviewsPage = null;
+    
+    public $cacheExpiresDate = null;
 
     /**
      * {@inheritdoc}
@@ -118,6 +120,8 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 'medium' => '180x180#'
             ]
         ]);
+        
+        $this->cacheExpiresDate = Carbon::now()->addDays(7);
         
         parent::__construct($attributes);
     }
@@ -655,19 +659,21 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             return $this->hotelsReviewsPage;
         }
-        else 
+        if($cachedResponse = $this->getCachedResponse('hotelsReviewsPage'))
         {
-            $url = $this->getHotelsReviewsUrl();
-            if($url)
+            return $this->hotelsReviewsPage = $cachedResponse;
+        }
+        $url = $this->getHotelsReviewsUrl();
+        if($url)
+        {
+            $hotelsPageContent = $this->getPageContent($url, []);
+            if($hotelsPageContent)
             {
-                $hotelsPageContent = $this->getPageContent($url, []);
-                if($hotelsPageContent)
-                {
-                    return $this->hotelsReviewsPage = $hotelsPageContent;
-                }
+                $this->setCachedResponse('hotelsReviewsPage', $hotelsPageContent);
+                return $this->hotelsReviewsPage = $hotelsPageContent;
             }
         }
-        return null;
+        return $this->hotelsReviewsPage;
     }
     
     public function saveHotelsReviews()
@@ -832,6 +838,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             return $this->bookingPage;
         }
+        if($cachedResponse = $this->getCachedResponse('bookingPage'))
+        {
+            return $this->bookingPage = $cachedResponse;
+        }
         if(!empty($this->booking_url))
         {
             $url = $this->getBookingUrl($this->booking_url);
@@ -842,6 +852,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 ]);
                 if($bookingPageContent)
                 {
+                    $this->setCachedResponse('bookingPage', $bookingPageContent);
                     $this->bookingPage = $bookingPageContent;
                 }
             }
@@ -1140,6 +1151,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             $this->googlePlacesInfo;
         }
+        if($cachedResponse = $this->getCachedResponse('googlePlacesInfo'))
+        {
+            return $this->googlePlacesInfo = $cachedResponse;
+        }
         $googlePid = $this->getGooglePid();
         if($googlePid)
         {
@@ -1149,6 +1164,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $response = $this->getPageContent($url, [], true);
                 if($response['status'] == "OK")
                 {
+                    $this->setCachedResponse('googlePlacesInfo', $response['result']);
                     $this->googlePlacesInfo = $response['result'];
                 }
             }
@@ -1239,12 +1255,12 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     {
         $result = [];
         $googlePlaceInfo = $this->getGooglePlaceInfo();
-        if( !empty($googlePlaceInfo['opening_hours']) && !empty($this->restaurant))
+        if( !empty($googlePlaceInfo['opening_hours']))
         {
             $openingHours = $googlePlaceInfo['opening_hours'];
             unset($openingHours['open_now']);
-            $this->restaurant->hours = $openingHours;
-            $this->restaurant->save();
+            $this->hours = $openingHours;
+            $this->save();
             $result = $openingHours;
         }
         return $result;
@@ -1308,6 +1324,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function getFacebookRating()
     {
         $fb = app(LaravelFacebookSdk::class);
+        if($cachedResponse = $this->getCachedResponse('facebookRating'))
+        {
+            return $cachedResponse;
+        }
         if( $this->checkUrl($this->facebook_url))
         {
             $id = $this->getFacebookIdFromUrl($this->facebook_url);
@@ -1317,10 +1337,12 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 {
                     $response = $fb->get('/' . $id . '?fields=rating_count,overall_star_rating,name', config('laravel-facebook-sdk.app_token'));
                     $values = $response->getGraphNode()->asArray();
-                    return [
+                    $result = [
                         'reviews_count' => $values['rating_count'],
                         'rating'        => $values['overall_star_rating']
                     ];
+                    $this->setCachedResponse('facebookRating', $result);
+                    return $result;
                 }
                 catch (Exception $e) {}
                 catch (FacebookSDKException $e) {}
@@ -1339,6 +1361,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             return $this->yelpToken;
         }
+        if($cachedResult = $this->getCachedResponse('yelpToken'))
+        {
+            return $this->yelpToken = $cachedResult;
+        }
         $client = new Client();
         $body = new PostBody();
         $body->forceMultipartUpload(true);
@@ -1351,7 +1377,9 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         try
         {
             $response = $client->post('https://api.yelp.com/oauth2/token', $options);
-            $this->yelpToken =  json_decode($response->getBody()->getContents(), true)['access_token'];
+            $result = json_decode($response->getBody()->getContents(), true)['access_token'];
+            $this->setCachedResponse('yelpToken', $result);
+            $this->yelpToken =  $result;
         }
         catch(Exception $e) { }
         return $this->yelpToken;
@@ -1372,6 +1400,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             return $this->yelpInfo;
         }
+        if($cachedResponse = $this->getCachedResponse('yelpInfo'))
+        {
+            return $this->yelpInfo = $cachedResponse;
+        }
         if(!empty($this->yelp_url))
         {
             $token = $this->getYelpToken();
@@ -1389,6 +1421,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     $responseArray = json_decode($response->getBody()->getContents(), true);
                     if(!empty($responseArray))
                     {
+                        $this->setCachedResponse('yelpInfo', $responseArray);
                         $this->yelpInfo = $responseArray;
                     }
                 }
@@ -1413,9 +1446,17 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $url = 'https://api.yelp.com/v3/businesses/' . $id;
                 try
                 {
-                    $response = $client->get($url , [
-                        'headers' => $headers
-                    ]);
+                    if($cachedResponse = $this->getCachedResponse('yelpBizInfo'))
+                    {
+                        $response = $cachedResponse;
+                    }
+                    else
+                    {
+                        $response = $client->get($url , [
+                            'headers' => $headers
+                        ]);
+                        $this->setCachedResponse('yelpBizInfo', $response);
+                    }
                     $responseArray = json_decode($response->getBody()->getContents(), true);
                     if( !empty($responseArray['review_count']) && !empty($responseArray['rating']))
                     {
@@ -1446,9 +1487,17 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $url = 'https://api.yelp.com/v3/businesses/' . $id;
                 try
                 {
-                    $response = $client->get($url . '/reviews', [
-                        'headers' => $headers
-                    ]);
+                    if($cachedResponse = $this->getCachedResponse('yelpReviewsFromApi'))
+                    {
+                        $response = $cachedResponse;
+                    }
+                    else
+                    {
+                        $response = $client->get($url . '/reviews', [
+                            'headers' => $headers
+                        ]);
+                        $this->setCachedResponse('yelpReviewsFromApi', $response);
+                    }
                     $yelp_reviews = json_decode($response->getBody()->getContents(), true);
                     if( !empty($yelp_reviews['reviews']))
                     {
@@ -1490,9 +1539,17 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             $client = new Client();
             try
             {
-                $response = $client->get($url . '/review_feed/', [
-                    'headers' => $headers
-                ]);
+                if($cachedResponse = $this->getCachedResponse('yelpReviewsFromPage'))
+                {
+                    $response = $cachedResponse;
+                }
+                else
+                {
+                    $response = $client->get($url . '/review_feed/', [
+                        'headers' => $headers
+                    ]);
+                    $this->setCachedResponse('yelpReviewsFromPage', $response);
+                }
                 $responseBody = json_decode($response->getBody()->getContents(), true);
                 if(!empty($responseBody['review_list']))
                 {
@@ -1569,18 +1626,20 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             return $this->tripadvisorReviewsPage;
         }
-        else 
+        if($cachedResponse = $this->getCachedResponse('tripadvisorReviewsPage'))
         {
-            if($this->tripadvisor_url && $this->checkUrl($this->tripadvisor_url))
+            return $this->tripadvisorReviewsPage = $cachedResponse;
+        }
+        if($this->tripadvisor_url && $this->checkUrl($this->tripadvisor_url))
+        {
+            $tripadvisorPageContent = $this->getPageContent($this->tripadvisor_url, []);
+            if($tripadvisorPageContent)
             {
-                $tripadvisorPageContent = $this->getPageContent($this->tripadvisor_url, []);
-                if($tripadvisorPageContent)
-                {
-                    return $this->tripadvisorReviewsPage = $tripadvisorPageContent;
-                }
+                $this->setCachedResponse('tripadvisorReviewsPage', $tripadvisorPageContent);
+                return $this->tripadvisorReviewsPage = $tripadvisorPageContent;
             }
         }
-        return null;
+        return $this->tripadvisorReviewsPage;
     }
     
     public function saveTripadvisorReviews()
@@ -1709,10 +1768,19 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         }
         if(!empty($this->booking_url))
         {
-            $reviewsUrl = $this->getBookingReviewsUrl($this->booking_url);
-            if($reviewsUrl && $reviewsPageContent = $this->getPageContent($reviewsUrl, [
-                'headers' => $this->getBookingHeaders()
-            ]))
+            $reviewsPageContent = null;
+            $cachedBookingResponse = $this->getCachedResponse('bookingReviewsPageContent');
+            if($cachedBookingResponse)
+            {
+                $reviewsPageContent = $cachedBookingResponse;
+            }
+            if(!$cachedBookingResponse && $reviewsUrl = $this->getBookingReviewsUrl($this->booking_url))
+            {
+                $reviewsPageContent = $this->getPageContent($reviewsUrl, [
+                    'headers' => $this->getBookingHeaders()
+                ]);
+            }
+            if($reviewsPageContent)
             {
                 $this->getBookingReviews($reviewsPageContent, $saveReviews);
             }
@@ -1827,5 +1895,16 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         ]);
         
         return $this->getResponse($client, $url, $options, $json);
+    }
+    
+    public function getCachedResponse($name)
+    {
+        return Cache::get('response.' . $name . '.' . $this->id);
+    }
+    
+    public function setCachedResponse($name, $data, $expires = null)
+    {
+        $exp = ($expires) ? $expires : $this->cacheExpiresDate;
+        Cache::put('response.' . $name . '.' . $this->id, $data, $exp);
     }
 }

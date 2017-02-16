@@ -520,11 +520,6 @@ class SpotController extends Controller
         $from         = date_parse_from_format( 'm.d.Y' , $dates['start_date'] );
         $to           = date_parse_from_format( 'm.d.Y' , $dates['end_date'] );
         
-        $result['dates'] = [
-            'from' => $from,
-            'to'   => $to,
-        ];
-        
         $result['data']['hotels'] = false;
         $result['data']['booking'] = false;
         
@@ -534,7 +529,7 @@ class SpotController extends Controller
         $endDate      = Carbon::create($to['year'], $to['month'], $to['day'], 0);
         
         $result['data']['hotelsUrl'] = $spot->getHotelsUrl($spot->hotelscom_url, $fromString, $toString);
-        $result['diff'] = $startDate->diffInDays($endDate);
+        $result['days'] = $startDate->diffInDays($endDate);
         if($result['data']['hotelsUrl'])
         {
             $hotelsPageContent = $spot->getPageContent($result['data']['hotelsUrl']);
@@ -542,7 +537,7 @@ class SpotController extends Controller
             if($hotelsPageContent)
             {
                 $hotelPrice = $spot->getHotelsPrice($hotelsPageContent);
-                $result['data']['hotels'] = (!empty($hotelPrice))? '$'.($hotelPrice * $result['diff']):false;
+                $result['data']['hotels'] = (!empty($hotelPrice))? '$'.($hotelPrice * $result['days']):false;
             }
         }
         
@@ -558,8 +553,6 @@ class SpotController extends Controller
                 $result['data']['booking'] = (!empty($bookingPrice))? '$'.$bookingPrice: false;
             }
         }
-
-        $result['result'] = $spot;
         return $result;
     }
 
@@ -583,15 +576,8 @@ class SpotController extends Controller
     {
         $result = [ 'photos' => [], 'amenities' => [] ];
         $amenities = false;
-        $bookingUrl = $spot->getBookingUrl($spot->booking_url);
-        if(
-            !empty($spot->booking_url) && 
-            $spot->checkUrl($spot->booking_url) && 
-            $bookingUrl &&
-            $bookingPageContent = $spot->getPageContent($bookingUrl, [
-                'headers' => $spot->getBookingHeaders()
-            ])
-        )
+        $bookingPageContent = $spot->getBookingPage();
+        if($bookingPageContent)
         {
             $result['photos'] = $spot->saveBookingPhotos($bookingPageContent);
             if( $amenities = $spot->saveBookingAmenities($bookingPageContent) )
@@ -613,15 +599,8 @@ class SpotController extends Controller
         }
         else
         {
-            $bookingUrl = (!empty($spot->booking_url))?$spot->getBookingUrl($spot->booking_url):false;
-            if(
-                isset($spot->booking_url) && 
-                $spot->checkUrl($spot->booking_url) && 
-                $bookingUrl &&
-                $bookingPageContent = $spot->getPageContent($bookingUrl, [
-                    'headers' => $spot->getBookingHeaders()
-                ])
-            )
+            $bookingPageContent = $spot->getBookingPage();
+            if($bookingPageContent)
             {
                 $bookingCoverObj = $spot->getBookingCover($bookingPageContent);
                 if($bookingCoverObj)
@@ -672,10 +651,20 @@ class SpotController extends Controller
         $result = [];
         if(!empty($spot->booking_url))
         {
-            $reviewsUrl = $spot->getBookingReviewsUrl($spot->booking_url);
-            if($reviewsUrl && $reviewsPageContent = $spot->getPageContent($reviewsUrl, [
-                'headers' => $spot->getBookingHeaders()
-            ]))
+            $reviewsPageContent = null;
+            $cachedBookingResponse = $spot->getCachedResponse('bookingReviewsPageContent');
+            if($cachedBookingResponse)
+            {
+                $reviewsPageContent = $cachedBookingResponse;
+            }
+            if(!$cachedBookingResponse && $reviewsUrl = $spot->getBookingReviewsUrl($spot->booking_url))
+            {
+                $reviewsPageContent = $spot->getPageContent($reviewsUrl, [
+                    'headers' => $spot->getBookingHeaders()
+                ]);
+                $spot->setCachedResponse('bookingReviewsPageContent', $reviewsPageContent);
+            }
+            if($reviewsPageContent)
             {
                 $spot->getBookingReviews($reviewsPageContent, true);
             }
