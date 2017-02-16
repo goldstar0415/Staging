@@ -54,7 +54,9 @@ header {
                 }
                 .tt-menu {
                     border: 1px solid rgba(0, 0, 0, 0.2);
-                    @include border-radius(8px);
+                    -webkit-border-radius: 8px;
+                    -moz-border-radius: 8px;
+                    border-radius: 8px;
                     @include box-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
                     margin: 12px 0;
                     padding: 8px 0;
@@ -104,7 +106,9 @@ header {
                     border: solid 1px #dbdbdb;
                     color: #dbdbdb;
                     padding: 8px 8px 8px 32px;
-                    @include border-radius(12px !important);
+                    -webkit-border-radius: 12px !important;
+                    -moz-border-radius: 12px !important;
+                    border-radius: 12px !important;
                     @include box_shadow_none();
                     @include transition(border-color 0.5s);
                     &:hover, &:active {
