@@ -396,7 +396,7 @@
                 $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
                     .then(function(response){
                         vm.prices = response.data.data;
-                        vm.prices.diff = response.data.diff;
+                        vm.prices.days = response.data.days;
                     },function(response){
                         toastr.error('No response. Please try again later.');
                     });
