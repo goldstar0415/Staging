@@ -5,7 +5,22 @@
     top: 70px;
     z-index: 0;
     width: 100%;
-    background-color: #424442;
+    background-color: #ede3c9;
+    .leaflet-control-attribution {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 160px;
+        height: 18px;
+        @media (max-width: 767px) {
+            bottom: 50px;
+        }
+    }
+    &.small-size {
+        .leaflet-control-attribution {
+            bottom: 50px;
+        }
+    }
 }
 
 .map.full-size {
