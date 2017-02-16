@@ -68,7 +68,7 @@
                             </div>
                             <div class="price">
                                 <p>{{ Spot.prices.booking ? Spot.prices.booking : 'Not available' }}</p>
-                                <span ng-if="Spot.prices.booking">For {{Spot.prices.diff}} night(s)</span>
+                                <span ng-if="Spot.prices.booking">For {{Spot.prices.days}} night(s)</span>
                                 <span ng-if="!Spot.prices.booking">Try other dates</span>
                             </div>
                             <a href="{{Spot.prices.bookingUrl}}" target="_blank">{{ Spot.prices.booking ? 'VIEW DEAL' : 'MORE OPTIONS' }}</a>
@@ -78,7 +78,7 @@
                             </div>
                             <div class="price">
                                 <p>{{ Spot.prices.hotels ? Spot.prices.hotels : 'Not available' }}</p>
-                                <span ng-if="Spot.prices.hotels">For {{Spot.prices.diff}} night(s)</span>
+                                <span ng-if="Spot.prices.hotels">For {{Spot.prices.days}} night(s)</span>
                                 <span ng-if="!Spot.prices.hotels">Try other dates</span>
                             </div>
                             <a href="{{Spot.prices.hotelsUrl}}" target="_blank">{{ Spot.prices.hotels ? 'VIEW DEAL' : 'MORE OPTIONS' }}</a>
@@ -113,11 +113,11 @@
                 <h1>Cost:</h1>
                 <p><span>{{Spot.spot.price_level}}</span></p>
             </div>
-            <div class="overview hours" ng-if="Spot.spot.weekday_text">
+            <div class="overview hours" ng-if="Spot.spot.hours.weekday_text">
                 <h1>Hours:</h1>
-                <p ng-repeat="date in Spot.spot.weekday_text">
+                <div ng-repeat="date in Spot.spot.hours.weekday_text">
                     {{date}}
-                </p>
+                </div>
             </div>
             <div class="overview amenities" ng-show="Spot.amenitiesCount != 0">
                 <h1>Amenities:</h1>

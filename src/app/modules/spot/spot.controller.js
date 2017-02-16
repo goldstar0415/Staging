@@ -323,9 +323,12 @@
             vm.spot.rating = data.total.rating;
         });*/
         
-        AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/hours').then(function(data) {
-            vm.spot.hours = data;
-        });
+        if(!vm.spot.hours)
+        {
+            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/hours').then(function(data) {
+                vm.spot.hours = data;
+            });
+        }
 
         vm.initDates = function() {
             var now = new Date(Date.now());
@@ -396,7 +399,7 @@
                 $http.get(API_URL + '/spots/' + spot.id + '/prices?' + $.param(vm.priceDate))
                     .then(function(response){
                         vm.prices = response.data.data;
-                        vm.prices.diff = response.data.diff;
+                        vm.prices.days = response.data.days;
                     },function(response){
                         toastr.error('No response. Please try again later.');
                     });
