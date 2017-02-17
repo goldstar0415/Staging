@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SKMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let initSettings = SKMapsInitSettings()
+        initSettings.mapDetailLevel = .light
+        
+        SKMapsService.sharedInstance().initializeSKMaps(withAPIKey: "9c229a702b7b69ec8b34af4341d2196a307576c81fb5606e45e831f5feda5fa3",
+                                                        settings: initSettings)
         return true
     }
 
