@@ -19,6 +19,21 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         configureMap()
+        configureNavigationBar()
+    }
+    
+    func configureNavigationBar() {
+        let logoImage = UIImage.init(named: "zoomtivity_logo")
+        let logoImageView = UIImageView.init(image: logoImage, highlightedImage: logoImage)
+        logoImageView.contentMode = .scaleAspectFit
+        
+        if let navigationBar = self.navigationController?.navigationBar {
+            logoImageView.frame.origin.x = navigationBar.frame.size.width * 0.175
+            logoImageView.frame.origin.y = 0
+            logoImageView.frame.size.width = navigationBar.frame.size.width * 0.3
+            logoImageView.frame.size.height = navigationBar.frame.size.height
+            navigationBar.addSubview(logoImageView)
+        }
     }
 
     func configureMap() {
