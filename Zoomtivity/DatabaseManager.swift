@@ -72,7 +72,9 @@ class DatabaseManager: NSObject {
     
     func fetchPoints(type: String!,  southWestPoint: CLLocationCoordinate2D!, northEastPoint: CLLocationCoordinate2D!) {
         
-        
+        JSONBuilder.buildJSONForPOIRequest(type: type,
+                                           southWestPoint: southWestPoint,
+                                           northEastPoint: northEastPoint)
         
     }
     

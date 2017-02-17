@@ -17,6 +17,7 @@
 		F2CD3D5A1E57889400CC9A3B /* MapLocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D591E57889400CC9A3B /* MapLocationDelegate.swift */; };
 		F2CD3D5F1E578F8300CC9A3B /* ZoomtivityColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D5E1E578F8300CC9A3B /* ZoomtivityColor.swift */; };
 		F2CD3D621E579A8200CC9A3B /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */; };
+		F2CD3D661E579C5600CC9A3B /* JSONBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D651E579C5600CC9A3B /* JSONBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		F2CD3D591E57889400CC9A3B /* MapLocationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocationDelegate.swift; sourceTree = "<group>"; };
 		F2CD3D5E1E578F8300CC9A3B /* ZoomtivityColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomtivityColor.swift; sourceTree = "<group>"; };
 		F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		F2CD3D651E579C5600CC9A3B /* JSONBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 		F206E79D1E5757EE00639BAD /* Zoomtivity */ = {
 			isa = PBXGroup;
 			children = (
+				F2CD3D641E579C4700CC9A3B /* Utlities */,
 				F2CD3D601E5797C800CC9A3B /* Core Data */,
 				F2CD3D5C1E578F6000CC9A3B /* Extensions */,
 				F206E7B31E5779B300639BAD /* View Controllers */,
@@ -146,6 +149,14 @@
 				F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */,
 			);
 			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		F2CD3D641E579C4700CC9A3B /* Utlities */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D651E579C5600CC9A3B /* JSONBuilder.swift */,
+			);
+			name = Utlities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +285,7 @@
 			files = (
 				F206E7A11E5757EE00639BAD /* MapViewController.swift in Sources */,
 				F206E79F1E5757EE00639BAD /* AppDelegate.swift in Sources */,
+				F2CD3D661E579C5600CC9A3B /* JSONBuilder.swift in Sources */,
 				F2CD3D621E579A8200CC9A3B /* DatabaseManager.swift in Sources */,
 				F2CD3D5A1E57889400CC9A3B /* MapLocationDelegate.swift in Sources */,
 				F2CD3D5F1E578F8300CC9A3B /* ZoomtivityColor.swift in Sources */,

@@ -21,6 +21,14 @@ extension MapViewController : SKPositionerServiceDelegate {
                                                        currentLocation.coordinate.longitude);
             region.zoomLevel = 17;
             mapView.visibleRegion = region;
+            
+            let northEastCoords = mapView.coordinate(for: CGPoint.init(x: mapView.bounds.size.width - 1, y: 1))
+            let southWestCoords = mapView.coordinate(for: CGPoint.init(x: 1, y: mapView.bounds.size.height - 1))
+            DatabaseManager.sharedDataManager.fetchPoints(type: "food",
+                                                          southWestPoint: southWestCoords,
+                                                          northEastPoint: northEastCoords)
+            
+            
         }
         
         currentUserLocation = currentLocation
