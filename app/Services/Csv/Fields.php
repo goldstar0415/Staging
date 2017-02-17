@@ -46,6 +46,7 @@ class Fields
         'google_url',
         'google_rating',
         'google_reviews_count',
+        'booking_id',
         'booking_url',
         'booking_rating',
         'booking_reviews_count',

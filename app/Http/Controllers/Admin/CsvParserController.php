@@ -397,11 +397,12 @@ class CsvParserController extends Controller
             if(in_array($title, $availableFields))
             {
                 $item[$title] = null;
+                $textWithoutQuestions = str_replace( "?", "[question_mark]", $row[$index] );
                 foreach(mb_detect_order() as $encoding)
                 {
-                    $str = mb_convert_encoding($row[$index], "UTF-8", $encoding);
+                    $str = mb_convert_encoding($textWithoutQuestions, "UTF-8", $encoding);
                     if(stristr($str, '?') === FALSE) {
-                        $item[$title] = $str;
+                        $item[$title] = str_replace( "[question_mark]", "?", $str);
                         break;
                     }
                 }
