@@ -7,5 +7,7 @@ target 'Zoomtivity' do
 
   # Pods for Zoomtivity
   pod 'ScoutMaps-iOS-SDK'
+  pod 'Alamofire'
+  pod 'SwiftyJSON'
 
 end

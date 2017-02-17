@@ -13,7 +13,7 @@ class JSONBuilder : NSObject {
     
 
     
-    static func buildJSONForPOIRequest(type: String!,  southWestPoint: CLLocationCoordinate2D!, northEastPoint: CLLocationCoordinate2D!) {
+    static func buildJSONForPOIRequest(type: String!,  southWestPoint: CLLocationCoordinate2D!, northEastPoint: CLLocationCoordinate2D!) -> [String : AnyObject] {
         
         let southWest: [String : AnyObject] = [
             "lat" : southWestPoint.latitude as AnyObject,
@@ -29,11 +29,12 @@ class JSONBuilder : NSObject {
             "_southWest" : southWest as AnyObject,
             "_northEast" : northEast as AnyObject
         ]
+        let boundBoxesArray = [boundBoxes]
         
         let filter: [String: AnyObject] = [
             "rating" : 0 as AnyObject,
             "tags" : [] as AnyObject,
-            "b_boxes" : boundBoxes as AnyObject
+            "b_boxes" : boundBoxesArray as AnyObject
         ]
         
         
@@ -44,8 +45,11 @@ class JSONBuilder : NSObject {
             
         ]
         
-        let valid = JSONSerialization.isValidJSONObject(jsonObject)
-        print(valid)
+        if JSONSerialization.isValidJSONObject(jsonObject) {
+            return jsonObject
+        } else {
+            return [:]
+        }
     }
     
 }

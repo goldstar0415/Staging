@@ -19,7 +19,7 @@ extension MapViewController : SKPositionerServiceDelegate {
             var region = SKCoordinateRegion()
             region.center = CLLocationCoordinate2DMake(currentLocation.coordinate.latitude,
                                                        currentLocation.coordinate.longitude);
-            region.zoomLevel = 17;
+            region.zoomLevel = 15;
             mapView.visibleRegion = region;
             
             let northEastCoords = mapView.coordinate(for: CGPoint.init(x: mapView.bounds.size.width - 1, y: 1))
@@ -27,7 +27,6 @@ extension MapViewController : SKPositionerServiceDelegate {
             DatabaseManager.sharedDataManager.fetchPoints(type: "food",
                                                           southWestPoint: southWestCoords,
                                                           northEastPoint: northEastCoords)
-            
             
         }
         

@@ -1,12 +1,18 @@
 PODS:
+  - Alamofire (4.2.0)
   - ScoutMaps-iOS-SDK (3.0.2)
+  - SwiftyJSON (3.1.3)
 
 DEPENDENCIES:
+  - Alamofire
   - ScoutMaps-iOS-SDK
+  - SwiftyJSON
 
 SPEC CHECKSUMS:
+  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
   ScoutMaps-iOS-SDK: 2b50decc60d3ff54c50f4dc2dd5b87513130930e
+  SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
 
-PODFILE CHECKSUM: bbe9df4693fe6976a6ecc6125c25730c123045ef
+PODFILE CHECKSUM: 4f4eeafe96a651d4e4f499d6df68c60f20accd9a
 
 COCOAPODS: 1.2.0.beta.1
