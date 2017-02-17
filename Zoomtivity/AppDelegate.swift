@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let initSettings = SKMapsInitSettings()
-        initSettings.mapDetailLevel = .light
+        initSettings.mapDetailLevel = .full
         
         SKMapsService.sharedInstance().initializeSKMaps(withAPIKey: "9c229a702b7b69ec8b34af4341d2196a307576c81fb5606e45e831f5feda5fa3",
                                                         settings: initSettings)

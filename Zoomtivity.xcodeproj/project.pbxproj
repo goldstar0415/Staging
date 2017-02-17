@@ -14,6 +14,7 @@
 		F206E7A71E5757EE00639BAD /* Zoomtivity.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F206E7A51E5757EE00639BAD /* Zoomtivity.xcdatamodeld */; };
 		F206E7A91E5757EE00639BAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F206E7A81E5757EE00639BAD /* Assets.xcassets */; };
 		F206E7AC1E5757EE00639BAD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F206E7AA1E5757EE00639BAD /* LaunchScreen.storyboard */; };
+		F2CD3D5A1E57889400CC9A3B /* MapLocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D591E57889400CC9A3B /* MapLocationDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		F206E7A81E5757EE00639BAD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F206E7AB1E5757EE00639BAD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F206E7AD1E5757EE00639BAD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2CD3D591E57889400CC9A3B /* MapLocationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocationDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,9 +96,26 @@
 		F206E7B31E5779B300639BAD /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F206E7A01E5757EE00639BAD /* MapViewController.swift */,
+				F2CD3D571E57886200CC9A3B /* Map View Controller */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F2CD3D571E57886200CC9A3B /* Map View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D581E57886B00CC9A3B /* Delegates */,
+				F206E7A01E5757EE00639BAD /* MapViewController.swift */,
+			);
+			name = "Map View Controller";
+			sourceTree = "<group>";
+		};
+		F2CD3D581E57886B00CC9A3B /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D591E57889400CC9A3B /* MapLocationDelegate.swift */,
+			);
+			name = Delegates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,6 +244,7 @@
 			files = (
 				F206E7A11E5757EE00639BAD /* MapViewController.swift in Sources */,
 				F206E79F1E5757EE00639BAD /* AppDelegate.swift in Sources */,
+				F2CD3D5A1E57889400CC9A3B /* MapLocationDelegate.swift in Sources */,
 				F206E7A71E5757EE00639BAD /* Zoomtivity.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

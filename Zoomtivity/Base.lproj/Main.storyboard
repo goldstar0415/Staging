@@ -13,8 +13,9 @@
         <scene sceneID="8ie-t3-zZG">
             <objects>
                 <navigationController id="gMf-HB-1G9" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="CGl-nR-ZtB">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="CGl-nR-ZtB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -52,6 +53,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zWc-9g-ENM"/>
+                    <connections>
+                        <outlet property="mapView" destination="92J-2m-PIO" id="Q3a-uk-Aft"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7hk-xH-aJm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
