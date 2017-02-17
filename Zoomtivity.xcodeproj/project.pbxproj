@@ -16,6 +16,7 @@
 		F206E7AC1E5757EE00639BAD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F206E7AA1E5757EE00639BAD /* LaunchScreen.storyboard */; };
 		F2CD3D5A1E57889400CC9A3B /* MapLocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D591E57889400CC9A3B /* MapLocationDelegate.swift */; };
 		F2CD3D5F1E578F8300CC9A3B /* ZoomtivityColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D5E1E578F8300CC9A3B /* ZoomtivityColor.swift */; };
+		F2CD3D621E579A8200CC9A3B /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		F206E7AD1E5757EE00639BAD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F2CD3D591E57889400CC9A3B /* MapLocationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocationDelegate.swift; sourceTree = "<group>"; };
 		F2CD3D5E1E578F8300CC9A3B /* ZoomtivityColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomtivityColor.swift; sourceTree = "<group>"; };
+		F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 		F206E79D1E5757EE00639BAD /* Zoomtivity */ = {
 			isa = PBXGroup;
 			children = (
+				F2CD3D601E5797C800CC9A3B /* Core Data */,
 				F2CD3D5C1E578F6000CC9A3B /* Extensions */,
 				F206E7B31E5779B300639BAD /* View Controllers */,
 				F206E79E1E5757EE00639BAD /* AppDelegate.swift */,
@@ -135,6 +138,14 @@
 				F2CD3D5E1E578F8300CC9A3B /* ZoomtivityColor.swift */,
 			);
 			name = Colour;
+			sourceTree = "<group>";
+		};
+		F2CD3D601E5797C800CC9A3B /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */,
+			);
+			name = "Core Data";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,6 +274,7 @@
 			files = (
 				F206E7A11E5757EE00639BAD /* MapViewController.swift in Sources */,
 				F206E79F1E5757EE00639BAD /* AppDelegate.swift in Sources */,
+				F2CD3D621E579A8200CC9A3B /* DatabaseManager.swift in Sources */,
 				F2CD3D5A1E57889400CC9A3B /* MapLocationDelegate.swift in Sources */,
 				F2CD3D5F1E578F8300CC9A3B /* ZoomtivityColor.swift in Sources */,
 				F206E7A71E5757EE00639BAD /* Zoomtivity.xcdatamodeld in Sources */,
