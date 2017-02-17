@@ -18,6 +18,7 @@
 		F2CD3D5F1E578F8300CC9A3B /* ZoomtivityColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D5E1E578F8300CC9A3B /* ZoomtivityColor.swift */; };
 		F2CD3D621E579A8200CC9A3B /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */; };
 		F2CD3D661E579C5600CC9A3B /* JSONBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D651E579C5600CC9A3B /* JSONBuilder.swift */; };
+		F2CD3D6C1E57A2D800CC9A3B /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D6B1E57A2D800CC9A3B /* APIManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		F2CD3D5E1E578F8300CC9A3B /* ZoomtivityColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomtivityColor.swift; sourceTree = "<group>"; };
 		F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		F2CD3D651E579C5600CC9A3B /* JSONBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONBuilder.swift; sourceTree = "<group>"; };
+		F2CD3D6B1E57A2D800CC9A3B /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 		F206E79D1E5757EE00639BAD /* Zoomtivity */ = {
 			isa = PBXGroup;
 			children = (
+				F2CD3D6A1E57A2CA00CC9A3B /* Networking */,
 				F2CD3D641E579C4700CC9A3B /* Utlities */,
 				F2CD3D601E5797C800CC9A3B /* Core Data */,
 				F2CD3D5C1E578F6000CC9A3B /* Extensions */,
@@ -157,6 +160,14 @@
 				F2CD3D651E579C5600CC9A3B /* JSONBuilder.swift */,
 			);
 			name = Utlities;
+			sourceTree = "<group>";
+		};
+		F2CD3D6A1E57A2CA00CC9A3B /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D6B1E57A2D800CC9A3B /* APIManager.swift */,
+			);
+			name = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,6 +294,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2CD3D6C1E57A2D800CC9A3B /* APIManager.swift in Sources */,
 				F206E7A11E5757EE00639BAD /* MapViewController.swift in Sources */,
 				F206E79F1E5757EE00639BAD /* AppDelegate.swift in Sources */,
 				F2CD3D661E579C5600CC9A3B /* JSONBuilder.swift in Sources */,
