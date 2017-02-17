@@ -13,7 +13,7 @@ gulp.task('build:fonts', function () {
   return gulp.src($.mainBowerFiles())
     .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
     .pipe($.flatten())
-    .pipe(gulp.dest(path.join(config.paths.dist, '/assets/fonts/')));
+    .pipe(gulp.dest(path.join(config.paths.dist, '/fonts/')));
 });
 
 gulp.task('build:service-worker', function () {
