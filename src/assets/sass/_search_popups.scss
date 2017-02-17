@@ -282,7 +282,7 @@
         li {
             font: 500 14px/24px;
             color: #929fa7;
-            background-color: #fff;
+            background-color: $light_brown;
             display: inline-block;
             //   border-top: 1px solid #aabac1;
             float: left;
@@ -2283,7 +2283,7 @@
     bottom: 0;
     right: 0;
     width: 70px;
-    background-color: white;
+    background-color: $light_brown;
     position: absolute;
     @media (min-width: 768px) {
         ul li img {
@@ -2313,7 +2313,7 @@
     }
 
     ul {
-        border-left: 3px solid whitesmoke;
+        border-left: 3px solid $dark_blue;
         overflow: auto;
         display: flex;
         justify-content: center;
@@ -2321,13 +2321,13 @@
         flex-direction: column;
         position: relative;
         height: calc(100vh - 100px);
-        background-color: white;
+        background-color: $light_brown;
         @media (max-width: 767px) {
             height: 50px;
             flex-direction: row;
             width: 100vw;
             border-left: none;
-            border-top: 3px solid whitesmoke;
+            border-top: 3px solid $dark_blue;
         }
 
         li {
