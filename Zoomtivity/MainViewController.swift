@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SideMenu
 
 class MainViewController: UIViewController {
     
@@ -16,6 +17,11 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureHamburgerButton()
+        
+        let menuLeftNavigationController = storyboard!.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as! UISideMenuNavigationController
+        SideMenuManager.menuPresentMode = .menuSlideIn
+        SideMenuManager
+        SideMenuManager.menuLeftNavigationController = menuLeftNavigationController
     }
     
     func configureHamburgerButton() {
@@ -34,21 +40,9 @@ class MainViewController: UIViewController {
     }
     
     func openHamburgerMenu() {
-        if leftDrawerMenu == nil {
-            leftDrawerMenu = LeftDrawerViewController()
+        if let leftMenu = SideMenuManager.menuLeftNavigationController {
+            self.present(leftMenu, animated: true, completion: nil)
         }
-        
-        let transition = CATransition()
-        transition.duration = 0.25
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromLeft
-        view.window!.layer.add(transition, forKey: kCATransition)
-        
-        leftDrawerMenu.modalPresentationStyle = .overCurrentContext
-        self.modalPresentationStyle = .overCurrentContext
-        self.navigationController?.present(leftDrawerMenu,
-                                           animated: false,
-                                           completion: nil)
     }
     
 }
