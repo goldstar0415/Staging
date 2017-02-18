@@ -9,7 +9,7 @@
 import UIKit
 import SKMaps
 
-class MapViewController: UIViewController {
+class MapViewController: MainViewController {
 
     @IBOutlet weak var mapView: SKMapView!
     

@@ -9,5 +9,6 @@ target 'Zoomtivity' do
   pod 'ScoutMaps-iOS-SDK'
   pod 'Alamofire'
   pod 'SwiftyJSON'
+  pod 'SideMenu'
 
 end

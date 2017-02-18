@@ -19,6 +19,9 @@
 		F2CD3D621E579A8200CC9A3B /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */; };
 		F2CD3D661E579C5600CC9A3B /* JSONBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D651E579C5600CC9A3B /* JSONBuilder.swift */; };
 		F2CD3D6C1E57A2D800CC9A3B /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D6B1E57A2D800CC9A3B /* APIManager.swift */; };
+		F2CD3D6F1E57BE9C00CC9A3B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D6E1E57BE9C00CC9A3B /* MainViewController.swift */; };
+		F2CD3D721E57C01100CC9A3B /* LeftDrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D701E57C01100CC9A3B /* LeftDrawerViewController.swift */; };
+		F2CD3D731E57C01100CC9A3B /* LeftDrawerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2CD3D711E57C01100CC9A3B /* LeftDrawerViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 		F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		F2CD3D651E579C5600CC9A3B /* JSONBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONBuilder.swift; sourceTree = "<group>"; };
 		F2CD3D6B1E57A2D800CC9A3B /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		F2CD3D6E1E57BE9C00CC9A3B /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		F2CD3D701E57C01100CC9A3B /* LeftDrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftDrawerViewController.swift; sourceTree = "<group>"; };
+		F2CD3D711E57C01100CC9A3B /* LeftDrawerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftDrawerViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +114,8 @@
 		F206E7B31E5779B300639BAD /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F2CD3D741E57C01900CC9A3B /* Left Drawer */,
+				F2CD3D6D1E57BE6300CC9A3B /* Main View Controller */,
 				F2CD3D571E57886200CC9A3B /* Map View Controller */,
 			);
 			name = "View Controllers";
@@ -168,6 +176,23 @@
 				F2CD3D6B1E57A2D800CC9A3B /* APIManager.swift */,
 			);
 			name = Networking;
+			sourceTree = "<group>";
+		};
+		F2CD3D6D1E57BE6300CC9A3B /* Main View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D6E1E57BE9C00CC9A3B /* MainViewController.swift */,
+			);
+			name = "Main View Controller";
+			sourceTree = "<group>";
+		};
+		F2CD3D741E57C01900CC9A3B /* Left Drawer */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D701E57C01100CC9A3B /* LeftDrawerViewController.swift */,
+				F2CD3D711E57C01100CC9A3B /* LeftDrawerViewController.xib */,
+			);
+			name = "Left Drawer";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +258,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2CD3D731E57C01100CC9A3B /* LeftDrawerViewController.xib in Resources */,
 				F206E7AC1E5757EE00639BAD /* LaunchScreen.storyboard in Resources */,
 				F206E7A91E5757EE00639BAD /* Assets.xcassets in Resources */,
 				F206E7A41E5757EE00639BAD /* Main.storyboard in Resources */,
@@ -296,10 +322,12 @@
 			files = (
 				F2CD3D6C1E57A2D800CC9A3B /* APIManager.swift in Sources */,
 				F206E7A11E5757EE00639BAD /* MapViewController.swift in Sources */,
+				F2CD3D721E57C01100CC9A3B /* LeftDrawerViewController.swift in Sources */,
 				F206E79F1E5757EE00639BAD /* AppDelegate.swift in Sources */,
 				F2CD3D661E579C5600CC9A3B /* JSONBuilder.swift in Sources */,
 				F2CD3D621E579A8200CC9A3B /* DatabaseManager.swift in Sources */,
 				F2CD3D5A1E57889400CC9A3B /* MapLocationDelegate.swift in Sources */,
+				F2CD3D6F1E57BE9C00CC9A3B /* MainViewController.swift in Sources */,
 				F2CD3D5F1E578F8300CC9A3B /* ZoomtivityColor.swift in Sources */,
 				F206E7A71E5757EE00639BAD /* Zoomtivity.xcdatamodeld in Sources */,
 			);
