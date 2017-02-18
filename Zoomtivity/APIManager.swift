@@ -13,9 +13,11 @@ import SwiftyJSON
 
 class APIManager : NSObject {
     
+    typealias APIResponseHandler = ([[String:AnyObject]]) -> Void
+    
     static let sharedAPIManager = APIManager()
     
-    func fetchPointsOfInterest(type: String!,  southWestPoint: CLLocationCoordinate2D!, northEastPoint:CLLocationCoordinate2D!) {
+    func fetchPointsOfInterest(type: String!,  southWestPoint: CLLocationCoordinate2D!, northEastPoint:CLLocationCoordinate2D!, completion: @escaping APIResponseHandler) {
         
         let body = JSONBuilder.buildJSONForPOIRequest(type: type,
                                                       southWestPoint: southWestPoint,
@@ -29,11 +31,14 @@ class APIManager : NSObject {
                           headers: nil).response { (response) in
                     
                             if let error = response.error {
-                                print(error)
+                                completion([["error" : error.localizedDescription as AnyObject]])
                             }
                             
                             if let data = response.data {
-                                print(JSON(data: data))
+                                
+                                let swiftyJsonVar = JSON(data: data)
+                                completion(swiftyJsonVar.arrayObject as! [[String:AnyObject]])
+                             
                             }
                             
         }

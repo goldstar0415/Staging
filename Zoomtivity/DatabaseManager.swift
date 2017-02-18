@@ -13,6 +13,8 @@ import CoreLocation
 class DatabaseManager: NSObject {
     static let sharedDataManager = DatabaseManager()
     
+    typealias POIResponseHandler = ([POI]) -> Void
+    
     var context: NSManagedObjectContext!
     
     lazy var persistentContainer: NSPersistentContainer = {
@@ -70,14 +72,31 @@ class DatabaseManager: NSObject {
         } catch { }
     }
     
-    func fetchPoints(type: String!,  southWestPoint: CLLocationCoordinate2D!, northEastPoint: CLLocationCoordinate2D!) {
+    func fetchPoints(type: String!,  southWestPoint: CLLocationCoordinate2D!, northEastPoint: CLLocationCoordinate2D!, completion: @escaping POIResponseHandler) {
         
         APIManager.sharedAPIManager.fetchPointsOfInterest(type: type,
                                                           southWestPoint: southWestPoint,
-                                                          northEastPoint: northEastPoint)
-        
-        
-        
+                                                          northEastPoint: northEastPoint,
+                                                          completion: { points in
+                                                            
+                                                            var pointsOfInterest = [POI]()
+                                                            
+                                                            for point in points {
+                                                                
+                                                                let newFoodPOI = POIFood(context: self.context)
+                                                                if let locationDetails = point["location"] {
+                                                                    
+                                                                    let locationDict = locationDetails as! [String : String]
+                                                                    
+                                                                    newFoodPOI.latitude = Double.init(locationDict["lat"]!)!
+                                                                    newFoodPOI.longitude = Double.init(locationDict["lng"]!)!
+                                                                    pointsOfInterest.append(newFoodPOI)
+                                                                }
+                                                            }
+                                                            
+                                                            completion(pointsOfInterest)
+                                                                                  
+        })
     }
     
         

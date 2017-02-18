@@ -22,6 +22,7 @@
 		F2CD3D6F1E57BE9C00CC9A3B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D6E1E57BE9C00CC9A3B /* MainViewController.swift */; };
 		F2CD3D721E57C01100CC9A3B /* LeftDrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D701E57C01100CC9A3B /* LeftDrawerViewController.swift */; };
 		F2CD3D731E57C01100CC9A3B /* LeftDrawerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2CD3D711E57C01100CC9A3B /* LeftDrawerViewController.xib */; };
+		F2CD3D761E58B43C00CC9A3B /* MapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D751E58B43C00CC9A3B /* MapViewDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		F2CD3D6E1E57BE9C00CC9A3B /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		F2CD3D701E57C01100CC9A3B /* LeftDrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftDrawerViewController.swift; sourceTree = "<group>"; };
 		F2CD3D711E57C01100CC9A3B /* LeftDrawerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftDrawerViewController.xib; sourceTree = "<group>"; };
+		F2CD3D751E58B43C00CC9A3B /* MapViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				F2CD3D591E57889400CC9A3B /* MapLocationDelegate.swift */,
+				F2CD3D751E58B43C00CC9A3B /* MapViewDelegate.swift */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				F2CD3D661E579C5600CC9A3B /* JSONBuilder.swift in Sources */,
 				F2CD3D621E579A8200CC9A3B /* DatabaseManager.swift in Sources */,
 				F2CD3D5A1E57889400CC9A3B /* MapLocationDelegate.swift in Sources */,
+				F2CD3D761E58B43C00CC9A3B /* MapViewDelegate.swift in Sources */,
 				F2CD3D6F1E57BE9C00CC9A3B /* MainViewController.swift in Sources */,
 				F2CD3D5F1E578F8300CC9A3B /* ZoomtivityColor.swift in Sources */,
 				F206E7A71E5757EE00639BAD /* Zoomtivity.xcdatamodeld in Sources */,

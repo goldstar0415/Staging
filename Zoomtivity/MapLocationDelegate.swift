@@ -26,11 +26,37 @@ extension MapViewController : SKPositionerServiceDelegate {
             let southWestCoords = mapView.coordinate(for: CGPoint.init(x: 1, y: mapView.bounds.size.height - 1))
             DatabaseManager.sharedDataManager.fetchPoints(type: "food",
                                                           southWestPoint: southWestCoords,
-                                                          northEastPoint: northEastCoords)
+                                                          northEastPoint: northEastCoords,
+                                                          completion: { points in
+                                                        self.placePointsOnMap(points: points)
+            })
             
         }
         
         currentUserLocation = currentLocation
+    }
+    
+    
+    func placePointsOnMap(points : [POI]) {
+        
+        
+        
+        let pinImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
+        pinImageView.image = UIImage.init(named: "marker-food")
+        let annotationView = SKAnnotationView.init(view: pinImageView, reuseIdentifier: "foodPin")
+       
+        
+        for (index, point) in points.enumerated() {
+            
+            let annotation = SKAnnotation()
+            annotation.annotationView = annotationView
+            annotation.identifier = Int32(index)
+            annotation.location = CLLocationCoordinate2DMake(point.latitude, point.longitude)
+            mapView.addAnnotation(annotation, with: SKAnimationSettings.default())
+            print(annotation.location)
+            
+        }
+        
     }
     
 }
