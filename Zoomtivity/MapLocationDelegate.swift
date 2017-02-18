@@ -10,9 +10,7 @@ import Foundation
 import SKMaps
 
 extension MapViewController : SKPositionerServiceDelegate {
-    
-    
-    
+        
     func positionerService(_ positionerService: SKPositionerService!, updatedCurrentLocation currentLocation: CLLocation!) {
         
         if currentUserLocation == nil {
@@ -30,8 +28,6 @@ extension MapViewController : SKPositionerServiceDelegate {
     
     
     func placePointsOnMap(points : [POI]) {
-        
-        
         
         let pinImageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 30, height: 30))
         pinImageView.image = UIImage.init(named: "marker-food")

@@ -156,15 +156,8 @@ class MapViewController: MainViewController {
                 self.searchField.resignFirstResponder()
             })
         })
-        
-        
+
     }
-    
-    
-    
-    
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
