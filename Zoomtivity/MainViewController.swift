@@ -20,7 +20,6 @@ class MainViewController: UIViewController {
         
         let menuLeftNavigationController = storyboard!.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as! UISideMenuNavigationController
         SideMenuManager.menuPresentMode = .menuSlideIn
-        SideMenuManager
         SideMenuManager.menuLeftNavigationController = menuLeftNavigationController
     }
     

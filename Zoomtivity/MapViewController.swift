@@ -40,6 +40,7 @@ class MapViewController: MainViewController {
         mapView.settings.followUserPosition = false
         mapView.settings.rotationEnabled = false
         mapView.settings.showCompass = false
+        mapView.mapScaleView.isHidden = true
         
     
         SKPositionerService.sharedInstance().delegate = self
