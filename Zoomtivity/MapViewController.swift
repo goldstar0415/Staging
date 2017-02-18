@@ -48,6 +48,17 @@ class MapViewController: MainViewController {
         SKPositionerService.sharedInstance().startLocationUpdate()
     }
     
+    func getFoodForCurrentMapPosition() {
+        let northEastCoords = mapView.coordinate(for: CGPoint.init(x: mapView.bounds.size.width - 1, y: 1))
+        let southWestCoords = mapView.coordinate(for: CGPoint.init(x: 1, y: mapView.bounds.size.height - 1))
+        DatabaseManager.sharedDataManager.fetchPoints(type: "food",
+                                                      southWestPoint: southWestCoords,
+                                                      northEastPoint: northEastCoords,
+                                                      completion: { points in
+                                                 self.placePointsOnMap(points: points)
+        })
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

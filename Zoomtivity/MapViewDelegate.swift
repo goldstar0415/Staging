@@ -15,4 +15,9 @@ extension MapViewController : SKMapViewDelegate {
         print(annotation.location)
     }
     
+    func mapView(_ mapView: SKMapView, didEndRegionChangeTo region: SKCoordinateRegion) {
+        getFoodForCurrentMapPosition()
+    }
+
+    
 }
