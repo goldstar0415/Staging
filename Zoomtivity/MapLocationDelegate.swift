@@ -26,6 +26,32 @@ extension MapViewController : SKPositionerServiceDelegate {
         currentUserLocation = currentLocation
     }
     
+    func positionerService(_ positionerService: SKPositionerService!, didChange status: CLAuthorizationStatus) {
+        switch status {
+        case .denied:
+            moveToDefaultPosition()
+            break
+            
+        case .notDetermined:
+            moveToDefaultPosition()
+            break
+            
+        default:
+            break
+        }
+    }
+    
+    
+    func moveToDefaultPosition() {
+        var region = SKCoordinateRegion()
+        // picadilly circus london
+        region.center = CLLocationCoordinate2DMake(51.510067,
+                                                   -0.133869);
+        region.zoomLevel = 15;
+        mapView.visibleRegion = region;
+        getFoodForCurrentMapPosition()
+    }
+    
     
     func placePointsOnMap(points : [POI]) {
         
