@@ -58,7 +58,7 @@ class JsonParserController extends Controller {
                     'remote_id'   => $prefix . $parsedResult['hash'],
                     'description' => $this->makeEllipsis($parsedResult['description'], 3000),
                     'web_sites'   => $sites,
-                    'title'       => $parsedResult['title'],
+                    'title'       => str_limit($parsedResult['title'], 252),
                     'is_approved' => true,
                     'is_private'  => false,
                     'spot_type_category_id' => $categoryId,
