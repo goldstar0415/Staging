@@ -96,10 +96,10 @@
             </div>
         </div>
         <div class="spot-img-bottom">
-            <p class="spot-name">{{SpotCard.item.title}}</p>
+            <p class="spot-name" ng-bind-html="SpotCard.item.title"></p>
             <p class="spot-address">
                 <span class="glyphicon glyphicon-map-marker"></span>
-                <span>{{SpotCard.item.address || SpotCard.item.points[0].address}}</span>
+                <span ng-bind-html="SpotCard.item.address || SpotCard.item.points[0].address"></span>
             </p>
         </div>
     </div>
