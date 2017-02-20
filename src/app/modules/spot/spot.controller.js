@@ -156,14 +156,21 @@
             ShowMarkers([vm.spot]);
         }
 
-        if (vm.spot.booking_url) {
+        if (vm.amenitiesCount == 0 && vm.spot.booking_url) {
             AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/info').then(function(data) {
-                if (vm.amenitiesCount == 0) {
-                    vm.spot.amenities = data.amenities;
-                    vm.amenitiesCount = Object.keys(vm.spot.amenities).length;
-                }
+                vm.spot.amenities = data.amenities;
+                vm.amenitiesCount = Object.keys(vm.spot.amenities).length;
                 vm.mergeByProperty(vm.spot.photos, data.photos, 'id');
                 vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
+            });
+        }
+        
+        if (vm.spot.facebook_url) {
+            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/facebook-photos').then(function(data) {
+                if(data.facebook_photos)
+                {
+                    vm.mergeByProperty(vm.spot.photos, data.facebook_photos, 'id');
+                }
             });
         }
         
@@ -202,12 +209,6 @@
             }
         };
         calcRatings();
-        //vm.spot.rating = vm.spot.avg_rating;
-        //vm.spot.rating = vm.spot.avg_rating;
-        
-        
-        
-        
         
         if (vm.spot.booking_url) {
             vm.reviewsEnabled = false;
@@ -318,11 +319,6 @@
             vm.rating = vm.spot.avg_rating;
         }
         
-        /*AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/ratings').then(function(data) {
-            vm.reviews_total = data;
-            vm.spot.rating = data.total.rating;
-        });*/
-        
         if(!vm.spot.hours)
         {
             AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/hours').then(function(data) {
@@ -384,7 +380,6 @@
                 }
             });
             vm.photoModal.result.then(function() {
-                // $rootScope.setOpenedSpot(null);
                 $http.get(API_URL + '/spots/' + vm.spot.id)
                     .success(function success(data) {
                         vm.spot = data;
@@ -414,12 +409,6 @@
                     avg_rating: vm.spot.avg_rating,
                     total_reviews: vm.spot.total_reviews
                 }, {});
-                /*vm.votes = {};
-                vm.reviewsPagination = new ScrollService(SpotReview.query, vm.votes, {
-                    page: 0,
-                    limit: 10,
-                    spot_id: spot.id
-                });*/
             }
         }
         
