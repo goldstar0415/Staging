@@ -33,6 +33,8 @@
                     remote: {
                         url: API_URL + '/search/spots?query=%QUERY',
                         wildcard: '%QUERY',
+                        rateLimitBy: 'debounce',
+                        rateLimitWait: 600,
                         prepare: function(query, settings) {
                             settings.url += '&lat='+scope.location.lat+'&lng='+scope.location.lng;
                             settings.url = settings.url.replace(/\%QUERY/, query);

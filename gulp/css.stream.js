@@ -13,7 +13,6 @@ module.exports = [
   `${BOWER}/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css`,
   `${BOWER}/ng-tags-input/ng-tags-input.min.css`,
   `${BOWER}/toastr/toastr.css`,
-  `${BOWER}/Ionicons/css/ionicons.css`,
   `${BOWER}/bootstrap-modal/css/bootstrap-modal.css`,
   `${BOWER}/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css`,
   `${BOWER}/angular-carousel/dist/angular-carousel.css`,
