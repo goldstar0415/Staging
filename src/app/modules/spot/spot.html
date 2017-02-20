@@ -19,10 +19,10 @@
         <div class="opened-main">
             <div class="opened-name-bottom">
                 <div class="left">
-                    <p class="spot-name">{{Spot.spot.title}}</p>
+                    <p class="spot-name" ng-bind-html="Spot.spot.title"></p>
                     <p class="spot-address">
                         <span class="glyphicon glyphicon-map-marker"></span>
-                        <span>{{Spot.spot.address || Spot.spot.points[0].address}}</span>
+                        <span ng-bind-html="Spot.spot.address || Spot.spot.points[0].address"></span>
                     </p>
                 </div>
                 <div class="right">
