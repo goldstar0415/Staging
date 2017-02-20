@@ -90,6 +90,7 @@ Route::resource(
 );
 Route::get('spots/{spots}/prices', 'SpotController@prices');
 Route::get('spots/{spots}/info', 'SpotController@getBookingInfo');
+Route::get('spots/{spots}/facebook-photos', 'SpotController@getFacebookPhotos');
 
 Route::get('spots/{spots}/booking-rating', 'SpotController@getBookingRating');
 Route::get('spots/{spots}/hotelscom-rating', 'SpotController@getHotelsRating');

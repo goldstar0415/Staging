@@ -766,4 +766,13 @@ class SpotController extends Controller
             ]);
         }
     }
+    
+    public function getFacebookPhotos(Spot $spot) {
+        $result = ['facebook_photos' => null];
+        if(!empty($spot->facebook_url))
+        {
+            $result['facebook_photos'] = $spot->getFacebookPhotos();
+        }
+        return $result;
+    }
 }

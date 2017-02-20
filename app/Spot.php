@@ -1351,6 +1351,63 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         return null;
     }
     
+    public function getFacebookPhotos() {
+        $fb = app(LaravelFacebookSdk::class);
+        if($cachedResponse = $this->getCachedResponse('facebookPhotos'))
+        {
+            return $cachedResponse;
+        }
+        if( $this->checkUrl($this->facebook_url))
+        {
+            $id = $this->getFacebookIdFromUrl($this->facebook_url);
+            if($id)
+            {
+                try
+                {
+                    $response = $fb->get('/' . $id . '?fields=photos.limit(10){images}', config('laravel-facebook-sdk.app_token'));
+                    $values = $response->getGraphNode()->asArray();
+                    $images = [];
+                    $needCover = ($this->remotePhotos()->where('image_type', 1)->exists()) ? false : true;
+                    if(isset($values['photos']))
+                    {
+                        foreach($values['photos'] as $photo)
+                        {
+                            if(isset($photo['images']))
+                            {
+                                foreach($photo['images'] as $image)
+                                {
+                                    if($image['width'] <= 720 && !$this->remotePhotos()->where('url', $image['source'])->exists())
+                                    {
+                                        $images[] = new RemotePhoto([
+                                            'url' => $image['source'],
+                                            'image_type' => $needCover ? 1 : 0,
+                                            'size' => 'original',
+                                        ]);
+                                        if($needCover)
+                                        {
+                                            $needCover = false;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if(!empty($images))
+                    {
+                        $this->remotePhotos()->saveMany($images);
+                    }
+                    
+                    $this->setCachedResponse('facebookPhotos', $images);
+                    return $images;
+                }
+                catch (Exception $e) {}
+                catch (FacebookSDKException $e) {}
+            }
+        }
+        return null;
+    }
+    
     /*
      * Yelp API methods 
      */
@@ -1646,11 +1703,19 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     {
         $count = $this->votes()->where('remote_type', SpotVote::TYPE_TRIPADVISOR)->count();
         $result = null;
-        if($count >= 5)
+        if($count < 5)
         {
             $page = $this->getTripadvisorReviewsPage();
             if($page)
             {
+                $idsArr = [];
+                foreach( $page->find('.reviewSelector') as $reviewObj )
+                {
+                    $id = $reviewObj->getAttribute('id');
+                    $idsArr[] = str_replace('review_', '', $id);
+                }
+                $reviewsNeeded = 5 - $count;
+                $reviewsAdded = 0;
                 $reviews = [];
                 foreach( $page->find('.basic_review') as $reviewObj )
                 {
@@ -1663,12 +1728,22 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     {
                         continue;
                     }
+                    $removeFromMsg = $message->find('.partnerRvw', 0);
+                    if($removeFromMsg)
+                    {
+                        $removeFromMsg->outertext = '';
+                    }
                     $rating = $reviewObj->find('.rating_s_fill', 0);
                     if(empty($rating) || empty($rating->getAttribute('alt')))
                     {
                         continue;
                     }
-                    $remote_id = 'ta_' . md5($message);
+                    $reportObj = $reviewObj->find('.problem', 0);
+                    if(!$reportObj)
+                    {
+                        continue;
+                    }
+                    $remote_id = 'ta_' . str_replace('ReportIAP_', '', $reportObj->getAttribute('id'));
                     if($this->votes()->where('remote_id', $remote_id)->exists())
                     {
                         continue;
@@ -1694,6 +1769,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                         'updated_at' => $date,
                         'spot_id' => $this->id,
                     ];
+                    $reviewsAdded++;
+                    if($reviewsAdded >= $reviewsNeeded)
+                    {
+                        break;
+                    }
                 }
                 $this->votes()->insert($reviews);
                 $result = $reviews;
