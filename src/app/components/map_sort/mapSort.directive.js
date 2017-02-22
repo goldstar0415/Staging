@@ -164,7 +164,8 @@
                 tags: [],
                 dateFrom: '',
                 dateTo: '',
-                maxPrice: ''
+                maxPrice: '',
+                isApproved: "true"
             };
         }
 
@@ -554,6 +555,7 @@
             vm.searchParams.start_date = $rootScope.filterOptions.dateFrom;
             vm.searchParams.end_date = $rootScope.filterOptions.dateTo;
             vm.searchParams.price = $rootScope.filterOptions.maxPrice;
+            vm.searchParams.is_approved = $rootScope.filterOptions.isApproved;
             vm.searchParams.tags = $rootScope.filterOptions.tags;
         }
         
@@ -646,6 +648,10 @@
             
             if (vm.searchParams.price) {
                 data.filter.price = vm.searchParams.price;
+            }
+            
+            if (vm.searchParams.is_approved) {
+                data.filter.is_approved = vm.searchParams.is_approved;
             }
 
             if (vm.searchParams.tags) {

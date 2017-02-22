@@ -58,6 +58,14 @@
             <option value="50">Less than $50</option>
         </select>
     </div>
+    <div class="form-group" ng-if="$root.isRole($root.currentUser, 'admin')">
+        <label for="filterPriceRange">Is approved<span hidden>clear</span></label>
+        <select class="form-control" id="filterIsApproved" ng-model="$root.filterOptions.isApproved">
+            <option selected value="true">Yes</option>
+            <option value="false">No</option>
+            <option value="any">Any</option>
+        </select>
+    </div>
     <div class="form-group">
         <label for="filterCategory">Category<span hidden>clear</span></label>
         <!-- <div class="form-control" id="filterCategory" ng-dropdown-multiselect="" options="$root.categoryData" selected-model="$root.filterOptions.categories"></div> -->

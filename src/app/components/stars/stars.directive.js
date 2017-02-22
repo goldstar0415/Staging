@@ -24,7 +24,7 @@
     /** @ngInject */
     function StarsController($scope, Spot, $rootScope) {
       var vm = this;
-      vm.avg_rating = (vm.item.avg_rating) ? vm.item.avg_rating : vm.item.rating;
+      vm.avg_rating = vm.item.avg_rating;
       $scope.$watch('Stars.item.avg_rating', function (value, old) {
         vm.avg_rating = value;
       });
