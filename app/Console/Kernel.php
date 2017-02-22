@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $mailer = app(AppMailer::class);
+        //$mailer = app(AppMailer::class);
         // Check coming birthdays and spots
         $schedule->call(function () {
             
@@ -49,21 +49,21 @@ class Kernel extends ConsoleKernel
             });
         })->daily();
 
-        $schedule->call(function () use ($mailer) {
-            $users = GeneratedUser::with(['user' => function ($query) {
-                $query->where('verified', false);
-            }])->get();
-
-            foreach ($users as $user) {
-                $mailer->remindGeneratedUser($user->user, $user->password);
-            }
-        })->cron('* 0 * *  0/2');
+        //$schedule->call(function () use ($mailer) {
+        //    $users = GeneratedUser::with(['user' => function ($query) {
+        //        $query->where('verified', false);
+        //    }])->get();
+        //
+        //    foreach ($users as $user) {
+        //        $mailer->remindGeneratedUser($user->user, $user->password);
+        //    }
+        //})->cron('* 0 * *  0/2');
 
         $schedule->call(function () {
             $this->dispatch(app(\App\Jobs\ParseEvents::class));
 //            $this->dispatch(app(\App\Jobs\CrawlerRun::class));
         })->weekly();
 		
-		$schedule->command('command:refreshspotsview')->withoutOverlapping()->cron('2 * * * *');
+        $schedule->command('command:refreshspotsview')->withoutOverlapping()->cron('0 0 * * *');
     }
 }

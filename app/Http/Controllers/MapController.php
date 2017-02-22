@@ -77,46 +77,45 @@ class MapController extends Controller {
         /**
          * @var $spots \Illuminate\Database\Query\Builder
          */
+        
         $spots = SpotView::select(
-                        'mv_spots_spot_points.*', 
-                        DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 2)::float AS lat"), 
-                        DB::raw("split_part(trim(ST_AsText(mv_spots_spot_points.location)::text, 'POINT()'), ' ', 1)::float AS lng"),
-                        'spots.title',
-                        'spots.avg_rating',
-                        'spot_points.address',
-                        'spots.minrate',
-                        'spots.maxrate',
-                        'spots.currencycode',
-                        'spots.avg_rating',
-                        'spots.total_reviews'
+                        'spots_mat_view.*', 
+                        DB::raw("split_part(trim(ST_AsText(spots_mat_view.location)::text, 'POINT()'), ' ', 2)::float AS lat"), 
+                        DB::raw("split_part(trim(ST_AsText(spots_mat_view.location)::text, 'POINT()'), ' ', 1)::float AS lng")
                 )
                 ->distinct()
-                ->where('mv_spots_spot_points.is_private', false)
-                ->where('mv_spots_spot_points.is_approved', true);
-        $spots->leftJoin('spots', 'spots.id', '=', 'mv_spots_spot_points.id');
+                ->where('spots_mat_view.is_private', false);
+        
+        $is_approved = true;
+        if($request->has('filter.is_approved') && auth()->check() && auth()->user()->hasRole('admin'))
+        {
+            $is_approved = $request->filter['is_approved'];
+        }
+        if($is_approved !== 'any')
+        {
+            $spots->where('spots_mat_view.is_approved', filter_var($is_approved, FILTER_VALIDATE_BOOLEAN));
+        }       
         if ($request->has('search_text')) {
-            $spots->where('mv_spots_spot_points.title_address', 'ilike', "%$request->search_text%");
+            $spots->whereRaw("concat_ws(' ', spots_mat_view.title::text, spots_mat_view.address::text) ilike ?", "%$request->search_text%");
         }
 
         if ($request->has('filter.category_ids')) {
-            $spots->whereIn('mv_spots_spot_points.spot_type_category_id', $request->filter['category_ids']);
+            $spots->whereIn('spots_mat_view.spot_type_category_id', $request->filter['category_ids']);
         }
 
         if ($request->has('type')) {
-            $spots->whereRaw("mv_spots_spot_points.spot_type_category_id in (
-				select id from spot_type_categories where spot_type_id in (select id from spot_types WHERE name = '{$request->type}'))");
+            $spots->where("spots_mat_view.type_name", $request->type);
         }
 
         if ($request->has('filter.start_date')) {
-            $spots->where('mv_spots_spot_points.start_date', '>=', $request->filter['start_date']);
+            $spots->where('spots_mat_view.start_date', '>=', $request->filter['start_date']);
         } else {
-            if ($request->has('type') && in_array($request->type, ['event']) and ! $request->has('filter.end_date')) {
-                $spots->where('mv_spots_spot_points.end_date', '>', Carbon::now()->format('Y-m-d'));
+            if ($request->has('type') && $request->type == 'event' and ! $request->has('filter.end_date')) {
+                $spots->where('spots_mat_view.end_date', '>', Carbon::now()->format('Y-m-d'));
             }
         }
-
         if ($request->has('filter.end_date')) {
-            $spots->where('mv_spots_spot_points.end_date', '<=', $request->filter['end_date'] . ' 23:59:59');
+            $spots->where('spots_mat_view.end_date', '<=', $request->filter['end_date'] . ' 23:59:59');
         }
 
         if ($request->has('filter.tags') && !empty($request->filter['tags'])) {
@@ -124,7 +123,7 @@ class MapController extends Controller {
             $tags = $request->filter['tags'];
             
             $spots->leftJoin('spot_tag', function ($join) {
-                $join->on('spot_tag.spot_id', '=', 'mv_spots_spot_points.id');
+                $join->on('spot_tag.spot_id', '=', 'spots_mat_view.id');
             });
             $spots->leftJoin('tags', function($join) {
                 $join->on('spot_tag.tag_id', '=', 'tags.id');
@@ -134,16 +133,16 @@ class MapController extends Controller {
                 $query->whereIn('tags.name', $tags);
                 foreach($tags as $tag)
                 {
-                    $query->orWhere('spots.title', 'ilike', '%'.DB::raw($tag).'%');
+                    $query->orWhere('spots_mat_view.title', 'ilike', '%'.DB::raw($tag).'%');
                 }
             });
         }
 
         if ($request->has('filter.rating')) {
-            //$spots->whereRaw("mv_spots_spot_points.id in (select qRating.spot_id from (select spot_votes.spot_id, avg(spot_votes.vote) OVER (PARTITION BY spot_id) as ratingAvg from spot_votes) qRating where ratingAvg > ?)", [$request->filter['rating']]);
+            //$spots->whereRaw("spots_mat_view.id in (select qRating.spot_id from (select spot_votes.spot_id, avg(spot_votes.vote) OVER (PARTITION BY spot_id) as ratingAvg from spot_votes) qRating where ratingAvg > ?)", [$request->filter['rating']]);
             if($request->filter['rating'] > 0)
             {
-                $spots->where('spots.avg_rating', '>=', $request->filter['rating']);
+                $spots->where('spots_mat_view.avg_rating', '>=', $request->filter['rating']);
             }
         }
         $calc_cur = [];
@@ -154,7 +153,7 @@ class MapController extends Controller {
             $rates = $this->rates;
             if(empty($rates))
             {
-                $spots->where('spots.minrate', '<=', $price)->where('spots.currencycode', 'USD');
+                $spots->where('spots_mat_view.minrate', '<=', $price)->where('spots_mat_view.currencycode', 'USD');
             }
             else
             {
@@ -162,13 +161,13 @@ class MapController extends Controller {
                     $query->where(function($subquery) use ($price, &$calc_cur)
                     {
                         $calc_cur['USD'] = $price;
-                        $subquery->whereRaw('CAST (spots.minrate AS FLOAT) <= ?', [(float)$price])->where('spots.currencycode', 'USD');
+                        $subquery->whereRaw('CAST (spots_mat_view.minrate AS FLOAT) <= ?', [(float)$price])->where('spots_mat_view.currencycode', 'USD');
                     });
                     foreach($rates as $cc => $cr)
                     {
                         $query->orWhere(function($subquery) use ($price, $cc, $cr, &$calc_cur){
                             $calc_cur[$cc] = $price * $cr;
-                            $subquery->whereRaw('CAST (spots.minrate AS FLOAT) <= ?', [$price * $cr])->where('spots.currencycode', $cc);
+                            $subquery->whereRaw('CAST (spots_mat_view.minrate AS FLOAT) <= ?', [$price * $cr])->where('spots_mat_view.currencycode', $cc);
                         });
                     }
                 });
@@ -180,7 +179,7 @@ class MapController extends Controller {
                 $search_areas = [];
                 foreach ($request->filter['b_boxes'] as $b_box) {
                     $search_areas[] = sprintf(
-                            '"mv_spots_spot_points"."location" && ST_MakeEnvelope(%s, %s, %s, %s, 4326)', 
+                            '"spots_mat_view"."location" && ST_MakeEnvelope(%s, %s, %s, %s, 4326)', 
                             $b_box['_southWest']['lng'], 
                             $b_box['_southWest']['lat'], 
                             $b_box['_northEast']['lng'], 
@@ -190,40 +189,25 @@ class MapController extends Controller {
                 $spots->whereRaw(implode(' OR ', $search_areas));
             }
         }
-        
-        $spots->leftJoin('spot_points', 'spot_points.spot_id', '=', 'mv_spots_spot_points.id');
-        $spots->with('rating');
-        
+                
         if ($request->has('filter.path')) {
             $path = [];
             foreach ($request->filter['path'] as $p) {
                 $path[] = "{$p['lng']} {$p['lat']}";
             }
-            $spots->whereRaw("ST_Distance(ST_GeogFromText('LINESTRING(" . implode(",", $path) . ")'),mv_spots_spot_points.location::geography) < ?", [6000]);
+            $spots->whereRaw("ST_Distance(ST_GeogFromText('LINESTRING(" . implode(",", $path) . ")'),spots_mat_view.location::geography) < ?", [6000]);
         }
         // search spots
-        //var_dump($spots->toSql());
-        //dd($spots->getBindings());
         $spotsArr = $spots->skip(0)->take(1000)->get();
         // cache cetegory icon URLs
         $cats = SpotTypeCategory::select("spot_type_categories.id", "spot_type_categories.spot_type_id")->get();
         $iconsCache = [];
-        $typesCache = [];
         foreach ($cats as $c) {
             $iconsCache[$c->id] = $c->icon_url;
-            $typesCache[$c->id]['display_name'] = ($c->type)?$c->type->display_name:null;
-            $typesCache[$c->id]['name'] = ($c->type)?$c->type->name:null;
         }
         $points = [];
         // fill spots
         foreach ($spotsArr as $spot) {
-            
-            //$rating = (isset($spot->rating[0])) ? (float)$spot->rating[0]->rating : 0;
-            //if(empty($rating) && Cache::has('spot-ratings-' . $spot->id))
-            //{
-            //    $ratingsArr = Cache::get('spot-ratings-' . $spot->id);
-            //    $rating = $ratingsArr['total']['rating'];
-            //}
             $points[] = [
                 'id' => $spot->spot_point_id,
                 'spot_id' => $spot->id,
@@ -231,19 +215,20 @@ class MapController extends Controller {
                     'lat' => $spot->lat,
                     'lng' => $spot->lng
                 ],
-                'rating' => $spot->rating,
                 'title' => $spot->title,
                 'address' => $spot->address,
                 'category_icon_url' => $iconsCache[$spot->spot_type_category_id],
-                'category_name' => $typesCache[$spot->spot_type_category_id]['display_name'],
-                'type' => $typesCache[$spot->spot_type_category_id]['name'],
+                'category_name' => $spot->type_display_name,
+                'type' => $spot->type_name,
                 'minrate' => $spot->minrate,
                 'maxrate' => $spot->maxrate,
                 'currencycode' => $spot->currencycode,
                 'cover_url'    => $spot->cover,
                 'avg_rating' => $spot->avg_rating, 
                 'total_reviews' => $spot->total_reviews,
-            ];
+                'is_approved' => $spot->is_approved,
+                'is_private' => $spot->is_private,
+            ]; 
         }
         return $points;
     }
