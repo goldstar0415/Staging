@@ -29,8 +29,7 @@
       'ngWebworker',
       'ui.checkbox',
     ])
-    .config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
-
+    .config(['$ocLazyLoadProvider', 'GOOGLE_API_KEYS_POOL', function ($ocLazyLoadProvider, GOOGLE_API_KEYS_POOL) {
       $ocLazyLoadProvider.config({
         // debug: true,
         modules: [
@@ -43,7 +42,7 @@
             'https://cdnjs.cloudflare.com/ajax/libs/angular-ui-calendar/1.0.0/calendar.min.js',
           ]},
           {name: 'gmaps', files: [
-            {type: 'js', path: 'https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAytote4odQOn_IpNkj207MXG2bF1uM2Zs'},
+            {type: 'js', path: 'https://maps.googleapis.com/maps/api/js?libraries=places&key='+_.sample(GOOGLE_API_KEYS_POOL), cache: false},
           ]},
           {name: 'cropper', files: versionize([
             'https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.js',

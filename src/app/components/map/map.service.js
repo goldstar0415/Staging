@@ -894,7 +894,8 @@
               zoomControl: true,
               zoomControlPosition: 'top-left',
               center: [37.405075073242188, -96.416015625000000],
-              zoom: 5
+              zoom: 5,
+              worldCopyJump: true,
           });
           
           // fix the attribution control
