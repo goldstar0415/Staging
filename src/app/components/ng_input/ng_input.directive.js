@@ -45,25 +45,6 @@
             var uniqLinks = _.reject(links, function (link) {
               return _.findWhere(blackListLinks, {url: link});
             });
-            if (uniqLinks.length > 0) {
-              $http({
-                url: API_URL + '/url-parse',
-                method: 'GET',
-                params: {'links[]': uniqLinks}
-              }).success(function (resp) {
-                var parsedLinks = resp.data;
-                if (resp.result && parsedLinks.length) {
-                  _.each(parsedLinks, function (parsedLink) {
-                    if (parsedLink.title && !parsedLink.error) {
-                      parsedLink.image = parsedLink.images.length ? parsedLink.images[0] : null;
-                      delete parsedLink.images;
-                      vm.attachments.links.push(parsedLink);
-                    }
-                  });
-                  blackListLinks = _.union(blackListLinks, parsedLinks);
-                }
-              });
-            }
           }
         }
       });
