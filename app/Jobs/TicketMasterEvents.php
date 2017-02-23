@@ -39,11 +39,6 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
     private $settings;
 
     /**
-     * @var GoogleAddress
-     */
-    private $google_address = null;
-    
-    /**
      * @var integer
      */
     public $page;
