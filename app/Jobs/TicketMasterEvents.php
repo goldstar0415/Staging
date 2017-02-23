@@ -68,7 +68,6 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
      * Execute the job.
      *
      * @param Client $http
-     * @param GoogleAddress $address
      */
     public function handle(Client $http)
     {
