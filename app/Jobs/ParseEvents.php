@@ -80,38 +80,17 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
         $nextPage = $page+1;
         Log::info('nextPage = ' . $nextPage);
 
-        $pages_count = 0;
         $data = $this->fetchData($query_string);
         $events = collect($data['events']);
         $this->importEvents($events);
         
-        if($nextPage <= 10) //may set all pages instead of 5: $pages_count
+        if($nextPage <= 10) //may set all pages instead of 5:
         {
             Log::info('$nextPage <= 5');
             $newJob = (new ParseEvents);
             $newJob->page = $nextPage;
             dispatch($newJob);
         }
-        
-        // uncomment it if you want to do all job in one queue
-        /*for ($nextPage; $nextPage <=  5 ; $nextPage++) //may set all pages instead of 5: $pages_count
-        {
-            $query_string['page'] = $nextPage;
-            $data = $this->fetchData($query_string);
-            $events = collect($data['_embedded']['events']);
-            $this->importEvents($events);
-        }*/
-        
-        /*$pages_count = ceil($data['meta']['total'] / $data['meta']['per_page']);
-        for ($page = 2; $page < 5 ; ++$page) {
-            if (!$this->importEvents($events)) {
-                break;
-            }
-            $query_string['page'] = $page;
-            $data = $this->fetchData($query_string);
-            $events = collect($data['events']);
-        }*/
-
     }
 
     public function importEvents(Collection $events)
