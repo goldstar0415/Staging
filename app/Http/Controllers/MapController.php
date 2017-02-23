@@ -77,13 +77,12 @@ class MapController extends Controller {
         /**
          * @var $spots \Illuminate\Database\Query\Builder
          */
-        
         $spots = SpotView::select(
                         'spots_mat_view.*', 
                         DB::raw("split_part(trim(ST_AsText(spots_mat_view.location)::text, 'POINT()'), ' ', 2)::float AS lat"), 
                         DB::raw("split_part(trim(ST_AsText(spots_mat_view.location)::text, 'POINT()'), ' ', 1)::float AS lng")
                 )
-                ->distinct()
+                //->distinct()
                 ->where('spots_mat_view.is_private', false);
         
         $is_approved = true;
@@ -207,7 +206,22 @@ class MapController extends Controller {
         }
         $points = [];
         // fill spots
+        $idsArr = [];
         foreach ($spotsArr as $spot) {
+            if(in_array($spot->id, $idsArr))
+            {
+                continue;
+            }
+            $cover = env('APP_URL') . '/uploads/missings/cover/original/missing.png';
+            if(!empty(trim($spot->remote_cover)))
+            {
+                $cover = trim($spot->remote_cover);
+            }
+            if(!empty(trim($spot->cover)))
+            {
+                $cover = env('S3_ENDPOINT') . "/cover/". $spot->id . "/original/" . trim($spot->cover);
+            }
+            
             $points[] = [
                 'id' => $spot->spot_point_id,
                 'spot_id' => $spot->id,
@@ -223,13 +237,15 @@ class MapController extends Controller {
                 'minrate' => $spot->minrate,
                 'maxrate' => $spot->maxrate,
                 'currencycode' => $spot->currencycode,
-                'cover_url'    => $spot->cover,
+                'cover_url'    => $cover, //$spot->cover,
                 'avg_rating' => $spot->avg_rating, 
                 'total_reviews' => $spot->total_reviews,
                 'is_approved' => $spot->is_approved,
                 'is_private' => $spot->is_private,
             ]; 
+            $idsArr[] = $spot->id;
         }
+        
         return $points;
     }
     

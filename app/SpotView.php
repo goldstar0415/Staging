@@ -61,7 +61,6 @@ class SpotView extends BaseModel
 {
     protected $table = 'spots_mat_view';
 
-    protected $appnds = ['cover'];
     public $timestamps = false;
     /**
      * Get the points for the spot
@@ -81,50 +80,6 @@ class SpotView extends BaseModel
         return $this->votes()
             ->selectRaw('avg(vote) as rating, spot_id')
             ->groupBy('spot_id');
-    }
-    
-    public function getCoverAttribute()
-    {
-        $cover_url = null;
-        // Cover from remote service
-        $rph = RemotePhoto::where('associated_type', Spot::class)
-                ->where('associated_id', $this->id)
-                ->orderBy('image_type', 'desc')
-                ->orderBy('created_at', 'asc')
-                ->first();
-        if( $rph )
-        {
-            $cover_url = $rph->url;
-        }
-        // Cover from booking (disabled)
-        /*if( !$cover_url )
-        {
-            $spot = new Spot();
-            $spot->id = $this->id;
-            $spotInfo = $spot->getSpotExtension();
-            $bookingUrl = (isset($spotInfo->booking_url))?$spot->getBookingUrl($spotInfo->booking_url):false;
-            if(
-                isset($spotInfo->booking_url) && 
-                $spot->checkUrl($spotInfo->booking_url) && 
-                $bookingUrl &&
-                $bookingPageContent = $spot->getPageContent($bookingUrl, [
-                    'headers' => $spot->getBookingHeaders()
-                ])
-            )
-            {
-                $cover_url = $result['cover_url'] = $spot->getBookingCover($bookingPageContent);
-            }
-        }*/
-        // Cover from spot
-        if ( empty($cover_url) ) {
-            $spot = Spot::where('id', $this->id)->first();
-            if($spot)
-            {
-                $cover = $spot->cover_url;
-                $cover_url = $cover['thumb'];
-            }
-        }
-        return $cover_url;
     }
         
         

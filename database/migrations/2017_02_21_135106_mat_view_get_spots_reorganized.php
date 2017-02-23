@@ -40,6 +40,10 @@ CREATE VIEW spots_view AS
 
         spot_points.location,
         spot_points.id as spot_point_id,
+        
+        remote_photos.url as remote_cover,
+        spots.cover_file_name as cover,
+
         row_number() OVER () AS primary_key
     from spots 
         inner join spot_points 
@@ -48,6 +52,16 @@ CREATE VIEW spots_view AS
             on (spots.spot_type_category_id = spot_type_categories.id)
         left join spot_types
             on (spot_type_categories.spot_type_id = spot_types.id)
+        left join (
+            select distinct associated_id, id ,url, image_type 
+                from remote_photos 
+                where associated_type = 'App\Spot' 
+                    and image_type = 1) as rps 
+            on (rps.associated_id = spots.id)
+        left join remote_photos 
+            on rps.id = remote_photos.id
+            
+
 );
 
 
@@ -183,6 +197,60 @@ CREATE OR REPLACE FUNCTION mv_spot_p_delete ()
 CREATE TRIGGER mv_spot_points_delete AFTER
     UPDATE ON spot_points FOR EACH ROW EXECUTE
     PROCEDURE mv_spot_p_delete();
+    
+/***************** Spot remote photos triggers ******/
+CREATE OR REPLACE FUNCTION mv_spot_remote_p_insert ()
+    RETURNS TRIGGER
+    AS 
+    $$
+        begin
+            if new.image_type = 1 and new.associated_type = 'App\Spot' then
+                PERFORM refresh_spots_mat_view(new.associated_id);
+            end if;
+            RETURN new;
+        end;
+    $$ 
+    LANGUAGE PLPGSQL;
+
+CREATE TRIGGER mv_spot_remote_photos_insert AFTER
+    INSERT ON remote_photos FOR EACH ROW EXECUTE
+    PROCEDURE mv_spot_remote_p_insert();
+
+
+CREATE OR REPLACE FUNCTION mv_spot_remote_p_update()
+    RETURNS TRIGGER
+    AS 
+    $$
+        begin
+            if new.image_type = 1 and new.associated_type = 'App\Spot' then
+                PERFORM refresh_spots_mat_view(new.associated_id);
+            end if;
+            RETURN new;
+        end;
+    $$
+    LANGUAGE PLPGSQL;
+
+CREATE TRIGGER mv_spot_remote_photos_update AFTER
+    UPDATE ON remote_photos FOR EACH ROW EXECUTE
+    PROCEDURE mv_spot_remote_p_update();
+
+
+CREATE OR REPLACE FUNCTION mv_spot_remote_p_delete ()
+    RETURNS TRIGGER
+    AS 
+    $$
+        begin
+            if old.image_type = 1 and old.associated_type = 'App\Spot' then
+                PERFORM refresh_spots_mat_view(old.associated_id);
+            end if;
+            RETURN old;
+        end;
+    $$ 
+    LANGUAGE PLPGSQL;
+
+CREATE TRIGGER mv_spot_remote_photos_delete AFTER
+    UPDATE ON remote_photos FOR EACH ROW EXECUTE
+    PROCEDURE mv_spot_remote_p_delete();
 
                 ");
         });
