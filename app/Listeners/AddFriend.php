@@ -22,6 +22,14 @@ class AddFriend
      */
     public function handle(UserFollowEvent $event)
     {
+        // check if this is the beginning of great friendship
+        if ($event->getFollower()->followers()->find($event->getFollowing()->id)) {
+            $event->getFollower()->friends()->attach($event->getFollowing()->id, [
+                'last_name' => $event->getFollowing()->last_name
+            ]);
+            $event->getFollowing()->friends()->attach($event->getFollower()->id, ['last_name' => $event->getFollower()->last_name]);
+        }
+        return;
         $friend = $event->getFollowing();
         $friend_model = new Friend([
             'first_name' => $friend->first_name,
