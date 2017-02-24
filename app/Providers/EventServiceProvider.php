@@ -19,7 +19,7 @@ use App\Events\OnWallPostDislike;
 use App\Events\OnSpotRemind;
 use App\Events\OnPlanRemind;
 use App\Events\OnAlbumPhotoComment;
-
+use App\Events\UserInviteEvent;
 use App\Listeners\AddFriend;
 use App\Listeners\AddReview;
 use App\Listeners\Feeder;
@@ -46,8 +46,7 @@ class EventServiceProvider extends ServiceProvider
             Feeder::class,
             MailNotifier::class
         ],
-        OnWallMessage::class => [
-            Feeder::class,
+        UserInviteEvent::class => [
             MailNotifier::class
         ],
         OnWallPostDelete::class => [

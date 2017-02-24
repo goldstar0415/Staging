@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Friend;
+use App\Http\Requests\Following\FollowRequest;
 use App\Http\Requests\Friend\FriendRequest;
 use App\Http\Requests\Friend\SetFriendAvatar;
 use App\Http\Requests\Friend\StoreFriendRequest;
@@ -35,6 +36,7 @@ class FriendController extends Controller
      */
     public function index(PaginateRequest $request)
     {
+        // get friends ids
         return $this->paginatealbe($request, $request->user()->friends());
     }
 
