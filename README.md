@@ -9,6 +9,12 @@ Run
 
 `bower install`
 
+# Configure the current environment
+
+- `cd src/` 
+- `cp env.example.js env.js`
+- edit the env.js file
+
 #Build development version and start a server
 
 Run `gulp serve`
