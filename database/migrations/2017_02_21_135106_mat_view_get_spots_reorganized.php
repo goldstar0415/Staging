@@ -43,6 +43,7 @@ CREATE VIEW spots_view AS
         
         remote_photos.url as remote_cover,
         spots.cover_file_name as cover,
+        setweight(to_tsvector(coalesce(spots.title::text, '')), 'A') || setweight(to_tsvector(coalesce(spot_points.address::text, '')), 'B') as fts,
 
         row_number() OVER () AS primary_key
     from spots 
