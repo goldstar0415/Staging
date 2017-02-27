@@ -78,13 +78,13 @@ class MapController extends Controller {
          * @var $spots \Illuminate\Database\Query\Builder
          */
         $spots = SpotView::select(
-                        'spots_mat_view.*', 
-                        DB::raw("split_part(trim(ST_AsText(spots_mat_view.location)::text, 'POINT()'), ' ', 2)::float AS lat"), 
+                        'spots_mat_view.*',
+                        DB::raw("split_part(trim(ST_AsText(spots_mat_view.location)::text, 'POINT()'), ' ', 2)::float AS lat"),
                         DB::raw("split_part(trim(ST_AsText(spots_mat_view.location)::text, 'POINT()'), ' ', 1)::float AS lng")
                 )
                 //->distinct()
                 ->where('spots_mat_view.is_private', false);
-        
+
         $is_approved = true;
         if($request->has('filter.is_approved') && auth()->check() && auth()->user()->hasRole('admin'))
         {
@@ -93,7 +93,7 @@ class MapController extends Controller {
         if($is_approved !== 'any')
         {
             $spots->where('spots_mat_view.is_approved', filter_var($is_approved, FILTER_VALIDATE_BOOLEAN));
-        }       
+        }
         if ($request->has('search_text')) {
             $spots->whereRaw("concat_ws(' ', spots_mat_view.title::text, spots_mat_view.address::text) ilike ?", "%$request->search_text%");
         }
@@ -178,7 +178,7 @@ class MapController extends Controller {
                 $search_areas = [];
                 foreach ($request->filter['b_boxes'] as $b_box) {
                     $search_areas[] = sprintf(
-                            '"spots_mat_view"."location" && ST_MakeEnvelope(%s, %s, %s, %s, 4326)', 
+                            '"spots_mat_view"."location" && ST_MakeEnvelope(%s, %s, %s, %s, 4326)',
                             $b_box['_southWest']['lng'], 
                             $b_box['_southWest']['lat'], 
                             $b_box['_northEast']['lng'], 
@@ -188,7 +188,7 @@ class MapController extends Controller {
                 $spots->whereRaw(implode(' OR ', $search_areas));
             }
         }
-                
+
         if ($request->has('filter.path')) {
             $path = [];
             foreach ($request->filter['path'] as $p) {
@@ -221,7 +221,7 @@ class MapController extends Controller {
             {
                 $cover = env('S3_ENDPOINT') . "/cover/". $spot->id . "/original/" . trim($spot->cover);
             }
-            
+
             $points[] = [
                 'id' => $spot->spot_point_id,
                 'spot_id' => $spot->id,
@@ -246,7 +246,7 @@ class MapController extends Controller {
             ]; 
             $idsArr[] = $spot->id;
         }
-        
+
         return $points;
     }
     

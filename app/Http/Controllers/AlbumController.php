@@ -124,8 +124,6 @@ class AlbumController extends Controller
      */
     public function show(Request $request, $album)
     {
-        $user = $request->user();
-
         if ($album->is_private and !$this->privacy->hasPermission($album->user, Privacy::FOLLOWINGS) or
             !$album->is_private and !$this->privacy->hasPermission($album->user, $album->user->privacy_photo_map)) {
             abort(403, 'Access denied');

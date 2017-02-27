@@ -39,11 +39,6 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
     private $settings;
 
     /**
-     * @var GoogleAddress
-     */
-    private $google_address = null;
-    
-    /**
      * @var integer
      */
     public $page;
@@ -73,7 +68,6 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
      * Execute the job.
      *
      * @param Client $http
-     * @param GoogleAddress $address
      */
     public function handle(Client $http)
     {
@@ -84,7 +78,6 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
         $query_string = ['apikey' => $this->settings['apikey'] , 'size' => 500, 'page' => $page];
         $data = [];
         $data = $this->fetchData($query_string);
-        $pages_count = $data['page']['totalPages'];
         $nextPage = $data['page']['number']+1;
         //Log::info('nextPage = ' . $nextPage);
         $events = collect($data['_embedded']['events']);
@@ -92,24 +85,12 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
         $this->importEvents($events);
         
         // comment it if you want to do all job in one queue
-        if($nextPage <= 5) //may set all pages instead of 5: $pages_count
+        if($nextPage <= 5) //may set all pages instead of 5
         {
-            //Log::info('$nextPage <= 5');
             $newJob = (new TicketMasterEvents);
             $newJob->page = $nextPage;
             dispatch($newJob);
         }
-
-        // uncomment it if you want to do all job in one queue
-        /*for ($nextPage; $nextPage <=  5 ; $nextPage++) //may set all pages instead of 5: $pages_count
-        {
-            $query_string['page'] = $nextPage;
-            $data = $this->fetchData($query_string);
-            $events = collect($data['_embedded']['events']);
-            $this->importEvents($events);
-        }*/
-
-
     }
 
     public function importEvents(Collection $events)
