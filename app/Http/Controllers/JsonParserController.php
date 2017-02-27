@@ -81,7 +81,7 @@ class JsonParserController extends Controller {
                 $newSpots[] = $spot;
             }
         }
-        $spotsCount = count($newSpots);
+
         Log::info('EventsJsonParser: new spots count: ' . count($newSpots));
         Log::info('EventsJsonParser: offset: ' . $currentOffset);
         return [

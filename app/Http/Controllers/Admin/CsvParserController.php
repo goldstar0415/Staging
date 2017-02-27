@@ -67,7 +67,6 @@ class CsvParserController extends Controller
         $reader->setOffset($file_offset);
         $reader->open($path);
         $isFirstRow         = ($file_offset == 0)?true:false;
-        $rows               = [];
         $rows_parsed_now    = 0;
         if(empty($pref))
         {
@@ -119,7 +118,6 @@ class CsvParserController extends Controller
                             $this->savePhoto($spot_id, $item);
                             $this->saveTags($spot_id, $item);
                         }
-                        //$rows[] = $item;
                     }
                     else {
                         $result['messages'][] = 'Remote service ID missed in string #' . ($rows_parsed_before + $rows_parsed_now + 1);
@@ -133,7 +131,7 @@ class CsvParserController extends Controller
             }
             $reader->close();
         }
-        //$result['rows']                 = $rows;
+
         $result['rows_parsed']          = $rows_parsed_before + $rows_parsed_now;
         $result['rows_parsed_now']      = $rows_parsed_now;
         header('Content-Type: text/html;charset=utf-8');
