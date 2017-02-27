@@ -38,7 +38,7 @@ gulp.task('build:other', () => {
     .pipe(gulp.dest(path.join(config.paths.dist, '/')));
 });
 
-gulp.task('build:pre-build', ['build:fonts', 'build:service-worker', 'build:other']);
+gulp.task('build:pre-build', ['build:fonts', 'build:service-worker', 'build:other', 'boot']);
 
 gulp.task('build:main', ['vendor', 'app', 'css', 'build:pre-build'], () => {
   const rev = gitRevSync.short();
