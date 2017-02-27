@@ -174,40 +174,28 @@
             });
         }
         
+        vm.services = [
+          'booking',
+          'hotelscom',
+          'yelp',
+          'facebook',
+          'tripadvisor',
+          'google',
+          'zomato'
+        ];
+        
         vm.reviews_total = {
             zoomtivity: {
                 rating: parseFloat(vm.spot.rating),
                 reviews_count: parseInt(vm.spot.reviews_count)
-            },
-            booking: {
-                rating: parseFloat(vm.spot.booking_rating),
-                reviews_count: parseInt(vm.spot.booking_reviews_count)
-            },
-            hotelscom: {
-                rating: parseFloat(vm.spot.hotelscom_rating),
-                reviews_count: parseInt(vm.spot.hotelscom_reviews_count)
-            },
-            yelp: {
-                rating: parseFloat(vm.spot.yelp_rating),
-                reviews_count: parseInt(vm.spot.yelp_reviews_count)
-            },
-            facebook: {
-                rating: parseFloat(vm.spot.facebook_rating),
-                reviews_count: parseInt(vm.spot.facebook_reviews_count)
-            },
-            tripadvisor: {
-                rating: parseFloat(vm.spot.tripadvisor_rating),
-                reviews_count: parseInt(vm.spot.tripadvisor_reviews_count)
-            },
-            google: {
-                rating: parseFloat(vm.spot.google_rating),
-                reviews_count: parseInt(vm.spot.google_reviews_count)
-            },
-            zomato: {
-                rating: parseFloat(vm.spot.zomato_rating),
-                reviews_count: parseInt(vm.spot.zomato_reviews_count)
             }
         };
+        _.each(vm.services, function(value) {
+            vm.reviews_total[value] = {
+                rating: parseFloat(vm.spot[value + '_rating']),
+                reviews_count: parseInt(vm.spot[value + '_reviews_count'])
+            };
+        });
         calcRatings();
         
         if (vm.spot.booking_url) {

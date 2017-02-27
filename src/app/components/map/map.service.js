@@ -2769,7 +2769,10 @@
                   marker.closePopup();
                   marker.isHighlighted = true;
               });
-              markers.push(marker);
+              if(marker._latlng)
+              {
+                  markers.push(marker);
+              }
           });
           otherLayer.addLayers(markers);
       }
