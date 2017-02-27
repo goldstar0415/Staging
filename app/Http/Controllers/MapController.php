@@ -132,7 +132,7 @@ class MapController extends Controller {
                 $query->whereIn('tags.name', $tags);
                 foreach($tags as $tag)
                 {
-                    $query->orWhere('spots_mat_view.title', 'ilike', '%'.DB::raw($tag).'%');
+                    $query->orWhere('spots_mat_view.title', 'ilike', "%$tag%");
                 }
             });
         }
@@ -242,6 +242,7 @@ class MapController extends Controller {
                 'total_reviews' => $spot->total_reviews,
                 'is_approved' => $spot->is_approved,
                 'is_private' => $spot->is_private,
+                'start_date' => $spot->start_date,
             ]; 
             $idsArr[] = $spot->id;
         }

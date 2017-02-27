@@ -25,9 +25,11 @@ use App\SpotReport;
 use App\SpotType;
 use App\SpotTypeCategory;
 use App\SpotVote;
+use App\SpotView;
 use App\User;
 use App\RemotePhoto;
 use App\SpotOwnerRequest as SpotOwnerRequestModel;
+use App\Jobs\SpotViewUpdater;
 use ChrisKonnertz\OpenGraph\OpenGraph;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
@@ -161,6 +163,8 @@ class SpotController extends Controller
         if ($spot->is_approved) {
             event(new OnSpotCreate($spot));
         }
+        
+        $this->dispatch(new SpotViewUpdater($spot->id, 'save'));
 
         return $spot->load('category.type');
     }
@@ -282,6 +286,8 @@ class SpotController extends Controller
         if ($spot->is_approved) {
             event(new OnSpotUpdate($spot));
         }
+        
+        $this->dispatch(new SpotViewUpdater($spot->id, 'update'));
 
         return $spot;
     }
@@ -295,6 +301,7 @@ class SpotController extends Controller
      */
     public function destroy(SpotDestroyRequest $request, $spot)
     {
+        $this->dispatch(new SpotViewUpdater($spot->id, 'delete'));
         return ['result' => $spot->delete()];
     }
 
@@ -765,10 +772,12 @@ class SpotController extends Controller
     {
         if($request->has('avg_rating') && $request->has('total_reviews'))
         {
-            $spot->update([
+            $updArr = [
                 'avg_rating' => $request->avg_rating,
                 'total_reviews' => $request->total_reviews
-            ]);
+            ];
+            SpotView::where('id', $spot->id)->update($updArr);
+            $spot->update($updArr);
         }
     }
     
