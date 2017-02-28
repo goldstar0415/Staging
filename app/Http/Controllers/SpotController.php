@@ -120,7 +120,6 @@ class SpotController extends Controller
      */
     public function store(SpotStoreRequest $request)
     {
-        
         $spot = new Spot($request->except([
             'locations',
             'tags',
@@ -130,10 +129,9 @@ class SpotController extends Controller
             'is_facebook_import'
         ]));
 
-        if ($request->hasFile('cover')) {
-            $cover = $request->file('cover');
-            $spot->cover = $cover->getRealPath();
-        }
+        $this->parseRequestCover($request, $spot);
+        $this->parseRequestDescription($request, $spot);
+
         if ($spot->is_private or $request->is_facebook_import) {
             $spot->is_approved = true;
         }
@@ -141,24 +139,12 @@ class SpotController extends Controller
             $spot->is_private = false;
             $spot->category()->associate(SpotTypeCategory::whereName('FaceBook')->first());
         }
-        if ($request->has('description')) {
-            $description = nl2br(e($request->description));
-            $spot->description = $description;
-        }
 
         $request->user()->spots()->save($spot);
-        if ($request->has('tags')) {
-            $spot->tags = $request->input('tags');
-        }
-        $spot->locations = $request->input('locations');
 
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file) {
-                $spot->photos()->create([
-                    'photo' => $file
-                ]);
-            }
-        }
+        $this->parseRequestTags($request, $spot);
+        $this->parseRequestLocations($request, $spot);
+        $this->parseRequestFiles($request, $spot);
 
         if ($spot->is_approved) {
             event(new OnSpotCreate($spot));
@@ -232,25 +218,15 @@ class SpotController extends Controller
             '_method',
             'is_private'
         ]));
-        if ($request->hasFile('cover')) {
-            $cover = $request->file('cover');
-            $spot->cover = $cover->getRealPath();
-        }
-        
-        if($request->has('description'))
-        {
-            $description = nl2br(e($request->description));
-            $spot->description = $description;
-        }
-        if ($request->has('tags')) {
-            $spot->tags = $request->input('tags');
-        }
-        $spot->locations = $request->input('locations');
+
+        $this->parseRequestCover($request, $spot);
+        $this->parseRequestDescription($request, $spot);
+        $this->parseRequestTags($request, $spot);
+        $this->parseRequestLocations($request, $spot);
 
         if (!$spot->is_private) {
             $is_approved = ($spot->user_id != null)?false:true;
-            if(auth()->check() && auth()->user()->hasRole('admin'))
-            {
+            if (auth()->check() && auth()->user()->hasRole('admin')) {
                 $is_approved = true;
             }
             $spot->is_approved = $is_approved;
@@ -258,19 +234,8 @@ class SpotController extends Controller
 
         $spot->save();
 
-        $deleted_files = $request->input('deleted_files');
-
-        if (!empty($deleted_files) and $spot->photos()->find($deleted_files)->count() === count($deleted_files)) {
-            SpotPhoto::destroy($deleted_files);
-        }
-
-        if ($request->has('files')) {
-            foreach ($request->file('files') as $file) {
-                $spot->photos()->create([
-                    'photo' => $file
-                ]);
-            }
-        }
+        $this->deleteSpotPhotos($request, $spot);
+        $this->parseRequestFiles($request, $spot);
 
         if ($request->is_private != $spot->is_private) {
             if (!$request->is_private) {
@@ -293,11 +258,88 @@ class SpotController extends Controller
     }
 
     /**
+     * Parse spot cover from request
+     * @param Request $request
+     * @param Spot $spot
+     */
+    private function parseRequestCover($request, $spot)
+    {
+        if ($request->hasFile('cover')) {
+            $cover = $request->file('cover');
+            $spot->cover = $cover->getRealPath();
+        }
+    }
+
+    /**
+     * Parse spot description from request
+     * @param Request $request
+     * @param Spot $spot
+     */
+    private function parseRequestDescription($request, $spot)
+    {
+        if ($request->has('description')) {
+            $description = nl2br(e($request->description));
+            $spot->description = $description;
+        }
+    }
+
+    /**
+     * Attach photos from request to given spot
+     * @param Request $request
+     * @param Spot $spot
+     */
+    private function parseRequestFiles($request, $spot)
+    {
+        if ($request->has('files')) {
+            foreach ($request->file('files') as $file) {
+                $spot->photos()->create([
+                    'photo' => $file
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Parse spot tags from request
+     * @param Request $request
+     * @param Spot $spot
+     */
+    private function parseRequestTags($request, $spot)
+    {
+        if ($request->has('tags')) {
+            $spot->tags = $request->input('tags');
+        }
+    }
+
+    /**
+     * Parse spot locations from request
+     * @param Request $request
+     * @param Spot $spot
+     */
+    private function parseRequestLocations($request, $spot)
+    {
+        $spot->locations = $request->input('locations');
+    }
+
+    /**
+     * Remove requested spot photos
+     * @param $request
+     * @param $spot
+     */
+    private function deleteSpotPhotos($request, $spot)
+    {
+        $deletedFiles = $request->input('deleted_files');
+        if (!empty($deletedFiles) and $spot->photos()->find($deletedFiles)->count() === count($deletedFiles)) {
+            SpotPhoto::destroy($deletedFiles);
+        }
+    }
+
+    /**
      * Remove the specified spot from storage.
      *
      * @param SpotDestroyRequest $request
      * @param Spot $spot
-     * @return bool|null
+     * @return array
      */
     public function destroy(SpotDestroyRequest $request, $spot)
     {
