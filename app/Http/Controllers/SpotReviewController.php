@@ -55,7 +55,7 @@ class SpotReviewController extends Controller
 
     /**
      * Store a newly created spot review in storage.
-     * @param SpotReviewStoreRequest $request
+     * @param SpotReviewRequest $request
      * @param Spot $spot
      * @return SpotVote
      */
@@ -64,7 +64,7 @@ class SpotReviewController extends Controller
         $review = new SpotVote([
             'message' => $request->input('message'),
             'vote'    => $request->input('vote')
-            ]);
+        ]);
         $review->user()->associate($request->user());
 
         $spot->votes()->save($review);
@@ -91,9 +91,9 @@ class SpotReviewController extends Controller
     /**
      * Update the specified spot review in storage.
      *
-     * @param SpotReviewRequest $request
+     * @param SpotReviewStoreRequest $request
      * @param Spot $spot
-     * @param SpotVote $comment
+     * @param $review
      * @return SpotVote
      */
     public function update(SpotReviewStoreRequest $request, $spot, $review)
