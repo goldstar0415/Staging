@@ -174,3 +174,9 @@ Route::get('prerender/{page_url}', 'PrerenderController@render')->where('page_ur
  * Search Spots
  */
 Route::get('search/spots', 'SearchController@search');
+
+/**
+ * Weather
+ */
+
+Route::get('weather/darksky', 'WeatherController@darksky');
