@@ -43,18 +43,13 @@ class FriendController extends Controller
     /**
      * Store a newly created friend in storage.
      * @param StoreFriendRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return Friend|\Illuminate\Http\JsonResponse
      */
     public function store(StoreFriendRequest $request)
     {
         $inputs = $request->except(['avatar', 'files']);
         $friend = new Friend($inputs);
-
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $friend->avatar = $avatar;
-        }
-
+        $this->parseRequestAvatar($request, $friend);
         $request->user()->friends()->save($friend);
 
         return $friend;
@@ -75,19 +70,28 @@ class FriendController extends Controller
      * Update the specified friend in storage.
      * @param UpdateFriendRequest $request
      * @param \App\Friend $friend
-     * @return \Illuminate\Http\JsonResponse
+     * @return Friend|\Illuminate\Http\JsonResponse
      */
     public function update(UpdateFriendRequest $request, $friend)
     {
         $inputs = $request->except(['avatar', 'files', 'avatar_url', 'default_location', 'friend']);
+        $this->parseRequestAvatar($request, $friend);
+        $friend->update($inputs);
+
+        return $friend;
+    }
+
+    /**
+     * Parse friend avatar from request
+     * @param Request $request
+     * @param Friend $friend
+     */
+    private function parseRequestAvatar($request, $friend)
+    {
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $friend->avatar = $avatar;
         }
-		
-        $friend->update($inputs);
-
-        return $friend;
     }
 
     /**
