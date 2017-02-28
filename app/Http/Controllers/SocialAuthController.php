@@ -41,6 +41,10 @@ class SocialAuthController extends Controller
      */
     public function getAccount(Request $request, $social)
     {
+        /** @var \Laravel\Socialite\Contracts\User $socialUser */
+        /** @var User $newUser */
+        /** @var \Illuminate\Http\JsonResponse $errResponse */
+
         $provider = Socialite::with($social->name);
         if ($social->name === 'facebook') {
             $provider->scopes(['email', 'user_friends']);
@@ -50,75 +54,148 @@ class SocialAuthController extends Controller
             if ($error = $this->checkError($request)) {
                 return $error;
             }
-            /**
-             * @var \Laravel\Socialite\Contracts\User $user
-             */
-            $user = $provider->user();
-            if (!$user or !$user->getEmail()) {
-                return redirect()->away(frontend_url() . '?' . http_build_query([
-                    'auth_error' => [
-                        'error' => 'No user data'
-                    ]                    
-                ]));
+
+            $socialUser = $provider->user();
+            if (!$socialUser or !$socialUser->getEmail()) {
+                return self::getRedirectProviderError();
             }
 
             if (!$this->auth->check()) {
-                //Checks by social identifier if user exists
-                $exist_user = $this->getUserByKey($social, $user->getId());
 
-                //Checks if user exists with current social identifier, auth if does
-                if ($exist_user) {
-                    $this->auth->login($exist_user);
-
-                    return redirect()->away(frontend_url($exist_user->alias ?: $exist_user->id));
+                if ($redirectResponse = $this->checkExistingUser($social, $socialUser)) {
+                    return $redirectResponse;
                 }
 
-                //Checks if account exists with social email, auth and attach current social if does
-                $exist_user = User::where('email', $user->getEmail())->first();
+                $newUser = $this->createUser($social, $socialUser);
+                $this->auth->login($newUser);
 
-                if ($exist_user) {
-                    $this->auth->login($exist_user);
-                    $this->attachSocial($this->auth->user(), $social, $user->getId());
-
-                    return redirect()->away(frontend_url($exist_user->alias ?: $exist_user->id));
-                }
-
-                //If account for current social data doesn't exist - create new one
-                $name = $user->getName();
-                list($first_name, $last_name) = str_contains($name, ' ') ? explode(' ', $name) : [$name, null];
-                $new_user = User::create([
-                    'email' => $user->getEmail(),
-                    'first_name' => $first_name,
-                    'last_name' => $last_name,
-                    'avatar' => self::getLargeAvatarUrl( $social->name, $user->getAvatar() ),
-                    'verified' => true
-                ]);
-                $this->attachSocial($new_user, $social, $user->getId());
-                $new_user->roles()->attach(Role::take(config('entrust.default')));
-                $this->auth->login($new_user);
-
-                return redirect()->away(frontend_url($new_user->alias ?: $new_user->id));
+                return self::getRedirectSuccess($newUser);
             }
 
-            //Check if user is trying to attach his/her social account to the existing one
-            if ($request->user()->socials()->where('name', $social->name)->exists()) {
-                return response()->json(
-                    ['message' => 'User already attached ' . $social->display_name . ' social'],
-                    403
-                );
+            if ($errResponse = $this->checkSocialAccount($request, $social, $socialUser)) {
+                return $errResponse;
             }
 
-            //If someone already attached current social account
-            if ($this->getUserByKey($social, $user->getId())) {
-                return response()->json(['message' => 'Somebody already attached this social'], 403);
-            }
+            $this->attachSocial($request->user(), $social, $socialUser->getId());
 
-            $this->attachSocial($request->user(), $social, $user->getId());
-
-            return redirect()->away(frontend_url('settings'));
+            return self::getRedirectSettings();
         }
 
         return $provider->redirect();
+    }
+
+    /**
+     * Does user already exist, login and redirect if does
+     * @param Social $social
+     * @param \Laravel\Socialite\Contracts\User $socialUser
+     * @return false|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    private function checkExistingUser($social, $socialUser)
+    {
+        //Checks by social identifier if user exists, auth if does
+        /** @var User $existingUser */
+        $existingUser = $this->getUserByKey($social, $socialUser->getId());
+        if ($existingUser) {
+            $this->auth->login($existingUser);
+            return self::getRedirectSuccess($existingUser);
+        }
+
+        //Checks if account exists with social email, auth and attach current social if does
+        /** @var User $existingUser */
+        $existingUser = $this->getUserByEmail($socialUser->getEmail());
+        if ($existingUser) {
+            $this->auth->login($existingUser);
+            $this->attachSocial($this->auth->user(), $social, $socialUser->getId());
+            return self::getRedirectSuccess($existingUser);
+        }
+        return false;
+    }
+
+    /**
+     * Check if user is trying to attach his/her social account to the existing one
+     * or if someone already attached current social account
+     * @param Request $request
+     * @param Social $social
+     * @param \Laravel\Socialite\Contracts\User $socialUser
+     * @return false|\Illuminate\Http\JsonResponse
+     */
+    private function checkSocialAccount(Request $request, Social $social, $socialUser)
+    {
+        if ($request->user()->socials()->where('name', $social->name)->exists()) {
+            return response()->json(
+                ['message' => 'User already attached ' . $social->display_name . ' social'],
+                403
+            );
+        }
+        if ($this->getUserByKey($social, $socialUser->getId())) {
+            return response()->json(['message' => 'Somebody already attached this social'], 403);
+        }
+
+        return false;
+    }
+
+    /**
+     * Save a new social user
+     * @param Social $social
+     * @param \Laravel\Socialite\Contracts\User $socialUser
+     * @return User
+     */
+    private function createUser($social, $socialUser)
+    {
+        $name = $socialUser->getName();
+        list($first_name, $last_name) = str_contains($name, ' ') ? explode(' ', $name) : [$name, null];
+        $newUser = User::create([
+            'email' => $socialUser->getEmail(),
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'avatar' => self::getLargeAvatarUrl( $social->name, $socialUser->getAvatar() ),
+            'verified' => true
+        ]);
+        $this->attachSocial($newUser, $social, $socialUser->getId());
+        $newUser->roles()->attach(Role::take(config('entrust.default')));
+
+        return $newUser;
+    }
+
+    /**
+     * Create a redirect response on provider error
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    private static function getRedirectProviderError()
+    {
+        return redirect()->away(frontend_url() . '?' . http_build_query([
+            'auth_error' => [
+                'error' => 'No user data'
+            ]
+        ]));
+    }
+
+    /**
+     * Create a success redirect
+     * @param $user
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    private static function getRedirectSuccess($user)
+    {
+        return redirect()->away(frontend_url($user->alias ?: $user->id));
+    }
+
+    /**
+     * Get a redirect to the settings page
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    private static function getRedirectSettings()
+    {
+        return redirect()->away(frontend_url('settings'));
+    }
+
+    /**
+     * @param string $email
+     * @return User
+     */
+    private function getUserByEmail($email)
+    {
+        return User::where('email', $email)->first();
     }
 
     /**
