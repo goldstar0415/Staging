@@ -5,14 +5,12 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\SpotTypeCategory;
 use App\SpotType;
-use App\SpotPoint;
-use App\Spot;
-use App\SpotAmenity;
 use App\Http\Controllers\Controller;
 use App\Services\Csv\Reader;
 use App\Services\Csv\Helper;
 use App\Services\Csv\Fields;
 use Carbon\Carbon;
+use Phaza\LaravelPostgis\Geometries\Point;
 use DB;
 
 class CsvParserController extends Controller
@@ -22,11 +20,37 @@ class CsvParserController extends Controller
     private $categoryId = null;
     private $typeName = null;
     private $updateExisting = false;
+    private $date = null;
+    private $headers = null;
+    private $field = null;
+    
+    private $insertedIds = [];
+    private $existingIds = [];
+    private $spotsRows = [];
+    private $spotsToUpdate = [];
+    private $photos = [];
+    private $tags = [];
+    private $amenities = [];
+    private $locations = [];
+    
+    private $result = [
+        'success'       => true, 
+        'end_of_parse'    => false, 
+        'messages'      => [],
+        'rows_added'    => 0,
+        'rows_updated'  => 0,
+    ];
     
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     */
+    
+    /**
+     * Index page
+     * 
+     * @return View
      */
     public function index()
     {
@@ -34,35 +58,42 @@ class CsvParserController extends Controller
         return view('admin.parser.index', ['fields' => $fieldsArr, 'categories' => SpotType::categoriesList()]);
     }
     
+    /**
+     * Uploading .CSV to host
+     * 
+     * @param Request $request
+     * @return App\Services\Csv\Helper
+     */
     public function exportUpload(Request $request)
     {
         return Helper::uploadCsv($request);
     }
     
+    /**
+     * Export handling
+     * 
+     * @param Request $request
+     * @return json
+     */
     public function export( Request $request ) 
     {
         $path               = $request->path;
-        $stepCount          = $this->stepCount;
         $total_rows         = $request->total_rows;
-        $updateExisting     = $this->updateExisting = (int)$request->update;
+        $this->updateExisting = (int)$request->update;
+        $this->field        = $request->field;
+        $this->mode         = $request->mode;
         $rows_parsed_before = $request->rows_parsed;
         $file_offset        = $request->file_offset;
-        $headers            = $request->input('headers', []);
+        $this->headers      = $request->input('headers', []);
         $this->categoryId   = $request->input('category', null);
+        $this->date         = date('Y-m-d H:i:s');
         if(!empty($this->categoryId))
         {
             $this->setTypeName();
         }
         $pref = $this->prefix;
-        $result             = [
-            'success'       => true, 
-            'endOfParse'    => false, 
-            'messages'      => [],
-            'update'        => $updateExisting,
-            'rows_added'    => 0,
-            'rows_updated'  => 0,
-            'old_offset'    => $file_offset
-        ];
+        $this->result['update'] = $this->updateExisting;
+        $this->result['old_offset'] = $file_offset;
         $reader             = new Reader();
         $reader->setOffset($file_offset);
         $reader->open($path);
@@ -70,175 +101,88 @@ class CsvParserController extends Controller
         $rows_parsed_now    = 0;
         if(empty($pref))
         {
-            $result['messages'][] = 'Category not selected';
-            return $result;
+            $this->result['messages'][] = 'Category not selected';
+            return $this->result;
         }
         if($total_rows == $rows_parsed_before)
         {
-            $result['endOfParse']       = true;
+            $this->result['end_of_parse']       = true;
         }
         else
         {
+            // Starting loop thru CSV
             config([
                 'excel.cache.enable'  => false
                 ]);
             foreach ($reader->getSheetIterator() as $sheet) {
                 foreach ($sheet->getRowIterator() as $row) {
-                    if($isFirstRow)
+                    // Getting fields headers if it's first row or if field setted in update mode
+                    if($isFirstRow && $this->mode === 'parsing')
                     {
-                        $headers = array_change_key_case(array_flip($row));
-                        $result['headers'] = $headers;
+                        $this->headers = array_change_key_case(array_flip($row));
                         $isFirstRow = false;
                         continue;
                     }
-                    if($rows_parsed_now < $stepCount)
+                    elseif($isFirstRow && $this->mode === 'update')
                     {
-                        $result['file_offset'] = $reader->getFilePointerOffset();
+                        $this->headers = array_flip([
+                            'remote_id',
+                            $this->field
+                        ]);
+                        $isFirstRow = false;
                     }
-                    if($rows_parsed_now >= $stepCount)
+                    // Getting current file pointer
+                    if($rows_parsed_now < $this->stepCount)
+                    {
+                        $this->result['file_offset'] = $reader->getFilePointerOffset();
+                    }
+                    // Checking for step items counter
+                    if($rows_parsed_now >= $this->stepCount)
                     {
                         break;
                     }
-                    $item = $this->convertColumns($headers, $row);
+                    $item = $this->associateColumns($row);
                     $remote_id = $this->getRemoteId($item);
-                    if( !empty($remote_id) || ($this->typeName == 'event') )
+                    
+                    if( !empty($remote_id))
                     {
-                        $spot = ($this->typeName == 'event') ? null : (DB::table('spots')
-                                ->select('id')
-                                ->where('remote_id', $remote_id)
-                                ->first());
-                        $spotExists = !empty($spot->id);
-                        $spot_id = $spotExists?$spot->id:null;
-                        $saveSpot = $this->saveSpot($spot_id, $spotExists, $item, $result, $remote_id);
-                        $spot_id = ($saveSpot)?$saveSpot:$spot_id;
-                        if($updateExisting || !$spotExists)
-                        {
-                            $this->saveAmenities($spot_id, $item);
-                            $this->saveLocation($spot_id, $item );
-                            $this->savePhoto($spot_id, $item);
-                            $this->saveTags($spot_id, $item);
-                        }
+                        $this->spotsRows[$remote_id] = $this->prepareSpot($item, $remote_id);
+                        $this->addAmenities($remote_id, $item);
+                        $this->addLocation($remote_id, $item);
+                        $this->addPhoto($remote_id, $item);
+                        $this->addTags($remote_id, $item);
                     }
                     else {
-                        $result['messages'][] = 'Remote service ID missed in string #' . ($rows_parsed_before + $rows_parsed_now + 1);
+                        $this->result['messages'][] = 'Remote service ID missed in string #' . ($rows_parsed_before + $rows_parsed_now + 1);
                     }
                     $rows_parsed_now++;
                 }
             }
-            if($rows_parsed_now == 0)
+            if(!empty($this->spotsRows))
             {
-                $result['endOfParse']       = true;
+                $this->saveSpots();
             }
+            $this->saveRelations();
+            $this->result['end_of_parse'] = ($rows_parsed_now == 0) ? true : false;
             $reader->close();
         }
 
-        $result['rows_parsed']          = $rows_parsed_before + $rows_parsed_now;
-        $result['rows_parsed_now']      = $rows_parsed_now;
+        $this->result['rows_parsed']          = $rows_parsed_before + $rows_parsed_now;
+        $this->result['rows_parsed_now']      = $rows_parsed_now;
+        $this->result['headers'] = $this->headers;
         header('Content-Type: text/html;charset=utf-8');
-        $result = json_encode($result);
-        return $result;
+        $this->result = json_encode($this->result);
+        return $this->result;
     }
     
-    public function updateField( Request $request)
-    {
-        $stepCount          = $this->stepCount;
-        $updateExisting     = (int)$request->update;
-        $file_offset        = $request->file_offset;
-        $path               = $request->path;
-        $total_rows         = $request->total_rows;
-        $rows_parsed_before = $request->rows_parsed;
-        if(!empty($this->categoryId))
-        {
-            $this->setTypeName();
-        }
-        $pref = $this->prefix;
-        $result             = [
-            'success'       => true, 
-            'endOfParse'    => false, 
-            'messages'      => [],
-            'update'        => $updateExisting,
-            'rows_added'    => 0,
-            'rows_updated'  => 0,
-            'old_offset'    => $file_offset
-        ];
-        if(empty($pref))
-        {
-            $result['messages'][] = 'Category not selected';
-            return $result;
-        }
-        $availableFields    = $this->getAvailableFields();
-        $field              = $availableFields[$request->field];
-        $reader             = new Reader();
-        $reader->setOffset($file_offset);
-        $reader->open($path);
-        $rows               = [];
-        $rows_parsed_now    = 0;
-        if($total_rows == $rows_parsed_before)
-        {
-            $result['endOfParse'] = true;
-        }
-        else
-        {
-            config([
-                'excel.cache.enable'  => false
-                ]);
-            foreach ($reader->getSheetIterator() as $sheet)
-            {
-                foreach ($sheet->getRowIterator() as $row) 
-                {
-                    if($rows_parsed_now < $stepCount)
-                    {
-                        $result['file_offset'] = $reader->getFilePointerOffset();
-                    }
-                    if($rows_parsed_now >= $stepCount)
-                    {
-                        break;
-                    }
-                    list($remote_id, $value) = $row;
-                    if(in_array($field, Fields::$spot))
-                    {
-                        $query = Spot::where('remote_id', $pref . $remote_id);
-                        if($field == 'web_sites')
-                        {
-                            $query->update([$field => "[\"$value\"]"]);
-                        }
-                        else
-                        {
-                            $query->update([$field => $value]);
-                        }
-                    }
-                    elseif(in_array($field, Fields::$mass))
-                    {
-                        $spot = Spot::where('remote_id', $pref . $remote_id)->first();
-                        if($spot)
-                        {
-                            switch($field)
-                            {
-                                case 'tags':
-                                    $this->saveTags($spot->id, [$field => $value]);
-                                    break;
-                                case 'photos':
-                                    $this->savePhoto($spot->id, [$field => $value]);
-                                    break;
-                                case 'amenities':
-                                    $this->saveAmenities($spot->id, [$field => $value]);
-                                    break;
-                            }
-                        }
-                    }
-                    $rows_parsed_now++;
-                }
-            }
-        }
-        $result['rows']                 = $rows;
-        $result['rows_parsed']          = $rows_parsed_before + $rows_parsed_now;
-        $result['rows_parsed_now']      = $rows_parsed_now;
-        header('Content-Type: text/html;charset=utf-8');
-        $result = json_encode($result);
-        return $result;
-    }
-    
-    protected function saveSpot($spot_id, $spotExists, $item, &$result, $remote_id)
+    /**
+     * Preparing items to insert/update as spot
+     * 
+     * @param array $item
+     * @param string $remote_id
+     * @return array
+     */
+    protected function prepareSpot($item, $remote_id)
     {
         $attrArr = [];
         foreach($item as $column => $value)
@@ -259,91 +203,163 @@ class CsvParserController extends Controller
                 }
             }
         }
-        if($spotExists && $this->updateExisting)
+        if($this->mode === 'parsing')
         {
-            DB::table('spots')
-                    ->where('remote_id', $remote_id)
-                    ->update($attrArr);
-            $result['rows_updated']++;
-            return $spot_id;
-        }
-        elseif(!$spotExists)
-        {
-            $date = date('Y-m-d H:i:s');
             $attrArr['is_approved'] = true;
             $attrArr['is_private'] = false;
-            $attrArr['spot_type_category_id'] = $this->getCategoryId();
-            $attrArr['created_at'] = $date;
-            $attrArr['updated_at'] = $date;
-            if($this->typeName != 'event')
+            $attrArr['spot_type_category_id'] = $this->categoryId;
+            $attrArr['created_at'] = $this->date;
+            $attrArr['updated_at'] = $this->date;
+        }
+        if($this->typeName != 'event')
+        {
+            $attrArr['remote_id'] = $remote_id;
+        }
+        return $attrArr;
+    }
+    
+    /**
+     * Handling for spots insert and update
+     * 
+     * @return void
+     */
+    protected function saveSpots()
+    {
+        if(!empty($this->spotsRows))
+        {
+            $existingSpots = DB::table('spots')->select(['id', 'remote_id'])->whereIn('remote_id', array_keys($this->spotsRows))->get();
+            if(!empty($existingSpots))
             {
-                $attrArr['remote_id'] = $remote_id;
+                foreach($existingSpots as $value)
+                {
+                    if($this->updateExisting || $this->mode === 'update')
+                    {
+                        $this->existingIds[$value->remote_id] = $value->id;
+                        $this->spotsToUpdate[$value->remote_id] = $this->spotsRows[$value->remote_id];
+                    }
+                    unset($this->spotsRows[$value->remote_id]);
+                }
+                if($this->mode === 'update')
+                {
+                    
+                }
             }
-            $result['rows_added']++;
-            return DB::table('spots')
-                    ->insertGetId($attrArr);
+            if(!empty($this->spotsToUpdate))
+            {
+                $this->updateSpots();
+            }
+            if(!empty($this->spotsRows) && $this->mode === 'parsing')
+            {
+                $this->insertSpots();
+            }
         }
     }
     
-    protected function saveLocation($spot_id, $item)
+    /**
+     * Updating existing spots
+     * 
+     * @return void
+     */
+    protected function updateSpots()
+    {
+        $spots = $this->spotsToUpdate;
+        $existingIds = $this->existingIds;
+        DB::transaction(function() use ($spots, $existingIds) {
+            foreach($spots as $remote_id => $row)
+            {
+                DB::table('spots')->where('id', $existingIds[$remote_id])->update($row);
+                $this->result['rows_updated']++;
+            }
+        });
+    }
+    
+    /**
+     * Inserting not existing spots
+     * 
+     * @return void
+     */
+    protected function insertSpots()
+    {
+        $spots = $this->spotsRows;
+        $this->insertedIds = DB::transaction(function() use ($spots) {
+            $insertedIds = [];
+            foreach($spots as $remote_id => $row)
+            {
+                $insertedIds[$remote_id] = DB::table('spots')->insertGetId($row);
+                $this->result['rows_added']++;
+            }
+            return $insertedIds;
+        });
+    }
+
+    /**
+     * Adding spots points for further saving
+     * 
+     * @param string $remote_id
+     * @param array $item
+     * @return void
+     */
+    protected function addLocation($remote_id, $item)
     {
         if(!empty($item['latitude']) && !empty($item['longitude']) && !empty($item['address']))
         {
-            SpotPoint::where('spot_id', $spot_id)->delete();
-            $point = new SpotPoint();
-            $point->location = [
-                'lat' => $item['latitude'],
-                'lng' => $item['longitude'],
+            $pointObj = new Point($item['latitude'], $item['longitude']);
+            $point = [
+                'location' => DB::raw(sprintf("ST_GeogFromText('%s')", $pointObj->toWKT())),
+                'address' => $item['address'],
             ];
-            $point->address = $item['address'];
-            $point->spot_id = $spot_id;
-            $point->save();
-            
+            $this->locations[$remote_id] = $point;
         }
     }
     
-    protected function savePhoto($spot_id, $item)
+    /**
+     * Adding spots remote photos for further saving
+     * 
+     * @param string $remote_id
+     * @param array $item
+     * @return void
+     */
+    protected function addPhoto($remote_id, $item)
     {
         if( !empty($item['photos']) )
         {
             $photos = array_filter(array_map('trim', explode(';', $item['photos'])));
             $needCover = true;
-            foreach($photos as $photo)
+            $i = 1;
+            foreach($photos as $photoUrl)
             {
-                DB::table('remote_photos')
-                        ->where('associated_type', Spot::class)
-                        ->where('associated_id', $spot_id)
-                        ->delete();
                 $image_type = 0;
                 if($needCover)
                 {
                     $image_type = 1;
                     $needCover = false;
                 }
-                $date = date('Y-m-d H:i:s');
-                $pictueArr[] = [
-                    'url' => $photo,
+                $this->photos[$remote_id][($image_type === 1)? 'caver':$i] = [
+                    'url' => $photoUrl,
                     'image_type' => $image_type,
                     'size' => 'original',
                     'associated_type' => Spot::class,
-                    'associated_id' => $spot_id,
-                    'created_at' => $date,
-                    'updated_at' => $date
+                    'created_at' => $this->date,
+                    'updated_at' => $this->date
                 ];
-                DB::table('remote_photos')
-                        ->insert($pictueArr);
+                $i++;
             }
         }
     }
     
-    protected function saveTags($spot_id, $item)
+    /**
+     * Adding spots tags for further saving
+     * 
+     * @param string $remote_id
+     * @param array $item
+     * @return void
+     */
+    protected function addTags($remote_id, $item)
     {
-        if( !empty($item['tags']) && $spot_id)
+        if( !empty($item['tags']))
         {
-            DB::table('spot_tag')->where('spot_id', $spot_id)->delete();
             $tags = array_filter(array_map('trim', explode(';', $item['tags'])));
             $idsArr = [];
-            $result = [];
             $existingTags = [];
             $tagsCollection = DB::table('tags')->whereIn('name', $tags)->get();
             foreach($tagsCollection as $tagObj)
@@ -358,61 +374,200 @@ class CsvParserController extends Controller
             }
             foreach($idsArr as $id)
             {
-                $result[] = ['spot_id' => $spot_id, 'tag_id' => $id];
+                $this->tags[$remote_id][] = [
+                    'tag_id' => $id];
             }
-            DB::table('spot_tag')->insert($result);
         }
     }
     
-    protected function saveAmenities($spot_id, $item)
+    /**
+     * Adding spots amenities for further saving
+     * 
+     * @param string $remote_id
+     * @param array $item
+     * @return void
+     */
+    protected function addAmenities($remote_id, $item)
     {
-        if(!empty($item['amenities']) && $spot_id)
+        if(!empty($item['amenities']))
         {
             $amenities = array_filter(explode(',', $item['amenities']));
             foreach($amenities as $amenity)
             {
                 $body = trim($amenity);
-                if( !SpotAmenity::where('spot_id', $spot_id)
-                                 ->where('item', $body)->exists() )
-                {
-                    $date = date('Y-m-d H:i:s');
-                    SpotAmenity::insert([
-                        'item' => $body,
-                        'spot_id' => $spot_id,
-                        'created_at' => $date,
-                        'updated_at' => $date
-                    ]);
-                }
+                $this->amenities[$remote_id][] = [
+                    'item' => $body,
+                    'created_at' => $this->date,
+                    'updated_at' => $this->date
+                ];
             }
         }
     }
     
-    protected function convertColumns($headers, $row)
+    /**
+     * Deleting old existing spots dependencies and adding new 
+     * related items for inserted and updated spots 
+     * 
+     * @return void
+     */
+    protected function saveRelations()
+    {
+        $spotIdsToRemove = $relationsToAdd = [
+            'photos' => [],
+            'tags' => [],
+            'amenities' => [],
+            'locations' => []
+        ];
+        // Preparing spots remote photos for insert
+        if($this->photos != [])
+        {
+            foreach($this->photos as $remote_id => $items)
+            {
+                foreach($items as $item)
+                {
+                    if(isset($this->insertedIds[$remote_id]))
+                    {
+                        $item['associated_id'] = $this->insertedIds[$remote_id];
+                    }
+                    if(isset($this->existingIds[$remote_id]))
+                    {
+                        $item['associated_id'] = $this->existingIds[$remote_id];
+                        $spotIdsToRemove['photos'][] = $this->existingIds[$remote_id];
+                    }
+                    if(isset($item['associated_id']))
+                    {
+                        $relationsToAdd['photos'][] = $item;
+                    }
+                }
+            }
+        }
+        // Preparing spots amenities for insert
+        if($this->amenities != [])
+        {
+            foreach($this->amenities as $remote_id => $items)
+            {
+                foreach($items as $item)
+                {
+                    if(isset($this->insertedIds[$remote_id]))
+                    {
+                        $item['spot_id'] = $this->insertedIds[$remote_id];
+                    }
+                    if(isset($this->existingIds[$remote_id]))
+                    {
+                        $item['spot_id'] = $this->existingIds[$remote_id];
+                        $spotIdsToRemove['amenities'][] = $this->existingIds[$remote_id];
+                    }
+                    if(isset($item['spot_id']))
+                    {
+                        $relationsToAdd['amenities'][] = $item;
+                    }
+                }
+            }
+        }
+        // Preparing spots tags for insert
+        if($this->tags != [])
+        {
+            foreach($this->tags as $remote_id => $items)
+            {
+                foreach($items as $item)
+                {
+                    if(isset($this->insertedIds[$remote_id]))
+                    {
+                        $item['spot_id'] = $this->insertedIds[$remote_id];
+                    }
+                    if(isset($this->existingIds[$remote_id]))
+                    {
+                        $item['spot_id'] = $this->existingIds[$remote_id];
+                        $spotIdsToRemove['tags'][] = $this->existingIds[$remote_id];
+                    }
+                    if(isset($item['spot_id']))
+                    {
+                        $relationsToAdd['tags'][] = $item;
+                    }
+                }
+            }
+        }
+        // Preparing spots points for insert
+        if($this->locations != [])
+        {
+            foreach($this->locations as $remote_id => $item)
+            {
+                if(isset($this->insertedIds[$remote_id]))
+                {
+                    $item['spot_id'] = $this->insertedIds[$remote_id];
+                }
+                if(isset($this->existingIds[$remote_id]))
+                {
+                    $item['spot_id'] = $this->existingIds[$remote_id];
+                    $spotIdsToRemove['locations'][] = $this->existingIds[$remote_id];
+                }
+                if(isset($item['spot_id']))
+                {
+                    $relationsToAdd['locations'][] = $item;
+                }
+            }
+        }
+        // Database transaction to remove all old relations of existing spots and add new relations for inserted and updated spots
+        DB::transaction(function() use ($spotIdsToRemove, $relationsToAdd) {
+            if($spotIdsToRemove['photos'] != [])
+            {
+                DB::table('remote_photos')->whereIn('associated_id', $spotIdsToRemove['photos'])->where('associated_type', Spot::class)->delete();
+            }
+            if($spotIdsToRemove['amenities'] != [])
+            {
+                DB::table('spot_amenities')->whereIn('spot_id', $spotIdsToRemove['amenities'])->delete();
+            }
+            if($spotIdsToRemove['tags'] != [])
+            {
+                DB::table('spot_tag')->whereIn('spot_id', $spotIdsToRemove['tags'])->delete();
+            }
+            if($spotIdsToRemove['locations'] != [])
+            {
+                DB::table('spot_points')->whereIn('spot_id', $spotIdsToRemove['locations'])->delete();
+            }
+            if($relationsToAdd['photos'] != [])
+            {
+                DB::table('remote_photos')->insert($relationsToAdd['photos']);
+            }
+            if($relationsToAdd['amenities'] != [])
+            {
+                DB::table('spot_amenities')->insert($relationsToAdd['amenities']);
+            }
+            if($relationsToAdd['tags'] != [])
+            {
+                DB::table('spot_tag')->insert($relationsToAdd['tags']);
+            }
+            if($relationsToAdd['locations'] != [])
+            {
+                DB::table('spot_points')->insert($relationsToAdd['locations']);
+            }
+        });
+    }
+
+    /**
+     * Creating associative array from CSV headers (if they are named properly) and row values
+     * 
+     * @param array $row
+     * @return array
+     */
+    protected function associateColumns($row)
     {
         $item = [];
         $availableFields = $this->getAvailableFields();
-        foreach($headers as $title => $index) {
+        foreach($this->headers as $title => $index) {
             if(in_array($title, $availableFields))
             {
-                $item[$title] = null;
-                $textWithoutQuestions = str_replace( "?", "[question_mark]", $row[$index] );
-                foreach(mb_detect_order() as $encoding)
-                {
-                    $str = mb_convert_encoding($textWithoutQuestions, "UTF-8", $encoding);
-                    if(stristr($str, '?') === FALSE) {
-                        $item[$title] = str_replace( "[question_mark]", "?", $str);
-                        break;
-                    }
-                }
-                if( !$item[$title] )
-                {
-                    $item[$title] = mb_convert_encoding($row[$index], "UTF-8", "ISO-8859-16");
-                }
+                $item[$title] = $row[$index];
             }
         }
         return $item;
     }
     
+    /**
+     * Gettin all possible fields
+     * 
+     * @return array
+     */
     protected function getAvailableFields() 
     {
         return array_merge(
@@ -422,25 +577,22 @@ class CsvParserController extends Controller
         );
     } 
     
+    /**
+     * Setting type name and prefix for remote_id's by category ID
+     * 
+     * @return void
+     */
     protected function setTypeName() 
     {
         $this->typeName = SpotTypeCategory::find($this->categoryId)->type->name;
         $this->prefix = $this->typeName . '_' . $this->categoryId . '_';
     }
-    
-    private function getCategoryId()
-    {
-        if(!empty($this->categoryId))
-        {
-            return $this->categoryId;
-        }
-        $category = DB::table('spot_type_categories')
-                ->select('id')
-                ->where('name', $this->categoryName)
-                ->first();
-        return $this->categoryId = (!empty($category->id))?$category->id:null;
-    }
-    
+
+    /**
+     * Returning list of field available for update
+     * 
+     * @return array
+     */
     protected function getFieldsForFront() 
     {
         $fieldsArr = array_merge(
@@ -455,6 +607,11 @@ class CsvParserController extends Controller
         return $fields;
     }
     
+    /**
+     * Generating remote_id with prefix depending on remote_id or booking_id in CSV
+     * 
+     * @return string
+     */
     protected function getRemoteId(&$item)
     {
         $remote_id = null;
