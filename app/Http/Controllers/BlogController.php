@@ -56,22 +56,8 @@ class BlogController extends Controller
      */
     public function store(BlogStoreRequest $request)
     {
-        $blog = new Blog($request->only(['blog_category_id', 'title', 'body']));
-        
-        $slug = str_slug($blog->title);
-        $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|max:255|unique:blogs']);
-        if (!$validator->fails() && !is_numeric($slug)) {
-            $blog->slug = $slug;
-        }
-
-        if ($request->hasFile('cover')) {
-            $blog->cover = $request->file('cover');
-        }
-        if ($request->has('location')) {
-            $blog->location = $request->input('location');
-            $blog->address = $request->input('address');
-        }
-
+        $blog = new Blog();
+        $this->parseRequestBlog($request, $blog);
         $request->user()->blogs()->save($blog);
 
         return $blog;
@@ -100,36 +86,33 @@ class BlogController extends Controller
      */
     public function update(BlogUpdateRequest $request, $blog)
     {
-        $slug = '';
+        $this->parseRequestBlog($request, $blog);
+        $blog->save();
 
+        return $blog;
+    }
+
+    /**
+     * Parse blog properties from request
+     * @param Request $request
+     * @param Blog $blog
+     */
+    private function parseRequestBlog($request, $blog)
+    {
         $blog->fill($request->only(['blog_category_id', 'title', 'body']));
-
-        $slug = str_slug($blog->title);
-        $validator = \Validator::make(compact('slug'), ['slug' => [
-                'required',
-                'alpha_dash',
-                'max:255',
-                'unique:blogs,slug,' .$blog->id
-            ]
-        ]);
-        if (!$validator->fails() && !is_numeric($slug)) {
-            $blog->slug = $slug;
-        }
-        else
-        {
-            $blog->slug = NULL;
-        }
 
         if ($request->hasFile('cover')) {
             $blog->cover = $request->file('cover');
         }
+
         if ($request->has('location')) {
             $blog->location = $request->input('location');
             $blog->address = $request->input('address');
         }
 
-        $blog->save();
-        return $blog;
+        $slug = str_slug($blog->title);
+        $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|max:255|unique:blogs']);
+        $blog->slug = !$validator->fails() && !is_numeric($slug) ? $slug: null;
     }
 
     /**
