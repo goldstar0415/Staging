@@ -20,10 +20,10 @@ resource('spot-reports', 'SpotReportController', ['only' => ['index', 'destroy']
 get('spot-owner', 'SpotOwnerController@index')->name('admin.spot-owner.index');
 get('spot-owner/{owner_request}/accept', 'SpotOwnerController@accept')->name('admin.spot-owner.accept');
 get('spot-owner/{owner_request}/reject', 'SpotOwnerController@reject')->name('admin.spot-owner.reject');
+get('spots/refresh-view', 'SpotController@refreshMaterializedView')->name('admin.spots.refresh-view');
 
 post('csv-parser/export', 'CsvParserController@export')->name('admin.csv-parser.export');
 post('csv-parser/exportUpload', 'CsvParserController@exportUpload')->name('admin.csv-parser.export-upload');
-post('csv-parser/update-field', 'CsvParserController@updateField')->name('admin.csv-parser.update-field');
 resource('csv-parser', 'CsvParserController', ['only' => ['index']]);
 
 resource('posts', 'BlogController', ['except' => 'show']);
