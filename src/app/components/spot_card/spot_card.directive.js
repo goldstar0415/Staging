@@ -44,6 +44,10 @@
                     vm.item.price = Math.round(vm.item.minrate) + ' ' + vm.item.currencycode;
                 }
             }
+            if(vm.item.spot_id)
+            {
+                vm.item.is_favorite = (_.indexOf($rootScope.currentUser.favorites_ids, vm.item.spot_id) > -1) ? true : false;
+            }
 
             function getImg() {
                 $http.get(API_URL + '/spots/' + ((vm.item.spot_id)?vm.item.spot_id:vm.item.id) + '/cover')
