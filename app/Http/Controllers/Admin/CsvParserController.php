@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Csv\Reader;
 use App\Services\Csv\Helper;
 use App\Services\Csv\Fields;
+use App\Spot;
 use Carbon\Carbon;
 use Phaza\LaravelPostgis\Geometries\Point;
 use DB;
@@ -23,6 +24,7 @@ class CsvParserController extends Controller
     private $date = null;
     private $headers = null;
     private $field = null;
+    private $mode = null;
     
     private $insertedIds = [];
     private $existingIds = [];
@@ -334,7 +336,7 @@ class CsvParserController extends Controller
                     $image_type = 1;
                     $needCover = false;
                 }
-                $this->photos[$remote_id][($image_type === 1)? 'caver':$i] = [
+                $this->photos[$remote_id][($image_type === 1)? 'cover':$i] = [
                     'url' => $photoUrl,
                     'image_type' => $image_type,
                     'size' => 'original',
