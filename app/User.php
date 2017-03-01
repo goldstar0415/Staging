@@ -457,6 +457,19 @@ class User extends BaseModel implements
     {
         return $this->followings()->count();
     }
+    
+    /**
+     * Get user's favorite spots ids only
+     * 
+     * @return array
+     */
+    public function getFavoritesIdsAttribute()
+    {
+        $ids = DB::table('spot_user')->select(DB::raw('spot_id as id'))->where('user_id', $this->id)->get();
+        return array_map(function($item) {
+            return $item->id;
+        }, $ids);
+    }
 
     /**
      * Get the user's followers
@@ -538,9 +551,8 @@ class User extends BaseModel implements
     /**
      * Get friends of the user
      */
-    public function friends()
-    {
-        return $this->hasMany(Friend::class);
+    public function friends() {
+        return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id')->withTimestamps();;
     }
 
     /*

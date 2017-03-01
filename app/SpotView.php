@@ -81,6 +81,42 @@ class SpotView extends BaseModel
             ->selectRaw('avg(vote) as rating, spot_id')
             ->groupBy('spot_id');
     }
+    
+    public static function saveView($id = null)
+    {
+        if($id)
+        {
+            DB::insert("INSERT INTO spots_mat_view SELECT * FROM
+                spots_view WHERE id=?", [$id]);
+        }
+    }
+    
+    public static function updateView($id = null)
+    {
+        if($id)
+        {
+            self::deleteView($id);
+            self::saveView($id);
+        }
+    }
+    
+    public static function deleteView($id = null)
+    {
+        if($id)
+        {
+            self::where('id', $id)->delete();
+        }
+    }
+    
+    public static function refreshView()
+    {
+        $sql = "
+                TRUNCATE TABLE spots_mat_view;
+                INSERT INTO spots_mat_view SELECT * FROM
+                    spots_view;
+        ";
+        \DB::connection()->getPdo()->exec($sql);
+    }
         
         
 }

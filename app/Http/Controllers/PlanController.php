@@ -52,29 +52,13 @@ class PlanController extends Controller
      */
     public function store(PlanStoreRequest $request)
     {
-        $plan = new Plan($request->only('title', 'location', 'address'));
-        if ($request->has('description')) {
-            $plan->description = $request->input('description');
-        }
-        if ($request->has('start_date')) {
-            $plan->start_date = $request->input('start_date');
-        }
-        if ($request->has('end_date')) {
-            $plan->end_date = $request->input('end_date');
-        }
+        $plan = new Plan();
+        $this->parseRequestPlan($request, $plan);
+
         $request->user()->plans()->save($plan);
 
-        if ($request->has('spots')) {
-            foreach ($request->input('spots') as $spot) {
-                $plan->spots()->attach($spot['id'], ['position' => $spot['position']]);
-            }
-        }
-        if ($request->has('activities')) {
-            foreach ($request->input('activities') as $activity_data) {
-                $activity = new Activity($activity_data);
-                $plan->activities()->save($activity);
-            }
-        }
+        $this->parseRequestSpots($request, $plan);
+        $this->parseRequestActivities($request, $plan);
 
         return $plan;
     }
@@ -99,6 +83,23 @@ class PlanController extends Controller
      */
     public function update(PlanUpdateRequest $request, $plan)
     {
+        $this->parseRequestPlan($request, $plan);
+
+        $plan->save();
+
+        $this->parseRequestSpots($request, $plan, true);
+        $this->parseRequestActivities($request, $plan, true);
+
+        return $plan;
+    }
+
+    /**
+     * Parse plan properties from request
+     * @param Request $request
+     * @param Plan $plan
+     */
+    private function parseRequestPlan($request, $plan)
+    {
         $plan->title = $request->input('title');
         $plan->location = $request->input('location');
         $plan->address = $request->input('address');
@@ -111,23 +112,43 @@ class PlanController extends Controller
         if ($request->has('end_date')) {
             $plan->end_date = $request->input('end_date');
         }
-        $plan->save();
+    }
 
+    /**
+     * Parse request spots and attach them to given plan
+     * @param Request $request
+     * @param Plan $plan
+     * @param bool $detach
+     */
+    private function parseRequestSpots($request, $plan, $detach = false)
+    {
         if ($request->has('spots')) {
-            $plan->spots()->detach();
+            if ($detach) {
+                $plan->spots()->detach();
+            }
             foreach ($request->input('spots') as $spot) {
                 $plan->spots()->attach($spot['id'], ['position' => $spot['position']]);
             }
         }
-        $plan->activities()->delete();
+    }
+
+    /**
+     * Parse request activities and attach them to given plan
+     * @param Request $request
+     * @param Plan $plan
+     * @param bool $delete
+     */
+    private function parseRequestActivities($request, $plan, $delete = false)
+    {
+        if ($delete) {
+            $plan->activities()->delete();
+        }
         if ($request->has('activities')) {
             foreach ($request->input('activities') as $activity_data) {
                 $activity = new Activity($activity_data);
                 $plan->activities()->save($activity);
             }
         }
-
-        return $plan;
     }
 
     /**
