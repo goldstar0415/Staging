@@ -150,8 +150,10 @@ class UserController extends Controller
      */
     public function getMe()
     {
-        return $this->appendUserRelations($this->auth->user())->append(['new_messages'])->withHidden('is_hints')
-            ->load('roles');
+        return $this->appendUserRelations($this->auth->user())
+                ->append(['new_messages', 'favorites_ids'])
+                ->withHidden('is_hints')
+                ->load('roles');
     }
 
     /**
