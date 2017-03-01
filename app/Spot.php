@@ -1318,7 +1318,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $id = $url[0];
             }
         }
-        return $id;
+        return (!empty($id))?$id:false;
     }
     
     public function getFacebookRating()

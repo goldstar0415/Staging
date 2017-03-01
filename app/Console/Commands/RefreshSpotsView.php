@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Schema\Blueprint;
+use App\SpotView;
 use Log;
 
 class RefreshSpotsView extends Command
@@ -40,11 +41,7 @@ class RefreshSpotsView extends Command
     public function handle()
     {
 		Log::debug('refresh view');
-		$sql = "
-			refresh materialized view concurrently mv_spots_spot_points;
-			CLUSTER mv_spots_spot_points using mvsp_spots_created_at;
-		";
-		\DB::connection()->getPdo()->exec($sql);
+		SpotView::refreshView();
     }
 	
 	public function fire() {
