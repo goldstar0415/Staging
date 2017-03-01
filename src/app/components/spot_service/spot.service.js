@@ -66,7 +66,10 @@
         var id = (spot.spot_id)?spot.spot_id:spot.id;
         Spot.favorite({id: id}, function () {
           spot.is_favorite = true;
-          ($rootScope.currentUser.favorites_ids).push((spot.spot_id)?spot.spot_id:spot.id);
+          if($rootScope.currentUser)
+          {
+            ($rootScope.currentUser.favorites_ids).push((spot.spot_id)?spot.spot_id:spot.id);
+          }
           syncSpots(id, {is_favorite: true});
         });
       }
@@ -81,10 +84,13 @@
       var id = (spot.spot_id)?spot.spot_id:spot.id;
       Spot.unfavorite({id: id}, function () {
         spot.is_favorite = false;
-        var spotFavoriteIndex = _.indexOf($rootScope.currentUser.favorites_ids, (spot.spot_id)?spot.spot_id:spot.id);
-        if(spotFavoriteIndex > -1)
+        if($rootScope.currentUser)
         {
-          ($rootScope.currentUser.favorites_ids).splice(spotFavoriteIndex, 1);
+          var spotFavoriteIndex = _.indexOf($rootScope.currentUser.favorites_ids, (spot.spot_id)?spot.spot_id:spot.id);
+          if(spotFavoriteIndex > -1)
+          {
+            ($rootScope.currentUser.favorites_ids).splice(spotFavoriteIndex, 1);
+          }
         }
         syncSpots(id, {is_favorite: false});
 
