@@ -152,6 +152,7 @@ class Base64File
         $mime = '';
         if (count($properties) === 3) {
             list($mime, $charset) = $properties;
+            $this->charset = $charset;
 
         } else {
             list($mime) = $properties;
