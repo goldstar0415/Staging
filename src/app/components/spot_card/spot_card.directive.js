@@ -44,7 +44,7 @@
                     vm.item.price = Math.round(vm.item.minrate) + ' ' + vm.item.currencycode;
                 }
             }
-            if(vm.item.spot_id)
+            if(vm.item.spot_id && $rootScope.currentUser)
             {
                 vm.item.is_favorite = (_.indexOf($rootScope.currentUser.favorites_ids, vm.item.spot_id) > -1) ? true : false;
             }
