@@ -243,6 +243,7 @@ class MapController extends Controller {
                 'is_approved' => $spot->is_approved,
                 'is_private' => $spot->is_private,
                 'start_date' => $spot->start_date,
+                'user_id' => $spot->user_id,
             ]; 
             $idsArr[] = $spot->id;
         }
