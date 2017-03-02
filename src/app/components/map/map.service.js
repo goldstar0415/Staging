@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService, $ocLazyLoad, OPENWEATHERMAP_API_KEY, SKOBBLER_API_KEY) {
+    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService, $ocLazyLoad, SKOBBLER_API_KEY) {
 
       console.log('MapService');
 
@@ -2676,21 +2676,21 @@
           mapBox.push(bounds._northEast.lng);
           mapBox.push(bounds._northEast.lat);
           mapBox.push(map.getZoom());
-          var params = {
-              //lat: center.lat,
-              //lon: center.lng,
-              bbox: mapBox.toString(),
-              cluster: 'yes',
-              APPID: OPENWEATHERMAP_API_KEY,
-              units: $rootScope.weatherUnits == 'us' ? 'imperial' : 'metric',
-              cnt: 10
-          };
-          var q = $.param(params);
-          q = 'http://api.openweathermap.org/data/2.5/box/city?' + q;
-          $http.get(API_URL + '/weather?q=' + encodeURIComponent(q))
-              .success(function(data) {
-                  drawWeatherMarkers(data);
-              })
+          
+          $http.get(API_URL + '/weather/openweathermap', {
+              params: {
+                  //lat: center.lat,
+                  //lon: center.lng,
+                  bbox: mapBox.toString(),
+                  cluster: 'yes',
+                  units: $rootScope.weatherUnits == 'us' ? 'imperial' : 'metric',
+                  cnt: 10
+              },
+          })
+          .success(function(resp) {
+              drawWeatherMarkers(resp);
+          });
+          
       }
 
       function setSkycon(icon) {
