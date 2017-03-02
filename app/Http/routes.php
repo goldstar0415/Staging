@@ -78,7 +78,6 @@ Route::get('spots/{spots}/members', 'SpotController@members');
 Route::get('spots/{spots}/preview', 'SpotController@preview');
 Route::get('spots/{spots}/export', 'SpotController@export');
 Route::get('spots/{spots}/cover', 'SpotController@getCover');
-Route::get('spots/{spots}/ratings', 'SpotController@getRatingInfo');
 Route::get('spots/{spots}/hours', 'SpotController@getHours');
 Route::put('spots/{spots}/photos', 'SpotPhotoController@store');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
@@ -136,7 +135,6 @@ Route::get('map/spots/list', 'MapController@getList');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
 Route::get('areas/{areas}/preview', 'AreaController@preview');
 Route::get('weather', 'MapController@getWeather');
-Route::get('rates', 'MapController@getRates');
 /**
  * Wall Controls
  */
