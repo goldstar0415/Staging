@@ -22,8 +22,6 @@ window.ENV = {
 
     MAPBOX_API_KEY: 'pk.eyJ1IjoiaW5ndmFyIiwiYSI6ImNpcWwwOTFsbjAwMm9pd20yYmhlMDloc3gifQ.hEl195NS4jCsaDxSq2rEyA',
 
-    OPENWEATHERMAP_API_KEY: '835492c0eab300994ec658dfb16ad305',
-
     SKOBBLER_API_KEY: 'eda6aaf13e44d3f03e464ae456149c09',
 
     USER_ONLINE_MINUTE: -5,
