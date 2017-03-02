@@ -3,7 +3,7 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, GEOCODING_KEY, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService, $ocLazyLoad, SKOBBLER_API_KEY) {
+    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService, $ocLazyLoad, SKOBBLER_API_KEY) {
 
       console.log('MapService');
 
@@ -96,8 +96,8 @@
       var pathSelectionStarted = false;
 
       //GEOCODING
-      var GeocodingSearchUrl = '//open.mapquestapi.com/nominatim/v1/search.php?format=json&key=' + GEOCODING_KEY + '&addressdetails=1&limit=3&q=';
-      var GeocodingReverseUrl = '//open.mapquestapi.com/nominatim/v1/reverse.php?format=json&key=' + GEOCODING_KEY;
+      var GeocodingSearchUrl = API_URL + '/geocoder/search?addressdetails=1&limit=3&q=';
+      var GeocodingReverseUrl = API_URL + '/geocoder/reverse?';
 
       function closeAll() {
         //   L.DomEvent.stopPropagation(e);
