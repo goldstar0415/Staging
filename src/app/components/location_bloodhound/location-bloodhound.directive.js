@@ -1,9 +1,9 @@
 (function() {
   'use strict';
-  angular.module('zoomtivity').directive('locationBloodhound', LocationBloodhound);
+  angular.module('zoomtivity').directive('locationBloodhound', ['API_URL', LocationBloodhound]);
 
   /** @ngInject */
-  function LocationBloodhound() {
+  function LocationBloodhound(API_URL) {
 
     return {
       restrict: 'A',
@@ -54,15 +54,20 @@
 
       function onTypeaheadSelect($event, $model) {
         var viewAddress;
-        if (provider == 'google') {
-          vm.location = {lat: $model.geometry.location.lat, lng: $model.geometry.location.lng};
-          vm.address = $model.formatted_address;
-          viewAddress = $model.formatted_address;
-        }
-        else {
-          vm.location = {lat: $model.lat, lng: $model.lon};
-          vm.address = $model.display_name;
-          viewAddress = $model.display_name;
+        
+        switch (provider) {
+          case 'google': {
+            vm.location = {lat: $model.geometry.location.lat, lng: $model.geometry.location.lng};
+            vm.address = $model.formatted_address;
+            viewAddress = $model.formatted_address;
+            break;
+          }
+          case 'mapquest':
+          default: {
+            vm.location = {lat: $model.lat, lng: $model.lon};
+            vm.address = $model.display_name;
+            viewAddress = $model.display_name;
+          }
         }
 
         display(viewAddress);
@@ -163,8 +168,8 @@
 
       var limit = scope.limit || 10;
       var provider = scope.provider || 'google';
-
-      var URL_MAP_QUEST = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&addressdetails=1&limit=' + limit + '&q=%QUERY%';
+      
+      var URL_MAP_QUEST = API_URL + '/geocoder/search?addressdetails=1&limit=' + limit + '&q=%QUERY%';
       var URL_GOOGLE_MAPS = 'https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=%QUERY%';
 
       var bhSource = new Bloodhound({
@@ -241,22 +246,39 @@
       }
 
       function apiResolver() {
-        return provider == 'google' ? URL_GOOGLE_MAPS : URL_MAP_QUEST;
-      }
-
-      function transformResponse(res) {
-        if (provider == 'google') {
-          return res.results;
-        } else {
-          return res;
+        switch (provider) {
+          case 'google': {
+            return URL_GOOGLE_MAPS;
+          }
+          case 'mapquest':
+          default: {
+            return URL_MAP_QUEST;
+          }
         }
       }
 
+      function transformResponse(res) {
+        switch (provider) {
+          case 'google': {
+            return res.results;
+          }
+          case 'mapquest':
+          default: {
+            return res;
+          }
+        }
+        
+      }
+
       function getSuggestionName(suggestion) {
-        if (provider == 'google') {
-          return suggestion.formatted_address;
-        } else {
-          return suggestion.value;
+        switch(provider) {
+          case 'google': {
+            return suggestion.formatted_address;
+          }
+          case 'mapquest':
+          default: {
+            return suggestion.display_name;
+          }
         }
       }
 
