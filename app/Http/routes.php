@@ -135,7 +135,7 @@ Route::post('map/spots', 'MapController@getSpots');
 Route::get('map/spots/list', 'MapController@getList');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
 Route::get('areas/{areas}/preview', 'AreaController@preview');
-Route::get('weather', 'MapController@getWeather');
+Route::get('weather', 'MapController@getWeather'); // deprecated: use /weather/openweathermap instead
 Route::get('rates', 'MapController@getRates');
 /**
  * Wall Controls
@@ -180,3 +180,4 @@ Route::get('search/spots', 'SearchController@search');
  */
 
 Route::get('weather/darksky', 'WeatherController@darksky');
+Route::get('weather/openweathermap', 'WeatherController@openWeatherMap');
