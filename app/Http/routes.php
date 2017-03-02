@@ -181,3 +181,11 @@ Route::get('search/spots', 'SearchController@search');
 
 Route::get('weather/darksky', 'WeatherController@darksky');
 Route::get('weather/openweathermap', 'WeatherController@openWeatherMap');
+
+
+/**
+ * Geocoder
+ */
+
+Route::get('geocoder/search', 'GeocoderController@search');
+Route::get('geocoder/reverse', 'GeocoderController@reverse');
