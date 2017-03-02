@@ -743,6 +743,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     
     public function getHotelsRating() 
     {
+        $result = null;
         $page = $this->getHotelsReviewsPage();
         if($page)
         {
@@ -751,10 +752,6 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
             {
                 $result = floatval(str_replace(',','.', trim($element->innertext())));
             }
-        }
-        else 
-        {
-            $result = false;
         }
         return $result;
     }
