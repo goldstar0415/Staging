@@ -157,7 +157,6 @@ Route::resource('posts.comments', 'BlogCommentController', ['only' => ['index', 
 Route::get('posts/{posts}/preview', 'BlogController@preview');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
-Route::get('url-parse', 'UrlMetaParserController@getContentFromSite');
 
 Route::group(['prefix' => 'import/logs', 'middleware' => 'admin'], function () {
     get('{type}', 'ShowLogController@show');
