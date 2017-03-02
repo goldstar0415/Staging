@@ -569,43 +569,53 @@ class SpotController extends Controller
     
     public function prices (Request $request, Spot $spot)
     {
-        $result       = [];
+        $result = [
+            'success' => true,
+            'data' => [
+                'hotels' => null,
+                'booking' =>null
+            ]
+        ];
         $dates        = $request->all();
-        $from         = date_parse_from_format( 'm.d.Y' , $dates['start_date'] );
-        $to           = date_parse_from_format( 'm.d.Y' , $dates['end_date'] );
-        
-        $result['data']['hotels'] = false;
-        $result['data']['booking'] = false;
-        
-        $fromString   = $from['year'] . '-' . (strlen($from['month']) == 1?'0':'') . $from['month'] . '-' . (strlen($from['day']) == 1?'0':'') . $from['day'];
-        $startDate    = Carbon::create($from['year'], $from['month'], $from['day'], 0);
-        $toString     =   $to['year'] . '-' . (strlen(  $to['month']) == 1?'0':'') .   $to['month'] . '-' . (strlen(  $to['day']) == 1?'0':'') .   $to['day'];
-        $endDate      = Carbon::create($to['year'], $to['month'], $to['day'], 0);
-        
-        $result['data']['hotelsUrl'] = $spot->getHotelsUrl($spot->hotelscom_url, $fromString, $toString);
-        $result['days'] = $startDate->diffInDays($endDate);
-        if($result['data']['hotelsUrl'])
+        if(isset($dates['start_date']) && isset($dates['end_date']))
         {
-            $hotelsPageContent = $spot->getPageContent($result['data']['hotelsUrl']);
-            
-            if($hotelsPageContent)
+            $parsedStartDate = date_parse_from_format( 'm.d.Y' , $dates['start_date'] );
+            $parsedEndDate   = date_parse_from_format( 'm.d.Y' , $dates['end_date'] );
+
+            $checkinDate = Carbon::create($parsedStartDate['year'], $parsedStartDate['month'], $parsedStartDate['day'], 0);
+            $checkoutDate = Carbon::create($parsedEndDate['year'], $parsedEndDate['month'], $parsedEndDate['day'], 0);
+            $checkinDateString  = $checkinDate->toDateString();
+            $checkoutDateString = $checkoutDate->toDateString();
+
+            $result['data']['hotelsUrl'] = $spot->getHotelsUrl($spot->hotelscom_url, $checkinDateString, $checkoutDateString);
+            $result['days'] = $checkinDate->diffInDays($checkoutDate);
+            if($result['data']['hotelsUrl'])
             {
-                $hotelPrice = $spot->getHotelsPrice($hotelsPageContent);
-                $result['data']['hotels'] = (!empty($hotelPrice))? '$'.($hotelPrice * $result['days']):false;
+                $hotelsPageContent = $spot->getPageContent($result['data']['hotelsUrl']);
+
+                if($hotelsPageContent)
+                {
+                    $hotelPrice = $spot->getHotelsPrice($hotelsPageContent);
+                    $result['data']['hotels'] = (!empty($hotelPrice))? '$'.($hotelPrice * $result['days']):false;
+                }
+            }
+
+            $result['data']['bookingUrl'] = $spot->getBookingUrl($spot->booking_url, $checkinDateString, $checkoutDateString);
+            if($result['data']['bookingUrl'])
+            {
+                $bookingPageContent = $spot->getPageContent($result['data']['bookingUrl'], [
+                    'headers' => $spot->getBookingHeaders()
+                ]);
+                if($bookingPageContent)
+                {
+                    $bookingPrice = $spot->getBookingPrice($bookingPageContent);
+                    $result['data']['booking'] = (!empty($bookingPrice))? '$'.$bookingPrice: false;
+                }
             }
         }
-        
-        $result['data']['bookingUrl'] = $spot->getBookingUrl($spot->booking_url, $fromString, $toString, true);
-        if($result['data']['bookingUrl'])
+        else
         {
-            $bookingPageContent = $spot->getPageContent($result['data']['bookingUrl'], [
-                'headers' => $spot->getBookingHeaders()
-            ]);
-            if($bookingPageContent)
-            {
-                $bookingPrice = $spot->getBookingPrice($bookingPageContent);
-                $result['data']['booking'] = (!empty($bookingPrice))? '$'.$bookingPrice: false;
-            }
+            $result['success'] = false;
         }
         return $result;
     }
@@ -676,16 +686,15 @@ class SpotController extends Controller
         return SpotType::categoriesList();
     }
     
-    // Ratings info and reviews methods
-    
-    public function getRatingInfo($spot)
-    {
-        return $spot->getReviewsTotal();
-    }
-    
     public function getHotelsRating(Spot $spot) {
-        $result = [];
-        if($spot->hotelscom_url)
+        $result = [
+            'success' => true,
+            'hotelscom' => [
+                'rating' => null,
+                'reviews_count' => null
+            ]
+        ];
+        if($spot->getHotelsReviewsPage())
         {
             $result['hotelscom']['rating'] = $spot->getHotelsRating();
             $result['hotelscom']['reviews_count'] = $spot->getHotelsReviewsCount();
@@ -698,11 +707,20 @@ class SpotController extends Controller
                 $spot->save();
             }
         }
+        else {
+            $result['success'] = false;
+        }
         return $result;
     }
     
     public function getBookingRating(Spot $spot) {
-        $result = [];
+        $result = [
+            'success' => true,
+            'booking' => [
+                'rating' => null,
+                'reviews_count' => null
+            ]
+        ];
         if(!empty($spot->booking_url))
         {
             $reviewsPageContent = null;
@@ -722,10 +740,9 @@ class SpotController extends Controller
             {
                 $spot->getBookingReviews($reviewsPageContent, true);
             }
-            $bookingTotals = $spot->getBookingTotals();
-            if(!empty($bookingTotals))
+            $result = $spot->getBookingTotals();
+            if($result['success'])
             {
-                $result['booking'] = $bookingTotals;
                 if( $spot->booking_rating != $result['booking']['rating'] || 
                     $spot->booking_reviews_count != $result['booking']['reviews_count'])
                 {
@@ -739,27 +756,28 @@ class SpotController extends Controller
     }
     
     public function getYelpRating(Spot $spot) {
-        $result = [];
-        $yelpInfo = $spot->getYelpBizInfo();
-        if( !empty($yelpInfo) )
+        $result = $spot->getYelpBizInfo();
+        if($result['success'] && 
+                ($spot->yelp_rating != $result['yelp']['rating'] || 
+                $spot->yelp_reviews_count != $result['yelp']['reviews_count']))
         {
             $spot->getYelpReviewsFromApi(true);
-            $result['yelp'] = $yelpInfo;
-            if(!empty($result['yelp']) && 
-                    ($spot->yelp_rating != $result['yelp']['rating'] || 
-                    $spot->yelp_reviews_count != $result['yelp']['reviews_count']))
-            {
-                $spot->yelp_rating = $result['yelp']['rating'];
-                $spot->yelp_reviews_count = $result['yelp']['reviews_count'];
-                $spot->save();
-            }
+            $spot->yelp_rating = $result['yelp']['rating'];
+            $spot->yelp_reviews_count = $result['yelp']['reviews_count'];
+            $spot->save();
         }
         return $result;
     }
     
     public function getTripadvisorRating(Spot $spot) {
-        $result = [];
-        if($spot->tripadvisor_url)
+        $result = [
+            'success' => true,
+            'tripadvisor' => [
+                'rating' => null,
+                'reviews_count' => null,
+            ]
+        ];
+        if($spot->getTripadvisorReviewsPage())
         {
             $result['tripadvisor']['rating'] = $spot->getTripadvisorRating();
             $result['tripadvisor']['reviews_count'] = $spot->getTripadvisorReviewsCount();
@@ -772,46 +790,44 @@ class SpotController extends Controller
                 $spot->save();
             }
         }
+        else
+        {
+            $result['success'] = false;
+        }
         return $result;
     }
     
     public function getFacebookRating(Spot $spot) {
-        $result = [];
-        if( $facebookRating = $spot->getFacebookRating())
+        $result = $spot->getFacebookRating();
+        if($facebookRating['success'] && 
+                ($spot->facebook_rating != $result['facebook']['rating'] || 
+                $spot->facebook_reviews_count != $result['facebook']['reviews_count']))
         {
-            $result['facebook'] = $facebookRating;
-            if(!empty($result['facebook']) && 
-                    ($spot->facebook_rating != $result['facebook']['rating'] || 
-                    $spot->facebook_reviews_count != $result['facebook']['reviews_count']))
-            {
-                $spot->facebook_rating = $result['facebook']['rating'];
-                $spot->facebook_reviews_count = $result['facebook']['reviews_count'];
-                $spot->save();
-            }
+            $spot->facebook_rating = $result['facebook']['rating'];
+            $spot->facebook_reviews_count = $result['facebook']['reviews_count'];
+            $spot->save();
         }
         return $result;
     }
     
     public function getGoogleRating(Spot $spot) {
-        $result = [];
-        if(!empty($spot->getGooglePlaceInfo()))
+
+        $result = $spot->getGoogleReviewsInfo();
+        if($result['success'] && 
+                ($spot->google_rating != $result['google']['rating'] || 
+                $spot->google_reviews_count != $result['google']['reviews_count']))
         {
             $spot->getGoogleReviews(true);
-            $result['google'] = $spot->getGoogleReviewsInfo();
-            if(!empty($result['google']) && 
-                    ($spot->google_rating != $result['google']['rating'] || 
-                    $spot->google_reviews_count != $result['google']['reviews_count']))
-            {
-                $spot->google_rating = $result['google']['rating'];
-                $spot->google_reviews_count = $result['google']['reviews_count'];
-                $spot->save();
-            }
+            $spot->google_rating = $result['google']['rating'];
+            $spot->google_reviews_count = $result['google']['reviews_count'];
+            $spot->save();
         }
         return $result;
     }
     
     public function saveRating(Request $request, Spot $spot)
     {
+        $result = ['success' => true];
         if($request->has('avg_rating') && $request->has('total_reviews'))
         {
             $updArr = [
@@ -821,13 +837,25 @@ class SpotController extends Controller
             SpotView::where('id', $spot->id)->update($updArr);
             $spot->update($updArr);
         }
+        else 
+        {
+            $result['success'] = false;
+        }
+        return $result;
     }
     
     public function getFacebookPhotos(Spot $spot) {
-        $result = ['facebook_photos' => null];
+        $result = [
+            'success' => false,
+            'facebook_photos' => null
+            ];
         if(!empty($spot->facebook_url))
         {
-            $result['facebook_photos'] = $spot->getFacebookPhotos();
+            $response = $spot->getFacebookPhotos();
+            if($response['success'])
+            {
+                $result = $response;
+            }
         }
         return $result;
     }
