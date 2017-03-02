@@ -5,6 +5,8 @@ namespace App\Http\Requests;
 /**
  * Class WeatherRequest
  * @package App\Http\Requests
+ *
+ * @deprecated Use app/Http/Requests/Weather/OpenWeatherMapRequest.php instead
  */
 class WeatherRequest extends Request
 {
