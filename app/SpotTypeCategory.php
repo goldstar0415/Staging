@@ -81,4 +81,16 @@ class SpotTypeCategory extends BaseModel implements StaplerableInterface
             $this->icon = $path;
         }
     }
+
+    public static function getIconCache()
+    {
+        $cache = [];
+
+        $spot_type_categories = self::select('id', 'spot_type_id')->get();
+        foreach($spot_type_categories as $item) {
+            $cache[$item->id] = $item->icon_url;
+        }
+
+        return $cache;
+    }
 }
