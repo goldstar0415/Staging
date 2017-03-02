@@ -38,11 +38,7 @@
             vm.openSpot = openSpot;
 
             if (vm.item.minrate) {
-                if (!_.isEmpty(fx.rates)) {
-                    vm.item.price = '$' + Math.round(fx(vm.item.minrate).from(vm.item.currencycode).to("USD"));
-                } else {
-                    vm.item.price = Math.round(vm.item.minrate) + ' ' + vm.item.currencycode;
-                }
+                vm.item.price = '$' + Math.round(vm.item.minrate);
             }
             if(vm.item.spot_id && $rootScope.currentUser)
             {
