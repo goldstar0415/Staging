@@ -21,7 +21,6 @@
         .constant('JS_CONSOLE_KEY', env.JS_CONSOLE_KEY)
         .constant('GEOCODING_KEY', env.GEOCODING_KEY)
         .constant('MAPBOX_API_KEY', env.MAPBOX_API_KEY)
-        .constant('DARK_SKY_API_KEY', env.DARK_SKY_API_KEY)
         .constant('OPENWEATHERMAP_API_KEY', env.OPENWEATHERMAP_API_KEY)
         .constant('SKOBBLER_API_KEY', env.SKOBBLER_API_KEY)
         .constant('toastr', toastr)
