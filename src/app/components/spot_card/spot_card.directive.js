@@ -102,14 +102,13 @@
                 if (hc) {
                     return url;
                 }
-                if (['food', 'shelter', 'event'].indexOf(type) != -1) {
-                    var max;
-                    if (type == 'food' || type== 'shelter') {
-                        max = (type === 'food') ? 32 : 84;
-                    } else {
-                        max = 129;
-                    }
-                    return S3_URL + '/assets/img/placeholders/' + type + '/' + (id % max) + '.jpg';
+                if (['food', 'shelter', 'event'].indexOf(type) > -1) {
+                    var maxImgNums = {
+                        food: 32,
+                        shelter: 84,
+                        event: 100
+                    };
+                    return S3_URL + '/assets/img/placeholders/' + type + '/' + (id % maxImgNums[type]) + '.jpg';
                 } else {
                     vm.getImg();
                     return API_URL + "/uploads/missings/covers/original/missing.png";
