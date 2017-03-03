@@ -6,16 +6,22 @@ use App\Services\Json\Reader;
 use App\Spot;
 use App\SpotType;
 use App\SpotTypeCategory;
-use App\SpotPoint;
-use App\RemotePhoto;
 use Log;
 
 class JsonParserController extends Controller {
     
     
+    protected $category;
+    protected $prefix;
     protected $dumpUrl  = "http://23.92.68.169/nkcjsdc/events.json";
     protected $filePath = "json/events.json";
     
+    public function __construct() {
+        $this->category = SpotTypeCategory::getOrCreate('heyevent', 'Heyevent');
+        $this->prefix = $this->category->getPrefix();
+    }
+
+
     public function getDump()
     {
         $url = $this->dumpUrl;
@@ -35,12 +41,12 @@ class JsonParserController extends Controller {
             'offset'      => (integer)$offset
         ]);
         
-        $categoryId = $this->getCategoryId();
+        $categoryId = $this->category->id;
         $newSpots = [];
         $parsedResults = $reader->getItems();
         $currentOffset = $reader->offset;
         $endOfFile     = $reader->endOfFile;
-        $prefix        = 'he_'; 
+        $prefix        = $this->prefix; 
         foreach($parsedResults as $index => $parsedResult)
         {
             if(!Spot::where('remote_id', '=', $prefix . $parsedResult['hash'])->exists())
@@ -100,23 +106,5 @@ class JsonParserController extends Controller {
         }
         $pos = strpos($cleanString, ' ', $limit);
         return substr($cleanString,0,$pos ) . '...';
-    }
-    
-    public function getCategoryId() {
-        $cat = SpotTypeCategory::where('name', 'heyevent');
-        if($cat->exists())
-        {
-            $catObj = $cat->first();
-        }
-        else
-        {
-            $type = SpotType::getTypeId('event');
-            $catObj = SpotTypeCategory::create([
-                'name' => 'heyevent',
-                'display_name' => 'Heyevent',
-                'spot_type_id' => $type
-            ]);
-        }
-        return $catObj->id;
     }
 }

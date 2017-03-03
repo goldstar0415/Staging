@@ -41,6 +41,7 @@ class CsvParserController extends Controller
         'messages'      => [],
         'rows_added'    => 0,
         'rows_updated'  => 0,
+        'rows_parsed_now' => 0,
     ];
     
     /**
@@ -100,7 +101,6 @@ class CsvParserController extends Controller
         $reader->setOffset($file_offset);
         $reader->open($path);
         $isFirstRow         = ($file_offset == 0)?true:false;
-        $rows_parsed_now    = 0;
         if(empty($pref))
         {
             $this->result['messages'][] = 'Category not selected';
@@ -155,9 +155,9 @@ class CsvParserController extends Controller
                         $this->addTags($remote_id, $item);
                     }
                     else {
-                        $this->result['messages'][] = 'Remote service ID missed in string #' . ($rows_parsed_before + $rows_parsed_now + 1);
+                        $this->result['messages'][] = 'Remote service ID missed in string #' . ($rows_parsed_before + $this->result['rows_parsed_now'] + 1);
                     }
-                    $rows_parsed_now++;
+                    $this->result['rows_parsed_now']++;
                 }
             }
             if(!empty($this->spotsRows))
@@ -165,12 +165,11 @@ class CsvParserController extends Controller
                 $this->saveSpots();
             }
             $this->saveRelations();
-            $this->result['end_of_parse'] = ($rows_parsed_now == 0) ? true : false;
+            $this->result['end_of_parse'] = ($this->result['rows_parsed_now'] == 0) ? true : false;
             $reader->close();
         }
 
-        $this->result['rows_parsed']          = $rows_parsed_before + $rows_parsed_now;
-        $this->result['rows_parsed_now']      = $rows_parsed_now;
+        $this->result['rows_parsed'] = $rows_parsed_before + $this->result['rows_parsed_now'];
         $this->result['headers'] = $this->headers;
         header('Content-Type: text/html;charset=utf-8');
         $this->result = json_encode($this->result);
