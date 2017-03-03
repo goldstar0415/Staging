@@ -4,11 +4,9 @@ namespace App\Jobs;
 
 use App\Jobs\Job;
 use App\Role;
-use App\Services\SpotsImportFile;
 use App\SpotTypeCategory;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Maatwebsite\Excel\Excel;
 use Storage;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;

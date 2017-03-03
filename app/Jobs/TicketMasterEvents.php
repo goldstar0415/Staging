@@ -5,19 +5,14 @@ namespace App\Jobs;
 use App\Jobs\Job;
 use App\RemotePhoto;
 use App\Services\AppSettings;
-use App\Services\GoogleAddress;
 use App\Spot;
-use App\SpotPhoto;
 use App\SpotTypeCategory;
-use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
-use Storage;
-use Log;
 
 class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
 {
@@ -66,6 +61,11 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
         '_16_9',
         '_4_3',
     ];
+    
+    public function __construct() {
+        $this->category = SpotTypeCategory::getOrCreate('ticketmaster', 'TicketMaster');
+        $this->prefix = $this->category->getPrefix();
+    }
 
     /**
      * Execute the job.
@@ -94,8 +94,6 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
 
     public function importEvents(Collection $events)
     {
-        
-        $this->setPrefix();
         foreach ($events as $event) {
             if(empty($event['id']) || // No remote Id
                empty($event['name']) || // No title
@@ -252,27 +250,6 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
         }
     }
     
-    /**
-     * Setting Remote ID prefix and category
-     * 
-     * @return void
-     */
-    public function setPrefix()
-    {
-        //Ticketmaster category should be in DB
-        $category = SpotTypeCategory::whereName('ticketmaster')->first();
-        if($category)
-        {
-            $type = 'event';
-            $this->prefix = $type . '_' . $category->id . '_' ;
-            $this->category = $category;
-        }
-        else
-        {
-            $this->prefix = 'tm_';
-        }
-    }
-
     /**
      * @param $query_string
      * @return array

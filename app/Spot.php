@@ -1022,14 +1022,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         foreach( $reviewsContent->find('.review_item') as $reviewObj )
         {
             // Checking if there's no object with review text end going to next if it's true
+            // And if review id doesn't exist going to next
             $reviewTextObj = $reviewObj->find('.review_item_review_content', 0);
-            if(!$reviewTextObj) 
-            {
-                continue;
-            }
-            // If review id doesn't exist going to next
             $idObj = $reviewObj->find('input[name=review_url]', 0);
-            if($idObj)
+            if(!$reviewTextObj || !$idObj) 
             {
                 continue;
             }
