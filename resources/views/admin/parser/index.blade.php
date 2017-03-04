@@ -17,5 +17,5 @@
 
 @endsection
 @section('scripts')
-    @include('admin.parser.scripts', ['uploadRoute' => 'admin.csv-parser.export', 'updateRoute' => 'admin.csv-parser.update-field'])
+    @include('admin.parser.scripts', ['uploadRoute' => 'admin.csv-parser.export'])
 @endsection

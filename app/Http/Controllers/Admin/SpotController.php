@@ -12,9 +12,9 @@ use App\User;
 use App\SpotTypeCategory;
 use DB;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Jobs\SpotViewUpdater;
 
 class SpotController extends Controller
 {
@@ -213,5 +213,10 @@ class SpotController extends Controller
             }),
             15
         ));
+    }
+    
+    public function refreshMaterializedView()
+    {
+        $this->dispatch(new SpotViewUpdater(null, 'refresh'));
     }
 }

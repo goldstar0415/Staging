@@ -4,15 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\ImportLogRequest;
 use App\Http\Requests\Admin\SpotImportRequest;
-use App\Jobs\SpotsImport;
 use App\Jobs\SpotsImportColumns;
 use App\Jobs\SpotsImportCsv;
 use App\Services\SpotsImportFile;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Maatwebsite\Excel\Excel;
 use Vinkla\Instagram\InstagramManager;
 
 class SpotImportController extends Controller

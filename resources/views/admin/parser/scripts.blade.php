@@ -25,7 +25,7 @@ $(function(){
     var $uploadPreloader = $uploadBtn.find('.prldr');
     var $uploadDone      = $uploadBtn.find('.btn-loaded');
     var $uploadText      = $uploadBtn.find('.btn-export');
-    var $parseBtn        = $form.find('button[type="button"]');
+    var $parseBtn        = $form.find('button.btn-parse');
     var $parsePreloader  = $parseBtn.find('.prldr');
     var $parseDone       = $parseBtn.find('.btn-loaded');
     var $parseText       = $parseBtn.find('.btn-export');
@@ -33,6 +33,9 @@ $(function(){
     var $fieldSelect     = $form.find('select.field-select');
     var $fieldCategory   = $form.find('select.field-category');
     var $mode            = $form.find('input[name="mode"]');
+    var $refreshBtn       = $form.find('button.btn-refresh');
+    var $refreshDone      = $refreshBtn.find('.btn-loaded');
+    var $refreshText      = $refreshBtn.find('.btn-export');
     
     var mode             = $mode.filter(':checked').val();
     // File inputs handle
@@ -159,13 +162,25 @@ $(function(){
                 parseHandler();
             }
         }
-        
+    });
+    
+    $refreshBtn.on('click', function(e) {
+        e.preventDefault();
+        if( !$refreshBtn.is('.disabled'))
+        {
+            $refreshBtn.addClass('disabled');
+            $refreshText.hide();
+            $refreshDone.show();
+            $.ajax({
+                url: '{{ route("admin.spots.refresh-view") }}'
+            });
+        }
     });
     
     var parseHandler = function() {
         $form.find('select').attr('disabled', 'disabled');
         message('Parsing step ' + (step) + ' started');
-        var url = (mode == 'parsing')?'{{ route($uploadRoute) }}':'{{ route($updateRoute) }}';
+        var url = '{{ route($uploadRoute) }}';
         $.ajax({
             url: url,
             data: {
@@ -174,6 +189,7 @@ $(function(){
                 rows_parsed: rowsParsed,
                 file_offset: fileOffset,
                 headers: headers,
+                mode: $mode.filter(':checked').val(),
                 category: $fieldCategory.val(),
                 field: $fieldSelect.val(),
                 update: $('input[name="update-existing"]').is(':checked')?1:0,
@@ -194,7 +210,7 @@ $(function(){
                         headers = response.headers;
                     }
                     
-                    if( rowsParsed >= totalRows || response.endOfParse == true )
+                    if( rowsParsed >= totalRows || response.end_of_parse == true )
                     {
                         message('Parsing complete!');
                         message('Total rows in file: ' + totalRows);
@@ -203,6 +219,7 @@ $(function(){
                         $parseDone.show();
                         $parsePreloader.hide();
                         stopTimer();
+                        $refreshBtn.removeClass('disabled');
                         //$parsePreloader.hide();
                     }
                     else if(rowsParsed < totalRows)
