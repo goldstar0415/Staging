@@ -55,17 +55,6 @@
           }, 600);
       }
         
-      if (_.isEmpty(fx.rates)) {
-          $http.get(API_URL + '/rates')
-              .then(function(resp) {
-                  if (resp.status === 200) {
-                    fx.base = 'USD';
-                    fx.rates = resp.data;
-                    fx.rates.USD = 1;
-                  }
-              });
-      }
-
 		function getPathRouter() {
 			switch(pathRouterFail) {
 				case 0:
@@ -1965,11 +1954,7 @@
         var spot = spot.spot ? spot.spot : spot;
         var scope = $rootScope.$new();
         if (spot.minrate) {
-            if (!_.isEmpty(fx.rates)) {
-                spot.price = '$' + Math.round(fx(spot.minrate).from(spot.currencycode).to("USD"));
-            } else {
-                spot.price = Math.round(spot.minrate) + ' ' + spot.currencycode;
-            }
+            spot.price = '$' + Math.round(spot.minrate);
         }
         scope.item = spot;
         scope.marker = marker;
