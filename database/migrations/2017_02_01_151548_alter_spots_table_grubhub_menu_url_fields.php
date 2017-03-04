@@ -23,7 +23,7 @@ class AlterSpotsTableGrubhubMenuUrlFields extends Migration
      */
     public function down()
     {
-        DB::statement('ALTER TABLE spots DROP COLUMNN grubhub_url');
+        DB::statement('ALTER TABLE spots DROP COLUMN grubhub_url');
         DB::statement('ALTER TABLE spots DROP COLUMN menu_url');
     }
 }

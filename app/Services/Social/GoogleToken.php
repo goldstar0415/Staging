@@ -85,10 +85,11 @@ class GoogleToken implements Token, \Serializable
 
     public function unserialize($serialized)
     {
-        parse_str($serialized);
-        $this->token = $token;
-        $this->exp = (int)$exp;
-        $this->scopes = $scopes;
+        $data = [];
+        parse_str($serialized, $sdata);
+        $this->token = $data['token'];
+        $this->exp = (int)$data['exp'];
+        $this->scopes = $data['scopes'];
     }
 
     public function setScopes(array $scopes)

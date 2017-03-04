@@ -3,8 +3,6 @@
 namespace App\Jobs;
 
 use App\Extensions\AppCollection;
-use App\Jobs\Job;
-use Illuminate\Contracts\Bus\SelfHandling;
 
 class SpotsImportColumns extends SpotsImport
 {

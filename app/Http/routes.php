@@ -78,7 +78,6 @@ Route::get('spots/{spots}/members', 'SpotController@members');
 Route::get('spots/{spots}/preview', 'SpotController@preview');
 Route::get('spots/{spots}/export', 'SpotController@export');
 Route::get('spots/{spots}/cover', 'SpotController@getCover');
-Route::get('spots/{spots}/ratings', 'SpotController@getRatingInfo');
 Route::get('spots/{spots}/hours', 'SpotController@getHours');
 Route::put('spots/{spots}/photos', 'SpotPhotoController@store');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
@@ -159,7 +158,6 @@ Route::resource('posts.comments', 'BlogCommentController', ['only' => ['index', 
 Route::get('posts/{posts}/preview', 'BlogController@preview');
 //-----------------------------------------------
 Route::get('file', 'DownloadController@index');
-Route::get('url-parse', 'UrlMetaParserController@getContentFromSite');
 
 Route::group(['prefix' => 'import/logs', 'middleware' => 'admin'], function () {
     get('{type}', 'ShowLogController@show');
@@ -174,6 +172,22 @@ Route::get('prerender/{page_url}', 'PrerenderController@render')->where('page_ur
  * Search Spots
  */
 Route::get('search/spots', 'SearchController@search');
+
+/**
+ * Weather
+ */
+
+Route::get('weather/darksky', 'WeatherController@darksky');
+Route::get('weather/openweathermap', 'WeatherController@openWeatherMap');
+
+
+/**
+ * Geocoder
+ */
+
+Route::get('geocoder/search', 'GeocoderController@search');
+Route::get('geocoder/reverse', 'GeocoderController@reverse');
+
 
 /**
  * Weather
