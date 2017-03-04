@@ -24,6 +24,8 @@
         .constant('toastr', toastr)
         .constant('moment', moment)
         .constant('USER_ONLINE_MINUTE', env.USER_ONLINE_MINUTE)
+        .constant('WEATHER_TILES_URL', '//mesonet.agron.iastate.edu')
+        .constant('CARTODB_TILES_URL', 'https://cartodb-basemaps-{s}.global.ssl.fastly.net')
         .constant('DATE_FORMAT', {
             datepicker: {
                 date: 'MM.DD.YYYY',
