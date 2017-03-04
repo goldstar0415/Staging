@@ -199,82 +199,32 @@
         calcRatings();
         
         if (vm.spot.booking_url) {
-            vm.reviewsEnabled = false;
-            refreshRating('booking');
-            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/booking-rating').then(function(data) {
-                if(data.booking)
-                {
-                    vm.reviews_total['booking'] = data.booking;
-                }
-                ratingRefreshed('booking');
-                calcRatings();
-                enableReviews();
-            });
+            sendRatingsRequest('booking');
         }
-        
         if (vm.spot.hotelscom_url) {
-            vm.reviewsEnabled = false;
-            refreshRating('hotelscom');
-            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/hotelscom-rating').then(function(data) {
-                if(data.hotels)
-                {
-                    vm.reviews_total['hotelscom'] = data.hotelscom;
-                }
-                ratingRefreshed('hotelscom');
-                calcRatings();
-                enableReviews();
-            });
+            sendRatingsRequest('hotelscom');
         }
-        
         if (vm.spot.yelp_url || vm.spot.yelp_id) {
-            vm.reviewsEnabled = false;
-            refreshRating('yelp');
-            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/yelp-rating').then(function(data) {
-                if(data.yelp)
-                {
-                    vm.reviews_total['yelp'] = data.yelp;
-                }
-                ratingRefreshed('yelp');
-                calcRatings();
-                enableReviews();
-            });
+            sendRatingsRequest('yelp');
         }
-        
         if (vm.spot.tripadvisor_url) {
-            vm.reviewsEnabled = false;
-            refreshRating('tripadvisor');
-            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/tripadvisor-rating').then(function(data) {
-                if(data.tripadvisor)
-                {
-                    vm.reviews_total['tripadvisor'] = data.tripadvisor;
-                }
-                ratingRefreshed('tripadvisor');
-                calcRatings();
-                enableReviews();
-            });
+            sendRatingsRequest('tripadvisor');
         }
-        
         if (vm.spot.facebook_url) {
-            vm.reviewsEnabled = false;
-            refreshRating('facebook');
-            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/facebook-rating').then(function(data) {
-                if(data.facebook)
-                {
-                    vm.reviews_total['facebook'] = data.facebook;
-                }
-                ratingRefreshed('facebook');
-                calcRatings();
-                enableReviews();
-            });
+            sendRatingsRequest('facebook');
+        }
+        if (vm.spot.google_id) {
+            sendRatingsRequest('google');
         }
         
-        if (vm.spot.google_id) {
+        function sendRatingsRequest(type)
+        {
             vm.reviewsEnabled = false;
-            refreshRating('google');
-            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/google-rating').then(function(data) {
-                if(data.google)
+            refreshRating(type);
+            AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/' + type + '-rating').then(function(data) {
+                if(data['success'] && data[type])
                 {
-                    vm.reviews_total['google'] = data.google;
+                    vm.reviews_total[type] = data[type];
                 }
                 ratingRefreshed('google');
                 calcRatings();

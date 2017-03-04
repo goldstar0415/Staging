@@ -38,11 +38,11 @@
             vm.openSpot = openSpot;
 
             if (vm.item.minrate) {
-                if (!_.isEmpty(fx.rates)) {
-                    vm.item.price = '$' + Math.round(fx(vm.item.minrate).from(vm.item.currencycode).to("USD"));
-                } else {
-                    vm.item.price = Math.round(vm.item.minrate) + ' ' + vm.item.currencycode;
-                }
+                vm.item.price = '$' + Math.round(vm.item.minrate);
+            }
+            if(vm.item.spot_id && $rootScope.currentUser)
+            {
+                vm.item.is_favorite = (_.indexOf($rootScope.currentUser.favorites_ids, vm.item.spot_id) > -1) ? true : false;
             }
 
             function getImg() {
@@ -102,14 +102,13 @@
                 if (hc) {
                     return url;
                 }
-                if (['food', 'shelter', 'event'].indexOf(type) != -1) {
-                    var max;
-                    if (type == 'food' || type== 'shelter') {
-                        max = (type === 'food') ? 32 : 84;
-                    } else {
-                        max = 129;
-                    }
-                    return S3_URL + '/assets/img/placeholders/' + type + '/' + (id % max) + '.jpg';
+                if (['food', 'shelter', 'event'].indexOf(type) > -1) {
+                    var maxImgNums = {
+                        food: 32,
+                        shelter: 84,
+                        event: 100
+                    };
+                    return S3_URL + '/assets/img/placeholders/' + type + '/' + (id % maxImgNums[type]) + '.jpg';
                 } else {
                     vm.getImg();
                     return API_URL + "/uploads/missings/covers/original/missing.png";

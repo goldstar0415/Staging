@@ -66,6 +66,10 @@
         var id = (spot.spot_id)?spot.spot_id:spot.id;
         Spot.favorite({id: id}, function () {
           spot.is_favorite = true;
+          if($rootScope.currentUser)
+          {
+            ($rootScope.currentUser.favorites_ids).push((spot.spot_id)?spot.spot_id:spot.id);
+          }
           syncSpots(id, {is_favorite: true});
         });
       }
@@ -80,6 +84,14 @@
       var id = (spot.spot_id)?spot.spot_id:spot.id;
       Spot.unfavorite({id: id}, function () {
         spot.is_favorite = false;
+        if($rootScope.currentUser)
+        {
+          var spotFavoriteIndex = _.indexOf($rootScope.currentUser.favorites_ids, (spot.spot_id)?spot.spot_id:spot.id);
+          if(spotFavoriteIndex > -1)
+          {
+            ($rootScope.currentUser.favorites_ids).splice(spotFavoriteIndex, 1);
+          }
+        }
         syncSpots(id, {is_favorite: false});
 
         if (callback) {
