@@ -9,6 +9,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="theme-color" content="#0B2639">
 	<base href="/">
 
 	<link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
@@ -38,14 +39,29 @@
     <!-- inject: ./../.tmp/boot/boot.env.js.tmp --><script src="/env.js"></script><!-- /injectfile -->
 
 </head>
-<body autoscroll="true" id="body" class="content-hidden">
+<body autoscroll="true" id="body" class="content-hidden no-js">
 <!--[if lt IE 10]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
 	your browser</a> to improve your experience.</p>
 <![endif]-->
 
+<!-- no-js notification -->
+<noscript>
+    <div id="no-js-notification">
+        <p>
+            We're Sorry, Zoomtivity Runs on Javascript. </br>
+            Please enable for your browser.
+        </p>
+        <img class="gif" src="/assets/img/nojs.gif" width="50%">
+    </div>
+</noscript>
+<script>
+    body.classList.remove("no-js");
+</script>
+<!-- /no-js notification -->
+
 <!--Preloader-->
-<div class="preloader" id="preloader">
+<div class="preloader hidden-no-js" id="preloader">
 	<div class="ferris_wheel">
 		<div class="wheel_wrap">
 			<div class="wheel">
@@ -70,7 +86,7 @@
 <!-- /Preloader-->
 
 
-<div snap-drawers>
+<div snap-drawers class="hidden-no-js">
 	<div snap-drawer>
 		<zm-side-menu side="left" ng-if="options.snap.disable == 'right'"></zm-side-menu>
 	</div>
@@ -79,7 +95,7 @@
 	</div>
 </div>
 
-<div snap-content snap-options="options.snap">
+<div snap-content snap-options="options.snap" class="hidden-no-js">
 	<!-- include header-->
 	<zm-header options="options" ng-class="{'landing-menu-wrapper': $state.includes('intro')}"></zm-header>
 
