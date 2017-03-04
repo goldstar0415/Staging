@@ -3,14 +3,18 @@
 
   angular
     .module('zoomtivity')
-    .factory('MapService', function ($rootScope, $timeout, $location, $http, API_URL, snapRemote, $compile, moment, $state, $modal, toastr, MOBILE_APP, MAPBOX_API_KEY, Area, SignUpService, Spot, SpotComment, SpotService, LocationService, $ocLazyLoad, SKOBBLER_API_KEY) {
+    .factory('MapService', function (
+        $rootScope, $timeout, $location, $http, snapRemote, $compile, moment, $state, $modal, toastr, $ocLazyLoad,
+        Area, SignUpService, Spot, SpotComment, SpotService, LocationService,
+        API_URL, SKOBBLER_API_KEY, WEATHER_TILES_URL, CARTODB_TILES_URL, MOBILE_APP, MAPBOX_API_KEY
+    ) {
 
       console.log('MapService');
 
       var map = null;
       var DEFAULT_MAP_LOCATION = [37.405075073242188, -96.416015625000000];
-      var tilesUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
-      var tilesWeatherUrl = '//mesonet.agron.iastate.edu/cache/tile.py/1.0.0/nexrad-n0q-{timestamp}/{z}/{x}/{y}.png';
+      var tilesUrl = CARTODB_TILES_URL + '/light_all/{z}/{x}/{y}.png';
+      var tilesWeatherUrl = WEATHER_TILES_URL + '/cache/tile.py/1.0.0/nexrad-n0q-{timestamp}/{z}/{x}/{y}.png';
       var timestamps = ['900913-m50m', '900913-m45m', '900913-m40m', '900913-m35m', '900913-m30m', '900913-m25m', '900913-m20m', '900913-m15m', '900913-m10m', '900913-m05m', '900913'];
 
       var radiusSelectionLimit = 500000; // in meters
@@ -44,9 +48,9 @@
 
       var highlightMarker;
       var mobileMarker;
-    
+
       var PickNotification = $('.pick-notification');
-      
+
       function pickNotificationFadeOut() {
           PickNotification.css('opacity', 0);
           $timeout(function() {
@@ -54,7 +58,7 @@
               PickNotification.css('opacity', 1);
           }, 600);
       }
-        
+
 		function getPathRouter() {
 			switch(pathRouterFail) {
 				case 0:
@@ -867,9 +871,9 @@
         });
 
         //map init
-          
+
         // the Skobbler map
-          
+
         map = L.skobbler.map(mapDOMElement, {
               apiKey: SKOBBLER_API_KEY,
               mapStyle: 'outdoor',
@@ -886,14 +890,14 @@
               zoom: 5,
               worldCopyJump: true,
           });
-          
+
           // fix the attribution control
           map.removeControl(map.attributionControl);
           var attribution = '<div class="leaflet-control-attribution"><a href="http://developer.skobbler.com/" target="_blank">Scout</a>, <a href="http://www.leafletjs.com" target="_blank">Leaflet</a>, <a href="http://www.openstreetmap.org" target="_blank">OpenStreetMap</a></div>';
           $('.map').append(attribution);
-          
+
         // the Leaflet map (old)
-          
+
         // map = L.map(mapDOMElement, {
         //   attributionControl: false,
         //   zoomControl: true,
@@ -2598,7 +2602,7 @@
       }
 
       function loadWeatherTiles(index) {
-          map['weatherLayer' + index] = new L.TileLayer.WMS("http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi", {
+          map['weatherLayer' + index] = new L.TileLayer.WMS(WEATHER_TILES_URL + "/cgi-bin/wms/nexrad/n0r.cgi", {
               layers: 'nexrad-n0r-' + timestamps[index],
               format: 'image/png',
               transparent: true,
@@ -2661,7 +2665,7 @@
           mapBox.push(bounds._northEast.lng);
           mapBox.push(bounds._northEast.lat);
           mapBox.push(map.getZoom());
-          
+
           $http.get(API_URL + '/weather/openweathermap', {
               params: {
                   //lat: center.lat,
@@ -2675,7 +2679,7 @@
           .success(function(resp) {
               drawWeatherMarkers(resp);
           });
-          
+
       }
 
       function setSkycon(icon) {
