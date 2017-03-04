@@ -1,5 +1,24 @@
 /* boot styles */
 
+
+.no-js .hidden-no-js {
+    display: none !important;
+}
+#no-js-notification {
+    width: 100%;
+    text-align: center;
+}
+#no-js-notification p {
+    color: black;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 2vw;
+    padding: 1vw;
+}
+#no-js-notification img.gif {
+    width: 50%;
+    height: auto;
+}
+
 .map {
 	width: calc(100vw - 70px);
 	height: calc(100vh - 100px)
