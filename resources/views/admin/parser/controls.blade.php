@@ -18,25 +18,19 @@
             ) !!}
         </div>
         <div class="radio">
-            <label><input name="mode" type="radio" value="parsing" checked>Parsing mode</label>
+            <label><input name="mode" type="radio" value="any" checked>Insert new and update old spots</label>
         </div>
         <div class="radio">
-            <label><input name="mode" type="radio" value="update">Update mode</label>
+            <label><input name="mode" type="radio" value="insert">Only insert new spots</label>
+        </div>
+        <div class="radio">
+            <label><input name="mode" type="radio" value="update">Only update old spots</label>
         </div>
         <div class="checkbox">
             <label><input name="auto-parse" type="checkbox" value="" checked>Automaticly start parsing</label>
         </div>
         <div class="checkbox">
-            <label><input name="update-existing" type="checkbox" value="">Update existing rows</label>
-        </div>
-        <div class="select" hidden>
-            <label for="field-select">Choose field for updating:</label>
-            {!! Form::select(
-                'field',
-                $fields,
-                null,
-                ['class' => 'field-select form-control', 'id' => 'field-select']
-            ) !!}
+            <label><input name="full-remote-id" type="checkbox" value="">Use full remote ID (with prefix) in CSV</label>
         </div>
     </div>
 </div>
