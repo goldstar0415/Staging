@@ -20,7 +20,7 @@ class CsvParserController extends Controller
     private $prefix = null;
     private $categoryId = null;
     private $typeName = null;
-    private $updateExisting = false;
+    private $usePrefix = true;
     private $date = null;
     private $headers = null;
     private $field = null;
@@ -34,6 +34,7 @@ class CsvParserController extends Controller
     private $tags = [];
     private $amenities = [];
     private $locations = [];
+    private $cachedTags = [];
     
     private $result = [
         'success'       => true, 
@@ -57,8 +58,7 @@ class CsvParserController extends Controller
      */
     public function index()
     {
-        $fieldsArr = $this->getFieldsForFront();
-        return view('admin.parser.index', ['fields' => $fieldsArr, 'categories' => SpotType::categoriesList()]);
+        return view('admin.parser.index', ['categories' => SpotType::categoriesList()]);
     }
     
     /**
@@ -82,7 +82,7 @@ class CsvParserController extends Controller
     {
         $path               = $request->path;
         $total_rows         = $request->total_rows;
-        $this->updateExisting = (int)$request->update;
+        $this->usePrefix    = (int)$request->use_prefix;
         $this->field        = $request->field;
         $this->mode         = $request->mode;
         $rows_parsed_before = $request->rows_parsed;
@@ -95,7 +95,6 @@ class CsvParserController extends Controller
             $this->setTypeName();
         }
         $pref = $this->prefix;
-        $this->result['update'] = $this->updateExisting;
         $this->result['old_offset'] = $file_offset;
         $reader             = new Reader();
         $reader->setOffset($file_offset);
@@ -119,27 +118,19 @@ class CsvParserController extends Controller
             foreach ($reader->getSheetIterator() as $sheet) {
                 foreach ($sheet->getRowIterator() as $row) {
                     // Getting fields headers if it's first row or if field setted in update mode
-                    if($isFirstRow && $this->mode === 'parsing')
+                    if($isFirstRow)
                     {
                         $this->headers = array_change_key_case(array_flip($row));
                         $isFirstRow = false;
                         continue;
                     }
-                    elseif($isFirstRow && $this->mode === 'update')
-                    {
-                        $this->headers = array_flip([
-                            'remote_id',
-                            $this->field
-                        ]);
-                        $isFirstRow = false;
-                    }
                     // Getting current file pointer
-                    if($rows_parsed_now < $this->stepCount)
+                    if($this->result['rows_parsed_now'] < $this->stepCount)
                     {
                         $this->result['file_offset'] = $reader->getFilePointerOffset();
                     }
                     // Checking for step items counter
-                    if($rows_parsed_now >= $this->stepCount)
+                    if($this->result['rows_parsed_now'] >= $this->stepCount)
                     {
                         break;
                     }
@@ -204,18 +195,7 @@ class CsvParserController extends Controller
                 }
             }
         }
-        if($this->mode === 'parsing')
-        {
-            $attrArr['is_approved'] = true;
-            $attrArr['is_private'] = false;
-            $attrArr['spot_type_category_id'] = $this->categoryId;
-            $attrArr['created_at'] = $this->date;
-            $attrArr['updated_at'] = $this->date;
-        }
-        if($this->typeName != 'event')
-        {
-            $attrArr['remote_id'] = $remote_id;
-        }
+        $attrArr['remote_id'] = $remote_id;
         return $attrArr;
     }
     
@@ -233,26 +213,27 @@ class CsvParserController extends Controller
             {
                 foreach($existingSpots as $value)
                 {
-                    if($this->updateExisting || $this->mode === 'update')
+                    if($this->mode !== 'insert')
                     {
                         $this->existingIds[$value->remote_id] = $value->id;
                         $this->spotsToUpdate[$value->remote_id] = $this->spotsRows[$value->remote_id];
                     }
                     unset($this->spotsRows[$value->remote_id]);
                 }
-                if($this->mode === 'update')
-                {
-                    
-                }
             }
-            if(!empty($this->spotsToUpdate))
+            if(!empty($this->spotsToUpdate) && $this->mode !== 'insert' )
             {
                 $this->updateSpots();
             }
-            if(!empty($this->spotsRows) && $this->mode === 'parsing')
+            elseif($this->mode === 'insert')
+            {
+                $this->existingIds = [];
+            }
+            if(!empty($this->spotsRows) && $this->mode !== 'update')
             {
                 $this->insertSpots();
             }
+            
         }
     }
     
@@ -286,6 +267,11 @@ class CsvParserController extends Controller
             $insertedIds = [];
             foreach($spots as $remote_id => $row)
             {
+                $row['is_approved'] = true;
+                $row['is_private'] = false;
+                $row['spot_type_category_id'] = $this->categoryId;
+                $row['created_at'] = $this->date;
+                $row['updated_at'] = $this->date;
                 $insertedIds[$remote_id] = DB::table('spots')->insertGetId($row);
                 $this->result['rows_added']++;
             }
@@ -361,22 +347,40 @@ class CsvParserController extends Controller
         {
             $tags = array_filter(array_map('trim', explode(';', $item['tags'])));
             $idsArr = [];
-            $existingTags = [];
-            $tagsCollection = DB::table('tags')->whereIn('name', $tags)->get();
-            foreach($tagsCollection as $tagObj)
+            
+            foreach($tags as $index => $tag)
             {
-                $idsArr[] = $tagObj->id;
-                $existingTags[] = $tagObj->name;
+                if(isset($this->cachedTags[$tag]))
+                {
+                    $this->tags[$remote_id][] = [
+                        'tag_id' => $this->cachedTags[$tag]
+                    ];
+                    unset($tags[$index]);
+                }
             }
-            $tags = array_diff($tags, $existingTags);
-            foreach($tags as $tag)
+            if(!empty($tags))
             {
-                $idsArr[] = DB::table('tags')->insertGetId(['name' => $tag]);
-            }
-            foreach($idsArr as $id)
-            {
-                $this->tags[$remote_id][] = [
-                    'tag_id' => $id];
+                $existingTags = [];
+                $tagsCollection = DB::table('tags')->whereIn('name', $tags)->get();
+                foreach($tagsCollection as $tagObj)
+                {
+                    $idsArr[] = $tagObj->id;
+                    $this->cachedTags[$tagObj->name] = $tagObj->id;
+                    $existingTags[] = $tagObj->name;
+                }
+                $tags = array_diff($tags, $existingTags);
+                foreach($tags as $tag)
+                {
+                    $tagId = DB::table('tags')->insertGetId(['name' => $tag]);
+                    $idsArr[] = $tagId;
+                    $this->cachedTags[$tag] = $tagId;
+                }
+                foreach($idsArr as $id)
+                {
+                    $this->tags[$remote_id][] = [
+                        'tag_id' => $id
+                    ];
+                }
             }
         }
     }
@@ -588,25 +592,6 @@ class CsvParserController extends Controller
         $this->typeName = SpotTypeCategory::find($this->categoryId)->type->name;
         $this->prefix = $this->typeName . '_' . $this->categoryId . '_';
     }
-
-    /**
-     * Returning list of field available for update
-     * 
-     * @return array
-     */
-    protected function getFieldsForFront() 
-    {
-        $fieldsArr = array_merge(
-                Fields::$spot,
-                Fields::$mass
-        );
-        $fields = [];
-        foreach($fieldsArr as $value)
-        {
-            $fields[$value] = $value;
-        }
-        return $fields;
-    }
     
     /**
      * Generating remote_id with prefix depending on remote_id or booking_id in CSV
@@ -618,14 +603,14 @@ class CsvParserController extends Controller
         $remote_id = null;
         if(!empty($item['booking_id']))
         {
-            $remote_id = $this->prefix . $item['booking_id'];
+            $remote_id = $item['booking_id'];
             unset($item['booking_id']);
         }
         if(!empty($item['remote_id']))
         {
-            $remote_id = $this->prefix . $item['remote_id'];
+            $remote_id = $item['remote_id'];
             unset($item['remote_id']);
         }
-        return $remote_id;
+        return ($this->usePrefix ? $this->prefix: '') . $remote_id;
     }
 }

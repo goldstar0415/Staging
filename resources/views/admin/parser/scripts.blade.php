@@ -29,9 +29,8 @@ $(function(){
     var $parsePreloader  = $parseBtn.find('.prldr');
     var $parseDone       = $parseBtn.find('.btn-loaded');
     var $parseText       = $parseBtn.find('.btn-export');
-    var $updateExisting  = $inputs.filter('[name="update-existing"]');
-    var $fieldSelect     = $form.find('select.field-select');
     var $fieldCategory   = $form.find('select.field-category');
+    var $fullRemoteId    = $form.find('input[name="full-remote-id"]');
     var $mode            = $form.find('input[name="mode"]');
     var $refreshBtn       = $form.find('button.btn-refresh');
     var $refreshDone      = $refreshBtn.find('.btn-loaded');
@@ -61,21 +60,18 @@ $(function(){
         });
     });
     
-    $fieldCategory.on('change', function() {
-        var selectedField = $fieldCategory.find(':selected');
-        var selectedType = selectedField.parent().attr('label');
-        if(selectedType == 'Event')
+    $fullRemoteId.on('change', function(){
+        var useFullRID = $fullRemoteId.is(':checked');
+        if(useFullRID)
         {
-            $mode.filter('[value="update"]').prop('checked', false).prop('disabled', true).addClass('disabled');
-            $mode.filter('[value="parsing"]').prop('checked', true);
-            $updateExisting.parents('.checkbox').slideUp();
-            $fieldSelect.parents('.select').slideUp();
+            $mode.filter('[value="any"]').addClass('disabled').prop('checked', false).prop('disabled', true);
+            $mode.filter('[value="insert"]').addClass('disabled').prop('checked', false).prop('disabled', true);
+            $mode.filter('[value="update"]').addClass('disabled').prop('checked', true);
         }
         else
         {
-            $mode.filter('[value="update"]').removeClass('disabled').prop('disabled', false);
-            handleMode();
-            var catId = selectedField.val();
+            $mode.filter('[value="any"]').removeClass('disabled').prop('disabled', false);
+            $mode.filter('[value="insert"]').removeClass('disabled').prop('disabled', false);
         }
     });
     
@@ -137,10 +133,6 @@ $(function(){
         }  
     });
     
-    $mode.on('change', function(){
-        handleMode();
-    });
-    
     $parseBtn.on('click', function(e) {
         e.preventDefault();
         startTimer();
@@ -191,8 +183,7 @@ $(function(){
                 headers: headers,
                 mode: $mode.filter(':checked').val(),
                 category: $fieldCategory.val(),
-                field: $fieldSelect.val(),
-                update: $('input[name="update-existing"]').is(':checked')?1:0,
+                use_prefix: $fullRemoteId.is(':checked')?0:1,
                 _token: token
             },
             type: 'POST',
@@ -249,22 +240,6 @@ $(function(){
                 sendParseError();
             }
         });
-    }
-    
-    function handleMode() {
-        mode = $mode.filter(':checked').val();
-        switch(mode) {
-            case 'parsing':
-                $updateExisting.parents('.checkbox').slideDown();
-                $fieldSelect.parents('.select').slideUp();
-                //$fieldCategory.parents('.select').slideDown();
-                break;
-            case 'update':
-                $updateExisting.parents('.checkbox').slideUp();
-                $fieldSelect.parents('.select').slideDown();
-                //$fieldCategory.parents('.select').slideUp();
-                break;
-        }
     }
     
     function message(mes) {
