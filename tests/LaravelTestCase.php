@@ -17,6 +17,10 @@ class LaravelTestCase extends Illuminate\Foundation\Testing\TestCase
      */
     protected $user;
 
+    protected $default_headers = [
+        'HTTP_Accept' => 'application/json'
+    ];
+
     /**
      * Creates the application.
      *
@@ -26,7 +30,10 @@ class LaravelTestCase extends Illuminate\Foundation\Testing\TestCase
     {
         $app = require __DIR__.'/../bootstrap/app.php';
 
-        $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+        $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
+
+        Dotenv::load(__DIR__.'/../');
+        $this->baseUrl = env('APP_URL', $this->baseUrl);
 
         return $app;
     }
@@ -43,6 +50,23 @@ class LaravelTestCase extends Illuminate\Foundation\Testing\TestCase
     }
 
     /**
+     * Visit the given URI with a GET request.
+     *
+     * @param  string $uri
+     * @param  array $data
+     * @param  array $headers
+     * @param array $files
+     * @return $this
+     */
+    public function get($uri, array $data = [], array $headers = [], array $files = [])
+    {
+        $headers = array_merge($this->default_headers, $headers);
+        $server = $this->transformHeadersToServerVars($headers);
+
+        return $this->call('GET', $uri, $data, [], $files, $server);
+    }
+
+    /**
      * Visit the given URI with a POST request.
      *
      * @param  string $uri
@@ -53,11 +77,10 @@ class LaravelTestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function post($uri, array $data = [], array $headers = [], array $files = [])
     {
+        $headers = array_merge($this->default_headers, $headers);
         $server = $this->transformHeadersToServerVars($headers);
 
-        $this->call('POST', $uri, $data, [], $files, $server);
-
-        return $this;
+        return $this->call('POST', $uri, $data, [], $files, $server);
     }
 
     /**
@@ -71,11 +94,10 @@ class LaravelTestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function put($uri, array $data = [], array $headers = [], array $files = [])
     {
+        $headers = array_merge($this->default_headers, $headers);
         $server = $this->transformHeadersToServerVars($headers);
 
-        $this->call('PUT', $uri, $data, [], $files, $server);
-
-        return $this;
+        return $this->call('PUT', $uri, $data, [], $files, $server);
     }
 
     /**
@@ -89,11 +111,10 @@ class LaravelTestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function patch($uri, array $data = [], array $headers = [], array $files = [])
     {
+        $headers = array_merge($this->default_headers, $headers);
         $server = $this->transformHeadersToServerVars($headers);
 
-        $this->call('PATCH', $uri, $data, [], $files, $server);
-
-        return $this;
+        return $this->call('PATCH', $uri, $data, [], $files, $server);
     }
     
     protected function makeUploadedFile()
