@@ -6,26 +6,63 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class MapSearchTest extends LaravelTestCase
 {
-
-    public function testSearch()
+    public function testTextSearchNoGPS()
     {
-        $response = $this->post(
-            '/map/search',
-            [
-                [
-                    '_northEast' => ['lat' => 30.33333, 'lng' => 23.43434],
-                    '_southWest' => ['lat' => 40.33333, 'lng' => 53.43434]
-                ],
-                [
-                    '_northEast' => ['lat' => 30.33333, 'lng' => 23.43434],
-                    '_southWest' => ['lat' => 40.33333, 'lng' => 53.43434]
-                ],
-                [
-                    '_northEast' => ['lat' => 30.33333, 'lng' => 23.43434],
-                    '_southWest' => ['lat' => 40.33333, 'lng' => 53.43434]
-                ]
-            ]
-        );
-        var_dump($this->response->getContent());
+        $response = $response = $this->get('/map/search', [
+            'query' => 'fish'
+        ]);
+        $this->assertResponseOk();
+    }
+
+    public function testTextSearchGPS()
+    {
+        $response = $response = $this->get('/map/search', [
+            'query' => 'fish',
+            'lat'   => '39.3',
+            'lng'   => '-21.7',
+        ]);
+        $this->assertResponseOk();
+    }
+
+    public function testRadiusSelection()
+    {
+        $response = $this->get('/map/selection/radius', [
+            'lat'    => '49.3',
+            'lng'    => '-11.7',
+            'radius' => '100000',
+        ]);
+        $this->assertResponseOk();
+    }
+
+    public function testPathSelection()
+    {
+        $response = $this->get('/map/selection/path', [
+            'vertices' => [
+                '0,20',
+                '2,30',
+                '10,25',
+            ],
+            'buffer' => 5000,
+        ]);
+        $this->assertResponseOk();
+    }
+
+    public function testLassoSelection()
+    {
+        $response = $this->get('/map/selection/lasso', [
+            'vertices' => [
+                '0,0',
+                '0,31',
+                '30,30',
+                '30,0',
+            ],
+        ]);
+        $this->assertResponseOk();
+    }
+
+    public function testList()
+    {
+        // undone
+
     }
 }
