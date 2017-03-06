@@ -23,6 +23,7 @@ use Facebook\Exceptions\FacebookSDKException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Post\PostBody;
 use GuzzleHttp\Exception\RequestException;
+use App\Services\SqlEscape;
 
 /**
  * Class Spot
@@ -63,7 +64,7 @@ use GuzzleHttp\Exception\RequestException;
  */
 class Spot extends BaseModel implements StaplerableInterface, CalendarExportable, Commentable
 {
-    use StaplerTrait, StartEndDatesTrait, NewestScopeTrait, ApprovedScopeTrait, Attachable;
+    use StaplerTrait, StartEndDatesTrait, NewestScopeTrait, ApprovedScopeTrait, Attachable, SqlEscape;
 
     protected $guarded = ['id', 'user_id'];
 
@@ -589,8 +590,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
      */
     public function scopeSearch($query, $filter)
     {
+    	$filter = self::escapeLike($filter);
+
         return $query
-            ->whereRaw("(LOWER(\"title\") like LOWER('%$filter%') OR LOWER(\"description\") like LOWER('%$filter%'))");
+            ->whereRaw("(LOWER(\"title\") like '%$filter%' OR LOWER(\"description\") like '%$filter%')");
     }
 
     /**

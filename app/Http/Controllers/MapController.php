@@ -21,6 +21,7 @@ use App\Http\Controllers\Event;
 use App\Http\Requests;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use App\Services\SqlEscape;
 
 /**
  * Class MapController
@@ -29,6 +30,8 @@ use GuzzleHttp\Exception\RequestException;
  * Map controller
  */
 class MapController extends Controller {
+
+	use SqlEscape;
 
     /**
      * Get spots in bounding box
@@ -156,10 +159,10 @@ class MapController extends Controller {
                 foreach ($request->filter['b_boxes'] as $b_box) {
                     $search_areas[] = sprintf(
                             '"spots_mat_view"."location" && ST_MakeEnvelope(%s, %s, %s, %s, 4326)',
-                            $b_box['_southWest']['lng'], 
-                            $b_box['_southWest']['lat'], 
-                            $b_box['_northEast']['lng'], 
-                            $b_box['_northEast']['lat']
+                            self::psqlEscapeString( $b_box['_southWest']['lng'] ),
+                            self::psqlEscapeString( $b_box['_southWest']['lat'] ),
+                            self::psqlEscapeString( $b_box['_northEast']['lng'] ),
+                            self::psqlEscapeString( $b_box['_northEast']['lat'] )
                     );
                 }
                 $spots->whereRaw(implode(' OR ', $search_areas));
@@ -169,8 +172,9 @@ class MapController extends Controller {
         if ($request->has('filter.path')) {
             $path = [];
             foreach ($request->filter['path'] as $p) {
-                $path[] = "{$p['lng']} {$p['lat']}";
+                $path[] = self::psqlEscapeString( str_replace(',', '', "{$p['lng']} {$p['lat']}") );
             }
+
             $spots->whereRaw("ST_Distance(ST_GeogFromText('LINESTRING(" . implode(",", $path) . ")'),spots_mat_view.location::geography) < ?", [6000]);
         }
         // search spots
