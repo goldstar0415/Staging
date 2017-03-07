@@ -16,6 +16,8 @@ class CreateChatMessageUserPivotTable extends Migration
             $table->integer('chat_message_id')->unsigned();
             $table->integer('sender_id')->unsigned();
             $table->integer('receiver_id')->unsigned();
+            $table->timestamp('sender_deleted_at')->nullable();
+            $table->timestamp('receiver_deleted_at')->nullable();
 
             $table->foreign('chat_message_id')->references('id')->on('chat_messages')
                 ->onUpdate('cascade')->onDelete('cascade');

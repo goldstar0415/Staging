@@ -17,7 +17,7 @@ class CreateLinksTable extends Migration
             $table->string('title');
             $table->string('description', 5000)->nullable();
             $table->string('url');
-            $table->jsonb('image');
+            $table->string('image', 500);
             $table->morphs('linkable');
             $table->timestamps();
         });

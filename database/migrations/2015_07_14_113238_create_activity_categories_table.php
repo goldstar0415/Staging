@@ -16,6 +16,10 @@ class CreateActivityCategoriesTable extends Migration
             $table->increments('id');
             $table->string('name', 64);
             $table->string('display_name', 128);
+            $table->string('icon_file_name')->nullable();
+            $table->integer('icon_file_size')->nullable();
+            $table->string('icon_content_type')->nullable();
+            $table->timestamp('icon_updated_at')->nullable();
         });
     }
 

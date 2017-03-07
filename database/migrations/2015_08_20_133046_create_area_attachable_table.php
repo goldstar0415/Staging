@@ -17,13 +17,14 @@ class CreateAreaAttachableTable extends Migration
 
         Schema::create('area_attachable', function(Blueprint $table) {
             $table->integer('area_id')->unsigned();
-            $table->morphs('areable');
+            $table->morphs('areaable');
             $table->timestamps();
 
             $table->foreign('area_id')->references('id')->on('areas')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->primary(['area_id', 'areable_id']);
+            $table->primary(['area_id', 'areaable_id']);
+            
         });
     }
 
