@@ -386,7 +386,12 @@
                 opacity: 0.0,
                 fill: false
               }).addTo(drawLayer);
-
+              $rootScope.mapSelectionProps = { vertices: [] };
+              _.each(points, function(value, index){
+                  ($rootScope.mapSelectionProps.vertices).push([value.lat, value.lng].join(','));
+              });
+              $rootScope.mapSearchType = 'lasso';
+              
             snapRemote.enable();
 
             var bboxes = GetDrawLayerBBoxes();
@@ -431,7 +436,12 @@
           L.DomEvent.preventDefault(e);
           RadiusSelection(function (startPoing, radius, b_box) {
             snapRemote.enable();
-
+            $rootScope.mapSelectionProps = {
+                radius: radius,
+                lat: startPoing.lat,
+                lng: startPoing.lng
+            };
+            $rootScope.mapSearchType = 'radius';
             var circle = L.circle(startPoing, radius, {
               opacity: 0.0,
               fill: false,
@@ -1349,7 +1359,6 @@
 				});
 
 				lazyRouter(waypoints, function (err, routes) {
-
 					if (line) {
 						drawLayer.removeLayer(line);
                         bgLayer.removeLayer(line);
@@ -1387,8 +1396,12 @@
                             fillColor: '#0C2638',
                             fillOpacity: 0.4,
                         }).addTo(bgLayer);
-
                         L.polyline(lineLatlngs, {color: 'red', smoothFactor: 1}).addTo(bgLayer);
+                        $rootScope.mapSelectionProps = { vertices: [] };
+                        _.each(lineLatlngs, function(value, index){
+                            ($rootScope.mapSelectionProps.vertices).push([value.lat, value.lng].join(','));
+                        });
+                        $rootScope.mapSearchType = 'path';
 
                         L.polygon(polyLatlngs, {
                           opacity: 0.0,
@@ -1796,7 +1809,7 @@
       }
 
       function ClearSelections(mapOnly, ignoreBBoxes) {
-		    clearPathFilter();
+	clearPathFilter();
         markersLayer.clearLayers();
         draggableMarkerLayer.clearLayers();
         drawLayer.clearLayers();
@@ -1822,6 +1835,8 @@
         if (!mapOnly) {
           $rootScope.$broadcast('clear-map-selection');
         }
+        $rootScope.mapSelectionProps = {};
+        $rootScope.mapSearchType = 'search';
       }
 
       //Controls
