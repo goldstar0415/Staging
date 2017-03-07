@@ -83,7 +83,7 @@
     function mapSort(getByIdFilter, $rootScope, $scope, $q, MapService, $http, $timeout, $window, LocationService, Spot, SpotService, API_URL, DATE_FORMAT, $stateParams, $ocLazyLoad) {
 
         var vm = this;
-        var SEARCH_URL = API_URL + '/map/spots';
+        var SEARCH_URL = API_URL + '/map/search';
         var SPOT_LIST_URL = API_URL + '/map/spots/list';
         var SPOTS_PER_PAGE = 1000;
         var restrictions = {
@@ -248,9 +248,7 @@
          */
         function onUpdateMapData(event, mapSpots, layer, isDrawArea, ignoreEmptyList) {
             console.log('update map');
-
             ignoreEmptyList = ignoreEmptyList === undefined || ignoreEmptyList === true;
-
             layer = layer || $rootScope.sortLayer;
             $rootScope.sortLayer = layer;
             if (angular.isDefined(isDrawArea)) {
@@ -578,7 +576,6 @@
                 l = vm.searchParams.location;
 
             } else {
-
                 if (!_.isEmpty(vm.searchParams.locations)) {
                     if (vm.searchParams.locations.length == 1) {
                         l = vm.searchParams.locations[0].location;
@@ -588,7 +585,6 @@
                 }
 
             }
-
             // search
             if (!$rootScope.isDrawArea) {
                 if (l) {
@@ -641,6 +637,7 @@
                 search_text: vm.searchParams.search_text,
                 filter: {}
             };
+            var url = SEARCH_URL;
 
             if (vm.searchParams.rating) {
                 data.filter.rating = vm.searchParams.rating;
@@ -648,6 +645,18 @@
             
             if (vm.searchParams.price) {
                 data.filter.price = vm.searchParams.price;
+            }
+            if ($rootScope.mapSelectionProps && $rootScope.mapSearchType === 'radius')
+            {
+                data.lat = $rootScope.mapSelectionProps.lat;
+                data.lng = $rootScope.mapSelectionProps.lng;
+                data.radius = $rootScope.mapSelectionProps.radius;
+                url = API_URL + '/map/selection/radius';
+            }
+            if ($rootScope.mapSelectionProps && $rootScope.mapSearchType === 'lasso')
+            {
+                data.vertices = $rootScope.mapSelectionProps.vertices;
+                url = API_URL + '/map/selection/lasso';
             }
             
             if (vm.searchParams.is_approved) {
@@ -693,20 +702,25 @@
                 $rootScope.mapSortFilters = {};
                 return;
             }
-            data.type = $rootScope.sortLayer;
+            data.filter.type = $rootScope.sortLayer;
 
             MapService.cancelHttpRequest();
             $rootScope.mapSortSpots.cancellerHttp = $q.defer();
 
             isIntermediateSearch = isIntermediateSearch === true;
-
             if ($rootScope.routeInterpolated) {
-                data.filter.path = _.map($rootScope.routeInterpolated, function (e) {
-                    return {lat: e.latLng.lat, lng: e.latLng.lng};
+                data.vertices = _.map($rootScope.routeInterpolated, function (e) {
+                    return [e.latLng.lat,e.latLng.lng].join(',');
                 });
+                data.buffer = 100000;
+                url = API_URL + '/map/selection/path';
             }
 
-            $http.post(SEARCH_URL, data, {timeout: $rootScope.mapSortSpots.cancellerHttp.promise})
+            $http({
+                    url: url + '?' +  $.param( data ) ,
+                    method: "GET",
+                    timeout: $rootScope.mapSortSpots.cancellerHttp.promise
+                })
                     .success(function (spots) {
                         if (spots.length > 0) {
                             onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0, false);
