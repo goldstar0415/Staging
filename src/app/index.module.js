@@ -56,13 +56,12 @@
             '/app/components/uploader/uploader.directive.js',
             '/app/components/upload_modal/upload_modal.directive.js',
           ])},
-          {name: 'summernote', files: [
+          {name: 'summernote', serie: true, files: [
             '/assets/libs/summernote/summernote.js',
             '/assets/libs/summernote/summernote.css',
             '/assets/libs/summernote/plugin/specialchars/summernote-ext-specialchars.min.js',
             '/assets/libs/summernote/plugin/databasic/summernote-ext-databasic.min.js',
             '/assets/libs/summernote/plugin/databasic/summernote-ext-databasic.min.css',
-            '/assets/libs/summernote/plugin/hello/summernote-ext-hello.min.js', // todo: what's the file, investigate, isn't a demo?
             versionize('/app/modules/summernote/summernote.js'),
           ]},
           {name: 'socket.io', files: [
