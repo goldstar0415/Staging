@@ -40,14 +40,18 @@ class SettingsController extends Controller
     public function index()
     {
         $ticketMastercategory = SpotTypeCategory::whereName('ticketmaster')->first();
-        $lastTicketMasterSpot = Spot::where('spot_type_category_id', $ticketMastercategory->id)
+        $lastTicketMasterSpot = $ticketMastercategory
+                ?Spot::where('spot_type_category_id', $ticketMastercategory->id)
                 ->orderBy('id', 'desc')
-                ->first();
+                ->first()
+                :null;
         
         $seatGeekCategory = SpotTypeCategory::whereName('seatgeek')->first();
-        $lastSeatGeekSpot = Spot::where('spot_type_category_id', $seatGeekCategory->id)
+        $lastSeatGeekSpot = $seatGeekCategory
+                ?Spot::where('spot_type_category_id', $seatGeekCategory->id)
                 ->orderBy('id', 'desc')
-                ->first();
+                ->first()
+                :null;
         
         return view('admin.settings', [
             'ticketMasterSpot' => $lastTicketMasterSpot,

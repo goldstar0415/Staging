@@ -16,8 +16,9 @@ class CreateActivitiesTable extends Migration
             $table->increments('id');
             $table->integer('plan_id')->unsigned();
             $table->integer('activity_category_id')->unsigned();
+            $table->integer('position')->unsigned();
             $table->string('title');
-            $table->string('description', 5000);
+            $table->string('description', 5000)->nullable();
             $table->string('address');
             $table->point('location');
             $table->datetime('start_date');

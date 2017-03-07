@@ -15,6 +15,7 @@ class CreatePlanSpotPivotTable extends Migration
         Schema::create('plan_spot', function(Blueprint $table) {
             $table->integer('plan_id')->unsigned();
             $table->integer('spot_id')->unsigned();
+            $table->integer('position')->unsigned();
 
             $table->foreign('plan_id')->references('id')->on('plans')
                 ->onUpdate('cascade')->onDelete('cascade');

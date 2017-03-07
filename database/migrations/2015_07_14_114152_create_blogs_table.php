@@ -18,10 +18,15 @@ class CreateBlogsTable extends Migration
             $table->integer('blog_category_id')->unsigned();
             $table->string('title', 255);
             $table->text('body');
-            $table->string('address');
-            $table->point('location');
-            $table->string('url');
+            $table->string('address')->nullable();
+            $table->point('location')->nullable();
+            $table->string('slug')->nullable();
+            $table->boolean('main')->default(false);
             $table->integer('count_views')->default(0);
+            $table->string('cover_file_name')->nullable();
+            $table->integer('cover_file_size')->nullable();
+            $table->string('cover_content_type')->nullable();
+            $table->timestamp('cover_updated_at')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')

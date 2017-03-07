@@ -15,12 +15,19 @@ class CreateFeedsTable extends Migration
         Schema::create('feeds', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->string('action_type', 128);
+            $table->integer('sender_id')->unsigned();
+            $table->string('event_type')->after('sender_id');
+            $table->morphs('feedable');
             $table->timestamps();
             $table->softDeletes();
+            
+            $table->foreign('sender_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
 
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
+            
+            
         });
     }
 
