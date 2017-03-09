@@ -120,6 +120,7 @@
         vm.ratingsRefreshing = [];
         vm.rating = vm.spot.avg_rating;
         vm.photoIndex = 0;
+        vm.rating_star = 1;
         vm.getPrice = getPrice;
         vm.amenitiesCount = Object.keys(vm.spot.amenities).length;
         vm.inputDate = {
