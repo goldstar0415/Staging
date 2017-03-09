@@ -2709,7 +2709,9 @@
           var markers = [];
           _.each(data.list, function(item) {
               var icon = CreateCustomIcon('', 'weather', item);
-              var marker = L.marker([item.coord.lat, item.coord.lon], {
+              var lat = (item.coord.lat)?item.coord.lat:item.coord.Lat;
+              var lon = (item.coord.lon)?item.coord.lon:item.coord.Lon;
+              var marker = L.marker([lat, lon], {
                   icon: icon
               });
               item.marker = marker;
@@ -2734,15 +2736,15 @@
               marker.bindPopup(popup);
               marker.on('click', function () {
                   if ($(window).width() > 767) {
-                      $rootScope.weatherLocation.lat = item.coord.lat;
-                      $rootScope.weatherLocation.lng = item.coord.lon;
+                      $rootScope.weatherLocation.lat = lat;
+                      $rootScope.weatherLocation.lng = lon;
                       $rootScope.toggleSidebar(true);
                   } else {
                       if(marker.isHighlighted) {
                           marker.closePopup();
                           marker.isHighlighted = false;
-                          $rootScope.weatherLocation.lat = item.coord.lat;
-                          $rootScope.weatherLocation.lng = item.coord.lon;
+                          $rootScope.weatherLocation.lat = lat;
+                          $rootScope.weatherLocation.lng = lon;
                           $rootScope.toggleSidebar(true);
                       } else {
                           marker.openPopup();
