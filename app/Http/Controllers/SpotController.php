@@ -35,8 +35,9 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Carbon\Carbon;
 use Cache;
-
+use Log;
 use App\Http\Requests;
+use App\Services\TextCleaner;
 
 /**
  * Class SpotController
@@ -470,14 +471,55 @@ class SpotController extends Controller
     public function preview($spot)
     {
         $og = new OpenGraph();
+        $url = sprintf('%s/%s/spot/%s/%s', config('app.frontend_url'), $spot->user_id ?: '0', $spot->id, $spot->slug);
+        $description = $spot->description ? TextCleaner::removeTimestamps($spot->description) : '';
+        $hasCover = isset($spot->cover_url['original']) && is_string($spot->cover_url['original']) && !preg_match('/\/missing.png/i', $spot->cover_url['original']);
+        $coverUrl = $hasCover ? $spot->cover_url['original'] : (self::getDummyImageUrl($spot) ?: $spot->cover_url['original']);
 
-        return view('opengraph')->with(
-            'og',
-            $og->title($spot->title)
-            ->image($spot->cover->url())
-            ->description($spot->description)
-            ->url(config('app.frontend_url') . '/user/' . $spot->user_id . '/spots/' . $spot->id)
+        return view('opengraph')->with('og', $og
+                ->title($spot->title)
+                ->image($coverUrl)
+                ->description($description)
+                ->url($url)
         );
+    }
+
+    /**
+     * Get dummy cover image url by spot type
+     * URL: {endpoint} {type} {img_id}
+     *  {https://s3.eu-central-1.amazonaws.com/zt-develop}/assets/img/placeholders/{event}/{101}.jpg
+     * @param Spot $spot
+     * @return string
+     */
+    protected static function getDummyImageUrl($spot): string
+    {
+        static $maxImgIds = [
+            'food' => 32,
+            'shelter' => 84,
+            'event' => 100,
+        ];
+
+        $S3BaseUrl = env('S3_ENDPOINT');
+
+        if ( !$S3BaseUrl ) {
+            Log::critical(__METHOD__ . ' - Please configure ENV S3_ENDPOINT');
+            return null;
+        }
+
+        if ( isset($spot->category->type->name) ) {
+            $type = $spot->category->type->name;
+
+            if ( !isset($maxImgIds[$type]) ) {
+                return null;
+            }
+
+            $maxImgId = $maxImgIds[$type];
+            $imgId = $spot->id % $maxImgId;
+
+            return sprintf('%s/assets/img/placeholders/%s/%s.jpg', $S3BaseUrl, $type, $imgId);
+        } else {
+            return null;
+        }
     }
 
     /**
