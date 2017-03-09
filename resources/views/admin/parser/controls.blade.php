@@ -55,9 +55,14 @@
         </div>
     </button>
     
-    <button class="btn btn-submit btn-refresh disabled" type="button">
+    <button class="btn btn-submit btn-refresh" type="button">
         <span class="btn-export">Refresh materialized view</span>
-        <span class="btn-loaded">Refresh request sent!</span>
+        <span class="btn-loaded">Refresh complite!</span>
+        <div class="prldr">
+            <div class="prldr-i prldr-1"></div>
+            <div class="prldr-i prldr-2"></div>
+            <div class="prldr-i prldr-3"></div>
+        </div>
     </button>
 </div>
 

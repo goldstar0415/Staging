@@ -216,7 +216,7 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
         $remotePhotos = [];
         $needCover = true;
         foreach ($event['performers'] as $performer) {
-            if ($performer['image']) {
+            if (!empty($performer['image'])) {
                 $remotePhotos[] = new RemotePhoto([
                     'url' => $performer['image'],
                     'image_type' => $needCover ? 1 : 0, // 1 - cover, 0 - regular

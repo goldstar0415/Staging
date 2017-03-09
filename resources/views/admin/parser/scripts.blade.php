@@ -33,6 +33,7 @@ $(function(){
     var $fullRemoteId    = $form.find('input[name="full-remote-id"]');
     var $mode            = $form.find('input[name="mode"]');
     var $refreshBtn       = $form.find('button.btn-refresh');
+    var $refreshPreloader = $refreshBtn.find('.prldr');
     var $refreshDone      = $refreshBtn.find('.btn-loaded');
     var $refreshText      = $refreshBtn.find('.btn-export');
     
@@ -89,7 +90,7 @@ $(function(){
             $uploadBtn.addClass('disabled');
             $uploadPreloader.show();
             $uploadText.hide();
-            
+            $refreshBtn.addClass('disabled');
             message('Upload started, please wait...');
             
             $form.addClass('loading');
@@ -121,12 +122,14 @@ $(function(){
                         message(response.data[0]);
                         sendUploadError();
                     }
+                    $refreshBtn.addClass('disabled');
                     $uploadPreloader.hide();
                 },
                 error: function(response){
                     message('File not loaded with error: ' + response.status + ' ' + response.statusText);
                     sendUploadError();
                     $uploadPreloader.hide();
+                    $refreshBtn.addClass('disabled');
                 }
                 
             });
@@ -142,13 +145,14 @@ $(function(){
             {
                 message('File for parse not loaded!');
                 stopTimer();
+                $refreshBtn.removeClass('disabled');
             }
             else
             {
                 $parseBtn.addClass('disabled');
                 $parsePreloader.show();
                 $parseText.hide();
-
+                $refreshBtn.addClass('disabled');
                 $form.addClass('loading');
                 $progressRow.slideDown();
                 parseHandler();
@@ -161,10 +165,25 @@ $(function(){
         if( !$refreshBtn.is('.disabled'))
         {
             $refreshBtn.addClass('disabled');
+            $form.addClass('loading');
+            $inputs.attr('disabled', true);
             $refreshText.hide();
-            $refreshDone.show();
+            $refreshPreloader.show();
+            message('Materialized view refresh started');
             $.ajax({
-                url: '{{ route("admin.spots.refresh-view") }}'
+                url: '{{ route("admin.spots.refresh-view") }}',
+                success: function(response){
+                    $refreshPreloader.hide();
+                    $refreshDone.show();
+                    $form.removeClass('loading');
+                    $inputs.attr('disabled', false);
+                    message('Materialized view refreshed successfully');
+                },
+                error: function() {
+                    message('<span class="text-danger">Something went wrong!</span>');
+                    $form.removeClass('loading');
+                    $inputs.attr('disabled', false);
+                }
             });
         }
     });
@@ -223,16 +242,16 @@ $(function(){
                         message('Total parsed rows: ' + rowsParsed);
                         parseHandler();
                     }
-                    if(response.messages && response.messages.length > 0)
-                    {
-                        $.each(response.messages, function(i, value){
-                            message('<span class="text-danger">' + value + '</span>');
-                        });
-                    }
                 }
                 else
                 {
                     sendParseError();
+                }
+                if(response.messages && response.messages.length > 0)
+                {
+                    $.each(response.messages, function(i, value){
+                        message('<span class="text-danger">' + value + '</span>');
+                    });
                 }
             },
             error: function() {

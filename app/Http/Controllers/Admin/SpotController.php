@@ -10,6 +10,7 @@ use App\Http\Requests\PaginateRequest;
 use App\Spot;
 use App\User;
 use App\SpotTypeCategory;
+use App\SpotView;
 use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -217,6 +218,9 @@ class SpotController extends Controller
     
     public function refreshMaterializedView()
     {
-        $this->dispatch(new SpotViewUpdater(null, 'refresh'));
+        // Comment when use thru queues:
+        SpotView::refreshView();
+        // Uncomment if wanted to use thru queues:
+        //$this->dispatch(new SpotViewUpdater(null, 'refresh'));
     }
 }

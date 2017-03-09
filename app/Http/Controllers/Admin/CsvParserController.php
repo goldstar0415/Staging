@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use App\SpotTypeCategory;
 use App\SpotType;
 use App\Http\Controllers\Controller;
@@ -155,7 +156,10 @@ class CsvParserController extends Controller
             {
                 $this->saveSpots();
             }
-            $this->saveRelations();
+            if($this->result['success'])
+            {
+                $this->saveRelations();
+            }
             $this->result['end_of_parse'] = ($this->result['rows_parsed_now'] == 0) ? true : false;
             $reader->close();
         }
@@ -229,11 +233,10 @@ class CsvParserController extends Controller
             {
                 $this->existingIds = [];
             }
-            if(!empty($this->spotsRows) && $this->mode !== 'update')
+            if(!empty($this->spotsRows) && $this->mode !== 'update' && $this->result['success'])
             {
                 $this->insertSpots();
             }
-            
         }
     }
     
@@ -249,8 +252,18 @@ class CsvParserController extends Controller
         DB::transaction(function() use ($spots, $existingIds) {
             foreach($spots as $remote_id => $row)
             {
-                DB::table('spots')->where('id', $existingIds[$remote_id])->update($row);
-                $this->result['rows_updated']++;
+                try
+                {
+                    DB::table('spots')->where('id', $existingIds[$remote_id])->update($row);
+                    $this->result['rows_updated']++;
+                }
+                catch(QueryException $e)
+                {
+                    $this->result['messages'][] = "Line with remote_id $remote_id throws SQL error on update:";
+                    $this->result['messages'][] = $e->getMessage();
+                    $this->result['success'] = false;
+                    break;
+                }
             }
         });
     }
@@ -272,8 +285,18 @@ class CsvParserController extends Controller
                 $row['spot_type_category_id'] = $this->categoryId;
                 $row['created_at'] = $this->date;
                 $row['updated_at'] = $this->date;
-                $insertedIds[$remote_id] = DB::table('spots')->insertGetId($row);
-                $this->result['rows_added']++;
+                try
+                {
+                    $insertedIds[$remote_id] = DB::table('spots')->insertGetId($row);
+                    $this->result['rows_added']++;
+                }
+                catch(QueryException $e)
+                {
+                    $this->result['messages'][] = "Line with remote_id $remote_id throws SQL error on insert:";
+                    $this->result['messages'][] = $e->getMessage();
+                    $this->result['success'] = false;
+                    break;
+                }
             }
             return $insertedIds;
         });
