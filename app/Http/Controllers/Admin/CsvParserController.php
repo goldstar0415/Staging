@@ -191,7 +191,7 @@ class CsvParserController extends Controller
                 }
                 elseif($column == 'start_date' || $column == 'end_date')
                 {
-                    $attrArr[$column] = Carbon::createFromFormat('m/d/Y', trim($value));
+                    $attrArr[$column] = Carbon::parse(trim($value))->toDateTimeString();
                 }
                 else
                 {
