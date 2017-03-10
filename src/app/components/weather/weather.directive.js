@@ -88,7 +88,7 @@
         };
 
         /** @ngInject */
-        function WeatherController($scope, $rootScope, $http, DARK_SKY_API_KEY, MapService) {
+        function WeatherController($scope, $rootScope, $http, MapService, API_URL) {
             var vm = this;
             vm.color = '#0b2639';
             vm.location = 'N/A';
@@ -158,23 +158,23 @@
                             }
                         }
                     });
-                $http.jsonp('https://api.darksky.net/forecast/' + DARK_SKY_API_KEY + '/' + vm.lat + ',' + vm.lng, {
-                        params: {
-                            extend: 'hourly',
-                            lang: 'en',
-                            units: vm.units,
-                            format: 'json',
-                            callback: 'JSON_CALLBACK'
-                        }
-                    })
-                    .then(function(resp) {
-                        if (resp.status === 200) {
-                            vm.tab = 0;
-                            resp.data.daily.data.pop();
-                            vm.data = resp.data;
-                            vm.selected = vm.data.currently;
-                        }
-                    });
+                $http.get(API_URL + '/weather/darksky', {
+                    params: {
+                        lat: vm.lat,
+                        lng: vm.lng,
+                        extend: 'hourly',
+                        lang: 'en',
+                        units: vm.units,
+                    }
+                })
+                .then(function (resp) {
+                    if (resp.status === 200) {
+                        vm.tab = 0;
+                        resp.data.daily.data.pop();
+                        vm.data = resp.data;
+                        vm.selected = vm.data.currently;
+                    }
+                });
             }
         }
     }

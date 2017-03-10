@@ -19,14 +19,13 @@
         .constant('GOOGLE_API_KEYS_POOL', env.GOOGLE_API_KEYS_POOL)
         .constant('GOOGLE_CLIENT_ID', env.GOOGLE_CLIENT_ID)
         .constant('JS_CONSOLE_KEY', env.JS_CONSOLE_KEY)
-        .constant('GEOCODING_KEY', env.GEOCODING_KEY)
         .constant('MAPBOX_API_KEY', env.MAPBOX_API_KEY)
-        .constant('DARK_SKY_API_KEY', env.DARK_SKY_API_KEY)
-        .constant('OPENWEATHERMAP_API_KEY', env.OPENWEATHERMAP_API_KEY)
         .constant('SKOBBLER_API_KEY', env.SKOBBLER_API_KEY)
         .constant('toastr', toastr)
         .constant('moment', moment)
         .constant('USER_ONLINE_MINUTE', env.USER_ONLINE_MINUTE)
+        .constant('WEATHER_TILES_URL', '//mesonet.agron.iastate.edu')
+        .constant('CARTODB_TILES_URL', 'https://cartodb-basemaps-{s}.global.ssl.fastly.net')
         .constant('DATE_FORMAT', {
             datepicker: {
                 date: 'MM.DD.YYYY',
