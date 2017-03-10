@@ -678,6 +678,10 @@
             if (categories.length > 0) {
                 data.filter.category_ids = _.pluck(categories, 'id');
             }
+            if($rootScope.filterOptions.category)
+            {
+                data.filter.category_ids = [$rootScope.filterOptions.category];
+            }
 
             $rootScope.mapSortFilters = angular.copy(data);
 
@@ -705,7 +709,7 @@
                     return {lat: e.latLng.lat, lng: e.latLng.lng};
                 });
             }
-
+            
             $http.post(SEARCH_URL, data, {timeout: $rootScope.mapSortSpots.cancellerHttp.promise})
                     .success(function (spots) {
                         if (spots.length > 0) {
