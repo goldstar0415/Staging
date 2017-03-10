@@ -6,6 +6,8 @@ use Log;
 use App\Http\Requests\Weather\DarkskyWeatherRequest;
 use App\Http\Requests\Weather\OpenWeatherMapRequest;
 use GuzzleHttp\Client as HttpClient;
+use Cache;
+use Carbon\Carbon;
 
 /**
  * Class WeatherController
@@ -43,12 +45,11 @@ class WeatherController extends Controller
         $latLng = $request->only(['lat', 'lng']);
 
         $weatherResponse = $this->darkskyRequest($latLng, $params);
-
         if ( isset($weatherResponse['error']) ) {
 	        return abort($weatherResponse['status']);
         }
 
-	    return response()->json($weatherResponse);
+	return response()->json($weatherResponse);
     }
 
     /**
@@ -83,11 +84,16 @@ class WeatherController extends Controller
     {
         $config = $this->config['darksky'];
         $url = sprintf('%s/forecast/%s/%s,%s', $config['baseUri'], $config['key'], $latLng['lat'], $latLng['lng']);
-
+        if(Cache::has($url))
+        {
+            return Cache::get($url);
+        }
         try {
 
         	$json = $this->http->get($url, ['query' => $params])->getBody();
-	        return self::parseHttpJson($json);
+                $result = self::parseHttpJson($json);
+                Cache::put($url, $result, Carbon::now()->addDay());
+	        return $result;
 
         } catch (\Exception $ex) {
 
