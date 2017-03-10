@@ -687,6 +687,10 @@
             if (categories.length > 0) {
                 data.filter.category_ids = _.pluck(categories, 'id');
             }
+            if($rootScope.filterOptions.category)
+            {
+                data.filter.category_ids = [$rootScope.filterOptions.category];
+            }
 
             $rootScope.mapSortFilters = angular.copy(data);
 
@@ -715,7 +719,6 @@
                 data.buffer = 100000;
                 url = API_URL + '/map/selection/path';
             }
-
             $http({
                     url: url + '?' +  $.param( data ) ,
                     method: "GET",

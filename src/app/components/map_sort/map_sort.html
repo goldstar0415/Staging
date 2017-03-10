@@ -69,9 +69,10 @@
     <div class="form-group">
         <label for="filterCategory">Category<span hidden>clear</span></label>
         <!-- <div class="form-control" id="filterCategory" ng-dropdown-multiselect="" options="$root.categoryData" selected-model="$root.filterOptions.categories"></div> -->
-        <select class="form-control" id="filterCategory" ng-model="$root.filterOptions.category">
+        <select class="form-control" id="filterCategory" ng-model="$root.filterOptions.category" ng-repeat="type in $root.spotCategories | filter: {name:$root.sortLayer}">
+            {{ type }}
             <option selected value="">Any</option>
-            <option ng-repeat="item in $root.mapSortSpots.data | unique" value="{{item}}">{{item}}</option>
+            <option ng-repeat="item in type.categories" value="{{item.id}}">{{item.name}}</option>
         </select>
     </div>
     <div class="form-group">
