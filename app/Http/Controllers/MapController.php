@@ -150,7 +150,7 @@ class MapController extends Controller {
         $calc_cur = [];
         if ($request->has('filter.price')) 
         {
-            $spots->where('spots_mat_view.minrate', '<=', $request->filter['price']);
+            $spots->where(DB::raw('spots_mat_view.minrate::float'), '<=', (float)$request->filter['price']);
         }
 
         if ($request->has('filter.b_boxes')) {
