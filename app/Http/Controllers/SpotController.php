@@ -841,7 +841,7 @@ class SpotController extends Controller
     
     public function getFacebookRating(Spot $spot) {
         $result = $spot->getFacebookRating();
-        if($facebookRating['success'] && 
+        if($result['success'] && 
                 ($spot->facebook_rating != $result['facebook']['rating'] || 
                 $spot->facebook_reviews_count != $result['facebook']['reviews_count']))
         {
