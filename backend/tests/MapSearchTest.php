@@ -8,7 +8,7 @@ class MapSearchTest extends LaravelTestCase
 {
     public function testTextSearchNoGPS()
     {
-        $response = $response = $this->get('/map/search', [
+        $response = $this->get('/map/search', [
             'query' => 'fish'
         ]);
         $this->assertResponseOk();
@@ -16,7 +16,7 @@ class MapSearchTest extends LaravelTestCase
 
     public function testTextSearchGPS()
     {
-        $response = $response = $this->get('/map/search', [
+        $response = $this->get('/map/search', [
             'query' => 'fish',
             'lat'   => '39.3',
             'lng'   => '-21.7',
