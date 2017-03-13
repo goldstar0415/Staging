@@ -48,7 +48,6 @@ $factory->define(App\User::class, function (Generator $faker) use ($timestamps) 
         'avatar' => $faker->image(storage_path('app'), 1000, 1000),
         'birth_date' => $faker->date(),
         'address' => $faker->address,
-        'location' => new Point($faker->latitude, $faker->longitude),
         'time_zone' => $faker->timezone,
         'description' => $faker->sentence,
         'privacy_events' => $faker->numberBetween(1, 5),
@@ -63,7 +62,6 @@ $factory->define(App\User::class, function (Generator $faker) use ($timestamps) 
         'notification_follow' => $faker->boolean(),
         'notification_new_spot' => $faker->boolean(),
         'notification_coming_spot' => $faker->boolean(),
-        'remember_token' => str_random(10),
         'verified' => true
     ], $timestamps());
 });

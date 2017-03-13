@@ -20,7 +20,7 @@ class CreateWallRatesTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')
-                ->onUpdate('cascade');
+                ->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('wall_id')->references('id')->on('walls')
                 ->onDelete('cascade')->onUpdate('cascade');
 

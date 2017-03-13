@@ -19,13 +19,12 @@ class DatabaseSeeder extends Seeder
         $this->call(SpotDefaultCategoriesTableSeeder::class);
         $this->call(SocialsTableSeeder::class);
         $this->call(ActivityLevelSeeder::class);
+        $this->call(UserTableSeeder::class);
         if (App::environment('local')) {
             $upload_dir = public_path('upload/App');
             if (File::isDirectory($upload_dir)) {
                 File::deleteDirectory($upload_dir);
             }
-
-            $this->call(UserTableSeeder::class);
             $this->call(WallsTableSeeder::class);
             $this->call(AreasTableSeeder::class);
             $this->call(PlansTableSeeder::class);

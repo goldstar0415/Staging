@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlanCommentsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,15 @@ class CreatePlanCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('plan_comments', function(Blueprint $table) {
+        Schema::create('comments', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('plan_id')->unsigned();
-            $table->string('body', 5000);
+            $table->integer('commentable_id')->unsigned();
+            $table->string('commentable_type');
+            $table->string('body', 255);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('plan_id')->references('id')->on('plans')
                 ->onUpdate('cascade')->onDelete('cascade');
         });
     }
@@ -33,6 +32,6 @@ class CreatePlanCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('plan_comments');
+        Schema::drop('comments');
     }
 }
