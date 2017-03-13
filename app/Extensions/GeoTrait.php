@@ -86,10 +86,10 @@ trait GeoTrait
             $search_areas[] = sprintf(
                 '"location" && ST_MakeEnvelope(%s, %s, %s, %s, 4326) AND
                 ("spots"."end_date" > NOW() AND "spots"."end_date" is not null OR "spots"."end_date" is null)',
-                $b_box['_southWest']['lng'],
-                $b_box['_southWest']['lat'],
-                $b_box['_northEast']['lng'],
-                $b_box['_northEast']['lat']
+                pg_escape_string( $b_box['_southWest']['lng'] ),
+	            pg_escape_string( $b_box['_southWest']['lat'] ),
+	            pg_escape_string( $b_box['_northEast']['lng'] ),
+	            pg_escape_string( $b_box['_northEast']['lat'] )
             );
         }
         $points = self::with(['spot', 'spot.user' => function ($query) {

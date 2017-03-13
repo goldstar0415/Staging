@@ -39,8 +39,8 @@ class PrerenderController extends Controller
 			case preg_match('/^(\d+)\/spot\/(\d+)/i', $url, $params):
 				return sprintf('spots/%s/preview', $params[2]);
 
-			case preg_match('/^article\/([^\/]+)/i', $url, $params):
-				return sprintf('posts/%s/preview', strtolower( $params[1] ));
+			case preg_match('/^(\d+)\/article\/([^\/]+)/i', $url, $params):
+				return sprintf('posts/%s/preview', strtolower( $params[2] ));
 
 			case preg_match('/^areas\/(\d+)/i', $url, $params):
 				return sprintf('areas/%s/preview', strtolower( $params[1] ));

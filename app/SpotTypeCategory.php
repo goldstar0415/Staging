@@ -93,4 +93,36 @@ class SpotTypeCategory extends BaseModel implements StaplerableInterface
 
         return $cache;
     }
+    
+    public function getPrefix()
+    {
+        return $this->type->name . '_' . $this->id . '_';
+    }
+    
+    /**
+     * Getting or creating spot category by name 
+     * 
+     * @param string $name
+     * @param string $displayName
+     * @param string $typeName
+     * @return SpotTypeCategory
+     */
+    public static function getOrCreate($name, $displayName, $typeName = 'event')
+    {
+        $cat = SpotTypeCategory::where('name', $name);
+        if($cat->exists())
+        {
+            $catObj = $cat->first();
+        }
+        else
+        {
+            $type = SpotType::getTypeId($typeName);
+            $catObj = SpotTypeCategory::create([
+                'name' => $name,
+                'display_name' => $displayName,
+                'spot_type_id' => $type
+            ]);
+        }
+        return $catObj;
+    }
 }

@@ -23,6 +23,7 @@ use App\Http\Controllers\Event;
 use App\Http\Requests;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use App\Services\SqlEscape;
 
 /**
  * Class MapController
@@ -33,6 +34,8 @@ use GuzzleHttp\Exception\RequestException;
 class MapController extends Controller {
 
     /**
+     * @deprecated
+     *
      * Get weather by latitude longitude
      *
      * @param WeatherRequest $request

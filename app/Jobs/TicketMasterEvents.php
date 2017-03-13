@@ -5,19 +5,14 @@ namespace App\Jobs;
 use App\Jobs\Job;
 use App\RemotePhoto;
 use App\Services\AppSettings;
-use App\Services\GoogleAddress;
 use App\Spot;
-use App\SpotPhoto;
 use App\SpotTypeCategory;
-use DateTime;
 use GuzzleHttp\Client;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
-use Storage;
-use Log;
 
 class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
 {
@@ -48,6 +43,9 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
      */
     public $imageUrlPattern = '/^(https?:\/\/(s1\.ticketm\.net\/)(dam|dbimages)\/)([^\.][\w\/\-]+)?\.(jpg|png)?$/';
     
+    public $prefix = null;
+    public $category = null;
+    
     public $picKeyReplacements = [
         '_TABLET',
         '_LANDSCAPE',
@@ -63,6 +61,11 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
         '_16_9',
         '_4_3',
     ];
+    
+    public function __construct() {
+        $this->category = SpotTypeCategory::getOrCreate('ticketmaster', 'TicketMaster');
+        $this->prefix = $this->category->getPrefix();
+    }
 
     /**
      * Execute the job.
@@ -73,19 +76,15 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
     {
         $this->http = $http;
         $this->settings = config('ticket-master');
-        $page = !empty($this->page)?$this->page:1;
-        //Log::info('$page = ' . $page);
+        $page = !empty($this->page)?$this->page:1; // setting page number to 1 as default
         $query_string = ['apikey' => $this->settings['apikey'] , 'size' => 500, 'page' => $page];
-        $data = [];
         $data = $this->fetchData($query_string);
         $nextPage = $data['page']['number']+1;
-        //Log::info('nextPage = ' . $nextPage);
         $events = collect($data['_embedded']['events']);
-        //dd(json_encode($events));
         $this->importEvents($events);
         
         // comment it if you want to do all job in one queue
-        if($nextPage <= 5) //may set all pages instead of 5
+        if($nextPage <= $data['page']['totalPages'])
         {
             $newJob = (new TicketMasterEvents);
             $newJob->page = $nextPage;
@@ -95,85 +94,35 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
 
     public function importEvents(Collection $events)
     {
-        $default_category = SpotTypeCategory::whereName('ticketmaster')->first();
         foreach ($events as $event) {
-            if(empty($event['id']) || empty($event['name']) ||  Spot::where('spot_type_category_id', $default_category->id)->where('remote_id', $event['id'])->exists())
+            if(empty($event['id']) || // No remote Id
+               empty($event['name']) || // No title
+               Spot::where('spot_type_category_id', $this->category->id) // Spot exists
+                    ->where('remote_id', $this->prefix . $event['id'])
+                    ->exists())
             {
                 continue;
             }
             $import_event = new Spot();
-            $import_event->category()->associate($default_category);
-            $import_event->title = (!empty($event['name']))?$event['name']:null;
-            
-            $import_event->remote_id = $event['id'];
-            
-            $time = !empty( $event['dates']['start']['localTime'])?$event['dates']['start']['localTime']:'08:00:00';
-            $date = !empty( $event['dates']['start']['localDate'])?$event['dates']['start']['localDate']:date('Y-m-d');
-            $import_event->start_date = $date . ' ' . $time;
-            $import_event->end_date = $date . ' 23:59:59';
-            
-            // Description
-            $descriptionArray = [];
-            if(isset($event['info']))
-            {
-                $descriptionArray[] = $event['info'];
-            }
-            if(isset($event['_embedded']['venues'][0]['name']))
-            {
-                $venueName = $event['_embedded']['venues'][0]['name'];
-                if(isset($event['_embedded']['venues'][0]['url']))
-                {
-                    $venueName = '<a href="' . $event['_embedded']['venues'][0]['url'] . '">' . $venueName . '</a>';
-                }
-                $descriptionArray[] = $venueName;
-            }
-            $descriptionArray[] = $import_event->start_date;
-            $import_event->description = implode("\n", $descriptionArray);
-            
+            $import_event->category()->associate($this->category);
+            $import_event->title = $event['name'];
+            $import_event->remote_id = $this->prefix . $event['id'];
+            $import_event->description = (isset($event['info']))?$event['info']:null;
             $import_event->web_sites = $this->getWebSites($event);
             $import_event->is_approved = true;
             $import_event->is_private = false;
+            
+            // Setting start and end date (there's no end dates so setting to end of a day)
+            if(!empty( $event['dates']['start']['localTime']) && !empty( $event['dates']['start']['localDate']))
+            {
+                $import_event->start_date = $event['dates']['start']['localDate'] . ' ' . $event['dates']['start']['localTime'];
+                $import_event->end_date   = $event['dates']['start']['localDate'] . ' ' . '23:59:59';
+            }
+            
             $import_event->save();
             
             // Address generation
-            $address = '';
-            $lat     = '';
-            $lon     = '';
-            if (!empty($event['_embedded']['venues'][0])) {
-                $venue = $event['_embedded']['venues'][0];
-
-                $address = [];
-                if( !empty($venue['address']) )
-                {
-                    $address[] = implode(', ', $venue['address']);
-                }
-                if( !empty($venue['city']['name']) )
-                {
-                    $address[] = $venue['city']['name'];
-                }
-                if( !empty($venue['state']['name']) )
-                {
-                    $address[] = $venue['state']['name'];
-                }
-                
-                $address = implode(', ', $address);
-                
-                if( !empty($venue['location']) )
-                {
-                    $lat = $venue['location']['latitude'];
-                    $lon = $venue['location']['longitude'];
-                }
-            }
-            if( !empty($address) && !empty($lat) && !empty($lon) )
-            {
-                $import_event->points()->create([
-                    'address' => $address,
-                    'location' => [
-                        'lat' => $lat,
-                        'lng' => $lon
-                    ]
-                ]);
-            }
+            $this->saveSpotPoint($import_event, $event);
 
             // Pictures
             if( !empty($event['images']) )
@@ -187,16 +136,13 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
     protected function getWebSites($event)
     {
         $sites = [];
-
         if (!empty($event['url'])) {
             $sites[] = $event['url'];
         }
-
         if (!empty($event['_embedded']['venues'][0]['url'])) {
             $sites[] = $event['_embedded']['venues'][0]['url'];
         }
-
-        return $sites ?: null;
+        return $sites ? $sites: null;
     }
 
 	/**
@@ -206,39 +152,43 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
 	 */
     protected function getRemotePhotos($event)
     {
-        $remotePhotos = [];
-        $needCover = true;
         $images = $event['images'];
-        
-        $imagesArr = [];
+        $imagesToSave = [];
         
         foreach($images as $image)
         {
+            // There's a images magic 
             preg_match($this->imageUrlPattern, $image['url'], $matchArr);
             if( !isset($matchArr[3]))
             {
-                $imagesArr[] = [
+                // If image have no part "dam" or "dbimages" in url then just adding it
+                $imagesToSave[] = [
                     'url' => $image['url'],
                     'width' => isset($image['width'])?$image['width']:0,
                 ];
             }
             else 
             {
+                // Else if it's "dam" we cleaning url from things that differs and get just image "ID" and then comparing their width
+                // If it's "dbimages" we just take one of them because they're similar
                 $key = ($matchArr[3] == 'dam')?str_replace($this->picKeyReplacements, '', $matchArr[4]):$matchArr[4];
                 if( !isset($imagesArr[$key]) || (isset($imagesArr[$key]) && $image['width'] > $imagesArr[$key]['width']))
                 {
-                    $imagesArr[$key] = [
+                    $imagesToSave[$key] = [
                         'url' => $image['url'],
                         'width' => isset($image['width'])?$image['width']:0,
                     ];
                 }
             }
         }
-        if(!empty($imagesArr))
+        // Getting array of all images to save
+        $remotePhotos = [];
+        if(!empty($imagesToSave))
         {
-            foreach($imagesArr as $imageArr)
+            $needCover = true;
+            foreach($imagesToSave as $imageArr)
             {
-                $isCover = 0;
+                $isCover = 0; // 1 - cover, 0 - regular
                 if($needCover)
                 {
                     $isCover = 1;
@@ -246,25 +196,74 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
                 }
                 $remotePhotos[] = new RemotePhoto([
                     'url' => $imageArr['url'],
-                    'image_type' => $isCover, // 1 - cover, 0 - regular
+                    'image_type' => $isCover, 
                     'size' => 'original',
                 ]);
             }
         }
         return $remotePhotos;
     }
-
+    
+    /**
+     * @param Spot $spot
+     * @param array $event
+     * @return mixed
+     */
+    public function saveSpotPoint($spot, $event)
+    {
+        if (!empty($event['_embedded']['venues'][0])) {
+            $venue = $event['_embedded']['venues'][0];
+            $address = [];
+            $lat     = null;
+            $lon     = null;
+            // Getting full address
+            if( !empty($venue['address']) )
+            {
+                $address[] = implode(', ', $venue['address']);
+            }
+            if( !empty($venue['city']['name']) )
+            {
+                $address[] = $venue['city']['name'];
+            }
+            if( !empty($venue['state']['name']) )
+            {
+                $address[] = $venue['state']['name'];
+            }
+            $address = implode(', ', $address);
+            // Getting lat and lon
+            if( !empty($venue['location']) )
+            {
+                $lat = $venue['location']['latitude'];
+                $lon = $venue['location']['longitude'];
+            }
+            // If everything ok => saving
+            if( !empty($address) && !empty($lat) && !empty($lon) )
+            {
+                $spot->points()->create([
+                    'address' => $address,
+                    'location' => [
+                        'lat' => $lat,
+                        'lng' => $lon
+                    ]
+                ]);
+            }
+        }
+    }
+    
     /**
      * @param $query_string
-     * @return mixed
+     * @return array
      */
     public function fetchData($query_string)
     {
-        $response = $this->http->get($this->api_url, [
-            'query' => $query_string
-        ]);
-        $data = json_decode((string)$response->getBody(), true);
-
+        try {
+            $response = $this->http->get($this->api_url, [
+                'query' => $query_string
+            ]);
+            $data = json_decode((string)$response->getBody(), true);
+        } catch (Exception $e) {
+            $data = [];
+        }
         return $data;
     }
 }

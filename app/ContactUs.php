@@ -4,6 +4,7 @@ namespace App;
 
 use App\Scopes\NewestScopeTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Services\SqlEscape;
 
 /**
  * Model ContactUs
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ContactUs extends Model
 {
-    use NewestScopeTrait;
+    use NewestScopeTrait, SqlEscape;
 
     protected $table = 'contact_us';
 
@@ -30,6 +31,8 @@ class ContactUs extends Model
      */
     public function scopeSearch($query, $filter)
     {
-        return $query->whereRaw("LOWER(\"message\") like LOWER('%$filter%')");
+    	$filter = self::escapeLike($filter);
+
+        return $query->whereRaw("LOWER(\"message\") like '%$filter%'");
     }
 }

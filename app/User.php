@@ -19,6 +19,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use App\SpotVote;
+use App\Services\SqlEscape;
 
 /**
  * Class User
@@ -96,7 +97,7 @@ class User extends BaseModel implements
     StaplerableInterface,
     CalendarExportable
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait,
+    use Authenticatable, CanResetPassword, EntrustUserTrait, SqlEscape,
         PostgisTrait, StaplerTrait, GeoTrait {
         StaplerTrait::boot insteadof EntrustUserTrait;
         EntrustUserTrait::boot insteadof StaplerTrait;
@@ -171,7 +172,13 @@ class User extends BaseModel implements
         'tumblr_link',
         'google_link',
         'custom_link',
-        'is_hints'
+        'is_hints',
+	    'token',
+	    'random_hash',
+	    'ip',
+	    'email',
+	    'ban_reason',
+	    'banned_at',
     ];
 
     protected $dates = ['deleted_at', 'banned_at', 'birth_date', 'last_action_at'];
@@ -196,10 +203,12 @@ class User extends BaseModel implements
      */
     public function scopeSearch($query, $filter)
     {
+    	$filter = self::escapeLike($filter);
+
         return $query
             ->whereRaw(
-                "LOWER(CONCAT(\"first_name\", ' ', \"last_name\")) like LOWER('%$filter%') " .
-                "OR LOWER(\"email\") like LOWER('%$filter%')"
+                "LOWER(CONCAT(\"first_name\", ' ', \"last_name\")) like '%$filter%' " .
+                "OR LOWER(\"email\") like '%$filter%'"
             );
     }
 

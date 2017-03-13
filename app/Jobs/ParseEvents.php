@@ -16,7 +16,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
-use Storage;
 use Log;
 
 class ParseEvents extends Job implements SelfHandling, ShouldQueue
@@ -52,6 +51,16 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
      * @var integer
      */
     public $page;
+    
+    /**
+     * @var SpotTypeCategory
+     */
+    public $category;
+    
+    /**
+     * @var string
+     */
+    public $prefix;
 
     /**
      * Execute the job.
@@ -60,6 +69,12 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
      * @param AppSettings $settings
      * @param GoogleAddress $address
      */
+    
+    public function __construct() {
+        $this->category = SpotTypeCategory::getOrCreate('seatgeek', 'SeatGeek');
+        $this->prefix = $this->category->getPrefix();
+    }
+    
     public function handle(Client $http, AppSettings $settings, GoogleAddress $address)
     {
         $this->http = $http;
@@ -95,11 +110,12 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
 
     public function importEvents(Collection $events)
     {
-        $default_category = SpotTypeCategory::whereName('seatgeek')->first();
+        $default_category = $this->category;
+        $prefix = $this->prefix;
 
         foreach ($events->sortByDesc('id') as $event) {
             
-            if(Spot::where('spot_type_category_id', $default_category->id)->where('remote_id', 'sg_' . $event['id'])->exists())
+            if(Spot::where('spot_type_category_id', $default_category->id)->where('remote_id', $prefix . $event['id'])->exists())
             {
                 continue;
             }
@@ -118,7 +134,7 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
             $import_event->end_date    = $date->format('Y-m-d 23:59:59');
             $import_event->web_sites   = $this->getWebSites($event);
             $import_event->is_approved = true;
-            $import_event->remote_id   = 'sg_' . $event['id'];
+            $import_event->remote_id   = $prefix . $event['id'];
             $import_event->save();
 
             $address = '';
@@ -200,7 +216,7 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
         $remotePhotos = [];
         $needCover = true;
         foreach ($event['performers'] as $performer) {
-            if ($performer['image']) {
+            if (!empty($performer['image'])) {
                 $remotePhotos[] = new RemotePhoto([
                     'url' => $performer['image'],
                     'image_type' => $needCover ? 1 : 0, // 1 - cover, 0 - regular
