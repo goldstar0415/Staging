@@ -29,17 +29,15 @@ class SpotTest extends LaravelTestCase
             'locations' => $spot_points->toArray(),
             'tags' => ['rem', 'tempora', 'some', 'newtag']
         ];
+
         if ($spot_category->type->name === 'event') {
             $data = array_merge($data, ['start_date' => $spot->start_date, 'end_date' => $spot->end_date]);
         }
-        $this->post(
-            '/spots',
-            $data,
-            [],
-            [
-                'files' => [$this->makeUploadedFile(), $this->makeUploadedFile(), $this->makeUploadedFile()]
-            ]
-        );
+
+        $response = $this->post('/spots', $data, [], [
+            'files' => [$this->makeUploadedFile(), $this->makeUploadedFile(), $this->makeUploadedFile()]
+        ]);
+
         $this->seeJson($spot->toArray());
         $this->assertResponseOk();
     }
