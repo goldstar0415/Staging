@@ -129,8 +129,10 @@ Route::get('message/{user_id}/read', 'ChatController@read');
 /**
  * Map Controls
  */
-Route::get('map/spots', 'MapController@getSpots');
-Route::post('map/spots', 'MapController@getSpots');
+Route::get('map/search', 'MapController@getSearch');
+Route::get('map/selection/radius', 'MapController@getSpotsRadiusSelection');
+Route::get('map/selection/lasso', 'MapController@getSpotsLassoSelection');
+Route::get('map/selection/path', 'MapController@getSpotsPathSelection');
 Route::get('map/spots/list', 'MapController@getList');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
 Route::get('areas/{areas}/preview', 'AreaController@preview');
