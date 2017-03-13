@@ -20,8 +20,8 @@ class CreateSpotOwnerRequestsTable extends Migration
             $table->string('email', 128);
             $table->string('phone', 128);
             $table->string('address');
-            $table->string('url');
-
+            $table->string('url')->nullable();
+            $table->string('text', 5000)->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')

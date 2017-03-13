@@ -12,16 +12,14 @@ class CreateRemotePhotosTable extends Migration
      */
     public function up()
     {
-		if (!Schema::hasTable('remote_photos')) {
-			Schema::create('remote_photos', function (Blueprint $table) {
-				$table->increments('id');
-				$table->morphs('associated');
-				$table->integer('image_type');
-				$table->string('url');
-				$table->string('size')->nullable();
-				$table->nullableTimestamps();
-			});
-		}
+        Schema::create('remote_photos', function (Blueprint $table) {
+            $table->increments('id');
+            $table->morphs('associated');
+            $table->integer('image_type');
+            $table->string('url', 500);
+            $table->string('size')->nullable();
+            $table->nullableTimestamps();
+        });
     }
 
     /**

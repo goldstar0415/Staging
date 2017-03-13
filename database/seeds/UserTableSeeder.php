@@ -21,8 +21,10 @@ class UserTableSeeder extends Seeder
             ]);
         $admin->roles()->attach(Role::take('admin'));
 
-        factory(User::class, 20)->create()->each(function (User $user) {
-            $user->roles()->attach(Role::take('zoomer'));
-        });
+        if (App::environment('local')) {
+            factory(User::class, 20)->create()->each(function (User $user) {
+                $user->roles()->attach(Role::take('zoomer'));
+            });
+        }
     }
 }
