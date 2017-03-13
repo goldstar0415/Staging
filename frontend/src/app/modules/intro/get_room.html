@@ -1,0 +1,48 @@
+<form ng-submit="Intro.searchRoom()">
+    <div class="content-block text-center"><h2 class="title-name">Get a Room</h2>
+        <h4>Million of Events for Everyone. Festivals. Concerts. Fairs &AMP; Fun Stuff</h4>
+        <div class="img-wrap"><img src="/assets/img/icons/get-room.png" alt=""/></div>
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="search-filters search-block no-pad"><!--Please add here class="applyed" for re-color inputs to blue-->
+                    <div class="country-filter">
+                        <input type="text" role="search"
+                              ng-model="Intro.searchParams.search_text"
+                              ng-change="Intro.searchAddress()"
+                              ng-model-options="{ debounce: 200 }"
+							  typeahead-wait-ms="100"
+                              typeahead-on-select="Intro.selectLocation($item)"
+                              typeahead="address.formatted_address for address in Intro.locations">
+                        <span class="icon-nav"></span>
+                    </div>
+
+                    <div class="radio-group">
+                        <input id="hotels" type="radio" class="radio" value="1" ng-model="Intro.searchParams.category_hotels">
+                        <label for="hotels"><span></span>Hotels</label>
+                        <input type="radio" class="radio" id="homes" name="homes" value="1" ng-model="Intro.searchParams.category_homes">
+                        <label for="homes"><span></span>Homes & Condos</label>
+                        <input id="campground" type="radio" class="radio" value="1" ng-model="Intro.searchParams.category_campground">
+                        <label for="campground"><span></span>Cabins & Campgrounds</label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-default green-btn " >search</button>
+            </div>
+            <div class="row other-search">
+                <p class="text-uppercase">Other Search tools</p>
+                <a ng-click="Intro.routeSearch('shelter')"><span><i class="icon-route"></i></span><span>Route Search</span></a>
+                <a ng-click="Intro.radiusSearch('shelter')"><span><i class="icon-map-search"></i></span><span>Map Search</span></a>
+            </div>
+            <div class="row">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                    sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </div>
+    </div>
+</form>

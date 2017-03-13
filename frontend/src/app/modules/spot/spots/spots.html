@@ -1,0 +1,94 @@
+<div class="text-center">
+    <h2 class="title-name nav-green">
+    {{currentUser.id == profileUser.id ? 'My spots' : profileUser.first_name + "'s spots"}}
+  </h2>
+</div>
+<a ui-sref="spot_create" ng-if="currentUser.id == profileUser.id" class="add-friend nav-bg-green" title="Create new spot"></a>
+<facebook-events ng-if="currentUser.id == profileUser.id" spots="Spots.spots"></facebook-events>
+
+<div infinite-scroll="Spots.pagination.nextPage()" infinite-scroll-disabled="Spots.pagination.busy" class="profile-spots clearfix" infinite-scroll-distance="1">
+    <div spotcard class="new-result-card" ng-repeat="item in Spots.spots.data" item="item" index="$index"></div>
+    <!-- <section class="my-spots-section" ng-repeat="item in Spots.spots.data">
+
+    <div class="event">
+      <div class="row">
+        <div class="col-md-2 col-xs-3 col-sm-4 spot-thumb">
+          <figure>
+            <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" class="img-size">
+            <spot-type type="item.category.type.display_name"></spot-type>
+          </figure>
+          <stars item="item"></stars>
+        </div>
+        <div class="col-md-10 col-xs-9 col-sm-8">
+          <a ng-click="item.visible_submenu = !item.visible_submenu"
+             ng-if="currentUser && currentUser.id != item.user_id && !item.isReported" class="more-info">. . .</a>
+
+          <div ng-show="item.visible_submenu" class="more-info-popup">
+            <ul class="list-unstyled">
+              <li ng-if="currentUser && currentUser.id != item.user_id && !item.isReported">
+                <a report-spot="item">Report</a>
+              </li>
+            </ul>
+          </div>
+          <h2>
+            <a ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})">{{::item.title}}</a>
+          </h2>
+
+
+          <p class="place" ng-if="item.points.length > 0">{{::item.points[0].address}}</p>
+
+          <div ng-if="item.type == 'Event'" class="date">
+            <date-range item="item"></date-range>
+          </div>
+          <div class="description" ng-bind-html="item.description | toParagraphs"></div>
+
+
+          <ul ng-if="item.tags && item.tags.length > 0" class="tags clearfix">
+            <li ng-repeat="tag in item.tags"><a
+              ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})">{{tag.name}}</a>
+            </li>
+          </ul>
+
+          <ul class="tools">
+            <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')">
+              <a ui-sref="spot_edit({spot_id: item.id})" class="edit-tools">Edit</a>
+            </li>
+            <li ng-if="currentUser.id == item.user_id || isRole(currentUser, 'admin')">
+              <a ng-click="Spots.removeSpot(item, $index);" class="delete">Delete</a>
+            </li>
+
+            <li ng-if="!item.is_saved && item.type == 'Event'">
+              <a class="save-event" ng-click="Spots.saveToCalendar(item)">Save</a>
+            </li>
+            <li ng-if="item.is_saved && item.type == 'Event'">
+              <a class="save-event saved clicked" ng-click="Spots.removeFromCalendar(item)">Remove</a>
+            </li>
+            <li ng-if="currentUser.id != item.user_id && !item.is_favorite">
+              <a class="favorite-spot" ng-click="Spots.addToFavorite(item)">Favorite</a>
+            </li>
+            <li ng-if="$root.currentUser && currentUser.id != item.user_id && item.is_favorite">
+              <a class="fav favorited" ng-click="Spots.removeFromFavorite(item)">Unfavorite</a>
+            </li>
+            <li ng-if="item.is_approved">
+              <invite-friends item="item"></invite-friends>
+            </li>
+            <li>
+              <share item="item" type="spot"></share>
+            </li>
+            <li ng-if="item.type == 'Event'">
+              <a class="download"
+                 ng-href="{{Spots.API_URL + '/spots/' + item.id + '/export'}}" target="_blank">Export to ICS</a>
+            </li>
+          </ul>
+          <share item="item" class="visible-xs" type="spot" only-icon="true"></share>
+
+        </div>
+      </div>
+    </div>
+  </section> -->
+</div>
+<preloader ng-show="Spots.pagination.busy"></preloader>
+
+<div class="col-xs-12">
+    <h4 class="text-center description" ng-if="Spots.spots.data.length == 0 && !Spots.pagination.busy">No spots yet.</h4>
+</div>

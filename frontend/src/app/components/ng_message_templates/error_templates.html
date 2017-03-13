@@ -1,0 +1,30 @@
+<script type="text/ng-template" id="error-email-messages">
+  <div ng-message="required">is required</div>
+  <div ng-message="email">wrong email</div>
+</script>
+
+<script type="text/ng-template" id="error-password-messages">
+  <div ng-message="required">is required</div>
+  <div ng-message="minlength">password is too short</div>
+  <div ng-message="match">passwords must match</div>
+</script>
+
+<script type="text/ng-template" id="error-title-messages">
+  <div ng-message="required">is required</div>
+  <div ng-message="minlength">title is too short</div>
+  <div ng-message="maxlength">title is too long</div>
+</script>
+
+<script type="text/ng-template" id="error-title-email-form">
+  <div ng-message="required">is required</div>
+  <div ng-message="email">wrong email</div>
+</script>
+
+<script type="text/ng-template" id="tags-template">
+  <div class="tag-template">
+    <div>
+      <span>{{$getDisplayText()}}</span>
+      <a class="remove-button" ng-click="$removeTag()"></a>
+    </div>
+  </div>
+</script>

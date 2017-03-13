@@ -1,0 +1,108 @@
+<form class="form-horizontal  no-pad" name="form" role="form" ng-submit="Article.save(form)" novalidate>
+  <a ui-sref="profile_blog({user_id: Article.user_id})" class="btn-back create-article-btn"></a>
+
+  <div class="text-center">
+    <h2 class="title-name">Create blog post</h2>
+  </div>
+  <section class="event-main-info">
+
+    <div class="form-group">
+      <label class="col-sm-3 col-xs-12 nopad control-label">Title</label>
+
+      <div class="col-sm-9 col-xs-12">
+        <input type="text" class="form-control" ng-model="Article.title" name="title" placeholder="Start typing..."
+               required/>
+
+        <div ng-messages="form.title.$error" ng-if="form.$submitted || form.title.$touched" class="error-message">
+          <div ng-message="required">is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 col-xs-12 control-label">Category</label>
+
+      <div class="col-sm-9 col-xs-12">
+        <ui-select ng-model="Article.blog_category_id" theme="bootstrap">
+          <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
+          <ui-select-choices repeat="item.id as item in Article.categories | filter : $select.search track by $index">
+            <div ng-bind-html="item.display_name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+
+        <input type="hidden" ng-model="Article.blog_category_id" name="blog_category_id" required/>
+
+        <div ng-messages="form.blog_category_id.$error" ng-if="form.$submitted || form.blog_category_id.$touched"
+             class="error-message">
+          <div ng-message="required">is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <!-- <label class="col-sm-3 col-xs-12 control-label">Upload</label> -->
+
+      <div class="col-sm-9 col-sm-offset-3 col-xs-offset-0 col-xs-12">
+        <div class="btn-group back-off">
+          <uploader button-text="{{Article.cover_url ? 'Change Cover Photo' : 'Upload Cover Photo'}}"></uploader>
+        </div>
+        <img ng-if="Article.cover_url && Article.images.files.length == 0"
+             class="img-thumbnail col-sm-3"
+             ng-src="{{Article.cover_url.original}}"/>
+
+        <div class="add-image" ng-if="Article.images.files.length > 0">
+          <img class="img-responsive"
+               ngf-src="Article.images.files[Article.images.files.length - 1]"/>
+
+          <a class="close-img" ng-click="Article.images.files.splice(0, 1)" data-toggle="tooltip"
+             data-placement="top" title="Delete"></a>
+        </div>
+      </div>
+    </div>
+<!--
+    <div class="form-group" hidden>
+      <label class="col-sm-3 col-xs-12 control-label">Alias</label>
+
+      <div class="col-sm-9 col-xs-12">
+        <input ng-model="Article.slug" name="slug" type="text" placeholder="Start typing..." class="form-control">
+      </div>
+    </div>-->
+    <div class="form-group">
+      <label class="col-sm-3 col-xs-12 control-label">Location </label>
+
+      <div class="col-sm-9 col-xs-12">
+        <input
+                location-bloodhound
+                address="Article.address"
+                location="Article.location"
+                ng-model-options="{ debounce: 200 }"
+                popover="Type address or click on the map to set location(s)"
+                popover-trigger="focus"
+                placeholder="Type location or click on map..."
+                type="text"
+                autocomplete="off"
+                bind-marker="true"
+                limit="15"
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 col-xs-12 control-label">Body </label>
+      <div class="col-sm-9 col-xs-12">
+        <summernote on-image-upload="imageUpload(files)" ng-model="Article.body" config="Article.options" editor="editor" editable="editable"></summernote>
+      </div>
+      <!--<div class="col-sm-9 col-xs-12">
+        <div content-tools data-name="article-body" ng-bind-html="Article.body | toTrustedHtml">
+        </div>
+      </div>-->
+    </div>
+
+    <div class="form-group">
+      <div class="col-xs-12 no-pad media-center">
+        <button type="submit" class="btn btn-default  green-btn pull-right ">Save</button>
+      </div>
+    </div>
+  </section>
+
+</form>

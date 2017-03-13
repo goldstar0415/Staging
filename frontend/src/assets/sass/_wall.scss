@@ -1,0 +1,171 @@
+.wall-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 120px;
+    width: 100%;
+    padding: 10px;
+    @media(max-width: 767px) {
+        flex-direction: column;
+    }
+    .wall-user {
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 10px 20px;
+        @media(min-width: 768px) {
+            flex: 3 0 0;
+        }
+        @media(max-width: 767px) {
+            align-self: flex-start;
+            width: 100%;
+            height: 50px;
+            margin: 10px 0;
+        }
+        & > a {
+            @media(max-width: 767px) {
+                height: 50px;
+            }
+            img {
+                border-radius: 100%;
+                height: 80px;
+                width: 80px;
+                @media(max-width: 767px) {
+                    height: 50px;
+                    width: 50px;
+                }
+                object-fit: cover;
+            }
+        }
+        .wall-user-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            margin-left: 20px;
+            a {
+                font-weight: bold;
+                color: $dark_blue;
+                font-size: 18px;
+                span {
+                    @media(min-width: 768px) {
+                        // word-spacing: 1000px;
+                    }
+                }
+            }
+            p {
+                margin: 0;
+                color: lightgrey;
+                font-size: 12px;
+            }
+        }
+    }
+    .wall-content {
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        background-color: whitesmoke;
+        padding: 10px 20px;
+        position: relative;
+        &:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: whitesmoke;
+            transform: rotate(45deg);
+            top: calc(50% - 10px);
+            left: -10px;
+            @media(max-width: 767px) {
+                // border-right: 1px solid #e9edf0;
+                border-left: none;
+                bottom: 0px;
+                top: -10px;
+                left: calc(50% - 10px);
+            }
+        }
+        .wall-message {
+            width: 100%;
+        }
+        @media(min-width: 768px) {
+            flex: 5 0 0;
+        }
+        .wall-buttons {
+            align-self: flex-end;
+            .like {
+                padding-left: 4rem;
+            }
+            color: #889197;
+        }
+    }
+}
+
+.wall-item-messages {
+    .wall-content {
+        justify-content: center;
+    }
+}
+
+.wall-item-chat {
+    .wall-buttons {
+        visibility: hidden;
+    }
+    &:hover {
+        .wall-buttons {
+            visibility: visible;
+        }
+    }
+}
+
+.wall-item-right {
+    flex-direction: row-reverse;
+    @media(max-width: 767px) {
+        flex-direction: column;
+        .wall-user {
+            flex-direction: row-reverse;
+            .wall-user-info {
+                margin: 0 20px 0 0;
+                text-align: right;
+            }
+        }
+    }
+    @media(min-width: 768px) {
+        .wall-content {
+            &:after {
+                left: auto;
+                right: -10px;
+            }
+        }
+    }
+}
+
+.wall-item-min {
+    flex-direction: column;
+    .wall-user {
+        align-self: flex-start;
+        width: 100%;
+        height: auto;
+        margin: 10px 0;
+        flex: initial;
+        & > a {
+            height: 50px;
+            img {
+                height: 50px;
+                width: 50px;
+            }
+        }
+    }
+    .wall-content {
+        flex: initial;
+        &:after {
+            border-left: none;
+            bottom: 0px;
+            top: -10px;
+            left: calc(50% - 10px);
+        }
+    }
+}

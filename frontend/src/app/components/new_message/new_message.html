@@ -1,0 +1,15 @@
+<div class="new-messages" ng-click="Message.redirectToMessage()" ng-if="Message.message.visible">
+  <h5 class="new-message">New Message</h5>
+
+  <div class="from-whom">
+    <img ng-src="{{Message.message.data.user.avatar_url.thumb}}">
+
+    <div class="message">
+      <h5 class="user-name">{{Message.message.data.user.first_name}} {{Message.message.data.user.last_name}}</h5>
+
+      <p>{{Message.message.data.message.body}}</p>
+
+      <p ng-if="!Message.message.data.message.body"><b>Click to read</b></p>
+    </div>
+  </div>
+</div>

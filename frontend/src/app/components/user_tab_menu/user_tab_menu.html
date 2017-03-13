@@ -1,0 +1,19 @@
+<ul class="wall-tabs">
+  <li ui-sref-active="active">
+    <a ui-sref="profile.main({user_id: profileUser.alias || profileUser.id})">Wall</a>
+  </li>
+  <li ui-sref-active="active">
+    <a ui-sref="chat">Messages
+      <span class="badge" ng-if="$root.currentUser.new_messages > 0">{{$root.currentUser.new_messages}}</span>
+    </a>
+  </li>
+  <li ui-sref-active="active">
+    <a ui-sref="feeds">Feeds</a>
+  </li>
+  <li ui-sref-active="active">
+    <a ui-sref="comments">Comments</a>
+  </li>
+  <li ui-sref-active="active">
+    <a ui-sref="reviews">Reviews</a>
+  </li>
+</ul>

@@ -1,0 +1,16 @@
+<div class="outline-none text-center readonly stars-control">
+    <div class="stars-bottom">
+        <span class="rating-star star-default"></span>
+        <span class="rating-star star-default"></span>
+        <span class="rating-star star-default"></span>
+        <span class="rating-star star-default"></span>
+        <span class="rating-star star-default"></span>
+    </div>
+    <div class="stars-top">
+        <span class="rating-star star-active" ng-if="Stars.avg_rating > 0" ng-class="{'star-half': Stars.avg_rating < 1}"></span>
+        <span class="rating-star star-active" ng-if="Stars.avg_rating > 1" ng-class="{'star-half': Stars.avg_rating < 2}"></span>
+        <span class="rating-star star-active" ng-if="Stars.avg_rating > 2" ng-class="{'star-half': Stars.avg_rating < 3}"></span>
+        <span class="rating-star star-active" ng-if="Stars.avg_rating > 3" ng-class="{'star-half': Stars.avg_rating < 4}"></span>
+        <span class="rating-star star-active" ng-if="Stars.avg_rating > 4" ng-class="{'star-half': Stars.avg_rating < 5}"></span>
+    </div>
+</div>

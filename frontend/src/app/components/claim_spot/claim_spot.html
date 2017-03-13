@@ -1,0 +1,59 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="modal.close()">&times;</button>
+  <h4 class="modal-title">Claim listing</h4>
+</div>
+<div class="modal-body report-modal clearfix">
+
+  <form name="form" ng-submit="modal.save(form)" novalidate>
+
+    <input type="email" name="email" placeholder="Business Email" ng-model="modal.email" class="white"
+           required/>
+
+    <div ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched"
+         class="error-message">
+      <div ng-messages-include="error-email-messages"></div>
+    </div>
+
+
+    <input type="text" name="phone" placeholder="Phone" ng-model="modal.phone" class="white"
+           required/>
+
+    <div ng-messages="form.phone.$error" ng-if="form.$submitted || form.phone.$touched"
+         class="error-message">
+      <div ng-message="required">is required</div>
+    </div>
+
+    <input type="text" name="address" placeholder="Business Address" ng-model="modal.address" class="white"
+           required/>
+
+    <div ng-messages="form.address.$error" ng-if="form.$submitted || form.address.$touched"
+         class="error-message">
+      <div ng-message="required">is required</div>
+    </div>
+
+
+    <input type="text" name="url" placeholder="Web URL" ng-model="modal.url" class="white" validate-link />
+
+    <div ng-messages="form.url.$error" ng-if="form.$submitted || form.url.$touched"
+         class="error-message">
+      <div ng-message="link">wrong url</div>
+    </div>
+
+    <input type="text" name="name" placeholder="Contact name" ng-model="modal.name" class="white"
+           required/>
+
+
+    <div ng-messages="form.name.$error" ng-if="form.$submitted || form.name.$touched"
+         class="error-message">
+      <div ng-message="required">is required</div>
+    </div>
+
+    <textarea placeholder="Comment" name="description" ng-model="modal.text" class="white" ></textarea>
+
+    <div>
+      <button class="btn btn-success pull-left col-sm-4  col-xs-5 button-my" type="submit">
+        Send
+      </button>
+    </div>
+  </form>
+</div>

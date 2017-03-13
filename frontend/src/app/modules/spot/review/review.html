@@ -1,0 +1,55 @@
+<div ng-if="!Review.deleted">
+    <div class="review-top">
+        <div class="review-avatar">
+            <a ng-if="$root.currentUser && Review.review.user" ui-sref="profile.main({user_id: Review.review.user.alias || Review.review.user.id})"
+                class="{{Review.getServiceName(Review.review.remote_type)}}">
+                <img ng-src="{{Review.review.user.avatar_url.thumb || Review.review.remote_user_avatar}}" class="avatar">
+            </a>
+            <span ng-if="!$root.currentUser || !Review.review.user" 
+                class="{{Review.getServiceName(Review.review.remote_type)}}">
+                <img ng-src="{{Review.review.user.avatar_url.thumb || Review.review.remote_user_avatar}}" class="avatar">
+            </span>
+        </div>
+        <div class="review-content">
+            <div>
+                <div class="pull-left outline-none" ng-class="{readonly: !Review.edit}">
+                    <rating
+                        ng-model="Review.review.vote"
+                        max="5"
+                        readonly="!Review.review.edit"
+                        state-on="'glyphicon glyphicon-star star-active'"
+                        state-off="'glyphicon glyphicon-star star-default'"
+                        ></rating>
+                </div>
+                <span class="name">
+                    &nbsp; by 
+                    <a ng-if="$root.currentUser && Review.review.user" ui-sref="profile.main({user_id: Review.review.user.alias || Review.review.user.id})">
+                        {{Review.review.user.first_name || Review.review.remote_user_name || "anonym"}} 
+                        {{Review.review.user.last_name}}
+                    </a>
+                    <span ng-if="!$root.currentUser || !Review.review.user">
+                        {{Review.review.user.first_name || Review.review.remote_user_name || "anonym"}} 
+                        {{Review.review.user.last_name}}
+                    </span>
+                </span>
+                <!-- <span class="time">{{Review.review.created_at| fromNow}}</span> -->
+            </div>
+            <p  ng-if="!Review.edit && !Review.fullReview" ng-bind-html="Review.review.message | linky:'_blank' | toTrustedHtml" text="Review.review.message" truncated class="review-small" ng-click="Review.more()"></p>
+            <p  ng-if="!Review.edit && Review.fullReview" ng-bind-html="Review.review.message | linky:'_blank' | toTrustedHtml" text="Review.review.message"></p>
+            <textarea name="review" ng-model="Review.review.message" placeholder="Start typing..."
+                ng-if="Review.edit && $root.isRole($root.currentUser, 'admin')"
+                ctrl-enter="Review.submit(reviewForm)" ng-maxlength="5000"
+                class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-valid-maxlength ng-touched"
+                required="required"></textarea>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="text-right" ng-if="$root.isRole($root.currentUser, 'admin')">
+        <!--<a class="like">Like</a>-->
+        <a class="action edit" ng-if="!Review.edit" ng-click="Review.editReview(Review.review)">Edit</a>
+        <a class="action delete" ng-click="Review.deleteReview(Review.review, $index)">Delete</a>
+        <a class="action save" ng-if="Review.edit"ng-click="Review.updateReview(Review.review)">Save</a>
+        <a class="action cancel" ng-if="Review.edit"ng-click="Review.cancelEditReview(Review.review)">Cancel</a>
+    </div>
+</div>

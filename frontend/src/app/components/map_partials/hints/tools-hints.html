@@ -1,0 +1,27 @@
+<!--<div class="col-xs-12 hidden-lg hidden-md hidden-sm no-pad">-->
+<!--<a href="#" class="btn results-btn">Show results</a>-->
+<!--</div>-->
+<!----- button for search result on map page (mobile) ----->
+
+<div class="tools-wrap" ng-if="showHintPopup && mapState == 'full-size' && !hideHints">
+  <div class="tools-hint-block">
+    <button ng-click="close()" type="button" class="close ">
+      <span aria-hidden="true" class="no-pad-right">&times;</span>
+    </button>
+
+    <h2><span>Hi Zoomer!</span>Looking for awesome place to go?</h2>
+
+    <p>Choose a tool for search:</p>
+    <ul>
+      <li class="path"><a ng-click="PathSelectionTool()"></a>Path
+        <div class="path-map"></div>
+      </li>
+      <li class="radius"><a ng-click="RadiusSelectionTool()"></a>Radius
+        <div class="radius-map"></div>
+      </li>
+      <li class="lasso"><a ng-click="LassoSelectionTool()"></a>Draw
+        <div class="lasso-map"></div>
+      </li>
+    </ul>
+  </div>
+</div>

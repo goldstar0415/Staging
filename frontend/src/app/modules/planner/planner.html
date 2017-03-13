@@ -1,0 +1,60 @@
+<div class="wrap planner-page">
+  <!-- section with calendar -->
+  <div>
+      <section class="col-xs-12 create-new-plan">
+        <div ui-calendar="Planner.calendarConfig" class="span8 calendar" ng-model="Planner.sourceEvents"></div>
+      </section>
+      <!-- end section with calendar -->
+
+      <!-- section with export -->
+      <section class="col-xs-12  no-pad ">
+        <!--<div class="export-to-ics">-->
+        <!--<a>Export to ICS</a>-->
+        <!--</div>-->
+      </section>
+      <!--end section with export -->
+
+
+      <!-- sub event -->
+      <section class="central  col-xs-12">
+        <div class="text-center">
+          <h2 class="title-name nav-blue">Plans</h2>
+        </div>
+        <a ui-sref="planner.create" class=" add-planner nav-bg-blue" title="Create new plan"></a>
+
+        <div infinite-scroll="Planner.pagination.nextPage()" infinite-scroll-disabled="Planner.pagination.busy"
+             class="clearfix" infinite-scroll-distance="1">
+          <div ng-repeat="plan in Planner.plans.data" class="event border-bottom">
+
+
+            <h3 class="title-planner">
+              <a ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})">{{plan.title}}</a>
+            </h3>
+
+            <p class="place">{{plan.address}}</p>
+
+            <div class="date">
+              <date-range item="plan"></date-range>
+            </div>
+            <p class="description">
+              <span>{{plan.description}}</span>
+            </p>
+
+            <ul class="tools clearfix">
+              <li>
+                <a ui-sref="planner.edit({plan_id: plan.id})" class="edit-tools">Edit</a>
+              </li>
+              <li>
+                <a class="delete" ng-click="Planner.deletePlan(plan, $index)">Delete</a>
+              </li>
+            </ul>
+            <share item="plan" class="visible-xs" type="plan"></share>
+          </div>
+        </div>
+        <preloader ng-show="Planner.pagination.busy"></preloader>
+
+        <h3 ng-if="Planner.plans.data.length == 0 && !Planner.pagination.busy" class="text-center description">No plans
+          yet.</h3>
+      </section>
+  </div>
+</div>

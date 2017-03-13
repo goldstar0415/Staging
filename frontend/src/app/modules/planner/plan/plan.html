@@ -1,0 +1,123 @@
+<div class="col-xs-12 no-pad">
+  <div class="col-xs-12 clearfix btn-back-wrapper">
+    <a ui-sref="planner.list" class="btn-back back btn-back-planner" title="back"></a>
+  </div>
+  <!-- section with spot -->
+  <section class="no-margin-bottom clearfix">
+
+    <div class="one-spot-section">
+
+      <h2 class="title-planner">{{Plan.title}}</h2>
+
+      <p class="place">{{Plan.address}}</p>
+
+      <div class="date">
+        <date-range item="Plan"></date-range>
+      </div>
+      <p class="description">
+        <span>{{Plan.description}}</span>
+      </p>
+      <ul class="tools clearfix">
+        <li>
+          <invite-friends item="Plan" type="plan"></invite-friends>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <!-- end section with spot -->
+
+  <!-- activity -->
+  <div ng-repeat="item in Plan.plan_attachments | orderBy:'position'">
+    <section ng-if="item.attachment_type == 'activity'" class="central no-margin-bottom sub-event">
+      <div class="media media-visible">
+        <div class="media-body">
+          <h2 class="media-heading title-planner">{{item.title}}
+          </h2>
+
+          <p class="place">{{item.address}}</p>
+
+          <div class="time-sub">
+            <date-range item="item"></date-range>
+          </div>
+          <div class="description">
+            <span>{{item.description}}</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!--end activity -->
+
+    <!-- sub event -->
+    <section ng-if="item.attachment_type == 'spot'" class="central no-margin-bottom sub-event">
+      <div class="media media-visible">
+        <a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})" class="pull-left">
+          <img ng-src="{{item.cover_url.thumb}}" alt="{{item.title}}" class="media-object fav-avatar-icon">
+        </a>
+
+        <div class="media-body">
+          <h2 class="media-heading title-planner">
+            <a ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})">{{item.title}}</a>
+          </h2>
+
+          <p class="place">{{item.address}}</p>
+
+          <div class="time-sub">
+            <date-range item="item"></date-range>
+          </div>
+          <div class="description">
+            <span>{{item.description}}</span>
+          </div>
+          <ul class="tools clearfix">
+            <li ng-if="!item.is_saved">
+              <a class="save-event" ng-click="Plan.saveToCalendar(item)">Save</a>
+            </li>
+            <li ng-if="item.is_saved">
+              <a class="save-event saved clicked" ng-click="Plan.removeFromCalendar(item)">Remove</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!--end sub event -->
+  </div>
+
+  <section class="comments-section">
+    <div class="comments-content clearfix ">
+      <ng-input message="Plan.message" attachments="Plan.attachments" on-submit="Plan.send()"
+                maxlength="5000" mobile="true"></ng-input>
+    </div>
+
+    <div infinite-scroll="Plan.pagination.nextPage()" infinite-scroll-disabled="Plan.pagination.busy"
+         class="clearfix" infinite-scroll-distance="1">
+      <div class="col-xs-12 post" ng-repeat="post in Plan.comments.data">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 padding-0">
+          <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">
+            <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
+          </a>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-8 info">
+          <h3 class="name">
+            <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}}
+              {{post.sender.last_name}}</a>
+          </h3>
+
+          <p class="time">{{post.created_at | fromNow}}</p>
+
+          <p ng-bind-html="post.body | linky:'_blank'"></p>
+          <attachments items="post.attachments"></attachments>
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <preloader ng-show="Plan.pagination.busy"></preloader>
+      </div>
+    </div>
+
+    <div class="spot-post empty" ng-if="Plan.comments.data.length == 0 && !Plan.pagination.busy">
+      <p class="comment-text">There are no comments.</p>
+    </div>
+  </section>
+
+
+</div>

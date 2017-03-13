@@ -1,0 +1,25 @@
+<div class="carousel-wrapper row clearfix" ng-if="Carousel.images.length > 0">
+  <div class="col-sm-12 carousel-img-wrapper">
+    <a photo-viewer items="Carousel.images" index="Carousel.mainImage.idx" current-item="Carousel.mainImage">
+      <img ng-src="{{ Carousel.mainImage.photo_url.original }}" alt="" class="img-responsive">
+    </a>
+  </div>
+
+  <div class=" col-xs-12 carousel-navigation">
+    <a class="left carousel-control" ng-click="Carousel.prev()" ng-show="Carousel.imageControl.start > 0">
+      <span class="prev glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" ng-click="Carousel.next()"
+       ng-show="Carousel.imageControl.start + Carousel.imageControl.step < Carousel.images.length">
+      <span class="glyphicon glyphicon-chevron-right next"></span>
+    </a>
+
+    <div class="col-xs-2"
+         ng-repeat="item in Carousel.images.slice(Carousel.imageControl.start, Carousel.imageControl.start + Carousel.imageControl.step)">
+      <a ng-click="Carousel.setMainImage(item, $index)">
+        <img ng-src="{{ item.photo_url.medium }}" alt="" class="img-responsive">
+      </a>
+    </div>
+  </div>
+</div>
+

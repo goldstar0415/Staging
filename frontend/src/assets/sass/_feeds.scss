@@ -1,0 +1,46 @@
+/*     feeds page */
+
+.feeds-img {
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.feeds-title {
+  a {
+    display: block;
+    font-weight: bold;
+    font-size: 2rem;
+    margin-bottom: 8px;
+    color: $dark_blue;
+    word-break: break-all;
+    .wrap-name span {
+      font-size: 2rem;
+      color: #222;
+    }
+  }
+}
+.friendmap-sub {
+  font-size: 1.4rem;
+  color: #889197;
+}
+.feeds-text {
+  font: $navigation_font;
+  color: $black;
+  font-size: 13px;
+  word-wrap: break-word;
+}
+.feed-text {
+  font: $navigation_font;
+  color: $black;
+  font-size: 14px;
+  margin-bottom: 1rem;
+}
+
+.event .avatar {
+      border-radius: 50%;
+      margin-right: 2rem;
+      img {
+        border-radius: 50%;
+      }
+    }
+/*  end feeds page */

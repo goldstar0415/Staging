@@ -1,0 +1,76 @@
+<div class="">
+  <div class="text-center"><h2 class="title-name nav-blue">Friends map</h2></div>
+
+  <div class="album-tools">
+    <contacts-import></contacts-import>
+	<facebook-friends class="fb-open"></facebook-friends>
+    <a title="Add People from Google Contacts" ng-click="Friendsmap.googleImport()" class="import-friendmap google-plus-friendmap"></a>
+  </div>
+</div>
+<div ng-repeat="item in Friendsmap.friends" class="col-xs-12 friends-block">
+  <div class="friends-wrapper">
+    <div class="avatar-wrap">
+      <div class="review-img avatar" ngf-select ngf-change="Friendsmap.setAvatar(item.id, $files)"
+         ngf-multiple="false" ng-model="Uploader.images" ngf-accept="'image/*'" ngf-max-size="5MB">
+        <img ng-src="{{item.avatar_url.medium}}" alt="Friends avatar">
+      </div>
+    </div>
+    <div class="text-block">
+      <h3 class="feeds-title">
+      <span class="col-xs-12 wrap-name">
+        <a ng-if="item.friend_id" ui-sref="profile.main({user_id: item.friend.alias || item.friend_id})">
+          {{item.first_name + " " + item.last_name}}
+        </a>
+        <span ng-if="!item.friend_id">{{item.first_name + " " + item.last_name}}</span>
+      </span>
+
+        <div class="col-xs-4 location-btn" ng-if="item.showSwitch">
+          <a class="custom-location" ng-class="{'active': item.showCustom}"
+             tooltip="User's&nbsp;Listed&nbsp;Location"
+             ng-click="Friendsmap.switchLocation(item, true)"></a>
+          <a class="default-location" ng-class="{'active': !item.showCustom}"
+             tooltip="Custom&nbsp;Location"
+             ng-click="Friendsmap.switchLocation(item, false)"></a>
+        </div>
+      </h3>
+      <!--<a ui-sref="friendsmap_edit({id: item.id})" class="edit"></a>-->
+
+      <div class="col-xs-12 no-pad">
+        <p ng-show="item.birth_date">{{moment(item.birth_date).format('DD-MMM-YYYY')}}</p>
+
+        <p class="friendmap-sub" ng-show="item.email">{{item.email}}</p>
+      </div>
+      <div class="col-xs-12 no-pad">
+        <p class="friendmap-sub" ng-show="item.phone">{{item.phone}}</p>
+      </div>
+
+      <div class="col-xs-12 no-pad">
+        <div class="col-xs-12 no-pad">
+          <p ng-show="item.displayAddress" class="friendmap-loc">{{item.displayAddress}}</p>
+        </div>
+      </div>
+
+
+      <div class="col-xs-12 no-pad">
+        <p ng-show="item.note" class="description">
+          {{item.note}}
+        </p>
+
+        <div class="col-xs-12 edit-delete text-left hidden-xs">
+          <!--<a class="edit edit-friendmap" ui-sref="friendsmap_edit({id: item.id})">Edit</a>-->
+          <a class="delete" ng-click="Friendsmap.removeFriend(item.id, $index)">Delete</a>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+
+  </div>
+  <div class="col-xs-12 edit-delete text-right visible-xs">
+    <a class="edit edit-friendmap" ui-sref="friendsmap_edit({id: item.id})">Edit</a>
+    <a class="delete" ng-click="Friendsmap.removeFriend(item.id, $index)">Delete</a>
+  </div>
+</div>
+
+<div class="col-xs-12" ng-if="Friendsmap.friends.length == 0">
+  <h4 class="text-center description">No friends yet.</h4>
+</div>

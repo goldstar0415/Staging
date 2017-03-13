@@ -1,0 +1,177 @@
+.friends-block {
+  margin: 0 0 15px;
+  border-bottom: 1px solid $light_grey;
+  .review-img {
+    padding: 0;
+    text-align: center;
+  }
+  .avatar-wrap {
+    width: 10rem;
+    float: left;
+  }
+  .text-block {
+    padding: 0;
+    width: calc(100% - 10rem);
+    float: left;
+    padding-left: 15px;
+    h3 {
+      margin: 0 0 5px;
+      .wrap-name {
+        padding-left: 0;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        white-space: inherit;
+        word-break: break-all;
+        overflow: hidden;
+        a, span {
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          margin: 0;
+          line-height: 28px;
+          font-size: 2rem;
+          font-weight: bold;
+          color: #000;
+          &:hover {
+            color: #124d76;
+            @include transition_color;
+          }
+        }
+      }
+    }
+    p {
+      margin: 0 0 5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .description {
+      font: 16px/19px;
+      margin: 10px 0 !important;
+      color: #889197;
+    }
+    .location-btn {
+      border: 1px solid $green;
+      border-radius: 5px;
+      padding: 0;
+      width: initial;
+      float: right;
+      a {
+        display: block;
+        float: left;
+        @include transition_bg_color;
+        margin-bottom: 0;
+        &:hover {
+          @include transition_bg_color;
+          background-color: $light_green;
+          background-position: center 7px;
+        }
+      }
+      .custom-location {
+        background: url(../img/icons/button-compass.png) center -20px no-repeat;
+        padding: 15px 26px;
+        border-right: 1px solid $green;
+        &.active {
+          background-color: $light_green;
+          background-position: center 7px;
+        }
+      }
+      .default-location {
+        background: url(../img/icons/button-location.png) center -20px no-repeat;
+        padding: 15px 26px;
+        &.active {
+          background-color: $light_green;
+          background-position: center 7px;
+        }
+      }
+    }
+  }
+}
+
+.friendmap-loc {
+  background: url(../img/svg/location.svg) no-repeat 0 0;
+  padding-left: 2rem;
+  padding-top: 1px;
+  background-size: 15px;
+  color:#000;
+  font-size: 14px;
+}
+.edit-delete {
+  padding: 15px 0;
+  a {
+    display: inline-block;
+    color: #889197;
+    font: 13px/13px;
+    &:hover {
+      color: $navy_blue;
+      @include transition_color;
+    }
+  }
+  .delete {
+    padding: 0 0 0 2rem;
+  }
+  .edit {
+    padding-left: 15px;
+    margin-right: 5px;
+    background-image: url('../img/svg/edit_icon.svg');
+    background-size: 15px;
+    color:#889197;
+    background-repeat: no-repeat;
+    &:hover, &:active, &:focus {
+      background-image: url('../img/svg/edit_icon_hover.svg');
+      color: $blue;
+    }
+  }
+}
+
+.location-friend {
+  &:focus {
+    font-family: 'Ubuntu bold';
+    font-weight: 700;
+    @include input_hover_effects;
+  }
+}
+location input {
+  min-height: 5rem;
+}
+@media (max-width: 1200px) {
+  .friends-block {
+    .avatar-wrap {
+      .fav-avatar-icon {
+        margin: 0 0 25px 0;
+      }
+    }
+    //.text-block {
+    //  padding-left: 15px;
+    //}
+  }
+}
+
+
+@media (max-width: 500px) {
+  .friends-block {
+    .text-block {
+      width: 100%;
+      padding-left: 0;
+      .wrap-name {
+        width: 100%;
+      }
+      .location-btn {
+        width: 100%;
+        margin-bottom: 15px;
+        a {
+          width: 50%;
+        }
+      }
+    }
+    .avatar-wrap {
+      .fav-avatar-icon {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+

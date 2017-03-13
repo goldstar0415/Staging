@@ -1,0 +1,218 @@
+/*     my spot   */
+.article {
+    position: relative;
+    z-index: 1;
+}
+.main-blog-article-content {
+    .comments-section {
+        padding: 0rem 3rem;
+    }
+  .caret {
+    transform: rotate(90deg);
+  }
+  .blog-content {
+    float: left;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: $white;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    position: relative;
+  }
+  .position-right {
+    float: right;
+    .dropdown-blog {
+      margin-bottom: 10px;
+      .caret {
+        float: right;
+        margin-top: 7px;
+      }
+      .btn-default {
+        border: 1px solid $light_grey;
+
+      }
+      .dropdown-menu {
+        width: 100%;
+      }
+    }
+  }
+
+  .btn-width {
+    width: 100%;
+    text-align: left;
+  }
+  .article {
+    .image-wrapper {
+      width: 100%;
+    }
+    .article-wrapper {
+      padding: 4rem 8rem;
+      position: relative;
+      .date-sm {
+        position: absolute;
+        display: block;
+        font-size: 1.2rem;
+        color: #fff;
+        background-color: #00c9f8;
+        width: 4rem;
+        height: 4rem;
+        line-height: 16px;
+        padding-top: 5px;
+        text-align: center;
+        bottom: 2rem;
+        right: 2rem;
+      }
+    }
+    .article-img {
+      display: block;
+      max-width: 100%;
+      max-height: 400px;
+      background-size: auto;
+      margin: 0 auto 0;
+      -webkit-border-radius: 5px 5px 0 0;
+      -moz-border-radius: 5px 5px 0 0;
+      border-radius: 0;
+      object-fit: cover;
+      font-family: 'object-fit: cover;'
+    }
+  }
+  .article {
+    .title-blog {
+      margin: 0 0 8px 0;
+      font: 500 24px/24px;
+      a {
+        color: $dark_blue;
+      }
+    }
+    .article-description {
+      font: 14px/20px;
+      padding: 5px 0 15px;
+
+      img {
+        max-width: 100%;
+      }
+    }
+    .share {
+      bottom: 1rem;
+      right: 0;
+    }
+
+    .share-wrap{
+      top: -1rem;
+    }
+
+    .article-info {
+      float: left;
+      font: 400 12px;
+      margin-right: 15px;
+      color: gray;
+      padding: 10px 0;
+      border: 0;
+    }
+    .location-link {
+      display: block;
+      float: right;
+      padding: 0 0 20px 2rem;
+      margin-bottom: 0;
+      background: url(../img/icons/map-loc.png) no-repeat 0 0;
+      a {
+        color: #000 !important;
+      }
+    }
+  }
+  .module-popular {
+    background: $white;
+    border: 1px solid $light_grey;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    .title-popular-new {
+      font: 500 20px/20px;
+      border-bottom: 1px solid $light_grey;
+      padding: 12px 15px 15px;
+      margin: 0;
+    }
+    .post {
+      padding: 15px 0;
+      border-bottom: 1px solid $light_grey;
+      .info-post {
+        a {
+          color: $dark_blue;
+          &:hover {
+            color: $blue;
+            @include transition_color;
+          }
+        }
+      }
+      .description {
+        word-wrap: break-word;
+      }
+      img {
+        display: block;
+        float: none;
+        width: 12rem;
+        height: 12rem;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        margin-right: auto;
+        margin-left: auto;
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+      }
+
+    }
+  }
+}
+.post {
+  padding: 15px 10px;
+  // padding: 4rem 8rem;
+  border-top: 1px solid #e9edf0;
+}
+.time {
+  font-size: 11px;
+  color: #b9bdc0;
+  margin-top: 0;
+}
+.delete-link {
+  margin-left: 15px;
+}
+
+.comments-section {
+  background-color: #fff;
+  border: 0;
+  .post-spot {
+    background-color: #fff;
+  }
+}
+.post .info .delete-link {
+    background: url(../img/icons/trash-ico.png) no-repeat;
+    color: #889197;
+    padding: 0 0 0 1.7rem;
+    margin-left: 0;
+    font-size: 1.2rem;
+  }
+.date-xs {
+    font-size: 1.2rem;
+    color: #fff;
+    padding: 0;
+    background-color: #00c9f8;
+    width: 4rem;
+    height: 4rem;
+    line-height: 16px;
+    padding-top: 5px;
+    text-align: center;
+  }
+
+.info-post .date {
+  float: right;
+}
+.info p {
+  color: grey;
+}

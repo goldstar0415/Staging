@@ -1,0 +1,53 @@
+<script type="text/ng-template" id="photoViewer.html">
+    <div class="new-photo-viewer" ng-class="{'with-comments' : PV.displayComments}">
+        <div class="photos">
+            <div class="photo-viewer-close" ng-click="PV.close()"></div>
+            <div class="photo-viewer-comments" ng-click="PV.toggleComments()" ng-if="!PV.nocoments && $root.currentUser" ng-class="{'active' : PV.displayComments}"></div>
+            <ul rn-carousel rn-carousel-controls rn-carousel-controls-allow-loop rn-carousel-index="index">
+                <li ng-repeat="photo in PV.items">
+                    <img ng-src="{{photo.url}}" alt="photo">
+                </li>
+            </ul>
+            <div rn-carousel-indicators ng-if="PV.items.length > 1" slides="PV.items" rn-carousel-index="index"></div>
+            <div class="location" ng-if="PV.currentPhoto.address">
+                <span class="glyphicon glyphicon-map-marker"></span>
+                <span>{{PV.currentPhoto.address}}</span>
+            </div>
+        </div>
+        <div class="comments" ng-if="!PV.nocoments && $root.currentUser" ng-show="PV.displayComments">
+            <form name="form" ng-submit="PV.sendComment(form)" class="new-post">
+                <textarea ng-model="PV.comment" name="comment" ng-maxlength="255" placeholder="Start typing..." required class="grey-bg no-attachments"></textarea>
+                <div ng-if="form.comment.$error.maxlength && (form.$submitted || form.comment.$touched)" class="error-message-inline">
+                    <div>can't be longer then 255 symbols</div>
+                </div>
+                <input type="submit" value="Send" class="btn-send-comment">
+            </form>
+            <div class="reviews">
+                <div class="wall-item wall-item-min" ng-repeat="comment in PV.comments">
+                    <div class="wall-user">
+                        <a ui-sref="profile.main({user_id: comment.sender.alias || comment.sender.id})" class="wall-avatar">
+                            <img ng-src="{{comment.sender.avatar_url.thumb}}">
+                        </a>
+                        <div class="wall-user-info">
+                            <a ui-sref="profile.main({user_id: comment.sender.alias || comment.sender.id})">
+                                <span>{{comment.sender.first_name}} {{comment.sender.last_name}}</span>
+                            </a>
+                            <p>{{comment.created_at | toTimezone}}</p>
+                        </div>
+                    </div>
+                    <div class="wall-content">
+                        <div class="wall-message">
+                            <p ng-bind-html="comment.body | linky:'_blank'" class="color-link"></p>
+                        </div>
+                        <div class="wall-buttons">
+                            <a ng-if="$root.profileUser.id == $root.currentUser.id || $root.currentUser.id == comment.sender.id || $root.isRole($root.currentUser, 'admin')" ng-click="PV.deleteComment(comment.id, $index)" class="delete">Delete</a>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="!PV.comments.length" class="no-comments">
+                    There are no comments.
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,98 @@
+//---<create new event--->
+.event-main-info {
+  border-bottom: none;
+  label {
+    padding-top: 1.3rem;
+    font-weight: bold;
+  }
+  .green-btn {
+    height: 4rem;
+    text-transform: uppercase;
+  }
+  uploader .green-btn {
+    padding-top: 10px;
+  }
+
+  location input {
+    //background: url(../img/icons/compass.png) no-repeat 99% center;
+  }
+
+  div[content-tools] {
+    border: 1px solid #e9edf0;
+    min-height: 200px;
+
+    .ce-element--focused, .ce-element--over {
+      background-color: transparent;
+    }
+  }
+
+  .add-image {
+    position: relative;
+    height: 15rem;
+    width: 15rem;
+    margin: 1rem 0;
+
+    .close-img {
+      top: 0;
+      right: 0;
+      width: 42px;
+      height: 42px;
+      position: absolute;
+      background: url(../img/icons/close-photo.png) center center no-repeat;
+    }
+  }
+}
+
+.event-additionl-info {
+  location input {
+  }
+}
+
+.dropdown-toggle {
+  @include transition_shadow;
+  color: $grey;
+  &:hover, &:focus, &:active {
+    @include blue_shadow;
+    border-color: $blue;
+    background: $white !important;
+  }
+}
+
+.dropdown-menu {
+  li {
+    &:hover, &:focus, &:active {
+      color: $grey;
+      cursor: pointer;
+    }
+  }
+}
+
+.buttons-set-new-event {
+  width: 100%;
+  display: block;
+
+  .active-point {
+    background: $blue_btn;
+    color: $white;
+    &:hover, &:focus, &:active {
+      background-color: $blue_btn !important;
+      box-shadow: none;
+      outline: none;
+      color: $white;
+    }
+  }
+}
+
+.no-chose-file {
+  margin-left: 20px;
+  color: $grey;
+  font-weight: 500;
+}
+
+//---</create new event--->
+@media (max-width: 767px) {
+    .ct-widget.ct-toolbox {
+      left: auto !important;
+      right: 0 !important;
+    }
+}

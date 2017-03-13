@@ -1,0 +1,17 @@
+<div class="form-group">
+  <button type="button" ng-click="SendMessage.openSendMessageModal()" class="btn btn-default blue-btn">CONTACT
+  </button>
+</div>
+
+<script type="text/ng-template" id="SendMessageModal.html">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="modal.close()">&times;</button>
+    <h4 class="modal-title send-message">New message to {{$root.profileUser.first_name}}
+      {{$root.profileUser.last_name}}</h4>
+  </div>
+  <div class="modal-body clearfix no-pad no-pad-bottom">
+
+    <ng-input message="modal.message" attachments="modal.attachments" on-submit="modal.send()" maxlength="5000"></ng-input>
+
+  </div>
+</script>

@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h3 class="margin-none">Select events for import
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="modal.close(false)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </h3>
+</div>
+<div class="modal-body no-pad-left-right no-pad-bottom">
+  <div class="col-sm-12">
+    <div class="search-block">
+      <input type="text" name="search" ng-model="search" class="search-friends" placeholder="Start typing...">
+      <input type="button" class="search-icon">
+    </div>
+  </div>
+
+  <div class="col-sm-12 no-pad choose-friend-block">
+    <div class="choose-friend"
+         ng-class="{choose: spot.selected}"
+         ng-click="modal.addSpot(spot)"
+         ng-repeat="spot in modal.spots | filter:search">
+      <img class="friend-avatar" ng-src="{{modal.API_URL + '/uploads/missings/covers/thumb/missing.png'}}">
+      <h4 class="name-friend">{{spot.title}}</h4>
+
+      <p class="time">{{spot.start_date | toTimezone:'MM.DD.YYYY'}} - {{spot.end_date | toTimezone:'MM.DD.YYYY'}}</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <input class="btn btn-success pull-left col-sm-4 col-xs-5 button-my" type="button" ng-click="modal.close(true)" value="Import" ng-disabled="!modal.isAnySelected()" />
+</div>

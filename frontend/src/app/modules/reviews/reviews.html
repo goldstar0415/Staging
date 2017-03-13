@@ -1,0 +1,83 @@
+<div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
+
+<div infinite-scroll="Review.pagination.nextPage()" infinite-scroll-disabled="Review.pagination.busy" class="clearfix" infinite-scroll-distance="1">
+    <div class="wall-item wall-item-messages" ng-repeat="item in Review.reviews.data">
+        <div class="wall-user">
+            <a ui-sref="spot({user_id: item.spot.user_id || 0, spot_id: item.spot.id})" class="wall-avatar">
+                <img ng-src="{{item.spot.cover_url.medium}}">
+            </a>
+            <div class="wall-user-info">
+                <a ui-sref="spot({user_id: item.spot.user_id || 0, spot_id: item.spot.id})">
+                    <span>{{item.spot.title}}</span>
+                </a>
+                <p>{{item.created_at | toTimezone}}</p>
+            </div>
+        </div>
+        <div class="wall-content">
+            <div class="wall-message">
+                <div>
+                  <div class="pull-left outline-none text-center readonly stars">
+                      <rating
+                        ng-model="item.vote"
+                        readonly="true"
+                        max="5"
+                        state-on="'glyphicon glyphicon-star star-active'"
+                        state-off="'glyphicon glyphicon-star star-default'"
+                        ></rating>
+                  </div>
+                  <br>
+                  by
+                  <a class="author-name" ui-sref="profile.main({user_id: item.user.alias || item.user.id})">
+                    {{item.user.first_name}} {{item.user.last_name}}
+                  </a>
+                </div>
+                <br>
+                <p ng-bind-html="item.message | linky:'_blank'" class="color-link"></p>
+            </div>
+        </div>
+        <!-- <div>
+
+        <a class="review-img" ui-sref="spot({user_id: item.spot.user_id || 0, spot_id: item.spot.id})">
+          <img class="media-object fav-avatar-icon feeds-img" ng-src="{{item.spot.cover_url.medium}}">
+        </a>
+
+        <div class="text-block">
+          <h2 class="media-heading feeds-title">
+
+            <a ui-sref="spot({user_id: item.spot.user_id || 0, spot_id: item.spot.id})"
+              >{{item.spot.title}}</a>
+          </h2>
+          <div>
+            <div class="pull-left outline-none text-center readonly stars">
+                <rating
+                  ng-model="item.vote"
+                  readonly="true"
+                  max="5"
+                  state-on="'glyphicon glyphicon-star star-active'"
+                  state-off="'glyphicon glyphicon-star star-default'"
+                  ></rating>
+            </div>
+            by
+            <a class="author-name" ui-sref="profile.main({user_id: item.user.alias || item.user.id})">
+              {{item.user.first_name}} {{item.user.last_name}}
+            </a>
+          </div>
+
+          <p class="time">{{item.created_at | toTimezone}}</p>
+
+        <p class="description" ng-bind-html="item.message | linky:'_blank'"></p>
+
+    </div>
+</div> -->
+
+</div>
+</div>
+
+<div class="col-xs-12">
+    <preloader ng-show="Review.pagination.busy"></preloader>
+</div>
+</div>
+
+<div class="col-xs-12">
+    <h4 class="text-center description" ng-if="Review.reviews.data.length == 0 && !Review.pagination.busy">No reviews yet.</h4>
+</div>

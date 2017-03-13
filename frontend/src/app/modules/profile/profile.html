@@ -1,0 +1,72 @@
+<div class="content-wall" ng-if="Profile.checkPermission(profileUser.privacy_wall)">
+    <div ng-if="profileUser.id == currentUser.id">
+        <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
+    </div>
+
+    <ng-input message="Profile.message" attachments="Profile.attachments" on-submit="Profile.send()" maxlength="5000"></ng-input>
+
+    <div infinite-scroll="Profile.pagination.nextPage()" infinite-scroll-disabled="Profile.pagination.busy" class="clearfix" infinite-scroll-distance="1">
+        <div ng-repeat="post in Profile.wall.data" class="wall-item">
+            <div class="wall-user">
+                <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})" class="wall-avatar">
+                    <img ng-src="{{post.sender.avatar_url.thumb}}">
+                </a>
+                <div class="wall-user-info">
+                    <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">
+                        <span>{{post.sender.first_name}} {{post.sender.last_name}}</span>
+                    </a>
+                    <p>{{post.created_at | fromNow}}</p>
+                </div>
+            </div>
+            <div class="wall-content">
+                <div class="wall-message">
+                    <p ng-bind-html="post.body | linky:'_blank'" class="color-link"></p>
+                    <attachments items="post.attachments"></attachments>
+                </div>
+                <div class="wall-buttons">
+                    <a class="like" ng-if="currentUser" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)">{{post.rating}}</a>
+                    <a ng-if="currentUser.id == profileUser.id || currentUser.id == post.sender.id || isRole(currentUser, 'admin')" ng-click="Profile.deletePost(post, $index)" class="delete">Delete</a>
+                </div>
+            </div>
+
+        </div>
+        <!-- <div class="col-xs-12 post" ng-repeat="post in Profile.wall.data">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 padding-0">
+                <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})" class="avatar">
+                    <img ng-src="{{post.sender.avatar_url.thumb}}">
+                </a>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 info">
+                <h3 class="name">
+          <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">{{post.sender.first_name}}
+            {{post.sender.last_name}}</a>
+        </h3>
+
+                <p class="time">{{post.created_at | fromNow}}</p>
+
+                <p ng-bind-html="post.body | linky:'_blank'" class="color-link"></p>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <attachments items="post.attachments"></attachments>
+                </div>
+            </div>
+
+            <div class="col-xs-12 edit-delete">
+                <a class="like" ng-if="currentUser" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)">
+          {{post.rating}}
+        </a>
+
+                <a ng-if="currentUser.id == profileUser.id || currentUser.id == post.sender.id || isRole(currentUser, 'admin')" ng-click="Profile.deletePost(post, $index)" class="delete">Delete</a>
+            </div>
+
+        </div> -->
+    </div>
+    <div class="col-xs-12">
+        <preloader ng-show="Profile.pagination.busy"></preloader>
+    </div>
+</div>
+
+<div class="col-xs-12" ng-if="Profile.wall.data.length == 0 && !Profile.pagination.busy">
+    <h4 class="text-center description">Wall is empty</h4>
+</div>

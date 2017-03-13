@@ -1,0 +1,113 @@
+<!-- <div class="attachments-preview"
+     ng-if="!_.isEmpty(Attachments.items.areas) || !_.isEmpty(Attachments.items.spots) || !_.isEmpty(Attachments.items.album_photos) || !_.isEmpty(Attachments.items.links)">
+  <div class="links">
+    <div class="media media-visible padding-bottom add-location clearfix" ng-repeat="area in Attachments.items.areas">
+      <a ui-sref="areas.preview({area_id: area.id})" class="img-selection">{{area.title}}</a>
+
+      <div class="media-body">
+
+        <p class="date">{{ area.created_at | toTimezone:'MM.DD.YYYY' }}</p>
+
+        <div class="description-link">{{area.description}}</div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <div ng-repeat="spot in Attachments.items.spots" class="media media-visible add-event">
+      <div class="spot-thumb">
+        <figure>
+          <a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})" class="wrap-img-event">
+            <img class="media-object attachment-link" ng-src="{{spot.cover_url.medium}}">
+            <spot-type type="spot.category.type.display_name"></spot-type>
+          </a>
+        </figure>
+        <stars item="spot"></stars>
+      </div>
+      <div class="attach-event">
+        <h3 class="media-heading ">
+          <a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})" class="event-img clearfix">{{spot.title}}</a>
+        </h3>
+
+        <p class="place">{{ spot.address }}</p>
+
+        <p class="date">
+          <date-range item="spot" class="ng-isolate-scope"></date-range>
+        </p>
+
+        <div class="description-link">{{spot.description}}</div>
+      </div>
+    </div>
+    <div ng-repeat="link in Attachments.items.links" class="media media-visible padding-bottom add-event">
+      <a class="pull-left wrap-img-event" ng-href="{{link.url}}" target="_blank">
+        <img class="media-object attachment-link" ng-src="{{link.image}}">
+      </a>
+
+      <div class="media-body">
+        <h3 class="media-heading ">
+          <a class="clearfix" ng-href="{{link.url}}" target="_blank">{{link.title}}</a>
+        </h3>
+
+        <div class="description-link">{{link.description}}</div>
+      </div>
+    </div>
+    <div ng-if="Attachments.items.plans.length > 0" ng-repeat="plan in Attachments.items.plans"
+         class="media media-visible padding-bottom add-event">
+      <p class="plan-invitation">plan invitation</p>
+
+      <div class="media media-visible">
+        <a class="pull-left" ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})">
+          <img class="media-object fav-avatar-icon activity" src="assets/img/icons/planner-invite.png"/>
+        </a>
+
+        <div class="media-body attach-event">
+          <h4 class="media-heading invitation-title clearfix">
+            <a ui-sref="planner.view({user_id: plan.user_id, plan_id: plan.id})">{{plan.title}}</a>
+          </h4>
+
+          <div class="description">
+            <span>{{plan.description}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+<div class="new-attachments" ng-if="Attachments.hasAnyAttachments()">
+    <div class="attachment-item" ng-repeat="spot in Attachments.items.spots">
+        <div class="image">
+            <a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})">
+                <img ng-src="{{spot.cover_url.medium}}">
+                <spot-type type="spot.category.type.display_name"></spot-type>
+                <stars item="spot"></stars>
+            </a>
+        </div>
+        <div class="info">
+            <h3 ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})">{{spot.title}}</h3>
+            <p class="place">{{spot.address}}</p>
+            <p class="date">
+              <date-range item="spot" class="ng-isolate-scope"></date-range>
+            </p>
+            <div class="description">{{spot.description}}</div>
+        </div>
+    </div>
+    <div class="" justified-gallery ng-if="Attachments.items.album_photos.length > 0">
+      <div class="col-sm-4 no-pad"
+           ng-repeat="photo in Attachments.items.album_photos"
+           photo-viewer
+           index="$index"
+           hide-comments="1"
+           items="Attachments.items.album_photos"
+           repeat-done>
+        <img ng-src="{{photo.photo_url.medium}}" class="img-responsive"/>
+      </div>
+    </div>
+</div>

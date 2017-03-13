@@ -1,0 +1,312 @@
+<!-- <div class="col-xs-12 menu-profile menu-profile-opened">
+    <ul class="col-xs-12" ng-if="$root.currentUser && $root.currentUser.id == $root.profileUser.id">
+        <li>
+            <a class="nav-spots" ui-sref="spots({user_id: $root.currentUser.id})" ng-class="{active: $root.$state.current.name == 'spots' || $root.$state.current.name == 'spot'}">
+                <img src="assets/img/svg/new_icons/icon_main_menu/spot-white.svg" alt="icon" />
+                <span>Spots</span>
+            </a>
+        </li>
+        <li ng-if="$root.isRole($root.currentUser, 'blogger')">
+            <a class="nav-blog" ui-sref="profile_blog({user_id: $root.currentUser.id})" ui-sref-active="active">
+                <img src="assets/img/svg/new_icons/icon_main_menu/blog_icon-white.svg" alt="icon" />
+                <span>Blog</span>
+            </a>
+        </li>
+        <li ng-if="$root.checkPermission($root.profileUser.privacy_favorites)">
+            <a class="nav-favorites" ui-sref="favorites({user_id: $root.currentUser.id})" ui-sref-active="active">
+                <img src="assets/img/svg/new_icons/icon_main_menu/heart-white.svg" alt="icon" />
+                <span>Favorites</span>
+            </a>
+        </li>
+        <li>
+            <a class="nav-searches" ui-sref="areas" ui-sref-active="active">
+                <img src="assets/img/svg/new_icons/icon_main_menu/save-white.svg" alt="icon" />
+                <span>Searches</span>
+            </a>
+        </li>
+        <li>
+            <a class="nav-friendmap" ui-sref="friendsmap" ui-sref-active="active">
+                <img src="assets/img/svg/new_icons/icon_main_menu/friend-white.svg" alt="icon" />
+                <span>Friends</span>
+            </a>
+        </li>
+        <li>
+            <a class="nav-photomap" ui-sref="photos.list({user_id: $root.currentUser.id})" ng-class="$root.isActiveState('photos')">
+                <img src="assets/img/svg/new_icons/icon_main_menu/photo-white.svg" alt="icon" />
+                <span>Photos</span>
+            </a>
+        </li>
+        <li>
+            <a class="nav-planner" ui-sref="planner.list" ng-class="$root.isActiveState('planner')">
+                <img src="assets/img/svg/new_icons/icon_main_menu/planner-white.svg" alt="icon" />
+                <span>Planner</span>
+            </a>
+        </li>
+        <li>
+            <a class="nav-settings" ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})" ui-sref-active="active">
+                <img src="assets/img/svg/new_icons/icon_main_menu/home-white.svg" alt="icon" />
+                <span>Stream</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="col-xs-12" ng-if="$root.currentUser.id != $root.profileUser.id">
+        <li>
+            <a ui-sref="spots({user_id: $root.profileUser.id})" ng-class="{active: Profile.$state.current.name == 'spots' || Profile.$state.current.name == 'spot'}" class="my-spots nav-spots">
+                <img src="assets/img/svg/new_icons/icon_main_menu/spot-white.svg" alt="icon" />
+                <span>Spots</span>
+            </a>
+        </li>
+        <li ng-if="$root.isRole($root.profileUser, 'blogger')">
+            <a ui-sref="profile_blog({user_id: $root.profileUser.id})" class="nav-blog" ui-sref-active="active">
+                <img src="assets/img/svg/new_icons/icon_main_menu/blog_icon-white.svg" alt="icon" />
+                <span>Blog</span>
+            </a>
+        </li>
+        <li ng-if="Profile.checkPermission($root.profileUser.privacy_favorites)">
+            <a ui-sref="favorites({user_id: $root.profileUser.id})" ui-sref-active="active" class="favorites nav-favorites">
+                <img src="assets/img/svg/new_icons/icon_main_menu/heart-white.svg" alt="icon" />
+                <span>Favorites</span>
+            </a>
+        </li>
+        <li ng-if="Profile.checkPermission($root.profileUser.privacy_photo_map)">
+            <a ui-sref="photos.list({user_id: $root.profileUser.id})" ng-class="Profile.isActive('photos')" class="photomap nav-photomap">
+                <img src="assets/img/svg/new_icons/icon_main_menu/photo-white.svg" alt="icon" />
+                <span>Photos</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="profile-toggle" ng-click="$root.toggleMapState()">
+        <img src="assets/img/svg/arrow-circle.svg" alt="arrow" style="transform: rotate({{$root.mapState == 'small-size' ? '90deg' : '270deg'}})">
+    </div>
+
+</div> -->
+
+<div ng-include="'/app/components/navigation/profile_menu/profile_links.html'"></div>
+
+
+
+<div class="mobile-nopad main-container">
+    <div class="profile-wrap">
+
+        <div class="information-profile " ng-if="!$root.isMobile || Profile.isStream()">
+            <section class="col-xs-12 col-sm-2 col-md-12 avatar-wrap" ng-if="$root.profileUser.id">
+                <a ng-if="$root.$state.current.name != 'profile.main'" ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})" tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}" class="avatar">
+                    <img ng-src="{{$root.profileUser.avatar_url.medium}}" />
+                </a>
+                <a ng-if="$root.$state.current.name == 'profile.main'" tooltip="{{ $root.currentUser.id == $root.profileUser.id ? 'Edit your Avatar and Profile in Settings' : '' }}" class="avatar">
+                    <img ng-src="{{$root.profileUser.avatar_url.medium}}" photo-viewer index="0" hide-comments="1" items="[$root.profileUser]" />
+                </a>
+            </section>
+            <section class="col-xs-12 col-sm-10 col-md-12 no-pad activity-mobile" ng-if="$root.profileUser.id">
+                <div class="status moderator" ng-if="$root.profileUser.status">{{$root.profileUser.status}}</div>
+                <h2 class="profile-name ">
+          <a ui-sref="profile.main({user_id: $root.profileUser.alias || $root.profileUser.id})">
+            <!-- <span title="Online" ng-class="$root.isOnline($root.profileUser)"></span> -->
+            <span class="avatar-first-name">{{$root.profileUser.first_name}}</span> {{$root.profileUser.last_name}}
+          </a>
+        </h2>
+
+                <div class="text-center" ng-if="Profile.checkPermission($root.profileUser.privacy_info)">
+                    <!--  <div class="activity-level">
+             {{$root.profileUser.activity_level}}
+           </div> -->
+                    <div class="age">
+                        <span ng-if="$root.profileUser.sex">{{$root.profileUser.sex == 'm' ? 'male' : 'female'}}</span><span ng-if="$root.profileUser.sex && $root.profileUser.birth_date">, </span>
+                        <span ng-if="$root.profileUser.birth_date">{{$root.profileUser.birth_date | age}} years</span>
+                    </div>
+                    <div class="location" ng-if="$root.profileUser.address"><span class="location-icon"></span> {{$root.profileUser.address}}
+                    </div>
+
+                    <div ng-if="$root.profileUser.description">
+                        <div ng-init="Profile.textLimit = 50" ng-class="{small: Profile.textLimit == 50, 'full-text': Profile.textLimit == 150}" class="biography">
+                            {{$root.profileUser.description | limitTo: Profile.textLimit}}
+                        </div>
+                        <div ng-if="Profile.textLimit == 50 && $root.profileUser.description.length > 50">
+                            <a class="more" ng-click="Profile.textLimit = 150">
+                Show All
+              </a>
+                        </div>
+                        <div ng-if="Profile.textLimit == 150 && $root.profileUser.description.length > 50">
+                            <a class="more" ng-click="Profile.textLimit = 50">
+                Show Less
+              </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="text-center" ng-if="$root.currentUser && $root.profileUser.id != $root.currentUser.id">
+                    <send-message></send-message>
+
+                    <div class="form-group">
+                        <button type="button" class="btn btn-default" ng-click="Profile.follow($root.profileUser)" ng-class="{'red-btn': !$root.profileUser.can_follow, 'green-btn': $root.profileUser.can_follow}">
+              {{$root.profileUser.can_follow ? 'Follow' : 'Unfollow'}}
+            </button>
+                    </div>
+                </div>
+
+                <div ng-if="Profile.checkPermission($root.profileUser.privacy_info)">
+
+                    <ul class="list-inline social-links">
+                        <li ng-if="$root.currentUser.social_links.facebook">
+                            <a ng-href="{{ $root.currentUser.social_links.facebook | absoluteLink}}" rel="nofollow" target="_blank" class="facebook">
+                            </a>
+                        </li>
+                        <li ng-if="$root.currentUser.social_links.twitter">
+                            <a ng-href="{{ $root.currentUser.social_links.twitter | absoluteLink}}" rel="nofollow" target="_blank" class="twitter">
+                            </a>
+                        </li>
+                        <li ng-if="$root.currentUser.social_links.instagram">
+                            <a ng-href="{{ $root.currentUser.social_links.instagram | absoluteLink}}" rel="nofollow" target="_blank" class="instagram">
+                            </a>
+                        </li>
+                        <li ng-if="$root.currentUser.social_links.tumblr">
+                            <a ng-href="{{ $root.currentUser.social_links.tumblr | absoluteLink }}" rel="nofollow" target="_blank" class="tumblr">
+                            </a>
+                        </li>
+                        <li ng-if="$root.currentUser.social_links.vk">
+                            <a ng-href="{{ $root.currentUser.social_links.vk | absoluteLink }}" rel="nofollow" target="_blank" class="vk">
+                            </a>
+                        </li>
+                        <li ng-if="$root.currentUser.social_links.custom">
+                            <a ng-href="{{ $root.currentUser.social_links.custom | absoluteLink }}" rel="nofollow" target="_blank" class="custom">
+                            </a>
+                        </li>
+                        <li ng-if="$root.currentUser.social_links.google">
+                            <a ng-href="{{ $root.currentUser.social_links.google | absoluteLink }}" rel="nofollow" target="_blank" class="google-plus">
+                            </a>
+                        </li>
+                    </ul>
+
+
+                    <div class="info-links hidden-lg hidden-md visible-sm visible-xs  ng-show col-xs-12">
+                        <a users-modal="followers" user="$root.profileUser" ng-if="Profile.checkPermission($root.profileUser.privacy_followers)">
+                            <i class="followers"></i>
+                            <span>{{$root.profileUser.count_followers}}</span>
+                            <br> Followers
+                        </a>
+                        <a users-modal="followings" user="$root.profileUser" ng-if="Profile.checkPermission($root.profileUser.privacy_followings)">
+                            <i class="followings"></i>
+                            <span>{{ $root.profileUser.count_followings}}</span>
+                            <br> Followings
+                        </a>
+                        <a ui-sref="spots({user_id: $root.profileUser.id})">
+                            <i class="events"></i>
+                            <span>{{$root.profileUser.count_spots}}</span>
+                            <br> Spots
+                        </a>
+                        <!-- <a ui-sref="photos.list({user_id: $root.profileUser.id})" class="albums"
+               ng-if="Profile.checkPermission($root.profileUser.privacy_photo_map)">
+              {{$root.profileUser.count_photos}}
+            </a>
+            <a ui-sref="favorites({user_id: $root.profileUser.id})" class="fav"
+               ng-if="Profile.checkPermission($root.profileUser.privacy_favorites)">
+              {{$root.profileUser.count_favorites}}
+            </a> -->
+                    </div>
+
+
+                    <aside class="module-sidebar clearfix visible-md visible-lg" ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.followers.length > 0 && Profile.checkPermission($root.profileUser.privacy_followers)">
+                        <h2 class="sidebar-title mgb20">
+              <a users-modal="followers" user="$root.profileUser">
+                Followers
+                <span class="counter">{{$root.profileUser.count_followers}}</span>
+              </a>
+            </h2>
+
+                        <div class="sidebar-row row-min" flexitems>
+                            <div ng-repeat="item in $root.profileUser.followers">
+                                <a ui-sref="profile.main({user_id: item.alias || item.id})">
+                                    <img ng-src="{{item.avatar_url.thumb}}" class="img-responsive" />
+
+                                    <div class="sidebar-user-name">
+                                        {{item.first_name}}
+                                        <!-- <br>{{item.last_name}} -->
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </aside>
+
+                    <aside class="module-sidebar clearfix visible-md visible-lg" ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.followings.length > 0 && Profile.checkPermission($root.profileUser.privacy_followings)">
+                        <h2 class="sidebar-title">
+              <a users-modal="followings" user="$root.profileUser">
+                Following
+                <span class="counter">{{$root.profileUser.count_followings}}</span>
+              </a>
+            </h2>
+
+                        <div class="sidebar-row row-min" flexitems>
+                            <div ng-repeat="item in $root.profileUser.followings">
+                                <a ui-sref="profile.main({user_id: item.alias || item.id})">
+
+                                    <img ng-src="{{item.avatar_url.thumb}}" alt="" class="img-responsive" />
+
+                                    <div class="sidebar-user-name">
+                                        {{item.first_name}}
+                                        <!-- <br>{{item.last_name}} -->
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </aside>
+
+                    <aside class="module-sidebar clearfix visible-md visible-lg" ng-if="Profile.isVisibleProfileBlock() && $root.profileUser.spots.length > 0 ">
+                        <h2 class="sidebar-title">
+              <a ui-sref="spots({user_id: $root.profileUser.id})">
+                Spots
+                <span class="counter">{{$root.profileUser.count_spots}}</span>
+              </a>
+            </h2>
+
+                        <div class="sidebar-row row-min" flexitems>
+                            <div ng-repeat="item in $root.profileUser.spots">
+                                <a ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})">
+
+                                    <img ng-src="{{item.cover_url.thumb}}" alt="" class="img-responsive" />
+
+                                    <div class="sidebar-user-name" ui-sref="spot({user_id: item.user_id || 0, spot_id: item.id})">
+                                        {{item.title}}
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </aside>
+
+                    <aside class="module-sidebar clearfix" ng-if="Profile.$state.is('spot')">
+                        <h2 class="sidebar-title">
+              <a users-modal="members" user="$root.currentSpot">
+                Members
+                <span class="counter">{{$root.currentSpot.count_members}}</span>
+              </a>
+            </h2>
+
+                        <div class="sidebar-row row-min">
+                            <div class="col-sm-4 pad-min col-xs-4" ng-repeat="item in $root.currentSpot.members">
+                                <a ui-sref="profile.main({user_id: item.alias || item.id})">
+                                    <img ng-src="{{item.avatar_url.thumb}}" class="avatar" />
+
+                                    <!-- <p class="sidebar-user-name">{{item.first_name}} {{item.last_name}}</p> -->
+                                </a>
+                            </div>
+                        </div>
+
+                    </aside>
+                </div>
+            </section>
+        </div>
+
+        <div class="profile-content">
+            <div ui-view class="ng-cloak"></div>
+        </div>
+
+        <!-- <div class="col-md-3 hidden-sm hidden-xs activity-profile">
+
+
+     </div> -->
+    </div>
+</div>

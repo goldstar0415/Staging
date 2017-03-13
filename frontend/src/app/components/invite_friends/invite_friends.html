@@ -1,0 +1,35 @@
+  <div class="modal-header">
+    <h3 class="margin-none">Choose some friends
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="modal.close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </h3>
+  </div>
+  <div class="modal-body clearfix no-pad-left-right no-pad-bottom">
+    <div class="col-sm-12">
+      <div class="search-block">
+        <input type="text" name="search" ng-model="search" class="search-friends" placeholder="Start typing...">
+        <input type="button" class="search-icon">
+      </div>
+    </div>
+
+    <div class="col-sm-12 no-pad choose-friend-block">
+      <div class="choose-friend"
+           ng-class="{choose: user.selected}"
+           ng-click="user.selected = !user.selected"
+           ng-repeat="user in modal.friends | filter:search">
+        <img class="friend-avatar" ng-src="{{user.avatar_url.thumb}}">
+        <h4 class="name-friend">
+          {{user.first_name+ ' ' +user.last_name}}
+        </h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <input class="btn btn-success pull-left col-sm-4 col-xs-5 button-my" type="button" ng-click="modal.inviteFriends()" value="Invite" ng-disabled="!modal.isAnySelected()" />
+
+    <button class="btn btn-primary pull-left col-sm-4  col-xs-5 button-my" type="button" ng-click="modal.close()">
+      Cancel
+    </button>
+  </div>

@@ -1,0 +1,240 @@
+.new-weather-container {
+    background-color: white;
+    padding: 20px;
+    overflow: auto;
+    .weather-header {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin: 0 0 20px;
+        .weather-city-name {
+            width: 100%;
+            margin: 0;
+            padding-right: 20px;
+            font-family: 'Open Sans';
+            font-weight: bold;
+            color: $dark_blue;
+            text-transform: uppercase;
+            font-size: 30px;
+            @media (max-width: 767px) {
+                font-size: 18px;
+            }
+        }
+        .weather-close {
+            width: 40px;
+            height: 40px;
+            background-size: 25px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-image: url(../img/svg/cancel.svg);
+            &:hover {
+                background-image: url(../img/svg/new-cancel-hover.svg);
+            }
+        }
+        .weather-units{
+            width: 20%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            // height: 33px;
+            span {
+                font-family: 'Open Sans';
+                font-weight: bold;
+                color: lightgrey;
+                font-size: 30px;
+                @media (max-width: 767px) {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+    .weather-tabs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        margin-bottom: 20px;
+        .tab {
+            // height: 50px;
+            width: 100%;
+            border-bottom: 2px solid $dark_blue;
+            cursor: pointer;
+            padding: 3px;
+            p {
+                color: $dark_blue;
+                font-size: 25px;
+                font-family: 'Open Sans';
+                font-weight: 900;
+                margin: 0 0 -3px;
+            }
+            span {
+                font-size: 11px;
+                color: grey;
+            }
+            &.active {
+                border-bottom: 2px solid $light_blue_btn;
+                p, span{
+                    color: $light_blue_btn;
+                }
+            }
+        }
+        @media (orientation: landscape) and (max-width: 600px) {
+            .tab {
+                p {
+                    font-size: 18px;
+                }
+                span {
+                    display: none;
+                }
+            }
+        }
+    }
+    .weather-main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        & > div {
+            width: 33.3%;
+        }
+        .icon {
+            canvas {
+                width: 100%;
+            }
+        }
+        .degrees {
+            p {
+                color: $dark_blue;
+                font-size: 40px;
+                font-family: 'Open Sans';
+                font-weight: 900;
+                margin: 0 0 -5px;
+                text-align: center;
+                span {
+                    font-size: 40px;
+                }
+            }
+            span {
+                font-size: 13px;
+                color: grey;
+                text-align: center;
+                display: block;
+            }
+        }
+        .info {
+            div {
+                p {
+                    color: $dark_blue;
+                    font-size: 14px;
+                    font-family: 'Open Sans';
+                    font-weight: 900;
+                    margin: 0;
+                    text-align: right;
+                    text-transform: uppercase;
+                }
+                span {
+                    font-size: 13px;
+                    color: grey;
+                    display: block;
+                    text-align: right;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+        @media (max-width: 400px), (orientation: landscape) and (max-width: 767px) {
+            flex-wrap: wrap;
+            & > div {
+                width: 50%;
+            }
+            .info {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                div {
+                    width: 33.3%;
+                    p, span {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+        @media (orientation: landscape) and (max-width: 600px) {
+            .info {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                display: none;
+                div {
+                    width: 50%;
+                    p, span {
+                        text-align: left;
+                    }
+                }
+            }
+        }
+    }
+    .weather-description {
+        font-size: 16px;
+        color: grey;
+        margin: 10px 0 20px;
+    }
+    .weather-hourly {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+        .hour {
+            background-color: #f8f8f8;
+            padding: 10px;
+            width: calc(25% - 10px);
+            margin: 5px;
+            @media (max-width: 400px), (orientation: landscape) and (max-width: 767px) {
+                width: calc(33.3% - 10px);
+            }
+            @media (orientation: landscape) and (max-width: 600px) {
+                width: calc(50% - 10px);
+            }
+            .time {
+                color: grey;
+            }
+            div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .icon {
+                    canvas {
+                        width: 100%;
+                    }
+                }
+                .small-degrees {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    align-items: center;
+                    p {
+                        width: 100%;
+                        color: $dark_blue;
+                        font-size: 15px;
+                        font-family: 'Open Sans';
+                        font-weight: 900;
+                        margin: 0;
+                        text-align: center;
+                        text-transform: uppercase;
+                        padding-left: 5px;
+                    }
+                    span {
+                        width: 100%;
+                        font-size: 10px;
+                        color: grey;
+                        font-weight: 900;
+                        font-family: 'Open Sans';
+                        display: block;
+                        text-align: center;
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
