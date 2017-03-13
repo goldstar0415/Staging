@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="gMf-HB-1G9">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="8ie-t3-zZG">
+            <objects>
+                <navigationController id="gMf-HB-1G9" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="CGl-nR-ZtB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.043137254901960784" green="0.14901960784313725" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="leftSide" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <segue destination="jLq-N3-3F8" kind="relationship" relationship="rootViewController" id="P55-pV-kwH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JGz-pX-f4m" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="370" y="-297"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="eIy-Ce-QA5">
+            <objects>
+                <viewController id="jLq-N3-3F8" customClass="MapViewController" customModule="Zoomtivity" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="boU-AZ-NjM"/>
+                        <viewControllerLayoutGuide type="bottom" id="gxi-I1-pBS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="a3M-pY-gtj">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="92J-2m-PIO" customClass="SKMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="92J-2m-PIO" secondAttribute="trailing" id="4Y6-kb-Ww7"/>
+                            <constraint firstItem="92J-2m-PIO" firstAttribute="top" secondItem="boU-AZ-NjM" secondAttribute="bottom" id="CM8-2r-kdV"/>
+                            <constraint firstItem="gxi-I1-pBS" firstAttribute="top" secondItem="92J-2m-PIO" secondAttribute="bottom" id="k60-ab-8rI"/>
+                            <constraint firstItem="92J-2m-PIO" firstAttribute="leading" secondItem="a3M-pY-gtj" secondAttribute="leading" id="usR-2Q-Z4N"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="zWc-9g-ENM"/>
+                    <connections>
+                        <outlet property="mapView" destination="92J-2m-PIO" id="Q3a-uk-Aft"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7hk-xH-aJm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1248.8" y="-297.30134932533736"/>
+        </scene>
+        <!--Side Menu Navigation Controller-->
+        <scene sceneID="5QD-eS-cvp">
+            <objects>
+                <navigationController storyboardIdentifier="LeftMenuNavigationController" navigationBarHidden="YES" id="9na-K2-NHg" customClass="UISideMenuNavigationController" customModule="SideMenu" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="FTy-Gr-mdj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="leftSide" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <segue destination="tQZ-ha-oam" kind="relationship" relationship="rootViewController" id="y3Z-xw-1xk"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="42x-c7-DfK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="814" y="404"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="CTX-mm-CFS">
+            <objects>
+                <viewController id="tQZ-ha-oam" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wNQ-bd-L0L"/>
+                        <viewControllerLayoutGuide type="bottom" id="0UB-8Q-QoJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HNI-qC-21t">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="zoomtivity_logo" translatesAutoresizingMaskIntoConstraints="NO" id="Ppz-uS-Wqq">
+                                <rect key="frame" x="38" y="20" width="300" height="134"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6dX-M8-8yP">
+                                <rect key="frame" x="0.0" y="154" width="375" height="513"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.043137254899999998" green="0.14901960780000001" blue="0.22352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="6dX-M8-8yP" firstAttribute="top" secondItem="Ppz-uS-Wqq" secondAttribute="bottom" id="7sQ-YR-HHo"/>
+                            <constraint firstItem="Ppz-uS-Wqq" firstAttribute="top" secondItem="wNQ-bd-L0L" secondAttribute="bottom" id="DvV-Mh-7qJ"/>
+                            <constraint firstItem="Ppz-uS-Wqq" firstAttribute="height" secondItem="HNI-qC-21t" secondAttribute="height" multiplier="0.2" id="HPN-Lp-Y68"/>
+                            <constraint firstItem="Ppz-uS-Wqq" firstAttribute="centerX" secondItem="HNI-qC-21t" secondAttribute="centerX" id="MH0-RB-7JD"/>
+                            <constraint firstItem="6dX-M8-8yP" firstAttribute="centerX" secondItem="HNI-qC-21t" secondAttribute="centerX" id="Pp3-Um-0n5"/>
+                            <constraint firstItem="0UB-8Q-QoJ" firstAttribute="top" secondItem="6dX-M8-8yP" secondAttribute="bottom" id="b3v-Mz-IT5"/>
+                            <constraint firstItem="6dX-M8-8yP" firstAttribute="width" secondItem="HNI-qC-21t" secondAttribute="width" id="g4A-gk-iUj"/>
+                            <constraint firstItem="Ppz-uS-Wqq" firstAttribute="width" secondItem="HNI-qC-21t" secondAttribute="width" multiplier="0.8" id="mOt-af-z0N"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="w4o-E9-rZl"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k3K-za-8g8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1532" y="400"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="zoomtivity_logo" width="852" height="221"/>
+    </resources>
+</document>

@@ -1,0 +1,528 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4F309282DE65C3FC2D0A6EF8 /* Pods_Zoomtivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA9F64AC2846B061BDFF5124 /* Pods_Zoomtivity.framework */; };
+		F206E79F1E5757EE00639BAD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F206E79E1E5757EE00639BAD /* AppDelegate.swift */; };
+		F206E7A11E5757EE00639BAD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F206E7A01E5757EE00639BAD /* MapViewController.swift */; };
+		F206E7A71E5757EE00639BAD /* Zoomtivity.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F206E7A51E5757EE00639BAD /* Zoomtivity.xcdatamodeld */; };
+		F206E7A91E5757EE00639BAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F206E7A81E5757EE00639BAD /* Assets.xcassets */; };
+		F206E7AC1E5757EE00639BAD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F206E7AA1E5757EE00639BAD /* LaunchScreen.storyboard */; };
+		F2CD3D5A1E57889400CC9A3B /* MapLocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D591E57889400CC9A3B /* MapLocationDelegate.swift */; };
+		F2CD3D5F1E578F8300CC9A3B /* ZoomtivityColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D5E1E578F8300CC9A3B /* ZoomtivityColor.swift */; };
+		F2CD3D621E579A8200CC9A3B /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */; };
+		F2CD3D661E579C5600CC9A3B /* JSONBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D651E579C5600CC9A3B /* JSONBuilder.swift */; };
+		F2CD3D6C1E57A2D800CC9A3B /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D6B1E57A2D800CC9A3B /* APIManager.swift */; };
+		F2CD3D6F1E57BE9C00CC9A3B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D6E1E57BE9C00CC9A3B /* MainViewController.swift */; };
+		F2CD3D721E57C01100CC9A3B /* LeftDrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D701E57C01100CC9A3B /* LeftDrawerViewController.swift */; };
+		F2CD3D731E57C01100CC9A3B /* LeftDrawerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F2CD3D711E57C01100CC9A3B /* LeftDrawerViewController.xib */; };
+		F2CD3D761E58B43C00CC9A3B /* MapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2CD3D751E58B43C00CC9A3B /* MapViewDelegate.swift */; };
+		F2CD3D771E5CE21000CC9A3B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F206E7A21E5757EE00639BAD /* Main.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		91DD9860287B20514A8E6FD3 /* Pods-Zoomtivity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zoomtivity.release.xcconfig"; path = "Pods/Target Support Files/Pods-Zoomtivity/Pods-Zoomtivity.release.xcconfig"; sourceTree = "<group>"; };
+		AA9F64AC2846B061BDFF5124 /* Pods_Zoomtivity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zoomtivity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DCC03AC82210B5FFF7630BE4 /* Pods-Zoomtivity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zoomtivity.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Zoomtivity/Pods-Zoomtivity.debug.xcconfig"; sourceTree = "<group>"; };
+		F206E79B1E5757EE00639BAD /* Zoomtivity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zoomtivity.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F206E79E1E5757EE00639BAD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F206E7A01E5757EE00639BAD /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		F206E7A31E5757EE00639BAD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F206E7A61E5757EE00639BAD /* Zoomtivity.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Zoomtivity.xcdatamodel; sourceTree = "<group>"; };
+		F206E7A81E5757EE00639BAD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F206E7AB1E5757EE00639BAD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F206E7AD1E5757EE00639BAD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2CD3D591E57889400CC9A3B /* MapLocationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocationDelegate.swift; sourceTree = "<group>"; };
+		F2CD3D5E1E578F8300CC9A3B /* ZoomtivityColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomtivityColor.swift; sourceTree = "<group>"; };
+		F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		F2CD3D651E579C5600CC9A3B /* JSONBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONBuilder.swift; sourceTree = "<group>"; };
+		F2CD3D6B1E57A2D800CC9A3B /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		F2CD3D6E1E57BE9C00CC9A3B /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		F2CD3D701E57C01100CC9A3B /* LeftDrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftDrawerViewController.swift; sourceTree = "<group>"; };
+		F2CD3D711E57C01100CC9A3B /* LeftDrawerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftDrawerViewController.xib; sourceTree = "<group>"; };
+		F2CD3D751E58B43C00CC9A3B /* MapViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewDelegate.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F206E7981E5757EE00639BAD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F309282DE65C3FC2D0A6EF8 /* Pods_Zoomtivity.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		36A3507E0D03BFC072EF8586 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AA9F64AC2846B061BDFF5124 /* Pods_Zoomtivity.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A500113590E6D362CFB424CB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DCC03AC82210B5FFF7630BE4 /* Pods-Zoomtivity.debug.xcconfig */,
+				91DD9860287B20514A8E6FD3 /* Pods-Zoomtivity.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F206E7921E5757ED00639BAD = {
+			isa = PBXGroup;
+			children = (
+				F206E79D1E5757EE00639BAD /* Zoomtivity */,
+				F206E79C1E5757EE00639BAD /* Products */,
+				A500113590E6D362CFB424CB /* Pods */,
+				36A3507E0D03BFC072EF8586 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F206E79C1E5757EE00639BAD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F206E79B1E5757EE00639BAD /* Zoomtivity.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F206E79D1E5757EE00639BAD /* Zoomtivity */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D6A1E57A2CA00CC9A3B /* Networking */,
+				F2CD3D641E579C4700CC9A3B /* Utlities */,
+				F2CD3D601E5797C800CC9A3B /* Core Data */,
+				F2CD3D5C1E578F6000CC9A3B /* Extensions */,
+				F206E7B31E5779B300639BAD /* View Controllers */,
+				F206E79E1E5757EE00639BAD /* AppDelegate.swift */,
+				F206E7A21E5757EE00639BAD /* Main.storyboard */,
+				F206E7A81E5757EE00639BAD /* Assets.xcassets */,
+				F206E7AA1E5757EE00639BAD /* LaunchScreen.storyboard */,
+				F206E7AD1E5757EE00639BAD /* Info.plist */,
+				F206E7A51E5757EE00639BAD /* Zoomtivity.xcdatamodeld */,
+			);
+			path = Zoomtivity;
+			sourceTree = "<group>";
+		};
+		F206E7B31E5779B300639BAD /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D741E57C01900CC9A3B /* Left Drawer */,
+				F2CD3D6D1E57BE6300CC9A3B /* Main View Controller */,
+				F2CD3D571E57886200CC9A3B /* Map View Controller */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F2CD3D571E57886200CC9A3B /* Map View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F206E7A01E5757EE00639BAD /* MapViewController.swift */,
+				F2CD3D581E57886B00CC9A3B /* Delegates */,
+			);
+			name = "Map View Controller";
+			sourceTree = "<group>";
+		};
+		F2CD3D581E57886B00CC9A3B /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D591E57889400CC9A3B /* MapLocationDelegate.swift */,
+				F2CD3D751E58B43C00CC9A3B /* MapViewDelegate.swift */,
+			);
+			name = Delegates;
+			sourceTree = "<group>";
+		};
+		F2CD3D5C1E578F6000CC9A3B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D5D1E578F6700CC9A3B /* Colour */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		F2CD3D5D1E578F6700CC9A3B /* Colour */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D5E1E578F8300CC9A3B /* ZoomtivityColor.swift */,
+			);
+			name = Colour;
+			sourceTree = "<group>";
+		};
+		F2CD3D601E5797C800CC9A3B /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D611E579A8200CC9A3B /* DatabaseManager.swift */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		F2CD3D641E579C4700CC9A3B /* Utlities */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D651E579C5600CC9A3B /* JSONBuilder.swift */,
+			);
+			name = Utlities;
+			sourceTree = "<group>";
+		};
+		F2CD3D6A1E57A2CA00CC9A3B /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D6B1E57A2D800CC9A3B /* APIManager.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		F2CD3D6D1E57BE6300CC9A3B /* Main View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D6E1E57BE9C00CC9A3B /* MainViewController.swift */,
+			);
+			name = "Main View Controller";
+			sourceTree = "<group>";
+		};
+		F2CD3D741E57C01900CC9A3B /* Left Drawer */ = {
+			isa = PBXGroup;
+			children = (
+				F2CD3D701E57C01100CC9A3B /* LeftDrawerViewController.swift */,
+				F2CD3D711E57C01100CC9A3B /* LeftDrawerViewController.xib */,
+			);
+			name = "Left Drawer";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F206E79A1E5757EE00639BAD /* Zoomtivity */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F206E7B01E5757EE00639BAD /* Build configuration list for PBXNativeTarget "Zoomtivity" */;
+			buildPhases = (
+				43990AB0E2B0747714498372 /* [CP] Check Pods Manifest.lock */,
+				F206E7971E5757EE00639BAD /* Sources */,
+				F206E7981E5757EE00639BAD /* Frameworks */,
+				F206E7991E5757EE00639BAD /* Resources */,
+				832AA85F6306B22CD308E673 /* [CP] Embed Pods Frameworks */,
+				771D260EC4FA9926479A18DA /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Zoomtivity;
+			productName = Zoomtivity;
+			productReference = F206E79B1E5757EE00639BAD /* Zoomtivity.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F206E7931E5757ED00639BAD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0810;
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = Zoomtivity;
+				TargetAttributes = {
+					F206E79A1E5757EE00639BAD = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = ZD4SU7K7J8;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = F206E7961E5757ED00639BAD /* Build configuration list for PBXProject "Zoomtivity" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F206E7921E5757ED00639BAD;
+			productRefGroup = F206E79C1E5757EE00639BAD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F206E79A1E5757EE00639BAD /* Zoomtivity */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F206E7991E5757EE00639BAD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2CD3D731E57C01100CC9A3B /* LeftDrawerViewController.xib in Resources */,
+				F206E7AC1E5757EE00639BAD /* LaunchScreen.storyboard in Resources */,
+				F2CD3D771E5CE21000CC9A3B /* Main.storyboard in Resources */,
+				F206E7A91E5757EE00639BAD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		43990AB0E2B0747714498372 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		771D260EC4FA9926479A18DA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Zoomtivity/Pods-Zoomtivity-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		832AA85F6306B22CD308E673 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Zoomtivity/Pods-Zoomtivity-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F206E7971E5757EE00639BAD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2CD3D6C1E57A2D800CC9A3B /* APIManager.swift in Sources */,
+				F206E7A11E5757EE00639BAD /* MapViewController.swift in Sources */,
+				F2CD3D721E57C01100CC9A3B /* LeftDrawerViewController.swift in Sources */,
+				F206E79F1E5757EE00639BAD /* AppDelegate.swift in Sources */,
+				F2CD3D661E579C5600CC9A3B /* JSONBuilder.swift in Sources */,
+				F2CD3D621E579A8200CC9A3B /* DatabaseManager.swift in Sources */,
+				F2CD3D5A1E57889400CC9A3B /* MapLocationDelegate.swift in Sources */,
+				F2CD3D761E58B43C00CC9A3B /* MapViewDelegate.swift in Sources */,
+				F2CD3D6F1E57BE9C00CC9A3B /* MainViewController.swift in Sources */,
+				F2CD3D5F1E578F8300CC9A3B /* ZoomtivityColor.swift in Sources */,
+				F206E7A71E5757EE00639BAD /* Zoomtivity.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F206E7A21E5757EE00639BAD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F206E7A31E5757EE00639BAD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F206E7AA1E5757EE00639BAD /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F206E7AB1E5757EE00639BAD /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F206E7AE1E5757EE00639BAD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F206E7AF1E5757EE00639BAD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F206E7B11E5757EE00639BAD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DCC03AC82210B5FFF7630BE4 /* Pods-Zoomtivity.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = ZD4SU7K7J8;
+				INFOPLIST_FILE = Zoomtivity/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cmt.Zoomtivity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "133016fc-48aa-4540-99c7-251aa6a1ec7f";
+				PROVISIONING_PROFILE_SPECIFIER = "XC iOS: *";
+				SKIP_INSTALL = NO;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		F206E7B21E5757EE00639BAD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 91DD9860287B20514A8E6FD3 /* Pods-Zoomtivity.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = ZD4SU7K7J8;
+				INFOPLIST_FILE = Zoomtivity/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cmt.Zoomtivity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "278c1e15-b45a-461f-b9ad-038b33d3ab79";
+				PROVISIONING_PROFILE_SPECIFIER = "Wildcard Distribution";
+				SKIP_INSTALL = NO;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F206E7961E5757ED00639BAD /* Build configuration list for PBXProject "Zoomtivity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F206E7AE1E5757EE00639BAD /* Debug */,
+				F206E7AF1E5757EE00639BAD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F206E7B01E5757EE00639BAD /* Build configuration list for PBXNativeTarget "Zoomtivity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F206E7B11E5757EE00639BAD /* Debug */,
+				F206E7B21E5757EE00639BAD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F206E7A51E5757EE00639BAD /* Zoomtivity.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F206E7A61E5757EE00639BAD /* Zoomtivity.xcdatamodel */,
+			);
+			currentVersion = F206E7A61E5757EE00639BAD /* Zoomtivity.xcdatamodel */;
+			path = Zoomtivity.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = F206E7931E5757ED00639BAD /* Project object */;
+}
