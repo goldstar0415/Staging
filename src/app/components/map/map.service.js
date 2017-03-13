@@ -50,6 +50,15 @@
       var mobileMarker;
 
       var PickNotification = $('.pick-notification');
+      
+      var markerPopupTemplate = '<div>\
+                            <p class="plate-name">{{item.title}}</p>\
+                            <p class="plate-stars"><stars item="item"></stars></p>\
+                            <p class="plate-info price" ng-if="item.minrate">{{item.price}}</p>\
+                            <p class="plate-info start-date" ng-if="item.start_date">{{item.start_date | date:\'MMM d\'}}</p>\
+                            <p class="plate-info" ng-if="!item.minrate">{{item.category.name}}</p>\
+                            <img width="50" height="50" src="{{image}}" />\
+                        </div>';
 
       function pickNotificationFadeOut() {
           PickNotification.css('opacity', 0);
@@ -1985,17 +1994,8 @@
         };
 
         scope.image = setMarkerIcon(spot, true);
-        var template = '<div>\
-                            <p class="plate-name">{{item.title}}</p>\
-                            <p class="plate-stars"><stars item="item"></stars></p>\
-                            <p class="plate-info price" ng-if="item.minrate">{{item.price}}</p>\
-                            <p class="plate-info start-date" ng-if="item.start_date">{{item.start_date | date:\'MMM d\'}}</p>\
-                            <p class="plate-info" ng-if="!item.minrate">{{item.category.name}}</p>\
-                            <img width="50" height="50" src="{{image}}" />\
-                        </div>';
-        var popupContent = $compile(template)(scope);
-        var popup = L.popup(options).setContent(popupContent[0]);
-        marker.bindPopup(popup);
+        marker.scope = scope;
+        marker.on('mouseover', drawPopup);
         marker.on('click', function () {
             if ($(window).width() > 767) {
                 if ($rootScope.isMapState()) {
@@ -2026,6 +2026,20 @@
                 }
             }
         });
+      }
+      
+      function drawPopup(marker) {
+          this.off('mouseover', drawPopup);
+          var options = {
+            keepInView: false,
+            autoPan: true,
+            closeButton: false,
+            className: 'map-marker-plate'
+          };
+          var template = markerPopupTemplate;
+          var popupContent = $compile(template)(this.scope);
+          var popup = L.popup(options).setContent(popupContent[0]);
+          this.bindPopup(popup);
       }
 
       function _loadSpotComments(scope, spot) {
