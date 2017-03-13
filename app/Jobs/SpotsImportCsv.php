@@ -2,25 +2,11 @@
 
 namespace App\Jobs;
 
-use App\GeneratedUser;
-use App\Jobs\Job;
 use App\Mailers\AppMailer;
 use App\Services\SpotsImportFile;
-use App\Spot;
-use App\SpotTypeCategory;
-use App\SpotVote;
-use App\User;
-use Carbon\Carbon;
-use Codesleeve\Stapler\AttachmentConfig;
-use Codesleeve\Stapler\Stapler;
-use File;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Log;
 use Maatwebsite\Excel\Excel;
-use Storage;
-use Validator;
 
 /**
  * Class SpotsImport

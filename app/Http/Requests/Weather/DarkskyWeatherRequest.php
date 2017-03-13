@@ -1,18 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Weather;
 
-/**
- * Class WeatherRequest
- * @package App\Http\Requests
- *
- * @deprecated Use app/Http/Requests/Weather/OpenWeatherMapRequest.php instead
- */
-class WeatherRequest extends Request
+use App\Http\Requests\Request;
+
+class DarkskyWeatherRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
@@ -22,14 +17,18 @@ class WeatherRequest extends Request
 
     /**
      * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules()
     {
-        return [
+        $rules = [
             'lat' => 'required|numeric',
-            'lng' => 'required|numeric'
+            'lng' => 'required|numeric',
+            'lang' => 'required|string|size:2',
+            'extend' => 'required|string|in:hourly',
+            'units' => 'required|string|in:si,us',
         ];
+
+        return $rules;
     }
 }

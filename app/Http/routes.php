@@ -78,7 +78,6 @@ Route::get('spots/{spots}/members', 'SpotController@members');
 Route::get('spots/{spots}/preview', 'SpotController@preview');
 Route::get('spots/{spots}/export', 'SpotController@export');
 Route::get('spots/{spots}/cover', 'SpotController@getCover');
-Route::get('spots/{spots}/ratings', 'SpotController@getRatingInfo');
 Route::get('spots/{spots}/hours', 'SpotController@getHours');
 Route::put('spots/{spots}/photos', 'SpotPhotoController@store');
 Route::resource('spots', 'SpotController', ['except' => ['create', 'edit']]);
@@ -137,7 +136,7 @@ Route::get('map/selection/path', 'MapController@getSpotsPathSelection');
 Route::get('map/spots/list', 'MapController@getList');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
 Route::get('areas/{areas}/preview', 'AreaController@preview');
-Route::get('weather', 'MapController@getWeather');
+Route::get('weather', 'MapController@getWeather'); // deprecated: use /weather/openweathermap instead
 Route::get('rates', 'MapController@getRates');
 /**
  * Wall Controls
@@ -171,3 +170,38 @@ Route::post('contact-us', 'UserController@contactUs');
 get('google-contacts', 'SocialContactsController@google');
 
 Route::get('prerender/{page_url}', 'PrerenderController@render')->where('page_url', '(.*)');
+/**
+ * Search Spots
+ */
+Route::get('search/spots', 'SearchController@search');
+
+/**
+ * Weather
+ */
+
+Route::get('weather/darksky', 'WeatherController@darksky');
+Route::get('weather/openweathermap', 'WeatherController@openWeatherMap');
+
+
+/**
+ * Geocoder
+ */
+
+Route::get('geocoder/search', 'GeocoderController@search');
+Route::get('geocoder/reverse', 'GeocoderController@reverse');
+
+
+/**
+ * Weather
+ */
+
+Route::get('weather/darksky', 'WeatherController@darksky');
+Route::get('weather/openweathermap', 'WeatherController@openWeatherMap');
+
+
+/**
+ * Geocoder
+ */
+
+Route::get('geocoder/search', 'GeocoderController@search');
+Route::get('geocoder/reverse', 'GeocoderController@reverse');

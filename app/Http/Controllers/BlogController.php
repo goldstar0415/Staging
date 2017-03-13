@@ -143,7 +143,7 @@ class BlogController extends Controller
             $og->title($blog->title)
                 ->image($blog->cover->url())
                 ->description($blog->body)
-                ->url(frontend_url('article', $blog->slug))
+                ->url(frontend_url($blog->user_id, 'article', $blog->slug))
         );
     }
 

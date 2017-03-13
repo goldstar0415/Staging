@@ -1,18 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Geocoder;
 
-/**
- * Class WeatherRequest
- * @package App\Http\Requests
- *
- * @deprecated Use app/Http/Requests/Weather/OpenWeatherMapRequest.php instead
- */
-class WeatherRequest extends Request
+use App\Http\Requests\Request;
+
+class MapquestSearchRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
@@ -22,14 +17,16 @@ class WeatherRequest extends Request
 
     /**
      * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules()
     {
-        return [
-            'lat' => 'required|numeric',
-            'lng' => 'required|numeric'
+        $rules = [
+            'addressdetails' => 'numeric',
+            'limit' => 'numeric',
+            'q' => 'required|string',
         ];
+
+        return $rules;
     }
 }
