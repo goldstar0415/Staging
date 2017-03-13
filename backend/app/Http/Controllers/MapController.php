@@ -99,7 +99,7 @@ class MapController extends Controller {
         \App\Http\Requests\Request $request,
         \Illuminate\Database\Eloquent\Builder &$spots
     ) {
-        $spots = $spots->skip($request->input('pagination_offset', 0))->take(100)->get();
+        $spots = $spots->skip($request->input('pagination_offset', 0))->take(1000)->get();
     }
 
     /**
