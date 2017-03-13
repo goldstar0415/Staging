@@ -1,0 +1,5 @@
+Alexander Shushunov
+Basenko Vyacheslav
+
+2015_07_14_104641_create_spot_types_table
+2015_07_14_104851_create_spot_type_categories_table
