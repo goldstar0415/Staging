@@ -133,7 +133,7 @@
 
     function _formatSpot(spot) {
       spot.type = spot.category.type.display_name;
-      if (spot.start_date && spot.end_date) {
+      if (spot.start_date || spot.end_date) {
         var isStartTimeExact = isTimeExact(spot.start_date, spot);
         var isEndTimeExact = isTimeExact(spot.end_date, spot);
         // create a JSON-LD-schema-compatible fields
@@ -142,9 +142,8 @@
         // ignore non-exact time
         spot.start_time = isStartTimeExact ? moment(spot.start_date).format(DATE_FORMAT.time) : null;
         spot.end_time = isEndTimeExact ? moment(spot.end_date).format(DATE_FORMAT.time) : null;
-
-        spot.start_date = moment(spot.start_date).format('YYYY-MM-DD');
-        spot.end_date = moment(spot.end_date).format('YYYY-MM-DD');
+        spot.start_date = spot.start_date ? moment(spot.start_date).format('YYYY-MM-DD') : null;
+        spot.end_date = spot.end_date ? moment(spot.end_date).format('YYYY-MM-DD') : null;
       }
       // fix URLs
       ['google_url', 'facebook_url', 'instagram_url', 'tumbler_url', 'twitter_url', 'vk_url'].forEach(function(n) {
@@ -183,7 +182,7 @@
       if (_.isEmpty(date))
         return false;
       var dateDateAndTime = date.split(' ');
-      if (_.isEmpty(dateDateAndTime[1]) || dateDateAndTime[1] == '00:00:00')
+      if (_.isEmpty(dateDateAndTime[1]) || dateDateAndTime[1] === '00:00:00')
         return false;
       var createdAtDateAndTime = spot.created_at.split(' ');
       return dateDateAndTime[1] != createdAtDateAndTime[1];

@@ -47,7 +47,8 @@
 	                    </span>
                     </span>
                     <span ng-if="Spot.spot.start_date != Spot.spot.end_date">
-	                    {{Spot.spot.start_date | date:'MMM d, y'}} <span ng-if="Spot.spot.start_time">{{Spot.spot.start_time}}</span> -
+	                    {{Spot.spot.start_date | date:'MMM d, y'}} <span ng-if="Spot.spot.start_time">{{Spot.spot.start_time}}</span>
+                            <span ng-if="Spot.spot.start_date && Spot.spot.end_date">-</span>
 	                    {{Spot.spot.end_date | date:'MMM d, y'}} <span ng-if="Spot.spot.end_time && Spot.spot.end_time != '11:59 pm'">{{Spot.spot.end_time}}</span>
                     </span>
                     <div class="buttons">
