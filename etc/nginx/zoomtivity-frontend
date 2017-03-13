@@ -1,0 +1,75 @@
+server {
+        listen 80;
+        server_name zoomtivity-front.dev;
+
+        root /var/www/zoomtivity/frontend/dist;
+
+        charset utf-8;
+
+        set $no_cache 0;
+
+        proxy_connect_timeout 3600;
+        proxy_send_timeout 3600;
+        proxy_read_timeout 3600;
+        send_timeout  3600;
+
+        access_log /var/log/nginx/zoom-front-access.log;
+        error_log  /var/log/nginx/zoom-front-error.log error;
+
+        client_max_body_size 1024m;
+
+        location ~ ^/api(.*)$  {
+                rewrite ^/api(.*) /$1 break;
+                add_header Access-Control-Allow-Origin *;
+                access_log off;
+                proxy_pass http://testback.zoomtivity.com;
+                proxy_set_header X-Real-IP $remote_addr;
+        }
+        location ~* ^.+\.(js|css|svg|png)$ {
+                expires max;
+        }
+
+        location ~* .(jpg|jpeg|png|gif|ico|css|js)$ {
+            log_not_found off;
+        expires max;
+        add_header Cache-Control "public, max-age=315360000";
+        }
+
+        location / {
+            add_header Access-Control-Allow-Origin *;
+
+            set $prerender 0;
+            if ($http_user_agent ~* "baiduspider|twitterbot|facebookexternalhit|rogerbot|linkedinbot|embedly|quora link preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator") {
+                set $prerender 1;
+            }
+            if ($uri ~* "^.+\.(js|css|xml|less|png|jpg|jpeg|gif|pdf|doc|txt|ico|rss|zip|mp3|rar|exe|wmv|doc|avi|ppt|mpg|mpeg|tif|wav|mov|psd|ai|xls|mp4|m4a|swf|dat|dmg|iso|flv|m4v|torrent|ttf|woff|json|scss|coffee)$") {
+                    set $prerender 0;
+            }
+
+            if ($prerender = 1) {
+                rewrite .* /prerender$request_uri break;
+                proxy_pass http://zoomtivity-back.dev;
+            }
+            expires max;
+            try_files $uri $uri/ /index.html;
+        }
+
+        location ~ [^/]\.html(/|$) {
+        #fastcgi_cache phpcache;
+            fastcgi_cache_valid 200 30m;
+            fastcgi_cache_methods GET HEAD;
+            add_header X-Fastcgi-Cache $upstream_cache_status;
+            fastcgi_cache_bypass $no_cache;
+            fastcgi_no_cache $no_cache;
+        }
+        #pagespeed on;
+        #pagespeed FileCachePath /var/ngx_pagespeed_cache;
+        #pagespeed RewriteLevel CoreFilters;
+        #pagespeed DisableFilters combine_css,combine_javascript,flatten_css_imports,fallback_rewrite_css_urls,inline_css,inline_javascript,rewrite_css,rewrite_javascript;
+
+        location ~ "\.pagespeed\.([a-z]\.)?[a-z]{2}\.[^.]{10}\.[^.]+" {
+                add_header "" "";
+        }
+        location ~ "^/pagespeed_static/" { }
+        location ~ "^/ngx_pagespeed_beacon$" { }
+}
