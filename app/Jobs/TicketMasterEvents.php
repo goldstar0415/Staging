@@ -84,7 +84,7 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
         $this->importEvents($events);
         
         // comment it if you want to do all job in one queue
-        if($nextPage <= 5) //may set all pages instead of 5
+        if($nextPage <= $data['page']['totalPages'])
         {
             $newJob = (new TicketMasterEvents);
             $newJob->page = $nextPage;
