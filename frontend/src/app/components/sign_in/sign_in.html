@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="modal.close()">&times;</button>
+  <h4 class="modal-title">Authorization</h4>
+</div>
+<div class="modal-body">
+  <form ng-submit="modal.userLogin(form)" name="form" novalidate>
+    <input type="email" name="email" ng-model="modal.email" class="white" placeholder="E-mail..."
+           ng-focus="focused = true" ng-blur="focused = false" required>
+
+    <div class="error-message" ng-messages="form.email.$error" ng-if="form.$submitted && !focused">
+      <div ng-messages-include="error-email-messages"></div>
+    </div>
+
+    <div class="password-block">
+      <input type="password" name="password" class="white" placeholder="Password..." ng-model="modal.password"
+             required>
+      <a class="eye" eye-password></a>
+
+      <div class="error-message" ng-messages="form.password.$error"
+           ng-if="form.$submitted">
+        <div ng-messages-include="error-password-messages"></div>
+      </div>
+    </div>
+
+    <p>All fields are required
+      <password-recovery></password-recovery>
+    </p>
+    <input type="submit" value="Zoom">
+  </form>
+</div>
+<div class="modal-footer">
+  <a ng-href="{{modal.BACKEND_URL}}/account/facebook">Sign In with Facebook</a>
+  <a ng-href="{{modal.BACKEND_URL}}/account/google">Sign In with Google+</a>
+</div>

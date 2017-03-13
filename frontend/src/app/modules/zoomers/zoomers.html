@@ -1,0 +1,125 @@
+<div class="col-xs-12 main-container">
+  <div class="container wrap col-xs-12 mgt25">
+    <div class="text-center"><h2 class="title-name">Zoomers</h2></div>
+    <div class="col-md-3  col-sm-12 col-xs-12 zoomers">
+      <div class="zoomers-sidebar">
+        <ul class="zoomers-list">
+          <li>
+            <a class="current active" ng-class="{active: Zoomers.type == 'all'}"
+               ng-click="Zoomers.setType('all')">Zoomers</a>
+          </li>
+          <li ng-if="currentUser">
+            <a class="followers" ng-class="{active: Zoomers.type == 'followers'}"
+               ng-click="Zoomers.setType('followers')">Followers</a>
+          </li>
+          <li ng-if="currentUser">
+            <a class="followings" ng-class="{active: Zoomers.type == 'followings'}"
+               ng-click="Zoomers.setType('followings')">Following</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-9 col-sm-12 col-xs-12 zoomers-content">
+      <!-- search block -->
+      <div class="search-block">
+        <form ng-submit="Zoomers.getUsers()">
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="Zoomers.filter" placeholder="Search for...">
+            <span class="input-group-btn">
+              <button class="btn btn-default search-btn" type="submit"></button>
+            </span>
+          </div>
+        </form>
+      </div>
+      <!-- /search-block -->
+
+      <div class="followers col-xs-12  no-pad">
+        <!-- section post -->
+
+        <div infinite-scroll="Zoomers.pagination.nextPage()" infinite-scroll-disabled="Zoomers.pagination.busy"
+             class="clearfix" infinite-scroll-distance="1">
+          <section class="post col-xs-12" ng-repeat="user in Zoomers.users.data"
+                   ng-if="Zoomers.users.data.length > 0">
+            <div class=" zoomer-user media-visible col-lg-6 col-md-6 col-sm-12 col-xs-12 no-pad ">
+              <a ui-sref="profile.main({user_id: user.alias || user.id})" class="col-sm-12 col-md-6 col-xs-12">
+                <img ng-src="{{user.avatar_url.medium}}" class="avatar"
+                     alt="{{user.first_name}} {{user.last_name}}">
+              </a>
+
+              <!-- media-body-content -->
+              <div class="col-md-6 col-sm-12 col-xs-12">
+                <h3 class=" name">
+                  <a ui-sref="profile.main({user_id: user.alias || user.id})">{{user.first_name}} {{user.last_name}}</a>
+                </h3>
+
+                <div class="info clearfix">
+                  <div ng-if="Zoomers.checkPermission(user.privacy_info, user)">
+                    <p class="age">
+                      <span ng-if="user.sex">{{user.sex == 'm' ? 'male' : 'female'}}</span>
+                      <span ng-if="user.birth_date"><span
+                        ng-if="user.sex">,</span> {{user.birth_date | age}} years</span>
+                    </p>
+
+                    <p class="description">{{user.description}}</p>
+                  </div>
+
+                  <p class="counters col-xs-5 col-xs-push-5  col-sm-5 col-sm-push-5 col-md-12 col-md-push-0">
+                    <a ui-sref="spots({user_id: user.id})" class="e-count" title="Spots">
+                      {{ user.count_spots }}
+                    </a>
+                    <a class="f-count" title="Followings" users-modal="followings" user="user"
+                       ng-if="Zoomers.checkPermission(user.privacy_followings, user)">
+                      {{ user.count_followings }}
+                    </a>
+                  </p>
+
+
+                </div>
+                <!-- end info -->
+                <div class="clearfix">
+                  <button type="button" ng-if="currentUser && currentUser.id != user.id"
+                          class="btn btn-default no-margin-left-right"
+                          ng-click="Zoomers.follow(user)"
+                          ng-class="{'red-btn': !user.can_follow, 'follow-btn': user.can_follow}">
+                    {{user.can_follow ? 'Follow' : 'Unfollow'}}
+                  </button>
+                </div>
+              </div>
+              <!--end media-body-content  -->
+
+            </div>
+
+            <div class="col-lg-6 col-md-6 hidden-sm hidden-xs no-pad">
+              <ul class="events" ng-if="user.spots.length > 0">
+                <li class="col-xs-4  zoomer-thumb events-width" ng-repeat="spot in user.spots">
+                  <a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})">
+                    <figure>
+                      <img class="frame img-responsive" ng-src="{{spot.cover_url.medium}}" alt="{{spot.title}}">
+                      <spot-type type="spot.category.type.display_name" class="zoomer-event-type"></spot-type>
+                    </figure>
+                  </a>
+                  <!--<a ui-sref="spot({user_id: spot.user_id || 0, spot_id: spot.id})" class="event-link">{{spot.title}}-->
+                  <!--</a>-->
+                </li>
+              </ul>
+            </div>
+
+          </section>
+        </div>
+        <div class="col-xs-12">
+          <preloader ng-show="Zoomers.pagination.busy"></preloader>
+        </div>
+        <!-- end section post -->
+
+        <div class="col-xs-12" ng-if="Zoomers.users.data.length == 0">
+          <b>No entries found!</b>
+        </div>
+      </div>
+      <!-- end followers -->
+    </div>
+    <!-- end col-xs-9-->
+  </div>
+  <!--end container -->
+</div>
+<!--end col-xs-12 -->

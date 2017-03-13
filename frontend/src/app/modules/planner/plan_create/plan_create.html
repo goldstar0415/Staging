@@ -1,0 +1,319 @@
+<form class="form-horizontal col-xs-12  central nopad " name="form" ng-submit="Plan.save(form)" novalidate>
+  <div class="text-center">
+    <h2 class="title-name">{{Plan.id ? 'Edit plan' : 'Create new plan'}}</h2>
+  </div>
+
+  <!-- section  event-main-info-->
+  <section class="event-main-info">
+    <div class="form-group">
+      <label for="title" class="col-sm-2 control-label">Title</label>
+
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="title" ng-model="Plan.title" id="title"
+               placeholder="Start typing..."
+               ng-minlength="3" ng-maxlength="250" required>
+
+        <div ng-messages="form.title.$error" ng-if="form.$submitted || form.title.$touched" class="error-message">
+          <div ng-message="required">is required</div>
+          <div ng-message="minlength">too short</div>
+          <div ng-message="maxlength">can't be longer then 250 symbols</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="description">Description</label>
+
+      <div class="col-sm-10">
+        <textarea class="form-control" rows="5" name="description" ng-maxlength="250" ng-model="Plan.description"
+                  id="description"></textarea>
+
+        <div ng-messages="form.description.$error" ng-if="form.$submitted || form.description.$touched"
+             class="error-message">
+          <div ng-message="maxlength">Description can't be longer then 250 symbols</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Location</label>
+
+      <div class="col-sm-10">
+        <input
+                location-bloodhound
+                address="Plan.address"
+                location="Plan.location"
+                ng-model-options="{ debounce: 200 }"
+                popover="Type address or click on the map to set location(s)"
+                popover-trigger="focus"
+                placeholder="Type location or click on map..."
+                type="text"
+                autocomplete="off"
+                bind-marker="true"
+                limit="15"
+                name="bh-plan-create"
+        >
+        <div ng-if="form.$submitted && !Plan.address" class="error-message-inline">
+          <div>is required</div>
+        </div>
+        <div ng-if="form.$submitted && Plan.address && !Plan.location" class="error-message-inline">
+          <div>wrong location</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group ">
+      <label class="col-md-2 col-sm-12 col-xs-12 control-label">Date</label>
+
+      <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class="col-sm-4 col-xs-5 no-pad">
+          <input ng-datepicker name="start_date" ng-model="Plan.start_date" end-date="Plan.end_date" today="true"
+                 type="text" required class="grey-bg">
+
+          <div ng-messages="form.start_date.$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-message="required">Start date field can't be empty</div>
+          </div>
+        </div>
+
+        <span class="col-sm-1 col-xs-2 mgt15 text-center">—</span>
+
+        <div class="col-sm-4 col-xs-5 no-pad">
+          <input ng-datepicker name="end_date" ng-model="Plan.end_date" start-date="Plan.start_date"
+                 type="text" required class="grey-bg">
+
+          <div ng-messages="form.end_date.$error" ng-if="form.$submitted" class="error-message-inline">
+            <div ng-message="required">End date field can't be empty</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 col-sm-12 col-xs-12 control-label">Time</label>
+
+      <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class="col-sm-4 col-xs-5 no-pad media-nopad">
+          <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.start_time" name="start_time"
+                 type="text" class="grey-bg">
+
+          <!--<div ng-messages="form.start_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
+          <!--<div ng-message="required">Start time field can't be empty</div>-->
+          <!--</div>-->
+        </div>
+        <span class="col-sm-1 col-xs-2 mgt15 text-center">—</span>
+
+        <div class="col-sm-4 col-xs-5 no-pad media-nopad">
+          <input ng-timepicker step="30" placeholder="12:00..." ng-model="Plan.end_time" name="end_time"
+                 type="text" class="grey-bg">
+
+          <!--<div ng-messages="form.end_time.$error" ng-if="form.$submitted" class="error-message-inline">-->
+          <!--<div ng-message="required">End time field can't be empty</div>-->
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+  <!-- end section  event-main-info -->
+
+  <!-- section  event-additionl-infoo-->
+  <div ng-repeat="attachment in Plan.attachments ">
+    <div class="grey-wrapper"></div>
+    <section class="event-additionl-info" ng-if="attachment.type == 'activity'">
+      <div class="form-group">
+        <div class="text-center">
+          <h3 class="title-name">Activity
+
+          </h3>
+          <button type="button" ng-click="Plan.deleteAttachment($parent.$index)" class="close pull right"></button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Title</label>
+
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="title_activity_{{$index}}" ng-model="attachment.data.title"
+                 placeholder="Start typing..." ng-minlength="3" ng-maxlength="255" required>
+
+          <div ng-messages="form['title_activity_' + $index].$error"
+               ng-if="(form.$submitted || form['title_activity_' +$index].$touched) && attachment.isSubmitted"
+               class="error-message">
+            <div ng-message="required">is required</div>
+            <div ng-message="minlength">too short</div>
+            <div ng-message="maxlength">can't be longer then 255 symbols</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Category</label>
+
+        <div class="col-sm-10">
+          <ui-select ng-model="attachment.data.category.id" theme="bootstrap">
+            <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
+            <ui-select-choices repeat="item.id as item in Plan.categories | filter : $select.search track by $index">
+              <div ng-bind-html="item.display_name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+
+          <input type="hidden" ng-model="attachment.data.category.id" name="category_activity_{{$index}}" required/>
+
+          <div ng-messages="form['category_activity_' + $index].$error"
+               ng-if="(form.$submitted || form['category_activity_' +$index].$touched) && attachment.isSubmitted"
+               class="error-message">
+            <div ng-message="required">is required</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Description</label>
+
+        <div class="col-sm-10">
+        <textarea class="form-control" rows="5" name="description_activity_{{$index}}"
+                  ng-model="attachment.data.description"
+                  ng-maxlength="250"></textarea>
+
+          <div ng-messages="form['description_activity_' + $index].$error"
+               ng-if="(form.$submitted || form['description_activity_' + $index].$touched) && attachment.isSubmitted"
+               class="error-message">
+            <div ng-message="maxlength">Description can't be longer then 250 symbols</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Location</label>
+
+        <div class="col-sm-10">
+          <input
+                  location-bloodhound
+                  address="attachment.data.address"
+                  location="attachment.data.location"
+                  ng-model-options="{ debounce: 200 }"
+                  popover="Type address or click on the map to set location(s)"
+                  popover-trigger="focus"
+                  placeholder="Type location or click on map..."
+                  type="text"
+                  autocomplete="off"
+                  bind-marker="true"
+                  limit="15"
+                  name="bh-plan-create-location"
+          >
+          <a ng-click="PlanCreate.addLocation(PlanCreate.newLocation)" class="btn-add compass" type="button"></a>
+
+          <div ng-if="form.$submitted && attachment.isSubmitted && !attachment.data.address "
+               class="error-message-inline">
+            <div>is required</div>
+          </div>
+          <div ng-if="form.$submitted && attachment.isSubmitted && attachment.data.address && !attachment.data.location"
+               class="error-message-inline">
+            <div>wrong location</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group ">
+        <label class="col-sm-2 col-xs-12 control-label">Date</label>
+
+        <div class="col-md-10 col-sm-5 col-xs-12">
+          <div class="col-sm-4 col-xs-5 no-pad">
+            <input ng-datepicker name="start_date_{{$index}}" ng-model="attachment.data.start_date"
+                   start-date="Plan.start_date" end-date="Plan.end_date" type="text" required class="grey-bg">
+
+            <div ng-messages="form['start_date_' + $index].$error" ng-if="form.$submitted && attachment.isSubmitted"
+                 class="error-message-inline">
+              <div ng-message="required">Start date field can't be empty</div>
+            </div>
+          </div>
+
+          <span class="col-sm-1 col-xs-2 text-center mgt15">—</span>
+
+          <div class="col-sm-4 col-xs-5 no-pad">
+            <input ng-datepicker name="end_date_{{$index}}" ng-model="attachment.data.end_date"
+                   start-date="Plan.start_date" end-date="Plan.end_date" type="text" required class="grey-bg">
+
+            <div ng-messages="form['end_date_' + $index].$error" ng-if="form.$submitted && attachment.isSubmitted"
+                 class="error-message-inline">
+              <div ng-message="required">End date field can't be empty</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group ">
+        <label class="col-sm-2 control-label">Time</label>
+
+        <div class="col-md-10 col-sm-12 col-xs-12">
+          <div class="col-sm-4 col-xs-5 no-pad">
+            <input ng-timepicker step="30" placeholder="12:00..." name="start_time_{{$index}}"
+                   ng-model="attachment.data.start_time" type="text" class="grey-bg">
+
+            <!--<div ng-messages="form['start_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">-->
+            <!--<div ng-message="required">Start time field can't be empty</div>-->
+            <!--</div>-->
+          </div>
+
+          <span class="col-xs-2 col-sm-1 text-center mgt15">—</span>
+
+          <div class="col-sm-4 col-xs-5 no-pad">
+            <input ng-timepicker step="30" placeholder="12:00..." name="end_time_{{$index}}"
+                   ng-model="attachment.data.end_time"
+                   type="text" class="grey-bg">
+
+            <!--<div ng-messages="form['end_time_' + $index].$error" ng-if="form.$submitted" class="error-message-inline">-->
+            <!--<div ng-message="required">End time field can't be empty</div>-->
+            <!--</div>-->
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- end section  event-additionl-info -->
+
+    <!-- section  event-add-location-->
+    <section class="event-add-location" ng-if="attachment.type == 'spot'">
+      <div class="event">
+        <div class="media media-visible">
+          <a class="pull-left">
+            <img class="media-object fav-avatar-icon feeds-img"
+                 ng-src="{{attachment.data.cover_url.thumb}}">
+          </a>
+
+          <div class="media-body">
+            <h2 class="media-heading feeds-title">
+              <button type="button" ng-click="Plan.deleteAttachment($parent.$index)" class="close">x</button>
+              <a ui-sref="spot({user_id: attachment.data.user_id || 0, spot_id: attachment.data.id})">{{attachment.data.title}}</a>
+            </h2>
+
+            <p class="time">
+              {{attachment.data.start_date | toTimezone:'MM.DD.YYYY'}}
+              -
+              {{attachment.data.end_date | toTimezone:'MM.DD.YYYY'}}
+            </p>
+
+            <p class="feeds-text">{{attachment.data.description}}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- end section  event-add-location -->
+  </div>
+
+  <!-- buttons block -->
+  <div class="form-group">
+    <div class="col-xs-12 buttons-block">
+
+      <button type="button" class="btn btn-default green-btn add-btn mgl0" ng-click="Plan.addActivity()">
+        Add activities
+      </button>
+      <button type="button" class="btn btn-default green-btn add-btn" spots-modal items="Plan.newSpots" attachments="Plan.attachments">
+        Add spots
+      </button>
+      <button type="submit" class="btn btn-default green-btn pull-right no-margin-left-right">Save
+      </button>
+    </div>
+  </div>
+  <!-- end buttons block -->
+
+</form>

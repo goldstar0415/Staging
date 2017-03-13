@@ -1,0 +1,46 @@
+<aside class="col-xs-12 col-lg-3  col-sm-12 col-md-12 col-lg-pull-1 position-right">
+  <div>
+    <ui-select ng-model="Post.popular_category" theme="bootstrap">
+      <ui-select-match placeholder="Select category ">{{$select.selected.display_name}}</ui-select-match>
+      <ui-select-choices repeat="item.id as item in Post.categories | filter : $select.search track by $index">
+        <div ng-bind-html="item.display_name | highlight: $select.search"></div>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+
+  <!-- module popular -->
+  <div class="module-popular col-xs-12 hidden-md hidden-sm hidden-xs">
+    <div class="module-post">
+      <h3 class="title-popular-new">Popular news</h3>
+
+      <figure class="post col-xs-12" ng-repeat="post in Post.posts">
+        <img class="avatar col-xs-12 col-sm-4" ng-src="{{post.cover_url.medium}}">
+
+
+        <figcaption class="info-post col-xs-12 col-sm-8">
+          <h4>
+            <a ui-sref="blog.article({slug: post.slug || post.id})">{{post.title}}</a>
+          </h4>
+
+          <p class="description" ng-bind-html="(post.body | htmlToPlaintext:100) +  '...'"></p>
+
+          <div class="views">Views: {{post.count_views}}</div>
+          <div class="date">{{post.created_at | toTimezone:'MM.DD.YYYY'}}</div>
+        </figcaption>
+      </figure>
+
+      <h4 class="text-center description" ng-if="Post.posts && Post.posts.length === 0">No posts in this category</h4>
+    </div>
+  </div>
+  <!--end module popular -->
+
+  <!-- module banner  -->
+  <div class=" module-banner hidden-md hidden-sm hidden-xs" ng-if="Post.showBanner">
+    <div class="banner-for-bloggers col-xs-12">
+      <div class="banner-logo"></div>
+      <p class="text-banner">Want to add a post to our blog?</p>
+      <button type="button" blogger-request class="banner-btn">Send request!</button>
+    </div>
+  </div>
+  <!--end module banner -->
+</aside>

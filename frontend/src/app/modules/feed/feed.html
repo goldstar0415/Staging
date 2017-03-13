@@ -1,0 +1,177 @@
+<div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
+
+<div>
+    <div infinite-scroll="Feed.pagination.nextPage()" infinite-scroll-disabled="Feed.pagination.busy" class="clearfix" infinite-scroll-distance="1">
+        <section class="section-event wall-item wall-item-messages" ng-repeat="item in Feed.feeds.data">
+            <div class="wall-user">
+                <a ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})" class="wall-avatar">
+                    <img ng-src="{{item.sender.avatar_url.thumb}}">
+                </a>
+                <div class="wall-user-info">
+                    <a ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">
+                        <span>{{item.sender.first_name}} {{item.sender.last_name}}</span>
+                    </a>
+                    <p>{{item.created_at | toTimezone}}</p>
+                </div>
+            </div>
+            <div class="wall-content">
+                <div class="wall-message">
+                    <div ng-switch="item.event_type">
+                        <div ng-switch-when="UserFollowEvent">
+                            <span ng-if="currentUser.id == item.feedable.id" class="mgb10">
+                    follows you
+                  </span>
+                            <span ng-if="currentUser.id != item.feedable.id" class="mgb10">
+                    now following <a ui-sref="profile.main({user_id: item.feedable.alias || item.feedable.id})">
+                    {{item.feedable.first_name}} {{item.feedable.last_name}}
+                  </a>
+                  </span>
+                        </div>
+
+                        <div ng-switch-when="UserUnfollowEvent">
+                            <span ng-if="currentUser.id == item.feedable.id">
+                    unfollows you
+                  </span>
+                            <span ng-if="currentUser.id != item.feedable.id">
+                    unfollow <a ui-sref="profile.main({user_id: item.feedable.alias || item.feedable.id})">
+                    {{item.feedable.first_name}} {{item.feedable.last_name}}
+                  </a>
+                  </span>
+                        </div>
+
+                        <div ng-switch-when="OnSpotUpdate" class="mgb10">
+                            updated spot
+                            <a ui-sref="spot({user_id: item.feedable.user_id || 0, spot_id: item.feedable.id})">{{item.feedable.title}}
+                    </a>
+                        </div>
+
+                        <div ng-switch-when="OnSpotCreate" class="mgb10">
+                            created spot
+                            <a ui-sref="spot({user_id: item.feedable.user_id || 0, spot_id: item.feedable.id})">{{item.feedable.title}}
+                    </a>
+                        </div>
+
+                        <div ng-switch-when="OnSpotComment" class="mgb10">
+                            <a ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">
+                      {{item.sender.first_name}} {{item.sender.last_name}}
+                    </a> commented your
+                            <a ui-sref="spot({user_id: (item.sender.alias || item.sender.id) || 0, spot_id: item.feedable.commentable_id})">spot</a>
+                        </div>
+
+                        <div ng-switch-when="OnAddToCalendar" class="mgb10">
+                            add spot
+                            <a ui-sref="spot({user_id: item.feedable.user_id || 0, spot_id: item.feedable.id})">{{item.feedable.title}}
+                    </a> to calendar
+                        </div>
+
+                        <div ng-switch-when="OnWallMessage">
+                            <p class="line-break" ng-bind-html="item.feedable.body | linky:'_blank'"></p>
+                            <attachments items="item.feedable.attachments"></attachments>
+                        </div>
+
+                        <div ng-switch-when="OnWallPostLike" class="feed-text" class="mgb10">
+                            likes your post "{{item.feedable.body | limitTo: 30}}{{item.feedable.body.lenght > 30 ? '...' : ''}}"
+                        </div>
+
+                        <div ng-switch-when="OnWallPostDislike" class="mgb10">
+                            doesn't like your post "{{item.feedable.body | limitTo: 30}}{{item.feedable.body.lenght > 30 ? '...' : ''}}"
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="event">
+
+        <div class="media media-visible">
+          <a class="pull-left avatar" ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})" >
+            <img class="media-object feeds-img" ng-src="{{item.sender.avatar_url.thumb}}">
+          </a>
+
+          <div class="media-body">
+            <h2 class="media-heading feeds-title">
+              <a ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">{{item.sender.first_name}}
+                {{item.sender.last_name}}</a>
+            </h2>
+
+            <div ng-switch="item.event_type">
+              <div ng-switch-when="UserFollowEvent">
+              <span ng-if="currentUser.id == item.feedable.id" class="mgb10">
+                follows you
+              </span>
+              <span ng-if="currentUser.id != item.feedable.id" class="mgb10">
+                now following <a ui-sref="profile.main({user_id: item.feedable.alias || item.feedable.id})">
+                {{item.feedable.first_name}} {{item.feedable.last_name}}
+              </a>
+              </span>
+              </div>
+
+              <div ng-switch-when="UserUnfollowEvent">
+              <span ng-if="currentUser.id == item.feedable.id">
+                unfollows you
+              </span>
+              <span ng-if="currentUser.id != item.feedable.id">
+                unfollow <a ui-sref="profile.main({user_id: item.feedable.alias || item.feedable.id})">
+                {{item.feedable.first_name}} {{item.feedable.last_name}}
+              </a>
+              </span>
+              </div>
+
+              <div ng-switch-when="OnSpotUpdate" class="mgb10">
+                updated spot
+                <a ui-sref="spot({user_id: item.feedable.user_id || 0, spot_id: item.feedable.id})"
+                  >{{item.feedable.title}}
+                </a>
+              </div>
+
+              <div ng-switch-when="OnSpotCreate" class="mgb10">
+                created spot
+                <a ui-sref="spot({user_id: item.feedable.user_id || 0, spot_id: item.feedable.id})"
+                  >{{item.feedable.title}}
+                </a>
+              </div>
+
+              <div ng-switch-when="OnSpotComment" class="mgb10">
+                <a ui-sref="profile.main({user_id: item.sender.alias || item.sender.id})">
+                  {{item.sender.first_name}} {{item.sender.last_name}}
+                </a>
+                commented your
+                <a ui-sref="spot({user_id: (item.sender.alias || item.sender.id) || 0, spot_id: item.feedable.commentable_id})">spot</a>
+              </div>
+
+              <div ng-switch-when="OnAddToCalendar" class="mgb10">
+                add spot
+                <a ui-sref="spot({user_id: item.feedable.user_id || 0, spot_id: item.feedable.id})"
+                  >{{item.feedable.title}}
+                </a> to calendar
+              </div>
+
+              <div ng-switch-when="OnWallMessage">
+                <p class="line-break" ng-bind-html="item.feedable.body | linky:'_blank'"></p>
+                <attachments items="item.feedable.attachments"></attachments>
+              </div>
+
+              <div ng-switch-when="OnWallPostLike" class="feed-text" class="mgb10">
+                likes your post "{{item.feedable.body | limitTo: 30}}{{item.feedable.body.lenght > 30 ? '...' : ''}}"
+              </div>
+
+              <div ng-switch-when="OnWallPostDislike" class="mgb10">
+                doesn't like your post "{{item.feedable.body | limitTo: 30}}{{item.feedable.body.lenght > 30 ? '...' :
+                ''}}"
+              </div>
+
+            </div>
+
+            <p class="time">{{item.created_at | toTimezone}}</p>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div> -->
+            <div class="clearfix"></div>
+        </section>
+    </div>
+    <preloader ng-show="Feed.pagination.busy"></preloader>
+
+
+    <h4 class="text-center description" ng-if="Feed.feeds.data.length == 0 && !Feed.pagination.busy">No feeds yet.</h4>
+</div>

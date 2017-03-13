@@ -1,0 +1,368 @@
+//---<create new event--->
+.create-event-page {
+  margin-bottom: 15px;
+}
+
+.pl0 {
+  padding-left: 0;
+}
+
+.buttons-set-new-event {
+  width: 100%;
+  display: block;
+  .btn-event {
+    height: 4rem;
+    margin-top: 5px;
+    border-radius: 0 !important;
+    display: block;
+    border: 1px solid $blue_btn;
+    background: $white;
+    padding: 7px 15px;
+    font: 600 14px/14px;
+    color: $blue_btn;
+    width: 33.33333%;
+    text-transform: uppercase;
+    &:hover, &:focus, &:active {
+      background-color: $blue_btn !important;
+      box-shadow: none;
+      outline: none;
+      color: $white;
+      border: 1px solid $blue_btn;
+    }
+  }
+  .active-point {
+    background: $blue_btn;
+    color: $white;
+  }
+}
+
+.category-dropdown {
+  width: 100%;
+  .btn-default {
+    &:hover .icon-category, &:focus, &:active {
+      @include blue_shadow;
+      background-color: $white;
+    }
+  }
+  li {
+    position: relative;
+    margin: 0;
+    font: 14px;
+    padding: 5px 10px;
+    color: $black;
+    border-bottom: 1px solid $light_grey;
+    background: $white;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  .dropdown-toggle {
+    text-align: left;
+    width: 100%;
+
+  }
+}
+
+.caret {
+  float: right;
+  margin-top: 8px;
+}
+
+.input-group-btn {
+  &:hover, &:focus, &:active {
+    @include blue_shadow;
+    @include transition_shadow;
+  }
+}
+
+.event-main-info, .event-upload-photos, .event-additionl-info, .event-add-video {
+  border-bottom: 1px solid $light_grey;
+  border-top: 1px solid $light_grey;
+  margin-bottom: 1.5rem;
+  padding: 15px;
+  .drop-box {
+    display: inline-table;
+  }
+}
+
+.event-additionl-info {
+  border-bottom: 0 !important;
+  button.close {
+    width: 3rem;
+    height: 3rem;
+    background: url(../img/svg/close_button.svg) no-repeat;
+    opacity: 1;
+    margin-bottom: 1rem;
+    margin-right: 1.5rem;
+    margin-top: 5px;
+  }
+}
+
+.event-add-video {
+  border: 0 !important;
+}
+
+.event-additionl-info .compass, .event-main-info .compass, .event-add-video .compass {
+  right: 2rem !important;
+}
+
+.remove-compass {
+  width: 100%;
+  margin-top: 1rem;
+  .compass {
+    background: url(../img/svg/close_icon.svg) no-repeat;
+    background-size: 22px;
+    background-color: #E2E2E2;
+    background-position: center;
+    right: 5px !important;
+  }
+}
+
+.event-main-info {
+  border-top: 0 !important;
+}
+
+.form-group {
+  .control-label {
+    font-weight: bold;
+    text-align: left;
+    font-size: 16px;
+    padding-top: 1.3rem;
+    color: #000;
+  }
+}
+
+.event-title {
+  font: 500 22px;
+  padding-left: 15px;
+}
+
+.event-upload-photos {
+  .form-group {
+    h3 {
+      padding: 0 0 0 15px;
+      float: left;
+      margin-top: 0;
+    }
+  }
+
+  .cover-preview {
+
+    .save-cover-btn {
+      margin-top: 1.5rem;
+      margin-left: 0;
+    }
+
+    img {
+      max-height: 300px;
+      margin-top: 20px;
+    }
+  }
+}
+
+.add, .add-event-btn {
+  float: right;
+  font: 500 16px;
+  margin-right: 18px;
+  background: $green;
+  color: $white;
+  @include border-radius;
+  @include transition_bg;
+  &:hover, &:active, &:focus {
+    background-color: $light_green;
+    color: $white;
+  }
+}
+
+.add-event-btn {
+  float: left;
+}
+
+.photos {
+  padding: 35px 10px 0;
+  display: block;
+  clear: both;
+
+  img {
+    width: 12rem;
+    height: 12rem;
+    margin: 5px;
+    @include border-radius;
+    @include transition_shadow;
+    padding: 0;
+    &:hover.cover-hover {
+      border: 3px $blue solid;
+      cursor: pointer;
+    }
+  }
+  li {
+    display: block;
+    position: relative;
+    z-index: 5;
+    float: left;
+    &:hover .delete {
+      cursor: pointer;
+      display: block;
+    }
+    .delete {
+      display: none;
+      top: 5px;
+      right: 5px;
+      width: 42px;
+      height: 42px;
+      position: absolute;
+      background: url(../img/icons/close-photo.png) center center no-repeat;
+      border-radius: 0;
+    }
+  }
+
+}
+
+.sidebar-event {
+  min-height: 100%;
+  float: right;
+
+  ul {
+    padding-left: 15px;
+    li {
+      a {
+        display: block;
+        height: 100px;
+        word-wrap: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -e-text-overflow: ellipsis;
+      }
+    }
+    .add-event-sidebar {
+      display: block;
+      width: 45px;
+      height: 45px;
+      background: url(../img/icons/big-plus.png) center center no-repeat #dde3e6;
+      @include transition_bg;
+      -webkit-border-radius: 30px;
+      -moz-border-radius: 30px;
+      border-radius: 30px;
+      -webkit-box-shadow: inset 1px 1px 0 0 #c8d0d4;
+      -moz-box-shadow: inset 1px 1px 0 0 #c8d0d4;
+      box-shadow: inset 1px 1px 0 0 #c8d0d4;
+      &:hover {
+        background: url(../img/icons/big-plus.png) center center no-repeat #d2d9dd;
+      }
+    }
+  }
+}
+
+.counter {
+  display: inline-block;
+  height: 2rem;
+  font-size: 1.2rem;
+  color: $white;
+  background: $blue;
+  padding: 0.3rem 1rem;
+  margin: 0;
+  vertical-align: middle;
+  @include transition_bg;
+  float: right;
+}
+
+.title-sidebar {
+  margin-top: 0;
+  margin-bottom: 15px;
+  a {
+    font: $navigation_font;
+    font-size: 22px;
+    color: $dark_blue;
+  }
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.host {
+  .tags {
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    border-color: #ccc;
+    //height: 5rem;
+    //padding: 1rem;
+    .tag-item {
+      background: #2c4456;
+      border-radius: 0;
+      border: 0;
+      color: #fff;
+      text-transform: uppercase;
+      .remove-button {
+        color: #fff;
+      }
+    }
+  }
+}
+
+.input-group {
+  input {
+    height: 34px;
+  }
+}
+
+.input-group-btn {
+  .btn {
+    height: 34px;
+  }
+}
+
+//---</create new event--->
+/* create spot */
+.no-pad input, button.category-dropdown {
+  min-height: 5rem;
+}
+
+.category-dropdown {
+  margin-top: 1rem;
+  text-transform: uppercase;
+  &:hover, &:active {
+    background-color: #00c9f8;
+    color: $white;
+    .icon-category {
+      background-position: -46px 0;
+    }
+    .filters-arrow {
+      background: url(../img/icons/slider-arrow.png) no-repeat -29px 0px;
+    }
+    .open-arrow {
+      background: url(../img/icons/right-arrow.png) no-repeat -3px 0;
+    }
+  }
+}
+
+.category-filter {
+  button {
+    padding-left: 5rem;
+    span {
+      float: left;
+    }
+  }
+}
+
+.search-filters .filter-definition .tags input {
+  &:active, &:focus, &:visited {
+    padding-left: 0;
+  }
+}
+
+.icon-plus {
+  background: url(../img/icons/category-plus.png) no-repeat 1rem 1.2rem #00c9f8;
+  padding: 2rem 2rem 3rem;
+  float: left;
+  margin-top: 1rem;
+}
+
+.icon-minus {
+  background: url(../img/icons/blue-minus.png) no-repeat 1.2rem 2.4rem #fff;
+  padding: 1.8rem 1.9rem 3rem;
+  float: left;
+  margin-top: 1rem;
+  border: 1px solid #eee;
+}

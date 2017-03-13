@@ -1,0 +1,31 @@
+<div class="text-center">
+  <a ui-sref="photos.list({user_id: profileUser.id})" class="btn-back" title="back" class="back"></a>
+  <h2 class="title-name nav-green2">
+    Album - <span>{{Album.album.title}}</span>
+    <!--<span class="album-tools" ng-if="currentUser.id == Album.album.user_id">-->
+    <!--<a title="Delete album" ng-click="Album.delete()" class="delete"></a>-->
+    <!--<a title="Edit album" ui-sref="photos.editAlbum({album_id: Album.album.id})" class="edit"></a>-->
+    <!--</span>-->
+  </h2>
+</div>
+
+<div class="col-xs-12 edit-delete mgt20 album" ng-if="currentUser.id == Album.album.user_id">
+  <a class="edit" title="Edit album" ui-sref="photos.editAlbum({album_id: Album.album.id})"></a>
+  <a class="delete" title="Delete album" ng-click="Album.deleteAlbum()"></a>
+</div>
+
+<div class="col-xs-12 mgt20">
+  <div ng-repeat="item in Album.photos" class="col-xs-6 col-md-3 photo-wrap">
+    <div class="photo">
+      <div class="album-tools-wrap col-xs-12" ng-if="currentUser.id == Album.album.user_id">
+        <a class="set-location" title="Set location" ui-sref="photos.edit_photo({photo_id: item.id})"></a>
+        <a class="set-avatar" title="Set as avatar" ng-click="Album.setAsAvatar(item.photo_url.original)"></a>
+        <a class="delete" title="Delete" ng-click="Album.deletePhoto(item.id, $index)"></a>
+      </div>
+
+      <div class="photo-wrapper">
+        <img photo-viewer items="Album.photos" index="$index" ng-src="{{item.photo_url.medium}}" alt="Photo not found"/>
+      </div>
+    </div>
+  </div>
+</div>

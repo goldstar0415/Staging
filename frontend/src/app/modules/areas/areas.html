@@ -1,0 +1,38 @@
+<div class="text-center">
+  <h2 class="title-name nav-yellow">Saved Searches</h2>
+</div>
+<div class="grey-container">
+  <div class="saved-search mgt25 col-xs-12" ng-repeat="item in Area.areas track by $index">
+
+    <div class="col-md-4 col-sm-3 col-xs-12 search-container">
+      <a ui-sref="areas.preview({area_id: item.id})">
+        <img class="search-img" ng-src="{{ item.cover_url.original || 'assets/img/missing_thumb.png' }}">
+      </a>
+    </div>
+    <div class="col-md-8 col-sm-9 col-xs-12 no-pad-right">
+      <h2 class="feeds-title">
+        <a ui-sref="areas.preview({area_id: item.id})">{{item.title}}</a>
+      </h2>
+
+      <p class="description">{{item.description}}</p>
+
+      <p class="time">{{item.created_at | toTimezone}}
+      <ul class="tools hidden-xs">
+        <li>
+          <a class="delete" ng-click="Area.RemoveArea(item.id, $index)">Delete</a>
+        </li>
+        <li>
+          <share item="item" type="area"></share>
+        </li>
+      </ul>
+      <div class="col-xs-12 edit-delete visible-xs">
+        <a class="delete" ng-click="Area.RemoveArea(item.id, $index)"></a>
+        <share item="item" type="area" only-icon="true"></share>
+      </div>
+      </p>
+    </div>
+  </div>
+</div>
+<div class="col-xs-12">
+  <h4 class="text-center description" ng-if="Area.areas.length == 0">No saved searches yet.</h4>
+</div>

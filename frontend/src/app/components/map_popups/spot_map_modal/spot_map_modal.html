@@ -1,0 +1,313 @@
+<script type="text/ng-template" id="SpotMapModal.html">
+  <div class="modal-body">
+
+    <div class="popup-width mobile-popup visible-xs">
+      <div class="mobile-popup-header">
+        <div class="mobile-popup-close text-center">
+          <span class="popup-close" ng-click="close()"></span>
+        </div>
+        <div class="mobile-popup-nav">
+          <div class="popup-links">
+            <ul class="list-inline">
+              <li><a ng-click="view = 'about'" class="menu-about">About</a>
+              </li>
+              <li><a ng-click="view = 'comments'" class="menu-reviews">Comments</a>
+              </li>
+              <li><a ng-click="view = 'photos'" class="menu-photos">Photos</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 popup-main">
+        <div class="col-xs-12 rating-mobile"> <!-- ngIf: data.spot.title -->
+          <stars item="data.spot" ng-if="data.spot.title" class="ng-scope ng-isolate-scope">
+            <div class="outline-none text-center readonly"
+                 ng-class="{readonly: Stars.item.is_rated || !$root.currentUser || Stars.item.user_id == $root.currentUser.id}"><span
+              ng-mouseleave="reset()" ng-keydown="onKeydown($event)" tabindex="0" role="slider" aria-valuemin="0"
+              aria-valuemax="5" aria-valuenow="0" ng-model="Stars.item.rating" readonly="readonly" max="5"
+              state-on="'glyphicon glyphicon-star star-active'" state-off="'glyphicon glyphicon-star star-default'"
+              class="ng-isolate-scope ng-valid ng-touched" style="">
+    <!-- ngRepeat: r in range track by $index --><i ng-repeat="r in range track by $index"
+                                                    ng-mouseenter="enter($index + 1)" ng-click="rate($index + 1)"
+                                                    class="glyphicon ng-scope glyphicon-star star-default"
+                                                    ng-class="$index < value &amp;&amp; (r.stateOn || 'glyphicon-star') || (r.stateOff || 'glyphicon-star-empty')">
+              <span class="sr-only ng-binding">( )</span>
+            </i><!-- end ngRepeat: r in range track by $index --><i ng-repeat="r in range track by $index"
+                                                                    ng-mouseenter="enter($index + 1)"
+                                                                    ng-click="rate($index + 1)"
+                                                                    class="glyphicon ng-scope glyphicon-star star-default"
+                                                                    ng-class="$index < value &amp;&amp; (r.stateOn || 'glyphicon-star') || (r.stateOff || 'glyphicon-star-empty')">
+              <span class="sr-only ng-binding">( )</span>
+            </i><!-- end ngRepeat: r in range track by $index --><i ng-repeat="r in range track by $index"
+                                                                    ng-mouseenter="enter($index + 1)"
+                                                                    ng-click="rate($index + 1)"
+                                                                    class="glyphicon ng-scope glyphicon-star star-default"
+                                                                    ng-class="$index < value &amp;&amp; (r.stateOn || 'glyphicon-star') || (r.stateOff || 'glyphicon-star-empty')">
+              <span class="sr-only ng-binding">( )</span>
+            </i><!-- end ngRepeat: r in range track by $index --><i ng-repeat="r in range track by $index"
+                                                                    ng-mouseenter="enter($index + 1)"
+                                                                    ng-click="rate($index + 1)"
+                                                                    class="glyphicon ng-scope glyphicon-star star-default"
+                                                                    ng-class="$index < value &amp;&amp; (r.stateOn || 'glyphicon-star') || (r.stateOff || 'glyphicon-star-empty')">
+              <span class="sr-only ng-binding">( )</span>
+            </i><!-- end ngRepeat: r in range track by $index --><i ng-repeat="r in range track by $index"
+                                                                    ng-mouseenter="enter($index + 1)"
+                                                                    ng-click="rate($index + 1)"
+                                                                    class="glyphicon ng-scope glyphicon-star star-default"
+                                                                    ng-class="$index < value &amp;&amp; (r.stateOn || 'glyphicon-star') || (r.stateOff || 'glyphicon-star-empty')">
+              <span class="sr-only ng-binding">( )</span>
+            </i><!-- end ngRepeat: r in range track by $index -->
+</span></div>
+          </stars>
+          <!-- end ngIf: data.spot.title --> </div>
+
+        <div class="row" ng-show="view == 'about'">
+          <div class="col-xs-3 mobile-popup-img spot-thumb">
+            <figure>
+              <img ng-src="{{data.spot.cover_url.medium}}" alt="Test spot" class="img-size"
+                   src="{{data.spot.cover_url.medium}}">
+              <spot-type type="data.spot.category.type.display_name"></spot-type>
+            </figure>
+            <!--<stars item="data.spot" class="star-event"></stars>-->
+          </div>
+          <div class="col-xs-9 mobile-popup-content">
+            <div class="popup-header">
+              <a class="title"
+                 ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id || 0})">{{data.spot.title}}</a>
+
+              <p class="location-event">{{data.address}}</p>
+
+              <p class="date-event" ng-if="data.spot.category.type.name == 'event'">
+                <span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>
+              </p>
+              <a class="author-event text-left"
+                 ui-sref="profile.main({user_id: data.spot.user.alias || data.spot.user_id})"
+                 ng-if="data.spot.user">
+                {{'by ' + data.spot.user.first_name + ' ' + data.spot.user.last_name}}
+              </a>
+            </div>
+            <div ng-show="view == 'about'" class="description margin-left0">{{data.spot.description}}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="content-popup-spot col-xs-12">
+            <div ng-show="view == 'comments'" class=" col-xs-12 reviews-popup">
+              <div ng-if="data.spot.comments.length > 0">
+                <div class="col-xs-12 previous-next" ng-if="data.spot.comments.length > 1">
+                  <a ng-click="changeComment(-1)" ng-show="commentIndexIndex > 0" class="previous"></a>
+                  <a ng-click="changeComment(1)" ng-show="commentIndexIndex < data.spot.comments.length - 1" class="next "></a>
+                </div>
+                <div class="col-sm-3 col-xs-12 avatar">
+                  <img ng-src="{{data.spot.comments[commentIndexIndex].sender.avatar_url.thumb}}"
+                       ui-sref="profile.main({user_id: data.spot.comments[commentIndexIndex].sender.alias || data.spot.comments[commentIndexIndex].sender.user_id})">
+                </div>
+
+                <div class="col-xs-12 col-sm-9 content">
+                  <span>
+                    <a class="reviews-user"
+                       ui-sref="profile.main({user_id: currentComment.sender.alias || currentComment.sender.user_id})">
+                      {{data.spot.comments[commentIndexIndex].sender.first_name + ' ' +
+                      data.spot.comments[commentIndexIndex].sender.last_name}}
+                    </a>
+                  </span>
+
+                  <div class="description">
+                    <span ng-bind-html="data.spot.comments[commentIndex].body | linky:'_blank'"></span>
+                    <span class="attachments" ng-hide="isEmptyAttachments()">&nbsp;</span>
+                  </div>
+
+                  <p class="date-reviews">
+                    {{data.spot.comments[commentIndex].created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}
+                  </p>
+                </div>
+              </div>
+
+              <div ng-if="!data.spot.comments.length" class="photos-event clearfix">
+                <span>There are no comments yet</span>
+              </div>
+            </div>
+            <div ng-show="view == 'photos'" class="wrapper">
+              <div class="col-xs-12 no-pad previous-next">
+                <a ng-click="changePhoto(-1)"
+                   ng-show="photoControl.start > 0" class="previous"></a>
+                <a ng-click="changePhoto(1)"
+                   ng-show="photoControl.start + photoControl.step < data.spot.photos.length" class="next"></a>
+              </div>
+              <div ng-if="data.spot.photos.length > 0" class="photos-event clearfix row">
+                <a
+                  ng-repeat="item in data.spot.photos.slice(photoControl.start, photoControl.start + photoControl.step)"
+                  photo-viewer items="data.spot.photos" index="$index" current-item="item" class="col-xs-3">
+                  <img ng-src="{{item.photo_url.thumb}}">
+                </a>
+              </div>
+              <div ng-if="!data.spot.photos || data.spot.photos.length == 0" class=" clearfix">
+                <span>There are no photos yet</span>
+              </div>
+            </div>
+
+
+            <div class="links-nav">
+              <ul class="tools clearfix">
+                <li ng-if="!data.spot.is_saved && data.spot.category.type.name == 'event'">
+                  <a class="save-event" ng-click="saveToCalendar(data.spot)">Save</a>
+                </li>
+                <li ng-if="$root.currentUser && data.spot.is_saved">
+                  <a class="save-event saved clicked" ng-click="removeFromCalendar(data.spot)">Remove</a>
+                </li>
+                <li ng-if="$root.currentUser.id != data.spot.user_id && !data.spot.is_favorite">
+                  <a class="favorite-spot" ng-click="addToFavorite(data.spot)">Favorite</a>
+                </li>
+                <li ng-if="$root.currentUser && $root.currentUser.id != data.spot.user_id && data.spot.is_favorite">
+                  <a class="fav favorited" ng-click="removeFromFavorite(data.spot)">Unfavorite</a>
+                </li>
+                <li ng-if="data.spot.is_approved">
+                  <invite-friends item="data.spot"></invite-friends>
+                </li>
+                <li ng-if="data.spot.share_links">
+                  <share item="data.spot" type="spot"></share>
+                </li>
+                <li ng-if="data.spot.category.type.name == 'event'">
+                  <a class="download" ng-href="{{API_URL + '/spots/' + data.spot.id + '/export'}}" target="_blank">
+                    Export to ICS
+                  </a>
+                </li>
+              </ul>
+              <!--<share item="data.spot" type="spot" class="hidden"></share>-->
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close"-->
+    <!--ng-click="close()">-->
+    <!--<span aria-hidden="true">×</span>-->
+    <!--</button>-->
+
+    <!--<ul class="tabs">-->
+    <!--<li><a ng-click="view = 'about'">About</a>-->
+    <!--</li>-->
+    <!--<li><a ng-click="view = 'comments'">Comments</a>-->
+    <!--</li>-->
+    <!--<li><a ng-click="view = 'photos'">Photos</a>-->
+    <!--</li>-->
+    <!--</ul>-->
+
+    <!--<div class="col-xs-12 popup-main">-->
+
+    <!--<div class="col-xs-12 rating-mobile">-->
+    <!--<stars item="data.spot" ng-if="data.spot.title"></stars>-->
+    <!--</div>-->
+
+    <!--<div class="col-xs-12 no-pad">-->
+    <!--<h3 class="col-xs-12 no-pad">-->
+    <!--<a class="title" ui-sref="spot({spot_id: data.spot.id, user_id: data.spot.user_id || 0})"-->
+    <!--{{data.spot.title}}</a>-->
+    <!--</h3>-->
+
+    <!--<p class="location">{{data.address}}</p>-->
+
+    <!--<p class="date-popup" ng-if="data.spot.category.type.name == 'event'">-->
+    <!--<span>{{data.spot.start_date | toTimezone : 'DD MMM YYYY'}}</span> - <span>{{data.spot.end_date | toTimezone : 'DD MMM YYYY'}}</span>-->
+    <!--</p>-->
+
+    <!--<a class="author-popup" ui-sref="profile.main({user_id: data.spot.user.alias || data.spot.user_id})"-->
+    <!--ng-if="data.spot.user">{{'by ' + data.spot.user.first_name-->
+    <!--+ ' ' + data.spot.user.last_name}}</a>-->
+    <!--</div>-->
+
+    <!--<div class="content-popup-spot col-xs-12">-->
+
+    <!--<div ng-show="view == 'about'" class="col-xs-12 wrapper">-->
+    <!--<div class="description" ng-bind-html="data.spot.description | toParagraphs"></div>-->
+    <!--</div>-->
+
+    <!--<div ng-show="view == 'comments'" class=" col-xs-12 reviews-popup no-pad">-->
+    <!--<div ng-if="data.spot.comments.length > 0">-->
+    <!--<div class="col-xs-12 previous-next" ng-if="data.spot.comments.length > 1 ">-->
+    <!--<a ng-click="changeComment(-1)" ng-show="commentIndex > 0" class="previous"></a>-->
+    <!--<a ng-click="changeComment(1)" ng-show="commentIndex < data.spot.comments.length - 1" class="next "></a>-->
+    <!--</div>-->
+
+    <!--<div class="col-sm-3 col-xs-12 avatar">-->
+    <!--<img ng-src="{{data.spot.comments[commentIndex].sender.avatar_url.thumb}}"-->
+    <!--ui-sref="profile.main({user_id: data.spot.comments[commentIndex].sender.alias || data.spot.comments[commentIndex].sender.user_id})">-->
+    <!--</div>-->
+    <!--<div class="col-xs-12 col-sm-9 content">-->
+    <!--<span><a class="reviews-user"-->
+    <!--ui-sref="profile.main({user_id: data.spot.comments[commentIndex].sender.alias || data.spot.comments[commentIndex].sender.user_id})">-->
+    <!--{{data.spot.comments[commentIndex].sender.first_name + ' ' +-->
+    <!--data.spot.comments[commentIndex].sender.last_name}}-->
+    <!--</a></span>-->
+
+    <!--<p class="date-reviews ">-->
+    <!--{{data.spot.comments[commentIndex].created_at | toTimezone: 'DD MMM YYYY [at] hh:mm a'}}</p>-->
+
+    <!--<div class="description">-->
+    <!--<span ng-bind-html="data.spot.comments[commentIndex].body | linky:'_blank'"></span>-->
+    <!--<span class="attachments" ng-hide="isEmptyAttachments()">&nbsp;</span>-->
+    <!--</div>-->
+
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div ng-if="!data.spot.comments.length" class="photos-event clearfix">-->
+    <!--<span>There are no comments yet</span>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="content-popup-spot">-->
+    <!--<div ng-show="view == 'photos'" class="wrapper">-->
+    <!--<div class="col-xs-12 previous-next no-pad">-->
+    <!--<a ng-click="changePhoto(-1)"-->
+    <!--ng-show="photoControl.start > 0" class="previous"></a>-->
+    <!--<a ng-click="changePhoto(1)"-->
+    <!--ng-show="photoControl.start + photoControl.step < data.spot.photos.length" class="next"> </a>-->
+    <!--</div>-->
+    <!--<div ng-if="data.spot.photos.length > 0" class="photos-event clearfix row">-->
+    <!--<a ng-repeat="item in data.spot.photos.slice(photoControl.start, photoControl.start + photoControl.step)"-->
+    <!--photo-viewer items="data.spot.photos" index="$index" current-item="item" class="col-xs-3">-->
+    <!--<img ng-src="{{item.photo_url.thumb}}">-->
+    <!--</a>-->
+    <!--</div>-->
+    <!--<div ng-if="data.spot.photos.length == 0" class="photos-event clearfix">-->
+    <!--<span>There are no photos yet</span>-->
+    <!--</div>-->
+
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--</div>-->
+    <!--<div class="links-nav">-->
+    <!--<ul class="tools col-xs-offset-3 clearfix">-->
+    <!--<li ng-if="!data.spot.is_saved && data.spot.category.type.name == 'event'">-->
+    <!--<a class="save-event" ng-click="saveToCalendar(data.spot)">Save</a>-->
+    <!--</li>-->
+    <!--<li ng-if="$root.currentUser && data.spot.is_saved">-->
+    <!--<a class="save-event saved clicked" ng-click="removeFromCalendar(data.spot)">Remove</a>-->
+    <!--</li>-->
+    <!--<li ng-if="$root.currentUser.id != data.spot.user_id && !data.spot.is_favorite">-->
+    <!--<a class="favorite-spot" ng-click="addToFavorite(data.spot)">Favorite</a>-->
+    <!--</li>-->
+    <!--<li ng-if="$root.currentUser && $root.currentUser.id != data.spot.user_id && data.spot.is_favorite">-->
+    <!--<a class="fav favorited" ng-click="removeFromFavorite(data.spot)">Unfavorite</a>-->
+    <!--</li>-->
+    <!--<li ng-if="data.spot.is_approved">-->
+    <!--<invite-friends item="data.spot"></invite-friends>-->
+    <!--</li>-->
+    <!--<li ng-if="data.spot.share_links">-->
+    <!--<share item="data.spot" type="spot"></share>-->
+    <!--</li>-->
+    <!--<li ng-if="data.spot.category.type.name == 'event'">-->
+    <!--<a class="download" ng-href="{{API_URL + '/spots/' + data.spot.id + '/export'}}" target="_blank">-->
+    <!--Export to ICS-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--</div>-->
+
+  </div>
+</script>

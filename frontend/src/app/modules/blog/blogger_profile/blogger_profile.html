@@ -1,0 +1,66 @@
+<div class="main-blog-content">
+    <div class="blog-content-first-block col-xs-12 ">
+        <div class="text-center">
+            <h2 class="title-name">
+        {{currentUser.id == profileUser.id ? 'My blog' : profileUser.first_name + "'s blog"}}
+      </h2></div>
+        <a ui-sref="profile_blog.create" class="add-friend-my-blog" title="Create new post" ng-if="currentUser.id == profileUser.id"></a>
+    </div>
+    <div class="article" ng-repeat="post in Blog.posts">
+        <div class="article-wrapper">
+            <div class="image-wrapper clearfix">
+                <img ng-src="{{post.cover_url.original}}" class="article-img">
+                <span class="date-sm hidden-xs" ng-bind-html="Blog.getDate(post.created_at)"></span>
+            </div>
+            <h2 class="title-blog row">
+          <a class="col-md-12 col-xs-9" ui-sref="blog.article({slug: post.slug || post.id})">{{post.title}}</a>
+          <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right" ng-bind-html="Blog.getDate(post.created_at)"></span>
+
+          <div class="clearfix"></div>
+        </h2>
+
+            <div class="location-link" ng-if="post.address">
+                <a ui-sref="index.post({slug: post.slug || post.id})">{{post.address}}</a>
+            </div>
+            <div class="clearfix"></div>
+
+            <p class="article-description article-description-truncated" ng-bind-html="post.body | htmlToPlaintext" truncated text="post.body | htmlToPlaintext"></p>
+
+            <div class="article-info col-xs-12">
+                <div class="blog-bottom-row">
+
+                    <p class="author">Author:
+                        <a ui-sref="profile.main({user_id: post.user.alias || post.user.id})">
+                {{post.user.first_name}} {{post.user.last_name}}
+              </a>
+                    </p>
+
+                    <p class="category">Category:
+                        <a>{{post.category.display_name}}</a>
+                    </p>
+
+                    <p class="views">Views: {{post.count_views}}</p>
+
+                    <p class="views">Comments: {{post.count_comments}}</p>
+                    <div>
+                        <share item="post" class="pull-right" type="post" only-icon="true"></share>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-sm-2" ng-if="currentUser.id == post.user_id || isRole(currentUser, 'admin')">
+                    <a ui-sref="profile_blog.edit({slug: post.slug || post.id})" class="edit-blog-article">Edit</a>
+                </div>
+                <div class="col-xs-2 col-sm-2" ng-if="currentUser.id == post.user_id || isRole(currentUser, 'admin')">
+                    <a ng-click="Blog.removePost(post, $index)" class="delete-blog-article">Delete</a>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    </div>
+    <div class="col-xs-12" ng-if="Blog.posts.length == 0">
+        <h4 class="text-center description">No posts yet.</h4>
+    </div>
+</div>

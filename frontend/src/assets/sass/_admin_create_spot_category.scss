@@ -1,0 +1,32 @@
+.spot-categories {
+    .save-spot {
+        float: right;
+        width: auto;
+    }
+    h2{
+    margin-left: 15px;}
+    padding-0 {
+        padding: 0;
+    }
+    legend {
+        border-bottom: none;
+    }
+    .category {
+        border: 1px solid #dee5ea;
+        width: 100%;
+        padding: 5px 10px;
+        border-radius: 3px;
+        outline: none;
+        @include transition_shadow;
+        &:hover {
+            border: 1px solid #76c7dc;
+            box-shadow: inset 0 1px 2px 0 #fff, 0 0 3px 0 #00b7f3;
+            @include transition_shadow
+        }
+    }
+    .button-admin {
+        font: 500 16px/18px;
+        padding: 5px 15px;
+        line-height: 110%;
+    }
+}

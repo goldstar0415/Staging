@@ -1,0 +1,97 @@
+<div class="modal-header">
+  <h3 class="margin-none">Choose some activities
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="modal.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </h3>
+</div>
+
+<div class="modal-body activity-modal-body clearfix">
+
+  <ul class="nav nav-tabs " role="tablist">
+    <li class="nav-tabs-default choose-tab" ng-click="modal.changeTab('spots')"
+        ng-class="{active: modal.tab == 'spots'}">
+      <a>My spots</a>
+    </li>
+    <li class="nav-tabs-default choose-tab " ng-click="modal.changeTab('favorites')"
+        ng-class="{active: modal.tab == 'favorites'}">
+      <a class="favorites-mobile">Favorites</a>
+    </li>
+    <li class="nav-tabs-default choose-tab" ng-click="modal.changeTab('areas')"
+        ng-class="{active: modal.tab == 'areas'}">
+      <a>Saved searches</a>
+    </li>
+  </ul>
+
+
+  <div class="tab-content">
+    <div class="col-sm-12">
+      <div class="search-block">
+        <input type="text" name="search" ng-model="search" class="search-friends" placeholder="Start typing...">
+        <input type="button" class="search-icon">
+      </div>
+    </div>
+
+    <div class="tab-pane col-sm-12 no-pad " ng-if="modal.tab == 'spots'"
+         ng-class="{active: modal.tab == 'spots'}">
+      <div class="col-sm-12 no-pad choose-friend-block">
+        <div ng-repeat="spot in modal.spots | filter: {is_approved: true, is_private: false, title: search}"
+             class="choose-friend choose-spot"
+             ng-class="{choose: spot.selected}"
+             ng-click="modal.addSpot(spot)">
+          <img class="friend-avatar" ng-src="{{spot.cover_url.thumb}}">
+          <h4 class="name-friend">
+            <a class="spot-name-friend">{{spot.title}}</a>
+          </h4>
+
+          <p class="date">
+            <date-range item="spot"></date-range>
+          </p>
+        </div>
+        <p ng-if="modal.spots.length == 0" class="text-center description">No spots yet.</p>
+      </div>
+    </div>
+
+    <div class="tab-pane col-sm-12 no-pad " ng-if="modal.tab == 'favorites'"
+         ng-class="{active: modal.tab == 'favorites'}">
+      <div class="col-sm-12 no-pad choose-friend-block">
+        <div class="">
+          <div ng-repeat="spot in modal.favorites | filter:{is_approved: true, is_private: false, title: search}"
+               class="choose-friend choose-spot col-sm-12"
+               ng-class="{choose: spot.selected}"
+               ng-click="modal.addSpot(spot)">
+            <img class="friend-avatar" ng-src="{{spot.cover_url.thumb}}">
+            <h4 class="name-friend">
+              <a class="favorites-name-friend">{{spot.title}}</a>
+            </h4>
+
+            <p class="date">
+              <date-range item="spot"></date-range>
+            </p>
+          </div>
+
+          <p ng-if="modal.favorites.length == 0" class="text-center description">No favorites yet.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane saved-search-block col-sm-12 no-pad" ng-if="modal.tab == 'areas'"
+         ng-class="{active: modal.tab == 'areas'}">
+      <div class="block-item" ng-repeat="area in modal.areas | filter: {title: search}">
+        <div class="clearfix" ng-class="{choose: area.selected}" ng-click="modal.addArea(area)">
+          <h4 class="activity-title"><a>{{area.title}}</a></h4>
+
+          <p class="saved-search-description">{{area.description}}</p>
+        </div>
+      </div>
+
+      <p ng-if="modal.areas.length == 0" class="text-center description">No saved searches yet.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-success pull-left col-sm-4  col-xs-5 button-my" ng-click="modal.close()" type="button">
+    Ok
+  </button>
+</div>

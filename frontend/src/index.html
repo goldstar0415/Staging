@@ -1,0 +1,401 @@
+<!doctype html>
+<html ng-app="zoomtivity" ng-jq="jQuery">
+<head>
+	<meta charset="utf-8">
+	<title>Zoomtivity</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta property="og:title" content="Zoomtivity"/>
+	<meta property="og:image" content="/assets/img/icons/logo.svg"/>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <meta name="theme-color" content="#0B2639">
+	<base href="/">
+
+	<link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+
+	<link rel="manifest" href="/manifest.json">
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+	<!-- inject: ./../.tmp/boot/boot.css.tmp --><link rel="stylesheet" type="text/css" href="/assets/css/boot.css"><!-- /injectfile -->
+
+	<script type="text/javascript">
+		(function(){
+			window.GIT_REVISION='__GULP_GIT_REVISION__';
+			window.versionize=function(urls){
+				var a=true;
+				/* !!! don't remove the '+' below, gulp should see exactly one search pattern */
+				if(window.GIT_REVISION=='__GULP_'+'GIT_REVISION__')return urls;
+				if(_.isString(urls)){urls=[urls];a=false;}
+				var res=_.map(urls, function(url){
+					return url.indexOf('/')===0&&url.indexOf('?')===-1?url+'?'+window.GIT_REVISION:url;
+				});
+				return a?res:res[0];
+			}
+		})();
+	</script>
+
+    <!-- inject: ./../.tmp/boot/boot.env.js.tmp --><script src="/env.js"></script><!-- /injectfile -->
+
+</head>
+<body autoscroll="true" id="body" class="content-hidden no-js">
+<!--[if lt IE 10]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+	your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- no-js notification -->
+<noscript>
+    <div id="no-js-notification">
+        <p>
+            We're Sorry, Zoomtivity Runs on Javascript. </br>
+            Please enable for your browser.
+        </p>
+        <img class="gif" src="/assets/img/nojs.gif" width="50%">
+    </div>
+</noscript>
+<script>
+    body.classList.remove("no-js");
+</script>
+<!-- /no-js notification -->
+
+<!--Preloader-->
+<div class="preloader hidden-no-js" id="preloader">
+	<div class="ferris_wheel">
+		<div class="wheel_wrap">
+			<div class="wheel">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+		<div class="buckets">
+			<div><span></span></div>
+			<div><span></span></div>
+			<div><span></span></div>
+			<div><span></span></div>
+			<div><span></span></div>
+			<div><span></span></div>
+			<div><span></span></div>
+			<div><span></span></div>
+		</div>
+		<div class="stand"><span></span></div>
+	</div>
+</div>
+<!-- /Preloader-->
+
+
+<div snap-drawers class="hidden-no-js">
+	<div snap-drawer>
+		<zm-side-menu side="left" ng-if="options.snap.disable == 'right'"></zm-side-menu>
+	</div>
+	<div snap-drawer="right">
+		<zm-side-menu side="right" ng-if="options.snap.disable == 'left'"></zm-side-menu>
+	</div>
+</div>
+
+<div snap-content snap-options="options.snap" class="hidden-no-js">
+	<!-- include header-->
+	<zm-header options="options" ng-class="{'landing-menu-wrapper': $state.includes('intro')}"></zm-header>
+
+	<!-- <hints-popup></hints-popup> -->
+
+	<!-- <map-sort ng-if="['full-size', 'big'].indexOf(mapState) >= 0"></map-sort> -->
+	<map-sort></map-sort>
+
+	<!-- map container-->
+	<div id="map" class="mapResize map {{mapState}}" ng-class="{ 'not-index': !$root.isMapState(), 'sidebar-opened': $root.isSidebarOpened, 'filter-opened': $root.isFilterOpened }"></div>
+
+	<!-- Opened spot -->
+	<div ng-if="$root.openedSpot != null && $root.isMapState()">
+		<spot spot="$root.openedSpot" modal="true"></spot>
+	</div>
+
+	<!-- content container-->
+	<div ng-show="mapState != 'full-size'" ui-view ng-class="{'landing-wrapper': $state.includes('intro')}"></div>
+
+	<div ng-include="'/app/components/navigation/profile_menu/profile_links.html'" class="map-block" ng-if="mapState == 'full-size' || $root.isMapState()"></div>
+	<!-- <div ng-include="'/app/components/navigation/profile_menu/profile_links_unauthorized.html'" class="map-block" ng-if="(mapState == 'full-size' && !currentUser) || ($root.isMapState() && !currentUser)"></div> -->
+
+</div>
+
+<ng-include src="'/app/modules/intro/intro_footer.html'"></ng-include>
+<ng-include src="'/app/components/map_partials/unregistered_banner.html'"></ng-include>
+<ng-include src="'/app/components/ng_message_templates/error_templates.html'"></ng-include>
+<ng-include src="'/app/components/password_reset/password_reset.html'"></ng-include>
+<ng-include src="'/app/components/photoviewer/photoviewer.html'"></ng-include>
+<ng-include src="'/app/components/users_modal/users_modal.html'"></ng-include>
+<ng-include src="'/app/components/map_popups/spot_map_modal/spot_map_modal.html'"></ng-include>
+
+<new-message></new-message>
+
+<!-- don't show it before preloader -->
+<div class="pick-notification" style="display: none;">
+	<img src='assets/img/Pick_a_tool.png'>
+</div>
+
+<!-- <div class="info-layout">
+    <p class="lay-info" data-elem=".leaflet-control .show-info">Show / Hide Info</p>
+    <p class="lay-radius" data-elem=".leaflet-control .radius-selection">Search By Radius</p>
+    <p class="lay-lasso" data-elem=".leaflet-control .lasso-selection">Draw Area</p>
+    <p class="lay-path" data-elem=".leaflet-control .path-selection">Search By Road Trip</p>
+    <p class="lay-location" data-elem=".leaflet-control .focus-geolocation">Show Your Location</p>
+    <p class="lay-category" data-elem=".todo-sidebar">Select Spot Category</p>
+    <p class="lay-weather" data-elem=".weather-sidebar">Show Weather</p>
+</div> -->
+
+<script> L_PREFER_CANVAS = true; </script>
+<script>
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+			// Registration was successful
+			console.log('ServiceWorker registration successful with scope: ', registration.scope);
+		}).catch(function(err) {
+			// registration failed :(
+			console.log('ServiceWorker registration failed: ', err);
+		});
+	}
+</script>
+<script>
+	//facebook
+	window.fbAsyncInit = function () {
+		FB.init({
+			appId: '742305589231590',
+			xfbml: true,
+			version: 'v2.4'
+		});
+	};
+
+	(function (d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {
+			return;
+		}
+		js = d.createElement(s);
+		js.id = id;
+		js.src = "//connect.facebook.net/en_US/sdk.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+
+</script>
+
+<!-- inject:cdn:js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.4.14/angular-resource.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/oclazyload/1.0.9/ocLazyLoad.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.8.0/loading-bar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.4.14/angular-sanitize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-touch/1.4.14/angular-touch.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.14/angular-cookies.min.js"></script>
+<!-- endinject -->
+
+<!-- todo: get gulp streams from here using useref -->
+<!-- inject:vendor:js -->
+<script src="/bower_components/angular-animate/angular-animate.js"></script>
+<script src="/bower_components/angular-translate/angular-translate.js"></script>
+<script src="/bower_components/angular-dialog-service/dist/dialogs.min.js"></script>
+<script src="/bower_components/angular-dialog-service/dist/dialogs-default-translations.min.js"></script>
+<script src="/bower_components/br-validations/releases/br-validations.js"></script>
+<script src="/bower_components/string-mask/src/string-mask.js"></script>
+<script src="/bower_components/angular-input-masks/angular-input-masks-standalone.min.js"></script>
+<script src="/bower_components/angular-messages/angular-messages.js"></script>
+<script src="/bower_components/angular-scroll-glue/src/scrollglue.js"></script>
+<script src="/bower_components/snapjs/snap.js"></script>
+<script src="/bower_components/angular-snap/angular-snap.js"></script>
+<script src="/bower_components/angular-ui-select/dist/select.js"></script>
+<script src="/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+<script src="/bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+<script src="/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+<script src="/bower_components/jQuery.dotdotdot/src/jquery.dotdotdot.min.umd.js"></script>
+<script src="/bower_components/bootstrap-modal/js/bootstrap-modal.js"></script>
+<script src="/bower_components/bootstrap-modal/js/bootstrap-modalmanager.js"></script>
+<script src="/bower_components/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
+<script src="/bower_components/angular-carousel/dist/angular-carousel.js"></script>
+<script src="/bower_components/skycons/skycons.js"></script>
+<script src="/bower_components/angular-skycons/angular-skycons.min.js"></script>
+<script src="/bower_components/ng-webworker/src/ng-webworker.min.js"></script>
+<script src="/bower_components/money.js/money.min.js"></script>
+<script src="/bower_components/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
+<script src="/assets/libs/screenfull/screenfull.min.js"></script>
+<script src="/assets/libs/Leaflet/leaflet.js"></script>
+<script src="/assets/libs/leaflet.pip/leaflet-pip.min.js"></script>
+<script src="/assets/libs/skobbler/skobbler-2.0.min.js"></script>
+<script src="/assets/libs/LeafletMarkerCluster/leaflet.markercluster.js"></script>
+<script src="/assets/libs/LeafletRoutingMachine/leaflet-routing-machine.js"></script>
+<script src="/assets/libs/angular-bootstrap.iml/ui-bootstrap-tpls.js"></script>
+<script src="/assets/libs/angularjs-dropdown-multiselect/angularjs-dropdown-multiselect.min.js"></script>
+<script src="/assets/libs/concave_hull/concavehull.min.js"></script>
+<script src="/assets/libs/datetimepicker/jquery.datetimepicker.js"></script>
+<script src="/assets/libs/bootstrap-tooltip/bootstrap-tooltip.js"></script>
+<script src="/assets/libs/screenfull/screenfull.min.js"></script>
+<!-- endinject -->
+
+<!-- inject:app:js -->
+<script src="/app/index.module.js"></script>
+<script src="/app/index.config.js"></script>
+<script src="/app/index.constants.js"></script>
+<script src="/app/index.route.js"></script>
+<script src="/app/index.run.js"></script>
+<script src="/app/models/album.js"></script>
+<script src="/app/models/area.js"></script>
+<script src="/app/models/friends.js"></script>
+<script src="/app/models/message.js"></script>
+<script src="/app/models/photo.js"></script>
+<script src="/app/models/photo_comment.js"></script>
+<script src="/app/models/plan.js"></script>
+<script src="/app/models/post.js"></script>
+<script src="/app/models/spot.js"></script>
+<script src="/app/models/spot_comment.js"></script>
+<script src="/app/models/spot_photo_comment.js"></script>
+<script src="/app/models/spot_review.js"></script>
+<script src="/app/models/user.js"></script>
+<script src="/app/components/blogger_request/blogger_request.directive.js"></script>
+<script src="/app/components/claim_spot/claim_spot.directive.js"></script>
+<script src="/app/components/contacts_import/contacts_import.directive.js"></script>
+<script src="/app/components/date_range/date_range.directive.js"></script>
+<script src="/app/components/attachments/attachments.directive.js"></script>
+<script src="/app/components/facebook_events/facebook_events.directive.js"></script>
+<script src="/app/components/directives/contenttools.js"></script>
+<script src="/app/components/directives/ctrlEnter.js"></script>
+<script src="/app/components/directives/datetimepicker.js"></script>
+<script src="/app/components/directives/eye_password.js"></script>
+<script src="/app/components/directives/justified_gallery.js"></script>
+<script src="/app/components/directives/link_checker.js"></script>
+<script src="/app/components/directives/ng_match.js"></script>
+<script src="/app/components/directives/onimageload.js"></script>
+<script src="/app/components/directives/repeat_done.js"></script>
+<script src="/app/components/directives/spotType.js"></script>
+<script src="/app/components/directives/youtube_player.js"></script>
+<script src="/app/components/facebook_friends/facebook_friends.directive.js"></script>
+<script src="/app/components/filters/absoluteLink.js"></script>
+<script src="/app/components/filters/age.js"></script>
+<script src="/app/components/filters/from_now.js"></script>
+<script src="/app/components/filters/htmlLinky.js"></script>
+<script src="/app/components/filters/htmlToPlaintext.js"></script>
+<script src="/app/components/filters/short_link.js"></script>
+<script src="/app/components/filters/toTrustedHtml.js"></script>
+<script src="/app/components/filters/to_paragraphs.js"></script>
+<script src="/app/components/filters/to_timezone.js"></script>
+<script src="/app/components/geolocation_ip/ip-api.js"></script>
+<script src="/app/components/google_contacts/google_contacts.controller.js"></script>
+<script src="/app/components/invite_friends/invite_friends.directive.js"></script>
+<script src="/app/components/google_maps_api/places_service.js"></script>
+<script src="/app/components/location/location_service.js"></script>
+<script src="/app/components/location_autocomplete/autocomplete.directive.js"></script>
+<script src="/app/components/flex_items/flex_items.directive.js"></script>
+<script src="/app/components/map_sort/mapSort.directive.js"></script>
+<script src="/app/components/map/map.service.js"></script>
+<script src="/app/components/new_message/new_message.directive.js"></script>
+<script src="/app/components/new_message/new_message.service.js"></script>
+<script src="/app/components/ng_carousel/ng_carousel.directive.js"></script>
+<script src="/app/components/ng_input/activity_modal.controller.js"></script>
+<script src="/app/components/ng_input/ng_input.directive.js"></script>
+<script src="/app/components/ng_input/photos_modal.controller.js"></script>
+<script src="/app/components/photoviewer/photoviewer.directive.js"></script>
+<script src="/app/components/password_recovery/password_recovery.directive.js"></script>
+<script src="/app/components/password_recovery/password_recovery.service.js"></script>
+<script src="/app/components/permission_service/permission_service.js"></script>
+<script src="/app/components/popular_posts/popular_posts.directive.js"></script>
+<script src="/app/components/report_spot/report_spot.directive.js"></script>
+<script src="/app/components/preloader/preloader.directive.js"></script>
+<script src="/app/components/password_reset/password_reset.controller.js"></script>
+<script src="/app/components/review_input/review_input.directive.js"></script>
+<script src="/app/components/scroll_service/scroll_service.js"></script>
+<script src="/app/components/share/share.js"></script>
+<script src="/app/components/send_message/send_message.directive.js"></script>
+<script src="/app/components/sign_in/sign_in.directive.js"></script>
+<script src="/app/components/sign_in/sign_in.service.js"></script>
+<script src="/app/components/sign_up/sign_up.directive.js"></script>
+<script src="/app/components/sign_up/sign_up.service.js"></script>
+<script src="/app/components/spot_card/spot_card.directive.js"></script>
+<script src="/app/components/socket/socket.service.js"></script>
+<script src="/app/components/spot_service/spot.service.js"></script>
+<script src="/app/components/spots_modal/spots_modal.directive.js"></script>
+<script src="/app/components/stars/stars.directive.js"></script>
+<script src="/app/components/user_hints/user_hints.directives.js"></script>
+<script src="/app/components/users_modal/users_modal.directive.js"></script>
+<script src="/app/components/truncated/truncated.directive.js"></script>
+<script src="/app/components/user_service/user.service.js"></script>
+<script src="/app/components/map_partials/hints/hints.directive.js"></script>
+<script src="/app/components/map_partials/saveSelection/save_selection.controller.js"></script>
+<script src="/app/components/map_popups/blog_popup/blog_popup.directive.js"></script>
+<script src="/app/components/map_popups/confirm_box/confirm.js"></script>
+<script src="/app/components/map_popups/post_popup/post_popup.js"></script>
+<script src="/app/components/map_popups/spot_map_modal/spot_map_modal.controller.js"></script>
+<script src="/app/components/map_popups/spot_popup/spot_popup.controller.js"></script>
+<script src="/app/components/map_popups/spot_popup/spot_popup.js"></script>
+<script src="/app/components/navigation/header/header.directive.js"></script>
+<script src="/app/components/navigation/side_menu/side_menu.directive.js"></script>
+<script src="/app/components/navigation/header/bloodhound-search.directive.js"></script>
+<script src="/app/modules/chat/chat.service.js"></script>
+<script src="/app/modules/spot/review/review.directive.js"></script>
+<script src="/app/modules/spot/spot.controller.js"></script>
+<script src="/app/components/async_loader_service/async_loader.service.js"></script>
+<script src="/app/components/weather/weather.directive.js"></script>
+<!-- endinject -->
+
+
+<!-- inject:partials -->
+<!-- angular templates will be automatically converted in js and inserted here -->
+<!-- endinject -->
+
+<!-- e-ndbuild -->
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.8.0/loading-bar.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.1/toastr.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
+<!-- inject:css -->
+<link rel="stylesheet" href="/bower_components/angular-dialog-service/dist/dialogs.min.css" />
+<link rel="stylesheet" href="/bower_components/angular-snap/angular-snap.css" />
+<link rel="stylesheet" href="/bower_components/angular-ui-select/dist/select.css" />
+<link rel="stylesheet" href="/bower_components/animate.css/animate.css" />
+<link rel="stylesheet" href="/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" />
+<link rel="stylesheet" href="/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+<link rel="stylesheet" href="/bower_components/ng-tags-input/ng-tags-input.min.css" />
+<link rel="stylesheet" href="/bower_components/toastr/toastr.css" />
+<link rel="stylesheet" href="/bower_components/bootstrap-modal/css/bootstrap-modal.css" />
+<link rel="stylesheet" href="/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" />
+<link rel="stylesheet" href="/bower_components/angular-carousel/dist/angular-carousel.css" />
+<link rel="stylesheet" href="/assets/libs/Leaflet/leaflet.css">
+<link rel="stylesheet" href="/assets/libs/LeafletRoutingMachine/leaflet-routing-machine.css">
+<link rel="stylesheet" href="/assets/libs/LeafletMarkerCluster/MarkerCluster.Default.css">
+<link rel="stylesheet" href="/assets/libs/LeafletMarkerCluster/MarkerCluster.css">
+<link rel="stylesheet" href="/assets/libs/bootstrap-tooltip/bootstrap-tooltip.css">
+<link rel="stylesheet" href="/assets/libs/datetimepicker/jquery.datetimepicker.css">
+<link rel="stylesheet" href="/assets/libs/jcarousel/jcarousel.css">
+<link rel="stylesheet" href="/assets/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="/assets/sass/_media.css">
+<link rel="stylesheet" href="/assets/sass/main.css">
+<link rel="stylesheet" href="/assets/css/main.css">
+<!-- endinject -->
+
+<!-- inject:servecss -->
+<!-- endinject -->
+
+<script>
+$(document).on('click', function() {
+	$('.pick-notification').hide();
+});
+window.hidePreloader = function() {
+	var pl = document.querySelector("#preloader");
+	if (pl) {
+		pl.parentNode.removeChild(pl);
+		body.classList.remove("content-hidden");
+	}
+};
+</script>
+
+</body>
+</html>

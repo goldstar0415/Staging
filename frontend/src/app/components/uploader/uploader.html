@@ -1,0 +1,27 @@
+<ng-form name="uploaderForm">
+  <div class="clearfix"
+       ngf-drop
+       ngf-select
+       name="images"
+       ng-model="Uploader.images"
+       ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+       ngf-multiple="Uploader.dropZone"
+       ng-class="{'drop-box': Uploader.dropZone}"
+       ngf-keep="true"
+       ngf-allow-dir="true"
+       ngf-keep-distinct="true"
+       ngf-accept="'image/*'"
+       ngf-max-size="5MB"
+       ngf-max-total-size="50MB"
+    >
+    <p ng-if="Uploader.dropZone" class="visible-xs">Click to upload</p>
+    <p ng-if="Uploader.dropZone" class="hidden-xs">Drag photos here or click to upload</p>
+    <a ng-if="!Uploader.dropZone" class="btn green-btn">{{Uploader.buttonText || 'Upload'}}</a>
+  </div>
+
+  <div class="error-message-uploader text-center" ng-messages="uploaderForm.images.$error" >
+    <div ng-message="maxSize">max photo size is 5MB</div>
+    <div ng-message="maxTotalSize">max total size is 50MB</div>
+  </div>
+</ng-form>
+<div ngf-no-file-drop>File Drop not available</div>

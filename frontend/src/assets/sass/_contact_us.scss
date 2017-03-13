@@ -1,0 +1,80 @@
+/*      contact us      */
+.contact-info {
+  margin-top: 0;
+  padding: 2.5rem !important;
+  padding-bottom: 1rem;
+  margin-bottom: 3rem;
+  .contact-title {
+    margin-bottom: 3rem;
+    font: 500 32px;
+  }
+  .contact-email {
+    a {
+      color: $blue;
+      &:hover, &:active, &:focus {
+        color: $navy_blue;
+        @include transition_color;
+      }
+    }
+  }
+}
+
+.contact-text {
+  margin-bottom: 20px;
+  padding-left: 5.5rem;
+  font: 400 16px;
+  padding-bottom: 5px;
+  background: url(../img/icons/contacts_ico.png) no-repeat !important;
+
+  &:nth-child(2) {
+    background-position: 0 -7px !important;
+    padding-left: 2.5em;
+  }
+  &:nth-child(3) {
+    background-position: 0 -51px !important;
+    padding-left: 2.5em;
+  }
+  &:last-child {
+    background-position: 0 -90px !important;
+    padding-left: 2.5em;
+  }
+}
+
+.keep-touch {
+  background: $white;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  border: 1px solid $light_grey;
+  position: relative;
+  .keep-touch-title {
+    padding: 0 0 20px 15px;
+    border-bottom: 1px solid $light_grey;
+    font: 500 24px;
+
+  }
+  .form-group {
+    .form-control {
+      min-height: 5rem;
+      padding: 1.5rem;
+    }
+    .control-label {
+      text-align: left;
+      font: 400 16px;
+      font-weight: bold;
+      padding-top: 1rem;
+    }
+    .send-btn {
+      background: $green;
+      border: 0;
+      color: $white;
+      width: 20%;
+      float: right;
+    }
+  }
+
+}
+
+:-ms-input-placeholder {
+  color: #999;
+}

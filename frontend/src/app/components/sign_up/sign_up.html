@@ -1,0 +1,92 @@
+<a ng-click="signUp.openSignUpModal()">Sign up</a>
+
+<script type="text/ng-template" id="SignUpModal.html">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="modal.close()">&times;</button>
+    <h4 class="modal-title">Registration</h4>
+  </div>
+  <div class="modal-body">
+    <form ng-submit="modal.signUpUser(form)" name="form" novalidate ng-hide="modal.success_message">
+
+      <input type="text" name="first_name" placeholder="First name..." ng-model="modal.first_name" class="white"
+             required/>
+
+      <div ng-messages="form.first_name.$error" ng-if="form.$submitted"
+           class="error-message">
+        <div ng-message="required">is required</div>
+      </div>
+
+      <input type="text" name="last_name" class="white" placeholder="Last name..." ng-model="modal.last_name"
+             required/>
+
+      <div ng-messages="form.last_name.$error" ng-if="form.$submitted" class="error-message">
+        <div ng-message="required">is required</div>
+      </div>
+
+      <input type="email" name="email" placeholder="E-mail..." class="white" ng-model="modal.email"
+             ng-focus="focused = true" ng-blur="focused = false" required/>
+
+      <div ng-messages="form.email.$error" ng-if="form.$submitted && !focused" class="error-message">
+        <div ng-messages-include="error-email-messages"></div>
+      </div>
+
+
+      <div class="password-block">
+        <input type="password"
+               name="password"
+               class="white"
+               placeholder="Password (min 6 symbols)..."
+               ng-model="modal.password"
+               minlength="6"
+               required/>
+        <a class="eye" eye-password></a>
+
+        <div ng-messages="form.password.$error" ng-if="form.$submitted " class="error-message">
+          <div ng-messages-include="error-password-messages"></div>
+        </div>
+      </div>
+
+      <div class="password-block">
+        <input type="password"
+               name="password_confirmation"
+               class="white"
+               placeholder="Password confirmation..."
+               ng-model="modal.password_confirmation"
+               ng-match="modal.password"
+               minlength="6"
+               required/>
+        <a class="eye" eye-password></a>
+
+        <div ng-messages="form.password_confirmation.$error"
+             ng-if="form.$submitted" class="error-message">
+          <div ng-messages-include="error-password-messages"></div>
+        </div>
+
+      </div>
+
+      <div class="terms-and-conditions-block">
+        <div class="checkbox-terms-and-conditions-hidden">
+          <input type="checkbox" ng-model="modal.$$checkbox_terms_and_conditions" name="$$checkbox_terms_and_conditions" required>
+        </div>
+        <checkbox ng-model="modal.$$checkbox_terms_and_conditions"></checkbox>
+        <span>I have read and understood the <a href="/terms" target="_blank">terms and conditions</a></span>
+
+        <div ng-messages="form.$$checkbox_terms_and_conditions.$error" ng-if="form.$submitted" class="error-message">
+          <div ng-message="required" class="ng-scope">is required</div>
+        </div>
+
+      </div>
+
+      <p>All fields are required</p>
+      <input type="submit" value="Register">
+    </form>
+
+    <div ng-show="modal.success_message">
+      {{ modal.success_message }}
+    </div>
+  </div>
+  <div class="modal-footer" ng-hide="modal.success_message">
+    <a ng-href="{{modal.BACKEND_URL}}/account/facebook">Sign Up with Facebook</a>
+    <a ng-href="{{modal.BACKEND_URL}}/account/google">Sign Up with Google</a>
+  </div>
+</script>

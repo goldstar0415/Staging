@@ -1,0 +1,51 @@
+
+<div class="content-block clearfix text-center"><h2 class="title-name">Plan a road trip</h2>
+    <h4>Million of Events for Everyone. Festivals. Concerts. Fairs &AMP; Fun Stuff</h4>
+    <div class="img-wrap"><img src="/assets/img/icons/plan.png" alt=""/></div>
+    <div class="col-xs-12">
+        <div class="row road-trip">
+            <div class="search-filters search-block no-pad"><!--Please add here class="applyed" for re-color inputs to blue-->
+                <div class="country-filter clearfix pause-block" ng-repeat="item in Intro.locations | orderBy:'-'">
+                    <span class="icon-pause" ></span>
+                    <location address="item.address" location="item.location" limit="15" bind-marker="false"></location>
+                    <span class="icon-nav"></span>
+                </div>
+                <div class="country-filter clearfix">
+                    <span class="icon-play" ></span>
+
+                    <location address="Intro.newLocation.address" location="Intro.newLocation.location"
+                              bind-marker="false" limit="15" pls="'Start location...'"></location>
+
+                    <span class="icon-nav" ></span>
+                </div>
+                <div class="country-filter clearfix add-stop">
+                    <a class="add-row" ng-click="Intro.addLocation()"><span></span>Add another stop</a>
+                </div>
+                <div class="country-filter clearfix">
+                    <span class="icon-play" ></span>
+
+                    <location address="Intro.finalLocation.address" location="Intro.finalLocation.location"
+                              bind-marker="false" limit="15" pls="'Final destination...'"></location>
+
+                    <span class="icon-nav" ></span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <button type="submit" class="btn btn-default green-btn " ng-click="Intro.searchRoute()">search</button>
+        </div>
+        <div class="row other-search">
+            <a class="long-btn-map" ng-click="Intro.routeSearch()"><span><i class="icon-route"></i>use map tool</span></a>
+        </div>
+        <div class="row">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+    </div>
+</div>

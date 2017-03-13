@@ -1,0 +1,172 @@
+.album-container {
+  padding: 0 5px;
+  .img-wrap {
+    width: 100%;
+    margin: 0 auto 20px;
+    display: block;
+    position: relative;
+    border: 1px solid $light_grey;
+    border-radius: 0;
+    text-align: center;
+    height: 210px;
+    -webkit-box-shadow: 0px 2px 2px 0px rgba(191, 191, 191, 0.3);
+    -moz-box-shadow: 0px 2px 2px 0px rgba(191, 191, 191, 0.3);
+    box-shadow: 0px 2px 2px 0px rgba(191, 191, 191, 0.3);
+    .photo-wrapper {
+      height: calc(100% - 50px);
+      vertical-align: middle;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .album-tools-wrap {
+      padding: 0;
+      display: none;
+      a {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        display: block;
+        float: right;
+        &:hover {
+          background-color: none;
+        }
+        span {
+          color: #98a4ac;
+        }
+        &.delete {
+          background: url(../img/svg/delete_button.svg) no-repeat;
+        }
+        &.edit {
+          //background: url(../img/svg/new_icons/zoomers-avatar.svg) center center no-repeat #00C9F8;
+          //background-size: 20px;
+          background: url(../img/svg/edit_button.svg) no-repeat;
+        }
+      }
+    }
+    img {
+      width: 100%;
+      min-height: 100%;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+    a {
+      display: block;
+      padding: 1.5rem;
+      color: $dark_blue;
+      font: 500 16px/22px;
+      transition: color .3s;
+      border-top: 1px solid $light_grey;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-radius: 0;
+      width: 100%;
+      background-color: #fff;
+      &:hover {
+        color: $blue;
+        transition: color .3s;
+      }
+      &.album-title {
+        position: absolute;
+        bottom: 0;
+        color: #000;
+      }
+      span {
+          color: #98a4ac;
+          font-size: 1.2rem;
+        }
+    }
+    &:hover {
+      .album-tools-wrap {
+        display: block;
+        margin-bottom: -40px;
+      }
+    }
+  }
+}
+
+.create {
+  label {
+    font: 200 16px/22px;
+    padding-top: 1.3rem;
+    font-weight: bold;
+  }
+  .upload-photos {
+    border-top: 1px solid $light_grey;
+    border-bottom: 0;
+    padding: 20px 15px;
+    h3 {
+      float: left;
+      margin: 0;
+    }
+  }
+  .save-cancel {
+    padding: 15px;
+    margin-top: 2rem;
+    input {
+      width: 13.5rem;
+      height: 5rem;
+      border: none;
+      @include button;
+      padding: 6px 15px;
+      @include transition_bg_color;
+      margin-bottom: 0;
+      &:hover {
+        box-shadow: none;
+        border: none;
+        @include transition_bg_color;
+      }
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+    .save {
+      background-color: $blue_btn;
+      margin-bottom: 0;
+      &:hover {
+        background-color: $light_blue_btn;
+      }
+    }
+    .cancel {
+      background-color: $navy_blue;
+      &:hover {
+        background-color: $light_blue;
+      }
+    }
+  }
+}
+
+@media (max-width: 550px) {
+
+  .album-tools-wrap {
+    display: block !important;
+    position: absolute;
+    bottom: 6px;
+    right: 5px;
+    float: right;
+    .edit {
+       margin-right: 4px;
+    }
+    .delete {
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .create {
+    .label-width {
+      width: 100%;
+    }
+    .input-width {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 350px) {
+  .album-container {
+    width: 100%;
+  }
+}

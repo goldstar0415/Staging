@@ -1,0 +1,25 @@
+.create_level{
+    background: #fff;
+    border: 1px solid #e9def0;
+    border-radius: 10px;
+    padding: 20px;
+    form {
+        label {
+            width: 20%;
+            font: 500 16px/18px;
+        }
+        .title-level {
+            width: 70%;
+        }
+
+        .number-events{
+            width: 70px;
+        }
+
+        .button-my{
+            width: 20%;
+            font: 500 16px/18px;
+            padding: 5px 15px;
+        }
+    }
+}

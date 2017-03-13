@@ -1,0 +1,39 @@
+<input ng-show="provider === 'google'"
+       typeahead="address as address.formatted_address for address in getData($viewValue)"
+       typeahead-wait-ms="100"
+       typeahead-on-select="onAutocompleteSelect($item, $model, $label)"
+
+       ng-model="viewAddress"
+       ng-change="onChange()"
+       ng-model-options="{ debounce: 200 }"
+
+       popover="{{bindMarker && !location ? 'Type address or click on the map to set location(s)'  : ''}}"
+       popover-trigger="focus"
+
+       placeholder="{{placeHolder}}"
+       type="text"
+       autocomplete="off"
+       class="{{customClasses}}"
+       ng-class="className">
+
+<input ng-show="provider != 'google'"
+       typeahead="address as address.formatted_address for address in getData($viewValue)"
+       typeahead-wait-ms="100"
+       typeahead-on-select="onAutocompleteSelect($item, $model, $label)"
+
+       ng-model="viewAddress"
+       ng-change="onChange()"
+
+       popover="{{bindMarker && !location ? 'Type address or click on the map to set location(s)'  : ''}}"
+       popover-trigger="focus"
+
+       placeholder={{placeHolder}}
+       type="text"
+       autocomplete="off"
+       class="{{customClasses}}"
+       ng-class="className">
+
+<a ng-if="showUserLocation"
+   ng-click="SetCurrentLocation();"
+   class="compass compass-location"
+   title="Find out the location"></a>

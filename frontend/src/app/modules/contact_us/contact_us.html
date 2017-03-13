@@ -1,0 +1,67 @@
+<div class="col-xs-12 main-container">
+  <div class="container wrap">
+    <div class="col-sm-6 col-xs-12 nopad-media contact-info">
+      <div class="text-center"><h2 class="title-name">Contact us</h2></div>
+
+      <p class="contact-location contact-text col-xs-12">1234 Street Mountain View, CA 94043</p>
+
+      <p class="contact-phone contact-text col-xs-12">+1 123-456-7890</p>
+
+      <p class="contact-email contact-text col-xs-12"><a href="#">email@example.com</a>
+      </p>
+    </div>
+
+    <div class="col-sm-6 col-xs-12  no-pad">
+      <div class="text-center mgt25"><h2 class="title-name">Message</h2></div>
+      <div class="event-main-info contact-info keep-touch">
+        <form class="form-horizontal" name="form" ng-submit="ContactUs.save()" novalidate ng-if="!ContactUs.$saved">
+          <div class="form-group">
+            <label class="col-md-2 col-sm-12  col-xs-12 control-label">Name</label>
+
+            <div class="col-md-10 col-sm-12 col-xs-12">
+              <input type="text" class="form-control" name="username" ng-model="ContactUs.username" required>
+
+              <div class="error-message" ng-messages="form.username.$error"
+                   ng-if="form.$submitted || form.username.$touched">
+                <div ng-messages-include="error-title-messages"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 col-sm-12  col-xs-12 control-label">Email</label>
+
+            <div class="col-md-10 col-sm-12 col-xs-12">
+              <input type="email" class="form-control" name="email" ng-model="ContactUs.email" required>
+
+              <div class="error-message" ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched">
+                <div ng-messages-include="error-email-messages"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-2 col-sm-12  col-xs-12 control-label">Message</label>
+
+            <div class="col-md-10 col-sm-12 col-xs-12">
+            <textarea class="form-control" rows="3" name="message" ng-model="ContactUs.message" ng-minlength="10"
+                      required></textarea>
+
+              <div class="error-message" ng-messages="form.message.$error"
+                   ng-if="form.$submitted || form.message.$touched">
+                <div ng-messages-include="error-title-messages"></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="media-center">
+              <button type="submit" class="btn btn-default green-btn pull-right">SEND</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div ng-if="ContactUs.$saved" class="alert alert-success" role="alert">
+        <b>Thank You!</b>
+      </div>
+    </div>
+  </div>
+</div>

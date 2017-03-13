@@ -1,0 +1,50 @@
+.blogpopup .leaflet-popup-content-wrapper {
+    border-radius: 0 !important;
+    height: 150px !important;
+    width: 400px !important;
+    overflow: hidden;
+    .blog-popup {
+        display: flex;
+        position: relative;
+        .blog-popup-img {
+            width: 150px;
+            height: 150px;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        .blog-popup-content {
+            width: calc(100% - 150px);
+            position: relative;
+            padding: 15px;
+            h2 {
+                margin: 0;
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .line {
+                border-top: 1px solid lightgrey;
+                width: 100%;
+                height: 1px;
+                margin-left: -15px;
+            }
+            .blog-popup-address {
+                .glyphicon {
+                    color: #01C9FA;
+                }
+            }
+            p {
+                margin: 8px 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: calc(100% - 50px);
+                span {
+                    color: #01C9FA;
+                }
+            }
+        }
+    }
+}

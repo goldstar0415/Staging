@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="modal.close()">&times;</button>
+  <h4 class="modal-title">Report</h4>
+</div>
+<div class="modal-body report-modal clearfix">
+
+  <form name="form" ng-submit="modal.save(form)" novalidate>
+    <div class="reason-block">
+      <input type="radio" ng-model="modal.reason" value="0" id="reason_0" class="radio">
+      <label for="reason_0"><span> Wrong&nbsp;Information</span></label>
+    </div>
+    <div class="reason-block">
+      <input type="radio" ng-model="modal.reason" value="1" id="reason_1">
+      <label for="reason_1"><span> Inappropriate&nbsp;Content</span></label>
+    </div>
+    <div class="reason-block">
+      <input type="radio" ng-model="modal.reason" value="2" id="reason_2">
+      <label for="reason_2"><span> Duplicate&nbsp;Data</span></label>
+    </div>
+    <div class="reason-block">
+      <input type="radio" ng-model="modal.reason" value="3" id="reason_3">
+      <label for="reason_3"><span> Spam</span></label>
+    </div>
+    <div class="reason-block">
+      <input type="radio" ng-model="modal.reason" value="4" id="reason_4">
+      <label for="reason_4"><span> Other</span></label>
+    </div>
+
+    <textarea placeholder="Description" name="description" ng-model="modal.description" 
+              required></textarea>
+
+    <div ng-messages="form.description.$error" ng-if="form.$submitted" class="error-message">
+      <div ng-message="required">is required</div>
+    </div>
+
+    <div>
+      <button class="btn btn-success pull-left col-sm-4  col-xs-5 button-my" type="submit">
+        Send
+      </button>
+    </div>
+  </form>
+</div>

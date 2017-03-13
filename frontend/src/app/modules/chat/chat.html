@@ -1,0 +1,74 @@
+<div class="messages">
+    <div ng-include="'/app/components/user_tab_menu/user_tab_menu.html'"></div>
+    <div ng-repeat="dialog in Chat.dialogs" class="wall-item" ui-sref="chatRoom({user_id: dialog.user.id})">
+        <div class="wall-user">
+            <a ui-sref="profile.main({user_id: dialog.user.alias || dialog.user.id})" class="wall-avatar">
+                <img ng-src="{{dialog.user.avatar_url.thumb}}">
+            </a>
+            <div class="wall-user-info">
+                <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">
+                    <span>{{dialog.user.first_name}} {{dialog.user.last_name}}</span>
+                </a>
+                <p>{{dialog.last_message.created_at | toTimezone}}</p>
+            </div>
+        </div>
+        <div class="wall-content">
+            <div class="wall-message">
+                <p ng-if="dialog.last_message.message != ''" ng-bind-html="dialog.last_message.message | linky:'_blank'" class="color-link"></p>
+                <p ng-if="dialog.last_message.message == ''" ng-bind-html="'[Attachment]' | linky:'_blank'" class="color-link"></p>
+            </div>
+            <div class="wall-buttons">
+                Go to dialog...
+            </div>
+        </div>
+    </div>
+    <!-- <div ng-repeat="dialog in Chat.dialogs" class="col-xs-12 message" ui-sref="chatRoom({user_id: dialog.user.id})" ng-class="{new: !dialog.last_message.is_read && dialog.last_message.user_id != currentUser.id}">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 nopad-media">
+            <a ui-sref="profile.main({user_id: dialog.user.alias || dialog.user.id})">
+                <img ng-src="{{dialog.user.avatar_url.thumb}}" class="avatar" />
+            </a>
+        </div>
+        <div class=" name-data" ng-class="{'col-xs-10 col-md-4 col-sm-3': dialog.last_message.user_id == currentUser.id, 'col-xs-8 col-md-8 col-sm-9' : dialog.last_message.user_id != currentUser.id}">
+            <h3 class="name">
+        <a>
+          {{dialog.user.first_name}} {{dialog.user.last_name}}
+        </a>
+      </h3>
+
+            <p class="send-message" ng-if="dialog.last_message.message">{{dialog.last_message.message}}</p>
+
+            <p ng-if="!dialog.last_message.message"><b>View Messages</b></p>
+
+            <p class="data">{{dialog.last_message.created_at | toTimezone}}</p>
+            <a class="delete" ng-click="Chat.deleteDialog(dialog.user.id, $index)">Delete</a>
+        </div>
+        <div class="content-messages padr0 hidden-xs">
+            <div ng-if="dialog.last_message.user_id != currentUser.id">
+            </div>
+            <div ng-if="dialog.last_message.user_id == currentUser.id" class="col-md-4 col-sm-6 col-md-offset-0 col-xs-4 col-xs-offset-8 nopad-media incoming-avatar">
+                <a>
+                    <img ng-src="{{currentUser.avatar_url.thumb}}">
+                </a>
+            </div>
+            <div ng-if="dialog.last_message.user_id == currentUser.id" class="col-xs-12 col-md-4 incoming-messages nopad-media" ng-class="{new: !dialog.last_message.is_read}">
+                <div class="col-md-12 col-sm-12 col-xs-12 nopad-media">
+                    <div class="message-in">
+                        <h3 class="name">
+              <a>
+                {{currentUser.first_name}} {{currentUser.last_name}}
+              </a>
+            </h3>
+
+                        <p ng-if="dialog.last_message.message">{{dialog.last_message.message}}</p>
+
+                        <p ng-if="!dialog.last_message.message"><b>View Messages</b></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div> -->
+    <div class="col-xs-12" ng-if="Chat.dialogs.length == 0">
+        <h4 class="text-center description">No messages yet</h4>
+    </div>
+</div>

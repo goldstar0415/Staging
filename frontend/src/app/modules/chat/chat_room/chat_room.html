@@ -1,0 +1,143 @@
+<div class="chat-conversation clearfix">
+    <div class="text-center">
+        <a ui-sref="chat" class="btn-back"></a>
+        <h2 class="title-name">
+      <a ui-sref="chat" title="back" class="back"></a>
+      <a ui-sref="profile.main({user_id: ChatRoom.user.alias || ChatRoom.user.id})">{{ChatRoom.user.first_name}}
+        {{ChatRoom.user.last_name}}'s</a>
+      dialog
+    </h2>
+    </div>
+
+    <div class="posts-chat clearfix" scroll-glue>
+        <!--<div class="show-previous">-->
+        <!--<a >Show previous posts</a>-->
+        <!--</div>-->
+
+        <div class="col-xs-12 padding-0">
+
+            <div ng-repeat="messageGroup in ChatRoom.messages.data track by $index ">
+                <h4 class="date-dialog-day">{{messageGroup.day}}</h4>
+
+                <div ng-repeat="message in messageGroup.messages">
+                    <div class="wall-item wall-item-chat" ng-if="currentUser.id == message.pivot.sender_id">
+                        <div class="wall-user">
+                            <a ui-sref="profile.main({user_id: dialog.user.alias || dialog.user.id})" class="wall-avatar">
+                                <img ng-src="{{currentUser.avatar_url.thumb}}">
+                            </a>
+                            <div class="wall-user-info">
+                                <a ui-sref="profile.main({user_id: currentUser.alias || currentUser.id})">
+                                    <span>{{currentUser.first_name}} {{currentUser.last_name}}</span>
+                                </a>
+                                <p>{{message.created_at}}</p>
+                            </div>
+                        </div>
+                        <div class="wall-content">
+                            <div class="wall-message">
+                                <p ng-bind-html="message.body | linky:'_blank'" class="color-link"></p>
+                                <attachments items="message.attachments"></attachments>
+                            </div>
+                            <div class="wall-buttons">
+                                <a ng-click="ChatRoom.deleteMessage(message.id)" class="delete"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wall-item wall-item-chat wall-item-right" ng-if="ChatRoom.user.id == message.pivot.sender_id">
+                        <div class="wall-user">
+                            <a ui-sref="profile.main({user_id: ChatRoom.user.alias || ChatRoom.user.id})" class="wall-avatar">
+                                <img ng-src="{{ChatRoom.user.avatar_url.thumb}}">
+                            </a>
+                            <div class="wall-user-info">
+                                <a ui-sref="profile.main({user_id: ChatRoom.user.alias || ChatRoom.user.id})">
+                                    <span>{{ChatRoom.user.first_name}} {{ChatRoom.user.last_name}}</span>
+                                </a>
+                                <p>{{message.created_at}}</p>
+                            </div>
+                        </div>
+                        <div class="wall-content">
+                            <div class="wall-message">
+                                <p ng-bind-html="message.body | linky:'_blank'" class="color-link"></p>
+                                <attachments items="message.attachments"></attachments>
+                            </div>
+                            <div class="wall-buttons">
+                                <a ng-click="ChatRoom.deleteMessage(message.id)" class="delete"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--       Dialog-User                 -->
+                    <!-- <div class="col-xs-12 dialog-user" ng-if="currentUser.id == message.pivot.sender_id"
+               ng-class="{new: !message.is_read}">
+            <div class="col-xs-12 user-name">
+
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 padding-0">
+              <div class="col-xs-12 col-md-2">
+                <p class="date right">{{message.created_at }}</p>
+              </div>
+              <div class="col-xs-12 col-md-10 dialog-content">
+                <div class="dial">
+                  <h3 class="right">
+                    <a ui-sref="profile.main({user_id: currentUser.alias || currentUser.id})">
+                      {{currentUser.first_name}} {{currentUser.last_name}}
+                    </a>
+                  </h3>
+                  <p ng-bind-html="message.body | linky:'_blank'"></p>
+                  <attachments items="message.attachments"></attachments>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2 col-xs-3">
+              <a ui-sref="profile.main({user_id: currentUser.alias || currentUser.id})" class="pull-right">
+                <img ng-src="{{currentUser.avatar_url.thumb}}" class="avatar">
+              </a>
+            </div>
+            <div class="delete-user">
+              <a ng-click="ChatRoom.deleteMessage(message.id)">
+                <img src="assets/img/icons/del.png">
+              </a>
+            </div>
+          </div> -->
+
+                    <!--       Dialog-friend                     -->
+                    <!-- <div class="col-xs-12 dialog-friend mgb10" ng-if="ChatRoom.user.id == message.pivot.sender_id"
+               ng-class="{new: !message.is_read}">
+            <div class="col-xs-12 user-name ">
+
+            </div>
+            <div class="col-md-3 col-lg-2 col-sm-4 col-xs-3">
+              <a ui-sref="profile.main({user_id: ChatRoom.user.alias || ChatRoom.user.id})">
+                <img ng-src="{{ChatRoom.user.avatar_url.thumb}}" class="avatar">
+              </a>
+            </div>
+            <div class="col-md-9 col-lg-10 col-sm-8 col-xs-9 padl0">
+
+              <div class="col-xs-12 col-md-10 dialog-content-friend ">
+                <div class="dial">
+                  <h3>
+                    <a ui-sref="profile.main({user_id: ChatRoom.user.alias || ChatRoom.user.id})">
+                      {{ChatRoom.user.first_name}} {{ChatRoom.user.last_name}}
+                    </a>
+                  </h3>
+                  <p ng-bind-html="message.body | linky:'_blank'"></p>
+                  <attachments items="message.attachments"></attachments>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-2 padl0">
+                <p class="date left">{{message.created_at }}</p>
+              </div>
+            </div>
+            <div class="delete-friend">
+              <a ng-click="ChatRoom.deleteMessage(message.id)">
+                <img src="assets/img/icons/del.png">
+              </a>
+            </div>
+          </div> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-input message="ChatRoom.message" attachments="ChatRoom.attachments" on-submit="ChatRoom.sendMessage()" maxlength="5000" on-focus="ChatRoom.markAsRead()" mobile="true"></ng-input>
+</div>

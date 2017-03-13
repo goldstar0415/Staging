@@ -1,0 +1,78 @@
+<div class="main-container">
+  <div class="container wrap padt40 mgt25">
+    <div class="text-center"><h2 class="title-name">Blog</h2></div>
+
+    <div class="main-blog-content">
+      <div class="media-wrap">
+        <popular-posts show-banner="true" class="hidden-xs"></popular-posts>
+      </div>
+      <div class="visible-xs media-banner-blog">
+        <div class="banner-for-bloggers col-xs-12">
+          <div class="banner-logo"></div>
+          <p class="text-banner">Want to add a post to our blog?</p>
+          <button type="button" blogger-request="" class="banner-btn" ></button>
+        </div>
+      </div>
+
+      <!-- blog content -->
+      <div class="central col-lg-7 col-sm-12 col-md-12 col-lg-push-1 col-xs-12">
+
+        <div infinite-scroll="Blog.pagination.nextPage()" infinite-scroll-disabled="Blog.pagination.busy"
+             class="clearfix" infinite-scroll-distance="1">
+
+          <div class="article" ng-repeat="post in Blog.posts.data">
+            <div class="article-wrapper">
+              <div class="image-wrapper clearfix">
+                <img ng-src="{{post.cover_url.original}}" class="article-img">
+                <span class="date-sm hidden-xs" ng-bind-html="Blog.getDate(post.created_at)"></span>
+              </div>
+              <h2 class="title-blog row">
+                <a class="col-md-12 col-xs-9" ui-sref="blog.article({user_id: post.user.id || 0, slug: post.slug || post.id})">{{post.title}}</a>
+                <span class="col-xs-3 col-md-0 visible-xs date-xs pull-right" ng-bind-html="Blog.getDate(post.created_at)"></span>
+
+                <div class="clearfix"></div>
+              </h2>
+
+              <div class="location-link" ng-if="post.address">
+                <a ui-sref="index.post({slug: post.slug || post.id})">{{post.address}}</a>
+              </div>
+              <div class="clearfix"></div>
+
+              <p class="article-description article-description-truncated" ng-bind-html="post.body | htmlToPlaintext" truncated text="post.body | htmlToPlaintext"></p>
+
+              <div class="article-info col-xs-12">
+                <div class="blog-bottom-row">
+
+                  <p class="author">Author:
+                    <a ui-sref="profile.main({user_id: post.user.alias || post.user.id})">
+                      {{post.user.first_name}} {{post.user.last_name}}
+                    </a>
+                  </p>
+
+                  <p class="category">Category:
+                    <a>{{post.category.display_name}}</a>
+                  </p>
+
+                  <p class="views">Views: {{post.count_views}}</p>
+
+                  <p class="views">Comments: {{post.count_comments}}</p>
+                    <div>
+                        <share item="post" class="pull-right" type="post" only-icon="true"></share>
+                    </div>
+
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12" ng-if="Blog.posts.data.length == 0 && !Blog.pagination.busy">
+        <h4 class="text-center description">No posts yet.</h4>
+      </div>
+      <!-- end blog content -->
+
+    </div>
+  </div>
+</div>

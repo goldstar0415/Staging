@@ -1,0 +1,239 @@
+.tabs-profile {
+  list-style: none;
+  margin: 24px 0 30px 0;
+  padding-left: 1px;
+  border-bottom: 1px solid #e9edf0;
+  li {
+    display: inline-block;
+    border: none;
+    margin-bottom: -1px;
+    a {
+      font-size: 16px;
+      line-height: 35px;
+      padding: 10px 20px 8px;
+      background: #e6e9eb;
+      border-radius: 5px 5px 0 0;
+      color: #000;
+      @include transition_color;
+      &:hover {
+        background: #00b7f3;
+        color: white;
+        @include transition_color;
+      }
+    }
+  }
+  .active {
+    a {
+      background: #0486df;
+      color: white;
+      transition: background .3s;
+    }
+  }
+}
+
+.padding-0 {
+  padding: 0;
+}
+
+.new-post {
+  padding: 10px;
+  background: #e9edf0;
+  border-radius: 7px 7px 0 0;
+  textarea {
+    resize: none;
+    width: 100%;
+    min-height: 85px;
+    margin-bottom: 8px;
+    padding: 5px 10px;
+    background: white;
+    border: 1px solid #dee5ea;
+    border-radius: 3px;
+    @include transition_shadow;
+    &:hover {
+      border: 1px solid #76c7dc;
+
+      box-shadow: 0 0 3px #00b7f3;
+      @include transition_shadow;
+    }
+  }
+  hr {
+    margin: 0 -10px 8px -10px;
+    height: 1px;
+    background: #cecbcb;
+  }
+  .submit-send {
+    width: 54px;
+    height: 22px;
+    margin-left: 14px;
+    background: #0c2638;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 12px;
+    float: right;
+    @include transition_bg;
+    &:hover {
+      background: #1a415b;
+      @include transition_bg;
+    }
+  }
+  .add-photo {
+    float: right;
+    display: block;
+    width: 16px;
+    height: 14px;
+    margin: 4px 0 0 10px;
+    background: url(../img/icons/clip-photo.png) no-repeat right top;
+    &:hover {
+      background: url(../img/icons/clip-photo.png) no-repeat right bottom;
+    }
+  }
+  .add-attach {
+    float: right;
+    display: block;
+    width: 16px;
+    height: 14px;
+    margin: 4px 0 0 10px;
+    background: url(../img/icons/clip-photo.png) no-repeat;
+    &:hover {
+      background: url(../img/icons/clip-photo.png) no-repeat left bottom;
+    }
+  }
+}
+
+.post {
+  padding: 15px 10px;
+  border-bottom: 1px solid #e9edf0;
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 40px;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .35);
+  }
+  .info {
+    position: relative;
+    .name {
+      text-align: none;
+      padding: 0;
+      margin-left: 0;
+      display: block;
+      font-size: 17px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      width: 380px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #0c2638;
+      transition: color 0.3s;
+      &:hover {
+        color: #124d76;
+        transition: color 0.3s;
+      }
+    }
+    .link-info {
+      margin-top: 5px;
+      color: #00b7f3;
+      transition: color 0.3s;
+      &:hover {
+        color: #0874be;
+        transition: color 0.3s;
+      }
+    }
+    .photo-info {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .time {
+      font: 11px;
+      color: #b9bdc0;
+      margin-top: 10px;
+    }
+    .external-link {
+      margin-bottom: 10px;
+      padding: 0;
+    }
+    .photo-info-small img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      padding: 5px;
+    }
+    .photo-info-big img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      padding: 5px;
+    }
+    .photo-info a img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+    }
+    .next-comments {
+      .wrap {
+        img {
+          border: 1px solid #f3f4f5;
+          background: #fff;
+        }
+      }
+      .second-info {
+        .second-link {
+          display: block;
+          color: #00b7f3;
+          font: 700 13px/13px;
+          line-height: 120%;
+          padding-left: 13px;
+          margin: 15px 0 10px;
+          background: url(../img/icons/arrow.png) no-repeat left 4px;
+          @include transition_color;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          &:hover {
+            color: #0874be;
+            background: url(../img/icons/arrow.png) no-repeat left -10px;
+            @include transition_color;
+          }
+        }
+      }
+      .description {
+        color: #666;
+      }
+    }
+  }
+}
+
+.plus-minus {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 12px;
+  font-size: 12px;
+  color: #00b7f3;
+  .plus {
+    display: block;
+    width: 12px;
+    height: 12px;
+    float: right;
+    margin: 2px 0 0 4px;
+    background: url(../img/icons/plus-minus.png) no-repeat top right;
+    &:hover {
+      background: url(../img/icons/plus-minus.png) no-repeat center right;
+    }
+  }
+  .minus {
+    display: block;
+    width: 12px;
+    height: 12px;
+    float: left;
+    margin: 2px 4px 0 0;
+    background: url(../img/icons/plus-minus.png) no-repeat top left;
+    &:hover {
+      background: url(../img/icons/plus-minus.png) no-repeat center left;
+    }
+  }
+}
+

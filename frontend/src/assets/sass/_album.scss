@@ -1,0 +1,99 @@
+.photo-wrap {
+  padding: 0 5px;
+  .photo {
+    width: 100%;
+    overflow: hidden;
+    margin: 0 0 20px;
+    border-radius: 0;
+    border: 1px solid $light_grey;
+    -webkit-box-shadow: 0px 3px 3px 0px rgba(191, 191, 191, 0.3);
+    -moz-box-shadow: 0px 3px 3px 0px rgba(191, 191, 191, 0.3);
+    box-shadow: 0px 3px 3px 0px rgba(191, 191, 191, 0.3);
+    .photo-wrapper {
+      vertical-align: middle;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 15rem;
+      overflow: hidden;
+      img {
+        width: 100%;
+        min-height: 100%;
+        cursor: pointer;
+        object-fit: cover;
+      }
+    }
+    .album-tools-wrap {
+      padding: 0;
+      display: none;
+      text-align: right;
+      a {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border-radius: 0;
+        display: block;
+        float: none;
+        @include transition_bg_color;
+      }
+      .set-avatar {
+        background: url(../img/svg/new_icons/zoomers-avatar.svg) no-repeat center center;
+        background-size: 20px;
+        background-color: #00C9F8;
+      }
+      .set-location {
+        background: url(../img/svg/location.svg) no-repeat;
+        background-color: #fff;
+        background-size: 16px;
+        background-position: center center;
+      }
+      .delete {
+        background: url(../img/svg/delete_button.svg) no-repeat;
+      }
+    }
+    &:hover {
+      .album-tools-wrap {
+        display: flex;
+        margin-bottom: -34px;
+        -webkit-flex-direction: row;
+       flex-direction: row;
+       -webkit-justify-content: flex-end;
+       justify-content: flex-end;
+      }
+    }
+  }
+}
+
+.album-name {
+  width: 90%;
+  display: block;
+  float: left;
+}
+
+.edit-delete.album {
+  text-align: right;
+  padding: 0 15px 15px 20px;
+  position: absolute;
+  top: 20px;
+  a {
+    margin: 0;
+    margin-right: 6px;
+  }
+  .delete {
+    height: 40px;
+    width: 40px;
+    background: url(../img/svg/delete_button.svg) no-repeat;
+  }
+  .edit {
+    height: 40px;
+    width: 40px;
+    background: url(../img/svg/edit_button.svg) no-repeat;
+    &:hover {
+      background: url(../img/svg/edit_button.svg) no-repeat;
+    }
+  }
+}
+
+.edit-album-photo {
+  margin: 1rem auto 2rem;
+}

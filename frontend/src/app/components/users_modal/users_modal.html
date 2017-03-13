@@ -1,0 +1,35 @@
+<script type="text/ng-template" id="FollowersModal.html">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="modal.close()">
+      <span aria-hidden="true">&times;</span></button>
+    <h3 class="margin-none" ng-if="modal.user.first_name">{{modal.user.first_name}}'s {{modal.usersType}}
+    </h3>
+
+    <h3 class="margin-none" ng-if="!modal.user.first_name">Members</h3>
+  </div>
+  <div class="modal-body no-pad-left-right no-pad-bottom">
+    <div class="col-sm-12">
+      <div class="search-block">
+        <input type="text" name="search" ng-model="search" class="search-friends" placeholder="Start typing...">
+        <input type="button" class="search-icon">
+      </div>
+    </div>
+
+    <div class="col-sm-12 no-pad choose-friend-block">
+      <div class="choose-friend" ng-repeat="user in modal.users | filter:search">
+        <a ui-sref="profile.main({user_id: user.alias || user.id})">
+          <img class="friend-avatar" ng-src="{{user.avatar_url.thumb}}">
+          <h4 class="name-friend">
+            {{user.first_name+ ' ' +user.last_name}}
+          </h4>
+        </a>
+      </div>
+
+      <p ng-if="modal.users.length == 0" class="text-center description">No {{modal.usersType}} yet.</p>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+  </div>
+
+</script>

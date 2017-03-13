@@ -1,0 +1,315 @@
+<div class="opened-item" ng-class="{ 'item-modal' : Spot.modal }" ng-if="Spot.spot">
+    <!-- <div class="opened-header" ng-if="Spot.modal">
+        <a ng-click="Spot.close()" ui-sref="spot({spot_id: Spot.spot.id, user_id: Spot.spot.user_id || 0})">
+            <img src="../../../assets/img/svg/fullscreen.svg" alt="">
+        </a>
+        <img src="../../../assets/img/svg/Icon_Events.svg" alt="category" ng-if="Spot.spot.category.type.name == 'event'">
+        <img src="../../../assets/img/svg/Icon_To_do.svg" alt="category" ng-if="Spot.spot.category.type.name == 'todo'">
+        <img src="../../../assets/img/svg/Icon_Grab_Grub.svg" alt="category" ng-if="Spot.spot.category.type.name == 'food'">
+        <img src="../../../assets/img/svg/Icon_Get_a_room.svg" alt="category" ng-if="Spot.spot.category.type.name == 'shelter'">
+        <span ng-click="Spot.close()">
+            <img src="../../../assets/img/svg/cancel.svg" alt="">
+        </span>
+    </div> -->
+
+	<spot-jsonld ng-if="Spot.spot.category.type.name == 'event'" spot="Spot.spot"></spot-jsonld>
+
+    <div class="opened-container">
+        <div spotcard class="new-result-card" item="Spot.spot"></div>
+        <div class="opened-main">
+            <div class="opened-name-bottom">
+                <div class="left">
+                    <p class="spot-name" ng-bind-html="Spot.spot.title"></p>
+                    <p class="spot-address">
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                        <span ng-bind-html="Spot.spot.address || Spot.spot.points[0].address"></span>
+                    </p>
+                </div>
+                <div class="right">
+                    <div class="opened-info">
+                        <span class="opened-info-stars"><stars item="Spot.spot"></stars></span>
+                        <span>{{Spot.spot.total_reviews}} reviews</span>
+                    </div>
+                </div>
+            </div>
+            <div class="opened-second-buttons">
+                <a class="button-order" target="_blank" ng-if="Spot.spot.order_url" ng-href="{{ Spot.spot.order_url }}">Order</a>
+                <a class="button-table" target="_blank" ng-if="Spot.spot.opentable_url" ng-href="{{ Spot.spot.opentable_url }}">Book table</a>
+                <a class="button-deals" target="_blank" ng-if="Spot.spot.deal_url" ng-href="{{ Spot.spot.deal_url }}">Deals</a>
+            </div>
+            <div class="opened-thrid-buttons" ng-if="Spot.spot.category.type.name == 'shelter' || Spot.spot.category.type.name == 'event'">
+                <div class="event-info" ng-if="Spot.spot.category.type.name == 'event'">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    <span ng-if="Spot.spot.start_date == Spot.spot.end_date">
+	                    {{Spot.spot.start_date | date:'MMM d, y'}}
+	                    <span ng-if="Spot.spot.start_time && Spot.spot.end_time">{{Spot.spot.start_time}}
+		                    <span ng-if="Spot.spot.end_time != '11:59 pm'">- {{Spot.spot.end_time}}</span>
+	                    </span>
+                    </span>
+                    <span ng-if="Spot.spot.start_date != Spot.spot.end_date">
+	                    {{Spot.spot.start_date | date:'MMM d, y'}} <span ng-if="Spot.spot.start_time">{{Spot.spot.start_time}}</span>
+                            <span ng-if="Spot.spot.start_date && Spot.spot.end_date">-</span>
+	                    {{Spot.spot.end_date | date:'MMM d, y'}} <span ng-if="Spot.spot.end_time && Spot.spot.end_time != '11:59 pm'">{{Spot.spot.end_time}}</span>
+                    </span>
+                    <div class="buttons">
+                        <a ng-if="Spot.spot.tickets" href="{{Spot.spot.tickets}}" target="_blank">Tickets</a>
+                        <a ng-if="Spot.spot.venues" href="{{Spot.spot.venues}}" target="_blank">Venue</a>
+                    </div>
+                </div>
+                <div ng-if="Spot.spot.category.type.name == 'shelter'">
+                    <div class="price-dates">
+                        <p>Find the lowest prices:</p>
+                        <input ng-datepicker ng-model="Spot.priceDate.start_date" start-date="Spot.inputDate.start_date" class="date" placeholder="CHECK IN" type="text" ng-change="Spot.startDateChanged()" ng-click="Spot.initDates()">
+                        <input ng-datepicker ng-model="Spot.priceDate.end_date" start-date="Spot.inputDate.end_date" class="date" placeholder="CHECK OUT" type="text" ng-click="Spot.initDates()">
+                        <button ng-click="Spot.getPrice()">Search</button>
+                    </div>
+                    <div class="prices-results" ng-if="Spot.prices">
+                        <div class="booking" ng-if="Spot.prices.bookingUrl">
+                            <div class="logo">
+                            </div>
+                            <div class="price">
+                                <p>{{ Spot.prices.booking ? Spot.prices.booking : 'Not available' }}</p>
+                                <span ng-if="Spot.prices.booking">For {{Spot.prices.days}} night(s)</span>
+                                <span ng-if="!Spot.prices.booking">Try other dates</span>
+                            </div>
+                            <a href="{{Spot.prices.bookingUrl}}" target="_blank">{{ Spot.prices.booking ? 'VIEW DEAL' : 'MORE OPTIONS' }}</a>
+                        </div>
+                        <div class="hotels" ng-if="Spot.prices.hotelsUrl">
+                            <div class="logo">
+                            </div>
+                            <div class="price">
+                                <p>{{ Spot.prices.hotels ? Spot.prices.hotels : 'Not available' }}</p>
+                                <span ng-if="Spot.prices.hotels">For {{Spot.prices.days}} night(s)</span>
+                                <span ng-if="!Spot.prices.hotels">Try other dates</span>
+                            </div>
+                            <a href="{{Spot.prices.hotelsUrl}}" target="_blank">{{ Spot.prices.hotels ? 'VIEW DEAL' : 'MORE OPTIONS' }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="opened-tabs">
+        <div class="tabs-list">
+            <div class="tab" ng-class="OpenedItem.tab == 'overview' || OpenedItem.tab == null ? 'active' : ''" ng-click="OpenedItem.tab = 'overview'">Overview</div>
+            <div class="tab" ng-class="OpenedItem.tab == 'reviews' ? 'active' : ''" ng-click="OpenedItem.tab = 'reviews'">Reviews</div>
+            <div class="tab" ng-class="OpenedItem.tab == 'photos' ? 'active' : ''" ng-click="OpenedItem.tab = 'photos'">Photos</div>
+            <div class="tab" ng-class="OpenedItem.tab == 'menu' ? 'active' : ''" ng-click="OpenedItem.tab = 'menu'" ng-if="Spot.spot && Spot.spot.menu">Menu</div>
+            <div class="tab" ng-class="OpenedItem.tab == 'chatter' ? 'active' : ''" ng-click="OpenedItem.tab = 'chatter'">Chatter</div>
+        </div>
+        <div class="tab-content-overview" ng-if="OpenedItem.tab == 'overview' || OpenedItem.tab == null">
+            <div class="overview about" ng-if="Spot.spot.description">
+                <h1>About:</h1>
+                <div ng-bind-html="Spot.spot.description"></div>
+            </div>
+            <div class="overview cuisine" ng-if="Spot.spot.hotels_category">
+                <h1>Cuisine:</h1>
+                <p>{{Spot.spot.hotels_category}}</p>
+            </div>
+            <div class="overview meals" ng-if="Spot.spot.meals_served">
+                <h1>Meals:</h1>
+                <p>{{Spot.spot.meals_served}}</p>
+            </div>
+            <div class="overview cost" ng-if="Spot.spot.price_level">
+                <h1>Cost:</h1>
+                <p><span>{{Spot.spot.price_level}}</span></p>
+            </div>
+            <div class="overview hours" ng-if="Spot.spot.hours.weekday_text">
+                <h1>Hours:</h1>
+                <div ng-repeat="date in Spot.spot.hours.weekday_text">
+                    {{date}}
+                </div>
+            </div>
+            <div class="overview amenities" ng-show="Spot.amenitiesCount != 0">
+                <h1>Amenities:</h1>
+                <div ng-repeat=" (amTitle, amItems) in Spot.spot.amenities">
+                    <div><b>{{amTitle | toTrustedHtml}}</b></div>
+                    <div ng-repeat="amItem in amItems">
+                        <div ng-bind-html="amItem | toTrustedHtml"></div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <div class="overview phone" ng-if="Spot.spot.phone_number">
+                <h1>Phone number:</h1>
+                <p>{{Spot.spot.phone_number}}</p>
+            </div>
+            <div class="overview email" ng-if="Spot.spot.email">
+                <h1>E-mail:</h1>
+                <p>{{Spot.spot.email}}</p>
+            </div>
+            <div class="overview website" ng-if="(Spot.spot.web_sites | seatgeek | ticketmaster).length">
+                <h1>Website:</h1>
+                <a ng-repeat="url in Spot.spot.web_sites | seatgeek | ticketmaster" href="{{url}}" target="_blank">
+                    {{url}}
+                </a>
+            </div>
+            <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
+              <li ng-repeat="link in Spot.spot.videos track by $index" class="video-size">
+                <youtube-player src="link"></youtube-player>
+              </li>
+            </ul>
+            <div class="overview connect" ng-if="Spot.spot.google_url || Spot.spot.facebook_url || Spot.spot.instagram_url || Spot.spot.tumbler_url || Spot.spot.twitter_url || Spot.spot.vk_url">
+                <h1>Connect:</h1>
+                <div class="tab-social-buttons">
+                    <a target="_blank" ng-href="{{Spot.spot.google_url}}" ng-if="Spot.spot.google_url">
+                        <img src="../../../assets/img/svg/social/google_icon.svg" alt="google" />
+                    </a>
+                    <a target="_blank" ng-href="{{Spot.spot.facebook_url}}" ng-if="Spot.spot.facebook_url">
+                        <img src="../../../assets/img/svg/social/facebook_icon.svg" alt="facebook" />
+                    </a>
+                    <a target="_blank" ng-href="{{Spot.spot.instagram_url}}" ng-if="Spot.spot.instagram_url">
+                        <img src="../../../assets/img/svg/social/instagram_icon.svg" alt="instagram" />
+                    </a>
+                    <a target="_blank" ng-href="{{Spot.spot.tumbler_url}}" ng-if="Spot.spot.tumbler_url">
+                        <img src="../../../assets/img/svg/social/tumbler_icon.svg" alt="tumbler" />
+                    </a>
+                    <a target="_blank" ng-href="{{Spot.spot.twitter_url}}" ng-if="Spot.spot.twitter_url">
+                        <img src="../../../assets/img/svg/social/twitter_icon.svg" alt="twitter" />
+                    </a>
+                    <a target="_blank" ng-href="{{Spot.spot.vk_url}}" ng-if="Spot.spot.vk_url">
+                        <img src="../../../assets/img/svg/social/vk_icon.svg" alt="vk" />
+                    </a>
+                </div>
+            </div>
+            <div class="overview tags" ng-if="Spot.spot.tags.length > 0">
+                <h1>Tags:</h1>
+                <div>
+                    <p ng-repeat="tag in Spot.spot.tags" class="spot-tag">{{tag.name}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content-reviews" ng-if="OpenedItem.tab == 'reviews'">
+            <section class="review-section clearfix">
+                <div class="review-types">
+                    <div ng-repeat="(serviceName, serviceInfo) in Spot.reviews_total" ng-if="serviceInfo.rating && serviceInfo.reviews_count && !isNaN(serviceInfo.rating) && !isNaN(serviceInfo.reviews_count)" class="review-type">
+                        <div class="review-type-icon {{serviceName}}"></div>
+                        <div class="clearfix"></div>
+                        <div class="pull-left with-margin">{{serviceInfo.rating|number:1}}</div>
+                        <div class="pull-left outline-none review-type-stars readonly">
+                            <rating
+                                ng-model="Spot.rating_star"
+                                max="1"
+                                readonly="true"
+                                state-on="'glyphicon glyphicon-star star-active'"
+                                state-off="'glyphicon glyphicon-star star-default'"
+                                ></rating>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="review-type-count pull-left with-margin">
+                            {{serviceInfo.reviews_count}} review{{ (serviceInfo.reviews_count!=1)?'s':'' }}
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+                <div class="review-content clearfix">
+                    <review-input
+                        ng-if="ReviewInput.item.auth_rate.user_id != $root.currentUser.id"
+                        review="Spot.review" vote="Spot.vote" item="Spot.spot"
+                                  maxlength="255"></review-input>
+                </div>
+                <div ng-if="Spot.votes.data.length" class="new-review">
+                    <h3>Recent</h3>
+                </div>
+                <div class="clearfix"></div>
+                <div infinite-scroll="Spot.reviewsPagination.nextPage()" infinite-scroll-disabled="Spot.reviewsPagination.busy"
+                     class="clearfix" infinite-scroll-distance="1">
+                    <div class="review post clearfix" ng-repeat="item in Spot.votes.data">
+                        <review review="item" spot="Spot.spot"></review>
+                    </div>
+                    <preloader ng-show="Spot.reviewsPagination.busy"></preloader>
+                </div>
+                <div class="spot-post empty" ng-if="Spot.votes.data.length == 0 && !Spot.pagination.busy">
+                    <p class="review-text">There are no reviews.</p>
+                </div>
+            </section>
+        </div>
+        <div class="tab-content-photos" ng-if="OpenedItem.tab == 'photos'">
+            <div class="add-photo" ng-click="Spot.openPhotosModal()">
+                <p class="add-photo">ADD PHOTO</p><div></div>
+            </div>
+            <div class="photos-container">
+                <div ng-repeat="photo in Spot.spot.photos">
+                    <img photo-viewer items="Spot.spot.photos" index="$index" nocoments="true" ng-src="{{photo.url}}" alt="photo" class="spot-album-photo">
+                </div>
+            </div>
+            <!-- <ul rn-carousel rn-carousel-controls rn-carousel-controls-allow-loop rn-carousel-index="OpenedItem.photoIndex">
+                <li ng-repeat="photo in Spot.spot.photos">
+                    <img photo-viewer items="Spot.spot.photos" index="$index" nocoments="true" ng-src="{{photo.url}}" alt="photo">
+                </li>
+            </ul>
+            <div rn-carousel-indicators ng-if="Spot.spot.photos.length > 1" slides="Spot.spot.photos" rn-carousel-index="OpenedItem.photoIndex"></div> -->
+        </div>
+        <div class="tab-content-menu" ng-if="OpenedItem.tab == 'menu'">
+            <h1>Menu</h1>
+        </div>
+        <div class="tab-content-chatter" ng-if="OpenedItem.tab == 'chatter'">
+            <!-- <div class="chatter-social-buttons">
+                <div class="chatter-social zoomtivity" ng-click="OpenedItem.chatterTab = 'zoomtivity'">
+                    <img src="../../../assets/img/logo.png" alt="zoomtivity">
+                    <p>Zoomtivity</p>
+                </div>
+                <div class="chatter-social facebook" ng-click="OpenedItem.chatterTab = 'facebook'">
+                    <img src="../../../assets/img/svg/social/facebook_icon.svg" alt="facebook">
+                    <p>Facebook</p>
+                </div>
+                <div class="chatter-social twitter" ng-click="OpenedItem.chatterTab = 'twitter'">
+                    <img src="../../../assets/img/svg/social/twitter_icon.svg" alt="twitter">
+                    <p>Twitter</p>
+                </div>
+            </div> -->
+            <!-- section with comment -->
+            <section class="comments-section" ng-show="OpenedItem.chatterTab == 'zoomtivity' || OpenedItem.chatterTab == null">
+              <div class="comments-content clearfix">
+                <ng-input message="Spot.message" attachments="Spot.attachments" on-submit="Spot.postComment()"
+                          maxlength="255"></ng-input>
+              </div>
+
+              <div infinite-scroll="Spot.pagination.nextPage()" infinite-scroll-disabled="Spot.pagination.busy"
+                   class="clearfix" infinite-scroll-distance="1">
+                <div class="col-xs-12 post" ng-repeat="post in Spot.comments.data">
+                    <div class="comment-top">
+                        <div class="comment-avatar padding-0">
+                          <a ui-sref="profile.main({user_id: post.sender.alias || post.sender.id})">
+                            <img ng-src="{{post.sender.avatar_url.thumb}}" class="avatar">
+                          </a>
+                        </div>
+                        <div class="comment-content info">
+                          <!-- <div class="plus-minus ng-scope" ng-if="currentUser">
+                            <a class="plus" ng-class="{clicked: post.user_rating == 1}" ng-click="Profile.like(post)"></a>
+                            <span class="value-rating ng-binding">0</span>
+                            <a class="minus" ng-class="{clicked: post.user_rating == -1}" ng-click="Profile.dislike(post)"></a>
+                          </div> -->
+                          <h3 class="name">
+                            <a ui-sref="profile.main({user_id: post.sender.alias || post.seder.id})">{{post.sender.first_name}} {{post.sender.last_name}}</a>
+                          </h3>
+                          <p ng-bind-html="post.body | linky:'_blank'"></p>
+                        </div>
+                    </div>
+                  <div class="col-xs-12">
+                    <attachments items="post.attachments"></attachments>
+                    <p class="time text-right">{{post.created_at | fromNow}}</p>
+                    <div class="text-right">
+                      <!--<a class="like">Like</a>-->
+                      <a class="delete" ng-if="post.user_id == currentUser.id" ng-click="Spot.deleteComment(post, $index)">Delete</a>
+                    </div>
+                  </div>
+                </div>
+                <preloader ng-show="Spot.pagination.busy"></preloader>
+              </div>
+
+              <div class="spot-post empty" ng-if="Spot.comments.data.length == 0 && !Spot.pagination.busy">
+                <p class="comment-text">There are no comments.</p>
+              </div>
+            </section>
+            <!-- end section with comment -->
+            <!-- <div ng-show="OpenedItem.chatterTab == 'facebook'" style="padding-top:20px;">
+                <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook&tabs=timeline&height=800&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="100%" height="500" style="border:none;overflow:hidden;width:100%" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+            </div>
+            <div ng-show="OpenedItem.chatterTab == 'twitter'">
+                <a class="twitter-timeline" href="https://twitter.com/McGuiresPub">Tweets by McGuiresPub</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div> -->
+        </div>
+    </div>
+</div>

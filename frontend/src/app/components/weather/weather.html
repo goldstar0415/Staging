@@ -1,0 +1,55 @@
+<div class="new-weather-container">
+    <div class="weather-header">
+        <h1 class="weather-city-name">{{Weather.location}}</h1>
+        <div class="weather-close" ng-click="$root.toggleSidebar(false)"></div>
+        <!-- <div class="weather-units">
+            <span ng-click="Weather.toggleUnits()">°{{Weather.unitsObj[Weather.units].temperature}}</span>
+        </div> -->
+    </div>
+    <div class="weather-tabs">
+        <div class="tab" ng-repeat="day in Weather.data.daily.data" ng-class="{'active' : Weather.tab == $index}" ng-click="Weather.changeTab($index)">
+            <p>{{day.time | dateLetters}}</p>
+            <span>{{day.time | dateSmall}}</span>
+        </div>
+    </div>
+    <div class="weather-main">
+        <div class="icon">
+            <skycon icon="Weather.selected.icon" size="150" color="Weather.color"></skycon>
+        </div>
+        <div class="degrees">
+            <p>{{(Weather.selected.temperatureMax || Weather.selected.temperature) | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}<span ng-if="Weather.selected.temperatureMin">{{Weather.selected.temperatureMin | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}</span></p>
+            <span ng-if="Weather.selected.apparentTemperature">Feels like {{Weather.selected.apparentTemperature | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}</span>
+        </div>
+        <div class="info">
+            <div class="wind">
+                <p>wind</p>
+                <span>{{Weather.selected.windBearing | windDirection}} {{Weather.selected.windSpeed | number:1}} {{Weather.unitsObj[Weather.units].speed}}</span>
+            </div>
+            <div class="humidity">
+                <p>humidity</p>
+                <span>{{(Weather.selected.humidity * 100) | number:0}} %</span>
+            </div>
+            <div class="pressure">
+                <p>pressure</p>
+                <span>{{Weather.selected.pressure | number:0}} hPa</span>
+            </div>
+        </div>
+    </div>
+    <p class="weather-description">
+        {{Weather.data.daily.data[Weather.tab].summary}}
+    </p>
+    <div class="weather-hourly">
+        <div class="hour" ng-repeat="hour in Weather.data.hourly.data | weatherByDay : Weather.selected.time : Weather.data.offset">
+            <p class="time">{{hour.time * 1000 | date : 'hh:mm a'}}</p>
+            <div>
+                <div class="icon">
+                    <skycon icon="hour.icon" size="40" color="Weather.color"></skycon>
+                </div>
+                <div class="small-degrees">
+                    <p>{{hour.temperature | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}</p>
+                    <!-- <span>{{hour.apparentTemperature | number:0}}°{{Weather.unitsObj[Weather.units].temperature}}</span> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

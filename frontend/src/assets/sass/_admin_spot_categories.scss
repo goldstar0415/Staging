@@ -1,0 +1,70 @@
+.spot-categories{
+    padding-top: 25px;
+     background: #fff;
+    border: 1px solid #e9edf0;
+    border-radius: 10px;
+    .padding-0{padding: 0;}
+    .button-category{
+        font: 500 16px/18px;
+            padding: 3px 15px;
+            line-height: 110%;
+        float: right;
+    }
+    h2{
+        margin-top: 0;
+    }
+        table {
+        border: 1px solid #e9edf0;
+        border-collapse: collapse;
+        tr {
+            height: 40px;
+        }
+        thead {
+            font: 500 16px/16px;
+            th {
+                border: 1px solid #e9edf0;
+            }
+        }
+        tbody {
+            font: 14px/14px;
+            tr:nth-child(even) {
+                background: #e9edf0;
+                td {
+                    border-color: #fff;
+                }
+                &:last-child {
+                    border-right-color: #e9edf0;
+
+                }
+            }
+            td {
+                border-right: 1px solid #e9edf0;
+                padding-left: 15px;
+                p {
+                    margin: 0;
+                    img {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 20px;
+                    }
+                }
+                a {
+                    color: #00b7f3;
+                    @include transition_color;
+                    &:hover {
+                        color: #0874be;
+                        @include transition_color;
+                    }
+                }
+                .delete {
+                    padding-right: 40px;
+                    background: url(../img/icons/trash.png) no-repeat -5px -12px;
+                    &:hover {
+                        background: url(../img/icons/trash.png) no-repeat -5px -53px;
+                    }
+                }
+
+            }
+        }
+    }
+}

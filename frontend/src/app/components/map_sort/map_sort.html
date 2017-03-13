@@ -1,0 +1,124 @@
+<user-hints></user-hints>
+
+<div class="new-sidebar-menu" ng-show="$root.isMapState()">
+    <div class="sidebar-menu-vertical" ng-class="$root.isMapState() ? 'sidebar-menu-vertical-bottom' : ''">
+        <ul>
+            <li ng-click="$root.toggleLayer('event', true, 'sidebar', $event)" ng-class="{'active': $root.sortLayer == 'event'}" class="event-sidebar">
+                <img src="../../../assets/img/svg/Icon_Events.svg" alt="img">
+                <p>Events</p>
+            </li>
+            <li ng-click="$root.toggleLayer('todo', true, 'sidebar', $event)" ng-class="{'active': $root.sortLayer == 'todo'}" class="todo-sidebar">
+                <img src="../../../assets/img/svg/Icon_To_do.svg" alt="img">
+                <p>To-Do</p>
+            </li>
+            <li ng-click="$root.toggleLayer('food', true, 'sidebar', $event)" ng-class="{'active': $root.sortLayer == 'food'}" class="food-sidebar">
+                <img src="../../../assets/img/svg/Icon_Grab_Grub.svg" alt="img">
+                <p>Food</p>
+            </li>
+            <li ng-click="$root.toggleLayer('shelter', true, 'sidebar', $event)" ng-class="{'active': $root.sortLayer == 'shelter'}" class="shelter-sidebar">
+                <img src="../../../assets/img/svg/Icon_Get_a_room.svg" alt="img">
+                <p>Shelter</p>
+            </li>
+            <li ng-click="$root.toggleLayer('weather', null, 'sidebar', $event)" ng-class="{'active': $root.sortLayer == 'weather'}" class="weather-sidebar">
+                <img src="../../../assets/img/svg/Icon_Weather.svg" alt="img">
+                <p>Weather</p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--New filter-->
+<div class="new-filter" ng-show="$root.isFilterOpened && $root.isMapState()">
+    <!-- <form action=""> -->
+    <div class="filter-header">
+        <p>{{ $root.sortLayer.charAt(0).toUpperCase() + $root.sortLayer.slice(1) }} Filters</p>
+        <span ng-click="MapSort.closeFilter()">
+            <img src="../../../assets/img/svg/cancel.svg" alt="">
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="filterRating">Minimum Rating<span hidden>clear</span></label>
+        <select class="form-control" id="filterRating" ng-model="$root.filterOptions.minRating">
+            <option selected value="0">Any</option>
+            <option value="1">★</option>
+            <option value="2">★★</option>
+            <option value="3">★★★</option>
+            <option value="4">★★★★</option>
+            <option value="5">★★★★★</option>
+        </select>
+    </div>
+    <div class="form-group" ng-if="$root.sortLayer == 'shelter'">
+        <label for="filterPriceRange">Price Range<span hidden>clear</span></label>
+        <select class="form-control" id="filterPriceRange" ng-model="$root.filterOptions.maxPrice">
+            <option selected value="">Any</option>
+            <option value="200">Less than $200</option>
+            <option value="150">Less than $150</option>
+            <option value="100">Less than $100</option>
+            <option value="75">Less than $75</option>
+            <option value="50">Less than $50</option>
+        </select>
+    </div>
+    <div class="form-group" ng-if="$root.isRole($root.currentUser, 'admin')">
+        <label for="filterPriceRange">Is approved<span hidden>clear</span></label>
+        <select class="form-control" id="filterIsApproved" ng-model="$root.filterOptions.isApproved">
+            <option selected value="true">Yes</option>
+            <option value="false">No</option>
+            <option value="any">Any</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="filterCategory">Category<span hidden>clear</span></label>
+        <!-- <div class="form-control" id="filterCategory" ng-dropdown-multiselect="" options="$root.categoryData" selected-model="$root.filterOptions.categories"></div> -->
+        <select class="form-control" id="filterCategory" ng-model="$root.filterOptions.category" ng-repeat="type in $root.spotCategories | filter: {name:$root.sortLayer}">
+            <option selected value="">Any</option>
+            <option ng-repeat="item in type.categories" value="{{item.id}}">{{item.name}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="filterTags">By tags & Keywords<span hidden>clear</span></label>
+        <tags-input id="filterTags" ng-model="$root.filterOptions.tags"></tags-input>
+    </div>
+    <div class="form-group"  ng-if="$root.sortLayer == 'event'">
+        <label>By dates<span hidden>clear</span></label>
+        <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea, applied: ($root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date)}">
+            <input ng-datepicker ng-model="$root.filterOptions.dateFrom" class="date" placeholder="FROM" type="text">
+            <div></div>
+            <input ng-datepicker ng-model="$root.filterOptions.dateTo" start-date="MapSort.searchParams.start_date" class="date" placeholder="TO" type="text">
+        </div>
+    </div>
+    <div class="form-group" hidden>
+        <label>Hotel features<span hidden>clear</span></label>
+        <input type="text" placeholder="FEATURES">
+    </div>
+    <button class="filter-apply pull-right" ng-click="MapSort.clearFilter()">CLEAR FILTER</button>
+    <button class="filter-apply" ng-click="MapSort.applyFilter()">APPLY FILTER</button>
+    <!-- </form> -->
+</div>
+
+<div class="sort-menu" ng-show="$root.isSidebarOpened && $root.isMapState() && (($root.mapSortSpots.sourceSpots.length && $root.isDrawArea) || $root.sortLayer == 'weather')" ng-class="{'weather-opened': $root.sortLayer == 'weather'}">
+    <p ng-if="$root.mapSortSpots.data.length && !$root.visibleSpotsIds.length && $root.sortLayer != 'weather'" class="message-loading">{{$root.sidebarMessage}}</p>
+    <div class="search-filters"
+         ng-show="$root.sortLayer != 'weather' && $root.visibleSpotsIds.length"
+         ng-class="{'applied-filter': !MapSort.isShowFilter && !MapSort.isEmptyFilters()}">
+        <div class="new-result" ng-if="windowWidth < 768">
+            <ul rn-carousel rn-carousel-index="$root.spotsCarousel.index">
+                <li ng-repeat="item in $root.mapSortSpots.data | getById | limitTo:$root.searchLimit track by item.id">
+                    <div class="new-result-card" spotcard item="item"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="new-result-container"
+             ng-if="windowWidth >= 768"
+             infinite-scroll="MapSort.nextPage()"
+             infinite-scroll-distance="0"
+             infinite-scroll-disabled="!$root.mapSortSpots.data.length"
+             infinite-scroll-container='".search-filters"'>
+            <div class="new-result-card"
+                 spotcard ng-repeat="item in $root.mapSortSpots.data | getById | limitTo:$root.searchLimit track by item.id"
+                 item="item" ng-mouseenter="MapSort.highlightSpotByHover(item)"
+                 ng-mouseleave="MapSort.clearSpotHighlighting(item)"
+                 ng-class="{ 'active' : item.id == $root.highlightedSpotId }"></div>
+        </div>
+    </div>
+    <weather ng-show="$root.sortLayer == 'weather'" lat="$root.weatherLocation.lat" lng="$root.weatherLocation.lng" units="$root.weatherUnits"></weather>
+</div>

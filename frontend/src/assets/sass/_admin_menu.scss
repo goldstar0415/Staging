@@ -1,0 +1,27 @@
+.admin-menu {
+    margin-top: 20px;
+    ul {
+        padding: 0;
+        border: 1px solid #e9edf0;
+        border-radius: 8px;
+        background: $white;
+        li {
+            a {
+                display: block;
+                font-size: 16px;
+                font-weight: 600;
+                color: #0c2638;
+                padding: 10px 40px;
+                border-bottom: 1px solid #e9edf0;
+                @include transition_color;
+                &:hover {
+                    color: #0874be;
+                    @include transition_color;
+                }
+                &:active {
+                    color: #0874be;
+                }
+            }
+        }
+    }
+}

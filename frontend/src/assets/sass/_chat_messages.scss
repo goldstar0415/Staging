@@ -1,0 +1,188 @@
+.messages {
+  padding: 0;
+  border-radius: 8px 8px 0 0;
+  background: $white;
+  .padding-0 {
+    padding: 0;
+  }
+  .messages-title {
+    font-size: 26px;
+    font-weight: 500;
+    margin: 20px 15px;
+  }
+
+  .message {
+    border-bottom: 1px solid #e9edf0;
+    padding: 12px 0;
+
+    &.new {
+      background: #f5f8fa;
+      .name-data {
+        padding-left: 1rem;
+        p {
+          display: block !important;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          font-size: 1.4rem;
+          color: #889197;
+          max-height: 10rem;
+        }
+      }
+    }
+    .avatar {
+      width: 10rem;
+      height: 10rem;
+      border: 1px solid #a6b1b7;
+      background: #fff;
+      padding: 3px;
+      border-radius: 50%;
+      img {
+        border-radius: 50%;
+      }
+    }
+    .name-data {
+      padding-left: 0;
+      p.send-message {
+          display: none;
+      }
+      .name {
+        margin: 0;
+        font-size: 2rem;
+        line-height: 110%;
+        font-weight: bold;
+        color: #000;
+        margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .data {
+        font-size: 11px;
+        color: #cdd0d2;
+        margin-bottom: 1rem;
+      }
+      .delete {
+        padding-left: 18px;
+        background: url(../img/icons/trash-ico.png) no-repeat;
+        font-size: 13px;
+      }
+    }
+    .content-messages {
+      p {
+        font-size: 11px;
+        line-height: 120%;
+        color: #333333;
+        margin-top: 5px;
+        height: 28px;
+        overflow: hidden;
+        margin: 0;
+      }
+      .message-in {
+        max-width: 100%;
+        width: auto;
+        position: relative;
+        float: right;
+        .name {
+          margin: 0;
+          margin-bottom: 1rem;
+          text-align: right;
+          a {
+            font-size: 2rem;
+            color: $blue_btn;
+            font-weight: bold;
+          }
+        }
+        p {
+          padding: 0;
+          font-size: 1.4rem;
+          color: #889197;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+       /*  &::after {
+          content: '';
+          position: absolute;
+          right: -8px;
+          top: 10px;
+          width: 15px;
+          height: 15px;
+          background: #f5f8fa;
+          transform: rotate(134deg);
+          border-top: 1px solid #e9edf0;
+          border-left: 1px solid #e9edf0;
+        } */
+      }
+        .incoming-avatar {
+          float: right;
+          width: 13rem;
+          img {
+            width: 10rem;
+            height: 10rem;
+            border: 1px solid #a6b1b7;
+            background: #fff;
+            padding: 3px;
+            border-radius: 50%;
+            border-radius: 50%;
+            float: right;
+          }
+        }
+
+    }
+    &:hover {
+      background: #e9edf0;
+    }
+  }
+}
+.plan-invitation {
+  padding: 5px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 500;
+  background-color: $dark_blue;
+  color: $white;
+  text-transform: uppercase;
+  word-break: break-all;
+}
+
+.invitation-title {
+  a {
+    color: $blue;
+    margin: 0 0 5px 0;
+   // padding-left: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  //  background: url(../img/icons/tools.png) -5px -4px no-repeat;
+    &:hover, &:focus, &:active {
+     // background: url(../img/icons/tools.png) -5px -21px no-repeat;
+      color: $navy_blue;
+    }
+  }
+}
+
+
+/*Dialog*/
+
+a {
+  color: #0c2638;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.data-dialog {
+  padding: 0;
+}
+
+.data-dialog .date-dialog {
+  font-size: 12px;
+  color: #9f9f9f;
+  text-align: center;
+}
+@media (max-width: 500px) {
+  .messages .message .content-messages .incoming-messages .incoming-avatar {
+    float: right;
+  }
+}

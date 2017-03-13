@@ -1,0 +1,118 @@
+/*activity profile*/
+.module-sidebar {
+    .item-fake {
+        width: 0px;
+        margin: 0;
+        // height: 60px;
+    }
+
+    .sidebar-title {
+        font-size: 1.6rem;
+        color: #000;
+        margin-top: 0;
+        font-weight: bold;
+        // text-align: center;
+    }
+
+    .avatar {
+        display: block;
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 3px;
+
+        img {
+            //max-width: 100%;
+            min-width: 100%;
+            min-height: 70px;
+        }
+    }
+
+    .img-responsive {
+        height: 100%;
+        object-fit: cover;
+        border-radius: 100%;
+        height: 75px;
+        width: 75px;
+    }
+
+    .sidebar-user-name {
+        text-align: center;
+        font-size: 12px;
+        margin-top: 5px;
+        overflow: hidden;
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        width: 75px;
+        height: 34px;
+        // padding-left: 7px;
+        // padding-right: 7px;
+        // color: #fff;
+        // padding-top: 2rem;
+        // text-align: center;
+        // white-space: pre-wrap;
+        // &:hover, &:focus, &:active {
+        //   color: #fff;
+        // }
+    }
+
+    .counter {
+        margin: 0;
+    }
+
+    a {
+        width: 65px;
+
+        &:active,
+        &:focus,
+        &:hover {
+            color: $navy_blue;
+        }
+    }
+}
+// .module-sidebar {
+//   .row-min {
+//     margin-left: -5px;
+//     margin-right: -5px;
+//     .pad-min {
+//       padding-left: 5px;
+//       padding-right: 5px;
+//       margin-bottom: 1rem;
+//       > a {
+//         position: relative;
+//         max-height: 8rem;
+//         .sidebar-user-name {
+//           top: 0;
+//           left: 0;
+//           right: 0;
+//           bottom: 0;
+//           background: rgba(26, 26, 47, 0.7);
+//           position: absolute;
+//           opacity: 0;
+//           transition: .5s all;
+//           overflow: hidden;
+//           text-overflow: ellipsis;
+//           white-space: pre-line;
+//         }
+//         &:hover {
+//           .sidebar-user-name {
+//             opacity: 1;
+//           }
+//         }
+//       }
+//     }
+//   }
+//   .img-responsive {
+//     max-height: 8rem;
+//     overflow: hidden;
+//     max-width: 100%;
+//   }
+// }
+// @media (max-width: 1200px) {
+//     .module-sidebar {
+//         .avatar {
+//             width: 60px;
+//             height: 60px;
+//         }
+//     }
+// }
+/*end activity profile*/

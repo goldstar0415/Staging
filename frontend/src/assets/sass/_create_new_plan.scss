@@ -1,0 +1,48 @@
+//---<create new plan--->
+.create-new-plan {
+  background-color: $white;
+  border-radius: 0;
+  // border: 1px solid $light_grey;
+  padding: 1.5rem 5rem 5rem;
+  border-bottom: 0;
+}
+.title-name {
+  font: $navigation_font;
+  font-size: 23px;
+  padding: 0 0 20px 15px;
+  border-bottom: 1px solid $light_grey;
+}
+.sub-title {
+  padding: 5px 0 0 15px;
+  margin: 0;
+  float: left;
+  display: block;
+  width: 100%;
+  padding-bottom: 15px;
+  .close {
+   margin-right: 2rem;
+  }
+}
+.buttons-block {
+  padding: 0 25px;
+  .add-btn {
+    margin-right: 15px;
+    font: $navigation_font;
+    margin-bottom: 15px;
+  }
+  .save-btn {
+    margin-bottom: 15px;
+  }
+}
+
+.event-add-location {
+  margin-bottom: 25px;
+  .event {
+    border-bottom: none !important;
+    .time, .feeds-text {
+      font-size: 13px;
+      color: $grey;
+    }
+  }
+}
+//---</create new plan--->

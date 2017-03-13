@@ -1,0 +1,19 @@
+Send request!
+<script type="text/ng-template" id="BloggerRequestModal.html">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="modal.close()">&times;</button>
+    <h4 class="modal-title send-message">Send request</h4>
+  </div>
+  <div class="modal-body clearfix no-pad no-pad-bottom">
+    <form class="new-post clearfix" name="form" ng-submit="modal.submit()">
+      <textarea name="message"
+                ng-model="modal.message"
+                placeholder="Start typing..."
+                ctrl-enter="modal.submit()"
+                required></textarea>
+
+      <input type="submit" class="submit-send" value="Send">
+
+    </form>
+  </div>
+</script>

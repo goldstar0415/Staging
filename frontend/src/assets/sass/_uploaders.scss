@@ -1,0 +1,107 @@
+.uploader {
+  margin: 0 auto;
+  z-index: 10000;
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+  width: 400px;
+  background: $white;
+  padding: 15px 0;
+  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 0 5px 0 rgba(0,0, 0,0.4);
+  box-shadow: 0 0 5px 0 rgba(0,0,0,0.4);
+  .round {
+  }
+  .target {
+    &:after {
+      content: ".";
+      display: block;
+      height: 0;
+      clear: both;
+      visibility: hidden;
+    }
+    height: 100px;
+    width: 364px;
+    border: 2px dashed #b5e0ef;
+    margin: 0 15px;
+    .mid-round {
+    }
+    -webkit-transition: border-color 0.3s;
+    -moz-transition: border-color 0.3s;
+    -o-transition: border-color 0.3s;
+    transition: border-color 0.3s;
+    &:hover {
+      cursor: pointer;
+      border: 2px dashed #00b7f3;
+      transition: border-color 0.3s;
+    }
+    p {
+      margin-top: 40px;
+      font: 500 18px/18px;
+      text-align: center;
+      color: #b5e0ef;
+    }
+  }
+  .photos {
+    &:after {
+      content: ".";
+      display: block;
+      height: 0;
+      clear: both;
+      visibility: hidden;
+    }
+    padding: 10px 0 0 10px;
+    margin: 20px 0 -10px 0;
+    border-top: 1px solid #e9edf0;
+    div {
+      position: relative;
+      float: left;
+      margin-right: 9px;
+      margin-bottom: 10px;
+      &:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+      }
+    }
+    img {
+      width: 38px;
+      height: 38px;
+      float: left;
+      .min-round {
+      }
+    }
+    p {
+      width: 50px;
+      float: right;
+      margin-top: 8px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .close {
+      display: block;
+      width: 38px;
+      height: 38px;
+      position: absolute;
+      background: url(../img/icons/min-cross.png) center center no-repeat, rgba(0, 0, 0, 0.3);
+      .min-round {
+      }
+    }
+  }
+  .buttons {
+    border-top: 1px solid #e9edf0;
+    padding: 15px 15px 0 15px;
+    margin-top: 15px;
+    .blue {
+      margin-left: 10px;
+    }
+  }
+}
+

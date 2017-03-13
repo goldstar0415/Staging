@@ -1,0 +1,414 @@
+//---<settings styles--->
+.settings {
+  padding: 0 !important;
+}
+.mt3 {
+  margin-top: 3rem;
+}
+.pdt10 a {
+  padding-top: 10px;
+}
+
+.edit-photo {
+  @include button;
+  background-color: $green;
+  height: 26px;
+  padding: 5px 20px;
+  margin-top: 15px;
+  display: inline-block;
+  width: auto;
+  @include transition_bg_color;
+  &:hover {
+    background: $light_green;
+  }
+}
+
+.half-width {
+  width: 49%;
+  float: left;
+  &:first-child {
+    margin-right: 0.5%;
+  }
+  &:last-child {
+    margin-left: 0.5%;
+    float: right;
+    outline: none !important;
+  }
+  input[type="radio"] {
+    margin-top: 1.5rem !important;
+  }
+}
+
+.radio {
+  width: auto;
+  float: left;
+  margin: 4px 5px 0 0 !important;
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.save-btn {
+  @include button;
+  background-color: $blue_btn;
+  width: auto;
+  padding: 5px 36px;
+  float: right;
+  border: none;
+  border-radius: 0;
+  font-size: 1.4rem;
+  height: 4rem;
+  text-transform: uppercase;
+  @include transition_bg_color;
+  &:hover {
+    background-color: $light_blue_btn;
+    box-shadow: none;
+    border: none;
+  }
+}
+
+.radio-group {
+  margin-bottom: 5px;
+  label {
+    padding-top: 0 !important;
+  }
+}
+
+.avatar-block {
+  padding: 0;
+  .bg-thumb {
+    background-color: #fff;
+    border: 1px solid #e9edf0;
+    padding: 5rem 2rem;
+    margin-right: 2rem;
+    text-align: center;
+    h2 {
+      margin-top: 0;
+    }
+    .green-btn {
+      height: 40px;
+      background-color: $blue_btn;
+      border-radius: 0;
+
+      &:hover {
+        background-color: $light_blue_btn;
+      }
+    }
+  }
+
+}
+
+.avatar img {
+  width: 100%;
+}
+
+.settings-block {
+  border-bottom: 1px solid $light_grey;
+  padding: 2rem;
+
+  input[type="text"], input[type="email"], input[type="password"], select, .ui-select-toggle {
+    height: 5rem;
+    border-radius: 0;
+  }
+  textarea {
+    border-radius: 0;
+  }
+  .eye {
+    margin-top: -3.1rem;
+  }
+  .ui-select-toggle {
+    padding: 1.5rem;
+  }
+
+  .main-information {
+    padding: 0;
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+  label {
+    font: 200 16px/22px;
+  }
+  .no-pad {
+    label {
+      font-weight: bold;
+      padding-top: 1.3rem;
+    }
+  }
+  .label-width, .input-width {
+    width: 50%;
+    float: left;
+  }
+  .input-width {
+    .ui-select-match-text {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 10px;
+    }
+  }
+}
+
+.settings-list {
+  text-decoration: none;
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 0px;
+  li {
+
+    a {
+      border-bottom: 1px solid $light_grey;
+      @include zoomers_sidebar;
+      color: $dark_blue;
+      margin: 0;
+      &:hover {
+        color: $blue;
+        text-decoration: none;
+        background-position: 0 -42px;
+      }
+      &.active {
+        color: $navy_blue;
+        font: $navigation_font;
+        @include zoomers_sidebar;
+        background-position: 0 -42px;
+      }
+    }
+    .my-spots {
+      background: url(../img/icons/my_spots.png) 0 -1px no-repeat;
+    }
+
+    .favorites {
+      background: url(../img/icons/fav.png) 0 -1px no-repeat;
+    }
+    .searches {
+      background: url(../img/icons/search_icon.png) 0 -1px no-repeat;
+    }
+    .friendsmap {
+      background: url(../img/icons/zoomers.png) 0 -1px no-repeat;
+    }
+    .photomap {
+      background: url(../img/icons/photo-map.png) 0 -1px no-repeat;
+    }
+    .planner {
+      background: url(../img/icons/planner.png) 0 -1px no-repeat;
+    }
+    .reviews {
+      background: url(../img/icons/review.png) 0 0 no-repeat;
+    }
+    .messages {
+      background: url(../img/icons/inbox.png) 0 -1px no-repeat;
+    }
+  }
+}
+
+.birthday {
+  display: block;
+  width: 4rem;
+  height: 4rem;
+  background: url(../img/svg/vertical_menu/calendar.svg) #00c9f8 center no-repeat;
+  background-size: 22px;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem !important;
+  z-index: 2;
+}
+
+.compass {
+  display: block;
+  width: 4rem;
+  height: 4rem;
+  background: url(../img/svg/add_icon.svg) #00c9f8 center no-repeat;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem !important;
+  z-index: 5;
+}
+
+/* radiobox */
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  cursor: pointer;
+  color: #555;
+}
+
+input[type="radio"] + label span {
+  display: inline-block;
+  vertical-align: middle;
+  width: 30px;
+  height: 21px;
+  background: url(../img/checkbox.png) 0px center no-repeat;
+}
+
+input[type="radio"]:checked + label span {
+  background: url(../img/checkbox.png) -39px center no-repeat;
+}
+
+.social-input {
+  padding-left: 6rem;
+  background-repeat: no-repeat;
+  background-position: 4px 4px;
+  background-size: 40px;
+}
+
+#fb_input {
+  background-image: url(../img/svg/social/facebook_icon.svg);
+}
+
+#tw_input {
+  background-image: url(../img/svg/social/twitter_icon.svg);
+}
+
+#in_input {
+  background-image: url(../img/svg/social/instagram_icon.svg);
+}
+
+#t_input {
+  background-image: url(../img/svg/social/tumbler_icon.svg);
+}
+
+#vk_input {
+  background-image: url(../img/svg/social/vk_icon.svg);
+}
+
+#custom_input {
+  background-image: url(../img/svg/social/logo_icon.svg);
+}
+
+#google_input {
+  background-image: url(../img/svg/social/google_icon.svg);
+}
+
+.avatar-block {
+  .avatar {
+    margin: 2rem auto;
+    margin-top: 0;
+  }
+}
+
+.location-changed {
+  @include input_hover_effects;
+  font-family: 'Ubuntu bold';
+}
+
+.social-section {
+  padding-top: 1rem;
+  .radio-group {
+    margin-top: .5rem;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .central {
+    padding-top: 0 !important;
+    .title-name {
+      margin-top: 3rem;
+      margin-bottom: 0;
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .settings-block {
+    .avatar-block, .main-information {
+      width: 100%;
+    }
+    .label-width {
+      width: 40%;
+    }
+    .input-width {
+      width: 60%;
+    }
+    .social-section {
+      width: 50%;
+    }
+    .form-group {
+      .no-pad {
+        .dropdown {
+          .ui-select-match-text {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  .ui-select-bootstrap .ui-select-choices-row>a {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 550px) {
+  .settings-block {
+    .label-width {
+      width: 100%;
+    }
+    .input-width {
+      width: 100%;
+    }
+    .main-information {
+      .col-xs-3, .col-xs-9 {
+        width: 100% !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .settings-block {
+    .social-section {
+      width: 100%;
+    }
+    .main-information {
+      input.half-width {
+        width: 100%;
+        &:last-child {
+          margin-top: 15px;
+        }
+      }
+    }
+  }
+}
+
+.compass-location {
+  right: 2.7rem;
+}
+
+//---</settings styles--->
+
+.modal-settings {
+  padding: 0;
+  .media-radiobox {
+    margin-bottom: 0;
+    li {
+      padding: 2rem;
+      border-bottom: 1px solid #e6e6e6;
+      &:last-child {
+        border: 0;
+      }
+    }
+    input[type="radio"] + label {
+      font-weight: normal;
+      color: #929fa7;
+      margin-bottom: 0;
+    }
+    input[type="radio"] + label span {
+      display: inline-block;
+      vertical-align: middle;
+      width: 30px;
+      height: 22px;
+      background: url(../img/radio2.png) 0px -27px no-repeat;
+    }
+    input[type="radio"]:checked + label {
+      color: #00c9f8;
+    }
+    input[type="radio"]:checked + label span {
+      background: url(../img/radio2.png) 0 0 no-repeat;
+    }
+  }
+}
+

@@ -1,0 +1,31 @@
+<div class="text-center">
+  <h2 class="title-name nav-green2">
+    {{currentUser.id == profileUser.id ? 'Photo map' : profileUser.first_name + "'s photo map"}}
+  </h2>
+
+  <div class="album-tools">
+    <a ng-if="Photomap.currentId == currentUser.id" title="Create new album" ui-sref="photos.createAlbum"
+       class="add-page nav-bg-green2"></a>
+  </div>
+</div>
+<div class="col-xs-12 mgt20 album-images">
+    <div ng-repeat="item in Photomap.albums" ng-init="$last ? Photomap.flexGrid() : angular.noop()">
+        <div ng-init="randClass = Photomap.getRandomClass()" class="{{randClass}}">
+            <img ng-src="{{item.cover.medium}}" ui-sref="photos.album({user_id: item.user_id, album_id: item.id})" alt="">
+            <div class="album-tools">
+                <a class="album-tools-delete" tooltip="Delete album" ng-click="Photomap.deleteAlbum(item, $index)">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+                <a class="album-tools-edit" tooltip="Edit Album" ui-sref="photos.editAlbum({album_id: item.id})">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+            </div>
+            <a ui-sref="photos.album({user_id: item.user_id, album_id: item.id})" class="album-title text-left">
+                <div class="title-width">{{item.title}} <span class="count">( {{item.count_photos}} )</span></div>
+            </a>
+        </div>
+    </div>
+    <div class="col-xs-12" ng-if="Photomap.albums.length == 0">
+        <h4 class="text-center description">No albums yet.</h4>
+    </div>
+</div>

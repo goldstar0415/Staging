@@ -1,0 +1,116 @@
+@mixin vertical_align {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+@mixin horizontal_align {
+  position: relative;
+  left:  50%;
+  transform: translateX(-50%);
+}
+
+@mixin transition_width {
+  -webkit-transition: width .3s ease;
+  -moz-transition: width .3s ease;
+  -ms-transition: width .3s ease;
+  transition: width .3s ease;
+}
+
+@mixin transition_color {
+  -webkit-transition: color .3s;
+  -moz-transition: color .3s;
+  -o-transition: color .3s;
+  transition: color .3s;
+}
+@mixin transition_none {
+  -moz-transition: none;
+  -webkit-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+@mixin transition_bg_color {
+  transition: background-color .3s;
+}
+
+@mixin transition_bg {
+  -webkit-transition: background .3s;
+  -moz-transition: background .3s;
+  -o-transition: background .3s;
+  transition: background .3s;
+}
+
+@mixin transition_shadow {
+  -webkit-transition: box-shadow .3s, border-color .3s;
+  -moz-transition: box-shadow .3s, border-color .3s;
+  -o-transition: box-shadow .3s, border-color .3s;
+  transition: box-shadow .3s, border-colors .3s;
+}
+
+@mixin blue_shadow {
+  -webkit-box-shadow: inset 0 1px 2px 0 $white, 0 0 3px 0 #00b7f3;
+  -moz-box-shadow: inset 0 1px 2px 0 $white, 0 0 3px 0 #00b7f3;
+  box-shadow: inset 0 1px 2px 0 $white, 0 0 3px 0 #00b7f3;
+}
+@mixin box_shadow_none {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+@mixin button {
+  padding: 10px 15px;
+  text-align: center;
+  font: $navigation_font;
+  color: $white;
+  text-decoration: none;
+  @include transition_bg_color;
+  border-radius: 3px;
+  &:hover {
+    color: $white;
+  }
+}
+
+@mixin white_border3 {
+  border: 3px solid $white;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+@mixin input_border {
+  border: 1px solid #dee5ea;
+}
+
+@mixin input_hover_effects {
+  border: 1px solid #76c7dc;
+  @include transition_shadow;
+  @include blue_shadow;
+}
+
+@mixin content_bg {
+  background-color: $white;
+  border-radius: 8px;
+  border: 1px solid #e9edf0;
+}
+@mixin border-radius {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+@mixin clearfix {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+@mixin zoomers_sidebar {
+  display: block;
+  font: $navigation_font;
+  text-decoration: none;
+  line-height: 2;
+  padding: 3px 40px 0;
+  @include transition_color;
+  margin-left: 1rem;
+}

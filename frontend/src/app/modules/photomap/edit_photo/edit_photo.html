@@ -1,0 +1,52 @@
+<div class="text-center">
+  <h2 class="title-name nav-green2">
+    <a ui-sref="photos.album({user_id: currentUser.id, album_id: Photo.photo.album_id})" class="back" title="Back"></a>
+    Edit photo</h2>
+</div>
+<div class="col-xs-12 no-pad">
+  <form ng-submit="Photo.save()" role="form" name="form" class="create" novalidate>
+    <div class="col-xs-12 form-group border-bottom indent-padding">
+      <div class="col-xs-3 no-pad label-width ">
+        <label>Album</label>
+      </div>
+      <div class="col-xs-9 no-pad input-width">
+        <input placeholder="Start typing..." name="title" ng-model="Photo.photo.album.title" type="text" disabled>
+
+        <div class="error-message-inline" ng-messages="form.title.$error"
+             ng-if="form.$submitted || form.title.$touched">
+          <div ng-messages-include="error-title-messages"></div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="col-xs-12 form-group border-bottom indent-padding">
+      <div class="col-xs-3 no-pad label-width">
+        <label>Address</label>
+      </div>
+      <div class="col-xs-9 no-pad input-width">
+        <input
+                location-bloodhound
+                address="Photo.address"
+                location="Photo.location"
+                ng-model-options="{ debounce: 200 }"
+                popover="Type address or click on the map to set location(s)"
+                popover-trigger="focus"
+                placeholder="Type location or click on map..."
+                type="text"
+                autocomplete="off"
+                bind-marker="true"
+                limit="15"
+        >
+      </div>
+    </div>
+
+    <figure class="col-xs-12 border-bottom">
+      <img class="edit-album-photo img-responsive" ng-src="{{Photo.photo.photo_url.original}}">
+    </figure>
+    <div class="col-xs-12 save-cancel">
+      <input type="submit" value="Save" class="save">
+    </div>
+  </form>
+</div>

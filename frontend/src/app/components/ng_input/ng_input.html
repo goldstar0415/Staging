@@ -1,0 +1,116 @@
+<form name="form" ng-submit="NgInput.submit(form)" novalidate class="clearfix">
+
+  <section class="col-xs-12 comments-section" ng-if="$root.currentUser" ng-class="{'hidden-xs': NgInput.mobile}">
+    <div class="new-post clearfix">
+      <textarea name="message"
+                ng-model="NgInput.message"
+                placeholder="Start typing..."
+                ng-focus="NgInput.onFocus()"
+                ctrl-enter="NgInput.submit(form)"
+                ng-maxlength="NgInput.maxlength"
+                ng-required="!NgInput.attachments.photos.length && !NgInput.attachments.spots.length && !NgInput.attachments.areas.length && !NgInput.attachments.links.length"></textarea>
+
+      <div ng-messages="form.message.$error" ng-if="form.$submitted" class="error-message">
+        <div ng-message="required">is required</div>
+        <div ng-message="maxlength">is too long</div>
+      </div>
+
+      <div class="attachments-preview" ng-if="!_.isEmpty(NgInput.attachments)">
+
+        <div class="links">
+          <div class="media media-visible padding-bottom add-location clearfix"
+               ng-repeat="area in NgInput.attachments.areas">
+            <a class="img-selection">{{area.title}}</a>
+
+            <div class="media-body">
+              <div class="description-link">
+                <span>{{area.description}}</span>
+                <a class="close-link" title="Delete" ng-click="NgInput.deleteArea($index)"></a>
+              </div>
+            </div>
+          </div>
+
+          <div ng-repeat="spot in NgInput.attachments.spots" class="media media-visible padding-bottom add-event">
+            <div class="col-md-2 col-xs-3 col-sm-4 spot-thumb">
+              <figure>
+                <a class="wrap-img-event">
+                  <img class="media-object attachment-link" ng-src="{{spot.cover_url.medium}}">
+                  <spot-type type="spot.category.type.display_name"></spot-type>
+                </a>
+              </figure>
+              <stars item="spot"></stars>
+            </div>
+            <div class="col-md-9 col-xs-9">
+              <a class="close-link" title="Delete" ng-click="NgInput.deleteSpot($index)"></a>
+
+              <h3 class="media-heading ">
+                <a class="event-img clearfix">{{spot.title}}</a>
+              </h3>
+              <!--<p class="place">London</p>-->
+              <p class="date">
+                <date-range item="spot" class="ng-isolate-scope"></date-range>
+              </p>
+              <div class="description-link">{{spot.description}}</div>
+            </div>
+          </div>
+
+          <div ng-repeat="link in NgInput.attachments.links" class="media media-visible padding-bottom add-event">
+            <a class="pull-left wrap-img-event" ng-href="{{link.url}}" target="_blank">
+              <img class="media-object attachment-link" ng-src="{{link.image}}">
+            </a>
+
+            <div class="media-body">
+              <a class="close-link" title="Delete" ng-click="NgInput.deleteLink($index)"></a>
+
+              <h3 class="media-heading ">
+                <a class="event-img clearfix" ng-href="{{link.url}}" target="_blank">{{link.title}}</a>
+              </h3>
+
+              <div class="description-link">{{link.description}}</div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="upload-photos clearfix" ng-if="NgInput.attachments.photos.length > 0">
+          <div class="photos">
+            <div class="add-img"
+                 ng-repeat="photo in NgInput.attachments.photos"
+                 ng-mouseenter="showDelete = true" ng-mouseleave="showDelete = false">
+              <img ng-src="{{photo.photo_url.medium}}">
+              <a class="close-img" ng-show="showDelete" ng-click="NgInput.deletePhoto($index)" data-toggle="tooltip"
+                 data-placement="top" title="Delete">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+      <input type="submit" class="submit-send" value="Send">
+      <a class="add-photo" ng-click="NgInput.openPhotosModal()"></a>
+      <a class="add-attach" ng-click="NgInput.openActivityModal()"></a>
+    </div>
+
+  </section>
+
+  <div class="fixed visible-xs" ng-if="NgInput.mobile">
+    <ul class="list-inline">
+      <li><a class="add-attach" ng-click="NgInput.openActivityModal()"></a></li>
+      <li class="chat-input">
+        <textarea name="message" ng-model="NgInput.message" placeholder="Start typing..." ng-focus="NgInput.onFocus()"
+                  ctrl-enter="NgInput.submit(form)" ng-maxlength="5000"
+                  ng-required="!NgInput.attachments.photos.length &amp;&amp; !NgInput.attachments.spots.length &amp;&amp; !NgInput.attachments.areas.length &amp;&amp; !NgInput.attachments.links.length"
+                  class="ng-pristine ng-isolate-scope ng-invalid ng-invalid-required ng-valid-maxlength ng-touched"
+                  required="required"></textarea>
+      </li>
+      <li><input type="submit" class="submit-send" value=""></li>
+    </ul>
+    <div class="mobile-attachments" ng-if="NgInput.getAttachmentsCount() > 0">
+      <span class="add-attach"></span>
+      <span class="count-attachments">{{ NgInput.getAttachmentsCount() }}</span>
+      <a ng-click="NgInput.clearAttachments()" class="attachment-close"></a>
+    </div>
+  </div>
+</form>

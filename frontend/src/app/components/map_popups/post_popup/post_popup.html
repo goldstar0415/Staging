@@ -1,0 +1,24 @@
+<div class="popup-width blog-popup" ng-if="!closePopup">
+  <div class="col-xs-4 nav-popup">
+    <div class="img-event">
+      <span class="wrap-img">
+        <img ng-src="{{data.cover_url.medium}}">
+      </span>
+    </div>
+  </div>
+  <div class="col-xs-8 popup-main">
+    <span>
+        <a class="title" ui-sref="blog.article({slug: data.slug})">{{data.title}}</a>
+    </span>
+
+    <a class="author-event" ui-sref="profile.main({user_id: data.user.alias || data.user.id})">
+      <span>Author: </span>
+      {{data.user.first_name}} {{data.user.last_name}}
+    </a>
+
+    <div class="close-event">
+      <a ng-click="closePopup = true" class="close"></a>
+    </div>
+  </div>
+</div>
+

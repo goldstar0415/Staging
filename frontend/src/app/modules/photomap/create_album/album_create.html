@@ -1,0 +1,86 @@
+<div class="text-center">
+  <h2 ng-hide="CreateAlbum.album.id" class="title-name nav-green2">Create new album</h2>
+
+  <h2 ng-show="CreateAlbum.album.id" class="title-name nav-green2">Edit album</h2>
+</div>
+<div class="col-xs-12 no-pad">
+  <form ng-submit="CreateAlbum.createAlbum(form)" role="form" name="form" class="create" novalidate>
+    <div class="col-xs-12 form-group">
+      <div class="col-xs-3 no-pad label-width">
+        <label>Title</label>
+      </div>
+      <div class="col-xs-9 no-pad input-width">
+        <input placeholder="Album Title..." class="form-control  " ng-minlength="3" ng-maxlength="128" name="title"
+               ng-model="CreateAlbum.album.title" type="text" required>
+
+        <div class="error-message-inline" ng-messages="form.title.$error"
+             ng-if="form.$submitted || form.title.$touched">
+          <div ng-messages-include="error-title-messages"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-xs-12 form-group">
+      <div class="col-xs-3 no-pad label-width">
+        <label>Privacy</label>
+      </div>
+      <div class="col-xs-9 no-pad input-width">
+        <ui-select
+          ng-model="CreateAlbum.album.is_private"
+          theme="bootstrap">
+          <ui-select-match placeholder="Enter option...">{{$select.selected.label}}</ui-select-match>
+          <ui-select-choices
+            repeat="item.value as item in CreateAlbum.privacy | filter : $select.search track by $index">
+            <div ng-bind-html="item.label | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+    </div>
+
+    <div class="col-xs-12 form-group">
+      <div class="col-xs-3 no-pad label-width">
+        <label>Location</label>
+      </div>
+      <div class="col-xs-9 no-pad input-width">
+        <input
+                location-bloodhound
+                address="CreateAlbum.album.address"
+                location="CreateAlbum.album.location"
+                ng-model-options="{ debounce: 200 }"
+                popover="Type address or click on the map to set location(s)"
+                popover-trigger="focus"
+                placeholder="Type location or click on map..."
+                type="text"
+                autocomplete="off"
+                bind-marker="true"
+                limit="15"
+        >
+      </div>
+    </div>
+
+    <div class="col-xs-12 upload-photos">
+
+      <div class="col-xs-12 no-pad">
+        <uploader drop-zone="true"></uploader>
+
+        <div class="photos no-pad">
+          <div class="add-img"
+               ng-repeat="image in CreateAlbum.images.files track by $index"
+               ng-mouseenter="showDelete = true" ng-mouseleave="showDelete = false">
+            <img ngf-src="image">
+            <a class="close-img" ng-show="showDelete" ng-click="CreateAlbum.deleteImage($index)" data-toggle="tooltip"
+               data-placement="top" title="Delete">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-xs-12 save-cancel text-right">
+      <input type="submit" value="SAVE" class="save">
+      <input type="button" value="CANCEL" ui-sref="photos.list({user_id: currentUser.id})" class="cancel">
+    </div>
+  </form>
+</div>

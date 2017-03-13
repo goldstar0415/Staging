@@ -1,0 +1,16 @@
+<div class="text-center">
+  <h2 class="title-name nav-blue">
+    {{currentUser.id == profileUser.id ? 'My' : profileUser.first_name + "'s"}}
+    {{ Follower.isFollowings ? 'followings' : 'followers' }}
+  </h2>
+</div>
+
+<div ng-repeat="item in Follower.users"
+     ui-sref="profile.main({user_id: item.alias || item.user_id})"
+     class="col-xs-4 col-md-3 mgt20">
+  <img ng-src="{{ item.avatar_url.medium }}" alt="" class="media-full-width">
+</div>
+
+<div class="col-xs-12" ng-if="Follower.users.length == 0 ">
+  <h4 class="text-center description">No {{ Follower.isFollowings ? 'followings' : 'followers' }} yet.</h4>
+</div>
