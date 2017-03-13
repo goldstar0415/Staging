@@ -39,7 +39,8 @@ class SpotTest extends LaravelTestCase
             [
                 'files' => [$this->makeUploadedFile(), $this->makeUploadedFile(), $this->makeUploadedFile()]
             ]
-        )->seeJson($spot->toArray());
+        );
+        $this->seeJson($spot->toArray());
         $this->assertResponseOk();
     }
 }

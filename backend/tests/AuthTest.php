@@ -41,7 +41,8 @@ class AuthTest extends LaravelTestCase
                 '_token' => csrf_token()
             ],
             ['Accept' => 'application/json']
-        )->seeJson(
+        );
+        $this->seeJson(
             [
                 'id' => Auth::id(),
                 'first_name' => $user->getAttributeValue('first_name'),
@@ -65,7 +66,8 @@ class AuthTest extends LaravelTestCase
                 'password' => 'password'
             ],
             ['Accept' => 'application/json']
-        )->seeJson(
+        );
+        $this->seeJson(
             [
                 'id' => $user->id,
                 'first_name' => $user->first_name,
@@ -86,7 +88,8 @@ class AuthTest extends LaravelTestCase
                 'password' => 'randompassword'
             ],
             ['Accept' => 'application/json']
-        )->seeJson([
+        );
+        $this->seeJson([
             'email' => 'These credentials do not match our records.'
         ]);
         $this->assertResponseStatus(422);
@@ -103,7 +106,8 @@ class AuthTest extends LaravelTestCase
             ],
             ['Accept' => 'application/json']
 
-        )->seeJson(['message' => 'user already authenticated']);
+        );
+        $this->seeJson(['message' => 'user already authenticated']);
         $this->assertResponseStatus(400);
     }
 
