@@ -227,7 +227,7 @@
                 {
                     vm.reviews_total[type] = data[type];
                 }
-                ratingRefreshed('google');
+                ratingRefreshed(type);
                 calcRatings();
                 enableReviews();
             });
