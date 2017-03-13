@@ -31,7 +31,7 @@
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
                     // prefetch: '../data/films/post_1960.json',
                     remote: {
-                        url: API_URL + '/search/spots?query=%QUERY',
+                        url: API_URL + '/map/search?query=%QUERY',
                         wildcard: '%QUERY',
                         rateLimitBy: 'debounce',
                         rateLimitWait: 600,
@@ -55,8 +55,7 @@
                     templates: {
                         suggestion: function(context) {
                             var template = "<div><span class='title'>{{value}}</span>{{dist}}</span> {{group}}</div>";
-                            template = template.replace(/\{\{value\}\}/, context.value);
-
+                            template = template.replace(/\{\{value\}\}/, context.title);
                             var group = "";
                             var dist  = "";
                             switch(context.type) {
