@@ -73,7 +73,7 @@ class FriendTest extends LaravelTestCase
 
     public function testShowAllFriends()
     {
-        $this->get('/friends')
-            ->see($this->user->friends->toJson());
+        $this->get('/friends');
+        $this->see($this->user->friends->toJson());
     }
 }
