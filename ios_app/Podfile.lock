@@ -1,0 +1,21 @@
+PODS:
+  - Alamofire (4.3.0)
+  - ScoutMaps-iOS-SDK (3.0.2)
+  - SideMenu (2.2.0)
+  - SwiftyJSON (3.1.4)
+
+DEPENDENCIES:
+  - Alamofire
+  - ScoutMaps-iOS-SDK
+  - SideMenu
+  - SwiftyJSON
+
+SPEC CHECKSUMS:
+  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  ScoutMaps-iOS-SDK: 2b50decc60d3ff54c50f4dc2dd5b87513130930e
+  SideMenu: eeff6b85456c5c6e14165655691d2033f6b24969
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+
+PODFILE CHECKSUM: 41a37adaed5846130bd23af2a383433cd0d09368
+
+COCOAPODS: 1.2.0
