@@ -32,7 +32,8 @@ class FollowTest extends LaravelTestCase
             $query->where('follower_id', '=', $user_id);
         })->take(1)->first();
 
-        $this->get('/follow/' . $follow_user->id)->seeJson(
+        $this->get('/follow/' . $follow_user->id);
+        $this->seeJson(
             ['message' => 'You are successfuly follow user ' . $follow_user->first_name]
         );
         $this->assertResponseOk();
@@ -43,7 +44,8 @@ class FollowTest extends LaravelTestCase
         $user_id = $this->user->id;
         $unfollow_user = $this->user->followings()->random()->first();
 
-        $this->get('/unfollow/' . $unfollow_user->id)->seeJson(
+        $this->get('/unfollow/' . $unfollow_user->id);
+        $this->seeJson(
             ['message' => 'You are successfuly unfollow user ' . $unfollow_user->first_name]
         );
         $this->assertResponseOk();

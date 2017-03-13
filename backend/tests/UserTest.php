@@ -6,8 +6,8 @@ class UserTest extends LaravelTestCase
     public function testGetMe()
     {
         $this->randomSignIn();
-        $this->get('users/me')
-            ->seeJson(
+        $this->get('users/me');
+        $this->seeJson(
                 [
                     'first_name' => $this->user->first_name,
                     'last_name' => $this->user->last_name,
@@ -18,8 +18,8 @@ class UserTest extends LaravelTestCase
 
     public function testMeNotAuth()
     {
-        $this->get('users/me')
-            ->seeJson(
+        $this->get('users/me');
+        $this->seeJson(
                 [
                     'message' => 'user unauthorized',
                 ]

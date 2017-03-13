@@ -34,7 +34,8 @@ class FriendTest extends LaravelTestCase
                 'location' => ['lat' => $friend->location->getLat(), 'lng' => $friend->location->getLng()],
                 'note' => $friend->note
             ]
-        )->seeJson(['message' => 'Friend successfuly added']);
+        );
+        $this->seeJson(['message' => 'Friend successfuly added']);
     }
 
     public function testUpdateFriend()
@@ -56,7 +57,8 @@ class FriendTest extends LaravelTestCase
                 'location' => ['lat' => $friend->location->getLat(), 'lng' => $friend->location->getLng()],
                 'note' => $friend->note
             ]
-        )->seeJson(['message' => 'Friend successfuly updated']);
+        );
+        $this->seeJson(['message' => 'Friend successfuly updated']);
     }
 
     public function testDeleteFriend()
@@ -65,8 +67,8 @@ class FriendTest extends LaravelTestCase
          * @var Friend $friend
          */
         $old_friend = $this->user->friends()->random()->first();
-        $this->delete('/friends/' . $old_friend->id)
-            ->seeJson(['message' => 'Friend successfuly deleted']);
+        $this->delete('/friends/' . $old_friend->id);
+        $this->seeJson(['message' => 'Friend successfuly deleted']);
     }
 
     public function testShowAllFriends()
