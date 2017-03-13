@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Events;
+
+use App\SpotVote;
+use Illuminate\Queue\SerializesModels;
+
+/**
+ * Class OnSpotReview
+ * @package App\Events
+ *
+ * Fires on spot review
+ */
+class OnSpotReview extends Event implements Feedable
+{
+    use SerializesModels;
+
+    /**
+     * @var SpotVote
+     */
+    public $review;
+
+    /**
+     * Create a new event instance.
+     *
+     * @param SpotVote $review
+     */
+    public function __construct(SpotVote $review)
+    {
+        $this->review = $review;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return SpotVote
+     */
+    public function getFeedable()
+    {
+        return $this->review;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return \App\User
+     */
+    public function getFeedSender()
+    {
+        return $this->review->user;
+    }
+}
