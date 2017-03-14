@@ -158,7 +158,7 @@
                             }
                         }
                     });
-                $http.get(API_URL + '/weather/darksky', {
+                $http.get(API_URL + '/xapi/weather/darksky', {
                     params: {
                         lat: vm.lat,
                         lng: vm.lng,

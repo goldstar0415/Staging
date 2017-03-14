@@ -169,7 +169,7 @@
       var limit = scope.limit || 10;
       var provider = scope.provider || 'google';
       
-      var URL_MAP_QUEST = API_URL + '/geocoder/search?addressdetails=1&limit=' + limit + '&q=%QUERY%';
+      var URL_MAP_QUEST = API_URL + '/xapi/geocoder/search?addressdetails=1&limit=' + limit + '&q=%QUERY%';
       var URL_GOOGLE_MAPS = 'https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=%QUERY%';
 
       var bhSource = new Bloodhound({
