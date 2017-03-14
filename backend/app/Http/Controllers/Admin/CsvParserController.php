@@ -82,12 +82,12 @@ class CsvParserController extends Controller
     public function export( Request $request ) 
     {
         $path               = $request->path;
-        $total_rows         = $request->total_rows;
+        $total_rows         = (int)$request->total_rows;
         $this->usePrefix    = (int)$request->use_prefix;
         $this->field        = $request->field;
         $this->mode         = $request->mode;
         $rows_parsed_before = $request->rows_parsed;
-        $file_offset        = $request->file_offset;
+        $file_offset        = (int)$request->file_offset;
         $this->headers      = $request->input('headers', []);
         $this->categoryId   = $request->input('category', null);
         $this->date         = date('Y-m-d H:i:s');
@@ -108,6 +108,7 @@ class CsvParserController extends Controller
         }
         if($total_rows == $rows_parsed_before)
         {
+            unlink($path);
             $this->result['end_of_parse']       = true;
         }
         else
@@ -165,9 +166,13 @@ class CsvParserController extends Controller
         }
 
         $this->result['rows_parsed'] = $rows_parsed_before + $this->result['rows_parsed_now'];
+        if($this->result['rows_parsed'] === $total_rows || $this->result['end_of_parse'])
+        {
+            $this->result['end_of_parse'] = true;
+            unlink($path);
+        }
         $this->result['headers'] = $this->headers;
         header('Content-Type: text/html;charset=utf-8');
-        $this->result = json_encode($this->result);
         return $this->result;
     }
     
