@@ -6,36 +6,135 @@ networks:
   front-tier:
     driver: bridge
 
-# todo
-
 services:
 
+  # Laravel backend
+
   backend:
+    extends:
+      file: abstract-cluster.yml
+      service: base
     build: ./backend
-    mem_limit: 512m
+    networks:
+      front-tier
+    expose:
+      - 80
     volumes:
       - ./backend:/data/www/default
     environment:
+      # todo: add production values here or remove empty items
+
       - NGINX_GENERATE_DEFAULT_VHOST=true
-    networks:
-      - back-tier
-    logging:
-      options:
-        max-size: "1m"
-#        max-file: "2"
+
+      - APP_NAME=zoomtivity
+      - APP_URL=
+      - FRONTEND_URL=
+      - APP_COOKIE_DOMAIN=
+      - APP_ENV=local
+      - APP_DEBUG=false
+      - APP_KEY=
+
+      - DB_CONNECTION=pgsql
+      - DB_HOST=database
+      - DB_DATABASE=zoomtivity
+      - DB_USERNAME=zoomtivity
+      - DB_PASSWORD=password
+
+      - CACHE_DRIVER=memcached
+      - SESSION_DRIVER=file # fixme ??
+      - QUEUE_DRIVER=redis
+      - BROADCAST_DRIVER=redis
+
+      - MAIL_DRIVER=smtp
+      - MAIL_HOST=
+      - MAIL_PORT=
+      - MAIL_USERNAME=
+      - MAIL_PASSWORD=
+      - MAIL_ENCRYPTION=null
+      - MAIL_FROM=
+
+      - S3_BUCKET=
+      - S3_ACL=public-read
+      - S3_KEY=
+      - S3_SECRET=
+      - S3_REGION=
+      - S3_SCHEME=https
+      - S3_VERSION=latest
+      - S3_ENDPOINT=
+
+      - FB_CLIENT_ID=1607656882886302
+      - FB_CLIENT_SECRET=1be71dd581f0de065b29a68527120b3c
+      - FB_REDIRECT_URL=http://zoomtivity-back-george.wirnex.com/account/facebook
+
+      - GOOGLE_CLIENT_ID=602474306590-8l0bu9hnd498cjhd12gkdg7s6061lqba.apps.googleusercontent.com
+      - GOOGLE_CLIENT_SECRET=VmE85UbqSNJd0oWr4qqsF3vt
+      - GOOGLE_REDIRECT_URL=http://zoomtivity-back-george.wirnex.com/account/google
+
+      - FORECAST_KEY=5a60b02b615de18dc36f167149c6ca1b
+
+      - DARK_SKY_API_KEY=8cbfccc23dc28e5a6d4aa337a8f6ed06
+
+      - OPENWEATHERMAP_API_KEY=835492c0eab300994ec658dfb16ad305
+
+      - MAPQUEST_API_KEY=peVrdYeAJADUMTIMKXuK4j9G52cnsY8p
+
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+      - MEMCACHED_HOST=memcached
+      - MEMCACHED_PORT=11211
+
+
+  # Postgres+PostGIS
 
   database:
-    image: wirnex/postgis:1.0
+    extends:
+      file: abstract-cluster.yml
+      service: base
+    build: ./postgres
     environment:
-      - POSTGRES_USER=user
+      - POSTGRES_USER=zoomtivity
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=zoomtivity
-    networks:
-      - back-tier
     expose:
-      - 3306
-    logging:
-      driver: "json-file"
-    mem_limit: 512m
+      - 5432
     restart: always
 
+
+  # Redis
+
+  redis:
+    extends:
+      file: abstract-cluster.yml
+      service: base
+    image: redis:alpine
+      expose:
+        - 6379
+    restart: always
+
+
+  # Memcached
+
+  memcached:
+    extends:
+      file: abstract-cluster.yml
+      service: base
+    image: memcached:alpine
+    expose:
+      - 11211
+    restart: always
+
+
+  # Websocket-Server
+
+  websocket:
+    extends:
+      file: abstract-cluster.yml
+      service: base
+    build: ./websocket
+    environment:
+      - PORT=8080
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    expose:
+      - 8080

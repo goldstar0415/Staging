@@ -1,1 +1,10 @@
 .idea/
+docker-compose.override.yml
+npm-*.log
+
+websocket/node_modules/
+
+postgres/data/
+!postgres/data/.gitkeep
+
+frontend/.tmp/
