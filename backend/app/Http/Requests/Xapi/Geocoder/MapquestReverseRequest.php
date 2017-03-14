@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Geocoder;
+namespace App\Http\Requests\Xapi\Geocoder;
 
 use App\Http\Requests\Request;
 

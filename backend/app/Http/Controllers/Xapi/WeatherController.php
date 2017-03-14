@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Xapi;
 
 use Log;
-use App\Http\Requests\Weather\DarkskyWeatherRequest;
-use App\Http\Requests\Weather\OpenWeatherMapRequest;
+use App\Http\Requests\Xapi\Weather\DarkskyWeatherRequest;
+use App\Http\Requests\Xapi\Weather\OpenWeatherMapRequest;
+use App\Http\Controllers\Controller;
 use GuzzleHttp\Client as HttpClient;
 use Cache;
 use Carbon\Carbon;

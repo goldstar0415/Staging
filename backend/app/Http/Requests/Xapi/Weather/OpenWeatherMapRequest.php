@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Geocoder;
+namespace App\Http\Requests\Xapi\Weather;
 
 use App\Http\Requests\Request;
 
-class MapquestSearchRequest extends Request
+class OpenWeatherMapRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,12 @@ class MapquestSearchRequest extends Request
     public function rules()
     {
         $rules = [
-            'addressdetails' => 'numeric',
-            'limit' => 'numeric',
-            'q' => 'required|string',
+//            'lat' => 'required|numeric',
+//            'lng' => 'required|numeric',
+            'bbox' => 'required|string',
+            'cluster' => 'required|string|in:yes,no',
+            'units' => 'required|string|in:imperial,metric',
+            'cnt' => 'required|integer|min:1',
         ];
 
         return $rules;

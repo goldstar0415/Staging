@@ -175,12 +175,12 @@ Route::get('prerender/{page_url}', 'PrerenderController@render')->where('page_ur
 
 Route::group(['prefix' => 'xapi'], function() {
     Route::group(['prefix' => 'weather'], function() {
-        Route::get('darksky',        'WeatherController@darksky');
-        Route::get('openweathermap', 'WeatherController@openWeatherMap');
+        Route::get('darksky',        'Xapi\WeatherController@darksky');
+        Route::get('openweathermap', 'Xapi\WeatherController@openWeatherMap');
     });
 
     Route::group(['prefix' => 'geocoder'], function() {
-        Route::get('search', 'GeocoderController@search');
-        Route::get('reverse', 'GeocoderController@reverse');
+        Route::get('search', 'Xapi\GeocoderController@search');
+        Route::get('reverse', 'Xapi\GeocoderController@reverse');
     });
 });
