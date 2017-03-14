@@ -62,7 +62,7 @@ class UserController extends Controller
             'getLogout',
             'getMe',
             'getIndex',
-            'getList',
+            'getListAll',
             'comments',
             'reviews',
             'contactUs',
@@ -71,7 +71,15 @@ class UserController extends Controller
             'usersImportInfo',
             'inviteEmail'
         ]]);
-        $this->middleware('auth', ['only' => ['getMe', 'changeEmail', 'unsubscribe', 'usersImportInfo', 'inviteEmail']]);
+        $this->middleware('auth', ['only' => [
+            'getMe',
+            'changeEmail',
+            'unsubscribe',
+            'usersImportInfo',
+            'inviteEmail',
+            'getListFollowers',
+            'getListFollowings',
+        ]]);
         $this->auth = $auth;
     }
 
