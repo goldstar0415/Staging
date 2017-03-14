@@ -12,10 +12,9 @@
   function User($resource, API_URL) {
     return $resource(API_URL + '/users/:id', {id: '@id'}, {
       query: {
-        url: API_URL + '/users/list',
+        url: API_URL + '/users/list/all',
         method: 'GET',
         params: {
-          type: 'all',
           page: 1,
           limit: 10
         }
