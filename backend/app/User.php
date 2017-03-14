@@ -19,7 +19,6 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use App\SpotVote;
-use App\Services\SqlEscape;
 
 /**
  * Class User
@@ -97,7 +96,7 @@ class User extends BaseModel implements
     StaplerableInterface,
     CalendarExportable
 {
-    use Authenticatable, CanResetPassword, EntrustUserTrait, SqlEscape,
+    use Authenticatable, CanResetPassword, EntrustUserTrait,
         PostgisTrait, StaplerTrait, GeoTrait {
         StaplerTrait::boot insteadof EntrustUserTrait;
         EntrustUserTrait::boot insteadof StaplerTrait;
@@ -203,13 +202,9 @@ class User extends BaseModel implements
      */
     public function scopeSearch($query, $filter)
     {
-    	$filter = self::escapeLike($filter);
-
         return $query
-            ->whereRaw(
-                "LOWER(CONCAT(\"first_name\", ' ', \"last_name\")) like '%$filter%' " .
-                "OR LOWER(\"email\") like '%$filter%'"
-            );
+            ->where(DB::raw("LOWER(CONCAT(first_name, ' ', last_name))"), 'like', "%$filter%")
+            ->orWhere(DB::raw('LOWER(email)'), 'like', "%$filter%");
     }
 
     /**
