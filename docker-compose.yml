@@ -12,14 +12,30 @@ services:
 
   backend:
     build: ./backend
-    expose:
-      - 80
+    mem_limit: 512m
+    volumes:
+      - ./backend:/data/www/default
+    environment:
+      - NGINX_GENERATE_DEFAULT_VHOST=true
     networks:
       - back-tier
-      - front-tier
+    logging:
+      options:
+        max-size: "1m"
+#        max-file: "2"
+
+  database:
+    image: wirnex/postgis:1.0
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=zoomtivity
+    networks:
+      - back-tier
+    expose:
+      - 3306
     logging:
       driver: "json-file"
-        options:
-          max-size: "1m"
-    volumes:
+    mem_limit: 512m
+    restart: always
 
