@@ -24,14 +24,9 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
     private $http;
 
     /**
-     * @var string
-     */
-    protected $api_url = 'https://app.ticketmaster.com/discovery/v2/events.json';
-
-    /**
      * @var AppSettings
      */
-    private $settings;
+    private $config;
 
     /**
      * @var integer
@@ -63,6 +58,7 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
     ];
     
     public function __construct() {
+        $this->config = config('services.ticketmaster');
         $this->category = SpotTypeCategory::getOrCreate('ticketmaster', 'TicketMaster');
         $this->prefix = $this->category->getPrefix();
     }
@@ -75,9 +71,8 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
     public function handle(Client $http)
     {
         $this->http = $http;
-        $this->settings = config('ticket-master');
         $page = !empty($this->page)?$this->page:1; // setting page number to 1 as default
-        $query_string = ['apikey' => $this->settings['apikey'] , 'size' => 500, 'page' => $page];
+        $query_string = ['apikey' => $this->config['apikey'] , 'size' => 500, 'page' => $page];
         $data = $this->fetchData($query_string);
         $nextPage = $data['page']['number']+1;
         $events = collect($data['_embedded']['events']);
@@ -257,7 +252,7 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
     public function fetchData($query_string)
     {
         try {
-            $response = $this->http->get($this->api_url, [
+            $response = $this->http->get($this->config['baseUri'], [
                 'query' => $query_string
             ]);
             $data = json_decode((string)$response->getBody(), true);

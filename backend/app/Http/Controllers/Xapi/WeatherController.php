@@ -18,17 +18,8 @@ use Carbon\Carbon;
  */
 class WeatherController extends Controller
 {
-    protected $config;
-    protected $http;
-
     public function __construct()
     {
-        $this->config = config('weather');
-        if (!isset($this->config['darksky'])) {
-            throw new \RuntimeException('Invalid weather/darksky config');
-        }
-
-        $this->http = new HttpClient;
     }
 
     /**
@@ -83,25 +74,28 @@ class WeatherController extends Controller
 	 */
     final protected function darkskyRequest(array $latLng, array $params = [])
     {
-        $config = $this->config['darksky'];
-        $url = sprintf('%s/forecast/%s/%s,%s', $config['baseUri'], $config['key'], $latLng['lat'], $latLng['lng']);
-        if(Cache::has($url))
-        {
+        $url = sprintf('%s/forecast/%s/%s,%s',
+            config('services.darksky.baseUri'),
+            config('services.darksky.api_key'),
+            $latLng['lat'],
+            $latLng['lng']
+        );
+
+        if(Cache::has($url)) {
             return Cache::get($url);
         }
+
         try {
+        	$json = (new HttpClient)->get($url, ['query' => $params])->getBody();
 
-        	$json = $this->http->get($url, ['query' => $params])->getBody();
-                $result = self::parseHttpJson($json);
-                Cache::put($url, $result, Carbon::now()->addDay());
+            $result = self::parseHttpJson($json);
+            Cache::put($url, $result, Carbon::now()->addDay());
+
 	        return $result;
-
         } catch (\Exception $ex) {
-
 	        Log::error('Darksky Error: ' . $ex->getMessage());
 	        return self::parseHttpError($ex);
         }
-
     }
 
     /**
@@ -112,22 +106,18 @@ class WeatherController extends Controller
      */
     final protected function openWeatherMapRequest($params)
     {
-        $config = $this->config['openWeatherMap'];
-        $url = sprintf('%s/data/2.5/box/city', $config['baseUri'] );
-        $params['APPID'] = $config['key'];
+        $url = sprintf('%s/data/2.5/box/city', config('services.openweathermap.baseUri'));
 
         try {
+            $json = (new HttpClient)->get($url, [
+                'query' => ['APPID' => config('services.openweathermap.api_key')]
+            )->getBody();
 
-            $json = $this->http->get($url, ['query' => $params])->getBody();
             return self::parseHttpJson($json);
-
         } catch (\Exception $ex) {
-
             Log::error('OpenWeatherMap Error: ' . $ex->getMessage());
             return self::parseHttpError($ex);
-
         }
-
     }
 
     /**
