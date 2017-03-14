@@ -81,9 +81,9 @@
     <div class="form-group"  ng-if="$root.sortLayer == 'event'">
         <label>By dates<span hidden>clear</span></label>
         <div class="date-filters clearfix" ng-class="{'move-top': $root.isDrawArea, applied: ($root.mapSortFilters.filter.start_date || $root.mapSortFilters.filter.end_date)}">
-            <input ng-datepicker ng-model="$root.filterOptions.dateFrom" class="date" placeholder="FROM" type="text">
+            <input ng-datepicker ng-model="$root.filterOptions.dateFrom" start-date="MapSort.inputDate.start_date" class="date" placeholder="FROM" type="text" ng-change="MapSort.startDateChanged()" ng-click="MapSort.initDates()" />
             <div></div>
-            <input ng-datepicker ng-model="$root.filterOptions.dateTo" start-date="MapSort.searchParams.start_date" class="date" placeholder="TO" type="text">
+            <input ng-datepicker ng-model="$root.filterOptions.dateTo" start-date="MapSort.inputDate.end_date" class="date" placeholder="TO" type="text"  ng-click="MapSort.initDates()" />
         </div>
     </div>
     <div class="form-group" hidden>
