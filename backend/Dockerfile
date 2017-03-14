@@ -19,9 +19,6 @@ RUN composer install --no-scripts
 COPY entry_point.sh /config/
 RUN chmod +x /config/entry_point.sh
 
-#CMD composer run-script --no-dev post-install-cmd
-# && /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
-
 ENTRYPOINT ["/config/entry_point.sh"]
 
 EXPOSE 80

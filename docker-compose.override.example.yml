@@ -1,0 +1,14 @@
+version: "2"
+
+services:
+
+  backend:
+    ports:
+      - "8098:80"
+    environment:
+      - APP_NAME=zoomtivity
+     # ....
+
+  database:
+    ports:
+      - "54328:5432"
