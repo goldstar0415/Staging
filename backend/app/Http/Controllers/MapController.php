@@ -138,14 +138,14 @@ class MapController extends Controller {
         }
 
         if ($request->has('filter.start_date')) {
-            $spots->where('spots_mat_view.start_date', '>=', $request->filter['start_date']);
+            $spots->where('spots_mat_view.start_date', '>=', Carbon::parse($request->filter['start_date'])->toDateTimeString());
         } else {
             if ($request->has('type') && $request->type == 'event' && ! $request->has('filter.end_date')) {
-                $spots->where('spots_mat_view.end_date', '>', Carbon::now()->format('Y-m-d'));
+                $spots->where('spots_mat_view.end_date', '>', Carbon::now()->toDateTimeString());
             }
         }
         if ($request->has('filter.end_date')) {
-            $spots->where('spots_mat_view.end_date', '<=', $request->filter['end_date']);
+            $spots->where('spots_mat_view.end_date', '<=', Carbon::parse($request->filter['end_date'])->endOfDay()->toDateTimeString());
         }
 
         if ($request->has('filter.tags') && !empty($request->filter['tags'])) {
@@ -174,8 +174,7 @@ class MapController extends Controller {
 
         if ($request->has('filter.price')) {
             $spots
-                ->where('spots_mat_view.minrate', '<=', $request->filter['price'])
-                ->where('spots_mat_view.currencycode', 'USD');
+                ->where(DB::raw('spots_mat_view.minrate::float'), '<=', (float)$request->filter['price']);
         }
     }
 
