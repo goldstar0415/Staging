@@ -20,45 +20,55 @@ class UserTest extends LaravelTestCase
         $this->assertResponseStatus(401);
     }
 
-    public function testListUnknown()
-    {
-        $response = $this->get('users/list', ['type' => 'unknown']);
-        $this->assertResponseStatus(422);
-    }
-
     public function testListAll()
     {
-        $response = $this->get('users/list', ['type' => 'all']);
+        $response = $this->get('users/list/all');
         $this->assertResponseStatus(200);
+    }
+
+    public function testListFollowersNoAuth()
+    {
+        $response = $this->get('users/list/followers');
+        $this->assertResponseStatus(401);
+    }
+
+    public function testListFollowingNoAuth()
+    {
+        $response = $this->get('users/list/followings');
+        $this->assertResponseStatus(401);
     }
 
     public function testListFollowers()
     {
-        $response = $this->get('users/list', ['type' => 'followers']);
+        $response = $this->get('users/list/followers');
+        $this->markTestIncomplete();
         $this->assertResponseStatus(200);
     }
 
     public function testListFollowing()
     {
-        $response = $this->get('users/list', ['type' => 'followings']);
+        $response = $this->get('users/list/followings');
+        $this->markTestIncomplete();
         $this->assertResponseStatus(200);
     }
 
     public function testListAllFiltered()
     {
-        $response = $this->get('users/list', ['type' => 'all', 'filter' => 'something']);
+        $response = $this->get('users/list/all', ['filter' => 'something']);
         $this->assertResponseStatus(200);
     }
 
     public function testListFollowersFiltered()
     {
-        $response = $this->get('users/list', ['type' => 'followers', 'filter' => 'something']);
-        $this->assertResponseStatus(200);
+        $response = $this->get('users/list/followers', ['filter' => 'something']);
+        $this->markTestIncomplete();
+        $this->assertResponseStatus(401);
     }
 
     public function testListFollowingFiltered()
     {
-        $response = $this->get('users/list', ['type' => 'followings', 'filter' => 'something']);
+        $response = $this->get('users/list/followings', ['filter' => 'something']);
+        $this->markTestIncomplete();
         $this->assertResponseStatus(200);
     }
 }
