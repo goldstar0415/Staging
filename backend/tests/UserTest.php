@@ -40,15 +40,15 @@ class UserTest extends LaravelTestCase
 
     public function testListFollowers()
     {
+        $this->randomSignIn();
         $response = $this->get('users/list/followers');
-        $this->markTestIncomplete();
         $this->assertResponseStatus(200);
     }
 
     public function testListFollowing()
     {
+        $this->randomSignIn();
         $response = $this->get('users/list/followings');
-        $this->markTestIncomplete();
         $this->assertResponseStatus(200);
     }
 
@@ -60,15 +60,15 @@ class UserTest extends LaravelTestCase
 
     public function testListFollowersFiltered()
     {
+        $this->randomSignIn();
         $response = $this->get('users/list/followers', ['filter' => 'something']);
-        $this->markTestIncomplete();
-        $this->assertResponseStatus(401);
+        $this->assertResponseStatus(200);
     }
 
     public function testListFollowingFiltered()
     {
+        $this->randomSignIn();
         $response = $this->get('users/list/followings', ['filter' => 'something']);
-        $this->markTestIncomplete();
         $this->assertResponseStatus(200);
     }
 }
