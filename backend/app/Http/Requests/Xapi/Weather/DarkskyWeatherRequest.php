@@ -22,8 +22,8 @@ class DarkskyWeatherRequest extends Request
     public function rules()
     {
         $rules = [
-            'lat' => 'required|numeric',
-            'lng' => 'required|numeric',
+            'lat' => 'required|latitude',
+            'lng' => 'required|longitude',
             'lang' => 'required|string|size:2',
             'extend' => 'required|string|in:hourly',
             'units' => 'required|string|in:si,us',

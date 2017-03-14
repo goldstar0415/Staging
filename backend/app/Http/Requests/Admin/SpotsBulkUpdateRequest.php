@@ -25,8 +25,8 @@ class SpotsBulkUpdateRequest extends Request
     {
         $rules = [
             'spots' => 'required|array',
-            'location.lat' => 'required_with:location.lng|number',
-            'location.lng' => 'required_with:location.lat|number',
+            'location.lat' => 'required_with:location.lng|latitude',
+            'location.lng' => 'required_with:location.lat|longitude',
             'address' => 'required_with:location.lat,location.lng|string',
             'start_date' => 'date_format:Y-m-d',
             'end_date' => 'date_format:Y-m-d',

@@ -22,8 +22,8 @@ class MapquestReverseRequest extends Request
     public function rules()
     {
         $rules = [
-            'lat' => 'required|numeric',
-            'lon' => 'required|numeric',
+            'lat' => 'required|latitude',
+            'lon' => 'required|longitude',
         ];
 
         return $rules;

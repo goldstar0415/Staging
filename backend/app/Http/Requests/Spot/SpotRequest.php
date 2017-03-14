@@ -44,8 +44,8 @@ class SpotRequest extends Request
             'locations',
             [
                 'address' => 'string|max:255',
-                'location.lat' => 'numeric',
-                'location.lng' => 'numeric'
+                'location.lat' => 'latitude',
+                'location.lng' => 'longitude'
             ]
         ));
         $rules = array_merge($rules, $this->arrayFieldRules('videos', 'string|max:255'));
