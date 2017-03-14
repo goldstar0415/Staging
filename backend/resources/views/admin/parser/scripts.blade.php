@@ -108,7 +108,7 @@ $(function(){
                         $uploadDone.show();
                         
                         fileForParse = response.data.path;
-                        totalRows = (mode == 'parsing') ? (response.data.count - 1) : response.data.count;
+                        totalRows = response.data.count - 1;
                         message('File uploaded: ' + response.data.filename + ';<br />' + 'Total rows: ' + totalRows);
                         $form.removeClass('loading');
                         stopTimer();
