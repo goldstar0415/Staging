@@ -98,8 +98,8 @@
       var pathSelectionStarted = false;
 
       //GEOCODING
-      var GeocodingSearchUrl = API_URL + '/geocoder/search?addressdetails=1&limit=3&q=';
-      var GeocodingReverseUrl = API_URL + '/geocoder/reverse?';
+      var GeocodingSearchUrl = API_URL + '/xapi/geocoder/search?addressdetails=1&limit=3&q=';
+      var GeocodingReverseUrl = API_URL + '/xapi/geocoder/reverse?';
 
       function closeAll() {
         //   L.DomEvent.stopPropagation(e);
@@ -2695,7 +2695,7 @@
           mapBox.push(bounds._northEast.lat);
           mapBox.push(map.getZoom());
 
-          $http.get(API_URL + '/weather/openweathermap', {
+          $http.get(API_URL + '/xapi/weather/openweathermap', {
               params: {
                   //lat: center.lat,
                   //lon: center.lng,

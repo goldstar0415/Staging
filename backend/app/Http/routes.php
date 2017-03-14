@@ -138,7 +138,7 @@ Route::get('map/selection/path', 'MapController@getSpotsPathSelection');
 Route::get('map/spots/list', 'MapController@getList');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
 Route::get('areas/{areas}/preview', 'AreaController@preview');
-Route::get('weather', 'MapController@getWeather'); // deprecated: use /weather/openweathermap instead
+Route::get('weather', 'MapController@getWeather'); // deprecated: use /xapi/weather/openweathermap instead
 Route::get('rates', 'MapController@getRates');
 /**
  * Wall Controls
@@ -173,33 +173,14 @@ get('google-contacts', 'SocialContactsController@google');
 
 Route::get('prerender/{page_url}', 'PrerenderController@render')->where('page_url', '(.*)');
 
-/**
- * Weather
- */
+Route::group(['prefix' => 'xapi'], function() {
+    Route::group(['prefix' => 'weather'], function() {
+        Route::get('darksky',        'WeatherController@darksky');
+        Route::get('openweathermap', 'WeatherController@openWeatherMap');
+    });
 
-Route::get('weather/darksky', 'WeatherController@darksky');
-Route::get('weather/openweathermap', 'WeatherController@openWeatherMap');
-
-
-/**
- * Geocoder
- */
-
-Route::get('geocoder/search', 'GeocoderController@search');
-Route::get('geocoder/reverse', 'GeocoderController@reverse');
-
-
-/**
- * Weather
- */
-
-Route::get('weather/darksky', 'WeatherController@darksky');
-Route::get('weather/openweathermap', 'WeatherController@openWeatherMap');
-
-
-/**
- * Geocoder
- */
-
-Route::get('geocoder/search', 'GeocoderController@search');
-Route::get('geocoder/reverse', 'GeocoderController@reverse');
+    Route::group(['prefix' => 'geocoder'], function() {
+        Route::get('search', 'GeocoderController@search');
+        Route::get('reverse', 'GeocoderController@reverse');
+    });
+});
