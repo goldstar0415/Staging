@@ -122,6 +122,13 @@
         vm.nextPage = nextPage;
         vm.closeFilter = closeFilter;
         vm.setWeatherLatLng = setWeatherLatLng;
+        
+        vm.startDateChanged = startDateChanged;
+        vm.initDates = initDates;
+        vm.inputDate = {
+            start_date: null,
+            end_date: null
+        }
     
         function pickNotificationFadeIn() {
             if (PickNotification.css('display') == 'none') {
@@ -162,11 +169,15 @@
                 minRating: "0",
                 category: '',
                 tags: [],
-                dateFrom: '',
-                dateTo: '',
+                dateFrom: null,
+                dateTo: null,
                 maxPrice: '',
                 isApproved: "true"
             };
+            vm.inputDate = {
+                start_date: null,
+                end_date: null
+            }
         }
 
         function clearFilter() {
@@ -236,6 +247,27 @@
                 }
             }
 
+        }
+        
+        
+        /**
+         * Dates fields handling
+         */
+        function initDates() {
+            var now = new Date(Date.now());
+            vm.inputDate.start_date = (now.getMonth() + 1) + "." + now.getDate() + "." + now.getFullYear();
+            now.setDate(now.getDate() + 1);
+            if (!vm.inputDate.end_date) {
+                vm.inputDate.end_date = (now.getMonth() + 1) + "." + now.getDate() + "." + now.getFullYear();
+            }
+        };
+
+        function startDateChanged() {
+            var newDate = new Date($rootScope.filterOptions.dateFrom);
+            newDate.setDate(newDate.getDate() + 1);
+            $rootScope.filterOptions.dateTo = (newDate.getMonth() + 1) + "." + newDate.getDate() + "." + newDate.getFullYear();
+            vm.inputDate.start_date = new Date(Date.now());
+            vm.inputDate.end_date = $rootScope.filterOptions.dateTo;
         }
         
         /**
@@ -713,16 +745,17 @@
                 data.filter.tags = _.pluck(vm.searchParams.tags, 'text');
             }
             if (vm.searchParams.start_date) {
-                if (vm.searchParams.start_date.match(/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/)) {
+                if (vm.searchParams.start_date.match(/^[0-9]{1,2}\.[0-9]{2}\.[0-9]{4}$/)) {
                     data.filter.start_date = moment(vm.searchParams.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
-                } else if (vm.searchParams.start_date.match(/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/)) {
+                } else if (vm.searchParams.start_date.match(/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/)) {
                     data.filter.start_date = vm.searchParams.start_date;
                 }
+                
             }
             if (vm.searchParams.end_date) {
-                if (vm.searchParams.end_date.match(/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/)) {
+                if (vm.searchParams.end_date.match(/^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}$/)) {
                     data.filter.end_date = moment(vm.searchParams.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
-                } else if (vm.searchParams.end_date.match(/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/)) {
+                } else if (vm.searchParams.end_date.match(/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/)) {
                     data.filter.end_date = vm.searchParams.end_date;
                 }
             }
