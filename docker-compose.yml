@@ -1,0 +1,25 @@
+version: "2"
+
+networks:
+  back-tier:
+    driver: bridge
+  front-tier:
+    driver: bridge
+
+# todo
+
+services:
+
+  backend:
+    build: ./backend
+    expose:
+      - 80
+    networks:
+      - back-tier
+      - front-tier
+    logging:
+      driver: "json-file"
+        options:
+          max-size: "1m"
+    volumes:
+
