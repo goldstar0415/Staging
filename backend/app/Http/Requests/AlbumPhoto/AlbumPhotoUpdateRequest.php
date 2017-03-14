@@ -13,8 +13,8 @@ class AlbumPhotoUpdateRequest extends AlbumPhotoRequest
     {
         $rules = [
             'address' => 'string|max:255',
-            'location.lat' => 'numeric',
-            'location.lng' => 'numeric'
+            'location.lat' => 'latitude',
+            'location.lng' => 'longitude'
         ];
 
         return $rules;

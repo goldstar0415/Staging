@@ -29,8 +29,8 @@ class BlogRequest extends Request
             'title' => 'required|max:255',
             'body' => 'required|max:5000',
             'slug' => 'alpha_dash|max:255|unique:blogs',
-            'location.lat' => 'numeric',
-            'location.lng' => 'numeric',
+            'location.lat' => 'latitude',
+            'location.lng' => 'longitude',
             'address' => 'required_with:location|string|max:255',
         ];
     }

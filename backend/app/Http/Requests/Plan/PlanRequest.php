@@ -29,8 +29,8 @@ class PlanRequest extends Request
             'start_date' => 'date_format:Y-m-d H:i:s',
             'end_date' => 'required_with:start_date|date_format:Y-m-d H:i:s',
             'address' => 'required|string|max:255',
-            'location.lat' => 'required|numeric',
-            'location.lng' => 'required|numeric',
+            'location.lat' => 'required|latitude',
+            'location.lng' => 'required|longitude',
             'activities' => 'array',
             'spots' => 'array'
         ];
@@ -44,8 +44,8 @@ class PlanRequest extends Request
                 'start_date' => 'date_format:Y-m-d H:i:s',
                 'end_date' => 'date_format:Y-m-d H:i:s',
                 'address' => 'required_with:location|string|max:255',
-                'location.lat' => 'required|numeric',
-                'location.lng' => 'required|numeric'
+                'location.lat' => 'required|latitude',
+                'location.lng' => 'required|longitude'
             ]
         ));
         $rules = array_merge($rules, $this->arrayFieldRules('spots', ['id' => 'integer', 'position' => 'integer']));

@@ -22,8 +22,8 @@ class OpenWeatherMapRequest extends Request
     public function rules()
     {
         $rules = [
-//            'lat' => 'required|numeric',
-//            'lng' => 'required|numeric',
+//            'lat' => 'required|latitude',
+//            'lng' => 'required|longitude',
             'bbox' => 'required|string',
             'cluster' => 'required|string|in:yes,no',
             'units' => 'required|string|in:imperial,metric',

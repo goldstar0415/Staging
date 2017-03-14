@@ -63,8 +63,8 @@ class SettingsUpdateRequest extends Request
                     'time_zone' => 'timezone',
                     'description' => 'string|max:255',
                     'address' => 'string|max:255',
-                    'location.lat' => 'numeric',
-                    'location.lng' => 'numeric'
+                    'location.lat' => 'latitude',
+                    'location.lng' => 'longitude'
                 ];
                 break;
             case 'security':
