@@ -19,4 +19,40 @@ class UserTest extends LaravelTestCase
         $this->seeJson(['message' => 'user unauthorized']);
         $this->assertResponseStatus(401);
     }
+
+    public function testListAll()
+    {
+        $response = $this->get('users/list', ['type' => 'all']);
+        $this->assertResponseStatus(200);
+    }
+
+    public function testListFollowers()
+    {
+        $response = $this->get('users/list', ['type' => 'followers']);
+        $this->assertResponseStatus(200);
+    }
+
+    public function testListFollowing()
+    {
+        $response = $this->get('users/list', ['type' => 'following']);
+        $this->assertResponseStatus(200);
+    }
+
+    public function testListAllFiltered()
+    {
+        $response = $this->get('users/list', ['type' => 'all', 'filter' => 'something']);
+        $this->assertResponseStatus(200);
+    }
+
+    public function testListFollowersFiltered()
+    {
+        $response = $this->get('users/list', ['type' => 'followers', 'filter' => 'something']);
+        $this->assertResponseStatus(200);
+    }
+
+    public function testListFollowingFiltered()
+    {
+        $response = $this->get('users/list', ['type' => 'following', 'filter' => 'something']);
+        $this->assertResponseStatus(200);
+    }
 }
