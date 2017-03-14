@@ -6,8 +6,8 @@ trait SelectionFilterRulesTrait {
     protected function getFilterRules() {
         $rules = [
             'filter.type'         => 'string',
-            'filter.start_date'   => 'date_format:Y-m-d H:i:s',
-            'filter.end_date'     => 'date_format:Y-m-d H:i:s',
+            'filter.start_date'   => 'date_format:Y-m-d',
+            'filter.end_date'     => 'date_format:Y-m-d',
             'filter.category_ids' => 'array',
             'filter.tags'         => 'array',
             'filter.rating'       => 'integer',
