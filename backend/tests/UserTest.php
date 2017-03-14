@@ -20,6 +20,12 @@ class UserTest extends LaravelTestCase
         $this->assertResponseStatus(401);
     }
 
+    public function testListUnknown()
+    {
+        $response = $this->get('users/list', ['type' => 'unknown']);
+        $this->assertResponseStatus(422);
+    }
+
     public function testListAll()
     {
         $response = $this->get('users/list', ['type' => 'all']);
@@ -34,7 +40,7 @@ class UserTest extends LaravelTestCase
 
     public function testListFollowing()
     {
-        $response = $this->get('users/list', ['type' => 'following']);
+        $response = $this->get('users/list', ['type' => 'followings']);
         $this->assertResponseStatus(200);
     }
 
@@ -52,7 +58,7 @@ class UserTest extends LaravelTestCase
 
     public function testListFollowingFiltered()
     {
-        $response = $this->get('users/list', ['type' => 'following', 'filter' => 'something']);
+        $response = $this->get('users/list', ['type' => 'followings', 'filter' => 'something']);
         $this->assertResponseStatus(200);
     }
 }
