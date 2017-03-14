@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Xapi;
 
 use Log;
 use GuzzleHttp\Client as HttpClient;
-use App\Http\Requests\Geocoder\MapquestSearchRequest;
-use App\Http\Requests\Geocoder\MapquestReverseRequest;
+use App\Http\Requests\Xapi\Geocoder\MapquestSearchRequest;
+use App\Http\Requests\Xapi\Geocoder\MapquestReverseRequest;
+use App\Http\Controllers\Controller;
 
 /**
  * Class GeocoderController

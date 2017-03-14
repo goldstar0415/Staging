@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Weather;
+namespace App\Http\Requests\Xapi\Weather;
 
 use App\Http\Requests\Request;
 
-class OpenWeatherMapRequest extends Request
+class DarkskyWeatherRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,11 @@ class OpenWeatherMapRequest extends Request
     public function rules()
     {
         $rules = [
-//            'lat' => 'required|numeric',
-//            'lng' => 'required|numeric',
-            'bbox' => 'required|string',
-            'cluster' => 'required|string|in:yes,no',
-            'units' => 'required|string|in:imperial,metric',
-            'cnt' => 'required|integer|min:1',
+            'lat' => 'required|numeric',
+            'lng' => 'required|numeric',
+            'lang' => 'required|string|size:2',
+            'extend' => 'required|string|in:hourly',
+            'units' => 'required|string|in:si,us',
         ];
 
         return $rules;
