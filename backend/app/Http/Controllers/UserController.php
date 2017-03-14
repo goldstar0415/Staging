@@ -58,21 +58,17 @@ class UserController extends Controller
      */
     public function __construct(Guard $auth)
     {
-        $this->middleware('guest', ['except' => [
+        $this->middleware('guest', ['only' => [
+            'postLogin',
+            'postCreate',
+            'postRecovery',
+            'postReset',
+        ]]);
+
+        $this->middleware('auth', ['only' => [
             'getLogout',
             'getMe',
-            'getIndex',
-            'getListAll',
-            'comments',
-            'reviews',
-            'contactUs',
-            'changeEmail',
-            'unsubscribe',
-            'usersImportInfo',
-            'inviteEmail'
-        ]]);
-        $this->middleware('auth', ['only' => [
-            'getMe',
+            'confirmEmail',
             'changeEmail',
             'unsubscribe',
             'usersImportInfo',
@@ -80,6 +76,7 @@ class UserController extends Controller
             'getListFollowers',
             'getListFollowings',
         ]]);
+
         $this->auth = $auth;
     }
 
@@ -99,7 +96,7 @@ class UserController extends Controller
      * @param AppMailer $mailer
      * @return User
      */
-    public function postIndex(Request $request, AppMailer $mailer)
+    public function postCreate(Request $request, AppMailer $mailer)
     {
         $validator = $this->validator($request->all());
 

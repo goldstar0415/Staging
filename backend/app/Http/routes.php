@@ -19,7 +19,7 @@ Route::get('users/me', 'UserController@getMe');
 Route::get('users/list/all', 'UserController@getListAll');
 Route::get('users/list/followers', 'UserController@getListFollowers');
 Route::get('users/list/followings', 'UserController@getListFollowings');
-Route::post('users', 'UserController@postIndex');
+Route::post('users', 'UserController@postCreate');
 Route::post('users/login', 'UserController@postLogin');
 Route::get('users/logout', 'UserController@getLogout');
 Route::post('users/recovery', 'UserController@postRecovery');
