@@ -1,22 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Xapi;
+namespace App\Http\Controllers;
 
 use Log;
 use GuzzleHttp\Client as HttpClient;
-use App\Http\Requests\Xapi\Geocoder\MapquestSearchRequest;
-use App\Http\Requests\Xapi\Geocoder\MapquestReverseRequest;
+use App\Http\Requests\Xapi\GooglePlacesAutocomplete\AutocompleteRequest;
 use App\Http\Controllers\Controller;
 
 /**
- * Class GeocoderController
+ * Class GooglePlacesAutocompleteController
  *
- * @package App\Http\Controllers
+ * @package App\Http\Controllers\Xapi
  */
-class GeocoderController extends Controller
+class GooglePlacesAutocompleteController extends Controller
 {
+    protected $http;
+
     public function __construct()
     {
+        $this->config = config('geocoding');
+        $this->http = new HttpClient;
     }
 
     /**
@@ -37,25 +40,6 @@ class GeocoderController extends Controller
     }
 
     /**
-     * Reverse-geocoder
-     * @param MapquestReverseRequest $request
-     * @return mixed
-     */
-    public function reverse(MapquestReverseRequest $request)
-    {
-        $params = $request->only(['lat', 'lon']);
-
-        $response = $this->mapquestRequest('reverse', $params);
-
-        if ( isset($response['error']) ) {
-            return abort($response['status']);
-        }
-
-        return response()->json($response);
-    }
-
-
-    /**
      * Mapquest request
      *
      * @param string $action
@@ -64,21 +48,23 @@ class GeocoderController extends Controller
      */
     final protected function mapquestRequest($action, array $params = [])
     {
-        $url = sprintf('%s/nominatim/v1/%s.php',
-            config('services.mapquest.baseUri'),
-            $action);
+        $config = $this->config['mapquest'];
+        $url = sprintf('%s/nominatim/v1/%s.php', $config['baseUri'], $action);
+
+        $params['format'] = 'json';
+        $params['key'] = $config['key'];
 
         try {
-            $json = (new HttpClient)->get($url, ['query' => [
-                'format' => 'json',
-                'key'    => config('services.mapquest.api_key'),
-            ]])->getBody();
 
+            $json = $this->http->get($url, ['query' => $params])->getBody();
             return self::parseHttpJson($json);
+
         } catch (\Exception $ex) {
+
             Log::error('Darksky Error: ' . $ex->getMessage());
             return self::parseHttpError($ex);
         }
+
     }
 
     /**

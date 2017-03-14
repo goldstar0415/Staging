@@ -26,33 +26,36 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URL'),
     ],
     'darksky' => [
-        'key'     => env('DARK_SKY_API_KEY'),
+        'api_key' => env('DARK_SKY_API_KEY'),
         'baseUri' => 'https://api.darksky.net',
     ],
     'openweathermap' => [
-        'key'     => env('OPENWEATHERMAP_API_KEY'),
+        'api_key' => env('OPENWEATHERMAP_API_KEY'),
         'baseUri' => 'http://api.openweathermap.org',
     ],
     'mapquest' => [
-        'key'     => env('MAPQUEST_API_KEY'),
+        'api_key' => env('MAPQUEST_API_KEY'),
         'baseUri' => 'http://open.mapquestapi.com',
     ],
     'yelp' => [
         'client_secret' => env('YELP_CLIENT_SECRET'),
         'client_id'     => env('YELP_CLIENT_ID'),
+        'tokenUri'      => 'https://api.yelp.com/oauth2/token',
     ],
     'ticketmaster' => [
-        'apikey'   => env('TICKETMASTER_APIKEY'),
+        'api_key'  => env('TICKETMASTER_APIKEY'),
         'secret'   => env('TICKETMASTER_SECRET'),
         'user'     => env('TICKETMASTER_USER'),
         'password' => env('TICKETMASTER_PASSWORD'),
+        'baseUri'  => 'https://app.ticketmaster.com/discovery/v2/events.json',
     ],
     'places' => [
-        'key'     => env('GOOGLE_PLACES_API_KEY'),
+        'api_key'     => env('GOOGLE_PLACES_API_KEY'),
         'baseUri' => 'https://maps.googleapis.com/maps/api/place/'
     ],
     'seatgeek' => [
-        'client_id' => env('SEATGEEK_CLIENT_ID'),
-        'secret'    => env('SEATGEEK_SECRET'),
+        'client_id'     => env('SEATGEEK_CLIENT_ID'),
+        'client_secret' => env('SEATGEEK_CLIENT_SECRET'),
+        'eventsUri'     => 'http://api.seatgeek.com/2/events',
     ],
 ];

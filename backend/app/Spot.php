@@ -1173,7 +1173,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             try
             {
-                $url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' . $googlePid . '&key=' . config('google.places.key');
+                $url = config('services.places.baseUri') . 'details/json?placeid=' . $googlePid . '&key=' . config('services.places.api_key');
                 $response = $this->getPageContent($url, [], true);
                 if($response['status'] == "OK")
                 {
@@ -1293,10 +1293,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     
     protected function getGooglePhotoUrl($photo_reference)
     {
-        return config('google.places.baseUri') . 'photo'
+        return config('services.places.baseUri') . 'photo'
         . '?maxwidth=400'
         . '&photoreference=' . $photo_reference
-        . '&key=' . config('google.places.key');
+        . '&key=' . config('services.places.api_key');
     }
 
     protected function getHashForGoogle($item)
@@ -1468,14 +1468,14 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         $body = new PostBody();
         $body->forceMultipartUpload(true);
         $body->replaceFields([
-                    'client_id' => config('yelp-api.client_id'),
-                    'client_secret' => config('yelp-api.client_secret'),
+                    'client_id' => config('services.yelp.client_id'),
+                    'client_secret' => config('services.yelp.client_secret'),
                     'grant_type' => 'client_credentials'
                 ]);
         $options = ['body' => $body];
         try
         {
-            $response = $client->post('https://api.yelp.com/oauth2/token', $options);
+            $response = $client->post(config('services.yelp.tokenUri'), $options);
             $result = json_decode($response->getBody()->getContents(), true)['access_token'];
             $this->setCachedResponse('yelpToken', $result);
             $this->yelpToken =  $result;
