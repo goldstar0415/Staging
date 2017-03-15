@@ -1,0 +1,9 @@
+/.idea
+npm-*.log
+
+/backend/vendor/
+
+/frontend/bower_components/
+/frontend/node_modules/
+/frontend/.tmp/
+/frontend/src/env.js
