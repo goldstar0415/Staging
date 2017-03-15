@@ -72,10 +72,12 @@ class GeocoderController extends Controller
             $action);
 
         try {
-            $json = (new HttpClient)->get($url, ['query' => [
-                'format' => 'json',
-                'key'    => config('services.mapquest.api_key'),
-            ]])->getBody();
+            $json = (new HttpClient)->get($url, ['query' =>
+                array_merge($params, [
+                    'format' => 'json',
+                    'key'    => config('services.mapquest.api_key'),
+                ]),
+            ])->getBody();
 
             return self::parseHttpJson($json);
         } catch (\Exception $ex) {
