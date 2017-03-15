@@ -13,7 +13,6 @@ RUN rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 RUN mkdir -p /data/tmp/php && chmod 777 /data/tmp/php
 
 COPY . /data/www/default
-COPY .env /data/www/default
 WORKDIR /data/www/default
 RUN composer install --no-scripts
 COPY entry_point.sh /config/
