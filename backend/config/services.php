@@ -26,7 +26,7 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URL'),
     ],
     'darksky' => [
-        'api_key' => env('DARK_SKY_API_KEY'),
+        'api_key' => env('DARKSKY_API_KEY'),
         'baseUri' => 'https://api.darksky.net',
     ],
     'openweathermap' => [
