@@ -104,14 +104,17 @@ class WeatherController extends Controller
      * @param array $params
      * @return array|mixed
      */
-    final protected function openWeatherMapRequest($params)
+    final protected function openWeatherMapRequest(array $params)
     {
         $url = sprintf('%s/data/2.5/box/city', config('services.openweathermap.baseUri'));
 
         try {
             $json = (new HttpClient)->get($url, [
-                'query' => ['APPID' => config('services.openweathermap.api_key')]
-            )->getBody();
+                'query' => array_merge(
+                    ['APPID' => config('services.openweathermap.api_key')],
+                    $params
+                ),
+            ])->getBody();
 
             return self::parseHttpJson($json);
         } catch (\Exception $ex) {
