@@ -1495,46 +1495,6 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         return false;
     }
     
-    public function getYelpInfo()
-    {
-        if(!empty($this->yelpInfo))
-        {
-            return $this->yelpInfo;
-        }
-        if($cachedResponse = $this->getCachedResponse('yelpInfo'))
-        {
-            return $this->yelpInfo = $cachedResponse;
-        }
-        if(!empty($this->yelp_url) || !empty($this->yelp_id))
-        {
-            $token = $this->getYelpToken();
-            $id    = (!empty($this->yelp_id)) ? $this->yelp_id : $this->getYelpIdFromUrl($this->yelp_url);
-            if($token && $id)
-            {
-                $client = new Client();
-                $headers = ['Authorization' => 'Bearer ' . $token];
-                $url = 'https://api.yelp.com/v3/businesses/' . $id;
-                try
-                {
-                    $response = $client->get($url , [
-                        'headers' => $headers
-                    ]);
-                    $responseArray = json_decode($response->getBody()->getContents(), true);
-                    if(!empty($responseArray))
-                    {
-                        $this->setCachedResponse('yelpInfo', $responseArray);
-                        $this->yelpInfo = $responseArray;
-                    }
-                }
-                catch(RequestException $e) {
-                    return false;
-                }
-            }
-            
-        }
-        return $this->yelpInfo;
-    }
-    
     public function getYelpBizInfo()
     {
         $result = [
