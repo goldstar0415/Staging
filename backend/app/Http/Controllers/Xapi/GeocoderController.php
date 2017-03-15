@@ -79,7 +79,7 @@ class GeocoderController extends Controller
 
             return self::parseHttpJson($json);
         } catch (\Exception $ex) {
-            Log::error('Darksky Error: ' . $ex->getMessage());
+            Log::error('Mapquest Error: ' . $ex->getMessage());
             return self::parseHttpError($ex);
         }
     }
