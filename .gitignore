@@ -5,6 +5,7 @@ npm-*.log
 websocket/node_modules/
 
 postgres/data/
-!postgres/data/.gitkeep
+
+redis/data/
 
 frontend/.tmp/
