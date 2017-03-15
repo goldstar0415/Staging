@@ -43,9 +43,12 @@ class GeocoderController extends Controller
      */
     public function reverse(MapquestReverseRequest $request)
     {
-        $params = $request->only(['lat', 'lon']);
+        $params = $request->only(['lat', 'lng']);
 
-        $response = $this->mapquestRequest('reverse', $params);
+        $response = $this->mapquestRequest('reverse', [
+            'lat' => $params['lat'],
+            'lon' => $params['lng'],
+        ]);
 
         if ( isset($response['error']) ) {
             return abort($response['status']);
