@@ -109,11 +109,10 @@ class WeatherController extends Controller
         $url = sprintf('%s/data/2.5/box/city', config('services.openweathermap.baseUri'));
 
         try {
-            $json = (new HttpClient)->get($url, [
-                'query' => array_merge(
-                    ['APPID' => config('services.openweathermap.api_key')],
-                    $params
-                ),
+            $json = (new HttpClient)->get($url, ['query' =>
+                array_merge($params, [
+                    'APPID' => config('services.openweathermap.api_key')
+                ]),
             ])->getBody();
 
             return self::parseHttpJson($json);
