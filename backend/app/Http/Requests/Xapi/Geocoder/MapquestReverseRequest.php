@@ -23,7 +23,7 @@ class MapquestReverseRequest extends Request
     {
         $rules = [
             'lat' => 'required|latitude',
-            'lon' => 'required|longitude',
+            'lng' => 'required|longitude',
         ];
 
         return $rules;
