@@ -52,12 +52,14 @@ services:
       file: abstract-cluster.yml
       service: base
     build: ./postgres
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    networks:
+      - front-tier
     environment:
       - POSTGRES_USER=zoomtivity
       - POSTGRES_PASSWORD=z00mz00m20!7
       - POSTGRES_DB=zoomtivity
-    volumes:
-      - ./postgres/data:/var/lib/postgresql/data
     expose:
       - 5432
     restart: always
