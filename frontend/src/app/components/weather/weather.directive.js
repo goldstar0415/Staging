@@ -104,7 +104,7 @@
                     temperature: 'F',
                     speed: 'mph',
                 }
-            }
+            };
 
             $scope.$watch(function() {
                 return (vm.lat);
@@ -128,7 +128,7 @@
                 }
                 MapService.showWeatherMarkers();
                 vm.init();
-            }
+            };
 
             vm.changeTab = function(index) {
                 vm.tab = index;
@@ -137,10 +137,13 @@
                 } else {
                     vm.selected = vm.data.daily.data[index];
                 }
-            }
+            };
 
             vm.init = function() {
-                $http.jsonp('https://nominatim.openstreetmap.org/reverse', {
+
+                if (vm.lat && vm.lng) {
+
+                    $http.jsonp('https://nominatim.openstreetmap.org/reverse', {
                         params: {
                             lat: vm.lat,
                             lon: vm.lng,
@@ -149,32 +152,34 @@
                             json_callback: 'JSON_CALLBACK'
                         }
                     })
-                    .then(function(resp) {
-                        if (resp.status === 200) {
-                            if (resp.data.address) {
-                                vm.location = resp.data.address.city || resp.data.address.county || resp.data.address.state || resp.data.address.country;
-                            } else {
-                                vm.location = 'N/A';
+                        .then(function(resp) {
+                            if (resp.status === 200) {
+                                if (resp.data.address) {
+                                    vm.location = resp.data.address.city || resp.data.address.county || resp.data.address.state || resp.data.address.country;
+                                } else {
+                                    vm.location = 'N/A';
+                                }
                             }
-                        }
-                    });
-                $http.get(API_URL + '/weather/darksky', {
-                    params: {
-                        lat: vm.lat,
-                        lng: vm.lng,
-                        extend: 'hourly',
-                        lang: 'en',
-                        units: vm.units,
-                    }
-                })
-                .then(function (resp) {
-                    if (resp.status === 200) {
-                        vm.tab = 0;
-                        resp.data.daily.data.pop();
-                        vm.data = resp.data;
-                        vm.selected = vm.data.currently;
-                    }
-                });
+                        });
+
+                    $http.get(API_URL + '/weather/darksky', {
+                            params: {
+                                lat: vm.lat,
+                                lng: vm.lng,
+                                extend: 'hourly',
+                                lang: 'en',
+                                units: vm.units,
+                            }
+                        })
+                        .then(function (resp) {
+                            if (resp.status === 200) {
+                                vm.tab = 0;
+                                resp.data.daily.data.pop();
+                                vm.data = resp.data;
+                                vm.selected = vm.data.currently;
+                            }
+                        });
+                }
             }
         }
     }
