@@ -51,7 +51,7 @@ services:
     extends:
       file: abstract-cluster.yml
       service: base
-    build: ./postgres
+    image: wirnex/postgis:1.2
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
     networks:
