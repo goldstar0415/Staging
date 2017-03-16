@@ -1,10 +1,13 @@
 FROM mhart/alpine-node:6
 
 COPY package.json /opt/websocket_server/
-WORKDIR /opt/websocket_server
-RUN npm install
-
+COPY entrypoint.sh /opt/websocket_server/
 COPY socket.js /opt/websocket_server/
 
+WORKDIR /opt/websocket_server
+
+RUN npm install && chmod +x entrypoint.sh
+
 EXPOSE 3000
-CMD ["npm", "run", "start"] # todo: add a 'start' cmd
+
+CMD ["./entrypoint.sh"]
