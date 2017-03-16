@@ -64,9 +64,9 @@
             "php artisan key:generate",
             "php artisan app:init",
             "npm install",
-            "supervisorctl reread",
-            "supervisorctl update",
-            "supervisorctl start all",
+            "supervisorctl reread || echo \"No Supervisor\"",
+            "supervisorctl update || echo \"No Supervisor\"",
+            "supervisorctl start all || echo \"No Supervisor\"",
             "php artisan migrate"
         ],
         "post-update-cmd": [
