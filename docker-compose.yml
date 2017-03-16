@@ -104,3 +104,16 @@ services:
       - REDIS_PORT=6379
     expose:
       - 8080
+
+
+  # Frontend
+
+  frontend:
+    extends:
+      file: abstract-cluster.yml
+      service: base
+    build: ./frontend
+    expose:
+      - 80
+      - 81
+
