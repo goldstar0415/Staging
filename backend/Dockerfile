@@ -4,7 +4,8 @@ MAINTAINER Wirnex <info@wirnex.com>
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* && \
-    mkdir -p /data/tmp/php && chmod -R 777 /data/tmp/
+    mkdir -p /data/tmp/php && chmod -R 777 /data/tmp/ && \
+    yum install -y php70-php-pgsql
 
 # todo fix postgresbuilder
 

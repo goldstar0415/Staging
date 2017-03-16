@@ -38,7 +38,8 @@ class AppInstallCommand extends Command
     {
         parent::__construct();
         $this->queue_conf = env('APP_NAME', 'laravel') . '-queue';
-        $this->socket_conf = env('APP_NAME', 'laravel') . '-socket';
+//        $this->socket_conf = env('APP_NAME', 'laravel') . '-socket';
+
     }
 
     /**
@@ -50,7 +51,7 @@ class AppInstallCommand extends Command
     {
         $app_path = base_path();
         $logs_path = storage_path('logs');
-        $user = get_current_user();
+        $user = 'www';
         $app_name = env('APP_NAME', 'laravel');
         $laravel_queue = <<<FILE
 [program:$app_name-queue]
@@ -64,7 +65,7 @@ numprocs=8
 redirect_stderr=true
 stdout_logfile=$logs_path/$this->queue_conf.log
 FILE;
-        File::put('/etc/supervisor/conf.d/' . $this->queue_conf . '.conf', $laravel_queue);
+        File::put('/etc/supervisor.d/' . $this->queue_conf . '.conf', $laravel_queue);
 
         $laravel_socket = <<<FILE
 [program:$app_name-socket]
@@ -78,7 +79,7 @@ numprocs=1
 redirect_stderr=true
 stdout_logfile=$logs_path/$this->socket_conf.log
 FILE;
-        File::put('/etc/supervisor/conf.d/' . $this->socket_conf . '.conf', $laravel_socket);
+        //File::put('/etc/supervisor.d/' . $this->socket_conf . '.conf', $laravel_socket);
         //Task Scheduling
         $cron_file_path = storage_path('app/crontab');
         File::put($cron_file_path, '* * * * * php ' . $app_path . '/artisan schedule:run 1>> /dev/null 2>&1' . "\n");
