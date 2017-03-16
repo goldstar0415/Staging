@@ -54,7 +54,11 @@
         ]
     },
     "scripts": {
+        "fix-postgres-builder": [
+            "echo 'sed builder' && sed -i \"s/\\\\\\\\Builder/\\\\\\\\PostgresBuilder/\" ./vendor/bosnadev/database/src/Schema/Builder.php"
+        ],
         "post-install-cmd": [
+            "composer run-script fix-postgres-builder",
             "php artisan clear-compiled",
             "php artisan optimize",
             "php artisan key:generate",
@@ -63,14 +67,18 @@
             "supervisorctl reread",
             "supervisorctl update",
             "supervisorctl start all",
-            "php artisan migrate --seed"
+            "php artisan migrate"
         ],
         "post-update-cmd": [
+            "composer run-script fix-postgres-builder",
             "php artisan clear-compiled",
             "php artisan optimize"
         ],
         "post-create-project-cmd": [
             "php artisan key:generate"
+        ],
+        "database-migrate-seed": [
+            "php artisan migrate --seed"
         ]
     },
     "config": {
