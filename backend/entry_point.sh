@@ -25,7 +25,7 @@ if [ "$(ls /config/init/)" ]; then
   done
 fi
 
-# Put environment variables (including from Docker) in to php conf file to use in env()
+# Put environment variables (including from Docker) in to php conf file to use in the env()
 env | sed "s/\(.*\)=\(.*\)/env[\1]='\2'/" | grep -v "''" > /data/conf/php-fpm-www-docker-env.conf && \
     echo "Sleep 20s..." && sleep 20 && composer install
 
