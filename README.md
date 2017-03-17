@@ -6,25 +6,124 @@ Running a Docker cluster
 
 ### Clone the project from git
 
-### Install docker
+Checkout the `dockerizing` branch
 
-See https://docs.docker.com/engine/installation/
-
-Check your installation using `docker -v`
-
-### Configure env vars and port binding
-
-- create a `docker-compose.override.yml` from example `docker-compose.override.example.yml`, do changes
-- create a front reverse-proxy nginx config, use the external ports you have defined in the `docker-compose.override.yml`
-- configure frontend variables `frontend/src/env.js`, change backend/websocket URLs according to your reverse-proxy server names
-- up the cluster `docker-compose -p my-zoom-cluster up -d`
-
-Folder Structure
-----------------
+#### Folder Structure
 
 - `/etc` contains all config files for system
 - `/backend` contains the laravel application
 - `/frontend` contains the user interface for web
-- `/ios_app` contains the code for the... iOS app 
+- `/ios_app` contains the code for the... iOS app
+- `/postgres` contains an image template which allow us to build a postgis image. In runtime it will contain also a ./data folder as a persistent PostgreSQL storage
+- `/redis` in runtime, will contain Redis data
+- `/websocket` contains WS server and a Dockerfile to build it
 
 
+#### Discover the docker-compose configs
+
+- `abstract-cluster.yml` - it's a base extendable config file
+- `docker-compose.yml` - the main config which provides a cluster definition
+- `docker-compose.override.yml` - the environment-dependent config (doesn't exist in git)
+- `docker-compose.override.example.yml` - an example for docker-compose.override.yml
+
+Check out how to access microservices inside the cluster: service name is a domain name inside the defined docker networks (front-tier/back-tier). 
+For example, Laravel can connect to DB using `database` hostname
+
+### Install Docker
+
+See https://docs.docker.com/engine/installation/
+
+Check your installation using `docker -v`, `docker-compose -v`
+
+
+### Configure env vars, port bindings and volumes
+
+#### Environment variables
+
+Create a `docker-compose.override.yml` from `docker-compose.override.example.yml`
+
+We can define any environment variables (like APP_NAME) using the `environment` sections in `docker-compose.override.yml`
+
+```yml
+  backend:
+    environment:
+      - APP_NAME=zoomtivity
+      ...
+```
+
+#### Port bindings
+
+Each container exposes some ports. 
+By default they are not visible, but we can bind them to the host machine via host-to-container bridge.
+
+For example, let's forward a container's nginx port via docker-proxy:
+
+```yml
+    ports:
+      - "19080:80"
+```
+
+Now we have an active host-machine port 19080
+
+Using port binding, you can just forward a PostgreSQL port to connect to the DB manually
+
+#### Volumes
+
+Volumes allow us to mount folders between host machine and containers. So we can change some files and see a mirrored files on the other side
+
+For example, PostgreSQL creates a data directory when running:
+
+```yml
+  database:
+    extends:
+      file: abstract-cluster.yml
+      service: base
+    image: wirnex/postgis:1.2
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data        <-----------
+```
+ 
+We've mounted this folder into `/postgres/data` on host machine. Every time we restart the container we have a restored data.
+
+Volumes can be used for development to see changes without restarting containers. (this feature doesn't work properly at the moment)
+
+#### Configure frontend environments
+
+Edit the src/env.js file, configure services URLs (use domain names or port binding, like site.com:19080). 
+If you have selected some domain names instead of host:port, configure the nginx reverse-proxy (see the next step)
+
+#### Set up a front reverse-proxy 
+
+Configure your host-machine nginx, use the external ports you have defined in the `docker-compose.override.yml`
+
+See examples: `etc/nginx/front-nginx.dev.conf`, `etc/nginx/front-nginx.prod.conf` 
+
+
+### Restore a postgres backup 
+
+Run your pg_restore using a forwarded DB port
+
+The fastest way: just get your PostgreSQL files from data directory on your existing DB server and put into `/postgres/data` volume
+
+
+### Run the cluster
+
+Choose a prefix for your docker cluster, like 'my-zoom-cluster'
+
+Run `docker-compose -p my-zoom-cluster up -d`
+Wait... Docker will build all the images, start containers.
+
+Run `docker-compose -p my-zoom-cluster ps` to see containers that docker has started
+
+### Useful docker commands
+
+`docker-compose -p my-zoom-cluster ps` - show cluster containers
+`docker-compose -p my-zoom-cluster up -d` - up all
+`docker-compose -p my-zoom-cluster up -d --build backend` - to rebuild and up one service
+`docker-compose -p my-zoom-cluster down` - down all
+`docker-compose -p my-zoom-cluster restart` - restart all
+`docker-compose -p my-zoom-cluster restart backend` - restart one service if needed
+`docker-compose -p my-zoom-cluster down --rmi=local` - down and remove all the local images
+`docker-compose -p my-zoom-cluster exec backend ls -la` - execute commands inside containers, for example, run `ls -la` on backend
+`docker-compose -p my-zoom-cluster logs -f` - see cluster logs in realtime
+`docker-compose -p my-zoom-cluster logs -f backend` - see backend's logs in realtime
