@@ -4,7 +4,7 @@ services:
 
   backend:
     ports:
-      - "8098:80"
+      - "19080:80"
     environment:
       - APP_NAME=zoomtivity
       - APP_URL=https://api.zoomtivity.com
@@ -17,27 +17,27 @@ services:
       - MAIL_DRIVER=smtp
       - MAIL_HOST=email-smtp.us-east-1.amazonaws.com
       - MAIL_PORT=587
-      - MAIL_USERNAME=AKIAJXTJGYNGVBUNJ75A
-      - MAIL_PASSWORD=AhHmVIKARsGm6t6qk2M8JCB9c3XiixmvnOZ7u9SVSXjQ
+      - MAIL_USERNAME=
+      - MAIL_PASSWORD=
       - MAIL_ENCRYPTION=tls
       - MAIL_FROM=info@zoomtivity.com
 
       - S3_BUCKET=zoomtivity
       - S3_ACL=public-read
-      - S3_KEY=AKIAJI53FSZ2CFRD2SBA
-      - S3_SECRET=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
+      - S3_KEY=
+      - S3_SECRET=
       - S3_REGION=us-east-1
       - S3_SCHEME=https
       - S3_VERSION=latest
       - S3_ENDPOINT=https://files.zoomtivity.com
 
-      - FB_CLIENT_ID=742305589231590
-      - FB_CLIENT_SECRET=e5502a012f8c0afb9076c25cc0efea3c
+      - FB_CLIENT_ID=
+      - FB_CLIENT_SECRET=
       - FB_REDIRECT_URL=https://api.zoomtivity.com/account/facebook
 
-      - GOOGLE_CLIENT_ID=948495733239-7agjnduuomah5nul15qi3chpfeasrisn.apps.googleusercontent.com
-      - GOOGLE_CLIENT_SECRET=YmYxQmANDZgEDBeieyqlkHJv
-      - GOOGLE_REDIRECT_URL=https://api.zoomtivity.com/account/google
+      - GOOGLE_CLIENT_ID=
+      - GOOGLE_CLIENT_SECRET=
+      - GOOGLE_REDIRECT_URL=
 
       - FORECAST_KEY=0aa9a75d6cef91fba5a524f128959cb7
 
@@ -51,3 +51,15 @@ services:
   database:
     ports:
       - "54328:5432"
+
+  websocket:
+    ports:
+      - "19081:8080"
+
+  frontend:
+    ports:
+      - "19082:80"
+      - "19083:81"
+    volumes:
+    # for development purpose
+      - ./frontend/src:/var/www/zoomtivity/src
