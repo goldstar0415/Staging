@@ -24,7 +24,7 @@ services:
     environment:
       # don't define any custom variables here, use the docker-compose.override.yml
 
-      - NGINX_GENERATE_DEFAULT_VHOST=true
+      - NGINX_GENERATE_DEFAULT_VHOST=false
 
       - DB_CONNECTION=pgsql
       - DB_HOST=database
