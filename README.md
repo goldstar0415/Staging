@@ -56,9 +56,10 @@ We can define any environment variables (like APP_NAME) using the `environment` 
 Each container exposes some ports. 
 By default they are not visible, but we can bind them to the host machine via host-to-container bridge.
 
-For example, let's forward a container's nginx port via docker-proxy:
+For example, let's forward a container's nginx port via docker-proxy in the docker-compose.override.yml:
 
 ```yml
+  backend:
     ports:
       - "19080:80"
 ```
@@ -66,12 +67,17 @@ For example, let's forward a container's nginx port via docker-proxy:
 Now we have an active host-machine port 19080
 
 Using port binding, you can just forward a PostgreSQL port to connect to the DB manually
+```yml
+  database:
+    ports:
+      - "54328:5432"
+```
 
 #### Volumes
 
 Volumes allow us to mount folders between host machine and containers. So we can change some files and see a mirrored files on the other side
 
-For example, PostgreSQL creates a data directory when running:
+For example, PostgreSQL has a data directory:
 
 ```yml
   database:
@@ -83,13 +89,14 @@ For example, PostgreSQL creates a data directory when running:
       - ./postgres/data:/var/lib/postgresql/data        <-----------
 ```
  
-We've mounted this folder into `/postgres/data` on host machine. Every time we restart the container we have a restored data.
+We've mounted this folder into `./postgres/data` on host machine. Thus every time we restart the container we have a restored data.
 
-Volumes can be used for development to see changes without restarting containers. (this feature doesn't work properly at the moment)
+Volumes can be used for development to see changes without restarting containers. (this feature doesn't work properly at the moment
+ cause docker sets its own permissions, need to change owner back on the host machine)
 
 #### Configure frontend environments
 
-Edit the src/env.js file, configure services URLs (use domain names or port binding, like site.com:19080). 
+Edit the src/env.js file, configure services URLs (use domain names or port binding, like hostmachinedomain:19080). 
 If you have selected some domain names instead of host:port, configure the nginx reverse-proxy (see the next step)
 
 #### Set up a front reverse-proxy 
@@ -103,7 +110,7 @@ See examples: `etc/nginx/front-nginx.dev.conf`, `etc/nginx/front-nginx.prod.conf
 
 Run your pg_restore using a forwarded DB port
 
-The fastest way: just get your PostgreSQL files from data directory on your existing DB server and put into `/postgres/data` volume
+The fastest way: just get your PostgreSQL files from backup and put into `/postgres/data` volume
 
 
 ### Run the cluster
@@ -123,7 +130,7 @@ Run `docker-compose -p my-zoom-cluster ps` to see containers that docker has sta
 `docker-compose -p my-zoom-cluster down` - down all
 `docker-compose -p my-zoom-cluster restart` - restart all
 `docker-compose -p my-zoom-cluster restart backend` - restart one service if needed
-`docker-compose -p my-zoom-cluster down --rmi=local` - down and remove all the local images
+`docker-compose -p my-zoom-cluster down --rmi=local` - down and remove all the local images (volumes will not be deleted)
 `docker-compose -p my-zoom-cluster exec backend ls -la` - execute commands inside containers, for example, run `ls -la` on backend
 `docker-compose -p my-zoom-cluster logs -f` - see cluster logs in realtime
 `docker-compose -p my-zoom-cluster logs -f backend` - see backend's logs in realtime
