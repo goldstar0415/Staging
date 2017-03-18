@@ -50,8 +50,8 @@ return [
         'baseUri'  => 'https://app.ticketmaster.com/discovery/v2/events.json',
     ],
     'places' => [
-        'api_key'     => env('GOOGLE_PLACES_API_KEY'),
-        'baseUri' => 'https://maps.googleapis.com/maps/api/place/'
+        'api_key' => env('GOOGLE_PLACES_API_KEY'),
+        'baseUri' => 'https://maps.googleapis.com/maps/api/place/autocomplete/json',
     ],
     'seatgeek' => [
         'client_id'     => env('SEATGEEK_CLIENT_ID'),
