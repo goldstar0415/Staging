@@ -1,5 +1,7 @@
 import random
 import math
+import string
+
 
 """ latitude range of world """
 def rng_lat():
@@ -16,6 +18,10 @@ def rng_usa_lat():
 """ approximate longitude range of usa """
 def rng_usa_lng():
     return random.uniform(-124, -71)
+
+""" generate something that looks sorta like a monkey mashing on a keyboard """
+def rng_alphanumeric_str(length):
+    return ''.join(random.choice(string.ascii_lowercase + string.digits + ' ' + ' ' + ' ') for _ in range(length))
 
 """ each event so we can simulate clicking different things """
 def rng_event():
