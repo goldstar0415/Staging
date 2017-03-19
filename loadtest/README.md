@@ -1,16 +1,17 @@
-## install mitmproxy
-sudo apt-get install python3.5 python3.5-dev libffi-dev libssl-dev
-cd mitmproxy
+# Setup
+
 virtualenv -p /usr/bin/python3.5 venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-## run mitmproxy
-cd mitproxy
-source venv/bin/activate
-mitmproxy --anticache --host
+# Running
 
-ensure your proxy settings are correct
+To run you can either use browser interface like so:
 
+locust -f loadtest/locustfiles/FILE  --host=http://zoomtivity-back.dev
 
-# pip install locustio
+Or CLI
+
+locust -f loadtest/locustfiles/FILE --host=http://zoomtivity-back.dev --no-web -c 1000 -r 10
+
+Clients to be 1000 and rate 10, simulates good burst but feel free to play around with these numbers

@@ -1,0 +1,6 @@
+setuptools==33.1.1
+pyopenssl==16.2.0
+six==1.10.0
+mitmproxy==2.0.0
+locustio==0.8a2
+noise==1.2.2
