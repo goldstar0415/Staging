@@ -51,3 +51,12 @@ services:
   database:
     ports:
       - "54328:5432"
+
+  frontend:
+    environment:
+      - SERVE_PORT=81
+    ports:
+      - "19082:80"
+      - "19083:81"
+    volumes:
+      - ./frontend:/var/www/zoomtivity-dev

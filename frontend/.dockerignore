@@ -1,5 +1,6 @@
-bower_components/
-node_modules/
-.tmp/
-_gulp/
-/dist/
+bower_components
+node_modules
+.tmp
+_gulp
+dist
+Dockerfile
