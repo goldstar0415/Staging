@@ -197,9 +197,10 @@
     z-index: 10 !important;
 }
 
-.leaflet &-bottom &-control {
-    margin-bottom: 0 !important;
-}
+// fixme !!!
+//.leaflet &-bottom &-control {
+//    margin-bottom: 0 !important;
+//}
 
 .leaflet-right .map-tools-top:last-child {
     margin-top: 0;

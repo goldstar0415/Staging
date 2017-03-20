@@ -85,7 +85,7 @@ For example, PostgreSQL creates a data directory when running:
  
 We've mounted this folder into `/postgres/data` on host machine. Every time we restart the container we have a restored data.
 
-Volumes can be used for development to see changes without restarting containers. (this feature doesn't work properly at the moment)
+Volumes can be used for development to see changes without restarting containers.
 
 #### Configure frontend environments
 
@@ -114,6 +114,65 @@ Run `docker-compose -p my-zoom-cluster up -d`
 Wait... Docker will build all the images, start containers.
 
 Run `docker-compose -p my-zoom-cluster ps` to see containers that docker has started
+
+
+### Development Mode
+
+#### Frontend
+
+- Configure your docker-compose.override.yml
+
+```yml
+  frontend:
+    environment:
+      - SERVE_PORT=81       <----------- define a custom internal gulp-serve port
+    ports:
+      - "19082:80"
+      - "19083:81"          <----------- configure gulp-serve port forwarding here, like '19083' 
+    volumes:
+      - ./frontend:/var/www/zoomtivity-dev
+```
+
+- Rebuild and restart your 'frontend' image & container
+
+- Configure your front Nginx, create a dev vhost (see etc/nginx/front-nginx.dev.conf):
+
+```nginx
+upstream zoom_front_serve { server localhost:19083; }
+
+server {
+        listen 80;
+        server_name dev.zoomtivity.loc;     <-------- choose a dev domain name
+        #... some configs .....
+        location / {
+            # .... some configs .....
+            proxy_pass http://zoom_front_serve;       <----------- put here the upstream you have configured before
+        }
+}
+```
+
+- Reload nginx: `sudo nginx -t`, `sudo nginx -s reload`
+
+- Configure automatic file uploads to your dev server in the IDE
+
+- Run `gulp serve`:
+
+```bash
+docker-compose -p my-zoom-cluster exec frontend npm run serve
+```
+
+This command will work in foreground, and the gulp will watch the container's filesystem for changes, recompile scss, ...
+
+- Open `http://dev.zoomtivity.loc` in your browser. In IDE, try to change src/index.html or a scss file, see the gulp's console messages
+
+> gulp-serve will not reload the static server when we change any js files or angular's html templates - it's not required
+> because files are served directly "as is" from the `src/` directory. Just reload the page in the browser.
+
+
+#### Backend
+
+//todo:
+
 
 ### Useful docker commands
 
