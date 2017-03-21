@@ -26,7 +26,6 @@ class UserListRequest extends Request
     public function rules()
     {
         return [
-            'type' => 'required|in:all,followers,followings',
             'filter' => 'string',
             'page' => 'integer',
             'limit' => 'integer'

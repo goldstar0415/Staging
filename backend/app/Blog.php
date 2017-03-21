@@ -10,7 +10,6 @@ use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
-use App\Services\SqlEscape;
 
 /**
  * Model Blog
@@ -34,7 +33,7 @@ use App\Services\SqlEscape;
  */
 class Blog extends BaseModel implements StaplerableInterface, Commentable
 {
-    use PostgisTrait, StaplerTrait, GeoTrait, NewestScopeTrait, SqlEscape;
+    use PostgisTrait, StaplerTrait, GeoTrait, NewestScopeTrait;
 
     protected $guarded = ['id', 'user_id', 'count_views'];
 
@@ -156,8 +155,6 @@ class Blog extends BaseModel implements StaplerableInterface, Commentable
      */
     public function scopeSearch($query, $filter)
     {
-    	$filter = self::escapeLike($filter);
-
         return $query->whereRaw("LOWER(\"body\") like '%$filter%' OR LOWER(\"title\") like '%$filter%'");
     }
 }
