@@ -58,20 +58,25 @@ class UserController extends Controller
      */
     public function __construct(Guard $auth)
     {
-        $this->middleware('guest', ['except' => [
+        $this->middleware('guest', ['only' => [
+            'postLogin',
+            'postCreate',
+            'postRecovery',
+            'postReset',
+        ]]);
+
+        $this->middleware('auth', ['only' => [
             'getLogout',
             'getMe',
-            'getIndex',
-            'getList',
-            'comments',
-            'reviews',
-            'contactUs',
+            'confirmEmail',
             'changeEmail',
             'unsubscribe',
             'usersImportInfo',
-            'inviteEmail'
+            'inviteEmail',
+            'getListFollowers',
+            'getListFollowings',
         ]]);
-        $this->middleware('auth', ['only' => ['getMe', 'changeEmail', 'unsubscribe', 'usersImportInfo', 'inviteEmail']]);
+
         $this->auth = $auth;
     }
 
@@ -91,7 +96,7 @@ class UserController extends Controller
      * @param AppMailer $mailer
      * @return User
      */
-    public function postIndex(Request $request, AppMailer $mailer)
+    public function postCreate(Request $request, AppMailer $mailer)
     {
         $validator = $this->validator($request->all());
 
@@ -108,34 +113,53 @@ class UserController extends Controller
     }
 
     /**
-     * Get user list by specific condition
+     * Get all user list
      *
      * @param UserListRequest $request
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function getList(UserListRequest $request)
+    public function getListAll(UserListRequest $request)
     {
-        $users = null;
+        return $this->getList($request, User::query());
+    }
+
+    /**
+     * Get user list of all user followers
+     *
+     * @param UserListRequest $request
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getListFollowers(UserListRequest $request)
+    {
+        return $this->getList($request, $request->user()->followers());
+    }
+
+    /**
+     * Get user list of all user followings
+     *
+     * @param UserListRequest $request
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getListFollowings(UserListRequest $request)
+    {
+        return $this->getList($request, $request->user()->followings());
+    }
+
+
+    /**
+     * Get user list by specific condition
+     *
+     * @param UserListRequest $request
+     * @param Builder $users
+     *
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    protected function getList(UserListRequest $request, $users)
+    {
         $limit = $request->get('limit', 10);
-        $filter = '';
-        if ($request->has('filter')) {
-            $filter = $request->get('filter');
-        }
 
-        switch ($request->get('type')) {
-            case 'all':
-                $users = User::query();
-                break;
-            case 'followers':
-                $users = $request->user()->followers();
-                break;
-            case 'followings':
-                $users = $request->user()->followings();
-                break;
-        }
-
-        if (!empty($filter)) {
-            $users->search($filter);
+        if(! empty($filter)) {
+            $users->search($request->get('filter'));
         }
 
         return $users->with(['spots' => function ($query) {

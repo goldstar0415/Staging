@@ -1,11 +1,16 @@
-.idea/
-docker-compose.override.yml
+/.idea
 npm-*.log
+docker-compose.override.yml
 
-websocket/node_modules/
+/backend/vendor/
 
-postgres/data/
+/frontend/bower_components/
+/frontend/node_modules/
+/frontend/.tmp/
+/frontend/src/env.js
 
-redis/data/
+/websocket/node_modules/
 
-frontend/.tmp/
+/postgres/data/
+
+/redis/data/
