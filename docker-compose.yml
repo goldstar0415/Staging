@@ -19,8 +19,6 @@ services:
       - front-tier
     expose:
       - 80
-    volumes:
-      - ./backend:/data/www/default
     environment:
       - NGINX_GENERATE_DEFAULT_VHOST=false
 

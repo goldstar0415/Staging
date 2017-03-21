@@ -5,6 +5,9 @@ services:
   backend:
     ports:
       - "19080:80"
+    volumes:
+      # for development purpose
+      - ./backend:/var/www/zoomtivity-backend
     environment:
       - APP_NAME=zoomtivity
       - APP_URL=https://api.zoomtivity.com
