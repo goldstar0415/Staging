@@ -1533,9 +1533,7 @@
             if (pathSelectionStarted) {
                 CancelPathSelection();
             }
-            
-            var area_id = null;
-            
+                        
             getScreenshot(function (image) {
                 var wp = GetDrawLayerPathWaypoints();
                 var dataObj = drawLayerGeoJSON;
@@ -1549,16 +1547,12 @@
                     cover: image
                 };
 
-                var returnId = function() {
-                    return area_id;
-                };
-
                 req.data.searchLayer = $rootScope.sortLayer;
 
                 return Area.save(req, function (data) {
-                    area_id = data.id;
+                    var area_hash = data.hash;
                     toastr.success('Selection saved!');
-                    callback(area_id);
+                    callback(area_hash);
                 }, function (data) {
                     toastr.error('Error!')
                 });

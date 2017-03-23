@@ -8,6 +8,7 @@ use App\Http\Requests\Area\AreaRequest;
 use App\Http\Requests\PaginateRequest;
 use ChrisKonnertz\OpenGraph\OpenGraph;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
@@ -47,6 +48,7 @@ class AreaController extends Controller
     public function store(AreaStoreRequest $request)
     {
         $area = new Area($request->all());
+        $area->hash = str_replace('.','', uniqid("", true));
         $request->user()->areas()->save($area);
 
         return $area;
@@ -72,8 +74,13 @@ class AreaController extends Controller
      * @param Area $area
      * @return Area
      */
-    public function preview($area)
+    public function preview($area_hash)
     {
+        $area = Area::where('hash', $area_hash)->first();
+        if(!$area)
+        {
+            throw new NotFoundHttpException;
+        }
         $og = new OpenGraph();
 
         return view('opengraph')->with(
