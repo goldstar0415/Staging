@@ -12,7 +12,7 @@
 
     _.each(vm.areas, function(item, id){
         console.log($location);
-        item.link = window.location.origin + '/areas/' + item.id;
+        item.link = window.location.origin + '/areas/' + item.hash;
     });
     /*
      * Remove area
