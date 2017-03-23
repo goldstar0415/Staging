@@ -14,8 +14,8 @@
         saveClicked: false
     };
     
-    var setLink = function(id) {
-        $scope.data.link = window.location.origin + '/areas/' + id;
+    var setLink = function(hash) {
+        $scope.data.link = window.location.origin + '/areas/' + hash;
     };
     
     $scope.save = function () {
