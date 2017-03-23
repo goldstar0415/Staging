@@ -12,7 +12,7 @@ class AlterAreasTableAddHashField extends Migration
      */
     public function up()
     {
-        Schema::create('areas', function(Blueprint $table) {
+        Schema::table('areas', function(Blueprint $table) {
             DB::connection()->getPdo()->exec("ALTER TABLE areas ADD hash varchar(30);");
         });
     }
