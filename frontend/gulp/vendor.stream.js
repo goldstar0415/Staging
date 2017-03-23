@@ -33,6 +33,8 @@ module.exports = [
   `${BOWER}/ng-webworker/src/ng-webworker.min.js`,
   `${BOWER}/money.js/money.min.js`,
   `${BOWER}/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js`,
+  `${BOWER}/clipboard/dist/clipboard.min.js`,
+  `${BOWER}/ngclipboard/src/ngclipboard.js`,
   `${SRC}/assets/libs/screenfull/screenfull.min.js`,
   `${SRC}/assets/libs/Leaflet/leaflet.js`,
   `${SRC}/assets/libs/leaflet.pip/leaflet-pip.min.js`,
