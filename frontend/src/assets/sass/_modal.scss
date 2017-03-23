@@ -372,3 +372,41 @@
 	//width: 1000px;
 
 }
+
+.search-save-modal {
+    .description {
+        height: 50px;
+    }
+    
+    .shared-link-input {
+        min-height: 3rem;
+    }
+    
+    .btn-shared-link {
+        opacity: inherit;
+        border-radius: 0;
+        border: 0;
+        background-color: #0b2639;
+        background-size: 65%;
+        background-position: 50%;
+        background-repeat: no-repeat;
+        width: 34px;
+        background-image: url(../img/svg/sharable.svg);
+        &:hover {
+            background-color: #21D2FC;
+        }
+        &.disabled {
+            background-color: gray;
+        }
+    }
+}
+
+@media all and (min-width: 768px)
+{
+    .search-save-modal {
+        .shared-link-wrapper {
+            width: 400px;
+        }
+    }
+}
+
