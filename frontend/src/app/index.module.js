@@ -27,6 +27,7 @@
 	    'oc.lazyLoad',
       'angular-skycons',
       'ngWebworker',
+      'ngclipboard',
       'ui.checkbox',
     ])
     .config(['$ocLazyLoadProvider', 'GOOGLE_API_KEYS_POOL', function ($ocLazyLoadProvider, GOOGLE_API_KEYS_POOL) {

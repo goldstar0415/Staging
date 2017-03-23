@@ -6,10 +6,14 @@
     .controller('AreasController', AreasController);
 
   /** @ngInject */
-  function AreasController(areas, Area, dialogs, toastr) {
+  function AreasController(areas, Area, dialogs, toastr, $location) {
     var vm = this;
     vm.areas = areas.slice();
 
+    _.each(vm.areas, function(item, id){
+        console.log($location);
+        item.link = window.location.origin + '/areas/' + item.id;
+    });
     /*
      * Remove area
      * @param id {number} area id
@@ -24,5 +28,10 @@
       });
 
     };
+    
+    vm.ShareArea = function(){
+        toastr.success('Copied to clipboard!');
+    };      
+
   }
 })();
