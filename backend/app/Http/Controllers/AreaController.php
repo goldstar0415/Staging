@@ -26,7 +26,15 @@ class AreaController extends Controller
     public function __construct()
     {
         $this->middleware('base64upload:cover', ['only' => ['store', 'update']]);
-        $this->middleware('auth', ['only' => ['store', 'update', 'destroy', 'show']]);
+        $this->middleware('auth', [
+            'only' => [
+                'store', 
+                'update', 
+                'destroy',
+                //'show' // Uncomment if wanted to show only to authorized users
+                ]
+            ]
+        );
     }
 
     /**
@@ -62,10 +70,10 @@ class AreaController extends Controller
      */
     public function show(Request $request, $area)
     {
-        if ($request->user()->id !== $area->user_id) {
+        // Use this if needed to show only to owner
+        /*if ($request->user()->id !== $area->user_id) {
             abort(403, 'Access denied');
-        }
-
+        }*/
         return $area;
     }
 
@@ -74,13 +82,14 @@ class AreaController extends Controller
      * @param Area $area
      * @return Area
      */
-    public function preview($area_hash)
+    public function preview($area) // Set $area_hash if using hash
     {
-        $area = Area::where('hash', $area_hash)->first();
+        // For hash using
+        /*$area = Area::where('hash', $area_hash)->first();
         if(!$area)
         {
             throw new NotFoundHttpException;
-        }
+        }*/
         $og = new OpenGraph();
 
         return view('opengraph')->with(
