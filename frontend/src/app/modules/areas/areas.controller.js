@@ -12,7 +12,9 @@
 
     _.each(vm.areas, function(item, id){
         console.log($location);
-        item.link = window.location.origin + '/areas/' + item.hash;
+        // Use item.hash for links with hash
+        // See AreaController and areas/{areas}/preview route on backend
+        item.link = window.location.origin + '/areas/' + item.id;
     });
     /*
      * Remove area
