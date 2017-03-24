@@ -28,7 +28,7 @@ class AreaController extends Controller
         $this->middleware('base64upload:cover', ['only' => ['store', 'update']]);
         $this->middleware('auth', [
             'only' => [
-                'store', 
+                //'store', 
                 'update', 
                 'destroy',
                 //'show' // Uncomment if wanted to show only to authorized users
@@ -57,8 +57,15 @@ class AreaController extends Controller
     {
         $area = new Area($request->all());
         $area->hash = str_replace('.','', uniqid("", true));
-        $request->user()->areas()->save($area);
-
+        if(auth()->check())
+        {
+            $request->user()->areas()->save($area);
+        }
+        else 
+        {
+            $area->user_id = 0;
+            $area->save();
+        }
         return $area;
     }
 

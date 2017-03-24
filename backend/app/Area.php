@@ -28,7 +28,7 @@ class Area extends BaseModel implements StaplerableInterface
 {
     use StaplerTrait, Attachable;
 
-    protected $fillable = ['cover', 'title', 'description', 'data', 'waypoints', 'zoom'];
+    protected $fillable = ['cover', 'title', 'description', 'data', 'waypoints', 'zoom', 'user_id'];
 
     protected $appends = ['share_links', 'cover_url'];
 
