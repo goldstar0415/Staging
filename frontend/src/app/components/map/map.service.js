@@ -1550,7 +1550,8 @@
                 req.data.searchLayer = $rootScope.sortLayer;
 
                 return Area.save(req, function (data) {
-                    var area_hash = data.hash;
+                    // See AreaController and areas/{areas}/preview route on backend
+                    var area_hash = data.id; // use data.hash for using hash
                     toastr.success('Selection saved!');
                     callback(area_hash);
                 }, function (data) {
