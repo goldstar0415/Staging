@@ -91,14 +91,20 @@ class AreaController extends Controller
             throw new NotFoundHttpException;
         }*/
         $og = new OpenGraph();
-
-        return view('opengraph')->with(
-            'og',
-            $og->title($area->title)
+        $og->title($area->title)
             ->description($area->description)
             ->image($area->cover->url())
-            ->url(frontend_url('areas', $area->id))
-        );
+            ->url(frontend_url('areas', $area->id));
+        $imgAttrArr = null;
+        if($image_info = getimagesize($area->cover->url()))
+        {
+            $imgAttrArr = [
+                'width' => $image_info[0],
+                'height' => $image_info[1]
+            ];
+        }
+        $og->image($area->cover->url(), $imgAttrArr);
+        return view('opengraph')->with('og', $og );
     }
 
     /**
