@@ -570,10 +570,11 @@
             },
             _click: function (e) {
                 $rootScope.sidebarMessage = "Loading...";
-                if ($rootScope.$state.current.name === 'areas.preview') {
+                if ($state.is('areas.preview') && $rootScope.currentUser) {
                     $location.path('/areas');
                     $rootScope.mapState = "full-size";
-                } else {
+                } 
+                else if (!$state.is('areas.preview') || ($state.is('areas.preview') && !$rootScope.currentUser)) {
                     L.DomEvent.stopPropagation(e);
                     L.DomEvent.preventDefault(e);
                     ClearSelections();
@@ -586,6 +587,10 @@
                     angular.element('.leaflet-control-container .map-tools > div').removeClass('active');
 
                     $rootScope.toggleSidebar(false);
+                    if($state.is('areas.preview'))
+                    {
+                        $location.path('/');
+                    }
                 }
             }
 
