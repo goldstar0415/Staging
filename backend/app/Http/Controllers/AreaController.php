@@ -100,7 +100,6 @@ class AreaController extends Controller
         $og = new OpenGraph();
         $og->title($area->title)
             ->description($area->description)
-            ->image($area->cover->url())
             ->url(frontend_url('areas', $area->id));
         $imgAttrArr = null;
         if($image_info = getimagesize($area->cover->url()))
