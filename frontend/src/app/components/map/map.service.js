@@ -530,7 +530,7 @@
             },
             onAdd: function (map) {
                 var scope = $rootScope.$new();
-                var template = '    <div tooltip="Save Selection" tooltip-placement="bottom" class="map-tools-top hidden">\
+                var template = '    <div tooltip="Save and Share" tooltip-placement="bottom" class="map-tools-top hidden">\
                           <div class="save-selection">\
                               <img src="../../assets/img/svg/floppy-disk-save-file.svg"/>\
                           </div>\
