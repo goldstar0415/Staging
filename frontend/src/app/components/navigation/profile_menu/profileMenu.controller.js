@@ -16,9 +16,9 @@
     //follow user and reload page
     vm.follow = function (user) {
       if (user.can_follow) {
-        User.follow({user_id: user.id}, reloadPage);
+        User.follow({user_id: user.id}, {}, reloadPage);
       } else {
-        User.unfollow({user_id: user.id}, reloadPage);
+        User.unfollow({user_id: user.id}, {}, reloadPage);
       }
       user.can_follow = !user.can_follow;
     };
@@ -36,10 +36,10 @@
     };
 
     vm.isStream = function () {
-      return $state.is('profile.main') 
-              || $state.is('feeds') 
-              || $state.is('comments') 
-              || $state.is('chat') 
+      return $state.is('profile.main')
+              || $state.is('feeds')
+              || $state.is('comments')
+              || $state.is('chat')
               || $state.is('chatRoom')
               || $state.is('reviews');
     };

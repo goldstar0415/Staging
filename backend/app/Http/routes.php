@@ -51,8 +51,8 @@ Route::get('albums/{albums}/lastUploadedPhotos', 'AlbumPhotoController@lastUploa
 /**
  * Follow
  */
-Route::get('follow/{users}', 'FollowController@getFollow');
-Route::get('unfollow/{users}', 'FollowController@getUnfollow');
+Route::post('follow/{users}', 'FollowController@postFollow');
+Route::post('unfollow/{users}', 'FollowController@postUnfollow');
 Route::get('followers/{users}', 'FollowController@getFollowers');
 Route::get('followings/{users}', 'FollowController@getFollowings');
 Route::post('followings/{users}/followFacebook', 'FollowController@followFacebook');

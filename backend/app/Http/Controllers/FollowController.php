@@ -24,7 +24,7 @@ class FollowController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['only' => ['getFollow', 'getUnfollow', 'followFacebook']]);
+        $this->middleware('auth', ['only' => ['postFollow', 'postUnfollow', 'followFacebook']]);
         $this->middleware('privacy', ['only' => ['getFollowers', 'getFollowings']]);
     }
 
@@ -35,7 +35,7 @@ class FollowController extends Controller
      * @param \App\User $follow_user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getFollow(FollowRequest $request, $follow_user)
+    public function postFollow(FollowRequest $request, $follow_user)
     {
         /**
          * @var \App\User $user
@@ -59,7 +59,7 @@ class FollowController extends Controller
      * @param \App\User $follow_user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getUnfollow(FollowRequest $request, $follow_user)
+    public function postUnfollow(FollowRequest $request, $follow_user)
     {
         /**
          * @var \App\User $user
