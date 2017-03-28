@@ -560,7 +560,7 @@
                 var scope = $rootScope.$new();
                 var template = '    <div tooltip="Clean Selection" tooltip-placement="bottom" ng-show="$root.sortLayer != \'weather\'" class="map-tools-top hidden">\
                             <div class="clear-selection">\
-                                <img src="../../assets/img/svg/cancel-button.svg"/>\
+                                <img src="../../assets/img/svg/cancel-button-red.svg"/>\
                             </div>\
                         </div>';
                 var btn = $compile(template)(scope);
