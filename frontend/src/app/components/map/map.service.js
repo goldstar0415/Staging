@@ -7,7 +7,7 @@
             $rootScope, $timeout, $location, $http, snapRemote, $compile, moment, $state, $modal, toastr, $ocLazyLoad,
             Area, SignUpService, Spot, SpotComment, SpotService, LocationService,
             API_URL, SKOBBLER_API_KEY, WEATHER_TILES_URL, CARTODB_TILES_URL, MOBILE_APP, MAPBOX_API_KEY,
-            $q, $stateParams
+            $q, $stateParams, DATE_FORMAT
             ) 
         {
         console.log('MapService');
