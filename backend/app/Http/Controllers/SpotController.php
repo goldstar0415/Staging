@@ -641,7 +641,7 @@ class SpotController extends Controller
                     $result['data']['hotels'] = (!empty($hotelPrice))? '$'.($hotelPrice * $result['days']):false;
                 }
             }
-
+            $result['data']['hotelsUrl'] = "https://www.jdoqocy.com/click-" . env('JDOQOCY_ID') . "?url=" . $result['data']['hotelsUrl'];
             $result['data']['bookingUrl'] = $spot->getBookingUrl($spot->booking_url, $checkinDateString, $checkoutDateString);
             if($result['data']['bookingUrl'])
             {
@@ -654,6 +654,7 @@ class SpotController extends Controller
                     $result['data']['booking'] = (!empty($bookingPrice))? '$'.$bookingPrice: false;
                 }
             }
+            $result['data']['bookingUrl'] = $result['data']['bookingUrl'] . "&aid=" . env("BOOKING_AID");
         }
         else
         {

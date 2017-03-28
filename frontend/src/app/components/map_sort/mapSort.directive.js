@@ -601,11 +601,17 @@
                 url = API_URL + '/map/selection/' + $rootScope.mapSearchType;
             }
             $rootScope.mapSortFilters = angular.copy(data);
-            var bbox_array = data.filter.b_boxes;
+            
+            var bbox_array = MapService.GetBBoxes();
+            if (bbox_array.length > 0) {
+                bbox_array = MapService.BBoxToParams(bbox_array);
+                data.query = '';
+            }
             if (bbox_array.length === 0 && !vm.searchParams.search_text) {
                 $rootScope.mapSortFilters = {};
                 return;
             }
+            
             isIntermediateSearch = isIntermediateSearch === true;
             MapService.cancelHttpRequest();
             $rootScope.mapSortSpots.cancellerHttp = $q.defer();
