@@ -144,8 +144,8 @@ Route::get('rates', 'MapController@getRates');
  * Wall Controls
  */
 Route::resource('wall', 'WallController', ['except' => ['create', 'edit']]);
-Route::get('wall/{wall}/like', 'WallController@like');
-Route::get('wall/{wall}/dislike', 'WallController@dislike');
+Route::post('wall/{wall}/like', 'WallController@like');
+Route::post('wall/{wall}/dislike', 'WallController@dislike');
 /**
  * Feed Controls
  */
