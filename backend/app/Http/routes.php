@@ -137,7 +137,7 @@ Route::get('map/selection/lasso', 'MapController@getSpotsLassoSelection');
 Route::get('map/selection/path', 'MapController@getSpotsPathSelection');
 Route::get('map/spots/list', 'MapController@getList');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
-Route::get('areas/{areas}/preview', 'AreaController@preview');
+Route::get('areas/{areas}/preview', 'AreaController@preview'); //use hash instead of areas if needed
 Route::get('weather', 'MapController@getWeather'); // deprecated: use /weather/openweathermap instead
 Route::get('rates', 'MapController@getRates');
 /**

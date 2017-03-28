@@ -1,17 +1,45 @@
-<form>
+<form class="search-save-modal">
   <div class="modal-header">
-    <h4> Save selections</h4>
+    <h4>Save and share your search</h4>
   </div>
   <div class="modal-body">
-    <input ng-model="data.title" type="text" class="" placeholder="Title...">
-    <textarea ng-model="data.description" placeholder="Description..." class="description"></textarea>
+    <input ng-model="data.title" 
+           ng-class="{'disabled': data.saveClicked}" 
+           type="text" 
+           ng-readonly="data.saveClicked"
+           placeholder="Title...">
+    <textarea ng-model="data.description" 
+              ng-class="{'disabled': data.saveClicked}" 
+              ng-readonly="data.saveClicked"
+              placeholder="Description..." 
+              class="description"></textarea>
+    
+    <div class="input-group shared-link-wrapper"
+         ngclipboard 
+         data-clipboard-target="#shared-link"
+         ng-click="clipboardClick()">
+        <input id="shared-link" class="form-control shared-link-input" 
+               ng-model="data.link" 
+               aria-describedby="btn-shared-link" 
+               placeholder="Shared link will be available after save" 
+               readonly 
+               type="text">
+        <span class="btn btn-shared-link input-group-addon" 
+              id="btn-shared-link" 
+              ng-class="{'disabled': (data.link == '')}"></span>
+    </div>
   </div>
   <div class="modal-footer">
-    <button ng-click="save()" class="btn btn-success pull-left col-sm-4 col-xs-5 button-my" type="button">
+    <button ng-click="save()" 
+            ng-class="{'disabled': (data.saveClicked)}" 
+            class="btn btn-success pull-left col-sm-4 col-xs-5 button-my" 
+            type="button">
       Save
     </button>
-    <button ng-click="cancel()" class="btn btn-primary pull-left col-sm-4 col-xs-5 button-my" type="button">
-      Cancel
+    <button ng-click="cancel()" 
+            class="btn btn-primary pull-left col-sm-4 col-xs-5 button-my" 
+            type="button">
+      {{ data.link ? 'Close' : 'Cancel' }}
     </button>
   </div>
 </form>

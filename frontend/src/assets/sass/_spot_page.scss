@@ -245,6 +245,20 @@
     }
 }
 
+.sharable-link {
+    background-image: url('../img/svg/sharable_link.svg');
+    background-size: 15px;
+    color: #889197;
+    background-repeat: no-repeat;
+
+    &:active,
+    &:focus,
+    &:hover {
+        background-image: url('../img/svg/sharable_link_hover.svg');
+        color: $blue;
+    }
+}
+
 .action {
     color: #889197;
 
