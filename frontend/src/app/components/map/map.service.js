@@ -2568,11 +2568,6 @@
             {
                 data.filter.category_ids = [$rootScope.filterOptions.category];
             }
-            data.filter.b_boxes = GetDrawLayerBBoxes();
-            if (data.filter.b_boxes.length > 0) {
-                data.filter.b_boxes = BBoxToParams(data.filter.b_boxes);
-                data.query = '';
-            }
             data.filter.type = $rootScope.sortLayer;
             if ($rootScope.mapSelectionProps && $rootScope.mapSearchType === 'path') {
                 data.vertices = _.map($rootScope.routeInterpolated, function (e) {
