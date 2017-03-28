@@ -2,7 +2,7 @@
   <h2 class="title-name nav-yellow">Saved Searches</h2>
 </div>
 <div class="grey-container">
-  <div class="saved-search mgt25 col-xs-12" ng-repeat="item in Area.areas track by $index">
+  <div class="saved-search mgt25 col-xs-12" ng-repeat="(index, item) in Area.areas track by $index">
 
     <div class="col-md-4 col-sm-3 col-xs-12 search-container">
       <a ui-sref="areas.preview({area_id: item.id})">
@@ -20,6 +20,9 @@
       <ul class="tools hidden-xs">
         <li>
           <a class="delete" ng-click="Area.RemoveArea(item.id, $index)">Delete</a>
+        </li>
+        <li>
+          <a class="sharable-link" ngclipboard data-clipboard-text="{{item.link}}" ng-click="Area.ShareArea(item.id, $index)">Sharable link</a>
         </li>
         <li>
           <share item="item" type="area"></share>

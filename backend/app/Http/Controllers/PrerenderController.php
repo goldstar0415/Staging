@@ -42,7 +42,8 @@ class PrerenderController extends Controller
 			case preg_match('/^(\d+)\/article\/([^\/]+)/i', $url, $params):
 				return sprintf('posts/%s/preview', strtolower( $params[2] ));
 
-			case preg_match('/^areas\/(\d+)/i', $url, $params):
+                        // use '[a-zA-Z0-9]+' instead of '\d+' for hash
+                        case preg_match('/^areas\/(\d+)/i', $url, $params): 
 				return sprintf('areas/%s/preview', strtolower( $params[1] ));
 
 			default:
