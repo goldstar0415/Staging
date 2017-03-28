@@ -32,7 +32,8 @@
       },
       markAsRead: {
         url: API_URL + '/message/:user_id/read',
-        ignoreLoadingBar: true
+        ignoreLoadingBar: true,
+        method: 'POST'
       }
     });
   }
