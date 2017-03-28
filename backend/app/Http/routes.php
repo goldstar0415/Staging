@@ -127,7 +127,7 @@ Route::get('message/dialogs', 'ChatController@getDialogs');
 Route::get('message/list', 'ChatController@getList');
 Route::delete('message/dialogs/{id}', 'ChatController@destroyDialog');
 Route::delete('message/{message}', 'ChatController@destroy');
-Route::get('message/{user_id}/read', 'ChatController@read');
+Route::post('message/{user_id}/read', 'ChatController@read');
 /**
  * Map Controls
  */
