@@ -7,7 +7,7 @@
             $rootScope, $timeout, $location, $http, snapRemote, $compile, moment, $state, $modal, toastr, $ocLazyLoad,
             Area, SignUpService, Spot, SpotComment, SpotService, LocationService,
             API_URL, SKOBBLER_API_KEY, WEATHER_TILES_URL, CARTODB_TILES_URL, MOBILE_APP, MAPBOX_API_KEY,
-            $q, $stateParams
+            $q, $stateParams, DATE_FORMAT
             ) 
         {
         console.log('MapService');
@@ -560,7 +560,7 @@
                 var scope = $rootScope.$new();
                 var template = '    <div tooltip="Clean Selection" tooltip-placement="bottom" ng-show="$root.sortLayer != \'weather\'" class="map-tools-top hidden">\
                             <div class="clear-selection">\
-                                <img src="../../assets/img/svg/cancel-button.svg"/>\
+                                <img src="../../assets/img/svg/cancel-button-red.svg"/>\
                             </div>\
                         </div>';
                 var btn = $compile(template)(scope);
@@ -2567,11 +2567,6 @@
             if ($rootScope.filterOptions.category)
             {
                 data.filter.category_ids = [$rootScope.filterOptions.category];
-            }
-            data.filter.b_boxes = GetDrawLayerBBoxes();
-            if (data.filter.b_boxes.length > 0) {
-                data.filter.b_boxes = BBoxToParams(data.filter.b_boxes);
-                data.query = '';
             }
             data.filter.type = $rootScope.sortLayer;
             if ($rootScope.mapSelectionProps && $rootScope.mapSearchType === 'path') {
