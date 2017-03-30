@@ -63,6 +63,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Laracasts\Generators\GeneratorsServiceProvider::class);
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
+        $this->app->register(\GrahamCampbell\Throttle\ThrottleServiceProvider::class);
         $this->app->bind(Privacy::class, function ($app) {
             return new Privacy($app[\Illuminate\Contracts\Auth\Guard::class]);
         });
