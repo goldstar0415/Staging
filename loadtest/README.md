@@ -1,10 +1,15 @@
 # Setup
 
-virtualenv -p /usr/bin/python3.5 venv
+apt-get install python3.5 python3-venv python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev
+python3.5 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
 # Running
+
+Run this to load the virtual environment
+source venv/bin/activate
+
 
 To run you can either use browser interface like so:
 
