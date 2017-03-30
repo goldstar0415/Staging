@@ -64,7 +64,7 @@
     function addToFavorite(spot) {
       if (checkUser()) {
         var id = (spot.spot_id)?spot.spot_id:spot.id;
-        Spot.favorite({id: id}, function () {
+        Spot.favorite({id: id}, {}, function () {
           spot.is_favorite = true;
           if($rootScope.currentUser)
           {
@@ -82,7 +82,7 @@
      */
     function removeFromFavorite(spot, callback) {
       var id = (spot.spot_id)?spot.spot_id:spot.id;
-      Spot.unfavorite({id: id}, function () {
+      Spot.unfavorite({id: id}, {}, function () {
         spot.is_favorite = false;
         if($rootScope.currentUser)
         {
