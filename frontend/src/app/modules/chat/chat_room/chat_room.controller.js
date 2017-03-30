@@ -55,13 +55,9 @@
       });
 
       if (countNewMessages > 0) {
-        Message.markAsRead({
-            user_id: user.id
-          },
-          function () {
+        Message.markAsRead({user_id: user.id}, {}, function () {
             ChatService.markAsRead($rootScope.currentUser.id);
-          }
-        );
+        });
       }
     }
 
