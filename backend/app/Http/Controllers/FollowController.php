@@ -11,6 +11,8 @@ use App\Http\Requests;
 use App\Http\Requests\Following\FollowFacebookRequest;
 use App\User;
 use Log;
+use DB;
+
 /**
  * Class FollowController
  * @package App\Http\Controllers
@@ -37,17 +39,52 @@ class FollowController extends Controller
      */
     public function postFollow(FollowRequest $request, $follow_user)
     {
-        /**
-         * @var \App\User $user
-         */
+        /** @var User $user */
+        /** @var User $follow_user */
+
+
         $user = $request->user();
-        if (!$user->followings()->find($follow_user->id)) {
-            $user->followings()->attach($follow_user->id);
+
+        if ( !$user->followings()->find($follow_user->id) ) {
+
+	        DB::trasaction(function() use ($user, $follow_user) {
+
+	        	$user->followings()->attach($follow_user->id);
+
+		        if ( $follow_user->followings()->find($user->id) ) {
+
+			        // add a friend for follower
+
+			        if ( !$user->friends()->find($follow_user->id) ) {
+
+				        $user->friends()->attach([$follow_user->id], [
+					        'first_name' => $follow_user->first_name,
+					        'last_name' => $follow_user->last_name
+				        ]);
+
+			        }
+
+			        // add a friend for following
+
+			        if ( !$follow_user->friends()->find($user->id) ) {
+
+				        $follow_user->friends()->attach($user->id, [
+					        'first_name' => $user->first_name,
+					        'last_name' => $user->last_name
+				        ]);
+
+			        }
+
+		        }
+
+	        });
+
         } else {
             return response()->json(['message' => 'You are already follow this user'], 403);
         }
 
-        event(new UserFollowEvent($user, $follow_user));
+        // broadcast an event
+	    event(new UserFollowEvent($user, $follow_user));
 
         return response()->json(['message' => 'You are successfuly follow user ' . $follow_user->first_name]);
     }
