@@ -70,6 +70,14 @@
           vm.picture = vm.item.cover_url.medium;
           break;
       }
+      if(vm.item && vm.item.spot_type_category_id)
+      {
+          vm.text = vm.item.title;
+          vm.description = vm.item.description;
+          vm.url = $state.href('spot', {spot_id: vm.item.id, user_id: vm.item.user_id}, {absolute: true});
+          vm.picture = vm.item.cover_url.medium;
+      }
+
 
       vm.close = function () {
         $modalInstance.close();
