@@ -74,7 +74,7 @@
       {
           vm.text = vm.item.title;
           vm.description = vm.item.description;
-          vm.url = $state.href('spot', {spot_id: vm.item.id, user_id: vm.item.user_id}, {absolute: true});
+          vm.url = $state.href('spot', {spot_id: vm.item.id, user_id: vm.item.user_id, spot_slug: vm.item.slug}, {absolute: true});
           vm.picture = vm.item.cover_url.medium;
       }
 
