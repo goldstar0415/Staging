@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'info@zoomtivity.com', 'name' => 'Zoomtivity'],
+    'from' => ['address' => env('MAIL_FROM', 'info@zoomtivity.com'), 'name' => 'Zoomtivity'],
 
     /*
     |--------------------------------------------------------------------------
