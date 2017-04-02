@@ -3,10 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\UserFollowEvent;
-use App\Friend;
 use App\User;
-use Storage;
-use Log;
 
 /**
  * Class AddFriend
@@ -24,58 +21,37 @@ class AddFriend
      */
     public function handle(UserFollowEvent $event)
     {
-	    return;
+	    /** @var User $user */
+	    /** @var User $followUser */
 
-        // check if this is the beginning of great friendship
-//        if ($event->getFollower()->followers()->find($event->getFollowing()->id)) {
-//            $event->getFollower()->friends()->attach($event->getFollowing()->id, [
-//                'last_name' => $event->getFollowing()->last_name
-//            ]);
-//            $event->getFollowing()->friends()->attach($event->getFollower()->id, ['last_name' => $event->getFollower()->last_name]);
-//        }
-//        return;
-//        $friend = $event->getFollowing();
-//        $friend_model = new Friend([
-//            'first_name' => $friend->first_name,
-//            'last_name' => $friend->last_name,
-//            'birth_date' => $friend->birth_date,
-//            'email' => $friend->email,
-//            'address' => $friend->address,
-//            'location' => $friend->location
-//        ]);
-//
-//        if ($friend->avatar_file_name !== null)
-//        {
-//            // get the original avatar img
-//            $avatarUrl = $friend->avatar->url('original');
-//            $avatarFileName = $friend->avatar_file_name;
-//            $avatarLocalStoragePath = 'tmp/' . $avatarFileName;
-//            try
-//            {
-//                if ( !$avatarUrl )
-//                    throw new \Exception('avatar URL is empty');
-//
-//                // download from S3 and save locally
-//                $avatarData = @file_get_contents($avatarUrl);
-//                if ( !$avatarData )
-//                    throw new \Exception("Couldn't download old file");
-//
-//                Storage::disk('local')->put($avatarLocalStoragePath, $avatarData);
-//                $avatarTmpPath = storage_path('app/') . $avatarLocalStoragePath;
-//
-//                if ( !file_exists( $avatarTmpPath ) )
-//                    throw new \Exception('Local tmp file does not exist');
-//
-//                // just attach a local file
-//                $friend_model->avatar = $avatarTmpPath;
-//
-//            } catch (\Exception $ex)
-//            {
-//                Log::error('Could not copy avatar: ' . $avatarUrl . ', ' . $ex->getMessage());
-//            }
-//        }
-//        $user = $event->getFollower();
-//        $friend_model->friend()->associate($friend);
-//        $user->friends()->save($friend_model);
+		$user = $event->getFollower();
+		$followUser = $event->getFollowing();
+
+	    if ( $followUser->followings()->find($user->id) ) {
+
+		    // add a friend for follower
+
+		    if ( !$user->friends()->find($followUser->id) ) {
+
+			    $user->friends()->attach([$followUser->id], [
+				    'first_name' => $followUser->first_name,
+				    'last_name' => $followUser->last_name
+			    ]);
+
+		    }
+
+		    // add a friend for following
+
+		    if ( !$followUser->friends()->find($user->id) ) {
+
+			    $followUser->friends()->attach($user->id, [
+				    'first_name' => $user->first_name,
+				    'last_name' => $user->last_name
+			    ]);
+
+		    }
+
+	    }
+
     }
 }
