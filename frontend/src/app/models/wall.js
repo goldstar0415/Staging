@@ -20,10 +20,12 @@
         }
       },
       like: {
+        method: 'POST',
         url: API_URL + '/wall/:id/like',
         ignoreLoadingBar: true
       },
       dislike: {
+        method: 'POST',
         url: API_URL + '/wall/:id/dislike',
         ignoreLoadingBar: true
       }

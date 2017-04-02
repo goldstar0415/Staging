@@ -6,11 +6,10 @@ use App\Events\UserFollowEvent;
 use App\Events\UserUnfollowEvent;
 use App\Http\Requests\Following\FollowRequest;
 use App\Social;
-use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Http\Requests\Following\FollowFacebookRequest;
 use App\User;
 use Log;
+
 /**
  * Class FollowController
  * @package App\Http\Controllers
@@ -24,7 +23,7 @@ class FollowController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['only' => ['getFollow', 'getUnfollow', 'followFacebook']]);
+        $this->middleware('auth', ['only' => ['postFollow', 'postUnfollow', 'followFacebook']]);
         $this->middleware('privacy', ['only' => ['getFollowers', 'getFollowings']]);
     }
 
@@ -35,19 +34,24 @@ class FollowController extends Controller
      * @param \App\User $follow_user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getFollow(FollowRequest $request, $follow_user)
+    public function postFollow(FollowRequest $request, $follow_user)
     {
-        /**
-         * @var \App\User $user
-         */
+        /** @var User $user */
+        /** @var User $follow_user */
+
+
         $user = $request->user();
-        if (!$user->followings()->find($follow_user->id)) {
+
+        if ( !$user->followings()->find($follow_user->id) ) {
+
             $user->followings()->attach($follow_user->id);
+
         } else {
             return response()->json(['message' => 'You are already follow this user'], 403);
         }
 
-        event(new UserFollowEvent($user, $follow_user));
+        // broadcast an event
+	    event(new UserFollowEvent($user, $follow_user));
 
         return response()->json(['message' => 'You are successfuly follow user ' . $follow_user->first_name]);
     }
@@ -59,7 +63,7 @@ class FollowController extends Controller
      * @param \App\User $follow_user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getUnfollow(FollowRequest $request, $follow_user)
+    public function postUnfollow(FollowRequest $request, $follow_user)
     {
         /**
          * @var \App\User $user

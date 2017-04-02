@@ -124,7 +124,10 @@
         } else {
             // MapService.removeHighlighting();
             angular.element('.map-tools-top').addClass('hidden');
-            angular.element('.map-tools').removeClass('hidden');
+            if($rootScope.sortLayer !== 'weather')
+            {
+                angular.element('.map-tools').removeClass('hidden');
+            }
             $rootScope.mapState = "full-size";
         }
     }
