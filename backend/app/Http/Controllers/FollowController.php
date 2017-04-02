@@ -6,12 +6,9 @@ use App\Events\UserFollowEvent;
 use App\Events\UserUnfollowEvent;
 use App\Http\Requests\Following\FollowRequest;
 use App\Social;
-use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Http\Requests\Following\FollowFacebookRequest;
 use App\User;
 use Log;
-use DB;
 
 /**
  * Class FollowController
@@ -47,37 +44,7 @@ class FollowController extends Controller
 
         if ( !$user->followings()->find($follow_user->id) ) {
 
-	        DB::trasaction(function() use ($user, $follow_user) {
-
-	        	$user->followings()->attach($follow_user->id);
-
-		        if ( $follow_user->followings()->find($user->id) ) {
-
-			        // add a friend for follower
-
-			        if ( !$user->friends()->find($follow_user->id) ) {
-
-				        $user->friends()->attach([$follow_user->id], [
-					        'first_name' => $follow_user->first_name,
-					        'last_name' => $follow_user->last_name
-				        ]);
-
-			        }
-
-			        // add a friend for following
-
-			        if ( !$follow_user->friends()->find($user->id) ) {
-
-				        $follow_user->friends()->attach($user->id, [
-					        'first_name' => $user->first_name,
-					        'last_name' => $user->last_name
-				        ]);
-
-			        }
-
-		        }
-
-	        });
+            $user->followings()->attach($follow_user->id);
 
         } else {
             return response()->json(['message' => 'You are already follow this user'], 403);
