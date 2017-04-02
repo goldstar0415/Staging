@@ -6,11 +6,10 @@ use App\Events\UserFollowEvent;
 use App\Events\UserUnfollowEvent;
 use App\Http\Requests\Following\FollowRequest;
 use App\Social;
-use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Http\Requests\Following\FollowFacebookRequest;
 use App\User;
 use Log;
+
 /**
  * Class FollowController
  * @package App\Http\Controllers
@@ -37,17 +36,22 @@ class FollowController extends Controller
      */
     public function postFollow(FollowRequest $request, $follow_user)
     {
-        /**
-         * @var \App\User $user
-         */
+        /** @var User $user */
+        /** @var User $follow_user */
+
+
         $user = $request->user();
-        if (!$user->followings()->find($follow_user->id)) {
+
+        if ( !$user->followings()->find($follow_user->id) ) {
+
             $user->followings()->attach($follow_user->id);
+
         } else {
             return response()->json(['message' => 'You are already follow this user'], 403);
         }
 
-        event(new UserFollowEvent($user, $follow_user));
+        // broadcast an event
+	    event(new UserFollowEvent($user, $follow_user));
 
         return response()->json(['message' => 'You are successfuly follow user ' . $follow_user->first_name]);
     }
