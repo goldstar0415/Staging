@@ -59,10 +59,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ($this->app->environment() == 'local') {
+        if ($this->app->environment('local')) {
             $this->app->register(\Laracasts\Generators\GeneratorsServiceProvider::class);
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+        } else if ($this->app->environment('production')) {
+            $this->app->register(\Sentry\SentryLaravel\SentryLaravelServiceProvider::class);
         }
+
         $this->app->register(\GrahamCampbell\Throttle\ThrottleServiceProvider::class);
         $this->app->bind(Privacy::class, function ($app) {
             return new Privacy($app[\Illuminate\Contracts\Auth\Guard::class]);
