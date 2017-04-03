@@ -72,6 +72,7 @@ class SpotController extends Controller
             'getRatingInfo',
             'getGoogleRating',
             'getFacebookRating',
+            'getFacebookPhotos',
             'getTripadvisorRating',
             'getYelpRating',
             'getBookingRating',

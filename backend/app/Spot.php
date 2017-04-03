@@ -1790,12 +1790,23 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     {
                         $removeFromMsg->outertext = '';
                     }
-                    $rating = $reviewObj->find('.rating_s_fill', 0);
-                    if(empty($rating) || empty($rating->getAttribute('alt')))
+                    $rating = $reviewObj->find('.ui_bubble_rating', 0);
+                    $ratingClass = trim(str_replace('ui_bubble_rating', '', $rating->class));
+                    $ratingBubblePrefix = "bubble_";
+                    if(empty($rating) || (empty($rating->getAttribute('alt')) && strpos($ratingClass, $ratingBubblePrefix) === false))
                     {
                         continue;
                     }
-                    $reportObj = $reviewObj->find('.problem', 0);
+                    if($rating->getAttribute('alt'))
+                    {
+                        $vote = (int)(str_replace(' of 5 bubbles', '', $rating->getAttribute('alt')));
+                    }
+                    else
+                    {
+                        $class = (int)trim(str_replace($ratingBubblePrefix, '', $ratingClass));
+                        $vote = $class / 10;
+                    }
+                    $reportObj = $reviewObj->find('.taLnk', 0);
                     if(!$reportObj)
                     {
                         continue;
@@ -1816,7 +1827,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     }
                     $date = (new Carbon($reviewObj->find('.ratingDate', 0)->getAttribute('title')))->toDateTimeString();
                     $reviews[] = [
-                        'vote' => (int)(str_replace(' of 5 bubbles', '', $rating->getAttribute('alt'))),
+                        'vote' => $vote,
                         'message' => $message->innertext(),
                         'remote_id' => $remote_id,
                         'remote_type' => SpotVote::TYPE_TRIPADVISOR,
@@ -1833,8 +1844,10 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     }
                 }
                 $this->votes()->insert($reviews);
+                
                 $result = $reviews;
             }
+            
         }
         return $result;
     }
