@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Xapi;
 use Log;
 use GuzzleHttp\Client as HttpClient;
 use App\Http\Requests\Xapi\Places\AutocompleteRequest;
+use App\Http\Requests\Xapi\Places\PlaceRequest;
 use App\Http\Controllers\Controller;
 
 /**
@@ -56,6 +57,29 @@ class GooglePlacesController extends Controller
             return $this->parseHttpError($ex);
         }
     }
+    
+    /**
+     * Getting google place info by place ID
+     *
+     * @param AutocompleteRequest $request
+     */
+    final protected function place(PlaceRequest $request)
+    {
+        $params = $request->only(['placeid']);
+        try {
+            $json = (new HttpClient)->get(config('services.places.placeUri'), ['query' =>
+                array_merge($params, [
+                    'key'   => config('services.places.api_key'),
+                ])
+            ])->getBody();
+
+            $data = $this->parsePlaceHttpJson($json);
+        } catch (\Exception $ex) {
+            Log::error('Google places autocomplete Error: ' . $ex->getMessage());
+            $data = $this->parseHttpError($ex);
+        }
+        return response()->json($data);
+    }
 
     /**
      * Parse Guzzle's response JSON
@@ -66,7 +90,7 @@ class GooglePlacesController extends Controller
     private function parseHttpJson($json)
     {
         $data = json_decode($json, true);
-
+        
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new \Exception();
         }
@@ -75,13 +99,30 @@ class GooglePlacesController extends Controller
         if ($data && array_key_exists("predictions", $data) && is_array($data['predictions'])) {
             foreach($data['predictions'] as $p) {
                 $suggestions[] = [
-                    'desciption' => $p['description'],
+                    'description' => $p['description'],
                     'place_id'   => $p['place_id']
                 ];
             }
         }
 
         return $suggestions;
+    }
+    
+    /**
+     * Parse Guzzle's response JSON for place
+     * @param string $json
+     * @return array
+     * @throws \Exception
+     */
+    private function parsePlaceHttpJson($json)
+    {
+        $data = json_decode($json, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \Exception();
+        }
+
+        return $data;
     }
 
     /**

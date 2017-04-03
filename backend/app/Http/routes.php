@@ -183,5 +183,6 @@ Route::group(['prefix' => 'xapi'], function() {
         Route::get('search', 'Xapi\GeocoderController@search');
         Route::get('reverse', 'Xapi\GeocoderController@reverse');
         Route::get('autocomplete', 'Xapi\GooglePlacesController@autocomplete');
+        Route::get('place', 'Xapi\GooglePlacesController@place');
     });
 });

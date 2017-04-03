@@ -9,7 +9,7 @@
     .factory('SpotService', SpotService);
 
   /** @ngInject */
-  function SpotService(Spot, moment, toastr, dialogs, $rootScope, SignUpService, DATE_FORMAT) {
+  function SpotService(Spot, moment, toastr, dialogs, $rootScope, SignUpService, DATE_FORMAT, API_URL, $http) {
     var commentIndex;
     var $scope;
 
@@ -30,7 +30,8 @@
       saveToCalendar: saveToCalendar,
       removeFromCalendar: removeFromCalendar,
       addToFavorite: addToFavorite,
-      removeFromFavorite: removeFromFavorite
+      removeFromFavorite: removeFromFavorite,
+      openSpot: openSpot
     };
 
     /*
@@ -176,6 +177,16 @@
             str = str.replace(rgx, '');
         });
         return str;
+    }
+    
+    function openSpot(spotId, event) {
+        if (!$rootScope.openedSpot) {
+            event.stopPropagation();
+            $http.get(API_URL + '/spots/' + spotId)
+                .success(function success(data) {
+                    $rootScope.setOpenedSpot(data);
+                });
+        }
     }
 
     function isTimeExact(date, spot) {

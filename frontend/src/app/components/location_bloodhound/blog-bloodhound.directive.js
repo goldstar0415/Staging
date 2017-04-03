@@ -25,7 +25,7 @@
     function controller($scope, toastr, $rootScope, MapService, $interval, $http) {
 
       var vm = $scope;
-      var provider = vm.provider || 'google';
+      var provider = vm.provider || 'spots';
       var loaded = false;
 
       (function() {
@@ -58,7 +58,7 @@
         {
             loaded = true;
             switch (vm.provider || provider) {
-              case 'google': {
+              case 'spots': {
                 $http.get( API_URL + '/xapi/geocoder/place?placeid=' + $model.place_id, {
                   withCredentials: false
                 }).then(function (response) {
@@ -73,7 +73,7 @@
                 });
                 break;
               }
-              case 'mapquest':
+              case 'cities':
               default: {
                 vm.location = {lat: $model.lat, lng: $model.lon};
                 vm.address = $model.display_name;
@@ -184,8 +184,8 @@
 
       var limit = scope.limit || 10;
       
-      var URL_MAP_QUEST = API_URL + '/xapi/geocoder/search?addressdetails=1&limit=' + limit + '&q=%QUERY%';
-      var URL_GOOGLE_MAPS = API_URL + '/xapi/geocoder/autocomplete?q=%QUERY%';
+      var URL_CITIES = API_URL + '/xapi/geocoder/search?addressdetails=1&limit=' + limit + '&q=%QUERY%';
+      var URL_SPOTS = API_URL + '/xapi/geocoder/autocomplete?q=%QUERY%';
 
       var bhSource;
       var suggestionTemplate;
@@ -278,22 +278,22 @@
 
       function apiResolver() {
         switch (getProvider()) {
-          case 'google': {
-            return URL_GOOGLE_MAPS;
+          case 'spots': {
+            return URL_SPOTS;
           }
-          case 'mapquest':
+          case 'cities':
           default: {
-            return URL_MAP_QUEST;
+            return URL_CITIES;
           }
         }
       }
 
       function getSuggestionName(suggestion) {
         switch(getProvider()) {
-          case 'google': {
+          case 'spots': {
             return suggestion.description;
           }
-          case 'mapquest':
+          case 'cities':
           default: {
             return suggestion.display_name;
           }
@@ -310,7 +310,7 @@
       }
       
       function getProvider() {
-          return scope.provider || 'google';
+          return scope.provider || 'spots';
       }
 
     }

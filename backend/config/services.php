@@ -52,6 +52,7 @@ return [
     'places' => [
         'api_key' => env('GOOGLE_PLACES_API_KEY'),
         'baseUri' => 'https://maps.googleapis.com/maps/api/place/autocomplete/json',
+        'placeUri' => 'https://maps.googleapis.com/maps/api/place/details/json',
     ],
     'seatgeek' => [
         'client_id'     => env('SEATGEEK_CLIENT_ID'),
