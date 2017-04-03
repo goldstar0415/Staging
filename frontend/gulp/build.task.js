@@ -95,5 +95,5 @@ gulp.task('build:main', ['vendor', 'app', 'css', 'build:pre-build'], () => {
 });
 
 gulp.task('build', (cb) => {
-  sequence('mirror', 'build:main', cb);
+  sequence('mirror', 'build:main', 'imagemin', cb);
 });
