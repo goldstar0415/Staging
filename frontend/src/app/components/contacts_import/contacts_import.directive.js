@@ -45,7 +45,7 @@
       console.log(user);
       if (user && user.id) {
         user.$disabled = true;
-        User.follow({user_id: user.id}).$promise
+        User.follow({user_id: user.id}, {}).$promise
           .then(function () {
             user.$success = true;
             toastr.success('User has been followed by you', 'Friends Import');

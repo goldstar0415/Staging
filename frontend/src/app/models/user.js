@@ -44,11 +44,11 @@
       },
       follow: {
         url: API_URL + '/follow/:user_id',
-        method: 'GET'
+        method: 'POST'
       },
       unfollow: {
         url: API_URL + '/unfollow/:user_id',
-        method: 'GET'
+        method: 'POST'
       },
       followers: {
         url: API_URL + '/followers/:user_id',

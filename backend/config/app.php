@@ -166,7 +166,8 @@ return [
         Yangqi\Htmldom\HtmldomServiceProvider::class,
         Vinkla\Instagram\InstagramServiceProvider::class,
         SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider::class,
-
+        GrahamCampbell\Throttle\ThrottleServiceProvider::class,
+        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
     ],
 
     /*
@@ -229,6 +230,8 @@ return [
         'Htmldom' => Yangqi\Htmldom\Htmldom::class,
         'Instagram' => Vinkla\Instagram\Facades\Instagram::class,
         'Facebook' => SammyK\LaravelFacebookSdk\FacebookFacade::class,
+        'Throttle' => GrahamCampbell\Throttle\Facades\Throttle::class,
+        'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
     ],
 
 ];

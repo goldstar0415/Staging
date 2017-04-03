@@ -590,8 +590,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
     public function scopeSearch($query, $filter)
     {
         return $query
-            ->where(DB::raw('(LOWER(title)'), 'like', "%$filter%")
-            ->orWhere(DB::raw('LOWER(description)'), 'like', "%$filter%");
+            ->where(DB::raw('title'), 'ilike', "%$filter%");
     }
 
     /**

@@ -26,7 +26,9 @@
         "box/spout": "^2.6",
         "doctrine/dbal": "^2.5",
         "neitanod/forceutf8": "dev-master",
-        "sammyk/laravel-facebook-sdk": "^3.0"
+        "sammyk/laravel-facebook-sdk": "^3.0",
+        "graham-campbell/throttle": "^5.0",
+        "sentry/sentry-laravel": "^0.6.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
