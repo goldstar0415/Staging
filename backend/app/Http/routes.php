@@ -51,8 +51,8 @@ Route::get('albums/{albums}/lastUploadedPhotos', 'AlbumPhotoController@lastUploa
 /**
  * Follow
  */
-Route::get('follow/{users}', 'FollowController@getFollow');
-Route::get('unfollow/{users}', 'FollowController@getUnfollow');
+Route::post('follow/{users}', 'FollowController@postFollow');
+Route::post('unfollow/{users}', 'FollowController@postUnfollow');
 Route::get('followers/{users}', 'FollowController@getFollowers');
 Route::get('followings/{users}', 'FollowController@getFollowings');
 Route::post('followings/{users}/followFacebook', 'FollowController@followFacebook');
@@ -74,8 +74,8 @@ Route::get('spots/{spots}/reviews', 'SpotController@getReviews');
 Route::post('spots/{spots}/rate', 'SpotController@rate');
 Route::post('spots/{spots}/report', 'SpotController@report');
 Route::post('spots/{spots}/owner', 'SpotController@ownerRequest');
-Route::get('spots/{spots}/favorite', 'SpotController@favorite');
-Route::get('spots/{spots}/unfavorite', 'SpotController@unfavorite');
+Route::post('spots/{spots}/favorite', 'SpotController@favorite');
+Route::post('spots/{spots}/unfavorite', 'SpotController@unfavorite');
 Route::get('spots/{spots}/members', 'SpotController@members');
 Route::get('spots/{spots}/preview', 'SpotController@preview');
 Route::get('spots/{spots}/export', 'SpotController@export');
@@ -127,7 +127,7 @@ Route::get('message/dialogs', 'ChatController@getDialogs');
 Route::get('message/list', 'ChatController@getList');
 Route::delete('message/dialogs/{id}', 'ChatController@destroyDialog');
 Route::delete('message/{message}', 'ChatController@destroy');
-Route::get('message/{user_id}/read', 'ChatController@read');
+Route::post('message/{user_id}/read', 'ChatController@read');
 /**
  * Map Controls
  */
@@ -137,15 +137,15 @@ Route::get('map/selection/lasso', 'MapController@getSpotsLassoSelection');
 Route::get('map/selection/path', 'MapController@getSpotsPathSelection');
 Route::get('map/spots/list', 'MapController@getList');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
-Route::get('areas/{areas}/preview', 'AreaController@preview');
+Route::get('areas/{areas}/preview', 'AreaController@preview'); //use hash instead of areas if needed
 Route::get('weather', 'MapController@getWeather'); // deprecated: use /weather/openweathermap instead
 Route::get('rates', 'MapController@getRates');
 /**
  * Wall Controls
  */
 Route::resource('wall', 'WallController', ['except' => ['create', 'edit']]);
-Route::get('wall/{wall}/like', 'WallController@like');
-Route::get('wall/{wall}/dislike', 'WallController@dislike');
+Route::post('wall/{wall}/like', 'WallController@like');
+Route::post('wall/{wall}/dislike', 'WallController@dislike');
 /**
  * Feed Controls
  */
@@ -172,11 +172,6 @@ Route::post('contact-us', 'UserController@contactUs');
 get('google-contacts', 'SocialContactsController@google');
 
 Route::get('prerender/{page_url}', 'PrerenderController@render')->where('page_url', '(.*)');
-/**
- * Search Spots
- */
-Route::get('search/spots', 'SearchController@search');
-
 /**
  * Weather
  */

@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('zoomtivity')
-        .filter('unique', function ($rootScope) {
+        .filter('unique', function ($rootScope) 
+        {
             return function (input) {
                 if (input) {
                     var arr = [];
@@ -17,7 +18,9 @@
                 }
                 return null;
             }
-        }).filter('getById', function ($rootScope) {
+        })
+        .filter('getById', function ($rootScope) 
+        {
             return function (input) {
                 if (input) {
                     var arr = [];
@@ -32,7 +35,9 @@
                 }
                 return null;
             }
-        }).filter('spotsFilter', function ($rootScope) {
+        })
+        .filter('spotsFilter', function ($rootScope) 
+        {
             return function (input) {
                 if (input) {
                     var arr = [];
@@ -64,7 +69,7 @@
                 return null;
             }
         });
-
+        
     /*
      * Directive for spot control panel
      */
@@ -92,9 +97,8 @@
         };
         var isSelectedAll = false;
         var geocoder = null;
-        var categoriesPromise = null;
         var PickNotification = $('.pick-notification');
-        
+
         vm.vertical = true;
         vm.weatherForecast = [];
         vm.saveToCalendar = SpotService.saveToCalendar;
@@ -122,14 +126,14 @@
         vm.nextPage = nextPage;
         vm.closeFilter = closeFilter;
         vm.setWeatherLatLng = setWeatherLatLng;
-        
+
         vm.startDateChanged = startDateChanged;
         vm.initDates = initDates;
         vm.inputDate = {
             start_date: null,
             end_date: null
         }
-    
+
         function pickNotificationFadeIn() {
             if (PickNotification.css('display') == 'none') {
                 PickNotification.css('opacity', 0);
@@ -139,7 +143,7 @@
                 }, 600);
             }
         }
-        
+
         $window.onresize = getWindowSize;
         function getWindowSize(event) {
             $timeout(function () {
@@ -154,26 +158,15 @@
             locations: [],
             tags: []
         };
-        
+
         function closeFilter() {
             $rootScope.isFilterOpened = false;
             clearFields();
             fillFilters();
         }
-        
+
         function clearFields() {
-            $rootScope.filterOptions = {
-                name: '',
-                location: '',
-                isFavorited: false,
-                minRating: "0",
-                category: '',
-                tags: [],
-                dateFrom: null,
-                dateTo: null,
-                maxPrice: '',
-                isApproved: "true"
-            };
+            MapService.clearFilterFields();
             vm.inputDate = {
                 start_date: null,
                 end_date: null
@@ -203,7 +196,7 @@
          * Initialization
          */
         function run() {
-            loadCategories();
+            MapService.loadCategories();
             vm.searchParams.search_text = ($stateParams.searchText || '');
             vm.searchParams.searchType = _.isObject($stateParams.spotSearch) ? $stateParams.spotSearch.activeSpotType || 'event' : 'event';
             vm.searchParams.rating = _.isObject($stateParams.filter) ? $stateParams.filter.rating || null : null;
@@ -216,7 +209,7 @@
                     vm.searchParams.end_date = moment($stateParams.filter.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
                 }
                 if (Array.isArray($stateParams.filter.category_ids) && $stateParams.filter.category_ids.length) {
-                    _.each(vm.spotCategories[vm.searchParams.searchType], function (item) {
+                    _.each($rootScope.searchSpotCategories[vm.searchParams.searchType], function (item) {
                         item.selected = $stateParams.filter.category_ids.indexOf(item.id) >= 0 ? true : false;
                     });
                 }
@@ -248,8 +241,8 @@
             }
 
         }
-        
-        
+
+
         /**
          * Dates fields handling
          */
@@ -269,7 +262,7 @@
             vm.inputDate.start_date = new Date(Date.now());
             vm.inputDate.end_date = $rootScope.filterOptions.dateTo;
         }
-        
+
         /**
          * Render map data
          * @param event
@@ -284,45 +277,45 @@
             layer = layer || $rootScope.sortLayer;
             $rootScope.sortLayer = layer;
             if (angular.isDefined(isDrawArea)) {
-              $rootScope.isDrawArea = isDrawArea;
+                $rootScope.isDrawArea = isDrawArea;
             }
 
             $rootScope.mapSortSpots = {
-              markers: [],
-              data: [],
-              page: 0
+                markers: [],
+                data: [],
+                page: 0
             };
-            if($rootScope.mapSortSpots && $rootScope.mapSortSpots.cancellerHttp)
+            if ($rootScope.mapSortSpots && $rootScope.mapSortSpots.cancellerHttp)
             {
                 $rootScope.mapSortSpots.push({cancellerHttp: $rootScope.mapSortSpots.cancellerHttp});
             }
 
-                if (!MapService.hasLayer(layer)) {
-                        toggleLayer(layer, false);
-                }
+            if (!MapService.hasLayer(layer)) {
+                toggleLayer(layer, false);
+            }
             if ($rootScope.isDrawArea) {
-              _.each(mapSpots, function (item) {
-                if (MapService.PointInPolygon(item.location)) {
-                  $rootScope.mapSortSpots.markers.push(item);
-                }
-              });
+                _.each(mapSpots, function (item) {
+                    if (MapService.PointInPolygon(item.location)) {
+                        $rootScope.mapSortSpots.markers.push(item);
+                    }
+                });
             } else {
                 $rootScope.mapSortSpots.markers = mapSpots;
             }
 
             $timeout(function () {
-              if ($rootScope.mapSortSpots.markers && $rootScope.mapSortSpots.markers.length > 0) {
-                $rootScope.changeMapState('small', null, false);
-                //   console.log($rootScope.mapSortSpots.data);
-                $rootScope.sidebarMessage = "Can't find any spots in this area...";
-                MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
-                if (!$rootScope.isDrawArea) {
-                    MapService.FitBoundsByLayer($rootScope.sortLayer);
-                }
+                if ($rootScope.mapSortSpots.markers && $rootScope.mapSortSpots.markers.length > 0) {
+                    $rootScope.changeMapState('small', null, false);
+                    //   console.log($rootScope.mapSortSpots.data);
+                    $rootScope.sidebarMessage = "Can't find any spots in this area...";
+                    MapService.drawSearchSpotMarkers($rootScope.mapSortSpots.markers, layer, true);
+                    if (!$rootScope.isDrawArea) {
+                        MapService.FitBoundsByLayer($rootScope.sortLayer);
+                    }
                 } else {
                     $rootScope.changeMapState('big');
-                    if ( !ignoreEmptyList ) {
-                      toastr.info('0 spots found');
+                    if (!ignoreEmptyList) {
+                        toastr.info('0 spots found');
                     }
                     MapService.clearLayers();
                 }
@@ -330,7 +323,7 @@
 
             $rootScope.mapSortSpots.sourceSpots = _filterUniqueSpots($rootScope.mapSortSpots.markers);
             if (_.isArray($rootScope.mapSortSpots.sourceSpots)) {
-                $rootScope.mapSortSpots.sourceSpots.forEach(function(spot){
+                $rootScope.mapSortSpots.sourceSpots.forEach(function (spot) {
                     formatDates(spot);
                 });
             }
@@ -424,29 +417,6 @@
             if ($rootScope.mapSortSpots.sourceSpots && $rootScope.mapSortSpots.sourceSpots.length > 0) {
                 $rootScope.mapSortSpots.data = $rootScope.mapSortSpots.sourceSpots;
                 $timeout(MapService.spotsOnScreen, 200);
-
-                // var startIdx = $rootScope.mapSortSpots.page * SPOTS_PER_PAGE,
-                // endIdx = startIdx + SPOTS_PER_PAGE,
-                // spots = $rootScope.mapSortSpots.sourceSpots.slice(startIdx, endIdx),
-                // ids = _.pluck(spots, 'spot_id');
-                //
-                // if (ids.length > 0) {
-                //   $rootScope.mapSortSpots.isLoading = true;
-                //   $http.get(SPOT_LIST_URL + '?' + jQuery.param({ids: ids}))
-                //     .success(function success(data) {
-                //       if ($rootScope.sortLayer == 'event') {
-                //         data = SpotService.formatSpot(data);
-                //       }
-                //
-                //       $rootScope.mapSortSpots.data = _.union($rootScope.mapSortSpots.data, data);
-                //       $rootScope.mapSortSpots.isLoading = false;
-                //     })
-                //     .catch(function (resp) {
-                //       $rootScope.mapSortSpots.isLoading = false;
-                //     });
-                //
-                //   $rootScope.mapSortSpots.page++;
-                // }
             }
         }
 
@@ -479,18 +449,9 @@
                     MapService.clearSelections(false, true);
                 }
                 MapService.showOtherLayers();
-                
+
                 PickNotification.hide();
 
-                // show weather radar data for US users
-                // if ($rootScope.currentCountryCode === 'us') {
-                // 	MapService.toggleWeatherLayer(true);
-                // } else {
-                // 	console.log('Current country: ', $rootScope.currentCountryCode);
-                // }
-                // MapService.toggleWeatherLayer(true);
-
-                //MapService.WeatherSelection(weather, geocodeCallback);
                 MapService.showWeatherMarkers();
                 MapService.getWeatherLatLng(setWeatherLatLng);
 
@@ -519,7 +480,7 @@
                 if ($rootScope.isDrawArea && wp.length < 1 && geoJson && geoJson.features.length < 1 && $rootScope.$state.current.name != 'areas.preview') {
                     toastr.info('Draw the search area');
                 }
-                
+
                 // Show a pick notification if needed
                 if (!$rootScope.isDrawArea && MapService.GetBBoxes().length == 0 && !vm.searchParams.search_text && $event && $event.originalEvent) {
                     $event.originalEvent.stopPropagation();
@@ -546,39 +507,6 @@
             }
         }
 
-        /**
-         * API-request or get from $rootScope
-         * @return {Promise}
-         */
-        function loadCategories() {
-            if (!categoriesPromise) {
-                categoriesPromise = $q.defer();
-                if (!$rootScope.spotCategories) {
-                    $http.get(API_URL + '/spots/categories')
-                            .success(function (data) {
-                                $rootScope.spotCategories = data;
-                                _loadCategories(data);
-                                categoriesPromise.resolve($rootScope.spotCategories);
-                            })
-                            .error(function (r) {
-                                console.error("Couldn't load spot categories", r);
-                                categoriesPromise.reject();
-                            });
-                } else {
-                    _loadCategories($rootScope.spotCategories);
-                    categoriesPromise.resolve($rootScope.spotCategories);
-                }
-            }
-            return categoriesPromise.promise;
-        }
-
-        function _loadCategories(data) {
-            vm.spotCategories = {};
-            _.each(data, function (item) {
-                vm.spotCategories[item.name] = item.categories;
-            });
-        }
-        
         function fillFilters()
         {
             vm.searchParams.rating = $rootScope.filterOptions.minRating;
@@ -588,7 +516,7 @@
             vm.searchParams.is_approved = $rootScope.filterOptions.isApproved;
             vm.searchParams.tags = $rootScope.filterOptions.tags;
         }
-        
+
         function applyFilter()
         {
             fillFilters();
@@ -617,6 +545,7 @@
                 }
 
             }
+            console.log('$rootScope.isDrawArea', $rootScope.isDrawArea);
             // search
             if (!$rootScope.isDrawArea) {
                 if (l) {
@@ -657,7 +586,7 @@
         }
 
         function doSearch(isIntermediateSearch) {
-            loadCategories().then(function () {
+            MapService.loadCategories().then(function () {
                 _doSearch(isIntermediateSearch);
             });
         }
@@ -665,34 +594,33 @@
          * API-request - apply a custom filter and update the map
          */
         function _doSearch(isIntermediateSearch) {
-            var data = getFiltersData();
+            var data = MapService.getFiltersData();
             var url = SEARCH_URL;
-            if ($rootScope.mapSelectionProps && $rootScope.mapSearchType === 'radius')
+            if($rootScope.mapSearchType)
             {
-                url = API_URL + '/map/selection/radius';
-            }
-            if ($rootScope.mapSelectionProps && $rootScope.mapSearchType === 'lasso')
-            {
-                url = API_URL + '/map/selection/lasso';
-            }
-            if ($rootScope.routeInterpolated) {
-                url = API_URL + '/map/selection/path';
+                url = API_URL + '/map/selection/' + $rootScope.mapSearchType;
             }
             $rootScope.mapSortFilters = angular.copy(data);
-            var bbox_array = data.filter.b_boxes;
+            
+            var bbox_array = MapService.GetBBoxes();
+            if (bbox_array.length > 0) {
+                bbox_array = MapService.BBoxToParams(bbox_array);
+                data.query = '';
+            }
             if (bbox_array.length === 0 && !vm.searchParams.search_text) {
                 $rootScope.mapSortFilters = {};
                 return;
             }
+            
             isIntermediateSearch = isIntermediateSearch === true;
             MapService.cancelHttpRequest();
             $rootScope.mapSortSpots.cancellerHttp = $q.defer();
 
             $http({
-                    url: url + '?' +  $.param( data ) ,
-                    method: "GET",
-                    timeout: $rootScope.mapSortSpots.cancellerHttp.promise
-                })
+                url: url + '?' + $.param(data),
+                method: "GET",
+                timeout: $rootScope.mapSortSpots.cancellerHttp.promise
+            })
                     .success(function (spots) {
                         if (spots.length > 0) {
                             onUpdateMapData(null, spots, $rootScope.sortLayer, bbox_array.length > 0, false);
@@ -709,77 +637,6 @@
                     toastr.error(resp.data ? resp.data.message : 'Something went wrong');
                 }
             });
-        }
-        
-        /**
-         * Taking filters data
-         * 
-         * @returns json
-         */
-        function getFiltersData()
-        {
-            var data = {
-                search_text: vm.searchParams.search_text,
-                filter: {}
-            };
-            if (vm.searchParams.rating) {
-                data.filter.rating = vm.searchParams.rating;
-            }
-            if (vm.searchParams.price) {
-                data.filter.price = vm.searchParams.price;
-            }
-            if ($rootScope.mapSelectionProps && $rootScope.mapSearchType === 'radius')
-            {
-                data.lat = $rootScope.mapSelectionProps.lat;
-                data.lng = $rootScope.mapSelectionProps.lng;
-                data.radius = $rootScope.mapSelectionProps.radius;
-            }
-            if ($rootScope.mapSelectionProps && $rootScope.mapSearchType === 'lasso')
-            {
-                data.vertices = $rootScope.mapSelectionProps.vertices;
-            }
-            if (vm.searchParams.is_approved) {
-                data.filter.is_approved = vm.searchParams.is_approved;
-            }
-            if (vm.searchParams.tags) {
-                data.filter.tags = _.pluck(vm.searchParams.tags, 'text');
-            }
-            if (vm.searchParams.start_date) {
-                if (vm.searchParams.start_date.match(/^[0-9]{1,2}\.[0-9]{2}\.[0-9]{4}$/)) {
-                    data.filter.start_date = moment(vm.searchParams.start_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
-                } else if (vm.searchParams.start_date.match(/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/)) {
-                    data.filter.start_date = vm.searchParams.start_date;
-                }
-                
-            }
-            if (vm.searchParams.end_date) {
-                if (vm.searchParams.end_date.match(/^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}$/)) {
-                    data.filter.end_date = moment(vm.searchParams.end_date, DATE_FORMAT.datepicker.date).format(DATE_FORMAT.backend_date);
-                } else if (vm.searchParams.end_date.match(/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/)) {
-                    data.filter.end_date = vm.searchParams.end_date;
-                }
-            }
-            var categories = _.where(vm.spotCategories[$rootScope.sortLayer], {selected: true});
-            if (categories.length > 0) {
-                data.filter.category_ids = _.pluck(categories, 'id');
-            }
-            if($rootScope.filterOptions.category)
-            {
-                data.filter.category_ids = [$rootScope.filterOptions.category];
-            }
-            data.filter.b_boxes = MapService.GetBBoxes();
-            if (data.filter.b_boxes.length > 0) {
-                data.filter.b_boxes = MapService.BBoxToParams(data.filter.b_boxes);
-                data.search_text = '';
-            }
-            data.filter.type = $rootScope.sortLayer;
-            if ($rootScope.routeInterpolated) {
-                data.vertices = _.map($rootScope.routeInterpolated, function (e) {
-                    return [e.latLng.lat,e.latLng.lng].join(',');
-                });
-                data.buffer = 100000;
-            }
-            return data;
         }
 
         /**
@@ -989,7 +846,7 @@
 
         function selectAllCategories() {
             isSelectedAll = !isSelectedAll;
-            _.each(vm.spotCategories[$rootScope.sortLayer], function (item) {
+            _.each($rootScope.spotCategories[$rootScope.sortLayer], function (item) {
                 item.selected = isSelectedAll;
             });
         }

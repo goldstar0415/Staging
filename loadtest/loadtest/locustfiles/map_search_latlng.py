@@ -1,3 +1,6 @@
+import sys
+sys.path.append('/var/www/zoomtivity/loadtest')
+
 from locust import HttpLocust, TaskSet, task
 import loadtest.common.utility as util
 import loadtest.common.shared as shared

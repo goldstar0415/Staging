@@ -68,7 +68,6 @@ class UserController extends Controller
         $this->middleware('auth', ['only' => [
             'getLogout',
             'getMe',
-            'confirmEmail',
             'changeEmail',
             'unsubscribe',
             'usersImportInfo',

@@ -31,7 +31,17 @@ use App\Services\SqlEscape;
  *
  * Map controller
  */
-class MapController extends Controller {
+class MapController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('throttle:60,1', ['only' => [
+            'getSearch',
+            'getSpotsRadiusSelection',
+            'getSpotsLassoSelection',
+            'getSpotsPathSelection',
+        ]]);
+    }
 
     /**
      * @deprecated

@@ -36,6 +36,7 @@ class Kernel extends HttpKernel
         'privacy' => \App\Http\Middleware\PrivacyCheck::class,
         'blogger' => \App\Http\Middleware\BloggerCheck::class,
         'admin' => \App\Http\Middleware\AdminCheck::class,
-        'bloggerOrAdmin' => \App\Http\Middleware\BloggerOrAdmin::class
+        'bloggerOrAdmin' => \App\Http\Middleware\BloggerOrAdmin::class,
+        'throttle' => \GrahamCampbell\Throttle\Http\Middleware\ThrottleMiddleware::class,
     ];
 }

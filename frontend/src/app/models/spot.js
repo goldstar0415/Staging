@@ -37,11 +37,13 @@
       },
       favorite: {
         url: API_URL + '/spots/:id/favorite',
-        ignoreLoadingBar: true
+        ignoreLoadingBar: true,
+        method: 'POST',
       },
       unfavorite: {
         url: API_URL + '/spots/:id/unfavorite',
-        ignoreLoadingBar: true
+        ignoreLoadingBar: true,
+        method: 'POST',
       },
       rate: {
         url: API_URL + '/spots/:id/rate',
