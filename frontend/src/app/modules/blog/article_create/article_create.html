@@ -71,8 +71,12 @@
       <label class="col-sm-3 col-xs-12 control-label">Location </label>
 
       <div class="col-sm-9 col-xs-12">
+        <div class="location-services" ng-if="$root.isRole($root.currentUser, 'admin')">
+            <a class="spot location-service" ng-class="{active: SpotCreate.provider == 'spots' }" ng-click="SpotCreate.setProvider('spots')"></a>
+            <a class="city location-service" ng-class="{active: SpotCreate.provider == 'cities'}" ng-click="SpotCreate.setProvider('cities')"></a>
+        </div>
         <input
-                location-bloodhound
+                blog-bloodhound
                 address="Article.address"
                 location="Article.location"
                 ng-model-options="{ debounce: 200 }"

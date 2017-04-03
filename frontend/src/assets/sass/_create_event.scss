@@ -366,3 +366,48 @@
   margin-top: 1rem;
   border: 1px solid #eee;
 }
+
+.location-select {
+    
+    .twitter-typeahead {
+        width: auto;
+        max-width: 100%;
+        float: auto;
+        display: block!important;
+    }
+    
+    &.with-margin {
+        .twitter-typeahead {
+            margin-left: 100px;
+        }
+    }
+    
+    .location-services {
+        float:left;
+        
+        a.location-service {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            background-size: 40px;
+            background-position: center;
+            margin-right: 5px;
+            margin-top: 5px;
+            &.google {
+                background-image: url(../img/svg/social/google_icon.svg);
+                background-size: 70px;
+            }
+            &.mapquest {
+                background-image: url(../img/svg/mapquest.svg);
+                border: 3px solid #8cc63f;
+            }
+            &.active {
+                outline:1px solid #00b7f3;
+            }
+            &:hover {
+                outline:1px solid #00b7f3;
+            }
+        }
+    }
+    
+}
