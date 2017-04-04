@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
 
-# todo
-
-echo "not implemented"
+docker-compose -p zoomtivity exec backend php artisan migrate
