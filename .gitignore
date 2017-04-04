@@ -11,6 +11,8 @@ docker-compose.override.yml
 
 /websocket/node_modules/
 
-/postgres/data/
+/postgres/data
+/postgres/backups
+!/postgres/backups/.gitkeep
 
 /redis/data/
