@@ -21,11 +21,13 @@ class GooglePlacesController extends Controller
      */
     public function autocomplete(AutocompleteRequest $request)
     {
-        $params = $request->only(['q']);
-
-        $response = $this->autocompleteRequest('search', [
-            'input' => $params['q']
-        ]);
+        $params = $request->only(['q', 'types']);
+        if($params['q'])
+        {
+            $params['input'] = $params['q'];
+            unset($params['q']);
+        }
+        $response = $this->autocompleteRequest('search', $params);
 
         if ( isset($response['error']) ) {
             return abort($response['status']);
@@ -45,10 +47,10 @@ class GooglePlacesController extends Controller
     {
         try {
             $json = (new HttpClient)->get(config('services.places.baseUri'), ['query' =>
-                array_merge($params, [
+                array_merge([
                     'key'   => config('services.places.api_key'),
                     'types' => 'geocode'
-                ])
+                ], $params)
             ])->getBody();
 
             return $this->parseHttpJson($json);
