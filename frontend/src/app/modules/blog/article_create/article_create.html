@@ -1,4 +1,4 @@
-<form class="form-horizontal  no-pad" name="form" role="form" ng-submit="Article.save(form)" novalidate>
+<form class="form-horizontal  no-pad article-form" name="form" role="form" ng-submit="Article.save(form)" novalidate>
   <a ui-sref="profile_blog({user_id: Article.user_id})" class="btn-back create-article-btn"></a>
 
   <div class="text-center">
@@ -70,23 +70,24 @@
     <div class="form-group">
       <label class="col-sm-3 col-xs-12 control-label">Location </label>
 
-      <div class="col-sm-9 col-xs-12">
+      <div class="col-sm-9 col-xs-12 location-select with-margin">
         <div class="location-services" ng-if="$root.isRole($root.currentUser, 'admin')">
-            <a class="spot location-service" ng-class="{active: SpotCreate.provider == 'spots' }" ng-click="SpotCreate.setProvider('spots')"></a>
-            <a class="city location-service" ng-class="{active: SpotCreate.provider == 'cities'}" ng-click="SpotCreate.setProvider('cities')"></a>
+            <a class="spot location-service" ng-class="{active: Article.locationProvider == 'spots' }" ng-click="Article.setProvider('spots')">spot</a>
+            <a class="city location-service" ng-class="{active: Article.locationProvider == 'cities'}" ng-click="Article.setProvider('cities')">city</a>
         </div>
         <input
-                blog-bloodhound
-                address="Article.address"
-                location="Article.location"
-                ng-model-options="{ debounce: 200 }"
-                popover="Type address or click on the map to set location(s)"
-                popover-trigger="focus"
-                placeholder="Type location or click on map..."
-                type="text"
-                autocomplete="off"
-                bind-marker="true"
-                limit="15"
+            blog-bloodhound
+            address="Article.address"
+            location="Article.location"
+            ng-model-options="{ debounce: 200 }"
+            popover="Type address or click on the map to set location(s)"
+            popover-trigger="focus"
+            placeholder="Type location or click on map..."
+            type="text"
+            autocomplete="off"
+            provider="Article.locationProvider"
+            bind-marker="true"
+            limit="5"
         >
       </div>
     </div>
