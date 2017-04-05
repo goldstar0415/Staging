@@ -25,13 +25,13 @@ services:
       - MAIL_ENCRYPTION=tls
       - MAIL_FROM=info@zoomtivity.com
 
-      - S3_BUCKET=zoomtivity
+      - S3_BUCKET=files.zoomtivity.com
       - S3_ACL=public-read
       - S3_KEY=
       - S3_SECRET=
       - S3_REGION=us-east-1
       - S3_SCHEME=https
-      - S3_VERSION=latest
+      - S3_VERSION=2006-03-01
       - S3_ENDPOINT=https://files.zoomtivity.com
 
       - FB_CLIENT_ID=
