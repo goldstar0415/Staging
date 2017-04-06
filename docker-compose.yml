@@ -1,0 +1,115 @@
+version: "2"
+
+networks:
+  back-tier:
+    driver: bridge
+  front-tier:
+    driver: bridge
+
+services:
+
+  # Laravel backend
+
+  backend:
+    extends:
+      file: abstract-cluster.yml
+      service: base
+    build: ./backend
+    networks:
+      - front-tier
+    expose:
+      - 80
+    environment:
+      - NGINX_GENERATE_DEFAULT_VHOST=false
+
+      - DB_CONNECTION=pgsql
+      - DB_HOST=database
+      - DB_DATABASE=zoomtivity
+      - DB_USERNAME=zoomtivity
+      - DB_PASSWORD=4yr76dMDHa2eGG7nAezMY83HCnyM9QYr
+      - DB_PORT=5432
+
+      - CACHE_DRIVER=memcached
+      - SESSION_DRIVER=redis
+      - QUEUE_DRIVER=redis
+      - BROADCAST_DRIVER=redis
+
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+      - MEMCACHED_HOST=memcached
+      - MEMCACHED_PORT=11211
+
+
+  # Postgres+PostGIS
+
+  database:
+    extends:
+      file: abstract-cluster.yml
+      service: base
+    image: wirnex/postgis:1.2
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    networks:
+      - front-tier
+    environment:
+      - POSTGRES_USER=zoomtivity
+      - POSTGRES_PASSWORD=4yr76dMDHa2eGG7nAezMY83HCnyM9QYr
+      - POSTGRES_DB=zoomtivity
+    expose:
+      - 5432
+    restart: always
+
+
+  # Redis
+
+  redis:
+    extends:
+      file: abstract-cluster.yml
+      service: base
+    image: redis:alpine
+    volumes:
+      - ./redis/data:/data
+    expose:
+      - 6379
+    restart: always
+
+
+  # Memcached
+
+  memcached:
+    extends:
+      file: abstract-cluster.yml
+      service: base
+    image: memcached:alpine
+    expose:
+      - 11211
+    restart: always
+
+
+  # Websocket-Server
+
+  websocket:
+    extends:
+      file: abstract-cluster.yml
+      service: base
+    build: ./websocket
+    environment:
+      - PORT=8080
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    expose:
+      - 8080
+
+
+  # Frontend
+
+  frontend:
+    extends:
+      file: abstract-cluster.yml
+      service: base
+    build: ./frontend
+    expose:
+      - 80
+      - 81
+

@@ -3,7 +3,7 @@
 const path = require('path');
 const gulp = require('gulp');
 const config = require('./config');
-const gitRevSync = require('git-rev-sync');
+const uuid = require('uuid');
 const injectString = require('gulp-inject-string');
 const injectFile = require('gulp-inject-file');
 const $ = require('gulp-load-plugins')({ pattern: ['gulp-*', 'main-bower-files'] });
@@ -17,7 +17,7 @@ gulp.task('build:fonts', function () {
 });
 
 gulp.task('build:service-worker', function () {
-  const rev = gitRevSync.short();
+  const rev = uniqueRev(16);
   return gulp.src([
       path.join(config.paths.src, '/service-worker.js'),
     ])
@@ -41,7 +41,7 @@ gulp.task('build:other', () => {
 gulp.task('build:pre-build', ['build:fonts', 'build:service-worker', 'build:other', 'boot']);
 
 gulp.task('build:main', ['vendor', 'app', 'css', 'build:pre-build'], () => {
-  const rev = gitRevSync.short();
+    const rev = uniqueRev(16);
 
   return gulp.src( path.join(config.paths.src, '/index.html') )
     .pipe( setRevision() )
@@ -97,3 +97,7 @@ gulp.task('build:main', ['vendor', 'app', 'css', 'build:pre-build'], () => {
 gulp.task('build', (cb) => {
   sequence('mirror', 'build:main', 'imagemin', cb);
 });
+
+function uniqueRev(len) {
+    return uuid.v4().split('-').join('').substr(0, (!len || len > 32) ? 32 : len);
+}

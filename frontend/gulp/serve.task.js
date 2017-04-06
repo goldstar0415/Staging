@@ -17,8 +17,8 @@ const sequence = require('run-sequence');
 let sassScope = _.filter(cssStream, p => /\S+\.scss/i.test(p));
 let cssScope = _.filter(cssStream, p => /\S+\.css/i.test(p));
 
-const APP_SERVE_PORT =  process.env.SERVE_PORT || 18081;
-const SYNC_PROXY_PORT = process.env.PORT || 8081;
+// const APP_SERVE_PORT =  process.env.SERVE_PORT || 18081;
+const SYNC_PROXY_PORT = process.env.SERVE_PORT || 8081;
 
 gulp.task('serve:sync', () => {
   bs.init({
@@ -62,6 +62,7 @@ gulp.task('serve:watch', () => {
   const options = {
     name: 'serve',
     verbose: true,
+    usePolling: true, // true for docker!
   };
 
   const watchScope = _.map(sassScope, (p) => {
@@ -130,7 +131,6 @@ gulp.task('serve:main', ['serve:sass', 'serve:watch'], () => {
       rule: {
         match: /<\/head>/i,
         fn: function (snippet, match) {
-          console.log('>>> Snippet');
           return snippet + match;
         }
       }
