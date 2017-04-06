@@ -7,7 +7,7 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.45",
-        "laravel/socialite": "^2.0",
+        "laravel/socialite": "v2.0.15",
         "zizaco/entrust": "dev-laravel-5",
         "predis/predis": "^1.1@dev",
         "phaza/laravel-postgis": "2.*",
