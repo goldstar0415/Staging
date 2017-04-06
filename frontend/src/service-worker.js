@@ -16,7 +16,7 @@ var disableCacheInDebugMode = true; // don't cache any files if APP_REVISION == 
 
 var cachePolicyConfig = {
     cacheableRemote: [
-      {match: /cdnjs\.cloudflare\.com/i, opaque: true},
+      // {match: /cdnjs\.cloudflare\.com/i, opaque: true}, // fixme: CORS error for css and fonts (investigate: https://developers.google.com/web/updates/2016/09/foreign-fetch)
       // {match: /https*:\/\/connect\.facebook\.net\/[^\/]+\/sdk\.js/i, opaque: true}, // fixme: doesn't work (?)
       {match: /fonts\.gstatic\.com/i, opaque: true},
     ],
