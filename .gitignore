@@ -1,5 +1,6 @@
 /.idea
 npm-*.log
+docker-compose.override.yml
 
 /backend/vendor/
 
@@ -7,3 +8,11 @@ npm-*.log
 /frontend/node_modules/
 /frontend/.tmp/
 /frontend/src/env.js
+
+/websocket/node_modules/
+
+/postgres/data
+/postgres/backups
+!/postgres/backups/.gitkeep
+
+/redis/data/

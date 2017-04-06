@@ -1,0 +1,70 @@
+version: "2"
+
+services:
+
+  backend:
+    ports:
+      - "19080:80"
+    volumes:
+      # for development purpose
+      - ./backend:/var/www/zoomtivity-backend
+    environment:
+      - APP_NAME=zoomtivity
+      - APP_URL=https://api.zoomtivity.com
+      - FRONTEND_URL=https://zoomtivity.com
+      - APP_COOKIE_DOMAIN=zoomtivity.com
+      - APP_ENV=production
+      - APP_DEBUG=true
+      - APP_KEY=adEvR0qvdNo7qPmhdcVFTPMwBFTRNj2d
+
+      - MAIL_DRIVER=smtp
+      - MAIL_HOST=email-smtp.us-east-1.amazonaws.com
+      - MAIL_PORT=587
+      - MAIL_USERNAME=
+      - MAIL_PASSWORD=
+      - MAIL_ENCRYPTION=tls
+      - MAIL_FROM=info@zoomtivity.com
+
+      - S3_BUCKET=files.zoomtivity.com
+      - S3_ACL=public-read
+      - S3_KEY=
+      - S3_SECRET=
+      - S3_REGION=us-east-1
+      - S3_SCHEME=https
+      - S3_VERSION=2006-03-01
+      - S3_ENDPOINT=https://files.zoomtivity.com
+
+      - FB_CLIENT_ID=
+      - FB_CLIENT_SECRET=
+      - FB_REDIRECT_URL=https://api.zoomtivity.com/account/facebook
+
+      - GOOGLE_CLIENT_ID=
+      - GOOGLE_CLIENT_SECRET=
+      - GOOGLE_REDIRECT_URL=
+
+      - FORECAST_KEY=0aa9a75d6cef91fba5a524f128959cb7
+
+      - DARK_SKY_API_KEY=8cbfccc23dc28e5a6d4aa337a8f6ed06
+
+      - OPENWEATHERMAP_API_KEY=835492c0eab300994ec658dfb16ad305
+
+      - MAPQUEST_API_KEY=peVrdYeAJADUMTIMKXuK4j9G52cnsY8p
+
+
+  database:
+    ports:
+      - "54328:5432"
+
+  frontend:
+    environment:
+      - SERVE_PORT=81
+    ports:
+      - "19082:80"
+      - "19083:81"
+    volumes:
+      # for development purpose
+      - ./frontend:/var/www/zoomtivity-dev
+
+  websocket:
+    ports:
+      - "19081:8080"
