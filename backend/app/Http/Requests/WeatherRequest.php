@@ -28,8 +28,8 @@ class WeatherRequest extends Request
     public function rules()
     {
         return [
-            'lat' => 'required|numeric',
-            'lng' => 'required|numeric'
+            'lat' => 'required|latitude',
+            'lng' => 'required|longitude'
         ];
     }
 }

@@ -10,6 +10,8 @@
     var vm = this;
     var coverName = null;
     var isChangedCover = false;
+    
+    vm.provider = 'google';
 
     vm.deletedImages = [];
     vm.edit = $state.current.edit || false;
@@ -471,6 +473,10 @@
             {text: 'Late Night'}
         ];
     }
+    
+    vm.setProvider = function(name) {
+        vm.provider = name;
+    };
 
 
     if (vm.edit) {

@@ -22,10 +22,11 @@
     /**
      * Controller
      */
-    function controller($scope, toastr, $rootScope, MapService, $interval) {
+    function controller($scope, toastr, $rootScope, MapService, $interval, $http) {
 
       var vm = $scope;
       var provider = vm.provider || 'google';
+      var loaded = false;
 
       (function() {
         var waitForElement = $interval(function() {
@@ -53,24 +54,39 @@
       }
 
       function onTypeaheadSelect($event, $model) {
-        var viewAddress;
-        
-        switch (provider) {
-          case 'google': {
-            vm.location = {lat: $model.geometry.location.lat, lng: $model.geometry.location.lng};
-            vm.address = $model.formatted_address;
-            viewAddress = $model.formatted_address;
-            break;
-          }
-          case 'mapquest':
-          default: {
-            vm.location = {lat: $model.lat, lng: $model.lon};
-            vm.address = $model.display_name;
-            viewAddress = $model.display_name;
-          }
+        if(!loaded)
+        {
+            loaded = true;
+            switch (vm.provider || provider) {
+              case 'google': {
+                $http.get( API_URL + '/xapi/geocoder/place?placeid=' + $model.place_id, {
+                  withCredentials: false
+                }).then(function (response) {
+                  if(response.data.status == "OK")
+                  {
+                    var data = response.data.result;
+                    vm.location = {lat: data.geometry.location.lat, lng: data.geometry.location.lng}
+                  }
+                  vm.address = $model.description;
+                  var viewAddress = $model.description;
+                  display(viewAddress);
+                });
+                break;
+              }
+              case 'mapquest':
+              default: {
+                vm.location = {lat: $model.lat, lng: $model.lon};
+                vm.address = $model.display_name;
+                var viewAddress = $model.display_name;
+                display(viewAddress);
+              }
+            }
+            var t = setInterval(function() {
+                loaded = false;
+                clearInterval(t);
+                t = undefined;
+            }, 400);
         }
-
-        display(viewAddress);
       }
 
       function onFocusin() {
@@ -167,63 +183,78 @@
     function link(scope, elem, attrs) {
 
       var limit = scope.limit || 10;
-      var provider = scope.provider || 'google';
       
-      var URL_MAP_QUEST = API_URL + '/geocoder/search?addressdetails=1&limit=' + limit + '&q=%QUERY%';
-      var URL_GOOGLE_MAPS = 'https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=%QUERY%';
+      var URL_MAP_QUEST = API_URL + '/xapi/geocoder/search?addressdetails=1&limit=' + limit + '&q=%QUERY%';
+      var URL_GOOGLE_MAPS = API_URL + '/xapi/geocoder/autocomplete?q=%QUERY%';
 
-      var bhSource = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: {
-          url: apiResolver(),
-          wildcard: '%QUERY%',
-          prepare: prepareQuery,
-          transform: transformResponse,
-        }
+      var bhSource;
+      var suggestionTemplate;
+      var showPreloader;
+      var widgetName; // a random name
+      var suggestionsElementCache;
+
+      bindTypeahead();
+      scope.$watch('provider', function(value){
+          rebindTypeahead();
       });
 
-      var suggestionTemplate = "<div><span class='title'>%VALUE%</span></div>";
-      var showPreloader = true;
-      var widgetName = 'bloodhound-typeahead-' + Math.floor(Math.random()*1e12); // a random name
-      var suggestionsElementCache = null;
-
-      elem
-        .typeahead(null, {
-          name: widgetName,
-          display: 'value',
-          source: bhSource,
-          limit: limit,
-          templates: {
-            suggestion: compileSuggestionTemplate,
-          }
-        })
-        .bind('typeahead:selected', function(event, datum) {
-          showPreloader = false; // don't display a preloader when we've selected an item
-          var t = setInterval(function() {
-            showPreloader = true;
-            clearInterval(t);
-            t = undefined;
-          }, 400);
-          scope.$emit('typeahead:selected', datum);
-        })
-        .on('typeahead:asyncrequest', function() {
-          if (showPreloader) {
-            getSuggestionsElement().addClass('is-loading');
-          }
-        })
-        .on('typeahead:asynccancel typeahead:asyncreceive', function() {
-          getSuggestionsElement().removeClass('is-loading');
-        })
-        .on('typeahead:change', function(event, newValue) {
-          scope.$emit('typeahead:change', newValue);
-        });
-
-      scope.$$input = {
-        $element: elem,
-        $setModelValue: setModelValue,
-        $getModelValue: getModelValue,
-      };
+      function bindTypeahead()
+      {
+          bhSource = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+              url: apiResolver(),
+              wildcard: '%QUERY%',
+              prepare: prepareQuery,
+            }
+          });
+          suggestionTemplate = "<div><span class='title'>%VALUE%</span></div>";
+          showPreloader = true;
+          widgetName = 'bloodhound-typeahead-' + Math.floor(Math.random()*1e12);
+          suggestionsElementCache = null;
+          elem
+            .typeahead({minLength: 3}, {
+              name: widgetName,
+              display: 'value',
+              source: bhSource,
+              limit: limit,
+              templates: {
+                suggestion: compileSuggestionTemplate,
+              }
+            })
+            .bind('typeahead:selected', function(event, datum) {
+              showPreloader = false; // don't display a preloader when we've selected an item
+              var t = setInterval(function() {
+                showPreloader = true;
+                clearInterval(t);
+                t = undefined;
+              }, 400);
+              scope.$emit('typeahead:selected', datum);
+            })
+            .on('typeahead:asyncrequest', function() {
+              if (showPreloader) {
+                getSuggestionsElement().addClass('is-loading');
+              }
+            })
+            .on('typeahead:asynccancel typeahead:asyncreceive', function() {
+              getSuggestionsElement().removeClass('is-loading');
+            })
+            .on('typeahead:change', function(event, newValue) {
+              scope.$emit('typeahead:change', newValue);
+            });
+          scope.$$input = {
+            $element: elem,
+            $setModelValue: setModelValue,
+            $getModelValue: getModelValue,
+          };
+      }
+      
+      function rebindTypeahead()
+      {
+          elem.typeahead('destroy');
+          bindTypeahead();
+      }
 
       function getSuggestionsElement() {
         if (!suggestionsElementCache) {
@@ -246,7 +277,7 @@
       }
 
       function apiResolver() {
-        switch (provider) {
+        switch (getProvider()) {
           case 'google': {
             return URL_GOOGLE_MAPS;
           }
@@ -257,23 +288,10 @@
         }
       }
 
-      function transformResponse(res) {
-        switch (provider) {
-          case 'google': {
-            return res.results;
-          }
-          case 'mapquest':
-          default: {
-            return res;
-          }
-        }
-        
-      }
-
       function getSuggestionName(suggestion) {
-        switch(provider) {
+        switch(getProvider()) {
           case 'google': {
-            return suggestion.formatted_address;
+            return suggestion.description;
           }
           case 'mapquest':
           default: {
@@ -289,6 +307,10 @@
       function getModelValue() {
         var val = elem.typeahead('val');
         return val ? (val+'').trim() : '';
+      }
+      
+      function getProvider() {
+          return scope.provider || 'google';
       }
 
     }

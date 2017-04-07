@@ -11,6 +11,7 @@
         vm = _.extend(vm, article);
         vm.categories = categories;
         vm.images = UploaderService.images;
+        vm.locationProvider = 'google';
         vm.options = {
             height: 200,
             toolbar: [
@@ -103,6 +104,10 @@
 
             console.log('image upload:', files);
             console.log('image upload\'s editable:', $scope.editable);
+        }
+        
+        vm.setProvider = function(name) {
+            vm.locationProvider = name;
         }
     }
 })();
