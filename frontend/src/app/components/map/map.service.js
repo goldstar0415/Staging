@@ -2947,7 +2947,6 @@
                     drawSpotMarkers: drawSpotMarkers,
                     drawSearchSpotMarkers: drawSearchSpotMarkers,
                     drawBlogMarkers: drawBlogMarkers,
-                    WeatherSelection: WeatherSelection,
 
                     cancelHttpRequest: cancelHttpRequest,
                     hasLayer: hasLayer,
