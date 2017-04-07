@@ -10,10 +10,11 @@
         position: absolute;
         bottom: 0;
         right: 0;
-        width: 160px;
-        height: 18px;
+        width: auto;
+        height: auto;
         @media (max-width: 767px) {
             bottom: 50px;
+            font-size: 0.7em;
         }
     }
     &.small-size {
@@ -25,11 +26,11 @@
 
 .map.full-size {
     position: absolute;
-    height: calc(100vh - 100px);
+    height: calc(100% - 50px);
     top: 50px;
     width: calc(100vw - 70px);
     @media (max-width: 767px) {
-        height: calc(100vh - 50px);
+        height: calc(100% - 50px);
         top: 50px;
         width: 100vw;
     }
@@ -236,14 +237,14 @@
     }
 
     .leaflet-left.leaflet-bottom {
-        bottom: 10px;
+        bottom: 60px;
         top: 10px;
         left: 1rem !important;
         display: flex;
-        justify-content: flex-start;
+        //justify-content: flex-start;
         flex-direction: column;
         border: none;
-        height: calc(100vh - 120px);
+        //height: calc(100vh - 120px);
         max-width: 40px;
         z-index: 999;
         opacity: 0.8;
