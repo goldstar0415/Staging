@@ -82,11 +82,11 @@
           {name: 'location-bloodhound', files: versionize([
             // todo: load `src/assets/sass/_location_bloodhound.scss` here
             '/app/components/location_bloodhound/location-bloodhound.directive.js',
-          ])},
+          ])}/*,
           {name: 'blog-bloodhound', files: versionize([
             // todo: load `src/assets/sass/_location_bloodhound.scss` here
             '/app/components/location_bloodhound/blog-bloodhound.directive.js',
-          ])}
+          ])}*/
 
           // {name: 'leaflet', files: [
           //   '/assets/libs/Leaflet/leaflet.js',

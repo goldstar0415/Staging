@@ -11,7 +11,7 @@
         vm = _.extend(vm, article);
         vm.categories = categories;
         vm.images = UploaderService.images;
-        vm.locationProvider = 'spots';
+        vm.locationProvider = 'google';
         vm.options = {
             height: 200,
             toolbar: [
