@@ -21,20 +21,30 @@ class SocialContactsController extends Controller
      */
     public function google(Request $request, GoogleClient $googleClient)
     {
-        $key = 'user-google-contacts-'.$request->user()->id;
-        $c = null;
-        if (Cache::has($key)) {
-            Log::debug('Google Contacts from cache');
-            $c = Cache::get($key);
-        } else {
-            Log::debug('google-contacts 0, user id: ' . $request->user()->id);
-            $contacts = $googleClient->getContacts();
-            if (!isset($contacts['feed']) or !isset($contacts['feed']['entry'])) {
-                abort(204);
-            }
-            $c = new GoogleContacts($contacts['feed']['entry'], $googleClient->getToken());
-            Cache::put($key, $c, 60*3);
+        $contacts = $googleClient->getContacts();
+
+        if (!isset($contacts['feed']) or !isset($contacts['feed']['entry'])) {
+            return abort(204);
         }
+
+        $c = new GoogleContacts($contacts['feed']['entry'], $googleClient->getToken());
+
+        // fixme, the $request->user() is empty, can't use a cached list
+
+//        $key = 'user-google-contacts-'.$request->user()->id;
+//        $c = null;
+//        if (Cache::has($key)) {
+//            Log::debug('Google Contacts from cache');
+//            $c = Cache::get($key);
+//        } else {
+//            Log::debug('google-contacts 0, user id: ' . $request->user());
+//            $contacts = $googleClient->getContacts();
+//            if (!isset($contacts['feed']) or !isset($contacts['feed']['entry'])) {
+//                abort(204);
+//            }
+//            $c = new GoogleContacts($contacts['feed']['entry'], $googleClient->getToken());
+//            Cache::put($key, $c, 60*3);
+//        }
         return view('google-contacts')->with('contacts', $c);
     }
 }

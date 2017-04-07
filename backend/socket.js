@@ -1,3 +1,5 @@
+// todo: rm from backend service
+
 var app = require('http').createServer(handler);
 var io = require('socket.io')(app);
 var Redis = require('ioredis');

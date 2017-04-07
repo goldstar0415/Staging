@@ -1,0 +1,6 @@
+Dockerfile
+vendor
+node_modules
+.env
+.env.example
+socket.js
