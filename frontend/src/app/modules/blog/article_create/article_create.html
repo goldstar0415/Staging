@@ -70,13 +70,13 @@
     <div class="form-group">
       <label class="col-sm-3 col-xs-12 control-label">Location </label>
 
-      <div class="col-sm-9 col-xs-12 location-select with-margin">
-        <div class="location-services" ng-if="$root.isRole($root.currentUser, 'admin')">
+      <div class="col-sm-9 col-xs-12 location-select"><!-- with-margin -->
+        <!--<div class="location-services" ng-if="$root.isRole($root.currentUser, 'admin')">
             <a class="spot location-service" ng-class="{active: Article.locationProvider == 'spots' }" ng-click="Article.setProvider('spots')">spot</a>
             <a class="city location-service" ng-class="{active: Article.locationProvider == 'cities'}" ng-click="Article.setProvider('cities')">city</a>
-        </div>
+        </div>-->
         <input
-            blog-bloodhound
+            location-bloodhound
             address="Article.address"
             location="Article.location"
             ng-model-options="{ debounce: 200 }"

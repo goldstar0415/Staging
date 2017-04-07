@@ -25,7 +25,7 @@
         function controller($scope, toastr, $rootScope, MapService, $interval, $http, $location) {
 
             var vm = $scope;
-            var provider = vm.provider || 'cities';
+            var provider = vm.provider || 'google';
             var loaded = false;
 
             (function () {
@@ -48,7 +48,6 @@
                 vm.location = vm.location || {lat: '', lng: ''};
                 vm.$$input.$element.on('focusin', onFocusin);
                 if (vm.address && validateLocation(vm.location)) {
-                    //console.log('have adress');
                     display(vm.address);
                     moveOrCreateMarker(vm.location);
                     MapService.GetMap().setView(vm.location, 12);
@@ -60,17 +59,7 @@
                 {
                     loaded = true;
                     switch (vm.provider || provider) {
-                        
-                        case 'spots':
-                        {
-                            vm.location = {lat: $model.lat, lng: $model.lon};
-                            vm.address = $model.display_name;
-                            var viewAddress = $model.display_name;
-                            display(viewAddress);
-                        }
-
-                        case 'cities':
-                        default:
+                        case 'google':
                         {
                             $http.get(API_URL + '/xapi/geocoder/place?placeid=' + $model.place_id, {
                                 withCredentials: false
@@ -86,6 +75,14 @@
                             });
                             break;
                         }
+                        case 'spots':
+                        default:
+                        {
+                            vm.location = {lat: $model.lat, lng: $model.lon};
+                            vm.address = $model.display_name;
+                            var viewAddress = $model.display_name;
+                            display(viewAddress);
+                        }
                     }
                     var t = setInterval(function () {
                         loaded = false;
@@ -96,9 +93,7 @@
             }
 
             function onFocusin() {
-                //console.log('onFocusin');
                 if (!validateLocation(vm.location) || vm.$$input.$getModelValue() == '') {
-                    //console.log('onfocus true');
                     MapService.GetMap().on('click', onMapClick);
                 }
             }
@@ -119,7 +114,6 @@
             }
 
             function watchLocation() {
-                //console.log('watchLocation');
                 if (validateLocation(vm.location)) {
                     moveOrCreateMarker(vm.location);
                 }
@@ -127,7 +121,6 @@
             }
 
             function setCurrentLocation() {
-                //console.log('setCurrentLocation');
                 if (!$rootScope.currentLocation) {
                     toastr.error('Geolocation error!');
                 } else {
@@ -174,15 +167,10 @@
             }
 
             function validateLocation(location) {
-                //console.log('validateLocation');
-                var valid = location && location.lat && (location.lat + '').trim() != '' && location.lng && (location.lng + '').trim() != '';
-                //console.log('valid', valid)
-                return valid;
+                return location && location.lat && (location.lat + '').trim() != '' && location.lng && (location.lng + '').trim() != '';
             }
 
             function onChange($event, newValue) {
-                //console.log('onChange');
-                //console.log('newValue', newValue)
                 if (!newValue || (newValue + '').trim() == '') {
                     removeMarker();
                     vm.location = null;
@@ -199,7 +187,7 @@
 
             var limit = scope.limit || 10;
 
-            var URL_CITIES = API_URL + '/xapi/geocoder/autocomplete?q=%QUERY%&types=(cities)';
+            var URL_CITIES = API_URL + '/xapi/geocoder/autocomplete?q=%QUERY%';/*&types=(cities)*/
             var URL_SPOTS = API_URL + '/map/search?query=%QUERY%&limit=' + limit;
 
             var bhSource;
@@ -219,21 +207,16 @@
                 var remote = {
                     url: apiResolver(),
                     wildcard: '%QUERY%',
-                    prepare: prepareQuery,
-                    transform: function(response) {
+                    prepare: prepareQuery//,
+                    /*transform: function(response) {
                         console.log(response);
                         return response;
-                    }
+                    }*/
                 };
-                //if (getProvider() == 'spots')
-                //{
-                    remote.rateLimitBy = 'debounce';
-                    remote.rateLimitWait = 600;
-                //}
-                //console.log(Bloodhound.tokenizers.obj);
-                //console.log(Bloodhound.tokenizers);
+                    //remote.rateLimitBy = 'throttle';//'debounce';
+                    //remote.rateLimitWait = 600;
                 bhSource = new Bloodhound({
-                    datumTokenizer: Bloodhound.tokenizers.whitespace,
+                    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
                     remote: remote
                 });
@@ -242,20 +225,20 @@
                 showPreloader = true;
                 widgetName = 'bloodhound-typeahead-' + Math.floor(Math.random() * 1e12);
                 suggestionsElementCache = null;
-                if (getProvider() == 'cities')
-                {
+                //if (getProvider() == 'google')
+                //{
                     elem.typeahead({
-                        minLength: 0
+                        minLength: 3
                     }, {
                         name: widgetName,
                         display: 'value',
                         source: bhSource,
-                        limit: 5,
+                        limit: limit,
                         templates: {
                             suggestion: compileSuggestionTemplate,
                         }
                     })
-                } else
+                /*} else
                 {
                     elem.typeahead({
                         minLength: 3,
@@ -266,7 +249,6 @@
                         limit: 5,
                         templates: {
                             suggestion: function (context) {
-                                //console.log('context',context);
                                 var template = "<div>" +
                                         "<div class=\"icon {{type}}\"></div>" +
                                         "<div class=\"info\"><div class='title'>{{title}}</div>" +
@@ -278,36 +260,27 @@
                             }
                         }
                     })
-                }
-
-                elem.on('typeahead:asyncrequest', function () {
-                    //console.log();
-                    if (showPreloader) {
-                        getSuggestionsElement().addClass('is-loading');
-                    }
-                })
-                .on('typeahead:change', function (event, newValue) {
-                    //console.log('typeahead:change', newValue);
-                    scope.$emit('typeahead:change', newValue);
-                })
-                .on('typeahead:asynccancel typeahead:asyncreceive', function (event, query, name) {
-                    //console.log('event', event);
-                    //console.log('query', query);
-                    //console.log('name', name);
-                    getSuggestionsElement().removeClass('is-loading');
-                })
-                .bind('typeahead:selected', function (obj, datum, name) {
+                }*/
+                .bind('typeahead:selected', function (obj, datum) {
                     showPreloader = false; // don't display a preloader when we've selected an item
                     var t = setInterval(function () {
                         showPreloader = true;
                         clearInterval(t);
                         t = undefined;
                     }, 400);
-                    //console.log('datum', datum);
                     scope.$emit('typeahead:selected', datum);
+                })
+                .on('typeahead:asyncrequest', function () {
+                    if (showPreloader) {
+                        getSuggestionsElement().addClass('is-loading');
+                    }
+                })
+                .on('typeahead:asynccancel typeahead:asyncreceive', function (event, query, name) {
+                    getSuggestionsElement().removeClass('is-loading');
+                })
+                .on('typeahead:change', function (event, newValue) {
+                    scope.$emit('typeahead:change', newValue);
                 });
-
-
                 scope.$$input = {
                     $element: elem,
                     $setModelValue: setModelValue,
@@ -329,11 +302,7 @@
             }
 
             function compileSuggestionTemplate(context) {
-                //console.log('compileSuggestionTemplate');
-                //console.log('context', context);
-                var suggestion = suggestionTemplate.replace(/%VALUE%/, getSuggestionName(context));
-                //console.log('sugestion', suggestion);
-                return suggestion;
+                return suggestionTemplate.replace(/%VALUE%/, getSuggestionName(context))
             }
 
             function prepareQuery(query, settings) {
@@ -347,7 +316,7 @@
 
             function apiResolver() {
                 switch (getProvider()) {
-                    case 'cities':
+                    case 'google':
                     {
                         return URL_CITIES;
                     }
@@ -360,10 +329,8 @@
             }
 
             function getSuggestionName(suggestion) {
-                //console.log('getSuggestionName');
-                //console.log('suggestion',suggestion);
                 switch (getProvider()) {
-                    case 'cities':
+                    case 'google':
                     {
                         return suggestion.description;
                     }
@@ -385,15 +352,7 @@
             }
 
             function getProvider() {
-                //console.log('scope.provider', scope.provider);
-                return scope.provider || 'cities';
-            }
-
-            function getSuggestionsElement() {
-                if (!suggestionsElementCache) {
-                    suggestionsElementCache = $('.tt-menu:has(.tt-dataset-' + widgetName + ')');
-                }
-                return suggestionsElementCache;
+                return scope.provider || 'google';
             }
         }
 
