@@ -137,8 +137,8 @@ Route::get('map/selection/lasso', 'MapController@getSpotsLassoSelection');
 Route::get('map/selection/path', 'MapController@getSpotsPathSelection');
 Route::get('map/spots/list', 'MapController@getList');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
-Route::get('areas/{areas}/preview', 'AreaController@preview'); //use hash instead of areas if needed
-Route::get('weather', 'MapController@getWeather'); // deprecated: use /weather/openweathermap instead
+Route::get('areas/{areas}/preview', 'AreaController@preview');
+Route::get('weather', 'MapController@getWeather'); // deprecated: use /xapi/weather/openweathermap instead
 Route::get('rates', 'MapController@getRates');
 /**
  * Wall Controls
@@ -172,33 +172,17 @@ Route::post('contact-us', 'UserController@contactUs');
 get('google-contacts', 'SocialContactsController@google');
 
 Route::get('prerender/{page_url}', 'PrerenderController@render')->where('page_url', '(.*)');
-/**
- * Weather
- */
 
-Route::get('weather/darksky', 'WeatherController@darksky');
-Route::get('weather/openweathermap', 'WeatherController@openWeatherMap');
+Route::group(['prefix' => 'xapi'], function() {
+    Route::group(['prefix' => 'weather'], function() {
+        Route::get('darksky',        'Xapi\WeatherController@darksky');
+        Route::get('openweathermap', 'Xapi\WeatherController@openWeatherMap');
+    });
 
-
-/**
- * Geocoder
- */
-
-Route::get('geocoder/search', 'GeocoderController@search');
-Route::get('geocoder/reverse', 'GeocoderController@reverse');
-
-
-/**
- * Weather
- */
-
-Route::get('weather/darksky', 'WeatherController@darksky');
-Route::get('weather/openweathermap', 'WeatherController@openWeatherMap');
-
-
-/**
- * Geocoder
- */
-
-Route::get('geocoder/search', 'GeocoderController@search');
-Route::get('geocoder/reverse', 'GeocoderController@reverse');
+    Route::group(['prefix' => 'geocoder'], function() {
+        Route::get('search', 'Xapi\GeocoderController@search');
+        Route::get('reverse', 'Xapi\GeocoderController@reverse');
+        Route::get('autocomplete', 'Xapi\GooglePlacesController@autocomplete');
+        Route::get('place', 'Xapi\GooglePlacesController@place');
+    });
+});

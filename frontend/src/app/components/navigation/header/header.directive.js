@@ -58,7 +58,7 @@
         });
 
         $scope.clearInput = function () {
-            vm.searchValue = '';
+            vm.searchValue = '';   
         };
 
         if (vm.options.snap.disable == "left") {

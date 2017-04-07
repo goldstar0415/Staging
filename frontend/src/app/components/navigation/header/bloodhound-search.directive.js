@@ -9,7 +9,7 @@
         .directive('bloodhoundRemote', BloodhoundRemoteSearch);
 
     /** @ngInject */
-    function BloodhoundRemoteSearch(API_URL) {
+    function BloodhoundRemoteSearch(MapService, API_URL, SpotService, $location, $rootScope) {
         return {
             restrict: 'A',
             scope: {
@@ -26,6 +26,7 @@
             },
             link: function (scope, elem, attrs) {
                 console.log('Init search', scope.options);
+                
                 var bestPictures = new Bloodhound({
                     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -38,15 +39,15 @@
                         prepare: function(query, settings) {
                             settings.url += '&lat='+scope.location.lat+'&lng='+scope.location.lng;
                             settings.url = settings.url.replace(/\%QUERY/, query);
-                            return settings;
+                            return settings;   
                         }
                     }
                 });
                 var widgetName = 'bloodhound-typeahead-' + Math.floor(Math.random()*1e12); // a random name
                 var suggestionsElementCache = null;
-
+                
                 elem.typeahead({
-                    minLength: 3,
+                    minLength: 4,
                 }, {
                     name: widgetName,
                     display: 'value',
@@ -54,8 +55,10 @@
                     limit: Infinity,
                     templates: {
                         suggestion: function(context) {
-                            var template = "<div><span class='title'>{{value}}</span>{{dist}}</span> {{group}}</div>";
-                            template = template.replace(/\{\{value\}\}/, context.title);
+                            var template = "<div><div class=\"icon {{type}}\"></div><div class=\"info\"><div class='title'>{{title}}</div><div class=\"address\">{{address}}</div></div><span>{{dist}}</span> {{group}}</div>";
+                            template = template.replace(/\{\{title\}\}/, context.title);
+                            template = template.replace(/\{\{type\}\}/, context.type);
+                            template = template.replace(/\{\{address\}\}/, context.address);
                             var group = "";
                             var dist  = "";
                             switch(context.type) {
@@ -85,6 +88,9 @@
                   })
                   .bind('typeahead:selected', function(obj, datum, name) {
                     scope.$emit('typeahead:selected', datum);
+                    $location.path((datum.user_id  ? datum.user_id : 0) + '/spot/' + datum.spot_id + '/');
+                    MapService.ChangeState('big', true);
+                    $rootScope.$apply();
                   });
 
                 function getSuggestionsElement() {

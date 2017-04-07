@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Geocoder;
+namespace App\Http\Requests\Xapi\Places;
 
 use App\Http\Requests\Request;
 
-class MapquestReverseRequest extends Request
+class PlaceRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class MapquestReverseRequest extends Request
     public function rules()
     {
         $rules = [
-            'lat' => 'required|numeric',
-            'lon' => 'required|numeric',
+            'placeid' => 'required|string',
         ];
 
         return $rules;

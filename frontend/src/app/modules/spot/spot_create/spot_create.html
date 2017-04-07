@@ -383,8 +383,11 @@
                     <label class="col-md-3 col-sm-12 col-xs-12 control-label">Location</label>
 
                     <div class="col-md-9 col-sm-12 col-xs-12 ">
-                        <div ng-if="SpotCreate.locations.length < SpotCreate.restrictions.locations">
-
+                        <div class="location-select" > <!--ng-if="SpotCreate.locations.length < SpotCreate.restrictions.locations" ng-class="{'with-margin': $root.isRole($root.currentUser, 'admin')}"-->
+                            <!--<div class="location-services" ng-if="$root.isRole($root.currentUser, 'admin')">
+                                <a class="google location-service" ng-class="{active: SpotCreate.provider == 'google' }" ng-click="SpotCreate.setProvider('google')"></a>
+                                <a class="mapquest location-service" ng-class="{active: SpotCreate.provider == 'mapquest'}" ng-click="SpotCreate.setProvider('mapquest')"></a>
+                            </div>-->
                             <input
                                 location-bloodhound
                                 address="SpotCreate.newLocation.address"
@@ -397,6 +400,7 @@
                                 autocomplete="off"
                                 bind-marker="true"
                                 limit="15"
+                                provider="SpotCreate.provider"
                                 >
                             <a ng-click="SpotCreate.addLocation(SpotCreate.newLocation)" class="btn-add compass" type="button"></a>
 

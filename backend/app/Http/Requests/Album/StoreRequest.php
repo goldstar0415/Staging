@@ -28,8 +28,8 @@ class StoreRequest extends AlbumRequest
             'title' => 'required|max:128',
             'is_private' => 'boolean',
             'files' => 'required',
-            'location.lat' => 'numeric',
-            'location.lng' => 'numeric'
+            'location.lat' => 'latitude',
+            'location.lng' => 'longitude'
         ];
         $rules = array_merge($rules, $this->arrayFieldRules('files', 'image|max:5000', true));
 

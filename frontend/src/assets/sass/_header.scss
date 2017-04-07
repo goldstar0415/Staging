@@ -54,28 +54,27 @@ header {
                 }
                 .tt-menu {
                     border: 1px solid rgba(0, 0, 0, 0.2);
-                    -webkit-border-radius: 8px;
-                    -moz-border-radius: 8px;
-                    border-radius: 8px;
+                    -webkit-border-radius: 0px;
+                    -moz-border-radius: 0px;
+                    border-radius: 0px;
                     @include box-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
-                    margin: 12px 0;
+                    margin: 6px 0;
                     padding: 8px 0;
                     width: 100%;
                     background: #fff;
+                    overflow: auto;
+                    max-height: 80vh;
                     .tt-suggestion {
                         font-size: 14px;
-                        @media all and (max-width: 959px) and (min-width: 600px) {
-                            font-size: 3vw;
-                        }
-                        @media all and (max-width: 599px) and (min-width: 50px) {
-                            font-size: 2.4vw;
-                        }
                         line-height: 24px;
                         padding: 3px 20px;
                         &:hover {
                             background-color: #0097cf;
                             color: #fff;
                             cursor: pointer;
+                            .address {
+                                color:#eee!important;
+                            }
                         }
                         &.tt-cursor {
                             background-color: #0097cf;
@@ -83,6 +82,44 @@ header {
                         }
                         .group-title {
                             float: right;
+                        }
+                        .info{
+                            margin-left: 25px;
+                            line-height: 20px;
+                            .title {
+                                vertical-align: top;
+                                display: block;
+                                font-size: bold;
+                            }
+                            .address {
+                                color: #888;
+                                font-size: 12px;
+                            }
+                        }
+                        
+                        .icon {
+                            float:left;
+                            width:20px;
+                            height: 20px;
+                            background-size: 20px;
+                            display: inline-block;
+                            background-repeat: no-repeat;
+                            padding: 0;
+                            border: 0;
+                            background-position: center;
+                            margin-right: 5px;
+                            &.event {
+                                background-image: url(../img/svg/Icon_Events.svg);
+                            }
+                            &.shelter {
+                                background-image: url(../img/svg/Icon_Get_a_room.svg);
+                            }
+                            &.todo {
+                                background-image: url(../img/svg/Icon_To_do.svg);
+                            }
+                            &.food {
+                                background-image: url(../img/svg/Icon_Grab_Grub.svg);
+                            }
                         }
                     }
                     &.is-loading {

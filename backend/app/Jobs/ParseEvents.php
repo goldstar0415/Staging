@@ -28,20 +28,10 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
     private $http;
 
     /**
-     * @var string
-     */
-    protected $api_url = 'http://api.seatgeek.com/2/events';
-
-    /**
      * @var AppSettings
      */
     private $settings;
     
-    /**
-     * @var array
-     */
-    private $config;
-
     /**
      * @var GoogleAddress
      */
@@ -78,7 +68,6 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
     public function handle(Client $http, AppSettings $settings, GoogleAddress $address)
     {
         $this->http = $http;
-        $this->config = config('seatgeek');
         $this->settings = $settings;
         $this->google_address = $address;
         $page = !empty($this->page)?$this->page:1;
@@ -90,8 +79,8 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
         if (isset($parser_settings->aid) && !empty($parser_settings->aid)) {
             $query_string['aid'] = $this->settings->parser->aid;
         }
-        $query_string['client_id'] = $this->config['client_id'];
-        $query_string['client_secret'] = $this->config['secret'];
+        $query_string['client_id']     = config('services.seatgeek.client_id');
+        $query_string['client_secret'] = config('services.seatgeek.client_secret');
         $nextPage = $page+1;
         Log::info('nextPage = ' . $nextPage);
 
@@ -234,7 +223,7 @@ class ParseEvents extends Job implements SelfHandling, ShouldQueue
      */
     public function fetchData($query_string)
     {
-        $response = $this->http->get($this->api_url, [
+        $response = $this->http->get(config('services.seatgeek.eventsUri'), [
             'query' => $query_string
         ]);
         $data = json_decode((string)$response->getBody(), true);

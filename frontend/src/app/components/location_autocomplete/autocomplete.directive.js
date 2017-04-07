@@ -31,7 +31,7 @@
       link: function autocompleteLink(s, e, a) {
         var className = s.inputClass || 'location-changed';
         var limit = s.limit || 10;
-        var searchUrl = API_URL + '/geocoder/search?addressdetails=1&limit=' + limit + '&q=';
+        var searchUrl = API_URL + '/xapi/geocoder/search?addressdetails=1&limit=' + limit + '&q=';
         var bindMarker = s.bindMarker;
         var provider = s.provider || 'google';
 
