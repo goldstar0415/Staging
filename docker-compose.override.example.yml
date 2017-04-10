@@ -42,6 +42,8 @@ services:
       - GOOGLE_CLIENT_SECRET=
       - GOOGLE_REDIRECT_URL=
 
+      - GOOGLE_PLACES_API_KEY_POOL=AIzaSyD7Ihe8zMbofUO5YWOwmbGIbmWbM9s_I-g;AIzaSyCxn_l79pp9boSnyu_P_rroLMn0iBqHecQ;AIzaSyDi44szjz3aLhF69C-sYiaWJfDAKbj_TWQ
+
       - FORECAST_KEY=0aa9a75d6cef91fba5a524f128959cb7
 
       - DARK_SKY_API_KEY=8cbfccc23dc28e5a6d4aa337a8f6ed06
