@@ -7,7 +7,7 @@ COPY ./ /var/www/zoomtivity-dev
 
 RUN \
   echo "Project files are: " && ls -las /var/www/zoomtivity && ls -las /var/www/zoomtivity-dev && \
-  echo "Installing required Alpine packages..." && apk update && apk add --no-cache nodejs python make g++ git nano mc && \
+  echo "Installing required Alpine packages..." && apk update && apk add --no-cache nodejs python make g++ git nano mc bash nasm autoconf automake libpng-dev libtool && \
   echo "Removing default nginx config..." && rm /etc/nginx/conf.d/default.conf && \
   echo "Installing global NPM packages..." && npm install -g gulp bower && \
   echo "Installing local NPM packages..." && cd /var/www/zoomtivity && npm install && \
