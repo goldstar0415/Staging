@@ -50,7 +50,16 @@ return [
         'baseUri'  => 'https://app.ticketmaster.com/discovery/v2/events.json',
     ],
     'places' => [
-        'api_key' => env('GOOGLE_PLACES_API_KEY'),
+        'api_key' => (function() { // get an api-key from pool
+            $keys = env('GOOGLE_PLACES_API_KEY_POOL');
+            if ( is_string($keys) && strlen($keys) > 0 ) {
+                $pool = explode(';', $keys);
+                return $pool[array_rand($pool)];
+            } else {
+                http_response_code(500);
+                die('Please configure Google.Places API keys');
+            }
+        })(),
         'baseUri' => 'https://maps.googleapis.com/maps/api/place/autocomplete/json',
         'placeUri' => 'https://maps.googleapis.com/maps/api/place/details/json',
     ],

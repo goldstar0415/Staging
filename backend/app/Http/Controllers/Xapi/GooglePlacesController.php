@@ -46,12 +46,14 @@ class GooglePlacesController extends Controller
     final protected function autocompleteRequest($action, array $params = [])
     {
         try {
-            $json = (new HttpClient)->get(config('services.places.baseUri'), ['query' =>
+            $req = [
+                'query' =>
                 array_merge([
                     'key'   => config('services.places.api_key'),
                     'types' => 'geocode'
                 ], $params)
-            ])->getBody();
+            ];
+            $json = (new HttpClient)->get(config('services.places.baseUri'), $req)->getBody();
 
             return $this->parseHttpJson($json);
         } catch (\Exception $ex) {
@@ -59,7 +61,7 @@ class GooglePlacesController extends Controller
             return $this->parseHttpError($ex);
         }
     }
-    
+
     /**
      * Getting google place info by place ID
      *
@@ -92,19 +94,23 @@ class GooglePlacesController extends Controller
     private function parseHttpJson($json)
     {
         $data = json_decode($json, true);
-        
+
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new \Exception();
         }
 
         $suggestions = [];
-        if ($data && array_key_exists("predictions", $data) && is_array($data['predictions'])) {
+
+        if ( isset($data['status']) && $data['status'] == 'OK' && isset($data['predictions']) ) {
             foreach($data['predictions'] as $p) {
                 $suggestions[] = [
                     'description' => $p['description'],
                     'place_id'   => $p['place_id']
                 ];
             }
+        } else {
+            Log::debug('Invalid response from google places api:');
+            Log::debug(compact('data'));
         }
 
         return $suggestions;
