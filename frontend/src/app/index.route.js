@@ -849,7 +849,7 @@
           }]
         }
       })
-      .state('spot', {
+      .state('spot', { //
         url: '/spot/:spot_id/:spot_slug',
         templateUrl: '/app/modules/spot/spot.html',
         controller: 'SpotController',
@@ -857,11 +857,19 @@
         parent: 'profile',
         resolve: {
           spot: ['$http','$rootScope', 'Spot', '$stateParams', function ($http, $rootScope, Spot, $stateParams) {
-            return $http.get(API_URL + '/spots/' + $stateParams.spot_id)
-              .success(function success(data) {
-                $rootScope.setOpenedSpot(data);
-                //   return Spot.get({id: $stateParams.spot_id}).$promise;
-              });
+              console.debug('> resolve spot');
+            if ($rootScope.boot && window.$$bootSpot) {
+                console.debug('> resolve spot - 1');
+                $rootScope.setOpenedSpot(window.$$bootSpot);
+                return window.$$bootSpot;
+            } else {
+                console.debug('> resolve spot - 2');
+                return $http.get(API_URL + '/spots/' + $stateParams.spot_id)
+                    .success(function success(data) {
+                        $rootScope.setOpenedSpot(data);
+                        //   return Spot.get({id: $stateParams.spot_id}).$promise;
+                    });
+            }
           }],
           loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load(versionize([
