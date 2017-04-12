@@ -5,7 +5,7 @@ MAINTAINER Wirnex <info@wirnex.com>
 COPY ./ /var/www/zoomtivity-backend
 COPY entry_point.sh /config/
 COPY nginx-vhost.conf /etc/nginx/hosts.d/zoomtivity-backend.conf
-COPY php.ini /etc/php.d/zoomtivity-php.ini
+COPY php.ini /etc/php.d/zz-z-override-php.ini
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/* && \
