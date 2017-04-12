@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="zoomtivity" ng-jq="jQuery" xmlns:og="http://ogp.me/ns#">
+<html ng-jq="jQuery" xmlns:og="http://ogp.me/ns#">
 <head>
 	<meta charset="utf-8">
 	<title>Zoomtivity</title>
@@ -408,6 +408,30 @@ window.hidePreloader = function() {
 		body.classList.remove("content-hidden");
 	}
 };
+
+// boot ng app here
+(function boot() {
+	var matches = (location.pathname+'').match(/^\/\d+\/spot\/(\d+)\/\S+/i);
+	if (matches) {
+		var spotId = matches[1], $http = angular.injector(["ng"]).get("$http");
+        $http.get(window.ENV.API_URL + '/spots/' + spotId)
+            .success(function success(data) {
+                console.debug('openedSpot', data);
+                window.$$bootSpot = data;
+                _ng();
+            })
+            .error(function(err){
+            	console.warn('cant load spot', err);
+            	_ng();
+            });
+    } else {
+        _ng();
+    }
+    function _ng() {
+        angular.bootstrap(document, ['zoomtivity']);
+    }
+})();
+
 </script>
 
 </body>
