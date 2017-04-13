@@ -10,6 +10,7 @@ use Codesleeve\Stapler\ORM\StaplerableInterface;
 use Phaza\LaravelPostgis\Eloquent\PostgisTrait;
 use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use Phaza\LaravelPostgis\Geometries\Point;
+use App\Spot;
 
 /**
  * Model Blog
@@ -97,6 +98,14 @@ class Blog extends BaseModel implements StaplerableInterface, Commentable
     public function category()
     {
         return $this->belongsTo(BlogCategory::class);
+    }
+    
+    /**
+     * Get the related spot
+     */
+    public function spot()
+    {
+        return $this->belongsTo(Spot::class);
     }
 
     /**

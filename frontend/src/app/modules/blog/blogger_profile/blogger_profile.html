@@ -19,9 +19,16 @@
           <div class="clearfix"></div>
         </h2>
 
-            <div class="location-link" ng-if="post.address">
+            <div class="location-link" ng-if="post.address && !post.spot">
                 <a ui-sref="index.post({slug: post.slug || post.id})">{{post.address}}</a>
             </div>
+            <div ng-if="post.spot" class="blog-spot">
+                <div class="icon {{post.spot.category.type.name}}"></div>
+                <div class="info">
+                    <div ui-sref="spot({spot_id:post.spot.id, spot_slug:post.spot.slug})"class='title'>{{post.spot.title}}</div>
+                    <div class='address'>{{(post.spot.points[0]?post.spot.points[0].address:null)}}</div>
+                </div>
+            </div>  
             <div class="clearfix"></div>
 
             <p class="article-description article-description-truncated" ng-bind-html="post.body | htmlToPlaintext" truncated text="post.body | htmlToPlaintext"></p>

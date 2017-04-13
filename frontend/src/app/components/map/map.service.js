@@ -2105,7 +2105,7 @@
                 }
 
                 function GetAddressByLatlng(latlng, callback) {
-                    var url = GeocodingReverseUrl + "&lat=" + latlng.lat + "&lon=" + latlng.lng;
+                    var url = GeocodingReverseUrl + "&lat=" + latlng.lat + "&lng=" + latlng.lng;
                     $http.get(url, {withCredentials: false}).
                             success(function (data, status, headers) {
                                 callback(data);

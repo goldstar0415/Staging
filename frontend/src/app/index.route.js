@@ -235,7 +235,7 @@
               'summernote',
               'cropper',
               'uploader',
-              'location-bloodhound',
+              'blog-bloodhound',
               '/app/modules/blog/article_create/articleCreate.controller.js',
             ]));
           }]
@@ -262,7 +262,7 @@
               'summernote',
               'cropper',
               'uploader',
-              'location-bloodhound',
+              'blog-bloodhound',
               '/app/modules/blog/article_create/articleCreate.controller.js',
             ]));
           }]

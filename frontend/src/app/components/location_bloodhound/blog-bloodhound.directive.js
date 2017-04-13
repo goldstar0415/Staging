@@ -14,6 +14,8 @@
                 limit: '=',
                 marker: '=',
                 provider: '=',
+                spotId: '=',
+                spot: '=',
             },
             controller: controller,
             link: link,
@@ -27,7 +29,7 @@
             var vm = $scope;
             var provider = vm.provider || 'google';
             var loaded = false;
-
+            
             (function () {
                 var waitForElement = $interval(function () {
                     if (vm.$$input) {
@@ -36,16 +38,18 @@
                     }
                 }, 100);
             })();
-
             vm.$on('typeahead:selected', onTypeaheadSelect);
             vm.$on('typeahead:change', onChange);
             vm.$watch('location', watchLocation);
+            
+            vm.display = display;
 
             vm.setCurrentLocation = setCurrentLocation;
 
             function init() {
                 console.log('init');
                 vm.location = vm.location || {lat: '', lng: ''};
+                vm.spotId = vm.spotId || null;
                 vm.$$input.$element.on('focusin', onFocusin);
                 if (vm.address && validateLocation(vm.location)) {
                     display(vm.address);
@@ -61,27 +65,27 @@
                     switch (vm.provider || provider) {
                         case 'google':
                         {
-                            $http.get(API_URL + '/xapi/geocoder/place?placeid=' + $model.place_id, {
-                                withCredentials: false
-                            }).then(function (response) {
-                                if (response.data.status == "OK")
-                                {
-                                    var data = response.data.result;
-                                    vm.location = {lat: data.geometry.location.lat, lng: data.geometry.location.lng}
-                                }
-                                vm.address = $model.description;
-                                var viewAddress = $model.description;
-                                display(viewAddress);
-                            });
+                            vm.location = {lat: $model.geometry.location.lat, lng: $model.geometry.location.lng}
+                            vm.address = $model.formatted_address;
+                            vm.spotId = null;
+                            display($model.formatted_address);
                             break;
                         }
                         case 'spots':
                         default:
                         {
-                            vm.location = {lat: $model.lat, lng: $model.lon};
-                            vm.address = $model.display_name;
-                            var viewAddress = $model.display_name;
-                            display(viewAddress);
+                            vm.location = $model.location;
+                            vm.address = $model.address;
+                            vm.spotId = $model.spot_id;
+                            console.log(vm.spot);
+                            console.log($model);
+                            vm.spot = {
+                                id: $model.spot_id,
+                                address: $model.address,
+                                title: $model.title,
+                                type: $model.type
+                            };
+                            display($model.title);
                         }
                     }
                     var t = setInterval(function () {
@@ -103,7 +107,7 @@
                     vm.location = event.latlng;
 
                     moveOrCreateMarker(event.latlng);
-
+                    vm.spotId = null;
                     MapService.GetAddressByLatlng(event.latlng, function (data) {
                         vm.address = data.display_name;
                         display(data.display_name);
@@ -187,7 +191,7 @@
 
             var limit = scope.limit || 10;
 
-            var URL_CITIES = API_URL + '/xapi/geocoder/autocomplete?q=%QUERY%';/*&types=(cities)*/
+            var URL_CITIES = API_URL + '/xapi/geocoder/geocode?q=%QUERY%';
             var URL_SPOTS = API_URL + '/map/search?query=%QUERY%&limit=' + limit;
 
             var bhSource;
@@ -196,9 +200,15 @@
             var widgetName; // a random name
             var suggestionsElementCache;
 
-
             bindTypeahead();
             scope.$watch('provider', function (value) {
+                if((scope.spotId && getProvider() == 'google') || (!scope.spotId && getProvider() == 'spots'))
+                {
+                    scope.location = {lat: '', lng: ''}
+                    scope.address = '';
+                    scope.spotId = null;
+                    scope.display('');
+                }
                 rebindTypeahead();
             });
 
@@ -207,11 +217,8 @@
                 var remote = {
                     url: apiResolver(),
                     wildcard: '%QUERY%',
-                    prepare: prepareQuery//,
-                    /*transform: function(response) {
-                        console.log(response);
-                        return response;
-                    }*/
+                    prepare: prepareQuery,
+                    transform: transformResponse
                 };
                     //remote.rateLimitBy = 'throttle';//'debounce';
                     //remote.rateLimitWait = 600;
@@ -225,8 +232,8 @@
                 showPreloader = true;
                 widgetName = 'bloodhound-typeahead-' + Math.floor(Math.random() * 1e12);
                 suggestionsElementCache = null;
-                //if (getProvider() == 'google')
-                //{
+                if (getProvider() == 'google')
+                {
                     elem.typeahead({
                         minLength: 3
                     }, {
@@ -238,7 +245,7 @@
                             suggestion: compileSuggestionTemplate,
                         }
                     })
-                /*} else
+                } else
                 {
                     elem.typeahead({
                         minLength: 3,
@@ -246,7 +253,7 @@
                         name: widgetName,
                         display: 'value',
                         source: bhSource,
-                        limit: 5,
+                        limit: limit,
                         templates: {
                             suggestion: function (context) {
                                 var template = "<div>" +
@@ -259,9 +266,9 @@
                                 return template;
                             }
                         }
-                    })
-                }*/
-                .bind('typeahead:selected', function (obj, datum) {
+                    });
+                }
+                elem.bind('typeahead:selected', function (obj, datum) {
                     showPreloader = false; // don't display a preloader when we've selected an item
                     var t = setInterval(function () {
                         showPreloader = true;
@@ -309,7 +316,10 @@
                 if (!scope.location) {
                     scope.location = {lat: '', lng: ''};
                 }
-                settings.url += '&lat=' + scope.location.lat + '&lng=' + scope.location.lng;
+                if(getProvider() !== 'google')
+                {
+                    settings.url += '&lat=' + scope.location.lat + '&lng=' + scope.location.lng;
+                }
                 settings.url = settings.url.replace(/%QUERY%/, query);
                 return settings;
             }
@@ -327,12 +337,27 @@
                     }
                 }
             }
+            
+            function transformResponse(res) {
+                switch (getProvider()) {
+                    case 'google':
+                    {
+                        return res.results;
+                    }
+                    case 'spots':
+                    default:
+                    {
+                        return res;
+                    }
+                }
+
+            }
 
             function getSuggestionName(suggestion) {
                 switch (getProvider()) {
                     case 'google':
                     {
-                        return suggestion.description;
+                        return suggestion.formatted_address;
                     }
                     case 'spots':
                     default:
