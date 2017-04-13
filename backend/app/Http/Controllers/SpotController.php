@@ -801,11 +801,11 @@ class SpotController extends Controller
     
     public function getYelpRating(Spot $spot) {
         $result = $spot->getYelpBizInfo();
+        $spot->getYelpReviewsFromApi(true);
         if($result['success'] && 
                 ($spot->yelp_rating != $result['yelp']['rating'] || 
                 $spot->yelp_reviews_count != $result['yelp']['reviews_count']))
         {
-            $spot->getYelpReviewsFromApi(true);
             $spot->yelp_rating = $result['yelp']['rating'];
             $spot->yelp_reviews_count = $result['yelp']['reviews_count'];
             $spot->save();
@@ -857,11 +857,11 @@ class SpotController extends Controller
     public function getGoogleRating(Spot $spot) {
 
         $result = $spot->getGoogleReviewsInfo();
+        $spot->getGoogleReviews(true);
         if($result['success'] && 
                 ($spot->google_rating != $result['google']['rating'] || 
                 $spot->google_reviews_count != $result['google']['reviews_count']))
         {
-            $spot->getGoogleReviews(true);
             $spot->google_rating = $result['google']['rating'];
             $spot->google_reviews_count = $result['google']['reviews_count'];
             $spot->save();

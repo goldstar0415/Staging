@@ -1172,7 +1172,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         {
             try
             {
-                $url = config('services.places.baseUri') . 'details/json?placeid=' . $googlePid . '&key=' . config('services.places.api_key');
+                $url = config('services.places.baseUri') . config('services.places.placeUri') . '?placeid=' . $googlePid . '&key=' . config('services.places.api_key');
                 $response = $this->getPageContent($url, [], true);
                 if($response['status'] == "OK")
                 {
@@ -1506,7 +1506,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         if(!empty($this->yelp_url) || !empty($this->yelp_id))
         {
             $token = $this->getYelpToken();
-            $id    = (!empty($this->yelp_id)) ? $this->yelp_id : $this->getYelpIdFromUrl($this->yelp_url);
+            $id    = (!empty($this->yelp_id) && $this->yelp_id != 'null') ? $this->yelp_id : $this->getYelpIdFromUrl($this->yelp_url);
             if($token && $id)
             {
                 $client = new Client();
@@ -1516,16 +1516,16 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 {
                     if($cachedResponse = $this->getCachedResponse('yelpBizInfo'))
                     {
-                        $response = $cachedResponse;
+                        $responseArray = $cachedResponse;
                     }
                     else
                     {
                         $response = $client->get($url , [
                             'headers' => $headers
                         ]);
-                        $this->setCachedResponse('yelpBizInfo', $response);
+                        $responseArray = json_decode($response->getBody()->getContents(), true);
+                        $this->setCachedResponse('yelpBizInfo', json_decode($response->getBody()->getContents(), true));
                     }
-                    $responseArray = json_decode($response->getBody()->getContents(), true);
                     if( !empty($responseArray['review_count']) && !empty($responseArray['rating']))
                     {
                         $result['yelp'] = [
@@ -1559,16 +1559,16 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 {
                     if($cachedResponse = $this->getCachedResponse('yelpReviewsFromApi'))
                     {
-                        $response = $cachedResponse;
+                        $yelp_reviews = $cachedResponse;
                     }
                     else
                     {
                         $response = $client->get($url . '/reviews', [
                             'headers' => $headers
                         ]);
-                        $this->setCachedResponse('yelpReviewsFromApi', $response);
+                        $yelp_reviews = json_decode($response->getBody()->getContents(), true);
+                        $this->setCachedResponse('yelpReviewsFromApi', $yelp_reviews);
                     }
-                    $yelp_reviews = json_decode($response->getBody()->getContents(), true);
                     if( !empty($yelp_reviews['reviews']))
                     {
                         $result = [];
@@ -1750,28 +1750,24 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     {
                         $removeFromMsg->outertext = '';
                     }
-                    $rating = $reviewObj->find('.ui_bubble_rating', 0);
-                    $ratingClass = trim(str_replace('ui_bubble_rating', '', $rating->class));
-                    $ratingBubblePrefix = "bubble_";
-                    if(empty($rating) || (empty($rating->getAttribute('alt')) && strpos($ratingClass, $ratingBubblePrefix) === false))
+                    $ratingObj = $reviewObj->find('.rating', 0);
+                    $img = ($ratingObj)?$ratingObj->find('img', 0):null;
+                    $rating = ($img)?preg_replace("/[^0-9]/", '', $img->class)/10:null;
+                    if(empty($rating))
                     {
                         continue;
                     }
-                    if($rating->getAttribute('alt'))
-                    {
-                        $vote = (int)(str_replace(' of 5 bubbles', '', $rating->getAttribute('alt')));
-                    }
-                    else
-                    {
-                        $class = (int)trim(str_replace($ratingBubblePrefix, '', $ratingClass));
-                        $vote = $class / 10;
-                    }
-                    $reportObj = $reviewObj->find('.taLnk', 0);
-                    if(!$reportObj)
+                    $vote = $rating;
+                    $helpObj = $reviewObj->find('.rnd_white_thank_btn', 0);
+                    if(!$helpObj)
                     {
                         continue;
                     }
-                    $remote_id = 'ta_' . str_replace('ReportIAP_', '', $reportObj->getAttribute('id'));
+                    $remote_id = 'ta_' . preg_replace("/[^0-9]/", '', $helpObj->class);
+                    if(empty($remote_id))
+                    {
+                        
+                    }
                     if($this->votes()->where('remote_id', $remote_id)->exists())
                     {
                         continue;
