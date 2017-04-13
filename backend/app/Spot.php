@@ -1755,20 +1755,22 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     $rating = ($img)?preg_replace("/[^0-9]/", '', $img->class)/10:null;
                     if(empty($rating))
                     {
+                        $spanObj = $ratingObj->find('.ui_bubble_rating', 0);
+                        $rating = ($spanObj) ? preg_replace("/[^0-9]/", '', $spanObj->class)/10:null;
+                    }
+                    if(empty($rating))
+                    {
                         continue;
                     }
                     $vote = $rating;
                     $helpObj = $reviewObj->find('.rnd_white_thank_btn', 0);
-                    if(!$helpObj)
-                    {
-                        continue;
-                    }
-                    $remote_id = 'ta_' . preg_replace("/[^0-9]/", '', $helpObj->class);
+                    $remote_id = preg_replace("/[^0-9]/", '', $helpObj->class);
                     if(empty($remote_id))
                     {
-                        
+                        $tooltipObj = $reviewObj->find('.tooltips .taLnk', 0);
+                        $remote_id = ($tooltipObj) ? preg_replace("/[^0-9]/", '', $tooltipObj->id): null;
                     }
-                    if($this->votes()->where('remote_id', $remote_id)->exists())
+                    if(empty($remote_id) || $this->votes()->where('remote_id', 'ta_' . $remote_id)->exists())
                     {
                         continue;
                     }
@@ -1785,7 +1787,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     $reviews[] = [
                         'vote' => $vote,
                         'message' => $message->innertext(),
-                        'remote_id' => $remote_id,
+                        'remote_id' => 'ta_' . $remote_id,
                         'remote_type' => SpotVote::TYPE_TRIPADVISOR,
                         'remote_user_name' => SpotVote::remoteReviewerNameCheck(trim($remote_user->innertext())),
                         //'remote_user_avatar' => $reviewObj->find('.avatar img', 0) ? $reviewObj->find('.avatar img', 0)->getAttribute('src') : null,
@@ -1834,13 +1836,11 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
         if($page)
         {
             $element = $page->find('.heading_ratings .ui_bubble_rating', 0);
-            if(!$element)
+            $result = ($element) ? floatval(str_replace(',', '.', $element->getAttribute('content'))) : null;
+            if(!$result)
             {
-                $element = $page->find('.rating .rating_rr_fill', 0);
-            }
-            if($element)
-            {
-                $result = floatval(str_replace(',', '.', $element->getAttribute('content')));
+                $element = $page->find('.heading_ratings .rating_rr_fill', 0);
+                $result = ($element) ? floatval($element->getAttribute('content')) : null;
             }
         }
         return $result;
