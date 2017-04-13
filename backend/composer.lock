@@ -1172,12 +1172,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/markuspoerschke/iCal.git",
-                "reference": "772dd14785df80693675526a513082849074c683"
+                "reference": "e4e8beb0ec9b74c5ed32e4aa0deeac05d12b8704"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/markuspoerschke/iCal/zipball/772dd14785df80693675526a513082849074c683",
-                "reference": "772dd14785df80693675526a513082849074c683",
+                "url": "https://api.github.com/repos/markuspoerschke/iCal/zipball/e4e8beb0ec9b74c5ed32e4aa0deeac05d12b8704",
+                "reference": "e4e8beb0ec9b74c5ed32e4aa0deeac05d12b8704",
                 "shasum": ""
             },
             "require": {
@@ -1212,7 +1212,7 @@
                 "ics",
                 "php calendar"
             ],
-            "time": "2017-04-04 20:44:39"
+            "time": "2017-04-09 17:03:11"
         },
         {
             "name": "facebook/graph-sdk",

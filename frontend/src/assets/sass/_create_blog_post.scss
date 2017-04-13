@@ -97,7 +97,6 @@
     }
 }
 
-
 .article-form {
     .location-select {
 
@@ -110,7 +109,7 @@
 
         &.with-margin {
             .twitter-typeahead {
-                margin-left: 90px;
+                margin-left: 100px;
             }
         }
 
@@ -118,7 +117,7 @@
             float:left;
 
             a.location-service {
-                width: 40px;
+                width: 45px;
                 height: 40px;
                 line-height: 40px;
                 display: inline-block;
@@ -223,7 +222,61 @@
                 }
             }
         }
+    }
+    .blog-spot {
+        .info{
+            margin-left: 25px;
+            line-height: 20px;
+            .title {
+                vertical-align: top;
+                display: block;
+                font-size: bold;
+            }
+            .address {
+                color: #888;
+                font-size: 12px;
+            }
+        }
 
+        .icon {
+            float:left;
+            width:20px;
+            height: 20px;
+            background-size: 20px;
+            display: inline-block;
+            background-repeat: no-repeat;
+            padding: 0;
+            border: 0;
+            background-position: center;
+            margin-right: 5px;
+            &.event {
+                background-image: url(../img/svg/Icon_Events.svg);
+            }
+            &.shelter {
+                background-image: url(../img/svg/Icon_Get_a_room.svg);
+            }
+            &.todo {
+                background-image: url(../img/svg/Icon_To_do.svg);
+            }
+            &.food {
+                background-image: url(../img/svg/Icon_Grab_Grub.svg);
+            }
+        }
+        .remove {
+            display: block;
+            position: absolute;
+            top: 0px;
+            right: 25px;
+            padding: 10px;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            color: $light_red;
+            font-weight: bold;
+            &:hover {
+                color: $blue_btn
+            }
+        }
     }
 }
 

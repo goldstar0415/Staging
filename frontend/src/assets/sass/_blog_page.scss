@@ -178,7 +178,51 @@
         @include transition_bg();
       }
     }
+    .blog-spot{
+        margin-bottom: 1.5rem;
+        margin-top: 2px;
+        .info{
+            margin-left: 25px;
+            line-height: 20px;
+            .title {
+                vertical-align: top;
+                display: block;
+                font-size: bold;
+                &:hover {
+                    color: #23527c;
+                }
+            }
+            .address {
+                color: #888;
+                font-size: 12px;
+            }
+        }
 
+        .icon {
+            float:left;
+            width:20px;
+            height: 20px;
+            background-size: 20px;
+            display: inline-block;
+            background-repeat: no-repeat;
+            padding: 0;
+            border: 0;
+            background-position: center;
+            margin-right: 5px;
+            &.event {
+                background-image: url(../img/svg/Icon_Events.svg);
+            }
+            &.shelter {
+                background-image: url(../img/svg/Icon_Get_a_room.svg);
+            }
+            &.todo {
+                background-image: url(../img/svg/Icon_To_do.svg);
+            }
+            &.food {
+                background-image: url(../img/svg/Icon_Grab_Grub.svg);
+            }
+        }
+    }
 }
 
 .title-blog {

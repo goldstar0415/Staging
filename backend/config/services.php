@@ -50,9 +50,16 @@ return [
         'baseUri'  => 'https://app.ticketmaster.com/discovery/v2/events.json',
     ],
     'places' => [
-        'api_key' => env('GOOGLE_PLACES_API_KEY'),
-        'baseUri' => 'https://maps.googleapis.com/maps/api/place/autocomplete/json',
-        'placeUri' => 'https://maps.googleapis.com/maps/api/place/details/json',
+        'geocode_key' => env('GOOGLE_GEOCODE_API_KEY'),
+        'api_keys' => [
+            env('GOOGLE_PLACES_API_KEY_1'),
+            env('GOOGLE_PLACES_API_KEY_2'),
+            env('GOOGLE_GEOCODE_API_KEY'),
+        ], 
+        'baseUri' => 'https://maps.googleapis.com',
+        'autocompleteUri' => '/maps/api/place/autocomplete/json',
+        'geocodeUri' => '/maps/api/geocode/json',
+        'placeUri' => '/maps/api/place/details/json',
     ],
     'seatgeek' => [
         'client_id'     => env('SEATGEEK_CLIENT_ID'),

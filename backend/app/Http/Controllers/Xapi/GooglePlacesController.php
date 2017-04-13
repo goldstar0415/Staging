@@ -21,19 +21,45 @@ class GooglePlacesController extends Controller
      */
     public function autocomplete(AutocompleteRequest $request)
     {
-        $params = $request->only(['q', 'types']);
+        $params = $request->all();
         if($params['q'])
         {
             $params['input'] = $params['q'];
             unset($params['q']);
         }
         $response = $this->autocompleteRequest('search', $params);
-
         if ( isset($response['error']) ) {
             return abort($response['status']);
         }
 
         return response()->json($response);
+    }
+    
+    /**
+     * Search geocode
+     * @param AutocompleteRequest $request
+     */
+    public function geocode(AutocompleteRequest $request)
+    {
+        $params = $request->all();
+        if(isset($params['q']))
+        {
+            $params['address'] = $params['q'];
+            unset($params['q']);
+        }
+        try {
+            $url = config('services.places.baseUri') . config('services.places.geocodeUri');
+            $json = (new HttpClient)->get($url, ['query' =>
+                array_merge($params, [
+                    'key'   => config('services.places.geocode_key'),
+                ])
+            ])->getBody();
+            $data = $this->parsePlaceHttpJson($json);
+        } catch (\Exception $ex) {
+            Log::error('Google places autocomplete Error: ' . $ex->getMessage());
+            $data = $this->parseHttpError($ex);
+        }
+        return response()->json($data);
     }
 
     /**
@@ -46,9 +72,9 @@ class GooglePlacesController extends Controller
     final protected function autocompleteRequest($action, array $params = [])
     {
         try {
-            $json = (new HttpClient)->get(config('services.places.baseUri'), ['query' =>
+            $json = (new HttpClient)->get(config('services.places.baseUri') . config('services.places.autocompleteUri'), ['query' =>
                 array_merge([
-                    'key'   => config('services.places.api_key'),
+                    'key'   => array_rand(config('services.places.api_keys')),
                     'types' => 'geocode'
                 ], $params)
             ])->getBody();
@@ -71,7 +97,7 @@ class GooglePlacesController extends Controller
         try {
             $json = (new HttpClient)->get(config('services.places.placeUri'), ['query' =>
                 array_merge($params, [
-                    'key'   => config('services.places.api_key'),
+                    'key'   => array_rand(config('services.places.api_keys')),
                 ])
             ])->getBody();
 
@@ -100,10 +126,7 @@ class GooglePlacesController extends Controller
         $suggestions = [];
         if ($data && array_key_exists("predictions", $data) && is_array($data['predictions'])) {
             foreach($data['predictions'] as $p) {
-                $suggestions[] = [
-                    'description' => $p['description'],
-                    'place_id'   => $p['place_id']
-                ];
+                $suggestions[] = $p;
             }
         }
 

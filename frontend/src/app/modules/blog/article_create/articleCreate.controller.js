@@ -11,7 +11,7 @@
         vm = _.extend(vm, article);
         vm.categories = categories;
         vm.images = UploaderService.images;
-        vm.locationProvider = 'google';
+        vm.locationProvider = vm.spot_id ? 'spots' : 'google';
         vm.options = {
             height: 200,
             toolbar: [
@@ -29,6 +29,15 @@
                 ['help', ['help']]
             ]
         };
+        if(vm.spot)
+        {
+            vm.spot = {
+                id: vm.spot.id,
+                address: (vm.spot.points[0]) ? vm.spot.points[0].address : null,
+                title: vm.spot.title,
+                type: vm.spot.category.type.name
+            };
+        }
 
         vm.save = save;
 
@@ -71,6 +80,14 @@
                     });
             }
         }
+        
+        vm.removeSpot = function() {
+            vm.location = {lat: '', lng: ''};
+            vm.address = '';
+            vm.spot_id = null;
+            vm.spot = null;
+            console.log(vm);
+        };
 
         $scope.imageUpload = function(files) {
 

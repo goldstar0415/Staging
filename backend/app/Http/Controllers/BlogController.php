@@ -45,7 +45,7 @@ class BlogController extends Controller
     public function index(PaginateRequest $request)
     {
         $blog_posts = $request->has('user_id') ? Blog::where('user_id', $request->input('user_id')) : Blog::query();
-        return $this->paginatealbe($request, $blog_posts->with(['category', 'user']));
+        return $this->paginatealbe($request, $blog_posts->with(['category', 'user', 'spot']));
     }
 
     /**
@@ -74,7 +74,7 @@ class BlogController extends Controller
         ++$blog->count_views;
         $blog->save();
 
-        return $blog->load(['category', 'user']);
+        return $blog->load(['category', 'user', 'spot']);
     }
 
     /**
@@ -109,6 +109,8 @@ class BlogController extends Controller
             $blog->location = $request->input('location');
             $blog->address = $request->input('address');
         }
+        
+        $blog->spot_id = ($request->has('spot_id')) ? $request->input('spot_id') : null;
 
         $slug = str_slug($blog->title);
         $validator = \Validator::make(compact('slug'), ['slug' => 'required|alpha_dash|max:255|unique:blogs']);
