@@ -81,8 +81,8 @@
         </div>      
         <div ng-if="!Article.spot_id">
             <div class="location-services" ng-if="$root.isRole($root.currentUser, 'admin')">
-                <a class="spot location-service" ng-class="{active: Article.locationProvider == 'spots' }" ng-click="Article.setProvider('spots')">spot</a>
                 <a class="city location-service" ng-class="{active: Article.locationProvider == 'google'}" ng-click="Article.setProvider('google')">place</a>
+                <a class="spot location-service" ng-class="{active: Article.locationProvider == 'spots' }" ng-click="Article.setProvider('spots')">spot</a>
             </div>
             <input
                 blog-bloodhound
