@@ -1696,11 +1696,6 @@
                  * Load selection from server
                  */
                 function LoadSelections(selection) {
-
-                    if (selection.data.search)
-                    {
-                        setFiltersData(selection.data.search);
-                    }
                     if (selection.waypoints && selection.waypoints.length > 0) {
                         _.each(selection.waypoints, function (array) {
                             PathSelection(array, function () {
@@ -1709,7 +1704,6 @@
                             });
                         });
                     }
-
                     if (selection.data) {
                         if (selection.data.searchLayer) {
                             $rootScope.toggleLayer(selection.data.searchLayer, true);
@@ -1797,6 +1791,10 @@
                                 }
                             }
                         });
+                    }
+                    if (selection.data.search)
+                    {
+                        setFiltersData(selection.data.search);
                     }
                     var bboxes = GetDrawLayerBBoxes();
                     $timeout(function () {
