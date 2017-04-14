@@ -72,7 +72,7 @@ class TicketMasterEvents extends Job implements SelfHandling, ShouldQueue
     {
         $this->http = $http;
         $page = !empty($this->page)?$this->page:1; // setting page number to 1 as default
-        $query_string = ['apikey' => $this->config['apikey'] , 'size' => 500, 'page' => $page];
+        $query_string = ['apikey' => $this->config['api_key'] , 'size' => 500, 'page' => $page];
         $data = $this->fetchData($query_string);
         $nextPage = $data['page']['number']+1;
         $events = collect($data['_embedded']['events']);
