@@ -171,9 +171,9 @@
 
       MapService.clearLayers();
       angular.element('.map-tools').hide();
-      // if (!$rootScope.boot || ($rootScope.boot && !mapOverrideParams)) {
-          $rootScope.changeMapState(current.mapState, current, true);
-      // }
+
+      $rootScope.changeMapState(current.mapState, current, true);
+
       if ($rootScope.boot) {
           $rootScope.boot = false;
       }
