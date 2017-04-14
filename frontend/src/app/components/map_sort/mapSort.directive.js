@@ -161,8 +161,6 @@
 
         function closeFilter() {
             $rootScope.isFilterOpened = false;
-            clearFields();
-            fillFilters();
         }
 
         function clearFields() {
@@ -191,6 +189,21 @@
         $rootScope.$on('impossible-route', onImpossibleRoute);
 
         run();
+        
+        /*var filtersNames = [
+            'minRating',
+            'dateFrom',
+            'dateTo',
+            'maxPrice',
+            'isApproved',
+            'tags',
+        ];
+        
+        _.each(filtersNames, function(val){
+            $rootScope.$watch('filterOptions.' + val, function() {
+                fillFilters();
+            });
+        });*/
 
         /**
          * Initialization
@@ -515,6 +528,7 @@
             vm.searchParams.price = $rootScope.filterOptions.maxPrice;
             vm.searchParams.is_approved = $rootScope.filterOptions.isApproved;
             vm.searchParams.tags = $rootScope.filterOptions.tags;
+            vm.searchParams.category = $rootScope.filterOptions.category;
         }
 
         function applyFilter()
