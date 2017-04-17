@@ -60,6 +60,18 @@
 
             </div>
 
+            <div class="row">
+              <div class="col-xs-2 col-sm-2">
+                <a ng-click="Article.sharePost()" class="share-blog-article">Share</a>
+              </div>
+              <div class="col-xs-2 col-sm-2" ng-if="currentUser.id == post.user_id || isRole(currentUser, 'admin')">
+                <a ui-sref="profile_blog.edit({slug: Article.slug || Article.id})" class="edit-blog-article">Edit</a>
+              </div>
+              <div class="col-xs-2 col-sm-2" ng-if="currentUser.id == post.user_id || isRole(currentUser, 'admin')">
+                <a ng-click="Article.removePost()" class="delete-blog-article">Delete</a>
+              </div>
+            </div>
+
           </div>
 
         </div>

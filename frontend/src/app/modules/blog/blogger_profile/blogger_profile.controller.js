@@ -6,11 +6,12 @@
         .controller('BloggerProfileController', BloggerProfileController);
 
     /** @ngInject */
-    function BloggerProfileController(posts, Post, dialogs, MapService, toastr) {
+    function BloggerProfileController(posts, Post, dialogs, MapService, toastr, Share) {
         var vm = this;
         vm.posts = posts;
         vm.removePost = removePost;
         vm.getDate = getDate;
+        vm.sharePost = sharePost;
 
         showMarkers();
 
@@ -44,6 +45,10 @@
         function getDate(date) {
             var $date = moment(date);
             return $date.format('DD') + '<br/>' + $date.format('MMM');
+        }
+
+        function sharePost(post) {
+            Share.openModal(post, 'post');
         }
 
     }

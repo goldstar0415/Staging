@@ -14,7 +14,7 @@
     .controller('BlogController', BlogController);
 
   /** @ngInject */
-  function BlogController($stateParams, Post, ScrollService) {
+  function BlogController($stateParams, Post, ScrollService, Share, toastr, dialogs) {
     var vm = this;
 
     vm.posts = {};
@@ -25,7 +25,11 @@
     };
     vm.pagination = new ScrollService(Post.paginate, vm.posts, params);
 
+    console.log(vm.posts);
+
     vm.getDate = getDate;
+    vm.sharePost = sharePost;
+    vm.removePost = removePost;
 
     ////////////////////////////
 
@@ -33,5 +37,24 @@
       var $date = moment(date);
       return $date.format('DD') + '<br/>' + $date.format('MMM');
     }
+
+    function sharePost(post) {
+      Share.openModal(post, 'post');
+    }
+
+    function removePost(post, idx) {
+      dialogs.confirm('Confirmation', 'Are you sure you want to delete post?').result.then(function () {
+        Post.delete({id: post.slug || post.id},
+            function () {
+              toastr.info('Spot successfully deleted');
+              vm.posts.data.splice(idx, 1);
+            },
+            function () {
+              toastr.error('An error occurred during deleting');
+            }
+        );
+      });
+    }
+
   }
 })();
