@@ -73,11 +73,10 @@
         font-size: 20px;
     }
     .opened-name-bottom {
-        display: flex;
-        justify-content: flex-start;
+        display: block;
         .spot-name {
             font-weight: normal;
-            font-size: 28px;
+            font-size: 24px;
             color: $dark_blue;
             @media (max-width: 767px) {
                 font-size: 22px;
@@ -87,7 +86,7 @@
             width: 80px;
         }
         @media (max-width: 767px) {
-            margin: 20px 0 15px;
+            margin-bottom: 15px;
         }
         p {
             // margin: -25px 0 0 80px;
@@ -655,7 +654,7 @@
             }
         }
     }
-    
+
     .spot-img-full { //
         // padding: 0px 10px 0 20px;
         position: absolute;

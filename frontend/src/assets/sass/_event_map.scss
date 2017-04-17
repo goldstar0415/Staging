@@ -360,23 +360,15 @@
         }
     }
     .opened-name-bottom {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
+        display: block;
         padding: 25px 0 10px;
         // background-color: #fafafa;
         // margin: 10px 0 15px !important;
-        .left {
-            width: 70%;
-            padding-right: 10px;
-        }
+        //.left {
+        //    padding-right: 10px;
+        //}
         .right {
-            width: 30%;
             .opened-info {
-                display: flex;
-                justify-content: center;
-                align-items: flex-end;
-                flex-direction: column;
                 &>span {
                     margin: 8px 0;
                 }
