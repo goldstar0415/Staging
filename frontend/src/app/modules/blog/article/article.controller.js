@@ -6,13 +6,15 @@
     .controller('ArticleController', ArticleController);
 
   /** @ngInject */
-  function ArticleController(article, ScrollService, PostComment, dialogs, toastr, $window) {
+  function ArticleController(article, ScrollService, PostComment, dialogs, toastr, $window, Share, Post) {
     var vm = this;
     vm = _.extend(vm, article);
     vm.sendComment = sendComment;
     vm.deleteComment = deleteComment;
     vm.getDate = getDate;
     vm.back = back;
+    vm.sharePost = sharePost;
+    vm.removePost = removePost;
 
     vm.comments = {};
     var params = {
@@ -68,6 +70,25 @@
           toastr.info('Comment successfully deleted');
           vm.comments.data.splice(idx, 1);
         });
+      });
+    }
+
+    function sharePost() {
+      Share.openModal(vm, 'post');
+    }
+
+    function removePost() {
+      dialogs.confirm('Confirmation', 'Are you sure you want to delete post?').result.then(function () {
+        Post.delete({id: vm.slug || vm.id},
+            function () {
+              toastr.info('Spot successfully deleted');
+              back();
+            },
+            function () {
+              toastr.error('An error occurred during deleting');
+              back();
+            }
+        );
       });
     }
 
