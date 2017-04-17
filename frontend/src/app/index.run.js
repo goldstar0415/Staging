@@ -70,7 +70,18 @@
     // };
     $rootScope.example1model = [];
 
-    MapService.Init('map');
+    var mapOverrideParams = null;
+    var bootSpot = window.$$bootSpot;
+    if (bootSpot && bootSpot.points && bootSpot.points.length && bootSpot.points[0] && bootSpot.points[0].location && bootSpot.points[0].location.lat && bootSpot.points[0].location.lng) {
+        mapOverrideParams = {
+            zoom: 18,
+            center: [bootSpot.points[0].location.lat, bootSpot.points[0].location.lng],
+            state: 'small',
+        };
+    }
+    $rootScope.boot = true;
+
+    MapService.Init('map', mapOverrideParams);
 
     $rootScope.$on('$stateChangeSuccess', onStateChangeSuccess);
     $rootScope.$on("$stateChangeError", onStateChangeError);
@@ -105,6 +116,10 @@
 
     function setOpenedSpot(item) {
         $rootScope.openedSpot = item;
+        if (!item && !$rootScope.isSidebarOpened) {
+            console.debug('> set zoom 5');
+            MapService.GetMap().setZoom(5);
+        }
     }
 
     function toggleSidebar(isOpened) {
@@ -156,8 +171,12 @@
 
       MapService.clearLayers();
       angular.element('.map-tools').hide();
+
       $rootScope.changeMapState(current.mapState, current, true);
 
+      if ($rootScope.boot) {
+          $rootScope.boot = false;
+      }
 
       if ($state.params.spotSearch) {
         initIntroPage();
