@@ -66,7 +66,7 @@
           break;
         case 'post':
           vm.text = vm.item.title;
-          vm.url = $state.href('blog.article', {slug: vm.item.slug}, {absolute: true});
+          vm.url = $state.href('blog.article', {slug: vm.item.slug, user_id: vm.item.user_id}, {absolute: true});
           vm.picture = vm.item.cover_url.medium;
           break;
       }
