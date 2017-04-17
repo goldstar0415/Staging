@@ -805,8 +805,18 @@
                     $rootScope.routeInterpolated = null;
                 }
 
-                //initialization
-                function InitMap(mapDOMElement) {
+                /**
+                 * initialization
+                 * @param mapDOMElement
+                 * @param {{center: Array, zoom: number}} overrideParams
+                 * @returns {*}
+                 * @constructor
+                 */
+
+                function InitMap(mapDOMElement, overrideParams) {
+
+                    console.debug('map override params', overrideParams);
+
                     //Leaflet touch hook
                     L.Map.mergeOptions({
                         tap: true,
@@ -901,8 +911,8 @@
                         retinaDisplay: 'yes',
                         zoomControl: true,
                         zoomControlPosition: 'top-left',
-                        center: [37.405075073242188, -96.416015625000000],
-                        zoom: 5,
+                        center: overrideParams ? overrideParams.center : [37.405075073242188, -96.416015625000000],
+                        zoom: overrideParams ? overrideParams.zoom : 5,
                         worldCopyJump: true,
                     });
 
@@ -931,11 +941,11 @@
                     map.addLayer(draggableMarkerLayer);
                     map.addLayer(drawLayer);
                     map.addLayer(markersLayer);
-                    ChangeState('big');
-
-                    map.setView(DEFAULT_MAP_LOCATION, 5);
-                    FocusMapToCurrentLocation(12);
-
+                    ChangeState((overrideParams && overrideParams.state) ? overrideParams.state : 'big');
+                    if (!overrideParams) {
+                        map.setView(DEFAULT_MAP_LOCATION, 5);
+                        FocusMapToCurrentLocation(12);
+                    }
                     window.map = map;
                     return map;
                 }
@@ -2153,6 +2163,7 @@
                 }
 
                 function FocusMapToGivenLocation(location, zoom, pause) {
+                    console.debug('>> focus to given location', location, zoom, pause);
                     if (location.lat && location.lng) {
                         setTimeout(function () {
                             map.panTo(new L.LatLng(location.lat, location.lng));
@@ -2507,7 +2518,7 @@
 
                 /**
                  * Taking filters data
-                 * 
+                 *
                  * @returns json
                  */
                 function getFiltersData()
@@ -2576,7 +2587,7 @@
 
                 /**
                  * Setting filters data
-                 * 
+                 *
                  * @returns void
                  */
                 function setFiltersData(data)

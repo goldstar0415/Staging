@@ -857,11 +857,15 @@
         parent: 'profile',
         resolve: {
           spot: ['$http','$rootScope', 'Spot', '$stateParams', function ($http, $rootScope, Spot, $stateParams) {
-            return $http.get(API_URL + '/spots/' + $stateParams.spot_id)
-              .success(function success(data) {
-                $rootScope.setOpenedSpot(data);
-                //   return Spot.get({id: $stateParams.spot_id}).$promise;
-              });
+            if ($rootScope.boot && window.$$bootSpot) {
+                $rootScope.setOpenedSpot(window.$$bootSpot);
+                return window.$$bootSpot;
+            } else {
+                return $http.get(API_URL + '/spots/' + $stateParams.spot_id)
+                    .success(function success(data) {
+                        $rootScope.setOpenedSpot(data);
+                    });
+            }
           }],
           loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load(versionize([
