@@ -278,7 +278,7 @@ class MapController extends Controller
      *
      * @return array
      */
-    public function getSpotsRadiusSelection(RadiusSelectionRequest $request) {
+    public function postSpotsRadiusSelection(RadiusSelectionRequest $request) {
         $spots = $this->grabSpotViews();
         $this->filterSpotViews($request, $spots);
 
@@ -302,7 +302,7 @@ class MapController extends Controller
      *
      * @return array
      */
-    public function getSpotsLassoSelection(LassoSelectionRequest $request) {
+    public function postSpotsLassoSelection(LassoSelectionRequest $request) {
         $spots = $this->grabSpotViews();
         $this->filterSpotViews($request, $spots);
 
@@ -324,7 +324,7 @@ class MapController extends Controller
      *
      * @return array
      */
-    public function getSpotsPathSelection(PathSelectionRequest $request) {
+    public function postSpotsPathSelection(PathSelectionRequest $request) {
         $spots = $this->grabSpotViews();
         $this->filterSpotViews($request, $spots);
 

@@ -132,9 +132,9 @@ Route::post('message/{user_id}/read', 'ChatController@read');
  * Map Controls
  */
 Route::get('map/search', 'MapController@getSearch');
-Route::get('map/selection/radius', 'MapController@getSpotsRadiusSelection');
-Route::get('map/selection/lasso', 'MapController@getSpotsLassoSelection');
-Route::get('map/selection/path', 'MapController@getSpotsPathSelection');
+Route::post('map/selection/radius', 'MapController@postSpotsRadiusSelection');
+Route::post('map/selection/lasso', 'MapController@postSpotsLassoSelection');
+Route::post('map/selection/path', 'MapController@postSpotsPathSelection');
 Route::get('map/spots/list', 'MapController@getList');
 Route::resource('areas', 'AreaController', ['except' => ['create', 'edit']]);
 Route::get('areas/{areas}/preview', 'AreaController@preview');
