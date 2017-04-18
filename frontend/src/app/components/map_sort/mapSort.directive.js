@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('zoomtivity')
-        .filter('unique', function ($rootScope) 
+        .filter('unique', function ($rootScope)
         {
             return function (input) {
                 if (input) {
@@ -19,7 +19,7 @@
                 return null;
             }
         })
-        .filter('getById', function ($rootScope) 
+        .filter('getById', function ($rootScope)
         {
             return function (input) {
                 if (input) {
@@ -36,7 +36,7 @@
                 return null;
             }
         })
-        .filter('spotsFilter', function ($rootScope) 
+        .filter('spotsFilter', function ($rootScope)
         {
             return function (input) {
                 if (input) {
@@ -69,7 +69,7 @@
                 return null;
             }
         });
-        
+
     /*
      * Directive for spot control panel
      */
@@ -189,7 +189,7 @@
         $rootScope.$on('impossible-route', onImpossibleRoute);
 
         run();
-        
+
         /*var filtersNames = [
             'minRating',
             'dateFrom',
@@ -198,7 +198,7 @@
             'isApproved',
             'tags',
         ];
-        
+
         _.each(filtersNames, function(val){
             $rootScope.$watch('filterOptions.' + val, function() {
                 fillFilters();
@@ -615,7 +615,7 @@
                 url = API_URL + '/map/selection/' + $rootScope.mapSearchType;
             }
             $rootScope.mapSortFilters = angular.copy(data);
-            
+
             var bbox_array = MapService.GetBBoxes();
             if (bbox_array.length > 0) {
                 bbox_array = MapService.BBoxToParams(bbox_array);
@@ -625,14 +625,15 @@
                 $rootScope.mapSortFilters = {};
                 return;
             }
-            
+
             isIntermediateSearch = isIntermediateSearch === true;
             MapService.cancelHttpRequest();
             $rootScope.mapSortSpots.cancellerHttp = $q.defer();
 
             $http({
-                url: url + '?' + $.param(data),
-                method: "GET",
+                url: url,
+                method: "POST",
+                data: data,
                 timeout: $rootScope.mapSortSpots.cancellerHttp.promise
             })
                     .success(function (spots) {
