@@ -141,7 +141,7 @@
             <div class="overview website" ng-if="(Spot.spot.web_sites | seatgeek | ticketmaster).length">
                 <h1>Website:</h1>
                 <a ng-repeat="url in Spot.spot.web_sites | seatgeek | ticketmaster" href="{{url}}" target="_blank">
-                    {{url}}
+                    <img src="../../../assets/img/svg/globe.svg" alt="{{url}}" />
                 </a>
             </div>
             <ul ng-if="Spot.spot.videos.length > 0" class="no-pad-left">
