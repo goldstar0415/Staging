@@ -89,14 +89,21 @@ header {
                             .title {
                                 vertical-align: top;
                                 display: block;
-                                font-size: bold;
+                                font-weight: bold;
                             }
                             .address {
                                 color: #888;
                                 font-size: 12px;
                             }
+                            .title, .address {
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                -o-text-overflow: ellipsis;
+                                -ms-text-overflow: ellipsis;
+                            }
                         }
-                        
+
                         .icon {
                             float:left;
                             width:20px;
