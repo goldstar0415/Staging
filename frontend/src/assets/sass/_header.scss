@@ -64,6 +64,14 @@ header {
                     background: #fff;
                     overflow: auto;
                     max-height: 80vh;
+
+                    &.tt-open {
+                        @media(max-width: 500px) {
+                            left: -62px !important;
+                            width: 100vw !important;
+                        }
+                    }
+
                     .tt-suggestion {
                         font-size: 14px;
                         line-height: 24px;
