@@ -70,6 +70,10 @@
             //send new review for spot
 
             vm.postReview = function () {
+                if (!$rootScope.currentUser) {
+                    toastr.warning('Please Login to Submit Review');
+                    return;
+                }
                 SpotReview.save({spot_id: vm.item.id},
                     {
                         message: vm.review || '',
@@ -86,7 +90,7 @@
                     }
                 )
             }
-            
+
             vm.updateReview = function() {
                 SpotReview.update({spot_id: vm.item.id, id: vm.item.auth_rate.id},
                     {
@@ -114,7 +118,7 @@
                 dialogs.confirm('Confirmation', 'Are you sure you want to delete review?').result.then(function () {
                     console.log('Deletion confirmed...');
                     SpotReview.delete({spot_id: vm.item.id, id: review.id}, function success(result) {
-                        
+
                         vm.item.rating = result.spot_rating;
                         delete result.spot_rating;
                         vm.item.auth_rate = false;
