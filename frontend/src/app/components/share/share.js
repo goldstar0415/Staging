@@ -18,10 +18,10 @@
 
         vm.openModal = openModal;
 
-        function openModal(item, type, allowUnathorized) {
+        function openModal(item, type, allowUnauthorized) {
             vm.item = item;
             vm.type = type;
-            if (!$rootScope.currentUser && !allowUnathorized) {
+            if (!$rootScope.currentUser && !allowUnauthorized) {
                 SignUpService.openModal('SignUpModal.html');
                 return;
             }
