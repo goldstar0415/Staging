@@ -30,10 +30,10 @@
             <a ng-click="$root.setOpenedSpot(null)" ui-sref="spot({spot_id: SpotCard.item.id, user_id: SpotCard.item.user_id || 0, spot_slug: SpotCard.item.slug})" class="img-icon-details" ng-click="SpotCard.openInviteModal(SpotCard.item)" tooltip="Details" tooltip-placement="bottom">Details</a>
             <a ng-click="$root.setOpenedSpot(null)" class="img-icon-close" tooltip="Close" tooltip-placement="bottom">Close</a>
         </div>
-        <div class="spot-img-full" ng-if="$root.currentUser.id">
-            <a class="img-icon-invite" ng-click="SpotCard.openInviteModal(SpotCard.item)" tooltip="Invite" tooltip-placement="top">Invite</a>
+        <div class="spot-img-full">
+            <a ng-if="$root.currentUser.id" class="img-icon-invite" ng-click="SpotCard.openInviteModal(SpotCard.item)" tooltip="Invite" tooltip-placement="top">Invite</a>
             <a class="img-icon-share" ng-click="SpotCard.openShareModal(SpotCard.item)"  tooltip="Share" tooltip-placement="top">Share</a>
-            <div class="spot-dropdown-menu" >
+            <div ng-if="$root.currentUser.id" class="spot-dropdown-menu" >
                 <span class="toggle-dropdown" ng-class="{'active' : SpotCard.isMenuOpened}" ng-click="SpotCard.toggleMenu()"></span>
                 <ul class="spot-card-dropdown" ng-show="SpotCard.isMenuOpened" ng-click="SpotCard.closeMenu()">
                     <li ng-if="$root.currentUser.id == SpotCard.item.user_id || $root.isRole($root.currentUser, 'admin')" ui-sref="spot_edit({spot_id: SpotCard.item.id})">
@@ -47,8 +47,8 @@
                 </ul>
             </div>
 
-            <a ng-if="$root.currentUser.id != SpotCard.item.user_id && SpotCard.item.is_favorite" class="img-icon-like liked" ng-click="SpotCard.removeFromFavorite(SpotCard.item)"  tooltip="Dislike" tooltip-placement="top">Dislike</a>
-            <a ng-if="$root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.is_favorite" class="img-icon-like" ng-click="SpotCard.addToFavorite(SpotCard.item)" tooltip="Like" tooltip-placement="top">Like</a>
+            <a ng-if="$root.currentUser && $root.currentUser.id != SpotCard.item.user_id && SpotCard.item.is_favorite" class="img-icon-like liked" ng-click="SpotCard.removeFromFavorite(SpotCard.item)"  tooltip="Dislike" tooltip-placement="top">Dislike</a>
+            <a ng-if="$root.currentUser && $root.currentUser.id != SpotCard.item.user_id && !SpotCard.item.is_favorite" class="img-icon-like" ng-click="SpotCard.addToFavorite(SpotCard.item)" tooltip="Like" tooltip-placement="top">Like</a>
         </div>
         <div class="spot-img-top">
             <stars item="SpotCard.item"></stars>
