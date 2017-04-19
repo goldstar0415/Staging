@@ -204,10 +204,7 @@
                 </div>
 
                 <div class="review-content clearfix">
-                    <review-input
-                        ng-if="ReviewInput.item.auth_rate.user_id != $root.currentUser.id"
-                        review="Spot.review" vote="Spot.vote" item="Spot.spot"
-                                  maxlength="255"></review-input>
+                    <review-input review="Spot.review" vote="Spot.vote" item="Spot.spot" maxlength="255"></review-input>
                 </div>
                 <div ng-if="Spot.votes.data.length" class="new-review">
                     <h3>Recent</h3>

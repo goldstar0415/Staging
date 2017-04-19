@@ -69,7 +69,7 @@
             }
 
             function openShareModal(item, type) {
-                Share.openModal(item, type);
+                Share.openModal(item, type, true);
             }
 
             function toggleMenu() {
@@ -79,7 +79,7 @@
             function closeMenu() {
                 vm.isMenuOpened = false;
             }
-            
+
             function setImage(item) {
                 var type, url;
                 if (item.type) {

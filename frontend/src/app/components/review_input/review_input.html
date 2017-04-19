@@ -1,5 +1,5 @@
 <form name="reviewForm" ng-submit="ReviewInput.submit(reviewForm)" novalidate class="clearfix"
-    ng-if="$root.currentUser && ReviewInput.edit && $root.currentUser.id != ReviewInput.item.user_id">
+    ng-if="!$root.currentUser || ($root.currentUser && ReviewInput.edit && $root.currentUser.id != ReviewInput.item.user_id)">
     <section class="review-section comments-section post" ng-class="{'hidden-xs': ReviewInput.mobile}">
         <div class="new-review"><h3>Write your own review</h3></div>
         <div class="new-post clearfix">

@@ -165,7 +165,7 @@
                 vm.spot.photos = _.union(vm.spot.photos, vm.spot.comments_photos);
             });
         }
-        
+
         if (vm.spot.facebook_url) {
             AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/facebook-photos').then(function(data) {
                 if(data.facebook_photos)
@@ -174,7 +174,7 @@
                 }
             });
         }
-        
+
         vm.services = [
           'booking',
           'hotelscom',
@@ -184,7 +184,7 @@
           'google',
           'zomato'
         ];
-        
+
         vm.reviews_total = {
             zoomtivity: {
                 rating: parseFloat(vm.spot.rating),
@@ -198,7 +198,7 @@
             };
         });
         calcRatings();
-        
+
         if (vm.spot.booking_url) {
             sendRatingsRequest('booking');
         }
@@ -217,7 +217,7 @@
         if (vm.spot.google_id) {
             sendRatingsRequest('google');
         }
-        
+
         function sendRatingsRequest(type)
         {
             vm.reviewsEnabled = false;
@@ -232,7 +232,7 @@
                 enableReviews();
             });
         }
-        
+
         function calcRatings()
         {
             var $starsSumm = 0;
@@ -245,9 +245,9 @@
                     $starsSumm += value.rating;
                     $reviewsCount += value.reviews_count;
                 }
-                
+
             });
-            
+
             var rating = 0;
             if($reviewsCount != 0)
             {
@@ -257,7 +257,7 @@
             vm.spot.total_reviews = $reviewsCount;
             vm.rating = vm.spot.avg_rating;
         }
-        
+
         if(!vm.spot.hours)
         {
             AsyncLoaderService.load(API_URL + '/spots/' + spot.id + '/hours').then(function(data) {
@@ -299,6 +299,10 @@
             links: []
         };
         vm.openPhotosModal = function() {
+            if (!$rootScope.currentUser) {
+                toastr.warning('Please Login to Submit Photos');
+                return;
+            }
             vm.photoModal = $modal.open({
                 templateUrl: '/app/components/ng_input/photos_modal.html',
                 controller: 'PhotosModalController',
@@ -325,7 +329,7 @@
                     });
             });
         };
-        
+
         function getPrice() {
             if (!vm.priceDate.start_date || !vm.priceDate.end_date) {
                 toastr.error('Please select your dates.')
@@ -339,7 +343,7 @@
                     });
             }
         }
-        
+
         function enableReviews() {
             if(vm.ratingsRefreshing.length === 0)
             {
@@ -350,11 +354,11 @@
                 }, {});
             }
         }
-        
+
         function refreshRating(serviceName) {
             vm.ratingsRefreshing.push(serviceName);
         }
-        
+
         function ratingRefreshed(serviceName) {
             var index = vm.ratingsRefreshing.indexOf(serviceName);
             vm.ratingsRefreshing.splice(index, 1);
