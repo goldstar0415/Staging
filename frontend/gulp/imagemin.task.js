@@ -51,7 +51,6 @@ function worker(relativePath, ext) {
     }
 
     const pattern = buildSearchPattern(relativePath, ext);
-    console.log(`> search pattern: ${pattern}`);
 
     return gulp
         .src(pattern)
