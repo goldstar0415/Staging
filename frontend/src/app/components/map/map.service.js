@@ -914,6 +914,14 @@
                         center: overrideParams ? overrideParams.center : [37.405075073242188, -96.416015625000000],
                         zoom: overrideParams ? overrideParams.zoom : 5,
                         worldCopyJump: true,
+                        minZoom: getMinZoom(),
+                    });
+
+                    $(window).on('resize', function() {
+                        map.options.minZoom = getMinZoom();
+                        if (map.options.zoom < map.options.minZoom) {
+                            map.setZoom(map.options.minZoom);
+                        }
                     });
 
                     // fix the attribution control
@@ -948,6 +956,16 @@
                     }
                     window.map = map;
                     return map;
+                }
+
+                function getMinZoom() {
+                    var tileSize = 256;
+                    // var maxScreenDimension = window.innerHeight > window.innerWidth ? window.innerHeight : window.innerWidth;
+                    var maxScreenDimension = $('#map').height();
+                    var maxTiles = Math.floor(maxScreenDimension / tileSize);
+                    var minZoom = Math.round(Math.log(maxTiles) / Math.log(2));
+                    minZoom = minZoom < 2 ? 2 : minZoom;
+                    return minZoom;
                 }
 
                 //return current map instance
