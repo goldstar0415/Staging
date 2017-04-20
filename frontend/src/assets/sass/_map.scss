@@ -8,19 +8,23 @@
     background-color: #ede3c9;
     .leaflet-control-attribution {
         position: absolute;
-        bottom: 0;
+        //bottom: 0;
         right: 0;
         width: auto;
         height: auto;
         @media (max-width: 767px) {
-            bottom: 50px;
+            //bottom: 50px;
             font-size: 0.7em;
         }
+        bottom: 50px;
     }
     &.small-size {
         .leaflet-control-attribution {
-            bottom: 50px;
+            display: none
         }
+        //@media (max-width: 840px) {
+        //    bottom: 0;
+        //}
     }
 }
 
