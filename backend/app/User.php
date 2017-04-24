@@ -19,6 +19,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Codesleeve\Stapler\ORM\StaplerableInterface;
 use App\Extensions\Stapler\EloquentTrait as StaplerTrait;
 use App\SpotVote;
+use Log;
 
 /**
  * Class User
@@ -193,6 +194,8 @@ class User extends BaseModel implements
         'is_following'
     ];
 
+    protected $dummyAvatarUrlTemplate;
+
     /**
      * Scope a query to search by user full name.
      *
@@ -221,6 +224,9 @@ class User extends BaseModel implements
                 'medium' => '160x160#'
             ]
         ]);
+
+        $adorableConfig = config('services.adorable');
+        $this->dummyAvatarUrlTemplate = $adorableConfig['avatarUrlTemplate'];
         
         parent::__construct($attributes);
     }
@@ -414,7 +420,25 @@ class User extends BaseModel implements
      */
     public function getAvatarUrlAttribute()
     {
-        return $this->getPictureUrls('avatar');
+        $urls = $this->getPictureUrls('avatar');
+
+        foreach ($urls as $k => $url) {
+            if ( preg_match('/\/missing\.[pngjeif]{3,4}$/i', $url) ) {
+                $urls[$k] = $this->getDummyAvatarUrl($k);
+            }
+        }
+
+        return $urls;
+    }
+
+    protected function getDummyAvatarUrl($size)
+    {
+        switch ($size) {
+            case 'medium': $size = 160; break;
+            case 'thumb': $size = 70; break;
+            default: $size = 256;
+        }
+        return str_replace([':size', ':identifier'], [$size, $this->id], $this->dummyAvatarUrlTemplate);
     }
 
     /**
