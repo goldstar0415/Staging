@@ -22,6 +22,7 @@ use Log;
  */
 class SpotReviewController extends Controller
 {
+    protected $dummyAvatarUrlTemplate;
 
     /**
      * SpotReviewController constructor.
@@ -29,6 +30,9 @@ class SpotReviewController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show']]);
+
+        $adorableConfig = config('services.adorable');
+        $this->dummyAvatarUrlTemplate = $adorableConfig['avatarUrlTemplate'];
     }
 
     /**
@@ -50,7 +54,29 @@ class SpotReviewController extends Controller
         }
         $query->with('user');
         $query->orderBy('created_at', 'DESC');
-        return $this->paginatealbe($request, $query);
+        $paginatedCollection = $this->paginatealbe($request, $query);
+
+        // use dummy avatars instead of empty images
+        if ( isset($paginatedCollection) && is_object($paginatedCollection) && method_exists($paginatedCollection, 'toArray') ) {
+            $results = $paginatedCollection->toArray();
+            if (isset($results['data'])) {
+                foreach ($results['data'] as &$res) {
+                    if ( isset($res['remote_user_avatar']) && preg_match('/\/missing\.[pngjeif]{3,4}$/i', $res['remote_user_avatar']) ) {
+                        $identifier = isset($res['user_id']) ? $res['user_id'] : (isset($res['remote_id']) ? $res['remote_id'] : rand(1e3, 5e3));
+                        $res['remote_user_avatar'] = $this->getDummyAvatarUrl(128, $identifier);
+                    }
+                }
+            }
+
+            return $results;
+        }
+
+        return $paginatedCollection;
+    }
+
+    protected function getDummyAvatarUrl($size, $identifier)
+    {
+        return str_replace([':size', ':identifier'], [$size, $identifier], $this->dummyAvatarUrlTemplate);
     }
 
     /**

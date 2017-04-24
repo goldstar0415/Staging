@@ -71,4 +71,7 @@ return [
         'client_secret' => env('SEATGEEK_CLIENT_SECRET'),
         'eventsUri'     => 'http://api.seatgeek.com/2/events',
     ],
+    'adorable' => [
+        'avatarUrlTemplate' => 'https://api.adorable.io/avatars/:size/:identifier.png',
+    ],
 ];
