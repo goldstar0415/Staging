@@ -235,17 +235,24 @@
                 position: absolute;
                 top: 40px;
                 bottom: 40px;
-                width: 20%;
-                background-size: 15%;
+                width: 10%;
+                background-size: 80%;
                 background-repeat: no-repeat;
-                background-position: center;
-                &.spot-img-swipe-left {
-                    left: 0;
-                    background-image: url(/assets/img/spot_swipe_left.png);
+                filter: drop-shadow(0px 0px 4px rgba(0,0,0,1));
+                @media (min-width: 768px) {
+                    display: none;
                 }
+
+                &.spot-img-swipe-left {
+                    left: 2px;
+                    background-image: url(/assets/img/svg/spot/swipe_left.svg);
+                    background-position: left center;
+                }
+
                 &.spot-img-swipe-right {
-                    right: 0;
-                    background-image: url(/assets/img/spot_swipe_right.png);
+                    right: 2px;
+                    background-image: url(/assets/img/svg/spot/swipe_right.svg);
+                    background-position: right center;
                 }
             }
         }
