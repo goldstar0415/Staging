@@ -22,7 +22,7 @@
 
   <ul ng-if="$root.currentUser">
     <li><a ui-sref="spots({user_id: $root.currentUser.id})" ui-sref-active="active" class="spots-link">My spots</a></li>
-    <li ng-if="$root.isRole($root.currentUser, 'blogger')">
+    <li>
       <a ui-sref="profile_blog({user_id: $root.currentUser.id})" ui-sref-active="active" class="blog-link">My blog</a>
     </li>
     <li><a ui-sref="favorites({user_id: $root.currentUser.id})" ui-sref-active="active"
