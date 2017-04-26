@@ -2043,15 +2043,29 @@ html {
 }
 
 .dialog-invite-find-friends-fb {
-  .icon {
-    width: 70px; height: 70px; border-radius: 50px; display: inline-block;
-  }
-  .fb {
-    background: url(../img/svg/social/facebook_icon.svg) no-repeat;
-  }
-  .zoom {
-    background: #1a1c42 url("../img/banner-logo.png") no-repeat scroll center 20% / 80% 80%;
-  }
+    .icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50px;
+        display: inline-block;
+    }
+    .fb {
+        background: url(../img/svg/social/facebook_icon.svg) no-repeat;
+    }
+    .zoom {
+        background: #1a1c42 url("../img/banner-logo.png") no-repeat scroll center 20% / 80% 80%;
+    }
+    .btn {
+        border-radius: 0;
+        color: #fff;
+        height: 3.5rem;
+        font-weight: 700;
+        background-color: #2c4456;
+        width: 206px;
+        @media (max-width: 767px) {
+            width: 100px;
+        }
+    }
 }
 
 .tooltip {
