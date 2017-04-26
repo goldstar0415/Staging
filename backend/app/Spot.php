@@ -699,7 +699,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                 $remote_user->find('.reviewer-data',0)->outertext = "";
                 $date = Carbon::createFromTimestamp(round($reviewObj->getAttribute('data-review-date')/1000))->toDateTimeString();
                 $reviews[] = [
-                    'vote' => (int)$rating,
+                    'vote' => round(floatval($rating)),
                     'message' => $message,
                     'remote_id' => $remote_id,
                     'remote_type' => SpotVote::TYPE_HOTELS,
@@ -1785,7 +1785,7 @@ class Spot extends BaseModel implements StaplerableInterface, CalendarExportable
                     }
                     $date = (new Carbon($reviewObj->find('.ratingDate', 0)->getAttribute('title')))->toDateTimeString();
                     $reviews[] = [
-                        'vote' => $vote,
+                        'vote' => round(floatval($vote)),
                         'message' => $message->innertext(),
                         'remote_id' => 'ta_' . $remote_id,
                         'remote_type' => SpotVote::TYPE_TRIPADVISOR,
