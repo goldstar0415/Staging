@@ -116,10 +116,6 @@
 
     function setOpenedSpot(item) {
         $rootScope.openedSpot = item;
-        if (!item && !$rootScope.isSidebarOpened) {
-            console.debug('> set zoom 5');
-            MapService.GetMap().setZoom(5);
-        }
     }
 
     function toggleSidebar(isOpened) {
