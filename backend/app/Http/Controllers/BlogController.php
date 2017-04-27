@@ -32,8 +32,8 @@ class BlogController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['index', 'show', 'preview', 'popular', 'categories']]);
-        $this->middleware('blogger', ['only' => ['store']]);
-        $this->middleware('bloggerOrAdmin', ['only' => ['update', 'destroy', 'upload']]);
+        //$this->middleware('blogger', ['only' => ['store']]);
+        //$this->middleware('bloggerOrAdmin', ['only' => ['update', 'destroy', 'upload']]);
     }
 
     /**
