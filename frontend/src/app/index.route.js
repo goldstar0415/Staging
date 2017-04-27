@@ -99,9 +99,15 @@
       })
       .state('index.email_verified', {
         url: '/email-verified',
-        controller: function (SignInService) {
-          SignInService.openModal();
-          toastr.success('Your email successfully verified');
+        controller: function (SignInService, $state, $timeout) {
+            toastr.success('Your email successfully verified', null, {
+                timeOut: 4e3,
+                onHidden: function() {
+                    $timeout(function() {
+                        $state.go('index');
+                    }, 500);
+                },
+            });
         },
         parent: 'main',
         mapState: 'big'
