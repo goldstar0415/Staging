@@ -175,7 +175,7 @@ class UserController extends Controller
     {
         return $this->appendUserRelations($this->auth->user())
                 ->append(['new_messages', 'favorites_ids'])
-                ->withHidden('is_hints')
+                ->withHidden(['is_hints', 'email'])
                 ->load('roles');
     }
 
