@@ -110,7 +110,22 @@
                 <td>{{ $spot->description }}</td>
                 <td>{{ $spot->tags->implode('name', ', ') }}</td>
                 @endif
-                <td>{{ $spot->points->implode('address', '; ') }}</td>
+                <td>
+                    @foreach( $spot->points as $spotPoint )
+                        {!! Form::open(['route' => ['admin.spots.update-spot-point', $spot->id, $spotPoint->id]]) !!}
+                            {!! Form::text('address', $spotPoint->address, ['placeholder' => 'address']) !!}
+                            {!! Form::hidden('_method', 'PUT') !!}
+                            {!! Form::submit('save', ['class' => 'btn btn-sm btn-default']) !!}
+                        {!! Form::close() !!}
+                    @endforeach
+                    @if( count($spot->points) == 0 )
+                            {!! Form::open(['route' => ['admin.spots.create-spot-point', $spot->id]]) !!}
+                            {!! Form::text('address', '', ['placeholder' => 'address']) !!}<br>
+                            {!! Form::text('location', '', ['placeholder' => '0.0000, 0.0000']) !!}
+                            {!! Form::submit('create', ['class' => 'btn btn-sm btn-default']) !!}
+                            {!! Form::close() !!}
+                    @endif
+                </td>
                 <td>{{ $spot->category->display_name }}</td>
                 <td>{{ $spot->created_at->format('Y-m-d') }}</td>
                 @if (Request::has('filter.date'))

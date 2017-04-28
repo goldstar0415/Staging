@@ -11,11 +11,14 @@ use App\Spot;
 use App\User;
 use App\SpotTypeCategory;
 use App\SpotView;
+use App\SpotPoint;
 use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Jobs\SpotViewUpdater;
+use Phaza\LaravelPostgis\Geometries\Point as LatLng;
+use Log;
 
 class SpotController extends Controller
 {
@@ -223,4 +226,30 @@ class SpotController extends Controller
         // Uncomment if wanted to use thru queues:
         //$this->dispatch(new SpotViewUpdater(null, 'refresh'));
     }
+
+    public function updateSpotPoint(Request $request, $id, $spotPointId)
+    {
+        $point = SpotPoint::findOrFail($spotPointId);
+        $point->address = trim($request->input('address'));
+        $point->save();
+
+        return back();
+    }
+
+    public function createSpotPoint(Request $request, $id)
+    {
+        $location = $request->input('location');
+        $matches = [];
+        if (!is_string($location) || !preg_match('/^\s*(\d+\.\d+)\s*,\s*(\d+\.\d+)/', $location, $matches) ) {
+            return abort(400, 'Invalid location value');
+        }
+
+        Spot::findOrFail($id)->points()->create([
+            'address' => trim($request->input('address')),
+            'location' => new LatLng($matches[1], $matches[2]),
+        ]);
+
+        return back();
+    }
+
 }

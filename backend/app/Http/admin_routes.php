@@ -21,6 +21,8 @@ get('spot-owner', 'SpotOwnerController@index')->name('admin.spot-owner.index');
 get('spot-owner/{owner_request}/accept', 'SpotOwnerController@accept')->name('admin.spot-owner.accept');
 get('spot-owner/{owner_request}/reject', 'SpotOwnerController@reject')->name('admin.spot-owner.reject');
 get('spots/refresh-view', 'SpotController@refreshMaterializedView')->name('admin.spots.refresh-view');
+put('spots/{id}/spot-points/{spot_point_id}', 'SpotController@updateSpotPoint')->name('admin.spots.update-spot-point');
+post('spots/{id}/spot-points', 'SpotController@createSpotPoint')->name('admin.spots.create-spot-point');
 
 post('csv-parser/export', 'CsvParserController@export')->name('admin.csv-parser.export');
 post('csv-parser/exportUpload', 'CsvParserController@exportUpload')->name('admin.csv-parser.export-upload');
