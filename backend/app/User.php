@@ -773,6 +773,8 @@ class User extends BaseModel implements
         $this->token = null;
 
         $this->save();
+
+        return $this;
     }
 
     /**
