@@ -333,6 +333,16 @@ class UserController extends Controller
     {
         $user = User::whereToken($token)->firstOrFail()->confirmEmail();
 
+        if ($this->auth->check()) {
+            $authUser = $this->auth->user();
+            if ($authUser->id != $user->id) {
+                $this->auth->logout();
+                $this->auth->login($user);
+            }
+        } else {
+            $this->auth->login($user);
+        }
+
         return redirect(frontend_url('email-verified'));
     }
 
