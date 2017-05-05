@@ -26,7 +26,6 @@ services:
       - DB_HOST=database
       - DB_DATABASE=zoomtivity
       - DB_USERNAME=zoomtivity
-      - DB_PASSWORD=4yr76dMDHa2eGG7nAezMY83HCnyM9QYr
       - DB_PORT=5432
 
       - CACHE_DRIVER=memcached
@@ -54,7 +53,6 @@ services:
       - front-tier
     environment:
       - POSTGRES_USER=zoomtivity
-      - POSTGRES_PASSWORD=4yr76dMDHa2eGG7nAezMY83HCnyM9QYr
       - POSTGRES_DB=zoomtivity
     expose:
       - 5432
