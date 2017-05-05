@@ -25,6 +25,7 @@ use Config;
 use Illuminate\Support\ServiceProvider;
 use Request;
 use Validator;
+use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -50,6 +51,16 @@ class AppServiceProvider extends ServiceProvider
             $categories = SpotType::categoriesList();
             $view->with('spot_categories', $categories);
         });
+
+        // override request scheme for URL-generator using a special front nginx header
+        if ( $realScheme = $this->app['request']->header('X-Real-Scheme') ) {
+            $realScheme = strtolower($realScheme);
+            if (in_array($realScheme, ['http', 'https'])) {
+                URL::forceSchema($realScheme);
+            } else {
+                throw new \Exception('Invalid X-Real-Scheme header, check front-nginx config');
+            }
+        }
     }
 
     /**
