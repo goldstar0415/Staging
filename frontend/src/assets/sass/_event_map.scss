@@ -184,8 +184,8 @@
                 justify-content: space-around;
                 flex-direction: column;
                 align-items: flex-start;
-                //padding: 5px 10px;
-                padding: 5px 110px 5px 10px;
+                padding: 5px 10px;
+                //padding: 5px 110px 5px 10px;
                 p {
                     margin: 0;
                     font-weight: bold;
@@ -206,16 +206,16 @@
                         color: $light_blue_btn;
                     }
                 }
-                .spot-date {
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    bottom: 0;
-                    width: 100px;
-                    font-size: 18px;
-                    padding: 0.3em 1em;
-                    text-align: right;
-                }
+                //.spot-date {
+                //    position: absolute;
+                //    top: 0;
+                //    right: 0;
+                //    bottom: 0;
+                //    width: 100px;
+                //    font-size: 18px;
+                //    padding: 0.3em 1em;
+                //    text-align: right;
+                //}
             }
             .img {
                 display: flex;
@@ -231,30 +231,30 @@
                     object-fit: cover;
                 }
             }
-            .spot-img-swipe {
-                position: absolute;
-                top: 40px;
-                bottom: 40px;
-                width: 10%;
-                background-size: 80%;
-                background-repeat: no-repeat;
-                filter: drop-shadow(0px 0px 4px rgba(0,0,0,1));
-                @media (min-width: 768px) {
-                    display: none;
-                }
-
-                &.spot-img-swipe-left {
-                    left: 2px;
-                    background-image: url(/assets/img/svg/spot/swipe_left.svg);
-                    background-position: left center;
-                }
-
-                &.spot-img-swipe-right {
-                    right: 2px;
-                    background-image: url(/assets/img/svg/spot/swipe_right.svg);
-                    background-position: right center;
-                }
-            }
+            //.spot-img-swipe {
+            //    position: absolute;
+            //    top: 40px;
+            //    bottom: 40px;
+            //    width: 10%;
+            //    background-size: 80%;
+            //    background-repeat: no-repeat;
+            //    filter: drop-shadow(0px 0px 4px rgba(0,0,0,1));
+            //    @media (min-width: 768px) {
+            //        display: none;
+            //    }
+            //
+            //    &.spot-img-swipe-left {
+            //        left: 2px;
+            //        background-image: url(/assets/img/svg/spot/swipe_left.svg);
+            //        background-position: left center;
+            //    }
+            //
+            //    &.spot-img-swipe-right {
+            //        right: 2px;
+            //        background-image: url(/assets/img/svg/spot/swipe_right.svg);
+            //        background-position: right center;
+            //    }
+            //}
         }
     }
 }
